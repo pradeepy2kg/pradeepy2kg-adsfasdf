@@ -380,15 +380,22 @@ function initPage() {
                     <td colspan="2" style="text-align:center;">කාර්යාල ප්‍රයෝජනය සඳහා පමණි /<br>
                         அலுவலக பாவனைக்காக மட்டும் / <br>
                         For office use only
-                    </td>                                                         
-                </tr>
-                <tr>
-                    <td width="40%"><s:label value="අනුක්‍රමික අංකය"/><br>
-                        <s:label value=" தொடர் இலக்கம் "/><br>
-                        <s:label value=" Serial Number"/>
                     </td>
-                    <td width="60%"><s:textfield id="bdfSerialNo" name="alterationSerialNo" maxLength="10"
-                                                 value="%{deathAlteration.alterationSerialNo}"/></td>
+                </tr>
+                <s:if test="alterationSerialNo>0">
+                    <tr>
+                        <td width="40%"><s:label value="අනුක්‍රමික අංකය"/><br>
+                            <s:label value=" தொடர் இலக்கம் "/><br>
+                            <s:label value=" Serial Number"/>
+                        </td>
+
+                        <td width="60%"><s:textfield id="bdfSerialNo" name="alterationSerialNo" maxLength="10"
+                                                     value="%{alterationSerialNo}" readonly="true"/></td>
+
+                    </tr>
+                </s:if>
+                <tr>
+                    <s:fielderror name="duplicateSerialNumberError" cssStyle="color:red;font-size:9pt;"/>
                 </tr>
                 <tr>
                     <td><s:label value="භාරගත් දිනය"/><br>

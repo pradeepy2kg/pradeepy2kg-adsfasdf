@@ -114,15 +114,11 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 logger.debug("capturing death alteration alteration serial number : {}", alterationSerialNo);
                 try {
                     DeathRegister dr = deathRegistrationService.getById(deathId, user);
-
-                    deathAlteration.setAlterationSerialNo(alterationSerialNo);
                     deathAlteration.setDeathId(deathId);
                     deathAlteration.setDeclarant(deathRegister.getDeclarant());
                     deathAlteration.setDeathPerson(deathRegister.getDeathPerson());
                     deathAlteration.setStatus(DeathAlteration.State.DATA_ENTRY);
                     deathAlteration.setDeathDivision(dr.getDeath().getDeathDivision());
-                    deathAlterationService.addDeathAlteration(deathAlteration, user);
-
                     Country deathCountry;
                     if (deathPersonCountry > 0) {
                         deathCountry = countryDAO.getCountry(deathPersonCountry);
@@ -136,9 +132,14 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                     }
 
                     //check is thre onther with same serial number in given death division
-/*
-                    DeathAlteration exsistingSameSerial=deathAlterationService.getDeathAlterationBySerialAndDeathDivision();
-*/
+/*                    List<DeathAlteration> exsistingSameSerial = deathAlterationService.geAlterationBySerialAndDeathDivision(serialNumber, user);
+                    //todo change comparision
+                    if (exsistingSameSerial.size() > 1) {
+                        addFieldError("duplicateSerialNumberError", "err.serial.number.duplication");
+                        populateOtherLists();
+                        return "pageLoad";
+                    }*/
+                    deathAlterationService.addDeathAlteration(deathAlteration, user);
 
                     addActionMessage(getText("alt.massage.success"));
                     populatePrimaryLists(districtUKey, dsDivisionId, language, user);
@@ -159,7 +160,9 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 deathAlteration.setIdUKey(deathAlterationId);
                 deathAlteration.setDeathId(deathId);
                 deathAlteration.setStatus(DeathAlteration.State.DATA_ENTRY);
+/*
                 deathAlteration.setAlterationSerialNo(alterationSerialNo);
+*/
                 deathAlteration.setLifeCycleInfo(exsisting.getLifeCycleInfo());
 
                 deathAlterationService.updateDeathAlteration(deathAlteration, user);
@@ -415,6 +418,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 deathRegister.setDeath(populateDeathInfo(deathAlteration.getDeathInfo(), deathRegister.getDeath()));
                 editMode = true;
                 toDay = deathAlteration.getDateReceived();
+                alterationSerialNo = deathAlteration.getIdUKey();
             } else {
                 logger.debug("cannot edit death alteration idUKey : {} : not in DATA_ENTRY mode", deathAlterationId);
                 populatePrimaryLists(districtUKey, dsDivisionId, language, user);

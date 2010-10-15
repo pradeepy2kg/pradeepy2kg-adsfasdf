@@ -19,7 +19,9 @@ import java.util.HashMap;
                 " AND dr.death.deathDivision.bdDivisionUKey =:deathDivisionUkey"),
         @NamedQuery(name = "get.atl.by.death.id", query = "SELECT da FROM DeathAlteration da WHERE da.deathId=:deathId"),
         @NamedQuery(name = "get.alt.by.date.period", query = "SELECT da FROM DeathAlteration da WHERE da.dateReceived " +
-                " BETWEEN :startDate AND :endDate ORDER BY da.dateReceived desc")
+                " BETWEEN :startDate AND :endDate ORDER BY da.dateReceived desc"),
+        //todo
+        @NamedQuery(name = "get.alt.by.seral.number.death.division", query = "SELECT da FROM DeathAlteration da")
 })
 
 public class DeathAlteration {
@@ -101,9 +103,6 @@ public class DeathAlteration {
     // The date when the alteration request was received
     @Temporal(value = TemporalType.DATE)
     private Date dateReceived;
-    // This is the serial number for the BirthAlteration
-    @Column(nullable = false, updatable = false)
-    private Long alterationSerialNo;
     /**
      * Contains the approval bit set for each field.
      */
@@ -169,14 +168,6 @@ public class DeathAlteration {
 
     public void setIdUKey(long idUKey) {
         this.idUKey = idUKey;
-    }
-
-    public Long getAlterationSerialNo() {
-        return alterationSerialNo;
-    }
-
-    public void setAlterationSerialNo(Long alterationSerialNo) {
-        this.alterationSerialNo = alterationSerialNo;
     }
 
     public long getDeathId() {
