@@ -20,6 +20,7 @@ import java.util.Set;
 })
 @Entity
 @Table(name = "REGISTRAR", schema = "CRS")
+@org.hibernate.annotations.Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)
 public class Registrar implements Serializable {
 
     @Id

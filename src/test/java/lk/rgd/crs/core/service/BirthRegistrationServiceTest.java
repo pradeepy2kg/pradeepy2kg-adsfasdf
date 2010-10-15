@@ -19,10 +19,13 @@ import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.prs.api.domain.Person;
 import lk.rgd.prs.api.service.PopulationRegistry;
 import lk.rgd.crs.api.service.CertificateSearchService;
+import org.hibernate.ejb.EntityManagerFactoryImpl;
 import org.springframework.context.ApplicationContext;
+import org.springframework.orm.jpa.EntityManagerFactoryInfo;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManagerFactory;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -783,5 +786,11 @@ public class BirthRegistrationServiceTest extends TestCase {
         bdf2 = birthRegSvc.getById(bdf2.getIdUKey(), deoColomboColombo);
         Assert.assertEquals("Person confirming".toUpperCase(), bdf2.getConfirmant().getConfirmantFullName());
         Assert.assertEquals(BirthDeclaration.State.ARCHIVED_CERT_GENERATED, bdf2.getRegister().getStatus());
+
+        // asankha some temp code to check if 2nd level caching works
+        EntityManagerFactoryInfo emfi = (EntityManagerFactoryInfo) ctx.getBean("entityManagerFactory");
+        EntityManagerFactory emf = emfi.getNativeEntityManagerFactory();
+        EntityManagerFactoryImpl empImpl = (EntityManagerFactoryImpl)emf;
+        System.out.println(empImpl.getSessionFactory().getStatistics());
     }
 }
