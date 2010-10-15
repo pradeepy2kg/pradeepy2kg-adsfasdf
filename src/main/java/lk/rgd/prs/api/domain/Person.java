@@ -222,6 +222,7 @@ public class Person implements Serializable {
         }
         marriages.add(m);
         lastMarriage = m;
+        civilStatus = CivilStatus.MARRIED;
     }
 
     /**
