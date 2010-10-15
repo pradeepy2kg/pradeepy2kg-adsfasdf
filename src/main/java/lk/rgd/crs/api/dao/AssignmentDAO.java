@@ -1,10 +1,7 @@
 package lk.rgd.crs.api.dao;
 
-import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.domain.Assignment;
-import lk.rgd.crs.api.domain.BDDivision;
-import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.domain.Registrar;
 
 import java.util.List;
@@ -75,4 +72,16 @@ public interface AssignmentDAO {
      * @return list of assignment
      */
     public List<Assignment> getAllAssignmentByDistricAndType(int districtId, Assignment.Type type, boolean active);
+
+    /**
+     * Return the active/inactive Assignments for the selected birth, death or marriage division
+     *
+     * @param divisionUKey the BD Division or MR Division unique id
+     * @param type         the type of the assignment (birth, death or marriage)
+     * @param active       include only currently active or inactive assignments
+     * @param acting       include acting or non-acting assignments
+     * @return the list of assignments
+     */
+    public List<Assignment> getAllAssignmentsByBDorMRDivisionAndType(int divisionUKey, Assignment.Type type,
+        boolean active, boolean acting);
 }

@@ -1,10 +1,18 @@
 package lk.rgd.crs.web;
 
+import lk.rgd.AppConstants;
+import lk.rgd.common.api.dao.UserDAO;
+import lk.rgd.common.api.dao.UserLocationDAO;
+import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.UserLocation;
+import lk.rgd.common.util.NameFormatUtil;
+import lk.rgd.crs.api.dao.BirthDeclarationDAO;
+import lk.rgd.crs.api.domain.BirthDeclaration;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
-import org.codehaus.jackson.map.ObjectMapper;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -14,18 +22,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
-import java.util.HashMap;
 import java.util.ArrayList;
-
-import lk.rgd.common.api.dao.UserLocationDAO;
-import lk.rgd.common.api.dao.UserDAO;
-import lk.rgd.common.api.domain.User;
-import lk.rgd.common.api.domain.UserLocation;
-import lk.rgd.common.util.NameFormatUtil;
-import lk.rgd.crs.api.dao.BirthDeclarationDAO;
-import lk.rgd.crs.api.domain.BirthDeclaration;
-import lk.rgd.AppConstants;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author Chathuranga Withana
