@@ -35,6 +35,7 @@ import java.util.Date;
                 "WHERE a.registrar.registrarUKey = :registrarUKey")
 
 })
+@org.hibernate.annotations.Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)
 public class Assignment implements Serializable {
 
     /**

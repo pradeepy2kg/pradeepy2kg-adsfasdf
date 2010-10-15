@@ -20,6 +20,7 @@ import java.io.Serializable;
     @NamedQuery(name = "get.birthCertSign.user.by.locationId", query = "SELECT ul.user FROM UserLocation ul " +
         "WHERE ul.locationId = :locationId AND ul.lifeCycleInfo.active = :active AND ul.signBirthCert IS TRUE")
 })
+@org.hibernate.annotations.Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)
 public class UserLocation implements Serializable {
     @Id
     private String userId;
