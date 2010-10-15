@@ -49,7 +49,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     private Map<Integer, String> bdDivisionList;
     private Map<Integer, String> raceList;
     private Map<Integer, String> countryList;
-    private Map<Integer, List<String>> pendingList = new HashMap<Integer, List<String>>();
+    private Map<List, List<String>> pendingList = new HashMap<List, List<String>>();
 
     private List<DeathAlteration> approvalList;
 
@@ -134,6 +134,11 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                         deathRace = raceDAO.getRace(deathPersonRace);
                         deathAlteration.getDeathPerson().setDeathPersonRace(deathRace);
                     }
+
+                    //check is thre onther with same serial number in given death division
+/*
+                    DeathAlteration exsistingSameSerial=deathAlterationService.getDeathAlterationBySerialAndDeathDivision();
+*/
 
                     addActionMessage(getText("alt.massage.success"));
                     populatePrimaryLists(districtUKey, dsDivisionId, language, user);
@@ -300,28 +305,52 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         if (deathAlteration.getDeathInfo().getDateOfDeath() != null)
             dateAlt = df.format(deathAlteration.getDeathInfo().getDateOfDeath());
 
-        getDisplayList(DeathAlteration.DATE_OF_DEATH, dateEx, dateAlt, 0);
-        getDisplayList(DeathAlteration.TIME_OF_DEATH, deathRegister.getDeath().getTimeOfDeath(), deathAlteration.getDeathInfo().getTimeOfDeath(), 0);
-        getDisplayList(DeathAlteration.PLACE_OF_DEATH_OFFICIAL, deathRegister.getDeath().getPlaceOfDeath(), deathAlteration.getDeathInfo().getPlaceOfDeath(), 0);
-        getDisplayList(DeathAlteration.PLACE_OF_DEATH_ENGLISH, deathRegister.getDeath().getPlaceOfDeathInEnglish(), deathAlteration.getDeathInfo().getPlaceOfDeathInEnglish(), 0);
-        getDisplayList(DeathAlteration.CAUSE_OF_DEATH_ESTABLISHED, deathRegister.getDeath().isCauseOfDeathEstablished(), deathAlteration.getDeathInfo().isCauseOfDeathEstablished(), 3);
-        getDisplayList(DeathAlteration.CAUSE_OF_DEATH, deathRegister.getDeath().getCauseOfDeath(), deathAlteration.getDeathInfo().getCauseOfDeath(), 0);
-        getDisplayList(DeathAlteration.ICD_CODE, deathRegister.getDeath().getIcdCodeOfCause(), deathAlteration.getDeathInfo().getIcdCodeOfCause(), 0);
-        getDisplayList(DeathAlteration.BURIAL_PLACE, deathRegister.getDeath().getPlaceOfBurial(), deathAlteration.getDeathInfo().getPlaceOfBurial(), 0);
-        //todo possible defect with ICD code and cause of death
+        Object[] array = DeathAlteration.indexMap.entrySet().toArray();
+        Map.Entry entry = (Map.Entry) array[0];
 
-        getDisplayList(DeathAlteration.DEATH_PERSON_COUNTRY, deathRegister.getDeathPerson().getDeathPersonCountry(), deathAlteration.getDeathPerson().getDeathPersonCountry(), 4);
-        getDisplayList(DeathAlteration.DEATH_PERSON_PASSPORT, deathRegister.getDeathPerson().getDeathPersonPassportNo(), deathAlteration.getDeathPerson().getDeathPersonPassportNo(), 0);
-        getDisplayList(DeathAlteration.DEATH_PERSON_AGE, deathRegister.getDeathPerson().getDeathPersonAge(), deathAlteration.getDeathPerson().getDeathPersonAge(), 1);
-        getDisplayList(DeathAlteration.DEATH_PERSON_GENDER, deathRegister.getDeathPerson().getDeathPersonGender(), deathAlteration.getDeathPerson().getDeathPersonGender(), 1);
-        getDisplayList(DeathAlteration.DEATH_PERSON_RACE, deathRegister.getDeathPerson().getDeathPersonRace(), deathAlteration.getDeathPerson().getDeathPersonRace(), 6);
-        getDisplayList(DeathAlteration.DEATH_PERSON_NAME_OFFICIAL, deathRegister.getDeathPerson().getDeathPersonNameOfficialLang(), deathAlteration.getDeathPerson().getDeathPersonNameOfficialLang(), 0);
-        getDisplayList(DeathAlteration.DEATH_PERSON_NAME_ENGLISH, deathRegister.getDeathPerson().getDeathPersonNameInEnglish(), deathAlteration.getDeathPerson().getDeathPersonNameInEnglish(), 0);
-        getDisplayList(DeathAlteration.DEATH_PERSON_ADDRESS, deathRegister.getDeathPerson().getDeathPersonPermanentAddress(), deathAlteration.getDeathPerson().getDeathPersonPermanentAddress(), 0);
-        getDisplayList(DeathAlteration.DEATH_PERSON_FATHER_PIN, deathRegister.getDeathPerson().getDeathPersonFatherPINorNIC(), deathAlteration.getDeathPerson().getDeathPersonFatherPINorNIC(), 0);
-        getDisplayList(DeathAlteration.DEATH_PERSON_FATHER_NAME, deathRegister.getDeathPerson().getDeathPersonFatherFullName(), deathAlteration.getDeathPerson().getDeathPersonFatherFullName(), 0);
-        getDisplayList(DeathAlteration.DEATH_PERSON_MOTHER_PIN, deathRegister.getDeathPerson().getDeathPersonMotherPINorNIC(), deathAlteration.getDeathPerson().getDeathPersonMotherPINorNIC(), 0);
-        getDisplayList(DeathAlteration.DEATH_PERSON_MOTHER_NAME, deathRegister.getDeathPerson().getDeathPersonMotherFullName(), deathAlteration.getDeathPerson().getDeathPersonMotherFullName(), 0);
+        entry = (Map.Entry) array[1];
+        getDisplayList(entry.getKey(), entry.getValue(), dateEx, dateAlt, 0);
+        entry = (Map.Entry) array[2];
+        getDisplayList(entry.getKey(), entry.getValue(), deathRegister.getDeath().getTimeOfDeath(), deathAlteration.getDeathInfo().getTimeOfDeath(), 0);
+        entry = (Map.Entry) array[3];
+        getDisplayList(entry.getKey(), entry.getValue(), deathRegister.getDeath().getPlaceOfDeath(), deathAlteration.getDeathInfo().getPlaceOfDeath(), 0);
+        entry = (Map.Entry) array[4];
+        getDisplayList(entry.getKey(), entry.getValue(), deathRegister.getDeath().getPlaceOfDeathInEnglish(), deathAlteration.getDeathInfo().getPlaceOfDeathInEnglish(), 0);
+        entry = (Map.Entry) array[5];
+        getDisplayList(entry.getKey(), entry.getValue(), deathRegister.getDeath().isCauseOfDeathEstablished(), deathAlteration.getDeathInfo().isCauseOfDeathEstablished(), 3);
+        entry = (Map.Entry) array[6];
+        getDisplayList(entry.getKey(), entry.getValue(), deathRegister.getDeath().getCauseOfDeath(), deathAlteration.getDeathInfo().getCauseOfDeath(), 0);
+        entry = (Map.Entry) array[7];
+        getDisplayList(entry.getKey(), entry.getValue(), deathRegister.getDeath().getIcdCodeOfCause(), deathAlteration.getDeathInfo().getIcdCodeOfCause(), 0);
+        entry = (Map.Entry) array[8];
+        getDisplayList(entry.getKey(), entry.getValue(), deathRegister.getDeath().getPlaceOfBurial(), deathAlteration.getDeathInfo().getPlaceOfBurial(), 0);
+
+        //todo possible defect with ICD code and cause of death
+        //todo death person pin is not here
+        entry = (Map.Entry) array[10];
+        getDisplayList(entry.getKey(), entry.getValue(), deathRegister.getDeathPerson().getDeathPersonCountry(), deathAlteration.getDeathPerson().getDeathPersonCountry(), 4);
+        entry = (Map.Entry) array[11];
+        getDisplayList(entry.getKey(), entry.getValue(), deathRegister.getDeathPerson().getDeathPersonPassportNo(), deathAlteration.getDeathPerson().getDeathPersonPassportNo(), 0);
+        entry = (Map.Entry) array[12];
+        getDisplayList(entry.getKey(), entry.getValue(), deathRegister.getDeathPerson().getDeathPersonAge(), deathAlteration.getDeathPerson().getDeathPersonAge(), 1);
+        entry = (Map.Entry) array[13];
+        getDisplayList(entry.getKey(), entry.getValue(), deathRegister.getDeathPerson().getDeathPersonGender(), deathAlteration.getDeathPerson().getDeathPersonGender(), 1);
+        entry = (Map.Entry) array[14];
+        getDisplayList(entry.getKey(), entry.getValue(), deathRegister.getDeathPerson().getDeathPersonRace(), deathAlteration.getDeathPerson().getDeathPersonRace(), 6);
+        entry = (Map.Entry) array[15];
+        getDisplayList(entry.getKey(), entry.getValue(), deathRegister.getDeathPerson().getDeathPersonNameOfficialLang(), deathAlteration.getDeathPerson().getDeathPersonNameOfficialLang(), 0);
+        entry = (Map.Entry) array[16];
+        getDisplayList(entry.getKey(), entry.getValue(), deathRegister.getDeathPerson().getDeathPersonNameInEnglish(), deathAlteration.getDeathPerson().getDeathPersonNameInEnglish(), 0);
+        entry = (Map.Entry) array[17];
+        getDisplayList(entry.getKey(), entry.getValue(), deathRegister.getDeathPerson().getDeathPersonPermanentAddress(), deathAlteration.getDeathPerson().getDeathPersonPermanentAddress(), 0);
+        entry = (Map.Entry) array[18];
+        getDisplayList(entry.getKey(), entry.getValue(), deathRegister.getDeathPerson().getDeathPersonFatherPINorNIC(), deathAlteration.getDeathPerson().getDeathPersonFatherPINorNIC(), 0);
+        entry = (Map.Entry) array[19];
+        getDisplayList(entry.getKey(), entry.getValue(), deathRegister.getDeathPerson().getDeathPersonFatherFullName(), deathAlteration.getDeathPerson().getDeathPersonFatherFullName(), 0);
+        entry = (Map.Entry) array[20];
+        getDisplayList(entry.getKey(), entry.getValue(), deathRegister.getDeathPerson().getDeathPersonMotherPINorNIC(), deathAlteration.getDeathPerson().getDeathPersonMotherPINorNIC(), 0);
+        entry = (Map.Entry) array[21];
+        getDisplayList(entry.getKey(), entry.getValue(), deathRegister.getDeathPerson().getDeathPersonMotherFullName(), deathAlteration.getDeathPerson().getDeathPersonMotherFullName(), 0);
 
         /**
          *retrimming death alteration pending list for partially approvals
@@ -471,49 +500,52 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
      * race=6
      */
 
-    private void getDisplayList(int index, Object deathRegistreValue, Object deathAlterationValue, int type) {
+    private void getDisplayList(Object index, Object label, Object deathRegistreValue, Object deathAlterationValue, int type) {
         List stringList = new ArrayList();
+        List indexList = new ArrayList();
+        indexList.add(0, index);
+        indexList.add(1, label);
         stringList.add(0, deathRegistreValue);
         stringList.add(1, deathAlterationValue);
         switch (type) {
             case 0:
                 if (deathAlterationValue != null & deathRegistreValue != null) {
                     if (compareStiring((String) deathRegistreValue, (String) deathAlterationValue)) {
-                        pendingList.put(index, stringList);
+                        pendingList.put(indexList, stringList);
                     }
                 } else {
                     if (!(deathAlterationValue == null & deathRegistreValue == null))
-                        pendingList.put(index, stringList);
+                        pendingList.put(indexList, stringList);
                 }
                 break;
             case 1:
                 if (deathAlterationValue != null & deathRegistreValue != null) {
                     if (compareInteger((Integer) deathRegistreValue, (Integer) deathAlterationValue)) {
-                        pendingList.put(index, stringList);
+                        pendingList.put(indexList, stringList);
                     }
                 } else {
                     if (!(deathAlterationValue == null & deathRegistreValue == null))
-                        pendingList.put(index, stringList);
+                        pendingList.put(indexList, stringList);
                 }
                 break;
             case 2:
                 if (deathAlterationValue != null & deathRegistreValue != null) {
                     if (compareLong((Long) deathRegistreValue, (Long) deathAlterationValue)) {
-                        pendingList.put(index, stringList);
+                        pendingList.put(indexList, stringList);
                     }
                 } else {
                     if (!(deathAlterationValue == null & deathRegistreValue == null))
-                        pendingList.put(index, stringList);
+                        pendingList.put(indexList, stringList);
                 }
                 break;
             case 3:
                 if (deathAlterationValue != null & deathRegistreValue != null) {
                     if (compareBoolean((Boolean) deathRegistreValue, (Boolean) deathAlterationValue)) {
-                        pendingList.put(index, stringList);
+                        pendingList.put(indexList, stringList);
                     }
                 } else {
                     if (!(deathAlterationValue == null & deathRegistreValue == null))
-                        pendingList.put(index, stringList);
+                        pendingList.put(indexList, stringList);
                 }
                 break;
             case 4:
@@ -524,7 +556,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                     countryList.add(0, ex.getEnCountryName());
                     countryList.add(1, cu.getEnCountryName());
                     if (compareCountry(ex, cu)) {
-                        pendingList.put(index, countryList);
+                        pendingList.put(indexList, countryList);
                     }
                 } else {
                     if (!(ex == null & cu == null)) {
@@ -532,7 +564,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                             countryList.add(0, ex.getEnCountryName());
                         if (cu != null)
                             countryList.add(1, cu.getEnCountryName());
-                        pendingList.put(index, countryList);
+                        pendingList.put(indexList, countryList);
                     }
                 }
                 break;
@@ -544,7 +576,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                     raceList.add(0, exRace.getEnRaceName());
                     raceList.add(1, cuRace.getEnRaceName());
                     if (compareRaces((Race) deathRegistreValue, (Race) deathAlterationValue)) {
-                        pendingList.put(index, raceList);
+                        pendingList.put(indexList, raceList);
                     }
                 } else {
                     if (!(deathAlterationValue == null & deathRegistreValue == null))
@@ -552,7 +584,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                             raceList.add(0, exRace.getEnRaceName());
                     if (cuRace != null)
                         raceList.add(1, cuRace.getEnRaceName());
-                    pendingList.put(index, raceList);
+                    pendingList.put(indexList, raceList);
                 }
                 break;
             default:
@@ -878,11 +910,11 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         this.deathAlterationId = deathAlterationId;
     }
 
-    public Map<Integer, List<String>> getPendingList() {
+    public Map<List, List<String>> getPendingList() {
         return pendingList;
     }
 
-    public void setPendingList(Map<Integer, List<String>> pendingList) {
+    public void setPendingList(Map<List, List<String>> pendingList) {
         this.pendingList = pendingList;
     }
 

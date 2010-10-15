@@ -2,15 +2,10 @@
 <style type="text/css" title="currentStyle">
     @import "../lib/datatables/media/css/demo_page.css";
     @import "../lib/datatables/media/css/demo_table.css";
-    @import "../lib/datatables/media/css/TableTools.css";
-    /*@import "../lib/datatables/media/css/ColVis.css";*/
     @import "../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css";
 </style>
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
-<%--<script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>--%>
-<%--<script type="text/javascript" language="javascript" src="../lib/datatables/media/js/ZeroClipboard.js"></script>--%>
-<%--<script type="text/javascript" language="javascript" src="../lib/datatables/media/js/TableTools.js"></script>--%>
-<%--<script type="text/javascript" language="javascript" src="../lib/datatables/media/js/ColVis.js"></script>--%>
+
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
 <script type="text/javascript">
     function initPage() {
@@ -42,11 +37,11 @@
                 <tbody>
                 <s:iterator value="pendingList">
                     <tr>
-                        <td align="left"><s:property value="%{key}"/></td>
+                        <td align="left"><s:property value="%{getText(key.get(1))}"/></td>
                         <td><s:property value="%{value.get(0)}"/></td>
                         <td><s:property value="%{value.get(1)}"/></td>
                         <td align="center">
-                            <s:checkbox value="%{#approvedIndex}" name="approvedIndex" fieldValue="%{key}"/>
+                            <s:checkbox value="%{#approvedIndex}" name="approvedIndex" fieldValue="%{key.get(0)}"/>
                         </td>
                     </tr>
                 </s:iterator>
