@@ -505,7 +505,8 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                         pendingList.put(indexList, stringList);
                     }
                 } else {
-                    if (!(deathAlterationValue == null & deathRegistreValue == null))
+                    if (!((deathAlterationValue == null || deathAlterationValue.toString().length() == 0)
+                            & (deathRegistreValue == null || deathRegistreValue.toString().length() == 0)))
                         pendingList.put(indexList, stringList);
                 }
                 break;
