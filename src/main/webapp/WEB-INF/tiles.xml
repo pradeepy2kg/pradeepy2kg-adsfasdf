@@ -183,11 +183,6 @@
         <put-attribute name="title" value="BirthCertificateSearch.title"/>
     </definition>
 
-    <definition name="epr.PRSAdvancedSearch" extends="epr.template">
-        <put-attribute name="body" value="/WEB-INF/pages/prs/PRSAdvancedSearch.jsp"/>
-        <put-attribute name="title" value="search.title"/>
-    </definition>
-
     <definition name="epr.birthRegisterReject" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/births/BirthDeclarationReject.jsp"/>
         <put-attribute name="title" value="reject.title"/>
@@ -419,6 +414,17 @@
     <definition name="epr.assignedUserLocation" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/management/AssignedUserLocation.jsp"/>
         <put-attribute name="title" value="assigned user location"/>
+    </definition>
+
+    <!--Population Registry Tiles-->
+    <definition name="epr.PRSAdvancedSearch" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/prs/PRSAdvancedSearch.jsp"/>
+        <put-attribute name="title" value="search.title"/>
+    </definition>
+
+    <definition name="epr.ExistingPersonRegistration" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/prs/ExistingPersonRegistrationForm.jsp"/>
+        <put-attribute name="title" value="person_registration.title"/>
     </definition>
 
 </tiles-definitions>

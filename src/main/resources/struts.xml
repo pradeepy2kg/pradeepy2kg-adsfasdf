@@ -81,6 +81,11 @@
             <result type="tiles" name="success">epr.PRSAdvancedSearch</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
+
+        <action name="eprExistingPersonRegistration" class="lk.rgd.prs.web.action.PopulationRegisterAction"
+                method="personRegistration">
+            <result type="tiles" name="success">epr.ExistingPersonRegistration</result>
+        </action>
     </package>
 
     <package name="births" namespace="/births" extends="NG">
