@@ -115,9 +115,9 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     }
 
     public UserManagmentAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, RoleDAO roleDAO, UserManager service, CourtDAO courtDAO,
-        BDDivisionDAO bdDivisionDAO, MasterDataManagementService dataManagementService, MRDivisionDAO mrDivisionDAO, LocationDAO locationDAO,
-        AppParametersDAO appParametersDAO, UserLocationDAO userLocationDAO, UserDAO userDAO,
-        BirthRecordsIndexer birthRecordsIndexer, DeathRecordsIndexer deathRecordsIndexer, PRSRecordsIndexer prsRecordsIndexer) {
+                               BDDivisionDAO bdDivisionDAO, MasterDataManagementService dataManagementService, MRDivisionDAO mrDivisionDAO, LocationDAO locationDAO,
+                               AppParametersDAO appParametersDAO, UserLocationDAO userLocationDAO, UserDAO userDAO,
+                               BirthRecordsIndexer birthRecordsIndexer, DeathRecordsIndexer deathRecordsIndexer, PRSRecordsIndexer prsRecordsIndexer) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.roleDAO = roleDAO;
@@ -168,6 +168,8 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         user.setAssignedBDDSDivisions(assDSDivision);
         if (userId == null) {
             service.createUser(user, currentUser);
+            addActionMessage(getText("data.Save.Success.label"));
+            setPageNo(0);
         } else if (updated != null) {
             //     user.setUserId(userId);
             //setting new district list and division list and role
@@ -188,8 +190,11 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
             service.updateUser(updated, currentUser);
             session.remove(WebConstants.SESSION_UPDATED_USER);
             session.put("viewUsers", null);
+            addActionMessage(getText("edit.Data.Save.Success.label"));
+            setPageNo(1);
+            populate();
         }
-        return "success";
+        return "form"+pageNo;
     }
 
 
@@ -426,7 +431,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
                 break;
             case 2:
                 DSDivision checkDSDivision = dsDivisionDAO.getDSDivisionByCode(dsDivision.getDivisionId(),
-                    districtDAO.getDistrict(UserDistrictId));
+                        districtDAO.getDistrict(UserDistrictId));
                 if (checkDSDivision != null) {
                     addFieldError("duplicateIdNumberError", "DS Division Id Number Already Used. Please Insert Another Number");
                     logger.debug("Duplicate District code number is :", checkDSDivision.getDivisionId());
