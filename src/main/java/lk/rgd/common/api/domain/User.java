@@ -17,30 +17,30 @@ import lk.rgd.AppConstants;
 @Entity
 @Table(name = "USERS", schema = "COMMON")
 @NamedQueries({
-    @NamedQuery(name = "filter.by.roleid", query = "SELECT u FROM User u " +
-        "WHERE u.status != 3 AND u.role.roleId = :roleId " +
-        "ORDER BY u.userId"),
-    @NamedQuery(name = "filter.by.bd_district", query = "SELECT u FROM User u " +
-        "WHERE u.status != 3 AND :assignedBDDistrict MEMBER OF u.assignedBDDistricts " +
-        "ORDER BY u.userId"),
-    @NamedQuery(name = "filter.by.mr_district", query = "SELECT u FROM User u " +
-        "WHERE u.status != 3 AND :assignedMRDistrict MEMBER OF u.assignedMRDistricts " +
-        "ORDER BY u.userId"),
-    @NamedQuery(name = "filter.by.role_and_bd_district", query = "SELECT u FROM User u " +
-        "WHERE u.status != 3 AND u.role = :role AND :assignedBDDistrict MEMBER OF u.assignedBDDistricts " +
-        "ORDER BY u.userId"),
-    @NamedQuery(name = "filter.by.role_and_mr_district", query = "SELECT u FROM User u " +
-        "WHERE u.status != 3 AND u.role = :role AND :assignedMRDistrict MEMBER OF u.assignedMRDistricts " +
-        "ORDER BY u.userId"),
-    @NamedQuery(name = "filter.by.wildcard_id", query = "SELECT u FROM User u " +
-        "WHERE u.status != 3 AND u.userId LIKE :userIdMatch " +
-        "ORDER BY u.userId"),
-    @NamedQuery(name = "filter.by.wildcard_name", query = "SELECT u FROM User u " +
-        "WHERE u.status != 3 AND u.userName LIKE :userNameMatch " +
-        "ORDER BY u.userName"),
-    @NamedQuery(name = "filter.non.deleted", query = "SELECT u FROM User u " +
-        "WHERE u.status != 3 " +
-        "ORDER BY u.userName")
+        @NamedQuery(name = "filter.by.roleid", query = "SELECT u FROM User u " +
+                "WHERE u.status != 3 AND u.role.roleId = :roleId " +
+                "ORDER BY u.userId"),
+        @NamedQuery(name = "filter.by.bd_district", query = "SELECT u FROM User u " +
+                "WHERE u.status != 3 AND :assignedBDDistrict MEMBER OF u.assignedBDDistricts " +
+                "ORDER BY u.userId"),
+        @NamedQuery(name = "filter.by.mr_district", query = "SELECT u FROM User u " +
+                "WHERE u.status != 3 AND :assignedMRDistrict MEMBER OF u.assignedMRDistricts " +
+                "ORDER BY u.userId"),
+        @NamedQuery(name = "filter.by.role_and_bd_district", query = "SELECT u FROM User u " +
+                "WHERE u.status != 3 AND u.role = :role AND :assignedBDDistrict MEMBER OF u.assignedBDDistricts " +
+                "ORDER BY u.userId"),
+        @NamedQuery(name = "filter.by.role_and_mr_district", query = "SELECT u FROM User u " +
+                "WHERE u.status != 3 AND u.role = :role AND :assignedMRDistrict MEMBER OF u.assignedMRDistricts " +
+                "ORDER BY u.userId"),
+        @NamedQuery(name = "filter.by.wildcard_id", query = "SELECT u FROM User u " +
+                "WHERE u.status != 3 AND u.userId LIKE :userIdMatch " +
+                "ORDER BY u.userId"),
+        @NamedQuery(name = "filter.by.wildcard_name", query = "SELECT u FROM User u " +
+                "WHERE u.status != 3 AND u.userName LIKE :userNameMatch " +
+                "ORDER BY u.userName"),
+        @NamedQuery(name = "filter.non.deleted", query = "SELECT u FROM User u " +
+                "WHERE u.status != 3 " +
+                "ORDER BY u.userName")
 })
 public class User implements Serializable {
 
@@ -119,8 +119,8 @@ public class User implements Serializable {
      */
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(schema = "COMMON", name = "USER_BDDISTRICTS",
-        joinColumns = @JoinColumn(name = "userId"),
-        inverseJoinColumns = @JoinColumn(name = "districtUKey"))
+            joinColumns = @JoinColumn(name = "userId"),
+            inverseJoinColumns = @JoinColumn(name = "districtUKey"))
     private Set<District> assignedBDDistricts;
 
     /**
@@ -128,8 +128,8 @@ public class User implements Serializable {
      */
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(schema = "COMMON", name = "USER_MRDISTRICTS",
-        joinColumns = @JoinColumn(name = "userId"),
-        inverseJoinColumns = @JoinColumn(name = "districtUKey"))
+            joinColumns = @JoinColumn(name = "userId"),
+            inverseJoinColumns = @JoinColumn(name = "districtUKey"))
     private Set<District> assignedMRDistricts;
 
     /**
@@ -137,8 +137,8 @@ public class User implements Serializable {
      */
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(schema = "COMMON", name = "USER_BDDSDIVISIONS",
-        joinColumns = @JoinColumn(name = "userId"),
-        inverseJoinColumns = @JoinColumn(name = "dsDivisionUKey"))
+            joinColumns = @JoinColumn(name = "userId"),
+            inverseJoinColumns = @JoinColumn(name = "dsDivisionUKey"))
     private Set<DSDivision> assignedBDDSDivisions;
 
     /**
@@ -374,13 +374,13 @@ public class User implements Serializable {
             if (location.getLifeCycleInfo().isActive()) {
                 if (AppConstants.SINHALA.equals(language)) {
                     al.put(location.getLocation().getLocationUKey(),
-                        location.getLocation().getLocationCode() + " : " + location.getLocation().getSiLocationName());
+                            location.getLocation().getLocationCode() + " : " + location.getLocation().getSiLocationName());
                 } else if (AppConstants.ENGLISH.equals(language)) {
                     al.put(location.getLocation().getLocationUKey(),
-                        location.getLocation().getLocationCode() + " : " + location.getLocation().getEnLocationName());
+                            location.getLocation().getLocationCode() + " : " + location.getLocation().getEnLocationName());
                 } else if (AppConstants.TAMIL.equals(language)) {
                     al.put(location.getLocation().getLocationUKey(),
-                        location.getLocation().getLocationCode() + " : " + location.getLocation().getTaLocationName());
+                            location.getLocation().getLocationCode() + " : " + location.getLocation().getTaLocationName());
                 }
             }
         }
