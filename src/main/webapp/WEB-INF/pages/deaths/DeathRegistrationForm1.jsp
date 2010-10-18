@@ -496,49 +496,16 @@ function initPage() {
 <div id="death-declaration-form-1-outer">
 <s:form name="deathRegistrationForm1" id="death-registration-form-1" action="eprDeathDeclaration.do" method="POST"
         onsubmit="javascript:return validate()">
-<table>
-    <col style="width:60%"/>
-    <col style="width:40%"/>
-    <tr>
-        <td></td>
-        <td>
-            <s:fielderror name="duplicateSerialNumberError" cssStyle="color:red;font-size:10pt"/>
-        </td>
-    </tr>
-</table>
-<table style="width: 100%; border:none; border-collapse:collapse;" class="font-9">
-    <col width="180px"/>
-    <col width="350px"/>
-    <col width="120px"/>
-    <col width="160px"/>
+
+<table class="table_reg_header_01" style="font-size:9pt">
+    <caption></caption>
+    <col/>
+    <col/>
     <tbody>
-
     <tr>
-        <td rowspan="3"></td>
-        <td rowspan="2" align="center">
-            <img src="<s:url value="/images/official-logo.png" />" style="display: block; text-align: center;"
-                 width="80" height="100">
-        </td>
-
-        <td style="border:1px solid #000;">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</td>
-        <td style="border:1px solid #000;">
-            <s:if test="editMode">
-                <s:textfield name="death.deathSerialNo" id="deathSerialNo" readonly="true"/>
-            </s:if>
-            <s:else>
-                <s:textfield name="death.deathSerialNo" id="deathSerialNo" maxLength="10"/>
-            </s:else>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="2" style="border:1px solid #000;text-align:center;">
-            කාර්යාල ප්‍රයෝජනය සඳහා පමණි /
-            <br>அலுவலக பாவனைக்காக மட்டும் /
-            <br>For office use only
-        </td>
-    </tr>
-    <tr>
-        <td align="center" class="font-12">
+        <td width="300px"></td>
+        <td align="center" style="font-size:12pt; width:430px"><img src="<s:url value="/images/official-logo.png"/>"
+                                                                    alt=""/><br>
             <s:if test="deathType.ordinal() == 0 || deathType.ordinal() == 1">
                 මරණ ප්‍රකාශයක් [30, 39(1), 41(1) (උ) වගන්ති] - සාමාන්‍ය මරණ හා හදිසි මරණ
                 <br>இறப்பு பிரதிக்கினை [30, 39(1), 41(1) (உ) பிரிவு ]- சாதாரண மரணம் மற்றும் திடீா் மரணம்
@@ -550,21 +517,46 @@ function initPage() {
                 <br>Declaration of Death [Section 36] – Late registration or Death of missing person
             </s:elseif>
         </td>
-        <td style="border:1px solid #000;">
-            භාරගත් දිනය
-            <br>பிறப்பைப் பதிவு திகதி
-            <br>Submitted Date
-        </td>
-        <td style="border:1px solid #000;">
-            <s:label value="YYYY-MM-DD" cssStyle="font-size:10px"/><br>
-            <s:textfield id="dateOfRegistrationDatePicker" name="death.dateOfRegistration"/>
+        <td>
+            <table class="table_reg_datePicker_page_01">
+                <tr>
+                    <s:fielderror name="duplicateSerialNumberError" cssStyle="color:red;font-size:9pt;"/>
+                </tr>
+                <tr>
+                    <td><label><span class="font-8">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span></label>
+                    </td>
+                    <td>
+                        <s:if test="editMode">
+                            <s:textfield name="death.deathSerialNo" id="deathSerialNo" readonly="true"/>
+                        </s:if>
+                        <s:else>
+                            <s:textfield name="death.deathSerialNo" id="deathSerialNo" maxLength="10"/>
+                        </s:else>
+                    </td>
+                </tr>
+            </table>
+
+            <table class="table_reg_datePicker_page_01">
+                <tr>
+                    <td colspan="2">කාර්යාල ප්‍රයෝජනය සඳහා පමණි <br>அலுவலக பாவனைக்காக மட்டும்
+                        <br>For office use only
+                        <hr>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label><span
+                                class="font-8">භාරගත්  දිනය<br>பிறப்பைப் பதிவு திகதி <br>Submitted Date</span></label>
+                    </td>
+                    <td><s:label value="YYYY-MM-DD" cssStyle="margin-left:20px;font-size:10px"/><br>
+                        <s:textfield name="death.dateOfRegistration" id="dateOfRegistrationDatePicker" maxLength="10"/>
+                    </td>
+                </tr>
+            </table>
         </td>
     </tr>
     <tr>
-        <td colspan="4" height="15px"></td>
-    </tr>
-    <tr>
-        <td colspan="4" class="font-9" style="text-align:justify;">
+        <td colspan="3">
             <s:if test="deathType.ordinal() == 0 || deathType.ordinal() == 1">
                 ප්‍රකාශකයා විසින් මරණය සිදු වූ කොට්ටාශයේ මරණ රෙජිස්ට්‍රාර් තැන වෙත ලබා දිය යුතුය. මෙම තොරතුරු මත සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ මරණය ලියාපදිංචි කරනු ලැබේ.
                 <br>தகவல் தருபவரால் இறப்பு நிகழ்ந்த பிரிவின் இறப்பு பதிவாளாரிடம் சமா்ப்பித்தல் வேண்டும். இத்தகவலின்படி சிவில் பதிவு அமைப்பில் பிறப்பு பதிவு செய்யப்படும்
@@ -579,6 +571,7 @@ function initPage() {
     </tr>
     </tbody>
 </table>
+
 <s:if test="deathType.ordinal() == 2 || deathType.ordinal() == 3">
     <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse;" class="font-9">
         <tr>
