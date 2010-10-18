@@ -51,6 +51,11 @@ public class ErrorCodes {
      * invalid PIN number
      */
     public static final int INVALID_PIN = 1009;
+    /**
+     * in complete death alteration
+     */
+    public static final int INCOMPLETE_ALTERATION = 1010;
+
 
     // error codes 2001 - 3000 indicate permission denied errors
     /**
@@ -74,7 +79,7 @@ public class ErrorCodes {
     public static int ENTITY_ALREADY_EXIST = 4001;
     public static int ENTITY_MANAGER_CLOSED = 4002;
     public static int NOT_AN_ENTITY = 4003;
-    public static int PERSISTING_EXCEPTION_COMMON=4004;
+    public static int PERSISTING_EXCEPTION_COMMON = 4004;
 
     // PRS error codes
     public static int PRS_ADD_RECORD_DENIED = 5001;

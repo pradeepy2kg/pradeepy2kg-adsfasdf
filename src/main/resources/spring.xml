@@ -96,6 +96,8 @@
     <bean id="birthDeclarationValidator" class="lk.rgd.crs.core.service.BirthDeclarationValidator">
         <constructor-arg ref="ecivilService"/>
     </bean>
+    <bean id="deathAlterationValidator" class="lk.rgd.crs.core.service.DeathAlterationValidator">
+    </bean>
     <bean id="deathDeclarationValidator" class="lk.rgd.crs.core.service.DeathDeclarationValidator">
     </bean>
     <bean id="serviceAuditor" class="lk.rgd.crs.core.service.ServiceAuditor">
@@ -157,6 +159,7 @@
     <bean id="deathAlterationService" class="lk.rgd.crs.core.service.DeathAlterationServiceImpl">
         <constructor-arg ref="deathAlterationDAOImpl"/>
         <constructor-arg ref="deathRegisterService"/>
+        <constructor-arg ref="deathAlterationValidator"/>
     </bean>
 
     <bean id="masterDataManagementService" class="lk.rgd.crs.core.service.MasterDataManagementServiceImpl">
