@@ -3,6 +3,7 @@ package lk.rgd.common.util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import lk.rgd.AppConstants;
+import lk.rgd.common.api.domain.Role;
 
 /**
  * @authar amith jayasekara
@@ -32,8 +33,9 @@ public class AssignmentUtill {
         throw new IllegalArgumentException("Invalid type code : {}");
     }
 
+
     public static String getAssignmentType(int code, String lang) {
-        
+
         if (lang.endsWith(AppConstants.SINHALA)) {
             switch (code) {
                 case 0:
@@ -82,4 +84,6 @@ public class AssignmentUtill {
         logger.error("Invalid type code : {}", code);
         throw new IllegalArgumentException("Invalid gender code : {}");
     }
+
+
 }
