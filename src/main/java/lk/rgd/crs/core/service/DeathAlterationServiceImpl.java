@@ -27,10 +27,12 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
     private static final Logger logger = LoggerFactory.getLogger(BirthAlterationServiceImpl.class);
     private final DeathAlterationDAO deathAlterationDAO;
     private final DeathRegistrationService deathRegistrationService;
+    private final DeathAlterationValidator deathAlterationValidator;
 
-    public DeathAlterationServiceImpl(DeathAlterationDAO deathAlterationDAO, DeathRegistrationService deathRegistrationService) {
+    public DeathAlterationServiceImpl(DeathAlterationDAO deathAlterationDAO, DeathRegistrationService deathRegistrationService, DeathAlterationValidator deathAlterationValidator) {
         this.deathAlterationDAO = deathAlterationDAO;
         this.deathRegistrationService = deathRegistrationService;
+        this.deathAlterationValidator = deathAlterationValidator;
     }
 
     /**
@@ -39,7 +41,9 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
     @Transactional(propagation = Propagation.REQUIRED)
     public void addDeathAlteration(DeathAlteration da, User user) {
         logger.debug("adding a new death alteration");
-        validateAccessToBDDivision(user, da.getDeathDivision());
+        DeathRegister dr = deathRegistrationService.getById(da.getDeathId(), user);
+        deathAlterationValidator.validateMinimulCondiations(da, dr);
+/*        validateAccessToBDDivision(user, da.getDeathDivision());*/
         deathAlterationDAO.addDeathAlteration(da, user);
     }
 

@@ -65,6 +65,8 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     private int pendingListSize;
     private int deathPersonCountry;
     private int deathPersonRace;
+    private int deathCountryId;
+    private int deathRaceId;
 
     private long certificateNumber;
     private long serialNumber;
@@ -129,15 +131,14 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                         deathRace = raceDAO.getRace(deathPersonRace);
                         deathAlteration.getDeathPerson().setDeathPersonRace(deathRace);
                     }
-
+                    populatePrimaryLists(districtUKey, dsDivisionId, language, user);
                     deathAlterationService.addDeathAlteration(deathAlteration, user);
 
                     addActionMessage(getText("alt.massage.success"));
-                    populatePrimaryLists(districtUKey, dsDivisionId, language, user);
                     logger.debug("capturing alteration success ");
                     return SUCCESS;
-                }
-                catch (Exception e) {
+
+                } catch (Exception e) {
                     logger.error("error accoured while adding death alteration ");
                     populatePrimaryLists(districtUKey, dsDivisionId, language, user);
                     return ERROR;
@@ -210,6 +211,14 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 DSDivision division = deathRegister.getDeath().getDeathDivision().getDsDivision();
                 dsDivision = dsDivisionDAO.getNameByPK(division.getDsDivisionUKey(), language);
                 deathDivision = bdDivisionDAO.getNameByPK(deathRegister.getDeath().getDeathDivision().getBdDivisionUKey(), language);
+                Country country = deathRegister.getDeathPerson().getDeathPersonCountry();
+                if (country != null) {
+                    deathCountryId = country.getCountryId();
+                }
+                Race race = deathRegister.getDeathPerson().getDeathPersonRace();
+                if (race != null) {
+                    deathRaceId = race.getRaceId();
+                }
                 //setting reciving date to today
                 toDay = new Date();
             } else {
@@ -564,16 +573,17 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                         pendingList.put(indexList, raceList);
                     }
                 } else {
-                    if (!(deathAlterationValue == null & deathRegistreValue == null))
+                    if (!(deathAlterationValue == null & deathRegistreValue == null)) {
                         if (exRace != null) {
                             raceList.add(0, exRace.getEnRaceName());
                             raceList.add(1, null);
                         }
-                    if (cuRace != null) {
-                        raceList.add(0, null);
-                        raceList.add(1, cuRace.getEnRaceName()); //due to bug array index out of bound couse by adding to 1 position when 0 position is empty
+                        if (cuRace != null) {
+                            raceList.add(0, null);
+                            raceList.add(1, cuRace.getEnRaceName()); //due to bug array index out of bound couse by adding to 1 position when 0 position is empty
+                        }
+                        pendingList.put(indexList, raceList);
                     }
-                    pendingList.put(indexList, raceList);
                 }
                 break;
             default:
@@ -953,5 +963,21 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
 
     public void setRejectComment(String rejectComment) {
         this.rejectComment = rejectComment;
+    }
+
+    public int getDeathRaceId() {
+        return deathRaceId;
+    }
+
+    public void setDeathRaceId(int deathRaceId) {
+        this.deathRaceId = deathRaceId;
+    }
+
+    public int getDeathCountryId() {
+        return deathCountryId;
+    }
+
+    public void setDeathCountryId(int deathCountryId) {
+        this.deathCountryId = deathCountryId;
     }
 }

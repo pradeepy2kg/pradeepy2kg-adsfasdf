@@ -793,7 +793,7 @@ function initPage() {
                 Country
             </td>
             <td align="center">
-                <s:select id="deathPersonCountryList" name="deathPersonCountry" value=""
+                <s:select id="deathPersonCountryList" name="deathPersonCountry" value="%{deathCountryId}"
                           list="countryList"
                           headerKey="0"
                           headerValue="%{getText('select_country.label')}"/>
@@ -836,7 +836,7 @@ function initPage() {
                 Race
             </td>
             <td colspan="2" align="center">
-                <s:select list="raceList" name="deathPersonRace" headerKey="0"
+                <s:select list="raceList" name="deathPersonRace" headerKey="0" value="%{deathRaceId}"
                           headerValue="%{getText('select_race.label')}"
                           cssStyle="width:200px;" id="deathPersonRaceList"/>
             </td>
