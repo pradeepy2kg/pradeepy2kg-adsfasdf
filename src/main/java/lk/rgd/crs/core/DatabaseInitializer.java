@@ -4,6 +4,7 @@ import lk.rgd.Permission;
 import lk.rgd.common.api.dao.RoleDAO;
 import lk.rgd.common.api.domain.*;
 import lk.rgd.common.core.dao.PreloadableDAO;
+import lk.rgd.common.util.RolePermissionUtils;
 import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.core.service.BirthRecordsIndexer;
 import lk.rgd.crs.core.service.DeathRecordsIndexer;
@@ -77,7 +78,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
         entityClasses.add(DeathAlteration.class);
     }
 
-    public void setDataSource(DataSource dataSource) {                    
+    public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
@@ -116,7 +117,8 @@ public class DatabaseInitializer implements ApplicationContextAware {
             logger.info("Recreating a new database..");
             recreateCleanDB(mysql);
             // perform additional initialization with Java code
-            additionalInitialization(ctx);
+            RolePermissionUtils.setPermissionBits(ctx);
+            //   additionalInitialization(ctx);
         }
 
         Map<String, PreloadableDAO> preloadableDaos = ctx.getBeansOfType(PreloadableDAO.class);

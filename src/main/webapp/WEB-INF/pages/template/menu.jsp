@@ -1,3 +1,7 @@
+<%@ page import="lk.rgd.common.api.domain.Role" %>
+<%@ page import="lk.rgd.common.api.domain.User" %>
+<%@ page import="lk.rgd.crs.web.util.WebUtils" %>
+<%@ page import="lk.rgd.common.util.RolePermissionUtils" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
@@ -7,7 +11,10 @@
 <style type="text/css">
 
 </style>
-
+<%
+    User user = (User) session.getAttribute("user_bean");
+    Role userRole = user.getRole();
+%>
 <div id="xmain-menu">
     <ul class="menu">
         <s:iterator value="#session.allowed_menue" id="menue">
@@ -75,29 +82,65 @@
                     </s:a>
                 </s:if>
 
-
                 <ul class="acitem">
                     <s:iterator value="value" id="x">
                         <s:if test="%{value.propertyKey != null}">
+
                             <li>
-                                <s:a href="%{value.category+value.action}" id="%{value.propertyKey}">
+                                <s:set name="permission" value="%{value.permissionKey}" scope="request"/>
+                                <%
+                                    int x = 0;
+                                    int permissionBit = (Integer) request.getAttribute("permission");
+                                    if (userRole.getRoleId().equals("RG") || userRole.getRoleId().equals("ARG") ||
+                                            userRole.getRoleId().equals("ADR") || userRole.getRoleId().equals("DR")) {
+                                        x = RolePermissionUtils.checkLinkRole(userRole, permissionBit);
+                                    } else {
+                                        x = 7;
+                                    }
+
+                                    switch (x)
+
+                                    {
+                                        case 2:
+                                %>
+                                    <%--adr link style--%>
+                                <s:a href="%{value.category+value.action}" id="%{value.propertyKey}"
+                                     cssStyle="color:red">
                                     <s:property
                                             value="%{getText(value.propertyKey)}"/>
                                 </s:a>
+                                <%
+                                        break;
+                                    case 4:
+                                %>
+
+                                    <%--arg link style--%>
+                                <s:a href="%{value.category+value.action}" id="%{value.propertyKey}"
+                                     cssStyle="color:green">
+                                    <s:property
+                                            value="%{getText(value.propertyKey)}"/>
+                                </s:a>
+                                <%
+                                        break;
+                                    default:
+                                %>
+                                    <%--default link style--%>
+                                <s:a href="%{value.category+value.action}" id="%{value.propertyKey}"
+                                        >
+                                    <s:property
+                                            value="%{getText(value.propertyKey)}"/>
+                                </s:a>
+                                <%
+                                    }
+                                %>
                             </li>
                         </s:if>
-
                     </s:iterator>
                 </ul>
                 </li>
             </s:if>
         </s:iterator>
     </ul>
+
 </div>
-<script type="text/javascript">
-    document.getElementById("birth_register_approval.label").style.color = "red";
-    document.getElementById("birth_confirmation_approval.label").style.color = "red";
-    document.getElementById("birth_register_belated_approval.label").style.color = "green";
-    document.getElementById("death_approve_print_list.label").style.color = "red";
-    document.getElementById("adoption_approval_and_print.lable").style.color = "green";
-</script>
+
