@@ -108,6 +108,7 @@ public class Menu {
 
         // PRS
         prsLink.put("eprPRSAdvancedSearch.do", new Link("prs.advanceSearch.label", "/ecivil/prs/", "eprPRSAdvancedSearch.do", Permission.SEARCH_PRS));
+        prsLink.put("eprExistingPersonRegistration.do", new Link("prs.personRegistration.label", "/ecivil/prs/", "eprExistingPersonRegistration.do", Permission.PRS_ADD_PERSON));
 
         // Birth Registration for DEO
         deoBirthLink.put("eprBirthRegistrationInit.do", new Link("birth_registration.label", "/ecivil/births/", "eprBirthRegistrationInit.do", Permission.EDIT_BDF));
