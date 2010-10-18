@@ -1,17 +1,18 @@
 package lk.rgd.crs.core.dao;
 
-import lk.rgd.crs.api.dao.DeathRegisterDAO;
-import lk.rgd.crs.api.domain.*;
-import lk.rgd.common.core.dao.BaseDAO;
-import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.api.domain.User;
+import lk.rgd.common.core.dao.BaseDAO;
+import lk.rgd.crs.api.dao.DeathRegisterDAO;
+import lk.rgd.crs.api.domain.BDDivision;
+import lk.rgd.crs.api.domain.DeathRegister;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
-import java.util.List;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -150,7 +151,7 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public List<DeathRegister> getDeathRegisterByDeathPersenPINorNIC(String pinOrNIC) {
+    public List<DeathRegister> getDeathRegisterByDeathPersonPINorNIC(String pinOrNIC) {
         Query q = em.createNamedQuery("get.all.deaths.by.deathPersonPIN");
         q.setParameter("pinOrNIC", pinOrNIC);
         return q.getResultList();

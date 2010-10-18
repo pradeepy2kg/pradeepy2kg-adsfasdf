@@ -1,10 +1,7 @@
 package lk.rgd.crs.api.domain;
 
-import lk.rgd.common.api.domain.User;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @author Indunil Moremada
@@ -38,8 +35,7 @@ import java.util.Date;
         @NamedQuery(name = "get.all.deaths.by.deathPersonPIN", query = "SELECT deathRegister FROM DeathRegister deathRegister WHERE " +
                 "deathRegister.deathPerson.deathPersonPINorNIC = :pinOrNIC"),
 
-        @NamedQuery(name = "findAllDeaths", query = "SELECT ddf FROM DeathRegister ddf"),
-        @NamedQuery(name = "get.all.deaths.by.pin.or.nic", query = "SELECT dr FROM DeathRegister dr WHERE dr.deathPerson.deathPersonPINorNIC = :pinOrNic")
+        @NamedQuery(name = "findAllDeaths", query = "SELECT ddf FROM DeathRegister ddf")
 })
 public class DeathRegister implements Serializable {
     public CRSLifeCycleInfo getLifeCycleInfo() {

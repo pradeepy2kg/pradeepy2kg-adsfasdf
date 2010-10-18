@@ -42,7 +42,7 @@ public class JSONCertSignUserLookupService extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         WebApplicationContext context =
-                WebApplicationContextUtils.getRequiredWebApplicationContext(config.getServletContext());
+            WebApplicationContextUtils.getRequiredWebApplicationContext(config.getServletContext());
         userLocationDAO = (UserLocationDAO) context.getBean("userLocationDAOImpl");
         userDAO = (UserDAO) context.getBean("userDAOImpl");
         birthDeclarationDAO = (BirthDeclarationDAO) context.getBean("birthDeclarationDAOImpl");
@@ -59,13 +59,30 @@ public class JSONCertSignUserLookupService extends HttpServlet {
         String mode = request.getParameter(WebConstants.MODE);
         String userId = request.getParameter(WebConstants.USER_ID);
         String certId = request.getParameter(WebConstants.CERTIFICATE_ID);
-        logger.debug("Received User Location Id : {} and Mode : {}", userLocationId, mode);
+
+        if (logger.isDebugEnabled()) {
+            logger.debug("Received UserLocationId : " + userLocationId + ", Mode : " + mode + ", UserId : " + userId +
+                ", CertificateId : " + certId);
+        }
+        if (userLocationId == null || mode == null || certId == null) {
+            logger.warn("Required parameters passed to this service is not valid");
+            return;
+        }
 
         HashMap<String, Object> optionList = new HashMap<String, Object>();
 
         try {
-            // TODO
-            HttpSession session = request.getSession();
+            HttpSession session = request.getSession(false);
+            if (session == null || session.isNew()) {
+                logger.warn("User has not logged on to the system to invoke this service");
+                return;
+            } else {
+                User user = (User) session.getAttribute(WebConstants.SESSION_USER_BEAN);
+                if (user == null) {
+                    logger.warn("Unexpected - User object is not present in the session");
+                    return;
+                }
+            }
 
             int locationId = Integer.parseInt(userLocationId);
             long certificateId = Long.parseLong(certId);
@@ -78,12 +95,10 @@ public class JSONCertSignUserLookupService extends HttpServlet {
                 optionList.put("authorizedUsers", getAdoptionCertSignUsers(locationId));
             } else if ("4".equals(mode)) {
                 optionList.put("authorizedUsers", getMarriageCertSignUsers(locationId));
-            } else if ("5".equals(mode)) {
             } else {
                 if (userId == null) {
-                    //get user id from session
-                    User user = (User) session.getAttribute(WebConstants.SESSION_USER_BEAN);
-                    userId = user.getUserId();
+                    logger.warn("Required parameter userId not passed to the service");
+                    return;
                 }
                 UserLocation userLocation = userLocationDAO.getUserLocation(userId, locationId);
                 String lang = getUserPrefLang(certificateId);
@@ -98,12 +113,13 @@ public class JSONCertSignUserLookupService extends HttpServlet {
                         optionList.put("locationAddress", userLocation.getLocation().getTaLocationMailingAddress());
 
                 } else {
-                    // TODO throw exception
+                    logger.warn("Unexpected language passed to the service");
+                    return;
                 }
             }
 
         } catch (NumberFormatException e) {
-            logger.error("Invalid number used for location id", e);
+            logger.error("Invalid number used for locationId or certificateId", e);
         } catch (Exception e) {
             logger.error("Unexpected Exception encountered ", e);
         }
@@ -121,21 +137,17 @@ public class JSONCertSignUserLookupService extends HttpServlet {
     }
 
     private List<SelectOption> getDeathCertSignUsers(int locationId) {
-        //TODO
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
     private List<SelectOption> getAdoptionCertSignUsers(int locationId) {
-        //TODO
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
     private List<SelectOption> getMarriageCertSignUsers(int locationId) {
-        //TODO
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    // TODO
     private String getUserPrefLang(long certIdUKey) {
         BirthDeclaration bd = birthDeclarationDAO.getById(certIdUKey);
         return bd.getRegister().getPreferredLanguage();

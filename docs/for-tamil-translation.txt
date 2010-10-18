@@ -20,3 +20,5 @@
 * (Signing Officer) සහතික කරන නිලධාරියා
 * (Select Place) ස්ථානය තෝරන්න
 * (Select Officer) නිලධාරියා තෝරන්න
+
+* Birth and Death Certificate Search Pages(solr) not translated

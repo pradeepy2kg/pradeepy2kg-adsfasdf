@@ -1,24 +1,23 @@
 package lk.rgd.crs.core.service;
 
-import lk.rgd.crs.api.service.DeathRegistrationService;
-import lk.rgd.crs.api.domain.DeathRegister;
-import lk.rgd.crs.api.domain.BDDivision;
-import lk.rgd.crs.api.dao.DeathRegisterDAO;
-import lk.rgd.crs.api.bean.UserWarning;
-import lk.rgd.crs.CRSRuntimeException;
-import lk.rgd.common.api.domain.User;
-import lk.rgd.common.api.domain.Role;
-import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
-
-import java.util.List;
-import java.util.Date;
-
+import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.api.domain.Role;
+import lk.rgd.common.api.domain.User;
+import lk.rgd.crs.CRSRuntimeException;
+import lk.rgd.crs.api.bean.UserWarning;
+import lk.rgd.crs.api.dao.DeathRegisterDAO;
+import lk.rgd.crs.api.domain.BDDivision;
+import lk.rgd.crs.api.domain.DeathRegister;
+import lk.rgd.crs.api.service.DeathRegistrationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author Indunil Moremada
@@ -317,7 +316,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
      */
     @Transactional(propagation = Propagation.SUPPORTS)
     public List<DeathRegister> getByPinOrNic(long pinOrNic, User user) {
-        List<DeathRegister> deathRegisterList = deathRegisterDAO.getDeathRegisterByDeathPersenPINorNIC("" + pinOrNic);
+        List<DeathRegister> deathRegisterList = deathRegisterDAO.getDeathRegisterByDeathPersonPINorNIC("" + pinOrNic);
         DeathRegister deathRegister = null;
         if (deathRegisterList.size() > 0) {
             deathRegister = deathRegisterList.get(0);

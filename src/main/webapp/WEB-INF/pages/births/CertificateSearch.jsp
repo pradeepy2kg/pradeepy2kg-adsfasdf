@@ -182,13 +182,12 @@
 
 <s:form action="%{certificateSearch}" name="birthCertificateSearchForm" id="birth-certificate-search-form-1"
         method="POST" onsubmit="javascript:return validate()">
-<table style="font-size:9pt">
+<table style="font-size:9pt;">
     <caption></caption>
     <col/>
     <col/>
     <tbody>
     <tr>
-            <%--<td width="300px"></td>--%>
         <td align="center" style="font-size:12pt; width:180px">
             <img src="<s:url value="/images/official-logo.png"></s:url>" alt=""/><br>
         </td>
@@ -254,7 +253,7 @@
     </tbody>
 </table>
 
-<table class="table_reg_page_01" cellspacing="0" cellpadding="0">
+<table class="table_reg_page_01" cellspacing="0" cellpadding="2px">
     <tr>
         <td class="font-9" width="400px"><label>(1) ඉල්ලුම්කරුගේ සම්පූර්ණ නම<br>*Tamil<br>
             Full Name of the Applicant</label></td>
@@ -433,7 +432,13 @@
     </tr>
     <tr>
         <td class="font-9"><label>
-            (8) මෙහි ඇලවූ මුද්දරවල වටිනාකම<br>*Tamil<br>Value of stamps affixed</label>
+            (8) අනන්‍යතා අංකය <br>*Tamil<br>Identification Number</label>
+        </td>
+        <td colspan="3"><s:textfield name="certSearch.search.searchPIN" maxLength="10"/></td>
+    </tr>
+    <tr>
+        <td class="font-9"><label>
+            (9) මෙහි ඇලවූ මුද්දරවල වටිනාකම<br>*Tamil<br>Value of stamps affixed</label>
         </td>
         <td colspan="3"><s:textfield name="certSearch.certificate.stampCharges" id="stampCharges" maxLength="5"/></td>
     </tr>

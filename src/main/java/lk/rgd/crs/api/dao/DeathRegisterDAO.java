@@ -1,13 +1,12 @@
 package lk.rgd.crs.api.dao;
 
-import lk.rgd.crs.api.domain.DeathRegister;
-import lk.rgd.crs.api.domain.AdoptionOrder;
-import lk.rgd.crs.api.domain.BDDivision;
-import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.api.domain.User;
+import lk.rgd.crs.api.domain.BDDivision;
+import lk.rgd.crs.api.domain.DeathRegister;
 
-import java.util.List;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Indunil Moremada
@@ -125,7 +124,7 @@ public interface DeathRegisterDAO {
      * @param pinOrNIC PIN number or NIC number
      * @return list of DeathRegister entries witch include given pin
      */
-    public List<DeathRegister> getDeathRegisterByDeathPersenPINorNIC(String pinOrNIC);
+    public List<DeathRegister> getDeathRegisterByDeathPersonPINorNIC(String pinOrNIC);
 }
 
 

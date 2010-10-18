@@ -104,6 +104,12 @@ public class SearchInfo {
     @Temporal(TemporalType.DATE)
     private Date certificateIssueDate;
 
+    /**
+     * This is the PIN(Identification Number) whose certificate being searched
+     */
+    @Column(nullable = true)
+    private Long searchPIN;
+
     public String getSearchFullNameOfficialLang() {
         return searchFullNameOfficialLang;
     }
@@ -222,5 +228,13 @@ public class SearchInfo {
 
     public void setBdDivision(BDDivision bdDivision) {
         this.bdDivision = bdDivision;
+    }
+
+    public Long getSearchPIN() {
+        return searchPIN;
+    }
+
+    public void setSearchPIN(Long searchPIN) {
+        this.searchPIN = searchPIN;
     }
 }

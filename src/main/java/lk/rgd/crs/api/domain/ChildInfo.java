@@ -16,7 +16,7 @@ public class ChildInfo implements Serializable {
     /**
      * This is the PIN number generated to the child
      */
-    @Column(nullable = true)
+    @Column(nullable = true,unique = true)
     private Long pin;
 
     /**

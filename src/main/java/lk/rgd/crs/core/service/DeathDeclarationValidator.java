@@ -3,18 +3,17 @@ package lk.rgd.crs.core.service;
 import lk.rgd.AppConstants;
 import lk.rgd.ErrorCodes;
 import lk.rgd.common.api.domain.User;
-import lk.rgd.crs.api.domain.DeathRegister;
+import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.DeathRegisterDAO;
-import lk.rgd.crs.CRSRuntimeException;
-
-import java.util.ResourceBundle;
-import java.util.List;
-import java.util.ArrayList;
-import java.text.MessageFormat;
-
+import lk.rgd.crs.api.domain.DeathRegister;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * a class to do validations in death declarations
@@ -88,7 +87,7 @@ public class DeathDeclarationValidator {
 
         //check is there any duplications in PIN
         String deathPersonPinOrNIC = deathRegister.getDeathPerson().getDeathPersonPINorNIC();
-        List deathsWithSamePin = deathRegisterDAO.getDeathRegisterByDeathPersenPINorNIC(deathPersonPinOrNIC);
+        List deathsWithSamePin = deathRegisterDAO.getDeathRegisterByDeathPersonPINorNIC(deathPersonPinOrNIC);
         if (deathsWithSamePin.size() > 1) {
             UserWarning w = new UserWarning(MessageFormat.format(rb.getString("same_death_person_pin_found_in_previous_recode"), deathPersonPinOrNIC));
             w.setSeverity(UserWarning.Severity.WARN);

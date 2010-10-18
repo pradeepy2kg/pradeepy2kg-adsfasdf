@@ -52,11 +52,7 @@ public class CertificateSearchServiceImpl implements CertificateSearchService {
         logger.debug("Get record by DSDivision ID : {} and Application No : {}", dsDivision.getDsDivisionUKey(),
             applicationNo);
         CertificateSearch cs = certificateSearchDAO.getByDSDivisionAndApplicationNo(dsDivision, applicationNo);
-        if (cs != null) {
-            return false;
-        } else {
-            return true;
-        }
+        return (cs == null);
     }
 
     /**
@@ -65,6 +61,7 @@ public class CertificateSearchServiceImpl implements CertificateSearchService {
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> performBirthCertificateSearch(CertificateSearch cs, User user) {
 
+        //TODO validations for CertificateSearch
         logger.debug("Birth certificate search started");
         validateCertificateType(cs, CertificateSearch.CertificateType.BIRTH);
 
@@ -87,15 +84,14 @@ public class CertificateSearchServiceImpl implements CertificateSearchService {
             if (search.getCertificateNo() != null) {
                 logger.debug("Search narrowed against Birth certificate IDUKey : {}", search.getCertificateNo());
                 exactRecord = birthDeclarationDAO.getById(search.getCertificateNo());
-                if (exactRecord != null) {
-                    final BirthDeclaration.State currentState = exactRecord.getRegister().getStatus();
-                    if (BirthDeclaration.State.ARCHIVED_CERT_PRINTED == currentState) {
-                        results.add(exactRecord);
-                    } else {
-                        handleException("The birth declaration state is invalid for IDUKey : " +
-                            search.getCertificateNo() + " " + currentState, ErrorCodes.INVALID_DATA);
-                    }
-                }
+                addMatchingBirth(results, exactRecord, search);
+            }
+
+            // add exact match using Generated Identification Number
+            if (exactRecord == null && search.getSearchPIN() != null) {
+                logger.debug("Search narrowed against Child/Persion PIN");
+                exactRecord = birthDeclarationDAO.getByPINorNIC(search.getSearchPIN());
+                addMatchingBirth(results, exactRecord, search);
             }
 
             // add exact match using Birth Declaration serial no and BDDivision
@@ -104,15 +100,7 @@ public class CertificateSearchServiceImpl implements CertificateSearchService {
                     search.getSearchSerialNo(), search.getBdDivision().getBdDivisionUKey());
                 exactRecord = birthDeclarationDAO.getActiveRecordByBDDivisionAndSerialNo(
                     search.getBdDivision(), search.getSearchSerialNo());
-                if (exactRecord != null) {
-                    final BirthDeclaration.State currentState = exactRecord.getRegister().getStatus();
-                    if (BirthDeclaration.State.ARCHIVED_CERT_PRINTED == currentState) {
-                        results.add(exactRecord);
-                    } else {
-                        handleException("The birth declaration state is invalid for IDUKey : " +
-                            search.getCertificateNo() + " " + currentState, ErrorCodes.INVALID_DATA);
-                    }
-                }
+                addMatchingBirth(results, exactRecord, search);
             }
 
             // add any matches from Solr search, except for the exact match
@@ -144,10 +132,12 @@ public class CertificateSearchServiceImpl implements CertificateSearchService {
      */
     public List<DeathRegister> performDeathCertificateSearch(CertificateSearch cs, User user) {
 
+        //TODO validations for CertificateSearch
         logger.debug("Death certificate search started");
         validateCertificateType(cs, CertificateSearch.CertificateType.DEATH);
 
         List<DeathRegister> results = new ArrayList<DeathRegister>();
+        List<DeathRegister> possibleRecords;
         DeathRegister exactRecord = null;
         CertificateSearch existing = null;
 
@@ -166,14 +156,16 @@ public class CertificateSearchServiceImpl implements CertificateSearchService {
             if (search.getCertificateNo() != null) {
                 logger.debug("Search narrowed against Death certificate IDUKey : {}", search.getCertificateNo());
                 exactRecord = deathRegisterDAO.getById(search.getCertificateNo());
-                if (exactRecord != null) {
-                    final DeathRegister.State currentState = exactRecord.getStatus();
-                    if (DeathRegister.State.DEATH_CERTIFICATE_PRINTED == currentState) {
-                        results.add(exactRecord);
-                    } else {
-                        handleException("The death declaration state is invalid for IDUKey : " +
-                            search.getCertificateNo() + " " + currentState, ErrorCodes.INVALID_DATA);
-                    }
+                addMatchingDeath(results, exactRecord, search);
+            }
+
+            // add exact match using Identification Number
+            if (exactRecord == null && search.getSearchPIN() != null) {
+                logger.debug("Search narrowed against Persion PIN");
+                possibleRecords =
+                    deathRegisterDAO.getDeathRegisterByDeathPersonPINorNIC(search.getSearchPIN().toString());
+                for (DeathRegister record : possibleRecords) {
+                    addMatchingDeath(results, record, search);
                 }
             }
 
@@ -183,15 +175,7 @@ public class CertificateSearchServiceImpl implements CertificateSearchService {
                     search.getSearchSerialNo(), search.getBdDivision().getBdDivisionUKey());
                 exactRecord = deathRegisterDAO.getActiveRecordByBDDivisionAndDeathSerialNo(
                     search.getBdDivision(), search.getSearchSerialNo());
-                if (exactRecord != null) {
-                    final DeathRegister.State currentState = exactRecord.getStatus();
-                    if (DeathRegister.State.DEATH_CERTIFICATE_PRINTED == currentState) {
-                        results.add(exactRecord);
-                    } else {
-                        handleException("The death declaration state is invalid for IDUKey : " +
-                            search.getCertificateNo() + " " + currentState, ErrorCodes.INVALID_DATA);
-                    }
-                }
+                addMatchingDeath(results, exactRecord, search);
             }
 
             // add any matches from Solr search, except for the exact match
@@ -216,6 +200,44 @@ public class CertificateSearchServiceImpl implements CertificateSearchService {
         }
 
         return results;
+    }
+
+    /**
+     * Add matching birth record to the results list
+     *
+     * @param results     the results list which holds matching birth records
+     * @param exactRecord the exact record which exist in the database
+     * @param search      the search info bean which consist searching info
+     */
+    private void addMatchingBirth(List<BirthDeclaration> results, BirthDeclaration exactRecord, SearchInfo search) {
+        if (exactRecord != null) {
+            final BirthDeclaration.State currentState = exactRecord.getRegister().getStatus();
+            if (BirthDeclaration.State.ARCHIVED_CERT_PRINTED == currentState) {
+                results.add(exactRecord);
+            } else {
+                handleException("The birth declaration state is invalid for IDUKey : " +
+                    search.getCertificateNo() + " " + currentState, ErrorCodes.INVALID_DATA);
+            }
+        }
+    }
+
+    /**
+     * Add matching death record to the results list
+     *
+     * @param results     the results list which holds matching death records
+     * @param exactRecord the exact record which exist in the database
+     * @param search      the search info bean which consist searching info
+     */
+    private void addMatchingDeath(List<DeathRegister> results, DeathRegister exactRecord, SearchInfo search) {
+        if (exactRecord != null) {
+            final DeathRegister.State currentState = exactRecord.getStatus();
+            if (DeathRegister.State.DEATH_CERTIFICATE_PRINTED == currentState) {
+                results.add(exactRecord);
+            } else {
+                handleException("The death declaration state is invalid for IDUKey : " +
+                    search.getCertificateNo() + " " + currentState, ErrorCodes.INVALID_DATA);
+            }
+        }
     }
 
     private void validateCertificateType(CertificateSearch cs, CertificateSearch.CertificateType certificateType) {
