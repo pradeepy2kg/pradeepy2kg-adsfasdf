@@ -140,6 +140,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
 
                 } catch (Exception e) {
                     logger.error("error accoured while adding death alteration ");
+                    addActionMessage(getText("alt.massage.cannot.add.alteration.is.empty"));
                     populatePrimaryLists(districtUKey, dsDivisionId, language, user);
                     return ERROR;
                 }

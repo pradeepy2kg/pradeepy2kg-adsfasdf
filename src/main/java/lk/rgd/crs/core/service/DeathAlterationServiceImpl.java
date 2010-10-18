@@ -42,6 +42,7 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
     public void addDeathAlteration(DeathAlteration da, User user) {
         logger.debug("adding a new death alteration");
         DeathRegister dr = deathRegistrationService.getById(da.getDeathId(), user);
+        logger.debug("calling validater");
         deathAlterationValidator.validateMinimulCondiations(da, dr);
 /*        validateAccessToBDDivision(user, da.getDeathDivision());*/
         deathAlterationDAO.addDeathAlteration(da, user);
