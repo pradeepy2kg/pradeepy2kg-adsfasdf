@@ -33,7 +33,6 @@ public class DeathAlterationValidator {
             ResourceBundle.getBundle("messages/death_validation_messages", AppConstants.LK_EN);
 
     public void validateMinimulCondiations(DeathAlteration deathAlteration, DeathRegister deathRegister) {
-        //        handleException("incomplete death alteration ", ErrorCodes.INCOMPLETE_ALTERATION);
         boolean pass = compareObjects(deathAlteration, deathRegister);
         if (!pass)
             handleException("incomplete death alteration ", ErrorCodes.INCOMPLETE_ALTERATION);

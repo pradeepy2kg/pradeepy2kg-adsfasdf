@@ -53,19 +53,19 @@ public class BirthDeclarationValidator {
     public void validateMinimalRequirements(BirthDeclaration bdf) {
 
         if (bdf.getRegister().getDateOfRegistration() == null ||
-            bdf.getRegister().getBirthDivision() == null ||
-            bdf.getChild().getDateOfBirth() == null ||
-            isEmptyString(bdf.getChild().getPlaceOfBirth()) ||
-            //bdf.getChild().getChildGender() - cannot validate
-            isEmptyString(bdf.getInformant().getInformantName()) ||
-            isEmptyString(bdf.getInformant().getInformantAddress()) ||
-            bdf.getInformant().getInformantSignDate() == null ||
-            //bdf.getInformant().getInformantType() - cannot validate
+                bdf.getRegister().getBirthDivision() == null ||
+                bdf.getChild().getDateOfBirth() == null ||
+                isEmptyString(bdf.getChild().getPlaceOfBirth()) ||
+                //bdf.getChild().getChildGender() - cannot validate
+                isEmptyString(bdf.getInformant().getInformantName()) ||
+                isEmptyString(bdf.getInformant().getInformantAddress()) ||
+                bdf.getInformant().getInformantSignDate() == null ||
+                //bdf.getInformant().getInformantType() - cannot validate
 
-            isEmptyString(bdf.getNotifyingAuthority().getNotifyingAuthorityAddress()) ||
-            bdf.getNotifyingAuthority().getNotifyingAuthoritySignDate() == null ||
-            isEmptyString(bdf.getNotifyingAuthority().getNotifyingAuthorityName()) ||
-            isEmptyString(bdf.getNotifyingAuthority().getNotifyingAuthorityPIN())) {
+                isEmptyString(bdf.getNotifyingAuthority().getNotifyingAuthorityAddress()) ||
+                bdf.getNotifyingAuthority().getNotifyingAuthoritySignDate() == null ||
+                isEmptyString(bdf.getNotifyingAuthority().getNotifyingAuthorityName()) ||
+                isEmptyString(bdf.getNotifyingAuthority().getNotifyingAuthorityPIN())) {
 
             if (bdf.getIdUKey() > 0) {
                 handleException("Birth declaration record ID : " + bdf.getIdUKey() + " is not complete. " +
