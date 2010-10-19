@@ -24,7 +24,7 @@ public class MarriageInfo implements Serializable {
      */
     @Enumerated
     @Column(nullable = true)
-    private MarriedStatus parentsMarried;
+    private MarriedStatus parentsMarried = MarriedStatus.MARRIED;
 
     /**
      * Parents married status as a String in the preferred language
