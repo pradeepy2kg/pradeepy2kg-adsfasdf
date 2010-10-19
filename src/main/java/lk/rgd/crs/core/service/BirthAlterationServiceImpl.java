@@ -10,6 +10,7 @@ import lk.rgd.crs.api.dao.BirthAlterationDAO;
 import lk.rgd.crs.api.dao.BirthDeclarationDAO;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.BirthAlteration;
+import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.service.BirthAlterationService;
 import lk.rgd.crs.core.ValidationUtils;
 import lk.rgd.crs.web.WebConstants;
@@ -125,6 +126,25 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
         existing.getLifeCycleInfo().setApprovalOrRejectUser(user);
         birthAlterationDAO.updateBirthAlteration(existing, user);
 
+        // We've saved the alteration record, now lets modify the birth record
+        BirthDeclaration bdf = birthDeclarationDAO.getById(ba.getBdfIDUKey());
+        switch (ba.getType()) {
+            case TYPE_27:
+            case TYPE_27A:
+            case TYPE_52_1_H:
+            case TYPE_52_1_I: {
+                logger.debug("Alteration is an amendment, inclusion of omission or correction. Type : {}", ba.getType().ordinal());
+                break;
+            }
+            case TYPE_52_1_A:
+            case TYPE_52_1_B:
+            case TYPE_52_1_D:
+            case TYPE_52_1_E: {
+                logger.debug("Alteration of type : {} is a cancellation of the existing record : {}", ba.getType().ordinal(), bdf.getIdUKey());
+                break;
+            }
+        }
+
         logger.debug("Updated birth alteration : {}", existing.getIdUKey());
     }
 
@@ -179,11 +199,11 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
      * @param user the user attempting to update or delete
      */
     private void validateAccessOfUserToEditOrDelete(BirthAlteration ba, User user) {
-        if (Role.ROLE_DEO.equals(user.getRole()) || Role.ROLE_ADR.equals(user.getRole())) {
+        if (Role.ROLE_DEO.equals(user.getRole().getRoleId()) || Role.ROLE_ADR.equals(user.getRole().getRoleId())) {
             if (ba.getSubissionLocation().equals(user.getPrimaryLocation())) {
                 return;
             }
-        } else if (!Role.ROLE_ADMIN.equals(user.getRole())) {
+        } else if (!Role.ROLE_ADMIN.equals(user.getRole().getRoleId())) {
             return;
         }
 
@@ -199,10 +219,9 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
      * @param user the user attempting to approve
      */
     private void validateAccessOfUserForApproval(BirthAlteration ba, User user) {
-        if (Role.ROLE_RG.equals(user.getRole())) {
+        if (Role.ROLE_RG.equals(user.getRole().getRoleId())) {
             // RG can approve any record
-            return;
-        } else if (Role.ROLE_ARG.equals(user.getRole())) {
+        } else if (Role.ROLE_ARG.equals(user.getRole().getRoleId())) {
             ValidationUtils.validateAccessToBDDivision(user,
                 birthDeclarationDAO.getById(ba.getBdfIDUKey()).getRegister().getBirthDivision());
 
@@ -210,7 +229,6 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
                 handleException("User : " + user.getUserId() + " is not allowed to approve/reject birth alteration",
                     ErrorCodes.PERMISSION_DENIED);
             }
-            return;
         } else {
             handleException("User : " + user.getUserId() + " is not an ARG for alteration approval",
                 ErrorCodes.PERMISSION_DENIED);
