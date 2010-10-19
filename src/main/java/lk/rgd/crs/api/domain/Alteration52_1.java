@@ -34,13 +34,6 @@ public class Alteration52_1 {
     public static final int INFORMANT_ADDRESS = 18;
 
 
-    public static final int Alt52_1_A = 19;
-    public static final int Alt52_1_B = 20;
-    public static final int Alt52_1_D = 21;
-    public static final int Alt52_1_E = 22;
-    public static final int Alt52_1_H = 23;
-    public static final int Alt52_1_I = 24;
-
 
     public enum SectionOfAct52_1 {
         Alt52_1_A, Alt52_1_B, Alt52_1_D, Alt52_1_E, Alt52_1_H, Alt52_1_I

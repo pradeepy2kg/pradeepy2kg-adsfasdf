@@ -1681,6 +1681,7 @@
 
 .search-option-table {
     width: 1030px;
+
 }
 
 .search-option-table select {
@@ -1804,7 +1805,9 @@ death-alteration-table-style01 td{border:none;}
 .table_non_editable_reg_page {width: 1030px;border-top: 1px solid #000000;border-left:1px solid #000;font-size: 9pt;}
 .table_non_editable_reg_page td{border-right: 1px solid #000000;border-bottom: 1px solid #000000;padding:3px;}
 
-
+.search-alteration-option-table {width: 1030px;}
+.search-alteration-option-table select {width: 230px}
+.search-alteration-option-table input {width: 230px;}
 
 
 

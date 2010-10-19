@@ -12,7 +12,6 @@ import java.util.Date;
  * @author Indunil Moremada
  */
 public interface BirthAlterationDAO {
-
     /**
      * Adds a birth alteration
      *

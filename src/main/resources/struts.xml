@@ -988,6 +988,10 @@
             <result type="tiles" name="success">epr.birthAlterationResult</result>
             <result type="tiles" name="error">epr.birthAlteration</result>
         </action>
+        <action name="eprEditSelectedAlteration" class="lk.rgd.crs.web.action.births.AlterationAction"
+                method="editbirthAlteration">
+            <result type="tiles" name="error">epr.birthAlteration</result>
+        </action>
 
         <action name="eprBirthAlterationPendingApproval" class="lk.rgd.crs.web.action.births.AlterationAction"
                 method="initBirthAlterationPendingApprovalList">

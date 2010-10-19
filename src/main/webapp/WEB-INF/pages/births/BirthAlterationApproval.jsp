@@ -40,7 +40,7 @@
                 <tr>
                         <%--<td><s:property value="birthChangeList[#approvalStatus.index]"/></td>--%>
                     <td style="text-align:center;"><s:property
-                            value="birthAlterationApprovalList[#approvalStatus.index][0]"/></td>
+                            value="%{getText(act+birthAlterationApprovalList[#approvalStatus.index][0]+'.label')}"/></td>
                     <td><s:label cssStyle="margin-left:25px;"/><s:property
                             value="birthAlterationApprovalList[#approvalStatus.index][1]"/></td>
                     <td><s:label cssStyle="margin-left:25px;"/><s:property

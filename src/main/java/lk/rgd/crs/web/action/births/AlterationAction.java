@@ -107,6 +107,16 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
     private String language;
 
+
+    private boolean editChildInfo;
+    private boolean editMotherInfo;
+    private boolean editInformantInfo;
+    private boolean editFatherInfo;
+    private boolean editMarriageInfo;
+    private boolean editMothersNameAfterMarriageInfo;
+    private boolean editGrandFatherInfo;
+
+
     public AlterationAction(BirthRegistrationService service, DistrictDAO districtDAO, CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO,
                             DSDivisionDAO dsDivisionDAO, BirthAlterationService alterationService, AppParametersDAO appParametersDAO) {
         this.service = service;
@@ -153,13 +163,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
                     addActionError(getText("cp1.error.entryNotPrinted"));
                     pageType = 0;
                 }
-                idUKey = bdf.getIdUKey();
-                nicOrPin = bdf.getChild().getPin();
-                serialNo = bdf.getRegister().getBdfSerialNo();
-                String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
-                districtName = districtDAO.getNameByPK(birthDistrictId, language);
-                dsDivisionName = dsDivisionDAO.getNameByPK(dsDivisionId, language);
-                bdDivisionName = bdDivisionDAO.getNameByPK(birthDivisionId, language);
+                getBirthCertificateInfo(bdf);
             }
             catch (Exception e) {
                 handleErrors(e);
@@ -168,7 +172,19 @@ public class AlterationAction extends ActionSupport implements SessionAware {
             }
             // check that birth Certificate is printed
 
-            populateAlteration(bdf);
+//            populateAlteration(bdf);
+            if (sectionOfAct == 3) {
+                alt27A = new Alteration27A();
+                populateAlt27A(bdf);
+            } else if (sectionOfAct == 2) {
+                alt52_1 = new Alteration52_1();
+                populateAlt52_1(bdf);
+            }
+            parent = bdf.getParent();
+            alt27 = new Alteration27();
+            alt27.setChildFullNameOfficialLang(bdf.getChild().getChildFullNameOfficialLang());
+            alt27.setChildFullNameEnglish(bdf.getChild().getChildFullNameEnglish());
+            logger.debug("populate child in information of child :{}", alt27.getChildFullNameEnglish());
             pageType = 1;
             populateBasicLists();
             populateCountryRacesAndAllDSDivisions();
@@ -176,78 +192,115 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         return SUCCESS;
     }
 
-    private void populateAlteration(BirthDeclaration bdf) {
-        alt27 = new Alteration27();
-        alt27A = new Alteration27A();
-        alt52_1 = new Alteration52_1();
-        alt27.setChildFullNameOfficialLang(bdf.getChild().getChildFullNameOfficialLang());
-        alt27.setChildFullNameEnglish(bdf.getChild().getChildFullNameEnglish());
+    private void populateAlt52_1(BirthDeclaration bdf) {
         parent = bdf.getParent();
         child = bdf.getChild();
-        switch (sectionOfAct) {
-            //set alt52_1
-            case 2:
-                InformantInfo bdfInformant = bdf.getInformant();
-                if (bdfInformant != null) {
-                    alt52_1.setInformant(new AlterationInformatInfo(bdfInformant.getInformantType(),
-                            bdfInformant.getInformantName(), bdfInformant.getInformantNICorPIN(), bdfInformant.getInformantAddress()));
-                }
-                if (child != null) {
-                    alt52_1.setChildGender(child.getChildGender());
-                    alt52_1.setDateOfBirth(child.getDateOfBirth());
-                    alt52_1.setPlaceOfBirth(child.getPlaceOfBirth());
-                    alt52_1.setPlaceOfBirthEnglish(child.getPlaceOfBirthEnglish());
-                }
-                MotherInfo mother = new MotherInfo();
-                if (parent != null) {
-                    mother.setMotherAddress(parent.getMotherAddress());
-                    mother.setMotherAgeAtBirth(parent.getMotherAgeAtBirth());
-                    mother.setMotherDOB(parent.getMotherDOB());
-                    mother.setMotherFullName(parent.getMotherFullName());
-                    mother.setMotherNICorPIN(parent.getMotherNICorPIN());
-                    mother.setMotherPassportNo(parent.getMotherPassportNo());
-                    if (parent.getMotherCountry() != null) {
-                        motherCountryId = bdf.getParent().getMotherCountry().getCountryId();
-                    }
-                    if (parent.getMotherRace() != null) {
-                        motherRaceId = bdf.getParent().getMotherRace().getRaceId();
-                    }
-                }
-                alt52_1.setMother(mother);
-                logger.debug("Loaded  Mother NIC or PIN Number of the {} is :{} ",
-                        alt52_1.getMother().getMotherFullName(), alt52_1.getMother().getMotherNICorPIN());
-
-                break;
-            case 3:
-                //set alt27A
-                FatherInfo father = new FatherInfo();
-                if (parent != null) {
-                    father.setFatherDOB(parent.getFatherDOB());
-                    father.setFatherFullName(parent.getFatherFullName());
-                    father.setFatherNICorPIN(parent.getFatherNICorPIN());
-                    father.setFatherPassportNo(parent.getFatherPassportNo());
-                    father.setFatherPlaceOfBirth(parent.getFatherPlaceOfBirth());
-                    father.setFatherRace(parent.getFatherRace());
-                    if (parent.getFatherCountry() != null) {
-                        fatherCountryId = parent.getFatherCountry().getCountryId();
-                    }
-                    if (parent.getFatherRace() != null) {
-                        fatherRaceId = parent.getFatherRace().getRaceId();
-                    }
-                }
-                alt27A.setFather(father);
-                alt27A.setGrandFather(bdf.getGrandFather());
-                alt27A.setMarriage(bdf.getMarriage());
-                break;
+        InformantInfo bdfInformant = bdf.getInformant();
+        if (alt52_1.getInformant() == null) {
+            if (bdfInformant != null) {
+                alt52_1.setInformant(new AlterationInformatInfo(bdfInformant.getInformantType(),
+                        bdfInformant.getInformantName(), bdfInformant.getInformantNICorPIN(), bdfInformant.getInformantAddress()));
+            }
+        } else {
+            editInformantInfo = true;
+        }
+        if (child != null) {
+            if (alt52_1.getDateOfBirth() == null) {
+                alt52_1.setDateOfBirth(child.getDateOfBirth());
+            }
+            if (alt52_1.getPlaceOfBirth() == null) {
+                alt52_1.setPlaceOfBirth(child.getPlaceOfBirth());
+            }
+            if (alt52_1.getPlaceOfBirthEnglish() == null) {
+                alt52_1.setPlaceOfBirthEnglish(child.getPlaceOfBirthEnglish());
+            }
+            if (alt52_1.getChildGender() == 0) {
+                alt52_1.setChildGender(child.getChildGender());
+            }
+            if (alt52_1.getBirthDivision() != null) {
+                birthDivisionId = 2;// alt52_1.getBirthDivision().getDivisionId();
+                logger.debug("birth id :{}", birthDivisionId);
+            } else {
+                editChildInfo = true;
+            }
 
         }
-        register = bdf.getRegister();
-        birthDistrictId = register.getBirthDistrict().getDistrictUKey();
-        birthDivisionId = register.getBirthDivision().getBdDivisionUKey();
-        dsDivisionId = register.getDsDivision().getDsDivisionUKey();
+        MotherInfo mother = alt52_1.getMother();
+        if (mother != null) {
+            editMotherInfo = true;
+        }
+        if (mother == null && parent != null) {
+            mother = new MotherInfo();
+            mother.setMotherAddress(parent.getMotherAddress());
+            mother.setMotherAgeAtBirth(parent.getMotherAgeAtBirth());
+            mother.setMotherDOB(parent.getMotherDOB());
+            mother.setMotherFullName(parent.getMotherFullName());
+            mother.setMotherNICorPIN(parent.getMotherNICorPIN());
+            mother.setMotherPassportNo(parent.getMotherPassportNo());
+            if (parent.getMotherCountry() != null) {
+                motherCountryId = bdf.getParent().getMotherCountry().getCountryId();
+            }
+            if (parent.getMotherRace() != null) {
+                motherRaceId = bdf.getParent().getMotherRace().getRaceId();
+            }
+        }
+        alt52_1.setMother(mother);
+        logger.debug("Loaded  Mother NIC or PIN Number of the {} is :{} ",
+                alt52_1.getMother().getMotherFullName(), alt52_1.getMother().getMotherNICorPIN());
+
     }
 
-
+    private void populateAlt27A(BirthDeclaration bdf) {
+        if (bdf != null) {
+            parent = bdf.getParent();
+            FatherInfo father = alt27A.getFather();
+            if (father != null) {
+                //if father is not null,check box of the father information will check
+                editFatherInfo = true;
+            }
+            if (father == null && parent != null) {
+                /*if father in null then father information will populate from bdf*/
+                father = new FatherInfo();
+                father.setFatherDOB(parent.getFatherDOB());
+                father.setFatherFullName(parent.getFatherFullName());
+                father.setFatherNICorPIN(parent.getFatherNICorPIN());
+                father.setFatherPassportNo(parent.getFatherPassportNo());
+                father.setFatherPlaceOfBirth(parent.getFatherPlaceOfBirth());
+                father.setFatherRace(parent.getFatherRace());
+                if (parent.getFatherCountry() != null) {
+                    fatherCountryId = parent.getFatherCountry().getCountryId();
+                }
+                if (parent.getFatherRace() != null) {
+                    fatherRaceId = parent.getFatherRace().getRaceId();
+                }
+            } else {
+                if (father.getFatherCountry() != null) {
+                    fatherCountryId = father.getFatherCountry().getCountryId();
+                    logger.debug("populated {} father country id is :{}", father.getFatherFullName(), fatherCountryId);
+                }
+                if (father.getFatherRace() != null) {
+                    fatherRaceId = father.getFatherRace().getRaceId();
+                }
+            }
+            if (alt27A.getGrandFather() == null) {
+                alt27A.setGrandFather(bdf.getGrandFather());
+            } else {
+                editGrandFatherInfo = true;
+            }
+            if (alt27A.getMarriage() == null) {
+                alt27A.setMarriage(bdf.getMarriage());
+            } else {
+                editMarriageInfo = true;
+            }
+            if (parent != null) {
+                if (alt27A.getMothersNameAfterMarriage() == null) {
+                    alt27A.setMothersNameAfterMarriage(parent.getMotherFullName());
+                } else {
+                    editMothersNameAfterMarriageInfo = true;
+                }
+            }
+        }
+    }
     public String birthAlteration() {
         boolean isAlt52_1;
         int checkDuplicate = 0;
@@ -256,20 +309,14 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         } else {
             isAlt52_1 = false;
         }
-        try {
-            BirthAlteration baCheck = alterationService.getActiveRecordByBDDivisionAndSerialNo(
-                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId), alterationSerialNo, user, isAlt52_1);
-            if (baCheck != null) {
-                logger.debug("Duplicate Alteration Serial Number is :{}", alterationSerialNo);
-                addFieldError("duplicateSerialNumberError", getText("p1.duplicateSerialNumber.label"));
-                checkDuplicate = 1;
+        BirthAlteration baCheck = alterationService.getActiveRecordByBDDivisionAndSerialNo(
+                bdDivisionDAO.getBDDivisionByPK(birthDivisionId), alterationSerialNo, user, isAlt52_1);
+        if (baCheck != null) {
+            logger.debug("Duplicate Alteration Serial Number is :{}", alterationSerialNo);
+            addFieldError("duplicateSerialNumberError", getText("p1.duplicateSerialNumber.label"));
+            checkDuplicate = 1;
 
-            }
         }
-        catch (Exception e) {
-            return ERROR;
-        }
-
         BirthAlteration ba = new BirthAlteration();
         ba.setAlt27(alt27); /*Child's full name is save in any act*/
         switch (sectionOfAct) {
@@ -299,7 +346,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
                 }
                 if (fatherRaceId > 0) alt27A.getFather().setFatherRace(raceDAO.getRace(fatherRaceId));
                 ba.setAlt27A(alt27A);
-                ba.setAlt52_1(alt52_1);
+                ba.setAlt52_1(null);
                 ba.setApprovalStatuses(new BitSet(WebConstants.BIRTH_ALTERATION_APPROVE_ALT27A));
                 break;
 
@@ -328,6 +375,59 @@ public class AlterationAction extends ActionSupport implements SessionAware {
             return ERROR;
         }
         return SUCCESS;
+    }
+
+    public String editbirthAlteration() {
+        BirthAlteration ba = alterationService.getById(idUKey, user);
+        if (ba != null) {
+            bdId = ba.getBdId();
+            BirthDeclaration bdf = service.getById(bdId, user);
+            alt27 = ba.getAlt27();
+            alt27A = ba.getAlt27A();
+            alt52_1 = ba.getAlt52_1();
+            alterationSerialNo = ba.getAlterationSerialNo();
+            dateReceived = ba.getDateReceived();
+            declarant = ba.getDeclarant();
+            bcOfFather = ba.isBcOfFather();
+            bcOfMother = ba.isBcOfMother();
+            mcOfParents = ba.isMcOfParents();
+            comments = ba.getComments();
+            pageType = 1;
+
+            if (alt27A != null) {
+                populateAlt27A(bdf);
+                sectionOfAct = 3;
+            } else if (alt52_1 != null) {
+                sectionOfAct = 2;
+                populateAlt52_1(bdf);
+            } else {
+                sectionOfAct = 1;
+            }
+            //information for search option
+            getBirthCertificateInfo(bdf);
+        }
+
+
+        populateBasicLists();
+        populateCountryRacesAndAllDSDivisions();
+        return SUCCESS;
+    }
+
+    private void getBirthCertificateInfo(BirthDeclaration bdf) {
+        if (bdf != null) {
+            register = bdf.getRegister();
+            birthDistrictId = register.getBirthDistrict().getDistrictUKey();
+            birthDivisionId = register.getBirthDivision().getBdDivisionUKey();
+            dsDivisionId = register.getDsDivision().getDsDivisionUKey();
+
+            idUKey = bdf.getIdUKey();
+            nicOrPin = bdf.getChild().getPin();
+            serialNo = bdf.getRegister().getBdfSerialNo();
+            String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
+            districtName = districtDAO.getNameByPK(birthDistrictId, language);
+            dsDivisionName = dsDivisionDAO.getNameByPK(dsDivisionId, language);
+            bdDivisionName = bdDivisionDAO.getNameByPK(birthDivisionId, language);
+        }
     }
 
     /**
@@ -470,9 +570,8 @@ public class AlterationAction extends ActionSupport implements SessionAware {
             String grandGrandFatherDOBinBA = null;
             String grandGrandFatherDOBinBDF = null;
             if (grandFatherOriginal.getGreatGrandFatherBirthYear() != null) {
-
+                grandGrandFatherDOBinBDF = grandFatherOriginal.getGreatGrandFatherBirthYear().toString();
             }
-            grandGrandFatherDOBinBDF = grandFatherOriginal.getGreatGrandFatherBirthYear().toString();
             if (grandFather.getGreatGrandFatherBirthYear() != null) {
                 grandGrandFatherDOBinBA = grandFather.getGreatGrandFatherBirthYear().toString();
             }
@@ -1326,5 +1425,61 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
     public void setDateReceivedFrom(Date dateReceivedFrom) {
         this.dateReceivedFrom = dateReceivedFrom;
+    }
+
+    public boolean isEditChildInfo() {
+        return editChildInfo;
+    }
+
+    public void setEditChildInfo(boolean editChildInfo) {
+        this.editChildInfo = editChildInfo;
+    }
+
+    public boolean isEditMotherInfo() {
+        return editMotherInfo;
+    }
+
+    public void setEditMotherInfo(boolean editMotherInfo) {
+        this.editMotherInfo = editMotherInfo;
+    }
+
+    public boolean isEditInformantInfo() {
+        return editInformantInfo;
+    }
+
+    public void setEditInformantInfo(boolean editInformantInfo) {
+        this.editInformantInfo = editInformantInfo;
+    }
+
+    public boolean isEditFatherInfo() {
+        return editFatherInfo;
+    }
+
+    public void setEditFatherInfo(boolean editFatherInfo) {
+        this.editFatherInfo = editFatherInfo;
+    }
+
+    public boolean isEditMarriageInfo() {
+        return editMarriageInfo;
+    }
+
+    public void setEditMarriageInfo(boolean editMarriageInfo) {
+        this.editMarriageInfo = editMarriageInfo;
+    }
+
+    public boolean isEditMothersNameAfterMarriageInfo() {
+        return editMothersNameAfterMarriageInfo;
+    }
+
+    public void setEditMothersNameAfterMarriageInfo(boolean editMothersNameAfterMarriageInfo) {
+        this.editMothersNameAfterMarriageInfo = editMothersNameAfterMarriageInfo;
+    }
+
+    public boolean isEditGrandFatherInfo() {
+        return editGrandFatherInfo;
+    }
+
+    public void setEditGrandFatherInfo(boolean editGrandFatherInfo) {
+        this.editGrandFatherInfo = editGrandFatherInfo;
     }
 }
