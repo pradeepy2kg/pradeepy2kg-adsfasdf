@@ -9,7 +9,6 @@ import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.api.dao.CountryDAO;
 import lk.rgd.common.api.dao.RaceDAO;
 import lk.rgd.crs.web.action.deaths.DeathAlterationAction;
-import lk.rgd.crs.web.action.deaths.DeathRegisterAction;
 import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.service.DeathAlterationService;
@@ -92,7 +91,7 @@ public class DeathAlterationActionTest extends CustomStrutsTestCase {
 
             //setting act
             DeathAlteration deathAlteration = new DeathAlteration();
-            deathAlteration.setAct(DeathAlteration.Act.ACT_52_1_a);
+            deathAlteration.setType(DeathAlteration.AlterationType.ACT_52_1_a);
             deathAlteration.setStatus(DeathAlteration.State.DATA_ENTRY);
             deathAlteration.setDateReceived(gCal.getTime());
             deathAlteration.setDeathId(i);

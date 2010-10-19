@@ -139,7 +139,12 @@ public class BirthDeclaration implements Serializable {
          * 10 - A BDF archived after an alteration is performed after initial BC. New
          * record is captured as ARCHIVED_BC_GENERATED
          */
-        ARCHIVED_ALTERED
+        ARCHIVED_ALTERED,
+        /**
+         * 11 - A BDF that should not have been captured by the system (e.g. birth did not happen, or a the double
+         * registration of a birth etc) will cause the record to be cancelled. This state marks a record as such
+         */
+        ARCHIVED_CANCELLED
     }
 
     /**
