@@ -20,6 +20,7 @@ import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.dao.BirthDeclarationDAO;
 import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.BirthRegistrationService;
+import lk.rgd.crs.core.ValidationUtils;
 import lk.rgd.prs.api.domain.Address;
 import lk.rgd.prs.api.domain.Marriage;
 import lk.rgd.prs.api.domain.Person;
@@ -1100,25 +1101,7 @@ public class BirthRegistrationServiceImpl implements
     private void validateAccessOfUser(User user, BirthDeclaration bdf) {
         if (bdf != null) {
             BDDivision bdDivision = bdf.getRegister().getBirthDivision();
-            validateAccessToBDDivision(user, bdDivision);
-        }
-    }
-
-    private void validateAccessToBDDivision(User user, BDDivision bdDivision) {
-        if (!(User.State.ACTIVE == user.getStatus()
-            &&
-            (Role.ROLE_RG.equals(user.getRole().getRoleId())
-                ||
-                (user.isAllowedAccessToBDDistrict(bdDivision.getDistrict().getDistrictUKey())
-                    &&
-                    user.isAllowedAccessToBDDSDivision(bdDivision.getDsDivision().getDsDivisionUKey())
-                )
-            )
-        )) {
-
-            handleException("User : " + user.getUserId() + " is not allowed access to the District : " +
-                bdDivision.getDistrict().getDistrictUKey() + " and/or DS Division : " +
-                bdDivision.getDsDivision().getDsDivisionUKey(), ErrorCodes.PERMISSION_DENIED);
+            ValidationUtils.validateAccessToBDDivision(user, bdDivision);
         }
     }
 
@@ -1179,7 +1162,7 @@ public class BirthRegistrationServiceImpl implements
             logger.debug("Get confirmations pending approval by BDDivision ID : " + bdDivision.getBdDivisionUKey()
                 + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
-        validateAccessToBDDivision(user, bdDivision);
+        ValidationUtils.validateAccessToBDDivision(user, bdDivision);
         return birthDeclarationDAO.getPaginatedListForState(
             bdDivision, pageNo, noOfRows, BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED);
     }
@@ -1195,7 +1178,7 @@ public class BirthRegistrationServiceImpl implements
             logger.debug("Get records pending confirmation printing by BDDivision ID : " +
                 bdDivision.getBdDivisionUKey() + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
-        validateAccessToBDDivision(user, bdDivision);
+        ValidationUtils.validateAccessToBDDivision(user, bdDivision);
         return birthDeclarationDAO.getPaginatedListForState(bdDivision, pageNo, noOfRows,
             printed ? BirthDeclaration.State.CONFIRMATION_PRINTED : BirthDeclaration.State.APPROVED);
     }
@@ -1211,7 +1194,7 @@ public class BirthRegistrationServiceImpl implements
             logger.debug("Get birth certificate list print by BDDivision ID : " +
                 bdDivision.getBdDivisionUKey() + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
-        validateAccessToBDDivision(user, bdDivision);
+        ValidationUtils.validateAccessToBDDivision(user, bdDivision);
         return birthDeclarationDAO.getPaginatedListForState(bdDivision, pageNo, noOfRows,
             printed ? BirthDeclaration.State.ARCHIVED_CERT_PRINTED : BirthDeclaration.State.ARCHIVED_CERT_GENERATED);
     }
@@ -1225,7 +1208,7 @@ public class BirthRegistrationServiceImpl implements
             logger.debug("Get records pending approval by BDDivision ID : " + bdDivision.getBdDivisionUKey()
                 + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
-        validateAccessToBDDivision(user, bdDivision);
+        ValidationUtils.validateAccessToBDDivision(user, bdDivision);
         return birthDeclarationDAO.getPaginatedListForState(bdDivision, pageNo, noOfRows, BirthDeclaration.State.DATA_ENTRY);
     }
 
@@ -1238,7 +1221,7 @@ public class BirthRegistrationServiceImpl implements
             logger.debug("Get records Belated pending approval by BDDivision ID : " + bdDivision.getBdDivisionUKey()
                 + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
-        validateAccessToBDDivision(user, bdDivision);
+        ValidationUtils.validateAccessToBDDivision(user, bdDivision);
         return birthDeclarationDAO.getPaginatedListForStateAndBirthType(bdDivision, pageNo, noOfRows,
             BirthDeclaration.State.DATA_ENTRY, BirthDeclaration.BirthType.BELATED);
     }
@@ -1254,7 +1237,7 @@ public class BirthRegistrationServiceImpl implements
                 " and date range : " + startDate + " to " + endDate + " Page : " + pageNo +
                 " with number of rows per page : " + noOfRows);
         }
-        validateAccessToBDDivision(user, bdDivision);
+        ValidationUtils.validateAccessToBDDivision(user, bdDivision);
         return birthDeclarationDAO.getByBDDivisionStatusAndRegisterDateRange(
             bdDivision, BirthDeclaration.State.DATA_ENTRY, startDate, endDate, pageNo, noOfRows);
     }
@@ -1270,7 +1253,7 @@ public class BirthRegistrationServiceImpl implements
                 " and date range : " + startDate + " to " + endDate + " Page : " + pageNo +
                 " with number of rows per page : " + noOfRows);
         }
-        validateAccessToBDDivision(user, bdDivision);
+        ValidationUtils.validateAccessToBDDivision(user, bdDivision);
         return birthDeclarationDAO.getByBDDivisionStatusBirthTypeAndRegisterDateRange(
             bdDivision, BirthDeclaration.State.DATA_ENTRY, BirthDeclaration.BirthType.BELATED, startDate, endDate,
             pageNo, noOfRows);
@@ -1288,7 +1271,7 @@ public class BirthRegistrationServiceImpl implements
                 bdDivision.getBdDivisionUKey() + " and date range : " + startDate + " to " + endDate +
                 " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
-        validateAccessToBDDivision(user, bdDivision);
+        ValidationUtils.validateAccessToBDDivision(user, bdDivision);
         return birthDeclarationDAO.getByBDDivisionStatusAndConfirmationReceiveDateRange(
             bdDivision, startDate, endDate, pageNo, noOfRows);
     }
@@ -1777,7 +1760,7 @@ public class BirthRegistrationServiceImpl implements
     public List<BirthDeclaration> getArchivedCorrectedEntriesForGivenSerialNo(BDDivision bdDivision, long serialNo, User user) {
         logger.debug("Searching for historical records for BD Division : {} and Serial number : {} ",
             bdDivision.getBdDivisionUKey(), serialNo);
-        validateAccessToBDDivision(user, bdDivision);
+        ValidationUtils.validateAccessToBDDivision(user, bdDivision);
         return birthDeclarationDAO.getHistoricalRecordsForBDDivisionAndSerialNo(bdDivision, serialNo);
     }
 
@@ -1786,7 +1769,7 @@ public class BirthRegistrationServiceImpl implements
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getDeclarationApprovalPendingByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, User user) {
-        validateAccessToDSDivison(dsDivision, user);
+        ValidationUtils.validateAccessToDSDivison(dsDivision, user);
         return birthDeclarationDAO.getPaginatedListForStateByDSDivision(dsDivision, pageNo, noOfRows,
             BirthDeclaration.State.DATA_ENTRY);
     }
@@ -1796,7 +1779,7 @@ public class BirthRegistrationServiceImpl implements
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getBelatedDeclarationApprovalPendingByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, User user) {
-        validateAccessToDSDivison(dsDivision, user);
+        ValidationUtils.validateAccessToDSDivison(dsDivision, user);
         return birthDeclarationDAO.getPaginatedListForStateAndBirthTypeByDSDivision(dsDivision, pageNo, noOfRows,
             BirthDeclaration.State.DATA_ENTRY, BirthDeclaration.BirthType.BELATED);
     }
@@ -1807,7 +1790,7 @@ public class BirthRegistrationServiceImpl implements
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getDeclarationPendingByDSDivisionAndRegisterDateRange(DSDivision dsDivision, Date startDate,
         Date endDate, int pageNo, int noOfRows, User user) {
-        validateAccessToDSDivison(dsDivision, user);
+        ValidationUtils.validateAccessToDSDivison(dsDivision, user);
         return birthDeclarationDAO.getByDSDivisionStatusAndRegisterDateRange(dsDivision, BirthDeclaration.State.DATA_ENTRY,
             startDate, endDate, pageNo, noOfRows);
     }
@@ -1818,7 +1801,7 @@ public class BirthRegistrationServiceImpl implements
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getBelatedDeclarationPendingByDSDivisionAndRegisterDateRange(DSDivision dsDivision,
         Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
-        validateAccessToDSDivison(dsDivision, user);
+        ValidationUtils.validateAccessToDSDivison(dsDivision, user);
         return birthDeclarationDAO.getByDSDivisionStatusBirthTypeAndRegisterDateRange(dsDivision,
             BirthDeclaration.State.DATA_ENTRY, BirthDeclaration.BirthType.BELATED, startDate, endDate, pageNo, noOfRows);
     }
@@ -1832,21 +1815,9 @@ public class BirthRegistrationServiceImpl implements
             logger.debug("Get confirmations pending approval by DSDivision ID : " + dsDivision.getDsDivisionUKey()
                 + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
-        validateAccessToDSDivison(dsDivision, user);
+        ValidationUtils.validateAccessToDSDivison(dsDivision, user);
         return birthDeclarationDAO.getPaginatedListForStateByDSDivision(
             dsDivision, pageNo, noOfRows, BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED);
-    }
-
-    private void validateAccessToDSDivison(DSDivision dsDivision, User user) {
-        if (!(User.State.ACTIVE == user.getStatus() &&
-            (Role.ROLE_RG.equals(user.getRole().getRoleId())
-                || (user.isAllowedAccessToBDDistrict(dsDivision.getDistrict().getDistrictUKey()))
-                || (user.isAllowedAccessToBDDSDivision(dsDivision.getDsDivisionUKey()))
-            )
-        )) {
-            handleException("User : " + user.getUserId() + " is not allowed access to the District : " +
-                dsDivision.getDistrictId(), ErrorCodes.PERMISSION_DENIED);
-        }
     }
 
     /**
@@ -1860,7 +1831,7 @@ public class BirthRegistrationServiceImpl implements
                 dsDivision.getDsDivisionUKey() + " and date range : " + startDate + " to " + endDate +
                 " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
-        validateAccessToDSDivison(dsDivision, user);
+        ValidationUtils.validateAccessToDSDivison(dsDivision, user);
         //setting the time of the endDate to the current time
         Date d = new Date();
         endDate.setHours(d.getHours());
@@ -1877,7 +1848,7 @@ public class BirthRegistrationServiceImpl implements
             logger.debug("Get records pending confirmation printing by DSDivision ID : " +
                 dsDivision.getDsDivisionUKey() + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
-        validateAccessToDSDivison(dsDivision, user);
+        ValidationUtils.validateAccessToDSDivison(dsDivision, user);
         return birthDeclarationDAO.getPaginatedListForStateByDSDivision(dsDivision, pageNo, noOfRows,
             printed ? BirthDeclaration.State.CONFIRMATION_PRINTED : BirthDeclaration.State.APPROVED);
     }
@@ -1891,7 +1862,7 @@ public class BirthRegistrationServiceImpl implements
             logger.debug("Get birth certificate list print by DSDivision ID : " +
                 dsDivision.getDsDivisionUKey() + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
-        validateAccessToDSDivison(dsDivision, user);
+        ValidationUtils.validateAccessToDSDivison(dsDivision, user);
         return birthDeclarationDAO.getPaginatedListForStateByDSDivision(dsDivision, pageNo, noOfRows,
             printed ? BirthDeclaration.State.ARCHIVED_CERT_PRINTED : BirthDeclaration.State.ARCHIVED_CERT_GENERATED);
     }
@@ -1902,7 +1873,7 @@ public class BirthRegistrationServiceImpl implements
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getByDSDivision(DSDivision dsDivision, User user) {
         logger.debug("Get records belonging to DSDivision ID : {}", dsDivision.getDsDivisionUKey());
-        validateAccessToDSDivison(dsDivision, user);
+        ValidationUtils.validateAccessToDSDivison(dsDivision, user);
         return birthDeclarationDAO.getByDSDivision(dsDivision);
     }
 

@@ -17,7 +17,6 @@ import lk.rgd.common.util.GenderUtil;
 import lk.rgd.Permission;
 
 import java.util.*;
-import java.lang.reflect.Array;
 
 /**
  * @author tharanga
@@ -309,13 +308,15 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         } else {
             isAlt52_1 = false;
         }
-        BirthAlteration baCheck = alterationService.getActiveRecordByBDDivisionAndSerialNo(
-                bdDivisionDAO.getBDDivisionByPK(birthDivisionId), alterationSerialNo, user, isAlt52_1);
+
+        // TODO fix this to lookup using idUKey
+        BirthAlteration baCheck = null;
+        //BirthAlteration baCheck = alterationService.getActiveRecordByBDDivisionAndSerialNo(
+        //        bdDivisionDAO.getBDDivisionByPK(birthDivisionId), alterationSerialNo, user, isAlt52_1);
         if (baCheck != null) {
             logger.debug("Duplicate Alteration Serial Number is :{}", alterationSerialNo);
             addFieldError("duplicateSerialNumberError", getText("p1.duplicateSerialNumber.label"));
             checkDuplicate = 1;
-
         }
         BirthAlteration ba = new BirthAlteration();
         ba.setAlt27(alt27); /*Child's full name is save in any act*/
@@ -357,7 +358,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         ba.setComments(comments);
         ba.setOtherDocuments(otherDocuments);
         ba.setStatus(BirthAlteration.State.DATA_ENTRY);
-        ba.setBdId(idUKey);
+        ba.setBdfIDUKey(idUKey);
         ba.setDeclarant(declarant);
         ba.setDateReceived(dateReceived);
         ba.setAlterationSerialNo(alterationSerialNo);
@@ -365,7 +366,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
             alterationService.addBirthAlteration(ba, user);
             logger.debug("Add a new Birth Alteration with Alteration Serial No  :{}", alterationSerialNo);
             idUKey = ba.getIdUKey();
-            bdId = ba.getBdId();
+            bdId = ba.getBdfIDUKey();
         }
         pageType = 1;
         initPermission();
@@ -378,9 +379,9 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     }
 
     public String editbirthAlteration() {
-        BirthAlteration ba = alterationService.getById(idUKey, user);
+        BirthAlteration ba = alterationService.getByIDUKey(idUKey, user);
         if (ba != null) {
-            bdId = ba.getBdId();
+            bdId = ba.getIdUKey();
             BirthDeclaration bdf = service.getById(bdId, user);
             alt27 = ba.getAlt27();
             alt27A = ba.getAlt27A();
@@ -460,18 +461,20 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         if (serialNo != 0) {
             logger.debug("filter Birth Alteration to approve by Birth Serial Number :{}", serialNo);
             if (birthDivisionId != 0) {
-                birthAlterationPendingApprovalList = alterationService.getApprovalPendingByBDDivisionAndBirthSerialNo(
+                birthAlterationPendingApprovalList = alterationService.getApprovalPendingByBDDivisionAndBDFSerialNo(
                         bdDivisionDAO.getBDDivisionByPK(birthDivisionId), serialNo, pageNo, noOfRows, user);
             }
         } else if (alterationSerialNo != null) {
             logger.debug("filter Birth Alteration to approve by Birth Alteration Serial Number :{}", alterationSerialNo);
-            if (divisionAlt != 0)
-                birthAlterationPendingApprovalList = alterationService.getApprovalPendingByBDDivisionAndAlterationSerialNo(
-                        bdDivisionDAO.getBDDivisionByPK(divisionAlt), alterationSerialNo, pageNo, noOfRows, user);
+            // TODO replace this with a idUKey lookup
+            //if (divisionAlt != 0)
+            //    birthAlterationPendingApprovalList = alterationService.getApprovalPendingByBDDivisionAndAlterationSerialNo(
+            //            bdDivisionDAO.getBDDivisionByPK(divisionAlt), alterationSerialNo, pageNo, noOfRows, user);
         } else if (dateReceivedFrom != null && dateReceivedTo != null) {
-            logger.debug("filter Birth Alteration to approve by received date from :{} to:{}", dateReceivedFrom, dateReceivedTo);
-            birthAlterationPendingApprovalList = alterationService.getApprovalPendingByRecivedDate
-                    (dateReceivedFrom, dateReceivedTo, pageNo, noOfRows, user);
+            // TODO - we cannot give a list awaiting reply only on received date - it has to be on DS division and date
+            //logger.debug("filter Birth Alteration to approve by received date from :{} to:{}", dateReceivedFrom, dateReceivedTo);
+            //birthAlterationPendingApprovalList = alterationService.getApprovalPendingByRecivedDate
+            //        (dateReceivedFrom, dateReceivedTo, pageNo, noOfRows, user);
         } else {
             if (birthDivisionId != 0) {
                 logger.debug("requested to filter birth alterations by birthDivisionId : {} ", birthDivisionId);
@@ -503,7 +506,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         //todo has to be implemented
         numberOfAppPending = 0;
         BirthDeclaration bdf = service.getById(bdId, user);
-        BirthAlteration ba = alterationService.getById(idUKey, user);
+        BirthAlteration ba = alterationService.getByIDUKey(idUKey, user);
         if (ba == null || bdf == null) {
             return ERROR;
         } else {
@@ -757,7 +760,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     }
 
     public String alterationApproval() {
-        BirthAlteration ba = alterationService.getById(idUKey, user);
+        BirthAlteration ba = alterationService.getByIDUKey(idUKey, user);
         int lengthOfBitSet = 0;
         Hashtable approvalsBitSet = new Hashtable();
         switch (sectionOfAct) {
@@ -797,7 +800,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         }
         logger.debug("length of the apprrovals list is  :{}", approvalsBitSet.size());
         alterationService.approveBirthAlteration(ba, approvalsBitSet, appStatus, user);
-        ba = alterationService.getById(idUKey, user);
+        ba = alterationService.getByIDUKey(idUKey, user);
         logger.debug("New Bit Set After Approval  :{}", ba.getApprovalStatuses());
         pageType = 2;
         return SUCCESS;
@@ -808,7 +811,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     }
 
     public String rejectAlteration() {
-        BirthAlteration ba = alterationService.getById(idUKey, user);
+        BirthAlteration ba = alterationService.getByIDUKey(idUKey, user);
         ba.setStatus(BirthAlteration.State.REJECT);
         alterationService.updateBirthAlteration(ba, user);
         return SUCCESS;

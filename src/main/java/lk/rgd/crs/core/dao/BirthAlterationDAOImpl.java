@@ -35,7 +35,7 @@ public class BirthAlterationDAOImpl extends BaseDAO implements BirthAlterationDA
     /**
      * @inheritDoc
      */
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.MANDATORY)
     public void updateBirthAlteration(BirthAlteration ba, User user) {
         ba.getLifeCycleInfo().setLastUpdatedTimestamp(new Date());
         ba.getLifeCycleInfo().setLastUpdatedUser(user);
@@ -109,7 +109,6 @@ public class BirthAlterationDAOImpl extends BaseDAO implements BirthAlterationDA
         // marked as active at any given point in time
     }
 
-    @Override
     public List<BirthAlteration> getBulkOfAlterationByIdUKey(long idUKey, int pageNo, int noOfRows) {
         Query q = em.createNamedQuery("filter.alteration.by.idUKey").
                 setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
@@ -120,7 +119,6 @@ public class BirthAlterationDAOImpl extends BaseDAO implements BirthAlterationDA
         return q.getResultList();
     }
 
-    @Override
     public List<BirthAlteration> getBulkOfAlterationByRecivedDate(Date recivedDateFrom, Date recivedDateTo, int pageNo, int noOfRows) {
         Query q = em.createNamedQuery("filter.alteration.by.recived.date").
                 setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
@@ -132,7 +130,6 @@ public class BirthAlterationDAOImpl extends BaseDAO implements BirthAlterationDA
         return q.getResultList();
     }
 
-    @Override
     public List<BirthAlteration> getBulkOfAlterationByBDDivisionAndAlterationSerialNo(BDDivision bdDivision, Long alterationSerialNo, int pageNo, int noOfRows) {
         Query q = em.createNamedQuery("filter.alteration.by.bdDivision.and.alteration.serial.number").
                 setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
@@ -144,7 +141,6 @@ public class BirthAlterationDAOImpl extends BaseDAO implements BirthAlterationDA
         return q.getResultList();
     }
 
-    @Override
     public List<BirthAlteration> getBulkOfAlterationByBDDivisionAndBirthSerialNo(BDDivision bdDivision, Long birthSerialNo, int pageNo, int noOfRows) {
         Query q = em.createNamedQuery("filter.alteration.by.bdDivision.and.birth.serial.number").
                 setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);

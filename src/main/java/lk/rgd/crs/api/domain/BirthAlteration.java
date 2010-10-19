@@ -1,5 +1,7 @@
 package lk.rgd.crs.api.domain;
 
+import lk.rgd.common.api.domain.Location;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.BitSet;
@@ -19,27 +21,26 @@ import java.util.BitSet;
         @NamedQuery(name = "get.active.ba.by.bddivision.in.ba.and.alterationSerialNo", query = "SELECT ba FROM BirthAlteration ba " +
                 "WHERE ba.alt52_1.birthDivision = :bdDivision AND ba.alterationSerialNo = :alterationSerialNo " +
                 "AND ba.lifeCycleInfo.activeRecord IS TRUE"),
-        @NamedQuery(name = "filter.alteration.by.dsdivision", query = "SELECT ba FROM BirthAlteration ba , BirthDeclaration bdf " +
-                "WHERE ba.bdId =bdf.idUKey AND bdf.register.birthDivision.dsDivision = :dsDivision AND ba.status <> :statusFullyApp AND ba.status <> :statusPrint " +
-                "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
+//        @NamedQuery(name = "filter.alteration.by.dsdivision", query = "SELECT ba FROM BirthAlteration ba , BirthDeclaration bdf " +
+//                "WHERE ba.bdId =bdf.idUKey AND bdf.register.birthDivision.dsDivision = :dsDivision AND ba.status <> :statusFullyApp AND ba.status <> :statusPrint " +
+//                "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
         @NamedQuery(name = "filter.alteration.by.idUKey", query = "SELECT ba FROM BirthAlteration ba " +
                 "WHERE ba.idUKey =:idUKey AND ba.status <>:statusFullyApp AND ba.status <>:statusPrint " +
                 "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
         @NamedQuery(name = "filter.alteration.by.recived.date", query = "SELECT ba FROM BirthAlteration ba " +
                 "WHERE ba.dateReceived BETWEEN :recivedDateFrom AND :recivedDateTo AND ba.status <>:statusFullyApp AND ba.status <>:statusPrint " +
-                "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
-        @NamedQuery(name = "filter.alteration.by.bdDivision.and.alteration.serial.number", query = "SELECT ba FROM BirthAlteration ba, BirthDeclaration bdf " +
-                "WHERE bdf.idUKey=ba.bdId AND ba.alterationSerialNo =:alterationSerialNo AND (bdf.register.birthDivision=:bdDivision OR ba.alt52_1.birthDivision=:bdDivision) AND" +
-                " ba.status <>:statusFullyApp AND ba.status <>:statusPrint " +
-                "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
-        @NamedQuery(name = "filter.alteration.by.bdDivision.and.birth.serial.number", query = "SELECT ba FROM BirthAlteration ba, BirthDeclaration bdf " +
-                "WHERE bdf.idUKey=ba.bdId AND bdf.register.bdfSerialNo =:birthSerialNo AND (bdf.register.birthDivision=:bdDivision OR ba.alt52_1.birthDivision=:bdDivision) AND" +
-                " ba.status <>:statusFullyApp AND ba.status <>:statusPrint " +
-                "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
-        @NamedQuery(name = "filter.alteration.by.bddivision", query = "SELECT ba FROM BirthAlteration ba,BirthDeclaration bdf " +
-                "WHERE ba.bdId =bdf.idUKey AND bdf.register.birthDivision = :bdDivision AND ba.status <> :statusFullyApp AND ba.status <> :statusPrint " +
                 "ORDER BY ba.lifeCycleInfo.createdTimestamp desc")
-
+//        @NamedQuery(name = "filter.alteration.by.bdDivision.and.alteration.serial.number", query = "SELECT ba FROM BirthAlteration ba, BirthDeclaration bdf " +
+//                "WHERE bdf.idUKey=ba.bdId AND ba.alterationSerialNo =:alterationSerialNo AND (bdf.register.birthDivision=:bdDivision OR ba.alt52_1.birthDivision=:bdDivision) AND" +
+//                " ba.status <>:statusFullyApp AND ba.status <>:statusPrint " +
+//                "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
+//        @NamedQuery(name = "filter.alteration.by.bdDivision.and.birth.serial.number", query = "SELECT ba FROM BirthAlteration ba, BirthDeclaration bdf " +
+//                "WHERE bdf.idUKey=ba.bdId AND bdf.register.bdfSerialNo =:birthSerialNo AND (bdf.register.birthDivision=:bdDivision OR ba.alt52_1.birthDivision=:bdDivision) AND" +
+//                " ba.status <>:statusFullyApp AND ba.status <>:statusPrint " +
+//                "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
+//        @NamedQuery(name = "filter.alteration.by.bddivision", query = "SELECT ba FROM BirthAlteration ba,BirthDeclaration bdf " +
+//                "WHERE ba.bdId =bdf.idUKey AND bdf.register.birthDivision = :bdDivision AND ba.status <> :statusFullyApp AND ba.status <> :statusPrint " +
+//                "ORDER BY ba.lifeCycleInfo.createdTimestamp desc")
 })
 
 public class BirthAlteration {
@@ -86,8 +87,11 @@ public class BirthAlteration {
     private Long alterationSerialNo;
 
     @Column(nullable = false)
-    // the ID points to Birth Declarition
-    private long bdId;
+    // the ID points to Birth Declarations idUKey
+    private long bdfIDUKey;
+
+    @Column(nullable = false)
+    private Location subissionLocation;
 
     @Column(nullable = false)
     // The date when the alteration request was received
@@ -205,12 +209,12 @@ public class BirthAlteration {
         this.stampFee = stampFee;
     }
 
-    public long getBdId() {
-        return bdId;
+    public long getBdfIDUKey() {
+        return bdfIDUKey;
     }
 
-    public void setBdId(long bdId) {
-        this.bdId = bdId;
+    public void setBdfIDUKey(long bdfIDUKey) {
+        this.bdfIDUKey = bdfIDUKey;
     }
 
     public Long getAlterationSerialNo() {
@@ -259,5 +263,13 @@ public class BirthAlteration {
 
     public void setOtherDocuments(String otherDocuments) {
         this.otherDocuments = otherDocuments;
+    }
+
+    public Location getSubissionLocation() {
+        return subissionLocation;
+    }
+
+    public void setSubissionLocation(Location subissionLocation) {
+        this.subissionLocation = subissionLocation;
     }
 }
