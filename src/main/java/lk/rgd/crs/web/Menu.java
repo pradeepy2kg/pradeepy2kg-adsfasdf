@@ -106,9 +106,10 @@ public class Menu {
         searchLink.put("eprMarkBirthCertificateSearch.do", new Link(null, "/ecivil/births/", "eprMarkBirthCertificateSearch.do", Permission.PRINT_BDF));
         searchLink.put("eprMarkDeathCertificateSearch.do", new Link(null, "/ecivil/deaths/", "eprMarkDeathCertificateSearch.do", Permission.PRINT_DDF));
 
-        // PRS
+        // PRS links
         prsLink.put("eprPRSAdvancedSearch.do", new Link("prs.advanceSearch.label", "/ecivil/prs/", "eprPRSAdvancedSearch.do", Permission.SEARCH_PRS));
-        prsLink.put("eprExistingPersonRegistration.do", new Link("prs.personRegistration.label", "/ecivil/prs/", "eprExistingPersonRegistration.do", Permission.PRS_ADD_PERSON));
+        prsLink.put("eprExistingPersonRegInit.do", new Link("prs.personRegistration.label", "/ecivil/prs/", "eprExistingPersonRegInit.do", Permission.PRS_ADD_PERSON));
+        prsLink.put("eprExistingPersonRegistration.do", new Link(null, "/ecivil/prs/", "eprExistingPersonRegistration.do", Permission.PRS_ADD_PERSON));
 
         // Birth Registration for DEO
         deoBirthLink.put("eprBirthRegistrationInit.do", new Link("birth_registration.label", "/ecivil/births/", "eprBirthRegistrationInit.do", Permission.EDIT_BDF));
