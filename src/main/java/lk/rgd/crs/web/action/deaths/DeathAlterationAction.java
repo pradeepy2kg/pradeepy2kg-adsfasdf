@@ -242,8 +242,11 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             rowNo = appParametersDAO.getIntParameter(DA_APPROVAL_ROWS_PER_PAGE);
 
             //search by date frame
-            if (startDate != null & endDate != null) {
-                approvalList = deathAlterationService.getDeathAlterationByTimePeriod(startDate, endDate, user);
+            if (startDate != null & endDate != null & divisionUKey > 0) {
+                //base on role ARG and higher need to be loaded alterations in his division
+                //others need to be loaded alteration which are entered from his division
+                //todo    change
+                approvalList = deathAlterationService.getDeathAlterationByTimePeriodAndDivision(startDate, endDate, divisionUKey, user);
             } else {
                 if (!(startDate == null & endDate == null)) {
                     addActionError(getText("invalide.searching.schema.data.enter.both.dates"));

@@ -28,10 +28,12 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
     private static final Logger logger = LoggerFactory.getLogger(BirthAlterationServiceImpl.class);
     private final BirthAlterationDAO birthAlterationDAO;
     private final BirthDeclarationDAO birthDeclarationDAO;
+    private final BirthAlterationValidator birthAlterationValidator;
 
-    public BirthAlterationServiceImpl(BirthAlterationDAO birthAlterationDAO, BirthDeclarationDAO birthDeclarationDAO) {
+    public BirthAlterationServiceImpl(BirthAlterationDAO birthAlterationDAO, BirthDeclarationDAO birthDeclarationDAO, BirthAlterationValidator birthAlterationValidator) {
         this.birthAlterationDAO = birthAlterationDAO;
         this.birthDeclarationDAO = birthDeclarationDAO;
+        this.birthAlterationValidator = birthAlterationValidator;
     }
 
     /**
@@ -41,6 +43,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
     public void addBirthAlteration(BirthAlteration ba, User user) {
         logger.debug("adding new birth alteration");
         validateAccessOfUser(ba, user);
+        birthAlterationValidator.validateMinimulConditions(ba);
         birthAlterationDAO.addBirthAlteration(ba, user);
     }
 

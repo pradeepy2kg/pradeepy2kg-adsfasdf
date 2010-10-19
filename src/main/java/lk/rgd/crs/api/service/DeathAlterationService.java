@@ -81,6 +81,7 @@ public interface DeathAlterationService {
      * @return
      */
     public List<DeathAlteration> getAlterationByDeathId(long deathId, User user);
+
     /**
      * approve death alteration and set bit set base on state partially or fully
      *
@@ -99,5 +100,5 @@ public interface DeathAlterationService {
      * @param user
      * @return
      */
-    public List<DeathAlteration> getDeathAlterationByTimePeriod(Date startDate, Date endDate, User user);
+    public List<DeathAlteration> getDeathAlterationByTimePeriodAndDivision(Date startDate, Date endDate, int dsDivisionUkey, User user);
 }
