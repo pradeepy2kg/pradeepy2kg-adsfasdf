@@ -334,4 +334,10 @@
         <constructor-arg ref="eventManagementService"/>
     </bean>
 
+    <bean id="populationRegisterAction" class="lk.rgd.prs.web.action.PopulationRegisterAction">
+        <constructor-arg ref="ecivilService"/>
+        <constructor-arg ref="raceDAOImpl"/>
+        <constructor-arg ref="countryDAOImpl"/>
+    </bean>
+
 </beans>

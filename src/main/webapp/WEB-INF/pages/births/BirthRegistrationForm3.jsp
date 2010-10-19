@@ -429,7 +429,7 @@ function initPage() {
                     <tbody>
                     <tr>
                         <td><label>ඔව්<br>ஆம்<br>Yes</label></td>
-                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'MARRIED':''}" value="1"
+                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'MARRIED':''}" 
                                      onclick="disableMarriage(false);disableSigns(true)" id="marriedId"/>
                         </td>
                     </tr>

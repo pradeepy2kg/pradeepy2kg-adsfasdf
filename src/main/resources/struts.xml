@@ -82,9 +82,14 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
+        <action name="eprExistingPersonRegInit" class="lk.rgd.prs.web.action.PopulationRegisterAction"
+                method="personRegistrationInit">
+            <result type="tiles" name="success">epr.ExistingPersonRegistration</result>
+        </action>
+
         <action name="eprExistingPersonRegistration" class="lk.rgd.prs.web.action.PopulationRegisterAction"
                 method="personRegistration">
-            <result type="tiles" name="success">epr.ExistingPersonRegistration</result>
+            <result type="tiles" name="success">epr.home</result>
         </action>
     </package>
 

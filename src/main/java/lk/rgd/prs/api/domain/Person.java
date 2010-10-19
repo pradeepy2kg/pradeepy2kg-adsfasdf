@@ -34,7 +34,7 @@ public class Person implements Serializable {
         SEMI_VERIFIED,   /** 1 - Record may be inaccurate - NIC is available */
         VERIFIED,        /** 2 - Record is confirmed to be accurate - PIN is available */
         CANCELLED        /** 3 - Record is is cancelled as a duplicate or error */
-        }
+    }
 
     /**
      * The life status
@@ -87,6 +87,12 @@ public class Person implements Serializable {
     @Column(unique = true, nullable = true)
     private Long temporaryPin;
     /**
+     * Date of registration - submitted date of the person registration info
+     */
+    @Column(nullable = true)
+    @Temporal(value = TemporalType.DATE)
+    private Date dateOfRegistration;
+    /**
      * The passport numbers in the format "LK:M1203456 JP:F092434"
      */
     @Column(nullable = true, length = 60)
@@ -126,6 +132,16 @@ public class Person implements Serializable {
      */
     @Column(nullable = true, length = 60)
     private String lastNameInEnglish;
+    /**
+     * The phone number of person
+     */
+    @Column(nullable = true, length = 30)
+    private String personPhoneNo;
+    /**
+     * The email address of person
+     */
+    @Column(nullable = true, length = 30)
+    private String personEmail;
     /**
      * Gender 0 - male, 1 - female, 2 - unknown
      */
@@ -280,6 +296,22 @@ public class Person implements Serializable {
 
     public void setLastNameInEnglish(String lastNameInEnglish) {
         this.lastNameInEnglish = lastNameInEnglish;
+    }
+
+    public String getPersonPhoneNo() {
+        return personPhoneNo;
+    }
+
+    public void setPersonPhoneNo(String personPhoneNo) {
+        this.personPhoneNo = personPhoneNo;
+    }
+
+    public String getPersonEmail() {
+        return personEmail;
+    }
+
+    public void setPersonEmail(String personEmail) {
+        this.personEmail = personEmail;
     }
 
     public int getGender() {
@@ -455,6 +487,14 @@ public class Person implements Serializable {
 
     public void setTemporaryPin(Long temporaryPin) {
         this.temporaryPin = temporaryPin;
+    }
+
+    public Date getDateOfRegistration() {
+        return dateOfRegistration;
+    }
+
+    public void setDateOfRegistration(Date dateOfRegistration) {
+        this.dateOfRegistration = dateOfRegistration;
     }
 
     public Race getRace() {

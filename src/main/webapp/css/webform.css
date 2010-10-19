@@ -41,7 +41,7 @@
 * Styles for the Birth Registration Form applys according to the 4 pages in 4 seperate sections.
 */
 
-.birth-registration-form-outer, #birth-confirmation-form-outer, .birth-confirmation-print-form-outer, .still-birth-registration-form-outer, #bdaw-outer, .birth-certificate-search-form-outer {
+.birth-registration-form-outer, #birth-confirmation-form-outer, .birth-confirmation-print-form-outer, .still-birth-registration-form-outer, #bdaw-outer, .birth-certificate-search-form-outer, .prs-existing-person-register-outer {
     width: 1030px;
     background: #ffffff;
     padding: 10px;
@@ -1145,12 +1145,19 @@
 /* Styles for the User Creation web form ends here. */
 
 /*styles for birth declaration forms*/
-.table_reg_page_01 {
+.table_reg_page_01, .table_reg_page_05 {
     width: 1030px;
     border: 1px solid #000000;;
     border-right: none;
     border-bottom: none;
     font-size: 9pt;
+}
+
+.table_reg_page_05 td {
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    padding:3px;
+    padding-left:5px;
 }
 
 .table_reg_page_01 td {
@@ -1378,7 +1385,7 @@
 .table_con_page_01 td {
     border-right: 1px solid #000000;
     border-bottom: 1px solid #000000;
-    padding:3px;    
+    padding: 3px;
 }
 
 .table_con_page_01 select, .table_con_page_01 input {
@@ -1707,107 +1714,443 @@
     margin-left: 40px;
 }
 
-.birth-registration-form-details-button-table{
-    
+.birth-registration-form-details-button-table {
+
 }
 
 /*css style for adoption registration pages*/
-#adoption-registration-home-outer{width:1030px;padding: 10px;}
-#adoption-registration-form-outer{width:1030px;background: #ffffff;padding: 10px;font-size:9pt;}
-#adoption-certificate-form-outer{width:1030px;background: #ffffff;padding: 10px;font-size:9pt;}
-.adoption-form-submit{margin:10px 0 10px 5px; text-transform:capitalize; width:112px; height:31px; border:none;float:right;text-align:center;}
-.adoption-form-submit a{text-decoration:none; line-height:30px; color:#000;}
+#adoption-registration-home-outer {
+    width: 1030px;
+    padding: 10px;
+}
 
-.adoption-reg-form-header-table {width:100%; border-left:none;font-size:12pt;text-align:center;margin-bottom:10px;padding-left:10px;}
-.adoption-reg-form-01-table01{width:100%;border-left:1px solid #000;border-top:1px solid #000;margin-bottom:10px;}
-.adoption-reg-form-01-table01 td {padding-left:5px;border-right:1px solid #000;border-bottom:1px solid #000;margin-bottom:10px;}
-.adoption-reg-form-01-table01 textarea{margin:5px;width:97%;margin-left:5px;}
-.adoption-reg-form-01-table01 input {margin:5px;width:96%;}
+#adoption-registration-form-outer {
+    width: 1030px;
+    background: #ffffff;
+    padding: 10px;
+    font-size: 9pt;
+}
 
+#adoption-certificate-form-outer {
+    width: 1030px;
+    background: #ffffff;
+    padding: 10px;
+    font-size: 9pt;
+}
 
-.adoption-reg-form-02-table01 {width:100%;border-left:1px solid #000;border-top:1px solid #000;margin-bottom:10px;}
-.adoption-reg-form-02-table01 td {padding-left:5px;border-right:1px solid #000;border-bottom:1px solid #000;margin-bottom:10px;}
-.adoption-reg-form-02-table01 textarea{margin:5px;width:94%;;margin-left:5px;}
-.adoption-reg-form-02-table01 input {margin:5px;width:94%;}
+.adoption-form-submit {
+    margin: 10px 0 10px 5px;
+    text-transform: capitalize;
+    width: 112px;
+    height: 31px;
+    border: none;
+    float: right;
+    text-align: center;
+}
 
+.adoption-form-submit a {
+    text-decoration: none;
+    line-height: 30px;
+    color: #000;
+}
 
-.adoption-reg-form-03-table01 {width:100%;border-left:1px solid #000;border-top:1px solid #000;margin-bottom:10px;}
-.adoption-reg-form-03-table01 td {border-right:1px solid #000;border-bottom:1px solid #000;margin-bottom:10px;}
-.adoption-reg-form-03-table01 textarea{margin:5px;width:94%;;margin-left:10px;}
-.adoption-reg-form-03-table01 input {margin:5px;width:94%;;margin-left:10px;}
+.adoption-reg-form-header-table {
+    width: 100%;
+    border-left: none;
+    font-size: 12pt;
+    text-align: center;
+    margin-bottom: 10px;
+    padding-left: 10px;
+}
 
+.adoption-reg-form-01-table01 {
+    width: 100%;
+    border-left: 1px solid #000;
+    border-top: 1px solid #000;
+    margin-bottom: 10px;
+}
 
-#adoption-applicant-info-form-outer{padding:10px; background:white;}
-#adoption-applicant-info-form-outer table tr td{padding:2px 5px;}
+.adoption-reg-form-01-table01 td {
+    padding-left: 5px;
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+    margin-bottom: 10px;
+}
 
+.adoption-reg-form-01-table01 textarea {
+    margin: 5px;
+    width: 97%;
+    margin-left: 5px;
+}
+
+.adoption-reg-form-01-table01 input {
+    margin: 5px;
+    width: 96%;
+}
+
+.adoption-reg-form-02-table01 {
+    width: 100%;
+    border-left: 1px solid #000;
+    border-top: 1px solid #000;
+    margin-bottom: 10px;
+}
+
+.adoption-reg-form-02-table01 td {
+    padding-left: 5px;
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+    margin-bottom: 10px;
+}
+
+.adoption-reg-form-02-table01 textarea {
+    margin: 5px;
+    width: 94%;;
+    margin-left: 5px;
+}
+
+.adoption-reg-form-02-table01 input {
+    margin: 5px;
+    width: 94%;
+}
+
+.adoption-reg-form-03-table01 {
+    width: 100%;
+    border-left: 1px solid #000;
+    border-top: 1px solid #000;
+    margin-bottom: 10px;
+}
+
+.adoption-reg-form-03-table01 td {
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+    margin-bottom: 10px;
+}
+
+.adoption-reg-form-03-table01 textarea {
+    margin: 5px;
+    width: 94%;;
+    margin-left: 10px;
+}
+
+.adoption-reg-form-03-table01 input {
+    margin: 5px;
+    width: 94%;;
+    margin-left: 10px;
+}
+
+#adoption-applicant-info-form-outer {
+    padding: 10px;
+    background: white;
+}
+
+#adoption-applicant-info-form-outer table tr td {
+    padding: 2px 5px;
+}
 
 /* Styles for the Death forms */
-#death-certificate-outer, #death-declaration-form-1-outer, #death-declaration-form-2-outer, #death-declaration-form-3-outer{width:1030px; background:white; padding:10px;}
-#death-certificate-outer table, #death-declaration-form-1-outer table, #death-declaration-form-2-outer table, #death-declaration-form-3-outer table{margin-bottom:15px;}
-#death-declaration-form-1-outer table tr td{padding:2px 5px;}
-#death-declaration-form-1-outer #deathDistrictId, #death-declaration-form-1-outer #deathDsDivisionId,#death-declaration-form-1-outer #deathDivisionId{width:560px;}
+#death-certificate-outer, #death-declaration-form-1-outer, #death-declaration-form-2-outer, #death-declaration-form-3-outer {
+    width: 1030px;
+    background: white;
+    padding: 10px;
+}
+
+#death-certificate-outer table, #death-declaration-form-1-outer table, #death-declaration-form-2-outer table, #death-declaration-form-3-outer table {
+    margin-bottom: 15px;
+}
+
+#death-declaration-form-1-outer table tr td {
+    padding: 2px 5px;
+}
+
+#death-declaration-form-1-outer #deathDistrictId, #death-declaration-form-1-outer #deathDsDivisionId, #death-declaration-form-1-outer #deathDivisionId {
+    width: 560px;
+}
 
 /*css class for late death registration*/
-#late-death-registrations-outer {width:1030px;background: #ffffff;padding: 10px;font-size:9pt;}
-.death-reg-header-table{width:1030px;border:none;font-size:12pt;text-align:center;margin-bottom:10px;}
-.death-reg-header-table-02 {width:1030px;border:none;font-size:10pt;margin-bottom:10px;}
-.death-late-reg-table{width:1030px;font-size:10pt;border-top:1px solid #000;border-left:1px solid #000;}
-.death-late-reg-table td{border-right:1px solid #000;border-bottom:1px solid #000;}
-.death-late-reg-table input{width:75px;float:right;margin-right:10px;}
-.death-late-reg-table textarea{width:96%;float:right;margin-right:10px;}
+#late-death-registrations-outer {
+    width: 1030px;
+    background: #ffffff;
+    padding: 10px;
+    font-size: 9pt;
+}
 
-#death-declaration-form-2-outer table tr td{padding:2px 5px;}
-#death-declaration-form-2-outer table tr td textarea{width:98%;}
-#add-inactive-divisions-outer,#adoption-certificate-existing-certificate-info {width:1030px;}
-.add-inactive-divisions-outer-table,.adoption-certificate-existing-certificate-info{width: 95%; border-top:1px solid #000;border-left:1px solid #000;}
-.add-inactive-divisions-outer-table td,.adoption-certificate-existing-certificate-info td {border-right:1px solid #000;border-bottom:1px solid #000;padding-left:5px;}
-.add-inactive-divisions-outer-table select,.adoption-certificate-existing-certificate-info select{width:80%;margin:5px;}
-.add-inactive-divisions-outer-table input,.adoption-certificate-existing-certificate-info input{width:80%;margin:5px;margin-left:10px}
-.add-inactive-divisions-outer-table label{width:80%;}
-.add-inactive-divisions-outer-table textarea{width:80%;margin-left:10px;}
+.death-reg-header-table {
+    width: 1030px;
+    border: none;
+    font-size: 12pt;
+    text-align: center;
+    margin-bottom: 10px;
+}
 
-#birth-alteration-outer{width:1030px;background-color:#fff;padding: 10px;font-size:9pt;}
-#death-alteration-outer{width:1030px;background-color:#fff;padding: 10px;font-size:9pt;}
-.birth-alteration-table-style01{border:none;}.
-death-alteration-table-style01 td{border:none;}.birth-alteration-table-style01{border:none;}.
-death-alteration-table-style01 td{border:none;}
-.birth-alteration-table-style02{;border-top:1px solid #000;border-left:1px solid #000;margin-top:10px;}
-.birth-alteration-table-style02 td{border-right:1px solid #000;border-bottom:1px solid #000;padding:3px;}
-.birth-alteration-table-style02 textarea{width:95%; margin:10px;}
-.birth-alteration-table-style02 input{width:85%;margin:10px;}
-.birth-alteration-table-style02 select{width:95%;margin:10px;}
-.birth-alteration-table-style02 label{width:95%;}
+.death-reg-header-table-02 {
+    width: 1030px;
+    border: none;
+    font-size: 10pt;
+    margin-bottom: 10px;
+}
 
-.death-alteration-table-style02{;border-top:1px solid #000;border-left:1px solid #000;margin-top:10px;}
-.death-alteration-table-style02 td{border-right:1px solid #000;border-bottom:1px solid #000;padding:3px;}
-.death-alteration-table-style02 textarea{width:95%; margin:10px;}
-.death-alteration-table-style02 input{width:85%;margin:10px;}
-.death-alteration-table-style02 select{width:95%;margin:10px;}
-.death-alteration-table-style02 label{width:95%;}
+.death-late-reg-table {
+    width: 1030px;
+    font-size: 10pt;
+    border-top: 1px solid #000;
+    border-left: 1px solid #000;
+}
 
-.birth-alteration-minimize-icon{float:right;width:35px;height:26px;border:none;font-size:12pt;cursor:n-resize }
-.birth-alteration-maximize-icon{float:right;width:35px;height:26px;border:none;font-size:12pt;cursor:s-resize }
+.death-late-reg-table td {
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+}
 
-#alteration-approval-list-outer{width:1030px;background-color:#fff;padding: 10px;font-size:9pt;}
-.alteration-approval-list-table{width:98%;border-top:1px solid #000;border-left:1px solid #000;}
-.alteration-approval-list-table td{border-right:1px solid #000;border-bottom:1px solid #000;height:40px;}
-.alteration-approval-list-table textarea{border-right:1px solid #000;border-bottom:1px solid #000;width:95%}
+.death-late-reg-table input {
+    width: 75px;
+    float: right;
+    margin-right: 10px;
+}
 
-#birth-alteration-result-outer {width:1030px;}
-#birth-alteration-result-outer table{width:80%;margin-left:100px;margin-top:25px;}
+.death-late-reg-table textarea {
+    width: 96%;
+    float: right;
+    margin-right: 10px;
+}
 
-#user-locaton-outer table{width:80%;border-top:1px solid #000;border-left:1px solid #000;margin-top:20px;height:200px;}
-#user-locaton-outer td{border-right:1px solid #000;border-bottom:1px solid #000;width:30%;padding-left:5px;}
-#user-locaton-outer input{margin:5px;}
-#user-locaton-outer select{width:45%;}
+#death-declaration-form-2-outer table tr td {
+    padding: 2px 5px;
+}
 
+#death-declaration-form-2-outer table tr td textarea {
+    width: 98%;
+}
 
-.table_non_editable_reg_page {width: 1030px;border-top: 1px solid #000000;border-left:1px solid #000;font-size: 9pt;}
-.table_non_editable_reg_page td{border-right: 1px solid #000000;border-bottom: 1px solid #000000;padding:3px;}
+#add-inactive-divisions-outer, #adoption-certificate-existing-certificate-info {
+    width: 1030px;
+}
 
-.search-alteration-option-table {width: 1030px;}
-.search-alteration-option-table select {width: 230px}
-.search-alteration-option-table input {width: 230px;}
+.add-inactive-divisions-outer-table, .adoption-certificate-existing-certificate-info {
+    width: 95%;
+    border-top: 1px solid #000;
+    border-left: 1px solid #000;
+}
+
+.add-inactive-divisions-outer-table td, .adoption-certificate-existing-certificate-info td {
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+    padding-left: 5px;
+}
+
+.add-inactive-divisions-outer-table select, .adoption-certificate-existing-certificate-info select {
+    width: 80%;
+    margin: 5px;
+}
+
+.add-inactive-divisions-outer-table input, .adoption-certificate-existing-certificate-info input {
+    width: 80%;
+    margin: 5px;
+    margin-left: 10px
+}
+
+.add-inactive-divisions-outer-table label {
+    width: 80%;
+}
+
+.add-inactive-divisions-outer-table textarea {
+    width: 80%;
+    margin-left: 10px;
+}
+
+#birth-alteration-outer {
+    width: 1030px;
+    background-color: #fff;
+    padding: 10px;
+    font-size: 9pt;
+}
+
+#death-alteration-outer {
+    width: 1030px;
+    background-color: #fff;
+    padding: 10px;
+    font-size: 9pt;
+}
+
+.birth-alteration-table-style01 {
+    border: none;
+}
+
+.
+death-alteration-table-style01 td {
+    border: none;
+}
+
+.birth-alteration-table-style01 {
+    border: none;
+}
+
+.
+death-alteration-table-style01 td {
+    border: none;
+}
+
+.birth-alteration-table-style02 {;
+    border-top: 1px solid #000;
+    border-left: 1px solid #000;
+    margin-top: 10px;
+}
+
+.birth-alteration-table-style02 td {
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+    padding: 3px;
+}
+
+.birth-alteration-table-style02 textarea {
+    width: 95%;
+    margin: 10px;
+}
+
+.birth-alteration-table-style02 input {
+    width: 85%;
+    margin: 10px;
+}
+
+.birth-alteration-table-style02 select {
+    width: 95%;
+    margin: 10px;
+}
+
+.birth-alteration-table-style02 label {
+    width: 95%;
+}
+
+.death-alteration-table-style02 {;
+    border-top: 1px solid #000;
+    border-left: 1px solid #000;
+    margin-top: 10px;
+}
+
+.death-alteration-table-style02 td {
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+    padding: 3px;
+}
+
+.death-alteration-table-style02 textarea {
+    width: 95%;
+    margin: 10px;
+}
+
+.death-alteration-table-style02 input {
+    width: 85%;
+    margin: 10px;
+}
+
+.death-alteration-table-style02 select {
+    width: 95%;
+    margin: 10px;
+}
+
+.death-alteration-table-style02 label {
+    width: 95%;
+}
+
+.birth-alteration-minimize-icon {
+    float: right;
+    width: 35px;
+    height: 26px;
+    border: none;
+    font-size: 12pt;
+    cursor: n-resize
+}
+
+.birth-alteration-maximize-icon {
+    float: right;
+    width: 35px;
+    height: 26px;
+    border: none;
+    font-size: 12pt;
+    cursor: s-resize
+}
+
+#alteration-approval-list-outer {
+    width: 1030px;
+    background-color: #fff;
+    padding: 10px;
+    font-size: 9pt;
+}
+
+.alteration-approval-list-table {
+    width: 98%;
+    border-top: 1px solid #000;
+    border-left: 1px solid #000;
+}
+
+.alteration-approval-list-table td {
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+    height: 40px;
+}
+
+.alteration-approval-list-table textarea {
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+    width: 95%
+}
+
+#birth-alteration-result-outer {
+    width: 1030px;
+}
+
+#birth-alteration-result-outer table {
+    width: 80%;
+    margin-left: 100px;
+    margin-top: 25px;
+}
+
+#user-locaton-outer table {
+    width: 80%;
+    border-top: 1px solid #000;
+    border-left: 1px solid #000;
+    margin-top: 20px;
+    height: 200px;
+}
+
+#user-locaton-outer td {
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+    width: 30%;
+    padding-left: 5px;
+}
+
+#user-locaton-outer input {
+    margin: 5px;
+}
+
+#user-locaton-outer select {
+    width: 45%;
+}
+
+.table_non_editable_reg_page {
+    width: 1030px;
+    border-top: 1px solid #000000;
+    border-left: 1px solid #000;
+    font-size: 9pt;
+}
+
+.table_non_editable_reg_page td {
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    padding: 3px;
+}
+
+.search-alteration-option-table {
+    width: 1030px;
+}
+
+.search-alteration-option-table select {
+    width: 230px
+}
+
+.search-alteration-option-table input {
+    width: 230px;
+}
 
 
 
