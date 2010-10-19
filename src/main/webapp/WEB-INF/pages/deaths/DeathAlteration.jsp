@@ -1003,7 +1003,7 @@ function initPage() {
         <td align="center"><s:radio id="declarantType" name="deathRegister.declarant.declarantType"
                                     list="#@java.util.HashMap@{'FATHER':''}"
                                     onchange="setInformPerson('','','','','');"
-                                    value="%{deathRegister.declarant.declarantType}"/>
+                                    value="%{deathAlteration.declarant.declarantType}"/>
         </td>
         <td align="center">
             ස්වාමිපුරුෂයා / භාර්යාව <br>
@@ -1014,7 +1014,7 @@ function initPage() {
                 <%--todo change--%>
             <s:radio id="declarantType" name="deathRegister.declarant.declarantType"
                      list="#@java.util.HashMap@{'SPOUSE':''}"
-                     onchange="setInformPerson('','','','','');" value="%{deathRegister.declarant.declarantType}"/>
+                     onchange="setInformPerson('','','','','');" value="%{deathAlteration.declarant.declarantType}"/>
         </td>
         <td>
             සහෝදරයා සහෝදරිය <br>
@@ -1024,7 +1024,7 @@ function initPage() {
         <td align="center">
             <s:radio id="declarantType" name="deathRegister.declarant.declarantType"
                      list="#@java.util.HashMap@{'BORTHER_OR_SISTER':''}"
-                     onchange="setInformPerson('','','','','');" value="%{deathRegister.declarant.declarantType}"/>
+                     onchange="setInformPerson('','','','','');" value="%{deathAlteration.declarant.declarantType}"/>
         </td>
     </tr>
     <tr>
@@ -1036,7 +1036,7 @@ function initPage() {
         <td align="center">
             <s:radio id="declarantType" name="deathRegister.declarant.declarantType"
                      list="#@java.util.HashMap@{'SON_OR_DAUGHTER':''}"
-                     onchange="setInformPerson('','','','','');" value="%{deathRegister.declarant.declarantType}"/>
+                     onchange="setInformPerson('','','','','');" value="%{deathAlteration.declarant.declarantType}"/>
         </td>
         <td>
             නෑයන් <br>
@@ -1046,7 +1046,7 @@ function initPage() {
         <td align="center">
             <s:radio id="declarantType" name="deathRegister.declarant.declarantType"
                      list="#@java.util.HashMap@{'RELATIVE':''}"
-                     onchange="setInformPerson('','','','','');" value="%{deathRegister.declarant.declarantType}"/>
+                     onchange="setInformPerson('','','','','');" value="%{deathAlteration.declarant.declarantType}"/>
         </td>
         <td>
             වෙනත් <br>
@@ -1056,7 +1056,7 @@ function initPage() {
         <td align="center">
             <s:radio id="declarantType" name="deathRegister.declarant.declarantType"
                      list="#@java.util.HashMap@{'OTHER':''}"
-                     onchange="setInformPerson('','','','','');" value="%{deathRegister.declarant.declarantType}"/>
+                     onchange="setInformPerson('','','','','');" value="%{deathAlteration.declarant.declarantType}"/>
         </td>
     </tr>
     <tr>
@@ -1067,7 +1067,7 @@ function initPage() {
         </td>
         <td colspan="6" align="left">
             <s:textfield id="declarant_pinOrNic" name="deathRegister.declarant.declarantNICorPIN" maxLength="10"
-                         value=""/>
+                         value="%{deathAlteration.declarant.declarantNICorPIN}"/>
         </td>
     </tr>
     <tr>
@@ -1078,7 +1078,7 @@ function initPage() {
         </td>
         <td colspan="6">
             <s:textarea id="declarantName" name="deathRegister.declarant.declarantFullName" cssStyle="width:99%"
-                        value=""/>
+                        value="%{deathAlteration.declarant.declarantFullName}"/>
         </td>
     </tr>
     <tr>
@@ -1089,7 +1089,7 @@ function initPage() {
         </td>
         <td colspan="6">
             <s:textarea id="declarantAddress" name="deathRegister.declarant.declarantAddress" cssStyle="width:99%"
-                        value=""/>
+                        value="%{deathAlteration.declarant.declarantAddress}"/>
         </td>
     </tr>
 

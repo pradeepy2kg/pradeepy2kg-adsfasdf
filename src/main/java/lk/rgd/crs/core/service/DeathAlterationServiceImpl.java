@@ -42,11 +42,9 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
     public void addDeathAlteration(DeathAlteration da, User user) {
         logger.debug("adding a new death alteration");
         DeathRegister dr = deathRegistrationService.getById(da.getDeathId(), user);
-        logger.info("getting death id for death alteration for adding : {}", da.getDeathId());
-        logger.debug("calling validater");
+        da.setSubmittedLocation(user.getPrimaryLocation());
         if (da != null & dr != null)
             deathAlterationValidator.validateMinimulCondiations(da, dr);
-/*        validateAccessToBDDivision(user, da.getDeathDivision());*/
         deathAlterationDAO.addDeathAlteration(da, user);
     }
 
@@ -152,9 +150,8 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public List<DeathAlteration> getDeathAlterationByTimePeriodAndDivision(Date startDate, Date endDate, int dsDivisionUkey, User user) {
-        //add user validation if others also get permission (other than ARG and above)
-        return deathAlterationDAO.getDeathAlterationByTimePeriodAndDivision(startDate, endDate, dsDivisionUkey);
+    public List<DeathAlteration> getDeathAlterationByUserLocation(int locationUKey) {
+        return deathAlterationDAO.getDeathAlterationByUserLocation(locationUKey);
     }
 
 

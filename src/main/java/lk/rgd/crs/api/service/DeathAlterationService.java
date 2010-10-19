@@ -93,12 +93,10 @@ public interface DeathAlterationService {
     public void approveDeathAlteration(long deathAlterationUKey, Hashtable<Integer, Boolean> fieldsToBeApproved, boolean appStatus, User user);
 
     /**
-     * get list of death alterations based on given period (alteration registered date)
+     * get list of death alterations by location key
      *
-     * @param startDate
-     * @param endDate
-     * @param user
-     * @return
+     * @param locationUKey location primary key
+     * @return list of death alterations submitted by given user location
      */
-    public List<DeathAlteration> getDeathAlterationByTimePeriodAndDivision(Date startDate, Date endDate, int dsDivisionUkey, User user);
+    public List<DeathAlteration> getDeathAlterationByUserLocation(int locationUKey);
 }

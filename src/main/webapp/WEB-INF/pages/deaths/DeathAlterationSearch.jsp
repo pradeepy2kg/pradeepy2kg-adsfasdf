@@ -103,31 +103,6 @@
 <s:actionerror/>
 <s:actionmessage/>
 <s:form method="post" action="eprCaptureDeathAlteration.do" onsubmit="javascript:return validateForm()">
-    <%----%><%--section select act--%><%--
-    <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
-        <legend align="right">
-            <s:label value="%{getText('label.legend.choose.the.act')}"/>
-        </legend>
-        <table cellpadding="2px" cellspacing="0">
-            <caption></caption>
-            <col width="500px">
-            <col>
-            <tbody>
-            <tr>
-                <td align="left">
-                    <s:label value="%{getText('label.selec.act')}"/>
-                </td>
-                <td align="left">
-                    <s:select
-                            list="#@java.util.HashMap@{'1':'52(1)','2':'53'}"
-                            name="#" cssStyle="width:185px;" disabled="false"
-                            id="sectionOfAct"/>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </fieldset>
---%>
     <%--section search by death certificate number--%>
     <div id="tabs">
             <ul>

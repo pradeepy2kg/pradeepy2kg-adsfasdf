@@ -1056,7 +1056,10 @@
 
         <action name="eprDeathAlterationSetBits" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"
                 method="setBitset">
-            <result type="tiles" name="success">epr.deathAlterationSearchHome</result>
+            <!--  <result type="tiles" name="success">epr.deathAlterationSearchHome</result>-->
+            <result type="redirectAction" name="success">
+                <param name="actionName">eprApproveDeathAlterations</param>
+            </result>
         </action>
         <!--todo follow-->
         <action name="eprDeathAlterationEdit" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"

@@ -77,12 +77,11 @@ public interface DeathAlterationDAO {
     public List<DeathAlteration> getAlterationByDeathId(long deathId);
 
     /**
-     * get list of death alterations by given time frame(Date of registration of a death alteration)
+     * get user locations by location id
      *
-     * @param startDate starting date
-     * @param endDate   ending date
-     * @return list of death alterations
+     * @param locationUKey location unique key
+     * @return list of death alteration done by given location
      */
-    public List<DeathAlteration> getDeathAlterationByTimePeriodAndDivision(Date startDate, Date endDate, int dsDivisionUKey);
+    public List<DeathAlteration> getDeathAlterationByUserLocation(int locationUKey);
 
 }
