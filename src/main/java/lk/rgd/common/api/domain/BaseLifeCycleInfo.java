@@ -27,7 +27,7 @@ public class BaseLifeCycleInfo implements Serializable {
     private Date createdTimestamp;
 
     @OneToOne (fetch = FetchType.LAZY)
-    @JoinColumn(name = "createdUserId", nullable = false, columnDefinition = "varchar(30) default 'system'")
+    @JoinColumn(name = "createdUserId", nullable = true)
     /**
      * The database row level created user (i.e. user entering the record to the system)
      */
@@ -41,7 +41,7 @@ public class BaseLifeCycleInfo implements Serializable {
     private Date lastUpdatedTimestamp;
 
     @OneToOne (fetch = FetchType.LAZY)
-    @JoinColumn(name = "lastUpdatedUserId", nullable = false, columnDefinition = "varchar(30) default 'system'")
+    @JoinColumn(name = "lastUpdatedUserId", nullable = true)
     /**
      * The database row level last updated user
      */
