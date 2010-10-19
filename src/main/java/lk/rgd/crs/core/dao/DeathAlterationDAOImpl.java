@@ -91,8 +91,9 @@ public class DeathAlterationDAOImpl extends BaseDAO implements DeathAlterationDA
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
-    public List<DeathAlteration> getDeathAlterationByTimePeriod(Date startDate, Date endDate) {
-        Query q = em.createNamedQuery("get.alt.by.date.period");
+    public List<DeathAlteration> getDeathAlterationByTimePeriodAndDivision(Date startDate, Date endDate, int deathDivisionUKey) {
+        //todo remove
+        Query q = em.createNamedQuery("get.alt.by.date.period.dsdivision");
         q.setParameter("startDate", startDate);
         q.setParameter("endDate", endDate);
         return q.getResultList();

@@ -18,8 +18,11 @@ import java.util.HashMap;
                 " WHERE da.deathId=dr.idUKey " +
                 " AND dr.death.deathDivision.bdDivisionUKey =:deathDivisionUkey"),
         @NamedQuery(name = "get.atl.by.death.id", query = "SELECT da FROM DeathAlteration da WHERE da.deathId=:deathId"),
-        @NamedQuery(name = "get.alt.by.date.period", query = "SELECT da FROM DeathAlteration da WHERE da.dateReceived " +
-                " BETWEEN :startDate AND :endDate ORDER BY da.dateReceived desc"),
+/*        @NamedQuery(name = "get.alt.by.date.period.dsdivision", query = "SELECT da FROM DeathAlteration da WHERE da.dateReceived " +
+                " BETWEEN :startDate AND :endDate  ORDER BY da.dateReceived desc"),  */
+        @NamedQuery(name = "get.alt.by.date.period.dsdivision", query = "SELECT da FROM DeathAlteration da WHERE da.dateReceived " +
+                " BETWEEN :startDate AND :endDate  ORDER BY da.dateReceived desc"),
+
         //todo
         @NamedQuery(name = "get.alt.by.seral.number.death.division", query = "SELECT da FROM DeathAlteration da")
 })

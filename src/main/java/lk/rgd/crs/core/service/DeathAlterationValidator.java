@@ -42,9 +42,11 @@ public class DeathAlterationValidator {
         DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
         String dateEx = null;
         String dateAlt = null;
-        if (deathRegister.getDeath().getDateOfDeath() != null)
+        logger.debug("death alteration : {}", deathAlteration);
+        logger.debug("death registration : {}", deathRegister);
+        if (deathRegister != null & deathRegister.getDeath().getDateOfDeath() != null)
             dateEx = df.format(deathRegister.getDeath().getDateOfDeath());
-        if (deathAlteration.getDeathInfo().getDateOfDeath() != null)
+        if (deathAlteration != null & deathAlteration.getDeathInfo().getDateOfDeath() != null)
             dateAlt = df.format(deathAlteration.getDeathInfo().getDateOfDeath());
 
         if (checkAlteration(dateEx, dateAlt, 0))

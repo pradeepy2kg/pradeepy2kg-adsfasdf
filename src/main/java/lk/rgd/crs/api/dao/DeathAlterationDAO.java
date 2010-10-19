@@ -83,6 +83,6 @@ public interface DeathAlterationDAO {
      * @param endDate   ending date
      * @return list of death alterations
      */
-    public List<DeathAlteration> getDeathAlterationByTimePeriod(Date startDate, Date endDate);
+    public List<DeathAlteration> getDeathAlterationByTimePeriodAndDivision(Date startDate, Date endDate, int dsDivisionUKey);
 
 }
