@@ -58,6 +58,16 @@ public class DeathAlteration {
         indexMap.put(22, "field.name.mother");
     }
 
+    public enum AlterationType {
+        TYPE_52_1_A,
+        TYPE_52_1_B,
+        TYPE_52_1_D,
+        TYPE_52_1_E,
+        TYPE_52_1_H,
+        TYPE_52_1_I,
+        TYPE_53
+    }
+
     public enum State {
         /**
          * 0 - A newly entered BDF - can be edited by DEO or ADR
@@ -94,6 +104,9 @@ public class DeathAlteration {
 
     @Enumerated
     private State status;
+
+    @Enumerated
+    private AlterationType type;
 
     @Enumerated
     private Act act;
@@ -284,5 +297,13 @@ public class DeathAlteration {
 
     public void setDeathDivision(BDDivision deathDivision) {
         this.deathDivision = deathDivision;
+    }
+
+    public AlterationType getType() {
+        return type;
+    }
+
+    public void setType(AlterationType type) {
+        this.type = type;
     }
 }

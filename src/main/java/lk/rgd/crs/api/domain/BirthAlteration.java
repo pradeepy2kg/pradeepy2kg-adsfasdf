@@ -45,6 +45,16 @@ import java.util.BitSet;
 
 public class BirthAlteration {
 
+    public enum AlterationType {
+        TYPE_27,
+        TYPE_27A,
+        TYPE_52_1_A,
+        TYPE_52_1_B,
+        TYPE_52_1_D,
+        TYPE_52_1_E,
+        TYPE_52_1_H,
+        TYPE_52_1_I
+    }
 
     public enum State {
         /**
@@ -72,6 +82,10 @@ public class BirthAlteration {
 
     @Enumerated
     private State status;
+
+    @Enumerated
+    private AlterationType type;
+
     /**
      * Contains the approval bit set for each field.
      */
@@ -271,5 +285,13 @@ public class BirthAlteration {
 
     public void setSubissionLocation(Location subissionLocation) {
         this.subissionLocation = subissionLocation;
+    }
+
+    public AlterationType getType() {
+        return type;
+    }
+
+    public void setType(AlterationType type) {
+        this.type = type;
     }
 }
