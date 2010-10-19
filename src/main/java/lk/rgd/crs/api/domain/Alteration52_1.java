@@ -20,7 +20,7 @@ public class Alteration52_1 {
 
     public static final int MOTHER_FULLNAME = 6;
     public static final int MOTHER_NIC_OR_PIN = 7;
-    public static final int MOTHER_BIRTH_YEAR = 8;
+    public static final int MOTHER_BIRTH_DATE = 8;
     public static final int MOTHER_BIRTH_PLACE = 9;
     public static final int MOTHER_COUNTRY = 10;
     public static final int MOTHER_PASSPORT = 11;

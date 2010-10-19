@@ -31,8 +31,9 @@ public class Person implements Serializable {
      */
     public enum Status {
         UNVERIFIED,      /** 0 - Record may be inaccurate - no PIN or NIC */
-        SEMI_VERIFIED, /** 0 - Record may be inaccurate - NIC is available */
-        VERIFIED         /** 1 - Record is confirmed to be accurate - PIN is available */
+        SEMI_VERIFIED,   /** 1 - Record may be inaccurate - NIC is available */
+        VERIFIED,        /** 2 - Record is confirmed to be accurate - PIN is available */
+        CANCELLED        /** 3 - Record is is cancelled as a duplicate or error */
         }
 
     /**

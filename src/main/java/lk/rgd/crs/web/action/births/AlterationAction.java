@@ -594,7 +594,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
             if (father.getFatherDOB() != null) {
                 fatherDOBinBA = father.getFatherDOB().toString();
             }
-            compareAndAdd(Alteration27A.FATHER_BIRTH_YEAR, fatherDOBinBDF, fatherDOBinBA);
+            compareAndAdd(Alteration27A.FATHER_BIRTH_DATE, fatherDOBinBDF, fatherDOBinBA);
             compareAndAdd(Alteration27A.FATHER_BIRTH_PLACE, parent.getFatherPlaceOfBirth(), father.getFatherPlaceOfBirth());
             //if father country is not null in both ba and bd
             if (father.getFatherCountry() != null && parent.getFatherCountry() != null) {
@@ -691,7 +691,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
                 if (baDate != null) {
                     baMotherDOB = baDate.toString();
                 }
-                compareAndAdd(Alteration52_1.MOTHER_BIRTH_YEAR, bdfMotherDOB, baMotherDOB);
+                compareAndAdd(Alteration52_1.MOTHER_BIRTH_DATE, bdfMotherDOB, baMotherDOB);
             }
             Country bdfCountry = parent.getMotherCountry();
             Country baCountry = mother.getMotherCountry();

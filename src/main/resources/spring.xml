@@ -154,7 +154,8 @@
     <bean id="birthAlterationService" class="lk.rgd.crs.core.service.BirthAlterationServiceImpl">
         <constructor-arg ref="birthAlterationDAOImpl"/>
         <constructor-arg ref="birthDeclarationDAOImpl"/>
-        <constructor-arg ref="birthAlterationValidator"/>
+        <constructor-arg ref="ecivilService"/>
+        <constructor-arg ref="personDAOImpl"/>
     </bean>
 
     <bean id="deathAlterationService" class="lk.rgd.crs.core.service.DeathAlterationServiceImpl">

@@ -8,12 +8,13 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.dao.BirthAlterationDAO;
 import lk.rgd.crs.api.dao.BirthDeclarationDAO;
-import lk.rgd.crs.api.domain.BDDivision;
-import lk.rgd.crs.api.domain.BirthAlteration;
-import lk.rgd.crs.api.domain.BirthDeclaration;
+import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.BirthAlterationService;
 import lk.rgd.crs.core.ValidationUtils;
 import lk.rgd.crs.web.WebConstants;
+import lk.rgd.prs.api.dao.PersonDAO;
+import lk.rgd.prs.api.domain.Person;
+import lk.rgd.prs.api.service.PopulationRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
@@ -27,19 +28,22 @@ import java.util.Map;
  * Handles the birth alteration process
  *
  * @author Indunil Moremada
- * @author Asankha Perera (reviewed and reorganized)
+ * @author Asankha Perera (reviewed, reorganized and completed)
  */
 public class BirthAlterationServiceImpl implements BirthAlterationService {
 
     private static final Logger logger = LoggerFactory.getLogger(BirthAlterationServiceImpl.class);
     private final BirthAlterationDAO birthAlterationDAO;
     private final BirthDeclarationDAO birthDeclarationDAO;
-    private final BirthAlterationValidator birthAlterationValidator;
+    private final PersonDAO personDAO;
+    private final PopulationRegistry ecivil;
 
-    public BirthAlterationServiceImpl(BirthAlterationDAO birthAlterationDAO, BirthDeclarationDAO birthDeclarationDAO, BirthAlterationValidator birthAlterationValidator) {
+    public BirthAlterationServiceImpl(BirthAlterationDAO birthAlterationDAO, BirthDeclarationDAO birthDeclarationDAO,
+        PopulationRegistry ecivil, PersonDAO personDAO) {
         this.birthAlterationDAO = birthAlterationDAO;
         this.birthDeclarationDAO = birthDeclarationDAO;
-        this.birthAlterationValidator = birthAlterationValidator;
+        this.ecivil = ecivil;
+        this.personDAO = personDAO;
     }
 
     /**
@@ -107,43 +111,64 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
         BirthAlteration existing = birthAlterationDAO.getById(ba.getIdUKey());
         validateAccessOfUserForApproval(existing, user);
 
+        boolean containsApprovedChanges = false;
         for (Map.Entry<Integer, Boolean> e : fieldsToBeApproved.entrySet()) {
             if (Boolean.TRUE.equals(e.getValue())) {
                 logger.debug("Setting status as approved for the alteration statement : {}", e.getKey());
                 existing.getApprovalStatuses().set(e.getKey(), WebConstants.BIRTH_ALTERATION_APPROVE_TRUE);
+                containsApprovedChanges = true;
             } else {
                 logger.debug("Setting status as rejected for the alteration statement : {}", e.getKey());
                 existing.getApprovalStatuses().set(e.getKey(), false);
             }
         }
 
-        if (applyChangesToBC) {
+        if (containsApprovedChanges && applyChangesToBC) {
             logger.debug("Requesting the application of changes to the BC as final for : {}", existing.getIdUKey());
             existing.setStatus(BirthAlteration.State.FULLY_APPROVED);
+
+            // We've saved the alteration record, now lets modify the birth record
+            BirthDeclaration bdf = birthDeclarationDAO.getById(ba.getBdfIDUKey());
+            switch (ba.getType()) {
+
+                case TYPE_27:
+                case TYPE_27A:
+                case TYPE_52_1_H:
+                case TYPE_52_1_I: {
+                    logger.debug("Alteration is an amendment, inclusion of omission or correction. Type : {}",
+                        ba.getType().ordinal());
+                    bdf.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_ALTERED);
+                    bdf.getLifeCycleInfo().setActiveRecord(false);      // mark old record as a non-active record
+                    birthDeclarationDAO.updateBirthDeclaration(bdf, user);
+
+                    // create the new entry as a clone from the existing
+                    bdf.setIdUKey(0);
+                    bdf.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CERT_GENERATED);
+                    applyChanges(ba, bdf, user);
+                    birthDeclarationDAO.addBirthDeclaration(bdf, user);
+                    break;
+                }
+                case TYPE_52_1_A:
+                case TYPE_52_1_B:
+                case TYPE_52_1_D:
+                case TYPE_52_1_E: {
+                    bdf.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CANCELLED);
+                    birthDeclarationDAO.updateBirthDeclaration(bdf, user);
+                    logger.debug("Alteration of type : {} is a cancellation of the existing record : {}",
+                        ba.getType().ordinal(), bdf.getIdUKey());
+
+                    // cancel any person on the PRS related to this same PIN
+                    Person person = personDAO.findPersonByPIN(bdf.getChild().getPin());
+                    person.setStatus(Person.Status.CANCELLED);
+                    ecivil.updatePerson(person, user);
+                    break;
+                }
+            }
         }
 
         existing.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
         existing.getLifeCycleInfo().setApprovalOrRejectUser(user);
         birthAlterationDAO.updateBirthAlteration(existing, user);
-
-        // We've saved the alteration record, now lets modify the birth record
-        BirthDeclaration bdf = birthDeclarationDAO.getById(ba.getBdfIDUKey());
-        switch (ba.getType()) {
-            case TYPE_27:
-            case TYPE_27A:
-            case TYPE_52_1_H:
-            case TYPE_52_1_I: {
-                logger.debug("Alteration is an amendment, inclusion of omission or correction. Type : {}", ba.getType().ordinal());
-                break;
-            }
-            case TYPE_52_1_A:
-            case TYPE_52_1_B:
-            case TYPE_52_1_D:
-            case TYPE_52_1_E: {
-                logger.debug("Alteration of type : {} is a cancellation of the existing record : {}", ba.getType().ordinal(), bdf.getIdUKey());
-                break;
-            }
-        }
 
         logger.debug("Updated birth alteration : {}", existing.getIdUKey());
     }
@@ -232,6 +257,182 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
         } else {
             handleException("User : " + user.getUserId() + " is not an ARG for alteration approval",
                 ErrorCodes.PERMISSION_DENIED);
+        }
+    }
+
+    private void applyChanges(BirthAlteration ba, BirthDeclaration bdf, User user) {
+
+        switch (ba.getType()) {
+
+            // section 27 - name changes
+            case TYPE_27: {
+                Alteration27 alt = ba.getAlt27();
+                process27Changes(ba, bdf, alt, user);
+                break;
+            }
+
+            // section 27 A - updates to marriage, mothers name after marriage or
+            // {father & great/grand father details if those were not specified in the current BDF}
+            case TYPE_27A: {
+                Alteration27A alt = ba.getAlt27A();
+                process27AChanges(ba, bdf, alt);
+                break;
+            }
+
+            // section 52 (1) - corrections
+            default: {
+                Alteration52_1 alt = ba.getAlt52_1();
+                process52_1Changes(ba, bdf, alt);
+                break;
+            }
+        }
+    }
+
+    private void process27Changes(BirthAlteration ba, BirthDeclaration bdf, Alteration27 alt, User user) {
+        // Update name of person on the PRS
+        Person person = personDAO.findPersonByPIN(bdf.getChild().getPin());
+
+        if (ba.getApprovalStatuses().get(Alteration27.CHILD_FULL_NAME_OFFICIAL_LANG)) {
+            bdf.getChild().setChildFullNameOfficialLang(alt.getChildFullNameOfficialLang());
+            person.setFullNameInOfficialLanguage(alt.getChildFullNameOfficialLang());
+        }
+        if (ba.getApprovalStatuses().get(Alteration27.CHILD_FULL_NAME_ENGLISH)) {
+            bdf.getChild().setChildFullNameEnglish(alt.getChildFullNameEnglish());
+            person.setFullNameInEnglishLanguage(alt.getChildFullNameEnglish());
+        }
+        ecivil.updatePerson(person, user);
+    }
+
+    private void process27AChanges(BirthAlteration ba, BirthDeclaration bdf, Alteration27A alt) {
+
+        // father details
+        if (ba.getApprovalStatuses().get(Alteration27A.FATHER_BIRTH_PLACE)) {
+            bdf.getParent().setFatherPlaceOfBirth(alt.getFather().getFatherPlaceOfBirth());
+        }
+        if (ba.getApprovalStatuses().get(Alteration27A.FATHER_BIRTH_DATE)) {
+            bdf.getParent().setFatherDOB(alt.getFather().getFatherDOB());
+        }
+        if (ba.getApprovalStatuses().get(Alteration27A.FATHER_COUNTRY)) {
+            bdf.getParent().setFatherCountry(alt.getFather().getFatherCountry());
+        }
+        if (ba.getApprovalStatuses().get(Alteration27A.FATHER_PASSPORT)) {
+            bdf.getParent().setFatherPassportNo(alt.getFather().getFatherPassportNo());
+        }
+        if (ba.getApprovalStatuses().get(Alteration27A.FATHER_NIC_OR_PIN)) {
+            bdf.getParent().setFatherNICorPIN(alt.getFather().getFatherNICorPIN());
+        }
+        if (ba.getApprovalStatuses().get(Alteration27A.FATHER_FULLNAME)) {
+            bdf.getParent().setFatherFullName(alt.getFather().getFatherFullName());
+        }
+        if (ba.getApprovalStatuses().get(Alteration27A.FATHER_RACE)) {
+            if (bdf.getParent().getFatherRace() != null) {
+                handleException("The fathers race cannot be changed under section 27A, when already specified." +
+                    " Use Section 52 (1) instead", ErrorCodes.ILLEGAL_STATE);
+            } else {
+                bdf.getParent().setFatherRace(alt.getFather().getFatherRace());
+            }
+        }
+
+        // marriage details
+        if (ba.getApprovalStatuses().get(Alteration27A.WERE_PARENTS_MARRIED)) {
+            bdf.getMarriage().setParentsMarried(alt.getMarriage().getParentsMarried());
+        }
+        if (ba.getApprovalStatuses().get(Alteration27A.PLACE_OF_MARRIAGE)) {
+            bdf.getMarriage().setPlaceOfMarriage(alt.getMarriage().getPlaceOfMarriage());
+        }
+        if (ba.getApprovalStatuses().get(Alteration27A.DATE_OF_MARRIAGE)) {
+            bdf.getMarriage().setDateOfMarriage(alt.getMarriage().getDateOfMarriage());
+        }
+
+        // mothers name after marriage
+        if (ba.getApprovalStatuses().get(Alteration27A.MOTHER_NAME_AFTER_MARRIAGE)) {
+            bdf.getParent().setMotherFullName(alt.getMothersNameAfterMarriage());
+        }
+
+        // grand father and great grand father details
+        if (ba.getApprovalStatuses().get(Alteration27A.GRAND_FATHER_BIRTH_PLACE)) {
+            bdf.getGrandFather().setGrandFatherBirthPlace(alt.getGrandFather().getGrandFatherBirthPlace());
+        }
+        if (ba.getApprovalStatuses().get(Alteration27A.GRAND_FATHER_BIRTH_YEAR)) {
+            bdf.getGrandFather().setGrandFatherBirthYear(alt.getGrandFather().getGrandFatherBirthYear());
+        }
+        if (ba.getApprovalStatuses().get(Alteration27A.GRAND_FATHER_FULLNAME)) {
+            bdf.getGrandFather().setGrandFatherFullName(alt.getGrandFather().getGrandFatherFullName());
+        }
+        if (ba.getApprovalStatuses().get(Alteration27A.GRAND_FATHER_NIC_OR_PIN)) {
+            bdf.getGrandFather().setGrandFatherNICorPIN(alt.getGrandFather().getGrandFatherNICorPIN());
+        }
+        if (ba.getApprovalStatuses().get(Alteration27A.GREAT_GRAND_FATHER_BIRTH_PLACE)) {
+            bdf.getGrandFather().setGreatGrandFatherBirthPlace(alt.getGrandFather().getGreatGrandFatherBirthPlace());
+        }
+        if (ba.getApprovalStatuses().get(Alteration27A.GREAT_GRAND_FATHER_BIRTH_YEAR)) {
+            bdf.getGrandFather().setGreatGrandFatherBirthYear(alt.getGrandFather().getGreatGrandFatherBirthYear());
+        }
+        if (ba.getApprovalStatuses().get(Alteration27A.GREAT_GRAND_FATHER_FULLNAME)) {
+            bdf.getGrandFather().setGreatGrandFatherFullName(alt.getGrandFather().getGreatGrandFatherFullName());
+        }
+        if (ba.getApprovalStatuses().get(Alteration27A.GREAT_GRAND_FATHER_NIC_OR_PIN)) {
+            bdf.getGrandFather().setGreatGrandFatherNICorPIN(alt.getGrandFather().getGreatGrandFatherNICorPIN());
+        }
+    }
+
+    private void process52_1Changes(BirthAlteration ba, BirthDeclaration bdf, Alteration52_1 alt) {
+
+        // childs details
+        if (ba.getApprovalStatuses().get(Alteration52_1.DATE_OF_BIRTH)) {
+            bdf.getChild().setDateOfBirth(alt.getDateOfBirth());
+        }
+        if (ba.getApprovalStatuses().get(Alteration52_1.PLACE_OF_BIRTH)) {
+            bdf.getChild().setPlaceOfBirth(alt.getPlaceOfBirth());
+        }
+        if (ba.getApprovalStatuses().get(Alteration52_1.PLACE_OF_BIRTH_ENGLISH)) {
+            bdf.getChild().setPlaceOfBirthEnglish(alt.getPlaceOfBirthEnglish());
+        }
+        if (ba.getApprovalStatuses().get(Alteration52_1.GENDER)) {
+            bdf.getChild().setChildGender(alt.getChildGender());
+        }
+
+        // mothers details
+        if (ba.getApprovalStatuses().get(Alteration52_1.MOTHER_NIC_OR_PIN)) {
+            bdf.getParent().setMotherNICorPIN(alt.getMother().getMotherNICorPIN());
+        }
+        if (ba.getApprovalStatuses().get(Alteration52_1.MOTHER_COUNTRY)) {
+            bdf.getParent().setMotherCountry(alt.getMother().getMotherCountry());
+        }
+        if (ba.getApprovalStatuses().get(Alteration52_1.MOTHER_PASSPORT)) {
+            bdf.getParent().setMotherPassportNo(alt.getMother().getMotherPassportNo());
+        }
+        if (ba.getApprovalStatuses().get(Alteration52_1.MOTHER_FULLNAME)) {
+            bdf.getParent().setMotherFullName(alt.getMother().getMotherFullName());
+        }
+        if (ba.getApprovalStatuses().get(Alteration52_1.MOTHER_BIRTH_DATE)) {
+            bdf.getParent().setMotherDOB(alt.getMother().getMotherDOB());
+        }
+        if (ba.getApprovalStatuses().get(Alteration52_1.MOTHER_AGE_AT_BIRTH)) {
+            bdf.getParent().setMotherAgeAtBirth(alt.getMother().getMotherAgeAtBirth());
+        }
+        if (ba.getApprovalStatuses().get(Alteration52_1.MOTHER_RACE)) {
+            bdf.getParent().setMotherRace(alt.getMother().getMotherRace());
+        }
+        if (ba.getApprovalStatuses().get(Alteration52_1.MOTHER_BIRTH_PLACE)) {
+            bdf.getParent().setMotherPlaceOfBirth(alt.getMother().getMotherPlaceOfBirth());
+        }
+        if (ba.getApprovalStatuses().get(Alteration52_1.MOTHER_ADDRESS)) {
+            bdf.getParent().setMotherAddress(alt.getMother().getMotherAddress());
+        }
+
+        // informant details
+        if (ba.getApprovalStatuses().get(Alteration52_1.INFORMANT_TYPE)) {
+            bdf.getInformant().setInformantType(alt.getInformant().getInformantType());
+        }
+        if (ba.getApprovalStatuses().get(Alteration52_1.INFORMANT_NIC_OR_PIN)) {
+            bdf.getInformant().setInformantNICorPIN(alt.getInformant().getInformantNICorPIN());
+        }
+        if (ba.getApprovalStatuses().get(Alteration52_1.INFORMANT_NAME)) {
+            bdf.getInformant().setInformantName(alt.getInformant().getInformantName());
+        }
+        if (ba.getApprovalStatuses().get(Alteration52_1.INFORMANT_ADDRESS)) {
+            bdf.getInformant().setInformantAddress(alt.getInformant().getInformantAddress());
         }
     }
 

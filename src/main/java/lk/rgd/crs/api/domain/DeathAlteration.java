@@ -56,16 +56,6 @@ public class DeathAlteration {
         indexMap.put(22, "field.name.mother");
     }
 
-    public enum AlterationType {
-        TYPE_52_1_A,
-        TYPE_52_1_B,
-        TYPE_52_1_D,
-        TYPE_52_1_E,
-        TYPE_52_1_H,
-        TYPE_52_1_I,
-        TYPE_53
-    }
-
     public enum State {
         /**
          * 0 - A newly entered BDF - can be edited by DEO or ADR
@@ -90,7 +80,7 @@ public class DeathAlteration {
 
     }
 
-    public enum Act {
+    public enum AlterationType {
         ACT_52_1_a,
         ACT_52_1_b,
         ACT_52_1_d,
@@ -105,9 +95,6 @@ public class DeathAlteration {
 
     @Enumerated
     private AlterationType type;
-
-    @Enumerated
-    private Act act;
 
     // This is an auto generated unique row identifier
     @Id
@@ -275,12 +262,12 @@ public class DeathAlteration {
         this.deathPerson = deathPerson;
     }
 
-    public Act getAct() {
-        return act;
+    public AlterationType getType() {
+        return type;
     }
 
-    public void setAct(Act act) {
-        this.act = act;
+    public void setType(AlterationType type) {
+        this.type = type;
     }
 
     public DeathAlterationInfo getDeathInfo() {
@@ -305,13 +292,5 @@ public class DeathAlteration {
 
     public void setSubmittedLocation(Location submittedLocation) {
         this.submittedLocation = submittedLocation;
-    }
-
-    public AlterationType getType() {
-        return type;
-    }
-
-    public void setType(AlterationType type) {
-        this.type = type;
     }
 }

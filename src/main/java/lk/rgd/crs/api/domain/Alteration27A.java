@@ -22,7 +22,7 @@ public class Alteration27A {
 
     public static final int FATHER_FULLNAME = 9;
     public static final int FATHER_NIC_OR_PIN = 10;
-    public static final int FATHER_BIRTH_YEAR = 11;
+    public static final int FATHER_BIRTH_DATE = 11;
     public static final int FATHER_BIRTH_PLACE = 12;
     public static final int FATHER_COUNTRY = 13;
     public static final int FATHER_PASSPORT = 14;
