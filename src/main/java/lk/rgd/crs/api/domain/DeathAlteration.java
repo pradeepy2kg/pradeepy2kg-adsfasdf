@@ -1,5 +1,7 @@
 package lk.rgd.crs.api.domain;
 
+import lk.rgd.common.api.domain.Location;
+
 import javax.persistence.*;
 import java.util.BitSet;
 import java.util.Date;
@@ -18,11 +20,7 @@ import java.util.HashMap;
                 " WHERE da.deathId=dr.idUKey " +
                 " AND dr.death.deathDivision.bdDivisionUKey =:deathDivisionUkey"),
         @NamedQuery(name = "get.atl.by.death.id", query = "SELECT da FROM DeathAlteration da WHERE da.deathId=:deathId"),
-/*        @NamedQuery(name = "get.alt.by.date.period.dsdivision", query = "SELECT da FROM DeathAlteration da WHERE da.dateReceived " +
-                " BETWEEN :startDate AND :endDate  ORDER BY da.dateReceived desc"),  */
-        @NamedQuery(name = "get.alt.by.date.period.dsdivision", query = "SELECT da FROM DeathAlteration da WHERE da.dateReceived " +
-                " BETWEEN :startDate AND :endDate  ORDER BY da.dateReceived desc"),
-
+        @NamedQuery(name = "get.alt.by.user.location", query = "SELECT da FROM DeathAlteration  da WHERE da.submittedLocation.locationUKey =:locationUKey"),
         //todo
         @NamedQuery(name = "get.alt.by.seral.number.death.division", query = "SELECT da FROM DeathAlteration da")
 })
@@ -110,13 +108,13 @@ public class DeathAlteration {
 
     @Enumerated
     private Act act;
-    @Id
+
     // This is an auto generated unique row identifier
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idUKey;
 
     @Column(nullable = false)
-    // The date when the alteration request was received
     @Temporal(value = TemporalType.DATE)
     private Date dateReceived;
     /**
@@ -144,6 +142,14 @@ public class DeathAlteration {
     @Column
     private float stampFee;
 
+    @ManyToOne
+    @JoinColumn(name = "submitedLocationUKey", nullable = false)
+    private Location submittedLocation;
+
+    @ManyToOne
+    @JoinColumn(name = "deathDivisionUKey", nullable = false)
+    private BDDivision deathRecodeDivision;
+
     @Embedded
     private DeathAlterationInfo deathInfo = new DeathAlterationInfo();
 
@@ -155,12 +161,6 @@ public class DeathAlteration {
 
     @Embedded
     private CRSLifeCycleInfo lifeCycleInfo = new CRSLifeCycleInfo();
-
-    /**
-     * The Birth/Death registration division where the birth is registered (Includes District)
-     */
-    @Transient
-    private BDDivision deathDivision;
 
     public State getStatus() {
         return status;
@@ -291,12 +291,20 @@ public class DeathAlteration {
         this.deathInfo = deathInfo;
     }
 
-    public BDDivision getDeathDivision() {
-        return deathDivision;
+    public BDDivision getDeathRecodeDivision() {
+        return deathRecodeDivision;
     }
 
-    public void setDeathDivision(BDDivision deathDivision) {
-        this.deathDivision = deathDivision;
+    public void setDeathRecodeDivision(BDDivision deathRecodeDivision) {
+        this.deathRecodeDivision = deathRecodeDivision;
+    }
+
+    public Location getSubmittedLocation() {
+        return submittedLocation;
+    }
+
+    public void setSubmittedLocation(Location submittedLocation) {
+        this.submittedLocation = submittedLocation;
     }
 
     public AlterationType getType() {

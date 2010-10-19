@@ -101,7 +101,9 @@
             <li><a href="#fragment-1"><span> <s:label
                     value="%{getText('lable.search.by.dsDivision')}"/></span></a></li>
             <li><a href="#fragment-2"><span><s:label
-                    value="%{getText('lable.search.by.date')}"/></span></a></li>
+                    value="%{getText('label.search.by.location')}"/></span></a></li>
+            <li><a href="#fragment-3"><span><s:label
+                    value="%{getText('label.search.by.death.person.pin')}"/></span></a></li>
         </ul>
 
         <div id="fragment-1">
@@ -157,16 +159,41 @@
                 <col width="250px">
                 <tbody>
                 <tr>
-                    <td><s:label value="%{getText('label.start.date')}"/></td>
+                    <td><s:label value="%{getText('label.location')}"/></td>
                     <td align="left">
-                        <s:textfield name="startDate" id="startDatePicker" maxLength="10"/>
+                        <s:select list="userLocations" name="locationUKey" value="%{locationUKey}" headerKey="0"
+                                  headerValue="%{getText('select.location')}"/>
                     </td>
                     <td>
 
                     </td>
-                    <td align="left"><s:label value="%{getText('label.end.date')}"/></td>
+                    <td align="left"></td>
                     <td>
-                        <s:textfield name="endDate" id="endDatePicker" maxLength="10"/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div id="fragment-3">
+            <table>
+                <caption></caption>
+                <col width="250px">
+                <col width="250px">
+                <col width="100px">
+                <col width="250px">
+                <col width="250px">
+                <tbody>
+                <tr>
+                    <td><s:label value="%{getText('label.death.person.pin')}"/></td>
+                    <td align="left">
+                        <s:textfield name="" maxLength="10"/>
+                    </td>
+                    <td>
+
+                    </td>
+                    <td align="left"></td>
+                    <td>
                     </td>
                 </tr>
                 </tbody>
@@ -205,7 +232,7 @@
                             <s:param name="deathAlterationId" value="idUKey"/>
                         </s:url>
                         <s:url id="rejectSelected" action="eprDeathAlterationReject">
-                            <s:param name="deathAlterationId" value="idUKey"/> 
+                            <s:param name="deathAlterationId" value="idUKey"/>
                         </s:url>
                         <s:url id="approveSelected" action="eprApproveDeathAlterationsDirect">
                             <s:param name="deathAlterationId" value="idUKey"/>
@@ -238,7 +265,7 @@
                                 </s:if>
                             </td>
                             <td align="center">
-                                <s:if test="status.ordinal()<2">
+                                <s:if test="status.ordinal()<2 & (#session.user_bean.role.roleId.equals('ARG') | #session.user_bean.role.roleId.equals('RG'))">
                                     <s:a href="%{approveSelected}" title="%{getText('approveTooltip.label')}">
                                         <img src="<s:url value='/images/approve.gif'/>" width="25" height="25"
                                              border="none"/></s:a>

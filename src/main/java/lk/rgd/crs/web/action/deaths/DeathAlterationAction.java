@@ -35,13 +35,12 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
 
     private User user;
     private Date toDay;
-    private Date startDate;
-    private Date endDate;
     private DeathAlterationService deathAlterationService;
     private DeathRegistrationService deathRegistrationService;
     private DeathAlteration deathAlteration;
     private DeathRegister deathRegister;
     private District deathDistrict;
+
 
     private Map session;
     private Map<Integer, String> districtList;
@@ -49,6 +48,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     private Map<Integer, String> bdDivisionList;
     private Map<Integer, String> raceList;
     private Map<Integer, String> countryList;
+    private Map<Integer, String> userLocations;
     private Map<List, List<String>> pendingList = new HashMap<List, List<String>>();
 
     private List<DeathAlteration> approvalList;
@@ -67,6 +67,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     private int deathPersonRace;
     private int deathCountryId;
     private int deathRaceId;
+    private int locationUKey;
 
     private long certificateNumber;
     private long serialNumber;
@@ -118,7 +119,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                     deathAlteration.setDeclarant(deathRegister.getDeclarant());
                     deathAlteration.setDeathPerson(deathRegister.getDeathPerson());
                     deathAlteration.setStatus(DeathAlteration.State.DATA_ENTRY);
-                    deathAlteration.setDeathDivision(dr.getDeath().getDeathDivision());
+                    deathAlteration.setDeathRecodeDivision(dr.getDeath().getDeathDivision());
 
                     Country deathCountry;
                     if (deathPersonCountry > 0) {
@@ -236,38 +237,32 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
      * searching death alterations for approvals/rejection/delete and edit
      */
     public String deathAlterationApproval() {
+        //todo ooooooooooooooooooooooo
+        pageNo = 1;
+        rowNo = appParametersDAO.getIntParameter(DA_APPROVAL_ROWS_PER_PAGE);
         logger.debug("attemp to get death alteration pending list");
         if (pageNumber > 0) {
-            pageNo = 1;
-            rowNo = appParametersDAO.getIntParameter(DA_APPROVAL_ROWS_PER_PAGE);
-
-            //search by date frame
-            if (startDate != null & endDate != null & divisionUKey > 0) {
-                //base on role ARG and higher need to be loaded alterations in his division
-                //others need to be loaded alteration which are entered from his division
-                //todo    change
-                approvalList = deathAlterationService.getDeathAlterationByTimePeriodAndDivision(startDate, endDate, divisionUKey, user);
+            //todo seach by pin number
+            if (locationUKey > 0) {
+                //search by user location
+                approvalList = deathAlterationService.getDeathAlterationByUserLocation(locationUKey);
             } else {
-                if (!(startDate == null & endDate == null)) {
-                    addActionError(getText("invalide.searching.schema.data.enter.both.dates"));
-                    startDate = null;
-                    endDate = null;
-                    populatePrimaryLists(districtUKey, dsDivisionId, language, user);
-                    return ERROR;
+                //search by division
+                if (divisionUKey > 0) {
+                    approvalList = deathAlterationService.getAlterationApprovalListByDeathDivision(pageNo, rowNo, divisionUKey);
                 }
-            }
-            //search by division
-            if (divisionUKey > 0) {
-                approvalList = deathAlterationService.getAlterationApprovalListByDeathDivision(pageNo, rowNo, divisionUKey);
             }
             if (approvalList.size() < 1) {
                 logger.debug("no pending list found ");
                 addActionError(getText("no.pending.alterations"));
                 populatePrimaryLists(districtUKey, dsDivisionId, language, user);
+                userLocations = user.getActiveLocations(language);
                 return ERROR;
             }
         }
         populatePrimaryLists(districtUKey, dsDivisionId, language, user);
+        userLocations = user.getActiveLocations(language);
+        locationUKey = 0;
         return SUCCESS;
     }
 
@@ -922,22 +917,6 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         this.pendingListSize = pendingListSize;
     }
 
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
-
     public int getDeathPersonCountry() {
         return deathPersonCountry;
     }
@@ -984,5 +963,21 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
 
     public void setDeathCountryId(int deathCountryId) {
         this.deathCountryId = deathCountryId;
+    }
+
+    public int getLocationUKey() {
+        return locationUKey;
+    }
+
+    public void setLocationUKey(int locationUKey) {
+        this.locationUKey = locationUKey;
+    }
+
+    public Map<Integer, String> getUserLocations() {
+        return userLocations;
+    }
+
+    public void setUserLocations(Map<Integer, String> userLocations) {
+        this.userLocations = userLocations;
     }
 }
