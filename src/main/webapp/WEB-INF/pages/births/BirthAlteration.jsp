@@ -132,7 +132,7 @@ $(function() {
     });
     $('#errors-info-check').click(function() {
         document.getElementById("tempBirthDivisionId").disabled = true;
-        document.getElementById("errors-info-check").disabled = true;
+        document.getElementById("errors-info-check").style.disabled = true;
         var fieldIds = new Array('childBirthDatePicker', 'childBirthDistrictId', 'childDsDivisionId', 'childBirthDivisionId',
                 'placeOfBirth', 'placeOfBirthEnglish', 'childGender');
         enableFields(fieldIds);
@@ -157,8 +157,8 @@ $(function() {
     });
     $('#marriage-info-check').click(function() {
         document.getElementById("marriage-info-check").disabled = true;
-        var fieldIds = new Array('placeOfMarriageId', 'dateOfMarriage', 'parentsMarried1',
-                'parentsMarried2', 'parentsMarried3', 'parentsMarried0');
+        var fieldIds = new Array('placeOfMarriageId', 'dateOfMarriage', 'parentsMarriedMARRIED',
+                'parentsMarriedUNMARRIED', 'parentsMarriedNO_SINCE_MARRIED', 'parentsMarriedUNKNOWN');
         enableFields(fieldIds);
     });
     $('#mother-after-marriage-info-check').click(function() {
@@ -181,13 +181,14 @@ function minimize(id) {
 
 }
 
-function maximize(id, click) {
+function maximize(id) {
     document.getElementById(id).style.display = 'block';
     document.getElementById(id + "-max").style.display = 'none';
     document.getElementById(id + "-min").style.display = 'block';
-    document.getElementById(id + "-check").style.display = 'block';
-    document.getElementById(id + "-check-lable").style.display = 'block';
-
+    if (! document.getElementById(id + "-check").checked) {
+        document.getElementById(id + "-check").style.display = 'block';
+        document.getElementById(id + "-check-lable").style.display = 'block';
+    }
 }
 function enableFields(fieldIds) {
     for (var i = 0; i < fieldIds.length; i++) {
@@ -219,8 +220,8 @@ function initPage() {
         fieldIds = new Array('father_pinOrNic', 'fatherCountryId', 'fatherPassportNoId', 'fatherName', 'fatherDadeOfbirth',
                 'fatherRaceId', 'fatherPlaceOfBirth', 'placeOfMarriageId', 'dateOfMarriage', 'grandFatherFullName', 'grandFather_pinOrNic',
                 'grandFatherBirthYear', 'grandFatherBirthPlaceId', 'greatGrandFatherFullNameId', 'grandGrandFather_pinOrNic',
-                'grandGrandFatherBirthYear', 'greatGrandFatherBirthPlaceId', 'mothersNameAfterMarriageId', 'parentsMarried1',
-                'parentsMarried2', 'parentsMarried3', 'parentsMarried0')
+                'grandGrandFatherBirthYear', 'greatGrandFatherBirthPlaceId', 'mothersNameAfterMarriageId', 'parentsMarriedMARRIED',
+                'parentsMarriedUNMARRIED', 'parentsMarriedNO_SINCE_MARRIED', 'parentsMarriedUNKNOWN')
 
     }
     document.getElementById("header-info-max").style.display = 'none';
@@ -238,8 +239,25 @@ function initPage() {
         }
     }
     initSerialNumber();
+    if (sectionOfAct == 2) {
+        checkIdNames = new Array('errors-info-check', 'mother-info-check', 'informant-info-check');
+    }
+    if (sectionOfAct == 3) {
+        checkIdNames = new Array('father-info-check', 'marriage-info-check', 'mother-after-marriage-info-check',
+                'mother-after-marriage-info-check', 'grandFather-info-check');
+    }
+    if (sectionOfAct != 1) {
+        for (var i = 0; i < checkIdNames.length; i++) {
+            checkBoxCheck(document.getElementById(checkIdNames[i]));
+        }
+    }
 }
-
+function checkBoxCheck(id) {
+    if (id.checked) {
+        id.click();
+        id.checked = true;
+    }
+}
 $(function() {
     $("#fatherDadeOfbirth").datepicker({
         changeYear: true,
@@ -498,85 +516,46 @@ function validateBirthYear(domElement, errorText, errorCode) {
 
 </script>
 <s:if test="pageType==0">
-    <div id="birth-confirmation-search">          
+    <div id="birth-confirmation-search">
     <s:actionerror cssClass="alreadyPrinted"/>
     <s:form action="eprBirthAlterationSearch.do" onsubmit="javascript:return validate2()">
-        <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
-            <table class="search-option-table">
-                <tr>
-                    <td width="135px"><s:label value="%{getText('sectionOfTheAct.lable')}"/></td>
-                    <td width="200px"><s:select
-                            list="#@java.util.HashMap@{'1':'27','2':'52(1)','3':'27 (A)'}"
-                            name="sectionOfAct" cssStyle="width:230px;"/></td>
-                </tr>
-            </table>
-        </fieldset>
         <div id="tabs">
             <ul>
-                    <li><a href="#fragment-1"><span> <s:label
-                                    value="%{getText('registrationSerchTab3.label')}"/></span></a></li>
-                    <li><a href="#fragment-2"><span><s:label
-                                    value="%{getText('registrationSerchTab2.label')}"/></span></a></li>
-                    <li><a href="#fragment-3"><span><s:label 
-                                    value="%{getText('registrationSerchTab1.label')}"/></span></a></li>
-                </ul>
-            
+                <li><a href="#fragment-1"><span> <s:label
+                        value="%{getText('registrationSerchTab3.label')}"/></span></a></li>
+                <li><a href="#fragment-2"><span><s:label
+                        value="%{getText('registrationSerchTab2.label')}"/></span></a></li>
+            </ul>
+            <table class="search-alteration-option-table">
+                <tr>
+                    <td width="135px" ><s:label value="%{getText('sectionOfTheAct.lable')}"
+                            cssStyle="margin-left:20px;"/></td>
+                    <td width="500px"><s:select
+                            list="#@java.util.HashMap@{'1':'27','2':'52(1)','3':'27 (A)'}"
+                            name="sectionOfAct" cssStyle="width:230px;margin-left:175px;" /></td>
+                </tr>
+            </table>
             <div id="fragment-1">
-                    <table class="search-option-table">
-                        <tr>
-                            <td width="135px"><s:label name="confirmationSearch"
-                                                       value="%{getText('certificateNumber.lable')}"/></td>
-                            <td width="500px"><s:textfield name="idUKey" id="bdfSerialNoIdSearch" maxLength="10"
-                                                           onkeypress="return isNumberKey(event)"/></td>
-                        </tr>
-                    </table>
+                <table class="search-alteration-option-table">
+                    <tr>
+                        <td width="135px"><s:label name="confirmationSearch"
+                                                   value="%{getText('certificateNumber.lable')}"/></td>
+                        <td width="500px"><s:textfield name="idUKey" id="bdfSerialNoIdSearch" maxLength="10"
+                                                       onkeypress="return isNumberKey(event)"
+                                cssStyle="margin-left:154px;"/></td>
+                    </tr>
+                </table>
             </div>
             <div id="fragment-2">
-                    <table class="search-option-table">
-                        <tr>
-                            <td width="135px"><s:label name="confirmationSearch"
-                                                       value="%{getText('idNumber.lable')}"/></td>
-                            <td width="200px"><s:textfield name="nicOrPin" id="idNumberSearch" maxLength="10"/></td>
+                <table class="search-alteration-option-table">
+                    <tr>
+                        <td width="135px"><s:label name="confirmationSearch"
+                                                   value="%{getText('idNumber.lable')}"/></td>
+                        <td width="200px"><s:textfield name="nicOrPin" id="idNumberSearch" maxLength="10"/></td>
 
-                        </tr>
-                    </table>
-            </div>
-            <div id="fragment-3">
-                    <table class="search-option-table">
-                        <caption></caption>
-                        <col/>
-                        <col/>
-                        <col/>
-                        <col/>
-                        <col/>
-                        <tbody>
-                        <tr>
-                            <td><s:label value="%{getText('searchDeclarationSearial.label')}"/></td>
-                            <td><s:textfield name="serialNo" id="bdfSearchSerialNoId" value="" maxLength="10"
-                                             onkeypress="return isNumberKey(event)"/></td>
-                            <td><s:label value="%{getText('district.label')}"/></td>
-                            <td>
-                                <s:select id="birthDistrictId" name="birthDistrictId" list="districtList"
-                                          value="birthDistrictId" cssStyle="width:240px;float:left;"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><s:label name="division" value="%{getText('select_DS_division.label')}"/></td>
-                            <td>
-                                <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList"
-                                          value="%{dsDivisionId}"
-                                          cssStyle="float:left;  width:240px;"/>
-                            </td>
-                            <td><s:label value="%{getText('select_BD_division.label')}"/></td>
-                            <td>
-                                <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}"
-                                          list="bdDivisionList" cssStyle=" width:240px;float:left;"
-                                          headerValue="%{getText('all.divisions.label')}" headerKey="0"/>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-            </div>
+                    </tr>
+                </table>
+            </div>           
         </div>
         <br/>
 
@@ -839,7 +818,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 <s:label value="பதிவுப் பிரிவு/"/> <br>
                 <s:label value=" Registration Division"/>
             </td>
-            <td colspan="4"><s:select id="childBirthDivisionId" name="birthDivisionId" value="%{birthDivisionId}"
+            <td colspan="4"><s:select id="childBirthDivisionId" name="birthDivisionId"
                                       list="bdDivisionList"
                                       cssStyle="float:left;  width:95%; "/>
             </td>
