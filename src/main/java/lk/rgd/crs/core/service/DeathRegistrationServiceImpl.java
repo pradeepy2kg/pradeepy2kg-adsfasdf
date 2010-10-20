@@ -113,6 +113,22 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public DeathRegister getById(long deathRegisterIdUKey) {
+        logger.debug("Load death registration record : {}", deathRegisterIdUKey);
+        DeathRegister deathRegister;
+        try {
+            deathRegister = deathRegisterDAO.getById(deathRegisterIdUKey);
+            return deathRegister;
+        } catch (NullPointerException e) {
+            logger.debug("no results found for death id : {}", deathRegisterIdUKey);
+            return null;
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
     @Transactional(propagation = Propagation.REQUIRED)
     //todo do validation warnings
     public List<UserWarning> approveDeathRegistration(long deathRegisterIdUKey, User user, boolean ignoreWarnings) {
@@ -177,7 +193,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         }
         //setting comment, this is relative only to death rejaction
         dr.setCommnet(comment);
-        //updating 
+        //updating
         deathRegisterDAO.updateDeathRegistration(dr, user);
     }
 

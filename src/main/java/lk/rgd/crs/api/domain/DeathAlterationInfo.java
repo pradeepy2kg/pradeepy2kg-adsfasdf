@@ -1,5 +1,7 @@
 package lk.rgd.crs.api.domain;
 
+import lk.rgd.crs.web.util.WebUtils;
+
 import javax.persistence.Embeddable;
 import javax.persistence.Column;
 import javax.persistence.Temporal;
@@ -48,7 +50,7 @@ public class DeathAlterationInfo implements Serializable {
     }
 
     public void setPlaceOfDeath(String placeOfDeath) {
-        this.placeOfDeath = placeOfDeath;
+        this.placeOfDeath = WebUtils.filterBlanks(placeOfDeath);
     }
 
     public Date getDateOfDeath() {
@@ -64,7 +66,7 @@ public class DeathAlterationInfo implements Serializable {
     }
 
     public void setTimeOfDeath(String timeOfDeath) {
-        this.timeOfDeath = timeOfDeath;
+        this.timeOfDeath = WebUtils.filterBlanks(timeOfDeath);
     }
 
     public String getPlaceOfDeathInEnglish() {
@@ -72,7 +74,7 @@ public class DeathAlterationInfo implements Serializable {
     }
 
     public void setPlaceOfDeathInEnglish(String placeOfDeathInEnglish) {
-        this.placeOfDeathInEnglish = placeOfDeathInEnglish;
+        this.placeOfDeathInEnglish = WebUtils.filterBlanks(placeOfDeathInEnglish);
     }
 
     public boolean isCauseOfDeathEstablished() {
@@ -88,7 +90,7 @@ public class DeathAlterationInfo implements Serializable {
     }
 
     public void setIcdCodeOfCause(String icdCodeOfCause) {
-        this.icdCodeOfCause = icdCodeOfCause;
+        this.icdCodeOfCause = WebUtils.filterBlanks(icdCodeOfCause);
     }
 
     public String getPlaceOfBurial() {
@@ -96,7 +98,7 @@ public class DeathAlterationInfo implements Serializable {
     }
 
     public void setPlaceOfBurial(String placeOfBurial) {
-        this.placeOfBurial = placeOfBurial;
+        this.placeOfBurial = WebUtils.filterBlanks(placeOfBurial);
     }
 
     public String getCauseOfDeath() {
@@ -104,6 +106,6 @@ public class DeathAlterationInfo implements Serializable {
     }
 
     public void setCauseOfDeath(String causeOfDeath) {
-        this.causeOfDeath = causeOfDeath;
+        this.causeOfDeath = WebUtils.filterBlanks(causeOfDeath);
     }
 }

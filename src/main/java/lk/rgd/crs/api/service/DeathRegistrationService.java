@@ -57,6 +57,14 @@ public interface DeathRegistrationService {
     public DeathRegister getById(long deathRegisterIdUKey, User user);
 
     /**
+     * get death alteration by given idUKey with out validating user's permission
+     *
+     * @param deathRegisterIdUKey death register unique key
+     * @return Death Register object for given death register unique key
+     */
+    public DeathRegister getById(long deathRegisterIdUKey);
+
+    /**
      * delete a Death registration based on requested Id
      *
      * @param deathRegiserIdUKey the unique id of the death registration to be removed

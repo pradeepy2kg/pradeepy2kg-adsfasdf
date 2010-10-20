@@ -1083,5 +1083,10 @@
             <result type="tiles" name="pageLoad">epr.deathAlterationRejectGetComment</result>
         </action>
 
+        <action name="eprDeathAlterationApplyChanges" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"
+                method="applyChanges">
+            <result type="tiles" name="success">epr.deathAlterationApprovalHome</result>
+        </action>
+
     </package>
 </struts>
