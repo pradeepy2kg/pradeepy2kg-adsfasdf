@@ -84,6 +84,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
 
     private boolean editMode;
 
+
     public DeathAlterationAction(DeathAlterationService deathAlterationService, DeathRegistrationService deathRegistrationService
             , DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO, RaceDAO raceDAO, CountryDAO countryDAO, AppParametersDAO appParametersDAO) {
         this.deathAlterationService = deathAlterationService;
@@ -114,12 +115,12 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             if (!editMode) {
                 logger.debug("capturing death alteration alteration serial number : {}", alterationSerialNo);
                 try {
-                    DeathRegister dr = deathRegistrationService.getById(deathId, user);
+                    DeathRegister dr = deathRegistrationService.getById(deathId);
                     deathAlteration.setDeathId(deathId);
                     deathAlteration.setDeclarant(deathRegister.getDeclarant());
                     deathAlteration.setDeathPerson(deathRegister.getDeathPerson());
                     deathAlteration.setStatus(DeathAlteration.State.DATA_ENTRY);
-                    deathAlteration.setDeathRecodeDivision(dr.getDeath().getDeathDivision());
+                    deathAlteration.setDeathRecodDivision(dr.getDeath().getDeathDivision());
                     deathAlteration.setDeathPersonPin(Integer.parseInt(dr.getDeathPerson().getDeathPersonPINorNIC()));
 
                     Country deathCountry;
@@ -133,9 +134,9 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                         deathRace = raceDAO.getRace(deathPersonRace);
                         deathAlteration.getDeathPerson().setDeathPersonRace(deathRace);
                     }
-                    populatePrimaryLists(districtUKey, dsDivisionId, language, user);
+                    //compare before add
                     deathAlterationService.addDeathAlteration(deathAlteration, user);
-
+                    populatePrimaryLists(districtUKey, dsDivisionId, language, user);
                     addActionMessage(getText("alt.massage.success"));
                     logger.debug("capturing alteration success ");
                     return SUCCESS;
@@ -169,7 +170,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             deathAlteration = new DeathAlteration();
             //search by certificate number
             if (certificateNumber != 0)
-                deathRegister = deathRegistrationService.getById(certificateNumber, user);
+                deathRegister = deathRegistrationService.getById(certificateNumber);
             //search by pin
             if (pin != 0) {
                 //only get firts recode others ignored  because there can be NIC duplications
@@ -247,6 +248,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 approvalList = deathAlterationService.getAlterationByDeathPersonPin(pin, user);
             } else if (locationUKey > 0) {
                 //search by user location
+                //todo :( defect with approval
                 approvalList = deathAlterationService.getDeathAlterationByUserLocation(locationUKey);
             } else {
                 //search by division
@@ -259,6 +261,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 addActionError(getText("no.pending.alterations"));
                 populatePrimaryLists(districtUKey, dsDivisionId, language, user);
                 userLocations = user.getActiveLocations(language);
+                locationUKey = 0;
                 return ERROR;
             }
         }
@@ -437,6 +440,10 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         return "pageLoad";
     }
 
+    public String applyChanges() {
+        return SUCCESS;
+    }
+
 
     //todo paginations next and previous
     /*  public String nextPage() {
@@ -541,23 +548,23 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 break;
             case 4:
                 List<String> countryList = new ArrayList<String>();
-                Country ex = (Country) deathRegistreValue;
-                Country cu = (Country) deathAlterationValue;
-                if (ex != null & cu != null) {
-                    countryList.add(0, ex.getEnCountryName());
-                    countryList.add(1, cu.getEnCountryName());
-                    if (compareCountry(ex, cu)) {
+                Country exsisting = (Country) deathRegistreValue;
+                Country current = (Country) deathAlterationValue;
+                if (exsisting != null & current != null) {
+                    countryList.add(0, exsisting.getEnCountryName());
+                    countryList.add(1, current.getEnCountryName());
+                    if (compareCountry(exsisting, current)) {
                         pendingList.put(indexList, countryList);
                     }
                 } else {
-                    if (!(ex == null & cu == null)) {
-                        if (ex != null) {
-                            countryList.add(0, ex.getEnCountryName());
+                    if (!(exsisting == null & current == null)) {
+                        if (exsisting != null) {
+                            countryList.add(0, exsisting.getEnCountryName());
                             countryList.add(1, null);
                         }
-                        if (cu != null) {
+                        if (current != null) {
                             countryList.add(0, null);
-                            countryList.add(1, cu.getEnCountryName());
+                            countryList.add(1, current.getEnCountryName());
                         }
                         pendingList.put(indexList, countryList);
                     }
@@ -590,7 +597,6 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             default:
         }
     }
-
 
     private boolean compareStiring(String exsisting, String current) {
         if (current != null) {
@@ -639,6 +645,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             return false;
         return true;
     }
+
 
     /**
      * basic list district/divisions/DS

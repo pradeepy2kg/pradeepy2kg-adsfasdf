@@ -1,3 +1,4 @@
+<%@ page import="lk.rgd.common.api.domain.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-tags" %>
@@ -93,7 +94,9 @@
     });
 
 </script>
-
+<%
+    User user = (User) session.getAttribute("user_bean");
+%>
 <s:form method="post" action="eprApproveDeathAlterations.do">
 
     <div id="tabs">
@@ -219,6 +222,7 @@
                     <th width="100px"><s:label value="%{getText('delete.label')}"/></th>
                     <th width="100px"><s:label value="%{getText('reject.label')}"/></th>
                     <th width="100px"><s:label value="%{getText('approve.label')}"/></th>
+                    <th width="100px"><s:label value="%{getText('apply.label')}"/></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -265,9 +269,23 @@
                                 </s:if>
                             </td>
                             <td align="center">
+                                <s:set name="deathDivision" value="deathRecodDivision.bdDivisionUKey"/>
                                 <s:if test="status.ordinal()<2 & (#session.user_bean.role.roleId.equals('ARG') | #session.user_bean.role.roleId.equals('RG'))">
+                                    <%
+                                        int deathDivisionUKey = (Integer) pageContext.getAttribute("deathDivision");
+                                        boolean approveRights = user.isAllowedAccessToBDDSDivision(deathDivisionUKey);
+                                        if (approveRights) {
+                                    %>
                                     <s:a href="%{approveSelected}" title="%{getText('approveTooltip.label')}">
                                         <img src="<s:url value='/images/approve.gif'/>" width="25" height="25"
+                                             border="none"/></s:a>
+                                    <%}%>
+                                </s:if>
+                            </td>
+                            <td align="center">
+                                <s:if test="status.ordinal()>1 & (#session.user_bean.role.roleId.equals('ARG') | #session.user_bean.role.roleId.equals('RG'))">
+                                    <s:a href="%{approveSelected}" title="%{getText('approveTooltip.label')}">
+                                        <img src="<s:url value='/images/update.gif'/>" width="25" height="25"
                                              border="none"/></s:a>
                                 </s:if>
                             </td>

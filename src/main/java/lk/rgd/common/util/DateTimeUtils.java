@@ -22,6 +22,7 @@ public class DateTimeUtils {
 
     /**
      * Returns a String representation of the passed Date in ISO 8601
+     *
      * @param localDate
      * @return
      */
@@ -39,9 +40,10 @@ public class DateTimeUtils {
     }
 
     /**
-     *  Returns an ISO8601 comliant (W3C standard as well) date. yyyy-MM-dd
-     * @param date   A java.util.Date object
-     * @return  the formatted String
+     * Returns an ISO8601 comliant (W3C standard as well) date. yyyy-MM-dd
+     *
+     * @param date A java.util.Date object
+     * @return the formatted String
      */
     public static String getISO8601FormattedString(Date date) {
         synchronized (ISO8601Format) {
@@ -50,10 +52,11 @@ public class DateTimeUtils {
     }
 
     /**
-     *  Returns a java.util.Date from an ISO8601 compliant date string yyyy-MM-dd
-     *  returns null if the string is not parseable.
+     * Returns a java.util.Date from an ISO8601 compliant date string yyyy-MM-dd
+     * returns null if the string is not parseable.
+     *
      * @param s String formatted in yyyy-MM-dd
-     * @return  date
+     * @return date
      */
     public static Date getDateFromISO8601String(String s) {
         try {
@@ -63,5 +66,13 @@ public class DateTimeUtils {
         } catch (ParseException e) {
             return null;
         }
+    }
+
+    public static DateFormat getUtcDfm() {
+        return utcDfm;
+    }
+
+    public static DateFormat getISO8601Format() {
+        return ISO8601Format;
     }
 }

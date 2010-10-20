@@ -15,13 +15,15 @@ import java.util.HashMap;
 @Entity
 @Table(name = "ALT_DEATH", schema = "CRS")
 @NamedQueries({
-        @NamedQuery(name = "get.alt.by.death.certificate.number", query = "SELECT da FROM DeathAlteration da WHERE da.deathId =:deathCertificateNumber"),
-        @NamedQuery(name = "get.alt.by.division.death.division", query = "SELECT da FROM DeathAlteration da,DeathRegister dr" +
-                " WHERE da.deathId=dr.idUKey " +
-                " AND dr.death.deathDivision.bdDivisionUKey =:deathDivisionUkey"),
+        @NamedQuery(name = "get.alt.by.death.certificate.number", query = "SELECT da FROM DeathAlteration da" +
+                " WHERE da.deathId =:deathCertificateNumber"),
+        @NamedQuery(name = "get.alt.by.division.death.division", query = "SELECT da FROM DeathAlteration da," +
+                "DeathRegister dr WHERE da.deathId=dr.idUKey AND dr.death.deathDivision.bdDivisionUKey =:deathDivisionUkey"),
         @NamedQuery(name = "get.atl.by.death.id", query = "SELECT da FROM DeathAlteration da WHERE da.deathId=:deathId"),
-        @NamedQuery(name = "get.alt.by.user.location", query = "SELECT da FROM DeathAlteration  da WHERE da.submittedLocation.locationUKey =:locationUKey"),
-        @NamedQuery(name = "get.alt.by.death.person.pin", query = "SELECT da FROM DeathAlteration  da WHERE da.deathPersonPin =:pin"),
+        @NamedQuery(name = "get.alt.by.user.location", query = "SELECT da FROM DeathAlteration  da" +
+                " WHERE da.submittedLocation.locationUKey =:locationUKey"),
+        @NamedQuery(name = "get.alt.by.death.person.pin", query = "SELECT da FROM DeathAlteration  da " +
+                "WHERE da.deathPersonPin =:pin"),
         //todo
         @NamedQuery(name = "get.alt.by.seral.number.death.division", query = "SELECT da FROM DeathAlteration da")
 })
@@ -31,7 +33,6 @@ public class DeathAlteration {
     public static final Map<Integer, String> indexMap = new HashMap<Integer, String>();
 
     static {
-
         indexMap.put(1, "field.sudden.death");
         indexMap.put(2, "field.date.death");
         indexMap.put(3, "field.time.death");
@@ -122,8 +123,10 @@ public class DeathAlteration {
 
     @Column
     private boolean mcOfParents;
+
     @Column
     private String otherDocuments;
+
     @Column
     private String comments;
 
@@ -139,7 +142,7 @@ public class DeathAlteration {
 
     @ManyToOne
     @JoinColumn(name = "deathDivisionUKey", nullable = false)
-    private BDDivision deathRecodeDivision;
+    private BDDivision deathRecodDivision;
 
     @Embedded
     private DeathAlterationInfo deathInfo = new DeathAlterationInfo();
@@ -152,6 +155,9 @@ public class DeathAlteration {
 
     @Embedded
     private CRSLifeCycleInfo lifeCycleInfo = new CRSLifeCycleInfo();
+
+    @Transient
+    private String deathPersonName;
 
     public State getStatus() {
         return status;
@@ -282,12 +288,12 @@ public class DeathAlteration {
         this.deathInfo = deathInfo;
     }
 
-    public BDDivision getDeathRecodeDivision() {
-        return deathRecodeDivision;
+    public BDDivision getDeathRecodDivision() {
+        return deathRecodDivision;
     }
 
-    public void setDeathRecodeDivision(BDDivision deathRecodeDivision) {
-        this.deathRecodeDivision = deathRecodeDivision;
+    public void setDeathRecodDivision(BDDivision deathRecodDivision) {
+        this.deathRecodDivision = deathRecodDivision;
     }
 
     public Location getSubmittedLocation() {
@@ -304,5 +310,13 @@ public class DeathAlteration {
 
     public void setDeathPersonPin(long deathPersonPin) {
         this.deathPersonPin = deathPersonPin;
+    }
+
+    public String getDeathPersonName() {
+        return deathPersonName;
+    }
+
+    public void setDeathPersonName(String deathPersonName) {
+        this.deathPersonName = deathPersonName;
     }
 }
