@@ -1,9 +1,10 @@
 package lk.rgd.crs.api.domain;
 
-import lk.rgd.crs.web.util.WebUtils;
 
-import javax.persistence.Embeddable;
+import lk.rgd.common.util.WebUtils;
+
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.io.Serializable;
@@ -11,7 +12,6 @@ import java.util.Date;
 
 /**
  * class for death info   for alteration
- *
  * @author amith jayasekara
  */
 @Embeddable
