@@ -43,7 +43,7 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
         logger.debug("adding a new death alteration");
         da.setSubmittedLocation(user.getPrimaryLocation());
         if (da != null)
-            deathAlterationValidator.validateMinimulCondiations(da);
+            deathAlterationValidator.validateMinimumConditions(da);
         deathAlterationDAO.addDeathAlteration(da, user);
     }
 
@@ -148,6 +148,15 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
     @Transactional(propagation = Propagation.REQUIRED)
     public List<DeathAlteration> getDeathAlterationByUserLocation(int locationUKey) {
         return deathAlterationDAO.getDeathAlterationByUserLocation(locationUKey);
+    }
+
+    /**
+     * @inheritDoc
+     */
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public List<DeathAlteration> getAlterationByDeathPersonPin(long pin, User user) {
+        return deathAlterationDAO.getDeathAlterationByDeathPersonPin(pin);
     }
 
 

@@ -26,7 +26,7 @@ public class DeathAlterationValidator {
     private static final Logger logger = LoggerFactory.getLogger(DeathAlterationValidator.class);
 
 
-    public void validateMinimulCondiations(DeathAlteration deathAlteration) {
+    public void validateMinimumConditions(DeathAlteration deathAlteration) {
         boolean pass = compareObjects(deathAlteration);
         if (!pass) {
             handleException("incomplete death alteration ", ErrorCodes.INCOMPLETE_ALTERATION);

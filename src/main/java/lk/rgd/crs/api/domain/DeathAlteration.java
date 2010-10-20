@@ -21,6 +21,7 @@ import java.util.HashMap;
                 " AND dr.death.deathDivision.bdDivisionUKey =:deathDivisionUkey"),
         @NamedQuery(name = "get.atl.by.death.id", query = "SELECT da FROM DeathAlteration da WHERE da.deathId=:deathId"),
         @NamedQuery(name = "get.alt.by.user.location", query = "SELECT da FROM DeathAlteration  da WHERE da.submittedLocation.locationUKey =:locationUKey"),
+        @NamedQuery(name = "get.alt.by.death.person.pin", query = "SELECT da FROM DeathAlteration  da WHERE da.deathPersonPin =:pin"),
         //todo
         @NamedQuery(name = "get.alt.by.seral.number.death.division", query = "SELECT da FROM DeathAlteration da")
 })
@@ -128,6 +129,9 @@ public class DeathAlteration {
 
     @Column
     private float stampFee;
+
+    @Column
+    private long deathPersonPin;
 
     @ManyToOne
     @JoinColumn(name = "submitedLocationUKey", nullable = false)
@@ -292,5 +296,13 @@ public class DeathAlteration {
 
     public void setSubmittedLocation(Location submittedLocation) {
         this.submittedLocation = submittedLocation;
+    }
+
+    public long getDeathPersonPin() {
+        return deathPersonPin;
+    }
+
+    public void setDeathPersonPin(long deathPersonPin) {
+        this.deathPersonPin = deathPersonPin;
     }
 }

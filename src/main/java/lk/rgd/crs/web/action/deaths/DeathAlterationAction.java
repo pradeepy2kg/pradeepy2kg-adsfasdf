@@ -120,6 +120,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                     deathAlteration.setDeathPerson(deathRegister.getDeathPerson());
                     deathAlteration.setStatus(DeathAlteration.State.DATA_ENTRY);
                     deathAlteration.setDeathRecodeDivision(dr.getDeath().getDeathDivision());
+                    deathAlteration.setDeathPersonPin(Integer.parseInt(dr.getDeathPerson().getDeathPersonPINorNIC()));
 
                     Country deathCountry;
                     if (deathPersonCountry > 0) {
@@ -172,9 +173,9 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             //search by pin
             if (pin != 0) {
                 //only get firts recode others ignored  because there can be NIC duplications
-                List<DeathRegister> deathAltList = deathRegistrationService.getByPinOrNic(pin, user);
-                if (deathAltList != null)
-                    deathRegister = deathAltList.get(0);
+                List<DeathRegister> deathRegisterList = deathRegistrationService.getByPinOrNic(pin, user);
+                if (deathRegisterList != null)
+                    deathRegister = deathRegisterList.get(0);
             }
             //search by  serial and death division
             if (serialNumber != 0 && divisionUKey != 0) {
@@ -237,13 +238,14 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
      * searching death alterations for approvals/rejection/delete and edit
      */
     public String deathAlterationApproval() {
-        //todo ooooooooooooooooooooooo
         pageNo = 1;
         rowNo = appParametersDAO.getIntParameter(DA_APPROVAL_ROWS_PER_PAGE);
         logger.debug("attemp to get death alteration pending list");
         if (pageNumber > 0) {
-            //todo seach by pin number
-            if (locationUKey > 0) {
+            //search by pin
+            if (pin > 0) {
+                approvalList = deathAlterationService.getAlterationByDeathPersonPin(pin, user);
+            } else if (locationUKey > 0) {
                 //search by user location
                 approvalList = deathAlterationService.getDeathAlterationByUserLocation(locationUKey);
             } else {
@@ -324,7 +326,6 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         entry = (Map.Entry) array[8];
         getDisplayList(entry.getKey(), entry.getValue(), deathRegister.getDeath().getPlaceOfBurial(), deathAlteration.getDeathInfo().getPlaceOfBurial(), 0);
 
-        //todo possible defect with ICD code and cause of death
         //todo death person pin is not here
         entry = (Map.Entry) array[10];
         getDisplayList(entry.getKey(), entry.getValue(), deathRegister.getDeathPerson().getDeathPersonCountry(), deathAlteration.getDeathPerson().getDeathPersonCountry(), 4);

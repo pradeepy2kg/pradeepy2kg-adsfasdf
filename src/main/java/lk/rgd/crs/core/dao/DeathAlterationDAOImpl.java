@@ -96,4 +96,11 @@ public class DeathAlterationDAOImpl extends BaseDAO implements DeathAlterationDA
         q.setParameter("locationUKey", locationUKey);
         return q.getResultList();
     }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<DeathAlteration> getDeathAlterationByDeathPersonPin(long pin) {
+        Query q = em.createNamedQuery("get.alt.by.death.person.pin");
+        q.setParameter("pin", pin);
+        return q.getResultList();
+    }
 }

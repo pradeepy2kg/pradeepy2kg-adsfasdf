@@ -84,4 +84,12 @@ public interface DeathAlterationDAO {
      */
     public List<DeathAlteration> getDeathAlterationByUserLocation(int locationUKey);
 
+    /**
+     * get death alteration by death persons pin number
+     *
+     * @param pin death persons pin number
+     * @return list of death alterations most probably one result
+     */
+    public List<DeathAlteration> getDeathAlterationByDeathPersonPin(long pin);
+
 }
