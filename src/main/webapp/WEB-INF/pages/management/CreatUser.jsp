@@ -94,6 +94,8 @@
         return true;
     }
 
+    function initPage() {
+    }
 </script>
 <div id="user-create-outer">
     <fieldset style="border:3px solid #c3dcee;margin-left:12em;margin-right:20.5em;margin-top:2.5em;">
@@ -156,38 +158,36 @@
                 </td>
             </s:label>
             </tr>
-                    <%--todo--%>
-                <div id="edit">
-                    <tr>
+                <%--todo--%>
+            <div id="edit">
+                <tr>
+                    <td>
+                        <s:if test="user == null">
+                            <s:label value="%{getText('assigned_districts.label')}"/>
+                        </s:if>
+                    </td>
+                    <td>
+                        <s:if test="user == null">
+                            <s:select list="districtList" name="assignedDistricts" multiple="true" size="10"
+                                      id="districtId"/>
+                        </s:if>
+                    </td>
+                <tr>
+                    <s:label>
                         <td>
                             <s:if test="user == null">
-                                <s:label value="%{getText('assigned_districts.label')}"/>
+                                <s:label value="%{getText('assigned_ds_divisions.label')}"/>
                             </s:if>
                         </td>
-                        <td>
-                            <s:if test="user == null">
-                                <s:select list="districtList" name="assignedDistricts" multiple="true"
-                                          size="10"
-                                          id="districtId"/>
-                            </s:if>
+                        <s:if test="user == null">
+                            <td><s:select list=" dsDivisionList" name="assignedDivisions" multiple="true" size="10"
+                                          id="divisionId"/>
+                        </s:if>
                         </td>
-                    <tr>
-                        <s:label>
-                            <td>
-                                <s:if test="user == null">
-                                    <s:label value="%{getText('assigned_ds_divisions.label')}"/>
-                                </s:if>
-                            </td>
-                            <s:if test="user == null">
-                                <td><s:select list=" dsDivisionList" name="assignedDivisions" multiple="true"
-                                              size="10"
-                                              id="divisionId"/>
-                            </s:if>
-                            </td>
-                        </s:label>
-                    </tr>
-                </div>
-                    <%--todo end--%>
+                    </s:label>
+                </tr>
+            </div>
+                <%--todo end--%>
 
 
             <tr>

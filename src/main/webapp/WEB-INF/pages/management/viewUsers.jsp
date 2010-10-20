@@ -25,12 +25,15 @@
             "sPaginationType": "full_numbers"
         });
     });
+
+    function initPage() {
+    }
 </script>
 
 
 <div id="view-users">
     <s:actionmessage cssStyle="text-align:left;"/>
-    
+
     <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
         <legend>Search Options</legend>
         <s:form action="eprViewSelectedUsers.do" name="viewUsers" id="view_usrs_form" method="POST">
@@ -51,7 +54,7 @@
                                                        headerValue="ALL"/></td>
                     <td rowspan="2" style="width:75px;">OR</td>
                     <td rowspan="2"><label>Name </label></td>
-                    <td rowspan="2"><s:textfield name="nameOfUser"/></td>
+                    <td rowspan="2"><s:textfield name="nameOfUser" cssStyle="text-transform:none;"/></td>
                     <td rowspan="2">
                         <div class="form-submit"><s:submit value="   SEARCH   "/></div>
                     </td>
