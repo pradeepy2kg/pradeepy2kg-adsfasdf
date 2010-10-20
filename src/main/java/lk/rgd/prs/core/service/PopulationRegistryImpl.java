@@ -203,6 +203,21 @@ public class PopulationRegistryImpl implements PopulationRegistry {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Auditable
+    public List<Person> findAllChildren(Person person, User user) {
+        if (user.isAuthorized(Permission.PRS_LOOKUP_PERSON_BY_KEYS)) {
+            return personDao.findAllChildren(person);
+        } else {
+            logger.error("User : " + user.getUserId() + " is not allowed to lookup persons on the PRS for children");
+            throw new PRSRuntimeException("User : " + user.getUserId() +
+                " is not allowed to lookup entries on the PRS for children", ErrorCodes.PRS_LOOKUP_BY_KEYS_DENIED);
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
     @Auditable
     @Transactional(propagation = Propagation.SUPPORTS)
     public Person findPersonByPINorNIC(String pinOrNic, User user) {

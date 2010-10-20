@@ -87,12 +87,11 @@ public class DatabaseInitializer implements ApplicationContextAware {
     }
 
     public void setApplicationContext(ApplicationContext ctx) throws BeansException {
-
         logger.info("Starting the database initialization..");
 
         boolean mysql = false;
 
-        // detect the target DB
+        // detect the target DB 
         EntityManagerFactoryInfo emf = (EntityManagerFactoryInfo) ctx.getBean("entityManagerFactory");
         if ("org.hibernate.dialect.MySQLDialect".equals(emf.getPersistenceUnitInfo().getProperties().
                 getProperty("hibernate.dialect"))) {
@@ -135,7 +134,6 @@ public class DatabaseInitializer implements ApplicationContextAware {
     }
 
     private void recreateCleanDB(boolean mysql) {
-
         System.out.println("\n**********          **********          **********          **********          **********\n");
         logger.info("Re-creating a clean Database ...");
 
@@ -245,6 +243,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bs.set(Permission.SEARCH_PRS);
             bs.set(Permission.USER_PREFERENCES);
             bs.set(Permission.EDIT_BIRTH_ALTERATION);
+            bs.set(Permission.PRS_VIEW_PERSON);
 
             deoRole.setPermBitSet(bs);
             roleDao.save(deoRole);

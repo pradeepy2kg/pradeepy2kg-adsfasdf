@@ -74,6 +74,14 @@ public interface PersonDAO {
     public List<Person> findPersonsByNIC(String nic);
 
     /**
+     * Return a list of Person objects as children for the given person
+     *
+     * @param p the Person whose childrn we want to find
+     * @return the matching list of person (children)
+     */
+    public List<Person> findAllChildren(Person p);
+
+    /**
      * Return all records - for indexing only
      *
      * @return all records

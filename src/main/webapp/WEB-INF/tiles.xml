@@ -427,4 +427,8 @@
         <put-attribute name="title" value="person_registration.title"/>
     </definition>
 
+    <definition name="epr.personDetails" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/prs/PersonDetails.jsp"/>
+        <put-attribute name="title" value="person_details.title"/>
+    </definition>
 </tiles-definitions>
