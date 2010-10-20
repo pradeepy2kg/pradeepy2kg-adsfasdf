@@ -41,10 +41,9 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
     @Transactional(propagation = Propagation.REQUIRED)
     public void addDeathAlteration(DeathAlteration da, User user) {
         logger.debug("adding a new death alteration");
-        DeathRegister dr = deathRegistrationService.getById(da.getDeathId(), user);
         da.setSubmittedLocation(user.getPrimaryLocation());
-        if (da != null & dr != null)
-            deathAlterationValidator.validateMinimulCondiations(da, dr);
+        if (da != null)
+            deathAlterationValidator.validateMinimulCondiations(da);
         deathAlterationDAO.addDeathAlteration(da, user);
     }
 
@@ -134,15 +133,12 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
         } else {
             da.setApprovalStatuses(approvalBitSet);
         }
-
-        //setting state
         //true means fully
         if (appStatus) {
             da.setStatus(DeathAlteration.State.FULLY_APPROVED);
         } else {
             da.setStatus(DeathAlteration.State.PARTIALY_APPROVED);
         }
-        //merging object
         deathAlterationDAO.updateDeathAlteration(da, user);
     }
 
@@ -155,7 +151,7 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
     }
 
 
-    private void validateAccessToBDDivision(User user, BDDivision bdDivision) {
+/*    private void validateAccessToBDDivision(User user, BDDivision bdDivision) {
         if (!(User.State.ACTIVE == user.getStatus()
                 &&
                 (Role.ROLE_ARG.equals(user.getRole().getRoleId())
@@ -166,12 +162,11 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
                         )
                 )
         )) {
-
-            handleException("User : " + user.getUserId() + " is not allowed access to the District : " +
+                       handleException("User : " + user.getUserId() + " is not allowed access to the District : " +
                     bdDivision.getDistrict().getDistrictId() + " and/or DS Division : " +
                     bdDivision.getDsDivision().getDivisionId(), ErrorCodes.PERMISSION_DENIED);
         }
-    }
+    }*/
 
     private void handleException(String message, int code) {
         logger.error(message);
