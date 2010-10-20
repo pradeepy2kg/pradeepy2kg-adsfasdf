@@ -1546,7 +1546,12 @@ public class BirthRegistrationServiceImpl implements
                 mother.setGender(AppConstants.Gender.FEMALE.ordinal());
                 mother.setPreferredLanguage(prefLanguage);
                 mother.setNic(motherNICorPIN);
-                mother.setStatus(Person.Status.UNVERIFIED);
+                if (motherNICorPIN != null) {
+                    mother.setNic(motherNICorPIN);
+                    mother.setStatus(Person.Status.SEMI_VERIFIED);
+                } else {
+                    mother.setStatus(Person.Status.UNVERIFIED);
+                }
                 mother.setLifeStatus(Person.LifeStatus.ALIVE);
                 mother.setPlaceOfBirth(parent.getMotherPlaceOfBirth());
 
