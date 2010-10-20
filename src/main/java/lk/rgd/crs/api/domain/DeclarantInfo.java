@@ -1,9 +1,9 @@
 package lk.rgd.crs.api.domain;
 
-import lk.rgd.crs.web.util.WebUtils;
+import lk.rgd.common.util.WebUtils;
 
-import javax.persistence.Embeddable;
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 /**

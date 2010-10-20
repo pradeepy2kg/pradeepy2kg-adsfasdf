@@ -1,6 +1,6 @@
 <%@ page import="lk.rgd.common.api.domain.Role" %>
 <%@ page import="lk.rgd.common.api.domain.User" %>
-<%@ page import="lk.rgd.crs.web.util.WebUtils" %>
+<%@ page import="lk.rgd.common.util.WebUtils" %>
 <%@ page import="lk.rgd.common.util.RolePermissionUtils" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>

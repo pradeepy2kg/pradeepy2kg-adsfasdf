@@ -34,6 +34,9 @@
     <col/>
     <tbody>
     <tr>
+        <s:actionmessage cssStyle="text-align:left;color:red;"/>
+    </tr>
+    <tr>
         <td width="300px"></td>
         <td align="center" style="font-size:12pt; width:430px">
             <img src="<s:url value="/images/official-logo.png"/>"/><br>
