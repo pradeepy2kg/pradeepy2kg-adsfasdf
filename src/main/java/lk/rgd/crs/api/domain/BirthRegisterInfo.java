@@ -5,7 +5,7 @@ import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.DateTimeUtils;
-import lk.rgd.crs.web.util.WebUtils;
+import lk.rgd.common.util.WebUtils;
 
 import javax.persistence.*;
 import java.io.Serializable;

@@ -1,19 +1,12 @@
-package lk.rgd.crs.web.util;
-
-import lk.rgd.crs.api.domain.BirthDeclaration;
-import lk.rgd.crs.web.WebConstants;
-import lk.rgd.common.api.domain.User;
-import lk.rgd.common.api.domain.Role;
-import lk.rgd.common.api.dao.RoleDAO;
-
-import java.beans.PropertyDescriptor;
-import java.beans.BeanInfo;
-import java.beans.Introspector;
-import java.lang.reflect.Method;
+package lk.rgd.common.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
+
+import java.beans.BeanInfo;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.Method;
 
 /**
  * Selection of utility methods to use in web apps, from struts actions and servlets or from other helper classes.

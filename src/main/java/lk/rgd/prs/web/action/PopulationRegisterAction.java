@@ -4,7 +4,10 @@ import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.common.api.dao.CountryDAO;
 import lk.rgd.common.api.dao.RaceDAO;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.util.WebUtils;
 import lk.rgd.crs.web.WebConstants;
+import lk.rgd.prs.PRSRuntimeException;
+import lk.rgd.prs.api.domain.Address;
 import lk.rgd.prs.api.domain.Person;
 import lk.rgd.prs.api.service.PopulationRegistry;
 import org.apache.struts2.interceptor.SessionAware;
@@ -47,9 +50,35 @@ public class PopulationRegisterAction extends ActionSupport implements SessionAw
     }
 
     public String personRegistration() {
-        logger.debug("Registration of existing person to PRS");
-        
-        
+        logger.debug("Registration of exiting person to PRS");
+        try {
+            // add passport number in given format - e.g. LK:M1203456 
+            person.addPassportNo(countryDAO.getCountry(personCountryId), personPassportNo);
+            person.setStatus(Person.Status.VERIFIED);
+            person.setLifeStatus(Person.LifeStatus.ALIVE);
+
+            long pin = service.addPerson(person, user);
+
+            // add permanent address
+            final Address permanent = new Address(permanentAddress);
+            permanent.setPermanent(true);
+            person.specifyAddress(permanent);
+            service.addAddress(permanent, user);
+
+            // add current address if available
+            if (WebUtils.filterBlanks(currentAddress) != null) {
+                final Address current = new Address(currentAddress);
+                person.specifyAddress(current);
+                service.addAddress(current, user);
+            }
+            service.updatePerson(person, user);
+
+            addActionMessage(getText("person_reg_success.message") + pin);
+
+        } catch (PRSRuntimeException e) {
+            logger.error("PRS Exception occurred while adding person to the PRS", e);
+        }
+        populate();         // TODO remove this temporary used
         return SUCCESS;
     }
 
@@ -67,10 +96,10 @@ public class PopulationRegisterAction extends ActionSupport implements SessionAw
      */
     private void populate() {
         logger.debug("Populating initializing data");
-        String langage = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
+        String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
 
-        raceList = raceDAO.getRaces(langage);
-        countryList = countryDAO.getCountries(langage);
+        raceList = raceDAO.getRaces(language);
+        countryList = countryDAO.getCountries(language);
         logger.debug("Race list and Country list populated with size : {} and {}", raceList.size(), countryList.size());
     }
 
@@ -114,6 +143,8 @@ public class PopulationRegisterAction extends ActionSupport implements SessionAw
 
     public void setPersonRaceId(int personRaceId) {
         this.personRaceId = personRaceId;
+        person.setRace(raceDAO.getRace(personRaceId));
+        logger.debug("setting person Race : {}", person.getRace().getEnRaceName());
     }
 
     public Person getPerson() {
@@ -122,5 +153,29 @@ public class PopulationRegisterAction extends ActionSupport implements SessionAw
 
     public void setPerson(Person person) {
         this.person = person;
+    }
+
+    public String getPersonPassportNo() {
+        return personPassportNo;
+    }
+
+    public void setPersonPassportNo(String personPassportNo) {
+        this.personPassportNo = personPassportNo;
+    }
+
+    public String getPermanentAddress() {
+        return permanentAddress;
+    }
+
+    public void setPermanentAddress(String permanentAddress) {
+        this.permanentAddress = permanentAddress;
+    }
+
+    public String getCurrentAddress() {
+        return currentAddress;
+    }
+
+    public void setCurrentAddress(String currentAddress) {
+        this.currentAddress = currentAddress;
     }
 }

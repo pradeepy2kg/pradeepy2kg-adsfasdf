@@ -3,6 +3,7 @@ package lk.rgd.prs.api.domain;
 import lk.rgd.AppConstants;
 import lk.rgd.common.api.domain.Country;
 import lk.rgd.common.api.domain.Race;
+import lk.rgd.common.util.WebUtils;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -269,7 +270,7 @@ public class Person implements Serializable {
     }
 
     public void setNic(String nic) {
-        this.nic = nic;
+        this.nic = WebUtils.filterBlanksAndToUpper(nic);
     }
 
     public String getFullNameInOfficialLanguage() {
@@ -277,8 +278,8 @@ public class Person implements Serializable {
     }
 
     public void setFullNameInOfficialLanguage(String fullNameInOfficialLanguage) {
-        this.fullNameInOfficialLanguage = fullNameInOfficialLanguage;
-        setInitialsAndLastnameOfficial(fullNameInOfficialLanguage);
+        this.fullNameInOfficialLanguage = WebUtils.filterBlanksAndToUpper(fullNameInOfficialLanguage);
+        setInitialsAndLastnameOfficial(WebUtils.filterBlanksAndToUpper(fullNameInOfficialLanguage));
     }
 
     public String getFullNameInEnglishLanguage() {
@@ -286,8 +287,8 @@ public class Person implements Serializable {
     }
 
     public void setFullNameInEnglishLanguage(String fullNameInEnglishLanguage) {
-        this.fullNameInEnglishLanguage = fullNameInEnglishLanguage;
-        setInitialsAndLastnameEnglish(fullNameInEnglishLanguage);
+        this.fullNameInEnglishLanguage = WebUtils.filterBlanksAndToUpper(fullNameInEnglishLanguage);
+        setInitialsAndLastnameEnglish(WebUtils.filterBlanksAndToUpper(fullNameInEnglishLanguage));
     }
 
     public String getLastNameInEnglish() {
@@ -295,7 +296,7 @@ public class Person implements Serializable {
     }
 
     public void setLastNameInEnglish(String lastNameInEnglish) {
-        this.lastNameInEnglish = lastNameInEnglish;
+        this.lastNameInEnglish = WebUtils.filterBlanksAndToUpper(lastNameInEnglish);
     }
 
     public String getPersonPhoneNo() {
@@ -303,7 +304,7 @@ public class Person implements Serializable {
     }
 
     public void setPersonPhoneNo(String personPhoneNo) {
-        this.personPhoneNo = personPhoneNo;
+        this.personPhoneNo = WebUtils.filterBlanks(personPhoneNo);
     }
 
     public String getPersonEmail() {
@@ -311,7 +312,7 @@ public class Person implements Serializable {
     }
 
     public void setPersonEmail(String personEmail) {
-        this.personEmail = personEmail;
+        this.personEmail = WebUtils.filterBlanks(personEmail);
     }
 
     public int getGender() {
@@ -335,7 +336,7 @@ public class Person implements Serializable {
     }
 
     public void setPlaceOfBirth(String placeOfBirth) {
-        this.placeOfBirth = placeOfBirth;
+        this.placeOfBirth = WebUtils.filterBlanksAndToUpper(placeOfBirth);
     }
 
     public Date getDateOfDeath() {
@@ -375,7 +376,7 @@ public class Person implements Serializable {
     }
 
     public void setInitialsInOfficialLanguage(String initialsInOfficialLanguage) {
-        this.initialsInOfficialLanguage = initialsInOfficialLanguage;
+        this.initialsInOfficialLanguage = WebUtils.filterBlanksAndToUpper(initialsInOfficialLanguage);
     }
 
     public String getLastNameInOfficialLanguage() {
@@ -383,7 +384,7 @@ public class Person implements Serializable {
     }
 
     public void setLastNameInOfficialLanguage(String lastNameInOfficialLanguage) {
-        this.lastNameInOfficialLanguage = lastNameInOfficialLanguage;
+        this.lastNameInOfficialLanguage = WebUtils.filterBlanksAndToUpper(lastNameInOfficialLanguage);
     }
 
     public String getInitialsInEnglish() {
@@ -391,7 +392,7 @@ public class Person implements Serializable {
     }
 
     public void setInitialsInEnglish(String initialsInEnglish) {
-        this.initialsInEnglish = initialsInEnglish;
+        this.initialsInEnglish = WebUtils.filterBlanksAndToUpper(initialsInEnglish);
     }
 
     public Set<Country> getCitizenship() {

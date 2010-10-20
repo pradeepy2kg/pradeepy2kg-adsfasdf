@@ -1,11 +1,11 @@
 package lk.rgd.crs.api.domain;
 
-import lk.rgd.crs.web.util.WebUtils;
 import lk.rgd.common.api.domain.District;
+import lk.rgd.common.util.WebUtils;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author Indunil Moremada

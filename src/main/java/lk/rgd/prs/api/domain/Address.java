@@ -58,6 +58,11 @@ public class Address implements Serializable {
     @Column(length = 10, nullable = true)
     private String postcode;
     /**
+     * Permanent address - if the address is permanent address then true else false
+     */
+    @Column(nullable = true, columnDefinition="smallint not null default 0")
+    private boolean permanent = false;
+    /**
      * Country - null means Sri Lanka
      */
     @OneToOne(optional = true)
@@ -125,6 +130,14 @@ public class Address implements Serializable {
 
     public void setPostcode(String postcode) {
         this.postcode = postcode;
+    }
+
+    public boolean isPermanent() {
+        return permanent;
+    }
+
+    public void setPermanent(boolean permanent) {
+        this.permanent = permanent;
     }
 
     public Country getCountry() {

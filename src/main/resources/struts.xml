@@ -89,7 +89,7 @@
 
         <action name="eprExistingPersonRegistration" class="lk.rgd.prs.web.action.PopulationRegisterAction"
                 method="personRegistration">
-            <result type="tiles" name="success">epr.home</result>
+            <result type="tiles" name="success">epr.ExistingPersonRegistration</result>
         </action>
     </package>
 
