@@ -43,6 +43,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> bdDivisionList;
     private Map<Integer, String> allDistrictList;
     private Map<Integer, String> allDSDivisionList;
+    private Map<Integer, String> userLocations;
     private List birthAlterationApprovalList;
 
     private User user;
@@ -52,7 +53,6 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     private DeclarantInfo declarant;
     private ParentInfo parent;
     private Date dateReceived;
-    private Long alterationSerialNo;
     private int[] index;
     private BitSet indexCheck;
     private HashMap approveStatus = new HashMap();
@@ -92,6 +92,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     private int motherRaceId;
     private int dsDivisionId;
     private int sectionOfAct;
+    private int locationUKey;
     private Long idUKey;
     private long serialNo; //to be used in the case where search is performed from confirmation 1 page.
     private boolean allowApproveAlteration;
@@ -102,6 +103,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     private Date alterationRecivedDate;
     private Date dateReceivedFrom;
     private Date dateReceivedTo;
+    private BirthAlteration.AlterationType alterationType;
 
 
     private String language;
@@ -149,8 +151,8 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         } else if (nicOrPin != null) {
             bdf = service.getByPINorNIC(nicOrPin, user);
         } else if (birthDivisionId != 0 && serialNo != 0) {
-            bdf = service.getActiveRecordByBDDivisionAndSerialNo(bdDivisionDAO.
-                    getBDDivisionByPK(birthDivisionId), serialNo, user);
+            bdf = service.getActiveRecordByBDDivisionAndSerialNo(bdDivisionDAO.getBDDivisionByPK
+                    (birthDivisionId), serialNo, user);
         }
         if (bdf == null) {
             addActionError(getText("cp1.error.entryNotAvailable"));
@@ -170,8 +172,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
                 pageType = 0;
             }
             // check that birth Certificate is printed
-
-//            populateAlteration(bdf);
+            //   populateAlteration(bdf);
             if (sectionOfAct == 3) {
                 alt27A = new Alteration27A();
                 populateAlt27A(bdf);
@@ -281,6 +282,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
                     fatherRaceId = father.getFatherRace().getRaceId();
                 }
             }
+            alt27A.setFather(father);
             if (alt27A.getGrandFather() == null) {
                 alt27A.setGrandFather(bdf.getGrandFather());
             } else {
@@ -300,33 +302,20 @@ public class AlterationAction extends ActionSupport implements SessionAware {
             }
         }
     }
-    public String birthAlteration() {
-        boolean isAlt52_1;
-        int checkDuplicate = 0;
-        if (sectionOfAct == 2) {
-            isAlt52_1 = true;
-        } else {
-            isAlt52_1 = false;
-        }
 
+    public String birthAlteration() {
         // TODO fix this to lookup using idUKey
-        BirthAlteration baCheck = null;
-        //BirthAlteration baCheck = alterationService.getActiveRecordByBDDivisionAndSerialNo(
-        //        bdDivisionDAO.getBDDivisionByPK(birthDivisionId), alterationSerialNo, user, isAlt52_1);
-        if (baCheck != null) {
-            logger.debug("Duplicate Alteration Serial Number is :{}", alterationSerialNo);
-            addFieldError("duplicateSerialNumberError", getText("p1.duplicateSerialNumber.label"));
-            checkDuplicate = 1;
-        }
         BirthAlteration ba = new BirthAlteration();
         ba.setAlt27(alt27); /*Child's full name is save in any act*/
         switch (sectionOfAct) {
             //case 2 is used to set alteration52_1
             case 1:
+                ba.setType(BirthAlteration.AlterationType.TYPE_27);
                 ba.setApprovalStatuses(new BitSet(WebConstants.BIRTH_ALTERATION_APPROVE_ALT27));
                 break;
             //case 2 is used to set alteration27A
             case 2:
+                ba.setType(alterationType);
                 if (birthDivisionId > 0) {
                     alt52_1.setBirthDivision(bdDivisionDAO.getBDDivisionByPK(birthDivisionId));
                 }
@@ -340,7 +329,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
                 ba.setApprovalStatuses(new BitSet(WebConstants.BIRTH_ALTERATION_APPROVE_ALT52_1));
                 break;
             case 3:
-                // alt52_1.setBirthDivision(bdDivisionDAO.getBDDivisionByPK(birthDivisionId));
+                ba.setType(BirthAlteration.AlterationType.TYPE_27A);
                 logger.debug("father country id is :{}", fatherCountryId);
                 if (fatherCountryId > 0) {
                     alt27A.getFather().setFatherCountry(countryDAO.getCountry(fatherCountryId));
@@ -361,32 +350,23 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         ba.setBdfIDUKey(idUKey);
         ba.setDeclarant(declarant);
         ba.setDateReceived(dateReceived);
-        ba.setAlterationSerialNo(alterationSerialNo);
-        if (checkDuplicate == 0) {
-            alterationService.addBirthAlteration(ba, user);
-            logger.debug("Add a new Birth Alteration with Alteration Serial No  :{}", alterationSerialNo);
-            idUKey = ba.getIdUKey();
-            bdId = ba.getBdfIDUKey();
-        }
+        alterationService.addBirthAlteration(ba, user);
+        logger.debug("Add a new Birth Alteration with Alteration idUKey  :{}", ba.getIdUKey());
+        idUKey = ba.getIdUKey();
+        bdId = ba.getBdfIDUKey();
         pageType = 1;
         initPermission();
-        if (checkDuplicate == 1) {
-            populateBasicLists();
-            populateCountryRacesAndAllDSDivisions();
-            return ERROR;
-        }
         return SUCCESS;
     }
 
     public String editbirthAlteration() {
         BirthAlteration ba = alterationService.getByIDUKey(idUKey, user);
         if (ba != null) {
-            bdId = ba.getIdUKey();
+            bdId = ba.getBdfIDUKey();
             BirthDeclaration bdf = service.getById(bdId, user);
             alt27 = ba.getAlt27();
             alt27A = ba.getAlt27A();
             alt52_1 = ba.getAlt52_1();
-            alterationSerialNo = ba.getAlterationSerialNo();
             dateReceived = ba.getDateReceived();
             declarant = ba.getDeclarant();
             bcOfFather = ba.isBcOfFather();
@@ -394,18 +374,21 @@ public class AlterationAction extends ActionSupport implements SessionAware {
             mcOfParents = ba.isMcOfParents();
             comments = ba.getComments();
             pageType = 1;
-
-            if (alt27A != null) {
+            //information for search option
+            if(bdf != null){
+                getBirthCertificateInfo(bdf);                
+            }
+            if (ba.getType() == BirthAlteration.AlterationType.TYPE_27A) {
                 populateAlt27A(bdf);
                 sectionOfAct = 3;
-            } else if (alt52_1 != null) {
+            } else if (ba.getType() != BirthAlteration.AlterationType.TYPE_27
+                    || ba.getType() != BirthAlteration.AlterationType.TYPE_27A) {
                 sectionOfAct = 2;
                 populateAlt52_1(bdf);
-            } else {
+            } else if (ba.getType() != BirthAlteration.AlterationType.TYPE_27) {
                 sectionOfAct = 1;
             }
-            //information for search option
-            getBirthCertificateInfo(bdf);
+
         }
 
 
@@ -429,6 +412,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
             dsDivisionName = dsDivisionDAO.getNameByPK(dsDivisionId, language);
             bdDivisionName = bdDivisionDAO.getNameByPK(birthDivisionId, language);
         }
+
     }
 
     /**
@@ -440,11 +424,9 @@ public class AlterationAction extends ActionSupport implements SessionAware {
      */
     public String initBirthAlterationPendingApprovalList() {
         populateDistrictAndDSDivision();
-        bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
         noOfRows = appParametersDAO.getIntParameter(BA_APPROVAL_ROWS_PER_PAGE);
         pageNo = 1;
-        /* birthAlterationPendingApprovalList = alterationService.getApprovalPendingByDSDivision(
-     dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);*/
+        populateBasicLists();
         initPermission();
         return SUCCESS;
     }
@@ -458,33 +440,23 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     public String filter() {
         setPageNo(1);
         noOfRows = appParametersDAO.getIntParameter(BA_APPROVAL_ROWS_PER_PAGE);
-        if (serialNo != 0) {
-            logger.debug("filter Birth Alteration to approve by Birth Serial Number :{}", serialNo);
-            if (birthDivisionId != 0) {
-                birthAlterationPendingApprovalList = alterationService.getApprovalPendingByBDDivisionAndBDFSerialNo(
-                        bdDivisionDAO.getBDDivisionByPK(birthDivisionId), serialNo, pageNo, noOfRows, user);
+        if (idUKey != null) {
+            BirthAlteration baApprovalPending = alterationService.getByIDUKey(idUKey, user);
+            if (birthAlterationPendingApprovalList == null) {
+                birthAlterationPendingApprovalList = new ArrayList<BirthAlteration>();
             }
-        } else if (alterationSerialNo != null) {
-            logger.debug("filter Birth Alteration to approve by Birth Alteration Serial Number :{}", alterationSerialNo);
-            // TODO replace this with a idUKey lookup
-            //if (divisionAlt != 0)
-            //    birthAlterationPendingApprovalList = alterationService.getApprovalPendingByBDDivisionAndAlterationSerialNo(
-            //            bdDivisionDAO.getBDDivisionByPK(divisionAlt), alterationSerialNo, pageNo, noOfRows, user);
-        } else if (dateReceivedFrom != null && dateReceivedTo != null) {
+            birthAlterationPendingApprovalList.add(baApprovalPending);
+            logger.debug("filter Birth Alteration to approve by Birth Alteration Serial Number :{}", idUKey);
+        } else if (locationUKey != 0) {
             // TODO - we cannot give a list awaiting reply only on received date - it has to be on DS division and date
             //logger.debug("filter Birth Alteration to approve by received date from :{} to:{}", dateReceivedFrom, dateReceivedTo);
-            //birthAlterationPendingApprovalList = alterationService.getApprovalPendingByRecivedDate
-            //        (dateReceivedFrom, dateReceivedTo, pageNo, noOfRows, user);
-        } else {
-            if (birthDivisionId != 0) {
-                logger.debug("requested to filter birth alterations by birthDivisionId : {} ", birthDivisionId);
-                birthAlterationPendingApprovalList = alterationService.getApprovalPendingByBDDivision(
-                        bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows, user);
-            } else {
-                logger.debug("requested to filter birth alterations by dsDivisionId : {}", dsDivisionId);
-                birthAlterationPendingApprovalList = alterationService.getApprovalPendingByDSDivision(
-                        dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);
-            }
+            /*birthAlterationPendingApprovalList = alterationService.get(
+                    dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);*/
+        } else if (birthDivisionId != 0) {
+            logger.debug("filter Birth Alteration to approve by Birth Serial Number :{}", serialNo);
+            birthAlterationPendingApprovalList = alterationService.getApprovalPendingByBDDivision(
+                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows, user);
+
         }
         if (birthAlterationPendingApprovalList != null) {
             paginationHandler(birthAlterationPendingApprovalList.size());
@@ -502,6 +474,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
      *
      * @return
      */
+
     public String approveInit() {
         //todo has to be implemented
         numberOfAppPending = 0;
@@ -510,6 +483,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         if (ba == null || bdf == null) {
             return ERROR;
         } else {
+            logger.debug("Loaded Birth Alteration with idUKey : {}", ba.getIdUKey());
             indexCheck = ba.getApprovalStatuses();
             alt27 = ba.getAlt27();
             alt27A = ba.getAlt27A();
@@ -523,23 +497,24 @@ public class AlterationAction extends ActionSupport implements SessionAware {
                 }
             }
             birthAlterationApprovalList = new ArrayList();
-            if (alt27 != null) {
+            alterationType = ba.getType();
+            if (alterationType == BirthAlteration.AlterationType.TYPE_27) {
                 logger.debug("loading birth alteration record of alt27 of idUKey  :{}", ba.getIdUKey());
-                compareAndAdd(Alteration27.CHILD_FULL_NAME_OFFICIAL_LANG, bdf.getChild().getChildFullNameOfficialLang(),
-                        alt27.getChildFullNameOfficialLang());
-                compareAndAdd(Alteration27.CHILD_FULL_NAME_ENGLISH, bdf.getChild().getChildFullNameEnglish(), alt27.getChildFullNameEnglish());
+                compareAndAdd(Alteration27.CHILD_FULL_NAME_OFFICIAL_LANG, bdf.getChild().
+                        getChildFullNameOfficialLang(), alt27.getChildFullNameOfficialLang());
+                compareAndAdd(Alteration27.CHILD_FULL_NAME_ENGLISH, bdf.getChild().getChildFullNameEnglish(),
+                        alt27.getChildFullNameEnglish());
                 sectionOfAct = 1;
                 logger.debug("Child full name in English is :{}", alt27.getChildFullNameEnglish());
-            }
-            if (alt27A != null) {
-                logger.debug("loading birth alteration record of alt27A of idUKey  :{}", ba.getIdUKey());
-                sectionOfAct = 2;
-                changesOfAlt27A(bdf, language);
-            }
-            if (alt52_1 != null) {
+            } else if (alterationType != BirthAlteration.AlterationType.TYPE_27A ||
+                    alterationType != BirthAlteration.AlterationType.TYPE_27) {
                 logger.debug("loading birth alteration record of alt52_1 of idUKey  :{}", ba.getIdUKey());
-                sectionOfAct = 3;
+                sectionOfAct = 2;
                 changesOfAlt52_1(bdf, language);
+            } else if (alterationType == BirthAlteration.AlterationType.TYPE_27A) {
+                logger.debug("loading birth alteration record of alt27A of idUKey  :{}", ba.getIdUKey());
+                sectionOfAct = 3;
+                changesOfAlt27A(bdf, language);
             }
             initPermission();
             populateBasicLists();
@@ -629,7 +604,15 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         marriage = alt27A.getMarriage();
         MarriageInfo marriageOriginal = bdf.getMarriage();
         if (marriage != null && marriageOriginal != null) {
-            compareAndAdd(Alteration27A.WERE_PARENTS_MARRIED, marriageOriginal.getParentsMarried().toString(), marriage.getParentsMarried().toString());
+            String originalParentsMarriage = null;
+            String marriageParents = null;
+            if (marriageOriginal.getParentsMarried() != null) {
+                originalParentsMarriage = marriageOriginal.getParentsMarried().toString();
+            }
+            if (marriage.getParentsMarried() != null) {
+                marriageParents = marriage.getParentsMarried().toString();
+            }
+            compareAndAdd(Alteration27A.WERE_PARENTS_MARRIED, originalParentsMarriage, marriageParents);
             compareAndAdd(Alteration27A.PLACE_OF_MARRIAGE, marriageOriginal.getPlaceOfMarriage(), marriage.getPlaceOfMarriage());
             String originalMarriageDate = null;
             String marriageDate = null;
@@ -907,6 +890,10 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     }
 
     private void populateBasicLists() {
+        userLocations = user.getActiveLocations(language);
+        if (userLocations != null) {
+            logger.debug("Loaded {} user locations", userLocations.size());
+        }
         populateDistrictAndDSDivision();
         bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, getLanguage(), user);
         if (birthDivisionId == 0) {
@@ -1230,14 +1217,6 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         this.dateReceived = dateReceived;
     }
 
-    public Long getAlterationSerialNo() {
-        return alterationSerialNo;
-    }
-
-    public void setAlterationSerialNo(Long alterationSerialNo) {
-        this.alterationSerialNo = alterationSerialNo;
-    }
-
     public ChildInfo getChild() {
         return child;
     }
@@ -1484,5 +1463,29 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
     public void setEditGrandFatherInfo(boolean editGrandFatherInfo) {
         this.editGrandFatherInfo = editGrandFatherInfo;
+    }
+
+    public BirthAlteration.AlterationType getAlterationType() {
+        return alterationType;
+    }
+
+    public void setAlterationType(BirthAlteration.AlterationType alterationType) {
+        this.alterationType = alterationType;
+    }
+
+    public Map<Integer, String> getUserLocations() {
+        return userLocations;
+    }
+
+    public void setUserLocations(Map<Integer, String> userLocations) {
+        this.userLocations = userLocations;
+    }
+
+    public int getLocationUKey() {
+        return locationUKey;
+    }
+
+    public void setLocationUKey(int locationUKey) {
+        this.locationUKey = locationUKey;
     }
 }

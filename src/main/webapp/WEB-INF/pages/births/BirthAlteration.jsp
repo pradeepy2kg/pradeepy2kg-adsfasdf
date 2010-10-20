@@ -309,11 +309,6 @@ function validate() {
     var domObject;
     var returnval = true;
     /*validation of common fields*/
-    domObject = document.getElementById('bdfSerialNo');
-    if (isFieldEmpty(domObject))
-        isEmpty(domObject, "", 'comError3');
-    else
-        validateSerialNo(domObject, "comError1", 'comError2');
     domObject = document.getElementById('acceptanceDate');
     if (isFieldEmpty(domObject))
         isEmpty(domObject, "", 'comError4')
@@ -519,20 +514,22 @@ function validateBirthYear(domElement, errorText, errorCode) {
     <div id="birth-confirmation-search">
     <s:actionerror cssClass="alreadyPrinted"/>
     <s:form action="eprBirthAlterationSearch.do" onsubmit="javascript:return validate2()">
-        <div id="tabs">
+        <div id="tabs" style="font-size:10pt;">
             <ul>
                 <li><a href="#fragment-1"><span> <s:label
                         value="%{getText('registrationSerchTab3.label')}"/></span></a></li>
                 <li><a href="#fragment-2"><span><s:label
                         value="%{getText('registrationSerchTab2.label')}"/></span></a></li>
+                <li><a href="#fragment-3"><span><s:label
+                        value="%{getText('registrationSerchTab1.label')}"/></span></a></li>
             </ul>
             <table class="search-alteration-option-table">
                 <tr>
-                    <td width="135px" ><s:label value="%{getText('sectionOfTheAct.lable')}"
-                            cssStyle="margin-left:20px;"/></td>
+                    <td width="135px"><s:label value="%{getText('sectionOfTheAct.lable')}"
+                                               cssStyle="margin-left:20px;"/></td>
                     <td width="500px"><s:select
                             list="#@java.util.HashMap@{'1':'27','2':'52(1)','3':'27 (A)'}"
-                            name="sectionOfAct" cssStyle="width:230px;margin-left:175px;" /></td>
+                            name="sectionOfAct" cssStyle="width:230px;margin-left:175px;"/></td>
                 </tr>
             </table>
             <div id="fragment-1">
@@ -542,7 +539,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                                                    value="%{getText('certificateNumber.lable')}"/></td>
                         <td width="500px"><s:textfield name="idUKey" id="bdfSerialNoIdSearch" maxLength="10"
                                                        onkeypress="return isNumberKey(event)"
-                                cssStyle="margin-left:154px;"/></td>
+                                                       cssStyle="margin-left:154px;"/></td>
                     </tr>
                 </table>
             </div>
@@ -555,7 +552,43 @@ function validateBirthYear(domElement, errorText, errorCode) {
 
                     </tr>
                 </table>
-            </div>           
+            </div>
+            <div id="fragment-3">
+                <table class="search-option-table">
+                    <caption></caption>
+                    <col/>
+                    <col/>
+                    <col/>
+                    <col/>
+                    <col/>
+                    <tbody>
+                    <tr>
+                        <td><s:label value="%{getText('searchDeclarationSearial.label')}"/></td>
+                        <td><s:textfield name="serialNo" id="bdfSearchSerialNoId" value="" maxLength="10"
+                                         onkeypress="return isNumberKey(event)"/></td>
+                        <td><s:label value="%{getText('district.label')}"/></td>
+                        <td>
+                            <s:select id="birthDistrictId" name="birthDistrictId" list="districtList"
+                                      value="birthDistrictId" cssStyle="width:240px;float:left;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><s:label name="division" value="%{getText('select_DS_division.label')}"/></td>
+                        <td>
+                            <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList"
+                                      value="%{dsDivisionId}"
+                                      cssStyle="float:left;  width:240px;"/>
+                        </td>
+                        <td><s:label value="%{getText('select_BD_division.label')}"/></td>
+                        <td>
+                            <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}"
+                                      list="bdDivisionList" cssStyle=" width:240px;float:left;"
+                                      headerValue="%{getText('all.divisions.label')}" headerKey="0"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <br/>
 
@@ -582,15 +615,6 @@ function validateBirthYear(domElement, errorText, errorCode) {
                     </td>
                 </tr>
                 <tr>
-                    <td width="40%"><s:label value="අනුක්‍රමික අංකය"/><br>
-                        <s:label value=" தொடர் இலக்கம் "/><br>
-                        <s:label value=" Serial Number"/>
-                    </td>
-                    <td width="60%">
-                        <s:textfield id="bdfSerialNo" name="alterationSerialNo" maxLength="10"
-                                     onkeypress="return isNumberKey(event)"/></td>
-                </tr>
-                <tr>
                     <td><s:label value="භාරගත් දිනය"/><br>
                         <s:label value="பெறப்பட்ட திகதி "/> <br>
                         <s:label value="Date of Acceptance"/>
@@ -608,9 +632,9 @@ function validateBirthYear(domElement, errorText, errorCode) {
                     </s:if>
                         <s:if test="sectionOfAct ==2">
                             <s:select
-                                    list="#@java.util.HashMap@{'Alt52_1_A':'52(1)A','Alt52_1_B':'52(1)B','Alt52_1_D':'52(1)D',
-                                    'Alt52_1_E':'52(1)E','Alt52_1_H':'52(1)H','Alt52_1_I':'52(1)I'}"
-                                    name="alt52_1.sectionOfAct52_1" cssStyle="width:190px; margin-left:5px"
+                                    list="#@java.util.HashMap@{'TYPE_52_1_A':'52(1)A','TYPE_52_1_B':'52(1)B','TYPE_52_1_D':'52(1)D',
+                                    'TYPE_52_1_E':'52(1)E','TYPE_52_1_H':'52(1)H','TYPE_52_1_I':'52(1)I'}"
+                                    name="AlterationType" cssStyle="width:190px; margin-left:5px"
                                     />
 
                         </s:if>
@@ -1187,7 +1211,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                             <br>Yes
                         </label></td>
                         <td style="border:none"><s:radio name="alt27A.marriage.parentsMarried" id="parentsMarried"
-                                                         list="#@java.util.HashMap@{'MARRIED':''}" value="1"/>
+                                                         list="#@java.util.HashMap@{'MARRIED':''}"/>
                         </td>
                     </tr>
                     <tr>
