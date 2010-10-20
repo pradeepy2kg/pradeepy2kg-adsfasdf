@@ -83,6 +83,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     private String rejectComment;
 
     private boolean editMode;
+    private boolean applyChanges;
 
 
     public DeathAlterationAction(DeathAlterationService deathAlterationService, DeathRegistrationService deathRegistrationService
@@ -378,8 +379,8 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     }
 
     public String setBitset() {
+        //todo add apply changes
         logger.info("setting bit set : {}", approvedIndex.length);
-
         Hashtable<Integer, Boolean> approveBitset = new Hashtable<Integer, Boolean>();
         for (int i = 0; i < approvedIndex.length; i++) {
             int bit = approvedIndex[i];
@@ -441,6 +442,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     }
 
     public String applyChanges() {
+        logger.debug("appling changes to death alteration : death certificate id :{}", deathAlterationId);
         return SUCCESS;
     }
 
@@ -987,5 +989,13 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
 
     public void setUserLocations(Map<Integer, String> userLocations) {
         this.userLocations = userLocations;
+    }
+
+    public boolean isApplyChanges() {
+        return applyChanges;
+    }
+
+    public void setApplyChanges(boolean applyChanges) {
+        this.applyChanges = applyChanges;
     }
 }
