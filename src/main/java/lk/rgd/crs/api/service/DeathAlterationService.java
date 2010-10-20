@@ -91,6 +91,15 @@ public interface DeathAlterationService {
     public List<DeathAlteration> getDeathAlterationByUserLocation(int locationUKey);
 
     /**
+     * get death alteration by death persons pin number
+     *
+     * @param pin  death person pin number
+     * @param user user who has permission to performe task
+     * @return list of death alteration object most probably only one result give if no pin duplications
+     */
+    public List<DeathAlteration> getAlterationByDeathPersonPin(long pin, User user);
+
+    /**
      * approve death alteration and set bit set base on state partially or fully
      *
      * @param deathAlterationUKey

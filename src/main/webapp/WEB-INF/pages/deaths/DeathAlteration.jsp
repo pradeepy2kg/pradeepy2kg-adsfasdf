@@ -445,7 +445,7 @@ function initPage() {
         <td></td>
     </tr>
     <tr>
-        <td colspan="3" style="font-size:11pt;text-align:center;margin-top:20px;">
+        <td colspan="3" style="font-size:11pt;text-align:center;margin-top:20px;border-top:2px">
             <s:label value="වෙනස් කලයුතු මරණ සහතිකය පිලිබඳ විස්තර"/> <br>
             <s:label value="பிள்ளை பற்றிய தகவல்"/> <br>
             <s:label value="Particulars of the Death Certificate to amend"/>
@@ -595,7 +595,7 @@ function initPage() {
         <col/>
         <col/>
         <tbody>
-        <tr>
+        <tr style="border-bottom:2px"> 
             <td>
                 (10)හදිසි මරණයක්ද ? <br>
                 in tamil <br>
@@ -623,7 +623,7 @@ function initPage() {
             </td>
         </tr>
         <tr>
-            <td colspan="2">
+            <td colspan="2" style="border-top:2px">
                 (11)මරණය සිදු වූ දිනය <br>
                 பிறந்த திகதி <br>
                 Date of Death
@@ -800,7 +800,7 @@ function initPage() {
             </td>
         </tr>
         <tr>
-            <td>
+            <td style="border-top:20px">
                 ගමන් බලපත්‍ර අංකය <br>
                 கடவுச் சீட்டு <br>
                 Passport No.
@@ -1059,7 +1059,7 @@ function initPage() {
                      onchange="setInformPerson('','','','','');" value="%{deathAlteration.declarant.declarantType}"/>
         </td>
     </tr>
-    <tr>
+    <tr style="border-top:20px">
         <td colspan="1">
             (31)අනන්‍යතා අංකය <br>
             தனிநபர் அடையாள எண் <br>
