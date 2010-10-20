@@ -21,8 +21,7 @@ import lk.rgd.Permission;
  * action class which handles the login and logout actions
  * of the EPR system
  */
-public class
-        LoginAction extends ActionSupport implements SessionAware {
+public class LoginAction extends ActionSupport implements SessionAware {
     private String userName;
     private String password;
     private Map session;

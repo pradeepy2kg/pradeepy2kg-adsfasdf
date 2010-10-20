@@ -91,6 +91,11 @@
                 method="personRegistration">
             <result type="tiles" name="success">epr.ExistingPersonRegistration</result>
         </action>
+
+        <action name="eprPersonDetails" class="lk.rgd.prs.web.action.PersonDetailsAction"
+                method="personDetails">
+            <result type="tiles" name="success">epr.personDetails</result>
+        </action>
     </package>
 
     <package name="births" namespace="/births" extends="NG">

@@ -340,4 +340,9 @@
         <constructor-arg ref="countryDAOImpl"/>
     </bean>
 
+    <bean id="personDetailsAction" class="lk.rgd.prs.web.action.PersonDetailsAction">
+        <constructor-arg ref="ecivilService"/>
+        <constructor-arg ref="raceDAOImpl"/>
+        <constructor-arg ref="countryDAOImpl"/>
+    </bean>
 </beans>
