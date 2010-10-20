@@ -52,7 +52,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
     @Transactional(propagation = Propagation.REQUIRED)
     public void addBirthAlteration(BirthAlteration ba, User user) {
         logger.debug("Adding new birth alteration record on request of : {}", ba.getDeclarant().getDeclarantFullName());
-        ba.setSubissionLocation(user.getPrimaryLocation());
+        ba.setSubmittedLocation(user.getPrimaryLocation());
         // any user (DEO, ADR of any DS office or BD division etc) can add a birth alteration request
         birthAlterationDAO.addBirthAlteration(ba, user);
     }
@@ -225,7 +225,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
      */
     private void validateAccessOfUserToEditOrDelete(BirthAlteration ba, User user) {
         if (Role.ROLE_DEO.equals(user.getRole().getRoleId()) || Role.ROLE_ADR.equals(user.getRole().getRoleId())) {
-            if (ba.getSubissionLocation().equals(user.getPrimaryLocation())) {
+            if (ba.getSubmittedLocation().equals(user.getPrimaryLocation())) {
                 return;
             }
         } else if (!Role.ROLE_ADMIN.equals(user.getRole().getRoleId())) {

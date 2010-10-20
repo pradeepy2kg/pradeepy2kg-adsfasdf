@@ -49,6 +49,7 @@
                         $("select#dsDivisionId").html(options1);
 
                         var options2 = '';
+                    <%--options2 += '<option value="' + 0 + '">' + <s:labe value="%{getText('select.registrationDivision.label')}"/> + '</option>';--%>
                         var bd = data.bdDivisionList;
                         for (var j = 0; j < bd.length; j++) {
                             options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
@@ -167,13 +168,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <s:actionerror/>
 <s:form action="eprFilterAlteration" method="post" onsubmit="javascript:return validate()">
-    <div id="tabs">
+    <div id="tabs" style="font-size:10pt;">
         <ul>
             <li><a href="#fragment-1"><span> <s:label
-                                                      value="%{getText('registrationSerchTab5.label')}"/></span></a>
+                    value="%{getText('registrationSerchTab6.label')}"/></span></a>
             </li>
             <li><a href="#fragment-2"><span><s:label
-                                                     value="%{getText('registrationSerchTab4.label')}"/></span></a></li>
+                    value="%{getText('registrationSerchTab3.label')}"/></span></a></li>
+            <li><a href="#fragment-3"><span><s:label
+                    value="%{getText('registrationSerchTab7.label')}"/></span></a></li>
         </ul>
 
         <div id="fragment-1">
@@ -188,7 +191,7 @@
                     <td style="width:25%"><s:label name="division" value="%{getText('select_DS_division.label')}"
                                                    cssStyle="margin-left:10px;"/></td>
                     <td style="width:25%">
-                        <s:select id="dsDivisionIdSerial" name="dsDivisionIdSerial" list="dsDivisionList"
+                        <s:select id="dsDivisionIdSerial" name="dsDivisionId" list="dsDivisionList" headerKey="0"
                                   cssStyle="float:left;  width:240px;"/>
                     </td>
                 </tr>
@@ -196,13 +199,10 @@
                     <td><s:label name="bdDivisionSerial" value="%{getText('select_BD_division.label')}"
                                  cssStyle="margin-left:10px;"/></td>
                     <td>
-                        <s:select id="bdDivisionSerial" name="divisionAlt" list="bdDivisionList"
-                                  headerValue="%{getText('all.divisions.label')}" headerKey="0"
-                                  cssStyle=" width:240px;float:left;"/>
+                        <s:select id="bdDivisionSerial" name="birthDivisionId" list="bdDivisionList"
+                                  headerKey="0" headerValue="%{getText('select.registrationDivision.label')}"
+                                  cssStyle="float:left;  width:240px; margin:2px 5px;"/>
                     </td>
-                    <td><s:label value="%{getText('searchDeclarationSearial.label')}" cssStyle="margin-left:10px"/></td>
-                    <td><s:textfield id="serialAltNumberId" name="alterationSerialNo" value="" cssStyle="width:235px"
-                                     onkeypress="return isNumberKey(event)" maxlength="10lecture "/></td>
                 </tr>
                 <tr>
                     <td>
@@ -212,17 +212,25 @@
             </table>
         </div>
         <div id="fragment-2">
-
             <table cellpadding="5" cellspacing="0" style="margin-left:20px;width:95%;padding:5px;">
                 <tr>
-                    <td width="350px"><s:label value="%{getText('alteration.received.date.lable')}"/></td>
-                    <td><s:label value="%{getText('from.lable')}" cssStyle="margin-right:10px;"/><s:textfield
-                            name="dateReceivedFrom" id="alterationRecivedFromDateId"/></td>
-                    <td><s:label value="%{getText('to.lable')}" cssStyle="margin-right:10px;"/><s:textfield
-                            name="dateReceivedTo" id="alterationRecivedToDateId"/></td>
+                    <td width="350px"><s:label value="%{getText('certificateNumber.lable')}"/></td>
+                    <td>
+                        <s:textfield name="idUKey"/>
+                    </td>
                 </tr>
             </table>
 
+        </div>
+        <div id="fragment-3">
+            <table cellpadding="5" cellspacing="0" style="margin-left:20px;width:95%;padding:5px;">
+                <tr>
+                    <td width="350px"><s:label value="%{getText('alteration.submitted.label')}"/></td>
+                    <td>
+                            <s:select list="userLocations" name="locationUKey" value="%{locationUKey}" headerKey="0"
+                                      headerValue="%{getText('select.location')}"/>
+                </tr>
+            </table>
         </div>
     </div>
     <div class="form-submit">
@@ -257,7 +265,7 @@
                     <s:if test="#request.allowApproveAlteration">
                         <s:url id="approveSelected" action="eprApproveSelectedAlteration.do">
                             <s:param name="idUKey" value="idUKey"/>
-                            <s:param name="bdId" value="bdId"/>
+                            <s:param name="bdId" value="bdfIDUKey"/>
                             <s:param name="nextFlag" value="%{#request.nextFlag}"/>
                             <s:param name="previousFlag" value="%{#request.previousFlag}"/>
                             <s:param name="pageType" value="%{#request.pageType}"/>
@@ -273,7 +281,7 @@
                     <s:if test="#request.allowApproveAlteration">
                         <s:url id="rejectSelected" action="eprRejectSelectedAlteration.do">
                             <s:param name="idUKey" value="idUKey"/>
-                            <s:param name="bdId" value="bdId"/>
+                            <s:param name="bdId" value="bdfIDUKey"/>
                             <s:param name="nextFlag" value="%{#request.nextFlag}"/>
                             <s:param name="previousFlag" value="%{#request.previousFlag}"/>
                             <s:param name="pageType" value="%{#request.pageType}"/>
@@ -286,21 +294,19 @@
                     </s:if>
                 </td>
 
-                 <td align="center">
-                    <s:if test="#request.allowApproveAlteration">
-                        <s:url id="editSelected" action="eprEditSelectedAlteration.do">
-                            <s:param name="idUKey" value="idUKey"/>
-                            <s:param name="bdId" value="bdId"/>
-                            <s:param name="nextFlag" value="%{#request.nextFlag}"/>
-                            <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-                            <s:param name="pageType" value="%{#request.pageType}"/>
-                            <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
-                            <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
-                            <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
-                        </s:url>
-                        <s:a href="%{editSelected}" title="%{getText('editTooltip.label')}">
-                            <img src="<s:url value='/images/edit.png'/>" width="25" height="25" border="none"/></s:a>
-                    </s:if>
+                <td align="center">
+                    <s:url id="editSelected" action="eprEditSelectedAlteration.do">
+                        <s:param name="idUKey" value="idUKey"/>
+                        <s:param name="bdId" value="bdfIDUKey"/>
+                        <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+                        <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+                        <s:param name="pageType" value="%{#request.pageType}"/>
+                        <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
+                        <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
+                        <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
+                    </s:url>
+                    <s:a href="%{editSelected}" title="%{getText('editTooltip.label')}">
+                        <img src="<s:url value='/images/edit.png'/>" width="25" height="25" border="none"/></s:a>
                 </td>
             </tr>
         </s:iterator>

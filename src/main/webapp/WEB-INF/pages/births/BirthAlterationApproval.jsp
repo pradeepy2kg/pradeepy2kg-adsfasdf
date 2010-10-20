@@ -1,6 +1,30 @@
 <%@ page import="lk.rgd.common.util.GenderUtil" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <script type="text/javascript">
+    /*$(function() {
+     $('#selectAll').click(function() {
+     var element = document.getElementById("selectAll").checked;
+     if (element) {
+     var birthAlterationApprovalList = document.getElementsByName("birthAlterationApprovalList");
+     *//* for(var i=0 ;i<birthAlterationApprovalList.length;i++){
+
+     }*//*
+     var ind= document.getElementsByName("index");
+     13.checked=true;
+     }
+     })
+     })*/
+    function checkAll(field)
+    {
+        for (i = 0; i < field.length; i++)
+            field[i].checked = true;
+    }
+    function uncheckAll(field)
+    {
+        for (i = 0; i < field.length; i++)
+            field[i].checked = false;
+    }
+
     function initPage() {
         /* var index = document.getElementsByName("indexCheck");
          index= index[0].value ;
@@ -25,25 +49,24 @@
 <s:if test="!(birthAlterationApprovalList.size()==0)">
     <div id="alteration-approval-list-outer">
     <fieldset>
-    <s:form action="eprApproveAlteration.do" method="post">
+    <s:form action="eprApproveAlteration.do" method="post" name="alterationApproval">
         <table class="alteration-approval-list-table" width="100%" cellpadding="0" cellspacing="0">
             <tr>
-                <td style="width:10%"></td>
-                <td style="width:40%;font-size:12pt; text-align:center;"><s:label
+                <td style="width:20%;font-size:8pt;"></td>
+                <td style="width:35%;font-size:12pt; text-align:center;"><s:label
                         value="%{getText('approval.table.row1.title')}"/></td>
-                <td style="width:40%;font-size:12pt; text-align:center;"><s:label
+                <td style="width:35%;font-size:12pt; text-align:center;"><s:label
                         value="%{getText('approval.table.row2.title')}"/></td>
                 <td style="width:10%;font-size:12pt; text-align:center;"><s:label
                         value="%{getText('approve.label')}"/></td>
             </tr>
             <s:iterator status="approvalStatus" value="birthAlterationApprovalList" id="approvalList">
                 <tr>
-                        <%--<td><s:property value="birthChangeList[#approvalStatus.index]"/></td>--%>
-                    <td style="text-align:center;"><s:property
-                            value="%{getText(act+birthAlterationApprovalList[#approvalStatus.index][0]+'.label')}"/></td>
-                    <td><s:label cssStyle="margin-left:25px;"/><s:property
+                    <td style="padding-left:5px;"><s:property
+                            value="%{getText(sectionOfAct+'.'+birthAlterationApprovalList[#approvalStatus.index][0]+'.label')}"/></td>
+                    <td style="padding-left:25px;"><s:property
                             value="birthAlterationApprovalList[#approvalStatus.index][1]"/></td>
-                    <td><s:label cssStyle="margin-left:25px;"/><s:property
+                    <td style="padding-left:25px;"><s:property
                             value="birthAlterationApprovalList[#approvalStatus.index][2]"/></td>
                     <td style="text-align:center;">
                         <s:checkbox name="index"
@@ -60,8 +83,16 @@
         <s:hidden name="sectionOfAct"/>
         <s:hidden name="numberOfAppPending"/>
         <s:hidden name="idUKey"/>
+        <div style="width:20%;float:left;margin-left:25px;">
+            <s:label value="%{getText('select_all.label')}"/>
+            <s:checkbox id="selectAll" name="selectAll" onClick="checkAll(document.alterationApproval.index)"/>
+        </div>
+        <div style="width:20%;float:left;margin-left:25px;">
+            <s:label value="%{getText('select_all.label')}"/>
+            <s:checkbox id="selectAll" name="selectAll" onClick="uncheckAll(document.alterationApproval.index)"/>
+        </div>
         <div class="form-submit">
-            <s:submit value="%{getText('submit.label')}" cssStyle="margin-top:10px;margin-right:25px"/>
+            <s:submit value="%{getText('save.label')}" cssStyle="margin-top:10px;margin-right:25px"/>
         </div>
     </s:form>
 </s:if>
@@ -82,6 +113,7 @@
     </table>
 </s:else>
 <s:hidden name="indexCheck"/>
+<s:hidden name="birthAlterationApprovalList"/>
 <%--
 <%
 

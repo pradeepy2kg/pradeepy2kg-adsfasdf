@@ -15,12 +15,12 @@ import java.util.BitSet;
 @Entity
 @Table(name = "ALT_BIRTH", schema = "CRS")
 @NamedQueries({
-        @NamedQuery(name = "get.active.ba.by.bddivision.in.bdf.and.alterationSerialNo", query = "SELECT ba FROM BirthAlteration ba, BirthDeclaration bdf " +
-                "WHERE bdf.register.birthDivision = :bdDivision AND ba.alterationSerialNo = :alterationSerialNo " +
-                "AND ba.lifeCycleInfo.activeRecord IS TRUE"),
-        @NamedQuery(name = "get.active.ba.by.bddivision.in.ba.and.alterationSerialNo", query = "SELECT ba FROM BirthAlteration ba " +
-                "WHERE ba.alt52_1.birthDivision = :bdDivision AND ba.alterationSerialNo = :alterationSerialNo " +
-                "AND ba.lifeCycleInfo.activeRecord IS TRUE"),
+        /* @NamedQuery(name = "get.active.ba.by.bddivision.in.bdf.and.alterationSerialNo", query = "SELECT ba FROM BirthAlteration ba, BirthDeclaration bdf " +
+     "WHERE bdf.register.birthDivision = :bdDivision AND ba.alterationSerialNo = :alterationSerialNo " +
+     "AND ba.lifeCycleInfo.activeRecord IS TRUE"),*/
+        /* @NamedQuery(name = "get.active.ba.by.bddivision.in.ba.and.alterationSerialNo", query = "SELECT ba FROM BirthAlteration ba " +
+     "WHERE ba.alt52_1.birthDivision = :bdDivision AND ba.alterationSerialNo = :alterationSerialNo " +
+     "AND ba.lifeCycleInfo.activeRecord IS TRUE"),*/
 //        @NamedQuery(name = "filter.alteration.by.dsdivision", query = "SELECT ba FROM BirthAlteration ba , BirthDeclaration bdf " +
 //                "WHERE ba.bdId =bdf.idUKey AND bdf.register.birthDivision.dsDivision = :dsDivision AND ba.status <> :statusFullyApp AND ba.status <> :statusPrint " +
 //                "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
@@ -29,7 +29,7 @@ import java.util.BitSet;
                 "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
         @NamedQuery(name = "filter.alteration.by.recived.date", query = "SELECT ba FROM BirthAlteration ba " +
                 "WHERE ba.dateReceived BETWEEN :recivedDateFrom AND :recivedDateTo AND ba.status <>:statusFullyApp AND ba.status <>:statusPrint " +
-                "ORDER BY ba.lifeCycleInfo.createdTimestamp desc")
+                "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
 //        @NamedQuery(name = "filter.alteration.by.bdDivision.and.alteration.serial.number", query = "SELECT ba FROM BirthAlteration ba, BirthDeclaration bdf " +
 //                "WHERE bdf.idUKey=ba.bdId AND ba.alterationSerialNo =:alterationSerialNo AND (bdf.register.birthDivision=:bdDivision OR ba.alt52_1.birthDivision=:bdDivision) AND" +
 //                " ba.status <>:statusFullyApp AND ba.status <>:statusPrint " +
@@ -38,9 +38,9 @@ import java.util.BitSet;
 //                "WHERE bdf.idUKey=ba.bdId AND bdf.register.bdfSerialNo =:birthSerialNo AND (bdf.register.birthDivision=:bdDivision OR ba.alt52_1.birthDivision=:bdDivision) AND" +
 //                " ba.status <>:statusFullyApp AND ba.status <>:statusPrint " +
 //                "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
-//        @NamedQuery(name = "filter.alteration.by.bddivision", query = "SELECT ba FROM BirthAlteration ba,BirthDeclaration bdf " +
-//                "WHERE ba.bdId =bdf.idUKey AND bdf.register.birthDivision = :bdDivision AND ba.status <> :statusFullyApp AND ba.status <> :statusPrint " +
-//                "ORDER BY ba.lifeCycleInfo.createdTimestamp desc")
+        @NamedQuery(name = "filter.alteration.by.bddivision", query = "SELECT ba FROM BirthAlteration ba,BirthDeclaration bdf " +
+                "WHERE ba.bdfIDUKey =bdf.idUKey AND bdf.register.birthDivision = :bdDivision AND ba.status <> :statusFullyApp AND ba.status <> :statusPrint " +
+                "ORDER BY ba.lifeCycleInfo.createdTimestamp desc")
 })
 
 public class BirthAlteration {
@@ -96,16 +96,13 @@ public class BirthAlteration {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idUKey;
 
-    // This is the serial number for the BirthAlteration
-    @Column(nullable = false, updatable = false)
-    private Long alterationSerialNo;
-
     @Column(nullable = false)
     // the ID points to Birth Declarations idUKey
     private long bdfIDUKey;
 
-    @Column(nullable = false)
-    private Location subissionLocation;
+    @ManyToOne
+    @JoinColumn(name = "submitedLocationUKey", nullable = false)
+    private Location submittedLocation;
 
     @Column(nullable = false)
     // The date when the alteration request was received
@@ -231,14 +228,6 @@ public class BirthAlteration {
         this.bdfIDUKey = bdfIDUKey;
     }
 
-    public Long getAlterationSerialNo() {
-        return alterationSerialNo;
-    }
-
-    public void setAlterationSerialNo(Long alterationSerialNo) {
-        this.alterationSerialNo = alterationSerialNo;
-    }
-
     public Date getDateReceived() {
         return dateReceived;
     }
@@ -279,12 +268,12 @@ public class BirthAlteration {
         this.otherDocuments = otherDocuments;
     }
 
-    public Location getSubissionLocation() {
-        return subissionLocation;
+    public Location getSubmittedLocation() {
+        return submittedLocation;
     }
 
-    public void setSubissionLocation(Location subissionLocation) {
-        this.subissionLocation = subissionLocation;
+    public void setSubmittedLocation(Location submittedLocation) {
+        this.submittedLocation = submittedLocation;
     }
 
     public AlterationType getType() {

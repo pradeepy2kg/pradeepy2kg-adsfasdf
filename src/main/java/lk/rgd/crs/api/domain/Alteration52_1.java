@@ -35,12 +35,7 @@ public class Alteration52_1 {
 
 
 
-    public enum SectionOfAct52_1 {
-        Alt52_1_A, Alt52_1_B, Alt52_1_D, Alt52_1_E, Alt52_1_H, Alt52_1_I
-    }
 
-    @Enumerated
-    private SectionOfAct52_1 sectionOfAct52_1;
     /**
      * The date of the birth
      */
@@ -144,13 +139,5 @@ public class Alteration52_1 {
 
     public void setChildGender(int childGender) {
         this.childGender = childGender;
-    }
-
-    public SectionOfAct52_1 getSectionOfAct52_1() {
-        return sectionOfAct52_1;
-    }
-
-    public void setSectionOfAct52_1(SectionOfAct52_1 sectionOfAct52_1) {
-        this.sectionOfAct52_1 = sectionOfAct52_1;
     }
 }
