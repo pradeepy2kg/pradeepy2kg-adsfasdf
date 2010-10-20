@@ -10,6 +10,20 @@
 <script type="text/javascript">
     function initPage() {
     }
+
+    function warning() {
+        var alterChanges = document.getElementById('applyChanges').value;
+        var ret = false;
+        if (alterChanges) {
+            ret = confirm(document.getElementById('confirmation').value)
+        }
+        if (ret) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
     $(document).ready(function() {
 
         $('#pendingApprovalTable').dataTable({
@@ -26,7 +40,7 @@
 </script>
 <div id="birth-register-approval-body">
     <s:if test="!(pendingList.size()==0)">
-        <s:form action="eprDeathAlterationSetBits" method="post">
+        <s:form action="eprDeathAlterationSetBits" method="post" onsubmit="javascript:return warning()">
             <table id="pendingApprovalTable" border="1" width="100%">
                 <thead>
                 <th><s:label value="%{getText('th.index')}"/></th>
@@ -47,12 +61,24 @@
                 </s:iterator>
                 </tbody>
             </table>
+            <table>
+                <caption/>
+                <col>
+                <col>
+                <tbody>
+                <tr>
+                    <td width="800px" align="right"><s:label value="%{getText('label.apply.changes')}"/></td>
+                    <td align="right"><s:checkbox id="applyChanges" name="applyChanges"/></td>
+                </tr>
+                </tbody>
+            </table>
             <div class="form-submit">
-            <s:submit name="submit" value="%{getText('lable.update')}"/>
-            <s:hidden name="deathAlterationId" value="%{deathAlteration.idUKey}"/>
-            <s:hidden name="pendingListSize" value="%{pendingList.size()}"/>
+                <s:submit name="submit" value="%{getText('lable.update')}"/>
+                <s:hidden name="deathAlterationId" value="%{deathAlteration.idUKey}"/>
+                <s:hidden name="pendingListSize" value="%{pendingList.size()}"/>
+            </div>
         </s:form>
-        </div>
+
     </s:if>
     <s:else>
         <table align="center" style="width:50%">
@@ -72,3 +98,4 @@
         </table>
     </s:else>
 </div>
+<s:hidden id="confirmation" value="%{getText('confirm.apply.changes')}"/>

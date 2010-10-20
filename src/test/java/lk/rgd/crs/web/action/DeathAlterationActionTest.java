@@ -5,6 +5,7 @@ import lk.rgd.common.core.AuthorizationException;
 import lk.rgd.common.api.domain.Country;
 import lk.rgd.common.api.domain.Race;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.api.dao.CountryDAO;
 import lk.rgd.common.api.dao.RaceDAO;
@@ -84,7 +85,8 @@ public class DeathAlterationActionTest extends CustomStrutsTestCase {
 
     private static List sampleDeaths() {
         List list = new LinkedList();
-
+        User user = loginSampleUser();
+        Location location = user.getPrimaryLocation();
         for (int i = 0; i < 6; i++) {
             // get Calendar with current date
             java.util.GregorianCalendar gCal = new GregorianCalendar();
@@ -96,6 +98,8 @@ public class DeathAlterationActionTest extends CustomStrutsTestCase {
             deathAlteration.setDateReceived(gCal.getTime());
             deathAlteration.setDeathId(i);
             deathAlteration.setBcOfFather(true);
+            deathAlteration.setDeathRecodDivision(colomboBDDivision);
+            deathAlteration.setSubmittedLocation(location);
 
             //Death alteration info
             DeathAlterationInfo deathAlterationInfo = new DeathAlterationInfo();
