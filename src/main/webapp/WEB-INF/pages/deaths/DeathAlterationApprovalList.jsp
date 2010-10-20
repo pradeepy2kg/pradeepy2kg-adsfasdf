@@ -1,4 +1,5 @@
 <%@ page import="lk.rgd.common.api.domain.User" %>
+<%@ page import="lk.rgd.crs.api.domain.BDDivision" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-tags" %>
@@ -269,11 +270,12 @@
                                 </s:if>
                             </td>
                             <td align="center">
-                                <s:set name="deathDivision" value="deathRecodDivision.bdDivisionUKey"/>
+                                <s:set name="deathDivision" value="deathRecodDivision"/>
                                 <s:if test="status.ordinal()<2 & (#session.user_bean.role.roleId.equals('ARG') | #session.user_bean.role.roleId.equals('RG'))">
                                     <%
-                                        int deathDivisionUKey = (Integer) pageContext.getAttribute("deathDivision");
-                                        boolean approveRights = user.isAllowedAccessToBDDSDivision(deathDivisionUKey);
+                                        BDDivision deathDivision = (BDDivision) pageContext.getAttribute("deathDivision");
+                                        int deathDSDivsion = deathDivision.getDsDivision().getDsDivisionUKey();
+                                        boolean approveRights = user.isAllowedAccessToBDDSDivision(deathDSDivsion);
                                         if (approveRights) {
                                     %>
                                     <s:a href="%{approveSelected}" title="%{getText('approveTooltip.label')}">

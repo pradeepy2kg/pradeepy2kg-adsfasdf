@@ -443,6 +443,9 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
 
     public String applyChanges() {
         logger.debug("appling changes to death alteration : death certificate id :{}", deathAlterationId);
+        populatePrimaryLists(districtUKey, dsDivisionId, language, user);
+        userLocations = user.getActiveLocations(language);
+        locationUKey = 0;
         return SUCCESS;
     }
 
