@@ -1,6 +1,8 @@
 package lk.rgd.crs.api.domain;
 
 import lk.rgd.common.api.domain.Location;
+import lk.rgd.common.util.WebUtils;
+import lk.rgd.common.util.NameFormatUtil;
 
 import javax.persistence.*;
 import java.util.BitSet;
@@ -133,8 +135,8 @@ public class DeathAlteration {
     @Column
     private float stampFee;
 
-    @Column
-    private long deathPersonPin;
+    @Column(name = "deathPersonPinOriginal")
+    private String deathPersonPin;
 
     @ManyToOne
     @JoinColumn(name = "submitedLocationUKey", nullable = false)
@@ -304,11 +306,11 @@ public class DeathAlteration {
         this.submittedLocation = submittedLocation;
     }
 
-    public long getDeathPersonPin() {
+    public String getDeathPersonPin() {
         return deathPersonPin;
     }
 
-    public void setDeathPersonPin(long deathPersonPin) {
+    public void setDeathPersonPin(String deathPersonPin) {
         this.deathPersonPin = deathPersonPin;
     }
 
@@ -317,6 +319,6 @@ public class DeathAlteration {
     }
 
     public void setDeathPersonName(String deathPersonName) {
-        this.deathPersonName = deathPersonName;
+        this.deathPersonName = NameFormatUtil.getDisplayName(deathPersonName, 80);
     }
 }

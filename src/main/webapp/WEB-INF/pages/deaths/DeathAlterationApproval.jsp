@@ -12,7 +12,7 @@
     }
 
     function warning() {
-        var alterChanges = document.getElementById('applyChanges').value;
+        var alterChanges = document.getElementById('applyChanges').checked;
         var ret = false;
         if (alterChanges) {
             ret = confirm(document.getElementById('confirmation').value)
@@ -23,6 +23,7 @@
         else {
             return false;
         }
+        return true;
     }
     $(document).ready(function() {
 

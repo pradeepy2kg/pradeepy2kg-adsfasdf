@@ -145,9 +145,24 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.MANDATORY, readOnly = true)
+    public void loadValuesToDeathAlterationObject(DeathAlteration da) {
+        DeathRegister dr = deathRegistrationService.getById(da.getDeathId());
+        da.setDeathPersonName(dr.getDeathPerson().getDeathPersonNameOfficialLang());
+    }
+
+    /**
+     * @inheritDoc
+     */
     @Transactional(propagation = Propagation.REQUIRED)
     public List<DeathAlteration> getDeathAlterationByUserLocation(int locationUKey) {
-        return deathAlterationDAO.getDeathAlterationByUserLocation(locationUKey);
+        List<DeathAlteration> result = deathAlterationDAO.getDeathAlterationByUserLocation(locationUKey);
+        Iterator itr = result.iterator();
+        while (itr.hasNext()) {
+            DeathAlteration da = (DeathAlteration) itr.next();
+            loadValuesToDeathAlterationObject(da);
+        }
+        return result;
     }
 
     /**
@@ -155,8 +170,14 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
      */
 
     @Transactional(propagation = Propagation.REQUIRED)
-    public List<DeathAlteration> getAlterationByDeathPersonPin(long pin, User user) {
-        return deathAlterationDAO.getDeathAlterationByDeathPersonPin(pin);
+    public List<DeathAlteration> getAlterationByDeathPersonPin(String pin, User user) {
+        List<DeathAlteration> result = deathAlterationDAO.getDeathAlterationByDeathPersonPin(pin);
+        Iterator itr = result.iterator();
+        while (itr.hasNext()) {
+            DeathAlteration da = (DeathAlteration) itr.next();
+            loadValuesToDeathAlterationObject(da);
+        }
+        return result;
     }
 
 
