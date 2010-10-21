@@ -27,6 +27,16 @@ public interface PopulationRegistry {
     public long addPerson(Person person, User user);
 
     /**
+     * Add existing person to the PRS 
+     * @param person the Person to be added
+     * @param permanentAddress the permanent address to be added
+     * @param currentAddress the current address to be added
+     * @param user the user performing this action
+     * @return the PIN number generated for the Person - for verified records, or -1 for any other
+     */
+    public long addExistingPerson(Person person, String permanentAddress, String currentAddress, User user);
+
+    /**
      * Update a Person on the PRS
      * @param person the Person to be updated. Note, the PRS does not allow deletion of rows
      * @param user the user performing this action

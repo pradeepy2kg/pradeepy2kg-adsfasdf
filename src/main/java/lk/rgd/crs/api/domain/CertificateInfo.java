@@ -5,6 +5,7 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.WebUtils;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -14,7 +15,7 @@ import java.util.Date;
  * @author Chathuranga Withana
  */
 @Embeddable
-public class CertificateInfo {
+public class CertificateInfo implements Serializable {
     /**
      * This is the application number of the certificate search form
      */

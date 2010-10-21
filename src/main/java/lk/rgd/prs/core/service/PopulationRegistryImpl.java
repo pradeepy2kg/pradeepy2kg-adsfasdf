@@ -4,7 +4,6 @@ import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
 import lk.rgd.common.api.Auditable;
 import lk.rgd.common.core.index.SolrIndexManager;
-import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.prs.PRSRuntimeException;
 import lk.rgd.prs.api.dao.PersonDAO;
@@ -73,6 +72,45 @@ public class PopulationRegistryImpl implements PopulationRegistry {
                 }
             }
             personDao.addPerson(person);
+        } else {
+            logger.error("User : " + user.getUserId() + " is not allowed to add persons to the PRS");
+            throw new PRSRuntimeException("User : " + user.getUserId() +
+                " is not allowed to add entries to the PRS", ErrorCodes.PRS_ADD_RECORD_DENIED);
+        }
+        return pin;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public long addExistingPerson(Person person, String permanentAddress, String currentAddress, User user) {
+        long pin = -1;
+
+        // TODO validate inputs
+        if (user.isAuthorized(Permission.PRS_ADD_PERSON)) {
+            person.setStatus(Person.Status.VERIFIED);
+            person.setLifeStatus(Person.LifeStatus.ALIVE);
+            // generate a PIN for existing person 
+            pin = pinGenerator.generatePINNumber(person.getDateOfBirth(), person.getGender() == 0);
+            person.setPin(pin);
+            
+            personDao.addPerson(person);
+            // add permanent address of the person to the PRS
+            if (permanentAddress != null) {
+                final Address permanentAdd = new Address(permanentAddress);
+                person.specifyAddress(permanentAdd);
+                personDao.addAddress(permanentAdd);
+            }
+            // add current address of the person to the PRS
+            if (currentAddress != null) {
+                final Address currentAdd = new Address(currentAddress);
+                person.specifyAddress(currentAdd);
+                personDao.addAddress(currentAdd);
+            }
+            if (permanentAddress != null || currentAddress != null) {
+                personDao.updatePerson(person);
+            }
         } else {
             logger.error("User : " + user.getUserId() + " is not allowed to add persons to the PRS");
             throw new PRSRuntimeException("User : " + user.getUserId() +

@@ -422,7 +422,7 @@
         <put-attribute name="title" value="search.title"/>
     </definition>
 
-    <definition name="epr.ExistingPersonRegistration" extends="epr.template">
+    <definition name="epr.existingPersonRegistration" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/prs/ExistingPersonRegistrationForm.jsp"/>
         <put-attribute name="title" value="person_registration.title"/>
     </definition>
@@ -430,5 +430,10 @@
     <definition name="epr.personDetails" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/prs/PersonDetails.jsp"/>
         <put-attribute name="title" value="person_details.title"/>
+    </definition>
+    
+    <definition name="epr.personRegisterDetails" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/prs/PersonRegisterDetails.jsp"/>
+        <put-attribute name="title" value="person_register_details.title"/>
     </definition>
 </tiles-definitions>

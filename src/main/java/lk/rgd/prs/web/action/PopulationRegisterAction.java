@@ -54,31 +54,12 @@ public class PopulationRegisterAction extends ActionSupport implements SessionAw
         try {
             // add passport number in given format - e.g. LK:M1203456 
             person.addPassportNo(countryDAO.getCountry(personCountryId), personPassportNo);
-            person.setStatus(Person.Status.VERIFIED);
-            person.setLifeStatus(Person.LifeStatus.ALIVE);
-
-            long pin = service.addPerson(person, user);
-
-            // add permanent address
-            final Address permanent = new Address(permanentAddress);
-            permanent.setPermanent(true);
-            person.specifyAddress(permanent);
-            service.addAddress(permanent, user);
-
-            // add current address if available
-            if (WebUtils.filterBlanks(currentAddress) != null) {
-                final Address current = new Address(currentAddress);
-                person.specifyAddress(current);
-                service.addAddress(current, user);
-            }
-            service.updatePerson(person, user);
-
+            long pin = service.addExistingPerson(person, permanentAddress, currentAddress, user);
             addActionMessage(getText("person_reg_success.message") + pin);
 
         } catch (PRSRuntimeException e) {
             logger.error("PRS Exception occurred while adding person to the PRS", e);
         }
-        populate();         // TODO remove this temporary used
         return SUCCESS;
     }
 

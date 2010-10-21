@@ -1,6 +1,7 @@
 package lk.rgd.prs.api.domain;
 
 import lk.rgd.common.api.domain.Country;
+import lk.rgd.common.util.WebUtils;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -73,7 +74,7 @@ public class Address implements Serializable {
     }
 
     public Address(String line1) {
-        this.line1 = line1;
+        this.line1 = WebUtils.filterBlanksAndToUpper(line1);
     }
 
     public long getAddressUKey() {
@@ -105,7 +106,7 @@ public class Address implements Serializable {
     }
 
     public void setLine1(String line1) {
-        this.line1 = line1;
+        this.line1 = WebUtils.filterBlanksAndToUpper(line1);
     }
 
     public String getLine2() {
@@ -113,7 +114,7 @@ public class Address implements Serializable {
     }
 
     public void setLine2(String line2) {
-        this.line2 = line2;
+        this.line2 = WebUtils.filterBlanksAndToUpper(line2);
     }
 
     public String getCity() {
@@ -121,7 +122,7 @@ public class Address implements Serializable {
     }
 
     public void setCity(String city) {
-        this.city = city;
+        this.city = WebUtils.filterBlanksAndToUpper(city);
     }
 
     public String getPostcode() {
@@ -129,7 +130,7 @@ public class Address implements Serializable {
     }
 
     public void setPostcode(String postcode) {
-        this.postcode = postcode;
+        this.postcode = WebUtils.filterBlanksAndToUpper(postcode);
     }
 
     public boolean isPermanent() {
