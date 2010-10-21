@@ -6,14 +6,72 @@
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
+<script>
+    //these inpute can not be null
+    var errormsg = "";
+    function validate() {
 
+        var returnval = true;
+        var domObject;
+        //order issued date
+        domObject = document.getElementById("reciveDatePicker");
+        if (isFieldEmpty(domObject)) {
+            isEmpty(domObject, "", 'error1');
+        } else {
+            isDate(domObject.value, 'error0', 'error1');
+        }
+
+        domObject = document.getElementById("deathDatePicker");
+        if (isFieldEmpty(domObject)) {
+            isEmpty(domObject, "", 'error2')
+        } else {
+            isDate(domObject.value, 'error0', 'error2');
+        }
+
+        domObject = document.getElementById("deathPerson_PINorNIC");
+        if (!isFieldEmpty(domObject)) {
+            validatePINorNIC(domObject, 'error0', 'error3');
+        }
+
+        domObject = document.getElementById("passportNumber");
+        if (!isFieldEmpty(domObject)) {
+            validatePassportNo(domObject, 'error0', 'error4');
+        }
+
+        domObject = document.getElementById("deathAge");
+        if (!isFieldEmpty(domObject)) {
+            isNumeric(domObject.value, 'error0', 'error5');
+        }
+
+        domObject = document.getElementById("fatherPinNic");
+        if (!isFieldEmpty(domObject)) {
+            validatePINorNIC(domObject, 'error0', 'error6');
+        }
+
+        domObject = document.getElementById("motherNIC");
+        if (!isFieldEmpty(domObject)) {
+            validatePINorNIC(domObject, 'error0', 'error7');
+        }
+
+        domObject = document.getElementById("declarant_pinOrNic");
+        if (!isFieldEmpty(domObject)) {
+            validatePINorNIC(domObject, 'error0', 'error8');
+        }
+
+        if (errormsg != "") {
+            alert(errormsg);
+            returnval = false;
+        }
+        errormsg = "";
+        return returnval;
+    }
+</script>
 <div id="death-alteration-outer">
-<s:form method="post" action="eprCaptureDeathAlteration.do">
+<s:form method="post" action="eprCaptureDeathAlteration.do" onsubmit="javascript:return validate()">
 <script type="text/javascript">
 var act;
 var informPerson;
-function setInformPerson(nICorPIN, name, address, tp, email)
-{
+function setInformPerson(nICorPIN, name, address, tp, email) {
     var informantName = document.getElementById("declarant_pinOrNic").value = nICorPIN;
     var informantNICorPIN = document.getElementById("declarantName").value = name;
     var informantAddress = document.getElementById("declarantAddress").value = address;
@@ -210,22 +268,18 @@ $(function() {
 
         }
 
-        function getTrueOffsetLeft(ele)
-        {
+        function getTrueOffsetLeft(ele) {
             var n = 0;
-            while (ele)
-            {
+            while (ele) {
                 n += ele.offsetLeft || 0;
                 ele = ele.offsetParent;
             }
             return n;
         }
 
-        function getTrueOffsetTop(ele)
-        {
+        function getTrueOffsetTop(ele) {
             var n = 0;
-            while (ele)
-            {
+            while (ele) {
                 n += ele.offsetTop || 0;
                 ele = ele.offsetParent;
             }
@@ -570,13 +624,13 @@ function initPage() {
             <s:label value="Information about the Death"/>
         </td>
         <td style="width:20%;text-align:right;border-right:none">
-<%--            <div id="death-info-check-lable">
-                <s:label value="%{getText('edit.lable')}"/></div>--%>
+                <%--            <div id="death-info-check-lable">
+               <s:label value="%{getText('edit.lable')}"/></div>--%>
         </td>
         <td style="border-right:none;width:3%">
-<%--
-            <s:checkbox id="death-info-check" name="editDeathInfo" cssStyle="float:right;"/>
---%>
+                <%--
+                            <s:checkbox id="death-info-check" name="editDeathInfo" cssStyle="float:right;"/>
+                --%>
         </td>
         <td style="width:2%;border-left:none">
             <div class="birth-alteration-minimize-icon" id="death-info-min">[-]</div>
@@ -597,7 +651,7 @@ function initPage() {
         <col/>
         <col/>
         <tbody>
-        <tr style="border-bottom:2px"> 
+        <tr style="border-bottom:2px">
             <td>
                 (10)හදිසි මරණයක්ද ? <br>
                 in tamil <br>
@@ -743,14 +797,14 @@ function initPage() {
             <s:label value="Information about the person Departed"/>
         </td>
         <td style="width:20%;text-align:right;border-right:none">
-<%--            <div id="death-person-info-check-lable">
-                <s:label value="%{getText('edit.lable')}"/></div>--%>                          010014566
+                <%--            <div id="death-person-info-check-lable">
+               <s:label value="%{getText('edit.lable')}"/></div>--%> 010014566
         </td>
         <td style="border-right:none;width:3%">
 
-<%--
-            <s:checkbox id="death-person-info-check" name="editDeathPerson" cssStyle="float:right;"/>
---%>
+                <%--
+                            <s:checkbox id="death-person-info-check" name="editDeathPerson" cssStyle="float:right;"/>
+                --%>
 
         </td>
         <td style="width:2%">
@@ -887,7 +941,7 @@ function initPage() {
             </td>
             <td colspan="6">
                 <s:textfield name="deathRegister.deathPerson.deathPersonFatherPINorNIC" cssStyle="width:180px;"
-                             id="pinNic"/>
+                             id="fatherPinNic"/>
             </td>
         </tr>
         <tr>
@@ -909,7 +963,7 @@ function initPage() {
             </td>
             <td colspan="6">
                 <s:textfield name="deathRegister.deathPerson.deathPersonMotherPINorNIC" cssStyle="width:180px;"
-                             id="fatherNIC"/>
+                             id="motherNIC"/>
             </td>
 
         </tr>
@@ -1135,6 +1189,15 @@ function initPage() {
 <s:hidden name="deathId" value="%{deathRegister.idUKey}"/>
 <s:hidden name="editMode" value="%{editMode}"/>
 <s:hidden name="deathAlterationId" value="%{deathAlteration.idUKey}"/>
+<s:hidden id="error0" value="%{getText('er.invalid.inputType')}"/>
+<s:hidden id="error1" value="%{getText('er.label.reciveDatePicker')}"/>
+<s:hidden id="error2" value="%{getText('er.label.dateOfDeath')}"/>
+<s:hidden id="error3" value="%{getText('er.label.deathPerson_PINorNIC')}"/>
+<s:hidden id="error4" value="%{getText('er.label.passportNumber')}"/>
+<s:hidden id="error5" value="%{getText('er.label.deathAge')}"/>
+<s:hidden id="error6" value="%{getText('er.label.fatherPinNic')}"/>
+<s:hidden id="error7" value="%{getText('er.label.motherNIC')}"/>
+<s:hidden id="error8" value="%{getText('er.label.declarant_pinOrNic')}"/>
 </s:form>
 </div>
 
