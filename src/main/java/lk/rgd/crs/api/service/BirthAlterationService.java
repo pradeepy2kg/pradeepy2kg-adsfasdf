@@ -65,7 +65,7 @@ public interface BirthAlterationService {
      *                           not yet complete, but save whatever approvals made to database
      */
     public void approveBirthAlteration(BirthAlteration ba, Map<Integer, Boolean> fieldsToBeApproved,
-        boolean applyChangesToBC, User user);
+                                       boolean applyChangesToBC, User user);
 
     /**
      * Returns a limited set of BirthAlterations for which one or more fields in the statement 27,27A or statement
@@ -93,6 +93,17 @@ public interface BirthAlterationService {
 
     /**
      * Returns a limited set of BirthAlterations for which one or more fields in the statement 27,27A or statement
+     * 52_1 are awaiting approval by an ARG or higher authority based on given birth/death division.
+     *
+     * @param bdDivision the birth/death division
+     * @param pageNo     the page number for the results required (start from 1)
+     * @param noOfRows   number of rows
+     * @return the birth alteration results
+     */
+    public List<BirthAlteration> getApprovalPendingByBDDivision(BDDivision bdDivision, int pageNo, int noOfRows);
+
+    /**
+     * Returns a limited set of BirthAlterations for which one or more fields in the statement 27,27A or statement
      * 52_1 are awaiting approval by an ARG or higher authority based on given Recived date of birth alteration
      *
      * @param bdDivision        birth Division of the birth
@@ -103,5 +114,19 @@ public interface BirthAlterationService {
      * @return the birth alteration results
      */
     public List<BirthAlteration> getApprovalPendingByBDDivisionAndBDFSerialNo
-        (BDDivision bdDivision, Long birthSerialNumber, int pageNo, int noOfRows, User user);
+            (BDDivision bdDivision, Long birthSerialNumber, int pageNo, int noOfRows, User user);
+
+
+    /**
+     * Returns a limited set of BirthAlterations for which one or more fields in the statement 27,27A or statement
+     * 52_1 are awaiting approval by an ARG or higher authority based on given Recived date of birth alteration
+     *
+     * @param locationUKey idUKey of the user location
+     * @param pageNo       the page number for the results required (start from 1)
+     * @param noOfRows     number of rows
+     * @param user         the user initiating the action
+     * @return the birth alteration results
+     */
+    public List<BirthAlteration> getApprovalPendingByUserLocationIdUKey
+            (int locationUKey, int pageNo, int noOfRows, User user);
 }

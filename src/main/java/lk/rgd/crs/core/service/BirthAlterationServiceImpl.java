@@ -39,7 +39,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
     private final PopulationRegistry ecivil;
 
     public BirthAlterationServiceImpl(BirthAlterationDAO birthAlterationDAO, BirthDeclarationDAO birthDeclarationDAO,
-        PopulationRegistry ecivil, PersonDAO personDAO) {
+                                      PopulationRegistry ecivil, PersonDAO personDAO) {
         this.birthAlterationDAO = birthAlterationDAO;
         this.birthDeclarationDAO = birthDeclarationDAO;
         this.ecivil = ecivil;
@@ -99,7 +99,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void approveBirthAlteration(BirthAlteration ba, Map<Integer, Boolean> fieldsToBeApproved,
-        boolean applyChangesToBC, User user) {
+                                       boolean applyChangesToBC, User user) {
 
         if (applyChangesToBC) {
             logger.debug("Attempt to approve birth alteration record : {} and apply changes to BC", ba.getIdUKey());
@@ -136,7 +136,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
                 case TYPE_52_1_H:
                 case TYPE_52_1_I: {
                     logger.debug("Alteration is an amendment, inclusion of omission or correction. Type : {}",
-                        ba.getType().ordinal());
+                            ba.getType().ordinal());
                     bdf.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_ALTERED);
                     bdf.getLifeCycleInfo().setActiveRecord(false);      // mark old record as a non-active record
                     birthDeclarationDAO.updateBirthDeclaration(bdf, user);
@@ -155,7 +155,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
                     bdf.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CANCELLED);
                     birthDeclarationDAO.updateBirthDeclaration(bdf, user);
                     logger.debug("Alteration of type : {} is a cancellation of the existing record : {}",
-                        ba.getType().ordinal(), bdf.getIdUKey());
+                            ba.getType().ordinal(), bdf.getIdUKey());
 
                     // cancel any person on the PRS related to this same PIN
                     Person person = personDAO.findPersonByPIN(bdf.getChild().getPin());
@@ -180,7 +180,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
     public List<BirthAlteration> getApprovalPendingByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, User user) {
         if (logger.isDebugEnabled()) {
             logger.debug("Get birth alteration pending approval by DSDivision ID : " + dsDivision.getDsDivisionUKey()
-                + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
+                    + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
         ValidationUtils.validateAccessToDSDivison(dsDivision, user);
         return birthAlterationDAO.getBulkOfAlterationByDSDivision(dsDivision, pageNo, noOfRows);
@@ -191,27 +191,44 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthAlteration> getApprovalPendingByBDDivision
-        (BDDivision bdDivision, int pageNo, int noOfRows, User user) {
+            (BDDivision bdDivision, int pageNo, int noOfRows, User user) {
         if (logger.isDebugEnabled()) {
             logger.debug("Get birth alteration pending approval by BDDivision ID : " + bdDivision.getBdDivisionUKey()
-                + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
+                    + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
         ValidationUtils.validateAccessToBDDivision(user, bdDivision);
         return birthAlterationDAO.getBulkOfAlterationByBDDivision(bdDivision, pageNo, noOfRows);
     }
-
+        @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<BirthAlteration> getApprovalPendingByBDDivision
+            (BDDivision bdDivision, int pageNo, int noOfRows) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Get birth alteration pending approval by BDDivision ID : " + bdDivision.getBdDivisionUKey()
+                    + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
+        }
+        return birthAlterationDAO.getBulkOfAlterationByBDDivision(bdDivision, pageNo, noOfRows);
+    }
     /**
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthAlteration> getApprovalPendingByBDDivisionAndBDFSerialNo(
-        BDDivision bdDivision, Long birthSerialNumber, int pageNo, int noOfRows, User user) {
+            BDDivision bdDivision, Long birthSerialNumber, int pageNo, int noOfRows, User user) {
 
         if (logger.isDebugEnabled()) {
             logger.debug("Get birth alterations pending approval - by Birth Division : " + bdDivision.getEnDivisionName() +
-                " and BDF serial : " + birthSerialNumber + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
+                    " and BDF serial : " + birthSerialNumber + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
         return birthAlterationDAO.getBulkOfAlterationByBDDivisionAndBirthSerialNo(bdDivision, birthSerialNumber, pageNo, noOfRows);
+    }
+
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<BirthAlteration> getApprovalPendingByUserLocationIdUKey(int locationUKey, int pageNo, int noOfRows, User user) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Get birth alterations pending approval - by User locaton id : " + locationUKey +
+                    " Page : " + pageNo + " with number of rows per page : " + noOfRows);
+        }
+        return birthAlterationDAO.getBulkOfAlterationByUserLocationIdUKey(locationUKey, pageNo, noOfRows);
     }
 
     /**
@@ -233,7 +250,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
         }
 
         ValidationUtils.validateAccessToBDDivision(user,
-            birthDeclarationDAO.getById(ba.getBdfIDUKey()).getRegister().getBirthDivision());
+                birthDeclarationDAO.getById(ba.getBdfIDUKey()).getRegister().getBirthDivision());
     }
 
     /**
@@ -248,15 +265,15 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
             // RG can approve any record
         } else if (Role.ROLE_ARG.equals(user.getRole().getRoleId())) {
             ValidationUtils.validateAccessToBDDivision(user,
-                birthDeclarationDAO.getById(ba.getBdfIDUKey()).getRegister().getBirthDivision());
+                    birthDeclarationDAO.getById(ba.getBdfIDUKey()).getRegister().getBirthDivision());
 
             if (!user.isAuthorized(Permission.APPROVE_BIRTH_ALTERATION)) {
                 handleException("User : " + user.getUserId() + " is not allowed to approve/reject birth alteration",
-                    ErrorCodes.PERMISSION_DENIED);
+                        ErrorCodes.PERMISSION_DENIED);
             }
         } else {
             handleException("User : " + user.getUserId() + " is not an ARG for alteration approval",
-                ErrorCodes.PERMISSION_DENIED);
+                    ErrorCodes.PERMISSION_DENIED);
         }
     }
 
@@ -327,7 +344,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
         if (ba.getApprovalStatuses().get(Alteration27A.FATHER_RACE)) {
             if (bdf.getParent().getFatherRace() != null) {
                 handleException("The fathers race cannot be changed under section 27A, when already specified." +
-                    " Use Section 52 (1) instead", ErrorCodes.ILLEGAL_STATE);
+                        " Use Section 52 (1) instead", ErrorCodes.ILLEGAL_STATE);
             } else {
                 bdf.getParent().setFatherRace(alt.getFather().getFatherRace());
             }
