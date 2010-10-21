@@ -13,7 +13,6 @@
 
         var returnval = true;
         var domObject;
-        //order issued date
         domObject = document.getElementById("reciveDatePicker");
         if (isFieldEmpty(domObject)) {
             isEmpty(domObject, "", 'error1');

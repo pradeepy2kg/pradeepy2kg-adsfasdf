@@ -3,7 +3,77 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
+<script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
+<script>
+     //these inpute can not be null
+    var errormsg = "";
+    function validate() {
 
+        var returnval = true;
+        var domObject;
+        domObject=document.getElementById("submitDatePicker");
+        if (isFieldEmpty(domObject)) {
+            isEmpty(domObject, "", 'error1');
+        } else {
+            isDate(domObject.value, 'error0', 'error1');
+        }
+
+        domObject = document.getElementById("person_PIN");
+        if (!isFieldEmpty(domObject)) {
+            validatePINorNIC(domObject, 'error0', 'error2');
+        }
+
+        domObject = document.getElementById("personPassportNo");
+        if (!isFieldEmpty(domObject)) {
+            validatePassportNo(domObject, 'error0', 'error3');
+        }
+
+        domObject = document.getElementById("birthDatePicker");
+        if (isFieldEmpty(domObject)) {
+            isEmpty(domObject, "", 'error4');
+        } else {
+            isDate(domObject.value, 'error0', 'error4');
+        }
+
+        domObject = document.getElementById("placeOfBirth");
+        if (isFieldEmpty(domObject)) {
+            isEmpty(domObject, "", 'error5');
+        }
+
+        domObject = document.getElementById("personFullNameOfficialLang");
+        if (isFieldEmpty(domObject)) {
+            isEmpty(domObject, "", 'error6');
+        }
+
+        domObject = document.getElementById("personFullNameEnglish");
+        if (isFieldEmpty(domObject)) {
+            isEmpty(domObject, "", 'error7');
+        }
+
+        domObject = document.getElementById("permanentAddress");
+        if (isFieldEmpty(domObject)) {
+            isEmpty(domObject, "", 'error8');
+        }
+
+        domObject = document.getElementById("personPhoneNo");
+        if (!isFieldEmpty(domObject)) {
+            validatePhoneNo(domObject, "error0", 'error9');
+        }
+
+        domObject = document.getElementById("personEmail");
+        if (!isFieldEmpty(domObject)) {
+            validateEmail(domObject, "error0", 'error10');
+        }
+
+        if (errormsg != "") {
+            alert(errormsg);
+            returnval = false;
+        }
+        errormsg = "";
+        return returnval;
+    }
+
+</script>
 <script type="text/javascript">
     $(function() {
         $("#submitDatePicker").datepicker({
@@ -26,7 +96,7 @@
 </script>
 
 <div class="prs-existing-person-register-outer">
-<s:form action="eprExistingPersonRegistration.do" method="POST">
+<s:form action="eprExistingPersonRegistration.do" method="POST" onsubmit="javascript:return validate()">
 
 <table class="table_reg_header_01" style="font-size:9pt">
     <caption></caption>
@@ -83,7 +153,7 @@
             <br>National Identity Card (NIC) Number
         </td>
         <td colspan="2">
-            <s:textfield name="person.nic" maxLength="10"/>
+            <s:textfield name="person.nic" id="person_PIN" maxLength="10"/>
         </td>
         <td rowspan="2" colspan="2">
             (3) විදේශිකයකු නම්<br>வெளிநாட்டவர் எனின் <br>If a foreigner
@@ -191,7 +261,7 @@
     <tr>
         <td>(10) ස්ථිර ලිපිනය<br>நிரந்தர வதிவிட முகவரி<br>Permanent Address</td>
         <td colspan="7">
-            <s:textarea name="permanentAddress" cssStyle="width:98.2%;text-transform:uppercase;"/>
+            <s:textarea name="permanentAddress" id="permanentAddress" cssStyle="width:98.2%;text-transform:uppercase;"/>
         </td>
     </tr>
     <tr>
@@ -209,11 +279,11 @@
     <tr>
         <td>(12) දුරකථන අංක<br>தொலைபேசி இலக்கம்<br>Telephone Numbers</td>
         <td colspan="2">
-            <s:textfield name="person.personPhoneNo" maxLength="15"/>
+            <s:textfield name="person.personPhoneNo" id="personPhoneNo" maxLength="15"/>
         </td>
         <td>(13) ඉ – තැපැල් <br>மின்னஞ்சல்<br>Email</td>
         <td colspan="4">
-            <s:textfield name="person.personEmail" cssStyle="text-transform:none;" maxLength="30"/>
+            <s:textfield name="person.personEmail" id="personEmail" cssStyle="text-transform:none;" maxLength="30"/>
         </td>
     </tr>
     </tbody>
@@ -265,5 +335,16 @@
     <s:submit value="%{getText('next.label')}" cssStyle="margin-top:10px;"/>
 </div>
 
+<s:hidden id="error0" value="%{getText('er.invalid.inputType')}"/>
+<s:hidden id="error1" value="%{getText('er.label.submitDatePicker')}"/>
+<s:hidden id="error2" value="%{getText('er.label.person_PIN')}"/>
+<s:hidden id="error3" value="%{getText('er.label.personPassportNo')}"/>
+<s:hidden id="error4" value="%{getText('er.label.birthDatePicker')}"/>
+<s:hidden id="error5" value="%{getText('er.label.placeOfBirth')}"/>
+<s:hidden id="error6" value="%{getText('er.label.personFullNameOfficialLang')}"/>
+<s:hidden id="error7" value="%{getText('er.label.personFullNameEnglish')}"/>
+<s:hidden id="error8" value="%{getText('er.label.permanentAddress')}"/>
+<s:hidden id="error9" value="%{getText('er.label.personPhoneNo')}"/>
+<s:hidden id="error10" value="%{getText('er.label.personEmail')}"/>
 </s:form>
 </div>
