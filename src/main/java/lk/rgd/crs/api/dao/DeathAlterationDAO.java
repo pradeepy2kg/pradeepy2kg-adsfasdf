@@ -90,6 +90,6 @@ public interface DeathAlterationDAO {
      * @param pin death persons pin number
      * @return list of death alterations most probably one result
      */
-    public List<DeathAlteration> getDeathAlterationByDeathPersonPin(long pin);
+    public List<DeathAlteration> getDeathAlterationByDeathPersonPin(String pin);
 
 }

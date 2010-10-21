@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 
 import lk.rgd.common.api.domain.*;
 import lk.rgd.common.api.dao.*;
+import lk.rgd.common.util.WebUtils;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.api.service.DeathAlterationService;
 import lk.rgd.crs.api.service.DeathRegistrationService;
@@ -73,7 +74,6 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     private long serialNumber;
     private long alterationSerialNo;
     private long deathId;
-    private long pin;
     private long deathAlterationId;
 
     private String language;
@@ -81,6 +81,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     private String dsDivision;
     private String deathDivision;
     private String rejectComment;
+    private String pin;
 
     private boolean editMode;
     private boolean applyChanges;
@@ -122,8 +123,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                     deathAlteration.setDeathPerson(deathRegister.getDeathPerson());
                     deathAlteration.setStatus(DeathAlteration.State.DATA_ENTRY);
                     deathAlteration.setDeathRecodDivision(dr.getDeath().getDeathDivision());
-                    deathAlteration.setDeathPersonPin(Integer.parseInt(dr.getDeathPerson().getDeathPersonPINorNIC()));
-
+                    deathAlteration.setDeathPersonPin(dr.getDeathPerson().getDeathPersonPINorNIC());
                     Country deathCountry;
                     if (deathPersonCountry > 0) {
                         deathCountry = countryDAO.getCountry(deathPersonCountry);
@@ -173,9 +173,9 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             if (certificateNumber != 0)
                 deathRegister = deathRegistrationService.getById(certificateNumber);
             //search by pin
-            if (pin != 0) {
+            if (pin != null && Integer.parseInt(pin) != 0) {
                 //only get firts recode others ignored  because there can be NIC duplications
-                List<DeathRegister> deathRegisterList = deathRegistrationService.getByPinOrNic(pin, user);
+                List<DeathRegister> deathRegisterList = deathRegistrationService.getByPinOrNic(Integer.parseInt(pin), user);
                 if (deathRegisterList != null)
                     deathRegister = deathRegisterList.get(0);
             }
@@ -245,8 +245,9 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         logger.debug("attemp to get death alteration pending list");
         if (pageNumber > 0) {
             //search by pin
-            if (pin > 0) {
-                approvalList = deathAlterationService.getAlterationByDeathPersonPin(pin, user);
+            if (pin != null && Integer.parseInt(pin) > 0) {
+                //todo fix issue with load all results
+                //       approvalList = deathAlterationService.getAlterationByDeathPersonPin(pin, user);
             } else if (locationUKey > 0) {
                 //search by user location
                 //todo :( defect with approval
@@ -866,12 +867,12 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         this.toDay = toDay;
     }
 
-    public long getPin() {
+    public String getPin() {
         return pin;
     }
 
-    public void setPin(long pin) {
-        this.pin = pin;
+    public void setPin(String pin) {
+        this.pin = WebUtils.filterBlanks(pin);
     }
 
     public List<DeathAlteration> getApprovalList() {

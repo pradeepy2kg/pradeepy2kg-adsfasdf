@@ -98,7 +98,7 @@ public class DeathAlterationDAOImpl extends BaseDAO implements DeathAlterationDA
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
-    public List<DeathAlteration> getDeathAlterationByDeathPersonPin(long pin) {
+    public List<DeathAlteration> getDeathAlterationByDeathPersonPin(String pin) {
         Query q = em.createNamedQuery("get.alt.by.death.person.pin");
         q.setParameter("pin", pin);
         return q.getResultList();

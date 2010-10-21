@@ -97,7 +97,7 @@ public interface DeathAlterationService {
      * @param user user who has permission to performe task
      * @return list of death alteration object most probably only one result give if no pin duplications
      */
-    public List<DeathAlteration> getAlterationByDeathPersonPin(long pin, User user);
+    public List<DeathAlteration> getAlterationByDeathPersonPin(String pin, User user);
 
     /**
      * approve death alteration and set bit set base on state partially or fully
@@ -109,5 +109,11 @@ public interface DeathAlterationService {
      */
     public void approveDeathAlteration(long deathAlterationUKey, Hashtable<Integer, Boolean> fieldsToBeApproved, boolean appStatus, User user);
 
+    /**
+     * filling transiant value death person name
+     *
+     * @param da death alteration
+     */
+    public void loadValuesToDeathAlterationObject(DeathAlteration da);
 
 }

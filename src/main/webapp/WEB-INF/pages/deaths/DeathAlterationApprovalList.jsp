@@ -244,7 +244,7 @@
                         </s:url>
                         <tr>
                             <td><s:property value="idUKey"/></td>
-                            <td><s:property value="status"/></td>
+                            <td><s:property value="deathPersonName"/></td>
                             <td align="center">
                                 <s:if test="status.ordinal()==0">
                                     <s:a href="%{editSelected}" title="%{getText('editTooltip.label')}">
@@ -286,7 +286,7 @@
                             </td>
                             <td align="center">
                                 <s:if test="status.ordinal()>1 & (#session.user_bean.role.roleId.equals('ARG') | #session.user_bean.role.roleId.equals('RG'))">
-                                    <s:a href="%{approveSelected}" title="%{getText('approveTooltip.label')}">
+                                    <s:a href="%{applySelected}" title="%{getText('applyChangesTooltip.label')}">
                                         <img src="<s:url value='/images/update.gif'/>" width="25" height="25"
                                              border="none"/></s:a>
                                 </s:if>

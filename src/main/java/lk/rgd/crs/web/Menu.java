@@ -292,6 +292,7 @@ public class Menu {
         argAlterationLink.put("eprDeathAlterationReject.do", new Link(null, "/ecivil/alteration/", "eprDeathAlterationReject.do", Permission.APPROVE_BIRTH_ALTERATION));
         argAlterationLink.put("eprDeathAlterationDelate.do", new Link(null, "/ecivil/alteration/", "eprDeathAlterationDelate.do", Permission.APPROVE_BIRTH_ALTERATION));
         argAlterationLink.put("eprDeathAlterationEdit.do", new Link(null, "/ecivil/alteration/", "eprDeathAlterationEdit.do", Permission.APPROVE_BIRTH_ALTERATION));
+        argAlterationLink.put("eprDeathAlterationApplyChanges.do", new Link(null, "/ecivil/alteration/", "eprDeathAlterationApplyChanges.do", Permission.APPROVE_BIRTH_ALTERATION));
 
         // assemble menu for admins : insertion - order
         adminLinks.put("admin", adminLink);
