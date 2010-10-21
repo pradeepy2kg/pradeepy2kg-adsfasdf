@@ -166,8 +166,9 @@
 
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<s:actionerror/>
+<s:actionerror cssStyle="color:red;font-size:9pt;"/>
 <s:form action="eprFilterAlteration" method="post" onsubmit="javascript:return validate()">
+    <%--<s:actionerror  cssStyle="color:red;font-size:9pt;"/>--%>
     <div id="tabs" style="font-size:10pt;">
         <ul>
             <li><a href="#fragment-1"><span> <s:label
@@ -227,6 +228,7 @@
                 <tr>
                     <td width="350px"><s:label value="%{getText('alteration.submitted.label')}"/></td>
                     <td>
+                            <s:label value="%{getText('from.lable')}" cssStyle="margin-right:10px;"/>
                             <s:select list="userLocations" name="locationUKey" value="%{locationUKey}" headerKey="0"
                                       headerValue="%{getText('select.location')}"/>
                 </tr>
@@ -259,10 +261,11 @@
         <s:iterator status="approvalStatus" value="birthAlterationPendingApprovalList" id="approvalList">
             <%--todo has to be completed--%>
             <tr>
-                <td><s:property value="#approvalStatus.index"/></td>
+                <td><s:property value="#approvalStatus.index +1"/></td>
                 <td><s:property value="alt27.childFullNameOfficialLang"/></td>
                 <td align="center">
-                    <s:if test="#request.allowApproveAlteration">
+                    <s:if test="#request.allowApproveAlteration &&
+                    alterationApprovalPermission.get(#approvalStatus.index)">
                         <s:url id="approveSelected" action="eprApproveSelectedAlteration.do">
                             <s:param name="idUKey" value="idUKey"/>
                             <s:param name="bdId" value="bdfIDUKey"/>
@@ -278,7 +281,8 @@
                     </s:if>
                 </td>
                 <td align="center">
-                    <s:if test="#request.allowApproveAlteration">
+                    <s:if test="#request.allowApproveAlteration &&
+                    alterationApprovalPermission.get(#approvalStatus.index)">
                         <s:url id="rejectSelected" action="eprRejectSelectedAlteration.do">
                             <s:param name="idUKey" value="idUKey"/>
                             <s:param name="bdId" value="bdfIDUKey"/>

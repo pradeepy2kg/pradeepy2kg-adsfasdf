@@ -16,15 +16,16 @@
      })*/
     function checkAll(field)
     {
-        for (i = 0; i < field.length; i++)
-            field[i].checked = true;
+        if (document.getElementById("selectAll").checked) {
+            for (i = 0; i < field.length; i++) {
+                field[i].checked = true;
+            }
+        }
+        else {
+            for (i = 0; i < field.length; i++)
+                field[i].checked = false;
+        }
     }
-    function uncheckAll(field)
-    {
-        for (i = 0; i < field.length; i++)
-            field[i].checked = false;
-    }
-
     function initPage() {
         /* var index = document.getElementsByName("indexCheck");
          index= index[0].value ;
@@ -86,10 +87,6 @@
         <div style="width:20%;float:left;margin-left:25px;">
             <s:label value="%{getText('select_all.label')}"/>
             <s:checkbox id="selectAll" name="selectAll" onClick="checkAll(document.alterationApproval.index)"/>
-        </div>
-        <div style="width:20%;float:left;margin-left:25px;">
-            <s:label value="%{getText('select_all.label')}"/>
-            <s:checkbox id="selectAll" name="selectAll" onClick="uncheckAll(document.alterationApproval.index)"/>
         </div>
         <div class="form-submit">
             <s:submit value="%{getText('save.label')}" cssStyle="margin-top:10px;margin-right:25px"/>

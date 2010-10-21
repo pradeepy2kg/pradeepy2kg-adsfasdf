@@ -291,6 +291,13 @@ public interface BirthRegistrationService {
     public BirthDeclaration getById(long bdId, User user);
 
     /**
+     * Returns the Birth Declaration object for a given Id
+     *
+     * @param bdId Birth Declarion Id for the given declaration
+     * @return the BDF if found, and the user has access to the record
+     */
+    public BirthDeclaration getById(long bdId);
+    /**
      * Returns the Birth Declaration object with all relatinships for a given Id
      *
      * @param bdId Birth Declarion Id for the given declaration

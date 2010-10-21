@@ -15,31 +15,17 @@ import java.util.BitSet;
 @Entity
 @Table(name = "ALT_BIRTH", schema = "CRS")
 @NamedQueries({
-        /* @NamedQuery(name = "get.active.ba.by.bddivision.in.bdf.and.alterationSerialNo", query = "SELECT ba FROM BirthAlteration ba, BirthDeclaration bdf " +
-     "WHERE bdf.register.birthDivision = :bdDivision AND ba.alterationSerialNo = :alterationSerialNo " +
-     "AND ba.lifeCycleInfo.activeRecord IS TRUE"),*/
-        /* @NamedQuery(name = "get.active.ba.by.bddivision.in.ba.and.alterationSerialNo", query = "SELECT ba FROM BirthAlteration ba " +
-     "WHERE ba.alt52_1.birthDivision = :bdDivision AND ba.alterationSerialNo = :alterationSerialNo " +
-     "AND ba.lifeCycleInfo.activeRecord IS TRUE"),*/
-//        @NamedQuery(name = "filter.alteration.by.dsdivision", query = "SELECT ba FROM BirthAlteration ba , BirthDeclaration bdf " +
-//                "WHERE ba.bdId =bdf.idUKey AND bdf.register.birthDivision.dsDivision = :dsDivision AND ba.status <> :statusFullyApp AND ba.status <> :statusPrint " +
-//                "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
         @NamedQuery(name = "filter.alteration.by.idUKey", query = "SELECT ba FROM BirthAlteration ba " +
                 "WHERE ba.idUKey =:idUKey AND ba.status <>:statusFullyApp AND ba.status <>:statusPrint " +
                 "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
         @NamedQuery(name = "filter.alteration.by.recived.date", query = "SELECT ba FROM BirthAlteration ba " +
                 "WHERE ba.dateReceived BETWEEN :recivedDateFrom AND :recivedDateTo AND ba.status <>:statusFullyApp AND ba.status <>:statusPrint " +
                 "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
-//        @NamedQuery(name = "filter.alteration.by.bdDivision.and.alteration.serial.number", query = "SELECT ba FROM BirthAlteration ba, BirthDeclaration bdf " +
-//                "WHERE bdf.idUKey=ba.bdId AND ba.alterationSerialNo =:alterationSerialNo AND (bdf.register.birthDivision=:bdDivision OR ba.alt52_1.birthDivision=:bdDivision) AND" +
-//                " ba.status <>:statusFullyApp AND ba.status <>:statusPrint " +
-//                "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
-//        @NamedQuery(name = "filter.alteration.by.bdDivision.and.birth.serial.number", query = "SELECT ba FROM BirthAlteration ba, BirthDeclaration bdf " +
-//                "WHERE bdf.idUKey=ba.bdId AND bdf.register.bdfSerialNo =:birthSerialNo AND (bdf.register.birthDivision=:bdDivision OR ba.alt52_1.birthDivision=:bdDivision) AND" +
-//                " ba.status <>:statusFullyApp AND ba.status <>:statusPrint " +
-//                "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
         @NamedQuery(name = "filter.alteration.by.bddivision", query = "SELECT ba FROM BirthAlteration ba,BirthDeclaration bdf " +
                 "WHERE ba.bdfIDUKey =bdf.idUKey AND bdf.register.birthDivision = :bdDivision AND ba.status <> :statusFullyApp AND ba.status <> :statusPrint " +
+                "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
+        @NamedQuery(name = "filter.alteration.by.user.location", query = "SELECT ba FROM BirthAlteration ba " +
+                "WHERE ba.submittedLocation.locationUKey= :locationUKey AND ba.status <>:statusFullyApp AND ba.status <>:statusPrint " +
                 "ORDER BY ba.lifeCycleInfo.createdTimestamp desc")
 })
 
@@ -104,6 +90,10 @@ public class BirthAlteration {
     @JoinColumn(name = "submitedLocationUKey", nullable = false)
     private Location submittedLocation;
 
+    @ManyToOne
+    @JoinColumn(name = "birthDivisionUKey", nullable = false)
+    private BDDivision birthRecodDivision;
+
     @Column(nullable = false)
     // The date when the alteration request was received
     @Temporal(value = TemporalType.DATE)
@@ -136,7 +126,6 @@ public class BirthAlteration {
     private String otherDocuments;
     @Column
     private String comments;
-
     @Column
     private float stampFee;
 
@@ -282,5 +271,13 @@ public class BirthAlteration {
 
     public void setType(AlterationType type) {
         this.type = type;
+    }
+
+    public BDDivision getBirthRecodDivision() {
+        return birthRecodDivision;
+    }
+
+    public void setBirthRecodDivision(BDDivision birthRecodDivision) {
+        this.birthRecodDivision = birthRecodDivision;
     }
 }

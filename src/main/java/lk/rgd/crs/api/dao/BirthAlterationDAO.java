@@ -118,4 +118,14 @@ public interface BirthAlterationDAO {
      * @return the birth alteration results
      */
     public List<BirthAlteration> getBulkOfAlterationByBDDivisionAndBirthSerialNo(BDDivision bdDivision, Long birthSerialNo, int pageNo, int noOfRows);
+
+    /**
+     * Returns a limited set of BirthAlterations based on given user location
+     *
+     * @param locationUKey   idUKey  of the user location
+     * @param pageNo        the page number for the results required (start from 1)
+     * @param noOfRows      number of rows
+     * @return the birth alteration results
+     */
+    public List<BirthAlteration> getBulkOfAlterationByUserLocationIdUKey(int locationUKey, int pageNo, int noOfRows);
 }

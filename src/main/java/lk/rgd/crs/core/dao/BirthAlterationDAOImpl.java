@@ -151,4 +151,14 @@ public class BirthAlterationDAOImpl extends BaseDAO implements BirthAlterationDA
         q.setParameter("statusPrint", BirthAlteration.State.PRINTED);
         return q.getResultList();
     }
+
+    @Override
+    public List<BirthAlteration> getBulkOfAlterationByUserLocationIdUKey(int locationUKey, int pageNo, int noOfRows) {
+        Query q = em.createNamedQuery("filter.alteration.by.user.location").
+                setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+        q.setParameter("locationUKey", locationUKey);
+        q.setParameter("statusFullyApp", BirthAlteration.State.FULLY_APPROVED);
+        q.setParameter("statusPrint", BirthAlteration.State.PRINTED);
+        return q.getResultList();
+    }
 }
