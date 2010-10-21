@@ -135,7 +135,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         this.prsRecordsIndexer = prsRecordsIndexer;
     }
 
-    public String creatUser() {
+    public String createUser() {
         User updated = (User) session.get(WebConstants.SESSION_UPDATED_USER);
         /*logger.debug("creat user called");
         if (divisions.equals(getText("get_ds_divisions.label"))) {

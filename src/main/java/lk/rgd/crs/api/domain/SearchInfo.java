@@ -3,6 +3,7 @@ package lk.rgd.crs.api.domain;
 import lk.rgd.common.util.WebUtils;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -11,7 +12,7 @@ import java.util.Date;
  * @author Chathuranga Withana
  */
 @Embeddable
-public class SearchInfo {
+public class SearchInfo implements Serializable {
     /**
      * This is the full name of whose certificate being searched (e.g. birth certificate, death certificate etc.)
      */

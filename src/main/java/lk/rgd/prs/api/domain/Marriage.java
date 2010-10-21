@@ -1,5 +1,7 @@
 package lk.rgd.prs.api.domain;
 
+import lk.rgd.common.util.WebUtils;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -108,7 +110,7 @@ public class Marriage implements Serializable {
     }
 
     public void setPlaceOfMarriage(String placeOfMarriage) {
-        this.placeOfMarriage = placeOfMarriage;
+        this.placeOfMarriage = WebUtils.filterBlanksAndToUpper(placeOfMarriage);
     }
 
     public State getState() {
