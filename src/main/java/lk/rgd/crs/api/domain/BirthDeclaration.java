@@ -203,6 +203,26 @@ public class BirthDeclaration implements Serializable {
     @Embedded
     private ConfirmantInfo confirmant = new ConfirmantInfo();
 
+    /**
+     * BE CAREFUL USING THIS METHOD. It returns a cheap shallow clone of a BDF for alteration purposes
+     * BE SURE you know how you are using the returned object
+     * 
+     * @return a shallow clone of the existing record
+     */
+    public BirthDeclaration clone() {
+        BirthDeclaration newBDF = new BirthDeclaration();
+        newBDF.setLifeCycleInfo(lifeCycleInfo);
+        newBDF.setChild(child);
+        newBDF.setParent(parent);
+        newBDF.setMarriage(marriage);
+        newBDF.setGrandFather(grandFather);
+        newBDF.setNotifyingAuthority(notifyingAuthority);
+        newBDF.setInformant(informant);
+        newBDF.setConfirmant(confirmant);
+
+        return newBDF;
+    }
+
     public long getIdUKey() {
         return idUKey;
     }

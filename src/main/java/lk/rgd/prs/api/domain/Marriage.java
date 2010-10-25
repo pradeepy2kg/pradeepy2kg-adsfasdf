@@ -136,4 +136,27 @@ public class Marriage implements Serializable {
     public void setBride(Person bride) {
         this.bride = bride;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Marriage marriage = (Marriage) o;
+
+        if (marriageUKey != marriage.marriageUKey) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (marriageUKey ^ (marriageUKey >>> 32));
+    }
 }

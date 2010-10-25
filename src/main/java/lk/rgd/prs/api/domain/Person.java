@@ -540,4 +540,27 @@ public class Person implements Serializable {
     private static final boolean isEmptyString(String s) {
         return s == null || s.trim().length() == 0;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Person person = (Person) o;
+
+        if (personUKey != person.personUKey) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (personUKey ^ (personUKey >>> 32));
+    }
 }

@@ -142,7 +142,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
                     birthDeclarationDAO.updateBirthDeclaration(bdf, user);
 
                     // create the new entry as a clone from the existing
-                    bdf.setIdUKey(0);
+                    BirthDeclaration newBDF = bdf.clone();
                     bdf.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CERT_GENERATED);
                     applyChanges(ba, bdf, user);
                     birthDeclarationDAO.addBirthDeclaration(bdf, user);
