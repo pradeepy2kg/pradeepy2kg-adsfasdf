@@ -34,31 +34,53 @@ public class DeathAlteration {
 
     public static final Map<Integer, String> indexMap = new HashMap<Integer, String>();
 
+    public static final int SUDDEN_DEATH = 1;
+    public static final int DATE_OF_DEATH = 2;
+    public static final int TIME_OF_DEATH = 3;
+    public static final int PLACE_OF_DEATH = 4;
+    public static final int PLACE_OF_DEATH_ENGLISH = 5;
+    public static final int CAUSE_OF_DEATH_ESTABLISHED = 6;
+    public static final int CAUSE_OF_DEATH = 7;
+    public static final int ICD_CODE = 8;
+    public static final int BURIAL_PLACE = 9;
+    public static final int PIN = 10;
+    public static final int COUNTRY = 11;
+    public static final int PASSPORT = 12;
+    public static final int AGE = 13;
+    public static final int GENDER = 14;
+    public static final int RACE = 15;
+    public static final int NAME = 16;
+    public static final int NAME_ENGLISH = 17;
+    public static final int ADDRESS = 18;
+    public static final int PIN_FATHER = 19;
+    public static final int NAME_FATHER = 20;
+    public static final int PIN_MOTHER = 21;
+    public static final int NAME_MOTHER = 22;
 
     static {
-        indexMap.put(1, "field.sudden.death");
-        indexMap.put(2, "field.date.death");
-        indexMap.put(3, "field.time.death");
-        indexMap.put(4, "field.place.death");
-        indexMap.put(5, "field.place.death.english");
-        indexMap.put(6, "field.cause.death.established");
-        indexMap.put(7, "field.cause.death");
-        indexMap.put(8, "field.icd.code");
-        indexMap.put(9, "field.burial.place");
+        indexMap.put(SUDDEN_DEATH, "field.sudden.death");
+        indexMap.put(DATE_OF_DEATH, "field.date.death");
+        indexMap.put(TIME_OF_DEATH, "field.time.death");
+        indexMap.put(PLACE_OF_DEATH, "field.place.death");
+        indexMap.put(PLACE_OF_DEATH_ENGLISH, "field.place.death.english");
+        indexMap.put(CAUSE_OF_DEATH_ESTABLISHED, "field.cause.death.established");
+        indexMap.put(CAUSE_OF_DEATH, "field.cause.death");
+        indexMap.put(ICD_CODE, "field.icd.code");
+        indexMap.put(BURIAL_PLACE, "field.burial.place");
 
-        indexMap.put(10, "field.pin.number");
-        indexMap.put(11, "field.country");
-        indexMap.put(12, "field.passPort");
-        indexMap.put(13, "field.age");
-        indexMap.put(14, "field.gender");
-        indexMap.put(15, "field.race");
-        indexMap.put(16, "field.name");
-        indexMap.put(17, "field.name.english");
-        indexMap.put(18, "field.address");
-        indexMap.put(19, "field.pin.father");
-        indexMap.put(20, "field.name.father");
-        indexMap.put(21, "field.pin.mother");
-        indexMap.put(22, "field.name.mother");
+        indexMap.put(PIN, "field.pin.number");
+        indexMap.put(COUNTRY, "field.country");
+        indexMap.put(PASSPORT, "field.passPort");
+        indexMap.put(AGE, "field.age");
+        indexMap.put(GENDER, "field.gender");
+        indexMap.put(RACE, "field.race");
+        indexMap.put(NAME, "field.name");
+        indexMap.put(NAME_ENGLISH, "field.name.english");
+        indexMap.put(ADDRESS, "field.address");
+        indexMap.put(PIN_FATHER, "field.pin.father");
+        indexMap.put(NAME_FATHER, "field.name.father");
+        indexMap.put(PIN_MOTHER, "field.pin.mother");
+        indexMap.put(NAME_MOTHER, "field.name.mother");
     }
 
     public enum State {
