@@ -168,6 +168,9 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
 
         existing.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
         existing.getLifeCycleInfo().setApprovalOrRejectUser(user);
+        if (applyChangesToBC) {
+            existing.setStatus(BirthAlteration.State.FULLY_APPROVED);
+        }
         birthAlterationDAO.updateBirthAlteration(existing, user);
 
         logger.debug("Updated birth alteration : {}", existing.getIdUKey());
