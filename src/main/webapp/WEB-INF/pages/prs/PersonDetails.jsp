@@ -94,7 +94,7 @@
             <br>Life status
         </td>
         <td>
-           <s:label value="%{person.lifeStatus}"/> 
+           <s:label value="%{person.lifeStatus}"/>
         </td>
         <td>
             මරණ දිනය
@@ -112,7 +112,7 @@
             <br>Race
         </td>
         <td>
-            <s:label value="%{person.race}"/>
+            <s:label value="%{person.race.enRaceName}"/>
         </td>
         <td>
             ස්ත්‍රී පුරුෂ භාවය
@@ -219,7 +219,7 @@
             <br>Start
         </td>
         <td colspan="3">
-            <s:label value="%{}"/>
+            <s:label value="%{person.lastAddress.startDate}"/>
         </td>
     </tr>
     <tr>
@@ -261,7 +261,7 @@
         </td>
         <td>
             <s:label value="%{}"/>
-            
+
         </td>
         <td>
             අවසානය
@@ -300,7 +300,7 @@
             <br>End
         </td>
         <td>
-            <s:label value="%{}"/>            
+            <s:label value="%{}"/>
         </td>
     </tr>
     </tbody>
@@ -349,9 +349,9 @@
             <br>தந்தையின்முழுப்
             <br>Father
         </td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td><s:label value="%{person.father.pin}"/></td>
+        <td><s:label value="%{person.father.dateOfBirth}"/></td>
+        <td><s:label value="%{person.father.fullNameInOfficialLanguage}"/></td>
     </tr>
     <tr>
         <td>
@@ -359,9 +359,9 @@
             <br>தாயின்
             <br>Mother
         </td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td><s:label value="%{person.mother.pin}"/></td>
+        <td><s:label value="%{person.mother.dateOfBirth}"/></td>
+        <td><s:label value="%{person.mother.fullNameInOfficialLanguage}"/></td>
     </tr>
     <tr>
         <td>
