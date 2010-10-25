@@ -71,7 +71,7 @@ public interface DeathAlterationService {
      * @param divisionId
      * @return
      */
-    public List<DeathAlteration> getAlterationApprovalListByDeathDivision(int pageNo, int numRows, int divisionId);
+    public List<DeathAlteration> getAlterationApprovalListByDeathDivision(int pageNo, int numRows, int divisionId,User user);
 
     /**
      * get death alteration object list by death id(forign key for death alteration)
@@ -86,9 +86,10 @@ public interface DeathAlterationService {
      * get list of death alterations by location key
      *
      * @param locationUKey location primary key
+     * @param user
      * @return list of death alterations submitted by given user location
      */
-    public List<DeathAlteration> getDeathAlterationByUserLocation(int locationUKey);
+    public List<DeathAlteration> getDeathAlterationByUserLocation(int locationUKey,User user);
 
     /**
      * get death alteration by death persons pin number
