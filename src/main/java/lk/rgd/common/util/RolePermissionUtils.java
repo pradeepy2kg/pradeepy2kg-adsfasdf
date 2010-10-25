@@ -42,6 +42,7 @@ public class RolePermissionUtils {
         deoBitSet.set(Permission.SEARCH_PRS);
         deoBitSet.set(Permission.USER_PREFERENCES);
         deoBitSet.set(Permission.EDIT_BIRTH_ALTERATION);
+        deoBitSet.set(Permission.PRS_VIEW_PERSON);
 
         // ADR
 
@@ -72,8 +73,7 @@ public class RolePermissionUtils {
         rgBitSet.or(argBitSet);
         // TODO add any RG specific permissions
 
-// ADMIN
-
+        // ADMIN
         adminBitSet = new BitSet();
         adminBitSet.set(Permission.USER_MANAGEMENT);
         adminBitSet.set(Permission.SERVICE_MASTER_DATA_MANAGEMENT);
