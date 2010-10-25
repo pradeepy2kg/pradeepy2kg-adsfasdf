@@ -436,4 +436,5 @@
         <put-attribute name="body" value="/WEB-INF/pages/prs/PersonRegisterDetails.jsp"/>
         <put-attribute name="title" value="person_register_details.title"/>
     </definition>
+
 </tiles-definitions>

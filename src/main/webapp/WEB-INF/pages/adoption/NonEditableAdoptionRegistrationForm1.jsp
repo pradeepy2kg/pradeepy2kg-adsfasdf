@@ -59,9 +59,9 @@
         <td><s:label value="%{#request.adoption.judgeName}"/></td>
     </tr>
     <tr>
-        <td>******* සහතිකය නිකුත් කල යුතු භාෂාව <br>***in tamil***<br>Preferred
-            Language for
-            ******
+        <td>සහතිකය නිකුත් කල යුතු භාෂාව
+            <br>*in tamil
+            <br>Preferred Language for
         </td>
         <s:set name="lang" value="%{#request.adoption.languageToTransliterate}"/>
         <td>
