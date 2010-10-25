@@ -17,6 +17,7 @@ import lk.rgd.crs.api.service.DeathAlterationService;
 import lk.rgd.crs.api.service.DeathRegistrationService;
 import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
+import lk.rgd.crs.CRSRuntimeException;
 
 
 /**
@@ -173,9 +174,9 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             if (certificateNumber != 0)
                 deathRegister = deathRegistrationService.getById(certificateNumber);
             //search by pin
-            if (pin != null && Integer.parseInt(pin) != 0) {
+            if (pin != null && Long.parseLong(pin) != 0) {
                 //only get firts recode others ignored  because there can be NIC duplications
-                List<DeathRegister> deathRegisterList = deathRegistrationService.getByPinOrNic(Integer.parseInt(pin), user);
+                List<DeathRegister> deathRegisterList = deathRegistrationService.getByPinOrNic(Long.parseLong(pin), user);
                 if (deathRegisterList != null)
                     deathRegister = deathRegisterList.get(0);
             }
@@ -246,16 +247,24 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         if (pageNumber > 0) {
             //search by pin
             if (pin != null && Integer.parseInt(pin) > 0) {
-                //todo fix issue with load all results
-                //       approvalList = deathAlterationService.getAlterationByDeathPersonPin(pin, user);
+                try {
+                    approvalList = deathAlterationService.getAlterationByDeathPersonPin(pin, user);
+                } catch (CRSRuntimeException e) {
+                    logger.error("cannot find a death alteration for pin : {}", pin);
+                    addActionError(getText("no.pending.alterations"));
+                    populatePrimaryLists(districtUKey, dsDivisionId, language, user);
+                    userLocations = user.getActiveLocations(language);
+                    locationUKey = 0;
+                    return ERROR;
+                }
             } else if (locationUKey > 0) {
                 //search by user location
                 //todo :( defect with approval
-                approvalList = deathAlterationService.getDeathAlterationByUserLocation(locationUKey);
+                approvalList = deathAlterationService.getDeathAlterationByUserLocation(locationUKey, user);
             } else {
                 //search by division
                 if (divisionUKey > 0) {
-                    approvalList = deathAlterationService.getAlterationApprovalListByDeathDivision(pageNo, rowNo, divisionUKey);
+                    approvalList = deathAlterationService.getAlterationApprovalListByDeathDivision(pageNo, rowNo, divisionUKey, user);
                 }
             }
             if (approvalList.size() < 1) {

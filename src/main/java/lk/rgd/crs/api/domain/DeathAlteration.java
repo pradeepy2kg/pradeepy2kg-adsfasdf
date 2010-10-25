@@ -34,6 +34,7 @@ public class DeathAlteration {
 
     public static final Map<Integer, String> indexMap = new HashMap<Integer, String>();
 
+
     static {
         indexMap.put(1, "field.sudden.death");
         indexMap.put(2, "field.date.death");
