@@ -1,217 +1,530 @@
-<%--@author Ashoka Ekanayaka--%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
-<link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<div class="prs-existing-person-register-outer">
-<s:form action="eprPersonDetails.do" method="POST">
+<div class="prs-person-report-outer">
 
-<table class="table_reg_header_01" style="font-size:9pt">
-    <caption></caption>
-    <col/>
-    <col/>
+<table style="width:100%; border:none; border-collapse:collapse;">
     <tbody>
     <tr>
-        <s:actionmessage cssStyle="text-align:left;color:red;"/>
-    </tr>
-    <tr>
-        <td width="300px"></td>
-        <td align="center" style="font-size:12pt; width:430px">
-            <img src="<s:url value="/images/official-logo.png"/>"/><br>
-            <label>ජනගහන ලේඛනයේ පුද්ගලයකු ලියාපදිංචි කිරීම
-                <br>* Tamil
-                <br>Registration of a person in the Population Registry</label>
+        <td rowspan="2" align="center">
+            <img src="<s:url value="../images/official-logo.png" />"
+                 style="display: block; text-align: center;" width="100" height="120">
         </td>
-        <td>
-            <table class="table_reg_datePicker_page_01" style="margin-right:0">
-                <tr>
-                    <td colspan="2">කාර්යාල ප්‍රයෝජනය සඳහා පමණි <br>அலுவலக பாவனைக்காக மட்டும்
-                        <br>For office use only
-                        <hr>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label><span class="font-8">භාරගත්  දිනය<br>* Tamil<br>Submitted Date</span></label>
-                    </td>
-                    <td>
-                        <s:label value="YYYY-MM-DD" cssStyle="margin-left:10px;font-size:10px"/><br>
-                        <s:textfield name="person.dateOfRegistration" id="submitDatePicker" maxLength="10"/>
-                    </td>
-                </tr>
-            </table>
+
+    </tr>
+    <tr></tr>
+    <tr>
+        <td align="center" style="font-size:12pt;">
+            <s:label>
+                ජනගහන ලේඛනයේ ලියාපදිංචි පුද්ගලයකු පිලිබඳ විස්තර
+                <br>குடிமதிப்பீட்டு ஆவணத்தில் ஆட்களை பதிவு செய்தல்
+                <br>Information about a Person registered in the Population Registry</s:label>
         </td>
     </tr>
     </tbody>
 </table>
 
-<table class="table_reg_page_05" cellspacing="0" cellpadding="0" style="margin-bottom:0;margin-top:20px;">
-    <caption></caption>
-    <col width="220px"/>
-    <col width="130px"/>
-    <col width="130px"/>
-    <col width="100px"/>
-    <col width="80px"/>
-    <col width="120px"/>
-    <col width="120px"/>
-    <col width="130px"/>
+<table border="1"
+       style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:10px 0;font-size:10pt">
+    <col width="200px">
+    <col width="200px">
+    <col width="120px">
+    <col width="180px">
+    <col width="120px">
+    <col width="210px">
     <tbody>
-
     <tr>
-        <td>
-            (1) ජාතික හැඳුනුම්පත් අංකය
-            <br>* Tamil
-            <br>National Identity Card (NIC) Number
-        </td>
-        <td colspan="2">
-            <s:textfield name="person.nic" maxLength="10"/>
-        </td>
-        <td rowspan="2" colspan="2">
-            (3) විදේශිකයකු නම්<br>* Tamil<br>If a foreigner
-        </td>
-        <td>රට<br>* Tamil<br>Country</td>
-        <td colspan="2">
-            <%--<s:text name="person.country"/>--%>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            (2) ජාතිය<br>இனம்<br>Race
-        </td>
-        <td colspan="2">
-            <s:text name="person.race.enRaceName" />
-        </td>
-        <td>ගමන් බලපත්‍ර අංකය<br>* Tamil<br>Passport No.</td>
-        <td colspan="2">
-            <s:label name="person.passportNos" />
-        </td>
-    </tr>
-    <tr>
-        <td>(4) උපන් දිනය<br>* Tamil<br>Date of Birth</td>
-        <td colspan="7">
-            <s:label value="YYYY-MM-DD" cssStyle="margin-left:5px;font-size:10px"/><br>
-            <s:textfield id="birthDatePicker" name="person.dateOfBirth" maxLength="10"/>
-        </td>
-    </tr>
-    <tr>
-        <td>(5) උපන් ස්ථානය<br>* Tamil<br>Place of Birth</td>
-        <td colspan="7">
-            <s:textfield name="person.placeOfBirth"/>
-        </td>
-    </tr>
-    <tr>
-        <td class="font-9">
-            (6) නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)
-            <br>பெயா் அரச கரும மொழியில் (சிங்களம் / தமிழ்)
-            <br>Name in any of the official languages (Sinhala / Tamil)
-        </td>
-        <td colspan="7">
-            <s:textarea name="person.fullNameInOfficialLanguage" id="personFullNameOfficialLang"
-                        cssStyle="width:98.2%;"/>
-        </td>
-    </tr>
-    <tr>
-        <td class="font-9">(7) නම ඉංග්‍රීසි භාෂාවෙන් <br>பெயா் ஆங்கில மொழியில்<br>Name in English</td>
-        <td colspan="7">
-            <s:textarea name="person.fullNameInEnglishLanguage" id="personFullNameEnglish"
-                        cssStyle="width:98.2%;"/>
-            <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px;"
-                 id="childName">
-        </td>
-    </tr>
-
-    <tr>
-        <td class="font-9">
-            (8) ස්ත්‍රී පුරුෂ භාවය<br>பால் <br>Gender of the child
-        </td>
-        <td colspan="2">
-            <s:select name="person.gender" cssStyle="width:190px; margin-left:5px;"
-                      list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"/>
+        <td rowspan="2">
+            අනන්‍යතා අංකය
+            <br>அடையாள எண்
+            <br>Identification Number
+            <br>
+            <br>(PIN)
         </td>
         <td rowspan="2">
-            (9) සිවිල් තත්වය<br>* Tamil<br>Civil Status
+            <s:label value="%{person.pin}"/>
         </td>
-        <td colspan="5" style="border:none;padding:0">
-            <table style="border:none;" cellspacing="0;" width="100%">
-                <tr>
-                    <td align="right">අවිවාහක<br>* Tamil<br>Never Married</td>
-                    <td><s:radio name="person.civilStatus" list="#@java.util.HashMap@{'NEVER_MARRIED':''}"/></td>
-                    <td align="right">විවාහක<br>* Tamil<br>Married</td>
-                    <td><s:radio name="person.civilStatus" list="#@java.util.HashMap@{'MARRIED':''}"/></td>
-                    <td align="right">දික්කසාද<br>* Tamil<br>Divorced</td>
-                    <td><s:radio name="person.civilStatus" list="#@java.util.HashMap@{'DIVORCED':''}"/></td>
-                </tr>
-                <tr>
-                    <td align="right">වැන්දබු<br>* Tamil<br>Widowed</td>
-                    <td><s:radio name="person.civilStatus" list="#@java.util.HashMap@{'WIDOWED':''}"/></td>
-                    <td align="right">නිෂ්ප්‍රභාකර ඇත <br>* Tamil<br>Anulled</td>
-                    <td><s:radio name="person.civilStatus" list="#@java.util.HashMap@{'ANNULLED':''}"/></td>
-                    <td align="right">වෙන් වී ඇත<br>* Tamil<br>Separated</td>
-                    <td><s:radio name="person.civilStatus" list="#@java.util.HashMap@{'SEPARATED':''}"/></td>
-                </tr>
-            </table>
+        <td rowspan="2">
+            අතීත
+            <br>தேசிய
+            <br>Previous
         </td>
-    </tr>
-    </tbody>
-</table>
-
-<table class="table_reg_page_05" cellspacing="0" cellpadding="0" style="margin-top:20px;margin-bottom:10px;">
-    <caption></caption>
-    <col width="220px"/>
-    <col width="130px"/>
-    <col width="130px"/>
-    <col width="100px"/>
-    <col width="100px"/>
-    <col width="110px"/>
-    <col width="110px"/>
-    <col width="130px"/>
-    <tbody>
-
-    <tr>
-        <td>(10) ස්ථිර ලිපිනය<br>* Tamil<br>Permanent Address</td>
-        <td colspan="7">
-            <s:textarea name="person.lastAddress" cssStyle="width:98.2%;text-transform:uppercase;"/>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="8" style="font-size:10pt;">
-            වර්තමාන පදිංචිය වෙනත් ස්ථානයක නම් පමණක්, தாயின் நிரந்தர வதிவிட முகவரி, Only if residing at a
-            different location,
-        </td>
-    </tr>
-    <tr>
-        <td>(11) වර්තමාන ලිපිනය<br>* Tamil<br>Current Address</td>
-        <td colspan="7">
-            <s:textarea name="person.lastAddress" cssStyle="width:98.2%;text-transform:uppercase;"/>
-        </td>
-    </tr>
-    <tr>
-        <td>(12) දුරකථන අංක<br>* Tamil<br>Telephone Numbers</td>
         <td colspan="2">
-            <s:textfield name="person.personPhoneNo" maxLength="15"/>
+            ජාතික හැඳුනුම්පත් අංකය
+            <br>தேசிய அடையாள அட்டை
+            <br>National Identity Card (NIC) Number
         </td>
-        <td>(13) ඉ – තැපැල් <br>* Tamil<br>Email</td>
-        <td colspan="4">
-            <s:textfield name="person.personEmail" cssStyle="text-transform:none;" maxLength="30"/>
+        <td>
+            <s:label value="%{person.nic}"/>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <br>තාවකාලික අනන්‍යතා අංකය
+            <br>இலக்கம் அல்லது தற்காலிக அடையாள
+            <br>Temporary Identification number
+        </td>
+    </tr>
+    <tr>
+        <td>
+            උපන් දිනය
+            <br>பிறந்த திகதி
+            <br>Date of birth
+        </td>
+        <td>
+            <s:label value="YYYY-MM-DD" cssStyle="margin-left:5px;font-size:10px"/><br>
+            <s:label value="%{person.dateOfBirth}"/>
+        </td>
+        <td>
+            උපන් ස්ථානය
+            <br>பிறந்த இடம்
+            <br>Place of Birth
+        </td>
+        <td colspan="3">
+            <s:label value="%{person.placeOfBirth}"/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            ජීවමාන තත්වය
+            <br>பிறந்த திகதி
+            <br>Life status
+        </td>
+        <td>
+        </td>
+        <td>
+            මරණ දිනය
+            <br>பிறந்த திகதி
+            <br>Date of Death
+        </td>
+        <td colspan="3">
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            ජාතිය
+            <br>இனம்
+            <br>Race
+        </td>
+        <td>
+            <s:label name="person.race"/>
+        </td>
+        <td>
+            ස්ත්‍රී පුරුෂ භාවය
+            <br>பால்
+            <br>Gender
+        </td>
+        <td>
+            <s:label value="%{person.gender}"/>
+        </td>
+        <td>
+            සිවිල් තත්වය
+            <br>சிவில் நிலைமை
+            <br>Civil Status
+        </td>
+        <td>
+            <s:label value="%{person.civilStatus}"/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            නම රාජ්‍ය භාෂාවෙන්
+            <br>பெயர் அரச கரும மொழியில்
+            <br>Name in official language
+        </td>
+        <td colspan="5">
+        <s:label value="%{person.fullNameInOfficialLanguage}"/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            නම ඉංග්‍රීසි භාෂාවෙන්
+            <br>பெயர் ஆங்கில மொழியில்
+            <br>Name in English
+        </td>
+        <td colspan="5">
+            <s:label value="%{person.fullNameInEnglishLanguage}"/>
         </td>
     </tr>
     </tbody>
 </table>
-
-<table class="table_reg_page_05" style="border:none">
+<table style="width:100%; border:none; border-collapse:collapse;">
     <tr>
-        <td align="center" style="font-size:10pt;border:none">
-            වෙනත් රටවල පුරවැසිභාවය ඇතිනම් ඒ පිලිබඳ විස්තර
-            <br>* Tamil
-            <br>If a citizen of any other countries, such details
+        <td align="center" style="font-size:12pt;">
+            පුරවැසිභාවය සහ ගමන් බලපත්‍ර
+            <br>வேறு நாடுகளில் பிரஜாவுரிமை
+            <br>Citizenship and Passport Details
         </td>
     </tr>
 </table>
-
-<div class="form-submit">
-    <s:submit value="%{getText('next.label')}" cssStyle="margin-top:10px;"/>
-</div>
-
-</s:form>
+<table border="1"
+       style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:10px 0;font-size:10pt">
+    <col width="200px">
+    <col width="200px">
+    <col width="300px">
+    <col width="330px">
+    <tbody>
+    <tr>
+        <td height="60px">
+            රට / நாடு /Country
+        </td>
+        <td></td>
+        <td>
+            ගමන් බලපත්‍ර අංකය / கடவுச் சீட்டு இல. /Passport No.
+        </td>
+        <td></td>
+    </tr>
+    </tbody>
+</table>
+<table style="width:100%; border:none; border-collapse:collapse;">
+    <tr>
+        <td align="center" style="font-size:12pt;">
+            පදිංචිය සහ සම්බන්ධ කිරීමේ තොරතුරු
+            <br>வேறு நாடுகளில் பிரஜாவுரிமை
+            <br>Residence and Contact details
+        </td>
+    </tr>
+</table>
+<table border="1"
+       style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:10px 0;font-size:10pt">
+    <col width="200px">
+    <col width="300px">
+    <col width="100px">
+    <col width="100px">
+    <col width="100px">
+    <col width="100px">
+    <col width="130px">
+    <tbody>
+    <tr>
+        <td>
+            වර්තමාන ලිපිනය
+            <br>தற்போதைய வதிவிட
+            <br>Current Address
+        </td>
+        <td colspan="2"></td>
+        <td>
+            ආරම්භය
+            <br> மின்னஞ்சல்
+            <br>Start
+        </td>
+        <td colspan="3"></td>
+    </tr>
+    <tr>
+        <td>
+            දුරකථන අංක
+            <br>தொலைபேசி இலக்கம்
+            <br>Telephone Numbers
+        </td>
+        <td colspan="2"></td>
+        <td>
+            ඉ – තැපැල්
+            <br>மின்னஞ்சல்
+            <br>Email
+        </td>
+        <td colspan="3"></td>
+    </tr>
+    <tr>
+        <td>
+            පෙර පදිංචි ලිපිනය
+            <br>தற்போதைய வதிவிட
+            <br>Previous Address
+        </td>
+        <td></td>
+        <td>
+            ස්ථිර
+            <br>மின்னஞ்சல்
+            <br>Permenent
+        </td>
+        <td>
+            ආරම්භය
+            <br> மின்னஞ்சல்
+            <br>Start
+        </td>
+        <td></td>
+        <td>
+            අවසානය
+            <br>மின்னஞ்சல்
+            <br>End
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>
+            පෙර පදිංචි ලිපිනය
+            <br>தற்போதைய வதிவிட
+            <br>Previous Address
+        </td>
+        <td></td>
+        <td>
+            තාවකාලික
+            <br>மின்னஞ்சல்
+            <br>Temporary
+        </td>
+        <td>
+            ආරම්භය
+            <br>மின்னஞ்சல்
+            <br>Start
+        </td>
+        <td></td>
+        <td>
+            අවසානය
+            <br>மின்னஞ்சல்
+            <br>End
+        </td>
+        <td></td>
+    </tr>
+    </tbody>
+</table>
+<table style="width:100%; border:none; border-collapse:collapse;">
+    <tr>
+        <td align="center" style="font-size:12pt;">
+            දෙමාපියන්, සහෝදර සහෝදරියන් සහ දරුවන්
+            <br>வேறு நாடுகளில் பிரஜாவுரிமை
+            <br>vParents, Brothers & Sisters, and Children
+        </td>
+    </tr>
+</table>
+<table border="1"
+       style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:10px 0;font-size:10pt">
+    <col width="130px">
+    <col width="150px">
+    <col width="150px">
+    <col>
+    <tbody>
+    <tr>
+        <td>
+            නෑදෑකම
+            <br>தந்தையின்முழுப்
+            <br>Relationship
+        </td>
+        <td>
+            අනන්‍යතා අංකය
+            <br>அடையாள எண்
+            <br>Identification Number
+        </td>
+        <td>
+            උපන් දිනය
+            <br>பிறந்த திகதி
+            <br>Date of birth
+        </td>
+        <td>
+            නම
+            <br>பெயர்
+            <br>Name
+        </td>
+    </tr>
+    <tr>
+        <td>
+            පියා
+            <br>தந்தையின்முழுப்
+            <br>Father
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>
+            මව
+            <br>தாயின்
+            <br>Mother
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>
+            සහෝදරයා
+            <br>தாயின்
+            <br>Brother
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>
+            සහෝදරිය
+            <br>தாயின்
+            <br>Sister
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>
+            ඥාති සහෝදරිය
+            <br>தாயின்
+            <br>Half Sister
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>
+            පුත්‍රයා
+            <br>தாயின்
+            <br>Son
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>
+            දියණිය
+            <br>தாயின்
+            <br>Daughter
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    </tbody>
+</table>
+<table style="width:100%; border:none; border-collapse:collapse;">
+    <tr>
+        <td align="center" style="font-size:12pt;">
+            විවාහයන්
+            <br>வேறு நாடுகளில்
+            <br>Marriages
+        </td>
+    </tr>
+</table>
+<table border="1"
+       style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:10px 0;font-size:10pt">
+    <col width="130px">
+    <col width="100px">
+    <col width="150px">
+    <col width="200px">
+    <col width="150px">
+    <col>
+    <tbody>
+    <tr>
+        <td>
+            දිනය
+            <br>தாயின்
+            <br>Date
+        </td>
+        <td>
+            නීතිය
+            <br>தாயின்
+            <br>Law
+        </td>
+        <td>
+            ස්ථානය
+            <br>தாயின்
+            <br>Place
+        </td>
+        <td>
+            අනන්‍යතා අංකය
+            <br>அடையாள எண்
+            <br>Identification Number
+        </td>
+        <td>
+            උපන් දිනය
+            <br>பிறந்த திகதி
+            <br>Date of birth
+        </td>
+        <td>
+            නම
+            <br>பெயர்
+            <br>Name
+        </td>
+    </tr>
+    <tr>
+        <td height="60px"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td height="60px"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    </tbody>
+</table>
+<table style="width:100%; border:none; border-collapse:collapse;">
+    <tr>
+        <td align="center" style="font-size:12pt;">
+            වාර්තාව පිලිබඳ ඉතිහාසය
+            <br>வேறு நாடுகளில்
+            <br>Record History
+        </td>
+    </tr>
+</table>
+<table border="1"
+       style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:10px 0;font-size:10pt">
+    <col width="250px">
+    <col width="250px">
+    <col width="250px">
+    <col>
+    <tbody>
+    <tr>
+        <td>
+            ඇතුල් කල දිනය
+            <br>தேசிய
+            <br>Date Added
+        </td>
+        <td></td>
+        <td>
+            ඇතුල් කල පුද්ගලයා
+            <br>தேசிய
+            <br>Added by
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>
+            අවසන් වෙනස් කිරීම කල දිනය
+            <br>தேசிய
+            <br>Last Updated
+        </td>
+        <td></td>
+        <td>
+            අවසන් වෙනස් කිරීම කල පුද්ගලයා
+            <br>தேசிய
+            <br>Updated by
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>
+            නිකුත් කල දිනය
+            <br>தேசிய
+            <br>Date Generated
+        </td>
+        <td></td>
+        <td>
+            නිකුත් කල පුද්ගලයා
+            <br>தேசிய
+            <br>Generated by
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>
+            වාර්තාවේ තත්වය
+            <br>தேசிய
+            <br>Record status
+        </td>
+        <td>
+            ස්ථිර
+            <br>தேசிய
+            <br>Verified
+        </td>
+        <td colspan="2"></td>
+    </tr>
+    </tbody>
+</table>
 </div>
