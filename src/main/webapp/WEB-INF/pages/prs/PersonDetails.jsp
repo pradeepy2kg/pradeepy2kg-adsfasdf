@@ -64,6 +64,9 @@
             <br>இலக்கம் அல்லது தற்காலிக அடையாள
             <br>Temporary Identification number
         </td>
+        <td>
+            <s:label value="%{person.temporaryPin}"/>
+        </td>
     </tr>
     <tr>
         <td>
@@ -91,6 +94,7 @@
             <br>Life status
         </td>
         <td>
+           <s:label value="%{person.lifeStatus}"/> 
         </td>
         <td>
             මරණ දිනය
@@ -98,7 +102,7 @@
             <br>Date of Death
         </td>
         <td colspan="3">
-
+            <s:label value="%{person.dateOfDeath}"/>
         </td>
     </tr>
     <tr>
@@ -108,7 +112,7 @@
             <br>Race
         </td>
         <td>
-            <s:label name="person.race"/>
+            <s:label value="%{person.race}"/>
         </td>
         <td>
             ස්ත්‍රී පුරුෂ භාවය
@@ -169,11 +173,15 @@
         <td height="60px">
             රට / நாடு /Country
         </td>
-        <td></td>
+        <td>
+            <s:label value="%{}"/>
+        </td>
         <td>
             ගමන් බලපත්‍ර අංකය / கடவுச் சீட்டு இல. /Passport No.
         </td>
-        <td></td>
+        <td>
+            <s:label value="%{person.passportNos}"/>
+        </td>
     </tr>
     </tbody>
 </table>
@@ -202,13 +210,17 @@
             <br>தற்போதைய வதிவிட
             <br>Current Address
         </td>
-        <td colspan="2"></td>
+        <td colspan="2">
+            <s:label value="%{person.lastAddress}"/>
+</td>
         <td>
             ආරම්භය
             <br> மின்னஞ்சல்
             <br>Start
         </td>
-        <td colspan="3"></td>
+        <td colspan="3">
+            <s:label value="%{}"/>
+        </td>
     </tr>
     <tr>
         <td>
@@ -216,13 +228,17 @@
             <br>தொலைபேசி இலக்கம்
             <br>Telephone Numbers
         </td>
-        <td colspan="2"></td>
+        <td colspan="2">
+            <s:label value="%{person.personPhoneNo}"/>
+        </td>
         <td>
             ඉ – තැපැල්
             <br>மின்னஞ்சல்
             <br>Email
         </td>
-        <td colspan="3"></td>
+        <td colspan="3">
+            <s:label value="%{person.personEmail}"/>
+        </td>
     </tr>
     <tr>
         <td>
@@ -230,7 +246,9 @@
             <br>தற்போதைய வதிவிட
             <br>Previous Address
         </td>
-        <td></td>
+        <td>
+            <s:label value="%{}"/>
+        </td>
         <td>
             ස්ථිර
             <br>மின்னஞ்சல்
@@ -241,13 +259,18 @@
             <br> மின்னஞ்சல்
             <br>Start
         </td>
-        <td></td>
+        <td>
+            <s:label value="%{}"/>
+            
+        </td>
         <td>
             අවසානය
             <br>மின்னஞ்சல்
             <br>End
         </td>
-        <td></td>
+        <td>
+            <s:label value="%{}"/>
+        </td>
     </tr>
     <tr>
         <td>
@@ -255,7 +278,9 @@
             <br>தற்போதைய வதிவிட
             <br>Previous Address
         </td>
-        <td></td>
+        <td>
+            <s:label value="%{}"/>
+        </td>
         <td>
             තාවකාලික
             <br>மின்னஞ்சல்
@@ -266,13 +291,17 @@
             <br>மின்னஞ்சல்
             <br>Start
         </td>
-        <td></td>
+        <td>
+            <s:label value="%{}"/>
+        </td>
         <td>
             අවසානය
             <br>மின்னஞ்சல்
             <br>End
         </td>
-        <td></td>
+        <td>
+            <s:label value="%{}"/>            
+        </td>
     </tr>
     </tbody>
 </table>
@@ -476,7 +505,9 @@
             <br>தேசிய
             <br>Date Added
         </td>
-        <td></td>
+        <td>
+            <s:label value="%{person.dateOfRegistration}"/>
+        </td>
         <td>
             ඇතුල් කල පුද්ගලයා
             <br>தேசிய
