@@ -178,4 +178,27 @@ public class Location implements Serializable {
             return null;
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Location location = (Location) o;
+
+        if (locationUKey != location.locationUKey) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return locationUKey;
+    }
 }

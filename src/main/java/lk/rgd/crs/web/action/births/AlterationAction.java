@@ -345,7 +345,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
         }
         if (birthDivisionId > 0) {
-            ba.setBirthRecodDivision(bdDivisionDAO.getBDDivisionByPK(birthDivisionId));
+            ba.setBirthRecordDivision(bdDivisionDAO.getBDDivisionByPK(birthDivisionId));
         }
         ba.setBcOfFather(bcOfFather);
         ba.setBcOfMother(bcOfMother);
@@ -487,7 +487,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
             BDDivision birthDivision;
             int birthDSDivsion;
             for (int i = 0; i < birthAlterationPendingApprovalList.size(); i++) {
-                birthDivision = birthAlterationPendingApprovalList.get(i).getBirthRecodDivision();
+                birthDivision = birthAlterationPendingApprovalList.get(i).getBirthRecordDivision();
                 birthDSDivsion = birthDivision.getDsDivision().getDsDivisionUKey();
                 boolean approveRights = user.isAllowedAccessToBDDSDivision(birthDSDivsion);
                 alterationApprovalPermission.put(i, approveRights);

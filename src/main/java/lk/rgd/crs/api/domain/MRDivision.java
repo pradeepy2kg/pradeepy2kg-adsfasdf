@@ -124,4 +124,27 @@ public class MRDivision implements Serializable {
     public int getMrDivisionUKey() {
         return mrDivisionUKey;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        MRDivision that = (MRDivision) o;
+
+        if (mrDivisionUKey != that.mrDivisionUKey) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return mrDivisionUKey;
+    }
 }

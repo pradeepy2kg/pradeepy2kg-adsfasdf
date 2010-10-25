@@ -87,4 +87,27 @@ public class Country implements Serializable {
     public void setCountryCode(String countryCode) {
         this.countryCode = countryCode;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Country country = (Country) o;
+
+        if (countryId != country.countryId) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return countryId;
+    }
 }

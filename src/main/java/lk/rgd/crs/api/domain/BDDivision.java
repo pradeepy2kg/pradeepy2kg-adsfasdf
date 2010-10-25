@@ -126,4 +126,27 @@ public class BDDivision implements Serializable {
     public int getBdDivisionUKey() {
         return bdDivisionUKey;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        BDDivision that = (BDDivision) o;
+
+        if (bdDivisionUKey != that.bdDivisionUKey) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return bdDivisionUKey;
+    }
 }

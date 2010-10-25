@@ -128,4 +128,27 @@ public class DSDivision implements Serializable {
     public void setDsDivisionUKey(int dsDivisionUKey) {
         this.dsDivisionUKey = dsDivisionUKey;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        DSDivision that = (DSDivision) o;
+
+        if (dsDivisionUKey != that.dsDivisionUKey) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return dsDivisionUKey;
+    }
 }

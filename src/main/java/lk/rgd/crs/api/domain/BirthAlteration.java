@@ -76,7 +76,7 @@ public class BirthAlteration {
      * Contains the approval bit set for each field.
      */
     @Column(nullable = true)
-    private BitSet approvalStatuses;
+    private BitSet approvalStatuses = new BitSet();
     @Id
     // This is an auto generated unique row identifier
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -92,7 +92,7 @@ public class BirthAlteration {
 
     @ManyToOne
     @JoinColumn(name = "birthDivisionUKey", nullable = false)
-    private BDDivision birthRecodDivision;
+    private BDDivision birthRecordDivision;
 
     @Column(nullable = false)
     // The date when the alteration request was received
@@ -109,7 +109,7 @@ public class BirthAlteration {
     private Alteration52_1 alt52_1;
 
     @Embedded
-    private DeclarantInfo declarant;
+    private DeclarantInfo declarant = new DeclarantInfo();
 
     @Embedded
     private CRSLifeCycleInfo lifeCycleInfo = new CRSLifeCycleInfo();
@@ -273,11 +273,11 @@ public class BirthAlteration {
         this.type = type;
     }
 
-    public BDDivision getBirthRecodDivision() {
-        return birthRecodDivision;
+    public BDDivision getBirthRecordDivision() {
+        return birthRecordDivision;
     }
 
-    public void setBirthRecodDivision(BDDivision birthRecodDivision) {
-        this.birthRecodDivision = birthRecodDivision;
+    public void setBirthRecordDivision(BDDivision birthRecordDivision) {
+        this.birthRecordDivision = birthRecordDivision;
     }
 }

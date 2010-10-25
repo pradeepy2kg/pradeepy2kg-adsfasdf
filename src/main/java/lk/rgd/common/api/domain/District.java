@@ -104,4 +104,27 @@ public class District implements Serializable {
     public int getDistrictUKey() {
         return districtUKey;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        District district = (District) o;
+
+        if (districtUKey != district.districtUKey) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return districtUKey;
+    }
 }
