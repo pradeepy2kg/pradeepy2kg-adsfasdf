@@ -209,9 +209,10 @@ public class BirthDeclaration implements Serializable {
      * 
      * @return a shallow clone of the existing record
      */
-    public BirthDeclaration clone() {
+    public BirthDeclaration shallowCopy() {
         BirthDeclaration newBDF = new BirthDeclaration();
         newBDF.setLifeCycleInfo(lifeCycleInfo);
+        newBDF.setRegister(register);
         newBDF.setChild(child);
         newBDF.setParent(parent);
         newBDF.setMarriage(marriage);
@@ -219,7 +220,6 @@ public class BirthDeclaration implements Serializable {
         newBDF.setNotifyingAuthority(notifyingAuthority);
         newBDF.setInformant(informant);
         newBDF.setConfirmant(confirmant);
-
         return newBDF;
     }
 

@@ -142,10 +142,10 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
                     birthDeclarationDAO.updateBirthDeclaration(bdf, user);
 
                     // create the new entry as a clone from the existing
-                    BirthDeclaration newBDF = bdf.clone();
-                    bdf.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CERT_GENERATED);
-                    applyChanges(ba, bdf, user);
-                    birthDeclarationDAO.addBirthDeclaration(bdf, user);
+                    BirthDeclaration newBDF = bdf.shallowCopy();
+                    newBDF.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CERT_GENERATED);
+                    applyChanges(ba, newBDF, user);
+                    birthDeclarationDAO.addBirthDeclaration(newBDF, user);
                     break;
                 }
                 case TYPE_52_1_A:
@@ -255,6 +255,11 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
      * @param user the user attempting to update or delete
      */
     private void validateAccessOfUserToEditOrDelete(BirthAlteration ba, User user) {
+        if (!BirthAlteration.State.DATA_ENTRY.equals(ba.getStatus())) {
+            handleException("Birth alteration ID : " + ba.getIdUKey() + " cannot be edited as its not in the " +
+                "Data entry state", ErrorCodes.ILLEGAL_STATE);
+        }
+
         if (Role.ROLE_DEO.equals(user.getRole().getRoleId()) || Role.ROLE_ADR.equals(user.getRole().getRoleId())) {
             if (ba.getSubmittedLocation().equals(user.getPrimaryLocation())) {
                 return;

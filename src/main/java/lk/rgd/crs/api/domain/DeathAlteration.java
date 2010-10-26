@@ -1,7 +1,6 @@
 package lk.rgd.crs.api.domain;
 
 import lk.rgd.common.api.domain.Location;
-import lk.rgd.common.util.WebUtils;
 import lk.rgd.common.util.NameFormatUtil;
 
 import javax.persistence.*;
@@ -18,10 +17,10 @@ import java.util.HashMap;
 @Table(name = "ALT_DEATH", schema = "CRS")
 @NamedQueries({
         @NamedQuery(name = "get.alt.by.death.certificate.number", query = "SELECT da FROM DeathAlteration da" +
-                " WHERE da.deathId =:deathCertificateNumber"),
+                " WHERE da.deathRegisterIDUkey =:deathCertificateNumber"),
         @NamedQuery(name = "get.alt.by.division.death.division", query = "SELECT da FROM DeathAlteration da," +
-                "DeathRegister dr WHERE da.deathId=dr.idUKey AND dr.death.deathDivision.bdDivisionUKey =:deathDivisionUkey"),
-        @NamedQuery(name = "get.atl.by.death.id", query = "SELECT da FROM DeathAlteration da WHERE da.deathId=:deathId"),
+                "DeathRegister dr WHERE da.deathRegisterIDUkey=dr.idUKey AND dr.death.deathDivision.bdDivisionUKey =:deathDivisionUkey"),
+        @NamedQuery(name = "get.atl.by.death.id", query = "SELECT da FROM DeathAlteration da WHERE da.deathRegisterIDUkey=:deathId"),
         @NamedQuery(name = "get.alt.by.user.location", query = "SELECT da FROM DeathAlteration  da" +
                 " WHERE da.submittedLocation.locationUKey =:locationUKey"),
         @NamedQuery(name = "get.alt.by.death.person.pin", query = "SELECT da FROM DeathAlteration  da " +
@@ -108,13 +107,13 @@ public class DeathAlteration {
     }
 
     public enum AlterationType {
-        ACT_52_1_a,
-        ACT_52_1_b,
-        ACT_52_1_d,
-        ACT_52_1_e,
-        ACT_52_1_i,
-        ACT_52_1_h,
-        ACT_53,
+        TYPE_52_1_A,
+        TYPE_52_1_B,
+        TYPE_52_1_D,
+        TYPE_52_1_E,
+        TYPE_52_1_I,
+        TYPE_52_1_H,
+        TYPE_53
     }
 
     @Enumerated
@@ -138,7 +137,7 @@ public class DeathAlteration {
     private BitSet approvalStatuses;
     //id points to death declaration
     @Column(nullable = false)
-    private long deathId;
+    private long deathRegisterIDUkey;
 
     @Column
     private boolean bcOfFather;
@@ -208,12 +207,12 @@ public class DeathAlteration {
         this.idUKey = idUKey;
     }
 
-    public long getDeathId() {
-        return deathId;
+    public long getDeathRegisterIDUkey() {
+        return deathRegisterIDUkey;
     }
 
-    public void setDeathId(long deathId) {
-        this.deathId = deathId;
+    public void setDeathRegisterIDUkey(long deathRegisterIDUkey) {
+        this.deathRegisterIDUkey = deathRegisterIDUkey;
     }
 
     public Date getDateReceived() {

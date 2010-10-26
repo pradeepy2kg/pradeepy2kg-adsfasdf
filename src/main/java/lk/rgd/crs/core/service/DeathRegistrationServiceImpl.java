@@ -27,13 +27,9 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
 
     private static final Logger logger = LoggerFactory.getLogger(DeathRegistrationService.class);
     private final DeathRegisterDAO deathRegisterDAO;
-    private final DeathDeclarationValidator deathDeclarationValidator;
 
-
-    DeathRegistrationServiceImpl(DeathRegisterDAO deathRegisterDAO, DeathDeclarationValidator deathDeclarationValidator) {
+    DeathRegistrationServiceImpl(DeathRegisterDAO deathRegisterDAO) {
         this.deathRegisterDAO = deathRegisterDAO;
-        this.deathDeclarationValidator = deathDeclarationValidator;
-
     }
 
     /**
@@ -42,7 +38,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     @Transactional(propagation = Propagation.REQUIRED)
     public void addLateDeathRegistration(DeathRegister deathRegistration, User user) {
         logger.debug("adding late/missing death registration");
-        deathDeclarationValidator.validateMinimalRequirments(deathRegistration);
+        DeathDeclarationValidator.validateMinimalRequirments(deathRegistration);
         if (deathRegistration.getDeathType() != DeathRegister.Type.LATE && deathRegistration.getDeathType() != DeathRegister.Type.MISSING) {
             handleException("Invalid death type : " + deathRegistration.getDeathType(), ErrorCodes.ILLEGAL_STATE);
         }
@@ -56,7 +52,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     @Transactional(propagation = Propagation.REQUIRED)
     public void addNormalDeathRegistration(DeathRegister deathRegistration, User user) {
         logger.debug("adding normal/sudden death registration");
-        deathDeclarationValidator.validateMinimalRequirments(deathRegistration);
+        DeathDeclarationValidator.validateMinimalRequirments(deathRegistration);
         if (deathRegistration.getDeathType() != DeathRegister.Type.NORMAL && deathRegistration.getDeathType() != DeathRegister.Type.SUDDEN) {
             handleException("Invalid death type : " + deathRegistration.getDeathType(), ErrorCodes.ILLEGAL_STATE);
         }
@@ -67,7 +63,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     private void addDeathRegistration(DeathRegister deathRegistration, User user) {
         validateAccessToBDDivision(user, deathRegistration.getDeath().getDeathDivision());
         //validate minimul requirments
-        deathDeclarationValidator.validateMinimalRequirments(deathRegistration);
+        DeathDeclarationValidator.validateMinimalRequirments(deathRegistration);
         // has this serial number been used already?
         DeathRegister existing = deathRegisterDAO.getActiveRecordByBDDivisionAndDeathSerialNo(deathRegistration.getDeath().getDeathDivision(),
                 deathRegistration.getDeath().getDeathSerialNo());
@@ -133,8 +129,9 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     //todo do validation warnings
     public List<UserWarning> approveDeathRegistration(long deathRegisterIdUKey, User user, boolean ignoreWarnings) {
         //  logger.debug("attempt to approve death registration record : {} ", deathRegisterIdUKey);
-        deathDeclarationValidator.validateMinimalRequirments(getById(deathRegisterIdUKey, user));
-        List<UserWarning> warnings = deathDeclarationValidator.validateStandardRequirements(deathRegisterDAO, getById(deathRegisterIdUKey, user), user);
+        DeathDeclarationValidator.validateMinimalRequirments(getById(deathRegisterIdUKey, user));
+        List<UserWarning> warnings = DeathDeclarationValidator.validateStandardRequirements(
+            deathRegisterDAO, getById(deathRegisterIdUKey, user), user);
         if (warnings.isEmpty() || ignoreWarnings) {
             setApprovalStatus(deathRegisterIdUKey, user, DeathRegister.State.APPROVED, null);
         }
@@ -167,7 +164,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
             handleException("Cannot change status , " + dr.getIdUKey() +
                     " Illegal state : " + dr.getStatus(), ErrorCodes.ILLEGAL_STATE);
         }
-        dr.setStatus(DeathRegister.State.DEATH_CERTIFICATE_PRINTED);
+        dr.setStatus(DeathRegister.State.ARCHIVED_CERT_GENERATED);
         deathRegisterDAO.updateDeathRegistration(dr, user);
     }
 

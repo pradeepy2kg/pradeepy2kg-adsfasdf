@@ -8,6 +8,7 @@ import lk.rgd.common.api.domain.User;
 import java.util.List;
 import java.util.Hashtable;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * @authar amith jayasekara
@@ -54,7 +55,7 @@ public interface DeathAlterationService {
      * @param user   User who has permission to retrive a death alteration.
      * @return retrive a unique death alteration object for given unique key.
      */
-    public DeathAlteration getById(long idUKey, User user);
+    public DeathAlteration getByIDUKey(long idUKey, User user);
 
     /**
      * get death alteration object list by death id(forign key for death alteration)
@@ -103,6 +104,18 @@ public interface DeathAlterationService {
     public List<DeathAlteration> getAlterationByDeathPersonPin(String pin, User user);
 
     /**
+     * Approve requested fields of death alteration statement 52_1 or 53 by an ARG or higher authority
+     *
+     * @param da                 the death alteration to be approved
+     * @param fieldsToBeApproved the list of field indexes to be approved
+     * @param user               the user initiating the action
+     * @param applyChangesToDC   if true, the approval is complete. Now apply changes to DC. if false, the approval is
+     *                           not yet complete, but save whatever approvals made to database
+     */
+    public void approveDeathAlteration(DeathAlteration da, Map<Integer, Boolean> fieldsToBeApproved,
+                                       boolean applyChangesToDC, User user);
+
+    /**
      * approve death alteration and set bit set base on state partially or fully
      *
      * @param deathAlterationUKey
@@ -111,12 +124,4 @@ public interface DeathAlterationService {
      * @param user
      */
     public void approveDeathAlteration(long deathAlterationUKey, Hashtable<Integer, Boolean> fieldsToBeApproved, boolean appStatus, User user);
-
-    /**
-     * filling transiant value death person name
-     *
-     * @param da death alteration
-     */
-    public void loadValuesToDeathAlterationObject(DeathAlteration da);
-
 }

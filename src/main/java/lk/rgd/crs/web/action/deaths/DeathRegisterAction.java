@@ -186,7 +186,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public String deathCertificate() {
         deathRegister = service.getById(idUKey, user);
-        if ((deathRegister.getStatus() != DeathRegister.State.DEATH_CERTIFICATE_PRINTED) &&
+        if ((deathRegister.getStatus() != DeathRegister.State.ARCHIVED_CERT_GENERATED) &&
             (deathRegister.getStatus() != DeathRegister.State.APPROVED)) {
             addActionError(getText("death.error.no.permission.print"));
             logger.debug("Current state of adoption certificate : {}", deathRegister.getStatus());
@@ -759,7 +759,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                 this.state = DeathRegister.State.REJECTED;
                 break;
             case 4:
-                this.state = DeathRegister.State.DEATH_CERTIFICATE_PRINTED;
+                this.state = DeathRegister.State.ARCHIVED_CERT_GENERATED;
                 //speacial case 0 all status
         }
     }

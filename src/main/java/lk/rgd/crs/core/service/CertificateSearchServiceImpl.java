@@ -141,7 +141,7 @@ public class CertificateSearchServiceImpl implements CertificateSearchService {
         DeathRegister exactRecord = null;
         CertificateSearch existing = null;
 
-        cs.getSearch().setSearchRecordStatus(DeathRegister.State.DEATH_CERTIFICATE_PRINTED.toString());
+        cs.getSearch().setSearchRecordStatus(DeathRegister.State.ARCHIVED_CERT_GENERATED.toString());
         SearchInfo search = cs.getSearch();
         CertificateInfo certificate = cs.getCertificate();
 
@@ -231,7 +231,7 @@ public class CertificateSearchServiceImpl implements CertificateSearchService {
     private void addMatchingDeath(List<DeathRegister> results, DeathRegister exactRecord, SearchInfo search) {
         if (exactRecord != null) {
             final DeathRegister.State currentState = exactRecord.getStatus();
-            if (DeathRegister.State.DEATH_CERTIFICATE_PRINTED == currentState) {
+            if (DeathRegister.State.ARCHIVED_CERT_GENERATED == currentState) {
                 results.add(exactRecord);
             } else {
                 handleException("The death declaration state is invalid for IDUKey : " +
