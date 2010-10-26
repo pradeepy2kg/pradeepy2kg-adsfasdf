@@ -255,12 +255,12 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
      * @param user the user attempting to update or delete
      */
     private void validateAccessOfUserToEditOrDelete(BirthAlteration ba, User user) {
-        if (!BirthAlteration.State.DATA_ENTRY.equals(ba.getStatus())) {
-            handleException("Birth alteration ID : " + ba.getIdUKey() + " cannot be edited as its not in the " +
-                "Data entry state", ErrorCodes.ILLEGAL_STATE);
-        }
 
         if (Role.ROLE_DEO.equals(user.getRole().getRoleId()) || Role.ROLE_ADR.equals(user.getRole().getRoleId())) {
+            if (!BirthAlteration.State.DATA_ENTRY.equals(ba.getStatus())) {
+                handleException("Birth alteration ID : " + ba.getIdUKey() + " cannot be edited as its not in the " +
+                        "Data entry state", ErrorCodes.ILLEGAL_STATE);
+            }
             if (ba.getSubmittedLocation().equals(user.getPrimaryLocation())) {
                 return;
             }

@@ -569,8 +569,8 @@ public class AlterationAction extends ActionSupport implements SessionAware {
                     index[i] = 0;
                 }
             }
-            if(pageType ==2){
-                applyChanges=true;
+            if (pageType == 2) {
+                applyChanges = true;
             }
             initPermission();
             populateBasicLists();
@@ -720,6 +720,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         MotherInfo mother = alt52_1.getMother();
         ParentInfo parent = bdf.getParent();
         if (mother != null && parent != null) {
+            logger.debug("compare mother informations in birth Alteration 1 :{} 2 : {}", parent.getMotherPlaceOfBirth(), mother.getMotherPlaceOfBirth());
             compareAndAdd(Alteration52_1.MOTHER_FULLNAME, parent.getMotherFullName(), mother.getMotherFullName());
             compareAndAdd(Alteration52_1.MOTHER_BIRTH_PLACE, parent.getMotherPlaceOfBirth(), mother.getMotherPlaceOfBirth());
             compareAndAdd(Alteration52_1.MOTHER_PASSPORT, parent.getMotherPassportNo(), mother.getMotherPassportNo());
@@ -772,7 +773,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
             compareAndAdd(Alteration52_1.INFORMANT_NAME, informantOriginal.getInformantName(), informant.getInformantName());
             compareAndAdd(Alteration52_1.INFORMANT_ADDRESS, informantOriginal.getInformantAddress(), informant.getInformantAddress());
         }
-
+       logger.debug("length of the alteration :{}",birthAlterationApprovalList.size());
 
     }
 
