@@ -161,7 +161,6 @@
     <bean id="deathAlterationService" class="lk.rgd.crs.core.service.DeathAlterationServiceImpl">
         <constructor-arg ref="deathAlterationDAOImpl"/>
         <constructor-arg ref="deathRegisterService"/>
-        <constructor-arg ref="deathAlterationValidator"/>
     </bean>
 
     <bean id="masterDataManagementService" class="lk.rgd.crs.core.service.MasterDataManagementServiceImpl">

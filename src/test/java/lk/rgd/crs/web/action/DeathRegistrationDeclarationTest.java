@@ -126,7 +126,6 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
             notify.setNotifyingAuthorityPIN("" + 123456789 + i);
             gCal.add(Calendar.DATE, -1);
             notify.setNotifyingAuthoritySignDate(gCal.getTime());
-
             //declarant info
             DeclarantInfo declarant = new DeclarantInfo();
             declarant.setDeclarantType(DeclarantInfo.DeclarantType.MOTHER);
@@ -319,9 +318,9 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
         assertEquals("Search by date", true, deathAction.isSearchByDate());
         //check death divsion is setted properlly
         assertEquals("Death division", 1, deathAction.getDeathDivisionId());
-        //there are two sample data for this senario
+        //there are 20 sample data for this senario
         assertNotNull("Sample data not null", deathAction.getDeathApprovalAndPrintList());
-        assertEquals("Sample data", 10, deathAction.getDeathApprovalAndPrintList().size());
+        assertEquals("Sample data", 20, deathAction.getDeathApprovalAndPrintList().size());
         logger.info("testing death filter by date completed");
     }
 

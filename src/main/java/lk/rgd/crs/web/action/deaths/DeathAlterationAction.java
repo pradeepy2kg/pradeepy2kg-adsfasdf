@@ -116,7 +116,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     public String captureDeathAlterations() {
         if (pageNumber > 0) {
             if (!editMode) {
-                logger.debug("capturing death alteration alteration serial number : {}", alterationSerialNo);
+                logger.debug("capturing death alteration alteration");
                 try {
                     DeathRegister dr = deathRegistrationService.getById(deathId);
                     deathAlteration.setDeathId(deathId);
@@ -141,6 +141,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                     populatePrimaryLists(districtUKey, dsDivisionId, language, user);
                     addActionMessage(getText("alt.massage.success"));
                     logger.debug("capturing alteration success ");
+
                     return SUCCESS;
 
                 } catch (Exception e) {
@@ -171,34 +172,39 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             logger.debug("attempting to load death alteration capture page");
             deathAlteration = new DeathAlteration();
             //search by certificate number
-            if (certificateNumber != 0)
+            if (certificateNumber != 0) {
+                logger.debug("attempt to load death register by certificate number : {}", certificateNumber);
                 deathRegister = deathRegistrationService.getById(certificateNumber);
+
+            }
             //search by pin
             if (pin != null && Long.parseLong(pin) != 0) {
                 //only get firts recode others ignored  because there can be NIC duplications
+                logger.debug("attempt to load death register by pin number : {}", pin);
                 List<DeathRegister> deathRegisterList = deathRegistrationService.getByPinOrNic(Long.parseLong(pin), user);
                 if (deathRegisterList != null)
                     deathRegister = deathRegisterList.get(0);
             }
             //search by  serial and death division
             if (serialNumber != 0 && divisionUKey != 0) {
+                logger.debug("attempt to load death register by serial number : {} and death division : {}", serialNumber, divisionUKey);
                 BDDivision deathDivision = bdDivisionDAO.getBDDivisionByPK(divisionUKey);
                 deathRegister = deathRegistrationService.getByBDDivisionAndDeathSerialNo(deathDivision, serialNumber, user);
             }
             if (deathRegister == null) {
-                logger.debug("can not find a death registretion for alterations : serial {} or :certificatenumber : {}", serialNumber, certificateNumber);
+                logger.debug("can not find a death registrations for alterations : serial {} or :certificateNumber : {}", serialNumber, certificateNumber);
                 addActionError(getText("error.cannot.find.death.registration"));
                 populatePrimaryLists(districtUKey, dsDivisionId, language, user);
                 return ERROR;
             }
-            //check is there a ongoing alteration for this cartificate
-            List<DeathAlteration> exsistingAlterations = deathAlterationService.getAlterationByDeathCertificateNumber(deathRegister.getIdUKey(), user);
-            Iterator<DeathAlteration> itr = exsistingAlterations.iterator();
+            //check is there a ongoing alteration for this certificate
+            List<DeathAlteration> existingAlterations = deathAlterationService.getAlterationByDeathCertificateNumber(deathRegister.getIdUKey(), user);
+            Iterator<DeathAlteration> itr = existingAlterations .iterator();
             while (itr.hasNext()) {
                 DeathAlteration da = itr.next();
                 if (!da.getStatus().equals(DeathAlteration.State.PRINTED)) {
                     logger.error("there is a onging alteration so cannot add a new");
-                    addActionError("error.exsisting.alteratios.data.entry");
+                    addActionError("error.existing.alterations.data.entry");
                     populatePrimaryLists(districtUKey, dsDivisionId, language, user);
                     return ERROR;
                 }
@@ -225,7 +231,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 if (race != null) {
                     deathRaceId = race.getRaceId();
                 }
-                //setting reciving date to today
+                //setting receiving date to today
                 toDay = new Date();
             } else {
                 logger.error("unknown error");
@@ -389,20 +395,25 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     }
 
     public String setBitset() {
-        //todo add apply changes
         logger.info("setting bit set : {}", approvedIndex.length);
-        Hashtable<Integer, Boolean> approveBitset = new Hashtable<Integer, Boolean>();
-        for (int i = 0; i < approvedIndex.length; i++) {
-            int bit = approvedIndex[i];
-            approveBitset.put(bit, true);
-        }
-        if (approvedIndex.length < pendingListSize) {
-            deathAlterationService.approveDeathAlteration(deathAlterationId, approveBitset, false, user);
-        } else {
-            deathAlterationService.approveDeathAlteration(deathAlterationId, approveBitset, true, user);
-        }
+        try {
+            Hashtable<Integer, Boolean> approveBitset = new Hashtable<Integer, Boolean>();
+            for (int i = 0; i < approvedIndex.length; i++) {
+                int bit = approvedIndex[i];
+                approveBitset.put(bit, true);
+            }
+            if (approvedIndex.length < pendingListSize) {
+                deathAlterationService.approveDeathAlteration(deathAlterationId, approveBitset, false, user);
+            } else {
+                deathAlterationService.approveDeathAlteration(deathAlterationId, approveBitset, true, user);
+            }
 
-        populatePrimaryLists(districtUKey, dsDivisionId, language, user);
+            populatePrimaryLists(districtUKey, dsDivisionId, language, user);
+        }
+        catch (CRSRuntimeException e) {
+            logger.error("cannot set bit set for death alteartion : {}", deathAlterationId);
+            return ERROR;
+        }
         return SUCCESS;
     }
 
@@ -469,7 +480,9 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     setPageNo(getPageNo() + 1);
 
     rowNo = appParametersDAO.getIntParameter(DA_APPROVAL_ROWS_PER_PAGE);
-    *//**
+    */
+
+    /**
      * gets the user selected district to get the records
      * variable nextFlag is used to handle the pagination link
      * in the jsp page
@@ -667,6 +680,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
      */
     private void populatePrimaryLists(int districtUKey, int dsDivisionId, String language, User user) {
         districtList = districtDAO.getDistrictNames(language, user);
+        logger.debug("distric list : {}", districtList);
         districtUKey = districtList.keySet().iterator().next();
         dsDivisionList = dsDivisionDAO.getDSDivisionNames(districtUKey, language, user);
         dsDivisionId = dsDivisionList.keySet().iterator().next();

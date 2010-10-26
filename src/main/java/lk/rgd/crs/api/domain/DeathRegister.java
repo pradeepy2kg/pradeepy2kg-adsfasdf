@@ -53,7 +53,7 @@ public class DeathRegister implements Serializable {
 
         REJECTED,  // 2 - An death registration rejected by the ADR
 
-        DEATH_CERTIFICATE_PRINTED, // 3 A certifcate is printed
+        DEATH_CERTIFICATE_PRINTED, // 3 A certificate is printed
     }
 
     public enum Type {
