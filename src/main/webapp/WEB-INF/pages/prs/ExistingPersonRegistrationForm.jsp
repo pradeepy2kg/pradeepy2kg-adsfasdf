@@ -5,13 +5,13 @@
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
 <script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
 <script>
-     //these inpute can not be null
+    //these inpute can not be null
     var errormsg = "";
     function validate() {
 
         var returnval = true;
         var domObject;
-        domObject=document.getElementById("submitDatePicker");
+        domObject = document.getElementById("submitDatePicker");
         if (isFieldEmpty(domObject)) {
             isEmpty(domObject, "", 'error1');
         } else {
@@ -121,7 +121,11 @@
                 </tr>
                 <tr>
                     <td>
-                        <label><span class="font-8">භාරගත්  දිනය<br>* Tamil<br>Submitted Date</span></label>
+                        <label><span class="font-8">
+                                භාරගත් දිනය
+                                <br>பிறப்பைப் பதிவு திகதி
+                                <br>Submitted Date
+                        </span></label>
                     </td>
                     <td>
                         <s:label value="YYYY-MM-DD" cssStyle="margin-left:10px;font-size:10px"/><br>
@@ -148,17 +152,23 @@
 
     <tr>
         <td>
-            (1) ජාතික හැඳුනුම්පත් අංකය
-            <br>* Tamil
-            <br>National Identity Card (NIC) Number
+            (1) ජාතික හැඳුනුම්පත් අංකය හෝ තාවකාලික අනන්‍යතා අංකය
+            <br>தேசிய அடையாள அட்டை இலக்கம் அல்லது தற்காலிக அடையாள இலக்கம்
+            <br>National Identity Card (NIC) Number or Temporary Identification number
         </td>
         <td colspan="2">
             <s:textfield name="person.nic" id="person_PIN" maxLength="10"/>
         </td>
         <td rowspan="2" colspan="2">
-            (3) විදේශිකයකු නම්<br>வெளிநாட்டவர் எனின் <br>If a foreigner
+            (3) විදේශිකයකු නම්
+            <br>வெளிநாட்டவர் எனின்
+            <br>If a foreigner
         </td>
-        <td>රට<br>நாடு<br>Country</td>
+        <td>
+            රට
+            <br>நாடு
+            <br>Country
+        </td>
         <td colspan="2">
             <s:select id="personCountryId" name="personCountryId" list="countryList" headerKey="0"
                       headerValue="%{getText('select_country.label')}" cssStyle="width:75%;margin-left:5px;"/>

@@ -9,7 +9,9 @@ import lk.rgd.prs.api.domain.Person;
 import lk.rgd.common.api.dao.RaceDAO;
 import lk.rgd.common.api.dao.CountryDAO;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.util.GenderUtil;
 import lk.rgd.crs.web.WebConstants;
+import lk.rgd.AppConstants;
 
 import java.util.Map;
 import java.util.List;
@@ -27,6 +29,8 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
     private Map session;
     private User user;
 
+    private String gender;
+
     private Person person;
     private long personId;
     private List<Person> children;
@@ -43,7 +47,7 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
         setPerson(service.getByUKey(personId, user));
         setChildren(service.findAllChildren(getPerson(), user));
         logger.debug("number of children for {} is {}", person.getFullNameInOfficialLanguage(), children.size());
-
+        gender= GenderUtil.getGender(person.getGender(), person.getPreferredLanguage());
         return SUCCESS;
     }
 
@@ -96,4 +100,13 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
     public void setSiblings(List siblings) {
         this.siblings = siblings;
     }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
 }

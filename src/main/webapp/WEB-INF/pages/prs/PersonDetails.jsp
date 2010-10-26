@@ -120,7 +120,7 @@
             <br>Gender
         </td>
         <td>
-            <s:label value="%{person.gender}"/>
+            <s:label name="" value="%{gender}" />
         </td>
         <td>
             සිවිල් තත්වය

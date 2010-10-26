@@ -199,7 +199,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
             declarant = deathRegister.getDeclarant();
 
             genderEn = GenderUtil.getGender(deathPerson.getDeathPersonGender(), AppConstants.ENGLISH);
-            genderSi = GenderUtil.getGender(deathPerson.getDeathPersonGender(), AppConstants.SINHALA);
+            genderSi = GenderUtil.getGender(deathPerson.getDeathPersonGender(), death.getPreferredLanguage());
 
             deathPersonDeathDivision = bdDivisionDAO.getNameByPK(deathRegister.getDeath().getDeathDivision().getDivisionId(), death.getPreferredLanguage());
             deathPersonDeathDivisionEn = bdDivisionDAO.getNameByPK(deathRegister.getDeath().getDeathDivision().getDivisionId(), AppConstants.ENGLISH);
