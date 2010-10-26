@@ -318,12 +318,12 @@
                 <td align="center">
                     <s:if test="#request.allowApproveAlteration &&
                     alterationApprovalPermission.get(#approvalStatus.index) && (status.ordinal() !=0)">
-                        <s:url id="applySelected" action="eprBirthAlterationApplyChanges">
+                        <s:url id="applySelected" action="eprApproveSelectedAlteration.do">
                             <s:param name="idUKey" value="idUKey"/>
                             <s:param name="bdId" value="bdfIDUKey"/>
                             <s:param name="nextFlag" value="%{#request.nextFlag}"/>
                             <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-                            <s:param name="pageType" value="%{#request.pageType}"/>
+                            <s:param name="pageType" value="2"/>
                             <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
                             <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
                             <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
