@@ -57,23 +57,6 @@ public interface DeathAlterationService {
     public DeathAlteration getById(long idUKey, User user);
 
     /**
-     * get list of DeathAlterations based on given death certificate number
-     *
-     * @param idUKey death certificate number
-     * @param user   user who has permission to get alterations
-     * @return list of death alterations
-     */
-    public List<DeathAlteration> getAlterationByDeathCertificateNumber(long idUKey, User user);
-
-    /**
-     * @param pageNo
-     * @param numRows
-     * @param divisionId
-     * @return
-     */
-    public List<DeathAlteration> getAlterationApprovalListByDeathDivision(int pageNo, int numRows, int divisionId,User user);
-
-    /**
      * get death alteration object list by death id(forign key for death alteration)
      *
      * @param deathId
@@ -83,13 +66,32 @@ public interface DeathAlterationService {
     public List<DeathAlteration> getAlterationByDeathId(long deathId, User user);
 
     /**
+     * get list of DeathAlterations based on given death certificate number
+     *
+     * @param idUKey death certificate number
+     * @param user   user who has permission to get alterations
+     * @return list of death alterations
+     */
+    public List<DeathAlteration> getAlterationByDeathCertificateNumber(long idUKey, User user);
+
+    /**
+     * get death alteration approval list by original death certificate registered death division
+     *
+     * @param pageNo     current page
+     * @param numRows    number of results rows
+     * @param divisionId death division id
+     * @return list of paginated death alteration objects
+     */
+    public List<DeathAlteration> getAlterationApprovalListByDeathDivision(int pageNo, int numRows, int divisionId, User user);
+
+    /**
      * get list of death alterations by location key
      *
      * @param locationUKey location primary key
      * @param user
      * @return list of death alterations submitted by given user location
      */
-    public List<DeathAlteration> getDeathAlterationByUserLocation(int locationUKey,User user);
+    public List<DeathAlteration> getDeathAlterationByUserLocation(int locationUKey, User user);
 
     /**
      * get death alteration by death persons pin number

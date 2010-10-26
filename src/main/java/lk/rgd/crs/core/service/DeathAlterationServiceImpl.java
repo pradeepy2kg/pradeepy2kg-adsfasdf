@@ -27,13 +27,11 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
     private static final Logger logger = LoggerFactory.getLogger(DeathAlterationServiceImpl.class);
     private final DeathAlterationDAO deathAlterationDAO;
     private final DeathRegistrationService deathRegistrationService;
-    private final DeathAlterationValidator deathAlterationValidator;
 
-    public DeathAlterationServiceImpl(DeathAlterationDAO deathAlterationDAO, DeathRegistrationService deathRegistrationService, DeathAlterationValidator deathAlterationValidator) {
+    public DeathAlterationServiceImpl(DeathAlterationDAO deathAlterationDAO, DeathRegistrationService deathRegistrationService) {
         this.deathAlterationDAO = deathAlterationDAO;
         this.deathRegistrationService = deathRegistrationService;
-        this.deathAlterationValidator = deathAlterationValidator;
-    }
+         }
 
     /**
      * @inheritDoc
@@ -43,7 +41,7 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
         logger.debug("adding a new death alteration");
         da.setSubmittedLocation(user.getPrimaryLocation());
         if (da != null)
-            deathAlterationValidator.validateMinimumConditions(da);
+            DeathAlterationValidator.validateMinimumConditions(da);
         deathAlterationDAO.addDeathAlteration(da, user);
     }
 
@@ -141,6 +139,7 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
         } else {
             da.setStatus(DeathAlteration.State.PARTIALY_APPROVED);
         }
+        validateAccessOfUserForApproval(da, user);
         deathAlterationDAO.updateDeathAlteration(da, user);
     }
 

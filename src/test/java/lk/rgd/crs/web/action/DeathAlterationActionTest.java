@@ -10,9 +10,11 @@ import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.api.dao.CountryDAO;
 import lk.rgd.common.api.dao.RaceDAO;
 import lk.rgd.crs.web.action.deaths.DeathAlterationAction;
+import lk.rgd.crs.web.action.deaths.DeathRegisterAction;
 import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.service.DeathAlterationService;
+import lk.rgd.crs.api.service.DeathRegistrationService;
 import lk.rgd.UnitTestManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,11 +34,12 @@ public class DeathAlterationActionTest extends CustomStrutsTestCase {
 
     private static final Logger logger = LoggerFactory.getLogger(DeathAlterationActionTest.class);
     private DeathAlterationAction deathAlterationAction;
+    private DeathRegisterAction deathAction;
+    private DeathRegister ddf;
     private ActionProxy proxy;
-    private DeathRegister dr;
 
     protected static BDDivision colomboBDDivision;
-    protected static BDDivision negamboBDDivision;
+    protected static BDDivision ambathalenPahala;
     protected static Country sriLanka;
     protected static Race sinhalese;
 
@@ -46,20 +49,35 @@ public class DeathAlterationActionTest extends CustomStrutsTestCase {
     protected final static CountryDAO countryDAO = (CountryDAO) ctx.getBean("countryDAOImpl", CountryDAO.class);
     protected final static RaceDAO raceDOA = (RaceDAO) ctx.getBean("raceDAOImpl", RaceDAO.class);
     protected final static DeathAlterationService deathAlterationService = (DeathAlterationService) ctx.getBean("deathAlterationService", DeathAlterationService.class);
+    protected final static DeathRegistrationService deathRegistrationService = (DeathRegistrationService) ctx.getBean("deathRegisterService", DeathRegistrationService.class);
 
     public static Test suite() {
         TestSetup setup = new TestSetup(new TestSuite(DeathAlterationActionTest.class)) {
             protected void setUp() throws Exception {
+
                 logger.info("setup called");
                 colomboBDDivision = bdDivisionDAO.getBDDivisionByPK(1);
-                negamboBDDivision = bdDivisionDAO.getBDDivisionByPK(9);
+                ambathalenPahala = bdDivisionDAO.getBDDivisionByPK(9);
                 sriLanka = countryDAO.getCountry(1);
                 sinhalese = raceDOA.getRace(1);
 
-                List deaths = sampleDeaths();
+                List deathAlterations = sampleDeathAlterations();
                 User sampleUser = loginSampleUser();
+                List deaths = sampleDeaths();
+
                 for (int i = 0; i < deaths.size(); i++) {
-                    deathAlterationService.addDeathAlteration((DeathAlteration) deaths.get(i), sampleUser);
+                    deathRegistrationService.addNormalDeathRegistration((DeathRegister) deaths.get(i), sampleUser);
+                }
+
+                //change state to certificate printed otherwise cannot add alterations
+                DeathRegister dr;
+                dr = deathRegistrationService.getByBDDivisionAndDeathSerialNo(ambathalenPahala, 2010012361, sampleUser);
+                deathRegistrationService.approveDeathRegistration(dr.getIdUKey(), sampleUser, true);
+                dr = deathRegistrationService.getByBDDivisionAndDeathSerialNo(ambathalenPahala, 2010012361, sampleUser);
+                deathRegistrationService.markDeathCertificateAsPrinted(dr.getIdUKey(), sampleUser);
+
+                for (int i = 0; i < deathAlterations.size(); i++) {
+                    deathAlterationService.addDeathAlteration((DeathAlteration) deathAlterations.get(i), sampleUser);
                 }
                 super.setUp();
             }
@@ -78,12 +96,12 @@ public class DeathAlterationActionTest extends CustomStrutsTestCase {
             rg = userManager.authenticateUser("rg", "password");
         }
         catch (AuthorizationException e) {
-            logger.debug("exception when autharizing a user :'rg' ");
+            logger.debug("exception when authorizing a user :'rg' ");
         }
         return rg;
     }
 
-    private static List sampleDeaths() {
+    private static List sampleDeathAlterations() {
         List list = new LinkedList();
         User user = loginSampleUser();
         Location location = user.getPrimaryLocation();
@@ -116,7 +134,7 @@ public class DeathAlterationActionTest extends CustomStrutsTestCase {
             //death person info
             DeathPersonInfo person = new DeathPersonInfo();
             person.setDeathPersonGender(0);
-            person.setDeathPersonNameOfficialLang("name in offocial lang" + i);
+            person.setDeathPersonNameOfficialLang("name in official lang" + i);
             person.setDeathPersonAge(25);
             person.setDeathPersonCountry(sriLanka);
             person.setDeathPersonFatherFullName("father full name " + i);
@@ -129,9 +147,9 @@ public class DeathAlterationActionTest extends CustomStrutsTestCase {
             //declarant info
             DeclarantInfo declarant = new DeclarantInfo();
             declarant.setDeclarantType(DeclarantInfo.DeclarantType.RELATIVE);
-            declarant.setDeclarantAddress("declarant address " + i);
-            declarant.setDeclarantEMail("declarant email" + i);
-            declarant.setDeclarantFullName("declarant full name " + i);
+            declarant.setDeclarantAddress("Declarant  address " + i);
+            declarant.setDeclarantEMail("Declarant email" + i);
+            declarant.setDeclarantFullName("Declarant full name " + i);
             declarant.setDeclarantNICorPIN("" + (123456789 + i));
 
             CRSLifeCycleInfo lifeCycleInfo = new CRSLifeCycleInfo();
@@ -148,6 +166,67 @@ public class DeathAlterationActionTest extends CustomStrutsTestCase {
         return list;
     }
 
+    private static List sampleDeaths() {
+        List list = new LinkedList();
+
+        for (int i = 10; i < 20; i++) {
+            // get Calendar with current date
+            java.util.GregorianCalendar gCal = new GregorianCalendar();
+            //Death info
+            DeathInfo death = new DeathInfo();
+            death.setDeathSerialNo(2010012345 + i);
+            death.setPlaceOfDeath("place of death :" + i);
+            gCal.add(Calendar.DATE, -20);
+            death.setDateOfDeath(gCal.getTime());
+            gCal.add(Calendar.DATE, -2);
+            death.setDateOfRegistration(gCal.getTime());
+            death.setPreferredLanguage("si");
+            death.setDeathDivision(ambathalenPahala);
+            death.setPlaceOfBurial("place of burial : " + i);
+
+            //death person info
+            DeathPersonInfo person = new DeathPersonInfo();
+            person.setDeathPersonGender(0);
+            person.setDeathPersonNameOfficialLang("name in official lang" + i);
+            person.setDeathPersonAge(25);
+            person.setDeathPersonCountry(sriLanka);
+            person.setDeathPersonFatherFullName("father full name " + i);
+            person.setDeathPersonFatherPINorNIC("1234567890");
+            person.setDeathPersonMotherFullName("mother full name " + i);
+            person.setDeathPersonMotherPINorNIC("1234567890");
+            person.setDeathPersonNameInEnglish("name in english" + i);
+            person.setDeathPersonPermanentAddress("address" + i);
+
+            //notifu authority info
+            NotifyingAuthorityInfo notify = new NotifyingAuthorityInfo();
+            notify.setNotifyingAuthorityName("notify name :" + i);
+            notify.setNotifyingAuthorityAddress("notify address :" + i);
+            notify.setNotifyingAuthorityPIN("" + 123456789 + i);
+            gCal.add(Calendar.DATE, -1);
+            notify.setNotifyingAuthoritySignDate(gCal.getTime());
+
+            //declarant info
+            DeclarantInfo declarant = new DeclarantInfo();
+            declarant.setDeclarantType(DeclarantInfo.DeclarantType.MOTHER);
+            declarant.setDeclarantAddress("declarant address " + i);
+            declarant.setDeclarantEMail("declarant email" + i);
+            declarant.setDeclarantFullName("declarant full name " + i);
+            declarant.setDeclarantNICorPIN("" + (123456789 + i));
+
+            DeathRegister deathRegister = new DeathRegister();
+            deathRegister.setStatus(DeathRegister.State.DATA_ENTRY);
+            deathRegister.setDeathType(DeathRegister.Type.NORMAL);
+            deathRegister.setDeath(death);
+            deathRegister.setDeathPerson(person);
+            deathRegister.setDeclarant(declarant);
+            deathRegister.setNotifyingAuthority(notify);
+
+            list.add(deathRegister);
+        }
+        return list;
+    }
+
+
     private String initAndExecute(String mapping, Map session) throws Exception {
         proxy = getActionProxy(mapping);
         deathAlterationAction = (DeathAlterationAction) proxy.getAction();
@@ -163,17 +242,72 @@ public class DeathAlterationActionTest extends CustomStrutsTestCase {
         return result;
     }
 
+    /**
+     * this test case testing loading death alteration capture page ,capturing death alterations and edit mode of a
+     * death alteration
+     *
+     * @throws Exception if fails to login.
+     */
     public void testCaptureDeathAlteration() throws Exception {
-        Object obj;
+
         Map session = userLogin("rg", "password");
+        /*
+        check page load(loading death alteration page with existing values)
+        * */
+        request.setParameter("pageNumber", "0");
+        //searching by death serial number
+        request.setParameter("serialNumber", "2010012361");
+        request.setParameter("divisionUKey", "" + ambathalenPahala.getBdDivisionUKey());
         initAndExecute("/alteration/eprCaptureDeathAlteration.do", session);
         session = deathAlterationAction.getSession();
         assertNotNull("session set", session);
+        //check death register is populated
+        assertNotNull("Death Register Object", deathAlterationAction.getDeathRegister());
+        //check basic list are populated if success
+        otherLists(deathAlterationAction);
     }
 
-    private Map userLogin(String username, String passwd) throws Exception {
-        request.setParameter("userName", username);
-        request.setParameter("password", passwd);
+    public void testCaptureAlterationNonEdit() throws Exception {
+
+        Map session = userLogin("rg", "password");
+        //checking capturing death alteration  with death id 2 non edit mode
+        request.setParameter("pageNumber", "1");
+        request.setParameter("serialNumber", "2010012361");
+        request.setParameter("divisionUKey", "" + ambathalenPahala.getBdDivisionUKey());
+        request.setParameter("editMode", "false");
+        request.setParameter("deathId", "2");
+        request.setParameter("deathAlteration.deathPerson.deathPersonPINorNIC", "7896541230");
+        request.setParameter("deathAlteration.deathPerson.deathPersonPassportNo", "963258741D");
+        request.setParameter("deathAlteration.deathPerson.deathPersonGender", "0");
+        request.setParameter("deathAlteration.deathPerson.deathPersonNameOfficialLang", "name");
+        request.setParameter("deathAlteration.deathPerson.deathPersonNameInEnglish", "name english");
+        request.setParameter("deathAlteration.deathPerson.deathPersonPermanentAddress", "address");
+        request.setParameter("comments", "comments");
+        request.setParameter("deathAlteration.deathPerson.deathPersonCountry", "2");
+        request.setParameter("deathAlteration.deathPerson.deathPersonRace", "2");
+        request.setParameter("deathAlteration.deathPerson.deathPersonAge", "10");
+        initAndExecute("/alteration/eprCaptureDeathAlteration.do", session);
+        //check bean is populated
+        assertEquals("Action Errors", 0, deathAlterationAction.getActionErrors().size());
+        assertEquals("Death Person Age", 10, (Object) deathAlterationAction.getDeathAlteration().getDeathPerson().getDeathPersonAge());
+        //check basic list are populated if success
+        //todo check more
+    }
+
+    private void basicLists(DeathAlterationAction deathAlterationAction) {
+        assertNotNull("District List", deathAlterationAction.getDistrictList());
+        assertNotNull("DSDivision List", deathAlterationAction.getDsDivisionList());
+        assertNotNull("Death Division List", deathAlterationAction.getBdDivisionList());
+    }
+
+    private void otherLists(DeathAlterationAction deathAlterationAction) {
+        assertNotNull("Race List", deathAlterationAction.getRaceList());
+        assertNotNull("Country List", deathAlterationAction.getCountryList());
+    }
+
+    private Map userLogin(String userName, String passWord) throws Exception {
+        request.setParameter("userName", userName);
+        request.setParameter("password", passWord);
         ActionProxy proxy = getActionProxy("/eprLogin.do");
         LoginAction loginAction = (LoginAction) proxy.getAction();
         ActionContext.getContext().setSession(new HashMap<String, Object>());

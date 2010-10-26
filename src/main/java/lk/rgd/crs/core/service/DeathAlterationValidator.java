@@ -19,7 +19,7 @@ import lk.rgd.crs.api.domain.DeathAlteration;
 import lk.rgd.crs.api.domain.DeathRegister;
 
 /**
- * basic back end valiation class for death alterations
+ * basic back end validation class for death alterations
  *
  * @author amith jayasekara
  */
@@ -27,14 +27,14 @@ public class DeathAlterationValidator {
     private static final Logger logger = LoggerFactory.getLogger(DeathAlterationValidator.class);
 
 
-    public void validateMinimumConditions(DeathAlteration deathAlteration) {
-        boolean pass = compareObjects(deathAlteration);
+    public static void validateMinimumConditions(DeathAlteration deathAlteration) {
+        boolean pass = checkObject(deathAlteration);
         if (!pass) {
             handleException("incomplete death alteration ", ErrorCodes.INCOMPLETE_ALTERATION);
         }
     }
 
-    private boolean compareObjects(DeathAlteration deathAlteration) {
+    private static boolean checkObject(DeathAlteration deathAlteration) {
 
         DateFormat df = DateTimeUtils.getISO8601Format();
         String dateAlt = null;
