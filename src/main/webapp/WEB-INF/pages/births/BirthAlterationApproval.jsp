@@ -47,7 +47,7 @@
          */
     }
 </script>
-<s:if test="!(birthAlterationApprovedList.size()==0)">
+<s:if test="(birthAlterationApprovalList.size() !=0) || (birthAlterationApprovedList.size() !=0)">
     <div id="alteration-approval-list-outer">
     <fieldset>
     <s:form action="eprApproveAlteration.do" method="post" name="alterationApproval">
