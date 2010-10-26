@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Embeddable
-public class InformantInfo implements Serializable {
+public class InformantInfo implements Serializable, Cloneable {
     public enum InformantType {
         FATHER,
         MOTHER,
@@ -94,5 +94,10 @@ public class InformantInfo implements Serializable {
 
     public void setInformantSignDate(Date informantSignDate) {
         this.informantSignDate = informantSignDate;
+    }
+
+    @Override
+    protected InformantInfo clone() throws CloneNotSupportedException {
+        return (InformantInfo) super.clone();
     }
 }

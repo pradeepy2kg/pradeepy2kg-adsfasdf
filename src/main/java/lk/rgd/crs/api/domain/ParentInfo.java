@@ -13,7 +13,7 @@ import java.util.Date;
  * Java bean instance to capture parent information as given by page 2 of birth declaration form
  */
 @Embeddable
-public class ParentInfo implements Serializable {
+public class ParentInfo implements Serializable, Cloneable {
     /**
      * NIC or PIN of father
      */
@@ -398,5 +398,10 @@ public class ParentInfo implements Serializable {
 
     public void setMotherDistrictPrint(String motherDistrictPrint) {
         this.motherDistrictPrint = motherDistrictPrint;
+    }
+
+    @Override
+    protected ParentInfo clone() throws CloneNotSupportedException {
+        return (ParentInfo) super.clone();
     }
 }

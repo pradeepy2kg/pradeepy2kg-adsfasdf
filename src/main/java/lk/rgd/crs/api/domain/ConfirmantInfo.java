@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Embeddable
-public class ConfirmantInfo implements Serializable {
+public class ConfirmantInfo implements Serializable, Cloneable {
 
     /**
      * The last date for confirmation - set as 14 days from confirmation print date
@@ -93,5 +93,10 @@ public class ConfirmantInfo implements Serializable {
 
     public void setConfirmationProcessedUser(User confirmationProcessedUser) {
         this.confirmationProcessedUser = confirmationProcessedUser;
+    }
+
+    @Override
+    protected ConfirmantInfo clone() throws CloneNotSupportedException {
+        return (ConfirmantInfo) super.clone();
     }
 }

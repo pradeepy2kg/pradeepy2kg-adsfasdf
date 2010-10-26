@@ -16,7 +16,7 @@ import java.util.Date;
  * and statuses for a given birth registration/declaration.
  */
 @Embeddable
-public class BirthRegisterInfo implements Serializable {
+public class BirthRegisterInfo implements Serializable, Cloneable {
     /**
      * The preferred language of for the record
      */
@@ -314,5 +314,10 @@ public class BirthRegisterInfo implements Serializable {
 
     public void setOriginalBCIssueUserSignPrint(String originalBCIssueUserSignPrint) {
         this.originalBCIssueUserSignPrint = originalBCIssueUserSignPrint;
+    }
+
+    @Override
+    protected BirthRegisterInfo clone() throws CloneNotSupportedException {
+        return (BirthRegisterInfo) super.clone();
     }
 }

@@ -13,7 +13,7 @@ import java.util.Date;
  * Java bean instance to contain notifying authority information enterd by page 4 of birth declaration form
  */
 @Embeddable
-public class NotifyingAuthorityInfo implements Serializable {
+public class NotifyingAuthorityInfo implements Serializable, Cloneable {
     /**
      * The notifying authority PIN
      */
@@ -69,5 +69,10 @@ public class NotifyingAuthorityInfo implements Serializable {
 
     public void setNotifyingAuthoritySignDate(Date notifyingAuthoritySignDate) {
         this.notifyingAuthoritySignDate = notifyingAuthoritySignDate;
+    }
+
+    @Override
+    protected NotifyingAuthorityInfo clone() throws CloneNotSupportedException {
+        return (NotifyingAuthorityInfo) super.clone();
     }
 }
