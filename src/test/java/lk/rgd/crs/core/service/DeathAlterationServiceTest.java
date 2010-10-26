@@ -1,6 +1,5 @@
 package lk.rgd.crs.core.service;
 
-import junit.framework.Assert;
 import junit.framework.TestCase;
 import lk.rgd.UnitTestManager;
 import lk.rgd.common.api.dao.CountryDAO;
@@ -8,12 +7,11 @@ import lk.rgd.common.api.dao.RaceDAO;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.core.AuthorizationException;
-import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
-import lk.rgd.crs.api.dao.BirthDeclarationDAO;
+import lk.rgd.crs.api.dao.DeathRegisterDAO;
 import lk.rgd.crs.api.domain.*;
-import lk.rgd.crs.api.service.BirthAlterationService;
-import lk.rgd.crs.api.service.BirthRegistrationService;
+import lk.rgd.crs.api.service.DeathAlterationService;
+import lk.rgd.crs.api.service.DeathRegistrationService;
 import lk.rgd.prs.api.service.PopulationRegistry;
 import org.springframework.context.ApplicationContext;
 
@@ -22,11 +20,11 @@ import java.util.*;
 /**
  * @author asankha
  */
-public class BirthAlterationServiceTest extends TestCase {
+public class DeathAlterationServiceTest extends TestCase {
 
     protected final ApplicationContext ctx = UnitTestManager.ctx;
-    protected final BirthRegistrationService birthRegSvc;
-    protected final BirthAlterationService   birthAltSvc;
+    protected final DeathRegistrationService deathRegSvc;
+    protected final DeathAlterationService deathAltSvc;
     protected final PopulationRegistry eCivil;
     protected final BDDivisionDAO bdDivisionDAO;
     protected final CountryDAO countryDAO;
@@ -34,7 +32,7 @@ public class BirthAlterationServiceTest extends TestCase {
     protected final UserManager userManager;
     protected final BDDivision colomboBDDivision;
     protected final BDDivision negamboBDDivision;
-    protected BirthDeclarationDAO birthDeclarationDAO;
+    protected DeathRegisterDAO deathRegisterDAO;
     protected User deoColomboColombo;
     protected User deoGampahaNegambo;
     protected User adrColomboColombo;
@@ -42,12 +40,11 @@ public class BirthAlterationServiceTest extends TestCase {
     protected User argNorthWesternProvince;
     protected User argWesternProvince;
 
-    public BirthAlterationServiceTest() {
+    public DeathAlterationServiceTest() {
 
-        birthDeclarationDAO = (BirthDeclarationDAO)
-            ctx.getBean("birthDeclarationDAOImpl", BirthDeclarationDAO.class);
-        birthRegSvc = (BirthRegistrationService) ctx.getBean("manageBirthService", BirthRegistrationService.class);
-        birthAltSvc = (BirthAlterationService) ctx.getBean("birthAlterationService", BirthAlterationService.class);
+        deathRegisterDAO = (DeathRegisterDAO) ctx.getBean("deathRegisterDAOImpl", DeathRegisterDAO.class);
+        deathRegSvc = (DeathRegistrationService) ctx.getBean("manageDeathService", DeathRegistrationService.class);
+        deathAltSvc = (DeathAlterationService) ctx.getBean("deathAlterationService", DeathAlterationService.class);
         eCivil = (PopulationRegistry) ctx.getBean("ecivilService", PopulationRegistry.class);
         bdDivisionDAO = (BDDivisionDAO) ctx.getBean("bdDivisionDAOImpl", BDDivisionDAO.class);
         countryDAO = (CountryDAO) ctx.getBean("countryDAOImpl", CountryDAO.class);
@@ -70,36 +67,36 @@ public class BirthAlterationServiceTest extends TestCase {
     }
 
     public void testAlterations() throws Exception {
-        // register birth in colombo
-        long bdfIdUKey = registerBirth();
+        // register death in colombo
+        long bdfIdUKey = registerDeath();
 
         // submit an alteration in Gampaha - added by adr
-        BirthAlteration ba = new BirthAlteration();
-        Alteration27 alt27 = new Alteration27();
+        DeathAlteration ba = new DeathAlteration();
+        /*Alteration27 alt27 = new Alteration27();
         alt27.setChildFullNameEnglish("X NEW NAME OF CHILD");
         alt27.setChildFullNameOfficialLang("X ළමයාගේ අලුත්  නම");
         ba.setAlt27(alt27);
         ba.getDeclarant().setDeclarantFullName("Declarant name");
         ba.getDeclarant().setDeclarantAddress("Declarant address");
         ba.getDeclarant().setDeclarantType(DeclarantInfo.DeclarantType.FATHER);
-        ba.setBirthRecordDivision(colomboBDDivision);
+        ba.setDeathRecordDivision(negamboBDDivision);
         ba.setDateReceived(new Date());
         ba.setBdfIDUKey(bdfIdUKey);
-        ba.setType(BirthAlteration.AlterationType.TYPE_27);
-        ba.setStatus(BirthAlteration.State.DATA_ENTRY);
-        birthAltSvc.addBirthAlteration(ba, deoGampahaNegambo);
+        ba.setType(DeathAlteration.AlterationType.TYPE_27);
+        ba.setStatus(DeathAlteration.State.DATA_ENTRY);
+        deathAltSvc.addDeathAlteration(ba, deoGampahaNegambo);
 
         // adr Gampaha can edit it, as he is in the same submit location
         // reload record
-        ba = birthAltSvc.getByIDUKey(ba.getIdUKey(), adrGampahaNegambo);
+        ba = deathAltSvc.getByIDUKey(ba.getIdUKey(), adrGampahaNegambo);
         ba.getAlt27().setChildFullNameEnglish("NEW NAME OF CHILD");
-        birthAltSvc.updateBirthAlteration(ba, adrGampahaNegambo);
+        deathAltSvc.updateDeathAlteration(ba, adrGampahaNegambo);
 
-        // adr Colombo can edit it, as he is assigned access to the BD division where the birth is registered
+        // adr Colombo can edit it, as he is assigned access to the BD division where the death is registered
         // reload record
-        ba = birthAltSvc.getByIDUKey(ba.getIdUKey(), adrColomboColombo);
+        ba = deathAltSvc.getByIDUKey(ba.getIdUKey(), adrColomboColombo);
         ba.getAlt27().setChildFullNameOfficialLang("ළමයාගේ අලුත්  නම");
-        birthAltSvc.updateBirthAlteration(ba, adrColomboColombo);
+        deathAltSvc.updateDeathAlteration(ba, adrColomboColombo);
 
         Map<Integer, Boolean> fieldsToBeApproved = new HashMap<Integer, Boolean>();
         fieldsToBeApproved.put(Alteration27.CHILD_FULL_NAME_ENGLISH, true);
@@ -107,93 +104,80 @@ public class BirthAlterationServiceTest extends TestCase {
 
         // arg for north western province cannot edit
         // reload record
-        ba = birthAltSvc.getByIDUKey(ba.getIdUKey(), argNorthWesternProvince);
+        ba = deathAltSvc.getByIDUKey(ba.getIdUKey(), argNorthWesternProvince);
         try {
-            birthAltSvc.approveBirthAlteration(ba, fieldsToBeApproved, true, argNorthWesternProvince);
-            fail("The north western province ARG should not be able to approve birth alteration for western province");
+            deathAltSvc.approveDeathAlteration(ba, fieldsToBeApproved, true, argNorthWesternProvince);
+            fail("The north western province ARG should not be able to approve death alteration for western province");
         } catch (Exception e) {}
 
         // arg for western province can approve
-        birthAltSvc.approveBirthAlteration(ba, fieldsToBeApproved, true, argWesternProvince);
+        deathAltSvc.approveDeathAlteration(ba, fieldsToBeApproved, true, argWesternProvince);
 
-        // save BDF serial number
-        long regNumber = birthDeclarationDAO.getById(ba.getBdfIDUKey()).getRegister().getBdfSerialNo();
-        
-        // birth record must be updated
-        BirthDeclaration bdf = birthRegSvc.getActiveRecordByBDDivisionAndSerialNo(
-            ba.getBirthRecordDivision(), regNumber, argWesternProvince);
-        Assert.assertEquals("NEW NAME OF CHILD", bdf.getChild().getChildFullNameEnglish());
-        Assert.assertEquals("සිංහලෙන් ළමයාගේ නම  " + regNumber, bdf.getChild().getChildFullNameOfficialLang());
-
-        // old record must still be available as archived
-        List<BirthDeclaration> altered = birthRegSvc.getArchivedCorrectedEntriesForGivenSerialNo(
-            ba.getBirthRecordDivision(), regNumber, argWesternProvince);
-        Assert.assertEquals(1, altered.size());
-        bdf = altered.get(0);
-        Assert.assertEquals("CHILDS NAME IN ENGLISH " + regNumber, bdf.getChild().getChildFullNameEnglish());
-        Assert.assertEquals("සිංහලෙන් ළමයාගේ නම  " + regNumber, bdf.getChild().getChildFullNameOfficialLang());
-        Assert.assertEquals(BirthDeclaration.State.ARCHIVED_ALTERED, bdf.getRegister().getStatus());
+        // death record must be updated
+        //DeathDeclaration bdf = deathRegSvc.getActiveRecordByBDDivisionAndSerialNo(
+        //    ba.get, ba.getBdfIDUKey(), argWesternProvince);
+*/
     }
 
-    public long registerBirth() throws Exception {
-        Calendar dob = Calendar.getInstance();
+    public long registerDeath() throws Exception {
+        /*Calendar dob = Calendar.getInstance();
         // test saving of a minimal BDF for colombo by DEO
         dob.add(Calendar.DATE, -3);
 
         // test colombo deo adding for colombo BD division
-        BirthDeclaration bdf1 = getMinimalBDF(2010011010, dob.getTime(), colomboBDDivision);
-        birthRegSvc.addLiveBirthDeclaration(bdf1, false, deoColomboColombo);
+        DeathDeclaration bdf1 = getMinimalBDF(2010011010, dob.getTime(), colomboBDDivision);
+        deathRegSvc.addLiveDeathDeclaration(bdf1, false, deoColomboColombo);
 
         // reload again to fill all fields as we still only have IDUkey of new record
-        bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
+        bdf1 = deathRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
 
         // colombo ADR approves - ignoring warnings
-        List<UserWarning> warnings = birthRegSvc.approveLiveBirthDeclaration(bdf1.getIdUKey(), true, adrColomboColombo);
+        List<UserWarning> warnings = deathRegSvc.approveLiveDeathDeclaration(bdf1.getIdUKey(), true, adrColomboColombo);
 
         // DEO prints confirmation - mark confirmation as printed
-        birthRegSvc.markLiveBirthConfirmationAsPrinted(bdf1, deoColomboColombo);
+        deathRegSvc.markLiveDeathConfirmationAsPrinted(bdf1, deoColomboColombo);
         // reload again and check for updated status as printed
-        bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
-        Assert.assertEquals(BirthDeclaration.State.CONFIRMATION_PRINTED, bdf1.getRegister().getStatus());
+        bdf1 = deathRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
+        Assert.assertEquals(DeathDeclaration.State.CONFIRMATION_PRINTED, bdf1.getRegister().getStatus());
 
         // capture confirmation by DEO without changes
         bdf1.getConfirmant().setConfirmantFullName("Person confirming");
-        birthRegSvc.markLiveBirthDeclarationAsConfirmedWithoutChanges(bdf1, deoColomboColombo);
+        deathRegSvc.markLiveDeathDeclarationAsConfirmedWithoutChanges(bdf1, deoColomboColombo);
 
         // reload again and check for update
-        bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
+        bdf1 = deathRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
 
         // DEO prints BC - mark BC as printed
-        birthRegSvc.markLiveBirthCertificateAsPrinted(bdf1, deoColomboColombo);
+        deathRegSvc.markLiveDeathCertificateAsPrinted(bdf1, deoColomboColombo);
         // reload again and check for update
-        bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
-        Assert.assertEquals(BirthDeclaration.State.ARCHIVED_CERT_PRINTED, bdf1.getRegister().getStatus());
+        bdf1 = deathRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
+        Assert.assertEquals(DeathDeclaration.State.ARCHIVED_CERT_PRINTED, bdf1.getRegister().getStatus());
 
-        return bdf1.getIdUKey();
+        return bdf1.getIdUKey();*/
+        return 1;
     }
 
-    protected BirthDeclaration getMinimalBDF(long serial, Date dob, BDDivision bdDivision) {
+    protected DeathRegister getMinimalDR(long serial, Date dob, BDDivision bdDivision) {
 
         Date today = new Date();
-        BirthDeclaration bdf = new BirthDeclaration();
-        bdf.getRegister().setBdfSerialNo(serial);
+        DeathRegister dr = new DeathRegister();
+        /*bdf.getRegister().setBdfSerialNo(serial);
         bdf.getRegister().setDateOfRegistration(today);
-        bdf.getRegister().setBirthDivision(bdDivision);
-        bdf.getChild().setDateOfBirth(dob);
-        bdf.getChild().setPlaceOfBirth("Place of birth for child " + serial);
+        bdf.getRegister().setDeathDivision(bdDivision);
+        bdf.getChild().setDateOfDeath(dob);
+        bdf.getChild().setPlaceOfDeath("Place of death for child " + serial);
         bdf.getChild().setChildGender(0);
         bdf.getChild().setChildFullNameOfficialLang("සිංහලෙන් ළමයාගේ නම  " + serial);
-        bdf.getChild().setChildFullNameEnglish("CHILDS NAME IN ENGLISH " + serial);
 
         bdf.getInformant().setInformantName("Name of Informant for Child : " + serial);
         bdf.getInformant().setInformantAddress("Address of Informant for Child : " + serial);
         bdf.getInformant().setInformantSignDate(today);
         bdf.getInformant().setInformantType(InformantInfo.InformantType.FATHER);
 
-        bdf.getNotifyingAuthority().setNotifyingAuthorityAddress("The address of the Birth registrar");
+        bdf.getNotifyingAuthority().setNotifyingAuthorityAddress("The address of the Death registrar");
         bdf.getNotifyingAuthority().setNotifyingAuthoritySignDate(today);
         bdf.getNotifyingAuthority().setNotifyingAuthorityName("Name of the Notifying Authority");
-        bdf.getNotifyingAuthority().setNotifyingAuthorityPIN("750010001");
-        return bdf;
+        bdf.getNotifyingAuthority().setNotifyingAuthorityPIN("750010001");*/
+        return dr;
     }
 }

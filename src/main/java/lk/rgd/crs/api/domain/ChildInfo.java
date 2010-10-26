@@ -11,7 +11,7 @@ import java.util.Date;
  * An instance representing child information submitted for the declaration of a birth (page 1 of the form)
  */
 @Embeddable
-public class ChildInfo implements Serializable {
+public class ChildInfo implements Serializable, Cloneable {
 
     /**
      * This is the PIN number generated to the child
@@ -225,5 +225,10 @@ public class ChildInfo implements Serializable {
 
     public void setPlaceOfBirthEnglish(String placeOfBirthEnglish) {
         this.placeOfBirthEnglish = WebUtils.filterBlanksAndToUpper(placeOfBirthEnglish);
+    }
+
+    @Override
+    protected ChildInfo clone() throws CloneNotSupportedException {
+        return (ChildInfo) super.clone();
     }
 }

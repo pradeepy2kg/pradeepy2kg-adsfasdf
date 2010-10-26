@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Embeddable
-public class MarriageInfo implements Serializable {
+public class MarriageInfo implements Serializable, Cloneable {
 
     /**
      * The Enumeration defining the type of married status.
@@ -103,5 +103,10 @@ public class MarriageInfo implements Serializable {
 
     public void setFatherSigned(boolean fatherSigned) {
         this.fatherSigned = fatherSigned;
+    }
+
+    @Override
+    protected MarriageInfo clone() throws CloneNotSupportedException {
+        return (MarriageInfo) super.clone();
     }
 }

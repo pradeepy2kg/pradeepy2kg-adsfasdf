@@ -11,7 +11,7 @@ import java.io.Serializable;
  * as entered by page 3 of the birth declaration form
  */
 @Embeddable
-public class GrandFatherInfo implements Serializable {
+public class GrandFatherInfo implements Serializable, Cloneable {
     // If grandfather of the child born in Sri Lanka, grandfather's details
 
     @Column(nullable = true, length = 600)
@@ -101,5 +101,10 @@ public class GrandFatherInfo implements Serializable {
 
     public void setGreatGrandFatherNICorPIN(String greatGrandFatherNICorPIN) {
         this.greatGrandFatherNICorPIN = WebUtils.filterBlanksAndToUpper(greatGrandFatherNICorPIN);
+    }
+
+    @Override
+    protected GrandFatherInfo clone() throws CloneNotSupportedException {
+        return (GrandFatherInfo) super.clone();
     }
 }
