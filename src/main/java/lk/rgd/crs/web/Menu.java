@@ -294,6 +294,8 @@ public class Menu {
         argAlterationLink.put("eprApproveSelectedAlteration.do", new Link(null, "/ecivil/alteration/", "eprApproveSelectedAlteration.do", Permission.APPROVE_BIRTH_ALTERATION));
         argAlterationLink.put("eprApproveAlteration.do", new Link(null, "/ecivil/births/", "eprApproveAlteration.do", Permission.APPROVE_BIRTH_ALTERATION));
         argAlterationLink.put("eprRejectSelectedAlteration.do", new Link(null, "/ecivil/births/", "eprRejectSelectedAlteration", Permission.APPROVE_BIRTH_ALTERATION));
+        argAlterationLink.put("eprBirthAlterationApplyChanges.do", new Link(null, "/ecivil/alteration/", "eprBirthAlterationApplyChanges.do", Permission.APPROVE_BIRTH_ALTERATION));
+
         // assemble menu for admins : insertion - order
         adminLinks.put("admin", adminLink);
         adminLinks.put("preference", preferanceLink);

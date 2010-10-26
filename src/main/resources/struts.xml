@@ -1028,6 +1028,10 @@
                 method="alterationApproval">
             <result type="tiles" name="success">epr.birthAlterationResult</result>
         </action>
+        <action name="eprBirthAlterationApplyChanges" class="lk.rgd.crs.web.action.births.AlterationAction"
+                method="birthAlterationApplyChanges">
+            <result type="tiles" name="success">epr.birthAlterationResult</result>
+        </action>
 
         <action name="eprApproveSelectedAlteration" class="lk.rgd.crs.web.action.births.AlterationAction"
                 method="approveInit">
