@@ -86,6 +86,7 @@ public class BirthAlterationServiceTest extends TestCase {
         ba.setDateReceived(new Date());
         ba.setBdfIDUKey(bdfIdUKey);
         ba.setType(BirthAlteration.AlterationType.TYPE_27);
+        ba.setStatus(BirthAlteration.State.DATA_ENTRY);
         birthAltSvc.addBirthAlteration(ba, deoGampahaNegambo);
 
         // adr Gampaha can edit it, as he is in the same submit location

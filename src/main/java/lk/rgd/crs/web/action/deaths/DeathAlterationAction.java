@@ -119,7 +119,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 logger.debug("capturing death alteration alteration");
                 try {
                     DeathRegister dr = deathRegistrationService.getById(deathId);
-                    deathAlteration.setDeathId(deathId);
+                    deathAlteration.setDeathRegisterIDUkey(deathId);
                     deathAlteration.setDeclarant(deathRegister.getDeclarant());
                     deathAlteration.setDeathPerson(deathRegister.getDeathPerson());
                     deathAlteration.setStatus(DeathAlteration.State.DATA_ENTRY);
@@ -152,12 +152,12 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 }
             } else {
                 logger.debug("attempt to edit death alteration : idUKey : {}", deathAlteration.getIdUKey());
-                DeathAlteration exsisting = deathAlterationService.getById(deathAlterationId, user);
+                DeathAlteration exsisting = deathAlterationService.getByIDUKey(deathAlterationId, user);
 
                 deathAlteration.setDeclarant(deathRegister.getDeclarant());
                 deathAlteration.setDeathPerson(deathRegister.getDeathPerson());
                 deathAlteration.setIdUKey(deathAlterationId);
-                deathAlteration.setDeathId(deathId);
+                deathAlteration.setDeathRegisterIDUkey(deathId);
                 deathAlteration.setStatus(DeathAlteration.State.DATA_ENTRY);
                 deathAlteration.setLifeCycleInfo(exsisting.getLifeCycleInfo());
 
@@ -211,7 +211,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             }
             //check death register is not null and in data approved state
             if (deathRegister != null) {
-                if (!deathRegister.getStatus().equals(DeathRegister.State.DEATH_CERTIFICATE_PRINTED)) {
+                if (!deathRegister.getStatus().equals(DeathRegister.State.ARCHIVED_CERT_GENERATED)) {
                     logger.error("cannot capture alterations certificate is not in correct state for alteration");
                     addActionError(getText("error.death.certificate.must.print.before"));
                     populatePrimaryLists(districtUKey, dsDivisionId, language, user);
@@ -293,7 +293,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
 
         if (deathAlterationId > 0) {
             //approving from deaht alteration approval list
-            deathAlteration = deathAlterationService.getById(deathAlterationId, user);
+            deathAlteration = deathAlterationService.getByIDUKey(deathAlterationId, user);
         } else {
             List<DeathAlteration> alterations = deathAlterationService.getAlterationByDeathId(deathId, user);
             Iterator<DeathAlteration> itr = alterations.iterator();
@@ -316,7 +316,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         /**
          * getting exsisting death recode and compare it with death alteration
          */
-        deathRegister = deathRegistrationService.getById(deathAlteration.getDeathId(), user);
+        deathRegister = deathRegistrationService.getById(deathAlteration.getDeathRegisterIDUkey(), user);
 
         DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
         String dateEx = null;
@@ -419,11 +419,11 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
 
     public String editDeathAlteration() {
         logger.debug("attempt to edit a death alteration : idUKey : {} ", deathAlterationId);
-        deathAlteration = deathAlterationService.getById(deathAlterationId, user);
+        deathAlteration = deathAlterationService.getByIDUKey(deathAlterationId, user);
         if (deathAlteration != null) {
             if (deathAlteration.getStatus().equals(DeathAlteration.State.DATA_ENTRY)) {
                 //populate death person info at alteration
-                deathRegister = deathRegistrationService.getById(deathAlteration.getDeathId(), user); //this is no use bt cannot set for null object so popullate it aswell
+                deathRegister = deathRegistrationService.getById(deathAlteration.getDeathRegisterIDUkey(), user); //this is no use bt cannot set for null object so popullate it aswell
                 deathRegister.setDeathPerson(deathAlteration.getDeathPerson());
                 //populate death info
                 deathRegister.setDeath(populateDeathInfo(deathAlteration.getDeathInfo(), deathRegister.getDeath()));
@@ -458,7 +458,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             populatePrimaryLists(districtUKey, dsDivisionId, language, user);
             return SUCCESS;
         }
-        deathAlteration = deathAlterationService.getById(deathAlterationId, user);
+        deathAlteration = deathAlterationService.getByIDUKey(deathAlterationId, user);
         return "pageLoad";
     }
 

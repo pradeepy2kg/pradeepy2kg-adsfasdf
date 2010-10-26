@@ -38,13 +38,6 @@ import java.io.Serializable;
         @NamedQuery(name = "findAllDeaths", query = "SELECT ddf FROM DeathRegister ddf")
 })
 public class DeathRegister implements Serializable {
-    public CRSLifeCycleInfo getLifeCycleInfo() {
-        return lifeCycleInfo;
-    }
-
-    public void setLifeCycleInfo(CRSLifeCycleInfo lifeCycleInfo) {
-        this.lifeCycleInfo = lifeCycleInfo;
-    }
 
     public enum State {
         DATA_ENTRY, // 0 - A newly entered death registration - can be edited by DEO, ADR
@@ -53,7 +46,11 @@ public class DeathRegister implements Serializable {
 
         REJECTED,  // 2 - An death registration rejected by the ADR
 
-        DEATH_CERTIFICATE_PRINTED, // 3 A certificate is printed
+        ARCHIVED_CERT_GENERATED, // 3 A certificate is printed
+
+        ARCHIVED_ALTERED,// 4 record is archived after an alteration
+
+        ARCHIVED_CANCELLED // 5 cancelled due to a duplication or registration of an event that did not occur
     }
 
     public enum Type {
@@ -99,6 +96,31 @@ public class DeathRegister implements Serializable {
     @Column(nullable = true, length = 100, name = "COMMENT")
     private String comment;
 
+    /**
+     * BE CAREFUL USING THIS METHOD. It returns a cheap shallow clone of a BDF for alteration purposes
+     * BE SURE you know how you are using the returned object
+     *
+     * @return a shallow clone of the existing record
+     */
+    public DeathRegister shallowCopy() {
+        DeathRegister dr = new DeathRegister();
+        dr.setLifeCycleInfo(lifeCycleInfo);
+        dr.setDeath(death);
+        dr.setDeathPerson(deathPerson);
+        dr.setNotifyingAuthority(notifyingAuthority);
+        dr.setDeclarant(declarant);
+        dr.setDeathType(deathType);
+        dr.setCommnet(comment);
+        return dr;
+    }
+
+    public CRSLifeCycleInfo getLifeCycleInfo() {
+        return lifeCycleInfo;
+    }
+
+    public void setLifeCycleInfo(CRSLifeCycleInfo lifeCycleInfo) {
+        this.lifeCycleInfo = lifeCycleInfo;
+    }
 
     public State getStatus() {
         return status;

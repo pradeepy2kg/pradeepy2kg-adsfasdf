@@ -111,10 +111,10 @@ public class DeathAlterationActionTest extends CustomStrutsTestCase {
 
             //setting act
             DeathAlteration deathAlteration = new DeathAlteration();
-            deathAlteration.setType(DeathAlteration.AlterationType.ACT_52_1_a);
+            deathAlteration.setType(DeathAlteration.AlterationType.TYPE_52_1_A);
             deathAlteration.setStatus(DeathAlteration.State.DATA_ENTRY);
             deathAlteration.setDateReceived(gCal.getTime());
-            deathAlteration.setDeathId(i);
+            deathAlteration.setDeathRegisterIDUkey(i);
             deathAlteration.setBcOfFather(true);
             deathAlteration.setDeathRecodDivision(colomboBDDivision);
             deathAlteration.setSubmittedLocation(location);

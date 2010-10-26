@@ -1,13 +1,14 @@
 package lk.rgd.crs.core.service;
 
+import lk.rgd.crs.api.dao.DeathRegisterDAO;
+import lk.rgd.crs.api.domain.DeathAlterationInfo;
+import lk.rgd.crs.api.domain.DeathPersonInfo;
 import lk.rgd.crs.api.service.DeathAlterationService;
-import lk.rgd.crs.api.service.DeathRegistrationService;
 import lk.rgd.crs.api.domain.DeathAlteration;
 import lk.rgd.crs.api.domain.DeathRegister;
 import lk.rgd.crs.api.dao.DeathAlterationDAO;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.core.ValidationUtils;
-import lk.rgd.crs.web.WebConstants;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.Role;
 import lk.rgd.ErrorCodes;
@@ -21,27 +22,28 @@ import java.util.*;
 
 /**
  * @author amith jayasekara
+ * @author asankha reviewed and enhanced
  */
 public class DeathAlterationServiceImpl implements DeathAlterationService {
 
     private static final Logger logger = LoggerFactory.getLogger(DeathAlterationServiceImpl.class);
     private final DeathAlterationDAO deathAlterationDAO;
-    private final DeathRegistrationService deathRegistrationService;
+    private final DeathRegisterDAO deathRegisterDAO;
 
-    public DeathAlterationServiceImpl(DeathAlterationDAO deathAlterationDAO, DeathRegistrationService deathRegistrationService) {
+    public DeathAlterationServiceImpl(DeathAlterationDAO deathAlterationDAO, DeathRegisterDAO deathRegisterDAO) {
         this.deathAlterationDAO = deathAlterationDAO;
-        this.deathRegistrationService = deathRegistrationService;
-         }
+        this.deathRegisterDAO = deathRegisterDAO;
+    }
 
     /**
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void addDeathAlteration(DeathAlteration da, User user) {
-        logger.debug("adding a new death alteration");
+        logger.debug("Adding new death alteration record on request of : {}", da.getDeclarant().getDeclarantFullName());
         da.setSubmittedLocation(user.getPrimaryLocation());
-        if (da != null)
-            DeathAlterationValidator.validateMinimumConditions(da);
+        DeathAlterationValidator.validateMinimumConditions(da);
+        // any user (DEO, ADR of any DS office or BD division etc) can add a birth alteration request
         deathAlterationDAO.addDeathAlteration(da, user);
     }
 
@@ -50,8 +52,13 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void updateDeathAlteration(DeathAlteration da, User user) {
-        logger.debug("updatign death alteration : idUKey : {}", da.getIdUKey());
+        logger.debug("Attempt to edit death alteration record : {}", da.getIdUKey());
+        validateAccessOfUserToEditOrDelete(da, user);
+
+        DeathAlteration existing = deathAlterationDAO.getById(da.getIdUKey());
+        validateAccessOfUserToEditOrDelete(existing, user);
         deathAlterationDAO.updateDeathAlteration(da, user);
+        logger.debug("Saved changes made to death alteration record : {}  in data entry state", da.getIdUKey());
     }
 
     /**
@@ -59,35 +66,40 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void deleteDeathAlteration(long idUKey, User user) {
-        logger.debug("about to remove alteration recode idUkey : {}", idUKey);
-        validateAccessOfUserToEditOrDelete(getById(idUKey, user), user);
+        logger.debug("Attempt to delete death alteration record : {}", idUKey);
+        DeathAlteration existing = deathAlterationDAO.getById(idUKey);
+        validateAccessOfUserToEditOrDelete(existing, user);
         deathAlterationDAO.deleteDeathAlteration(idUKey);
+        logger.debug("Deleted death alteration record : {}  in data entry state", idUKey);
     }
 
     /**
      * @inheritDoc
      */
     public void rejectDeathAlteration(long idUKey, User user, String comment) {
-        DeathAlteration exsisting = getById(idUKey, user);
-        exsisting.setStatus(DeathAlteration.State.REJECT);
-        exsisting.setComments(comment);
-        validateAccessOfUserToEditOrDelete(exsisting, user);
-        deathAlterationDAO.rejectDeathAlteration(exsisting, user);
+        DeathAlteration existing = getByIDUKey(idUKey, user);
+        validateAccessOfUserForApproval(existing, user);
+        existing.setStatus(DeathAlteration.State.REJECT);
+        existing.setComments(comment);
+        deathAlterationDAO.updateDeathAlteration(existing, user);
+        logger.debug("Rejected death alteration record : {}", idUKey);
     }
 
     /**
      * @inheritDoc
      */
-    @Transactional(propagation = Propagation.REQUIRED)
-    public DeathAlteration getById(long idUKey, User user) {
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public DeathAlteration getByIDUKey(long idUKey, User user) {
+        logger.debug("Loading death alteration record : {}", idUKey);
         DeathAlteration da = deathAlterationDAO.getById(idUKey);
+        validateAccessOfUserToEditOrDelete(da, user);
         return da;
     }
 
     /**
      * @inheritDoc
      */
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<DeathAlteration> getAlterationByDeathCertificateNumber(long idUKey, User user) {
         return deathAlterationDAO.getByCertificateNumber(idUKey);
     }
@@ -95,7 +107,7 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
     /**
      * @inheritDoc
      */
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<DeathAlteration> getAlterationApprovalListByDeathDivision(int pageNo, int numRows, int divisionId, User user) {
         return deathAlterationDAO.getPaginatedAlterationApprovalListByDeathDivision(pageNo, numRows, divisionId);
     }
@@ -103,7 +115,7 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
     /**
      * @inheritDoc
      */
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<DeathAlteration> getAlterationByDeathId(long deathId, User user) {
         return deathAlterationDAO.getAlterationByDeathId(deathId);
     }
@@ -112,55 +124,94 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void approveDeathAlteration(long deathAlterationUkey, Hashtable<Integer, Boolean> fieldsToBeApproved, boolean appStatus, User user) {
-        //no need to validate because only approval is allowed to ARG so he has permission to all divisions
-        //getting alteration to approve
-        DeathAlteration da = getById(deathAlterationUkey, user);
-        //setting bit set
-        BitSet approvalBitSet = new BitSet(WebConstants.DEATH_ALTERATION_APPROVE);
-        Enumeration<Integer> fieldList = fieldsToBeApproved.keys();
-        while (fieldList.hasMoreElements()) {
-            Integer aKey = fieldList.nextElement();
-            if (fieldsToBeApproved.get(aKey) == true) {
-                approvalBitSet.set(aKey, true);
+    public void approveDeathAlteration(DeathAlteration da, Map<Integer, Boolean> fieldsToBeApproved,
+                                       boolean applyChangesToDC, User user) {
+        
+        if (applyChangesToDC) {
+            logger.debug("Attempt to approve death alteration record : {} and apply changes to DC", da.getIdUKey());
+        } else {
+            logger.debug("Attempt to save intermediate approvals for alteration record : {}", da.getIdUKey());
+        }
+
+        validateAccessOfUserForApproval(da, user);
+        DeathAlteration existing = deathAlterationDAO.getById(da.getIdUKey());
+        validateAccessOfUserForApproval(existing, user);
+
+        boolean containsApprovedChanges = false;
+        for (Map.Entry<Integer, Boolean> e : fieldsToBeApproved.entrySet()) {
+            if (Boolean.TRUE.equals(e.getValue())) {
+                logger.debug("Setting status as approved for the alteration statement : {}", e.getKey());
+                existing.getApprovalStatuses().set(e.getKey(), true);
+                containsApprovedChanges = true;
+            } else {
+                logger.debug("Setting status as rejected for the alteration statement : {}", e.getKey());
+                existing.getApprovalStatuses().set(e.getKey(), false);
             }
         }
-        //merge  with exsisting
-        BitSet ex = da.getApprovalStatuses();
-        if (ex != null) {
-            ex.or(approvalBitSet);
-            da.setApprovalStatuses(ex);
-        } else {
-            da.setApprovalStatuses(approvalBitSet);
-        }
-        //true means fully
-        if (appStatus) {
-            da.setStatus(DeathAlteration.State.FULLY_APPROVED);
-        } else {
-            da.setStatus(DeathAlteration.State.PARTIALY_APPROVED);
-        }
-        validateAccessOfUserForApproval(da, user);
-        deathAlterationDAO.updateDeathAlteration(da, user);
-    }
 
-    /**
-     * @inheritDoc
-     */
-    @Transactional(propagation = Propagation.MANDATORY, readOnly = true)
-    public void loadValuesToDeathAlterationObject(DeathAlteration da) {
-        DeathRegister dr = deathRegistrationService.getById(da.getDeathId());
-        da.setDeathPersonName(dr.getDeathPerson().getDeathPersonNameOfficialLang());
+        if (containsApprovedChanges && applyChangesToDC) {
+            logger.debug("Requesting the application of changes to the DC as final for : {}", existing.getIdUKey());
+            existing.setStatus(DeathAlteration.State.FULLY_APPROVED);
+
+            // We've saved the alteration record, now lets modify the birth record
+            DeathRegister deathRegister = deathRegisterDAO.getById(da.getDeathRegisterIDUkey());
+            switch (da.getType()) {
+
+                case TYPE_53 :
+                case TYPE_52_1_H:
+                case TYPE_52_1_I: {
+                    logger.debug("Alteration is an amendment, inclusion of omission or correction. Type : {}",
+                        da.getType().ordinal());
+                    deathRegister.setStatus(DeathRegister.State.ARCHIVED_ALTERED);
+                    deathRegister.getLifeCycleInfo().setActiveRecord(false);      // mark old record as a non-active record
+                    deathRegisterDAO.updateDeathRegistration(deathRegister, user);
+
+                    // create the new entry as a clone from the existing
+                    DeathRegister newDR = deathRegister.shallowCopy();
+                    newDR.setStatus(DeathRegister.State.ARCHIVED_CERT_GENERATED);
+                    applyChanges(da, deathRegister, user);
+                    deathRegisterDAO.addDeathRegistration(deathRegister, user);
+                    break;
+                }
+
+                case TYPE_52_1_A:
+                case TYPE_52_1_B:
+                case TYPE_52_1_D:
+                case TYPE_52_1_E: {
+                    deathRegister.setStatus(DeathRegister.State.ARCHIVED_CANCELLED);
+                    deathRegisterDAO.updateDeathRegistration(deathRegister, user);
+                    logger.debug("Alteration of type : {} is a cancellation of the existing record : {}",
+                        da.getType().ordinal(), deathRegister.getIdUKey());
+                    break;
+                }
+            }
+        }
+
+        existing.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
+        existing.getLifeCycleInfo().setApprovalOrRejectUser(user);
+        if (applyChangesToDC) {
+            existing.setStatus(DeathAlteration.State.FULLY_APPROVED);
+        }
+        deathAlterationDAO.updateDeathAlteration(existing, user);
+        logger.debug("Updated death alteration : {}", existing.getIdUKey());
     }
 
     /**
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
+    public void approveDeathAlteration(long deathAlterationUkey, Hashtable<Integer, Boolean> fieldsToBeApproved, boolean appStatus, User user) {
+        // TODO - amith remove this method, and the entry in the interface by using the above updated method
+    }
+
+    /**
+     * @inheritDoc
+     */
+    // TODO amith - review if this list needs to be paginated, if so implement the necessary logic
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<DeathAlteration> getDeathAlterationByUserLocation(int locationUKey, User user) {
         List<DeathAlteration> result = deathAlterationDAO.getDeathAlterationByUserLocation(locationUKey);
-        Iterator itr = result.iterator();
-        while (itr.hasNext()) {
-            DeathAlteration da = (DeathAlteration) itr.next();
+        for (DeathAlteration da : result) {
             loadValuesToDeathAlterationObject(da);
         }
         return result;
@@ -170,18 +221,113 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
      * @inheritDoc
      */
 
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<DeathAlteration> getAlterationByDeathPersonPin(String pin, User user) {
         List<DeathAlteration> result = deathAlterationDAO.getDeathAlterationByDeathPersonPin(pin);
-        Iterator itr = result.iterator();
-        while (itr.hasNext()) {
-            DeathAlteration da = (DeathAlteration) itr.next();
+        for (DeathAlteration da : result) {
             loadValuesToDeathAlterationObject(da);
             validateAccessOfUserForApproval(da, user);
         }
         return result;
     }
 
+    private void loadValuesToDeathAlterationObject(DeathAlteration da) {
+        DeathRegister dr = deathRegisterDAO.getById(da.getDeathRegisterIDUkey());
+        da.setDeathPersonName(dr.getDeathPerson().getDeathPersonNameOfficialLang());
+    }
+
+    private void applyChanges(DeathAlteration da, DeathRegister dr, User user) {
+
+        switch (da.getType()) {
+
+            // section 53 - corrections to sudden deaths
+            case TYPE_53: {
+//                Alteration27 alt = ba.getAlt27();
+//                process27Changes(ba, bdf, alt, user);
+                break;
+            }
+
+            // section 52 (1) - corrections to normal deaths
+            default: {
+                // process death alteration info
+                DeathAlterationInfo deathAlterationInfo = da.getDeathInfo();
+
+                if (da.getApprovalStatuses().get(DeathAlteration.SUDDEN_DEATH)) {
+                    dr.setDeathType(DeathRegister.Type.SUDDEN);
+                }
+                if (da.getApprovalStatuses().get(DeathAlteration.DATE_OF_DEATH)) {
+                    dr.getDeath().setDateOfDeath(deathAlterationInfo.getDateOfDeath());
+                }
+                if (da.getApprovalStatuses().get(DeathAlteration.TIME_OF_DEATH)) {
+                    dr.getDeath().setTimeOfDeath(deathAlterationInfo.getTimeOfDeath());
+                }
+                if (da.getApprovalStatuses().get(DeathAlteration.PLACE_OF_DEATH)) {
+                    dr.getDeath().setPlaceOfDeath(deathAlterationInfo.getPlaceOfDeath());
+                }
+                if (da.getApprovalStatuses().get(DeathAlteration.PLACE_OF_DEATH_ENGLISH)) {
+                    dr.getDeath().setPlaceOfDeathInEnglish(deathAlterationInfo.getPlaceOfDeathInEnglish());
+                }
+                if (da.getApprovalStatuses().get(DeathAlteration.CAUSE_OF_DEATH_ESTABLISHED)) {
+                    dr.getDeath().setCauseOfDeathEstablished(deathAlterationInfo.isCauseOfDeathEstablished());
+                }
+                if (da.getApprovalStatuses().get(DeathAlteration.CAUSE_OF_DEATH)) {
+                    dr.getDeath().setCauseOfDeath(deathAlterationInfo.getCauseOfDeath());
+                }
+                if (da.getApprovalStatuses().get(DeathAlteration.ICD_CODE)) {
+                    dr.getDeath().setIcdCodeOfCause(deathAlterationInfo.getIcdCodeOfCause());
+                }
+                if (da.getApprovalStatuses().get(DeathAlteration.BURIAL_PLACE)) {
+                    dr.getDeath().setPlaceOfBurial(deathAlterationInfo.getPlaceOfBurial());
+                }
+
+                // process dead person info
+                DeathPersonInfo deathPersonInfo = da.getDeathPerson();
+
+                if (da.getApprovalStatuses().get(DeathAlteration.PIN)) {
+                    dr.getDeathPerson().setDeathPersonPINorNIC(deathPersonInfo.getDeathPersonPINorNIC());
+                }
+                if (da.getApprovalStatuses().get(DeathAlteration.COUNTRY)) {
+                    dr.getDeathPerson().setDeathPersonCountry(deathPersonInfo.getDeathPersonCountry());
+                }
+                if (da.getApprovalStatuses().get(DeathAlteration.PASSPORT)) {
+                    dr.getDeathPerson().setDeathPersonPassportNo(deathPersonInfo.getDeathPersonPassportNo());
+                }
+                if (da.getApprovalStatuses().get(DeathAlteration.AGE)) {
+                    dr.getDeathPerson().setDeathPersonAge(deathPersonInfo.getDeathPersonAge());
+                }
+                if (da.getApprovalStatuses().get(DeathAlteration.GENDER)) {
+                    dr.getDeathPerson().setDeathPersonGender(deathPersonInfo.getDeathPersonGender());
+                }
+                if (da.getApprovalStatuses().get(DeathAlteration.RACE)) {
+                    dr.getDeathPerson().setDeathPersonRace(deathPersonInfo.getDeathPersonRace());
+                }
+                if (da.getApprovalStatuses().get(DeathAlteration.NAME)) {
+                    dr.getDeathPerson().setDeathPersonNameOfficialLang(deathPersonInfo.getDeathPersonNameOfficialLang());
+                }
+                if (da.getApprovalStatuses().get(DeathAlteration.NAME_ENGLISH)) {
+                    dr.getDeathPerson().setDeathPersonNameInEnglish(deathPersonInfo.getDeathPersonNameInEnglish());
+                }
+                if (da.getApprovalStatuses().get(DeathAlteration.ADDRESS)) {
+                    dr.getDeathPerson().setDeathPersonPermanentAddress(deathPersonInfo.getDeathPersonPermanentAddress());
+                }
+                if (da.getApprovalStatuses().get(DeathAlteration.PIN_FATHER)) {
+                    dr.getDeathPerson().setDeathPersonFatherPINorNIC(deathPersonInfo.getDeathPersonFatherPINorNIC());
+                }
+                if (da.getApprovalStatuses().get(DeathAlteration.NAME_FATHER)) {
+                    dr.getDeathPerson().setDeathPersonFatherFullName(deathPersonInfo.getDeathPersonFatherFullName());
+                }
+                if (da.getApprovalStatuses().get(DeathAlteration.PIN_MOTHER)) {
+                    dr.getDeathPerson().setDeathPersonMotherPINorNIC(deathPersonInfo.getDeathPersonMotherPINorNIC());
+                }
+                if (da.getApprovalStatuses().get(DeathAlteration.NAME_MOTHER)) {
+                    dr.getDeathPerson().setDeathPersonMotherFullName(deathPersonInfo.getDeathPersonMotherFullName());
+                }
+
+                break;
+            }
+        }
+    }
+    
     /**
      * Checks if the user can edit or delete a death alteration entry before approval by an ARG
      * <p/>
@@ -192,6 +338,11 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
      * @param user the user attempting to update or delete
      */
     private void validateAccessOfUserToEditOrDelete(DeathAlteration da, User user) {
+        if (!DeathAlteration.State.DATA_ENTRY.equals(da.getStatus())) {
+            handleException("Death alteration ID : " + da.getIdUKey() + " cannot be edited as its not in the " +
+                "Data entry state", ErrorCodes.ILLEGAL_STATE);
+        }
+
         if (Role.ROLE_DEO.equals(user.getRole().getRoleId()) || Role.ROLE_ADR.equals(user.getRole().getRoleId())) {
             if (da.getSubmittedLocation().equals(user.getPrimaryLocation())) {
                 return;
@@ -200,7 +351,7 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
             return;
         }
 
-        ValidationUtils.validateAccessToBDDivision(user, deathAlterationDAO.getById(da.getDeathId()).getDeathRecodDivision());
+        ValidationUtils.validateAccessToBDDivision(user, deathAlterationDAO.getById(da.getDeathRegisterIDUkey()).getDeathRecodDivision());
     }
 
     /**
@@ -214,7 +365,7 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
         if (Role.ROLE_RG.equals(user.getRole().getRoleId())) {
             // RG can approve any record
         } else if (Role.ROLE_ARG.equals(user.getRole().getRoleId())) {
-            ValidationUtils.validateAccessToBDDivision(user, deathAlterationDAO.getById(da.getDeathId()).getDeathRecodDivision());
+            ValidationUtils.validateAccessToBDDivision(user, deathAlterationDAO.getById(da.getDeathRegisterIDUkey()).getDeathRecodDivision());
             if (!user.isAuthorized(Permission.APPROVE_BIRTH_ALTERATION)) {
                 handleException("User : " + user.getUserId() + " is not allowed to approve/reject death alteration",
                         ErrorCodes.PERMISSION_DENIED);

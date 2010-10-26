@@ -243,7 +243,7 @@ public class DeathRecordsIndexer {
         try {
             logger.info("Begin re-indexing of all death records into Solr");
             for (DeathRegister ddf : ddfList) {
-                if (ddf.getStatus() == DeathRegister.State.DEATH_CERTIFICATE_PRINTED) {
+                if (ddf.getStatus() == DeathRegister.State.ARCHIVED_CERT_GENERATED) {
                     addRecord(ddf);
                     count++;
                     if (count % 10000 == 0) {

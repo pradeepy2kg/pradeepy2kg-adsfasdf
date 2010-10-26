@@ -296,7 +296,6 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
         return q.getResultList();
     }
 
-    @Override
     public BirthDeclaration getByPINorNIC(long PINorNIC) {
         Query q = em.createNamedQuery("get.by.NicOrPin");
         q.setParameter("PINorNIC", PINorNIC);

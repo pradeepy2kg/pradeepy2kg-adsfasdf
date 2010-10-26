@@ -38,7 +38,7 @@ public class DeathDeclarationValidator {
      *
      * @param deathRegister the death declaration form
      */
-    public void validateMinimalRequirments(DeathRegister deathRegister) {
+    public static void validateMinimalRequirments(DeathRegister deathRegister) {
 
         boolean primaryCondition = deathRegister.getDeath().getDateOfRegistration() == null || deathRegister.getDeath().getDeathDivision() == null ||
                 deathRegister.getDeath().getDateOfDeath() == null || isEmptyString(deathRegister.getDeath().getPlaceOfDeath())  || isEmptyString(deathRegister.getDeclarant().getDeclarantAddress()) ||
@@ -72,7 +72,7 @@ public class DeathDeclarationValidator {
      * @param user             the user initiating the validation.
      * @return a list of warnings issued against the death declaration
      */
-    public List<UserWarning> validateStandardRequirements(
+    public static List<UserWarning> validateStandardRequirements(
             DeathRegisterDAO deathRegisterDAO, DeathRegister deathRegister, User user) {
         // create a holder to capture any warnings
         List<UserWarning> warnings = new ArrayList<UserWarning>();
@@ -102,7 +102,7 @@ public class DeathDeclarationValidator {
         throw new CRSRuntimeException(msg, errorCode);
     }
 
-    private static final boolean isEmptyString(String s) {
+    private static boolean isEmptyString(String s) {
         return s == null || s.trim().length() == 0;
     }
 
