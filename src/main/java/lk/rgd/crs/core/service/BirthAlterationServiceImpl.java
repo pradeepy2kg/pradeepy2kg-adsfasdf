@@ -115,7 +115,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
         for (Map.Entry<Integer, Boolean> e : fieldsToBeApproved.entrySet()) {
             if (Boolean.TRUE.equals(e.getValue())) {
                 logger.debug("Setting status as approved for the alteration statement : {}", e.getKey());
-                existing.getApprovalStatuses().set(e.getKey(), WebConstants.BIRTH_ALTERATION_APPROVE_TRUE);
+                existing.getApprovalStatuses().set(e.getKey(), true);
                 containsApprovedChanges = true;
             } else {
                 logger.debug("Setting status as rejected for the alteration statement : {}", e.getKey());
@@ -128,23 +128,28 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
             existing.setStatus(BirthAlteration.State.FULLY_APPROVED);
 
             // We've saved the alteration record, now lets modify the birth record
-            BirthDeclaration bdf = birthDeclarationDAO.getById(ba.getBdfIDUKey());
-            switch (ba.getType()) {
+            BirthDeclaration bdf = birthDeclarationDAO.getById(existing.getBdfIDUKey());
+            switch (existing.getType()) {
 
                 case TYPE_27:
                 case TYPE_27A:
                 case TYPE_52_1_H:
                 case TYPE_52_1_I: {
                     logger.debug("Alteration is an amendment, inclusion of omission or correction. Type : {}",
-                            ba.getType().ordinal());
+                            existing.getType().ordinal());
                     bdf.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_ALTERED);
                     bdf.getLifeCycleInfo().setActiveRecord(false);      // mark old record as a non-active record
                     birthDeclarationDAO.updateBirthDeclaration(bdf, user);
 
                     // create the new entry as a clone from the existing
-                    BirthDeclaration newBDF = bdf.shallowCopy();
+                    BirthDeclaration newBDF = null;
+                    try {
+                        newBDF = bdf.clone();
+                    } catch (CloneNotSupportedException e) {
+                        handleException("Unable to clone BDF : " + bdf.getIdUKey(), ErrorCodes.ILLEGAL_STATE);
+                    }
                     newBDF.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CERT_GENERATED);
-                    applyChanges(ba, newBDF, user);
+                    applyChanges(existing, newBDF, user);
                     birthDeclarationDAO.addBirthDeclaration(newBDF, user);
                     break;
                 }
@@ -155,7 +160,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
                     bdf.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CANCELLED);
                     birthDeclarationDAO.updateBirthDeclaration(bdf, user);
                     logger.debug("Alteration of type : {} is a cancellation of the existing record : {}",
-                            ba.getType().ordinal(), bdf.getIdUKey());
+                            existing.getType().ordinal(), bdf.getIdUKey());
 
                     // cancel any person on the PRS related to this same PIN
                     Person person = personDAO.findPersonByPIN(bdf.getChild().getPin());
@@ -164,13 +169,13 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
                     break;
                 }
             }
+
+        } else {
+            existing.setStatus(BirthAlteration.State.PARTIALY_APPROVED);
         }
 
         existing.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
         existing.getLifeCycleInfo().setApprovalOrRejectUser(user);
-        if (applyChangesToBC) {
-            existing.setStatus(BirthAlteration.State.FULLY_APPROVED);
-        }
         birthAlterationDAO.updateBirthAlteration(existing, user);
 
         logger.debug("Updated birth alteration : {}", existing.getIdUKey());

@@ -85,7 +85,7 @@ import java.io.Serializable;
     @NamedQuery(name = "get.by.NicOrPin", query = "SELECT bdf FROM BirthDeclaration bdf " +
         "WHERE bdf.child.pin = :PINorNIC")
 })
-public class BirthDeclaration implements Serializable {
+public class BirthDeclaration implements Serializable, Cloneable {
 
     /**
      * The Enumeration defining the state of the record. Any change of position of an element will have a serious
@@ -202,6 +202,29 @@ public class BirthDeclaration implements Serializable {
 
     @Embedded
     private ConfirmantInfo confirmant = new ConfirmantInfo();
+
+    public BirthDeclaration clone() throws CloneNotSupportedException {
+        BirthDeclaration newBDF = (BirthDeclaration) super.clone();
+        newBDF.setIdUKey(0);
+        newBDF.setLifeCycleInfo(lifeCycleInfo.clone());
+        newBDF.setRegister(register.clone());
+        newBDF.setChild(child.clone());
+        if (parent != null) {
+            newBDF.setParent(parent.clone());
+        }
+        if (marriage != null) {
+            newBDF.setMarriage(marriage.clone());
+        }
+        if (grandFather != null) {
+            newBDF.setGrandFather(grandFather.clone());
+        }
+        newBDF.setNotifyingAuthority(notifyingAuthority.clone());
+        newBDF.setInformant(informant.clone());
+        if (confirmant != null) {
+            newBDF.setConfirmant(confirmant.clone());
+        }
+        return newBDF;
+    }
 
     /**
      * BE CAREFUL USING THIS METHOD. It returns a cheap shallow clone of a BDF for alteration purposes
