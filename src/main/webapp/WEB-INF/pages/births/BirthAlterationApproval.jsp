@@ -63,8 +63,11 @@
             </tr>
             <s:iterator status="approvalStatus" value="birthAlterationApprovalList" id="approvalList">
                 <tr>
-                    <td style="padding-left:5px;"><s:property
-                            value="%{getText(sectionOfAct+'.'+birthAlterationApprovalList[#approvalStatus.index][0]+'.label')}"/></td>
+
+                    <td style="padding-left:5px;">
+                        <s:label value="%{birthAlterationApprovalList[#approvalStatus.index][0]}"/>
+                        <s:property
+                                value="%{getText(sectionOfAct+'.'+birthAlterationApprovalList[#approvalStatus.index][0]+'.label')}"/></td>
                     <td style="padding-left:25px;"><s:property
                             value="birthAlterationApprovalList[#approvalStatus.index][1]"/></td>
                     <td style="padding-left:25px;"><s:property
@@ -78,7 +81,6 @@
                 </tr>
             </s:iterator>
         </table>
-
         </fieldset>
         </div>
         <s:hidden name="sectionOfAct"/>
@@ -87,6 +89,10 @@
         <div style="width:20%;float:left;margin-left:25px;">
             <s:label value="%{getText('select_all.label')}"/>
             <s:checkbox id="selectAll" name="selectAll" onClick="checkAll(document.alterationApproval.index)"/>
+        </div>
+        <div style="width:20%;float:left;margin-left:25px;">
+            <s:label value="%{getText('apply Changes')}"/>
+            <s:checkbox id="" name="applyChanges"/>
         </div>
         <div class="form-submit">
             <s:submit value="%{getText('save.label')}" cssStyle="margin-top:10px;margin-right:25px"/>

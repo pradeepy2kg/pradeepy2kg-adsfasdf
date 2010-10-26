@@ -131,7 +131,6 @@ $(function() {
         maximize("header-info");
     });
     $('#errors-info-check').click(function() {
-        document.getElementById("tempBirthDivisionId").disabled = true;
         document.getElementById("errors-info-check").style.disabled = true;
         var fieldIds = new Array('childBirthDatePicker', 'childBirthDistrictId', 'childDsDivisionId', 'childBirthDivisionId',
                 'placeOfBirth', 'placeOfBirthEnglish', 'childGender');
@@ -238,7 +237,6 @@ function initPage() {
             document.getElementById(fieldIds[i]).disabled = true;
         }
     }
-    initSerialNumber();
     if (sectionOfAct == 2) {
         checkIdNames = new Array('errors-info-check', 'mother-info-check', 'informant-info-check');
     }
@@ -707,7 +705,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 சான்றிதழ் இல <br>
                 Certificate Number
             </td>
-            <td><s:label name="idUKey"/></td>
+            <td><s:label name="bdId"/></td>
         </tr>
         <tr>
             <td>දිස්ත්‍රික්කය <br>
@@ -740,6 +738,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
     <s:hidden name="dsDivisionName"/>
     <s:hidden name="bdDivisionName"/>
     <s:hidden name="serialNo"/>
+    <s:hidden name="bdId"/>
 </div>
 <s:if test="sectionOfAct==1">
     <s:hidden name=" birthDivisionId"/>
@@ -1594,6 +1593,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
     </tbody>
 </table>
 </div>--%>
+<s:label name="idUKey"/>
 <s:hidden name="idUKey"/>
 <s:hidden name="sectionOfAct"/>
 <div class="form-submit">

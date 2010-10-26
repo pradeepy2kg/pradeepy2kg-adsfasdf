@@ -84,7 +84,7 @@ public interface BirthAlterationDAO {
      * @param noOfRows number of rows
      * @return the birth alteration results
      */
-    public List<BirthAlteration> getBulkOfAlterationByIdUKey(long idUKey, int pageNo, int noOfRows);
+    public BirthAlteration getBulkOfAlterationByIdUKey(long idUKey, int pageNo, int noOfRows);
 
     /**
      * Returns a limited set of BirthAlterations based on given recived date

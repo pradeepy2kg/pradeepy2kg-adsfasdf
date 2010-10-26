@@ -119,7 +119,7 @@ public interface BirthAlterationService {
 
     /**
      * Returns a limited set of BirthAlterations for which one or more fields in the statement 27,27A or statement
-     * 52_1 are awaiting approval by an ARG or higher authority based on given Recived date of birth alteration
+     * 52_1 are awaiting approval by an ARG or higher authority based on user location
      *
      * @param locationUKey idUKey of the user location
      * @param pageNo       the page number for the results required (start from 1)
@@ -129,4 +129,17 @@ public interface BirthAlterationService {
      */
     public List<BirthAlteration> getApprovalPendingByUserLocationIdUKey
             (int locationUKey, int pageNo, int noOfRows, User user);
+
+    /**
+     * Returns a limited set of BirthAlterations for which one or more fields in the statement 27,27A or statement
+     * 52_1 are awaiting approval by an ARG or higher authority based on given idUKey
+     *
+     * @param idUKey   idUKey of the birth Alteration
+     * @param pageNo   the page number for the results required (start from 1)
+     * @param noOfRows number of rows
+     * @param user     the user initiating the action
+     * @return the birth alteration results
+     */
+    public BirthAlteration getApprovalPendingByIdUKey
+            (Long idUKey, int pageNo, int noOfRows, User user);
 }

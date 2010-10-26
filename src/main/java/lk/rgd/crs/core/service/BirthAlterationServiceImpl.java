@@ -202,7 +202,8 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
         ValidationUtils.validateAccessToBDDivision(user, bdDivision);
         return birthAlterationDAO.getBulkOfAlterationByBDDivision(bdDivision, pageNo, noOfRows);
     }
-        @Transactional(propagation = Propagation.NEVER, readOnly = true)
+
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthAlteration> getApprovalPendingByBDDivision
             (BDDivision bdDivision, int pageNo, int noOfRows) {
         if (logger.isDebugEnabled()) {
@@ -211,6 +212,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
         }
         return birthAlterationDAO.getBulkOfAlterationByBDDivision(bdDivision, pageNo, noOfRows);
     }
+
     /**
      * @inheritDoc
      */
@@ -232,6 +234,15 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
                     " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
         return birthAlterationDAO.getBulkOfAlterationByUserLocationIdUKey(locationUKey, pageNo, noOfRows);
+    }
+
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public BirthAlteration getApprovalPendingByIdUKey(Long idUKey, int pageNo, int noOfRows, User user) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Get birth alterations pending approval - by idUKey : " + idUKey +
+                    " Page : " + pageNo + " with number of rows per page : " + noOfRows);
+        }
+        return birthAlterationDAO.getBulkOfAlterationByIdUKey(idUKey, pageNo, noOfRows);
     }
 
     /**

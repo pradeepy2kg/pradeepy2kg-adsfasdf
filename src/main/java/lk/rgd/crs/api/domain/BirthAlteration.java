@@ -16,16 +16,14 @@ import java.util.BitSet;
 @Table(name = "ALT_BIRTH", schema = "CRS")
 @NamedQueries({
         @NamedQuery(name = "filter.alteration.by.idUKey", query = "SELECT ba FROM BirthAlteration ba " +
-                "WHERE ba.idUKey =:idUKey AND ba.status <>:statusFullyApp AND ba.status <>:statusPrint " +
-                "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
-        @NamedQuery(name = "filter.alteration.by.recived.date", query = "SELECT ba FROM BirthAlteration ba " +
-                "WHERE ba.dateReceived BETWEEN :recivedDateFrom AND :recivedDateTo AND ba.status <>:statusFullyApp AND ba.status <>:statusPrint " +
+                "WHERE ba.idUKey =:idUKey  AND (ba.status =:statusDataEntry OR ba.status =:statusPartialyApproved) " +
                 "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
         @NamedQuery(name = "filter.alteration.by.bddivision", query = "SELECT ba FROM BirthAlteration ba,BirthDeclaration bdf " +
-                "WHERE ba.bdfIDUKey =bdf.idUKey AND bdf.register.birthDivision = :bdDivision AND ba.status <> :statusFullyApp AND ba.status <> :statusPrint " +
+                "WHERE ba.bdfIDUKey =bdf.idUKey AND bdf.register.birthDivision = :bdDivision  AND " +
+                "(ba.status =:statusDataEntry OR ba.status =:statusPartialyApproved) " +
                 "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
         @NamedQuery(name = "filter.alteration.by.user.location", query = "SELECT ba FROM BirthAlteration ba " +
-                "WHERE ba.submittedLocation.locationUKey= :locationUKey AND ba.status <>:statusFullyApp AND ba.status <>:statusPrint " +
+                "WHERE ba.submittedLocation.locationUKey= :locationUKey AND (ba.status =:statusDataEntry OR ba.status =:statusPartialyApproved) " +
                 "ORDER BY ba.lifeCycleInfo.createdTimestamp desc")
 })
 
