@@ -154,14 +154,14 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
             existing.setStatus(DeathAlteration.State.FULLY_APPROVED);
 
             // We've saved the alteration record, now lets modify the birth record
-            DeathRegister deathRegister = deathRegisterDAO.getById(da.getDeathRegisterIDUkey());
-            switch (da.getType()) {
+            DeathRegister deathRegister = deathRegisterDAO.getById(existing.getDeathRegisterIDUkey());
+            switch (existing.getType()) {
 
                 case TYPE_53 :
                 case TYPE_52_1_H:
                 case TYPE_52_1_I: {
                     logger.debug("Alteration is an amendment, inclusion of omission or correction. Type : {}",
-                        da.getType().ordinal());
+                        existing.getType().ordinal());
                     deathRegister.setStatus(DeathRegister.State.ARCHIVED_ALTERED);
                     deathRegister.getLifeCycleInfo().setActiveRecord(false);      // mark old record as a non-active record
                     deathRegisterDAO.updateDeathRegistration(deathRegister, user);
@@ -169,7 +169,7 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
                     // create the new entry as a clone from the existing
                     DeathRegister newDR = deathRegister.shallowCopy();
                     newDR.setStatus(DeathRegister.State.ARCHIVED_CERT_GENERATED);
-                    applyChanges(da, deathRegister, user);
+                    applyChanges(existing, deathRegister, user);
                     deathRegisterDAO.addDeathRegistration(deathRegister, user);
                     break;
                 }
@@ -181,17 +181,17 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
                     deathRegister.setStatus(DeathRegister.State.ARCHIVED_CANCELLED);
                     deathRegisterDAO.updateDeathRegistration(deathRegister, user);
                     logger.debug("Alteration of type : {} is a cancellation of the existing record : {}",
-                        da.getType().ordinal(), deathRegister.getIdUKey());
+                        existing.getType().ordinal(), deathRegister.getIdUKey());
                     break;
                 }
             }
+
+        } else {
+            existing.setStatus(DeathAlteration.State.PARTIALY_APPROVED);
         }
 
         existing.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
         existing.getLifeCycleInfo().setApprovalOrRejectUser(user);
-        if (applyChangesToDC) {
-            existing.setStatus(DeathAlteration.State.FULLY_APPROVED);
-        }
         deathAlterationDAO.updateDeathAlteration(existing, user);
         logger.debug("Updated death alteration : {}", existing.getIdUKey());
     }
