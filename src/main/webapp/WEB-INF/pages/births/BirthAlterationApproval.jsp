@@ -47,7 +47,7 @@
          */
     }
 </script>
-<s:if test="!(birthAlterationApprovalList.size()==0)">
+<s:if test="!(birthAlterationApprovedList.size()==0)">
     <div id="alteration-approval-list-outer">
     <fieldset>
     <s:form action="eprApproveAlteration.do" method="post" name="alterationApproval">
@@ -73,10 +73,30 @@
                     <td style="padding-left:25px;"><s:property
                             value="birthAlterationApprovalList[#approvalStatus.index][2]"/></td>
                     <td style="text-align:center;">
-                        <s:checkbox name="index"
-                                    value="%{#index}"
-                                    fieldValue="%{birthAlterationApprovalList[#approvalStatus.index][0]}"
-                                    id="%{birthAlterationApprovalList[#approvalStatus.index][0]}"/>
+                        <s:if test="pageType==2">
+                            rejected
+                        </s:if>
+                        <s:else>
+                            <s:checkbox name="index"
+                                        value="%{#index}"
+                                        fieldValue="%{birthAlterationApprovalList[#approvalStatus.index][0]}"
+                                        id="%{birthAlterationApprovalList[#approvalStatus.index][0]}"/>
+                        </s:else>
+                    </td>
+                </tr>
+            </s:iterator>
+            <s:iterator status="approvedStatus" value="birthAlterationApprovedList" id="approvedList">
+                <tr>
+                    <td style="padding-left:5px;">
+                        <s:label value="%{birthAlterationApprovedList[#approvedStatus.index][0]}"/>
+                        <s:property
+                                value="%{getText(sectionOfAct+'.'+birthAlterationApprovedList[#approvedStatus.index][0]+'.label')}"/></td>
+                    <td style="padding-left:25px;"><s:property
+                            value="birthAlterationApprovedList[#approvedStatus.index][1]"/></td>
+                    <td style="padding-left:25px;"><s:property
+                            value="birthAlterationApprovedList[#approvedStatus.index][2]"/></td>
+                    <td style="text-align:center;">
+                        Approved
                     </td>
                 </tr>
             </s:iterator>

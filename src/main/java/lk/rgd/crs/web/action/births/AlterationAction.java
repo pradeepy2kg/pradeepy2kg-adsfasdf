@@ -46,6 +46,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> userLocations;
     private Map<Integer, Boolean> alterationApprovalPermission;
     private List birthAlterationApprovalList;
+    private List birthAlterationApprovedList;
 
     private User user;
     private Alteration27 alt27;
@@ -460,7 +461,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         noOfRows = appParametersDAO.getIntParameter(BA_APPROVAL_ROWS_PER_PAGE);
         if (idUKey != null) {
             try {
-                BirthAlteration baApprovalPending = alterationService.getApprovalPendingByIdUKey(idUKey,pageNo,noOfRows,user);
+                BirthAlteration baApprovalPending = alterationService.getApprovalPendingByIdUKey(idUKey, pageNo, noOfRows, user);
                 if (birthAlterationPendingApprovalList == null) {
                     birthAlterationPendingApprovalList = new ArrayList<BirthAlteration>();
                 }
@@ -536,6 +537,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
                 }
             }
             birthAlterationApprovalList = new ArrayList();
+            birthAlterationApprovedList = new ArrayList();
             alterationType = ba.getType();
             if (alterationType == BirthAlteration.AlterationType.TYPE_27) {
                 logger.debug("loading birth alteration record of alt27 of idUKey  :{}", ba.getIdUKey());
@@ -566,6 +568,9 @@ public class AlterationAction extends ActionSupport implements SessionAware {
                 } else {
                     index[i] = 0;
                 }
+            }
+            if(pageType ==2){
+                applyChanges=true;
             }
             initPermission();
             populateBasicLists();
@@ -794,18 +799,26 @@ public class AlterationAction extends ActionSupport implements SessionAware {
             compareChanges[2] = null;
         }
         boolean checkApp = true;
-        if (!(indexCheck.get(index))) {
-            if (compareChanges[1] != null && compareChanges[2] != null) {
-                if (!compareChanges[2].equals(compareChanges[1])) {
+
+        if (compareChanges[1] != null && compareChanges[2] != null) {
+            if (!compareChanges[2].equals(compareChanges[1])) {
+                if (!(indexCheck.get(index))) {
                     birthAlterationApprovalList.add(compareChanges);
                     numberOfAppPending++;
+                } else {
+                    birthAlterationApprovedList.add(compareChanges);
                 }
             }
-            if ((compareChanges[2] == null && compareChanges[1] != null) || (compareChanges[2] != null && compareChanges[1] == null)) {
+        }
+        if ((compareChanges[2] == null && compareChanges[1] != null) || (compareChanges[2] != null && compareChanges[1] == null)) {
+            if (!(indexCheck.get(index))) {
                 birthAlterationApprovalList.add(compareChanges);
                 numberOfAppPending++;
+            } else {
+                birthAlterationApprovedList.add(compareChanges);
             }
         }
+
     }
 
     public String alterationApproval() {
@@ -848,9 +861,6 @@ public class AlterationAction extends ActionSupport implements SessionAware {
                     approvalsBitSet.put(i, false);
                 }
             }
-        }
-        for (int i = 0; i < approvalsBitSet.size(); i++) {
-            logger.debug("approval bit set :{} -{}", i, approvalsBitSet.get(i));
         }
         boolean appStatus = false;
         if (applyChanges) {
@@ -1608,5 +1618,13 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
     public void setApplyChanges(boolean applyChanges) {
         this.applyChanges = applyChanges;
+    }
+
+    public List getBirthAlterationApprovedList() {
+        return birthAlterationApprovedList;
+    }
+
+    public void setBirthAlterationApprovedList(List birthAlterationApprovedList) {
+        this.birthAlterationApprovedList = birthAlterationApprovedList;
     }
 }
