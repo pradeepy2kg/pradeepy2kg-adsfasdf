@@ -13,7 +13,7 @@ import java.util.Date;
  * record in confirmation state
  */
 @Embeddable
-public class CRSLifeCycleInfo implements Serializable {
+public class CRSLifeCycleInfo implements Serializable, Cloneable {
 
     // ----- Record approval or rejection information - optional ---------
     @Column
@@ -64,6 +64,11 @@ public class CRSLifeCycleInfo implements Serializable {
 
     @Column(nullable = false, columnDefinition = "integer default 1")
     private boolean activeRecord = true;
+
+    @Override
+    protected CRSLifeCycleInfo clone() throws CloneNotSupportedException {
+        return (CRSLifeCycleInfo) super.clone();
+    }
 
     public Date getCreatedTimestamp() {
         return createdTimestamp;
