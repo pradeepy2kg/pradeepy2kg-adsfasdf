@@ -1,0 +1,342 @@
+package lk.rgd.crs.core.service;
+
+import lk.rgd.ErrorCodes;
+import lk.rgd.Permission;
+import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.api.domain.Role;
+import lk.rgd.common.api.domain.User;
+import lk.rgd.crs.CRSRuntimeException;
+import lk.rgd.crs.api.bean.UserWarning;
+import lk.rgd.crs.api.dao.DeathRegisterDAO;
+import lk.rgd.crs.api.domain.BDDivision;
+import lk.rgd.crs.api.domain.DeathRegister;
+import lk.rgd.crs.api.service.DeathRegistrationService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
+import java.util.List;
+
+/**
+ * @author Indunil Moremada
+ * @authar amith jayasekara
+ */
+public class DeathRegistrationServiceImpl implements DeathRegistrationService {
+
+    private static final Logger logger = LoggerFactory.getLogger(DeathRegistrationService.class);
+    private final DeathRegisterDAO deathRegisterDAO;
+
+    DeathRegistrationServiceImpl(DeathRegisterDAO deathRegisterDAO) {
+        this.deathRegisterDAO = deathRegisterDAO;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void addLateDeathRegistration(DeathRegister deathRegistration, User user) {
+        logger.debug("adding late/missing death registration");
+        DeathDeclarationValidator.validateMinimalRequirments(deathRegistration);
+        if (deathRegistration.getDeathType() != DeathRegister.Type.LATE && deathRegistration.getDeathType() != DeathRegister.Type.MISSING) {
+            handleException("Invalid death type : " + deathRegistration.getDeathType(), ErrorCodes.ILLEGAL_STATE);
+        }
+        addDeathRegistration(deathRegistration, user);
+        logger.debug("added a late/missing registration with idUKey : {} ", deathRegistration.getIdUKey());
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void addNormalDeathRegistration(DeathRegister deathRegistration, User user) {
+        logger.debug("adding normal/sudden death registration");
+        DeathDeclarationValidator.validateMinimalRequirments(deathRegistration);
+        if (deathRegistration.getDeathType() != DeathRegister.Type.NORMAL && deathRegistration.getDeathType() != DeathRegister.Type.SUDDEN) {
+            handleException("Invalid death type : " + deathRegistration.getDeathType(), ErrorCodes.ILLEGAL_STATE);
+        }
+        addDeathRegistration(deathRegistration, user);
+        logger.debug("added a normal/sudden registration with idUKey : {} ", deathRegistration.getIdUKey());
+    }
+
+    private void addDeathRegistration(DeathRegister deathRegistration, User user) {
+        validateAccessToBDDivision(user, deathRegistration.getDeath().getDeathDivision());
+        //validate minimul requirments
+        DeathDeclarationValidator.validateMinimalRequirments(deathRegistration);
+        // has this serial number been used already?
+        DeathRegister existing = deathRegisterDAO.getActiveRecordByBDDivisionAndDeathSerialNo(deathRegistration.getDeath().getDeathDivision(),
+                deathRegistration.getDeath().getDeathSerialNo());
+        if (existing != null) {
+            handleException("can not add death registration " + existing.getIdUKey() +
+                    " deathRegistration number already exists : " + existing.getStatus(), ErrorCodes.ENTITY_ALREADY_EXIST);
+        }
+        deathRegistration.setStatus(DeathRegister.State.DATA_ENTRY);
+        deathRegisterDAO.addDeathRegistration(deathRegistration, user);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void updateDeathRegistration(DeathRegister deathRegistration, User user) {
+        businessValidations(deathRegistration, user);
+        DeathRegister dr = deathRegisterDAO.getById(deathRegistration.getIdUKey());
+        if (DeathRegister.State.DATA_ENTRY != dr.getStatus()) {
+            handleException("Cannot update death registration " + deathRegistration.getIdUKey() +
+                    " Illegal state at target : " + dr.getStatus(), ErrorCodes.ILLEGAL_STATE);
+        }
+        deathRegisterDAO.updateDeathRegistration(deathRegistration, user);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public DeathRegister getById(long deathRegisterIdUKey, User user) {
+        logger.debug("Load death registration record : {}", deathRegisterIdUKey);
+        DeathRegister deathRegister;
+        try {
+            deathRegister = deathRegisterDAO.getById(deathRegisterIdUKey);
+            validateAccessToBDDivision(user, deathRegister.getDeath().getDeathDivision());
+            return deathRegister;
+        } catch (NullPointerException e) {
+            logger.debug("no results found for death id : {}", deathRegisterIdUKey);
+            return null;
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public DeathRegister getById(long deathRegisterIdUKey) {
+        logger.debug("Load death registration record : {}", deathRegisterIdUKey);
+        DeathRegister deathRegister;
+        try {
+            deathRegister = deathRegisterDAO.getById(deathRegisterIdUKey);
+            return deathRegister;
+        } catch (NullPointerException e) {
+            logger.debug("no results found for death id : {}", deathRegisterIdUKey);
+            return null;
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    //todo do validation warnings
+    public List<UserWarning> approveDeathRegistration(long deathRegisterIdUKey, User user, boolean ignoreWarnings) {
+        //  logger.debug("attempt to approve death registration record : {} ", deathRegisterIdUKey);
+        DeathDeclarationValidator.validateMinimalRequirments(getById(deathRegisterIdUKey, user));
+        List<UserWarning> warnings = DeathDeclarationValidator.validateStandardRequirements(
+            deathRegisterDAO, getById(deathRegisterIdUKey, user), user);
+        if (warnings.isEmpty() || ignoreWarnings) {
+            setApprovalStatus(deathRegisterIdUKey, user, DeathRegister.State.APPROVED, null);
+        }
+        return warnings;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void rejectDeathRegistration(long deathRegisterIdUKey, User user, String comment) {
+        logger.debug("attempt to reject death registration record : {}", deathRegisterIdUKey);
+
+        if (comment == null || comment.trim().length() < 1) {
+            handleException("A comment is required to reject a birth declaration",
+                    ErrorCodes.COMMENT_REQUIRED_BDF_REJECT);
+        }
+        setApprovalStatus(deathRegisterIdUKey, user, DeathRegister.State.REJECTED, comment);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void markDeathCertificateAsPrinted(long deathRegisterIdUKey, User user) {
+        logger.debug("requested to mark death certificate as printed for the record : {} ", deathRegisterIdUKey);
+        DeathRegister dr = deathRegisterDAO.getById(deathRegisterIdUKey);
+        validateAccessToBDDivision(user, dr.getDeath().getDeathDivision());
+        if (DeathRegister.State.APPROVED != dr.getStatus()) {
+            handleException("Cannot change status , " + dr.getIdUKey() +
+                    " Illegal state : " + dr.getStatus(), ErrorCodes.ILLEGAL_STATE);
+        }
+        dr.setStatus(DeathRegister.State.ARCHIVED_CERT_GENERATED);
+        deathRegisterDAO.updateDeathRegistration(dr, user);
+    }
+
+    private void setApprovalStatus(long idUKey, User user, DeathRegister.State state, String comment) {
+        // check approve permission
+        if (!user.isAuthorized(Permission.APPROVE_DEATH)) {
+            handleException("User : " + user.getUserId() + " is not allowed to approve/reject death declarations",
+                    ErrorCodes.PERMISSION_DENIED);
+        }
+        DeathRegister dr = deathRegisterDAO.getById(idUKey);
+        if (DeathRegister.State.DATA_ENTRY == dr.getStatus()) {
+            validateAccessToBDDivision(user, dr.getDeath().getDeathDivision());
+            dr.setStatus(state);
+            dr.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
+            dr.getLifeCycleInfo().setApprovalOrRejectUser(user);
+            if (state == DeathRegister.State.APPROVED) {
+                dr.getLifeCycleInfo().setCertificateGeneratedTimestamp(new Date());
+                dr.getLifeCycleInfo().setCertificateGeneratedUser(user);
+            }
+        } else {
+            handleException("Cannot approve/reject death registration " + dr.getIdUKey() +
+                    " Illegal state : " + dr.getStatus(), ErrorCodes.ILLEGAL_STATE);
+        }
+        //setting comment, this is relative only to death rejaction
+        dr.setCommnet(comment);
+        //updating
+        deathRegisterDAO.updateDeathRegistration(dr, user);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void deleteDeathRegistration(long deathRegiserIdUKey, User user) {
+        logger.debug("attempt to delete death registration record : {}", deathRegiserIdUKey);
+        DeathRegister dr = deathRegisterDAO.getById(deathRegiserIdUKey);
+        validateAccessToBDDivision(user, dr.getDeath().getDeathDivision());
+        if (DeathRegister.State.DATA_ENTRY != dr.getStatus()) {
+            handleException("Cannot delete death registraion " + deathRegiserIdUKey +
+                    " Illegal state : " + dr.getStatus(), ErrorCodes.ILLEGAL_STATE);
+        }
+        deathRegisterDAO.deleteDeathRegistration(deathRegisterDAO.getById(deathRegiserIdUKey), user);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<DeathRegister> getPaginatedListForState(BDDivision deathDivision, int pageNo, int noOfRows, DeathRegister.State status, User user) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Get death registrations with the state : " + status
+                    + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
+        }
+        validateAccessToBDDivision(user, deathDivision);
+        return deathRegisterDAO.getPaginatedListForState(deathDivision, pageNo, noOfRows, status);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<DeathRegister> getByBDDivisionAndRegistrationDateRange(BDDivision deathDivision,
+                                                                       Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
+        validateAccessToBDDivision(user, deathDivision);
+        return deathRegisterDAO.getByBDDivisionAndRegistrationDateRange(deathDivision, startDate, endDate, pageNo, noOfRows);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<DeathRegister> getPaginatedListForAll(BDDivision deathDivision, int pageNo, int noOfRows, User user) {
+        logger.debug("Get all death registrations   Page : {}  with number of rows per page : {} ", pageNo, noOfRows);
+        validateAccessToBDDivision(user, deathDivision);
+        return deathRegisterDAO.getPaginatedListForAll(deathDivision, pageNo, noOfRows);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public DeathRegister getByBDDivisionAndDeathSerialNo(BDDivision bdDivision, long deathSerialNo, User user) {
+        DeathRegister dr = deathRegisterDAO.getActiveRecordByBDDivisionAndDeathSerialNo(bdDivision, deathSerialNo);
+        if (dr != null)
+            validateAccessToBDDivision(user, dr.getDeath().getDeathDivision());
+        return dr;
+    }
+
+    private void handleException(String message, int code) {
+        logger.error(message);
+        throw new CRSRuntimeException(message, code);
+    }
+
+    private void businessValidations(DeathRegister deathRegister, User user) {
+        validateAccessToBDDivision(user, deathRegister.getDeath().getDeathDivision());
+        if (deathRegister.getStatus() != DeathRegister.State.DATA_ENTRY) {
+            handleException("can not update death registration " + deathRegister.getIdUKey() +
+                    " Illegal State : " + deathRegister.getStatus(), ErrorCodes.ILLEGAL_STATE);
+        }
+
+    }
+
+    private void validateAccessToBDDivision(User user, BDDivision bdDivision) {
+        final String role = user.getRole().getRoleId();
+        if (!(User.State.ACTIVE == user.getStatus()
+                &&
+                (Role.ROLE_RG.equals(role)
+                        ||
+                        (user.isAllowedAccessToBDDistrict(bdDivision.getDistrict().getDistrictUKey())
+                                &&
+                                user.isAllowedAccessToBDDSDivision(bdDivision.getDsDivision().getDsDivisionUKey())
+                        )
+                )
+        )) {
+
+            handleException("User : " + user.getUserId() + " is not allowed access to the District : " +
+                    bdDivision.getDistrict().getDistrictId() + " and/or DS Division : " +
+                    bdDivision.getDsDivision().getDivisionId(), ErrorCodes.PERMISSION_DENIED);
+        }
+    }
+
+    private void validateAccessToDSDivision(User user, DSDivision dsDivision) {
+        final String role = user.getRole().getRoleId();
+        if (!(User.State.ACTIVE == user.getStatus()
+                &&
+                (Role.ROLE_RG.equals(role)
+                        || user.isAllowedAccessToBDDistrict(dsDivision.getDistrict().getDistrictUKey())
+                )
+        )) {
+
+            handleException("User : " + user.getUserId() + " is not allowed access to the District : " +
+                    dsDivision.getDistrict().getDistrictId(), ErrorCodes.PERMISSION_DENIED);
+        }
+
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<DeathRegister> getPaginatedListForStateByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, DeathRegister.State status, User user) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Get death registrations with the state : " + status
+                    + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
+        }
+        validateAccessToDSDivision(user, dsDivision);
+        return deathRegisterDAO.getPaginatedListForStateByDSDivision(dsDivision, pageNo, noOfRows, status);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<DeathRegister> getPaginatedListForAllByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, User user) {
+        logger.debug("Get all death registrations   Page : {}  with number of rows per page : {} ", pageNo, noOfRows);
+        validateAccessToDSDivision(user, dsDivision);
+        return deathRegisterDAO.getPaginatedListForAllByDSDivision(dsDivision, pageNo, noOfRows);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<DeathRegister> getByPinOrNic(long pinOrNic, User user) {
+        List<DeathRegister> deathRegisterList = deathRegisterDAO.getDeathRegisterByDeathPersonPINorNIC("" + pinOrNic);
+        DeathRegister deathRegister = null;
+        if (deathRegisterList.size() > 0) {
+            deathRegister = deathRegisterList.get(0);
+            validateAccessToBDDivision(user, deathRegister.getDeath().getDeathDivision());
+            return deathRegisterList;
+        } else {
+            return null;
+        }
+    }
+}
