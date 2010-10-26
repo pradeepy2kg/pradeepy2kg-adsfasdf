@@ -13,6 +13,7 @@ import lk.rgd.crs.web.WebConstants;
 
 import java.util.Map;
 import java.util.List;
+import java.util.ArrayList;
 
 public class PersonDetailsAction extends ActionSupport implements SessionAware {
 
@@ -29,7 +30,8 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
     private Person person;
     private long personId;
     private List<Person> children;
-    
+    private List<Person> siblings;
+
     public PersonDetailsAction(PopulationRegistry service, RaceDAO raceDAO, CountryDAO countryDAO) {
         this.service = service;
         this.raceDAO = raceDAO;
@@ -40,6 +42,7 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
         logger.debug("getting extended details of an existing person in PRS");
         setPerson(service.getByUKey(personId, user));
         setChildren(service.findAllChildren(getPerson(), user));
+        logger.debug("number of children for {} is {}", person.getFullNameInOfficialLanguage(), children.size());
 
         return SUCCESS;
     }
@@ -84,5 +87,13 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
 
     public void setChildren(List<Person> children) {
         this.children = children;
+    }
+
+    public List getSiblings() {
+        return siblings;
+    }
+
+    public void setSiblings(List siblings) {
+        this.siblings = siblings;
     }
 }

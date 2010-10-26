@@ -310,7 +310,7 @@
         <td align="center" style="font-size:12pt;">
             දෙමාපියන්, සහෝදර සහෝදරියන් සහ දරුවන්
             <br>வேறு நாடுகளில் பிரஜாவுரிமை
-            <br>vParents, Brothers & Sisters, and Children
+            <br>Parents, Brothers & Sisters, and Children
         </td>
     </tr>
 </table>
@@ -363,58 +363,68 @@
         <td><s:label value="%{person.mother.dateOfBirth}"/></td>
         <td><s:label value="%{person.mother.fullNameInOfficialLanguage}"/></td>
     </tr>
-    <tr>
+
+    <s:iterator value="siblings" status="stat">
+     <tr>
         <td>
-            සහෝදරයා
-            <br>தாயின்
-            <br>Brother
+            <s:if test="%{[#stat.index].gender == 0}">
+                සහෝදරයා
+                <br>தாயின்
+                <br>Brother
+            </s:if>
+            <s:if test="%{[#stat.index].gender == 1}">
+                සහෝදරිය
+                <br>தாயின்
+                <br>Sister
+            </s:if>
+            <s:if test="%{[#stat.index].gender == 2}">
+                දියණිය
+                <br>தாயின்
+                <br>Unknown
+            </s:if>
         </td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td><s:property value="pin"/></td>
+        <td><s:property value="dateOfBirth"/></td>
+        <td><s:property value="fullNameInOfficialLanguage"/></td>
     </tr>
-    <tr>
+    </s:iterator>
+    <%--<tr>--%>
+        <%--<td>--%>
+        <%--</td>--%>
+        <%--ඥාති සහෝදරිය--%>
+        <%--<br>தாயின்--%>
+        <%--<br>Half Sister--%>
+        <%--<td></td>--%>
+        <%--<td></td>--%>
+        <%--<td></td>--%>
+    <%--</tr>--%>
+    <s:iterator value="children" status="id">
+     <tr>
         <td>
-            සහෝදරිය
-            <br>தாயின்
-            <br>Sister
+            <s:if test="%{[#id.index].gender == 0}">
+                පුත්‍රයා
+                <br>தாயின்
+                <br>Son
+            </s:if>
+            <s:if test="%{[#id.index].gender == 1}">
+                දියණිය
+                <br>தாயின்
+                <br>Daughter
+            </s:if>
+            <s:if test="%{[#id.index].gender == 2}">
+                දියණිය
+                <br>தாயின்
+                <br>Unknown
+            </s:if>
         </td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td><s:property value="pin"/></td>
+        <td><s:property value="dateOfBirth"/></td>
+        <td><s:property value="fullNameInOfficialLanguage"/></td>
     </tr>
-    <tr>
-        <td>
-            ඥාති සහෝදරිය
-            <br>தாயின்
-            <br>Half Sister
-        </td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>
-            පුත්‍රයා
-            <br>தாயின்
-            <br>Son
-        </td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>
-            දියණිය
-            <br>தாயின்
-            <br>Daughter
-        </td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
+    </s:iterator>
     </tbody>
 </table>
+
 <table style="width:100%; border:none; border-collapse:collapse;">
     <tr>
         <td align="center" style="font-size:12pt;">
