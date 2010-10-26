@@ -101,7 +101,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     private boolean nextFlag;
     private boolean previousFlag;
     private List<BirthAlteration> birthAlterationPendingApprovalList;
-    private int divisionAlt;
+    private int divisionAltaration;
     private Date alterationRecivedDate;
     private Date dateReceivedFrom;
     private Date dateReceivedTo;
@@ -110,6 +110,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
     private String language;
     private boolean applyChanges;
+    private boolean approveRightsToUser;
 
 
     private boolean editChildInfo;
@@ -325,8 +326,8 @@ public class AlterationAction extends ActionSupport implements SessionAware {
             //case 2 is used to set alteration27A
             case 2:
                 ba.setType(alterationType);
-                if (birthDivisionId > 0) {
-                    alt52_1.setBirthDivision(bdDivisionDAO.getBDDivisionByPK(birthDivisionId));
+                if (divisionAltaration > 0) {
+                    alt52_1.setBirthDivision(bdDivisionDAO.getBDDivisionByPK(divisionAltaration));
                 }
                 if (motherCountryId > 0) {
                     alt52_1.getMother().setMotherCountry(countryDAO.getCountry(motherCountryId));
@@ -362,6 +363,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         ba.setBdfIDUKey(bdId);
         ba.setDeclarant(declarant);
         ba.setDateReceived(dateReceived);
+/*        logger.debug("ba value is :{}",ba.getBdfIDUKey());*/
         if (idUKey != null) {
             alterationService.updateBirthAlteration(ba, user);
             logger.debug("Updated a  Birth Alteration with Alteration idUKey  :{}", ba.getIdUKey());
@@ -369,6 +371,9 @@ public class AlterationAction extends ActionSupport implements SessionAware {
             alterationService.addBirthAlteration(ba, user);
             logger.debug("Add a new Birth Alteration with Alteration idUKey  :{}", ba.getIdUKey());
         }
+        /*check permission to approval birth alteration  */
+        approveRightsToUser = user.isAllowedAccessToBDDSDivision(ba.getBirthRecordDivision().
+                getDsDivision().getDsDivisionUKey());
         idUKey = ba.getIdUKey();
         bdId = ba.getBdfIDUKey();
         pageType = 1;
@@ -773,7 +778,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
             compareAndAdd(Alteration52_1.INFORMANT_NAME, informantOriginal.getInformantName(), informant.getInformantName());
             compareAndAdd(Alteration52_1.INFORMANT_ADDRESS, informantOriginal.getInformantAddress(), informant.getInformantAddress());
         }
-       logger.debug("length of the alteration :{}",birthAlterationApprovalList.size());
+        logger.debug("length of the alteration :{}", birthAlterationApprovalList.size());
 
     }
 
@@ -845,24 +850,35 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
         }
         int check = 0;
-        for (int i = 0; i < lengthOfBitSet + 1; i++) {
-            if (indexCheck.get(i)) {
-                approvalsBitSet.put(i, true);
-            } else {
-                if (check < index.length) {
-                    if (i == index[check]) {
-                        logger.debug("index {}  is :{}", i, index[check]);
-                        //if a field is approved bit set to true
-                        approvalsBitSet.put(i, true);
-                        check++;
+        if (index != null) {
+            for (int i = 0; i < lengthOfBitSet + 1; i++) {
+                if (indexCheck.get(i)) {
+                    approvalsBitSet.put(i, true);
+                } else {
+                    if (check < index.length) {
+                        if (i == index[check]) {
+                            logger.debug("index {}  is :{}", i, index[check]);
+                            //if a field is approved bit set to true
+                            approvalsBitSet.put(i, true);
+                            check++;
+                        } else {
+                            approvalsBitSet.put(i, false);
+                        }
                     } else {
                         approvalsBitSet.put(i, false);
                     }
+                }
+            }
+        } else {
+            for (int i = 0; i < lengthOfBitSet + 1; i++) {
+                if (indexCheck.get(i)) {
+                    approvalsBitSet.put(i, true);
                 } else {
                     approvalsBitSet.put(i, false);
                 }
             }
         }
+
         boolean appStatus = false;
         if (applyChanges) {
             logger.debug("length of the apprrovals list is  :{}", applyChanges);
@@ -908,10 +924,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
             } else {
                 approvalsBitSet.put(i, false);
             }
-
-            alterationService.approveBirthAlteration(ba, approvalsBitSet, applyChanges, user);
         }
-        ;
         return SUCCESS;
     }
 
@@ -1501,14 +1514,6 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         this.alterationRecivedDate = alterationRecivedDate;
     }
 
-    public int getDivisionAlt() {
-        return divisionAlt;
-    }
-
-    public void setDivisionAlt(int divisionAlt) {
-        this.divisionAlt = divisionAlt;
-    }
-
     public Date getDateReceivedTo() {
         return dateReceivedTo;
     }
@@ -1627,5 +1632,21 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
     public void setBirthAlterationApprovedList(List birthAlterationApprovedList) {
         this.birthAlterationApprovedList = birthAlterationApprovedList;
+    }
+
+    public int getDivisionAltaration() {
+        return divisionAltaration;
+    }
+
+    public void setDivisionAltaration(int divisionAltaration) {
+        this.divisionAltaration = divisionAltaration;
+    }
+
+    public boolean isApproveRightsToUser() {
+        return approveRightsToUser;
+    }
+
+    public void setApproveRightsToUser(boolean approveRightsToUser) {
+        this.approveRightsToUser = approveRightsToUser;
     }
 }

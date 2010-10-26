@@ -49,7 +49,7 @@
 </script>
 <s:if test="(birthAlterationApprovalList.size() !=0) || (birthAlterationApprovedList.size() !=0)">
     <div id="alteration-approval-list-outer">
-    <fieldset>
+    <fieldset style="border:none">
     <s:form action="eprApproveAlteration.do" method="post" name="alterationApproval">
         <table class="alteration-approval-list-table" width="100%" cellpadding="0" cellspacing="0">
             <tr>
@@ -65,7 +65,6 @@
                 <tr>
 
                     <td style="padding-left:5px;">
-                        <s:label value="%{birthAlterationApprovalList[#approvalStatus.index][0]}"/>
                         <s:property
                                 value="%{getText(sectionOfAct+'.'+birthAlterationApprovalList[#approvalStatus.index][0]+'.label')}"/></td>
                     <td style="padding-left:25px;"><s:property
@@ -74,7 +73,7 @@
                             value="birthAlterationApprovalList[#approvalStatus.index][2]"/></td>
                     <td style="text-align:center;">
                         <s:if test="pageType==2">
-                            rejected
+                           <s:label value="%{getText('rejected.lable')}"/>
                         </s:if>
                         <s:else>
                             <s:checkbox name="index"
@@ -88,7 +87,6 @@
             <s:iterator status="approvedStatus" value="birthAlterationApprovedList" id="approvedList">
                 <tr>
                     <td style="padding-left:5px;">
-                        <s:label value="%{birthAlterationApprovedList[#approvedStatus.index][0]}"/>
                         <s:property
                                 value="%{getText(sectionOfAct+'.'+birthAlterationApprovedList[#approvedStatus.index][0]+'.label')}"/></td>
                     <td style="padding-left:25px;"><s:property
@@ -96,7 +94,7 @@
                     <td style="padding-left:25px;"><s:property
                             value="birthAlterationApprovedList[#approvedStatus.index][2]"/></td>
                     <td style="text-align:center;">
-                        Approved
+                        <s:label value="%{getText('Approved.lable')}"/>
                     </td>
                 </tr>
             </s:iterator>
@@ -106,13 +104,20 @@
         <s:hidden name="sectionOfAct"/>
         <s:hidden name="numberOfAppPending"/>
         <s:hidden name="idUKey"/>
-        <div style="width:20%;float:left;margin-left:25px;">
-            <s:label value="%{getText('select_all.label')}"/>
-            <s:checkbox id="selectAll" name="selectAll" onClick="checkAll(document.alterationApproval.index)"/>
-        </div>
-        <div style="width:20%;float:left;margin-left:25px;">
-            <s:label value="%{getText('apply Changes')}"/>
-            <s:checkbox id="" name="applyChanges"/>
+        <s:if test="pageType != 2">
+            <div style="width:20%;float:left;margin-left:25px;margin-top:20px;">
+                <s:label value="%{getText('select_all.label')}"/>
+                <s:checkbox id="selectAll" name="selectAll" onClick="checkAll(document.alterationApproval.index)"/>
+            </div>
+        </s:if>
+        <div style="width:60%;float:left;margin-left:25px;margin-top:20px;">
+            <s:if test="pageType == 2">
+                <s:hidden name="applyChanges" value="true"/>
+            </s:if>
+            <s:else>
+                <s:label value="%{getText('label.apply.changes')}"/>
+                <s:checkbox id="" name="applyChanges"/>
+            </s:else>
         </div>
         <div class="form-submit">
             <s:submit value="%{getText('save.label')}" cssStyle="margin-top:10px;margin-right:25px"/>
@@ -137,8 +142,4 @@
 </s:else>
 <s:hidden name="indexCheck"/>
 <s:hidden name="birthAlterationApprovalList"/>
-<%--
-<%
 
-    out.print(GenderUtil.getGender(0, "si"));
-%>--%>

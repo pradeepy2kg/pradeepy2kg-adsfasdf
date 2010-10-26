@@ -10,23 +10,24 @@
             <tr>
                 <td></td>
                 <td style="text-align:center;">
-                    <s:label value="%{getText('saveSuccess.label')}"/>
+                    <s:label value="* %{getText('saveSuccess.label')}."/>
                 </td>
                 <td></td>
 
             </tr>
             <tr>
                 <td></td>
-                <td style="width:40%;"><s:if test="#request.allowApproveAlteration">
+                <td style="width:80%;">
+                    <s:if test="#request.allowApproveAlteration && approveRightsToUser">
+                        <div class="form-submit" align="center">
+                            <s:form action="eprApproveSelectedAlteration.do">
+                                <s:hidden name="idUKey"/>
+                                <s:hidden name="bdId"/>
+                                <s:submit name="approve" value="%{getText('approve.label')}"/>
+                            </s:form>
+                        </div>
+                    </s:if>
                     <div class="form-submit" align="center">
-                        <s:form action="eprApproveSelectedAlteration.do">
-                            <s:hidden name="idUKey"/>
-                            <s:hidden name="bdId"/>
-                            <s:submit name="approve" value="%{getText('approve.label')}"/>
-                        </s:form>
-                    </div>
-                </s:if>
-                    <div class="form-submit" style="float:left;">
                         <s:form action="eprBirthAlterationInit.do">
                             <s:submit name="approve" value="%{getText('add.new.lable')}"/>
                         </s:form>
@@ -40,7 +41,7 @@
         <table align="center">
             <tr>
                 <td></td>
-                <td style="text-align:center;width:40%"><s:label value="%{getText('saveApprovalSuccess.label')}"/> </td>
+                <td style="text-align:center;width:40%"><s:label value="%{getText('saveApprovalSuccess.label')}"/></td>
                 <td></td>
             </tr>
             <tr>
