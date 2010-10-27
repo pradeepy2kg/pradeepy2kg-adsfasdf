@@ -30,3 +30,9 @@
 
 *Married
 *Unmarried
+
+*Never married(විවාහ නොවූ අයෙකි)
+*Annulled(අවලංගු කරන ලදී)
+*Separated(වෙන්වී ඇත)
+*Devoced(දික්කසාද වී ඇත)
+*Widowed(කනවැන්දුම්)

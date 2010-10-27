@@ -1,7 +1,19 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
 
+<div class="form-submit">
+    <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
+</div>
+
+<div id="prsCertificate-page" class="form-submit" style="margin:15px 0 0 10px; ">
+    <s:a href="%{print}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>
+</div>
+<div id="prsCertificate-page" class="form-submit" style="margin:15px 0 0 10px; ">
+    <s:a href="%{cancel}"><s:label value="%{getText('cancel.button')}"/></s:a>
+</div>
 <div class="prs-certificate-outer">
+
 
 <table style="width:100%; border:none; border-collapse:collapse;">
     <col width="300px">
@@ -15,7 +27,7 @@
                  style="display: block; text-align: center;" width="100" height="120">
         </td>
         <td>
-            <table border="1" style="width:100%;border:1px solid #000;border-collapse:collapse;">
+            <table border="1" style="width:100%;border:1px solid #000;border-collapse:collapse;font-size:10pt;">
                 <tr height="60px">
                     <td>
                         අනුක්‍රමික අංකය
@@ -246,4 +258,14 @@
     </tr>
     </tbody>
 </table>
+</div>
+<div class="form-submit">
+    <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
+</div>
+
+<div id="prsCertificate-page" class="form-submit" style="margin:15px 0 0 10px; ">
+    <s:a href="%{print}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>
+</div>
+<div id="prsCertificate-page" class="form-submit" style="margin:15px 0 0 10px; ">
+    <s:a href="%{cancel}"><s:label value="%{getText('cancel.button')}"/></s:a>
 </div>
