@@ -1046,6 +1046,7 @@
                 method="birthAlterationHome">
             <result type="tiles" name="success">epr.birthAlterationHome</result>
         </action>
+
         <!--death alteration related actions-->
         <action name="eprDeathAlterationSearchHome" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"
                 method="deathAlterationSearch">
@@ -1076,7 +1077,7 @@
                 <param name="actionName">eprApproveDeathAlterations</param>
             </result>
         </action>
-        <!--todo follow-->
+
         <action name="eprDeathAlterationEdit" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"
                 method="editDeathAlteration">
             <result type="tiles" name="success">epr.deathAlterationCapture</result>
@@ -1092,10 +1093,15 @@
             <result type="tiles" name="success">epr.deathAlterationSearchHome</result>
             <result type="tiles" name="pageLoad">epr.deathAlterationRejectGetComment</result>
         </action>
-
+        <!--todo remove-->
         <action name="eprDeathAlterationApplyChanges" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"
                 method="applyChanges">
             <result type="tiles" name="success">epr.deathAlterationApprovalHome</result>
+        </action>
+
+        <action name="eprDeathAlterationPrintLetter" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"
+                method="printAlterationLetter">
+            <result type="tiles" name="pageLoad">epr.deathAlterationPrintLetter</result>
         </action>
 
     </package>

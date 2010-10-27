@@ -19,7 +19,8 @@ import java.util.HashMap;
         @NamedQuery(name = "get.alt.by.death.certificate.number", query = "SELECT da FROM DeathAlteration da" +
                 " WHERE da.deathRegisterIDUkey =:deathCertificateNumber"),
         @NamedQuery(name = "get.alt.by.division.death.division", query = "SELECT da FROM DeathAlteration da," +
-                "DeathRegister dr WHERE da.deathRegisterIDUkey=dr.idUKey AND dr.death.deathDivision.bdDivisionUKey =:deathDivisionUkey"),
+                "DeathRegister dr WHERE da.deathRegisterIDUkey=dr.idUKey " +
+                "AND dr.death.deathDivision.bdDivisionUKey =:deathDivisionUkey AND da.lifeCycleInfo.activeRecord = true"),
         @NamedQuery(name = "get.atl.by.death.id", query = "SELECT da FROM DeathAlteration da WHERE da.deathRegisterIDUkey=:deathId"),
         @NamedQuery(name = "get.alt.by.user.location", query = "SELECT da FROM DeathAlteration  da" +
                 " WHERE da.submittedLocation.locationUKey =:locationUKey"),
@@ -33,28 +34,28 @@ public class DeathAlteration {
 
     public static final Map<Integer, String> indexMap = new HashMap<Integer, String>();
 
-    public static final int SUDDEN_DEATH = 1;
-    public static final int DATE_OF_DEATH = 2;
-    public static final int TIME_OF_DEATH = 3;
-    public static final int PLACE_OF_DEATH = 4;
-    public static final int PLACE_OF_DEATH_ENGLISH = 5;
-    public static final int CAUSE_OF_DEATH_ESTABLISHED = 6;
-    public static final int CAUSE_OF_DEATH = 7;
-    public static final int ICD_CODE = 8;
-    public static final int BURIAL_PLACE = 9;
-    public static final int PIN = 10;
-    public static final int COUNTRY = 11;
-    public static final int PASSPORT = 12;
-    public static final int AGE = 13;
-    public static final int GENDER = 14;
-    public static final int RACE = 15;
-    public static final int NAME = 16;
-    public static final int NAME_ENGLISH = 17;
-    public static final int ADDRESS = 18;
-    public static final int PIN_FATHER = 19;
-    public static final int NAME_FATHER = 20;
-    public static final int PIN_MOTHER = 21;
-    public static final int NAME_MOTHER = 22;
+    public static final int SUDDEN_DEATH = 0;
+    public static final int DATE_OF_DEATH = 1;
+    public static final int TIME_OF_DEATH = 2;
+    public static final int PLACE_OF_DEATH = 3;
+    public static final int PLACE_OF_DEATH_ENGLISH = 4;
+    public static final int CAUSE_OF_DEATH_ESTABLISHED = 5;
+    public static final int CAUSE_OF_DEATH = 6;
+    public static final int ICD_CODE = 7;
+    public static final int BURIAL_PLACE = 8;
+    public static final int PIN = 9;
+    public static final int COUNTRY = 10;
+    public static final int PASSPORT = 11;
+    public static final int AGE = 12;
+    public static final int GENDER = 13;
+    public static final int RACE = 14;
+    public static final int NAME = 15;
+    public static final int NAME_ENGLISH = 16;
+    public static final int ADDRESS = 17;
+    public static final int PIN_FATHER = 18;
+    public static final int NAME_FATHER = 19;
+    public static final int PIN_MOTHER = 20;
+    public static final int NAME_MOTHER = 21;
 
     static {
         indexMap.put(SUDDEN_DEATH, "field.sudden.death");
@@ -88,7 +89,7 @@ public class DeathAlteration {
          */
         DATA_ENTRY,
         /**
-         * 1 - An ADR or higher partialy approved ba
+         * 1 - An ADR or higher partially approved ba
          */
         PARTIALY_APPROVED,
         /*
@@ -134,7 +135,14 @@ public class DeathAlteration {
      * Contains the approval bit set for each field.
      */
     @Column(nullable = true)
-    private BitSet approvalStatuses;
+    private BitSet approvalStatuses = new BitSet();
+
+    /**
+     * contains requested bit set
+     */
+    @Column(nullable = true)
+    private BitSet requestedAlterations = new BitSet();
+
     //id points to death declaration
     @Column(nullable = false)
     private long deathRegisterIDUkey;
@@ -342,5 +350,13 @@ public class DeathAlteration {
 
     public void setDeathPersonName(String deathPersonName) {
         this.deathPersonName = NameFormatUtil.getDisplayName(deathPersonName, 80);
+    }
+
+    public BitSet getRequestedAlterations() {
+        return requestedAlterations;
+    }
+
+    public void setRequestedAlterations(BitSet requestedAlterations) {
+        this.requestedAlterations = requestedAlterations;
     }
 }
