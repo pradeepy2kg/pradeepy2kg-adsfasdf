@@ -97,6 +97,18 @@ public class PersonDAOImpl extends BaseDAO implements PersonDAO {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public List<Person> findAllSiblings(Person p) {
+        Query q = em.createNamedQuery("findAllSiblings");
+        q.setParameter("person", p);
+        q.setParameter("mother", p.getMother());
+        q.setParameter("father", p.getFather());
+        return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
     @Transactional(propagation = Propagation.SUPPORTS)
     public List<Person> findAll() {
         Query q = em.createNamedQuery("findAllPersons");

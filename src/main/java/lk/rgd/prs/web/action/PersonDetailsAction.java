@@ -45,9 +45,14 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
     public String personDetails() {
         logger.debug("getting extended details of an existing person in PRS");
         setPerson(service.getByUKey(personId, user));
-        setChildren(service.findAllChildren(getPerson(), user));
+        gender= GenderUtil.getGender(person.getGender(), user.getPrefLanguage());
+
+        children = service.findAllChildren(person, user);
         logger.debug("number of children for {} is {}", person.getFullNameInOfficialLanguage(), children.size());
-        gender= GenderUtil.getGender(person.getGender(), person.getPreferredLanguage());
+
+        siblings = service.findAllSiblings(person, user);
+        logger.debug("number of siblings for {} is {}", person.getFullNameInOfficialLanguage(), siblings.size());
+
         return SUCCESS;
     }
 

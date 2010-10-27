@@ -17,10 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * This is the main service interface for the PRS
@@ -250,6 +247,25 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             logger.error("User : " + user.getUserId() + " is not allowed to lookup persons on the PRS for children");
             throw new PRSRuntimeException("User : " + user.getUserId() +
                 " is not allowed to lookup entries on the PRS for children", ErrorCodes.PRS_LOOKUP_BY_KEYS_DENIED);
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Auditable
+    public List<Person> findAllSiblings(Person person, User user) {
+        if (user.isAuthorized(Permission.PRS_LOOKUP_PERSON_BY_KEYS)) {
+            if (person.getFather() == null && person.getMother() == null ) {
+                logger.debug("Parent information not provided for looking up siblings {}", person.getPersonUKey());
+                return Collections.EMPTY_LIST;
+            }
+            return personDao.findAllSiblings(person);
+        } else {
+            logger.error("User : " + user.getUserId() + " is not allowed to lookup persons on the PRS for siblings");
+            throw new PRSRuntimeException("User : " + user.getUserId() +
+                " is not allowed to lookup entries on the PRS for siblings", ErrorCodes.PRS_LOOKUP_BY_KEYS_DENIED);
         }
     }
 
