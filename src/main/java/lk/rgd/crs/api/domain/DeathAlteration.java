@@ -107,6 +107,20 @@ public class DeathAlteration {
 
     }
 
+    /**
+     * Section 52 1 changes for normal deaths
+     * a - The event did not occur although recorded [Requires a cancellation of the existing record]
+     * b - Has been registered more than once [Requires a cancellation of the existing record]
+     * c - Wrong register has been used (e.g. Death register used for a Birth) [Will not occur in the computerized system]
+     * d - Wrong registrar / Registration division used (e.g. Reg. Div 1 under DS Div A selected whereas it should have been Reg. Div 2) [Will require a re-registration as the correction ]
+     * e - Wrong informant - A person who could should not have been identified as the informant has been specified as the informant - [Will require a re-registration as the correction ]
+     * f - A late registration has taken place using the normal form for registration [Will not occur in the computerized system]
+     * g - The entry has not been signed (Approved) by the registrar [Will not occur in the computerized system]
+     * h & i - Corrections / omissions, Alterations etc.
+     * j - Reconstruction of damaged records [Will not occur in the computerized system]
+     *
+     * Section 53 changes for sudden deaths
+     */
     public enum AlterationType {
         TYPE_52_1_A,
         TYPE_52_1_B,
@@ -174,7 +188,7 @@ public class DeathAlteration {
 
     @ManyToOne
     @JoinColumn(name = "deathDivisionUKey", nullable = false)
-    private BDDivision deathRecodDivision;
+    private BDDivision deathRecordDivision;
 
     @Embedded
     private DeathAlterationInfo deathInfo = new DeathAlterationInfo();
@@ -320,12 +334,12 @@ public class DeathAlteration {
         this.deathInfo = deathInfo;
     }
 
-    public BDDivision getDeathRecodDivision() {
-        return deathRecodDivision;
+    public BDDivision getDeathRecordDivision() {
+        return deathRecordDivision;
     }
 
-    public void setDeathRecodDivision(BDDivision deathRecodDivision) {
-        this.deathRecodDivision = deathRecodDivision;
+    public void setDeathRecordDivision(BDDivision deathRecordDivision) {
+        this.deathRecordDivision = deathRecordDivision;
     }
 
     public Location getSubmittedLocation() {

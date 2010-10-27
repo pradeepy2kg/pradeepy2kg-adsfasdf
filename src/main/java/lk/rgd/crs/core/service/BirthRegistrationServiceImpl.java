@@ -1155,9 +1155,7 @@ public class BirthRegistrationServiceImpl implements
 
         BirthDeclaration bdf = birthDeclarationDAO.getActiveRecordByBDDivisionAndSerialNo(bdDivision, serialNo);
         // does the user have access to the BDF (i.e. check district and DS division)
-        //calling validate access iff bdf is not null otherwise it throws null pointer exception
-        if (bdf != null)
-            validateAccessOfUser(user, bdf);
+        validateAccessOfUser(user, bdf);
         return bdf;
     }
 

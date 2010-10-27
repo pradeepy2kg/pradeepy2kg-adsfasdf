@@ -1,5 +1,6 @@
 package lk.rgd.crs.core.service;
 
+import junit.framework.Assert;
 import junit.framework.TestCase;
 import lk.rgd.UnitTestManager;
 import lk.rgd.common.api.dao.CountryDAO;
@@ -43,7 +44,7 @@ public class DeathAlterationServiceTest extends TestCase {
     public DeathAlterationServiceTest() {
 
         deathRegisterDAO = (DeathRegisterDAO) ctx.getBean("deathRegisterDAOImpl", DeathRegisterDAO.class);
-        deathRegSvc = (DeathRegistrationService) ctx.getBean("manageDeathService", DeathRegistrationService.class);
+        deathRegSvc = (DeathRegistrationService) ctx.getBean("deathRegisterService", DeathRegistrationService.class);
         deathAltSvc = (DeathAlterationService) ctx.getBean("deathAlterationService", DeathAlterationService.class);
         eCivil = (PopulationRegistry) ctx.getBean("ecivilService", PopulationRegistry.class);
         bdDivisionDAO = (BDDivisionDAO) ctx.getBean("bdDivisionDAOImpl", BDDivisionDAO.class);
@@ -68,116 +69,108 @@ public class DeathAlterationServiceTest extends TestCase {
 
     public void testAlterations() throws Exception {
         // register death in colombo
-        long bdfIdUKey = registerDeath();
+        long drIdUKey = registerDeath(20102010);
 
         // submit an alteration in Gampaha - added by adr
-        DeathAlteration ba = new DeathAlteration();
-        /*Alteration27 alt27 = new Alteration27();
-        alt27.setChildFullNameEnglish("X NEW NAME OF CHILD");
-        alt27.setChildFullNameOfficialLang("X ළමයාගේ අලුත්  නම");
-        ba.setAlt27(alt27);
-        ba.getDeclarant().setDeclarantFullName("Declarant name");
-        ba.getDeclarant().setDeclarantAddress("Declarant address");
-        ba.getDeclarant().setDeclarantType(DeclarantInfo.DeclarantType.FATHER);
-        ba.setDeathRecordDivision(negamboBDDivision);
-        ba.setDateReceived(new Date());
-        ba.setBdfIDUKey(bdfIdUKey);
-        ba.setType(DeathAlteration.AlterationType.TYPE_27);
-        ba.setStatus(DeathAlteration.State.DATA_ENTRY);
-        deathAltSvc.addDeathAlteration(ba, deoGampahaNegambo);
+        DeathAlteration da = new DeathAlteration();
+        da.getDeathPerson().setDeathPersonNameInEnglish("X NEW NAME OF PERSON DEPARTED");
+        da.getDeathPerson().setDeathPersonNameOfficialLang("X මරණයට පත් මිනිසාගේ අලුත් නම");
+        da.getDeclarant().setDeclarantFullName("Declarant name");
+        da.getDeclarant().setDeclarantAddress("Declarant address");
+        da.getDeclarant().setDeclarantType(DeclarantInfo.DeclarantType.SON_OR_DAUGHTER);
+        da.setDeathRecordDivision(colomboBDDivision);
+        da.setDateReceived(new Date());
+        da.setDeathRegisterIDUkey(drIdUKey);
+        da.setType(DeathAlteration.AlterationType.TYPE_52_1_H);
+        da.setStatus(DeathAlteration.State.DATA_ENTRY);
+        deathAltSvc.addDeathAlteration(da, deoGampahaNegambo);
 
         // adr Gampaha can edit it, as he is in the same submit location
         // reload record
-        ba = deathAltSvc.getByIDUKey(ba.getIdUKey(), adrGampahaNegambo);
-        ba.getAlt27().setChildFullNameEnglish("NEW NAME OF CHILD");
-        deathAltSvc.updateDeathAlteration(ba, adrGampahaNegambo);
+        da = deathAltSvc.getByIDUKey(da.getIdUKey(), adrGampahaNegambo);
+        da.getDeathPerson().setDeathPersonNameInEnglish("NEW NAME OF PERSON DEPARTED");
+        deathAltSvc.updateDeathAlteration(da, adrGampahaNegambo);
 
         // adr Colombo can edit it, as he is assigned access to the BD division where the death is registered
         // reload record
-        ba = deathAltSvc.getByIDUKey(ba.getIdUKey(), adrColomboColombo);
-        ba.getAlt27().setChildFullNameOfficialLang("ළමයාගේ අලුත්  නම");
-        deathAltSvc.updateDeathAlteration(ba, adrColomboColombo);
+        da = deathAltSvc.getByIDUKey(da.getIdUKey(), adrColomboColombo);
+        da.getDeathPerson().setDeathPersonNameOfficialLang(" මරණයට පත් මිනිසාගේ අලුත් නම");
+        deathAltSvc.updateDeathAlteration(da, adrColomboColombo);
 
         Map<Integer, Boolean> fieldsToBeApproved = new HashMap<Integer, Boolean>();
-        fieldsToBeApproved.put(Alteration27.CHILD_FULL_NAME_ENGLISH, true);
-        fieldsToBeApproved.put(Alteration27.CHILD_FULL_NAME_OFFICIAL_LANG, false);
+        fieldsToBeApproved.put(DeathAlteration.NAME, true);
+        fieldsToBeApproved.put(DeathAlteration.NAME_ENGLISH, false);
 
         // arg for north western province cannot edit
         // reload record
-        ba = deathAltSvc.getByIDUKey(ba.getIdUKey(), argNorthWesternProvince);
+        da = deathAltSvc.getByIDUKey(da.getIdUKey(), argNorthWesternProvince);
         try {
-            deathAltSvc.approveDeathAlteration(ba, fieldsToBeApproved, true, argNorthWesternProvince);
+            deathAltSvc.approveDeathAlteration(da, fieldsToBeApproved, true, argNorthWesternProvince);
             fail("The north western province ARG should not be able to approve death alteration for western province");
         } catch (Exception e) {}
 
         // arg for western province can approve
-        deathAltSvc.approveDeathAlteration(ba, fieldsToBeApproved, true, argWesternProvince);
+        deathAltSvc.approveDeathAlteration(da, fieldsToBeApproved, true, argWesternProvince);
+
+        long serialNumber = deathRegisterDAO.getById(da.getDeathRegisterIDUkey()).getDeath().getDeathSerialNo();
 
         // death record must be updated
-        //DeathDeclaration bdf = deathRegSvc.getActiveRecordByBDDivisionAndSerialNo(
-        //    ba.get, ba.getBdfIDUKey(), argWesternProvince);
-*/
+        DeathRegister ddf = deathRegSvc.getActiveRecordByBDDivisionAndSerialNo(
+            da.getDeathRecordDivision(), serialNumber, argWesternProvince);
+
+        Assert.assertNotNull(ddf);
+        Assert.assertEquals("DEAD PERSON ORIGINAL NAME", ddf.getDeathPerson().getDeathPersonNameInEnglish());
+        Assert.assertEquals("මරණයට පත් මිනිසාගේ අලුත් නම", ddf.getDeathPerson().getDeathPersonNameOfficialLang());
+        Assert.assertEquals(DeathRegister.State.ARCHIVED_CERT_GENERATED, ddf.getStatus());
+
+        // old record must be archived
+        // old record must still be available as archived
+
+        List<DeathRegister> altered = deathRegSvc.getArchivedCorrectedEntriesForGivenSerialNo(
+            da.getDeathRecordDivision(), serialNumber, argWesternProvince);
+        Assert.assertEquals(1, altered.size());
+        ddf = altered.get(0);
+        Assert.assertEquals("DEAD PERSON ORIGINAL NAME", ddf.getDeathPerson().getDeathPersonNameInEnglish());
+        Assert.assertEquals("මරණයට පත් පුද්ගලයාගේ නම", ddf.getDeathPerson().getDeathPersonNameOfficialLang());
+        Assert.assertEquals(DeathRegister.State.ARCHIVED_ALTERED, ddf.getStatus());
     }
 
-    public long registerDeath() throws Exception {
-        /*Calendar dob = Calendar.getInstance();
-        // test saving of a minimal BDF for colombo by DEO
-        dob.add(Calendar.DATE, -3);
+    private long registerDeath(long serial) {
 
-        // test colombo deo adding for colombo BD division
-        DeathDeclaration bdf1 = getMinimalBDF(2010011010, dob.getTime(), colomboBDDivision);
-        deathRegSvc.addLiveDeathDeclaration(bdf1, false, deoColomboColombo);
+        final DeathRegister.Type deathType = DeathRegister.Type.NORMAL;
+        Calendar dod = Calendar.getInstance();
+        dod.add(Calendar.DATE, -3);
 
-        // reload again to fill all fields as we still only have IDUkey of new record
-        bdf1 = deathRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
-
-        // colombo ADR approves - ignoring warnings
-        List<UserWarning> warnings = deathRegSvc.approveLiveDeathDeclaration(bdf1.getIdUKey(), true, adrColomboColombo);
-
-        // DEO prints confirmation - mark confirmation as printed
-        deathRegSvc.markLiveDeathConfirmationAsPrinted(bdf1, deoColomboColombo);
-        // reload again and check for updated status as printed
-        bdf1 = deathRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
-        Assert.assertEquals(DeathDeclaration.State.CONFIRMATION_PRINTED, bdf1.getRegister().getStatus());
-
-        // capture confirmation by DEO without changes
-        bdf1.getConfirmant().setConfirmantFullName("Person confirming");
-        deathRegSvc.markLiveDeathDeclarationAsConfirmedWithoutChanges(bdf1, deoColomboColombo);
-
-        // reload again and check for update
-        bdf1 = deathRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
-
-        // DEO prints BC - mark BC as printed
-        deathRegSvc.markLiveDeathCertificateAsPrinted(bdf1, deoColomboColombo);
-        // reload again and check for update
-        bdf1 = deathRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
-        Assert.assertEquals(DeathDeclaration.State.ARCHIVED_CERT_PRINTED, bdf1.getRegister().getStatus());
-
-        return bdf1.getIdUKey();*/
-        return 1;
+        DeathRegister ddf = getMinimalDDF(serial, dod.getTime(), colomboBDDivision);
+        ddf.setDeathType(deathType);
+        deathRegSvc.addNormalDeathRegistration(ddf, deoColomboColombo);
+        deathRegSvc.approveDeathRegistration(ddf.getIdUKey(), adrColomboColombo, true);
+        return ddf.getIdUKey();
     }
 
-    protected DeathRegister getMinimalDR(long serial, Date dob, BDDivision bdDivision) {
+    protected DeathRegister getMinimalDDF(long serial, Date dod, BDDivision deathDivision) {
 
         Date today = new Date();
-        DeathRegister dr = new DeathRegister();
-        /*bdf.getRegister().setBdfSerialNo(serial);
-        bdf.getRegister().setDateOfRegistration(today);
-        bdf.getRegister().setDeathDivision(bdDivision);
-        bdf.getChild().setDateOfDeath(dob);
-        bdf.getChild().setPlaceOfDeath("Place of death for child " + serial);
-        bdf.getChild().setChildGender(0);
-        bdf.getChild().setChildFullNameOfficialLang("සිංහලෙන් ළමයාගේ නම  " + serial);
+        DeathRegister ddf = new DeathRegister();
+        ddf.getDeath().setDeathSerialNo(serial);
+        ddf.getDeath().setDateOfRegistration(today);
+        ddf.getDeath().setDeathDivision(deathDivision);
+        ddf.getDeath().setDateOfDeath(dod);
+        ddf.getDeath().setPlaceOfDeath("Place of death person " + serial);
+        ddf.getDeath().setPlaceOfBurial("Place of burial " + serial);
+        ddf.getDeathPerson().setDeathPersonNameInEnglish("DEAD PERSON ORIGINAL NAME");
+        ddf.getDeathPerson().setDeathPersonNameOfficialLang("මරණයට පත් පුද්ගලයාගේ නම");
 
-        bdf.getInformant().setInformantName("Name of Informant for Child : " + serial);
-        bdf.getInformant().setInformantAddress("Address of Informant for Child : " + serial);
-        bdf.getInformant().setInformantSignDate(today);
-        bdf.getInformant().setInformantType(InformantInfo.InformantType.FATHER);
+        ddf.getDeathPerson().setDeathPersonGender(0);
+        ddf.getDeclarant().setDeclarantType(DeclarantInfo.DeclarantType.RELATIVE);
+        ddf.getDeclarant().setDeclarantAddress("declarant address ");
+        ddf.getDeclarant().setDeclarantEMail("declarant email");
+        ddf.getDeclarant().setDeclarantFullName("declarant full name ");
 
-        bdf.getNotifyingAuthority().setNotifyingAuthorityAddress("The address of the Death registrar");
-        bdf.getNotifyingAuthority().setNotifyingAuthoritySignDate(today);
-        bdf.getNotifyingAuthority().setNotifyingAuthorityName("Name of the Notifying Authority");
-        bdf.getNotifyingAuthority().setNotifyingAuthorityPIN("750010001");*/
-        return dr;
+        ddf.getNotifyingAuthority().setNotifyingAuthorityPIN("750010001");
+        ddf.getNotifyingAuthority().setNotifyingAuthorityName("Name of the Notifying Authority");
+        ddf.getNotifyingAuthority().setNotifyingAuthorityAddress("Address of the Death registrar");
+        ddf.getNotifyingAuthority().setNotifyingAuthoritySignDate(today);
+        return ddf;
     }
 }

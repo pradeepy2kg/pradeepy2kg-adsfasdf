@@ -13,7 +13,7 @@ import java.util.Date;
  *         An instance representing death information submitted for the deathRegistration of a death (page 1 of the form)
  */
 @Embeddable
-public class DeathInfo implements Serializable {
+public class DeathInfo implements Serializable, Cloneable {
 
     @Column(nullable = false)
     private long deathSerialNo;
@@ -208,5 +208,10 @@ public class DeathInfo implements Serializable {
 
     public District getDeathDistrict() {
         return deathDivision.getDistrict();
+    }
+
+    @Override
+    protected DeathInfo clone() throws CloneNotSupportedException {
+        return (DeathInfo) super.clone();
     }
 }

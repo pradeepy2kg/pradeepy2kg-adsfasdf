@@ -1,10 +1,6 @@
 package lk.rgd.crs.core.service;
 
 import junit.framework.TestCase;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-import junit.framework.Assert;
-import junit.extensions.TestSetup;
 import lk.rgd.common.api.service.UserManager;
 import org.springframework.context.ApplicationContext;
 import org.slf4j.Logger;
@@ -18,12 +14,10 @@ import lk.rgd.crs.api.service.DeathRegistrationService;
 import lk.rgd.crs.api.domain.DeathRegister;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.DeclarantInfo;
-import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.CRSRuntimeException;
 
 import java.util.Date;
 import java.util.Calendar;
-import java.util.List;
 
 /**
  * @author Chathuranga Withana
@@ -106,7 +100,7 @@ public class DeathRegistrationServiceTest extends TestCase {
 
         // try adding a late death
         DeathRegister ddf3 = getMinimalDDF(20101010, dob.getTime(), colomboBDDivision);
-        ddf3.setDeathType(DeathRegister.Type.LATE);
+        ddf3.setDeathType(DeathRegister.Type.LATE_NORMAL);
         try {
             deathRegService.addNormalDeathRegistration(ddf3, deoColomboColombo);
             fail("Should not allow addition of illegal death type records");

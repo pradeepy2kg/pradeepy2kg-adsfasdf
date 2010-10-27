@@ -139,7 +139,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                     deathAlteration.setDeclarant(deathRegister.getDeclarant());
                     deathAlteration.setDeathPerson(deathRegister.getDeathPerson());
                     deathAlteration.setStatus(DeathAlteration.State.DATA_ENTRY);
-                    deathAlteration.setDeathRecodDivision(dr.getDeath().getDeathDivision());
+                    deathAlteration.setDeathRecordDivision(dr.getDeath().getDeathDivision());
                     deathAlteration.setDeathPersonPin(dr.getDeathPerson().getDeathPersonPINorNIC());
                     Country deathCountry;
                     if (deathPersonCountry > 0) {

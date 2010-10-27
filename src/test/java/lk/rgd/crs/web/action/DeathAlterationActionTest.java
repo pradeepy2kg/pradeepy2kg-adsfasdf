@@ -122,7 +122,7 @@ public class DeathAlterationActionTest extends CustomStrutsTestCase {
             deathAlteration.setDateReceived(gCal.getTime());
             deathAlteration.setDeathRegisterIDUkey(i);
             deathAlteration.setBcOfFather(true);
-            deathAlteration.setDeathRecodDivision(colomboBDDivision);
+            deathAlteration.setDeathRecordDivision(colomboBDDivision);
             deathAlteration.setSubmittedLocation(location);
 
             //Death alteration info

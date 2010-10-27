@@ -124,6 +124,7 @@ public class BirthAlterationServiceTest extends TestCase {
             ba.getBirthRecordDivision(), regNumber, argWesternProvince);
         Assert.assertEquals("NEW NAME OF CHILD", bdf.getChild().getChildFullNameEnglish());
         Assert.assertEquals("සිංහලෙන් ළමයාගේ නම  " + regNumber, bdf.getChild().getChildFullNameOfficialLang());
+        Assert.assertEquals(BirthDeclaration.State.ARCHIVED_CERT_GENERATED, bdf.getRegister().getStatus());
 
         // old record must still be available as archived
         List<BirthDeclaration> altered = birthRegSvc.getArchivedCorrectedEntriesForGivenSerialNo(

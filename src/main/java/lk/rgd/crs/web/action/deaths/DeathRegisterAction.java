@@ -165,14 +165,14 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                 if (idUKey == 0) {
                     if (DeathRegister.Type.NORMAL == deathType || DeathRegister.Type.SUDDEN == deathType) {
                         service.addNormalDeathRegistration(ddf, user);
-                    } else if (DeathRegister.Type.LATE == deathType || DeathRegister.Type.MISSING == deathType) {
+                    } else if (DeathRegister.Type.LATE_NORMAL == deathType || DeathRegister.Type.MISSING == deathType) {
                         service.addLateDeathRegistration(ddf, user);
                     }
                     idUKey = ddf.getIdUKey();
                     addActionMessage(getText("saveSuccess.label"));
                 } else {
                     if (DeathRegister.Type.NORMAL == deathType || DeathRegister.Type.SUDDEN == deathType
-                        || DeathRegister.Type.LATE == deathType || DeathRegister.Type.MISSING == deathType) {
+                        || DeathRegister.Type.LATE_NORMAL == deathType || DeathRegister.Type.MISSING == deathType) {
                         service.updateDeathRegistration(ddf, user);
                         addActionMessage(getText("editDataSaveSuccess.label"));
                     }

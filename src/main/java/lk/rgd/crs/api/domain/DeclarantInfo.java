@@ -13,7 +13,7 @@ import java.io.Serializable;
  */
 
 @Embeddable
-public class DeclarantInfo implements Serializable {
+public class DeclarantInfo implements Serializable, Cloneable {
 
     /**
      * 0 - father, 1 - mother, 2 - brotherOrSister,
@@ -94,5 +94,10 @@ public class DeclarantInfo implements Serializable {
 
     public void setDeclarantType(DeclarantType declarantType) {
         this.declarantType = declarantType;
+    }
+
+    @Override
+    protected DeclarantInfo clone() throws CloneNotSupportedException {
+        return (DeclarantInfo) super.clone();
     }
 }

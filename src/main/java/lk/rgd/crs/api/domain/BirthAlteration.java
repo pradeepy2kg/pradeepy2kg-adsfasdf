@@ -29,6 +29,24 @@ import java.util.BitSet;
 
 public class BirthAlteration {
 
+    /**
+     * Section 27
+     * Name change
+     *
+     * Section 27 A
+     * Alteration of details
+     *
+     * Section 52 - 1
+     * a - The event did not occur although recorded [Requires a cancellation of the existing record]
+     * b - Has been registered more than once [Requires a cancellation of the existing record]
+     * c - Wrong register has been used (e.g. Death register used for a Birth) [Will not occur in the computerized system]
+     * d - Wrong registrar / Registration division used (e.g. Reg. Div 1 under DS Div A selected whereas it should have been Reg. Div 2) [Will require a re-registration as the correction ]
+     * e - Wrong informant - A person who could should not have been identified as the informant has been specified as the informant - [Will require a re-registration as the correction ]
+     * f - A late registration has taken place using the normal form for registration [Will not occur in the computerized system]
+     * g - The entry has not been signed (Approved) by the registrar [Will not occur in the computerized system]
+     * h & i - Corrections / omissions, Alterations etc.
+     * j - Reconstruction of damaged records [Will not occur in the computerized system]
+     */
     public enum AlterationType {
         TYPE_27,
         TYPE_27A,
