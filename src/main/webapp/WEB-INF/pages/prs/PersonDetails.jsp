@@ -94,7 +94,7 @@
             <br>Life status
         </td>
         <td>
-           <s:label value="%{person.lifeStatus}"/>
+           <s:label value="%{lifeStatus}"/>
         </td>
         <td>
             මරණ දිනය
@@ -112,7 +112,7 @@
             <br>Race
         </td>
         <td>
-            <s:label value="%{person.race.enRaceName}"/>
+            <s:label value="%{race}"/>
         </td>
         <td>
             ස්ත්‍රී පුරුෂ භාවය
@@ -128,7 +128,7 @@
             <br>Civil Status
         </td>
         <td>
-            <s:label value="%{person.civilStatus}"/>
+            <s:label value="%{civilStatus}"/>
         </td>
     </tr>
     <tr>

@@ -15,8 +15,8 @@ public class MarriedStatusUtil {
     /**
      * Return married status string in selected language
      *
-     * @param state     the married status enumeration
-     * @param language  selected language
+     * @param state    the married status enumeration
+     * @param language selected language
      * @return the married status string for selected language and enumeration
      * @see lk.rgd.crs.api.domain.MarriageInfo.MarriedStatus
      */
@@ -24,24 +24,66 @@ public class MarriedStatusUtil {
 
         if (AppConstants.SINHALA.equals(language)) {
             switch (state) {
-                case UNKNOWN: return "නොදනී";
-                case MARRIED: return "විවාහකයි";
-                case UNMARRIED: return "අවිවාහකයි";
-                case NO_SINCE_MARRIED: return "නැත, නමුත් පසුව විවාහවී ඇත";
+                case UNKNOWN:
+                    return "නොදනී";
+                case MARRIED:
+                    return "විවාහකයි";
+                case UNMARRIED:
+                    return "අවිවාහකයි";
+                case NO_SINCE_MARRIED:
+                    return "නැත, නමුත් පසුව විවාහවී ඇත";
+//                case NEVER_MARRIED:
+//                    return "Never married";
+//                case ANNULLED:
+//                    return "Annulled";
+//                case SEPARATED:
+//                    return "Separated";
+//                case DIVORCED:
+//                    return "Devoced";
+//                case WIDOWED:
+//                    return "Widowed";
             }
         } else if (AppConstants.TAMIL.equals(language)) {
             switch (state) {
-                case UNKNOWN: return "Unknown in Tamil";
-                case MARRIED: return "Married in Tamil";
-                case UNMARRIED: return "Unmarried in Tamil";
-                case NO_SINCE_MARRIED: return "No, but since married Tamil";
+                case UNKNOWN:
+                    return "Unknown in Tamil";
+                case MARRIED:
+                    return "Married in Tamil";
+                case UNMARRIED:
+                    return "Unmarried in Tamil";
+                case NO_SINCE_MARRIED:
+                    return "இல்லை, பின் விவாகமாணவா்கள்";
+//                case NEVER_MARRIED:
+//                    return "Never married";
+//                case ANNULLED:
+//                    return "Annulled";
+//                case SEPARATED:
+//                    return "Separated";
+//                case DIVORCED:
+//                    return "Devoced";
+//                case WIDOWED:
+//                    return "Widowed";
             }
         } else if (AppConstants.ENGLISH.equals(language)) {
             switch (state) {
-                case UNKNOWN: return "Unknown";
-                case MARRIED: return "Married";
-                case UNMARRIED: return "Unmarried";
-                case NO_SINCE_MARRIED: return "No, but since married";
+                case UNKNOWN:
+                    return "Unknown";
+                case MARRIED:
+                    return "Married";
+                case UNMARRIED:
+                    return "Unmarried";
+                case NO_SINCE_MARRIED:
+                    return "No, but since married";
+//                case NEVER_MARRIED:
+//                    return "Never married";
+//                case ANNULLED:
+//                    return "Annulled";
+//                case SEPARATED:
+//                    return "Separated";
+//                case DIVORCED:
+//                    return "Devoced";
+//                case WIDOWED:
+//                    return "Widowed";
             }
         } else {
             logger.error("Invalid language : {}", language);

@@ -97,6 +97,11 @@
             <result type="tiles" name="success">epr.personDetails</result>
         </action>
 
+        <action name="eprPRSCertificate" class="lk.rgd.prs.web.action.PersonDetailsAction"
+                method="personDetails">
+            <result type="tiles" name="success">epr.PRSCertificate</result>
+        </action>
+
 
     </package>
 

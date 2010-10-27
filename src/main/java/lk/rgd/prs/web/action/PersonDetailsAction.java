@@ -10,7 +10,9 @@ import lk.rgd.common.api.dao.RaceDAO;
 import lk.rgd.common.api.dao.CountryDAO;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.GenderUtil;
+import lk.rgd.common.util.MarriedStatusUtil;
 import lk.rgd.crs.web.WebConstants;
+import lk.rgd.crs.api.domain.MarriageInfo;
 import lk.rgd.AppConstants;
 
 import java.util.Map;
@@ -30,6 +32,13 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
     private User user;
 
     private String gender;
+    private String genderEn;
+    private String lifeStatus;
+    private String race;
+    private String raceEn;
+    private String civilStatus;
+    private MarriageInfo marriage;
+
 
     private Person person;
     private long personId;
@@ -45,8 +54,19 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
     public String personDetails() {
         logger.debug("getting extended details of an existing person in PRS");
         setPerson(service.getByUKey(personId, user));
-        gender= GenderUtil.getGender(person.getGender(), user.getPrefLanguage());
-
+        gender = GenderUtil.getGender(person.getGender(), user.getPrefLanguage());
+        genderEn = GenderUtil.getGender(person.getGender(), AppConstants.ENGLISH);
+        if (person.getRace() != null) {
+            race = raceDAO.getNameByPK(person.getRace().getRaceId(), user.getPrefLanguage());
+            raceEn = raceDAO.getNameByPK(person.getRace().getRaceId(), AppConstants.ENGLISH);
+        }
+//        if(person.getCivilStatus()!=null){
+//            civilStatus=person.getCivilStatus().toString();
+//        }
+//        if(person.getLifeStatus()!=null){
+//            lifeStatus=person.getLifeStatus().toString();
+//            lifeStatus = MarriedStatusUtil.getMarriedStatus(marriage.getParentsMarried(), AppConstants.ENGLISH);        
+//        }
         children = service.findAllChildren(person, user);
         logger.debug("number of children for {} is {}", person.getFullNameInOfficialLanguage(), children.size());
 
@@ -55,6 +75,7 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
 
         return SUCCESS;
     }
+
 
     /**
      * This method is used to load existing person registration form
@@ -114,4 +135,51 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
         this.gender = gender;
     }
 
+    public String getLifeStatus() {
+        return lifeStatus;
+    }
+
+    public void setLifeStatus(String lifeStatus) {
+        this.lifeStatus = lifeStatus;
+    }
+
+    public String getRace() {
+        return race;
+    }
+
+    public void setRace(String race) {
+        this.race = race;
+    }
+
+    public String getCivilStatus() {
+        return civilStatus;
+    }
+
+    public void setCivilStatus(String civilStatus) {
+        this.civilStatus = civilStatus;
+    }
+
+    public MarriageInfo getMarriage() {
+        return marriage;
+    }
+
+    public void setMarriage(MarriageInfo marriage) {
+        this.marriage = marriage;
+    }
+
+    public String getGenderEn() {
+        return genderEn;
+    }
+
+    public void setGenderEn(String genderEn) {
+        this.genderEn = genderEn;
+    }
+
+    public String getRaceEn() {
+        return raceEn;
+    }
+
+    public void setRaceEn(String raceEn) {
+        this.raceEn = raceEn;
+    }
 }

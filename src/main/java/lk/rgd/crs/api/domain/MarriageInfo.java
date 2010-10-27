@@ -13,10 +13,15 @@ public class MarriageInfo implements Serializable, Cloneable {
      * The Enumeration defining the type of married status.
      */
     public enum MarriedStatus {
-        UNKNOWN,            /** 0 - married status unknown */
-        MARRIED,            /** 1 - married */
-        UNMARRIED,          /** 2 - unmarried */
-        NO_SINCE_MARRIED    /** 3 - no but married later - e.g. for births -after child birth */
+        UNKNOWN,                /** 0 - married status unknown */
+        MARRIED,                 /** 1 - married */
+        UNMARRIED,              /** 2 - unmarried */
+        NO_SINCE_MARRIED  ,    /** 3 - no but married later - e.g. for births -after child birth */
+//        NEVER_MARRIED,         /** 4 - Never known to be married */
+//        ANNULLED,               /** 5 - Currently married */
+//        SEPARATED,              /** 6 - Living separately from spouse. Cannot re-marry - TODO is this necessary? */
+//        DIVORCED ,              /** 7 - Legally divorced from the spouse. Can re-marry */
+//        WIDOWED ,               /** 8 - Spouse has died */
     }
 
     /**

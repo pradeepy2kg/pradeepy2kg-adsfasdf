@@ -41,7 +41,7 @@
 * Styles for the Birth Registration Form applys according to the 4 pages in 4 seperate sections.
 */
 
-.birth-registration-form-outer, #birth-confirmation-form-outer, .birth-confirmation-print-form-outer, .still-birth-registration-form-outer, #bdaw-outer, .birth-certificate-search-form-outer, .prs-existing-person-register-outer , .prs-person-report-outer, .alteration-print-letter-outer {
+.birth-registration-form-outer, #birth-confirmation-form-outer, .birth-confirmation-print-form-outer, .still-birth-registration-form-outer, #bdaw-outer, .birth-certificate-search-form-outer, .prs-existing-person-register-outer , .prs-person-report-outer, .alteration-print-letter-outer ,.prs-certificate-outer{
     width: 1030px;
     background: #ffffff;
     padding: 10px;

@@ -442,4 +442,9 @@
         <put-attribute name="title" value="person_register_details.title"/>
     </definition>
 
+    <definition name="epr.PRSCertificate" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/prs/PRSCertificate.jsp"/>
+        <put-attribute name="title" value="prs_certificate.title"/>
+    </definition>
+
 </tiles-definitions>
