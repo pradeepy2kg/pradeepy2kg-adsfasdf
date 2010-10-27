@@ -82,6 +82,14 @@ public interface PersonDAO {
     public List<Person> findAllChildren(Person p);
 
     /**
+     * Return a list of Person objects as siblings for the given person
+     *
+     * @param p the Person whose siblings are to be found
+     * @return the matching list of person (siblings)
+     */
+    public List<Person> findAllSiblings(Person p);
+
+    /**
      * Return all records - for indexing only
      *
      * @return all records

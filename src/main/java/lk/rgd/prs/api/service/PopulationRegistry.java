@@ -108,6 +108,15 @@ public interface PopulationRegistry {
     public List<Person> findAllChildren(Person person, User user);
 
     /**
+     * Return the list of siblings as a list of Person objects for the given Person
+     *
+     * @param person the Person
+     * @param user the user performing this action
+     * @return the matching persons
+     */
+    public List<Person> findAllSiblings(Person person, User user);
+
+    /**
      * Return the Person object for the given PIN or National ID card number. If the NIC number matches multiple
      * Persons, the first match is returned for simplicity.
      *

@@ -20,7 +20,8 @@ import java.util.Set;
     @NamedQuery(name = "findAllPersons", query = "SELECT p FROM Person p"),
     @NamedQuery(name = "filter.by.pin", query = "SELECT p FROM Person p WHERE p.pin = :pin"),
     @NamedQuery(name = "filter.by.nic", query = "SELECT p FROM Person p WHERE p.nic = :nic"),
-    @NamedQuery(name = "findAllChildren", query = "SELECT p FROM Person p WHERE p.mother = :person OR p.father = :person")
+    @NamedQuery(name = "findAllChildren", query = "SELECT p FROM Person p WHERE p.mother = :person OR p.father = :person"),
+    @NamedQuery(name = "findAllSiblings", query = "SELECT p FROM Person p WHERE (p.mother = :mother OR p.father = :father) AND (p <> :person)")
 })
 public class Person implements Serializable {
 
