@@ -3,7 +3,6 @@ package lk.rgd.crs.core.service;
 import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
 import lk.rgd.common.api.domain.DSDivision;
-import lk.rgd.common.api.domain.Role;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
@@ -11,6 +10,7 @@ import lk.rgd.crs.api.dao.DeathRegisterDAO;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.DeathRegister;
 import lk.rgd.crs.api.service.DeathRegistrationService;
+import lk.rgd.crs.core.ValidationUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
@@ -21,7 +21,7 @@ import java.util.List;
 
 /**
  * @author Indunil Moremada
- * @authar amith jayasekara
+ * @author amith jayasekara
  */
 public class DeathRegistrationServiceImpl implements DeathRegistrationService {
 
@@ -39,7 +39,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     public void addLateDeathRegistration(DeathRegister deathRegistration, User user) {
         logger.debug("adding late/missing death registration");
         DeathDeclarationValidator.validateMinimalRequirments(deathRegistration);
-        if (deathRegistration.getDeathType() != DeathRegister.Type.LATE && deathRegistration.getDeathType() != DeathRegister.Type.MISSING) {
+        if (deathRegistration.getDeathType() != DeathRegister.Type.LATE_NORMAL && deathRegistration.getDeathType() != DeathRegister.Type.MISSING) {
             handleException("Invalid death type : " + deathRegistration.getDeathType(), ErrorCodes.ILLEGAL_STATE);
         }
         addDeathRegistration(deathRegistration, user);
@@ -61,7 +61,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     }
 
     private void addDeathRegistration(DeathRegister deathRegistration, User user) {
-        validateAccessToBDDivision(user, deathRegistration.getDeath().getDeathDivision());
+        validateAccessOfUser(user, deathRegistration);
         //validate minimul requirments
         DeathDeclarationValidator.validateMinimalRequirments(deathRegistration);
         // has this serial number been used already?
@@ -98,7 +98,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         DeathRegister deathRegister;
         try {
             deathRegister = deathRegisterDAO.getById(deathRegisterIdUKey);
-            validateAccessToBDDivision(user, deathRegister.getDeath().getDeathDivision());
+            validateAccessOfUser(user, deathRegister);
             return deathRegister;
         } catch (NullPointerException e) {
             logger.debug("no results found for death id : {}", deathRegisterIdUKey);
@@ -159,7 +159,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     public void markDeathCertificateAsPrinted(long deathRegisterIdUKey, User user) {
         logger.debug("requested to mark death certificate as printed for the record : {} ", deathRegisterIdUKey);
         DeathRegister dr = deathRegisterDAO.getById(deathRegisterIdUKey);
-        validateAccessToBDDivision(user, dr.getDeath().getDeathDivision());
+        validateAccessOfUser(user, dr);
         if (DeathRegister.State.APPROVED != dr.getStatus()) {
             handleException("Cannot change status , " + dr.getIdUKey() +
                     " Illegal state : " + dr.getStatus(), ErrorCodes.ILLEGAL_STATE);
@@ -176,7 +176,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         }
         DeathRegister dr = deathRegisterDAO.getById(idUKey);
         if (DeathRegister.State.DATA_ENTRY == dr.getStatus()) {
-            validateAccessToBDDivision(user, dr.getDeath().getDeathDivision());
+            validateAccessOfUser(user, dr);
             dr.setStatus(state);
             dr.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
             dr.getLifeCycleInfo().setApprovalOrRejectUser(user);
@@ -201,7 +201,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     public void deleteDeathRegistration(long deathRegiserIdUKey, User user) {
         logger.debug("attempt to delete death registration record : {}", deathRegiserIdUKey);
         DeathRegister dr = deathRegisterDAO.getById(deathRegiserIdUKey);
-        validateAccessToBDDivision(user, dr.getDeath().getDeathDivision());
+        validateAccessOfUser(user, dr);
         if (DeathRegister.State.DATA_ENTRY != dr.getStatus()) {
             handleException("Cannot delete death registraion " + deathRegiserIdUKey +
                     " Illegal state : " + dr.getStatus(), ErrorCodes.ILLEGAL_STATE);
@@ -218,7 +218,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
             logger.debug("Get death registrations with the state : " + status
                     + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
-        validateAccessToBDDivision(user, deathDivision);
+        ValidationUtils.validateAccessToBDDivision(user, deathDivision);
         return deathRegisterDAO.getPaginatedListForState(deathDivision, pageNo, noOfRows, status);
     }
 
@@ -228,7 +228,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<DeathRegister> getByBDDivisionAndRegistrationDateRange(BDDivision deathDivision,
                                                                        Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
-        validateAccessToBDDivision(user, deathDivision);
+        ValidationUtils.validateAccessToBDDivision(user, deathDivision);
         return deathRegisterDAO.getByBDDivisionAndRegistrationDateRange(deathDivision, startDate, endDate, pageNo, noOfRows);
     }
 
@@ -238,7 +238,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<DeathRegister> getPaginatedListForAll(BDDivision deathDivision, int pageNo, int noOfRows, User user) {
         logger.debug("Get all death registrations   Page : {}  with number of rows per page : {} ", pageNo, noOfRows);
-        validateAccessToBDDivision(user, deathDivision);
+        ValidationUtils.validateAccessToBDDivision(user, deathDivision);
         return deathRegisterDAO.getPaginatedListForAll(deathDivision, pageNo, noOfRows);
     }
 
@@ -248,8 +248,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     @Transactional(propagation = Propagation.SUPPORTS)
     public DeathRegister getByBDDivisionAndDeathSerialNo(BDDivision bdDivision, long deathSerialNo, User user) {
         DeathRegister dr = deathRegisterDAO.getActiveRecordByBDDivisionAndDeathSerialNo(bdDivision, deathSerialNo);
-        if (dr != null)
-            validateAccessToBDDivision(user, dr.getDeath().getDeathDivision());
+        validateAccessOfUser(user, dr);
         return dr;
     }
 
@@ -259,44 +258,10 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     }
 
     private void businessValidations(DeathRegister deathRegister, User user) {
-        validateAccessToBDDivision(user, deathRegister.getDeath().getDeathDivision());
+        validateAccessOfUser(user, deathRegister);
         if (deathRegister.getStatus() != DeathRegister.State.DATA_ENTRY) {
             handleException("can not update death registration " + deathRegister.getIdUKey() +
                     " Illegal State : " + deathRegister.getStatus(), ErrorCodes.ILLEGAL_STATE);
-        }
-
-    }
-
-    private void validateAccessToBDDivision(User user, BDDivision bdDivision) {
-        final String role = user.getRole().getRoleId();
-        if (!(User.State.ACTIVE == user.getStatus()
-                &&
-                (Role.ROLE_RG.equals(role)
-                        ||
-                        (user.isAllowedAccessToBDDistrict(bdDivision.getDistrict().getDistrictUKey())
-                                &&
-                                user.isAllowedAccessToBDDSDivision(bdDivision.getDsDivision().getDsDivisionUKey())
-                        )
-                )
-        )) {
-
-            handleException("User : " + user.getUserId() + " is not allowed access to the District : " +
-                    bdDivision.getDistrict().getDistrictId() + " and/or DS Division : " +
-                    bdDivision.getDsDivision().getDivisionId(), ErrorCodes.PERMISSION_DENIED);
-        }
-    }
-
-    private void validateAccessToDSDivision(User user, DSDivision dsDivision) {
-        final String role = user.getRole().getRoleId();
-        if (!(User.State.ACTIVE == user.getStatus()
-                &&
-                (Role.ROLE_RG.equals(role)
-                        || user.isAllowedAccessToBDDistrict(dsDivision.getDistrict().getDistrictUKey())
-                )
-        )) {
-
-            handleException("User : " + user.getUserId() + " is not allowed access to the District : " +
-                    dsDivision.getDistrict().getDistrictId(), ErrorCodes.PERMISSION_DENIED);
         }
 
     }
@@ -310,7 +275,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
             logger.debug("Get death registrations with the state : " + status
                     + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
-        validateAccessToDSDivision(user, dsDivision);
+        ValidationUtils.validateAccessToDSDivison(dsDivision, user);
         return deathRegisterDAO.getPaginatedListForStateByDSDivision(dsDivision, pageNo, noOfRows, status);
     }
 
@@ -320,7 +285,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<DeathRegister> getPaginatedListForAllByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, User user) {
         logger.debug("Get all death registrations   Page : {}  with number of rows per page : {} ", pageNo, noOfRows);
-        validateAccessToDSDivision(user, dsDivision);
+        ValidationUtils.validateAccessToDSDivison(dsDivision, user);
         return deathRegisterDAO.getPaginatedListForAllByDSDivision(dsDivision, pageNo, noOfRows);
     }
 
@@ -333,10 +298,42 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         DeathRegister deathRegister = null;
         if (deathRegisterList.size() > 0) {
             deathRegister = deathRegisterList.get(0);
-            validateAccessToBDDivision(user, deathRegister.getDeath().getDeathDivision());
+            validateAccessOfUser(user, deathRegister);
             return deathRegisterList;
         } else {
             return null;
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public DeathRegister getActiveRecordByBDDivisionAndSerialNo(BDDivision bdDivision, long serialNo, User user) {
+
+        logger.debug("Get active record by BDDivision ID : {} and Serial No : {}", bdDivision.getBdDivisionUKey(), serialNo);
+
+        DeathRegister ddf = deathRegisterDAO.getActiveRecordByBDDivisionAndDeathSerialNo(bdDivision, serialNo);
+        // does the user have access to the DR (i.e. check district and DS division)
+        validateAccessOfUser(user, ddf);
+        return ddf;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<DeathRegister> getArchivedCorrectedEntriesForGivenSerialNo(BDDivision bdDivision, long serialNo, User user) {
+        logger.debug("Searching for historical records for BD Division : {} and Serial number : {} ",
+                bdDivision.getBdDivisionUKey(), serialNo);
+        ValidationUtils.validateAccessToBDDivision(user, bdDivision);
+        return deathRegisterDAO.getHistoricalRecordsForBDDivisionAndSerialNo(bdDivision, serialNo);
+    }
+
+    private void validateAccessOfUser(User user, DeathRegister dr) {
+        if (dr != null) {
+            BDDivision bdDivision = dr.getDeath().getDeathDivision();
+            ValidationUtils.validateAccessToBDDivision(user, bdDivision);
         }
     }
 }

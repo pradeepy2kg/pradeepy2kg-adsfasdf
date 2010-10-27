@@ -84,6 +84,15 @@ public interface DeathRegisterDAO {
     public DeathRegister getActiveRecordByBDDivisionAndDeathSerialNo(BDDivision bdDivision, long deathSerialNo);
 
     /**
+     * Returns historical records for the given BD Division and Serial number
+     *
+     * @param deathDivision the birth death division
+     * @param serialNo      the Death register serial number
+     * @return the related historical records - if any
+     */
+    public List<DeathRegister> getHistoricalRecordsForBDDivisionAndSerialNo(BDDivision deathDivision, long serialNo);
+
+    /**
      * Returns a limited set of DeathRegister for selected BD Division and selected range of registration dates.
      * Results are ordered on the descending registration date. pageNo  and noOfRows used for pagination
      *

@@ -105,8 +105,17 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
         } catch (NoResultException e) {
             return null;
         }
-        // NonUniqueResultException should not occur since only one record for a serial number + BD division will be
-        // marked as active at any given point in time
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<DeathRegister> getHistoricalRecordsForBDDivisionAndSerialNo(BDDivision deathDivision, long serialNo) {
+        Query q = em.createNamedQuery("get.historical.death.records.by.bddivision.and.serialNo");
+        q.setParameter("deathDivision", deathDivision);
+        q.setParameter("serialNo", serialNo);
+        return q.getResultList();
     }
 
     /**

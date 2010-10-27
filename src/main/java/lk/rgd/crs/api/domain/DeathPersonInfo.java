@@ -16,7 +16,7 @@ import java.io.Serializable;
  */
 
 @Embeddable
-public class DeathPersonInfo implements Serializable {
+public class DeathPersonInfo implements Serializable, Cloneable {
 
     @Column(nullable = true)
     private String deathPersonPINorNIC;
@@ -181,5 +181,10 @@ public class DeathPersonInfo implements Serializable {
                 deathPersonNameOfficialLang.length());
         }
         return deathPersonNameOfficialLang;
+    }
+
+    @Override
+    protected DeathPersonInfo clone() throws CloneNotSupportedException {
+        return (DeathPersonInfo) super.clone();
     }
 }

@@ -35,9 +35,14 @@ import java.io.Serializable;
         @NamedQuery(name = "get.all.deaths.by.deathPersonPIN", query = "SELECT deathRegister FROM DeathRegister deathRegister WHERE " +
                 "deathRegister.deathPerson.deathPersonPINorNIC = :pinOrNIC"),
 
+        @NamedQuery(name = "get.historical.death.records.by.bddivision.and.serialNo", query = "SELECT dr FROM DeathRegister dr " +
+                "WHERE (dr.death.deathDivision = :deathDivision AND dr.death.deathSerialNo = :serialNo) " +
+                "AND dr.lifeCycleInfo.activeRecord IS FALSE " +
+                "ORDER BY dr.lifeCycleInfo.lastUpdatedTimestamp desc"),
+
         @NamedQuery(name = "findAllDeaths", query = "SELECT ddf FROM DeathRegister ddf")
 })
-public class DeathRegister implements Serializable {
+public class DeathRegister implements Serializable, Cloneable {
 
     public enum State {
         DATA_ENTRY, // 0 - A newly entered death registration - can be edited by DEO, ADR
@@ -58,9 +63,11 @@ public class DeathRegister implements Serializable {
 
         SUDDEN,  // 1 - A sudden death
 
-        LATE,   // 2 - A late death registration
+        LATE_NORMAL,   // 2 - A late death registration for a normal death
 
-        MISSING   // 3 - A death of a missing person
+        LATE_SUDDEN,   // 3 - A late death registration for a sudden death
+
+        MISSING   // 4 - A death of a missing person
     }
 
     /**
@@ -96,21 +103,16 @@ public class DeathRegister implements Serializable {
     @Column(nullable = true, length = 100, name = "COMMENT")
     private String comment;
 
-    /**
-     * BE CAREFUL USING THIS METHOD. It returns a cheap shallow clone of a BDF for alteration purposes
-     * BE SURE you know how you are using the returned object
-     *
-     * @return a shallow clone of the existing record
-     */
-    public DeathRegister shallowCopy() {
-        DeathRegister dr = new DeathRegister();
-        dr.setLifeCycleInfo(lifeCycleInfo);
-        dr.setDeath(death);
-        dr.setDeathPerson(deathPerson);
-        dr.setNotifyingAuthority(notifyingAuthority);
-        dr.setDeclarant(declarant);
-        dr.setDeathType(deathType);
-        dr.setCommnet(comment);
+    public DeathRegister clone() throws CloneNotSupportedException {
+        DeathRegister dr = (DeathRegister) super.clone();
+        dr.setIdUKey(0);
+        dr.setLifeCycleInfo(lifeCycleInfo.clone());
+        dr.setDeath(death.clone());
+        if (deathPerson != null) {
+            dr.setDeathPerson(deathPerson.clone());
+        }
+        dr.setNotifyingAuthority(notifyingAuthority.clone());
+        dr.setDeclarant(declarant.clone());
         return dr;
     }
 
@@ -153,9 +155,6 @@ public class DeathRegister implements Serializable {
     }
 
     public DeathPersonInfo getDeathPerson() {
-        if (deathPerson == null) {
-            deathPerson = new DeathPersonInfo();
-        }
         return deathPerson;
     }
 
@@ -172,9 +171,6 @@ public class DeathRegister implements Serializable {
     }
 
     public DeathInfo getDeath() {
-        if (death == null) {
-            death = new DeathInfo();
-        }
         return death;
     }
 

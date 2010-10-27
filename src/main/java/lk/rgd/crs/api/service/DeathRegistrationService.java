@@ -188,4 +188,23 @@ public interface DeathRegistrationService {
      * @return give list of death register objects based on death persosns pin or NIC number
      */
     public List<DeathRegister> getByPinOrNic(long pinOrNic, User user);
+
+    /**
+     * Returns the active Death Declaration record for a given serialNo under a selected BD Division
+     *
+     * @param bdDivision the Birth Death declaration division
+     * @param serialNo   serial number to check
+     * @param user       the user making the request
+     * @return the active record with the given serial number within the BD division
+     */
+    public DeathRegister getActiveRecordByBDDivisionAndSerialNo(BDDivision bdDivision, long serialNo, User user);
+
+    /**
+     * Returns historical records for the given BD Division and Serial number
+     *
+     * @param bdDivision the birth death division
+     * @param serialNo   the Death register serial number
+     * @return the related historical records - if any
+     */
+    public List<DeathRegister> getArchivedCorrectedEntriesForGivenSerialNo(BDDivision bdDivision, long serialNo, User user);
 }

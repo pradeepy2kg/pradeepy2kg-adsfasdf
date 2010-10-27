@@ -312,7 +312,7 @@ public interface BirthRegistrationService {
      * @param bdDivision the Birth Death declaration division
      * @param serialNo   serial number to check
      * @param user       the user making the request
-     * @return true if the serial number is unique and not used at present
+     * @return the active record with the given serial number within the BD division
      */
     public BirthDeclaration getActiveRecordByBDDivisionAndSerialNo(BDDivision bdDivision, long serialNo, User user);
 
