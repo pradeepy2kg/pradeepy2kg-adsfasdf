@@ -223,7 +223,7 @@
                     <th width="100px"><s:label value="%{getText('delete.label')}"/></th>
                     <th width="100px"><s:label value="%{getText('reject.label')}"/></th>
                     <th width="100px"><s:label value="%{getText('approve.label')}"/></th>
-                    <th width="100px"><s:label value="%{getText('apply.label')}"/></th>
+                    <th width="100px"><s:label value="%{getText('print.label')}"/></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -242,6 +242,10 @@
                         <s:url id="approveSelected" action="eprApproveDeathAlterationsDirect">
                             <s:param name="deathAlterationId" value="idUKey"/>
                         </s:url>
+                        <s:url id="printSelected" action="eprDeathAlterationPrintLetter">
+                            <s:param name="deathAlterationId" value="idUKey"/>
+                        </s:url>
+
                         <tr>
                             <td><s:property value="idUKey"/></td>
                             <td><s:property value="deathPersonName"/></td>
@@ -285,9 +289,9 @@
                                 </s:if>
                             </td>
                             <td align="center">
-                                <s:if test="status.ordinal()>1 & (#session.user_bean.role.roleId.equals('ARG') | #session.user_bean.role.roleId.equals('RG'))">
-                                    <s:a href="%{applySelected}" title="%{getText('applyChangesTooltip.label')}">
-                                        <img src="<s:url value='/images/update.gif'/>" width="25" height="25"
+                                <s:if test="status.ordinal()== 2">
+                                    <s:a href="%{printSelected}" title="%{getText('printConfirmation.label')}">
+                                        <img src="<s:url value='/images/print_icon.gif'/>" width="25" height="25"
                                              border="none"/></s:a>
                                 </s:if>
                             </td>

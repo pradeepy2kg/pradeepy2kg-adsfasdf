@@ -84,6 +84,12 @@ public class DeathAlterationActionTest extends CustomStrutsTestCase {
 
             protected void tearDown() throws Exception {
                 logger.info("tear down called ");
+                /*User sampleUser = loginSampleUser();
+                for (int i = 10; i < 20; i++) {
+                    DeathRegister dr = deathRegistrationService.getByBDDivisionAndDeathSerialNo(ambathalenPahala, 2010012345 + i, sampleUser);
+                    deathRegistrationService.deleteDeathRegistration(dr.getIdUKey(), sampleUser);
+                    logger.debug("death recode : serial number {} : deleted", 2010012345 + i);
+                }*/
                 super.tearDown();
             }
         };

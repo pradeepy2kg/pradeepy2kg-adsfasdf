@@ -463,8 +463,8 @@ function initPage() {
                     </td>
                     <td>
                         <s:select
-                                list="#@java.util.HashMap@{'ACT_52_1_a':'52(1) a','ACT_52_1_b':'52(1) b','ACT_52_1_d':'52(1) d','ACT_52_1_e':'52(1) e','ACT_52_1_i':'52(1) h','ACT_52_1_h':'52(1) i','ACT_53':'53'}"
-                                name="deathAlteration.act"
+                                list="#@java.util.HashMap@{'TYPE_52_1_A':'52(1) A ','TYPE_52_1_B':'52(1) B','TYPE_52_1_D':'52(1) D','TYPE_52_1_E':'52(1) E','TYPE_52_1_I':'52(1) I','TYPE_52_1_H':'52(1) H','TYPE_53':'53'}"
+                                name="deathAlteration.type"
                                 cssStyle="width:190px; margin-left:5px;" onchange="setAct(value)"/>
                     </td>
 

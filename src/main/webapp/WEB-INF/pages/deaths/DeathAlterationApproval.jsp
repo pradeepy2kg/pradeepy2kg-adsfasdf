@@ -25,19 +25,7 @@
         }
         return true;
     }
-    $(document).ready(function() {
 
-        $('#pendingApprovalTable').dataTable({
-            "bPaginate": true,
-            "bLengthChange": false,
-            "bFilter": true,
-            "bSort": true,
-            "bInfo": false,
-            "bAutoWidth": false,
-            "bJQueryUI": true,
-            "sPaginationType": "full_numbers"
-        });
-    });
 </script>
 <div id="birth-register-approval-body">
     <s:if test="!(pendingList.size()==0)">

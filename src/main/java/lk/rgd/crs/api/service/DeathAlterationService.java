@@ -49,20 +49,20 @@ public interface DeathAlterationService {
     public void rejectDeathAlteration(long idUKey, User user, String comment);
 
     /**
-     * retrive a DeathAlteration object for a given idUKey
+     * retrieve a DeathAlteration object for a given idUKey
      *
      * @param idUKey Unique key for death alteration.
-     * @param user   User who has permission to retrive a death alteration.
-     * @return retrive a unique death alteration object for given unique key.
+     * @param user   User who has permission to retrieve a death alteration.
+     * @return retrieve a unique death alteration object for given unique key.
      */
     public DeathAlteration getByIDUKey(long idUKey, User user);
 
     /**
-     * get death alteration object list by death id(forign key for death alteration)
+     * get death alteration object list by death id(foreign key for death alteration)
      *
-     * @param deathId
-     * @param user
-     * @return
+     * @param deathId death register idUKey
+     * @param user    ser who has permission to retrieve a death alteration.
+     * @return list of death alterations
      */
     public List<DeathAlteration> getAlterationByDeathId(long deathId, User user);
 
@@ -98,7 +98,7 @@ public interface DeathAlterationService {
      * get death alteration by death persons pin number
      *
      * @param pin  death person pin number
-     * @param user user who has permission to performe task
+     * @param user user who has permission to retrieve a death alteration.
      * @return list of death alteration object most probably only one result give if no pin duplications
      */
     public List<DeathAlteration> getAlterationByDeathPersonPin(String pin, User user);
@@ -115,13 +115,4 @@ public interface DeathAlterationService {
     public void approveDeathAlteration(DeathAlteration da, Map<Integer, Boolean> fieldsToBeApproved,
                                        boolean applyChangesToDC, User user);
 
-    /**
-     * approve death alteration and set bit set base on state partially or fully
-     *
-     * @param deathAlterationUKey
-     * @param fieldsToBeApproved
-     * @param appStatus
-     * @param user
-     */
-    public void approveDeathAlteration(long deathAlterationUKey, Hashtable<Integer, Boolean> fieldsToBeApproved, boolean appStatus, User user);
-}
+    }
