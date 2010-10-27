@@ -8,7 +8,6 @@
     <s:url action="eprDeathAlterationSearchHome.do" id="addnew"></s:url>
     <s:actionmessage/>
     <div class="form-submit">
-
         <s:submit name="addNew" value="%{getText('lable.add.new')}" action="%{addNew}"/>
     </div>
 

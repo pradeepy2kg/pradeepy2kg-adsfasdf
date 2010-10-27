@@ -1,4 +1,5 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <style type="text/css" title="currentStyle">
     @import "../lib/datatables/media/css/demo_page.css";
     @import "../lib/datatables/media/css/demo_table.css";
@@ -13,30 +14,24 @@
 
     function warning() {
         var alterChanges = document.getElementById('applyChanges').checked;
-        var ret = false;
+       var ret=true;
         if (alterChanges) {
             ret = confirm(document.getElementById('confirmation').value)
         }
-        if (ret) {
-            return true;
-        }
-        else {
-            return false;
-        }
-        return true;
+        return ret;
     }
 
 </script>
 <div id="birth-register-approval-body">
     <s:if test="!(pendingList.size()==0)">
         <s:form action="eprDeathAlterationSetBits" method="post" onsubmit="javascript:return warning()">
-            <table id="pendingApprovalTable" border="1" width="100%">
-                <thead>
-                <th><s:label value="%{getText('th.index')}"/></th>
-                <th><s:label value="%{getText('th.exsists')}"/></th>
-                <th><s:label value="%{getText('th.alteration')}"/></th>
-                <th><s:label value="%{getText('th.approve')}"/></th>
-                </thead>
+            <table id="pendingApprovalTable" border="1" width="100%" class="table_reg_page_05" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td><s:label value="%{getText('th.index')}"/></td>
+                    <td><s:label value="%{getText('th.exsists')}"/></td>
+                    <td><s:label value="%{getText('th.alteration')}"/></td>
+                    <td><s:label value="%{getText('th.approve')}"/></td>
+                </tr>
                 <tbody>
                 <s:iterator value="pendingList">
                     <tr>
@@ -44,7 +39,7 @@
                         <td><s:property value="%{value.get(0)}"/></td>
                         <td><s:property value="%{value.get(1)}"/></td>
                         <td align="center">
-                            <s:checkbox value="%{#approvedIndex}" name="approvedIndex" fieldValue="%{key.get(0)}"/>
+                            <s:checkbox value="%{value.get(2)!=null}"  name="approvedIndex" fieldValue="%{key.get(0)}"/>
                         </td>
                     </tr>
                 </s:iterator>
@@ -56,7 +51,7 @@
                 <col>
                 <tbody>
                 <tr>
-                    <td width="800px" align="right"><s:label value="%{getText('label.apply.changes')}"/></td>
+                    <td width="1000px" align="right"><s:label value="%{getText('label.apply.changes')}"/></td>
                     <td align="right"><s:checkbox id="applyChanges" name="applyChanges"/></td>
                 </tr>
                 </tbody>

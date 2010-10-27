@@ -247,6 +247,7 @@
                         </s:url>
 
                         <tr>
+
                             <td><s:property value="idUKey"/></td>
                             <td><s:property value="deathPersonName"/></td>
                             <td align="center">
@@ -274,7 +275,7 @@
                                 </s:if>
                             </td>
                             <td align="center">
-                                <s:set name="deathDivision" value="deathRecodDivision"/>
+                                <s:set name="deathDivision" value="deathRecordDivision"/>
                                 <s:if test="status.ordinal()<2 & (#session.user_bean.role.roleId.equals('ARG') | #session.user_bean.role.roleId.equals('RG'))">
                                     <%
                                         BDDivision deathDivision = (BDDivision) pageContext.getAttribute("deathDivision");
