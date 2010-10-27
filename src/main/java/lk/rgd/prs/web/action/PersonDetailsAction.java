@@ -17,7 +17,6 @@ import lk.rgd.AppConstants;
 
 import java.util.Map;
 import java.util.List;
-import java.util.ArrayList;
 
 public class PersonDetailsAction extends ActionSupport implements SessionAware {
 
@@ -53,7 +52,7 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
 
     public String personDetails() {
         logger.debug("getting extended details of an existing person in PRS");
-        setPerson(service.getByUKey(personId, user));
+        person = service.getByUKey(personId, user);
         gender = GenderUtil.getGender(person.getGender(), user.getPrefLanguage());
         genderEn = GenderUtil.getGender(person.getGender(), AppConstants.ENGLISH);
         if (person.getRace() != null) {
@@ -65,7 +64,7 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
 //        }
 //        if(person.getLifeStatus()!=null){
 //            lifeStatus=person.getLifeStatus().toString();
-//            lifeStatus = MarriedStatusUtil.getMarriedStatus(marriage.getParentsMarried(), AppConstants.ENGLISH);        
+//            lifeStatus = MarriedStatusUtil.getMarriedStatus(marriage.getParentsMarried(), AppConstants.ENGLISH);
 //        }
         children = service.findAllChildren(person, user);
         logger.debug("number of children for {} is {}", person.getFullNameInOfficialLanguage(), children.size());
@@ -75,7 +74,6 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
 
         return SUCCESS;
     }
-
 
     /**
      * This method is used to load existing person registration form

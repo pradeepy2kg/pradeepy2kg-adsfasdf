@@ -351,7 +351,14 @@
         </td>
         <td><s:label value="%{person.father.pin}"/></td>
         <td><s:label value="%{person.father.dateOfBirth}"/></td>
-        <td><s:label value="%{person.father.fullNameInOfficialLanguage}"/></td>
+        <td>
+            <s:url id="personDetails" action="eprPersonDetails">
+                <s:param name="personId" value="%{person.father.personUKey}"/>
+            </s:url>
+            <s:a href="%{personDetails}">
+                <s:label value="%{person.father.fullNameInOfficialLanguage}"/>
+            </s:a>
+        </td>
     </tr>
     <tr>
         <td>
@@ -361,65 +368,81 @@
         </td>
         <td><s:label value="%{person.mother.pin}"/></td>
         <td><s:label value="%{person.mother.dateOfBirth}"/></td>
-        <td><s:label value="%{person.mother.fullNameInOfficialLanguage}"/></td>
+        <td>
+            <s:url id="personDetails" action="eprPersonDetails">
+                <s:param name="personId" value="%{person.mother.personUKey}"/>
+            </s:url>
+            <s:a href="%{personDetails}">
+                <s:label value="%{person.mother.fullNameInOfficialLanguage}"/>
+            </s:a>
+        </td>
     </tr>
 
-    <s:iterator value="siblings" status="stat">
+    <s:iterator value="siblings" var="sibling">
      <tr>
         <td>
-            <s:if test="%{[#stat.index].gender == 0}">
+            <s:if test="%{#sibling.gender == 0}">
                 සහෝදරයා
                 <br>தாயின்
                 <br>Brother
             </s:if>
-            <s:if test="%{[#stat.index].gender == 1}">
+            <s:elseif test="%{#sibling.gender == 1}">
                 සහෝදරිය
                 <br>தாயின்
                 <br>Sister
-            </s:if>
-            <s:if test="%{[#stat.index].gender == 2}">
-                දියණිය
-                <br>தாயின்
-                <br>Unknown
-            </s:if>
+            </s:elseif>
+            <s:else>
+                සහෝදරයා/සහෝදරිය
+                <br>தாயின்/தாயின்
+                <br>Brother/Sister
+            </s:else>
         </td>
         <td><s:property value="pin"/></td>
         <td><s:property value="dateOfBirth"/></td>
-        <td><s:property value="fullNameInOfficialLanguage"/></td>
+        <td>
+            <s:url id="personDetails" action="eprPersonDetails">
+                <s:param name="personId">
+                    <s:property value="personUKey"/>
+                </s:param>
+            </s:url>
+            <s:a href="%{personDetails}">
+                <s:property value="fullNameInOfficialLanguage"/>
+            </s:a>
+        </td>
     </tr>
     </s:iterator>
-    <%--<tr>--%>
-        <%--<td>--%>
-        <%--</td>--%>
-        <%--ඥාති සහෝදරිය--%>
-        <%--<br>தாயின்--%>
-        <%--<br>Half Sister--%>
-        <%--<td></td>--%>
-        <%--<td></td>--%>
-        <%--<td></td>--%>
-    <%--</tr>--%>
-    <s:iterator value="children" status="id">
+
+    <s:iterator value="children" var="child">
      <tr>
         <td>
-            <s:if test="%{[#id.index].gender == 0}">
-                පුත්‍රයා
-                <br>தாயின்
-                <br>Son
-            </s:if>
-            <s:if test="%{[#id.index].gender == 1}">
+            <s:if test="%{#child.gender == 1}">
                 දියණිය
                 <br>தாயின்
                 <br>Daughter
             </s:if>
-            <s:if test="%{[#id.index].gender == 2}">
-                දියණිය
+            <s:elseif test="%{#child.gender == 0}">
+                පුත්‍රයා
                 <br>தாயின்
-                <br>Unknown
-            </s:if>
+                <br>Son
+            </s:elseif>
+            <s:else>
+                පුත්‍රයා/දියණිය
+                <br>தாயின்/தாயின்
+                <br>Son/Daughter
+            </s:else>
         </td>
         <td><s:property value="pin"/></td>
         <td><s:property value="dateOfBirth"/></td>
-        <td><s:property value="fullNameInOfficialLanguage"/></td>
+        <td>
+            <s:url id="personDetails" action="eprPersonDetails">
+                <s:param name="personId">
+                    <s:property value="personUKey"/>
+                </s:param>
+            </s:url>
+            <s:a href="%{personDetails}">
+                <s:property value="fullNameInOfficialLanguage"/>
+            </s:a>
+        </td>
     </tr>
     </s:iterator>
     </tbody>
