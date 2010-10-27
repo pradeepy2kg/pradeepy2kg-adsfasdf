@@ -65,8 +65,7 @@
         return returnval;
     }
 </script>
-<div id="death-alteration-outer">
-<s:form method="post" action="eprCaptureDeathAlteration.do" onsubmit="javascript:return validate()">
+
 <script type="text/javascript">
 var act;
 var informPerson;
@@ -423,6 +422,8 @@ function initPage() {
     }
 }
 </script>
+<div id="death-alteration-outer">
+<s:form method="post" action="eprCaptureDeathAlteration.do" onsubmit="javascript:return validate()">
 <table class="death-alteration-table-style01" style="width:1030px;" cellpadding="2px">
     <tr>
         <td width="30%"></td>
@@ -797,7 +798,7 @@ function initPage() {
         </td>
         <td style="width:20%;text-align:right;border-right:none">
                 <%--            <div id="death-person-info-check-lable">
-               <s:label value="%{getText('edit.lable')}"/></div>--%> 010014566
+               <s:label value="%{getText('edit.lable')}"/></div>--%> 
         </td>
         <td style="border-right:none;width:3%">
 

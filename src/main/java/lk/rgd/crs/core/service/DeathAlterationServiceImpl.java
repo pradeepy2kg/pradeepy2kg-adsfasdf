@@ -42,8 +42,6 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
     public void addDeathAlteration(DeathAlteration da, User user) {
         logger.debug("Adding new death alteration record on request of : {}", da.getDeclarant().getDeclarantFullName());
         da.setSubmittedLocation(user.getPrimaryLocation());
-        // TODO Amith Fix this test first - the class violates many things !!!
-        // TODO DeathAlterationValidator.validateMinimumConditions(da);
         // any user (DEO, ADR of any DS office or BD division etc) can add a birth alteration request
         deathAlterationDAO.addDeathAlteration(da, user);
     }
@@ -198,6 +196,11 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
 
         } else {
             existing.setStatus(DeathAlteration.State.PARTIALY_APPROVED);
+            BitSet partiallyApprovedBitSet = new BitSet();
+            for (Map.Entry e : fieldsToBeApproved.entrySet()) {
+                partiallyApprovedBitSet.set((Integer) e.getKey(), (Boolean) e.getValue());
+            }
+            existing.setApprovalStatuses(partiallyApprovedBitSet);
         }
 
         existing.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
@@ -235,7 +238,9 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
 
     private void loadValuesToDeathAlterationObject(DeathAlteration da) {
         DeathRegister dr = deathRegisterDAO.getById(da.getDeathRegisterIDUkey());
-        da.setDeathPersonName(dr.getDeathPerson().getDeathPersonNameOfficialLang());
+        if (dr.getDeathPerson().getDeathPersonNameOfficialLang() != null) {
+            da.setDeathPersonName(dr.getDeathPerson().getDeathPersonNameOfficialLang());
+        }
     }
 
     private void applyChanges(DeathAlteration da, DeathRegister dr, User user) {

@@ -71,8 +71,4 @@ public class DateTimeUtils {
     public static DateFormat getUtcDfm() {
         return utcDfm;
     }
-
-    public static DateFormat getISO8601Format() {
-        return ISO8601Format;
-    }
 }

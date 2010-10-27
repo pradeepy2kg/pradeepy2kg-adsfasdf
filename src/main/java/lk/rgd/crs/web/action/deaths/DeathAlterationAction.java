@@ -2,6 +2,7 @@ package lk.rgd.crs.web.action.deaths;
 
 import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.AppConstants;
+import lk.rgd.common.util.DateTimeUtils;
 import lk.rgd.common.util.GenderUtil;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
@@ -53,7 +54,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     private Map<Integer, String> raceList;
     private Map<Integer, String> countryList;
     private Map<Integer, String> userLocations;
-    private Map<List, List<String>> pendingList = new HashMap<List, List<String>>();
+    private Map<List, List> pendingList = new HashMap<List, List>();
     private Map<String, List<String>> printingList = new HashMap<String, List<String>>();
 
     private List<DeathAlteration> approvalList;
@@ -222,7 +223,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             while (itr.hasNext()) {
                 DeathAlteration da = itr.next();
                 if (!da.getStatus().equals(DeathAlteration.State.FULLY_APPROVED)) {
-                    logger.error("there is a onging alteration so cannot add a new");
+                    logger.error("there is a ongoing alteration so cannot add a new");
                     addActionError("error.existing.alterations.data.entry");
                     populatePrimaryLists(districtUKey, dsDivisionId, language, user);
                     return ERROR;
@@ -268,7 +269,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     public String deathAlterationApproval() {
         pageNo = 1;
         rowNo = appParametersDAO.getIntParameter(DA_APPROVAL_ROWS_PER_PAGE);
-        logger.debug("attemp to get death alteration pending list");
+        logger.debug("attempt to get death alteration pending list");
         if (pageNumber > 0) {
             //search by pin
             if (pin != null && Integer.parseInt(pin) > 0) {
@@ -331,19 +332,18 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             populatePrimaryLists(districtUKey, dsDivisionId, language, user);
             return ERROR;
         }
-        //todo check sudden death
+        //todo check sudden death   gender is print with 0 and 1 convert them 
         /**
          * getting existing death recode and compare it with death alteration
          */
         deathRegister = deathRegistrationService.getById(deathAlteration.getDeathRegisterIDUkey(), user);
 
-        DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
         String dateEx = null;
         String dateAlt = null;
         if (deathRegister.getDeath().getDateOfDeath() != null)
-            dateEx = df.format(deathRegister.getDeath().getDateOfDeath());
+            dateEx = DateTimeUtils.getISO8601FormattedString(deathRegister.getDeath().getDateOfDeath());
         if (deathAlteration.getDeathInfo().getDateOfDeath() != null)
-            dateAlt = df.format(deathAlteration.getDeathInfo().getDateOfDeath());
+            dateAlt = DateTimeUtils.getISO8601FormattedString(deathAlteration.getDeathInfo().getDateOfDeath());
 
         Object[] array = DeathAlteration.indexMap.entrySet().toArray();
 
@@ -444,36 +444,45 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         }
 
 
-        /**
+        /**    private Map<List, List> pendingList = new HashMap<List, List>();
          *trimming death alteration pending list for partially approvals
          */
         if (deathAlteration.getStatus().equals(DeathAlteration.State.PARTIALY_APPROVED)) {
-            List currentList = new ArrayList();
+            Map<List, List> currentList = new HashMap<List, List>();
             BitSet current = deathAlteration.getApprovalStatuses();
             for (Map.Entry e : pendingList.entrySet()) {
+                List add = new LinkedList();
                 List keyEntry = (List) e.getKey();
                 int key = (Integer) keyEntry.get(0);
                 boolean available = current.get(key);
                 if (available) {
-                    currentList.add(keyEntry);
+                    add = (List) e.getValue();
+                    add.add(2, true);
+                    currentList.put(keyEntry, add);
                 }
             }
-            for (int i = 0; i < currentList.size(); i++) {
-                pendingList.remove(currentList.get(i));
+            for (Map.Entry e : currentList.entrySet()) {
+                pendingList.put((List) e.getKey(), (List) e.getValue());
             }
+
+            /*        for (int i = 0; i < currentList.size(); i++) {
+                pendingList.put(currentList.get(i));
+            }*/
         }
         populatePrimaryLists(districtUKey, dsDivisionId, language, user);
         return SUCCESS;
     }
 
     public String setBitset() {
-        logger.info("setting bit set : {}", approvedIndex.length);
+        logger.info("setting bit set : {}", approvedIndex);
         try {
             Hashtable<Integer, Boolean> approveBitset = new Hashtable<Integer, Boolean>();
             deathAlteration = deathAlterationService.getByIDUKey(deathAlterationId, user);
-            for (int i = 0; i < approvedIndex.length; i++) {
-                int bit = approvedIndex[i];
-                approveBitset.put(bit, true);
+            if (approvedIndex != null) {
+                for (int i = 0; i < approvedIndex.length; i++) {
+                    int bit = approvedIndex[i];
+                    approveBitset.put(bit, true);
+                }
             }
             deathAlterationService.approveDeathAlteration(deathAlteration, approveBitset, applyChanges, user);
             populatePrimaryLists(districtUKey, dsDivisionId, language, user);
@@ -559,6 +568,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         }*/
         if (requested.get(DeathAlteration.DATE_OF_DEATH)) {
             values = new LinkedList();
+            //todo use utill class for det data format
             DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
             String dateEx = null;
             String dateAlt = null;
@@ -672,9 +682,9 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
 
         if (requested.get(DeathAlteration.GENDER)) {
             values = new LinkedList();
-            values.add(0, GenderUtil.getGender(deathRegister.getDeathPerson().getDeathPersonAge(),
+            values.add(0, GenderUtil.getGender(deathRegister.getDeathPerson().getDeathPersonGender(),
                     deathRegister.getDeath().getPreferredLanguage()));
-            values.add(1, GenderUtil.getGender(deathAlteration.getDeathPerson().getDeathPersonAge(),
+            values.add(1, GenderUtil.getGender(deathAlteration.getDeathPerson().getDeathPersonGender(),
                     deathRegister.getDeath().getPreferredLanguage()));
             values.add(2, approvedBitset.get(DeathAlteration.GENDER));
             printingList.put(DeathAlteration.indexMap.get(DeathAlteration.GENDER), values);
@@ -1205,11 +1215,11 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         this.deathAlterationId = deathAlterationId;
     }
 
-    public Map<List, List<String>> getPendingList() {
+    public Map<List, List> getPendingList() {
         return pendingList;
     }
 
-    public void setPendingList(Map<List, List<String>> pendingList) {
+    public void setPendingList(Map<List, List> pendingList) {
         this.pendingList = pendingList;
     }
 

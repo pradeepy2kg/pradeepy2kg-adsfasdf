@@ -28,16 +28,16 @@ public class DeathAlterationValidator {
 
 
     public static void validateMinimumConditions(DeathAlteration deathAlteration) {
-        boolean pass = checkObject(deathAlteration);
-        if (!pass) {
-            handleException("incomplete death alteration ", ErrorCodes.INCOMPLETE_ALTERATION);
-        }
+        
     }
+/*
 
-    /**
+    */
+/**
      * placeOfDeath ,dateOfDeath ,placeOfBurial are cannot be null .so if Death Alteration object change them to null
      * it may be affect if arg approves those changes so it is better to validate them before add alteration.
-     */
+     *//*
+
 
     private static boolean checkObject(DeathAlteration deathAlteration) {
         DateFormat df = DateTimeUtils.getISO8601Format();
@@ -50,6 +50,7 @@ public class DeathAlterationValidator {
         if ((deathAlteration.getDeathInfo().getPlaceOfBurial()) != null) return true;
         return false;
     }
+*/
 
     private static void handleException(String msg, int errorCode) {
         logger.error(msg);
