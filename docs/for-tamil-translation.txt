@@ -24,3 +24,9 @@
 * Birth and Death Certificate Search Pages(solr) not translated
 
 * (Registration of a person in the Population Registry) ජනගහන ලේඛනයේ පුද්ගලයකු ලියාපදිංචි කිරීම
+*Male
+*Female
+*Unknown
+
+*Married
+*Unmarried
