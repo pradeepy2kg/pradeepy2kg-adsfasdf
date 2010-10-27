@@ -32,37 +32,17 @@ public class MarriedStatusUtil {
                     return "අවිවාහකයි";
                 case NO_SINCE_MARRIED:
                     return "නැත, නමුත් පසුව විවාහවී ඇත";
-//                case NEVER_MARRIED:
-//                    return "Never married";
-//                case ANNULLED:
-//                    return "Annulled";
-//                case SEPARATED:
-//                    return "Separated";
-//                case DIVORCED:
-//                    return "Devoced";
-//                case WIDOWED:
-//                    return "Widowed";
             }
         } else if (AppConstants.TAMIL.equals(language)) {
             switch (state) {
                 case UNKNOWN:
                     return "Unknown in Tamil";
                 case MARRIED:
-                    return "Married in Tamil";
+                    return "திருமணமாணவர்";
                 case UNMARRIED:
-                    return "Unmarried in Tamil";
+                    return "திருமணமாகாதவர்";
                 case NO_SINCE_MARRIED:
                     return "இல்லை, பின் விவாகமாணவா்கள்";
-//                case NEVER_MARRIED:
-//                    return "Never married";
-//                case ANNULLED:
-//                    return "Annulled";
-//                case SEPARATED:
-//                    return "Separated";
-//                case DIVORCED:
-//                    return "Devoced";
-//                case WIDOWED:
-//                    return "Widowed";
             }
         } else if (AppConstants.ENGLISH.equals(language)) {
             switch (state) {
@@ -74,16 +54,6 @@ public class MarriedStatusUtil {
                     return "Unmarried";
                 case NO_SINCE_MARRIED:
                     return "No, but since married";
-//                case NEVER_MARRIED:
-//                    return "Never married";
-//                case ANNULLED:
-//                    return "Annulled";
-//                case SEPARATED:
-//                    return "Separated";
-//                case DIVORCED:
-//                    return "Devoced";
-//                case WIDOWED:
-//                    return "Widowed";
             }
         } else {
             logger.error("Invalid language : {}", language);

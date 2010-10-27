@@ -11,12 +11,15 @@ import lk.rgd.common.api.dao.CountryDAO;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.GenderUtil;
 import lk.rgd.common.util.MarriedStatusUtil;
+import lk.rgd.common.util.CivilStatusUtil;
+import lk.rgd.common.util.LifeStatusUtil;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.api.domain.MarriageInfo;
 import lk.rgd.AppConstants;
 
 import java.util.Map;
 import java.util.List;
+import java.util.ArrayList;
 
 public class PersonDetailsAction extends ActionSupport implements SessionAware {
 
@@ -54,24 +57,34 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
         logger.debug("getting extended details of an existing person in PRS");
         person = service.getByUKey(personId, user);
         gender = GenderUtil.getGender(person.getGender(), user.getPrefLanguage());
-        genderEn = GenderUtil.getGender(person.getGender(), AppConstants.ENGLISH);
         if (person.getRace() != null) {
             race = raceDAO.getNameByPK(person.getRace().getRaceId(), user.getPrefLanguage());
-            raceEn = raceDAO.getNameByPK(person.getRace().getRaceId(), AppConstants.ENGLISH);
         }
-//        if(person.getCivilStatus()!=null){
-//            civilStatus=person.getCivilStatus().toString();
-//        }
-//        if(person.getLifeStatus()!=null){
-//            lifeStatus=person.getLifeStatus().toString();
-//            lifeStatus = MarriedStatusUtil.getMarriedStatus(marriage.getParentsMarried(), AppConstants.ENGLISH);
-//        }
+        if (person.getCivilStatus() != null) {
+            civilStatus = CivilStatusUtil.getCivilStatus(person.getCivilStatus(), user.getPrefLanguage());
+        }
+        if (person.getLifeStatus() != null) {
+            lifeStatus = LifeStatusUtil.getLifeStatus(person.getLifeStatus(), user.getPrefLanguage());
+        }
         children = service.findAllChildren(person, user);
         logger.debug("number of children for {} is {}", person.getFullNameInOfficialLanguage(), children.size());
 
         siblings = service.findAllSiblings(person, user);
         logger.debug("number of siblings for {} is {}", person.getFullNameInOfficialLanguage(), siblings.size());
+        return SUCCESS;
+    }
 
+    /**
+     * This method is used to load PRS certificate
+     */
+    public String initPRSCertificate() {
+        setPerson(service.getByUKey(personId, user));
+        gender = GenderUtil.getGender(person.getGender(), person.getPreferredLanguage());
+        genderEn = GenderUtil.getGender(person.getGender(), AppConstants.ENGLISH);
+        if (person.getRace() != null) {
+            race = raceDAO.getNameByPK(person.getRace().getRaceId(), person.getPreferredLanguage());
+            raceEn = raceDAO.getNameByPK(person.getRace().getRaceId(), AppConstants.ENGLISH);
+        }
         return SUCCESS;
     }
 

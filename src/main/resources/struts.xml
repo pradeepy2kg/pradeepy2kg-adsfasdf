@@ -98,7 +98,7 @@
         </action>
 
         <action name="eprPRSCertificate" class="lk.rgd.prs.web.action.PersonDetailsAction"
-                method="personDetails">
+                method="initPRSCertificate">
             <result type="tiles" name="success">epr.PRSCertificate</result>
         </action>
 
