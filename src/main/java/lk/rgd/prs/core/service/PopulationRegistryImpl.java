@@ -5,11 +5,14 @@ import lk.rgd.Permission;
 import lk.rgd.common.api.Auditable;
 import lk.rgd.common.core.index.SolrIndexManager;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.util.IdentificationNumberUtil;
 import lk.rgd.prs.PRSRuntimeException;
+import lk.rgd.prs.api.dao.PersonCitizenshipDAO;
 import lk.rgd.prs.api.dao.PersonDAO;
 import lk.rgd.prs.api.domain.Address;
 import lk.rgd.prs.api.domain.Marriage;
 import lk.rgd.prs.api.domain.Person;
+import lk.rgd.prs.api.domain.PersonCitizenship;
 import lk.rgd.prs.api.service.PINGenerator;
 import lk.rgd.prs.api.service.PopulationRegistry;
 import org.slf4j.Logger;
@@ -33,12 +36,15 @@ public class PopulationRegistryImpl implements PopulationRegistry {
     private final PersonDAO personDao;
     private final PINGenerator pinGenerator;
     private final SolrIndexManager solrIndexManager;
+    private final PersonCitizenshipDAO citizenshipDAO;
     private final Random rand = new Random(System.currentTimeMillis());
 
-    public PopulationRegistryImpl(PersonDAO personDao, PINGenerator pinGenerator, SolrIndexManager solrIndexManager) {
+    public PopulationRegistryImpl(PersonDAO personDao, PINGenerator pinGenerator, SolrIndexManager solrIndexManager,
+        PersonCitizenshipDAO citizenshipDAO) {
         this.personDao = personDao;
         this.pinGenerator = pinGenerator;
         this.solrIndexManager = solrIndexManager;
+        this.citizenshipDAO = citizenshipDAO;
     }
 
     /**
@@ -81,17 +87,30 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public long addExistingPerson(Person person, String permanentAddress, String currentAddress, User user) {
+    public long addExistingPerson(Person person, String permanentAddress, String currentAddress, User user,
+        List<PersonCitizenship> citizenshipList) {
         long pin = -1;
 
-        // TODO validate inputs
-        if (user.isAuthorized(Permission.PRS_ADD_PERSON)) {
+        // TODO validate inputs. NIC, permanent and current address, DOB
+
+        if (user.isAuthorized(Permission.PRS_LOOKUP_PERSON_BY_KEYS) && user.isAuthorized(Permission.PRS_ADD_PERSON)) {
+            final List<Person> exactRecord = new ArrayList<Person>();
+            // TODO find generic solution
+            if (person.getTemporaryPin() != null) {
+                exactRecord.add(personDao.findPersonByTemporaryPIN(person.getTemporaryPin()));
+            } else if (person.getNic() != null) {
+                // TODO currently adding first element of the Person list
+                exactRecord.add(personDao.findPersonsByNIC(person.getNic()).iterator().next());
+            }
+
+
+//        if (user.isAuthorized(Permission.PRS_ADD_PERSON)) {
             person.setStatus(Person.Status.VERIFIED);
             person.setLifeStatus(Person.LifeStatus.ALIVE);
-            // generate a PIN for existing person 
+            // generate a PIN for existing person
             pin = pinGenerator.generatePINNumber(person.getDateOfBirth(), person.getGender() == 0);
             person.setPin(pin);
-            
+
             personDao.addPerson(person);
             // add permanent address of the person to the PRS
             if (permanentAddress != null) {
@@ -108,7 +127,19 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             if (permanentAddress != null || currentAddress != null) {
                 personDao.updatePerson(person);
             }
-        } else {
+            // add citizenship list of the person to the PRS
+            if (citizenshipList != null) {
+                for (PersonCitizenship pc : citizenshipList) {
+                    pc.setPerson(person);
+                    citizenshipDAO.addCitizenship(pc, user);
+                }
+            }
+        } else if (!user.isAuthorized(Permission.PRS_LOOKUP_PERSON_BY_KEYS)) {
+            logger.error("User : " + user.getUserId() +
+                " is not allowed to lookup persons on the PRS by keys (nic/temporaryPIN)");
+            throw new PRSRuntimeException("User : " + user.getUserId() +
+                " is not allowed to lookup entries on the PRS by keys (nic)", ErrorCodes.PRS_LOOKUP_BY_KEYS_DENIED);
+        } else if (!user.isAuthorized(Permission.PRS_ADD_PERSON)) {
             logger.error("User : " + user.getUserId() + " is not allowed to add persons to the PRS");
             throw new PRSRuntimeException("User : " + user.getUserId() +
                 " is not allowed to add entries to the PRS", ErrorCodes.PRS_ADD_RECORD_DENIED);
@@ -257,7 +288,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
     @Auditable
     public List<Person> findAllSiblings(Person person, User user) {
         if (user.isAuthorized(Permission.PRS_LOOKUP_PERSON_BY_KEYS)) {
-            if (person.getFather() == null && person.getMother() == null ) {
+            if (person.getFather() == null && person.getMother() == null) {
                 logger.debug("Parent information not provided for looking up siblings {}", person.getPersonUKey());
                 return Collections.EMPTY_LIST;
             }

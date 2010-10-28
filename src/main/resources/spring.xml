@@ -91,6 +91,7 @@
     <bean id="locationDAOImpl" class="lk.rgd.common.core.dao.LocationDAOImpl"/>
     <bean id="userLocationDAOImpl" class="lk.rgd.common.core.dao.UserLocationDAOImpl"/>
     <bean id="deathAlterationDAOImpl" class="lk.rgd.crs.core.dao.DeathAlterationDAOImpl"/>
+    <bean id="personCitizenshipDAOImpl" class="lk.rgd.prs.core.dao.PersonCitizenshipDAOImpl"/>
 
     <!--Utility singletons-->
     <bean id="birthDeclarationValidator" class="lk.rgd.crs.core.service.BirthDeclarationValidator">
@@ -133,7 +134,7 @@
         <constructor-arg ref="userManagerService"/>
         <constructor-arg ref="birthRecordsIndexer"/>
         <constructor-arg ref="adoptionOrderDAOImpl"/>
-        <constructor-arg ref="userDAOImpl"/>
+        <constructor-arg ref="personCitizenshipDAOImpl"/>
         <constructor-arg ref="birthDeclarationValidator"/>
     </bean>
 
@@ -185,6 +186,7 @@
         <constructor-arg ref="personDAOImpl"/>
         <constructor-arg ref="pinGeneratorService"/>
         <constructor-arg ref="solrIndexManager"/>
+        <constructor-arg ref="personCitizenshipDAOImpl"/>
     </bean>
 
     <bean id="pinGeneratorService" class="lk.rgd.prs.core.service.PINGeneratorImpl">

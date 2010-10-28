@@ -3,19 +3,19 @@ package lk.rgd.prs.web.action;
 import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.common.api.dao.CountryDAO;
 import lk.rgd.common.api.dao.RaceDAO;
+import lk.rgd.common.api.domain.Country;
 import lk.rgd.common.api.domain.User;
-import lk.rgd.common.util.WebUtils;
+import lk.rgd.common.util.DateTimeUtils;
+import lk.rgd.common.util.NameFormatUtil;
 import lk.rgd.crs.web.WebConstants;
-import lk.rgd.prs.PRSRuntimeException;
-import lk.rgd.prs.api.domain.Address;
 import lk.rgd.prs.api.domain.Person;
+import lk.rgd.prs.api.domain.PersonCitizenship;
 import lk.rgd.prs.api.service.PopulationRegistry;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Chathuranga Withana
@@ -23,6 +23,8 @@ import java.util.Map;
 public class PopulationRegisterAction extends ActionSupport implements SessionAware {
 
     private static final Logger logger = LoggerFactory.getLogger(PopulationRegisterAction.class);
+    // This delimiter used to delimit countryId and passportNo from citizenship string
+    private static final String delimiter = ":,";
 
     // services and DAOs
     private final PopulationRegistry service;
@@ -37,11 +39,13 @@ public class PopulationRegisterAction extends ActionSupport implements SessionAw
 
     private Person person;
 
+    private long personUKey;
     private int personCountryId;
     private int personRaceId;
     private String personPassportNo;
     private String permanentAddress;
     private String currentAddress;
+    private String citizenship;
 
     public PopulationRegisterAction(PopulationRegistry service, RaceDAO raceDAO, CountryDAO countryDAO) {
         this.service = service;
@@ -51,16 +55,65 @@ public class PopulationRegisterAction extends ActionSupport implements SessionAw
 
     public String personRegistration() {
         logger.debug("Registration of exiting person to PRS");
-        try {
-            // add passport number in given format - e.g. LK:M1203456 
-            person.addPassportNo(countryDAO.getCountry(personCountryId), personPassportNo);
-            long pin = service.addExistingPerson(person, permanentAddress, currentAddress, user);
-            addActionMessage(getText("person_reg_success.message") + pin);
+        // TODO implement validation 
+        validateExistingPersonRegistration();
 
-        } catch (PRSRuntimeException e) {
-            logger.error("PRS Exception occurred while adding person to the PRS", e);
+        final List<PersonCitizenship> citizenshipList = getCitizenshipList();
+        if (personCountryId != 0 && personPassportNo != null) {
+            citizenshipList.add(createPersonCitizenship(countryDAO.getCountry(personCountryId), personPassportNo));
+        }
+        long pin = service.addExistingPerson(person, permanentAddress, currentAddress, user, citizenshipList);
+        // personUKey used to redirect to PRS certificate page
+        personUKey = person.getPersonUKey();
+        addActionMessage(getText("person_reg_success.message") + pin);
+
+        if (logger.isDebugEnabled()) {
+            logger.debug("Person with name : " + NameFormatUtil.getDisplayName(person.getFullNameInEnglishLanguage(), 30)
+                + " and dateOfBirth : " + DateTimeUtils.getISO8601FormattedString(person.getDateOfBirth())
+                + " added to the PRS with PersonUKey : " + person.getPersonUKey() + " and generated PIN : " + pin);
         }
         return SUCCESS;
+    }
+
+    /**
+     * Returns citizenship list after processing citizenship String passed by the Existing Person Registration Form
+     */
+    private List<PersonCitizenship> getCitizenshipList() {
+        logger.debug("Received citizenship string : {}", citizenship);
+        if (citizenship != null && citizenship.trim().length() > 0) {
+            List<PersonCitizenship> list = new ArrayList<PersonCitizenship>();
+
+            int countryId;
+            String passportNo;
+            StringTokenizer tokenizer = new StringTokenizer(citizenship, delimiter);
+            while (tokenizer.hasMoreTokens()) {
+                countryId = Integer.parseInt(tokenizer.nextToken());
+                passportNo = tokenizer.nextToken();
+                list.add(createPersonCitizenship(countryDAO.getCountry(countryId), passportNo));
+            }
+
+            return list;
+        } else {
+            return null;
+        }
+    }
+
+    private PersonCitizenship createPersonCitizenship(Country country, String passport) {
+        PersonCitizenship pc = new PersonCitizenship();
+        pc.setCountry(country);
+        pc.setPassportNo(passport);
+        return pc;
+    }
+
+    /**
+     * Validations for existing person registration form
+     */
+    private void validateExistingPersonRegistration() {
+        // TODO validate inputs
+        /*if (person.getDateOfRegistration() == null || person.getDateOfBirth() == null || person.getPlaceOfBirth() == null
+            || person.getFullNameInOfficialLanguage() == null || person.getFullNameInEnglishLanguage() == null) {
+
+        }*/
     }
 
     /**
@@ -108,6 +161,14 @@ public class PopulationRegisterAction extends ActionSupport implements SessionAw
 
     public void setCountryList(Map<Integer, String> countryList) {
         this.countryList = countryList;
+    }
+
+    public long getPersonUKey() {
+        return personUKey;
+    }
+
+    public void setPersonUKey(long personUKey) {
+        this.personUKey = personUKey;
     }
 
     public int getPersonCountryId() {
@@ -158,5 +219,14 @@ public class PopulationRegisterAction extends ActionSupport implements SessionAw
 
     public void setCurrentAddress(String currentAddress) {
         this.currentAddress = currentAddress;
+    }
+
+    public String getCitizenship() {
+        return citizenship;
+    }
+
+    public void setCitizenship(String citizenship) {
+        this.citizenship = citizenship;
+        logger.debug("setting citizenship list : {}", citizenship);
     }
 }

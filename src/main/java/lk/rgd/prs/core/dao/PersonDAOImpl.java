@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * The Person DAO should not be used for most of the queries as we do not want the DB to be loaded. Instead, a
  * record should be first searched for through the Lucene index, and the row numbers found. Subsequently, the user
- * may request for complete details of these objects via the DB - using the optimal unique key lookup 
+ * may request for complete details of these objects via the DB - using the optimal unique key lookup
  *
  * @author asankha
  */
@@ -72,6 +72,20 @@ public class PersonDAOImpl extends BaseDAO implements PersonDAO {
             return null;
         }
         // A NonUniqueResultException will not be thrown since pin is a unique column
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public Person findPersonByTemporaryPIN(long temporaryPIN) {
+        Query q = em.createNamedQuery("filter.by.temporaryPIN");
+        q.setParameter("temporaryPin", temporaryPIN);
+        try {
+            return (Person) q.getSingleResult();
+        } catch (NoResultException ignore) {
+            return null;
+        }
     }
 
     /**
