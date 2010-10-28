@@ -12,26 +12,26 @@ import java.util.BitSet;
 @Embeddable
 public class Alteration52_1 {
 
-    public static final int DATE_OF_BIRTH = 1;
-    public static final int PLACE_OF_BIRTH = 2;
-    public static final int PLACE_OF_BIRTH_ENGLISH = 3;
-    public static final int BIRTH_DIVISION = 4;
-    public static final int GENDER = 5;
+    public static final int DATE_OF_BIRTH = 0;
+    public static final int PLACE_OF_BIRTH = 1;
+    public static final int PLACE_OF_BIRTH_ENGLISH = 2;
+    public static final int BIRTH_DIVISION = 3;
+    public static final int GENDER = 4;
 
-    public static final int MOTHER_FULLNAME = 6;
-    public static final int MOTHER_NIC_OR_PIN = 7;
-    public static final int MOTHER_BIRTH_DATE = 8;
-    public static final int MOTHER_BIRTH_PLACE = 9;
-    public static final int MOTHER_COUNTRY = 10;
-    public static final int MOTHER_PASSPORT = 11;
-    public static final int MOTHER_RACE = 12;
-    public static final int MOTHER_AGE_AT_BIRTH = 13;
-    public static final int MOTHER_ADDRESS = 14;
+    public static final int MOTHER_FULLNAME = 5;
+    public static final int MOTHER_NIC_OR_PIN = 6;
+    public static final int MOTHER_BIRTH_DATE = 7;
+    public static final int MOTHER_BIRTH_PLACE = 8;
+    public static final int MOTHER_COUNTRY = 9;
+    public static final int MOTHER_PASSPORT = 10;
+    public static final int MOTHER_RACE = 11;
+    public static final int MOTHER_AGE_AT_BIRTH = 12;
+    public static final int MOTHER_ADDRESS = 13;
 
-    public static final int INFORMANT_TYPE = 15;
-    public static final int INFORMANT_NIC_OR_PIN = 16;
-    public static final int INFORMANT_NAME = 17;
-    public static final int INFORMANT_ADDRESS = 18;
+    public static final int INFORMANT_TYPE = 14;
+    public static final int INFORMANT_NIC_OR_PIN = 15;
+    public static final int INFORMANT_NAME = 16;
+    public static final int INFORMANT_ADDRESS = 17;
 
 
 

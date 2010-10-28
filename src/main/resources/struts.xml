@@ -1051,7 +1051,10 @@
                 method="birthAlterationHome">
             <result type="tiles" name="success">epr.birthAlterationHome</result>
         </action>
-
+        <action name="eprPrintBirthAlterarionNotice" class="lk.rgd.crs.web.action.births.AlterationAction"
+                method="printBirthAlterationNotice">
+            <result type="tiles" name="success">epr.printBirthAlterarionNotice</result>
+        </action>
         <!--death alteration related actions-->
         <action name="eprDeathAlterationSearchHome" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"
                 method="deathAlterationSearch">

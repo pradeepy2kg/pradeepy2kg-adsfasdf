@@ -47,7 +47,7 @@
          */
     }
 </script>
-<s:if test="(birthAlterationApprovalList.size() !=0) || (birthAlterationApprovedList.size() !=0)">
+<s:if test="(birthAlterationApprovalList.size() !=0)">
     <div id="alteration-approval-list-outer">
     <fieldset style="border:none">
     <s:form action="eprApproveAlteration.do" method="post" name="alterationApproval">
@@ -72,29 +72,11 @@
                     <td style="padding-left:25px;"><s:property
                             value="birthAlterationApprovalList[#approvalStatus.index][2]"/></td>
                     <td style="text-align:center;">
-                        <s:if test="pageType==2">
-                           <s:label value="%{getText('rejected.lable')}"/>
-                        </s:if>
-                        <s:else>
                             <s:checkbox name="index"
                                         value="%{#index}"
                                         fieldValue="%{birthAlterationApprovalList[#approvalStatus.index][0]}"
                                         id="%{birthAlterationApprovalList[#approvalStatus.index][0]}"/>
-                        </s:else>
-                    </td>
-                </tr>
-            </s:iterator>
-            <s:iterator status="approvedStatus" value="birthAlterationApprovedList" id="approvedList">
-                <tr>
-                    <td style="padding-left:5px;">
-                        <s:property
-                                value="%{getText(sectionOfAct+'.'+birthAlterationApprovedList[#approvedStatus.index][0]+'.label')}"/></td>
-                    <td style="padding-left:25px;"><s:property
-                            value="birthAlterationApprovedList[#approvedStatus.index][1]"/></td>
-                    <td style="padding-left:25px;"><s:property
-                            value="birthAlterationApprovedList[#approvedStatus.index][2]"/></td>
-                    <td style="text-align:center;">
-                        <s:label value="%{getText('Approved.lable')}"/>
+
                     </td>
                 </tr>
             </s:iterator>
@@ -104,21 +86,10 @@
         <s:hidden name="sectionOfAct"/>
         <s:hidden name="numberOfAppPending"/>
         <s:hidden name="idUKey"/>
-        <s:if test="pageType != 2">
             <div style="width:20%;float:left;margin-left:25px;margin-top:20px;">
                 <s:label value="%{getText('select_all.label')}"/>
                 <s:checkbox id="selectAll" name="selectAll" onClick="checkAll(document.alterationApproval.index)"/>
             </div>
-        </s:if>
-        <div style="width:60%;float:left;margin-left:25px;margin-top:20px;">
-            <s:if test="pageType == 2">
-                <s:hidden name="applyChanges" value="true"/>
-            </s:if>
-            <s:else>
-                <s:label value="%{getText('label.apply.changes')}"/>
-                <s:checkbox id="" name="applyChanges"/>
-            </s:else>
-        </div>
         <div class="form-submit">
             <s:submit value="%{getText('save.label')}" cssStyle="margin-top:10px;margin-right:25px"/>
         </div>

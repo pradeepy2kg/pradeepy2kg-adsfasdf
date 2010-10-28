@@ -61,11 +61,8 @@ public interface BirthAlterationService {
      * @param ba                 the birth alteration to be approved
      * @param fieldsToBeApproved the list of field indexes to be approved
      * @param user               the user initiating the action
-     * @param applyChangesToBC   if true, the approval is complete. Now apply changes to BC. ff false, the approval is
-     *                           not yet complete, but save whatever approvals made to database
      */
-    public void approveBirthAlteration(BirthAlteration ba, Map<Integer, Boolean> fieldsToBeApproved,
-                                       boolean applyChangesToBC, User user);
+    public void approveBirthAlteration(BirthAlteration ba, Map<Integer, Boolean> fieldsToBeApproved, User user);
 
     /**
      * Returns a limited set of BirthAlterations for which one or more fields in the statement 27,27A or statement

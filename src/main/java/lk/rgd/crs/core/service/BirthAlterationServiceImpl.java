@@ -98,15 +98,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void approveBirthAlteration(BirthAlteration ba, Map<Integer, Boolean> fieldsToBeApproved,
-                                       boolean applyChangesToBC, User user) {
-
-        if (applyChangesToBC) {
-            logger.debug("Attempt to approve birth alteration record : {} and apply changes to BC", ba.getIdUKey());
-        } else {
-            logger.debug("Attempt to save intermediate approvals for alteration record : {}", ba.getIdUKey());
-        }
-
+    public void approveBirthAlteration(BirthAlteration ba, Map<Integer, Boolean> fieldsToBeApproved, User user) {
         validateAccessOfUserForApproval(ba, user);
         BirthAlteration existing = birthAlterationDAO.getById(ba.getIdUKey());
         validateAccessOfUserForApproval(existing, user);
@@ -123,7 +115,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
             }
         }
 
-        if (containsApprovedChanges && applyChangesToBC) {
+        if (containsApprovedChanges) {
             logger.debug("Requesting the application of changes to the BC as final for : {}", existing.getIdUKey());
             existing.setStatus(BirthAlteration.State.FULLY_APPROVED);
 
@@ -170,10 +162,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
                 }
             }
 
-        } else {
-            existing.setStatus(BirthAlteration.State.PARTIALY_APPROVED);
-        }
-
+        } 
         existing.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
         existing.getLifeCycleInfo().setApprovalOrRejectUser(user);
         birthAlterationDAO.updateBirthAlteration(existing, user);
