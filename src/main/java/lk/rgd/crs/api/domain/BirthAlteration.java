@@ -16,14 +16,14 @@ import java.util.BitSet;
 @Table(name = "ALT_BIRTH", schema = "CRS")
 @NamedQueries({
         @NamedQuery(name = "filter.alteration.by.idUKey", query = "SELECT ba FROM BirthAlteration ba " +
-                "WHERE ba.idUKey =:idUKey  AND (ba.status =:statusDataEntry OR ba.status =:statusPartialyApproved) " +
+                "WHERE ba.idUKey =:idUKey AND (ba.status =:statusDataEntry OR ba.status =:statusFullyApproved) "+
                 "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
         @NamedQuery(name = "filter.alteration.by.bddivision", query = "SELECT ba FROM BirthAlteration ba,BirthDeclaration bdf " +
                 "WHERE ba.bdfIDUKey =bdf.idUKey AND bdf.register.birthDivision = :bdDivision  AND " +
-                "(ba.status =:statusDataEntry OR ba.status =:statusPartialyApproved) " +
+                "(ba.status =:statusDataEntry OR ba.status =:statusFullyApproved) " +
                 "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
         @NamedQuery(name = "filter.alteration.by.user.location", query = "SELECT ba FROM BirthAlteration ba " +
-                "WHERE ba.submittedLocation.locationUKey= :locationUKey AND (ba.status =:statusDataEntry OR ba.status =:statusPartialyApproved) " +
+                "WHERE ba.submittedLocation.locationUKey= :locationUKey AND (ba.status =:statusDataEntry OR ba.status =:statusFullyApproved) " +
                 "ORDER BY ba.lifeCycleInfo.createdTimestamp desc")
 })
 
@@ -66,17 +66,14 @@ public class BirthAlteration {
         /**
          * 1 - An ARG or higher partialy approved ba
          */
-        PARTIALY_APPROVED,
-        /*
-        * 2 - An ARG or higher fully approved ba
-        * */
+
         FULLY_APPROVED,
         /**
-         * 3 - A fully completed alteration for which the BDF has being changed.
+         * 2- A fully completed alteration for which the BDF has being changed.
          */
         PRINTED,
         /**
-         * 4 - A rejected alteration
+         * 3 - A rejected alteration
          */
         REJECT,
 
@@ -93,6 +90,14 @@ public class BirthAlteration {
      */
     @Column(nullable = true)
     private BitSet approvalStatuses = new BitSet();
+
+
+    /**
+     * Contains the change bit set for each field.
+     */
+    @Column(nullable = true)
+    private BitSet changedfields = new BitSet();
+
     @Id
     // This is an auto generated unique row identifier
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -295,5 +300,13 @@ public class BirthAlteration {
 
     public void setBirthRecordDivision(BDDivision birthRecordDivision) {
         this.birthRecordDivision = birthRecordDivision;
+    }
+
+    public BitSet getChangedfields() {
+        return changedfields;
+    }
+
+    public void setChangedfields(BitSet changedfields) {
+        this.changedfields = changedfields;
     }
 }

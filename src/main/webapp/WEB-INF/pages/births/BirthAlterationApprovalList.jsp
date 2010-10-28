@@ -266,7 +266,7 @@
                 <td><s:property value="alt27.childFullNameOfficialLang"/></td>
                 <td align="center">
                     <s:if test="#request.allowApproveAlteration &&
-                    alterationApprovalPermission.get(#approvalStatus.index)">
+                    alterationApprovalPermission.get(#approvalStatus.index) && (status.ordinal() ==0)">
                         <s:url id="approveSelected" action="eprApproveSelectedAlteration.do">
                             <s:param name="idUKey" value="idUKey"/>
                             <s:param name="bdId" value="bdfIDUKey"/>
@@ -283,7 +283,7 @@
                 </td>
                 <td align="center">
                     <s:if test="#request.allowApproveAlteration &&
-                    alterationApprovalPermission.get(#approvalStatus.index)">
+                    alterationApprovalPermission.get(#approvalStatus.index) && (status.ordinal() ==0)">
                         <s:url id="rejectSelected" action="eprRejectSelectedAlteration.do">
                             <s:param name="idUKey" value="idUKey"/>
                             <s:param name="bdId" value="bdfIDUKey"/>
@@ -317,8 +317,8 @@
                 </td>
                 <td align="center">
                     <s:if test="#request.allowApproveAlteration &&
-                    alterationApprovalPermission.get(#approvalStatus.index) && (status.ordinal() !=0)">
-                        <s:url id="applySelected" action="eprApproveSelectedAlteration.do">
+                    alterationApprovalPermission.get(#approvalStatus.index) && (status.ordinal() == 1)">
+                        <s:url id="applySelected" action="eprPrintBirthAlterarionNotice.do">
                             <s:param name="idUKey" value="idUKey"/>
                             <s:param name="bdId" value="bdfIDUKey"/>
                             <s:param name="nextFlag" value="%{#request.nextFlag}"/>
@@ -327,10 +327,9 @@
                             <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
                             <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
                             <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
-                            <s:param name="applyChanges" value="true"/>
                         </s:url>
                         <s:a href="%{applySelected}">
-                            <img src="<s:url value='/images/approve.gif'/>" width="25" height="25" border="none"/></s:a>
+                            <img src="<s:url value='/images/print_icon.gif'/>" width="25" height="25" border="none"/></s:a>
                     </s:if>
                 </td>
             </tr>

@@ -9,6 +9,7 @@ import lk.rgd.common.api.Auditable;
 import lk.rgd.common.api.dao.EventDAO;
 import lk.rgd.common.api.domain.Event;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.core.service.UserManagerImpl;
 import lk.rgd.crs.api.domain.*;
@@ -37,13 +38,17 @@ public class ServiceAuditor implements MethodInterceptor {
     private static final Logger logger = LoggerFactory.getLogger(ServiceAuditor.class);
     private final Map<Class, Class> serviceClasses;
     private final List<Class> debugClasses;
-    private final XStream xstream = new XStream();
+    private final XStream xstream;
     private final boolean debugInputParameters;
     private final EventDAO eventDao;
 
     public ServiceAuditor(boolean captureDebugBeforeExecution, EventDAO eventDao) {
         this.debugInputParameters = captureDebugBeforeExecution;
         this.eventDao = eventDao;
+
+        xstream = new XStream();
+        xstream.omitField(Location.class, "users");
+        xstream.omitField(BirthAlteration.class, "lifeCycleInfo");
 
         xstream.alias("adoptionOrder", AdoptionOrder.class);
         xstream.alias("assignment", Assignment.class);
@@ -114,7 +119,10 @@ public class ServiceAuditor implements MethodInterceptor {
         // Do we need to debug this call? If this is audited, and debugInputParameters is set, then we should
         boolean debugInvocation = auditInvocation && debugInputParameters;
 
-        logger.debug("Audit method call : {} Debug method call : {}", auditInvocation, debugInvocation);
+        if (logger.isDebugEnabled()) {
+            logger.debug("Service method : " + serviceClass.getName() + "." + method.getName() +
+                "() - audit : " + auditInvocation + " debug : " + debugInvocation);
+        }
 
         // the Event for this invocation
         Event event = auditInvocation ? new Event() : null;

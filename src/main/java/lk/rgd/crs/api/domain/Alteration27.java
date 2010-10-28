@@ -10,8 +10,8 @@ import java.util.BitSet;
  */
 @Embeddable
 public class Alteration27 {
-    public static final int CHILD_FULL_NAME_OFFICIAL_LANG = 1;
-    public static final int CHILD_FULL_NAME_ENGLISH = 2;
+    public static final int CHILD_FULL_NAME_OFFICIAL_LANG = 0;
+    public static final int CHILD_FULL_NAME_ENGLISH = 1;
 
     @Column(nullable = true, length = 600)
     private String childFullNameOfficialLang;

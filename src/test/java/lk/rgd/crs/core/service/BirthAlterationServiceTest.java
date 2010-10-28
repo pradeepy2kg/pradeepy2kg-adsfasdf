@@ -109,12 +109,12 @@ public class BirthAlterationServiceTest extends TestCase {
         // reload record
         ba = birthAltSvc.getByIDUKey(ba.getIdUKey(), argNorthWesternProvince);
         try {
-            birthAltSvc.approveBirthAlteration(ba, fieldsToBeApproved, true, argNorthWesternProvince);
+            birthAltSvc.approveBirthAlteration(ba, fieldsToBeApproved, argNorthWesternProvince);
             fail("The north western province ARG should not be able to approve birth alteration for western province");
         } catch (Exception e) {}
 
         // arg for western province can approve
-        birthAltSvc.approveBirthAlteration(ba, fieldsToBeApproved, true, argWesternProvince);
+        birthAltSvc.approveBirthAlteration(ba, fieldsToBeApproved, argWesternProvince);
 
         // save BDF serial number
         long regNumber = birthDeclarationDAO.getById(ba.getBdfIDUKey()).getRegister().getBdfSerialNo();

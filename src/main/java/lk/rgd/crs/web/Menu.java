@@ -268,6 +268,7 @@ public class Menu {
         deoAlterationLink.put("eprBirthAlterationSearch.do", new Link(null, "/ecivil/alteration/", "eprBirthAlterationSearch.do", Permission.EDIT_BIRTH_ALTERATION));
         deoAlterationLink.put("eprBirthAlterationHome.do", new Link(null, "/ecivil/alteration/", "eprBirthAlterationHome.do", Permission.EDIT_BIRTH_ALTERATION));
         deoAlterationLink.put("eprEditSelectedAlteration.do", new Link(null, "/ecivil/alteration/", "eprEditSelectedAlteration.do", Permission.EDIT_BIRTH_ALTERATION));
+        deoAlterationLink.put("eprPrintBirthAlterarionNotice.do", new Link(null, "/ecivil/alteration/", "eprPrintBirthAlterarionNotice.do", Permission.EDIT_BIRTH_ALTERATION));
 
         //todo complete
         //links related to deo or above for death alteration

@@ -68,7 +68,7 @@ public class BirthAlterationDAOImpl extends BaseDAO implements BirthAlterationDA
                 setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("dsDivision", dsDivision);
         q.setParameter("statusDataEntry", BirthAlteration.State.DATA_ENTRY);
-        q.setParameter("statusPartialyApproved", BirthAlteration.State.PARTIALY_APPROVED);
+        q.setParameter("statusFullyApproved", BirthAlteration.State.FULLY_APPROVED);
         return q.getResultList();
     }
 
@@ -82,7 +82,7 @@ public class BirthAlterationDAOImpl extends BaseDAO implements BirthAlterationDA
         logger.debug("get Approval pending list from bdDivision Number is :{}", BDDivision.getDivisionId());
         q.setParameter("bdDivision", BDDivision);
         q.setParameter("statusDataEntry", BirthAlteration.State.DATA_ENTRY);
-        q.setParameter("statusPartialyApproved", BirthAlteration.State.PARTIALY_APPROVED);
+       q.setParameter("statusFullyApproved", BirthAlteration.State.FULLY_APPROVED);
         return q.getResultList();
     }
 
@@ -114,8 +114,6 @@ public class BirthAlterationDAOImpl extends BaseDAO implements BirthAlterationDA
                 setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         logger.debug("get Approval pending list from idUKey number is :{}", idUKey);
         q.setParameter("idUKey", idUKey);
-        q.setParameter("statusDataEntry", BirthAlteration.State.DATA_ENTRY);
-        q.setParameter("statusPartialyApproved", BirthAlteration.State.PARTIALY_APPROVED);
         return (BirthAlteration) q.getSingleResult();
     }
 
@@ -126,7 +124,7 @@ public class BirthAlterationDAOImpl extends BaseDAO implements BirthAlterationDA
         q.setParameter("recivedDateFrom", recivedDateFrom);
         q.setParameter("recivedDateTo", recivedDateTo);
         q.setParameter("statusDataEntry", BirthAlteration.State.DATA_ENTRY);
-        q.setParameter("statusPartialyApproved", BirthAlteration.State.PARTIALY_APPROVED);
+        q.setParameter("statusFullyApproved", BirthAlteration.State.FULLY_APPROVED);
         return q.getResultList();
     }
 
@@ -137,7 +135,7 @@ public class BirthAlterationDAOImpl extends BaseDAO implements BirthAlterationDA
         q.setParameter("bdDivision", bdDivision);
         q.setParameter("alterationSerialNo", alterationSerialNo);
         q.setParameter("statusDataEntry", BirthAlteration.State.DATA_ENTRY);
-        q.setParameter("statusPartialyApproved", BirthAlteration.State.PARTIALY_APPROVED);
+        q.setParameter("statusFullyApproved", BirthAlteration.State.FULLY_APPROVED);
         return q.getResultList();
     }
 
@@ -148,7 +146,7 @@ public class BirthAlterationDAOImpl extends BaseDAO implements BirthAlterationDA
         q.setParameter("bdDivision", bdDivision);
         q.setParameter("birthSerialNo", birthSerialNo);
         q.setParameter("statusDataEntry", BirthAlteration.State.DATA_ENTRY);
-        q.setParameter("statusPartialyApproved", BirthAlteration.State.PARTIALY_APPROVED);
+        q.setParameter("statusFullyApproved", BirthAlteration.State.FULLY_APPROVED);
         return q.getResultList();
     }
 
@@ -158,7 +156,7 @@ public class BirthAlterationDAOImpl extends BaseDAO implements BirthAlterationDA
                 setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("locationUKey", locationUKey);
         q.setParameter("statusDataEntry", BirthAlteration.State.DATA_ENTRY);
-        q.setParameter("statusPartialyApproved", BirthAlteration.State.PARTIALY_APPROVED);
+        q.setParameter("statusFullyApproved", BirthAlteration.State.FULLY_APPROVED);
         return q.getResultList();
     }
 }

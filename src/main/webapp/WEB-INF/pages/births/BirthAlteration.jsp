@@ -1593,7 +1593,6 @@ function validateBirthYear(domElement, errorText, errorCode) {
     </tbody>
 </table>
 </div>--%>
-<s:label name="idUKey"/>
 <s:hidden name="idUKey"/>
 <s:hidden name="sectionOfAct"/>
 <div class="form-submit">
