@@ -4,6 +4,7 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.prs.api.domain.Address;
 import lk.rgd.prs.api.domain.Marriage;
 import lk.rgd.prs.api.domain.Person;
+import lk.rgd.prs.api.domain.PersonCitizenship;
 
 import java.util.Date;
 import java.util.List;
@@ -27,14 +28,16 @@ public interface PopulationRegistry {
     public long addPerson(Person person, User user);
 
     /**
-     * Add existing person to the PRS 
+     * Add existing person to the PRS
      * @param person the Person to be added
      * @param permanentAddress the permanent address to be added
      * @param currentAddress the current address to be added
      * @param user the user performing this action
+     * @param citizenshipList the person citizenship list
      * @return the PIN number generated for the Person - for verified records, or -1 for any other
      */
-    public long addExistingPerson(Person person, String permanentAddress, String currentAddress, User user);
+    public long addExistingPerson(Person person, String permanentAddress, String currentAddress, User user,
+        List<PersonCitizenship> citizenshipList);
 
     /**
      * Update a Person on the PRS

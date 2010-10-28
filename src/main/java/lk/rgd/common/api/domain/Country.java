@@ -1,10 +1,11 @@
 package lk.rgd.common.api.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import lk.rgd.prs.api.domain.PersonCitizenship;
+
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Represents a Country maintained by the system. A country has a unique ID, and multiple names in
@@ -27,10 +28,17 @@ public class Country implements Serializable {
     private String enCountryName;
     @Column(nullable = false, length = 30, unique = true, updatable = false)
     private String taCountryName;
-    @Column(name="active", columnDefinition="smallint not null default 1")
+    @Column(name = "active", columnDefinition = "smallint not null default 1")
     private boolean active;
 
-    public Country() {}
+    /**
+     * The persons assigned to this country
+     */
+    @OneToMany(mappedBy = "country", fetch = FetchType.EAGER)
+    private Set<PersonCitizenship> persons = new HashSet<PersonCitizenship>();
+
+    public Country() {
+    }
 
     public Country(int countryId, String siCountryName, String enCountryName, String taCountryName, boolean active) {
         this.countryId = countryId;
@@ -86,6 +94,14 @@ public class Country implements Serializable {
 
     public void setCountryCode(String countryCode) {
         this.countryCode = countryCode;
+    }
+
+    public Set<PersonCitizenship> getPersons() {
+        return persons;
+    }
+
+    public void setPersons(Set<PersonCitizenship> persons) {
+        this.persons = persons;
     }
 
     @Override

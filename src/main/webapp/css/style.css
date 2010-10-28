@@ -15,6 +15,10 @@ input, textarea{text-transform:uppercase;}
     background:url(../images/odd-row.png);
     line-height:30px;
 }
+.row_selected {
+    background-color:#99B3FF;
+    line-height:30px;
+}
 .even{
     background:url(../images/even-row.png);
     line-height:30px;

@@ -1,17 +1,10 @@
 package lk.rgd.crs.core;
 
-import lk.rgd.Permission;
-import lk.rgd.common.api.dao.RoleDAO;
 import lk.rgd.common.api.domain.*;
 import lk.rgd.common.core.dao.PreloadableDAO;
 import lk.rgd.common.util.RolePermissionUtils;
 import lk.rgd.crs.api.domain.*;
-import lk.rgd.crs.core.service.BirthRecordsIndexer;
-import lk.rgd.crs.core.service.DeathRecordsIndexer;
-import lk.rgd.prs.api.domain.Address;
-import lk.rgd.prs.api.domain.Marriage;
-import lk.rgd.prs.api.domain.PINNumber;
-import lk.rgd.prs.api.domain.Person;
+import lk.rgd.prs.api.domain.*;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.slf4j.Logger;
@@ -28,7 +21,6 @@ import org.springframework.test.jdbc.SimpleJdbcTestUtils;
 import javax.sql.DataSource;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.BitSet;
 import java.util.List;
 import java.util.Map;
 
@@ -71,6 +63,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
         entityClasses.add(Person.class);
         entityClasses.add(Marriage.class);
         entityClasses.add(PINNumber.class);
+        entityClasses.add(PersonCitizenship.class);
 
         entityClasses.add(DeathRegister.class);
 

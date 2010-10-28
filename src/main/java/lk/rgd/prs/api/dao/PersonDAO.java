@@ -66,6 +66,14 @@ public interface PersonDAO {
     public Person findPersonByPIN(long pin);
 
     /**
+     * Return the Person object for the person with the given temporary PIN
+     * 
+     * @param temporaryPIN the unique temporary Personal Identification Number
+     * @return the matching person
+     */
+    public Person findPersonByTemporaryPIN(long temporaryPIN);
+
+    /**
      * Return the list of Person objects for the given National ID card number
      *
      * @param nic the national ID card number

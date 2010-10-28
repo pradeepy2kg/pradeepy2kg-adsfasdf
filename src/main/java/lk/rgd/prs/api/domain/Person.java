@@ -19,6 +19,7 @@ import java.util.Set;
 @NamedQueries({
     @NamedQuery(name = "findAllPersons", query = "SELECT p FROM Person p"),
     @NamedQuery(name = "filter.by.pin", query = "SELECT p FROM Person p WHERE p.pin = :pin"),
+    @NamedQuery(name = "filter.by.temporaryPIN", query = "SELECT p FROM Person p WHERE p.temporaryPin = :temporaryPin"),
     @NamedQuery(name = "filter.by.nic", query = "SELECT p FROM Person p WHERE p.nic = :nic"),
     @NamedQuery(name = "findAllChildren", query = "SELECT p FROM Person p WHERE p.mother = :person OR p.father = :person"),
     @NamedQuery(name = "findAllSiblings", query = "SELECT p FROM Person p WHERE (p.mother = :mother OR p.father = :father) AND (p <> :person)")
@@ -183,6 +184,16 @@ public class Person implements Serializable {
     @Column(nullable = true)
     private LifeStatus lifeStatus;
     /**
+     *
+     */
+    @Column(nullable = true, length = 10)
+    private String motherPINorNIC;
+    /**
+     *
+     */
+    @Column(nullable = true, length = 10)
+    private String fatherPINorNIC;
+    /**
      * The mother of this person
      */
     @OneToOne
@@ -194,14 +205,6 @@ public class Person implements Serializable {
     @OneToOne
     @JoinColumn(name = "fatherUKey")
     private Person father;
-    /**
-     * Countries of citizenship
-     */
-    @ManyToMany
-    @JoinTable(schema = "PRS", name = "PERSON_CITIZENSHIP",
-        joinColumns = @JoinColumn(name = "personUKey"),
-        inverseJoinColumns = @JoinColumn(name = "countryId"))
-    private Set<Country> citizenship;
     /**
      * List of addresses
      */
@@ -231,6 +234,11 @@ public class Person implements Serializable {
     @ManyToOne
     @JoinColumn(name = "race")
     private Race race;
+    /**
+     * The Countries assigned to this person
+     */
+    @OneToMany(mappedBy = "person", fetch = FetchType.EAGER)
+    private Set<PersonCitizenship> countries = new HashSet<PersonCitizenship>();  
 
     /**
      * Add a record of a marriage. Marks this marriage as the 'last' marriage
@@ -257,7 +265,6 @@ public class Person implements Serializable {
         lastAddress = a;
         a.setPerson(this);
     }
-
     //----------------------------------- getters and setters -----------------------------------
     public Long getPin() {
         return pin;
@@ -397,17 +404,6 @@ public class Person implements Serializable {
         this.initialsInEnglish = WebUtils.filterBlanksAndToUpper(initialsInEnglish);
     }
 
-    public Set<Country> getCitizenship() {
-        return citizenship;
-    }
-
-    public void addCitizenship(Country country) {
-        if (this.citizenship == null) {
-            this.citizenship = new HashSet<Country>();
-        }
-        this.citizenship.add(country);
-    }
-
     public long getPersonUKey() {
         return personUKey;
     }
@@ -468,6 +464,22 @@ public class Person implements Serializable {
         this.status = status;
     }
 
+    public String getMotherPINorNIC() {
+        return motherPINorNIC;
+    }
+
+    public void setMotherPINorNIC(String motherPINorNIC) {
+        this.motherPINorNIC = motherPINorNIC;
+    }
+
+    public String getFatherPINorNIC() {
+        return fatherPINorNIC;
+    }
+
+    public void setFatherPINorNIC(String fatherPINorNIC) {
+        this.fatherPINorNIC = fatherPINorNIC;
+    }
+
     public Person getMother() {
         return mother;
     }
@@ -506,6 +518,14 @@ public class Person implements Serializable {
 
     public void setRace(Race race) {
         this.race = race;
+    }
+
+    public Set<PersonCitizenship> getCountries() {
+        return countries;
+    }
+
+    public void setCountries(Set<PersonCitizenship> countries) {
+        this.countries = countries;
     }
 
     private void setInitialsAndLastnameEnglish(String fullname) {

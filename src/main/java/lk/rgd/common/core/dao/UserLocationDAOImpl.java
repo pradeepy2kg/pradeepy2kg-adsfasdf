@@ -4,8 +4,6 @@ import lk.rgd.common.api.dao.UserLocationDAO;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.UserLocation;
 import lk.rgd.common.api.domain.UserLocationID;
-import lk.rgd.Permission;
-import lk.rgd.ErrorCodes;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
