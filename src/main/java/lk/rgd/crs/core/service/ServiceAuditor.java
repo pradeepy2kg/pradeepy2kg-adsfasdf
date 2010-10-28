@@ -10,6 +10,7 @@ import lk.rgd.common.api.dao.EventDAO;
 import lk.rgd.common.api.domain.Event;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.Location;
+import lk.rgd.common.api.domain.UserLocation;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.core.service.UserManagerImpl;
 import lk.rgd.crs.api.domain.*;
@@ -49,6 +50,16 @@ public class ServiceAuditor implements MethodInterceptor {
         xstream = new XStream();
         xstream.omitField(Location.class, "users");
         xstream.omitField(BirthAlteration.class, "lifeCycleInfo");
+        xstream.omitField(BirthDeclaration.class, "lifeCycleInfo");
+        xstream.omitField(DeathAlteration.class, "lifeCycleInfo");
+        xstream.omitField(DeathRegister.class, "lifeCycleInfo");
+        xstream.omitField(AdoptionOrder.class, "lifeCycleInfo");
+        xstream.omitField(BirthDeclaration.class, "confirmationPrintUser");
+        xstream.omitField(User.class, "assignedBDDistricts");
+        xstream.omitField(User.class, "assignedMRDistricts");
+        xstream.omitField(User.class, "assignedBDDSDivisions");
+        xstream.omitField(User.class, "locations");
+        xstream.omitField(UserLocation.class, "user");
 
         xstream.alias("adoptionOrder", AdoptionOrder.class);
         xstream.alias("assignment", Assignment.class);
@@ -58,6 +69,7 @@ public class ServiceAuditor implements MethodInterceptor {
         xstream.alias("registrar", Registrar.class);
         xstream.alias("birthAlteration", BirthAlteration.class);
         xstream.alias("deathAlteration", DeathAlteration.class);
+
 
         // the service classes that need to be audited
         serviceClasses = new HashMap<Class, Class>();
@@ -121,7 +133,7 @@ public class ServiceAuditor implements MethodInterceptor {
 
         if (logger.isDebugEnabled()) {
             logger.debug("Service method : " + serviceClass.getName() + "." + method.getName() +
-                "() - audit : " + auditInvocation + " debug : " + debugInvocation);
+                    "() - audit : " + auditInvocation + " debug : " + debugInvocation);
         }
 
         // the Event for this invocation
