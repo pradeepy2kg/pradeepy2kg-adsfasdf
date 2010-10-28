@@ -64,7 +64,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     private int divisionUKey;
     private int pageNo;  //to capture data table pagination
     private int rowNo;
-    private int pendingListSize;
+    private int pendingListSize;       //todo remove
     private int deathPersonCountry;
     private int deathPersonRace;
     private int deathCountryId;
@@ -265,7 +265,6 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 deathRaceId = race.getRaceId();
             }
             //todo remove use java scripts setting receiving date to today
-
             toDay = new Date();
         }
         return "pageLoad";
@@ -439,27 +438,6 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             //updating death alteration
             deathAlterationService.updateDeathAlteration(deathAlteration, user);
         }
-
-
-/*  todo remove no more partially approvals
-       if (deathAlteration.getStatus().equals(DeathAlteration.State.PARTIALY_APPROVED)) {
-            Map<List, List> currentList = new HashMap<List, List>();
-            BitSet current = deathAlteration.getApprovalStatuses();
-            for (Map.Entry e : approvalFieldList.entrySet()) {
-                List add = new LinkedList();
-                List keyEntry = (List) e.getKey();
-                int key = (Integer) keyEntry.get(0);
-                boolean available = current.get(key);
-                if (available) {
-                    add = (List) e.getValue();
-                    add.add(2, true);
-                    currentList.put(keyEntry, add);
-                }
-            }
-            for (Map.Entry e : currentList.entrySet()) {
-                approvalFieldList.put((List) e.getKey(), (List) e.getValue());
-            }
-        }*/
         populatePrimaryLists(districtUKey, dsDivisionId, language, user);
         return SUCCESS;
     }
@@ -505,15 +483,6 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         }
         deathAlteration = deathAlterationService.getByIDUKey(deathAlterationId, user);
         return "pageLoad";
-    }
-    //todo remove
-
-    public String applyChanges() {
-        logger.debug("applying changes to death alteration : death certificate id :{}", deathAlterationId);
-        populatePrimaryLists(districtUKey, dsDivisionId, language, user);
-        userLocations = user.getActiveLocations(language);
-        locationUKey = 0;
-        return SUCCESS;
     }
 
     /**
