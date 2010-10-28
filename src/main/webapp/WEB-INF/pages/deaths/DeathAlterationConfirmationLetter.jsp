@@ -2,14 +2,35 @@
 <%@ page import="java.util.Date" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<style type="text/css" title="currentStyle">
+<style type="text/css">
+    #death-certificate-outer table tr td {
+        padding: 0 5px;
+    }
+
+    @media print {
+        .form-submit {
+            display: none;
+        }
+
+        td {
+            font-size: 9pt;
+        }
+    }
+
+    #death-certificate-outer .form-submit {
+        margin: 5px 0 15px 0;
+    }
 </style>
+<script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
 <script type="text/javascript">
     function initPage() {
     }
 </script>
 <div class="alteration-print-letter-outer">
-
+    <div class="form-submit">
+        <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
+        <s:hidden id="printMessage" value="%{getText('print.message')}"/>
+    </div>
     <hr style="border-style:dashed ; float:left;width:100% ;margin-bottom:30px;margin-top:20px;">
     <table border="0" cellspacing="0" width="100%">
         <caption></caption>
