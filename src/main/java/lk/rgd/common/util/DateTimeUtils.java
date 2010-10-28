@@ -67,8 +67,4 @@ public class DateTimeUtils {
             return null;
         }
     }
-
-    public static DateFormat getUtcDfm() {
-        return utcDfm;
-    }
 }

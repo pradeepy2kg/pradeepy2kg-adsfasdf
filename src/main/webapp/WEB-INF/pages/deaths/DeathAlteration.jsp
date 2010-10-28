@@ -624,13 +624,11 @@ function initPage() {
             <s:label value="Information about the Death"/>
         </td>
         <td style="width:20%;text-align:right;border-right:none">
-                <%--            <div id="death-info-check-lable">
-               <s:label value="%{getText('edit.lable')}"/></div>--%>
+            <div id="death-info-check-lable">
+                <s:label value="%{getText('edit.lable')}"/></div>
         </td>
         <td style="border-right:none;width:3%">
-                <%--
-                            <s:checkbox id="death-info-check" name="editDeathInfo" cssStyle="float:right;"/>
-                --%>
+            <s:checkbox id="death-info-check" name="editDeathInfo" cssStyle="float:right;"/>
         </td>
         <td style="width:2%;border-left:none">
             <div class="birth-alteration-minimize-icon" id="death-info-min">[-]</div>
@@ -797,15 +795,11 @@ function initPage() {
             <s:label value="Information about the person Departed"/>
         </td>
         <td style="width:20%;text-align:right;border-right:none">
-                <%--            <div id="death-person-info-check-lable">
-               <s:label value="%{getText('edit.lable')}"/></div>--%> 
+            <div id="death-person-info-check-lable">
+                <s:label value="%{getText('edit.lable')}"/></div>
         </td>
         <td style="border-right:none;width:3%">
-
-                <%--
-                            <s:checkbox id="death-person-info-check" name="editDeathPerson" cssStyle="float:right;"/>
-                --%>
-
+            <s:checkbox id="death-person-info-check" name="editDeathPerson" cssStyle="float:right;"/>
         </td>
         <td style="width:2%">
             <div class="birth-alteration-minimize-icon" id="death-person-info-min">[-]</div>
@@ -834,8 +828,8 @@ function initPage() {
                 Identification Number
             </td>
             <td colspan="3" rowspan="2">
-                <s:textfield name="deathRegister.deathPerson.deathPersonPINorNIC" id="deathPerson_PINorNIC"
-                             cssStyle="float:left;"/>
+                <s:textfield name="deathAlteration.deathPerson.deathPersonPINorNIC" id="deathPerson_PINorNIC"
+                             cssStyle="float:left;" value="%{deathRegister.deathPerson.deathPersonPINorNIC}"/>
                 <img src="<s:url value="/images/search-father.png" />"
                      style="vertical-align:middle; margin-left:20px;" id="death_person_lookup">
             </td>
@@ -864,8 +858,8 @@ function initPage() {
                 Passport No.
             </td>
             <td>
-                <s:textfield name="deathRegister.deathPerson.deathPersonPassportNo" cssStyle="width:180px;"
-                             id="passportNumber"/>
+                <s:textfield name="deathAlteration.deathPerson.deathPersonPassportNo" cssStyle="width:180px;"
+                             id="passportNumber" value="%{deathRegister.deathPerson.deathPersonPassportNo}"/>
             </td>
         </tr>
         <tr>
@@ -874,8 +868,8 @@ function initPage() {
                 பிறப்ப <br>
                 Age or probable Age
             </td>
-            <td><s:textfield name="deathRegister.deathPerson.deathPersonAge" cssStyle="width:180px;"
-                             id="deathAge"/></td>
+            <td><s:textfield name="deathAlteration.deathPerson.deathPersonAge" cssStyle="width:180px;"
+                             id="deathAge" value="%{deathRegister.deathPerson.deathPersonAge}"/></td>
             <td>
                 (20)ස්ත්‍රී පුරුෂ භාවය <br>
                 பால் <br>
@@ -884,7 +878,7 @@ function initPage() {
             <td>
                 <s:select
                         list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
-                        name="deathRegister.deathPerson.deathPersonGender" headerKey="0"
+                        name="deathAlteration.deathPerson.deathPersonGender" headerKey="0"
                         headerValue="%{getText('select_gender.label')}"
                         id="deathPersonGender" cssStyle="width:190px; margin-left:5px;"/>
             </td>
@@ -907,8 +901,8 @@ function initPage() {
                 Name in either of the official languages (Sinhala / Tamil)
             </td>
             <td colspan="6">
-                <s:textarea name="deathRegister.deathPerson.deathPersonNameOfficialLang" cssStyle="width:99%;"
-                            id="nameOfficialLang"/>
+                <s:textarea name="deathAlteration.deathPerson.deathPersonNameOfficialLang" cssStyle="width:99%;"
+                            id="nameOfficialLang" value="%{deathRegister.deathPerson.deathPersonNameOfficialLang}"/>
             </td>
         </tr>
         <tr>
@@ -918,8 +912,8 @@ function initPage() {
                 Name in English
             </td>
             <td colspan="6">
-                <s:textarea name="deathRegister.deathPerson.deathPersonNameInEnglish" cssStyle="width:99%;"
-                            id="nameEnglish"/>
+                <s:textarea name="deathAlteration.deathPerson.deathPersonNameInEnglish" cssStyle="width:99%;"
+                            id="nameEnglish" value="%{deathRegister.deathPerson.deathPersonNameInEnglish}"/>
             </td>
         </tr>
         <tr>
@@ -929,8 +923,8 @@ function initPage() {
                 Permanent Address
             </td>
             <td colspan="6">
-                <s:textarea name="deathRegister.deathPerson.deathPersonPermanentAddress" cssStyle="width:99%;"
-                            id="address"/>
+                <s:textarea name="deathAlteration.deathPerson.deathPersonPermanentAddress" cssStyle="width:99%;"
+                            id="address" value="%{deathRegister.deathPerson.deathPersonPermanentAddress}"/>
             </td>
         </tr>
         <tr>
@@ -940,8 +934,8 @@ function initPage() {
                 Fathers Identification Number
             </td>
             <td colspan="6">
-                <s:textfield name="deathRegister.deathPerson.deathPersonFatherPINorNIC" cssStyle="width:180px;"
-                             id="fatherPinNic"/>
+                <s:textfield name="deathAlteration.deathPerson.deathPersonFatherPINorNIC" cssStyle="width:180px;"
+                             id="fatherPinNic" value="%{deathRegister.deathPerson.deathPersonFatherPINorNIC}"/>
             </td>
         </tr>
         <tr>
@@ -951,8 +945,8 @@ function initPage() {
                 Fathers full name
             </td>
             <td colspan="6">
-                <s:textarea name="deathRegister.deathPerson.deathPersonFatherFullName" cssStyle="width:99%;"
-                            id="fatherName"/>
+                <s:textarea name="deathAlteration.deathPerson.deathPersonFatherFullName" cssStyle="width:99%;"
+                            id="fatherName" value="%{deathRegister.deathPerson.deathPersonFatherFullName}"/>
             </td>
         </tr>
         <tr>
@@ -962,8 +956,8 @@ function initPage() {
                 Mothers Identification Number
             </td>
             <td colspan="6">
-                <s:textfield name="deathRegister.deathPerson.deathPersonMotherPINorNIC" cssStyle="width:180px;"
-                             id="motherNIC"/>
+                <s:textfield name="deathAlteration.deathPerson.deathPersonMotherPINorNIC" cssStyle="width:180px;"
+                             id="motherNIC" value="%{deathRegister.deathPerson.deathPersonMotherPINorNIC}"/>
             </td>
 
         </tr>
@@ -974,8 +968,8 @@ function initPage() {
                 Mothers full name
             </td>
             <td colspan="6">
-                <s:textarea name="deathRegister.deathPerson.deathPersonMotherFullName" cssStyle="width:99%;"
-                            id="motherName"/>
+                <s:textarea name="deathAlteration.deathPerson.deathPersonMotherFullName" cssStyle="width:99%;"
+                            id="motherName" value="%{deathRegister.deathPerson.deathPersonMotherFullName}"/>
             </td>
         </tr>
         </tbody>
@@ -1058,7 +1052,7 @@ function initPage() {
             in tamil <br>
             Father / Mother
         </td>
-        <td align="center"><s:radio id="declarantType" name="deathRegister.declarant.declarantType"
+        <td align="center"><s:radio id="declarantType" name="deathAlteration.declarant.declarantType"
                                     list="#@java.util.HashMap@{'FATHER':''}"
                                     onchange="setInformPerson('','','','','');"
                                     value="%{deathAlteration.declarant.declarantType}"/>
@@ -1070,7 +1064,7 @@ function initPage() {
         </td>
         <td width="45px" align="center">
                 <%--todo change--%>
-            <s:radio id="declarantType" name="deathRegister.declarant.declarantType"
+            <s:radio id="declarantType" name="deathAlteration.declarant.declarantType"
                      list="#@java.util.HashMap@{'SPOUSE':''}"
                      onchange="setInformPerson('','','','','');" value="%{deathAlteration.declarant.declarantType}"/>
         </td>
@@ -1080,7 +1074,7 @@ function initPage() {
             Brother / Sister
         </td>
         <td align="center">
-            <s:radio id="declarantType" name="deathRegister.declarant.declarantType"
+            <s:radio id="declarantType" name="deathAlteration.declarant.declarantType"
                      list="#@java.util.HashMap@{'BORTHER_OR_SISTER':''}"
                      onchange="setInformPerson('','','','','');" value="%{deathAlteration.declarant.declarantType}"/>
         </td>
@@ -1092,7 +1086,7 @@ function initPage() {
             Son / Daughter
         </td>
         <td align="center">
-            <s:radio id="declarantType" name="deathRegister.declarant.declarantType"
+            <s:radio id="declarantType" name="deathAlteration.declarant.declarantType"
                      list="#@java.util.HashMap@{'SON_OR_DAUGHTER':''}"
                      onchange="setInformPerson('','','','','');" value="%{deathAlteration.declarant.declarantType}"/>
         </td>
@@ -1102,7 +1096,7 @@ function initPage() {
             Relative
         </td>
         <td align="center">
-            <s:radio id="declarantType" name="deathRegister.declarant.declarantType"
+            <s:radio id="declarantType" name="deathAlteration.declarant.declarantType"
                      list="#@java.util.HashMap@{'RELATIVE':''}"
                      onchange="setInformPerson('','','','','');" value="%{deathAlteration.declarant.declarantType}"/>
         </td>
@@ -1112,7 +1106,7 @@ function initPage() {
             Other
         </td>
         <td align="center">
-            <s:radio id="declarantType" name="deathRegister.declarant.declarantType"
+            <s:radio id="declarantType" name="deathAlteration.declarant.declarantType"
                      list="#@java.util.HashMap@{'OTHER':''}"
                      onchange="setInformPerson('','','','','');" value="%{deathAlteration.declarant.declarantType}"/>
         </td>
@@ -1124,7 +1118,7 @@ function initPage() {
             Identification Number
         </td>
         <td colspan="6" align="left">
-            <s:textfield id="declarant_pinOrNic" name="deathRegister.declarant.declarantNICorPIN" maxLength="10"
+            <s:textfield id="declarant_pinOrNic" name="deathAlteration.declarant.declarantNICorPIN" maxLength="10"
                          value="%{deathAlteration.declarant.declarantNICorPIN}"/>
         </td>
     </tr>
@@ -1135,7 +1129,7 @@ function initPage() {
             Name
         </td>
         <td colspan="6">
-            <s:textarea id="declarantName" name="deathRegister.declarant.declarantFullName" cssStyle="width:99%"
+            <s:textarea id="declarantName" name="deathAlteration.declarant.declarantFullName" cssStyle="width:99%"
                         value="%{deathAlteration.declarant.declarantFullName}"/>
         </td>
     </tr>
@@ -1146,7 +1140,7 @@ function initPage() {
             Postal Address
         </td>
         <td colspan="6">
-            <s:textarea id="declarantAddress" name="deathRegister.declarant.declarantAddress" cssStyle="width:99%"
+            <s:textarea id="declarantAddress" name="deathAlteration.declarant.declarantAddress" cssStyle="width:99%"
                         value="%{deathAlteration.declarant.declarantAddress}"/>
         </td>
     </tr>

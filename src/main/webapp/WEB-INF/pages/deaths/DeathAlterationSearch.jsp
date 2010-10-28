@@ -102,7 +102,7 @@
 
 <s:actionerror/>
 <s:actionmessage/>
-<s:form method="post" action="eprCaptureDeathAlteration.do" onsubmit="javascript:return validateForm()">
+<s:form method="post" action="eprDeathAlterationPageLoad.do" onsubmit="javascript:return validateForm()">
     <%--section search by death certificate number--%>
     <div id="tabs">
             <ul>

@@ -1087,7 +1087,7 @@
         </action>
 
         <action name="eprDeathAlterationEdit" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"
-                method="editDeathAlteration">
+                method="editDeathAlterationInit">
             <result type="tiles" name="success">epr.deathAlterationCapture</result>
         </action>
 
@@ -1111,6 +1111,13 @@
                 method="printAlterationLetter">
             <result type="tiles" name="pageLoad">epr.deathAlterationPrintLetter</result>
         </action>
+
+        <action name="eprDeathAlterationPageLoad" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"
+                method="deathAlterationCaptureInit">
+            <result type="tiles" name="pageLoad">epr.deathAlterationCapture</result>
+            <result type="tiles" name="error">epr.deathAlterationSearchHome</result>
+        </action>
+
 
     </package>
 </struts>

@@ -32,8 +32,6 @@ import java.util.HashMap;
 
 public class DeathAlteration {
 
-    public static final Map<Integer, String> indexMap = new HashMap<Integer, String>();
-
     public static final int SUDDEN_DEATH = 0;
     public static final int DATE_OF_DEATH = 1;
     public static final int TIME_OF_DEATH = 2;
@@ -56,32 +54,6 @@ public class DeathAlteration {
     public static final int NAME_FATHER = 19;
     public static final int PIN_MOTHER = 20;
     public static final int NAME_MOTHER = 21;
-
-    static {
-        indexMap.put(SUDDEN_DEATH, "field.sudden.death");
-        indexMap.put(DATE_OF_DEATH, "field.date.death");
-        indexMap.put(TIME_OF_DEATH, "field.time.death");
-        indexMap.put(PLACE_OF_DEATH, "field.place.death");
-        indexMap.put(PLACE_OF_DEATH_ENGLISH, "field.place.death.english");
-        indexMap.put(CAUSE_OF_DEATH_ESTABLISHED, "field.cause.death.established");
-        indexMap.put(CAUSE_OF_DEATH, "field.cause.death");
-        indexMap.put(ICD_CODE, "field.icd.code");
-        indexMap.put(BURIAL_PLACE, "field.burial.place");
-
-        indexMap.put(PIN, "field.pin.number");
-        indexMap.put(COUNTRY, "field.country");
-        indexMap.put(PASSPORT, "field.passPort");
-        indexMap.put(AGE, "field.age");
-        indexMap.put(GENDER, "field.gender");
-        indexMap.put(RACE, "field.race");
-        indexMap.put(NAME, "field.name");
-        indexMap.put(NAME_ENGLISH, "field.name.english");
-        indexMap.put(ADDRESS, "field.address");
-        indexMap.put(PIN_FATHER, "field.pin.father");
-        indexMap.put(NAME_FATHER, "field.name.father");
-        indexMap.put(PIN_MOTHER, "field.pin.mother");
-        indexMap.put(NAME_MOTHER, "field.name.mother");
-    }
 
     public enum State {
         /**
@@ -118,7 +90,7 @@ public class DeathAlteration {
      * g - The entry has not been signed (Approved) by the registrar [Will not occur in the computerized system]
      * h & i - Corrections / omissions, Alterations etc.
      * j - Reconstruction of damaged records [Will not occur in the computerized system]
-     *
+     * <p/>
      * Section 53 changes for sudden deaths
      */
     public enum AlterationType {
@@ -142,6 +114,10 @@ public class DeathAlteration {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idUKey;
 
+    //id points to death declaration
+    @Column(nullable = false)
+    private long deathRegisterIDUkey;
+
     @Column(nullable = false)
     @Temporal(value = TemporalType.DATE)
     private Date dateReceived;
@@ -156,10 +132,6 @@ public class DeathAlteration {
      */
     @Column(nullable = true)
     private BitSet requestedAlterations = new BitSet();
-
-    //id points to death declaration
-    @Column(nullable = false)
-    private long deathRegisterIDUkey;
 
     @Column
     private boolean bcOfFather;
