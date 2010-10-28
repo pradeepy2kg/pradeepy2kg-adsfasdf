@@ -109,10 +109,7 @@ public interface DeathAlterationService {
      * @param da                 the death alteration to be approved
      * @param fieldsToBeApproved the list of field indexes to be approved
      * @param user               the user initiating the action
-     * @param applyChangesToDC   if true, the approval is complete. Now apply changes to DC. if false, the approval is
-     *                           not yet complete, but save whatever approvals made to database
      */
-    public void approveDeathAlteration(DeathAlteration da, Map<Integer, Boolean> fieldsToBeApproved,
-                                       boolean applyChangesToDC, User user);
+    public void approveDeathAlteration(DeathAlteration da, Map<Integer, Boolean> fieldsToBeApproved, User user);
 
-    }
+}

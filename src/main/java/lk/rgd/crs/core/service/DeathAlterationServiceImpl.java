@@ -127,80 +127,60 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void approveDeathAlteration(DeathAlteration da, Map<Integer, Boolean> fieldsToBeApproved,
-                                       boolean applyChangesToDC, User user) {
-
-        if (applyChangesToDC) {
-            logger.debug("Attempt to approve death alteration record : {} and apply changes to DC", da.getIdUKey());
-        } else {
-            logger.debug("Attempt to save intermediate approvals for alteration record : {}", da.getIdUKey());
-        }
-
+    public void approveDeathAlteration(DeathAlteration da, Map<Integer, Boolean> fieldsToBeApproved,User user) {
+        logger.debug("Attempt to approve death alteration record : {} and apply changes to DC", da.getIdUKey());
         validateAccessOfUserForApproval(da, user);
         DeathAlteration existing = deathAlterationDAO.getById(da.getIdUKey());
         validateAccessOfUserForApproval(existing, user);
 
-        boolean containsApprovedChanges = false;
         for (Map.Entry<Integer, Boolean> e : fieldsToBeApproved.entrySet()) {
             if (Boolean.TRUE.equals(e.getValue())) {
                 logger.debug("Setting status as approved for the alteration statement : {}", e.getKey());
                 existing.getApprovalStatuses().set(e.getKey(), true);
-                containsApprovedChanges = true;
             } else {
                 logger.debug("Setting status as rejected for the alteration statement : {}", e.getKey());
                 existing.getApprovalStatuses().set(e.getKey(), false);
             }
         }
+        logger.debug("Requesting the application of changes to the DC as final for : {}", existing.getIdUKey());
+        existing.setStatus(DeathAlteration.State.FULLY_APPROVED);
 
-        if (containsApprovedChanges && applyChangesToDC) {
-            logger.debug("Requesting the application of changes to the DC as final for : {}", existing.getIdUKey());
-            existing.setStatus(DeathAlteration.State.FULLY_APPROVED);
+        // We've saved the alteration record, now lets modify the birth record
+        DeathRegister deathRegister = deathRegisterDAO.getById(existing.getDeathRegisterIDUkey());
+        switch (existing.getType()) {
 
-            // We've saved the alteration record, now lets modify the birth record
-            DeathRegister deathRegister = deathRegisterDAO.getById(existing.getDeathRegisterIDUkey());
-            switch (existing.getType()) {
+            case TYPE_53:
+            case TYPE_52_1_H:
+            case TYPE_52_1_I: {
+                logger.debug("Alteration is an amendment, inclusion of omission or correction. Type : {}",
+                        existing.getType().ordinal());
+                deathRegister.setStatus(DeathRegister.State.ARCHIVED_ALTERED);
+                deathRegister.getLifeCycleInfo().setActiveRecord(false);      // mark old record as a non-active record
+                deathRegisterDAO.updateDeathRegistration(deathRegister, user);
 
-                case TYPE_53:
-                case TYPE_52_1_H:
-                case TYPE_52_1_I: {
-                    logger.debug("Alteration is an amendment, inclusion of omission or correction. Type : {}",
-                            existing.getType().ordinal());
-                    deathRegister.setStatus(DeathRegister.State.ARCHIVED_ALTERED);
-                    deathRegister.getLifeCycleInfo().setActiveRecord(false);      // mark old record as a non-active record
-                    deathRegisterDAO.updateDeathRegistration(deathRegister, user);
-
-                    // create the new entry as a clone from the existing
-                    DeathRegister newDR = null;
-                    try {
-                        newDR = deathRegister.clone();
-                    } catch (CloneNotSupportedException e) {
-                        handleException("Unable to clone DR : " + deathRegister.getIdUKey(), ErrorCodes.ILLEGAL_STATE);
-                    }
-                    newDR.setStatus(DeathRegister.State.ARCHIVED_CERT_GENERATED);
-                    applyChanges(existing, newDR, user);
-                    deathRegisterDAO.addDeathRegistration(newDR, user);
-                    break;
+                // create the new entry as a clone from the existing
+                DeathRegister newDR = null;
+                try {
+                    newDR = deathRegister.clone();
+                } catch (CloneNotSupportedException e) {
+                    handleException("Unable to clone DR : " + deathRegister.getIdUKey(), ErrorCodes.ILLEGAL_STATE);
                 }
-
-                case TYPE_52_1_A:
-                case TYPE_52_1_B:
-                case TYPE_52_1_D:
-                case TYPE_52_1_E: {
-                    deathRegister.setStatus(DeathRegister.State.ARCHIVED_CANCELLED);
-                    deathRegisterDAO.updateDeathRegistration(deathRegister, user);
-                    logger.debug("Alteration of type : {} is a cancellation of the existing record : {}",
-                            existing.getType().ordinal(), deathRegister.getIdUKey());
-                    break;
-                }
+                newDR.setStatus(DeathRegister.State.ARCHIVED_CERT_GENERATED);
+                applyChanges(existing, newDR, user);
+                deathRegisterDAO.addDeathRegistration(newDR, user);
+                break;
             }
 
-        } else {
-            existing.setStatus(DeathAlteration.State.PARTIALY_APPROVED);
-            BitSet partiallyApprovedBitSet = new BitSet();
-            for (Map.Entry e : fieldsToBeApproved.entrySet()) {
-                partiallyApprovedBitSet.set((Integer) e.getKey(), (Boolean) e.getValue());
+            case TYPE_52_1_A:
+            case TYPE_52_1_B:
+            case TYPE_52_1_D:
+            case TYPE_52_1_E: {
+                deathRegister.setStatus(DeathRegister.State.ARCHIVED_CANCELLED);
+                deathRegisterDAO.updateDeathRegistration(deathRegister, user);
+                logger.debug("Alteration of type : {} is a cancellation of the existing record : {}",
+                        existing.getType().ordinal(), deathRegister.getIdUKey());
+                break;
             }
-            existing.setApprovalStatuses(partiallyApprovedBitSet);
         }
 
         existing.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());

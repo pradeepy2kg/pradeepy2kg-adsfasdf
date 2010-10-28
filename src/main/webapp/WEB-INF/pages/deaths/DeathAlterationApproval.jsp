@@ -13,19 +13,17 @@
     }
 
     function warning() {
-        var alterChanges = document.getElementById('applyChanges').checked;
-       var ret=true;
-        if (alterChanges) {
-            ret = confirm(document.getElementById('confirmation').value)
-        }
+        var ret = true;
+        ret = confirm(document.getElementById('confirmation').value)
         return ret;
     }
 
 </script>
 <div id="birth-register-approval-body">
-    <s:if test="!(pendingList.size()==0)">
+    <s:if test="!(approvalFieldList.size()==0)">
         <s:form action="eprDeathAlterationSetBits" method="post" onsubmit="javascript:return warning()">
-            <table id="pendingApprovalTable" border="1" width="100%" class="table_reg_page_05" cellpadding="0" cellspacing="0">
+            <table id="pendingApprovalTable" border="1" width="100%" class="table_reg_page_05" cellpadding="0"
+                   cellspacing="0">
                 <tr>
                     <td><s:label value="%{getText('th.index')}"/></td>
                     <td><s:label value="%{getText('th.exsists')}"/></td>
@@ -33,19 +31,19 @@
                     <td><s:label value="%{getText('th.approve')}"/></td>
                 </tr>
                 <tbody>
-                <s:iterator value="pendingList">
+                <s:iterator value="approvalFieldList">
                     <tr>
-                        <td align="left"><s:property value="%{getText(key.get(1))}"/></td>
+                        <td align="left"><s:property value="%{getText('death.alteration.field.'+key)}"/></td>
                         <td><s:property value="%{value.get(0)}"/></td>
                         <td><s:property value="%{value.get(1)}"/></td>
                         <td align="center">
-                            <s:checkbox value="%{value.get(2)!=null}"  name="approvedIndex" fieldValue="%{key.get(0)}"/>
+                            <s:checkbox name="approvedIndex" fieldValue="%{key}"/>
                         </td>
                     </tr>
                 </s:iterator>
                 </tbody>
             </table>
-            <table>
+<%--            <table>
                 <caption/>
                 <col>
                 <col>
@@ -55,11 +53,10 @@
                     <td align="right"><s:checkbox id="applyChanges" name="applyChanges"/></td>
                 </tr>
                 </tbody>
-            </table>
+            </table>--%>
             <div class="form-submit">
                 <s:submit name="submit" value="%{getText('lable.update')}"/>
                 <s:hidden name="deathAlterationId" value="%{deathAlteration.idUKey}"/>
-                <s:hidden name="pendingListSize" value="%{pendingList.size()}"/>
             </div>
         </s:form>
 

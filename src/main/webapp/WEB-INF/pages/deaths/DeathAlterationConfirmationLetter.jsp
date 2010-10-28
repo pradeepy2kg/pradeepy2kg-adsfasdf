@@ -53,7 +53,6 @@
                 Printed On : <%= DateTimeUtils.getISO8601FormattedString(new Date()) %>
             </td>
             <td style="text-align:right;margin-left:auto;margin-right:0;">
-                <%--<%= DateTimeUtils.getISO8601FormattedString(new Date()) %>--%>
             </td>
         </tr>
         </tbody>
@@ -69,16 +68,16 @@
 
         </tr>
         <tbody>
-        <s:iterator value="printingList">
+        <s:iterator value="approvalFieldList">
             <tr>
-                <td align="left"><s:property value="%{getText(key)}"/></td>
-                <td><s:property value="%{value.get(0)}"/></td>
-                <td><s:property value="%{value.get(1)}"/></td>
+                <td align="left" width="125px"><s:property value="%{getText('death.alteration.field.'+key)}"/></td>
+                <td align="left" width="400px"><s:property value="%{value.get(0)}"/></td>
+                <td align="left" width="400px"><s:property value="%{value.get(1)}"/></td>
                 <s:if test="%{value.get(2)==true}">
-                    <td><s:label value="%{getText('yes.label')}"/></td>
+                    <td align="center"><s:label value="%{getText('yes.label')}"/></td>
                 </s:if>
                 <s:else>
-                    <td><s:label value="%{getText(reject.label')}"/></td>
+                    <td align="center"><s:label value="%{getText(reject.label')}"/></td>
                 </s:else>
             </tr>
         </s:iterator>
