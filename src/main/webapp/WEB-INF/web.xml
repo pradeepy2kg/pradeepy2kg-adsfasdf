@@ -73,6 +73,14 @@
         </init-param>
         <load-on-startup>2</load-on-startup>
     </servlet>
+    <servlet>
+        <servlet-name>ImageServlet</servlet-name>
+        <servlet-class>lk.rgd.prs.web.ImageServlet</servlet-class>
+        <init-param>
+            <param-name>myName</param-name>
+            <param-value>value</param-value>
+        </init-param>
+    </servlet>
 
     <listener>
         <listener-class>org.apache.tiles.web.startup.TilesListener</listener-class>

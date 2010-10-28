@@ -211,6 +211,13 @@
             <artifactId>xstream</artifactId>
             <version>1.3.1</version>
         </dependency>
+
+        <!-- barcode4j for barcode generation for PRS -->
+        <dependency>
+            <groupId>net.sf.barcode4j</groupId>
+            <artifactId>barcode4j</artifactId>
+            <version>2.0</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -297,7 +304,6 @@
             </build>
         </profile>
     </profiles>
-
 
     <properties>
         <sonar.host.url>http://localhost:8000</sonar.host.url>
