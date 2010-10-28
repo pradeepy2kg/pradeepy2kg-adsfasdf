@@ -346,24 +346,18 @@ $(function() {
         maximize("death-person-info");
     });
     $('#death-info-check').click(function() {
-
-
         document.getElementById("death-info-check").disabled = true;
-
-
+        document.getElementById('death').value = true;
         var fieldIds = new Array('deathDatePicker', 'deathTimePicker', 'placeOfDeath', 'placeOfDeathInEnglish', 'cause_of_death',
                 'ICD_code', 'placeOfBurial', 'act5353', 'act5252', 'cause_of_death_yesfalse', 'cause_of_death_notrue');
         enableFields(fieldIds);
     });
 
     $('#death-person-info-check').click(function() {
-
-
         document.getElementById("death-person-info-check").disabled = true;
-
-
-        var fieldIds = new Array('deathPerson_PINorNIC', 'deathPersonCountryList', 'passportNumber', 'deathAge', 'deathPersonGender',
-                'deathPersonRaceList', 'nameOfficialLang', 'nameEnglish', 'address', 'pinNic', 'fatherName', 'fatherNIC', 'motherName');
+        document.getElementById('deathPerson').value = true;
+        var fieldIds = new Array('deathPerson_PINorNIC', 'deathPersonCountryList', 'passportNumber', 'deathAge', 'deathPersonGender'
+                , 'deathPersonRaceList', 'fatherPinNic', 'nameEnglish', 'address', 'nameOfficialLang', 'motherNIC', 'motherName', 'fatherName');
         enableFields(fieldIds);
     });
 });
@@ -400,11 +394,10 @@ function initPage() {
     var fieldIds;
     idNames = new Array('death-info', 'death-person-info');
     checkIdNames = new Array('death-person-info-check', 'death-info-check');
-    fieldIds = new Array(
-            'deathDatePicker', 'deathTimePicker', 'placeOfDeath', 'placeOfDeathInEnglish',
-            'cause_of_death', 'ICD_code', 'placeOfBurial', 'deathPerson_PINorNIC', 'deathPersonCountryList',
-            'passportNumber', 'deathAge', 'deathPersonGender', 'deathPersonRaceList', 'nameOfficialLang', 'nameEnglish', 'address', 'pinNic',
-            'fatherName', 'fatherNIC', 'motherName', 'act5353', 'act5252', 'cause_of_death_yesfalse', 'cause_of_death_notrue'
+    fieldIds = new Array('deathDatePicker', 'cause_of_death_yesfalse', 'act5252', 'motherNIC', 'motherName', 'fatherName',
+            'fatherPinNic', 'nameEnglish', 'address', 'nameOfficialLang', 'deathAge', 'deathPersonGender', 'deathPersonRaceList'
+            , 'deathPerson_PINorNIC', 'deathPersonCountryList', 'passportNumber', 'placeOfBurial', 'cause_of_death', 'ICD_code'
+            , 'cause_of_death_notrue', 'placeOfDeath', 'placeOfDeathInEnglish', 'act5353', 'act5252', 'deathTimePicker'
             );
 
     //set serial number
@@ -417,9 +410,11 @@ function initPage() {
         document.getElementById(checkIdNames[i]).style.display = 'none';
         document.getElementById(checkIdNames[i] + "-lable").style.display = 'none';
     }
+
     for (var i = 0; i < fieldIds.length; i++) {
         document.getElementById(fieldIds[i]).disabled = true;
     }
+
 }
 </script>
 <div id="death-alteration-outer">
@@ -628,7 +623,7 @@ function initPage() {
                 <s:label value="%{getText('edit.lable')}"/></div>
         </td>
         <td style="border-right:none;width:3%">
-            <s:checkbox id="death-info-check" name="editDeathInfo" cssStyle="float:right;"/>
+            <s:checkbox id="death-info-check" name="#" cssStyle="float:right;"/>
         </td>
         <td style="width:2%;border-left:none">
             <div class="birth-alteration-minimize-icon" id="death-info-min">[-]</div>
@@ -799,7 +794,7 @@ function initPage() {
                 <s:label value="%{getText('edit.lable')}"/></div>
         </td>
         <td style="border-right:none;width:3%">
-            <s:checkbox id="death-person-info-check" name="editDeathPerson" cssStyle="float:right;"/>
+            <s:checkbox id="death-person-info-check" name="" cssStyle="float:right;"/>
         </td>
         <td style="width:2%">
             <div class="birth-alteration-minimize-icon" id="death-person-info-min">[-]</div>
@@ -1183,6 +1178,11 @@ function initPage() {
 <s:hidden name="deathId" value="%{deathRegister.idUKey}"/>
 <s:hidden name="editMode" value="%{editMode}"/>
 <s:hidden name="deathAlterationId" value="%{deathAlteration.idUKey}"/>
+<s:hidden id="deathPerson" name="editDeathPerson" value=""/>
+<s:hidden id="death" name="editDeathInfo" value=""/>
+
+</s:form>
+</div>
 <s:hidden id="error0" value="%{getText('er.invalid.inputType')}"/>
 <s:hidden id="error1" value="%{getText('er.label.reciveDatePicker')}"/>
 <s:hidden id="error2" value="%{getText('er.label.dateOfDeath')}"/>
@@ -1192,6 +1192,4 @@ function initPage() {
 <s:hidden id="error6" value="%{getText('er.label.fatherPinNic')}"/>
 <s:hidden id="error7" value="%{getText('er.label.motherNIC')}"/>
 <s:hidden id="error8" value="%{getText('er.label.declarant_pinOrNic')}"/>
-</s:form>
-</div>
 
