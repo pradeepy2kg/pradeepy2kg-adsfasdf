@@ -85,7 +85,8 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     private String pin;
 
     private boolean editMode;
-    private boolean applyChanges;
+    private boolean editDeathInfo;
+    private boolean editDeathPerson;
 
     public enum Type {
 
@@ -147,7 +148,12 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                     deathRace = raceDAO.getRace(deathPersonRace);
                     deathAlteration.getDeathPerson().setDeathPersonRace(deathRace);
                 }
-                //compare before add
+                if (!editDeathInfo) {
+                    deathAlteration.setDeathInfo(null);
+                }
+                if (!editDeathPerson) {
+                    deathAlteration.setDeathPerson(null);
+                }
                 deathAlterationService.addDeathAlteration(deathAlteration, user);
                 populatePrimaryLists(districtUKey, dsDivisionId, language, user);
                 addActionMessage(getText("alt.massage.success"));
@@ -378,46 +384,49 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         }
 
         //todo sudden death
-
-        getDisplayList(DeathAlteration.DATE_OF_DEATH, dateEx, dateAlt, Type.STRING.ordinal());
-        getDisplayList(DeathAlteration.TIME_OF_DEATH, deathRegister.getDeath().getTimeOfDeath(),
-                deathAlteration.getDeathInfo().getTimeOfDeath(), Type.STRING.ordinal());
-        getDisplayList(DeathAlteration.PLACE_OF_DEATH, deathRegister.getDeath().getPlaceOfDeath(),
-                deathAlteration.getDeathInfo().getPlaceOfDeath(), Type.STRING.ordinal());
-        getDisplayList(DeathAlteration.PLACE_OF_DEATH_ENGLISH, deathRegister.getDeath().getPlaceOfDeathInEnglish(),
-                deathAlteration.getDeathInfo().getPlaceOfDeathInEnglish(), Type.STRING.ordinal());
-        getDisplayList(DeathAlteration.CAUSE_OF_DEATH_ESTABLISHED, deathRegister.getDeath().isCauseOfDeathEstablished(),
-                deathAlteration.getDeathInfo().isCauseOfDeathEstablished(), Type.BOOLEAN.ordinal());
-        getDisplayList(DeathAlteration.CAUSE_OF_DEATH, deathRegister.getDeath().getCauseOfDeath(),
-                deathAlteration.getDeathInfo().getCauseOfDeath(), Type.STRING.ordinal());
-        getDisplayList(DeathAlteration.ICD_CODE, deathRegister.getDeath().getIcdCodeOfCause(),
-                deathAlteration.getDeathInfo().getIcdCodeOfCause(), Type.STRING.ordinal());
-        getDisplayList(DeathAlteration.BURIAL_PLACE, deathRegister.getDeath().getPlaceOfBurial(),
-                deathAlteration.getDeathInfo().getPlaceOfBurial(), Type.STRING.ordinal());
-        getDisplayList(DeathAlteration.COUNTRY, deathRegister.getDeathPerson().getDeathPersonCountry(),
-                deathAlteration.getDeathPerson().getDeathPersonCountry(), Type.COUNTRY.ordinal());
-        getDisplayList(DeathAlteration.PASSPORT, deathRegister.getDeathPerson().getDeathPersonPassportNo(),
-                deathAlteration.getDeathPerson().getDeathPersonPassportNo(), Type.STRING.ordinal());
-        getDisplayList(DeathAlteration.AGE, deathRegister.getDeathPerson().getDeathPersonAge(),
-                deathAlteration.getDeathPerson().getDeathPersonAge(), Type.INTEGER.ordinal());
-        getDisplayList(DeathAlteration.GENDER, deathRegister.getDeathPerson().getDeathPersonGender(),
-                deathAlteration.getDeathPerson().getDeathPersonGender(), Type.INTEGER.ordinal());
-        getDisplayList(DeathAlteration.RACE, deathRegister.getDeathPerson().getDeathPersonRace(),
-                deathAlteration.getDeathPerson().getDeathPersonRace(), Type.RACE.ordinal());
-        getDisplayList(DeathAlteration.NAME, deathRegister.getDeathPerson().getDeathPersonNameOfficialLang(),
-                deathAlteration.getDeathPerson().getDeathPersonNameOfficialLang(), Type.STRING.ordinal());
-        getDisplayList(DeathAlteration.NAME_ENGLISH, deathRegister.getDeathPerson().getDeathPersonNameInEnglish(),
-                deathAlteration.getDeathPerson().getDeathPersonNameInEnglish(), Type.STRING.ordinal());
-        getDisplayList(DeathAlteration.ADDRESS, deathRegister.getDeathPerson().getDeathPersonPermanentAddress(),
-                deathAlteration.getDeathPerson().getDeathPersonPermanentAddress(), Type.STRING.ordinal());
-        getDisplayList(DeathAlteration.PIN_FATHER, deathRegister.getDeathPerson().getDeathPersonFatherPINorNIC(),
-                deathAlteration.getDeathPerson().getDeathPersonFatherPINorNIC(), Type.STRING.ordinal());
-        getDisplayList(DeathAlteration.NAME_FATHER, deathRegister.getDeathPerson().getDeathPersonFatherFullName(),
-                deathAlteration.getDeathPerson().getDeathPersonFatherFullName(), Type.STRING.ordinal());
-        getDisplayList(DeathAlteration.PIN_MOTHER, deathRegister.getDeathPerson().getDeathPersonMotherPINorNIC(),
-                deathAlteration.getDeathPerson().getDeathPersonMotherPINorNIC(), Type.STRING.ordinal());
-        getDisplayList(DeathAlteration.NAME_MOTHER, deathRegister.getDeathPerson().getDeathPersonMotherFullName(),
-                deathAlteration.getDeathPerson().getDeathPersonMotherFullName(), Type.STRING.ordinal());
+        if (deathAlteration.getDeathInfo() != null) {
+            getDisplayList(DeathAlteration.DATE_OF_DEATH, dateEx, dateAlt, Type.STRING.ordinal());
+            getDisplayList(DeathAlteration.TIME_OF_DEATH, deathRegister.getDeath().getTimeOfDeath(),
+                    deathAlteration.getDeathInfo().getTimeOfDeath(), Type.STRING.ordinal());
+            getDisplayList(DeathAlteration.PLACE_OF_DEATH, deathRegister.getDeath().getPlaceOfDeath(),
+                    deathAlteration.getDeathInfo().getPlaceOfDeath(), Type.STRING.ordinal());
+            getDisplayList(DeathAlteration.PLACE_OF_DEATH_ENGLISH, deathRegister.getDeath().getPlaceOfDeathInEnglish(),
+                    deathAlteration.getDeathInfo().getPlaceOfDeathInEnglish(), Type.STRING.ordinal());
+            getDisplayList(DeathAlteration.CAUSE_OF_DEATH_ESTABLISHED, deathRegister.getDeath().isCauseOfDeathEstablished(),
+                    deathAlteration.getDeathInfo().isCauseOfDeathEstablished(), Type.BOOLEAN.ordinal());
+            getDisplayList(DeathAlteration.CAUSE_OF_DEATH, deathRegister.getDeath().getCauseOfDeath(),
+                    deathAlteration.getDeathInfo().getCauseOfDeath(), Type.STRING.ordinal());
+            getDisplayList(DeathAlteration.ICD_CODE, deathRegister.getDeath().getIcdCodeOfCause(),
+                    deathAlteration.getDeathInfo().getIcdCodeOfCause(), Type.STRING.ordinal());
+            getDisplayList(DeathAlteration.BURIAL_PLACE, deathRegister.getDeath().getPlaceOfBurial(),
+                    deathAlteration.getDeathInfo().getPlaceOfBurial(), Type.STRING.ordinal());
+        }
+        if (deathAlteration.getDeathPerson() != null) {
+            getDisplayList(DeathAlteration.COUNTRY, deathRegister.getDeathPerson().getDeathPersonCountry(),
+                    deathAlteration.getDeathPerson().getDeathPersonCountry(), Type.COUNTRY.ordinal());
+            getDisplayList(DeathAlteration.PASSPORT, deathRegister.getDeathPerson().getDeathPersonPassportNo(),
+                    deathAlteration.getDeathPerson().getDeathPersonPassportNo(), Type.STRING.ordinal());
+            getDisplayList(DeathAlteration.AGE, deathRegister.getDeathPerson().getDeathPersonAge(),
+                    deathAlteration.getDeathPerson().getDeathPersonAge(), Type.INTEGER.ordinal());
+            getDisplayList(DeathAlteration.GENDER, deathRegister.getDeathPerson().getDeathPersonGender(),
+                    deathAlteration.getDeathPerson().getDeathPersonGender(), Type.INTEGER.ordinal());
+            getDisplayList(DeathAlteration.RACE, deathRegister.getDeathPerson().getDeathPersonRace(),
+                    deathAlteration.getDeathPerson().getDeathPersonRace(), Type.RACE.ordinal());
+            getDisplayList(DeathAlteration.NAME, deathRegister.getDeathPerson().getDeathPersonNameOfficialLang(),
+                    deathAlteration.getDeathPerson().getDeathPersonNameOfficialLang(), Type.STRING.ordinal());
+            getDisplayList(DeathAlteration.NAME_ENGLISH, deathRegister.getDeathPerson().getDeathPersonNameInEnglish(),
+                    deathAlteration.getDeathPerson().getDeathPersonNameInEnglish(), Type.STRING.ordinal());
+            getDisplayList(DeathAlteration.ADDRESS, deathRegister.getDeathPerson().getDeathPersonPermanentAddress(),
+                    deathAlteration.getDeathPerson().getDeathPersonPermanentAddress(), Type.STRING.ordinal());
+            getDisplayList(DeathAlteration.PIN_FATHER, deathRegister.getDeathPerson().getDeathPersonFatherPINorNIC(),
+                    deathAlteration.getDeathPerson().getDeathPersonFatherPINorNIC(), Type.STRING.ordinal());
+            getDisplayList(DeathAlteration.NAME_FATHER, deathRegister.getDeathPerson().getDeathPersonFatherFullName(),
+                    deathAlteration.getDeathPerson().getDeathPersonFatherFullName(), Type.STRING.ordinal());
+            getDisplayList(DeathAlteration.PIN_MOTHER, deathRegister.getDeathPerson().getDeathPersonMotherPINorNIC(),
+                    deathAlteration.getDeathPerson().getDeathPersonMotherPINorNIC(), Type.STRING.ordinal());
+            getDisplayList(DeathAlteration.NAME_MOTHER, deathRegister.getDeathPerson().getDeathPersonMotherFullName(),
+                    deathAlteration.getDeathPerson().getDeathPersonMotherFullName(), Type.STRING.ordinal());
+        }
 
         //applying requested bit set
         if (deathAlteration.getRequestedAlterations().size() == 0) {
@@ -468,7 +477,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             }
             deathAlterationService.approveDeathAlteration(deathAlteration, approveBitset, user);
             populatePrimaryLists(districtUKey, dsDivisionId, language, user);
-            logger.debug("apply changes to death alteration : alteration id  {} :apply changes : {}", deathAlterationId, applyChanges);
+            logger.debug("apply changes to death alteration : alteration id  {}", deathAlterationId);
         }
         catch (CRSRuntimeException e) {
             logger.error("cannot set bit set for death alteration : {}", deathAlterationId);
@@ -1259,19 +1268,27 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         this.userLocations = userLocations;
     }
 
-    public boolean isApplyChanges() {
-        return applyChanges;
-    }
-
-    public void setApplyChanges(boolean applyChanges) {
-        this.applyChanges = applyChanges;
-    }
-
     public Map<Integer, List> getApprovalFieldList() {
         return approvalFieldList;
     }
 
     public void setApprovalFieldList(Map<Integer, List> approvalFieldList) {
         this.approvalFieldList = approvalFieldList;
+    }
+
+    public boolean isEditDeathPerson() {
+        return editDeathPerson;
+    }
+
+    public void setEditDeathPerson(boolean editDeathPerson) {
+        this.editDeathPerson = editDeathPerson;
+    }
+
+    public boolean isEditDeathInfo() {
+        return editDeathInfo;
+    }
+
+    public void setEditDeathInfo(boolean editDeathInfo) {
+        this.editDeathInfo = editDeathInfo;
     }
 }

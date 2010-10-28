@@ -34,7 +34,7 @@ public class DeathPersonInfo implements Serializable, Cloneable {
     /**
      * Gender 0 - male, 1 - female, 2 - unknown
      */
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int deathPersonGender;
 
     /**

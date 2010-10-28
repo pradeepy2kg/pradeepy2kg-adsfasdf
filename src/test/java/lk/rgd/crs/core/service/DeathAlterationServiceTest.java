@@ -105,12 +105,12 @@ public class DeathAlterationServiceTest extends TestCase {
         // reload record
         da = deathAltSvc.getByIDUKey(da.getIdUKey(), argNorthWesternProvince);
         try {
-            deathAltSvc.approveDeathAlteration(da, fieldsToBeApproved, true, argNorthWesternProvince);
+            deathAltSvc.approveDeathAlteration(da, fieldsToBeApproved, argNorthWesternProvince);
             fail("The north western province ARG should not be able to approve death alteration for western province");
         } catch (Exception e) {}
 
         // arg for western province can approve
-        deathAltSvc.approveDeathAlteration(da, fieldsToBeApproved, true, argWesternProvince);
+        deathAltSvc.approveDeathAlteration(da, fieldsToBeApproved, argWesternProvince);
 
         long serialNumber = deathRegisterDAO.getById(da.getDeathRegisterIDUkey()).getDeath().getDeathSerialNo();
 

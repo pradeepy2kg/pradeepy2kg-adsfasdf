@@ -6,8 +6,6 @@ import lk.rgd.common.util.NameFormatUtil;
 import javax.persistence.*;
 import java.util.BitSet;
 import java.util.Date;
-import java.util.Map;
-import java.util.HashMap;
 
 /**
  * @authar amith jayasekara
