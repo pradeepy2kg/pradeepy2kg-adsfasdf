@@ -1006,7 +1006,7 @@
             <result type="tiles" name="error">epr.birthAlteration</result>
         </action>
         <action name="eprEditSelectedAlteration" class="lk.rgd.crs.web.action.births.AlterationAction"
-                method="editbirthAlteration">
+                method="editBirthAlteration">
             <result type="tiles" name="error">epr.birthAlteration</result>
         </action>
 
