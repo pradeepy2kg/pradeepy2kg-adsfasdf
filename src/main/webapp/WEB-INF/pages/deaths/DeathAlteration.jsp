@@ -62,7 +62,7 @@
             returnval = false;
         }
         errormsg = "";
-        return returnval;
+        return true;
     }
 </script>
 

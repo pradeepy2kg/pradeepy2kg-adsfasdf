@@ -41,6 +41,7 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
     @Transactional(propagation = Propagation.REQUIRED)
     public void addDeathAlteration(DeathAlteration da, User user) {
         logger.debug("Adding new death alteration record on request of : {}", da.getDeclarant().getDeclarantFullName());
+        DeathAlterationValidator.validateMinimumConditions(da);
         da.setSubmittedLocation(user.getPrimaryLocation());
         // any user (DEO, ADR of any DS office or BD division etc) can add a birth alteration request
         deathAlterationDAO.addDeathAlteration(da, user);
@@ -127,7 +128,7 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void approveDeathAlteration(DeathAlteration da, Map<Integer, Boolean> fieldsToBeApproved,User user) {
+    public void approveDeathAlteration(DeathAlteration da, Map<Integer, Boolean> fieldsToBeApproved, User user) {
         logger.debug("Attempt to approve death alteration record : {} and apply changes to DC", da.getIdUKey());
         validateAccessOfUserForApproval(da, user);
         DeathAlteration existing = deathAlterationDAO.getById(da.getIdUKey());
