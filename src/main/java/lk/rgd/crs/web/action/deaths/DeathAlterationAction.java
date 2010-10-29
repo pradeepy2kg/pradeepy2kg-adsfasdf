@@ -52,7 +52,6 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     private Map<Integer, String> userLocations;
     private Map<Integer, List> approvalFieldList = new HashMap<Integer, List>();
 
-
     private List<DeathAlteration> approvalList;
 
     private int[] approvedIndex;
@@ -161,6 +160,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 return SUCCESS;
 
             } catch (CRSRuntimeException e) {
+                //todo both cases(both object null and declerant info is null gives same error massage if need two add here)
                 logger.error("CRS exception while adding death alteration ");
                 addActionMessage(getText("alt.massage.cannot.add.alteration.validation.failed"));
                 populatePrimaryLists(districtUKey, dsDivisionId, language, user);
@@ -851,7 +851,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                         }
                         if (cuRace != null) {
                             raceList.add(0, null);
-                            raceList.add(1, cuRace.getEnRaceName()); //due to bug array index out of bound couse by adding to 1 position when 0 position is empty
+                            raceList.add(1, cuRace.getEnRaceName()); //due to bug array index out of bound cause by adding to 1 position when 0 position is empty
                         }
                         approvalFieldList.put(index, raceList);
                     }
@@ -919,6 +919,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         dsDivisionList = dsDivisionDAO.getDSDivisionNames(districtUKey, language, user);
         dsDivisionId = dsDivisionList.keySet().iterator().next();
         bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
+        logger.debug("basic lists are populated");
     }
 
     /**
@@ -927,6 +928,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     private void populateOtherLists() {
         raceList = raceDAO.getRaces(language);
         countryList = countryDAO.getCountries(language);
+        logger.debug("other lists are populated ");
     }
 
     public void setSession(Map map) {
