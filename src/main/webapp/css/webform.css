@@ -1685,12 +1685,17 @@
 }
 
 .user-create-table {
-    width: 35em;
+    width: 37em;
     margin: 2em;
 }
 
 .user-create-table input {
     width: 20em;
+    margin: .5em;
+    margin-left: 1.5em;
+}
+.user-create-table textarea {
+    width: 22.5em;
     margin: .5em;
     margin-left: 1.5em;
 }
