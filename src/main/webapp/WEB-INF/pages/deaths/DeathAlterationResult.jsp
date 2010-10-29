@@ -14,7 +14,7 @@
     <div class="form-submit">
         <s:form method="post" action="eprApproveDeathAlterationsDirect.do">
             <s:submit name="approve" value="%{getText('lable.approve')}"/>
-            <s:hidden name="deathId" value="%{deathId}"/>
+            <s:hidden name="deathId" value="%{deathAlteration.deathRegisterIDUkey}"/>
         </s:form>
     </div>
 </div>
