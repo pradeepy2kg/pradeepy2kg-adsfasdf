@@ -104,14 +104,14 @@
                     onsubmit="javascript:return validate()">
             <s:if test="userId == null">
             <tr>
-                <td style="width:15em;">
+                <td style="width:20em;">
                     <s:label value="%{getText('user_id.label')}"/></td>
                 <td>
                     <s:textfield name="user.userId" id="checkUserId" cssStyle="text-transform:none;"/></td>
                 </s:if>
             </tr>
             <tr>
-                <td>
+                <td style="width:25em;">
                     <s:label value="%{getText('user_name.label')}"/></td>
                 <td>
                     <s:textfield name="user.userName" id="userName" cssStyle="text-transform:none;"/></td>
@@ -120,6 +120,18 @@
                     <s:label value="%{getText('user_pin.label')}"/></td>
                 <td>
                     <s:textfield name="user.pin" id="userPin" cssStyle="text-transform:none;"/></td>
+
+            <tr>
+            <tr>
+                <td>
+                    <s:label value="Signature in Sinhala And English"/></td>
+                <td>
+                    <s:textarea name="user.sienSignatureText" id="userName" cssStyle="text-transform:none;"/></td>
+            <tr>
+                <td>
+                    <s:label value="Signature in Tamil And English"/></td>
+                <td>
+                    <s:textarea name="user.taenSignatureText" id="userPin" cssStyle="text-transform:none;"/></td>
 
             <tr>
                 <td>
