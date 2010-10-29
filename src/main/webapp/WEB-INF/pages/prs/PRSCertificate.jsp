@@ -1,19 +1,37 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
+<style type="text/css">
+    #birth-certificate-outer table tr td {
+        padding: 0 5px;
+    }
 
-<div class="form-submit">
-    <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
-</div>
+    @media print {
+        .form-submit {
+            display: none;
+        }
 
-<div id="prsCertificate-page" class="form-submit" style="margin:15px 0 0 10px; ">
-    <s:a href="%{print}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>
+        td {
+            font-size: 9pt;
+        }
+    }
+
+    #birth-certificate-outer .form-submit {
+        margin: 5px 0 15px 0;
+    }
+</style>
+
+<div id="birth-certificate-outer">
+
+<div class="form-submit" style="margin:5px 0 0 0;">
+    <s:submit value="%{getText('mark_as_print.button')}" type="submit"/>
 </div>
-<div id="prsCertificate-page" class="form-submit" style="margin:15px 0 0 10px; ">
+<div class="form-submit" style="margin:15px 0 0 5px;">
+    <s:a href="%{printPage}" onclick="printPage()"><s:label value="%{getText('print.button')}"/></s:a>
+</div>
+<div id="birthRegistration-page" class="form-submit" style="margin-top:15px;float:right;">
     <s:a href="%{cancel}"><s:label value="%{getText('cancel.button')}"/></s:a>
 </div>
-<div class="prs-certificate-outer">
-
 
 <table style="width:100%; border:none; border-collapse:collapse;">
     <col width="300px">
@@ -133,13 +151,13 @@
     </tr>
     <tr>
         <td colspan="2">
-            (10) මවගේ අනන්‍යතා අංකය හෝ ජාතික හැඳුනුම්පත් අංකය
+            මවගේ අනන්‍යතා අංකය හෝ ජාතික හැඳුනුම්පත් අංකය
             <br>தாயின் அடையாள எண் அல்லது தேசிய அடையாள அட்டை இலக்கம்
             <br>Mothers Identification Number (PIN) or NIC
         </td>
         <td></td>
         <td colspan="2">
-            (11) පියාගේ අනන්‍යතා අංකය හෝ ජාතික හැඳුනුම්පත් අංකය
+            පියාගේ අනන්‍යතා අංකය හෝ ජාතික හැඳුනුම්පත් අංකය
             <br>தந்தையின் அடையாள எண் அல்லது தேசிய அடையாள அட்டை இலக்கம்
             <br>Fathers Identification Number (PIN) or NIC
         </td>
@@ -156,7 +174,7 @@
     <tbody>
     <tr>
         <td height="120px">
-            (10) ස්ථිර ලිපිනය
+            ස්ථිර ලිපිනය
             <br>நிரந்தர வதிவிட முகவரி
             <br>Permanent Address
         </td>
@@ -174,7 +192,7 @@
     </tr>
     <tr>
         <td height="120px">
-            (11) වර්තමාන ලිපිනය
+            වර්තමාන ලිපිනය
             <br>தற்போதைய வதிவிட முகவரி
             <br>Current Address
         </td>
@@ -186,7 +204,7 @@
     </tr>
     <tr>
         <td>
-            (12) දුරකථන අංක
+            දුරකථන අංක
             <br>தொலைபேசி இலக்கம்
             <br>Telephone Numbers
         </td>
@@ -194,7 +212,7 @@
             <s:label value="%{person.personPhoneNo}"/>
         </td>
         <td>
-            (13) ඉ – තැපැල්
+            ඉ – තැපැල්
             <br>மின்னஞ்சல்
             <br>Email
         </td>
@@ -207,46 +225,46 @@
 </table>
 
 <s:if test="numberOfCountries != 0">
-<table style="width:100%; border:none; border-collapse:collapse;">
-    <tr>
-        <td align="center" style="font-size:12pt;">
-            වෙනත් රටවල පුරවැසිභාවය ඇතිනම් ඒ පිලිබඳ විස්තර
-            <br>வேறு நாடுகளில் பிரஜாவுரிமை இருந்தால் அது பற்றிய தகவல்கள்
-            <br>If a citizen of any other countries, such details
-        </td>
-    </tr>
-</table>
-
-<table border="1"
-       style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:10px 0;font-size:10pt">
-    <col width="180px">
-    <col width="200px">
-    <col width="350px">
-    <col width="200px">
-    <tbody>
-        <s:iterator value="personCitizenship">
+    <table style="width:100%; border:none; border-collapse:collapse;">
         <tr>
-            <td height="40px">
-                රට / நாடு /Country
+            <td align="center" style="font-size:12pt;">
+                වෙනත් රටවල පුරවැසිභාවය ඇතිනම් ඒ පිලිබඳ විස්තර
+                <br>வேறு நாடுகளில் பிரஜாவுரிமை இருந்தால் அது பற்றிய தகவல்கள்
+                <br>If a citizen of any other countries, such details
             </td>
-            <td> <s:property value="country.enCountryName"/> </td>
-            <td>
-                ගමන් බලපත්‍ර අංකය / கடவுச் சீட்டு இல. /Passport No.
-            </td>
-            <td><s:property value="passportNo"/></td>
         </tr>
-        </s:iterator>
-    </tbody>
-</table>
-</s:if>
-</div>
-<div class="form-submit">
-    <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
-</div>
+    </table>
 
-<div id="prsCertificate-page" class="form-submit" style="margin:15px 0 0 10px; ">
-    <s:a href="%{print}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>
+    <table border="1"
+           style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:10px 0;font-size:10pt">
+        <col width="180px">
+        <col width="200px">
+        <col width="350px">
+        <col width="200px">
+        <tbody>
+        <s:iterator value="personCitizenship">
+            <tr>
+                <td height="40px">
+                    රට / நாடு /Country
+                </td>
+                <td><s:property value="country.enCountryName"/></td>
+                <td>
+                    ගමන් බලපත්‍ර අංකය / கடவுச் சீட்டு இல. /Passport No.
+                </td>
+                <td><s:property value="passportNo"/></td>
+            </tr>
+        </s:iterator>
+        </tbody>
+    </table>
+</s:if>
+
+<div class="form-submit" style="margin:5px 0 0 0;">
+    <s:submit value="%{getText('mark_as_print.button')}" type="submit"/>
 </div>
-<div id="prsCertificate-page" class="form-submit" style="margin:15px 0 0 10px; ">
+<div class="form-submit" style="margin:15px 0 0 5px;">
+    <s:a href="%{printPage}" onclick="printPage()"><s:label value="%{getText('print.button')}"/></s:a>
+</div>
+<div id="birthRegistration-page" class="form-submit" style="margin-top:15px;float:right;">
     <s:a href="%{cancel}"><s:label value="%{getText('cancel.button')}"/></s:a>
+</div>
 </div>
