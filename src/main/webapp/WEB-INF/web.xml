@@ -35,6 +35,11 @@
         <servlet-class>lk.rgd.crs.web.JSONCertSignUserLookupService</servlet-class>
     </servlet>
     
+    <servlet>
+        <servlet-name>ImageServlet</servlet-name>
+        <servlet-class>lk.rgd.prs.web.ImageServlet</servlet-class>
+    </servlet>
+
     <servlet-mapping>
         <servlet-name>PersonLookupService</servlet-name>
         <url-pattern>/prs/PersonLookupService</url-pattern>
@@ -48,6 +53,11 @@
     <servlet-mapping>
         <servlet-name>CertSignUserLookupService</servlet-name>
         <url-pattern>/crs/CertSignUserLookupService</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>ImageServlet</servlet-name>
+        <url-pattern>/prs/ImageServlet</url-pattern>
     </servlet-mapping>
 
     <filter-mapping>
@@ -72,14 +82,6 @@
             <param-value>/WEB-INF/lib/tiles/base-tiles-def.xml</param-value>
         </init-param>
         <load-on-startup>2</load-on-startup>
-    </servlet>
-    <servlet>
-        <servlet-name>ImageServlet</servlet-name>
-        <servlet-class>lk.rgd.prs.web.ImageServlet</servlet-class>
-        <init-param>
-            <param-name>myName</param-name>
-            <param-value>value</param-value>
-        </init-param>
     </servlet>
 
     <listener>
