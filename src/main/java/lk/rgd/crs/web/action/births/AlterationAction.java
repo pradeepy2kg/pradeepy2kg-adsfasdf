@@ -533,7 +533,6 @@ public class AlterationAction extends ActionSupport implements SessionAware {
             return ERROR;
         } else {
             logger.debug("Loaded Birth Alteration with idUKey : {}", ba.getIdUKey());
-            indexCheck = ba.getApprovalStatuses();
             alt27 = ba.getAlt27();
             alt27A = ba.getAlt27A();
             alt52_1 = ba.getAlt52_1();
@@ -705,11 +704,19 @@ public class AlterationAction extends ActionSupport implements SessionAware {
             case 0:
                 if (bdfName != null) {
                     compareChanges[1] = bdfName.toString();
+                    compareChanges[1] = compareChanges[1].trim();
+                    if (compareChanges[1].length() == 0) {
+                        compareChanges[1] = null;
+                    }
                 } else {
                     compareChanges[1] = null;
                 }
                 if (baName != null) {
                     compareChanges[2] = baName.toString();
+                    compareChanges[2] = compareChanges[2].trim();
+                    if (compareChanges[2].length() == 0) {
+                        compareChanges[2] = null;
+                    }
                 } else {
                     compareChanges[2] = null;
                 }
@@ -773,23 +780,18 @@ public class AlterationAction extends ActionSupport implements SessionAware {
                 }
         }
 
-
         if (compareChanges[1] != null && compareChanges[2] != null) {
             if (!compareChanges[2].equals(compareChanges[1])) {
-                if (!(indexCheck.get(index))) {
-                    birthAlterationApprovalList.add(compareChanges);
-                    numberOfAppPending++;
-                } else {
-                    birthAlterationApprovedList.add(compareChanges);
-                }
-            }
-        }
-        if ((compareChanges[2] == null && compareChanges[1] != null) || (compareChanges[2] != null && compareChanges[1] == null)) {
-            if (!(indexCheck.get(index))) {
                 birthAlterationApprovalList.add(compareChanges);
                 numberOfAppPending++;
-            } else {
-                birthAlterationApprovedList.add(compareChanges);
+            }
+        }
+        if (!(compareChanges == null && compareChanges[2] == null)) {
+            if ((compareChanges[2] == null && compareChanges[1] != null) || (compareChanges[2] != null && compareChanges[1] == null)) {
+                birthAlterationApprovalList.add(compareChanges);
+                logger.debug("null property is ,{},value bdf :{} ", compareChanges[0], compareChanges[1]);
+                logger.debug("null property is ,{},value ba : {}", compareChanges[0], compareChanges[2]);
+                numberOfAppPending++;
             }
         }
 
@@ -838,6 +840,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         ba = alterationService.getByIDUKey(idUKey, user);
         logger.debug("New Bit Set After Approval  :{}", ba.getApprovalStatuses());
         pageType = 2;
+        bdId=ba.getBdfIDUKey();
         return SUCCESS;
     }
 

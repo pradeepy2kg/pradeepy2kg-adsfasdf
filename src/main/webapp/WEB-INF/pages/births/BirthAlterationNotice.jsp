@@ -59,7 +59,7 @@
                 <hr style="border-style:dashed ; float:left;width:100% ;margin-bottom:30px;margin-top:30px;">
                 <table class="alteration-approval-list-table" width="100%" cellpadding="0" cellspacing="0">
                     <tr>
-                        <td style="width:20%;font-size:8pt;"></td>
+                        <td style="width:20%;font-size:8pt;"><s:label/></td>
                         <td style="width:35%;font-size:10pt; text-align:center;"><s:label
                                 value="%{getText('approval.table.row1.title')}"/></td>
                         <td style="width:35%;font-size:10pt; text-align:center;"><s:label
@@ -72,9 +72,9 @@
                                 <s:property
                                         value="%{getText(sectionOfAct+'.'+birthAlterationApprovedList[#approvedStatus.index][0]+'.label')}"/></td>
                             <td style="padding-left:15px;"><s:property
-                                    value="birthAlterationApprovedList[#approvedStatus.index][1]"/></td>
+                                    value="birthAlterationApprovedList[#approvedStatus.index][1]"/><s:label/></td>
                             <td style="padding-left:15px;"><s:property
-                                    value="birthAlterationApprovedList[#approvedStatus.index][2]"/></td>
+                                    value="birthAlterationApprovedList[#approvedStatus.index][2]"/><s:label/></td>
                             <td style="text-align:center;">
                                 <s:label value="%{getText('Approved.lable')}"/>
                             </td>
@@ -87,9 +87,9 @@
                                 <s:property
                                         value="%{getText(sectionOfAct+'.'+birthAlterationApprovalList[#approvalStatus.index][0]+'.label')}"/></td>
                             <td style="padding-left:15px;"><s:property
-                                    value="birthAlterationApprovalList[#approvalStatus.index][1]"/></td>
+                                    value="birthAlterationApprovalList[#approvalStatus.index][1]"/><s:label/></td>
                             <td style="padding-left:15px;"><s:property
-                                    value="birthAlterationApprovalList[#approvalStatus.index][2]"/></td>
+                                    value="birthAlterationApprovalList[#approvalStatus.index][2]"/><s:label/></td>
                             <td style="text-align:center;">
                                 <s:label value="%{getText('rejected.lable')}"/>
                             </td>
@@ -97,7 +97,7 @@
                     </s:iterator>
 
                 </table>
-                 <div style="page-break-after:always;margin-bottom:200px;"></div>
+                <div style="page-break-after:always;margin-bottom:350px;"></div>
             </s:if>
                 <%--Latter for declarant   --%>
 
@@ -147,9 +147,9 @@
                                 <s:property
                                         value="%{getText(sectionOfAct+'.'+birthAlterationApprovedList[#approvedStatus.index][0]+'.label')}"/></td>
                             <td style="padding-left:15px;font-size:9pt;"><s:property
-                                    value="birthAlterationApprovedList[#approvedStatus.index][1]"/></td>
+                                    value="birthAlterationApprovedList[#approvedStatus.index][1]"/><s:label/></td>
                             <td style="padding-left:15px;font-size:9pt;"><s:property
-                                    value="birthAlterationApprovedList[#approvedStatus.index][2]"/></td>
+                                    value="birthAlterationApprovedList[#approvedStatus.index][2]"/><s:label/></td>
                             <td style="text-align:center;font-size:9pt;">
                                 <s:label value="%{getText('Approved.lable')}"/>
                             </td>
@@ -162,9 +162,9 @@
                                 <s:property
                                         value="%{getText(sectionOfAct+'.'+birthAlterationApprovalList[#approvalStatus.index][0]+'.label')}"/></td>
                             <td style="padding-left:15px;"><s:property
-                                    value="birthAlterationApprovalList[#approvalStatus.index][1]"/></td>
+                                    value="birthAlterationApprovalList[#approvalStatus.index][1]"/><s:label/></td>
                             <td style="padding-left:15px;"><s:property
-                                    value="birthAlterationApprovalList[#approvalStatus.index][2]"/></td>
+                                    value="birthAlterationApprovalList[#approvalStatus.index][2]"/><s:label/></td>
                             <td style="text-align:center;">
                                 <s:label value="%{getText('rejected.lable')}"/>
                             </td>

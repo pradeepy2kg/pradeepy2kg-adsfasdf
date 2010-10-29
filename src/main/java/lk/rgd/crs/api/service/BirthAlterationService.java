@@ -66,7 +66,7 @@ public interface BirthAlterationService {
 
     /**
      * Returns a limited set of BirthAlterations for which one or more fields in the statement 27,27A or statement
-     * 52_1 are awaiting approval by an ARG or higher authority based on given DSDivison id.
+     * 52_1 are awaiting approval by an ARG or higher authority based on given DS.Divison id.
      *
      * @param dsDivision the divisional Secretariat
      * @param pageNo     the page number for the results required (start from 1)

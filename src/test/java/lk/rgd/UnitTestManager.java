@@ -25,7 +25,7 @@ import java.sql.*;
  *
  * @author asankha
  */
-public class UnitTestManager extends TestCase {
+public class UnitTestManager extends TestCase {                     
 
     private static final Logger logger = LoggerFactory.getLogger(UnitTestManager.class);
     public static final ApplicationContext ctx = getApplicationContext();
