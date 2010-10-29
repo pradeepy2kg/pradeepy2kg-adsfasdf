@@ -34,7 +34,7 @@
                         <br>தொடர் இலக்கம்
                         <br>Serial Number
                     </td>
-                    <td width="150px"><s:label name=""/></td>
+                    <td width="150px"><s:label name="personId"/></td>
                 </tr>
             </table>
         </td>
@@ -69,7 +69,7 @@
             <br>Identification Number
         </td>
         <td colspan="2">
-            <s:label value="%{person.nic}"/>
+            <s:label value="%{person.pin}"/>
         </td>
         <td>
             උපන් දිනය
@@ -88,8 +88,8 @@
             <br>Gender
         </td>
         <td colspan="2">
-            <s:label name="" value="%{gender}" /> <br>
-            <s:label name="" value="%{genderEn}" />           
+            <s:label name="" value="%{gender}"/> <br>
+            <s:label name="" value="%{genderEn}"/>
         </td>
         <td>
             ජාතිය
@@ -97,7 +97,7 @@
             <br>Race
         </td>
         <td colspan="2">
-            <s:label value="%{race}"/>  <br>          
+            <s:label value="%{race}"/> <br>
             <s:label value="%{raceEn}"/>
         </td>
     </tr>
@@ -108,7 +108,7 @@
             <br>Place of Birth
         </td>
         <td colspan="5">
-            <s:label value="%{person.placeOfBirth}"/>            
+            <s:label value="%{person.placeOfBirth}"/>
         </td>
     </tr>
     <tr>
@@ -128,7 +128,7 @@
             <br>Name in English
         </td>
         <td colspan="5">
-            <s:label value="%{person.fullNameInEnglishLanguage}"/>            
+            <s:label value="%{person.fullNameInEnglishLanguage}"/>
         </td>
     </tr>
     <tr>
@@ -155,19 +155,16 @@
     <col>
     <tbody>
     <tr>
-        <td rowspan="3" height="120px">
+        <td height="120px">
             (10) ස්ථිර ලිපිනය
             <br>நிரந்தர வதிவிட முகவரி
             <br>Permanent Address
         </td>
-        <td colspan="3"></td>
-
-    </tr>
-    <tr>
-        <td colspan="3"></td>
-    </tr>
-    <tr>
-        <td colspan="3"></td>
+        <td colspan="3" height="40px">
+            <s:label value="%{permanentAddress.Line1}"/>
+            <br><s:label value="%{permanentAddress.Line2}"/>
+            <br><s:label value="%{permanentAddress.City}"/>
+        </td>
     </tr>
     <tr>
         <td colspan="4" height="40px">
@@ -176,18 +173,16 @@
         </td>
     </tr>
     <tr>
-        <td rowspan="3" height="120px">
+        <td height="120px">
             (11) වර්තමාන ලිපිනය
             <br>தற்போதைய வதிவிட முகவரி
             <br>Current Address
         </td>
-        <td colspan="3"></td>
-    </tr>
-    <tr>
-        <td colspan="3"></td>
-    </tr>
-    <tr>
-        <td colspan="3"></td>
+        <td colspan="3" height="40px">
+            <s:label value="%{person.LastAddress.Line1}"/>
+            <br><s:label value="%{person.LastAddress.Line2}"/>
+            <br><s:label value="%{person.LastAddress.City}"/>
+        </td>
     </tr>
     <tr>
         <td>
@@ -210,6 +205,8 @@
 
     </tbody>
 </table>
+
+<s:if test="numberOfCountries != 0">
 <table style="width:100%; border:none; border-collapse:collapse;">
     <tr>
         <td align="center" style="font-size:12pt;">
@@ -219,6 +216,7 @@
         </td>
     </tr>
 </table>
+
 <table border="1"
        style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:10px 0;font-size:10pt">
     <col width="180px">
@@ -226,38 +224,21 @@
     <col width="350px">
     <col width="200px">
     <tbody>
-    <tr>
-        <td height="40px">
-            රට / நாடு /Country
-        </td>
-        <td></td>
-        <td>
-            ගමන් බලපත්‍ර අංකය / கடவுச் சீட்டு இல. /Passport No.
-        </td>
-        <td></td>
-    </tr>
-    <tr>
-        <td height="40px">
-            රට / நாடு /Country
-        </td>
-        <td></td>
-        <td>
-            ගමන් බලපත්‍ර අංකය / கடவுச் சீட்டு இல. /Passport No.
-        </td>
-        <td></td>
-    </tr>
-    <tr>
-        <td height="40px">
-            රට / நாடு /Country
-        </td>
-        <td></td>
-        <td>
-            ගමන් බලපත්‍ර අංකය / கடவுச் சீட்டு இல. /Passport No.
-        </td>
-        <td></td>
-    </tr>
+        <s:iterator value="personCitizenship">
+        <tr>
+            <td height="40px">
+                රට / நாடு /Country
+            </td>
+            <td> <s:property value="country.enCountryName"/> </td>
+            <td>
+                ගමන් බලපත්‍ර අංකය / கடவுச் சீட்டு இல. /Passport No.
+            </td>
+            <td><s:property value="passportNo"/></td>
+        </tr>
+        </s:iterator>
     </tbody>
 </table>
+</s:if>
 </div>
 <div class="form-submit">
     <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
