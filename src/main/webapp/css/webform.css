@@ -7,7 +7,7 @@
 *       1. Birth Registration Form (4 pages)
 *       2. Birth Confirmation Form (3 pages)
 * To change the styles in those web forms, use the styles that are applied in this css.  form-submit
-* Styles for each page are done in a seperate area of the css file.
+* Styles for each page are done in a separate area of the css file.
 */
 
 /* Common FONT-SIZES are defined here */
@@ -38,7 +38,7 @@
 
 /*
 * Styles for the Birth Registration Form Begins here.
-* Styles for the Birth Registration Form applys according to the 4 pages in 4 seperate sections.
+* Styles for the Birth Registration Form apply according to the 4 pages in 4 seperate sections.
 */
 
 .birth-registration-form-outer, #birth-confirmation-form-outer, .birth-confirmation-print-form-outer, .still-birth-registration-form-outer, #bdaw-outer, .birth-certificate-search-form-outer, .prs-existing-person-register-outer , .prs-person-report-outer, .alteration-print-letter-outer ,.prs-certificate-outer{
@@ -1515,7 +1515,22 @@
     font-family: Bhashitha2, Bhashitha2San;
 }
 
+#alteration-print-letter-outer {
+    width: 1030px;
+    height: auto;
+    padding: 10px;
+    background: #fff;
+    font-size: 9pt;
+    font-family: Bhashitha2, Bhashitha2San;
+}
+
 #birth-certificate-outer table {
+    font-size: 10pt;
+    font-family: Bhashitha2, Bhashitha2San;
+    margin-bottom: 10px;
+}
+
+#alteration-print-letter-outer table {
     font-size: 10pt;
     font-family: Bhashitha2, Bhashitha2San;
     margin-bottom: 10px;
@@ -1529,12 +1544,26 @@
     margin-bottom: 0;
 }
 
+#alteration-print-letter-outer p {
+    font-size: 8pt;
+    font-family: Bhashitha2, Bhashitha2San;
+    text-align: center;
+    margin-top: -3px;
+    margin-bottom: 0;
+}
+
 .bc-name {
     font-size: 12pt;
     font-family: Bhashitha2, Bhashitha2San;
 }
 
 #birth-certificate-outer .table-with-border {
+    width: 100%;
+    border: 1px solid #000;
+    border-collapse: collapse;
+}
+
+#alteration-print-letter-outer .table-with-border {
     width: 100%;
     border: 1px solid #000;
     border-collapse: collapse;
