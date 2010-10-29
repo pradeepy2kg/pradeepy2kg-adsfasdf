@@ -122,8 +122,8 @@
 <s:actionmessage name="registrarFound" cssStyle="color:blue;font-size:10pt"/><s:property
         value="%{#session.exsisting_registrar.fullNameInOfficialLanguage}"/>
 
-<s:set name="indirect" value="directAssigment"/>
-<%--<s:if test="directAssigment>0">
+<s:set name="indirect" value="directAssignment"/>
+<%--<s:if test="directAssignment>0">
 
     <form action="eprSearchRegistrarByPin.do" method="post">
         <table>
@@ -135,7 +135,7 @@
             <tbody>
             <tr>
                 <td>
-                    <s:if test="%{(#session.exsisting_registrar == null  &&  directAssigment!=0)}">
+                    <s:if test="%{(#session.exsisting_registrar == null  &&  directAssignment!=0)}">
                         <s:textfield id="registrarPin" name="registrarPin" value="%{registrarPin}"/>
                     </s:if>
                     <s:else>
@@ -143,7 +143,7 @@
                 </td>
                 <td>
                     <div id="search_button" class="button">
-                        <s:if test="%{#session.exsisting_registrar == null  &&  directAssigment!=0}">
+                        <s:if test="%{#session.exsisting_registrar == null  &&  directAssignment!=0}">
                             <s:submit name="refresh" value="%{getText('label.button.searchr')}"
                                       onclick="javascript:searchButtonClick();"/>
                         </s:if>
@@ -285,15 +285,25 @@
         </table>
     </fieldset>
     <s:if test="%{#session.exsisting_registrar != null && !editableAssignment}">
-        <s:submit name="assignMentSubmit" value="%{getText('add.assignment')}" align="right"/>
+        <div class="form-submit">
+            <s:submit name="assignMentSubmit" value="%{getText('add.assignment')}" align="right"/>
+        </div>
     </s:if>
     <s:elseif test="editableAssignment">
-        <s:submit name="assignMentEdit" value="%{getText('update.assignment')}"/>
+        <div class="form-submit">
+            <s:submit name="assignMentEdit" value="%{getText('update.assignment')}"/>
+        </div>
         <s:hidden name="editMode" value="true"/>
     </s:elseif>
-    <s:hidden name="directAssigment" value="2"/>
+    <s:hidden name="directAssignment" value="2"/>
     <s:hidden name="registrarSession" value="true"/>
 </s:form>
+<div class="form-submit">
+    <s:form action="eprRegistrarsView.do">
+        <s:submit value="%{getText('label.back')}"/>
+        <s:hidden name="registrarUkey" value="%{assignment.registrar.registrarUKey}"/>
+    </s:form>
+</div>
 <s:if test="assignment != null">
     <script type="text/javascript">
         document.getElementById('dsDivisionId').disabled = true;
