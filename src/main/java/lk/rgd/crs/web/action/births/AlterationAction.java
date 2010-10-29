@@ -155,6 +155,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
         if (idUKey != null) {
             bdf = service.getById(idUKey);
+            logger.debug("load birth with idUKey :{}", bdf.getIdUKey());
         } else if (nicOrPin != null) {
             bdf = service.getByPINorNIC(nicOrPin, user);
         } else if (birthDivisionId != 0 && serialNo != 0) {
@@ -840,7 +841,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         ba = alterationService.getByIDUKey(idUKey, user);
         logger.debug("New Bit Set After Approval  :{}", ba.getApprovalStatuses());
         pageType = 2;
-        bdId=ba.getBdfIDUKey();
+        bdId = ba.getBdfIDUKey();
         return SUCCESS;
     }
 
