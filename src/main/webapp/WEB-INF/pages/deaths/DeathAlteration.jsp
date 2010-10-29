@@ -10,6 +10,7 @@
     //these inpute can not be null
     var errormsg = "";
     function validate() {
+        var bothEmpty;
 
         var returnval = true;
         var domObject;
@@ -56,13 +57,14 @@
         if (!isFieldEmpty(domObject)) {
             validatePINorNIC(domObject, 'error0', 'error8');
         }
-
+  //todo validate (declarent type is the only nullble false value in the object) 
         if (errormsg != "") {
             alert(errormsg);
             returnval = false;
         }
         errormsg = "";
-        return true;
+        
+        return returnval;
     }
 </script>
 
@@ -77,19 +79,6 @@ function setInformPerson(nICorPIN, name, address, tp, email) {
     var informantEmail = document.getElementById("declarant_email").value = email;
 }
 
-function setAct(value) {
-    if (value == 7) {
-        act = 53;
-    } else {
-        act = 52;
-    }
-}
-
-function validateAct(value) {
-    if (value != act) {
-        alert("add massage conflict with selected act and row number 10")
-    }
-}
 
 $(function() {
     $("#deathDatePicker").datepicker({
@@ -1192,4 +1181,7 @@ function initPage() {
 <s:hidden id="error6" value="%{getText('er.label.fatherPinNic')}"/>
 <s:hidden id="error7" value="%{getText('er.label.motherNIC')}"/>
 <s:hidden id="error8" value="%{getText('er.label.declarant_pinOrNic')}"/>
+<s:hidden id="error9" value="%{getText('er.label.cannot.empty')}"/>
+<s:hidden id="error10" value="%{getText('er.label.declarent.type')}"/>
+
 

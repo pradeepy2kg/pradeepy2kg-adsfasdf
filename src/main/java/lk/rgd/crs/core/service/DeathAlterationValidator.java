@@ -28,13 +28,15 @@ public class DeathAlterationValidator {
 
     /**
      * this method validate basic requirements of death alteration such as
-     * both objects can't be null and declarent information must be filled .
+     * both objects can't be null and declarent information must be filled.
+     * note :only nullble false field in declarent is type . .
      */
     public static void validateMinimumConditions(DeathAlteration deathAlteration) {
-        //todo check declarent
+
         logger.debug("validating death alteration for death register id  :{}", deathAlteration.getDeathRegisterIDUkey());
-        boolean filledAtleastOneObject = (deathAlteration.getDeathInfo() != null | deathAlteration.getDeathPerson() != null);
-        if (!filledAtleastOneObject) {
+        boolean pass = (deathAlteration.getDeathInfo() != null | deathAlteration.getDeathPerson() != null) &&
+                (deathAlteration.getDeclarant().getDeclarantType() != null);
+        if (!pass) {
             handleException("cannot add not an alteration, validation failed", ErrorCodes.INCOMPLETE_ALTERATION);
         }
     }

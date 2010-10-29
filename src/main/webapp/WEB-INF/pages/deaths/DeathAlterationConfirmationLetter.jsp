@@ -1,9 +1,10 @@
 <%@ page import="lk.rgd.common.util.DateTimeUtils" %>
 <%@ page import="java.util.Date" %>
+<%@ page import="java.util.Locale" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <style type="text/css">
-       #alteration-print-letter-outer table tr td {
+    #alteration-print-letter-outer table tr td {
         padding: 0 5px;
     }
 
