@@ -307,7 +307,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         logger.debug("attempt to get death alteration pending list");
         if (pageNumber > 0) {
             //search by pin
-            if (pin != null && Integer.parseInt(pin) > 0) {
+            if (pin != null) {
                 try {
                     approvalList = deathAlterationService.getAlterationByDeathPersonPin(pin, user);
                 } catch (CRSRuntimeException e) {
@@ -382,7 +382,6 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             dateAlt = DateTimeUtils.getISO8601FormattedString(deathAlteration.getDeathInfo().getDateOfDeath());
         }
 
-        //todo sudden death
         if (deathAlteration.getDeathInfo() != null) {
             getDisplayList(DeathAlteration.DATE_OF_DEATH, dateEx, dateAlt, Type.STRING.ordinal());
             getDisplayList(DeathAlteration.TIME_OF_DEATH, deathRegister.getDeath().getTimeOfDeath(),

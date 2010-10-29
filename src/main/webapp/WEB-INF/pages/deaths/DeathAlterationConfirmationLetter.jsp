@@ -3,7 +3,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <style type="text/css">
-    #death-certificate-outer table tr td {
+       #alteration-print-letter-outer table tr td {
         padding: 0 5px;
     }
 
@@ -11,13 +11,9 @@
         .form-submit {
             display: none;
         }
-
-        td {
-            font-size: 9pt;
-        }
     }
 
-    #death-certificate-outer .form-submit {
+    #alteration-print-letter-outer .form-submit {
         margin: 5px 0 15px 0;
     }
 </style>
