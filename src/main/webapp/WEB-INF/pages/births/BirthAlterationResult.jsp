@@ -40,20 +40,25 @@
     <s:if test="pageType==2">
         <table align="center">
             <tr>
-                <td></td>
-                <td style="text-align:center;width:40%"><s:label value="%{getText('saveApprovalSuccess.label')}"/></td>
-                <td></td>
+                <td style="text-align:center;width:60%"><s:label
+                        value="* %{getText('saveApprovalSuccess.label')}"/></td>
             </tr>
             <tr>
-                <td></td>
-                <td align="center">
-                    <div class="form-submit" align="center" style="text-align:left;margin-right:31%">
+                <td>
+                    <div class="form-submit" align="center" style="text-align:left;float:right;">
+                        <s:form action="eprPrintBirthAlterarionNotice.do">
+                            <s:hidden name="idUKey"/>
+                            <s:hidden name="bdId"/>
+                            <s:submit name="approve" value="%{getText('print.label')}"/>
+                        </s:form>
+                    </div>
+                    <div class="form-submit" align="center" style="text-align:left;float:right;">
                         <s:form action="eprBirthAlterationInit.do">
                             <s:submit name="approve" value="%{getText('add.new.lable')}"/>
                         </s:form>
                     </div>
+
                 </td>
-                <td></td>
             </tr>
         </table>
     </s:if>
