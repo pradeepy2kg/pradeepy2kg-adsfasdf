@@ -37,7 +37,7 @@
     
     <servlet>
         <servlet-name>ImageServlet</servlet-name>
-        <servlet-class>lk.rgd.prs.web.ImageServlet</servlet-class>
+        <servlet-class>lk.rgd.prs.web.BarCodeImageServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
