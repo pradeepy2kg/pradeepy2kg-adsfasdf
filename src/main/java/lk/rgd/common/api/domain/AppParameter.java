@@ -39,6 +39,7 @@ public class AppParameter implements Serializable {
 
     public AppParameter(String name, String value) {
         this.name = name;
+
         this.value = value;
     }
 

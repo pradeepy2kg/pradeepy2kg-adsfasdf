@@ -56,6 +56,15 @@ public interface PopulationRegistry {
     public Person getByUKey(long personUKey, User user);
 
     /**
+     * Return the Person object loaded with all relationships for the person with the given unique key
+     *
+     * @param personUKey the unique database PK
+     * @param user the user performing this action
+     * @return the matching person
+     */
+    public Person getLoadedObjectByUKey(long personUKey, User user);
+
+    /**
      * Add a Marriage to the PRS
      * @param m the Marriage to be added
      * @param user the user performing this action

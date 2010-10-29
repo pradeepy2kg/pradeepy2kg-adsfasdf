@@ -6,20 +6,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import lk.rgd.prs.api.service.PopulationRegistry;
 import lk.rgd.prs.api.domain.Person;
+import lk.rgd.prs.api.domain.Address;
+import lk.rgd.prs.api.domain.PersonCitizenship;
 import lk.rgd.common.api.dao.RaceDAO;
 import lk.rgd.common.api.dao.CountryDAO;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.GenderUtil;
-import lk.rgd.common.util.MarriedStatusUtil;
 import lk.rgd.common.util.CivilStatusUtil;
 import lk.rgd.common.util.LifeStatusUtil;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.api.domain.MarriageInfo;
 import lk.rgd.AppConstants;
 
-import java.util.Map;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.*;
 
 public class PersonDetailsAction extends ActionSupport implements SessionAware {
 
@@ -40,7 +39,9 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
     private String raceEn;
     private String civilStatus;
     private MarriageInfo marriage;
-
+    private Address permanentAddress;
+    private Set<PersonCitizenship> personCitizenship;
+    private int numberOfCountries;
 
     private Person person;
     private long personId;
@@ -78,12 +79,24 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
      * This method is used to load PRS certificate
      */
     public String initPRSCertificate() {
-        setPerson(service.getByUKey(personId, user));
+        person = service.getLoadedObjectByUKey(personId, user);
         gender = GenderUtil.getGender(person.getGender(), person.getPreferredLanguage());
         genderEn = GenderUtil.getGender(person.getGender(), AppConstants.ENGLISH);
         if (person.getRace() != null) {
             race = raceDAO.getNameByPK(person.getRace().getRaceId(), person.getPreferredLanguage());
             raceEn = raceDAO.getNameByPK(person.getRace().getRaceId(), AppConstants.ENGLISH);
+        }
+        if (person.getAddresses() != null) {
+            for (Address address : person.getAddresses()) {
+                if (address.isPermanent()) {
+                    permanentAddress = address;
+                    break;
+                }
+            }
+        }
+        if (person.getCountries() != null) {
+            personCitizenship = person.getCountries();
+            numberOfCountries = personCitizenship.size();
         }
         return SUCCESS;
     }
@@ -193,4 +206,29 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
     public void setRaceEn(String raceEn) {
         this.raceEn = raceEn;
     }
+
+    public Address getPermanentAddress() {
+        return permanentAddress;
+    }
+
+    public void setPermanentAddress(Address permanentAddress) {
+        this.permanentAddress = permanentAddress;
+    }
+
+    public Set<PersonCitizenship> getPersonCitizenship() {
+        return personCitizenship;
+    }
+
+    public void setPersonCitizenship(Set<PersonCitizenship> personCitizenship) {
+        this.personCitizenship = personCitizenship;
+    }
+
+    public int getNumberOfCountries() {
+        return numberOfCountries;
+    }
+
+    public void setNumberOfCountries(int numberOfCountries) {
+        this.numberOfCountries = numberOfCountries;
+    }
+
 }

@@ -10,7 +10,7 @@
 <s:actionmessage cssStyle="text-align:left;color:red;"/>
 
 <s:url id="print" action="eprPRSCertificate.do">
-    <s:param name="personId" value="#request.personId"/>
+    <s:param name="personId" value="#request.personUKey"/>
 </s:url>
 
 <div id="prsCertificate-page" class="form-submit" style="margin:15px 0 0 10px; ">
