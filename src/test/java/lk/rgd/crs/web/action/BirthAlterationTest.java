@@ -14,6 +14,7 @@ import lk.rgd.common.api.domain.Race;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.core.AuthorizationException;
+import lk.rgd.common.util.DateTimeUtils;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.BirthRegistrationService;
@@ -38,6 +39,7 @@ public class BirthAlterationTest extends CustomStrutsTestCase {
     protected static BDDivision colomboBDDivision;
     protected static Country sriLanka;
     protected static Race sinhalese;
+    private BirthDeclaration bd;
 
     protected final static ApplicationContext ctx = UnitTestManager.ctx;
     protected final static UserManager userManager = (UserManager) ctx.getBean("userManagerService", UserManager.class);
@@ -71,6 +73,7 @@ public class BirthAlterationTest extends CustomStrutsTestCase {
                     //change state to ARCHIVED_CERT_PRINTED
                     temp = birthRegistrationService.getById(idUKey, sampleUser);
                     birthRegistrationService.markLiveBirthCertificateAsPrinted(temp, sampleUser);
+                    logger.debug("child idUKey is :", temp.getIdUKey());
                 }
 
                 super.setUp();
@@ -93,8 +96,8 @@ public class BirthAlterationTest extends CustomStrutsTestCase {
         assertNotNull(proxy);
         logger.debug("nameSpace {} and actionName {}", mapping.getNamespace(), proxy.getMethod());
 
-        AlterationAction altaratioAlterationAction = (AlterationAction) proxy.getAction();
-        assertNotNull(altaratioAlterationAction);
+        AlterationAction alterationAction = (AlterationAction) proxy.getAction();
+        assertNotNull(alterationAction);
     }
 
     public void testAddBirthAlterationByChangingFatherInfomationWithIdUKey() throws Exception {
@@ -103,7 +106,7 @@ public class BirthAlterationTest extends CustomStrutsTestCase {
         initAndExecute("/alteration/eprBirthAlterationInit.do", session);
         session = alterationAction.getSession();
         BirthDeclaration bd = alterationAction.getService().getActiveRecordByBDDivisionAndSerialNo(
-            alterationAction.getBDDivisionDAO().getBDDivisionByPK(1), new Long("2010012401"), (User) session.get(WebConstants.SESSION_USER_BEAN));
+                alterationAction.getBDDivisionDAO().getBDDivisionByPK(1), new Long("2010012401"), (User) session.get(WebConstants.SESSION_USER_BEAN));
         Long idUKey = bd.getIdUKey();
         request.setParameter("idUKey", idUKey.toString());
         logger.debug("current state of the record : {} ", bd.getRegister().getStatus());
@@ -115,8 +118,10 @@ public class BirthAlterationTest extends CustomStrutsTestCase {
 
 
         bd = alterationAction.getService().getActiveRecordByBDDivisionAndSerialNo(
-            alterationAction.getBDDivisionDAO().getBDDivisionByPK(1), new Long("2010012401"), (User) session.get(WebConstants.SESSION_USER_BEAN));
-
+                alterationAction.getBDDivisionDAO().getBDDivisionByPK(1), new Long("2010012401"), (User) session.get(WebConstants.SESSION_USER_BEAN));
+        //set alt27A
+        request.setParameter("alt27.childFullNameOfficialLang", bd.getChild().getChildFullNameOfficialLang());
+        request.setParameter("alt27.childFullNameEnglish", bd.getChild().getChildFullNameEnglish());
         //setting required data
         request.setParameter("dateReceived", "2010-09-21");
         request.setParameter("alterationSerialNo", "2010012411");
@@ -143,8 +148,10 @@ public class BirthAlterationTest extends CustomStrutsTestCase {
         initAndExecute("/alteration/eprBirthAlteration.do", session);
         session = alterationAction.getSession();
 
-        assertEquals("Action errors after altering father infomation ", 0, alterationAction.getActionErrors().size());
-
+        assertEquals("Action errors after altering father information", 0, alterationAction.getActionErrors().size());
+        assertEquals("RUWAN PERERA", alterationAction.getAlt27().getChildFullNameOfficialLang());
+        assertEquals("RUWAN PERERA", alterationAction.getAlt27().getChildFullNameEnglish());
+        assertEquals("Anuradha Silva", alterationAction.getAlt27A().getFather().getFatherFullName());
     }
 
     private static User loginSampleUser() {
@@ -267,9 +274,30 @@ public class BirthAlterationTest extends CustomStrutsTestCase {
         return list;
     }
 
+    public void testBirthAlterationSearch() throws Exception {
+
+        Map session = UserLogin("rg", "password");
+        request.setParameter("pageType", "1");
+        request.setParameter("idUKey", "1");
+        request.setParameter("sectionOfAct", "2");
+        initAndExecute("/alteration/eprBirthAlterationSearch.do", session);
+        session = alterationAction.getSession();
+        assertNotNull("session set", session);
+        assertEquals("RUWAN PERERA", alterationAction.getAlt27().getChildFullNameOfficialLang());
+        assertEquals("RUWAN PERERA", alterationAction.getAlt27().getChildFullNameEnglish());
+        //check death register is populated
+        //check basic list are populated if success
+
+        otherLists(alterationAction);
+    }
+
+    private void otherLists(AlterationAction alterationAction) {
+        assertNotNull("Race List", alterationAction.getRaceList());
+        assertNotNull("Country List", alterationAction.getCountryList());
+    }
+
     @Override
     public String getContextLocations() {
         return "unitTest_applicationContext.xml";
     }
-
 }
