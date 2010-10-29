@@ -589,6 +589,11 @@
         </td>
         <td colspan="2"></td>
     </tr>
+    <tr>
+        <td>
+            <img src="${pageContext.request.contextPath}/ImageServlet" />
+        </td>
+    </tr>
     </tbody>
 </table>
 </div>
