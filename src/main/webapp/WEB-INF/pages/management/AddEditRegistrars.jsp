@@ -29,13 +29,11 @@
 
     });
 
-    $(document).ready(function()
-    {
+    $(document).ready(function() {
         //hide the all of the element with class msg_body
         $(".msg_body").hide();
         //toggle the componenet with class msg_body
-        $(".msg_head").click(function()
-        {
+        $(".msg_head").click(function() {
             $(this).next(".msg_body").slideToggle(600);
         });
     });
@@ -133,10 +131,10 @@
         });
     });
 
-    var nameOfficialLang ;
-    var nameEnglish ;
-    var pin ;
-    var nic ;
+    var nameOfficialLang;
+    var nameEnglish;
+    var pin;
+    var nic;
     var gender;
     var dob;
     var address;
@@ -212,8 +210,7 @@
 <style type="text/css">
 
     #assignments {
-        background-color: #3399FF;
-        font-size: 30px;
+               font-size: 15px;
         cursor: default;
     }
 
@@ -354,21 +351,15 @@
             </tbody>
         </s:if>
     </table>
-
-</fieldset>
-<%--add a new assignment--%>
-
-<fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
-    <legend align="right"><s:property value="%{getText('registrar.add.new.assignment')}"/></legend>
-    <div id="assignments">
+    <div id="assignments" align="right">
         <s:url action="eprAssignmentAddDirect.do" id="x">
             <s:param value="%{registrar.pin}" name="registrarPin"></s:param>
-            <s:param value="3" name="directAssigment"></s:param>
+            <s:param value="3" name="directAssignment"></s:param>
         </s:url>
         <s:a href="%{x}" id="addText"><s:property value="%{getText('assignment.add.new.assignment')}"/></s:a>
     </div>
-</fieldset>
 
+</fieldset>
 <s:hidden id="invalideData" value="%{getText('invalide.data')}"/>
 <s:hidden id="cannotNull" value="%{getText('cannot.null')}"/>
 <s:hidden id="pin" value="%{getText('filed.pin')}"/>

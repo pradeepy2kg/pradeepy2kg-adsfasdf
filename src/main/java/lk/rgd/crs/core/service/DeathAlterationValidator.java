@@ -37,7 +37,7 @@ public class DeathAlterationValidator {
         boolean pass = (deathAlteration.getDeathInfo() != null | deathAlteration.getDeathPerson() != null) &&
                 (deathAlteration.getDeclarant().getDeclarantType() != null);
         if (!pass) {
-            handleException("cannot add not an alteration, validation failed", ErrorCodes.INCOMPLETE_ALTERATION);
+            handleException("validation failed ,Can't add death alteration ", ErrorCodes.INCOMPLETE_ALTERATION);
         }
     }
 

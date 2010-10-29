@@ -108,7 +108,7 @@
 
 <div id="manage_registrars"/>
 <s:form action="eprRegistrarsFilter.do" method="post">
-    <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
+    <fieldset style="margin-bottom:0px;margin-top:2px;border:2px solid #c3dcee;">
             <%--    <legend><s:property value="%{getText('filter.dsDivisions')}"/></legend>--%>
         <table cellspacing="0" cellpadding="0">
             <caption></caption>
@@ -132,7 +132,7 @@
             </tbody>
         </table>
     </fieldset>
-    <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
+    <fieldset style="margin-bottom:0px;margin-top:2px;border:2px solid #c3dcee;">
             <%--<legend align="right"><s:property value="%{getText('filter.active.inactive')}"/></legend>--%>
         <table cellspacing="0" cellpadding="0">
             <caption></caption>
@@ -147,7 +147,7 @@
             </tbody>
         </table>
     </fieldset>
-    <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
+    <fieldset style="margin-bottom:0px;margin-top:2px;border:2px solid #c3dcee;">
         <table cellspacing="0" cellpadding="0">
             <caption></caption>
 
@@ -169,55 +169,57 @@
 </s:form>
 
 <div id="manage_registrars_body">
-    <table id="registrars-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
-        <thead>
-        <tr class="table-title">
-            <th width="200px"><s:label value="%{getText('label.bdDivision')}"/></th>
-            <th width="200px"><s:label value="%{getText('label.name')}"/></th>
-            <th width="20px"><s:label value="%{getText('label.active')}"/></th>
-            <th width="75px"><s:label value="%{getText('label.type')}"/></th>
-            <th width="100px"><s:label value="%{getText('label.startDate')}"/></th>
-            <th width="100px"><s:label value="%{getText('label.endDate')}"/></th>
-        </tr>
-        </thead>
-        <s:if test="assignmentList.size>0">
+    <fieldset style="margin-bottom:0px;margin-top:5px;border:2px solid #c3dcee;">
+        <table id="registrars-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
+            <thead>
+            <tr class="table-title">
+                <th width="200px"><s:label value="%{getText('label.bdDivision')}"/></th>
+                <th width="200px"><s:label value="%{getText('label.name')}"/></th>
+                <th width="20px"><s:label value="%{getText('label.active')}"/></th>
+                <th width="75px"><s:label value="%{getText('label.type')}"/></th>
+                <th width="100px"><s:label value="%{getText('label.startDate')}"/></th>
+                <th width="100px"><s:label value="%{getText('label.endDate')}"/></th>
+            </tr>
+            </thead>
+            <s:if test="assignmentList.size>0">
 
-            <tbody>
-            <s:iterator status="assignmentStatus" value="assignmentList" id="assignmentList">
-                <s:url action="eprRegistrarsView.do" id="assign">
-                    <s:param name="registrarUkey" value="registrar.registrarUKey"/>
-                </s:url>
-                <tr>
-                    <s:if test="birthDivision != null">
-                        <td><s:property value="birthDivision.enDivisionName"/></td>
-                    </s:if>
-                    <s:if test="deathDivision != null">
-                        <td><s:property value="deathDivision.enDivisionName"/></td>
-                    </s:if>
-                    <s:if test="marriageDivision != null">
-                        <td><s:property value="marriageDivision.enDivisionName"/></td>
-                    </s:if>
+                <tbody>
+                <s:iterator status="assignmentStatus" value="assignmentList" id="assignmentList">
+                    <s:url action="eprRegistrarsView.do" id="assign">
+                        <s:param name="registrarUkey" value="registrar.registrarUKey"/>
+                    </s:url>
+                    <tr>
+                        <s:if test="birthDivision != null">
+                            <td><s:property value="birthDivision.enDivisionName"/></td>
+                        </s:if>
+                        <s:if test="deathDivision != null">
+                            <td><s:property value="deathDivision.enDivisionName"/></td>
+                        </s:if>
+                        <s:if test="marriageDivision != null">
+                            <td><s:property value="marriageDivision.enDivisionName"/></td>
+                        </s:if>
 
-                    <td><s:a href="%{assign}"><s:property value="registrar.fullNameInEnglishLanguage"/></s:a></td>
-                    <s:if test="lifeCycleInfo.active ==true">
-                        <td><s:property value="%{getText('label.yes')}"/></td>
-                    </s:if>
-                    <s:else>
-                        <td><s:property value="%{getText('label.no')}"/></td>
-                    </s:else>
-                    <td>
-                        <%= AssignmentUtill.getAssignmentType((Integer) request.getAttribute("type.ordinal()"),
-                                ((Locale) session.getAttribute("WW_TRANS_I18N_LOCALE")).getLanguage())
-                        %>
-                    </td>
-                    <td><s:property value="permanentDate"/></td>
-                    <td><s:property value="terminationDate"/></td>
-                </tr>
-            </s:iterator>
-            </tbody>
+                        <td><s:a href="%{assign}"><s:property value="registrar.fullNameInEnglishLanguage"/></s:a></td>
+                        <s:if test="lifeCycleInfo.active ==true">
+                            <td><s:property value="%{getText('label.yes')}"/></td>
+                        </s:if>
+                        <s:else>
+                            <td><s:property value="%{getText('label.no')}"/></td>
+                        </s:else>
+                        <td>
+                            <%= AssignmentUtill.getAssignmentType((Integer) request.getAttribute("type.ordinal()"),
+                                    ((Locale) session.getAttribute("WW_TRANS_I18N_LOCALE")).getLanguage())
+                            %>
+                        </td>
+                        <td><s:property value="permanentDate"/></td>
+                        <td><s:property value="terminationDate"/></td>
+                    </tr>
+                </s:iterator>
+                </tbody>
 
-        </s:if>
-    </table>
+            </s:if>
+        </table>
+    </fieldset>
 </div>
 <s:hidden id="divisionHeaderValue" value="%{getText('all.divisions.label')}"/>
 
