@@ -42,7 +42,8 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> raceList;
     private Map<Integer, String> bdDivisionList;
     private Map<Integer, String> allDistrictList;
-    private Map<Integer, String> allDSDivisionList;
+    private Map<Integer, String> allDsDivisionList;
+    private Map<Integer, String> allBdDivisionList;
     private Map<Integer, String> userLocations;
     private Map<Integer, Boolean> alterationApprovalPermission;
     private List<String[]> birthAlterationApprovalList;
@@ -1008,6 +1009,9 @@ public class AlterationAction extends ActionSupport implements SessionAware {
             declarant = ba.getDeclarant();
 
         }
+        if (bdf != null) {
+            getBirthCertificateInfo(bdf);
+        }
         return SUCCESS;
     }
 
@@ -1337,7 +1341,6 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
     private void populateDistrictAndDSDivision() {
         setLanguage(((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage());
-
         districtList = districtDAO.getDistrictNames(language, user);
         if (birthDistrictId == 0) {
             if (!districtList.isEmpty()) {
@@ -1362,6 +1365,20 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
         /** getting full district list and DS list */
         allDistrictList = districtDAO.getAllDistrictNames(language, user);
+        if (birthDistrictId == 0) {
+            if (!districtList.isEmpty()) {
+                birthDistrictId = districtList.keySet().iterator().next();
+                logger.debug("first allowed district in the list {} was set", birthDistrictId);
+            }
+        }
+        allDsDivisionList = dsDivisionDAO.getAllDSDivisionNames(birthDistrictId, language, user);
+        if (dsDivisionId == 0) {
+            if (!dsDivisionList.isEmpty()) {
+                dsDivisionId = dsDivisionList.keySet().iterator().next();
+                logger.debug("first allowed DS Division in the list {} was set", dsDivisionId);
+            }
+        }
+        allBdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
     }
 
     private void handleErrors(Exception e) {
@@ -1475,15 +1492,6 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     public void setAllDistrictList(Map<Integer, String> allDistrictList) {
         this.allDistrictList = allDistrictList;
     }
-
-    public Map<Integer, String> getAllDSDivisionList() {
-        return allDSDivisionList;
-    }
-
-    public void setAllDSDivisionList(Map<Integer, String> allDSDivisionList) {
-        this.allDSDivisionList = allDSDivisionList;
-    }
-
 
     public BirthRegistrationService getService() {
         return this.service;
@@ -1952,5 +1960,29 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
     public void setApproveRightsToUser(boolean approveRightsToUser) {
         this.approveRightsToUser = approveRightsToUser;
+    }
+
+    public DistrictDAO getDistrictDAO() {
+        return districtDAO;
+    }
+
+    public void setDistrictDAO(DistrictDAO districtDAO) {
+        this.districtDAO = districtDAO;
+    }
+
+    public Map<Integer, String> getAllBdDivisionList() {
+        return allBdDivisionList;
+    }
+
+    public void setAllBdDivisionList(Map<Integer, String> allBdDivisionList) {
+        this.allBdDivisionList = allBdDivisionList;
+    }
+
+    public Map<Integer, String> getAllDsDivisionList() {
+        return allDsDivisionList;
+    }
+
+    public void setAllDsDivisionList(Map<Integer, String> allDsDivisionList) {
+        this.allDsDivisionList = allDsDivisionList;
     }
 }
