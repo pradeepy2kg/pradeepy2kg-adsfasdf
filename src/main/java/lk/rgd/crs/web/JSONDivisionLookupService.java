@@ -4,6 +4,7 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
+import lk.rgd.crs.api.dao.MRDivisionDAO;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +32,7 @@ public class JSONDivisionLookupService extends HttpServlet {
     private DSDivisionDAO dsDivisionDAO;
     private BDDivisionDAO bdDivisionDAO;
     private DistrictDAO districtDAO;
+    private MRDivisionDAO mrDivisionDAO;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -39,6 +41,7 @@ public class JSONDivisionLookupService extends HttpServlet {
         dsDivisionDAO = (DSDivisionDAO) context.getBean("dsDivisionDAOImpl");
         bdDivisionDAO = (BDDivisionDAO) context.getBean("bdDivisionDAOImpl");
         districtDAO = (DistrictDAO) context.getBean("districtDAOImpl");
+        mrDivisionDAO = (MRDivisionDAO) context.getBean("mrDivisionDAOImpl");
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -79,6 +82,17 @@ public class JSONDivisionLookupService extends HttpServlet {
                 List bd = getBDDivisions(lang, dsDivisionId, user);
                 optionLists.put("dsDivisionList", ds);
                 optionLists.put("bdDivisionList", bd);
+            } else if ("6".equals(mode)) {
+                //passing district list and return ds division list and mr division list for 1st ds division.
+                List ds = getAllDSDivisions(lang, divisionId, user);
+                int dsDivisionId = Integer.parseInt(((SelectOption) ds.get(0)).getOptionValue());
+                List bd = getMRDivision(lang, dsDivisionId, user);
+                optionLists.put("dsDivisionList", ds);
+                optionLists.put("bdDivisionList", bd);
+
+            } else if ("7".equals(mode)) {
+                // passing dsDivisionId, return the MR list
+                optionLists.put("bdDivisionList", getMRDivision(lang, divisionId, user));
             } else {
                 // passing districtId, return DS List and the BD List for the 1st DS division
                 List ds = getDSDivisions(lang, divisionId, user);
@@ -87,12 +101,13 @@ public class JSONDivisionLookupService extends HttpServlet {
                 optionLists.put("dsDivisionList", ds);
                 optionLists.put("bdDivisionList", bd);
             }
-        } catch (Exception e) {
+        } catch (Exception
+                e) {
             logger.error("Fatal Error : {}", e);
             return;
         }
 
-      
+
         PrintWriter out = response.getWriter();
 
         mapper.writeValue(out, optionLists);
@@ -102,6 +117,13 @@ public class JSONDivisionLookupService extends HttpServlet {
     private List getBDDivisions(String language, int dsDivisionId, User user) {
         Map<Integer, String> bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
         logger.debug("Loaded BD list : {}", bdDivisionList);
+
+        return getList(bdDivisionList);
+    }
+
+    private List getMRDivision(String language, int dsDivision, User user) {
+        Map<Integer, String> bdDivisionList = mrDivisionDAO.getMRDivisionNames(dsDivision, language, user);
+        logger.debug("Loaded MR list : {}", bdDivisionList);
 
         return getList(bdDivisionList);
     }

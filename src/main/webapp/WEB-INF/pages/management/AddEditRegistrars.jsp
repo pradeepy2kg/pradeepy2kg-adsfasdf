@@ -209,8 +209,8 @@
 
 <style type="text/css">
 
-    #assignments {
-               font-size: 15px;
+    #assignments, #assignments2 {
+        font-size: 15px;
         cursor: default;
     }
 
@@ -316,6 +316,7 @@
                 <s:url action="eprAssignmentEdit.do" id="editSelected">
                     <s:param name="assignmentUKey" value="assignmentUKey"/>
                     <s:param name="editableAssignment" value="true"/>
+                    <s:param name="assignmentType" value="%{type.ordinal()}"/>
                 </s:url>
                 <tr>
                     <s:if test="birthDivision != null">
@@ -355,8 +356,18 @@
         <s:url action="eprAssignmentAddDirect.do" id="x">
             <s:param value="%{registrar.pin}" name="registrarPin"></s:param>
             <s:param value="3" name="directAssignment"></s:param>
+            <s:param value="1" name="assignmentType"></s:param>
         </s:url>
-        <s:a href="%{x}" id="addText"><s:property value="%{getText('assignment.add.new.assignment')}"/></s:a>
+        <s:a href="%{x}" id="addText"><s:property
+                value="%{getText('assignment.add.new.assignment.birth.death')}"/></s:a>
+    </div>
+    <div id="assignments2" align="right">
+        <s:url action="eprAssignmentAddDirect.do" id="x">
+            <s:param value="%{registrar.pin}" name="registrarPin"></s:param>
+            <s:param value="3" name="directAssignment"></s:param>
+            <s:param value="2" name="assignmentType"></s:param>
+        </s:url>
+        <s:a href="%{x}" id="addText"><s:property value="%{getText('assignment.add.new.assignment.marriage')}"/></s:a>
     </div>
 
 </fieldset>
