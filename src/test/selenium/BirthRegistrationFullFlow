@@ -439,6 +439,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>click</td>
+	<td>eprDirectApproveIgnoreWarning_ignoreWarning</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprDirectApproveIgnoreWarning_approve</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='birth-register-approval-footer']/a[2]/label</td>
+	<td></td>
+</tr>
+<tr>
 	<td>clickAndWait</td>
 	<td>//div[@id='birth-confirmation-print-form-outer-page']/div[2]/a/label</td>
 	<td></td>

@@ -256,7 +256,19 @@
         </s:iterator>
         </tbody>
     </table>
+
+
 </s:if>
+<table border="1"
+       style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:10px 0;font-size:10pt">
+    <tbody>
+    <tr>
+        <td colspan="4">
+            <img src="${pageContext.request.contextPath}/prs/ImageServlet?personId=${person.personUKey}"/>
+        </td>
+    </tr>
+    </tbody>
+</table>
 
 <div class="form-submit" style="margin:5px 0 0 0;">
     <s:submit value="%{getText('mark_as_print.button')}" type="submit"/>

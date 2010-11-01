@@ -5,6 +5,7 @@ import lk.rgd.common.core.dao.PreloadableDAO;
 import lk.rgd.common.util.RolePermissionUtils;
 import lk.rgd.crs.api.domain.*;
 import lk.rgd.prs.api.domain.*;
+import lk.rgd.prs.web.BarCodeImageServlet;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.slf4j.Logger;
@@ -69,6 +70,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
 
         entityClasses.add(BirthAlteration.class);
         entityClasses.add(DeathAlteration.class);
+        entityClasses.add(BarCodeImageServlet.class);
     }
 
     public void setDataSource(DataSource dataSource) {

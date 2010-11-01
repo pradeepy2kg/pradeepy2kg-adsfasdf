@@ -12,7 +12,9 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.domain.UserLocation;
 import lk.rgd.common.api.service.UserManager;
+import lk.rgd.common.api.service.EventViewerService;
 import lk.rgd.common.core.service.UserManagerImpl;
+import lk.rgd.common.core.service.EventViewerServiceImpl;
 import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.*;
 import lk.rgd.prs.api.service.PopulationRegistry;
@@ -82,6 +84,7 @@ public class ServiceAuditor implements MethodInterceptor {
         serviceClasses.put(DeathAlterationService.class, DeathAlterationServiceImpl.class);
         serviceClasses.put(CertificateSearchService.class, CertificateSearchServiceImpl.class);
         serviceClasses.put(UserManager.class, UserManagerImpl.class);
+        serviceClasses.put(EventViewerService.class, EventViewerServiceImpl.class);
 
         // the domain objects to be debug audited
         debugClasses = new ArrayList<Class>();
