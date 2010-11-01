@@ -169,6 +169,13 @@ public class Person implements Serializable {
     @Temporal(value = TemporalType.DATE)
     private Date dateOfDeath;
     /**
+     * The Hash value computed from person details. This can be used to verify a given barcode of a person.
+     * details include : official lang name, english name, pin, gender, DOB, and record created time.
+     * Algorithm will be SHA-1 hence length is 160.
+     *  */
+    @Column(nullable = true, length = 160)
+    private String hash;
+    /**
      * Record status - unverified (default) or verified
      */
     @Column(columnDefinition = "smallint not null default 0")
@@ -338,6 +345,14 @@ public class Person implements Serializable {
 
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getHash() {
+        return hash;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
     }
 
     public String getPlaceOfBirth() {

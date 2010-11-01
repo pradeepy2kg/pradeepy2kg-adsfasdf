@@ -6,11 +6,7 @@ import lk.rgd.AppConstants;
 import lk.rgd.prs.api.domain.Person;
 
 /**
- * Created by IntelliJ IDEA.
- * User: widu
- * Date: Oct 27, 2010
- * Time: 5:07:55 PM
- * To change this template use File | Settings | File Templates.
+ * utility class to help UI to display  localized labels for civil status.
  */
 public class CivilStatusUtil {
     private static final Logger logger = LoggerFactory.getLogger(CivilStatusUtil.class);
