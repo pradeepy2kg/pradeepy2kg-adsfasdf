@@ -23,8 +23,8 @@ public class Address implements Serializable {
     /**
      * The person to whom this address belongs (Note: An address belongs to only one person)
      */
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="personUKey", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "personUKey", nullable = false)
     private Person person;
     /**
      * Start date at this address
@@ -33,7 +33,7 @@ public class Address implements Serializable {
     @Temporal(value = TemporalType.DATE)
     private Date startDate;
     /**
-     * End date at this address 
+     * End date at this address
      */
     @Column(nullable = true)
     @Temporal(value = TemporalType.DATE)
@@ -61,7 +61,7 @@ public class Address implements Serializable {
     /**
      * Permanent address - if the address is permanent address then true else false
      */
-    @Column(nullable = true, columnDefinition="smallint not null default 0")
+    @Column(nullable = true, columnDefinition = "smallint not null default 0")
     private boolean permanent = false;
     /**
      * Country - null means Sri Lanka
@@ -163,22 +163,22 @@ public class Address implements Serializable {
             buffer.append(line1);
         }
         if ((line2 != null) && (!"".equals(line2))) {
-            buffer.append(", " );
+            buffer.append(", ");
             buffer.append(line2);
         }
 
         if ((city != null) && (!"".equals(city))) {
-            buffer.append(", " );
+            buffer.append(", ");
             buffer.append(city);
             // in the very likely case of postcode being absent,, we don't want to look silly by
             // printing a comma in the end.
             if ((postcode != null) && (!"".equals(postcode))) {
-                buffer.append(", " );
+                buffer.append(", ");
             }
         }
 
         if ((postcode != null) && (!"".equals(postcode))) {
-            buffer.append(", " );
+            buffer.append(", ");
             buffer.append(postcode);
         }
 

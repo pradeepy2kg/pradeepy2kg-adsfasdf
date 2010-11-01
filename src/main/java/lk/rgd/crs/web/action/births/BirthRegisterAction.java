@@ -24,8 +24,8 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 
 /**
- * EntryAction is a struts action class  responsible for  data capture for a birth declaration and the persistance of the same.
- * Data capture forms (4) will be kept in session until persistance at the end of 4th page.
+ * EntryAction is a struts action class  responsible for  data capture for a birth declaration and the persistence of the same.
+ * Data capture forms (4) will be kept in session until persistence at the end of 4th page.
  */
 public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private static final Logger logger = LoggerFactory.getLogger(BirthRegisterAction.class);
@@ -144,11 +144,11 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     /**
      * This method is responsible for loading and capture data for all 4 BDF pages as well
-     * as their persistance. pageNo hidden variable which is passed to the action (empty=0 for the
+     * as their persistence. pageNo hidden variable which is passed to the action (empty=0 for the
      * very first form page) is used to decide which state of the process we are in. at the last step
-     * only we do a persistance, until then all data will be in the session. This is a design decision
+     * only we do a persistence, until then all data will be in the session. This is a design decision
      * to limit DB writes. Masterdata population will be done before displaying every page.
-     * This will have no performace impact as they will be cached in the backend.
+     * This will have no performance impact as they will be cached in the backend.
      */
     public String birthDeclaration() {
         logger.debug("Step {} of 4 ", pageNo);
@@ -272,9 +272,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     /**
      * This method is responsible for loading and capture data for all 3 BDC pages as well
-     * as their persistance. pageNo hidden variable which is passed to the action (empty=0 for the
+     * as their persistence. pageNo hidden variable which is passed to the action (empty=0 for the
      * very first form page) is used to decide which state of the process we are in. bdId field should be used to
-     * determine the particular birth declarion entity on the initial visit to action. (after then it will be kept in the session)
+     * determine the particular birth declaration entity on the initial visit to action. (after then it will be kept in the session)
      */
     public String birthConfirmation() {
         logger.debug("Step {} of 3 ", pageNo);
@@ -577,7 +577,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             bdf = service.getById(bdId, user);
             birthType = bdf.getRegister().getBirthType();
             if (bdf.getRegister().getStatus().ordinal() == 5) {
-                logger.debug("serching rivisions for bdId {} ", bdId);
+                logger.debug("searching revisions for bdId {} ", bdId);
                 archivedEntryList = service.getArchivedCorrectedEntriesForGivenSerialNo(bdf.getRegister().getBirthDivision(), bdf.getRegister().getBdfSerialNo(), user);
             }
             if (BirthDeclaration.BirthType.ADOPTION == birthType) {
@@ -610,7 +610,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     /**
      * This method is responsible for loading 1 of the 3 BDC pages.
      * If bdId is 0 it is a fresh birth confirmation, else it is for
-     * edit. In edit mode checks wheather requested birthDeclaration
+     * edit. In edit mode checks whether requested birthDeclaration
      * is in the editable. If it is not in the editable mode directed
      * to error page
      *
@@ -654,7 +654,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     /**
      * This is responsible for skipping the 2 of 3BDC
-     * if there is no confirmation changes recieved.
+     * if there is no confirmation changes received.
      *
      * @return
      */
@@ -667,7 +667,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     /**
-     * Load Birth Cetificate List Page
+     * Load Birth Certificate List Page
      *
      * @return pageLoad
      */
@@ -793,8 +793,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         }
         /**
          *  under "Add another mode", few special values need to be3 preserved from last entry .
-         *  Pre setting serial, dateOfRegistrtion, district, division and notifyAuthority in batch mode data entry.
-         *  serial number incerementing by one.
+         *  Pre setting serial, dateOfRegistration, district, division and notifyAuthority in batch mode data entry.
+         *  serial number incrementing by one.
          */
         if (addNewMode) {
             BirthDeclaration oldBdf = service.getById(oldBdId, user);
@@ -840,10 +840,10 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             logger.debug("Districts, DS and BD divisions set from RegisterInfo : {} {}", birthDistrictId, dsDivisionId);
         }
 
-        if (!idsPopulated) {         // populate distric and ds div Ids with user preferences or set to 0 temporarily
+        if (!idsPopulated) {         // populate district and ds div Ids with user preferences or set to 0 temporarily
             if (user.getPrefBDDistrict() != null) {
                 birthDistrictId = user.getPrefBDDistrict().getDistrictUKey();
-                logger.debug("Prefered district {} set in user {}", birthDistrictId, user.getUserId());
+                logger.debug("Preferred district {} set in user {}", birthDistrictId, user.getUserId());
             } else {
                 birthDistrictId = 0;
                 logger.debug("First district in the list {} was set in user {}", birthDistrictId, user.getUserId());

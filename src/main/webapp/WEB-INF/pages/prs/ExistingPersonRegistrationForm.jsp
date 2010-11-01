@@ -1,16 +1,21 @@
 <%--@author Chathuranga Withana--%>
+<style type="text/css" title="currentStyle">
+    @import "../lib/datatables/media/css/demo_page.css";
+    @import "../lib/datatables/media/css/demo_table.css";
+    @import "../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css";
+</style>
+
+<%@ page import="lk.rgd.common.util.NameFormatUtil" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
-<link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
-<%--<link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>--%>
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
 <script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
 <script>
     //these input can not be null
     var errormsg = "";
     function validate() {
-
+        // TODO complete this java script
         var returnVal = true;
         var domObject;
         domObject = document.getElementById("submitDatePicker");
@@ -20,10 +25,10 @@
             isDate(domObject.value, 'error0', 'error1');
         }
 
-        domObject = document.getElementById("person_PIN");
-        if (!isFieldEmpty(domObject)) {
-            validatePINorNIC(domObject, 'error0', 'error2');
-        }
+        /*domObject = document.getElementById("person_PIN");
+         if (!isFieldEmpty(domObject)) {
+         validatePINorNIC(domObject, 'error0', 'error2');
+         }*/
 
         domObject = document.getElementById("personPassportNo");
         if (!isFieldEmpty(domObject)) {
@@ -77,6 +82,36 @@
 
 </script>
 <script type="text/javascript">
+
+    $('img#personName').bind('click', function(evt3) {
+        var id = $("textarea#personFullNameOfficialLang").attr("value");
+        var wsMethod = "transliterate";
+        var soapNs = "http://translitwebservice.transliteration.icta.com/";
+
+        var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
+        soapBody.attr("xmlns:trans", soapNs);
+        soapBody.appendChild(new SOAPObject('InputName')).val(id);
+        soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
+        soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
+        soapBody.appendChild(new SOAPObject('Gender')).val('U');
+
+        //Create a new SOAP Request
+        var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
+
+        //Lets send it
+        SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
+        SOAPClient.SendRequest(sr, processResponse1); //Send request to server and assign a callback
+    });
+
+    function processResponse1(respObj) {
+        //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
+        $("textarea#personFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].
+        return[0].Text
+    )
+        ;
+    }
+    ;
+
     $(function() {
         $("#submitDatePicker").datepicker({
             changeYear:true,
@@ -131,6 +166,17 @@
                 /* Country */  null,
                 /* Passport No. */ null
             ]
+        });
+
+        $('#persons-table').dataTable({
+            "bPaginate": true,
+            "bLengthChange": false,
+            "bFilter": true,
+            "bSort": true,
+            "bInfo": false,
+            "bAutoWidth": false,
+            "bJQueryUI": true,
+            "sPaginationType": "full_numbers"
         });
     });
 
@@ -206,7 +252,7 @@
 </script>
 
 <div class="prs-existing-person-register-outer">
-<s:form action="eprExistingPersonRegistration.do" method="POST">
+<s:form action="eprExistingPersonRegistration.do" method="POST" onsubmit="javascript:return validate()">
 
 <table class="table_reg_header_01" style="font-size:9pt">
     <caption></caption>
@@ -214,15 +260,15 @@
     <col/>
     <tbody>
     <tr>
-        <td width="300px"></td>
+        <td width="250px"></td>
         <td align="center" style="font-size:12pt; width:430px">
             <img src="<s:url value="/images/official-logo.png"/>"/><br>
             <label>ජනගහන ලේඛනයේ පුද්ගලයකු ලියාපදිංචි කිරීම
                 <br>குடிமதிப்பீட்டு ஆவணத்தில் ஆட்களை பதிவு செய்தல்
                 <br>Registration of a person in the Population Registry</label>
         </td>
-        <td>
-            <table class="table_reg_datePicker_page_01" style="margin-right:0">
+        <td width="350px" align="right" style="margin-right:0;">
+            <table class="table_reg_datePicker_page_01" style="width:90%;margin-right:0;">
                 <tr>
                     <td colspan="2">කාර්යාල ප්‍රයෝජනය සඳහා පමණි <br>அலுவலக பாவனைக்காக மட்டும்
                         <br>For office use only
@@ -231,7 +277,8 @@
                 </tr>
                 <tr>
                     <td>
-                        <label><span class="font-8">භාරගත්  දිනය<br>* Tamil<br>Submitted Date</span></label>
+                        <label><span
+                                class="font-8">භාරගත්  දිනය<br>பெறப்பட்ட திகதி <br>Date of Acceptance </span></label>
                     </td>
                     <td>
                         <s:label value="YYYY-MM-DD" cssStyle="margin-left:10px;font-size:10px"/><br>
@@ -243,6 +290,45 @@
     </tr>
     </tbody>
 </table>
+
+<s:if test="personList.size > 0">
+    <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
+        <legend><b>Possible Duplicates</b></legend>
+        <table id="persons-table" width="100%" cellpadding="0" cellspacing="0" class="display">
+            <thead>
+            <tr>
+                <th width="150px;">Id</th>
+                <th width="150px;">NIC</th>
+                <th width="480px;">Name</th>
+                <th width="200px;">Status</th>
+                <th width="50px;"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <s:iterator status="searchStatus" value="personList">
+                <tr class="<s:if test="#searchStatus.odd == true">odd</s:if><s:else>even</s:else>">
+                    <td align="center"><s:property value="personUKey"/></td>
+                    <td align="center"><s:property value="nic"/></td>
+                    <td>
+                        <s:if test="fullNameInOfficialLanguage != null">
+                            <%= NameFormatUtil.getDisplayName((String) request.getAttribute("fullNameInOfficialLanguage"), 50)%>
+                        </s:if>
+                    </td>
+                    <td align="center"><s:property value="status"/></td>
+                    <td>
+                        <s:url id="editPerson" action="eprEditPerson.do">
+                            <s:param name="personUKey" value="personUKey"/>
+                        </s:url>
+                        <s:a href="%{editPerson}" title="%{getText('editTooltip.label')}">
+                            <img src="<s:url value='/images/edit.png'/>" width="25" height="25" border="none"/>
+                        </s:a>
+                    </td>
+                </tr>
+            </s:iterator>
+            </tbody>
+        </table>
+    </fieldset>
+</s:if>
 
 <table class="table_reg_page_05" cellspacing="0" cellpadding="0" style="margin-bottom:0;margin-top:20px;">
     <caption></caption>
@@ -327,7 +413,18 @@
             <s:textarea name="person.fullNameInEnglishLanguage" id="personFullNameEnglish"
                         cssStyle="width:98.2%;"/>
             <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px;"
-                 id="childName">
+                 id="personName">
+        </td>
+    </tr>
+    <tr>
+        <td class="font-9" colspan="3">
+            පුද්ගලයකු ලියාපදිංචි කිරීමේ සහතිකය නිකුත් කල යුතු භාෂාව
+            <br>* Tamil
+            <br>Preferred Language for Person Registration Certificate
+        </td>
+        <td colspan="5">
+            <s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'Tamil'}" name="person.preferredLanguage"
+                      cssStyle="width:190px; margin-left:5px;"/>
         </td>
     </tr>
 
@@ -375,7 +472,7 @@
         <td colspan="3">
             (12) පියාගේ අනන්‍යතා අංකය හෝ ජාතික හැඳුනුම්පත් අංකය
             <br>தந்தையின் அடையாள எண் அல்லது தேசிய அடையாள அட்டை இலக்கம்
-            <br>Fathers Identification Number (PIN) or NIC 
+            <br>Fathers Identification Number (PIN) or NIC
         </td>
         <td colspan="2">
             <s:textfield name="person.fatherPINorNIC" id="fatherPINorNIC" maxLength="10"/>
@@ -473,6 +570,13 @@
         </tr>
         </thead>
         <tbody>
+        <s:iterator value="citizenshipList">
+            <tr>
+                <td><s:property value="countryId"/></td>
+                <td><s:property value="country.siCountryName"/></td>
+                <td><s:property value="passportNo"/></td>
+            </tr>
+        </s:iterator>
         </tbody>
     </table>
 </div>

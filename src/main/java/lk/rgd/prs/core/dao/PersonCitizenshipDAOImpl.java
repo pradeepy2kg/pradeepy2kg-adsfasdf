@@ -1,10 +1,10 @@
 package lk.rgd.prs.core.dao;
 
+import lk.rgd.common.api.domain.User;
 import lk.rgd.common.core.dao.BaseDAO;
 import lk.rgd.prs.api.dao.PersonCitizenshipDAO;
 import lk.rgd.prs.api.domain.PersonCitizenship;
 import lk.rgd.prs.api.domain.PersonCitizenshipID;
-import lk.rgd.common.api.domain.User;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +20,7 @@ public class PersonCitizenshipDAOImpl extends BaseDAO implements PersonCitizensh
     /**
      * @inheritDoc
      */
-    @Transactional(propagation = Propagation.MANDATORY)
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public PersonCitizenship getPersonCitizenship(long personUKey, int countryId) {
         return em.find(PersonCitizenship.class, new PersonCitizenshipID(personUKey, countryId));
     }
@@ -31,7 +31,6 @@ public class PersonCitizenshipDAOImpl extends BaseDAO implements PersonCitizensh
     @Transactional(propagation = Propagation.MANDATORY)
     public void addCitizenship(PersonCitizenship citizenship, User user) {
         citizenship.getPerson().getCountries().add(citizenship);
-        citizenship.getCountry().getPersons().add(citizenship);
         citizenship.getLifeCycleInfo().setCreatedUser(user);
         citizenship.getLifeCycleInfo().setCreatedTimestamp(new Date());
         citizenship.getLifeCycleInfo().setLastUpdatedUser(user);
@@ -68,7 +67,7 @@ public class PersonCitizenshipDAOImpl extends BaseDAO implements PersonCitizensh
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.MANDATORY)
-    public List<PersonCitizenship> getCitizenListByPersonId(long personUKey) {
+    public List<PersonCitizenship> getCitizenshipsByPersonId(long personUKey) {
         Query q = em.createNamedQuery("get.citizenship.by.personId");
         q.setParameter("personUKey", personUKey);
         return q.getResultList();

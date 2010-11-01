@@ -49,5 +49,5 @@ public interface PersonCitizenshipDAO {
      * @param personUKey the person unique id
      * @return filtered citizenship list for specified person
      */
-    public List<PersonCitizenship> getCitizenListByPersonId(long personUKey);
+    public List<PersonCitizenship> getCitizenshipsByPersonId(long personUKey);
 }

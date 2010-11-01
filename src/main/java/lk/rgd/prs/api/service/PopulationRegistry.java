@@ -36,7 +36,7 @@ public interface PopulationRegistry {
      * @param citizenshipList the person citizenship list
      * @return the PIN number generated for the Person - for verified records, or -1 for any other
      */
-    public long addExistingPerson(Person person, String permanentAddress, String currentAddress, User user,
+    public List<Person> addExistingPerson(Person person, String permanentAddress, String currentAddress, User user,
         List<PersonCitizenship> citizenshipList);
 
     /**

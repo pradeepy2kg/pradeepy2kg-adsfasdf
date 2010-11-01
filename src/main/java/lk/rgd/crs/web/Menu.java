@@ -110,6 +110,7 @@ public class Menu {
         prsLink.put("eprPRSAdvancedSearch.do", new Link("prs.advanceSearch.label", "/ecivil/prs/", "eprPRSAdvancedSearch.do", Permission.SEARCH_PRS));
         prsLink.put("eprExistingPersonRegInit.do", new Link("prs.personRegistration.label", "/ecivil/prs/", "eprExistingPersonRegInit.do", Permission.PRS_ADD_PERSON));
         prsLink.put("eprExistingPersonRegistration.do", new Link(null, "/ecivil/prs/", "eprExistingPersonRegistration.do", Permission.PRS_ADD_PERSON));
+        prsLink.put("eprEditPerson.do", new Link(null, "/ecivil/prs/", "eprEditPerson.do", Permission.PRS_EDIT_PERSON));
         prsLink.put("eprPersonDetails.do", new Link(null, "/ecivil/prs/", "eprPersonDetails.do", Permission.PRS_VIEW_PERSON));
         prsLink.put("eprPRSCertificate.do", new Link(null, "/ecivil/prs/", "eprPRSCertificate.do", Permission.PRS_VIEW_PERSON));
 

@@ -90,11 +90,16 @@
         <action name="eprExistingPersonRegistration" class="lk.rgd.prs.web.action.PopulationRegisterAction"
                 method="personRegistration">
             <result type="tiles" name="success">epr.personRegisterDetails</result>
+            <result type="tiles" name="form">epr.existingPersonRegistration</result>
         </action>
 
         <action name="eprPersonDetails" class="lk.rgd.prs.web.action.PersonDetailsAction"
                 method="personDetails">
             <result type="tiles" name="success">epr.personDetails</result>
+        </action>
+
+        <action name="eprEditPerson" class="lk.rgd.prs.web.action.PopulationRegisterAction" method="editPersonDetails">
+            <result type="tiles" name="success">epr.existingPersonRegistration</result>
         </action>
 
         <action name="eprPRSCertificate" class="lk.rgd.prs.web.action.PersonDetailsAction"
