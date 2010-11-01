@@ -74,7 +74,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
                 }
             }
         } catch (AuthorizationException e) {
-            addActionError("Incorrect username or password.");
+            addActionError("Incorrect user name or password.");
             logger.error("{} : {}", e.getMessage(), e);
             return "error";
         }

@@ -131,8 +131,15 @@
             <tr>
                 <td><s:property value="%{getText('label.district')}"/></td>
                 <td colspan="1" align="left">
-                    <s:select id="districtId" name="districtId" list="districtList" value="%{districtId}"
-                              cssStyle="width:98.5%; width:240px;" headerKey="0" headerValue="%{getText('all.district.label')}"/>
+                    <s:if test="%{#session.user_bean.role.roleId.equals('ADMIN')}">
+                        <s:select id="districtId" name="districtId" list="districtList" value="%{districtId}"
+                                  cssStyle="width:98.5%; width:240px;" headerKey="0"
+                                  headerValue="%{getText('all.district.label')}"/>
+                    </s:if>
+                    <s:else>
+                        <s:select id="districtId" name="districtId" list="districtList" value="%{districtId}"
+                                  cssStyle="width:98.5%; width:240px;"/>
+                    </s:else>
                 </td>
                 <td><s:property value="%{getText('label.DSDivision')}"/></td>
                 <td colspan="1" align="left"><s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList"
@@ -234,5 +241,6 @@
     </fieldset>
 </div>
 <s:hidden id="divisionHeaderValue" value="%{getText('all.divisions.label')}"/>
+<s:property value="%{#session.user_bean.role.roleId}"/>
 
 
