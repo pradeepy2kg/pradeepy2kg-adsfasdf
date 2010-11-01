@@ -250,7 +250,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
                 userLocation.setUserId(userId);
                 userLocation.setUser(userDAO.getUserByPK(userId));
                 service.addUserLocation(userLocation, currentUser);
-                logger.debug("Add New User locatin \"{}\" for user :{}", locationDAO.getLocation(locationId).getEnLocationName(), userId);
+                logger.debug("Add New User location \"{}\" for user :{}", locationDAO.getLocation(locationId).getEnLocationName(), userId);
                 userLocation = null;
             }
         }
@@ -274,7 +274,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
 
     public String activeUserLocation() {
         service.activeUserLocation(userId, locationId, currentUser);
-        logger.debug("Active lacation of {} user is :{}", userId, locationDAO.getLocation(locationId).getEnLocationName());
+        logger.debug("Active location of {} user is :{}", userId, locationDAO.getLocation(locationId).getEnLocationName());
         userLocationNameList = userLocationDAO.getUserLocationsListByUserId(userId);
         populate();
         return SUCCESS;
@@ -282,7 +282,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
 
     public String inactiveUserLocation() {
         service.inactiveUserLocation(userId, locationId, currentUser);
-        logger.debug("Inactive lacation of {} user is :{}", userId, locationDAO.getLocation(locationId).getEnLocationName());
+        logger.debug("Inactive location of {} user is :{}", userId, locationDAO.getLocation(locationId).getEnLocationName());
         userLocationNameList = userLocationDAO.getUserLocationsListByUserId(userId);
         populate();
         return SUCCESS;
