@@ -40,11 +40,8 @@ public class PersonCitizenshipTest extends TestCase {
         dob.add(Calendar.YEAR, -30);
 
         Person p1 = getMinimalPerson(dob.getTime());
-//        p1.addCitizenship(countryDAO.getCountry(1), "SRILANKA");
-//        p1.addCitizenship(countryDAO.getCountry(2), "JAPAN");
-//        p1.addCitizenship(countryDAO.getCountry(3), "INDIA");
         try {
-            long pin = eCivil.addExistingPerson(
+            eCivil.addExistingPerson(
                 p1, "Permanent Address", "Current Address", deoColomboColombo, addSampleCitizenship());
         } catch (Exception e) {
             fail("Person failed to add PRS");

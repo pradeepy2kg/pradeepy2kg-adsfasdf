@@ -33,6 +33,8 @@ public class PopulationRegisterAction extends ActionSupport implements SessionAw
 
     private Map<Integer, String> raceList;
     private Map<Integer, String> countryList;
+    private List<Person> personList;
+    private List<PersonCitizenship> citizenshipList;
 
     private Map session;
     private User user;
@@ -58,30 +60,46 @@ public class PopulationRegisterAction extends ActionSupport implements SessionAw
         // TODO implement validation 
         validateExistingPersonRegistration();
 
-        final List<PersonCitizenship> citizenshipList = getCitizenshipList();
+//        final List<PersonCitizenship> citizenshipList = new ArrayList<PersonCitizenship>();
+        citizenshipList = new ArrayList<PersonCitizenship>();
+        getCitizenshipList(citizenshipList);
         if (personCountryId != 0 && personPassportNo != null) {
             citizenshipList.add(createPersonCitizenship(countryDAO.getCountry(personCountryId), personPassportNo));
         }
-        long pin = service.addExistingPerson(person, permanentAddress, currentAddress, user, citizenshipList);
-        // personUKey used to redirect to PRS certificate page
-        personUKey = person.getPersonUKey();
-        addActionMessage(getText("person_reg_success.message") + pin);
+        personList = service.addExistingPerson(person, permanentAddress, currentAddress, user, citizenshipList);
 
-        if (logger.isDebugEnabled()) {
-            logger.debug("Person with name : " + NameFormatUtil.getDisplayName(person.getFullNameInEnglishLanguage(), 30)
-                + " and dateOfBirth : " + DateTimeUtils.getISO8601FormattedString(person.getDateOfBirth())
-                + " added to the PRS with PersonUKey : " + person.getPersonUKey() + " and generated PIN : " + pin);
+        if (personList.isEmpty()) {
+            final long pin = person.getPin();
+            // personUKey used to redirect to PRS certificate page
+            personUKey = person.getPersonUKey();
+            addActionMessage(getText("person_reg_success.message") + pin);
+
+            if (logger.isDebugEnabled()) {
+                logger.debug("Person with name : " + NameFormatUtil.getDisplayName(person.getFullNameInEnglishLanguage(), 30)
+                    + " and dateOfBirth : " + DateTimeUtils.getISO8601FormattedString(person.getDateOfBirth())
+                    + " added to the PRS with PersonUKey : " + person.getPersonUKey() + " and generated PIN : " + pin);
+            }
+            return SUCCESS;
+        } else {
+            populate();
+            return "form";
         }
+    }
+
+    public String editPersonDetails() {
+        logger.debug("Edit Person Details with PersonUKey : {}", personUKey);
+        populate();
+        person = service.getByUKey(personUKey, user);
         return SUCCESS;
     }
 
     /**
      * Returns citizenship list after processing citizenship String passed by the Existing Person Registration Form
      */
-    private List<PersonCitizenship> getCitizenshipList() {
+    private void getCitizenshipList(List<PersonCitizenship> list) {
         logger.debug("Received citizenship string : {}", citizenship);
+//        List<PersonCitizenship> list = new ArrayList<PersonCitizenship>();
         if (citizenship != null && citizenship.trim().length() > 0) {
-            List<PersonCitizenship> list = new ArrayList<PersonCitizenship>();
 
             int countryId;
             String passportNo;
@@ -92,12 +110,15 @@ public class PopulationRegisterAction extends ActionSupport implements SessionAw
                 list.add(createPersonCitizenship(countryDAO.getCountry(countryId), passportNo));
             }
 
-            return list;
+//            return list;
         } else {
-            return null;
+//            return null;
         }
     }
 
+    /**
+     * Return PersonCitizenship object when country and passport number passed
+     */
     private PersonCitizenship createPersonCitizenship(Country country, String passport) {
         PersonCitizenship pc = new PersonCitizenship();
         pc.setCountry(country);
@@ -161,6 +182,22 @@ public class PopulationRegisterAction extends ActionSupport implements SessionAw
 
     public void setCountryList(Map<Integer, String> countryList) {
         this.countryList = countryList;
+    }
+
+    public List<Person> getPersonList() {
+        return personList;
+    }
+
+    public void setPersonList(List<Person> personList) {
+        this.personList = personList;
+    }
+
+    public List<PersonCitizenship> getCitizenshipList() {
+        return citizenshipList;
+    }
+
+    public void setCitizenshipList(List<PersonCitizenship> citizenshipList) {
+        this.citizenshipList = citizenshipList;
     }
 
     public long getPersonUKey() {

@@ -84,7 +84,7 @@ public interface PersonDAO {
     /**
      * Return a list of Person objects as children for the given person
      *
-     * @param p the Person whose childrn we want to find
+     * @param p the Person whose children we want to find
      * @return the matching list of person (children)
      */
     public List<Person> findAllChildren(Person p);

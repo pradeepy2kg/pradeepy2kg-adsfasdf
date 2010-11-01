@@ -118,7 +118,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     /**
      * if confirmationFlag is set to true gets the BirthDeclarations which were confirmed by the parents else gets the
      * BirthDeclarations which are not confirmed yet by the parents, then set them in the approvalPendingList to get
-     * later in the jsp. page naviagation can be done only if previousFlag is set to 1 or nextFlag is set to 1 initial
+     * later in the jsp. page navigation can be done only if previousFlag is set to 1 or nextFlag is set to 1 initial
      * data are loaded based on the first district of the allowed district and the first division of the allowed division
      */
     private void birthRegisterApproval() {
@@ -169,7 +169,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             } else {
                 allowApproveBDF = user.isAuthorized(Permission.APPROVE_BDF);
             }
-            logger.debug("permissions for Birth Registratin Approval were populated : edit Registration {} , Approve/Reject Registration {} , "
+            logger.debug("permissions for Birth Registration Approval were populated : edit Registration {} , Approve/Reject Registration {} , "
                 , allowEditBDF, allowApproveBDF);
         }
     }
@@ -231,7 +231,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                 }
             } else if (searchStartDate != null && searchEndDate != null && bdfSerialNo == 0) {
                 // searching according to selected date range in BDF approval page
-                logger.debug("initializing bith declaration filter based on date range startDate : {} endDate : {}", startDate, endDate);
+                logger.debug("initializing birth declaration filter based on date range startDate : {} endDate : {}", startDate, endDate);
                 searchDateRangeFlag = true;
                 loadDeclarationApprovalPendingByDivisionAndDateRange();
             } else {
@@ -250,7 +250,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     }
 
     /**
-     * approve selected pending BirthDeclaration if there are any warnings redirected to warning displying page
+     * approve selected pending BirthDeclaration if there are any warnings redirected to warning displaying page
      *
      * @return String
      */
@@ -310,7 +310,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     }
 
     /**
-     * responsible for apprve BDF immediately after filling the form. if confirmationApprovalFlag is set to true it is
+     * responsible for approve BDF immediately after filling the form. if confirmationApprovalFlag is set to true it is
      * for Birth Confirmation changes direct approval purposes.
      *
      * @return
@@ -422,7 +422,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     }
 
     /**
-     * @return String which desides the next page
+     * @return String which decides the next page
      */
     public String approveListOfEntries() {
         initPermission(approveBelated);
@@ -624,24 +624,20 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     public String previousPage() {
         initPermission(approveBelated);
         if (logger.isDebugEnabled()) {
-            logger.debug("inside previousPage() : current birthDistrictId {}, birthDivisionId {} ", birthDistrictId, birthDivisionId
-                + " requested from pageNo " + pageNo);
+            logger.debug("inside previousPage() : current birthDistrictId {}, birthDivisionId {} ",
+                birthDistrictId, birthDivisionId + " requested from pageNo " + pageNo);
         }
         /**
-         * UI related. decides whether to display
-         * next and previous links
+         * UI related. decides whether to display next and previous links
          */
         if (previousFlag && getPageNo() == 2) {
             /**
-             * request is comming backword(calls previous
-             * to load the very first page
+             * request is coming backward(calls previous to load the very first page
              */
             setPreviousFlag(false);
         } else if (getPageNo() == 1) {
             /**
-             * if request is from page one
-             * in the next page previous link
-             * should be displayed
+             * if request is from page one in the next page previous link should be displayed
              */
             setPreviousFlag(false);
         } else {

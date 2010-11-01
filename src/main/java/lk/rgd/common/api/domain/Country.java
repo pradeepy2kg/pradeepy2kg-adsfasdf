@@ -31,12 +31,6 @@ public class Country implements Serializable {
     @Column(name = "active", columnDefinition = "smallint not null default 1")
     private boolean active;
 
-    /**
-     * The persons assigned to this country
-     */
-    @OneToMany(mappedBy = "country", fetch = FetchType.EAGER)
-    private Set<PersonCitizenship> persons = new HashSet<PersonCitizenship>();
-
     public Country() {
     }
 
@@ -94,14 +88,6 @@ public class Country implements Serializable {
 
     public void setCountryCode(String countryCode) {
         this.countryCode = countryCode;
-    }
-
-    public Set<PersonCitizenship> getPersons() {
-        return persons;
-    }
-
-    public void setPersons(Set<PersonCitizenship> persons) {
-        this.persons = persons;
     }
 
     @Override
