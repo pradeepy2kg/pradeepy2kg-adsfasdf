@@ -9,6 +9,7 @@ import lk.rgd.common.api.domain.*;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.core.AuthorizationException;
 import lk.rgd.common.util.Base64;
+import lk.rgd.common.util.HashUtil;
 import lk.rgd.crs.web.WebConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -89,16 +90,7 @@ public class UserManagerImpl implements UserManager {
      * @inheritDoc
      */
     public final String hashPassword(String password) {
-        MessageDigest sha = null;
-        try {
-            sha = MessageDigest.getInstance("SHA-1");
-        } catch (NoSuchAlgorithmException e) {
-            logger.warn("Cannot instantiate a SHA-1 message digest", e);
-            throw new RGDRuntimeException("Cannot instantiate a SHA-1 message digest", e);
-        }
-        sha.reset();
-        sha.update(password.getBytes());
-        return new String(Base64.encode(sha.digest()));
+        return HashUtil.hashString(password);
     }
 
     /**

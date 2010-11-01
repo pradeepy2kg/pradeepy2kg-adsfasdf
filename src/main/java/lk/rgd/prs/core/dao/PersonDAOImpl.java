@@ -1,6 +1,7 @@
 package lk.rgd.prs.core.dao;
 
 import lk.rgd.common.core.dao.BaseDAO;
+import lk.rgd.common.util.HashUtil;
 import lk.rgd.prs.api.dao.PersonDAO;
 import lk.rgd.prs.api.domain.Address;
 import lk.rgd.prs.api.domain.Marriage;
@@ -23,11 +24,13 @@ public class PersonDAOImpl extends BaseDAO implements PersonDAO {
 
     @Transactional(propagation = Propagation.MANDATORY)
     public void addPerson(Person person) {
+        person.setHash(HashUtil.hashPerson(person));
         em.persist(person);
     }
 
     @Transactional(propagation = Propagation.MANDATORY)
     public void updatePerson(Person person) {
+        person.setHash(HashUtil.hashPerson(person));
         em.merge(person);
     }
 
