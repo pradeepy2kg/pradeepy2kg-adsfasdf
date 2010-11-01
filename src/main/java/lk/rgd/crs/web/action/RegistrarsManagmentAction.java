@@ -1,6 +1,8 @@
 package lk.rgd.crs.web.action;
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.crs.api.domain.BDDivision;
+import lk.rgd.crs.api.domain.MRDivision;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +20,7 @@ import lk.rgd.crs.api.service.RegistrarManagementService;
 import lk.rgd.crs.web.WebConstants;
 
 /**
- * action class for managing registras    and their assignments
+ * action class for managing registrars    and their assignments
  *
  * @author amith jayasekara
  */
@@ -71,6 +73,10 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
     private Date permanentDate;
     private Date terminationDate;
 
+    private String districtName;
+    private String dsDivisionName;
+    private String divisionName;
+
     public RegistrarsManagmentAction(DistrictDAO districtDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO, RegistrarManagementService service, MRDivisionDAO mrDivisionDAO) {
         this.districtDAO = districtDAO;
         this.bdDivisionDAO = bdDivisionDAO;
@@ -99,19 +105,15 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
             registrarUkey = asg.getRegistrar().getRegistrarUKey();
             session.remove(WebConstants.SESSION_UPDATED_ASSIGNMENT_REGISTRAR);
         }
-        //following district and ds divisions are setted for add assignment
-        this.districtId = 1;
-        this.dsDivisionId = 1;
-        populateLists(districtId, dsDivisionId);
 
         if (registrarUkey > 0) {
             registrar = service.getRegistrarById(registrarUkey);
             assignmentList = service.getAssignments(registrarUkey, user);
         }
         Registrar existing = (Registrar) session.get(WebConstants.SESSION_EXSISTING_REGISTRAR);
-        logger.info("existing  : {}", existing );
-        if (existing  != null && existing .getRegistrarUKey() > 0) {
-            registrar = existing ;
+        logger.info("existing  : {}", existing);
+        if (existing != null && existing.getRegistrarUKey() > 0) {
+            registrar = existing;
             assignmentList = service.getAssignments(registrar.getRegistrarUKey(), user);
         }
         /*  assignmentList = service.getAllAssignments(user);*/
@@ -133,13 +135,12 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
         } else {
             if (type != null) {
                 assignmentList = service.getAssignmentsByDSDivision(dsDivisionId, type, state, user);
-
             } else {
                 assignmentList = service.getAssignmentsByDSDivision(dsDivisionId, state, user);
-
             }
         }
-        populateLists(districtId, dsDivisionId);
+        //todo check if need
+        populateLists(districtId, dsDivisionId, 1);
         return SUCCESS;
     }
 
@@ -150,7 +151,7 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
         if (page > 0) {
             //check is there a registrar for that pin already exists
             List<Registrar> existingRegistrarsList = service.getRegistrarByPin(registrar.getPin(), user);
-            if (existingRegistrarsList .size() > 1) { //there is already one before
+            if (existingRegistrarsList.size() > 1) { //there is already one before
                 addActionError(getText("error.registrar.already.exists"));
                 return "error";
             } else {
@@ -203,18 +204,42 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
             life.setActive(state);
             beforeEdit.setLifeCycleInfo(life);
             service.updateAssignment(beforeEdit, user);
-            populateLists(1, 1);
+            //todo load base on witch type of going to change
+            populateLists(1, 1, 1);
             return "updated";
         }
-        populateLists(1, 1);
+        populateLists(1, 1, 1);
         return SUCCESS;
     }
 
     public String editAssignment() {
+        String language = user.getPrefLanguage();
         //put current assignment in to session for redirection purposes
         assignment = service.getAssignmentById(assignmentUKey, user);
         session.put(WebConstants.SESSION_UPDATED_ASSIGNMENT_REGISTRAR, assignment);
-        populateLists(1, 1);
+        BDDivision birthDivision = assignment.getBirthDivision();
+        BDDivision deathDivision = assignment.getDeathDivision();
+        MRDivision mrdivision = assignment.getMarriageDivision();
+        if (birthDivision != null) {
+            divisionId = birthDivision.getBdDivisionUKey();
+            dsDivisionId = birthDivision.getDsDivision().getDsDivisionUKey();
+            districtId = birthDivision.getDistrict().getDistrictUKey();
+            divisionName = bdDivisionDAO.getNameByPK(divisionId, language);
+        }
+        if (deathDivision != null) {
+            divisionId = deathDivision.getBdDivisionUKey();
+            dsDivisionId = deathDivision.getDsDivision().getDsDivisionUKey();
+            districtId = deathDivision.getDistrict().getDistrictUKey();
+            divisionName = bdDivisionDAO.getNameByPK(divisionId, language);
+        }
+        if (mrdivision != null) {
+            divisionId = mrdivision.getMrDivisionUKey();
+            dsDivisionId = mrdivision.getDsDivision().getDsDivisionUKey();
+            districtId = mrdivision.getDistrict().getDistrictUKey();
+            divisionName = mrDivisionDAO.getNameByPK(divisionId, language);
+        }
+        districtName = districtDAO.getNameByPK(districtId, language);
+        dsDivisionName = dsDivisionDAO.getNameByPK(dsDivisionId, language);
         return SUCCESS;
     }
 
@@ -223,11 +248,11 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
 
         logger.info("attempting to update registrar : {}", registrar.getFullNameInEnglishLanguage());
         //setting previous life cycle info
-        registrar.setLifeCycleInfo(existing .getLifeCycleInfo());
+        registrar.setLifeCycleInfo(existing.getLifeCycleInfo());
         //setting current assignment
-        registrar.setAssignments(existing .getAssignments());
+        registrar.setAssignments(existing.getAssignments());
         //setting uK
-        registrar.setRegistrarUKey(existing .getRegistrarUKey());
+        registrar.setRegistrarUKey(existing.getRegistrarUKey());
 
         service.updateRegistrar(registrar, user);
         session.put(WebConstants.SESSION_EXSISTING_REGISTRAR, registrar);
@@ -241,13 +266,14 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
         if (registrarPin > 0) {
             session.put(WebConstants.SESSION_EXSISTING_REGISTRAR, service.getRegistrarByPin(registrarPin, user).get(0));
         }
-        populateLists(1, 1);
+        populateLists(1, 1, assignmentType);
         directAssignment = 1;
         return SUCCESS;
     }
 
+    //loads basic lists for separate types
 
-    private void populateLists(int distirictId, int dsDivisionId) {
+    private void populateLists(int distirictId, int dsDivisionId, int assignmentType) {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         if (user.getRole().getRoleId().equals(Role.ROLE_ADMIN)) {
             districtList = districtDAO.getAllDistrictNames(language, user);
@@ -256,9 +282,19 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
             districtList = districtDAO.getDistrictNames(language, user);
             dsDivisionList = dsDivisionDAO.getDSDivisionNames(distirictId, language, user);
         }
-
-        divisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionList.keySet().iterator().next(), language, user);
-        //todo load marrage divison list
+        switch (assignmentType) {
+            //requesting death /birth division list
+            case 1:
+                if (divisionList != null && divisionList.size() > 0) {
+                    divisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionList.keySet().iterator().next(), language, user);
+                }
+                break;
+            //requesting marriage division list
+            case 2:
+                if (divisionList != null && divisionList.size() > 0) {
+                    divisionList = mrDivisionDAO.getMRDivisionNames(dsDivisionList.keySet().iterator().next(), language, user);
+                }
+        }
     }
 
     public void setSession(Map map) {
@@ -533,5 +569,29 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
 
     public void setIndirect(boolean indirect) {
         this.indirect = indirect;
+    }
+
+    public String getDistrictName() {
+        return districtName;
+    }
+
+    public void setDistrictName(String districtName) {
+        this.districtName = districtName;
+    }
+
+    public String getDsDivisionName() {
+        return dsDivisionName;
+    }
+
+    public void setDsDivisionName(String dsDivisionName) {
+        this.dsDivisionName = dsDivisionName;
+    }
+
+    public String getDivisionName() {
+        return divisionName;
+    }
+
+    public void setDivisionName(String divisionName) {
+        this.divisionName = divisionName;
     }
 }

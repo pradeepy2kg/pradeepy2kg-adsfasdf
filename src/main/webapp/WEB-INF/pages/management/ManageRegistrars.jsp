@@ -22,7 +22,18 @@
 
 <script>
     $(document).ready(function() {
-
+        /**
+         *             "bPaginate": true,
+         "bLengthChange": false,
+         "bFilter": true,
+         ,
+         "sDom": 'T,C,H<"clear">lftipr'
+         "bSort": true,
+         "bInfo": false,
+         "bAutoWidth": false,
+         "bJQueryUI": true,
+         "sPaginationType": "full_numbers"
+         */
         $('#registrars-list-table').dataTable({
             "bPaginate": true,
             "bLengthChange": false,
@@ -31,8 +42,8 @@
             "bInfo": false,
             "bAutoWidth": false,
             "bJQueryUI": true,
-            "sPaginationType": "full_numbers"   ,
-            "sDom": 'T,C,H<"clear">lftipr'
+            "sPaginationType": "full_numbers",
+            "sDom":'T,C,H<"clear">lft'
             /**
              * plugin and short key
              * TableTools T
@@ -121,7 +132,7 @@
                 <td><s:property value="%{getText('label.district')}"/></td>
                 <td colspan="1" align="left">
                     <s:select id="districtId" name="districtId" list="districtList" value="%{districtId}"
-                              cssStyle="width:98.5%; width:240px;"/>
+                              cssStyle="width:98.5%; width:240px;" headerKey="0" headerValue="%{getText('all.district.label')}"/>
                 </td>
                 <td><s:property value="%{getText('label.DSDivision')}"/></td>
                 <td colspan="1" align="left"><s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList"
@@ -182,7 +193,6 @@
             </tr>
             </thead>
             <s:if test="assignmentList.size>0">
-
                 <tbody>
                 <s:iterator status="assignmentStatus" value="assignmentList" id="assignmentList">
                     <s:url action="eprRegistrarsView.do" id="assign">
@@ -191,6 +201,8 @@
                     <tr>
                         <s:if test="birthDivision != null">
                             <td><s:property value="birthDivision.enDivisionName"/></td>
+                            <%--                            <td><s:property value="birthDivision.enDivisionName"/></td>
+                           <td><s:property value="birthDivision.enDivisionName"/></td>--%>
                         </s:if>
                         <s:if test="deathDivision != null">
                             <td><s:property value="deathDivision.enDivisionName"/></td>
@@ -222,4 +234,5 @@
     </fieldset>
 </div>
 <s:hidden id="divisionHeaderValue" value="%{getText('all.divisions.label')}"/>
+
 

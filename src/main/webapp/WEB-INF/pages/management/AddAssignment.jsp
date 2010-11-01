@@ -1,3 +1,7 @@
+<%@ page import="lk.rgd.common.util.AssignmentUtill" %>
+<%@ page import="lk.rgd.common.api.domain.User" %>
+<%@ page import="lk.rgd.crs.web.WebConstants" %>
+<%@ page import="java.util.Locale" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-tags" %>
@@ -54,13 +58,26 @@
         });
     });
 
-    // mode 1 = passing District, will return DS list
-    // mode 2 = passing DsDivision, will return BD list
-    // any other = passing district, will return DS list and the BD list for the first DS
+
+    //mode 2 = passing DsDivision, will return BD list
+    //mode 5 = passing districtId, return DS List and the BD List for the 1st DS division
+    //mode 6 = passing district list and return ds division list and mr division list for 1st ds division.
+    //mode 7 = passing dsDivisionId, return the MR list
+
     $(function() {
         $('select#districtId').bind('change', function(evt1) {
             var id = $("select#districtId").attr("value");
-            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:5},
+            var type = document.getElementById("assignmentType").value;
+            var mode;
+            if (type == 1) {
+                //this mean requesting bd division
+                mode = 5;
+            }
+            if (type == 2) {
+                //this mean requesting mr division
+                mode = 6;
+            }
+            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:mode},
                     function(data) {
                         var options1 = '';
                         var ds = data.dsDivisionList;
@@ -80,7 +97,17 @@
 
         $('select#dsDivisionId').bind('change', function(evt2) {
             var id = $("select#dsDivisionId").attr("value");
-            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:2},
+            var type = document.getElementById("assignmentType").value;
+            var mode;
+            if (type == 1) {
+                //this mean requesting bd division
+                mode = 2;
+            }
+            if (type == 2) {
+                //this mean requesting mr division
+                mode = 7;
+            }
+            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:mode},
                     function(data) {
                         var options = '';
                         var bd = data.bdDivisionList;
@@ -168,32 +195,57 @@
     <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
         <table>
             <tbody>
-            <tr>
-                <td width="200px">
-                    <s:property value="%{getText('label.district')}"/>
-                </td>
-                <td>
-                    <s:select id="districtId" name="districtId" list="districtList" value="%{districtId}"
-                              cssStyle="width:240px;"/>
-                </td>
-                <td width="200px">
-                    <s:property value="%{getText('label.dsDivision')}"/>
-                </td>
-                <td>
-                    <s:select id="dsDivisionId" name="dsDivisionId"
-                              list="dsDivisionList"
-                              value="%{dsDivisionId}"
-                              cssStyle="float:left;  width:240px;"/></td>
-            </tr>
-            <tr>
-                <td width="200px">
-                    <s:property value="%{getText('label.division')}"/>
-                </td>
-                <td>
-                    <s:select id="divisionId" name="divisionId" value="%{divisionId}" list="divisionList"
-                              cssStyle="float:left;  width:240px;"/>
-                </td>
-            </tr>
+            <s:if test="%{editableAssignment}">
+                <tr>
+                    <td width="200px">
+                        <s:property value="%{getText('label.district')}"/>
+                    </td>
+                    <td width="240px">
+                        <s:property value="%{districtName}"/>
+                    </td>
+                    <td width="200px">
+                        <s:property value="%{getText('label.dsDivision')}"/>
+                    </td>
+                    <td>
+                        <s:property value="%{dsDivisionName}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="200px">
+                        <s:property value="%{getText('label.division')}"/>
+                    </td>
+                    <td><s:property value="%{divisionName}"/>
+                    </td>
+                </tr>
+            </s:if>
+            <s:else>
+                <tr>
+                    <td width="200px">
+                        <s:property value="%{getText('label.district')}"/>
+                    </td>
+                    <td>
+                        <s:select id="districtId" name="districtId" list="districtList" value="%{districtId}"
+                                  cssStyle="width:240px;"/>
+                    </td>
+                    <td width="200px">
+                        <s:property value="%{getText('label.dsDivision')}"/>
+                    </td>
+                    <td>
+                        <s:select id="dsDivisionId" name="dsDivisionId"
+                                  list="dsDivisionList"
+                                  value="%{dsDivisionId}"
+                                  cssStyle="float:left;  width:240px;"/></td>
+                </tr>
+                <tr>
+                    <td width="200px">
+                        <s:property value="%{getText('label.division')}"/>
+                    </td>
+                    <td>
+                        <s:select id="divisionId" name="divisionId" value="%{divisionId}" list="divisionList"
+                                  cssStyle="float:left;  width:240px;"/>
+                    </td>
+                </tr>
+            </s:else>
             </tbody>
         </table>
     </fieldset>
@@ -205,9 +257,26 @@
                 <td width="200px">
                     <s:property value="%{getText('label.type')}"/>
                 </td>
-                <td colspan="1" align=left><s:select
-                        list="#@java.util.HashMap@{'0':getText('label.type.birth'),'1':getText('label.type.death'),'2':getText('label.type.marriage.general'),'3':getText('label.type.marriage.kandyan'),'4':getText('label.type.marriage.muslim')}"
-                        name="assignmentType" cssStyle="width:240px; margin-left:5px;" id="type"/></td>
+                <s:if test="%{editableAssignment}">
+                    <s:set name="type" value="%{assignmentType}" scope="page"/>
+                    <td colspan="1" align=left>
+                        <%= AssignmentUtill.getAssignmentType((Integer) request.getAttribute("type.ordinal()"),
+                                ((Locale) session.getAttribute("WW_TRANS_I18N_LOCALE")).getLanguage())
+                        %>
+                    </td>
+                </s:if>
+                <s:else>
+                    <s:if test="%{assignmentType == 1}">
+                        <td colspan="1" align=left><s:select
+                                list="#@java.util.HashMap@{'0':getText('label.type.birth'),'1':getText('label.type.death')}"
+                                name="assignmentType" cssStyle="width:240px; margin-left:5px;" id="type"/></td>
+                    </s:if>
+                    <s:if test="%{assignmentType == 2}">
+                        <td colspan="1" align=left><s:select
+                                list="#@java.util.HashMap@{'2':getText('label.type.marriage.general'),'3':getText('label.type.marriage.kandyan'),'4':getText('label.type.marriage.muslim')}"
+                                name="assignmentType" cssStyle="width:240px; margin-left:5px;" id="type"/></td>
+                    </s:if>
+                </s:else>
             </tr>
             </tbody>
         </table>
@@ -318,5 +387,8 @@
 <s:hidden id="appoinmentDate" value="%{getText('field.appoinment.date')}"/>
 <s:hidden id="permanentDate" value="%{getText('field.permanent.data')}"/>
 <s:hidden id="terminationDate" value="%{getText('field.termination.data')}"/>
+<s:hidden id="assignmentType" value="%{assignmentType}"/>
+
+
 
 

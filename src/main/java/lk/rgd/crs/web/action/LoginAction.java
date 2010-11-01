@@ -64,6 +64,15 @@ public class LoginAction extends ActionSupport implements SessionAware {
         User user;
         try {
             user = userManager.authenticateUser(userName, userManager.hashPassword(password));
+            //check if user have a preferred bd or mr ds division
+            if (!user.getRole().getRoleId().equals("ADMIN") && !user.getRole().getRoleId().equals("RG")) {
+                if (user.getAssignedBDDSDivisions() != null && user.getAssignedBDDSDivisions().size() == 0
+                        ) {
+                    addActionError("You are not assign to any DS Division.Contact admin for resolve problem");
+                    logger.error("user : {} , doesn't allocate to any DS Division", user.getUserName());
+                    return "error";
+                }
+            }
         } catch (AuthorizationException e) {
             addActionError("Incorrect username or password.");
             logger.error("{} : {}", e.getMessage(), e);
@@ -138,7 +147,8 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
     /**
      * logout action which invalidates the session of the user
-     *                   https://192.168.1.6:9080
+     * https://192.168.1.6:9080
+     *
      * @return String
      */
     public String logout() {
