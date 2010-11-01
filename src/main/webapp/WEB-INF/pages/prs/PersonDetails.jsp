@@ -589,11 +589,6 @@
         </td>
         <td colspan="2"></td>
     </tr>
-    <tr>
-        <td colspan="4">
-            <img src="${pageContext.request.contextPath}/prs/ImageServlet?personId=${person.personUKey}" />
-        </td>
-    </tr>
     </tbody>
 </table>
 </div>
