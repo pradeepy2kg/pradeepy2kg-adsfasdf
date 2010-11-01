@@ -132,7 +132,7 @@ public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, Preload
     /**
      * @inheritDoc
      */
-    @Transactional(propagation = Propagation.SUPPORTS)
+    @Transactional(propagation = Propagation.MANDATORY)
     public List<DSDivision> findAll() {
         Query q = em.createNamedQuery("findAllDSDivisions");
         return q.getResultList();

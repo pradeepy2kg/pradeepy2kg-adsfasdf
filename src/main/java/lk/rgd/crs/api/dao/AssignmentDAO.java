@@ -56,14 +56,6 @@ public interface AssignmentDAO {
     public List<Assignment> getAssignmentsByTypeAndDSDivision(int dsDivisionUKey, Assignment.Type type, boolean active);
 
     /**
-     * get all assignments
-     *
-     * @param user requesting user
-     * @return list of all assignments
-     */
-    public List<Assignment> getAllAssignments(User user);
-
-    /**
      * get all assignment on given district
      *
      * @param districtId district id
@@ -83,5 +75,13 @@ public interface AssignmentDAO {
      * @return the list of assignments
      */
     public List<Assignment> getAllAssignmentsByBDorMRDivisionAndType(int divisionUKey, Assignment.Type type,
-        boolean active, boolean acting);
+                                                                     boolean active, boolean acting);
+
+    /**
+     * get all active assignments
+     *
+     * @param active active recode or inactive
+     * @return list of assignments
+     */
+    public List<Assignment> getAllActiveAssignments(boolean active);
 }

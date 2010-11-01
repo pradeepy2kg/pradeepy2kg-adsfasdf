@@ -52,6 +52,7 @@ public class AssignmentDAOImpl extends BaseDAO implements AssignmentDAO {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<Assignment> getAssignmentsForRegistrar(Registrar registrar) {
         Query q = em.createNamedQuery("get.by.registrarUKey");
         q.setParameter("registrarUKey", registrar.getRegistrarUKey());
@@ -61,6 +62,7 @@ public class AssignmentDAOImpl extends BaseDAO implements AssignmentDAO {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<Assignment> getAssignmentsByTypeAndDSDivision(int dsDivisionUKey, Assignment.Type type, boolean active) {
         Query q = null;
         switch (type) {
@@ -80,12 +82,7 @@ public class AssignmentDAOImpl extends BaseDAO implements AssignmentDAO {
         return q.getResultList();
     }
 
-    public List<Assignment> getAllAssignments(User user) {
-        Query q = em.createNamedQuery("get.all.assignments");
-        return q.getResultList();
-    }
-
-    //todo
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<Assignment> getAllAssignmentByDistricAndType(int districtId, Assignment.Type type, boolean active) {
         Query q = null;
         List<Assignment> result = null;
@@ -118,12 +115,22 @@ public class AssignmentDAOImpl extends BaseDAO implements AssignmentDAO {
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<Assignment> getAllAssignmentsByBDorMRDivisionAndType(int divisionUKey, Assignment.Type type,
-        boolean active, boolean acting) {
+                                                                     boolean active, boolean acting) {
         Query q = em.createNamedQuery("get.assignments.by.type.and.division");
         q.setParameter("type", type);
         q.setParameter("divisionUKey", divisionUKey);
         q.setParameter("active", active);
         q.setParameter("acting", acting);
+        return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<Assignment> getAllActiveAssignments(boolean active) {
+        Query q = em.createNamedQuery("get.all.assignments");
+        q.setParameter("active", active);
         return q.getResultList();
     }
 }
