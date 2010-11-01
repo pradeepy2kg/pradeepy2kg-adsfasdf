@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="lk.rgd.common.util.GenderUtil" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <script type="text/javascript">
@@ -14,8 +15,7 @@
      }
      })
      })*/
-    function checkAll(field)
-    {
+    function checkAll(field) {
         if (document.getElementById("selectAll").checked) {
             for (i = 0; i < field.length; i++) {
                 field[i].checked = true;
@@ -53,18 +53,31 @@
     <s:form action="eprApproveAlteration.do" method="post" name="alterationApproval">
         <table class="alteration-approval-list-table" width="100%" cellpadding="0" cellspacing="0">
             <tr>
-                <td style="width:20%;font-size:8pt;"></td>
-                <td style="width:35%;font-size:12pt; text-align:center;"><s:label
-                        value="%{getText('approval.table.row1.title')}"/></td>
-                <td style="width:35%;font-size:12pt; text-align:center;"><s:label
-                        value="%{getText('approval.table.row2.title')}"/></td>
-                <td style="width:10%;font-size:12pt; text-align:center;"><s:label
-                        value="%{getText('approve.label')}"/></td>
+                <td style="width:15%;font-size:12pt;text-align:center;" >
+                    Heading <br>
+                    தலைப்பு <br>
+                    ශීර්ෂය
+                </td>
+                <td style="width:35%;font-size:12pt; text-align:center;">
+                    Existing Entry <br>
+                    உள்ள பதிவுக் குறிப்பு <br>
+                    තිබෙන සටහන
+                </td>
+                <td style="width:35%;font-size:12pt; text-align:center;">
+                    Requested Entry <br>
+                    வேண்டப்பட்ட பதிவுக் குறிப்பு <br>
+                    ඉල්ලුම් කර ඇති සටහන
+                </td>
+                <td style="width:15%;font-size:12pt; text-align:center;">
+                    Approval Status <br>
+                    அனுமதி வழங்கல் <br>
+                    අනුමත කිරීම
+                </td>
             </tr>
             <s:iterator status="approvalStatus" value="birthAlterationApprovalList" id="approvalList">
                 <tr>
 
-                    <td style="padding-left:5px;">
+                    <td style="padding-left:5px;font-size:8pt">
                         <s:property
                                 value="%{getText(sectionOfAct+'.'+birthAlterationApprovalList[#approvalStatus.index][0]+'.label')}"/></td>
                     <td style="padding-left:25px;"><s:property
@@ -72,10 +85,10 @@
                     <td style="padding-left:25px;"><s:property
                             value="birthAlterationApprovalList[#approvalStatus.index][2]"/></td>
                     <td style="text-align:center;">
-                            <s:checkbox name="index"
-                                        value="%{#index}"
-                                        fieldValue="%{birthAlterationApprovalList[#approvalStatus.index][0]}"
-                                        id="%{birthAlterationApprovalList[#approvalStatus.index][0]}"/>
+                        <s:checkbox name="index"
+                                    value="%{#index}"
+                                    fieldValue="%{birthAlterationApprovalList[#approvalStatus.index][0]}"
+                                    id="%{birthAlterationApprovalList[#approvalStatus.index][0]}"/>
 
                     </td>
                 </tr>
@@ -86,10 +99,10 @@
         <s:hidden name="sectionOfAct"/>
         <s:hidden name="numberOfAppPending"/>
         <s:hidden name="idUKey"/>
-            <div style="width:20%;float:left;margin-left:25px;margin-top:20px;">
-                <s:label value="%{getText('select_all.label')}"/>
-                <s:checkbox id="selectAll" name="selectAll" onClick="checkAll(document.alterationApproval.index)"/>
-            </div>
+        <div style="width:20%;float:left;margin-left:25px;margin-top:20px;">
+            <s:label value="%{getText('select_all.label')}"/>
+            <s:checkbox id="selectAll" name="selectAll" onClick="checkAll(document.alterationApproval.index)"/>
+        </div>
         <div class="form-submit">
             <s:submit value="%{getText('save.label')}" cssStyle="margin-top:10px;margin-right:25px"/>
         </div>
