@@ -124,19 +124,24 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
 
     public String filter() {
         logger.info("filter called");
-        //selecting all division
-        if (dsDivisionId == -1) {
-            if (type != null) {
-                assignmentList = service.getAssignmentsByDistrictId(districtId, type, state, user);
-
-            } else {
-                assignmentList = service.getAssignmentsByDistrictId(districtId, state, user);
-            }
+        //filter by all districts
+        if (districtId == 0) {
+            assignmentList = service.getAllActiveAssignment(true, user);
         } else {
-            if (type != null) {
-                assignmentList = service.getAssignmentsByDSDivision(dsDivisionId, type, state, user);
+            //selecting all division
+            if (dsDivisionId == -1) {
+                if (type != null) {
+                    assignmentList = service.getAssignmentsByDistrictId(districtId, type, state, user);
+
+                } else {
+                    assignmentList = service.getAssignmentsByDistrictId(districtId, state, user);
+                }
             } else {
-                assignmentList = service.getAssignmentsByDSDivision(dsDivisionId, state, user);
+                if (type != null) {
+                    assignmentList = service.getAssignmentsByDSDivision(dsDivisionId, type, state, user);
+                } else {
+                    assignmentList = service.getAssignmentsByDSDivision(dsDivisionId, state, user);
+                }
             }
         }
         //todo check if need
@@ -285,13 +290,13 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
         switch (assignmentType) {
             //requesting death /birth division list
             case 1:
-                if (divisionList != null && divisionList.size() > 0) {
+                if (dsDivisionList != null && dsDivisionList.size() > 0) {
                     divisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionList.keySet().iterator().next(), language, user);
                 }
                 break;
             //requesting marriage division list
             case 2:
-                if (divisionList != null && divisionList.size() > 0) {
+                if (dsDivisionList != null && dsDivisionList.size() > 0) {
                     divisionList = mrDivisionDAO.getMRDivisionNames(dsDivisionList.keySet().iterator().next(), language, user);
                 }
         }

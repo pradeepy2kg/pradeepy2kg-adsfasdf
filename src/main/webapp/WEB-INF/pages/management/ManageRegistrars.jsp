@@ -241,6 +241,6 @@
     </fieldset>
 </div>
 <s:hidden id="divisionHeaderValue" value="%{getText('all.divisions.label')}"/>
-<s:property value="%{#session.user_bean.role.roleId}"/>
+
 
 

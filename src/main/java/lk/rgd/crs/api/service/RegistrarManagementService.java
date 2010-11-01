@@ -99,7 +99,7 @@ public interface RegistrarManagementService {
     public Registrar getRegistrarById(long idUKey);
 
     /**
-     * retrun registrars by given pin number
+     * rerun registrars by given pin number
      *
      * @param pin  registrars unique pin number
      * @param user user who is requesting registrars
@@ -108,41 +108,42 @@ public interface RegistrarManagementService {
     public List<Registrar> getRegistrarByPin(long pin, User user);
 
     /**
-     * get all the assignment (in all divisions)
+     * get a assignment by assignmentUKey
      *
-     * @param user requeting user
-     * @return
-     */
-    public List<Assignment> getAllAssignments(User user);
-
-    /**
-     * get a assignment by assignentUKey
-     *
-     * @param assignmentUKey uniquey for assignment
-     * @param user           user who has permisiion to request a assignment
-     * @return assignment wich has given unique key
+     * @param assignmentUKey unique for assignment
+     * @param user           user who has permission to request a assignment
+     * @return assignment witch has given unique key
      */
     public Assignment getAssignmentById(long assignmentUKey, User user);
 
     /**
      * get all assignments in given district
      *
-     * @param districtId distict ID
+     * @param districtId district ID
      * @param type       assignment type
      * @param active     assignment state
-     * @param user       user who has permiassion to request assignments
+     * @param user       user who has permission to request assignments
      * @return list of assignment filter by given district ,state and type
      */
     public List<Assignment> getAssignmentsByDistrictId(int districtId, Assignment.Type type, boolean active, User user);
 
     /**
-     * get all assignments for given district with out considdering type
+     * get all assignments for given district with out considering type
      *
      * @param districtId district unique key
      * @param active     active or inactive
-     * @param user       user who has permiassion to request assignments
-     * @return list of assignmet for given districtUKey filter by active or inactive
+     * @param user       user who has permission to request assignments
+     * @return list of assignment for given districtUKey filter by active or inactive
      */
     public List<Assignment> getAssignmentsByDistrictId(int districtId, boolean active, User user);
+
+    /**
+     * get all active assignments
+     *
+     * @param active active or inactive assignments
+     * @param user   user who has permissions to request assignments
+     * @return list of active assignments
+     */
+    public List<Assignment> getAllActiveAssignment(boolean active, User user);
 
 }

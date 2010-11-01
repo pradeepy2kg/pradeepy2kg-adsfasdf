@@ -30,16 +30,15 @@ import java.util.Date;
         @NamedQuery(name = "get.marriage.assignments.by.state.type.and.dsdivision", query = "SELECT a FROM Assignment a " +
                 " WHERE a.lifeCycleInfo.active = :active AND a.type = :type " +
                 " AND a.marriageDivision.dsDivision.dsDivisionUKey = :dsDivisionUKey"),
-        @NamedQuery(name = "get.all.assignments", query = "SELECT a FROM Assignment a"),
         @NamedQuery(name = "get.by.registrarUKey", query = "SELECT a FROM Assignment a " +
                 "WHERE a.registrar.registrarUKey = :registrarUKey"),
-
         @NamedQuery(name = "get.assignments.by.type.and.division", query = "SELECT a FROM Assignment a " +
                 "WHERE a.type = :type AND " +
                 "((a.birthDivision IS NOT NULL AND a.birthDivision.bdDivisionUKey = :divisionUKey) OR " +
                 "(a.deathDivision IS NOT NULL AND a.deathDivision.bdDivisionUKey = :divisionUKey) OR" +
                 "(a.marriageDivision IS NOT NULL AND a.marriageDivision.mrDivisionUKey = :divisionUKey))" +
-                "AND a.lifeCycleInfo.active = :active AND a.registrar.acting = :acting")         
+                "AND a.lifeCycleInfo.active = :active AND a.registrar.acting = :acting"),
+        @NamedQuery(name = "get.all.assignments", query = "SELECT a FROM Assignment a WHERE a.lifeCycleInfo.active =:active")
 })
 @org.hibernate.annotations.Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)
 public class Assignment implements Serializable {
