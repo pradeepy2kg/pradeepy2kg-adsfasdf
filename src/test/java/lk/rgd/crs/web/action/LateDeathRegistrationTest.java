@@ -31,7 +31,7 @@ import junit.framework.TestSuite;
 import junit.extensions.TestSetup;
 
 public class LateDeathRegistrationTest extends CustomStrutsTestCase {
-    private static final Logger logger = LoggerFactory.getLogger(AdoptionActionTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(LateDeathRegistrationTest.class);
     private ActionProxy proxy;
     private User user;
     private DeathRegisterAction deathAction;
@@ -99,7 +99,7 @@ public class LateDeathRegistrationTest extends CustomStrutsTestCase {
             death.setDeathSerialNo(2010012445 + i);
             death.setPlaceOfDeath("place of death :" + i);
             gCal.add(Calendar.DATE, -20);
-            death.setDateOfDeath(gCal.getTime());
+            death.setDateOfDeath(gCal.getTime());                   
             gCal.add(Calendar.DATE, -2);
             death.setDateOfRegistration(gCal.getTime());
             death.setPreferredLanguage("si");
@@ -191,7 +191,7 @@ public class LateDeathRegistrationTest extends CustomStrutsTestCase {
     public void testLateDeathDeclaration() throws Exception {
         Map session = UserLogin("ashoka", "ashoka");
         initAndExucute("/deaths/eprInitLateDeathDeclaration.do", session);
-        assertEquals("Action erros for Adoption Declaration ", 0, deathAction.getActionErrors().size());
+        assertEquals("Action errors for Adoption Declaration ", 0, deathAction.getActionErrors().size());
 
         DeathRegister ddf;
         session = deathAction.getSession();

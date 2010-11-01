@@ -158,7 +158,7 @@ public class LoginActionTest extends CustomStrutsTestCase {
         request.setParameter("password", "password");
 
         String result = login();
-        assertEquals("expired", result);
+        assertEquals("error", result);
     }
 
 

@@ -264,7 +264,7 @@ public class DeathAlterationActionTest extends CustomStrutsTestCase {
         //searching by death serial number
         request.setParameter("serialNumber", "2010012361");
         request.setParameter("divisionUKey", "" + ambathalenPahala.getBdDivisionUKey());
-        initAndExecute("/alteration/eprCaptureDeathAlteration.do", session);
+        initAndExecute("/alteration/eprDeathAlterationPageLoad.do", session);
         session = deathAlterationAction.getSession();
         assertNotNull("session set", session);
         //check death register is populated
