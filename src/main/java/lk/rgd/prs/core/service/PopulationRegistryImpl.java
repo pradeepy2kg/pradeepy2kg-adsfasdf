@@ -121,13 +121,13 @@ public class PopulationRegistryImpl implements PopulationRegistry {
 
             personDao.addPerson(person);
             // add permanent address of the person to the PRS
-            if (permanentAddress != null) {
+            if (permanentAddress != null && permanentAddress.trim().length() > 0) {
                 final Address permanentAdd = new Address(permanentAddress);
                 person.specifyAddress(permanentAdd);
                 personDao.addAddress(permanentAdd);
             }
             // add current address of the person to the PRS
-            if (currentAddress != null) {
+            if (currentAddress != null && currentAddress.trim().length() > 0) {
                 final Address currentAdd = new Address(currentAddress);
                 person.specifyAddress(currentAdd);
                 personDao.addAddress(currentAdd);

@@ -7,6 +7,7 @@ import lk.rgd.common.api.domain.Country;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.DateTimeUtils;
 import lk.rgd.common.util.NameFormatUtil;
+import lk.rgd.common.util.WebUtils;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.prs.api.domain.Person;
 import lk.rgd.prs.api.domain.PersonCitizenship;
@@ -55,6 +56,9 @@ public class PopulationRegisterAction extends ActionSupport implements SessionAw
         this.countryDAO = countryDAO;
     }
 
+    /**
+     * This method used to register persons to the PRS
+     */
     public String personRegistration() {
         logger.debug("Registration of exiting person to PRS");
         // TODO implement validation 
@@ -86,6 +90,9 @@ public class PopulationRegisterAction extends ActionSupport implements SessionAw
         }
     }
 
+    /**
+     * This method edits existing persons in the PRS
+     */
     public String editPersonDetails() {
         logger.debug("Edit Person Details with PersonUKey : {}", personUKey);
         populate();
@@ -247,7 +254,7 @@ public class PopulationRegisterAction extends ActionSupport implements SessionAw
     }
 
     public void setPermanentAddress(String permanentAddress) {
-        this.permanentAddress = permanentAddress;
+        this.permanentAddress = WebUtils.filterBlanksAndToUpper(permanentAddress);
     }
 
     public String getCurrentAddress() {
@@ -255,7 +262,7 @@ public class PopulationRegisterAction extends ActionSupport implements SessionAw
     }
 
     public void setCurrentAddress(String currentAddress) {
-        this.currentAddress = currentAddress;
+        this.currentAddress = WebUtils.filterBlanksAndToUpper(currentAddress);
     }
 
     public String getCitizenship() {

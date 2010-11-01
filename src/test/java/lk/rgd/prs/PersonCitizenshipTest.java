@@ -23,6 +23,11 @@ public class PersonCitizenshipTest extends TestCase {
     private final UserManager userManager;
     private User deoColomboColombo;
 
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+    }
+
     public PersonCitizenshipTest() {
         eCivil = (PopulationRegistry) ctx.getBean("ecivilService", PopulationRegistry.class);
         countryDAO = (CountryDAO) ctx.getBean("countryDAOImpl", CountryDAO.class);
@@ -54,6 +59,8 @@ public class PersonCitizenshipTest extends TestCase {
         person.setDateOfRegistration(today);
         person.setGender(1);
         person.setDateOfBirth(dob);
+        person.setFullNameInOfficialLanguage("පුද්ගලයාගේ නම");
+        person.setFullNameInEnglishLanguage("Person Name");
 
         return person;
     }
