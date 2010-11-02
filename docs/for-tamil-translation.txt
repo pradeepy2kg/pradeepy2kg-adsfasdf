@@ -31,8 +31,9 @@
 *Married
 *Unmarried
 
-
 *Alive
 *Dead
 *Missing
 *Non resident
+
+*(Preferred Language for Person Registration Certificate)පුද්ගලයකු ලියාපදිංචි කිරීමේ සහතිකය නිකුත් කල යුතු භාෂාව

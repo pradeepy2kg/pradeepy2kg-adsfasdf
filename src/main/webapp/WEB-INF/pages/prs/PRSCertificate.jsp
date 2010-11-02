@@ -12,7 +12,7 @@
         }
 
         td {
-            font-size: 9pt;
+            font-size: 10pt;
         }
     }
 
@@ -39,7 +39,9 @@
     <col width="300px">
     <tbody>
     <tr>
-        <td></td>
+        <td>
+            <img src="${pageContext.request.contextPath}/prs/ImageServlet?personId=${person.personUKey}" width="200" height="75"/>
+        </td>
         <td rowspan="2" align="center">
             <img src="<s:url value="../images/official-logo.png" />"
                  style="display: block; text-align: center;" width="100" height="120">
@@ -52,7 +54,7 @@
                         <br>தொடர் இலக்கம்
                         <br>Serial Number
                     </td>
-                    <td width="150px"><s:label name="personId"/></td>
+                    <td width="150px" style="font-size:11pt"><s:label name="personId"/></td>
                 </tr>
             </table>
         </td>
@@ -60,7 +62,7 @@
     </tr>
     <tr></tr>
     <tr>
-        <td align="center" style="font-size:12pt;" colspan="3">
+        <td align="center" style="font-size:14pt;" colspan="3">
             <s:label>
                 ජනගහන ලේඛනයේ පුද්ගලයකු ලියාපදිංචි කිරීමේ සහතික පත්‍රය
                 <br> குடிமதிப்பீட்டு ஆவணத்தின் ஆட் பதிவிற்கான சான்றிதழ்
@@ -81,12 +83,12 @@
     <col width="150px">
     <tbody>
     <tr>
-        <td>
+        <td height="60px">
             අනන්‍යතා අංකය
             <br>அடையாள எண்
             <br>Identification Number
         </td>
-        <td colspan="2">
+        <td colspan="2" style="font-size:12pt">
             <s:label value="%{person.pin}"/>
         </td>
         <td>
@@ -94,18 +96,18 @@
             <br>பிறந்த திகதி
             <br>Date of birth
         </td>
-        <td colspan="2">
+        <td colspan="2" style="font-size:12pt">
             <s:label value="%{person.dateOfBirth}"/><br>
             <s:label value="YYYY-MM-DD" cssStyle="margin-left:5px;font-size:10px"/>
         </td>
     </tr>
     <tr>
-        <td>
+        <td height="60px">
             ස්ත්‍රී පුරුෂ භාවය
             <br>பால்
             <br>Gender
         </td>
-        <td colspan="2">
+        <td colspan="2" style="font-size:12pt">
             <s:label name="" value="%{gender}"/> <br>
             <s:label name="" value="%{genderEn}"/>
         </td>
@@ -114,54 +116,58 @@
             <br>இனம்
             <br>Race
         </td>
-        <td colspan="2">
+        <td colspan="2" style="font-size:12pt">
             <s:label value="%{race}"/> <br>
             <s:label value="%{raceEn}"/>
         </td>
     </tr>
     <tr>
-        <td>
+        <td height="60px">
             උපන් ස්ථානය
             <br>பிறந்த இடம்
             <br>Place of Birth
         </td>
-        <td colspan="5">
+        <td colspan="5" style="font-size:12pt">
             <s:label value="%{person.placeOfBirth}"/>
         </td>
     </tr>
     <tr>
-        <td>
+        <td height="110px">
             නම
             <br>பெயர்
             <br>Name
         </td>
-        <td colspan="5">
+        <td colspan="5" style="font-size:13pt">
             <s:label value="%{person.fullNameInOfficialLanguage}"/>
         </td>
     </tr>
     <tr>
-        <td>
+        <td height="110px">
             නම ඉංග්‍රීසි භාෂාවෙන්
             <br>ஆங்கிலத்தில் பெயர்
             <br>Name in English
         </td>
-        <td colspan="5">
+        <td colspan="5" style="font-size:13pt">
             <s:label value="%{person.fullNameInEnglishLanguage}"/>
         </td>
     </tr>
     <tr>
-        <td colspan="2">
+        <td colspan="2" height="80px">
             මවගේ අනන්‍යතා අංකය හෝ ජාතික හැඳුනුම්පත් අංකය
             <br>தாயின் அடையாள எண் அல்லது தேசிய அடையாள அட்டை இலக்கம்
             <br>Mothers Identification Number (PIN) or NIC
         </td>
-        <td></td>
+        <td style="font-size:12pt">
+             <s:label value="%{person.motherPINorNIC}"/>
+        </td>
         <td colspan="2">
             පියාගේ අනන්‍යතා අංකය හෝ ජාතික හැඳුනුම්පත් අංකය
             <br>தந்தையின் அடையாள எண் அல்லது தேசிய அடையாள அட்டை இலக்கம்
             <br>Fathers Identification Number (PIN) or NIC
         </td>
-        <td></td>
+        <td style="font-size:12pt">
+            <s:label value="%{person.fatherPINorNIC}"/>
+        </td>
     </tr>
     </tbody>
 </table>
@@ -170,7 +176,7 @@
     <col width="200px">
     <col width="300px">
     <col width="100px">
-    <col>
+    <col width="430px">
     <tbody>
     <tr>
         <td height="120px">
@@ -178,7 +184,7 @@
             <br>நிரந்தர வதிவிட முகவரி
             <br>Permanent Address
         </td>
-        <td colspan="3" height="40px">
+        <td colspan="3" height="40px" style="font-size:12pt">
             <s:label value="%{permanentAddress.Line1}"/>
             <br><s:label value="%{permanentAddress.Line2}"/>
             <br><s:label value="%{permanentAddress.City}"/>
@@ -196,19 +202,19 @@
             <br>தற்போதைய வதிவிட முகவரி
             <br>Current Address
         </td>
-        <td colspan="3" height="40px">
+        <td colspan="3" height="40px" style="font-size:12pt">
             <s:label value="%{person.LastAddress.Line1}"/>
             <br><s:label value="%{person.LastAddress.Line2}"/>
             <br><s:label value="%{person.LastAddress.City}"/>
         </td>
     </tr>
     <tr>
-        <td>
+        <td height="60px">
             දුරකථන අංක
             <br>தொலைபேசி இலக்கம்
             <br>Telephone Numbers
         </td>
-        <td>
+        <td style="font-size:12pt">
             <s:label value="%{person.personPhoneNo}"/>
         </td>
         <td>
@@ -216,7 +222,7 @@
             <br>மின்னஞ்சல்
             <br>Email
         </td>
-        <td>
+        <td style="font-size:12pt">
             <s:label value="%{person.personEmail}"/>
         </td>
     </tr>
@@ -247,28 +253,16 @@
                 <td height="40px">
                     රට / நாடு /Country
                 </td>
-                <td><s:property value="country.enCountryName"/></td>
+                <td style="font-size:12pt"><s:property value="country.enCountryName"/></td>
                 <td>
                     ගමන් බලපත්‍ර අංකය / கடவுச் சீட்டு இல. /Passport No.
                 </td>
-                <td><s:property value="passportNo"/></td>
+                <td style="font-size:12pt"><s:property value="passportNo"/></td>
             </tr>
         </s:iterator>
         </tbody>
     </table>
-
-
 </s:if>
-<table border="1"
-       style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:10px 0;font-size:10pt">
-    <tbody>
-    <tr>
-        <td colspan="4">
-            <img src="${pageContext.request.contextPath}/prs/ImageServlet?personId=${person.personUKey}"/>
-        </td>
-    </tr>
-    </tbody>
-</table>
 
 <div class="form-submit" style="margin:5px 0 0 0;">
     <s:submit value="%{getText('mark_as_print.button')}" type="submit"/>
