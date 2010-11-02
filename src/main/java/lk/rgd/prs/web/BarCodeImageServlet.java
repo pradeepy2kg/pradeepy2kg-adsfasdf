@@ -88,27 +88,20 @@ public class BarCodeImageServlet extends HttpServlet {
 
                     //prepare data
                     StringBuffer buffer = new StringBuffer();
-                    buffer.append("Name in Offcicial Language=");
-                    buffer.append(URLEncoder.encode(person.getFullNameInOfficialLanguage(), "UTF-8"));
-                    buffer.append("\r");
-                    buffer.append("Name in English=");
+                    //buffer.append(URLEncoder.encode(person.getFullNameInOfficialLanguage(), "UTF-8"));
+                    //buffer.append("|");
                     buffer.append(person.getFullNameInEnglishLanguage());
-                    buffer.append("\r");
-                    buffer.append("NIC=");
-                    buffer.append(person.getNic());
-                    buffer.append("\r");
-                    buffer.append("Pin=");
+                    buffer.append("|");
+                    //buffer.append("NIC=");
+                    //buffer.append(person.getNic());
+                    //buffer.append("|");
                     buffer.append(person.getPin());
-                    buffer.append("\r");
-                    buffer.append("Gender=");
+                    buffer.append("|");
                     buffer.append(person.getGender());
-                    buffer.append("\r");
-                    buffer.append("idukey=");
+                    buffer.append("|");
                     buffer.append(person.getPersonUKey());
-                    buffer.append("\r");
-                    buffer.append("DOB=");
+                    buffer.append("|");
                     buffer.append(person.getDateOfBirth());
-                    buffer.append("\r");
                     logger.debug("Barcode data size : {}", buffer.length());
 
                     //Generate the barcode
