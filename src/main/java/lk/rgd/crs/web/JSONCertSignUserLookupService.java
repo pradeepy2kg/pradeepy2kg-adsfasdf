@@ -97,8 +97,8 @@ public class JSONCertSignUserLookupService extends HttpServlet {
                 optionList.put("authorizedUsers", getMarriageCertSignUsers(locationId));
             } else {
                 if (userId == null) {
-                    logger.warn("Required parameter userId not passed to the service");
-                    return;
+                    User user = (User) session.getAttribute(WebConstants.SESSION_USER_BEAN);
+                    userId = user.getUserId();
                 }
                 UserLocation userLocation = userLocationDAO.getUserLocation(userId, locationId);
                 String lang = getUserPrefLang(certificateId);
