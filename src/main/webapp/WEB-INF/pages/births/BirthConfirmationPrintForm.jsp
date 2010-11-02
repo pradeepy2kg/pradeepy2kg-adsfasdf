@@ -33,7 +33,7 @@
             var certId = $('label#certificateId').text();
             var options = '';
             if (id > 0) {
-                $.getJSON('/ecivil/crs/CertSignUserLookupService', {userLocationId:id,certificateId:certId},
+                $.getJSON('/ecivil/crs/CertSignUserLookupService', {userLocationId:id,mode:0,certificateId:certId},
                         function(data) {
                             var locationAddress = data.locationAddress;
                             $("label#retAddress").html(locationAddress);
