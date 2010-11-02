@@ -1,6 +1,7 @@
 package lk.rgd.crs.web.action.deaths;
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.crs.api.service.DeathAlterationService;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +48,10 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private final CountryDAO countryDAO;
     private final AppParametersDAO appParametersDAO;
     private final DeathRegistrationService service;
+    private final DeathAlterationService deathAlterationService;
     private final RaceDAO raceDAO;
+
+    private BitSet changedFields;
 
     private Map<Integer, String> districtList;
     private Map<Integer, String> dsDivisionList;
@@ -105,7 +109,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public DeathRegisterAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
                                CountryDAO countryDAO, DeathRegistrationService deathRegistrationService,
-                               AppParametersDAO appParametersDAO, RaceDAO raceDAO) {
+                               AppParametersDAO appParametersDAO, RaceDAO raceDAO, DeathAlterationService deathAlterationService) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
@@ -113,6 +117,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         this.service = deathRegistrationService;
         this.appParametersDAO = appParametersDAO;
         this.raceDAO = raceDAO;
+        this.deathAlterationService = deathAlterationService;
     }
 
     public String welcome() {
@@ -217,9 +222,22 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
             initPermissionForApprovalAndPrint();
             //loading historical recodes
             archivedEntryList = service.getArchivedCorrectedEntriesForGivenSerialNo(deathRegister.getDeath().getDeathDivision(),
-                    deathRegister.getDeath().getDeathSerialNo(), user);
+                    deathRegister.getDeath().getDeathSerialNo(), idUKey, user);
+            //create changed bit set to display *  marks
+            if (archivedEntryList.size() > 0) {
+                displayChagesInStarMark(archivedEntryList);
+            }
             return SUCCESS;
         }
+    }
+
+    private void displayChagesInStarMark(List<DeathRegister> deathRegisters) {
+        changedFields = new BitSet();
+        for (int i = 0; i < deathRegisters.size(); i++) {
+            DeathAlteration da = deathAlterationService.getAlterationByDeathCertificateNumber(deathRegisters.get(i).getIdUKey(), user).get(0);
+            changedFields.or(da.getApprovalStatuses());
+        }
+        logger.debug("bit sets merge and final bit set : {}", changedFields);
     }
 
     public String deathApprovalAndPrint() {
@@ -321,8 +339,8 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public String directApproveDeath() {
-        //todo include validater
-        logger.debug("requested to direct approve Death Decalaration with idUKey : {}", idUKey);
+        //todo include validator
+        logger.debug("requested to direct approve Death Declaration with idUKey : {}", idUKey);
         warnings = service.approveDeathRegistration(idUKey, user, ignoreWarning);
         initPermissionForApprovalAndPrint();
         populate();
@@ -347,14 +365,14 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
             //load get comment page for rejection
             return "getComment";
         }
-        logger.debug("requested to reject Death Decalaration with idUKey : {}", idUKey);
+        logger.debug("requested to reject Death Declaration with idUKey : {}", idUKey);
         try {
             service.rejectDeathRegistration(idUKey, user, comment);
         } catch (CRSRuntimeException e) {
             //todo
             /*
-            * after retruning this error comment page doesnt have death object so when submitting it gives exception
-            * so set object here before forword to page
+            * after returning this error comment page doesn't have death object so when submitting it gives exception
+            * so set object here before foreword to page
             * */
             addFieldError("errorField", getText("%{death.comment.is.required}"));
             return "getComment";
@@ -452,7 +470,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     }
 
     /**
-     * method to ignore death certificate mariking as printed and
+     * method to ignore death certificate marking as printed and
      * load the previous state of the list page
      *
      * @return
@@ -496,7 +514,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
         if (addNewMode) {
             DeathRegister oldDdf = service.getById(oldIdUKey, user);
-            logger.debug("Old IDUkey : {} ", oldIdUKey);
+            logger.debug("Old IdUkey : {} ", oldIdUKey);
             death = new DeathInfo();
             death.setDeathSerialNo(oldDdf.getDeath().getDeathSerialNo() + 1);
             death.setDateOfRegistration(oldDdf.getDeath().getDateOfRegistration());
@@ -536,10 +554,10 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
             logger.debug("Districts, DS and BD divisions set from RegisterInfo : {} {}", deathDistrictId, dsDivisionId);
         }
 
-        if (!idsPopulated) {         // populate distric and ds div Ids with user preferences or set to 0 temporarily
+        if (!idsPopulated) {         // populate district and ds div Ids with user preferences or set to 0 temporarily
             if (user.getPrefBDDistrict() != null) {
                 deathDistrictId = user.getPrefBDDistrict().getDistrictUKey();
-                logger.debug("Prefered district {} set in user {}", deathDistrictId, user.getUserId());
+                logger.debug("Preferred district {} set in user {}", deathDistrictId, user.getUserId());
             } else {
                 deathDistrictId = 0;
                 logger.debug("First district in the list {} was set in user {}", deathDistrictId, user.getUserId());
@@ -1137,5 +1155,13 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public void setArchivedEntryList(List<DeathRegister> archivedEntryList) {
         this.archivedEntryList = archivedEntryList;
+    }
+
+    public BitSet getChangedFields() {
+        return changedFields;
+    }
+
+    public void setChangedFields(BitSet changedFields) {
+        this.changedFields = changedFields;
     }
 }

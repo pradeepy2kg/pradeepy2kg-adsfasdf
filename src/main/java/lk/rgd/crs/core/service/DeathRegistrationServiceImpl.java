@@ -323,11 +323,11 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<DeathRegister> getArchivedCorrectedEntriesForGivenSerialNo(BDDivision bdDivision, long serialNo, User user) {
+    public List<DeathRegister> getArchivedCorrectedEntriesForGivenSerialNo(BDDivision bdDivision, long serialNo,long deathId, User user) {
         logger.debug("Searching for historical records for BD Division : {} and Serial number : {} ",
                 bdDivision.getBdDivisionUKey(), serialNo);
         ValidationUtils.validateAccessToBDDivision(user, bdDivision);
-        return deathRegisterDAO.getHistoricalRecordsForBDDivisionAndSerialNo(bdDivision, serialNo);
+        return deathRegisterDAO.getHistoricalRecordsForBDDivisionAndSerialNo(bdDivision, serialNo,deathId);
     }
 
     private void validateAccessOfUser(User user, DeathRegister dr) {
