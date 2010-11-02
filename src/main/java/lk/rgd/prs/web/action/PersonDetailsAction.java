@@ -8,6 +8,7 @@ import lk.rgd.prs.api.service.PopulationRegistry;
 import lk.rgd.prs.api.domain.Person;
 import lk.rgd.prs.api.domain.Address;
 import lk.rgd.prs.api.domain.PersonCitizenship;
+import lk.rgd.prs.api.domain.Marriage;
 import lk.rgd.common.api.dao.RaceDAO;
 import lk.rgd.common.api.dao.CountryDAO;
 import lk.rgd.common.api.domain.User;
@@ -40,7 +41,9 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
     private String civilStatus;
     private MarriageInfo marriage;
     private Address permanentAddress;
+    private Set<Address> address;
     private Set<PersonCitizenship> personCitizenship;
+    private Set<Marriage> marrage;
     private int numberOfCountries;
 
     private Person person;
@@ -67,6 +70,13 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
         if (person.getLifeStatus() != null) {
             lifeStatus = LifeStatusUtil.getLifeStatus(person.getLifeStatus(), user.getPrefLanguage());
         }
+        if (person.getAddresses() != null) {
+            address=person.getAddresses();
+        }
+        if(person.getMarriages() != null){
+            marrage = person.getMarriages();
+        }
+        
         children = service.findAllChildren(person, user);
         logger.debug("number of children for {} is {}", person.getFullNameInOfficialLanguage(), children.size());
 
@@ -231,4 +241,19 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
         this.numberOfCountries = numberOfCountries;
     }
 
+    public Set<Address> getAddress() {
+        return address;
+    }
+
+    public void setAddress(Set<Address> address) {
+        this.address = address;
+    }
+
+    public Set<Marriage> getMarrage() {
+        return marrage;
+    }
+
+    public void setMarrage(Set<Marriage> marrage) {
+        this.marrage = marrage;
+    }
 }

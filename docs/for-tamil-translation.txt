@@ -28,12 +28,11 @@
 *Female
 *Unknown
 
-*Married
-*Unmarried
-
 *Alive
 *Dead
 *Missing
 *Non resident
 
 *(Preferred Language for Person Registration Certificate)පුද්ගලයකු ලියාපදිංචි කිරීමේ සහතිකය නිකුත් කල යුතු භාෂාව
+*(Marriages Details not available.)විවාහයන් පිළිබදව තොරතුරු වාර්තා වී නොමැත.
+*(Citizenships and Passport Details not available.)වෙනත් රටවල පුරවැසි භාවයන් පිළිබදව විස්තර නොමැත.

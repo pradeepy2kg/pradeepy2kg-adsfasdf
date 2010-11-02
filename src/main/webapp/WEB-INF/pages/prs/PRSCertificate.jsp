@@ -40,7 +40,7 @@
     <tbody>
     <tr>
         <td>
-            <img src="${pageContext.request.contextPath}/prs/ImageServlet?personId=${person.personUKey}" width="200" height="75"/>
+            <img src="${pageContext.request.contextPath}/prs/ImageServlet?personId=${person.personUKey}" width="100" height="100"/>
         </td>
         <td rowspan="2" align="center">
             <img src="<s:url value="../images/official-logo.png" />"

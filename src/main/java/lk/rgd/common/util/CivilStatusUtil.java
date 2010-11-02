@@ -25,6 +25,8 @@ public class CivilStatusUtil {
                 switch (state) {
                     case NEVER_MARRIED:
                         return "අවිවාහක";
+                    case MARRIED:
+                        return "විවාහක";
                     case ANNULLED:
                         return "නිෂ්ප්‍රභාකර ඇත";
                     case SEPARATED:
@@ -38,6 +40,8 @@ public class CivilStatusUtil {
                 switch (state) {
                     case NEVER_MARRIED:
                         return "திருமணமாகாதவர்";
+                    case MARRIED:
+                        return "திருமணமாணவர் ";
                     case ANNULLED:
                         return "தள்ளிவைத்தல்";
                     case SEPARATED:
@@ -51,6 +55,8 @@ public class CivilStatusUtil {
                 switch (state) {
                     case NEVER_MARRIED:
                         return "Never married";
+                    case MARRIED:
+                        return "Married";
                     case ANNULLED:
                         return "Annulled";
                     case SEPARATED:
