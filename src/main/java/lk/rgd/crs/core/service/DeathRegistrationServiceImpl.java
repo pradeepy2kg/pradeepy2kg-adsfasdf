@@ -131,7 +131,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         //  logger.debug("attempt to approve death registration record : {} ", deathRegisterIdUKey);
         DeathDeclarationValidator.validateMinimalRequirments(getById(deathRegisterIdUKey, user));
         List<UserWarning> warnings = DeathDeclarationValidator.validateStandardRequirements(
-            deathRegisterDAO, getById(deathRegisterIdUKey, user), user);
+                deathRegisterDAO, getById(deathRegisterIdUKey, user), user);
         if (warnings.isEmpty() || ignoreWarnings) {
             setApprovalStatus(deathRegisterIdUKey, user, DeathRegister.State.APPROVED, null);
         }

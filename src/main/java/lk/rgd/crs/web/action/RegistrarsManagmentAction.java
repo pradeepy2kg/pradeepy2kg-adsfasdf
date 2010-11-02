@@ -123,7 +123,7 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
     }
 
     public String filter() {
-        logger.info("filter called");
+        logger.debug("filter called");
         //filter by all districts
         if (districtId == 0) {
             assignmentList = service.getAllActiveAssignment(true, user);

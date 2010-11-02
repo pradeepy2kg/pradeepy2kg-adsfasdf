@@ -373,16 +373,16 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
          */
         deathRegister = deathRegistrationService.getById(deathAlteration.getDeathRegisterIDUkey(), user);
 
-        String dateEx = null;
-        String dateAlt = null;
-        if (deathRegister.getDeath().getDateOfDeath() != null) {
-            dateEx = DateTimeUtils.getISO8601FormattedString(deathRegister.getDeath().getDateOfDeath());
-        }
-        if (deathAlteration.getDeathInfo().getDateOfDeath() != null) {
-            dateAlt = DateTimeUtils.getISO8601FormattedString(deathAlteration.getDeathInfo().getDateOfDeath());
-        }
-
         if (deathAlteration.getDeathInfo() != null) {
+            String dateEx = null;
+            String dateAlt = null;
+            if (deathRegister.getDeath().getDateOfDeath() != null) {
+                dateEx = DateTimeUtils.getISO8601FormattedString(deathRegister.getDeath().getDateOfDeath());
+            }
+            if (deathAlteration.getDeathInfo().getDateOfDeath() != null) {
+                dateAlt = DateTimeUtils.getISO8601FormattedString(deathAlteration.getDeathInfo().getDateOfDeath());
+            }
+
             getDisplayList(DeathAlteration.DATE_OF_DEATH, dateEx, dateAlt, Type.STRING.ordinal());
             getDisplayList(DeathAlteration.TIME_OF_DEATH, deathRegister.getDeath().getTimeOfDeath(),
                     deathAlteration.getDeathInfo().getTimeOfDeath(), Type.STRING.ordinal());
