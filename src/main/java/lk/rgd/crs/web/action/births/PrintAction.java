@@ -96,7 +96,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
     /**
      * This method responsible for initially loading birth certificates or birth confirmations
      * which are not already printed. If confirmListFlag is set to true loads the birth
-     * confirmations else laod the birth certificates. Returns a list of BirthDeclarations.
+     * confirmations else load the birth certificates. Returns a list of BirthDeclarations.
      */
     private void intiPrint() {
         populateInitialDistrict();
@@ -126,9 +126,8 @@ public class PrintAction extends ActionSupport implements SessionAware {
     }
 
     /**
-     * This method responsible for filtering the displaying data based on
-     * birth division and also it filters list as printed or Not-printed.
-     * finally returns a list of BirthDeclarations according to the request.
+     * This method responsible for filtering the displaying data based on birth division and also it filters list as
+     * printed or Not-printed. Finally returns a list of BirthDeclarations according to the request.
      *
      * @return String success
      */
@@ -169,10 +168,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
     }
 
     /**
-     * method responsible for marking requested birth confirmations
-     * and birth certificate as printed.
-     *
-     * @return
+     * Method responsible for marking requested birth confirmations and birth certificate as printed.
      */
     public String markAsPrinted() {
         BirthDeclaration bdf = service.getById(bdId, user);
@@ -249,8 +245,6 @@ public class PrintAction extends ActionSupport implements SessionAware {
 
     /**
      * Used to move forward when list grows more than 10 records.
-     *
-     * @return
      */
     public String nextPage() {
         if (logger.isDebugEnabled()) {
@@ -286,8 +280,6 @@ public class PrintAction extends ActionSupport implements SessionAware {
 
     /**
      * Used to move backward.
-     *
-     * @return
      */
     public String previousPage() {
         if (logger.isDebugEnabled()) {
@@ -322,11 +314,8 @@ public class PrintAction extends ActionSupport implements SessionAware {
     }
 
     /**
-     * this method is responsible for loading the previous state of
-     * birth certificate and birth confirmation print list pages if
-     * it cancels the printing process
-     *
-     * @return
+     * This method is responsible for loading the previous state of birth certificate and birth confirmation print list
+     * pages if it cancels the printing process
      */
     public String backToPreviousState() {
         int noOfRows = appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE);
@@ -357,10 +346,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
     }
 
     /**
-     * simple method to load the birth confirmation form detail
-     * after printing the birth certificate
-     *
-     * @return
+     * Simple method to load the birth confirmation form detail after printing the birth certificate
      */
     public String directPrintBirthCertificate() {
         return SUCCESS;
