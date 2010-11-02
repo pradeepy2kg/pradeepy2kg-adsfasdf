@@ -52,11 +52,12 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> districtList;
     private Map<Integer, String> dsDivisionList;
     private Map<Integer, String> bdDivisionList;
-
-    private Map<Integer, String> countryList;
-    private List<DeathRegister> deathApprovalAndPrintList;
-    private Map<Integer, String> raceList;
     private List<UserWarning> warnings;
+    private Map<Integer, String> raceList;
+    private Map<Integer, String> countryList;
+
+    private List<DeathRegister> deathApprovalAndPrintList;
+    private List<DeathRegister> archivedEntryList;
 
     private int pageNo;
     private int noOfRows;
@@ -186,8 +187,8 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public String deathCertificate() {
         deathRegister = service.getById(idUKey, user);
-        if ((deathRegister.getStatus() != DeathRegister.State.ARCHIVED_CERT_GENERATED) &&
-                (deathRegister.getStatus() != DeathRegister.State.APPROVED)) {
+        if ((deathRegister.getStatus() != DeathRegister.State.ARCHIVED_CERT_GENERATED) && (deathRegister.getStatus()
+                != DeathRegister.State.ARCHIVED_ALTERED) && (deathRegister.getStatus() != DeathRegister.State.APPROVED)) {
             addActionError(getText("death.error.no.permission.print"));
             logger.debug("Current state of adoption certificate : {}", deathRegister.getStatus());
             return ERROR;
@@ -201,13 +202,22 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
             genderEn = GenderUtil.getGender(deathPerson.getDeathPersonGender(), AppConstants.ENGLISH);
             genderSi = GenderUtil.getGender(deathPerson.getDeathPersonGender(), death.getPreferredLanguage());
 
-            deathPersonDeathDivision = bdDivisionDAO.getNameByPK(deathRegister.getDeath().getDeathDivision().getDivisionId(), death.getPreferredLanguage());
-            deathPersonDeathDivisionEn = bdDivisionDAO.getNameByPK(deathRegister.getDeath().getDeathDivision().getDivisionId(), AppConstants.ENGLISH);
-            deathPersondsDivision = dsDivisionDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(deathRegister.getDeath().getDeathDivision().getDivisionId()).getDsDivision().getDsDivisionUKey(), death.getPreferredLanguage());
-            deathPersondsDivisionEn = dsDivisionDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(deathRegister.getDeath().getDeathDivision().getDivisionId()).getDsDivision().getDsDivisionUKey(), AppConstants.ENGLISH);
-            deathPersonDistrict = districtDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(deathRegister.getDeath().getDeathDivision().getDivisionId()).getDistrict().getDistrictUKey(), death.getPreferredLanguage());
-            deathPersonDistrictEn = districtDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(deathRegister.getDeath().getDeathDivision().getDivisionId()).getDistrict().getDistrictUKey(), AppConstants.ENGLISH);
+            deathPersonDeathDivision = bdDivisionDAO.getNameByPK(deathRegister.getDeath().getDeathDivision().getDivisionId(),
+                    death.getPreferredLanguage());
+            deathPersonDeathDivisionEn = bdDivisionDAO.getNameByPK(deathRegister.getDeath().getDeathDivision().getDivisionId(),
+                    AppConstants.ENGLISH);
+            deathPersondsDivision = dsDivisionDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(
+                    deathRegister.getDeath().getDeathDivision().getDivisionId()).getDsDivision().getDsDivisionUKey(), death.getPreferredLanguage());
+            deathPersondsDivisionEn = dsDivisionDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(
+                    deathRegister.getDeath().getDeathDivision().getDivisionId()).getDsDivision().getDsDivisionUKey(), AppConstants.ENGLISH);
+            deathPersonDistrict = districtDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(
+                    deathRegister.getDeath().getDeathDivision().getDivisionId()).getDistrict().getDistrictUKey(), death.getPreferredLanguage());
+            deathPersonDistrictEn = districtDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(
+                    deathRegister.getDeath().getDeathDivision().getDivisionId()).getDistrict().getDistrictUKey(), AppConstants.ENGLISH);
             initPermissionForApprovalAndPrint();
+            //loading historical recodes
+            archivedEntryList = service.getArchivedCorrectedEntriesForGivenSerialNo(deathRegister.getDeath().getDeathDivision(),
+                    deathRegister.getDeath().getDeathSerialNo(), user);
             return SUCCESS;
         }
     }
@@ -1119,5 +1129,13 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public void setCertificateSearch(boolean certificateSearch) {
         this.certificateSearch = certificateSearch;
+    }
+
+    public List<DeathRegister> getArchivedEntryList() {
+        return archivedEntryList;
+    }
+
+    public void setArchivedEntryList(List<DeathRegister> archivedEntryList) {
+        this.archivedEntryList = archivedEntryList;
     }
 }

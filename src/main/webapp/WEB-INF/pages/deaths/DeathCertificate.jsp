@@ -13,6 +13,10 @@
             display: none;
         }
 
+        #alterations {
+            display: none;
+        }
+
         td {
             font-size: 9pt;
         }
@@ -25,6 +29,34 @@
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
 
 <div id="death-certificate-outer">
+<s:if test="#request.archivedEntryList.size>0">
+    <div id="alterations">
+        <fieldset style="border:2px inset red; width:400px;">
+            <legend style="color:red;"><s:label value="%{getText('ArchivedData.label')}"/></legend>
+            <table>
+                <th></th>
+                <th><s:label value="%{getText('lastupdate.time.label')}"/></th>
+                <th><s:label name="viewlbl" value="%{getText('view.label')}"/></th>
+                <s:iterator status="archivedStatus" value="archivedEntryList" id="searchId">
+                    <tr class="<s:if test="#archivedStatus.odd == true">odd</s:if><s:else>even</s:else>">
+                        <td class="table-row-index"><s:property value="%{#archivedStatus.count}"/></td>
+                        <s:set value="getRegister().getStatus()" name="status"/>
+                        <td><s:property value="getLifeCycleInfo().getLastUpdatedTimestamp()"/></td>
+                        <s:set name="abc" value="getLifeCycleInfo().getLastUpdatedTimestamp()"/>
+
+                        <s:url id="viewSelected" action="eprDeathCertificate.do">
+                            <s:param name="idUKey" value="idUKey"/>
+                        </s:url>
+                        <td><s:a href="%{viewSelected}" title="%{getText('view.label')}">
+                            <img src="<s:url value='/images/view_1.gif'/>" width="25" height="25" border="none"/></s:a>
+                        </td>
+                    </tr>
+                </s:iterator>
+            </table>
+        </fieldset>
+    </div>
+</s:if>
+
 <s:if test="directPrint">
     <s:url id="print" action="eprDierctPrintDeathCertificate.do">
         <s:param name="idUKey" value="#request.idUKey"/>
@@ -327,7 +359,7 @@
             <br>சான்றிதழ் அளிக்கும் அதிகாரியின் பெயர், பதவி, கையொப்பம்
             <br>Name, Signature and Designation of certifying officer
         </td>
-        <td colspan="2" ><s:label name="nameOfOfficer" value="%{}"/>,
+        <td colspan="2"><s:label name="nameOfOfficer" value="%{}"/>,
             <br>
             <s:label name="designationOfCertifyingOfficer " value="%{}"/>
         </td>
