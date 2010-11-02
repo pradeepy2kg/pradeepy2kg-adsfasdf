@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * @author asankha
+ * @author Ashoka Ekanayaka
  */
 @Entity
 @Table(name = "PERSON", schema = "PRS")
@@ -25,7 +25,6 @@ import java.util.Set;
     @NamedQuery(name = "findAllSiblings", query = "SELECT p FROM Person p WHERE (p.mother = :mother OR p.father = :father) AND (p <> :person)")
 })
 public class Person implements Serializable {
-
     private static String[] EMPTY_NAME = new String[2];
 
     /**
@@ -75,6 +74,10 @@ public class Person implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long personUKey;
+
+    @Embedded
+    private PRSLifeCycleInfo lifeCycleInfo = new PRSLifeCycleInfo();
+
     /**
      * The unique Personal Identification Number
      */
@@ -541,6 +544,14 @@ public class Person implements Serializable {
 
     public void setCountries(Set<PersonCitizenship> countries) {
         this.countries = countries;
+    }
+
+    public PRSLifeCycleInfo getLifeCycleInfo() {
+        return lifeCycleInfo;
+    }
+
+    public void setLifeCycleInfo(PRSLifeCycleInfo lifeCycleInfo) {
+        this.lifeCycleInfo = lifeCycleInfo;
     }
 
     private void setInitialsAndLastnameEnglish(String fullname) {
