@@ -6,7 +6,7 @@
 <style type="text/css" title="currentStyle">
     @import "../lib/datatables/media/css/demo_page.css";
     @import "../lib/datatables/media/css/demo_table.css";
-    @import "../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css";
+    @import "../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css";
 </style>
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
 <script>
