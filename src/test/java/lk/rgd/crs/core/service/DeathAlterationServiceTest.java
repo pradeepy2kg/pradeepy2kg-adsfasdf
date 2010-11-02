@@ -58,7 +58,7 @@ public class DeathAlterationServiceTest extends TestCase {
             deoGampahaNegambo = userManager.authenticateUser("deo-gampaha-negambo", "password");
             adrGampahaNegambo = userManager.authenticateUser("adr-gampaha-negambo", "password");
             argNorthWesternProvince = userManager.authenticateUser("arg-north-western", "password");
-            argWesternProvince      = userManager.authenticateUser("arg-western", "password");
+            argWesternProvince = userManager.authenticateUser("arg-western", "password");
         } catch (AuthorizationException e) {
             throw new IllegalArgumentException("Cannot authenticate sample users");
         }
@@ -107,7 +107,8 @@ public class DeathAlterationServiceTest extends TestCase {
         try {
             deathAltSvc.approveDeathAlteration(da, fieldsToBeApproved, argNorthWesternProvince);
             fail("The north western province ARG should not be able to approve death alteration for western province");
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
 
         // arg for western province can approve
         deathAltSvc.approveDeathAlteration(da, fieldsToBeApproved, argWesternProvince);
@@ -116,7 +117,7 @@ public class DeathAlterationServiceTest extends TestCase {
 
         // death record must be updated
         DeathRegister ddf = deathRegSvc.getActiveRecordByBDDivisionAndSerialNo(
-            da.getDeathRecordDivision(), serialNumber, argWesternProvince);
+                da.getDeathRecordDivision(), serialNumber, argWesternProvince);
 
         Assert.assertNotNull(ddf);
         Assert.assertEquals("DEAD PERSON ORIGINAL NAME", ddf.getDeathPerson().getDeathPersonNameInEnglish());
@@ -127,7 +128,7 @@ public class DeathAlterationServiceTest extends TestCase {
         // old record must still be available as archived
 
         List<DeathRegister> altered = deathRegSvc.getArchivedCorrectedEntriesForGivenSerialNo(
-            da.getDeathRecordDivision(), serialNumber, argWesternProvince);
+                da.getDeathRecordDivision(), serialNumber, ddf.getIdUKey(), argWesternProvince);
         Assert.assertEquals(1, altered.size());
         ddf = altered.get(0);
         Assert.assertEquals("DEAD PERSON ORIGINAL NAME", ddf.getDeathPerson().getDeathPersonNameInEnglish());
