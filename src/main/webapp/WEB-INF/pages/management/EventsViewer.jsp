@@ -7,14 +7,14 @@
     @import "../lib/datatables/media/css/demo_table.css";
     @import "../lib/datatables/media/css/TableTools.css";
     @import "../lib/datatables/media/css/ColVis.css";
-    @import "../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css";
+    @import "../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css";
 </style>
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/ZeroClipboard.js"></script>
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/TableTools.js"></script>
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/ColVis.js"></script>
-<link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
+<link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 
 <script type="text/javascript" src="../lib/timepicker/jquery.utils.js"></script>
 <script type="text/javascript" src="../lib/timepicker/jquery.strings.js"></script>
