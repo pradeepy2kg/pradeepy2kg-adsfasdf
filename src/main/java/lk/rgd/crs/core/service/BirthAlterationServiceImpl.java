@@ -170,18 +170,6 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
         logger.debug("Updated birth alteration : {}", existing.getIdUKey());
     }
 
-    /**
-     * @inheritDoc
-     */
-    @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<BirthAlteration> getApprovalPendingByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, User user) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Get birth alteration pending approval by DSDivision ID : " + dsDivision.getDsDivisionUKey()
-                    + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
-        }
-        ValidationUtils.validateAccessToDSDivison(dsDivision, user);
-        return birthAlterationDAO.getBulkOfAlterationByDSDivision(dsDivision, pageNo, noOfRows);
-    }
 
     /**
      * @inheritDoc
@@ -205,20 +193,6 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
                     + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
         return birthAlterationDAO.getBulkOfAlterationByBDDivision(bdDivision, pageNo, noOfRows);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<BirthAlteration> getApprovalPendingByBDDivisionAndBDFSerialNo(
-            BDDivision bdDivision, Long birthSerialNumber, int pageNo, int noOfRows, User user) {
-
-        if (logger.isDebugEnabled()) {
-            logger.debug("Get birth alterations pending approval - by Birth Division : " + bdDivision.getEnDivisionName() +
-                    " and BDF serial : " + birthSerialNumber + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
-        }
-        return birthAlterationDAO.getBulkOfAlterationByBDDivisionAndBirthSerialNo(bdDivision, birthSerialNumber, pageNo, noOfRows);
     }
 
     @Transactional(propagation = Propagation.NEVER, readOnly = true)

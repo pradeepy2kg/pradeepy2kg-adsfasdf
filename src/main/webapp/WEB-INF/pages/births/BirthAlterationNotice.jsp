@@ -191,8 +191,8 @@
                 <td style="padding-left:15px;"><s:property
                         value="birthAlterationApprovalList[#approvalStatus.index][2]"/><s:label/></td>
                 <td style="text-align:center;">
-                    ප්‍රතික්ෂේපිතයි /
-                    இரத்து செய்தல் /
+                    ප්‍රතික්ෂේපිතයි <br>
+                    இரத்து செய்தல் <br>
                     Rejected
                 </td>
             </tr>
@@ -218,12 +218,11 @@
         <td rowspan="8" width="200px"></td>
     </tr>
     <tr>
-        <td><s:label cssStyle="width:600px;font-size:12pt;"
-                     cssClass="disable"
+        <td><s:label cssStyle="width:600px;font-size:10pt;"    name="declarant.declarantFullName"
                      disabled="true"/></td>
     </tr>
     <tr>
-        <td><s:label cssStyle="width:600px;font-size:12pt;"
+        <td><s:label cssStyle="width:600px;font-size:10pt;"  name="declarant.declarantAddress"
                      cssClass="disable"
                      disabled="true"/></td>
     </tr>
@@ -346,8 +345,8 @@
             <td style="padding-left:15px;"><s:property
                     value="birthAlterationApprovedList[#approvedStatus.index][2]"/><s:label/></td>
             <td style="text-align:center;font-size:9pt;">
-                අනුමතයි /
-                அனுமதி /
+                අනුමතයි <br>
+                அனுமதி  <br>
                 Approved
             </td>
         </tr>
@@ -363,8 +362,8 @@
             <td style="padding-left:15px;"><s:property
                     value="birthAlterationApprovalList[#approvalStatus.index][2]"/><s:label/></td>
             <td style="text-align:center;">
-                ප්‍රතික්ෂේපිතයි /
-                இரத்து செய்தல் /
+                ප්‍රතික්ෂේපිතයි <br>
+                இரத்து செய்தல் <br>
                 Rejected
             </td>
         </tr>

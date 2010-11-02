@@ -156,7 +156,6 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
         if (idUKey != null) {
             bdf = service.getById(idUKey);
-            logger.debug("load birth with idUKey :{}", bdf.getIdUKey());
         } else if (nicOrPin != null) {
             bdf = service.getByPINorNIC(nicOrPin, user);
         } else if (birthDivisionId != 0 && serialNo != 0) {
@@ -898,12 +897,23 @@ public class AlterationAction extends ActionSupport implements SessionAware {
          * variable nextFlag is used to handle the pagination link
          * in the jsp page
          */
-        if (birthDivisionId != 0) {
+        if (idUKey != null) {
+            BirthAlteration baApprovalPending = alterationService.getApprovalPendingByIdUKey
+                    (idUKey, pageNo, noOfRows, user);
+            if (birthAlterationPendingApprovalList == null) {
+                birthAlterationPendingApprovalList = new ArrayList<BirthAlteration>();
+            }
+            birthAlterationPendingApprovalList.add(baApprovalPending);
+            logger.debug("filter Birth Alteration to approve by Birth Alteration Serial Number :{}", idUKey);
+        } else if (locationUKey != 0) {
+            logger.debug("filter Birth Alteration to approve by idUKey of the location :{}", locationUKey);
+            birthAlterationPendingApprovalList = alterationService.getApprovalPendingByUserLocationIdUKey(
+                    locationUKey, pageNo, noOfRows, user);
+        } else if (birthDivisionId != 0) {
+            logger.debug("filter Birth Alteration to approve by Birth Serial Number :{}", serialNo);
             birthAlterationPendingApprovalList = alterationService.getApprovalPendingByBDDivision(
-                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows, user);
-        } else {
-            birthAlterationPendingApprovalList = alterationService.getApprovalPendingByDSDivision(
-                    dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);
+                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows);
+
         }
         paginationHandler(birthAlterationPendingApprovalList.size());
         setPreviousFlag(true);
@@ -949,12 +959,23 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         }
         noOfRows = appParametersDAO.getIntParameter(BA_APPROVAL_ROWS_PER_PAGE);
 
-        if (birthDivisionId != 0) {
+        if (idUKey != null) {
+            BirthAlteration baApprovalPending = alterationService.getApprovalPendingByIdUKey
+                    (idUKey, pageNo, noOfRows, user);
+            if (birthAlterationPendingApprovalList == null) {
+                birthAlterationPendingApprovalList = new ArrayList<BirthAlteration>();
+            }
+            birthAlterationPendingApprovalList.add(baApprovalPending);
+            logger.debug("filter Birth Alteration to approve by Birth Alteration Serial Number :{}", idUKey);
+        } else if (locationUKey != 0) {
+            logger.debug("filter Birth Alteration to approve by idUKey of the location :{}", locationUKey);
+            birthAlterationPendingApprovalList = alterationService.getApprovalPendingByUserLocationIdUKey(
+                    locationUKey, pageNo, noOfRows, user);
+        } else if (birthDivisionId != 0) {
+            logger.debug("filter Birth Alteration to approve by Birth Serial Number :{}", serialNo);
             birthAlterationPendingApprovalList = alterationService.getApprovalPendingByBDDivision(
-                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows, user);
-        } else {
-            birthAlterationPendingApprovalList = alterationService.getApprovalPendingByDSDivision(
-                    dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);
+                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows);
+
         }
         populateBasicLists();
         initPermission();
