@@ -200,11 +200,12 @@ public interface DeathRegistrationService {
     public DeathRegister getActiveRecordByBDDivisionAndSerialNo(BDDivision bdDivision, long serialNo, User user);
 
     /**
-     * Returns historical records for the given BD Division and Serial number
+     * Returns historical records for the given BD Division and Serial number recodes witch are done before given death id
      *
      * @param bdDivision the birth death division
      * @param serialNo   the Death register serial number
+     * @param deathId    death certificate idUKey
      * @return the related historical records - if any
      */
-    public List<DeathRegister> getArchivedCorrectedEntriesForGivenSerialNo(BDDivision bdDivision, long serialNo, User user);
+    public List<DeathRegister> getArchivedCorrectedEntriesForGivenSerialNo(BDDivision bdDivision, long serialNo, long deathId, User user);
 }

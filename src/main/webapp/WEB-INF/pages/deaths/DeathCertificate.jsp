@@ -56,7 +56,6 @@
         </fieldset>
     </div>
 </s:if>
-
 <s:if test="directPrint">
     <s:url id="print" action="eprDierctPrintDeathCertificate.do">
         <s:param name="idUKey" value="#request.idUKey"/>
@@ -92,18 +91,22 @@
         </s:url>
     </s:else>
 </s:else>
+
 <s:if test="#request.allowPrintCertificate">
-    <div id="birthRegistration-page" class="form-submit" style="margin-top:15px;float:right;">
-        <s:a href="%{print}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>
-    </div>
+    <s:if test="deathRegister.status.ordinal()==3">
+        <div id="birthRegistration-page" class="form-submit" style="margin-top:15px;float:right;">
+            <s:a href="%{print}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>
+        </div>
+    </s:if>
     <div class="form-submit">
         <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
         <s:hidden id="printMessage" value="%{getText('print.message')}"/>
     </div>
 </s:if>
-<div id="birthRegistration-page" class="form-submit" style="margin-top:15px;float:right;">
-    <s:a href="%{cancel}"><s:label value="%{getText('cancel.button')}"/></s:a>
+<div class="form-submit">
+     <s:submit type="button" value="%{getText('cancel.button')}" onClick="history.go(-1)"/>
 </div>
+
 <table style="width: 100%; border:none; border-collapse:collapse; ">
     <col width="250px"/>
     <col width="530px"/>
@@ -379,21 +382,22 @@
     வழங்கப்பட்டது
     <br>Issued under Cap. 110 of the Births and Deaths Registration Act
     </s:label>
-
-
     <s:if test="#request.allowPrintCertificate">
+    <s:if test="deathRegister.status.ordinal()==3">
 
 <div id="birthRegistration-page" class="form-submit" style="margin-top:15px;float:right;">
     <s:a href="%{print}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>
 </div>
+</s:if>
 <div class="form-submit">
     <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
     <s:hidden id="printMessage" value="%{getText('print.message')}"/>
 </div>
 </s:if>
-<div id="birthRegistration-page" class="form-submit" style="margin-top:15px;float:right;">
-    <s:a href="%{cancel}"><s:label value="%{getText('cancel.button')}"/></s:a>
+<div class="form-submit">
+     <s:submit type="button" value="%{getText('cancel.button')}" onClick="history.go(-1)"/>
 </div>
+    </div>
 
-</div>
+
 

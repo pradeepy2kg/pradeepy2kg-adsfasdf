@@ -88,9 +88,10 @@ public interface DeathRegisterDAO {
      *
      * @param deathDivision the birth death division
      * @param serialNo      the Death register serial number
+     * @param deathId       death certificate id
      * @return the related historical records - if any
      */
-    public List<DeathRegister> getHistoricalRecordsForBDDivisionAndSerialNo(BDDivision deathDivision, long serialNo);
+    public List<DeathRegister> getHistoricalRecordsForBDDivisionAndSerialNo(BDDivision deathDivision, long serialNo, long deathId);
 
     /**
      * Returns a limited set of DeathRegister for selected BD Division and selected range of registration dates.

@@ -36,10 +36,9 @@ import java.io.Serializable;
         @NamedQuery(name = "get.all.deaths.by.deathPersonPIN", query = "SELECT deathRegister FROM DeathRegister deathRegister WHERE " +
                 "deathRegister.deathPerson.deathPersonPINorNIC = :pinOrNIC"),
 
-        @NamedQuery(name = "get.historical.death.records.by.bddivision.and.serialNo", query = "SELECT dr FROM DeathRegister dr " +
-                "WHERE (dr.death.deathDivision = :deathDivision AND dr.death.deathSerialNo = :serialNo) " +
-                "AND dr.lifeCycleInfo.activeRecord IS FALSE " +
-                "ORDER BY dr.lifeCycleInfo.lastUpdatedTimestamp desc"),
+        @NamedQuery(name = "get.historical.death.records.by.bddivision.and.serialNo.deathID", query = "SELECT dr FROM DeathRegister dr " +
+                "WHERE (dr.death.deathDivision = :deathDivision AND dr.death.deathSerialNo = :serialNo  AND dr.idUKey < :deathId) " +
+                "AND dr.lifeCycleInfo.activeRecord IS FALSE ORDER BY dr.lifeCycleInfo.lastUpdatedTimestamp desc"),
 
         @NamedQuery(name = "findAllDeaths", query = "SELECT ddf FROM DeathRegister ddf")
 })
