@@ -14,6 +14,16 @@ public class GenderUtil {
     private static final String GENDER_FEMALE_STRING = "ගැහැණු / #Female# / Female";
     private static final String GENDER_UNKNOWN_STRING = "නොදත් / #Unknown# / Unknown";
 
+    public static String getGenderCharacter(int code) {
+        switch (code) {
+            case 0: return "M"; //'\u2642';
+            case 1: return "F"; //'\u2640';
+            case 2: return "U";
+        }
+        logger.error("Invalid gender code : {}", code);
+        throw new IllegalArgumentException("Invalid gender code : {}");
+    }
+
     public static String getGenderString(int code) {
         switch (code) {
             case 0: return GENDER_MALE_STRING;
