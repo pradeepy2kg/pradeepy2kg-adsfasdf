@@ -60,6 +60,7 @@
 }
 
 .dataTables_filter {
+    margin:4px;
 	width: 50%;
 	float: right;
 	text-align: right;
