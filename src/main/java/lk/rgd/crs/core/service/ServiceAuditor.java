@@ -84,7 +84,6 @@ public class ServiceAuditor implements MethodInterceptor {
         serviceClasses.put(DeathAlterationService.class, DeathAlterationServiceImpl.class);
         serviceClasses.put(CertificateSearchService.class, CertificateSearchServiceImpl.class);
         serviceClasses.put(UserManager.class, UserManagerImpl.class);
-        serviceClasses.put(EventViewerService.class, EventViewerServiceImpl.class);
 
         // the domain objects to be debug audited
         debugClasses = new ArrayList<Class>();

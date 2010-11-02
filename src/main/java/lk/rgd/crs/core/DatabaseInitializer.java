@@ -70,7 +70,6 @@ public class DatabaseInitializer implements ApplicationContextAware {
 
         entityClasses.add(BirthAlteration.class);
         entityClasses.add(DeathAlteration.class);
-        entityClasses.add(BarCodeImageServlet.class);
     }
 
     public void setDataSource(DataSource dataSource) {
