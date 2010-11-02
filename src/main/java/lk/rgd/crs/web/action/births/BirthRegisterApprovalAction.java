@@ -1,28 +1,23 @@
 package lk.rgd.crs.web.action.births;
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.Permission;
+import lk.rgd.common.api.dao.AppParametersDAO;
 import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.dao.DistrictDAO;
-import lk.rgd.common.api.dao.AppParametersDAO;
+import lk.rgd.common.api.domain.User;
+import lk.rgd.common.util.DateTimeUtils;
+import lk.rgd.crs.CRSRuntimeException;
+import lk.rgd.crs.api.bean.UserWarning;
+import lk.rgd.crs.api.dao.BDDivisionDAO;
+import lk.rgd.crs.api.domain.BirthDeclaration;
+import lk.rgd.crs.api.service.BirthRegistrationService;
+import lk.rgd.crs.web.WebConstants;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
-import java.util.Map;
-import java.util.Locale;
-import java.util.List;
-import java.util.ArrayList;
-
-import lk.rgd.crs.api.domain.BirthDeclaration;
-import lk.rgd.crs.api.dao.BDDivisionDAO;
-import lk.rgd.crs.api.service.BirthRegistrationService;
-import lk.rgd.crs.api.bean.UserWarning;
-import lk.rgd.crs.web.WebConstants;
-import lk.rgd.crs.CRSRuntimeException;
-import lk.rgd.common.api.domain.User;
-import lk.rgd.common.util.DateTimeUtils;
-import lk.rgd.Permission;
 
 
 /**
