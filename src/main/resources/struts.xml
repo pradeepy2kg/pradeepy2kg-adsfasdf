@@ -530,7 +530,7 @@
 
         <action name="eprInitLateDeathDeclaration" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
                 method="initDeathDeclaration">
-            <param name="deathType">LATE</param>
+            <param name="deathType">LATE_NORMAL</param>
             <result type="tiles" name="success">epr.deathDeclaration_form1</result>
         </action>
 
