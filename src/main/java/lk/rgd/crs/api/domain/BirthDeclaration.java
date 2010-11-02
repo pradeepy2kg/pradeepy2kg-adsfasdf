@@ -83,7 +83,7 @@ import java.io.Serializable;
         "ORDER BY bdf.register.dateOfRegistration desc"),
 
     @NamedQuery(name = "get.by.NicOrPin", query = "SELECT bdf FROM BirthDeclaration bdf " +
-        "WHERE bdf.child.pin = :PINorNIC")
+        "WHERE bdf.child.pin = :PINorNIC AND bdf.lifeCycleInfo.activeRecord=true ")
 })
 public class BirthDeclaration implements Serializable, Cloneable {
 

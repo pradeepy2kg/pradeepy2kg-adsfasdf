@@ -53,22 +53,22 @@
     <s:form action="eprApproveAlteration.do" method="post" name="alterationApproval">
         <table class="alteration-approval-list-table" width="100%" cellpadding="0" cellspacing="0">
             <tr>
-                <td style="width:15%;font-size:12pt;text-align:center;" >
+                <td style="width:15%;font-size:10pt;text-align:center;" >
                     Heading <br>
                     தலைப்பு <br>
                     ශීර්ෂය
                 </td>
-                <td style="width:35%;font-size:12pt; text-align:center;">
+                <td style="width:35%;font-size:10pt; text-align:center;">
                     Existing Entry <br>
                     உள்ள பதிவுக் குறிப்பு <br>
                     තිබෙන සටහන
                 </td>
-                <td style="width:35%;font-size:12pt; text-align:center;">
+                <td style="width:35%;font-size:10pt; text-align:center;">
                     Requested Entry <br>
                     வேண்டப்பட்ட பதிவுக் குறிப்பு <br>
                     ඉල්ලුම් කර ඇති සටහන
                 </td>
-                <td style="width:15%;font-size:12pt; text-align:center;">
+                <td style="width:15%;font-size:10pt; text-align:center;">
                     Approval Status <br>
                     அனுமதி வழங்கல் <br>
                     අනුමත කිරීම

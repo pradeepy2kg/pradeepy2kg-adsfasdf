@@ -266,7 +266,7 @@
                 <td><s:property value="alt27.childFullNameOfficialLang"/></td>
                 <td align="center">
                     <s:if test="#request.allowApproveAlteration &&
-                    alterationApprovalPermission.get(#approvalStatus.index) ">
+                    alterationApprovalPermission.get(#approvalStatus.index) && (status.ordinal() ==0)">
                         <s:url id="approveSelected" action="eprApproveSelectedAlteration.do">
                             <s:param name="idUKey" value="idUKey"/>
                             <s:param name="bdId" value="bdfIDUKey"/>

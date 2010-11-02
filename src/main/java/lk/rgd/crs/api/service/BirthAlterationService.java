@@ -63,19 +63,6 @@ public interface BirthAlterationService {
      * @param user               the user initiating the action
      */
     public void approveBirthAlteration(BirthAlteration ba, Map<Integer, Boolean> fieldsToBeApproved, User user);
-
-    /**
-     * Returns a limited set of BirthAlterations for which one or more fields in the statement 27,27A or statement
-     * 52_1 are awaiting approval by an ARG or higher authority based on given DS.Divison id.
-     *
-     * @param dsDivision the divisional Secretariat
-     * @param pageNo     the page number for the results required (start from 1)
-     * @param noOfRows   number of rows
-     * @param user       the user initiating the action
-     * @return the birth alteration results
-     */
-    public List<BirthAlteration> getApprovalPendingByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, User user);
-
     /**
      * Returns a limited set of BirthAlterations for which one or more fields in the statement 27,27A or statement
      * 52_1 are awaiting approval by an ARG or higher authority based on given birth/death division.
@@ -99,19 +86,6 @@ public interface BirthAlterationService {
      */
     public List<BirthAlteration> getApprovalPendingByBDDivision(BDDivision bdDivision, int pageNo, int noOfRows);
 
-    /**
-     * Returns a limited set of BirthAlterations for which one or more fields in the statement 27,27A or statement
-     * 52_1 are awaiting approval by an ARG or higher authority based on given Recived date of birth alteration
-     *
-     * @param bdDivision        birth Division of the birth
-     * @param pageNo            the page number for the results required (start from 1)
-     * @param noOfRows          number of rows
-     * @param user              the user initiating the action
-     * @param birthSerialNumber Serial Number of the Birth Declaration
-     * @return the birth alteration results
-     */
-    public List<BirthAlteration> getApprovalPendingByBDDivisionAndBDFSerialNo
-            (BDDivision bdDivision, Long birthSerialNumber, int pageNo, int noOfRows, User user);
 
 
     /**
