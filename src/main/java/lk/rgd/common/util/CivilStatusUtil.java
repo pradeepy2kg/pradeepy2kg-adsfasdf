@@ -13,6 +13,10 @@ public class CivilStatusUtil {
     private static final Logger logger = LoggerFactory.getLogger(CivilStatusUtil.class);
 
     public static String getStatusAsString(Person.CivilStatus s) {
+        if (s == null) {
+            return "U"; // unknown
+        }
+
         switch (s) {
             case NEVER_MARRIED:
                 return "N";
