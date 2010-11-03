@@ -29,11 +29,18 @@
         afterRequest: function () {
             $(this.target).empty();
 
-            var table = '<table cellpadding="0" cellspacing="0" border="0" class="display" id="table"><thead><tr><th>UKey</th><th>DOB</th><th>Name in English</th><th>Name in Official Language</th><th>Gender</th><th>NIC</th></tr></thead>';
+            var table = '<table cellpadding="0" cellspacing="0" border="0" class="display" id="table">' +
+                '<thead><tr><th>PIN</th><th>NIC</th><th>Name in English</th><th>Name in Official Language</th>' +
+                '<th>Gender</th><th>DOB</th><th>Citizenship</th><th>Life Status</th><th>Civil Status</th><th>Record Status</th></tr></thead>';
             for (var i = 0, l = this.manager.response.response.docs.length; i < l; i++) {
                 var doc = this.manager.response.response.docs[i];
 
-                table += '<tr><td>' + doc.personUKey + '</td><td>' + (doc.dateOfBirth == null ? "" : doc.dateOfBirth.substring(0,10)) + '</td><td>' + doc.fullNameInEnglishLanguage + '</td><td>' + doc.fullNameInOfficialLanguage  + '</td><td>' + doc.gender + '</td><td>' + doc.nic + '</td></tr>';
+                table += '<tr><td><a href="prs/eprPersonDetails.do?personId=' + doc.personUKey + '">' + doc.pin +
+                    '</a></td><td><a href="prs/eprPersonDetails.do?personId=' + doc.personUKey + '">' + doc.nic +
+                    '</a></td><td>' + doc.fullNameInEnglishLanguage + '</td><td>' + doc.fullNameInOfficialLanguage  +
+                    '</td><td>' + doc.gender + '</td><td>' + (doc.dateOfBirth == null ? "" : doc.dateOfBirth.substring(0,10)) +
+                    '</td><td>' + (doc.citizenship == null ? "" : doc.citizenship) + '</td><td>' + doc.lifeStatus +
+                    '</td><td>' + doc.civilStatus + '</td><td>' + doc.recordStatus+ '</td></tr>';
             }
             table += '</table>';
 

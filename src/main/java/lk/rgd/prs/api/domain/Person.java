@@ -25,7 +25,6 @@ import java.util.Set;
     @NamedQuery(name = "findAllSiblings", query = "SELECT p FROM Person p WHERE (p.mother = :mother OR p.father = :father) AND (p <> :person)")
 })
 public class Person implements Serializable {
-    private static String[] EMPTY_NAME = new String[2];
 
     /**
      * Record status
@@ -99,11 +98,7 @@ public class Person implements Serializable {
     @Column(nullable = true)
     @Temporal(value = TemporalType.DATE)
     private Date dateOfRegistration;
-    /**
-     * The passport numbers in the format "LK:M1203456 JP:F092434"
-     */
-    @Column(nullable = true, length = 60)
-    private String passportNos;
+
     /**
      * The preferred language of for the record
      */
@@ -247,7 +242,7 @@ public class Person implements Serializable {
     /**
      * The Countries assigned to this person
      */
-    @OneToMany(mappedBy = "person", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
     private Set<PersonCitizenship> countries = new HashSet<PersonCitizenship>();  
 
     /**
@@ -460,18 +455,6 @@ public class Person implements Serializable {
 
     public void setLastAddress(Address lastAddress) {
         this.lastAddress = lastAddress;
-    }
-
-    public String getPassportNos() {
-        return passportNos;
-    }
-
-    public void addPassportNo(Country country, String passportNo) {
-        if (this.passportNos == null) {
-            this.passportNos = country.getCountryCode() + ":" + passportNo;
-        } else {
-            this.passportNos = this.passportNos + " " + country.getCountryCode() + ":" + passportNo;
-        }
     }
 
     public Status getStatus() {

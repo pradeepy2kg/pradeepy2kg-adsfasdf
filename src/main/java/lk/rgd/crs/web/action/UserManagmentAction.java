@@ -13,7 +13,7 @@ import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.service.MasterDataManagementService;
 import lk.rgd.crs.core.service.BirthRecordsIndexer;
 import lk.rgd.crs.core.service.DeathRecordsIndexer;
-import lk.rgd.crs.core.service.PRSRecordsIndexer;
+import lk.rgd.crs.api.service.PRSRecordsIndexer;
 import lk.rgd.crs.web.WebConstants;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;

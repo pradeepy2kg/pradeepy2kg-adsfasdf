@@ -209,7 +209,7 @@
         <constructor-arg ref="deathRegisterDAOImpl"/>
         <constructor-arg ref="appParametersDAOImpl"/>
     </bean>
-    <bean id="prsRecordsIndexer" class="lk.rgd.crs.core.service.PRSRecordsIndexer">
+    <bean id="prsRecordsIndexer" class="lk.rgd.crs.core.service.PRSRecordsIndexerImpl">
         <constructor-arg ref="solrIndexManager"/>
         <constructor-arg ref="personDAOImpl"/>
         <constructor-arg ref="appParametersDAOImpl"/>
