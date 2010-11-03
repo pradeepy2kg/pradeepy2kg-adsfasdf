@@ -185,6 +185,9 @@ public class PopulationRegistryImpl implements PopulationRegistry {
         for (Address a : p.getAddresses()) {
             a.isPermanent();
         }
+        for (Marriage m : p.getMarriages()) {
+            m.getMarriageUKey();
+        }
         return p;
     }
 

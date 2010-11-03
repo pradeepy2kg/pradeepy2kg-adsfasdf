@@ -59,7 +59,7 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
 
     public String personDetails() {
         logger.debug("getting extended details of an existing person in PRS");
-        person = service.getByUKey(personId, user);
+        person = service.getLoadedObjectByUKey(personId, user);
         gender = GenderUtil.getGender(person.getGender(), user.getPrefLanguage());
         if (person.getRace() != null) {
             race = raceDAO.getNameByPK(person.getRace().getRaceId(), user.getPrefLanguage());
