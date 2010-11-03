@@ -21,7 +21,7 @@ var Manager;
             nextLabel: '&gt;',
             innerWindow: 1,
             renderHeader: function (perPage, offset, total) {
-                $('#pager-header').html($('<span/>').text('Selected record bundle shown below contains ' + Math.min(total, offset + 1) + ' to ' + Math.min(total, offset + perPage) + ' of ' + total + ' records'));
+                $('#pager-header').html($('<span/>').text('Selected record bundle shown below contains ' + Math.min(total, offset + 1) + ' to ' + Math.min(total, offset + perPage) + ' of ' + total + ' records [The results in the table below are paginated]'));
             }
         }));
 
@@ -29,18 +29,6 @@ var Manager;
             id: 'currentsearch',
             target: '#selection'
         }));
-
-        /*Manager.addWidget(new AjaxSolr.TextWidget({
-            id: 'searchPIN',
-            target: '#searchPIN',
-            field: 'pin'
-        }));
-
-        Manager.addWidget(new AjaxSolr.TextWidget({
-            id: 'searchMothersNICorPIN',
-            target: '#searchMothersNICorPIN',
-            field: 'motherNICorPIN'
-        }));*/
 
         Manager.addWidget(new AjaxSolr.TextWidget({
             id: 'searchEnglish',
@@ -54,10 +42,40 @@ var Manager;
             field: 'fullNameInOfficialLanguage'
         }));
 
+        Manager.addWidget(new AjaxSolr.TermTextWidget({
+            id: 'searchAllNames',
+            target: '#searchAllNames',
+            field: 'allNames'
+        }));
+
+        Manager.addWidget(new AjaxSolr.TextWidget({
+            id: 'searchPIN',
+            target: '#searchPIN',
+            field: 'pin'
+        }));
+
+        Manager.addWidget(new AjaxSolr.TextWidget({
+            id: 'searchNIC',
+            target: '#searchNIC',
+            field: 'nic'
+        }));
+
+        Manager.addWidget(new AjaxSolr.TextWidget({
+            id: 'searchPassport',
+            target: '#searchPassport',
+            field: 'passport'
+        }));
+
         Manager.addWidget(new AjaxSolr.AdvancedSearchWidget({
             id: 'searchAdvanced',
             target: '#searchAdvanced',
             field: '*'
+        }));
+
+        Manager.addWidget(new AjaxSolr.DateSelectWidget({
+            id: 'searchDOB',
+            target: '#searchDOB',
+            field: 'dateOfBirth'
         }));
 
         Manager.addWidget(new AjaxSolr.DateRangeWidget({
@@ -66,7 +84,43 @@ var Manager;
             field: 'dateOfBirth'
         }));
 
-        var fields = [ 'gender' ];
+        Manager.addWidget(new AjaxSolr.DateSelectWidget({
+            id: 'searchDOD',
+            target: '#searchDOD',
+            field: 'dateOfDeath'
+        }));
+
+        Manager.addWidget(new AjaxSolr.DateRangeWidget({
+            id: 'searchDODRange',
+            target: '#searchDODRange',
+            field: 'dateOfDeath'
+        }));
+
+        Manager.addWidget(new AjaxSolr.TextWidget({
+            id: 'searchLastAddress',
+            target: '#searchLastAddress',
+            field: 'lastAddress'
+        }));
+
+        Manager.addWidget(new AjaxSolr.TextWidget({
+            id: 'searchAllAddresses',
+            target: '#searchAllAddresses',
+            field: 'allAddresses'
+        }));
+
+        Manager.addWidget(new AjaxSolr.TextWidget({
+            id: 'searchPhone',
+            target: '#searchPhone',
+            field: 'phone'
+        }));
+        
+        Manager.addWidget(new AjaxSolr.TextWidget({
+            id: 'searchLastEmail',
+            target: '#searchEmail',
+            field: 'email'
+        }));
+
+        var fields = [ 'gender', 'lifeStatus', 'civilStatus', 'recordStatus', 'citizenship' ];
         for (var i = 0, l = fields.length; i < l; i++) {
             Manager.addWidget(new AjaxSolr.TagcloudWidget({
                 id: fields[i],
@@ -80,7 +134,7 @@ var Manager;
         var params = {
             facet: true,
             'rows' : 100,
-            'facet.field': [ 'gender' ],
+            'facet.field': [ 'gender', 'lifeStatus', 'civilStatus', 'recordStatus', 'citizenship' ],
             'facet.limit': 20,
             'facet.mincount': 1,
             'f.topics.facet.limit': 50,

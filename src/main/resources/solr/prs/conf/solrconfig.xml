@@ -7,7 +7,7 @@
       You may also set this to false using by setting the system property:
         -Dsolr.abortOnConfigurationError=false
     -->
-    <abortOnConfigurationError>${solr.abortOnConfigurationError:true}</abortOnConfigurationError>
+    <abortOnConfigurationError>${solr.abortOnConfigurationError:false}</abortOnConfigurationError>
 
     <!-- lib directives can be used to instruct Solr to load an Jars identified
        and use them to resolve any "plugins" specified in your solrconfig.xml or
@@ -208,12 +208,11 @@ Controls how often Lucene loads terms into memory.  Default is 128 and is likely
              maxDocs - number of updates since last commit is greater than this
              maxTime - oldest uncommited update (in ms) is this long ago
              Instead of enabling autoCommit, consider using "commitWithin"
-             when adding documents. http://wiki.apache.org/solr/UpdateXmlMessages
+             when adding documents. http://wiki.apache.org/solr/UpdateXmlMessages-->
         <autoCommit>
           <maxDocs>10000</maxDocs>
           <maxTime>1000</maxTime>
         </autoCommit>
-        -->
 
 
         <!-- The RunExecutableListener executes an external command from a
@@ -423,17 +422,15 @@ concurrently.  An error is returned if this limit is exceeded. Recommend
     -->
     <requestDispatcher handleSelect="true">
         <!--Make sure your system has some authentication before enabling remote streaming!  -->
-        <requestParsers enableRemoteStreaming="true" multipartUploadLimitInKB="2048000"/>
+        <requestParsers enableRemoteStreaming="false" multipartUploadLimitInKB="4096"/>
 
         <!-- Set HTTP caching related parameters (for proxy caches and clients).
-
              To get the behaviour of Solr 1.2 (ie: no caching related headers)
              use the never304="true" option and do not specify a value for
              <cacheControl>
         -->
         <!-- <httpCaching never304="true"> -->
-        <httpCaching lastModifiedFrom="openTime"
-                     etagSeed="Solr">
+        <httpCaching lastModifiedFrom="openTime" etagSeed="Solr">
             <!-- lastModFrom="openTime" is the default, the Last-Modified value
                  (and validation against If-Modified-Since requests) will all be
                  relative to when the current Searcher was opened.

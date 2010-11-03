@@ -22,7 +22,7 @@ AjaxSolr.CurrentSearchWidget = AjaxSolr.AbstractWidget.extend({
       AjaxSolr.theme('list_items', this.target, links);
     }
     else {
-      $(this.target).html('<div>Records are unfiltered!</div>');
+      $(this.target).html('<li>Records are unfiltered!</li>');
     }
   },
 
