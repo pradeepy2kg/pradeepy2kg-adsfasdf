@@ -159,25 +159,20 @@ public class Address implements Serializable {
 
     public String toString() {
         StringBuilder buffer = new StringBuilder();
-        if ((line1 != null) && (!"".equals(line1))) {
+        if ((line1 != null) && (line1.trim().length() > 0)) {
             buffer.append(line1);
         }
-        if ((line2 != null) && (!"".equals(line2))) {
+        if ((line2 != null) && (line2.trim().length() > 0)) {
             buffer.append(", ");
             buffer.append(line2);
         }
 
-        if ((city != null) && (!"".equals(city))) {
+        if ((city != null) && (city.trim().length() > 0)) {
             buffer.append(", ");
             buffer.append(city);
-            // in the very likely case of postcode being absent,, we don't want to look silly by
-            // printing a comma in the end.
-            if ((postcode != null) && (!"".equals(postcode))) {
-                buffer.append(", ");
-            }
         }
 
-        if ((postcode != null) && (!"".equals(postcode))) {
+        if ((postcode != null) && (postcode.trim().length() > 0)) {
             buffer.append(", ");
             buffer.append(postcode);
         }
