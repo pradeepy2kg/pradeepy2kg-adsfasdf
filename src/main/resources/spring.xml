@@ -260,6 +260,7 @@
 
     <bean id="loginAction" class="lk.rgd.crs.web.action.LoginAction">
         <constructor-arg ref="userManagerService"/>
+        <constructor-arg ref="appParametersDAOImpl"/>
     </bean>
 
     <bean id="searchAction" class="lk.rgd.crs.web.action.births.SearchAction">

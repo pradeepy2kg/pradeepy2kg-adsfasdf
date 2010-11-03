@@ -28,6 +28,8 @@ public class AppParameter implements Serializable {
     public static final String CRS_CERTIFICATE_SEARCH_LIMIT = "crs.certificate.search.record.limit";
     /** The parameter key that holds the number of days until a password expires */
     public static final String PASSWORD_EXPIRY_DAYS = "rgd.password_expiry_days";
+    /*The parameter key that holds the max number of log attempts*/
+    public static final String MAX_NUMBER_OF_LOGIN_ATTEMPTS="rgd.max.number.of.login.attempts";
 
     @Id
     @Column(length = 100)

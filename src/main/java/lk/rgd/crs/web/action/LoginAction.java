@@ -1,6 +1,8 @@
 package lk.rgd.crs.web.action;
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.common.api.dao.AppParametersDAO;
+import lk.rgd.common.api.domain.AppParameter;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +24,8 @@ import lk.rgd.Permission;
  * of the EPR system
  */
 public class LoginAction extends ActionSupport implements SessionAware {
+
+    private final AppParametersDAO appParaDao;
     private String userName;
     private String password;
     private Map session;
@@ -42,8 +46,9 @@ public class LoginAction extends ActionSupport implements SessionAware {
     private int stillBirths;
     private int SBPendingApprovals;
 
-    public LoginAction(UserManager userManager) {
+    public LoginAction(UserManager userManager, AppParametersDAO appParaDao) {
         this.userManager = userManager;
+        this.appParaDao = appParaDao;
     }
 
     public Locale getLocale() {
@@ -82,7 +87,8 @@ public class LoginAction extends ActionSupport implements SessionAware {
             if (user != null) {
                 int loginAttempts = user.getLoginAttempts();
                 logger.debug("value of loging attempts :{}", loginAttempts);
-                if (loginAttempts > WebConstants.MAX_NUMBER_OF_LOGIN_ATTEMPTS) {
+                int maxLoginAttempts = appParaDao.getIntParameter(AppParameter.MAX_NUMBER_OF_LOGIN_ATTEMPTS);
+                if (loginAttempts > maxLoginAttempts) {
                     user.getLifeCycleInfo().setActive(false);
                     addActionError("Please contact Admin to Active your Account");
                 } else {
