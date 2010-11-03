@@ -1,5 +1,8 @@
 package lk.rgd.crs.api.domain;
 
+import lk.rgd.common.api.domain.Location;
+import lk.rgd.common.api.domain.User;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -103,6 +106,35 @@ public class DeathRegister implements Serializable, Cloneable {
     @Column(nullable = true, length = 100, name = "COMMENT")
     private String comment;
 
+    /**
+     * The place of issue for the original death certificate - free copy (Stores the Location ID)
+     */
+    @OneToOne
+    @JoinColumn(name = "originalDCPIssuelocationId", nullable = true)
+    private Location originalDCPlaceOfIssue;
+
+    /**
+     * The original DC issued user
+     */
+    @OneToOne
+    @JoinColumn(name = "originalDCIssueUserId", nullable = true)
+    private User originalDCIssueUser;
+
+
+    /**
+     * The original DC place of issue as a String in the preferred language and english - e.g. කොළඹ / Colombo
+     */
+    @Transient
+    private String originalDCPlaceOfIssuePrint;
+
+    /**
+     * The original DC place of issue signature as a String in preferred language and english
+     * e.g. ප්‍රාදේශීය ලේකම් කොට්ටාශ කාර්යාලය / Divisional Secretariat
+     */
+    @Transient
+    private String originalDCPlaceOfIssueSignPrint;
+
+
     public DeathRegister clone() throws CloneNotSupportedException {
         DeathRegister dr = (DeathRegister) super.clone();
         dr.setIdUKey(0);
@@ -192,5 +224,45 @@ public class DeathRegister implements Serializable, Cloneable {
 
     public void setCommnet(String comment) {
         this.comment = comment;
+    }
+
+    public Location getOriginalDCPlaceOfIssue() {
+        return originalDCPlaceOfIssue;
+    }
+
+    public void setOriginalDCPlaceOfIssue(Location originalDCPlaceOfIssue) {
+        this.originalDCPlaceOfIssue = originalDCPlaceOfIssue;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public User getOriginalDCIssueUser() {
+        return originalDCIssueUser;
+    }
+
+    public void setOriginalDCIssueUser(User originalDCIssueUser) {
+        this.originalDCIssueUser = originalDCIssueUser;
+    }
+
+    public String getOriginalDCPlaceOfIssuePrint() {
+        return originalDCPlaceOfIssuePrint;
+    }
+
+    public void setOriginalDCPlaceOfIssuePrint(String originalDCPlaceOfIssuePrint) {
+        this.originalDCPlaceOfIssuePrint = originalDCPlaceOfIssuePrint;
+    }
+
+    public String getOriginalDCPlaceOfIssueSignPrint() {
+        return originalDCPlaceOfIssueSignPrint;
+    }
+
+    public void setOriginalDCPlaceOfIssueSignPrint(String originalDCPlaceOfIssueSignPrint) {
+        this.originalDCPlaceOfIssueSignPrint = originalDCPlaceOfIssueSignPrint;
     }
 }

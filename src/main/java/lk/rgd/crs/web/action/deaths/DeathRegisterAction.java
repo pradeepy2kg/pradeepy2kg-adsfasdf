@@ -56,12 +56,14 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> districtList;
     private Map<Integer, String> dsDivisionList;
     private Map<Integer, String> bdDivisionList;
-    private List<UserWarning> warnings;
     private Map<Integer, String> raceList;
     private Map<Integer, String> countryList;
+    private Map<Integer, String> locationList;
 
     private List<DeathRegister> deathApprovalAndPrintList;
     private List<DeathRegister> archivedEntryList;
+    private List<UserWarning> warnings;
+
 
     private int pageNo;
     private int noOfRows;
@@ -236,7 +238,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         for (int i = 0; i < deathRegisters.size(); i++) {
             DeathAlteration da = deathAlterationService.getAlterationByDeathCertificateNumber(deathRegisters.get(i).getIdUKey(), user).get(0);
             changedFields.or(da.getApprovalStatuses());
-                    }
+        }
         logger.debug("bit sets merge and final bit set : {}", changedFields);
     }
 
@@ -1163,5 +1165,13 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public void setChangedFields(BitSet changedFields) {
         this.changedFields = changedFields;
+    }
+
+    public Map<Integer, String> getLocationList() {
+        return locationList;
+    }
+
+    public void setLocationList(Map<Integer, String> locationList) {
+        this.locationList = locationList;
     }
 }

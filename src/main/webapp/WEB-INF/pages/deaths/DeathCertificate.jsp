@@ -38,8 +38,8 @@
 <div id="death-certificate-outer">
 <s:if test="#request.archivedEntryList.size>0">
     <div id="alterations">
-        <fieldset style="border:2px inset red; width:400px;">
-            <legend style="color:red;"><s:label value="%{getText('ArchivedData.label')}"/></legend>
+          <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;width:400px">
+            <legend><s:label value="%{getText('ArchivedData.label')}"/></legend>
             <table>
                 <th></th>
                 <th><s:label value="%{getText('lastupdate.time.label')}"/></th>
@@ -59,6 +59,31 @@
                         </td>
                     </tr>
                 </s:iterator>
+            </table>
+        </fieldset>
+    </div>
+    <div id="locations">
+        <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;width:400px">
+            <legend> <s:label value="%{getText('selectoption.label')}"/></b></legend>
+            <table>
+                <tr>
+                    <td>
+                        <s:label value="%{getText('placeOfIssue.label')}"/>
+                    </td>
+                    <td>
+<%--
+                        <s:select id="locationId" name="locationId" list="locationList" cssStyle="width:300px;"/>
+--%>
+                    </td>
+                </tr>
+                <tr>
+                    <td><s:label value="%{getText('signOfficer.label')}"/></td>
+                    <td>
+<%--
+                        <s:select id="issueUserId" name="issueUserId" list="userList" cssStyle="width:300px;"/>
+--%>
+                    </td>
+                </tr>
             </table>
         </fieldset>
     </div>
