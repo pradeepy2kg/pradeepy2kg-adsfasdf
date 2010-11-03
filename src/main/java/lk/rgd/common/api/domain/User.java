@@ -157,7 +157,9 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<UserLocation> locations = new HashSet<UserLocation>();
 
-    /** The active primary location of the user*/
+    /**
+     * The active primary location of the user
+     */
     @OneToOne
     @JoinColumn(name = "primaryLocationUKey")
     private Location primaryLocation;
@@ -167,6 +169,9 @@ public class User implements Serializable {
 
     @Column
     private String taenSignatureText;
+
+    @Column(name = "loginAttempts", columnDefinition = "smallint not null default 1")
+    private int loginAttempts;
 
     public User() {
     }
@@ -339,6 +344,14 @@ public class User implements Serializable {
 
     public void setPrimaryLocation(Location primaryLocation) {
         this.primaryLocation = primaryLocation;
+    }
+
+    public int getLoginAttempts() {
+        return loginAttempts;
+    }
+
+    public void setLoginAttempts(int loginAttempts) {
+        this.loginAttempts = loginAttempts;
     }
 
     public boolean isAllowedAccessToBDDistrict(int id) {

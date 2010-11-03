@@ -57,4 +57,8 @@ public class WebConstants {
     public static final String USER_ID = "userId";
     public static final String CERTIFICATE_ID = "certificateId";
     public static final String PERSON_ID = "personId";
+
+    //to track wtich has change in death alterations
+    public static final int MAX_NUMBER_OF_LOGIN_ATTEMPTS=2;
+
 }

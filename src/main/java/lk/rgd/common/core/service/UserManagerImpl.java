@@ -53,9 +53,9 @@ public class UserManagerImpl implements UserManager {
     @Auditable
     public User authenticateUser(String userId, String password) throws AuthorizationException {
         User user = userDao.getUserByPK(userId);
-        if (user != null && user.getStatus() == User.State.ACTIVE
-            && password != null && user.getPasswordHash() != null
-            && !SYSTEM_USER_NAME.equalsIgnoreCase(userId)) {
+        if (user != null && user.getStatus() == User.State.ACTIVE && user.getLifeCycleInfo().isActive()
+                && password != null && user.getPasswordHash() != null
+                && !SYSTEM_USER_NAME.equalsIgnoreCase(userId)) {
             if (user.getPasswordHash().equals(password) || user.getPasswordHash().equals(hashPassword(password))) {
                 return user;
             } else {
@@ -63,14 +63,15 @@ public class UserManagerImpl implements UserManager {
             }
         }
         logger.warn("Attempt to authenticate non-existent or inactive user : {} or empty password", userId);
-        throw new AuthorizationException("Invalid user ID, password or user : " + userId, ErrorCodes.INVALID_LOGIN);        
+        throw new AuthorizationException("Invalid user ID, password or user : " + userId, ErrorCodes.INVALID_LOGIN);
     }
 
     /**
      * @inheritDoc
      */
     @Auditable
-    public void logoutUser(String userId) {}
+    public void logoutUser(String userId) {
+    }
 
     /**
      * @inheritDoc
@@ -202,6 +203,17 @@ public class UserManagerImpl implements UserManager {
             }
             userDao.updateUser(userToUpdate, adminUser);
         }
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void updateUser(User userToUpdate) {
+        User adminUser = getSystemUser();
+        User existing = userDao.getUserByPK(userToUpdate.getUserId());
+        if (existing.getStatus() == User.State.DELETED) {
+            handleException("Attempt to modify deleted account : " + existing.getUserId() +
+                    " by : " + adminUser.getUserId() + " denied", ErrorCodes.AUTHORIZATION_FAILS_USER_MANAGEMENT);
+        }
+        userDao.updateUser(userToUpdate, adminUser);
     }
 
     /**

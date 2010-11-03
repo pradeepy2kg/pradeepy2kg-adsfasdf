@@ -115,9 +115,9 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     }
 
     public UserManagmentAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, RoleDAO roleDAO, UserManager service, CourtDAO courtDAO,
-        BDDivisionDAO bdDivisionDAO, MasterDataManagementService dataManagementService, MRDivisionDAO mrDivisionDAO, LocationDAO locationDAO,
-        AppParametersDAO appParametersDAO, UserLocationDAO userLocationDAO, UserDAO userDAO,
-        BirthRecordsIndexer birthRecordsIndexer, DeathRecordsIndexer deathRecordsIndexer, PRSRecordsIndexer prsRecordsIndexer) {
+                               BDDivisionDAO bdDivisionDAO, MasterDataManagementService dataManagementService, MRDivisionDAO mrDivisionDAO, LocationDAO locationDAO,
+                               AppParametersDAO appParametersDAO, UserLocationDAO userLocationDAO, UserDAO userDAO,
+                               BirthRecordsIndexer birthRecordsIndexer, DeathRecordsIndexer deathRecordsIndexer, PRSRecordsIndexer prsRecordsIndexer) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.roleDAO = roleDAO;
@@ -198,7 +198,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     }
 
 
-    public String deleteUser() {
+    public String inactiveUser() {
         populate();
         user = service.getUserByID(userId);
         service.deleteUser(user, (User) session.get(WebConstants.SESSION_USER_BEAN));
@@ -208,6 +208,16 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         return "success";
     }
 
+    public String activeUser() {
+        populate();
+        user = service.getUserByID(userId);
+        user.setLoginAttempts(1);
+        user.getLifeCycleInfo().setActive(true);
+        service.updateUser(user, (User) session.get(WebConstants.SESSION_USER_BEAN));
+        usersList = service.getAllUsers();
+        session.put("viewUsers", usersList);
+        return "success";
+    }
 
     public String initUser() {
         populate();
@@ -431,7 +441,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
                 break;
             case 2:
                 DSDivision checkDSDivision = dsDivisionDAO.getDSDivisionByCode(dsDivision.getDivisionId(),
-                    districtDAO.getDistrict(UserDistrictId));
+                        districtDAO.getDistrict(UserDistrictId));
                 if (checkDSDivision != null) {
                     addFieldError("duplicateIdNumberError", "DS Division Id Number Already Used. Please Insert Another Number");
                     logger.debug("Duplicate District code number is :", checkDSDivision.getDivisionId());

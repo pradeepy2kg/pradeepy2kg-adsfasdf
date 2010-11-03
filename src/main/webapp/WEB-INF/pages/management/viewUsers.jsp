@@ -80,6 +80,7 @@
                         <th><s:label name="name" value="Name"/></th>
                         <th><s:label name="edit" value="Edit User"/></th>
                         <th><s:label name="edit" value="Delete User"/></th>
+                        <th><s:label name="edit" value="Active User"/></th>
                         <th><s:label name="edit" value="User Location"/></th>
                         <s:set name="allowEdit" value="true"/>
                     </tr>
@@ -96,12 +97,23 @@
                                     src="<s:url value='/images/edit.png'/>" width="25" height="25"
                                     border="none"/></s:a>
                             </td>
-                            <s:url id="deleteSelected" action="eprdeleteUsers.do">
+                            <s:url id="deleteSelected" action="eprInactiveUsers.do">
                                 <s:param name="userId" value="userId"/>
                             </s:url>
-                            <td align="center"><s:a href="%{deleteSelected}"><img
-                                    src="<s:url value='/images/delete.gif'/>" width="25" height="25"
-                                    border="none"/></s:a>
+                            <td align="center">                                
+                                    <s:a href="%{deleteSelected}"><img
+                                            src="<s:url value='/images/delete.gif'/>" width="25" height="25"
+                                            border="none"/></s:a>
+                            </td>
+                            <s:url id="activeSelected" action="eprActiveUsers.do">
+                                <s:param name="userId" value="userId"/>
+                            </s:url>
+                            <td align="center">
+                                <s:if test="!(lifeCycleInfo.active)">
+                                    <s:a href="%{activeSelected}">
+                                        <img src="<s:url value='/images/approve.gif'/>" width="25" height="25"
+                                             border="none"/></s:a>
+                                </s:if>
                             </td>
 
                             <s:url id="assignedUserLocation" action="eprInitAssignedUserLocation.do">

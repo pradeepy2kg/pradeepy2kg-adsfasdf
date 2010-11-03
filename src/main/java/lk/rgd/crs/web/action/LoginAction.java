@@ -64,6 +64,10 @@ public class LoginAction extends ActionSupport implements SessionAware {
         User user;
         try {
             user = userManager.authenticateUser(userName, userManager.hashPassword(password));
+            if (user != null) {
+                user.setLoginAttempts(1);
+                userManager.updateUser(user);
+            }
             //check if user have a preferred bd or mr ds division
             if (!user.getRole().getRoleId().equals("ADMIN") && !user.getRole().getRoleId().equals("RG")) {
                 if (user.getAssignedBDDSDivisions() != null && user.getAssignedBDDSDivisions().size() == 0
@@ -74,10 +78,25 @@ public class LoginAction extends ActionSupport implements SessionAware {
                 }
             }
         } catch (AuthorizationException e) {
-            addActionError("Incorrect user name or password.");
+            user = userManager.getUserByID(userName);
+            if (user != null) {
+                int loginAttempts = user.getLoginAttempts();
+                logger.debug("value of loging attempts :{}", loginAttempts);
+                if (loginAttempts > WebConstants.MAX_NUMBER_OF_LOGIN_ATTEMPTS) {
+                    user.getLifeCycleInfo().setActive(false);
+                    addActionError("Please contact Admin to Active your Account");
+                } else {
+                    addActionError("Incorrect user name or password.");
+                    user.setLoginAttempts(loginAttempts + 1);
+                }
+                userManager.updateUser(user);
+            } else {
+                addActionError("Incorrect user name or password.");
+            }
             logger.error("{} : {}", e.getMessage(), e);
             return "error";
         }
+
 
         try {
             String language = user.getPrefLanguage();

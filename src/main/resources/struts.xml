@@ -913,8 +913,12 @@
                 method="viewUsers">
             <result type="tiles" name="success">epr.viewUsers</result>
         </action>
-        <action name="eprdeleteUsers" class="lk.rgd.crs.web.action.UserManagmentAction"
-                method="deleteUser">
+        <action name="eprInactiveUsers" class="lk.rgd.crs.web.action.UserManagmentAction"
+                method="inactiveUser">
+            <result type="tiles" name="success">epr.viewUsers</result>
+        </action>
+        <action name="eprActiveUsers" class="lk.rgd.crs.web.action.UserManagmentAction"
+                method="activeUser">
             <result type="tiles" name="success">epr.viewUsers</result>
         </action>
 

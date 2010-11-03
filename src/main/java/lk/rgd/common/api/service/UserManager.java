@@ -25,6 +25,7 @@ public interface UserManager {
 
     /**
      * This is a marker method to record the event into the event database
+     *
      * @param userId the user logging out
      */
     public void logoutUser(String userId);
@@ -124,7 +125,6 @@ public interface UserManager {
      * @param adminUser    the user account creating the new user - must belong to role ADMIN
      */
     void createUser(User userToCreate, User adminUser);
-
     /**
      * Update a user
      *
@@ -132,6 +132,13 @@ public interface UserManager {
      * @param adminUser    the user account creating the new user - must belong to role ADMIN
      */
     void updateUser(User userToUpdate, User adminUser);
+    /**
+     * Update a user
+     *
+     * @param userToUpdate the User instance to update
+     */
+    void updateUser(User userToUpdate);
+
 
     /**
      * Delete a user. Will mark this record as permanently removed, and then maintained for historical
@@ -172,6 +179,7 @@ public interface UserManager {
      * @param adminUser  user performing the action
      */
     public void activeUserLocation(String userId, int locationId, User adminUser);
+
     /**
      * @param userId     id of the user
      * @param locationId id of the location

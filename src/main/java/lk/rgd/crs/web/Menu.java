@@ -53,7 +53,8 @@ public class Menu {
         adminLink.put("eprViewUsers.do", new Link("viewUsers.label", "/ecivil/management/", "eprViewUsers.do", Permission.USER_MANAGEMENT));
         adminLink.put("eprInitAddDivisionsAndDsDivisions.do", new Link("addDivision.label", "/ecivil/management/", "eprInitAddDivisionsAndDsDivisions.do", Permission.SERVICE_MASTER_DATA_MANAGEMENT));
         adminLink.put("eprUserCreation.do", new Link(null, "/ecivil/management/", "eprUserCreation.do", Permission.USER_MANAGEMENT));
-        adminLink.put("eprdeleteUsers.do", new Link(null, "/ecivil/management/", "eprdeleteUsers.do", Permission.USER_MANAGEMENT));
+        adminLink.put("eprInactiveUsers.do", new Link(null, "/ecivil/management/", "eprInactiveUsers.do", Permission.USER_MANAGEMENT));
+        adminLink.put("eprActiveUsers.do", new Link(null, "/ecivil/management/", "eprActiveUsers.do", Permission.USER_MANAGEMENT));
         adminLink.put("eprViewSelectedUsers.do", new Link(null, "/ecivil/management/", "eprViewSelectedUsers.do", Permission.USER_MANAGEMENT));
         adminLink.put("eprActiveDivisionsAndDsDivisions.do", new Link(null, "/ecivil/management/", "eprActiveDivisionsAndDsDivisions.do", Permission.SERVICE_MASTER_DATA_MANAGEMENT));
         adminLink.put("eprInactiveDivisionsAndDsDivisions.do", new Link(null, "/ecivil/management/", "eprInactiveDivisionsAndDsDivisions.do", Permission.SERVICE_MASTER_DATA_MANAGEMENT));
