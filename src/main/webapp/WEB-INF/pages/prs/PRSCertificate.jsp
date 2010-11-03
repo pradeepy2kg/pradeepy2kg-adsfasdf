@@ -1,3 +1,4 @@
+<%@ page import="lk.rgd.common.util.GenderUtil" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
@@ -40,7 +41,8 @@
     <tbody>
     <tr>
         <td>
-            <img src="${pageContext.request.contextPath}/prs/ImageServlet?personId=${person.personUKey}" width="100" height="100"/>
+            <img src="${pageContext.request.contextPath}/prs/ImageServlet?personId=${person.personUKey}" width="100"
+                 height="100"/>
         </td>
         <td rowspan="2" align="center">
             <img src="<s:url value="../images/official-logo.png" />"
@@ -158,7 +160,7 @@
             <br>Mothers Identification Number (PIN) or NIC
         </td>
         <td style="font-size:12pt">
-             <s:label value="%{person.motherPINorNIC}"/>
+            <s:label value="%{person.motherPINorNIC}"/>
         </td>
         <td colspan="2">
             පියාගේ අනන්‍යතා අංකය හෝ ජාතික හැඳුනුම්පත් අංකය
@@ -230,7 +232,7 @@
     </tbody>
 </table>
 
-<s:if test="numberOfCountries != 0">
+<s:if test="person.countries.size() != 0">
     <table style="width:100%; border:none; border-collapse:collapse;">
         <tr>
             <td align="center" style="font-size:12pt;">
@@ -240,7 +242,6 @@
             </td>
         </tr>
     </table>
-
     <table border="1"
            style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:10px 0;font-size:10pt">
         <col width="180px">
@@ -248,12 +249,19 @@
         <col width="350px">
         <col width="200px">
         <tbody>
-        <s:iterator value="personCitizenship">
+        <s:iterator value="person.countries">
             <tr>
                 <td height="40px">
                     රට / நாடு /Country
                 </td>
-                <td style="font-size:12pt"><s:property value="country.enCountryName"/></td>
+                <td style="font-size:12pt">
+                    <s:if test="person.preferredLanguage=='si'">
+                        <s:property value="country.siCountryName"/>
+                    </s:if>
+                    <s:if test="person.preferredLanguage=='ta'">
+                        <s:property value="country.taCountryName"/>
+                    </s:if>
+                </td>
                 <td>
                     ගමන් බලපත්‍ර අංකය / கடவுச் சீட்டு இல. /Passport No.
                 </td>

@@ -158,7 +158,7 @@
         <td align="center"><img src="<s:url value="/images/official-logo.png" />" alt=""/><br> <label>
             ශ්‍රී ලංකා / ﻿இலங்கை / SRI LANKA<br><br>
             දෙමව්පියන් / භාරකරු විසින් උපත තහවුරු කිරීම
-            ﻿﻿ <br>பெற்றோர் அல்லது பாதுகாப்பாளா் மூலம் பிறப்பை உறுதிப்படுத்தல்
+            ﻿﻿ <br>பெற்றோர் அல்லது பாதுகாப்பாளர்  மூலம் பிறப்பை உறுதிப்படுத்தல்
             <br>Confirmation of Birth by Parents / Guardian
         </label></td>
         <td>
@@ -221,7 +221,7 @@
         <td class="cell_01">1</td>
         <td>සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ අදාල “උපතක් ලියාපදිංචි කිරීම සඳහා විස්තර” ප්‍රකාශනයේ අනුක්‍රමික අංකය
             හා දිනය
-            <br>பிறப்பை பதிவு செய்வதற்கான விபரம்" எனும் படிவத்தின் தொடா் இலக்கமும் திகதியும்
+            <br>பிறப்பை பதிவு செய்வதற்கான விபரம்" எனும் படிவத்தின் தொடர்  இலக்கமும் திகதியும்
             <br>Serial Number and the Date of the ‘Particulars for Registration of a Birth’ form
         </td>
         <td><s:textfield cssClass="disable" disabled="true"
@@ -263,14 +263,14 @@
             உள்ளடக்கப்பட்டுள்ள
             விபரம<br>Information included in Civil Registration System </label></td>
         <td class="cell_02" colspan="6"><label>
-             ඇතුලත් කරඇති තොරතුරු හෝ යම් අක්ෂර දෝෂයක් නිවැරදි කල යුතුනම් .
-            <br>புதியசிவில் பதிவ..ண்டிய விப...
+             ඇතුලත් කරඇති තොරතුරු හෝ යම් අක්ෂර දෝෂයක් නිවැරදි කල යුතුනම් , වෙනස් විය යුතු ආකාරය ඇතුලත් කරන්න
+            <br>உட்புகுத்தப்பட்ட விபரங்கள் அல்லது ஏதாவது தவறு திருத்தப்பட வேண்டுமாயின், திருத்தப்படவெண்டிய விதத்தினை குறிப்பிடவும்  
             <br>If there are spelling mistakes or changes in existing details.</label></td>
     </tr>
     <tr>
         <td class="cell_01">2</td>
         <td class="cell_04"><label>උපන් දිනය<br>பிறந்த திகதி<br>Date of birth</label></td>
-        <td class="cell_03"><label>අවුරුද්ද  <br>இயர் <br>Year</label></td>
+        <td class="cell_03"><label>අවුරුද්ද  <br>வருடம் <br>Year</label></td>
         <td class="cell_03"><s:textfield value="%{#session.birthConfirmation_db.child.dateOfBirth.year+1900}"
                                          cssClass="disable" disabled="true"
                                          size="4"/></td>
@@ -288,7 +288,7 @@
     </tr>
     <tr>
         <td>3</td>
-        <td><label>ස්ත්‍රී පුරුෂ භාවය <br>பால்பால்<br>Gender</label></td>
+        <td><label>ස්ත්‍රී පුරුෂ භාවය <br>பால்<br>Gender</label></td>
         <td colspan="6">
             <s:if test="bdId != 0">
                 <s:if test="#session.birthConfirmation_db.child.childGender == 0">

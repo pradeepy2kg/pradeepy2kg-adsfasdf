@@ -7,8 +7,6 @@ import org.slf4j.LoggerFactory;
 import lk.rgd.prs.api.service.PopulationRegistry;
 import lk.rgd.prs.api.domain.Person;
 import lk.rgd.prs.api.domain.Address;
-import lk.rgd.prs.api.domain.PersonCitizenship;
-import lk.rgd.prs.api.domain.Marriage;
 import lk.rgd.common.api.dao.RaceDAO;
 import lk.rgd.common.api.dao.CountryDAO;
 import lk.rgd.common.api.domain.User;
@@ -16,7 +14,6 @@ import lk.rgd.common.util.GenderUtil;
 import lk.rgd.common.util.CivilStatusUtil;
 import lk.rgd.common.util.LifeStatusUtil;
 import lk.rgd.crs.web.WebConstants;
-import lk.rgd.crs.api.domain.MarriageInfo;
 import lk.rgd.AppConstants;
 
 import java.util.*;
@@ -39,12 +36,8 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
     private String race;
     private String raceEn;
     private String civilStatus;
-    private MarriageInfo marriage;
     private Address permanentAddress;
     private Set<Address> address;
-    private Set<PersonCitizenship> personCitizenship;
-    private Set<Marriage> marrage;
-    private int numberOfCountries;
 
     private Person person;
     private long personId;
@@ -70,16 +63,8 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
         if (person.getLifeStatus() != null) {
             lifeStatus = LifeStatusUtil.getLifeStatus(person.getLifeStatus(), user.getPrefLanguage());
         }
-        if (person.getAddresses() != null) {
-            address=person.getAddresses();
-        }
-        if(person.getMarriages() != null){
-            marrage = person.getMarriages();
-        }
-        
         children = service.findAllChildren(person, user);
         logger.debug("number of children for {} is {}", person.getFullNameInOfficialLanguage(), children.size());
-
         siblings = service.findAllSiblings(person, user);
         logger.debug("number of siblings for {} is {}", person.getFullNameInOfficialLanguage(), siblings.size());
         return SUCCESS;
@@ -103,10 +88,6 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
                     break;
                 }
             }
-        }
-        if (person.getCountries() != null) {
-            personCitizenship = person.getCountries();
-            numberOfCountries = personCitizenship.size();
         }
         return SUCCESS;
     }
@@ -193,14 +174,6 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
         this.civilStatus = civilStatus;
     }
 
-    public MarriageInfo getMarriage() {
-        return marriage;
-    }
-
-    public void setMarriage(MarriageInfo marriage) {
-        this.marriage = marriage;
-    }
-
     public String getGenderEn() {
         return genderEn;
     }
@@ -225,22 +198,6 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
         this.permanentAddress = permanentAddress;
     }
 
-    public Set<PersonCitizenship> getPersonCitizenship() {
-        return personCitizenship;
-    }
-
-    public void setPersonCitizenship(Set<PersonCitizenship> personCitizenship) {
-        this.personCitizenship = personCitizenship;
-    }
-
-    public int getNumberOfCountries() {
-        return numberOfCountries;
-    }
-
-    public void setNumberOfCountries(int numberOfCountries) {
-        this.numberOfCountries = numberOfCountries;
-    }
-
     public Set<Address> getAddress() {
         return address;
     }
@@ -249,11 +206,7 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
         this.address = address;
     }
 
-    public Set<Marriage> getMarrage() {
-        return marrage;
-    }
-
-    public void setMarrage(Set<Marriage> marrage) {
-        this.marrage = marrage;
+    public CountryDAO getCountryDAO() {
+        return countryDAO;
     }
 }

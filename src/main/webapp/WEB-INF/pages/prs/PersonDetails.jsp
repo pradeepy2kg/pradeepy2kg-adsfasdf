@@ -153,7 +153,7 @@
     </tr>
     </tbody>
 </table>
-<s:if test="numberOfCountries != 0">
+<s:if test="person.countries.size() != 0">
     <table style="width:100%; border:none; border-collapse:collapse;">
         <tr>
             <td align="center" style="font-size:12pt;">
@@ -170,20 +170,30 @@
         <col width="300px">
         <col width="330px">
         <tbody>
-        <tr>
-            <td height="60px">
-                රට / நாடு /Country
-            </td>
-            <td>
-                <s:label value="%{}"/>
-            </td>
-            <td>
-                ගමන් බලපත්‍ර අංකය / கடவுச் சீட்டு இல. /Passport No.
-            </td>
-            <td>
-                <s:label value="%{person.passportNos}"/>
-            </td>
-        </tr>
+        <s:iterator value="person.countries">
+            <tr>
+                <td height="60px">
+                    රට / நாடு /Country
+                </td>
+                <td>
+                    <s:if test="#session.user_bean.prefLanguage == 'si'">
+                        <s:property value="country.siCountryName"/>
+                    </s:if>
+                    <s:if test="#session.user_bean.prefLanguage=='ta'">
+                        <s:property value="country.taCountryName"/>
+                    </s:if>
+                    <s:if test="#session.user_bean.prefLanguage=='en'">
+                        <s:property value="country.enCountryName"/>
+                    </s:if>
+                </td>
+                <td>
+                    ගමන් බලපත්‍ර අංකය / கடவுச் சீட்டு இல. /Passport No.
+                </td>
+                <td>
+                    <s:property value="%{passportNo}"/>
+                </td>
+            </tr>
+        </s:iterator>
         </tbody>
     </table>
 
@@ -191,14 +201,15 @@
 <s:else>
     <table style="width:100%; border:none; border-collapse:collapse;">
         <tr>
-            <td>
+            <td align="center">
                 වෙනත් රටවල පුරවැසි භාවයන් පිළිබදව විස්තර නොමැත.
-                <br>* in tamil
+                <br>வேறு நாட்டினது பிரஜாவுரிமை சம்பந்தமான விபரங்கள் இல்லை
                 <br>Citizenships and Passport Details not available.
             </td>
         </tr>
     </table>
 </s:else>
+<br>
 <table style="width:100%; border:none; border-collapse:collapse;">
     <tr>
         <td align="center" style="font-size:12pt;">
@@ -254,8 +265,8 @@
             <s:label value="%{person.personEmail}"/>
         </td>
     </tr>
-    <s:if test="address.size() != 0">
-        <s:iterator value="address">
+    <s:iterator value="person.addresses">
+        <s:if test="addressUKey != person.lastAddress.addressUKey ">
             <tr>
                 <td>
                     පෙර පදිංචි ලිපිනය
@@ -263,7 +274,7 @@
                     <br>Previous Address
                 </td>
                 <td>
-                    <s:property value="%{}"/>
+                    <s:property value="%{Line1}"/>
                 </td>
                 <td>
                     ස්ථිර
@@ -287,11 +298,13 @@
                 <td>
                     <s:property value="%{endDate}"/>
                 </td>
+
             </tr>
-        </s:iterator>
-    </s:if>
+        </s:if>
+    </s:iterator>
     </tbody>
 </table>
+
 <table style="width:100%; border:none; border-collapse:collapse;">
     <tr>
         <td align="center" style="font-size:12pt;">
@@ -435,7 +448,7 @@
     </tbody>
 </table>
 
-<s:if test="marrage == null">
+<s:if test="person.marriages.size() != 0">
     <table style="width:100%; border:none; border-collapse:collapse;">
         <tr>
             <td align="center" style="font-size:12pt;">
@@ -486,31 +499,39 @@
                 <br>Name
             </td>
         </tr>
-        <s:iterator value="marrage">
         <tr>
-            <td height="60px"><s:property value=""/></td>
-            <td><s:property value="dateOfMarriage"/> </td>
-            <td><s:property value="Law"/> </td>
-            <td><s:property value="placeOfMarriage"/> </td>
-            <td><s:property value="marriageUKey"/> </td>
-            <td><s:property value=""/> </td>
-            <td><s:property value=""/> </td>
+            <s:iterator value="person.marriages">
+                <td height="60px"><s:property value="dateOfMarriage"/></td>
+                <td><s:property value="Law"/></td>
+                <td><s:property value="placeOfMarriage"/></td>
+                <s:if test="person.gender == 0">
+                    <td><s:property value="groom.pin"/></td>
+                    <td><s:property value="groom.dateOfBirth"/></td>
+                    <td><s:property value="groom.fullNameInOfficialLanguage"/></td>
+                </s:if>
+                <s:elseif test="person.gender == 1">
+                    <td><s:property value="bride.pin"/></td>
+                    <td><s:property value="bride.dateOfBirth"/></td>
+                    <td><s:property value="bride.fullNameInOfficialLanguage"/></td>
+                </s:elseif>
+            </s:iterator>
         </tr>
-        </s:iterator>
         </tbody>
     </table>
 </s:if>
+
 <s:else>
     <table style="width:100%; border:none; border-collapse:collapse;">
         <tr>
-            <td>
+            <td align="center">
                 විවාහයන් පිළිබදව තොරතුරු වාර්තා වී නොමැත.
-                <br>* in Tamil
+                <br>திருமணம் சம்மந்தமான விபரங்கள் அறிக்கையிடப்படவில்லை
                 <br>Marriages Details not available.
             </td>
         </tr>
     </table>
 </s:else>
+<br>
 <table style="width:100%; border:none; border-collapse:collapse;">
     <tr>
         <td align="center" style="font-size:12pt;">

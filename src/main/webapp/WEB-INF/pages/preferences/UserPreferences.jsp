@@ -53,10 +53,10 @@
             <tr>
                 <td>
                     <div id="set-language" class="font-10">
-                        <label>භාෂාව / *in tamil / Language </label>
+                        <label>භාෂාව / மொழி / Language </label>
                     </div>
                 </td>
-                <td><s:select list="#@java.util.HashMap@{'en':'English','si':'සිංහල','ta':'Tamil'}" name="prefLanguage"
+                <td><s:select list="#@java.util.HashMap@{'en':'English','si':'සිංහල','ta':'தமிழ்'}" name="prefLanguage"
                               value="%{#session.WW_TRANS_I18N_LOCALE.language}"></s:select>
                 </td>
             </tr>
@@ -75,7 +75,7 @@
             <tr>
                 <td>
                     <div id="user-ds-division" class="font-10">
-                        <label>D.S.කොට්ඨාශය / பிரிவு / D.S. Division</label>
+                        <label>D.S.කොට්ඨාශය /D.S. பிரிவு / D.S. Division</label>
                     </div>
                 </td>
                 <td width="250px"><s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList"
