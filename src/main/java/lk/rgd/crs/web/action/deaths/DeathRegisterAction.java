@@ -236,7 +236,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         for (int i = 0; i < deathRegisters.size(); i++) {
             DeathAlteration da = deathAlterationService.getAlterationByDeathCertificateNumber(deathRegisters.get(i).getIdUKey(), user).get(0);
             changedFields.or(da.getApprovalStatuses());
-        }
+                    }
         logger.debug("bit sets merge and final bit set : {}", changedFields);
     }
 
