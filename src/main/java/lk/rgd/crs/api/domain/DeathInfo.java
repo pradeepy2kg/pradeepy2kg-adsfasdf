@@ -10,6 +10,7 @@ import java.util.Date;
 /**
  * @author Indunil Moremada
  * @author Tharanga Punchihewa
+ * @author amith jayasekara
  *         An instance representing death information submitted for the deathRegistration of a death (page 1 of the form)
  */
 @Embeddable
