@@ -29,6 +29,8 @@
     .changes-done {
         font-size: 6pt;
         font: bold;
+        position: relative;
+        top: 3px
     }
 </style>
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
