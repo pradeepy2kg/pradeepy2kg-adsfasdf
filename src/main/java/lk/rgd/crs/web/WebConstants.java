@@ -59,6 +59,6 @@ public class WebConstants {
     public static final String PERSON_ID = "personId";
 
     //to track wtich has change in death alterations
-    public static final int MAX_NUMBER_OF_LOGIN_ATTEMPTS=2;
+   
 
 }

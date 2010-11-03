@@ -176,6 +176,7 @@
             "bInfo": false,
             "bAutoWidth": false,
             "bJQueryUI": true,
+            "header":false,
             "sPaginationType": "full_numbers"
         });
     });
