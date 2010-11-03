@@ -37,7 +37,7 @@ import java.io.Serializable;
                 "deathRegister.deathPerson.deathPersonPINorNIC = :pinOrNIC"),
 
         @NamedQuery(name = "get.historical.death.records.by.bddivision.and.serialNo.deathID", query = "SELECT dr FROM DeathRegister dr " +
-                "WHERE (dr.death.deathDivision = :deathDivision AND dr.death.deathSerialNo = :serialNo  AND dr.idUKey < :deathId) " +
+                "WHERE (dr.death.deathDivision = :deathDivision AND dr.death.deathSerialNo = :serialNo  AND dr.idUKey < :deathId AND dr.status= 4) " +
                 "AND dr.lifeCycleInfo.activeRecord IS FALSE ORDER BY dr.lifeCycleInfo.lastUpdatedTimestamp desc"),
 
         @NamedQuery(name = "findAllDeaths", query = "SELECT ddf FROM DeathRegister ddf")

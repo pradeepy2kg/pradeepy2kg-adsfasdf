@@ -25,6 +25,11 @@
     #death-certificate-outer .form-submit {
         margin: 5px 0 15px 0;
     }
+
+    .changes-done {
+        font-size: 6pt;
+        font: bold;
+    }
 </style>
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
 
@@ -104,7 +109,7 @@
     </div>
 </s:if>
 <div class="form-submit">
-     <s:submit type="button" value="%{getText('cancel.button')}" onClick="history.go(-1)"/>
+    <s:submit type="button" value="%{getText('cancel.button')}" onClick="history.go(-1)"/>
 </div>
 
 <table style="width: 100%; border:none; border-collapse:collapse; ">
@@ -184,154 +189,252 @@
             <br>நிறைவேற்றிய மாற்றங்கள்
             <br>Changes after first registration
         </td>
-        <td><s:label name="" value="%{}"/></td>
+        <td>
+            <s:if test="changedFields.size() > 0">
+                ඔව් - “**” ලකුණින් පෙන්වා ඈත
+                <br>
+                ஆம்-”**” குறியீட்டில் குறிப்பிடப்பட்டுள்ளது
+                <br>
+                Yes - marked with “**”
+            </s:if>
+            <s:else>
+                නැත
+                <br>
+                இல்லை
+                <br>
+                No
+            </s:else>
+        </td>
     </tr>
     </tbody>
 </table>
 
 <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; " class="font-9">
-    <col width="150px"/>
-    <col width="160px"/>
-    <col width="100px"/>
-    <col width="100px"/>
-    <col width="180px"/>
-    <col width="120px"/>
-    <col width="100px"/>
-    <col/>
-    <tbody>
-    <tr>
-        <td height="60px">
-            අනන්‍යතා අංකය
-            <br>அடையாள எண்
-            <br>Identification Number
-        </td>
-        <td><s:label name="" value="%{deathPerson.deathPersonPINorNIC}"/></td>
-        <td>
-            වයස
-            <br>வயது
-            <br>Age
-        </td>
-        <td><s:label name="" value="%{deathPerson.deathPersonAge}"/></td>
-        <td>
-            මරණය සිදුවූ දිනය
-            <br>இறப்பு நிகழ்ந்த திகதி
-            <br>Date of death
-        </td>
-        <td><s:label name="" value="%{death.dateOfDeath}"/></td>
-        <td>
-            ස්ත්‍රී පුරුෂ භාවය
-            <br>பால்
-            <br>Gender
-        </td>
-        <td>
-            <s:label name="" value="%{genderSi}"/>
-            <br> <s:label name="" value="%{genderEn}"/>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="1" height="60px">
-            මරණයේ ස්වභාවය
-            <br>மரணத்தின் வகை
-            <br>Type of Death
-        </td>
-        <td colspan="7"><s:label name="" value="%{}"/>
-            <br><s:label name="" value="%{}"/></td>
-    </tr>
-    <tr>
-        <td colspan="1" height="60px">
-            මරණය සිදුවූ ස්ථානය
-            <br>இறப்பு நிகழந்த இடம்
-            <br>Place of death
-        </td>
-        <td colspan="7"><s:label name="" value="%{death.placeOfDeath}"/>
-            <br><s:label name="" value="%{death.placeOfDeathInEnglish}"/></td>
-    </tr>
-    <tr>
-        <td colspan="1" height="60px">
-            මරණයට හේතු
-            <br>இறப்பிற்கான காரணம்
-            <br>Cause of Death
-        </td>
-        <td colspan="7" style="font-size:9pt"><s:label name="" value="%{death.causeOfDeath}"/></td>
-        <%--<td colspan="1">හේතුවේ ICD කේත අංකය<br>*in tamil<br>ICD Code of cause</td>--%>
-        <%--<td colspan="2"><s:label name="" value="%{death.icdCodeOfCause}"/></td>--%>
-    </tr>
-    <tr>
-        <td colspan="1">
-            ආදාහන හෝ භූමදාන ස්ථානය
-            <br>அடக்கம் செய்த அல்லது தகனஞ் செய்த இடம்
-            <br>Place of burial or cremation
-        </td>
-        <td colspan="7" style="font-size:10pt"><s:label name="" value="%{death.placeOfBurial}"/></td>
-    </tr>
-    <tr>
-        <td colspan="1" height="100px">
-            නම
-            <br>பெயர்
-            <br>Name
-        </td>
-        <td colspan="7" style="font-size:10pt"><s:label name=""
-                                                        value="%{deathPerson.deathPersonNameOfficialLang}"/></td>
-    </tr>
-    <tr>
-        <td colspan="1" height="90px">
-            නම ඉංග්‍රීසි භාෂාවෙන්
-            <br>பெயர் ஆங்கில மொழியில்
-            <br>Name in English
-        </td>
-        <td colspan="7" style="font-size:10pt"><s:label name="" value="%{deathPerson.deathPersonNameInEnglish}"/></td>
-    </tr>
-    <tr>
-        <td colspan="1" height="80px">
-            පියාගේ සම්පුර්ණ නම
-            <br>தந்தையின்முழுப் பெயர்
-            <br>Father's Full Name
-        </td>
-        <td colspan="4" style="font-size:10pt"><s:label name="" value="%{deathPerson.deathPersonFatherFullName}"/></td>
-        <td colspan="1">
-            අනන්‍යතා අංකය
-            <br>அடையாள எண்
-            <br>Identification No.
-        </td>
-        <td colspan="2"><s:label name="" value="%{deathPerson.deathPersonFatherPINorNIC}"/></td>
-    </tr>
-    <tr>
-        <td colspan="1" height="80px">
-            මවගේ සම්පූර්ණ නම
-            <br>தாயின் முழுப் பெயர்
-            <br>Mother's Full Name
-        </td>
-        <td colspan="4" style="font-size:10pt"><s:label name="" value="%{deathPerson.deathPersonMotherFullName}"/></td>
-        <td colspan="1">
-            අනන්‍යතා අංකය
-            <br>அடையாள எண்
-            <br>Identification No.
-        </td>
-        <td colspan="2"><s:label name="" value="%{deathPerson.deathPersonMotherPINorNIC}"/></td>
-    </tr>
-    <tr>
-        <td colspan="1" height="80px">
-            දැනුම් දෙන්නගේ නම
-            <br>தகவலளிப்பவரின் பெயர்
-            <br>Informant's Name
-        </td>
-        <td colspan="4" style="font-size:10pt"><s:label name="" value="%{declarant.declarantFullName}"/></td>
-        <td colspan="1">
-            අනන්‍යතා අංකය
-            <br>அடையாள எண்
-            <br>Identification No.
-        </td>
-        <td colspan="2"><s:label name="" value="%{declarant.declarantNICorPIN}"/></td>
-    </tr>
-    <tr>
-        <td colspan="1" height="80px">
-            දැනුම් ලිපිනය
-            <br>தகவலளிப்பவரின் முகவரி
-            <br>Informant's Address
-        </td>
-        <td colspan="7" style="font-size:10pt"><s:label name="" value="%{declarant.declarantAddress}"/></td>
-    </tr>
-    </tbody>
+<col width="150px"/>
+<col width="160px"/>
+<col width="100px"/>
+<col width="100px"/>
+<col width="180px"/>
+<col width="120px"/>
+<col width="100px"/>
+<col/>
+<tbody>
+<tr>
+    <td height="60px">
+        අනන්‍යතා අංකය
+        <br>அடையாள எண்
+        <br>Identification Number
+    </td>
+    <td><s:label name="" value="%{deathPerson.deathPersonPINorNIC}"/>
+        <div class="changes-done">
+            <s:if test="changedFields.get(9)">
+                **
+            </s:if>
+        </div>
+    </td>
+    <td>
+        වයස
+        <br>வயது
+        <br>Age
+    </td>
+    <td><s:label name="" value="%{deathPerson.deathPersonAge}"/>
+        <div class="changes-done">
+            <s:if test="changedFields.get(12)">
+                **
+            </s:if>
+        </div>
+    </td>
+    <td>
+        මරණය සිදුවූ දිනය
+        <br>இறப்பு நிகழ்ந்த திகதி
+        <br>Date of death
+    </td>
+    <td><s:label name="" value="%{death.dateOfDeath}"/>
+        <div class="changes-done">
+            <s:if test="changedFields.get(1)">
+                **
+            </s:if>
+        </div>
+    </td>
+    <td>
+        ස්ත්‍රී පුරුෂ භාවය
+        <br>பால்
+        <br>Gender
+    </td>
+    <td>
+        <s:label name="" value="%{genderSi}"/>
+        <br> <s:label name="" value="%{genderEn}"/>
+        <div class="changes-done">
+            <s:if test="changedFields.get(13)">
+                **
+            </s:if>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td colspan="1" height="60px">
+        මරණයේ ස්වභාවය
+        <br>மரணத்தின் வகை
+        <br>Type of Death
+    </td>
+    <td colspan="7"><s:label name="" value="%{}"/>
+        <br><s:label name="" value="%{}"/>
+        <div class="changes-done">
+            <s:if test="changedFields.get(0)">
+                **
+            </s:if>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td colspan="1" height="60px">
+        මරණය සිදුවූ ස්ථානය
+        <br>இறப்பு நிகழந்த இடம்
+        <br>Place of death
+    </td>
+    <td colspan="7"><s:label name="" value="%{death.placeOfDeath}"/>
+        <br><s:label name="" value="%{death.placeOfDeathInEnglish}"/>
+        <div class="changes-done">
+            <s:if test="changedFields.get(3)">
+                **
+            </s:if>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td colspan="1" height="60px">
+        මරණයට හේතු
+        <br>இறப்பிற்கான காரணம்
+        <br>Cause of Death
+    </td>
+    <td colspan="7" style="font-size:9pt"><s:label name="" value="%{death.causeOfDeath}"/>
+        <div class="changes-done">
+            <s:if test="changedFields.get(6)">
+                **
+            </s:if>
+        </div>
+    </td>
+    <%--<td colspan="1">හේතුවේ ICD කේත අංකය<br>*in tamil<br>ICD Code of cause</td>--%>
+    <%--<td colspan="2"><s:label name="" value="%{death.icdCodeOfCause}"/></td>--%>
+</tr>
+<tr>
+    <td colspan="1">
+        ආදාහන හෝ භූමදාන ස්ථානය
+        <br>அடக்கம் செய்த அல்லது தகனஞ் செய்த இடம்
+        <br>Place of burial or cremation
+    </td>
+    <td colspan="7" style="font-size:10pt"><s:label name="" value="%{death.placeOfBurial}"/>
+        <div class="changes-done">
+            <s:if test="changedFields.get(8)">
+                **
+            </s:if>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td colspan="1" height="100px">
+        නම
+        <br>பெயர்
+        <br>Name
+    </td>
+    <td colspan="7" style="font-size:10pt"><s:label name=""
+                                                    value="%{deathPerson.deathPersonNameOfficialLang}"/>
+        <div class="changes-done">
+            <s:if test="changedFields.get(15)">
+                **
+            </s:if>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td colspan="1" height="90px">
+        නම ඉංග්‍රීසි භාෂාවෙන්
+        <br>பெயர் ஆங்கில மொழியில்
+        <br>Name in English
+    </td>
+    <td colspan="7" style="font-size:10pt"><s:label name="" value="%{deathPerson.deathPersonNameInEnglish}"/>
+        <div class="changes-done">
+            <s:if test="changedFields.get(16)">
+                **
+            </s:if>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td colspan="1" height="80px">
+        පියාගේ සම්පුර්ණ නම
+        <br>தந்தையின்முழுப் பெயர்
+        <br>Father's Full Name
+    </td>
+    <td colspan="4" style="font-size:10pt"><s:label name="" value="%{deathPerson.deathPersonFatherFullName}"/>
+        <div class="changes-done">
+            <s:if test="changedFields.get(19)">
+                **
+            </s:if>
+        </div>
+    </td>
+    <td colspan="1">
+        අනන්‍යතා අංකය
+        <br>அடையாள எண்
+        <br>Identification No.
+    </td>
+    <td colspan="2"><s:label name="" value="%{deathPerson.deathPersonFatherPINorNIC}"/>
+        <div class="changes-done">
+            <s:if test="changedFields.get(18)">
+                **
+            </s:if>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td colspan="1" height="80px">
+        මවගේ සම්පූර්ණ නම
+        <br>தாயின் முழுப் பெயர்
+        <br>Mother's Full Name
+    </td>
+    <td colspan="4" style="font-size:10pt"><s:label name="" value="%{deathPerson.deathPersonMotherFullName}"/>
+        <div class="changes-done">
+            <s:if test="changedFields.get(21)">
+                **
+            </s:if>
+        </div>
+    </td>
+    <td colspan="1">
+        අනන්‍යතා අංකය
+        <br>அடையாள எண்
+        <br>Identification No.
+    </td>
+    <td colspan="2"><s:label name="" value="%{deathPerson.deathPersonMotherPINorNIC}"/>
+        <div class="changes-done">
+            <s:if test="changedFields.get(20)">
+                **
+            </s:if>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td colspan="1" height="80px">
+        දැනුම් දෙන්නගේ නම
+        <br>தகவலளிப்பவரின் பெயர்
+        <br>Informant's Name
+    </td>
+    <td colspan="4" style="font-size:10pt"><s:label name="" value="%{declarant.declarantFullName}"/></td>
+    <td colspan="1">
+        අනන්‍යතා අංකය
+        <br>அடையாள எண்
+        <br>Identification No.
+    </td>
+    <td colspan="2"><s:label name="" value="%{declarant.declarantNICorPIN}"/></td>
+</tr>
+<tr>
+    <td colspan="1" height="80px">
+        දැනුම් ලිපිනය
+        <br>தகவலளிப்பவரின் முகவரி
+        <br>Informant's Address
+    </td>
+    <td colspan="7" style="font-size:10pt"><s:label name="" value="%{declarant.declarantAddress}"/></td>
+</tr>
+</tbody>
 </table>
 
 <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin-bottom:0;"
@@ -395,9 +498,9 @@
 </div>
 </s:if>
 <div class="form-submit">
-     <s:submit type="button" value="%{getText('cancel.button')}" onClick="history.go(-1)"/>
+    <s:submit type="button" value="%{getText('cancel.button')}" onClick="history.go(-1)"/>
 </div>
-    </div>
+</div>
 
 
 
