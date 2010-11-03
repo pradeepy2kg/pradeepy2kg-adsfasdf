@@ -16,6 +16,10 @@ public class LifeStatusUtil {
     private static final Logger logger = LoggerFactory.getLogger(LifeStatusUtil.class);
 
     public static String getStatusAsString(Person.LifeStatus s) {
+        if (s == null) {
+            return "U";
+        }
+
         switch (s) {
             case UNKNOWN:
                 return "U";
