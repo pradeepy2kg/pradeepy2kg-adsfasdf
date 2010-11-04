@@ -74,7 +74,7 @@ public class DeathAlterationActionTest extends CustomStrutsTestCase {
                 dr = deathRegistrationService.getByBDDivisionAndDeathSerialNo(ambathalenPahala, 2010012361, sampleUser);
                 deathRegistrationService.approveDeathRegistration(dr.getIdUKey(), sampleUser, true);
                 dr = deathRegistrationService.getByBDDivisionAndDeathSerialNo(ambathalenPahala, 2010012361, sampleUser);
-                deathRegistrationService.markDeathCertificateAsPrinted(dr.getIdUKey(), sampleUser);
+                deathRegistrationService.markDeathCertificateAsPrinted(dr, sampleUser);
 
                 for (int i = 0; i < deathAlterations.size(); i++) {
                     deathAlterationService.addDeathAlteration((DeathAlteration) deathAlterations.get(i), sampleUser);
