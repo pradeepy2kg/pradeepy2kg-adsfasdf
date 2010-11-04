@@ -34,11 +34,11 @@
     }
 </style>
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
-
+<s:form action="eprPrintDeathCertificate.do" method="post">
 <div id="death-certificate-outer">
 <s:if test="#request.archivedEntryList.size>0">
     <div id="alterations">
-          <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;width:400px">
+        <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;width:400px">
             <legend><s:label value="%{getText('ArchivedData.label')}"/></legend>
             <table>
                 <th></th>
@@ -62,31 +62,31 @@
             </table>
         </fieldset>
     </div>
-    <div id="locations">
-        <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;width:400px">
-            <legend> <s:label value="%{getText('selectoption.label')}"/></b></legend>
-            <table>
-                <tr>
-                    <td>
-                        <s:label value="%{getText('placeOfIssue.label')}"/>
-                    </td>
-                    <td>
-<%--
-                        <s:select id="locationId" name="locationId" list="locationList" cssStyle="width:300px;"/>
---%>
-                    </td>
-                </tr>
-                <tr>
-                    <td><s:label value="%{getText('signOfficer.label')}"/></td>
-                    <td>
-<%--
-                        <s:select id="issueUserId" name="issueUserId" list="userList" cssStyle="width:300px;"/>
---%>
-                    </td>
-                </tr>
-            </table>
-        </fieldset>
-    </div>
+    <s:if test="deathRegister.status.ordinal()==1 ">
+        <div id="locations">
+            <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;width:500px">
+                <legend> <s:label value="%{getText('selectoption.label')}"/></b></legend>
+                <table>
+                    <tr>
+                        <td>
+                            <s:label value="%{getText('placeOfIssue.label')}"/>
+                        </td>
+                        <td>
+                            <s:select id="locationId" name="locationId" value="%{locationId}" list="locationList"
+                                      cssStyle="width:300px;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><s:label value="%{getText('signOfficer.label')}"/></td>
+                        <td>
+                            <s:select id="issueUserId" name="issueUserId" value="%{issueUserId}" list="userList"
+                                      cssStyle="width:300px;"/>
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+        </div>
+    </s:if>
 </s:if>
 <s:if test="directPrint">
     <s:url id="print" action="eprDierctPrintDeathCertificate.do">
@@ -125,9 +125,9 @@
 </s:else>
 
 <s:if test="#request.allowPrintCertificate">
-    <s:if test="deathRegister.status.ordinal()==3">
-        <div id="birthRegistration-page" class="form-submit" style="margin-top:15px;float:right;">
-            <s:a href="%{print}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>
+    <s:if test="deathRegister.status.ordinal()==1">
+        <div id="birthRegistration-page" class="form-submit">
+            <s:submit type="button" value="%{getText('mark_as_print.button')}"/>
         </div>
     </s:if>
     <div class="form-submit">
@@ -341,8 +341,8 @@
             </s:if>
         </div>
     </td>
-    <%--<td colspan="1">හේතුවේ ICD කේත අංකය<br>*in tamil<br>ICD Code of cause</td>--%>
-    <%--<td colspan="2"><s:label name="" value="%{death.icdCodeOfCause}"/></td>--%>
+        <%--<td colspan="1">හේතුවේ ICD කේත අංකය<br>*in tamil<br>ICD Code of cause</td>--%>
+        <%--<td colspan="2"><s:label name="" value="%{death.icdCodeOfCause}"/></td>--%>
 </tr>
 <tr>
     <td colspan="1">
@@ -492,7 +492,7 @@
             <br>சான்றிதழ் அளிக்கும் அதிகாரியின் பெயர், பதவி, கையொப்பம்
             <br>Name, Signature and Designation of certifying officer
         </td>
-        <td colspan="2"><s:label name="nameOfOfficer" value="%{}"/>,
+        <td colspan="2"><s:label name="nameOfOfficer" value="%{deathRegister.originalDCPlaceOfIssueSignPrint}"/>,
             <br>
             <s:label name="designationOfCertifyingOfficer " value="%{}"/>
         </td>
@@ -501,7 +501,7 @@
         <td colspan="2" height="30px">
             නිකුත් කළ ස්ථානය / வழங்கிய இடம் / Place of Issue
         </td>
-        <td colspan="2"><s:label name="" value="%{death.placeOfIssue}"/></td>
+        <td colspan="2"><s:label name="" value="%{deathRegister.originalDCPlaceOfIssuePrint}"/></td>
     </tr>
     </tbody>
 </table>
@@ -513,10 +513,10 @@
     <br>Issued under Cap. 110 of the Births and Deaths Registration Act
     </s:label>
     <s:if test="#request.allowPrintCertificate">
-    <s:if test="deathRegister.status.ordinal()==3">
+    <s:if test="deathRegister.status.ordinal()==1">
 
-<div id="birthRegistration-page" class="form-submit" style="margin-top:15px;float:right;">
-    <s:a href="%{print}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>
+<div id="birthRegistration-page" class="form-submit">
+    <s:submit type="button" value="%{getText('mark_as_print.button')}"/>
 </div>
 </s:if>
 <div class="form-submit">
@@ -528,6 +528,13 @@
     <s:submit type="button" value="%{getText('cancel.button')}" onClick="history.go(-1)"/>
 </div>
 </div>
-
+<s:hidden value="%{idUKey}" name="idUKey"/>
+<s:hidden name="currentStatus" value="%{#request.currentStatus}"/>
+<s:hidden name="pageNo" value="%{#request.pageNo}"/>
+<s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
+<s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
+<s:hidden name="dsDivisionId" value="%{#request.dsDivisionId}"/>
+<s:hidden name="deathDivisionId" value="%{#request.deathDivisionId}"/>
+</s:form>
 
 

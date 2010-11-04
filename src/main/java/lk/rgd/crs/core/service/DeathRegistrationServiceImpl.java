@@ -1,5 +1,6 @@
 package lk.rgd.crs.core.service;
 
+import lk.rgd.AppConstants;
 import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
 import lk.rgd.common.api.domain.DSDivision;
@@ -110,6 +111,17 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.SUPPORTS)
+    public DeathRegister getWithTransientValuesById(long idUKey, User user) {
+        logger.debug("laod deth register record with transient values : idUKey{}", idUKey);
+        DeathRegister dr = deathRegisterDAO.getById(idUKey);
+        loadValues(dr, user);
+        return dr;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
     public DeathRegister getById(long deathRegisterIdUKey) {
         logger.debug("Load death registration record : {}", deathRegisterIdUKey);
         DeathRegister deathRegister;
@@ -156,16 +168,15 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void markDeathCertificateAsPrinted(long deathRegisterIdUKey, User user) {
-        logger.debug("requested to mark death certificate as printed for the record : {} ", deathRegisterIdUKey);
-        DeathRegister dr = deathRegisterDAO.getById(deathRegisterIdUKey);
-        validateAccessOfUser(user, dr);
-        if (DeathRegister.State.APPROVED != dr.getStatus()) {
-            handleException("Cannot change status , " + dr.getIdUKey() +
-                    " Illegal state : " + dr.getStatus(), ErrorCodes.ILLEGAL_STATE);
+    public void markDeathCertificateAsPrinted(DeathRegister deathRegister, User user) {
+        logger.debug("requested to mark death certificate as printed for the record : {} ", deathRegister.getIdUKey());
+        validateAccessOfUser(user, deathRegister);
+        if (DeathRegister.State.APPROVED != deathRegister.getStatus()) {
+            handleException("Cannot change status , " + deathRegister.getIdUKey() +
+                    " Illegal state : " + deathRegister.getStatus(), ErrorCodes.ILLEGAL_STATE);
         }
-        dr.setStatus(DeathRegister.State.ARCHIVED_CERT_GENERATED);
-        deathRegisterDAO.updateDeathRegistration(dr, user);
+        deathRegister.setStatus(DeathRegister.State.ARCHIVED_CERT_GENERATED);
+        deathRegisterDAO.updateDeathRegistration(deathRegister, user);
     }
 
     private void setApprovalStatus(long idUKey, User user, DeathRegister.State state, String comment) {
@@ -323,11 +334,11 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<DeathRegister> getArchivedCorrectedEntriesForGivenSerialNo(BDDivision bdDivision, long serialNo,long deathId, User user) {
+    public List<DeathRegister> getArchivedCorrectedEntriesForGivenSerialNo(BDDivision bdDivision, long serialNo, long deathId, User user) {
         logger.debug("Searching for historical records for BD Division : {} and Serial number : {} ",
                 bdDivision.getBdDivisionUKey(), serialNo);
         ValidationUtils.validateAccessToBDDivision(user, bdDivision);
-        return deathRegisterDAO.getHistoricalRecordsForBDDivisionAndSerialNo(bdDivision, serialNo,deathId);
+        return deathRegisterDAO.getHistoricalRecordsForBDDivisionAndSerialNo(bdDivision, serialNo, deathId);
     }
 
     private void validateAccessOfUser(User user, DeathRegister dr) {
@@ -335,5 +346,13 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
             BDDivision bdDivision = dr.getDeath().getDeathDivision();
             ValidationUtils.validateAccessToBDDivision(user, bdDivision);
         }
+    }
+
+    private void loadValues(DeathRegister deathRegister, User user) {
+        logger.debug("loading transient values for death record : {}", deathRegister.getIdUKey());
+        deathRegister.setOriginalDCIssueUser(user);
+        deathRegister.setOriginalDCPlaceOfIssue(user.getPrimaryLocation());
+        deathRegister.setOriginalDCPlaceOfIssueSignPrint(user.getUserSignature(deathRegister.getDeath().getPreferredLanguage()));
+        deathRegister.setOriginalDCPlaceOfIssuePrint(user.getPrimaryLocation().getLocationName(deathRegister.getDeath().getPreferredLanguage()));
     }
 }

@@ -1141,7 +1141,7 @@ public class BirthRegistrationServiceImpl implements
         BirthDeclaration bdf = birthDeclarationDAO.getById(bdId);
         // does the user have access to the BDF (i.e. check district and DS division)
         validateAccessOfUser(user, bdf);
-        //trigger lazy loder handler by calling this lazy loading object
+        //trigger lazy loader handler by calling this lazy loading object
         bdf.getLifeCycleInfo().getApprovalOrRejectUser().getUserName();
         logger.debug(bdf.getLifeCycleInfo().getApprovalOrRejectUser().getUserName());
         return bdf;

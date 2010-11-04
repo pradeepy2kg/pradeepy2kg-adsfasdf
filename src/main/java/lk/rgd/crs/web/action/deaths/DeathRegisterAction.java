@@ -1,6 +1,7 @@
 package lk.rgd.crs.web.action.deaths;
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.common.util.NameFormatUtil;
 import lk.rgd.crs.api.service.DeathAlterationService;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
@@ -25,6 +26,7 @@ import lk.rgd.Permission;
  * @authar amith jayasekara
  */
 public class DeathRegisterAction extends ActionSupport implements SessionAware {
+
     private static final Logger logger = LoggerFactory.getLogger(DeathRegisterAction.class);
     private static final String DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE = "crs.dr_rows_per_page";
     private Map session;
@@ -41,12 +43,16 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private int dsDivisionId;
     private int deathPersonCountry;
     private int deathPersonRace;
+    private int locationId;
 
     private final DistrictDAO districtDAO;
     private final BDDivisionDAO bdDivisionDAO;
     private final DSDivisionDAO dsDivisionDAO;
     private final CountryDAO countryDAO;
     private final AppParametersDAO appParametersDAO;
+    private final UserLocationDAO userLocationDAO;
+    private final LocationDAO locationDAO;
+    private final UserDAO userDAO;
     private final DeathRegistrationService service;
     private final DeathAlterationService deathAlterationService;
     private final RaceDAO raceDAO;
@@ -59,6 +65,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> raceList;
     private Map<Integer, String> countryList;
     private Map<Integer, String> locationList;
+    private Map<String, String> userList;
 
     private List<DeathRegister> deathApprovalAndPrintList;
     private List<DeathRegister> archivedEntryList;
@@ -97,6 +104,9 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private String time;
     private String comment;
     private String serialNumber;
+    private String nameOfOfficer;
+    private String placeOfIssue;
+    private String issueUserId;
 
     private Date fromDate;
     private Date endDate;
@@ -109,9 +119,10 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private boolean addNewMode;
     private boolean certificateSearch;
 
+
     public DeathRegisterAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
                                CountryDAO countryDAO, DeathRegistrationService deathRegistrationService,
-                               AppParametersDAO appParametersDAO, RaceDAO raceDAO, DeathAlterationService deathAlterationService) {
+                               AppParametersDAO appParametersDAO, RaceDAO raceDAO, DeathAlterationService deathAlterationService, UserLocationDAO userLocationDAO, UserDAO userDAO, LocationDAO locationDAO) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
@@ -120,7 +131,11 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         this.appParametersDAO = appParametersDAO;
         this.raceDAO = raceDAO;
         this.deathAlterationService = deathAlterationService;
+        this.userLocationDAO = userLocationDAO;
+        this.userDAO = userDAO;
+        this.locationDAO = locationDAO;
     }
+
 
     public String welcome() {
         return SUCCESS;
@@ -193,7 +208,8 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
 
     public String deathCertificate() {
-        deathRegister = service.getById(idUKey, user);
+        //    deathRegister = service.getById(idUKey, user);
+        deathRegister = service.getWithTransientValuesById(idUKey, user);
         if ((deathRegister.getStatus() != DeathRegister.State.ARCHIVED_CERT_GENERATED) && (deathRegister.getStatus()
                 != DeathRegister.State.ARCHIVED_ALTERED) && (deathRegister.getStatus() != DeathRegister.State.APPROVED)) {
             addActionError(getText("death.error.no.permission.print"));
@@ -229,6 +245,20 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
             if (archivedEntryList.size() > 0) {
                 displayChagesInStarMark(archivedEntryList);
             }
+
+            //display user locations
+            String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
+            locationList = user.getActiveLocations(language);
+            if (!locationList.isEmpty()) {
+                int selectedLocationId = locationList.keySet().iterator().next();
+                userList = new HashMap<String, String>();
+                // TODO temporaray solution have to change this after caching done for user locations
+                for (User u : userLocationDAO.getBirthCertSignUsersByLocationId(selectedLocationId, true)) {
+                    userList.put(u.getUserId(), NameFormatUtil.getDisplayName(u.getUserName(), 50));
+                }
+            }
+            locationId = user.getPrimaryLocation().getLocationUKey();
+            issueUserId = user.getUserId();
             return SUCCESS;
         }
     }
@@ -321,7 +351,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public String approveDeath() {
-        logger.debug("requested to approve Death Decalaration with idUKey : {}", idUKey);
+        logger.debug("requested to approve Death Declaration with idUKey : {}", idUKey);
         logger.debug("Current status : {}", currentStatus);
         warnings = service.approveDeathRegistration(idUKey, user, ignoreWarning);
         if (warnings.size() > 0) {
@@ -441,17 +471,25 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public String markDeathDeclarationAsPrinted() {
-
         logger.debug("requested to mark Death Declaration as printed for idUKey : {} ", idUKey);
         if (directPrint) {
+            //todo remove why this ???
             logger.debug("direct requested to mark Death Declaration as printed for idUKey : {} ", idUKey);
-            service.markDeathCertificateAsPrinted(idUKey, user);
+            service.markDeathCertificateAsPrinted(deathRegister, user);
         } else {
             logger.debug("not direct requested to mark Death Declaration as printed for idUKey : {} ", idUKey);
             deathRegister = service.getById(idUKey, user);
             if (deathRegister != null && deathRegister.getStatus() == DeathRegister.State.APPROVED) {
                 try {
-                    service.markDeathCertificateAsPrinted(idUKey, user);
+                    if (locationId != 0 && issueUserId != null) {
+                        logger.debug("Certificate issued locationId : {} and userId : {}", locationId, issueUserId);
+                        deathRegister.setOriginalDCIssueUser(userDAO.getUserByPK(issueUserId));
+                        deathRegister.setOriginalDCPlaceOfIssue(locationDAO.getLocation(locationId));
+                        service.markDeathCertificateAsPrinted(deathRegister, user);
+                    } else {
+                        logger.warn("For the first time Birth certificate print issued location and user not valid");
+                        return ERROR;
+                    }
                 }
                 catch (CRSRuntimeException e) {
                     addActionError("death.error.no.permission.print");
@@ -466,6 +504,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                         dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);
             }
         }
+
         initPermissionForApprovalAndPrint();
         populate();
         return SUCCESS;
@@ -1173,5 +1212,45 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public void setLocationList(Map<Integer, String> locationList) {
         this.locationList = locationList;
+    }
+
+    public Map<String, String> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(Map<String, String> userList) {
+        this.userList = userList;
+    }
+
+    public String getNameOfOfficer() {
+        return nameOfOfficer;
+    }
+
+    public void setNameOfOfficer(String nameOfOfficer) {
+        this.nameOfOfficer = nameOfOfficer;
+    }
+
+    public String getPlaceOfIssue() {
+        return placeOfIssue;
+    }
+
+    public void setPlaceOfIssue(String placeOfIssue) {
+        this.placeOfIssue = placeOfIssue;
+    }
+
+    public int getLocationId() {
+        return locationId;
+    }
+
+    public void setLocationId(int locationId) {
+        this.locationId = locationId;
+    }
+
+    public String getIssueUserId() {
+        return issueUserId;
+    }
+
+    public void setIssueUserId(String issueUserId) {
+        this.issueUserId = issueUserId;
     }
 }
