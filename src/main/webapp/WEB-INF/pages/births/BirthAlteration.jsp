@@ -874,7 +874,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
         </tr>
         <tr>
             <td><s:label value="ඉංග්‍රීසි භාෂාවෙන්"/><br>
-                <s:label value="in tamil"/><br>
+                <s:label value="இங்கிலீஷ் "/><br>
                 <s:label value="In English"/>
             </td>
             <td colspan="4"><s:textfield cssStyle="width:95%" name="alt52_1.placeOfBirthEnglish"
@@ -1249,7 +1249,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                         </td>
                     </tr>
                     <tr>
-                        <td style="border:none"><label>නොදනී<br>*in tamil<br>Unknown</label></td>
+                        <td style="border:none"><label>නොදනී<br>தெரியாது<br>Unknown</label></td>
                         <td style="border:none"><s:radio name="alt27A.marriage.parentsMarried" id="parentsMarried"
                                                          list="#@java.util.HashMap@{'UNKNOWN':''}"/>
                         </td>

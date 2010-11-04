@@ -447,7 +447,7 @@ function initPage() {
                         </td>
                     </tr>
                     <tr>
-                        <td><label>නොදනී<br>*in tamil<br>Unknown</label></td>
+                        <td><label>නොදනී<br>தெரியாது<br>Unknown</label></td>
                         <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'UNKNOWN':''}"
                                      onclick="disableMarriage(true);disableSigns(true)" id="unknownMarriage"/>
                         </td>

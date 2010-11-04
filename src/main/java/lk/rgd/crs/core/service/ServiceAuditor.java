@@ -134,7 +134,7 @@ public class ServiceAuditor implements MethodInterceptor {
         boolean debugInvocation = auditInvocation && debugInputParameters;
 
         if (logger.isDebugEnabled()) {
-            logger.debug("Service method : " + serviceClass.getName() + "." + method.getName() +
+            logger.debug("Service method : " + method.getDeclaringClass().getName() + "." + method.getName() +
                     "() - audit : " + auditInvocation + " debug : " + debugInvocation);
         }
 

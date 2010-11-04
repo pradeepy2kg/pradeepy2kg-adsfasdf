@@ -60,7 +60,7 @@
     </tr>
     <tr>
         <td>සහතිකය නිකුත් කල යුතු භාෂාව
-            <br>*in tamil
+            <br>சான்றிதழ் வழங்கப்பட வேண்டிய மொழி 
             <br>Preferred Language for
         </td>
         <s:set name="lang" value="%{#request.adoption.languageToTransliterate}"/>

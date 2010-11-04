@@ -550,7 +550,7 @@ function initPage() {
         සහතිකය නිකුත් කල යුතු භාෂාව <br>பிறப்பு அத்தாட்சி ….. <br>Preferred Language for Birth Certificate </label>
     </td>
     <td colspan="6">
-        <s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'Tamil'}" name="register.preferredLanguage"
+        <s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'தமிழ்'}" name="register.preferredLanguage"
                   cssStyle="width:190px; margin-left:5px;"/>
     </td>
 </tr>

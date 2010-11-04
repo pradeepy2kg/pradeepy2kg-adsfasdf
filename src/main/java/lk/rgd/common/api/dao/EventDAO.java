@@ -38,11 +38,12 @@ public interface EventDAO {
 
     /**
      * 
-     * @param pageNo
-     * @param noOfRows
-     * @param startTime
-     * @param endTime
-     * @return
+     * @param pageNo   page number
+     * @param noOfRows number of rows
+     * @param startTime   Start time for read
+     * @param endTime    End time for read
+     * @param  eventType Type of event
+     * @return  filtered records (paginated)
      */
     public List<Event> getPaginatedListByTimestampRange(int pageNo, int noOfRows, Date startTime, Date endTime,Event.Type eventType);
 }

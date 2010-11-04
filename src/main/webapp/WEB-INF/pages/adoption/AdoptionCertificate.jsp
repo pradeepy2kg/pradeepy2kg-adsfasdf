@@ -301,7 +301,7 @@ Mother's Identification No.
             </td>
             <td width="25%"><s:label name="" value="%{birthDivisionName}"/></td>
             <td>දැනට පවතින උප්පැන්න සහතිකයේ අණුක්‍රමික අංකය<br/>
-                ** in Tamil **<br/>
+                தற்போதைய பிறப்புச்சான்றிதழின் தொடர் இலக்கம் <br/>
                 The serial number of the existing Birth Certificate
             </td>
             <td width="25%">

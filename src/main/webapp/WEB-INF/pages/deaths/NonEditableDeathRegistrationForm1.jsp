@@ -60,20 +60,9 @@
                 Civil Registration System based on the information provided in this form.
             </s:if>
             <s:elseif test="deathType.ordinal() == 2 || deathType.ordinal() == 3">
-                ලියාපදිංචි නොකරන ලද මරණයක් සම්බන්ධයෙන් මෙහි පහත ප්‍රකාශ කරනු ලබන විස්තර මගේ දැනීමේ හා විශ්වාසයේ ප
-                ්‍රකාර සැබෑ බව හා නිවැරදි බවද, මරණය සිදුවී, නැතහොත් ගෘහයක් හෝ ගොඩනැගිල්ලක් නොවන ස්ථානයක තිබී මෘතශරීරය
-                සම්බවී,
-                මාස තුඅනක් ඇතුලත දී මරණය ලියාපදිංචි කිරීමට නොහැකි වුයේ මෙහි පහත සඳහන් කාරණය හේතු කොටගෙන බවද
-                , ..... පදිංචි .... වන මම ගාම්භීරතා පුර්වකාවද, අවංක ලෙසද, සැබෑ ලෙසද, මෙයින් ප්‍රකාශ කරමි. <br/>
-
-                in tamil line 1
-                in tamil line 2
-                in tamil line 3 <br/>
-
-                I …. of …. solemnly, sincerely, and truly declare that the particulars stated below relating to an
-                unregistered death, are true and correct to the best of my knowledge and belief, and that the death has not
-                been registered within three months from its occurrence or from the finding of the corpse in a place other
-                than a house or a building, for this reason.
+                ලියාපදිංචි නොකරන ලද මරණයක් සම්බන්ධයෙන් මෙහි පහත ප්‍රකාශ කරනු ලබන විස්තර මගේ දැනීමේ හා විශ්වාසයේ ප්‍රකාර සැබෑ බව හා නිවැරදි බවද, මරණය සිදුවී, නැතහොත් ගෘහයක් හෝ ගොඩනැගිල්ලක් නොවන ස්ථානයක තිබී මෘතශරීරය සම්බවී, මාස තුඅනක් ඇතුලත දී මරණය ලියාපදිංචි කිරීමට නොහැකි වුයේ මෙහි පහත සඳහන් කාරණය හේතු කොටගෙන බවද, ..... පදිංචි .... වන මම ගාම්භීරතා පුර්වකාවද, අවංක ලෙසද, සැබෑ ලෙසද, මෙයින් ප්‍රකාශ කරමි.
+                <br>பதியப்படாத மரணம் சம்பந்தமாக இங்கு கீழ் பிரதிக்கினை செய்யப்படும் விபரங்கள் எனது அறிவிக்கும் நம்பிக்கைக்கும் உரியவகையில் உண்மையானதும் சரியானதும் எனவும் இறப்பு நிகழ்ந்து அல்லது வீடு அல்லது கட்டிடம் அல்லாத இடத்திலிருந்து அப்பிரேதத்தைக் கண்டு மூன்று மாதங்களுக்குள் இறப்பினை பதிவதற்கு இயலாது போனது கீழ் குறிப்பிடப்படும் காரணத்தினால் ஆகும் என ….......................................................................வதியும் ….........................................................ஆகிய நான் நோ்மையாகவும் உண்மையாகவும் பயபக்தியுடனும் பிரதிக்கினை செய்கின்றேன்.
+                <br>I …. of …. solemnly, sincerely, and truly declare that the particulars stated below relating to an unregistered death, are true and correct to the best of my knowledge and belief, and that the death has not been registered within three months from its occurrence or from the finding of the corpse in a place other than a house or a building, for this reason.
             </s:elseif>
         </td>
     </tr>
@@ -83,7 +72,7 @@
     <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse;" class="font-9">
         <tr>
             <td width="150px">(1)මරණය ලියාපදිංචි කිරීම ප්‍රමාද වීමට කාරණය <br/>
-                in tamil <br/>
+                இறப்பினை பதிவதற்கு தாமதித்ததற்கான காரணம்<br/>
                 Reason for the late registration of the death
             </td>
             <td>
@@ -112,12 +101,12 @@
     </tr>
     <s:if test="deathType.ordinal() == 0 || deathType.ordinal() == 1">
         <tr>
-            <td colspan="5">
+            <td >
                 හදිසි මරණයක්ද ? <br/>
-                in tamil <br/>
+                திடீர் மரணமா?<br/>
                 Sudden death?
             </td>
-            <td colspan="3">
+            <td colspan="8">
                 <s:if test="deathType.ordinal() == 0">
                     <s:label value="%{getText('yes.label')}"/>
                 </s:if>
@@ -129,12 +118,12 @@
     </s:if>
     <s:elseif test="deathType.ordinal() == 2 || deathType.ordinal() == 3">
         <tr>
-            <td colspan="5">
+            <td colspan="2">
                 නැතිවුණු පුද්ගලයෙකුගේ මරණයක්ද ? <br/>
-                in tamil <br/>
+                காணாமற்போன நபரது மரணமா?<br/>
                 Is the death of a missing person?
             </td>
-            <td colspan="3">
+            <td colspan="6">
                 <s:if test="deathType.ordinal() == 2">
                     <s:label value="%{getText('yes.label')}"/>
                 </s:if>
@@ -147,7 +136,7 @@
     <tr>
         <td>මරණය සිදුවූ දිනය<br>பிறந்த திகதி<br>Date of death</td>
         <td colspan="3" style="text-align:left;"><s:label value="%{#session.deathRegister.death.dateOfDeath}"/></td>
-        <td>වෙලාව<br>*in tamil<br>Time</td>
+        <td>වෙලාව<br>நேரம்<br>Time</td>
         <td colspan="3"><s:label value="%{#session.deathRegister.death.timeOfDeath}"/></td>
     </tr>
     <tr>
@@ -201,12 +190,14 @@
         <td colspan="5"><s:label value="%{#session.deathRegister.death.placeOfDeath}"/></td>
     </tr>
     <tr>
-        <td colspan="2">ඉංග්‍රීසි භාෂාවෙන්<br>*in tamil<br>In English</td>
+        <td colspan="2">ඉංග්‍රීසි භාෂාවෙන්<br>ஆங்கில மொழியில்<br>In English</td>
         <td colspan="5"><s:label value="%{#session.deathRegister.death.placeOfDeathInEnglish}"/></td>
     </tr>
     <tr>
             <%--TODO --%>
-        <td rowspan="2" colspan="2">මරණයට හේතුව තහවුරුද?<br>*in tamil<br>Is the cause of death established?</td>
+        <td rowspan="2" colspan="2">මරණයට හේතුව තහවුරුද?<br>இறப்பிற்கான காரணம் உறுதியானதா?<br>Is the cause of death
+            established?
+        </td>
         <td rowspan="2" colspan="2">
             <s:if test="session.deathRegister.death.causeOfDeathEstablished ==true">
                 <s:label value="%{getText('yes.label')}"/>
@@ -215,7 +206,8 @@
                 <s:label value="%{getText('no.label')}"/>
             </s:else>
         </td>
-        <td rowspan="2" colspan="3">මරණය දින 30 කට අඩු ළදරුවෙකුගේද?<br>*in tamil<br>Is the death of an infant
+        <td rowspan="2" colspan="3">මරණය දින 30 කට අඩු ළදරුවෙකුගේද?<br>இறப்பு 30 நாட்களுக்கு குறைவான சிசுவினதா?<br>Is
+            the death of an infant
             less
             than 30 days?
         </td>
@@ -231,19 +223,20 @@
     <tr>
     </tr>
     <tr>
-        <td colspan="1">මරණයට හේතුව<br>*in tamil<br>Cause of death</td>
+        <td colspan="1">මරණයට හේතුව<br>இறப்பிற்கான காரணம்<br>Cause of death</td>
         <td colspan="4"><s:label value="%{#session.deathRegister.death.causeOfDeath}"/></td>
-        <td colspan="2">හේතුවේ ICD කේත අංකය<br>*in tamil<br>ICD Code of cause</td>
+        <td colspan="2">හේතුවේ ICD කේත අංකය<br>காரணத்திற்கான ICD குறியீட்டு இலக்கம்<br>ICD Code of cause</td>
         <td colspan="2"><s:label value="%{#session.deathRegister.death.icdCodeOfCause}"/></td>
     </tr>
     <tr>
-        <td colspan="1">ආදාහන හෝ භූමදාන ස්ථානය<br>*in tamil<br>Place of burial or cremation</td>
+        <td colspan="1">ආදාහන හෝ භූමදාන ස්ථානය<br>அடக்கம் செய்த அல்லது தகனஞ் செய்த இடம்<br>Place of burial or cremation
+        </td>
         <td colspan="8"><s:label value="%{#session.deathRegister.death.placeOfBurial}"/></td>
     </tr>
     <s:if test="deathType.ordinal() == 2 || deathType.ordinal() == 3">
         <tr>
             <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)වෙනත් තොරතුරු <br/>
-                in tamil <br/>
+                இறப்பிற்கான காரணம்<br/>
                 Any other information
             </td>
             <td colspan="8">
@@ -254,7 +247,7 @@
     <tr>
         <td colspan="2"><label>
             මරණ
-            සහතිකය නිකුත් කල යුතු භාෂාව <br>*in tamil<br>Preferred
+            සහතිකය නිකුත් කල යුතු භාෂාව <br>சான்றிதழ் வழங்கப்பட வேண்டிய மொழி <br>Preferred
             Language for
             Death Certificate </label></td>
         <td colspan="7">
@@ -345,19 +338,35 @@
         <td colspan="6"><s:label value="%{#session.deathRegister.deathPerson.deathPersonPermanentAddress}"/></td>
     </tr>
     <tr>
-        <td colspan="1">පියාගේ පු.අ.අ. / ජා.හැ.අ.<br>*in tamil<br>Fathers PIN / NIC</td>
+        <td colspan="1">
+            පියාගේ අනන්‍යතා අංකය
+            <br>தந்தையின் அடையாள எண்
+            <br>Fathers Identification No.
+        </td>
         <td colspan="6"><s:label value="%{#session.deathRegister.deathPerson.deathPersonFatherPINorNIC}"/></td>
     </tr>
     <tr>
-        <td colspan="1">පියාගේ සම්පුර්ණ නම<br>*in tamil <br>Fathers full name</td>
+        <td colspan="1">
+            පියාගේ සම්පුර්ණ නම
+            <br>தந்தையின் முழுப் பெயர்
+            <br>Fathers full name
+        </td>
         <td colspan="6"><s:label value="%{#session.deathRegister.deathPerson.deathPersonFatherFullName}"/></td>
     </tr>
     <tr>
-        <td colspan="1">මවගේ පු.අ.අ. / ජා.හැ.අ.<br>*in tamil<br>Mothers PIN / NIC</td>
+        <td colspan="1">
+            මවගේ අනන්‍යතා අංකය
+            <br>தாயின் அடையாள எண்
+            <br>Mothers Identification No.
+        </td>
         <td colspan="6"><s:label value="%{#session.deathRegister.deathPerson.deathPersonMotherPINorNIC}"/></td>
     </tr>
     <tr>
-        <td colspan="1">මවගේ සම්පුර්ණ නම<br>*in tamil <br>Mothers full name</td>
+        <td colspan="1">
+            මවගේ සම්පුර්ණ නම
+            <br>தாயின் முழுப் பெயர்
+            <br>Mothers full name
+        </td>
         <td colspan="6"><s:label value="%{#session.deathRegister.deathPerson.deathPersonMotherFullName}"/></td>
     </tr>
     </tbody>

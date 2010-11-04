@@ -636,12 +636,12 @@ function initPage() {
         <tr style="border-bottom:2px">
             <td>
                 (10)හදිසි මරණයක්ද ? <br>
-                in tamil <br>
+                திடீர் மரணமா?<br>
                 Sudden death?
             </td>
             <td colspan="2">
                 ඔව් (53 වගන්තිය) <br>
-                xx <br>
+                ஆம்( 53 ஆம் பிரிவு)<br>
                 Yes (Section 53)
             </td>
             <td align="center">
@@ -651,7 +651,7 @@ function initPage() {
             </td>
             <td>
                 නැත (52 (1) වගන්තිය) <br>
-                xx <br>
+                இல்லை( 52(1) ஆம் பிரிவு)<br>
                 No (Section 52 (1))
             </td>
             <td align="center">
@@ -672,7 +672,7 @@ function initPage() {
             </td>
             <td>
                 වෙලාව <br>
-                in tamil<br>
+                நேரம்<br>
                 Time
             </td>
             <td align="center">
@@ -699,7 +699,7 @@ function initPage() {
         <tr>
             <td colspan="2">
                 ඉංග්‍රීසි භාෂාවෙන් <br>
-                in tamil <br>
+                ஆங்கில மொழியில்<br>
                 In English
             </td>
             <td colspan="3">
@@ -711,18 +711,18 @@ function initPage() {
         </tr>
         <tr>
             <td>(13)මරණයට හේතුව තහවුරුද? <br>
-                in tamil <br>
+                இறப்பிற்கான காரணம் உறுதியானதா?<br>
                 Cause of death established?
             </td>
             <td colspan="2">
-                නැත / xx / No
+                නැත / இல்வல / No
             </td>
             <td align="center">
                 <s:radio name="deathAlteration.deathInfo.causeOfDeathEstablished"
                          list="#@java.util.HashMap@{'false':''}"
                          id="cause_of_death_yes" value="%{deathRegister.death.causeOfDeathEstablished}"/>
             </td>
-            <td>ඔව් / xx /Yes</td>
+            <td>ඔව් / ஆம் /Yes</td>
             <td align="center">
                 <s:radio name="deathAlteration.deathInfo.causeOfDeathEstablished"
                          list="#@java.util.HashMap@{'true':''}"
@@ -731,7 +731,7 @@ function initPage() {
         </tr>
         <tr>
             <td>(14)මරණයට හේතුව <br>
-                in tamil <br>
+                இறப்பிற்கான காரணம்<br>
                 Cause of death
             </td>
             <td colspan="3">
@@ -740,7 +740,7 @@ function initPage() {
             </td>
             <td>
                 (15)හේතුවේ ICD කේත අංකය <br>
-                in tamil <br>
+                காரணத்திற்கான ICD குறியீட்டு இலக்கம்<br>
                 ICD Code of cause
             </td>
             <td>
@@ -751,7 +751,7 @@ function initPage() {
         </tr>
         <tr>
             <td>(16)ආදාහන හෝ භූමදාන ස්ථානය <br>
-                in tamil <br>
+                அடக்கம் செய்த அல்லது தகனஞ் செய்த இடம் <br>
                 Place of burial or cremation
             </td>
             <td colspan="5">
@@ -925,7 +925,7 @@ function initPage() {
         <tr>
             <td>
                 (26)පියාගේ සම්පුර්ණ නම <br>
-                in tamil <br>
+                தந்தையின் முழுப் பெயர்<br>
                 Fathers full name
             </td>
             <td colspan="6">
@@ -948,7 +948,7 @@ function initPage() {
         <tr>
             <td>
                 (28)මවගේ සම්පුර්ණ නම <br>
-                in tamil <br>
+                தாயின் முழுப் பெயர்<br>
                 Mothers full name
             </td>
             <td colspan="6">
@@ -985,19 +985,19 @@ function initPage() {
     <tr>
         <td style="width:5%"><s:checkbox name="deathAlteration.bcOfFather"/></td>
         <td style="width:90%"><s:label
-                value=" පියාගේ උප්පැන්න සහතිකය  / in Tamil / Fathers Birth Certificate"
+                value=" පියාගේ උප්පැන්න සහතිකය  / தகப்பனின் பிறப்புச் சான்றிதழ்  / Fathers Birth Certificate"
                 cssStyle="margin-left:5px;"/></td>
     </tr>
     <tr>
         <td style="width:5%"><s:checkbox name="deathAlteration.bcOfMother"/></td>
         <td style="width:90%"><s:label
-                value="මවගේ උප්පැන්න සහතිකය / in Tamil / Mothers Birth Certificate"
+                value="මවගේ උප්පැන්න සහතිකය / தாயின் பிறப்புச் சான்றிதழ் / Mothers Birth Certificate"
                 cssStyle="margin-left:5px;"/></td>
     </tr>
     <tr>
         <td style="width:5%"><s:checkbox name="deathAlteration.mcOfParents"/></td>
         <td style="width:90%"><s:label
-                value=" මව්පියන්ගේ විවාහ සහතිකය / in Tamil / Parents Marriage Certificate"
+                value=" මව්පියන්ගේ විවාහ සහතිකය / பொற்றோரின் திருமணச் சான்றிதழ் / Parents Marriage Certificate"
                 cssStyle="margin-left:5px;"/></td>
     </tr>
     <tr>
@@ -1028,12 +1028,12 @@ function initPage() {
     <tr>
         <td rowspan="2" width="200px">
             (30)දැනුම් දෙන්නේ කවරකු වශයෙන්ද <br>
-            in tamil <br>
+            தகவல் வழங்குபவர் <br>
             Capacity for giving information
         </td>
         <td>
             පියා / මව <br>
-            in tamil <br>
+            தந்தை/ தாய்<br>
             Father / Mother
         </td>
         <td align="center"><s:radio id="declarantType" name="deathAlteration.declarant.declarantType"
@@ -1043,7 +1043,7 @@ function initPage() {
         </td>
         <td align="center">
             ස්වාමිපුරුෂයා / භාර්යාව <br>
-            in tamil <br>
+            கணவன்/ மனைவி<br>
             Husband / Wife
         </td>
         <td width="45px" align="center">
@@ -1054,7 +1054,7 @@ function initPage() {
         </td>
         <td>
             සහෝදරයා සහෝදරිය <br>
-            in tamil <br>
+            சகோதரான்/ சகோதரி<br>
             Brother / Sister
         </td>
         <td align="center">
@@ -1066,7 +1066,7 @@ function initPage() {
     <tr>
         <td>
             පුත්‍රයා / දියණිය <br>
-            in tamil <br>
+            மகன்/ மகள்<br>
             Son / Daughter
         </td>
         <td align="center">
@@ -1086,7 +1086,7 @@ function initPage() {
         </td>
         <td>
             වෙනත් <br>
-            in tamil <br>
+            வேறு<br>
             Other
         </td>
         <td align="center">

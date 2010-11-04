@@ -424,7 +424,7 @@
                         <s:radio name="marriage.parentsMarried" id="parentsMarried"
                                  list="#@java.util.HashMap@{'NO_SINCE_MARRIED':''}"/>
                     </td>
-                    <td><label>නොදනී<br>*in tamil<br>Unknown</label></td>
+                    <td><label>නොදනී<br>தெரியாது<br>Unknown</label></td>
                     <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'UNKNOWN':''}"/></td>
                 </tr>
             </table>

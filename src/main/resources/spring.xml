@@ -36,7 +36,6 @@
                 <value>masterDataManagementService</value>
                 <value>certificateSearchService</value>
                 <value>ecivilService</value>
-                <value>eventManagementService</value>
             </list>
         </property>
         <property name="interceptorNames">

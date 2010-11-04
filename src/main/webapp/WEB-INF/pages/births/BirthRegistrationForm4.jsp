@@ -203,22 +203,22 @@
                         <td colspan="5" style="text-align:center;font-size:12pt">
                             <s:if test="bdfLateOrBelated==1">
                                 පමා වූ උපත් ලියාපදිංචිය
-                                <br>* Tamil
+                                <br>தாமதித்த பிறப்புப் பதிவு
                                 <br>Late Birth Registration
                             </s:if>
                             <s:else>
                                 කල් පසු වූ උපත් ලියාපදිංචිය
-                                <br>*Tamil
+                                <br>காலங் கடந்த பிறப்புப் பதிவு
                                 <br>Belated Birth Registration
                             </s:else>
                         </td>
                     </tr>
                     <tr>
-                        <td width="200px"><label>ලිපිගොනු අංකය<br>*in tamil<br>Case File Number</label></td>
+                        <td width="200px"><label>ලිපිගොනු අංකය<br>கோவை இலக்கம் <br>Case File Number</label></td>
                         <td colspan="2"><s:textfield name="register.caseFileNumber" id="caseFileNumber"/></td>
                     </tr>
                     <tr>
-                        <td><label>අදහස් දක්වන්න<br>* in tamil<br>Add Comments </label></td>
+                        <td><label>අදහස් දක්වන්න<br>கருத்தினை தெரிவிக்கவும் <br>Add Comments </label></td>
                         <td><s:textarea name="register.comments" id="comments" cssStyle="width:98%;" rows="10"/></td>
                     </tr>
                     </tbody>
