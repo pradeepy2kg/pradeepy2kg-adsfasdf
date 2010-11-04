@@ -771,10 +771,12 @@ function initPage() {
     <tr>
         <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
             මරණ
-            සහතිකය නිකුත් කල යුතු භාෂාව <br>*in tamil<br>Preferred
+            සහතිකය නිකුත් කල යුතු භාෂාව
+            <br>சான்றிதழ் வழங்கப்பட வேண்டிய மொழி
+            <br>Preferred
             Language for
             Death Certificate </label></td>
-        <td colspan="7"><s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'Tamil'}"
+        <td colspan="7"><s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'தமிழ்'}"
                                   name="death.preferredLanguage"
                                   cssStyle="width:190px; margin-left:5px;"></s:select></td>
     </tr>

@@ -46,6 +46,10 @@ public class EventViewerServiceImpl implements EventViewerService {
             return Collections.emptyList();
         }
     }
+
+    /**
+     * @inheritDoc
+     */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<Event> getPaginatedListByTimestampRange(int pageNo, int noOfRows, Date startTime, Date endTime,Event.Type eventType){
         try {

@@ -285,7 +285,7 @@
         </td>
     </tr>
     <tr>
-        <td colspan="2">ප්‍රකාශකයා අත්සන්කල දිනය<br> *in tamil<br>Declaranat Signed Date</td>
+        <td colspan="2">ප්‍රකාශකයා අත්සන්කල දිනය<br>பிரதிக்கினையாளர் கையொப்பமிட்ட திகதி <br>Declaranat Signed Date</td>
         <td colspan="5">
             <s:label value="YYYY-MM-DD" cssStyle="font-size:10px"/><br>
             <s:textfield id="declarantDatePicker" name=""/>

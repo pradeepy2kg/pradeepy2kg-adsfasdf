@@ -323,11 +323,11 @@ function enableSerialNumber(mode) {
         <td><s:textfield name="adoption.judgeName" id="judgeName" cssStyle="margin-left:5px;"/></td>
     </tr>
     <tr>
-        <td>සහතිකය නිකුත් කල යුතු භාෂාව <br>*in tamil<br>Preferred
+        <td>සහතිකය නිකුත් කල යුතු භාෂාව <br>சான்றிதழ் வழங்கப்பட வேண்டிய மொழி  <br>Preferred
             Language for
         </td>
         <td style="text-align:left;" width="30px">
-            <s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'Tamil'}"
+            <s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'தமிழ்'}"
                       name="adoption.languageToTransliterate"
                       cssStyle="width:200px; margin-left:5px;"></s:select>
         </td>

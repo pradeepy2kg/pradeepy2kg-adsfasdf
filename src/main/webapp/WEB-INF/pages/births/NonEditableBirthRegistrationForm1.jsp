@@ -593,10 +593,10 @@
     </tr>
     <tr>
         <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)රෝහලට ඇතුලත් කිරිමේ
-            අංකය<br>*in tamil<br>Hospital Admission Number</label></td>
+            අංකය<br>வைத்தியசாலை அனுமதி இலக்கம் <br>Hospital Admission Number</label></td>
         <td colspan="1" class="passport"><s:label value="%{#request.parent.motherAdmissionNo}"/></td>
         <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)රෝහලට ඇතුලත් කිරිමේ
-            දිනය<br>*in tamil<br>Hospital Admission Date</label></td>
+            දිනය<br>வைத்தியசாலையில் அனுமதித்த திகதி <br>Hospital Admission Date</label></td>
         <td colspan="3"><s:label value="%{#request.parent.motherAdmissionDate}"/></td>
     </tr>
     <tr>
@@ -892,11 +892,11 @@
         <s:else>Belated Registration</s:else>
     </div>
     <div id="late-belated-case-file-num">
-        <label>*in sinhala<br>*in tamil<br>Case File Number</label>
+        <label>ලිපිගොනු අංකය<br>கோவை இலக்கம் <br>Case File Number</label>
         <s:label name="caseFileNumber"/>
     </div>
     <div id="late-belated-prev-comments">
-        <label>*in sinhala<br>* in tamil<br>Comments </label>
+        <label>අදහස් දක්වන්න<br>கருத்தினை தெரிவிக்கவும் <br>Comments </label>
         <s:label name="%{#request.register.comments}"/>
     </div>
 </div>
