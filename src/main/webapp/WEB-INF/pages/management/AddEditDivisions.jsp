@@ -529,73 +529,85 @@
                         <s:if test="(pageType==6)"><s:property value="enLocationName"/></s:if>
                     </td>
                     <s:if test="pageType==1">
-                        <s:url id="inactiveSelected" action="eprInactiveDivisionsAndDsDivisions.do">
+                        <s:url id="inactiveSelected" action="eprActivateOrInactivateDivisionsAndDsDivisions.do">
                             <s:param name="pageType" value="pageType"/>
                             <s:param name="UserDistrictId" value="districtUKey"/>
+                            <s:param name="activate" value="false"/>
                         </s:url>
-                        <s:url id="activeSelected" action="eprActiveDivisionsAndDsDivisions.do">
+                        <s:url id="activeSelected" action="eprActivateOrInactivateDivisionsAndDsDivisions.do">
                             <s:param name="pageType" value="pageType"/>
                             <s:param name="UserDistrictId" value="districtUKey"/>
+                            <s:param name="activate" value="true"/>
                         </s:url>
                     </s:if>
                     <s:if test="pageType==2">
-                        <s:url id="inactiveSelected" action="eprInactiveDivisionsAndDsDivisions.do">
+                        <s:url id="inactiveSelected" action="eprActivateOrInactivateDivisionsAndDsDivisions.do">
                             <s:param name="pageType" value="pageType"/>
                             <s:param name="UserDistrictId" value="UserDistrictId"/>
                             <s:param name="dsDivisionId" value="dsDivisionUKey"/>
+                            <s:param name="activate" value="false"/>
                         </s:url>
-                        <s:url id="activeSelected" action="eprActiveDivisionsAndDsDivisions.do">
+                        <s:url id="activeSelected" action="eprActivateOrInactivateDivisionsAndDsDivisions.do">
                             <s:param name="pageType" value="pageType"/>
                             <s:param name="UserDistrictId" value="UserDistrictId"/>
                             <s:param name="dsDivisionId" value="dsDivisionUKey"/>
+                            <s:param name="activate" value="true"/>
                         </s:url>
                     </s:if>
                     <s:if test="pageType==3">
-                        <s:url id="inactiveSelected" action="eprInactiveDivisionsAndDsDivisions.do">
+                        <s:url id="inactiveSelected" action="eprActivateOrInactivateDivisionsAndDsDivisions.do">
                             <s:param name="pageType" value="pageType"/>
                             <s:param name="divisionId" value="bdDivisionUKey"/>
                             <s:param name="UserDistrictId" value="UserDistrictId"/>
                             <s:param name="dsDivisionId" value="dsDivisionId"/>
+                            <s:param name="activate" value="false"/>
                         </s:url>
-                        <s:url id="activeSelected" action="eprActiveDivisionsAndDsDivisions.do">
+                        <s:url id="activeSelected" action="eprActivateOrInactivateDivisionsAndDsDivisions.do">
                             <s:param name="pageType" value="pageType"/>
                             <s:param name="divisionId" value="bdDivisionUKey"/>
                             <s:param name="UserDistrictId" value="UserDistrictId"/>
                             <s:param name="dsDivisionId" value="dsDivisionId"/>
+                            <s:param name="activate" value="true"/>
                         </s:url>
                     </s:if>
                     <s:if test="pageType==4">
-                        <s:url id="inactiveSelected" action="eprInactiveDivisionsAndDsDivisions.do">
+                        <s:url id="inactiveSelected" action="eprActivateOrInactivateDivisionsAndDsDivisions.do">
                             <s:param name="pageType" value="pageType"/>
                             <s:param name="UserDistrictId" value="UserDistrictId"/>
                             <s:param name="mrdivisionId" value="mrDivisionUKey"/>
                             <s:param name="dsDivisionId" value="dsDivisionId"/>
+                            <s:param name="activate" value="false"/>
                         </s:url>
-                        <s:url id="activeSelected" action="eprActiveDivisionsAndDsDivisions.do">
+                        <s:url id="activeSelected" action="eprActivateOrInactivateDivisionsAndDsDivisions.do">
                             <s:param name="pageType" value="pageType"/>
                             <s:param name="UserDistrictId" value="UserDistrictId"/>
                             <s:param name="mrdivisionId" value="mrDivisionUKey"/>
                             <s:param name="dsDivisionId" value="dsDivisionId"/>
+                            <s:param name="activate" value="true"/>
                         </s:url>
                     </s:if>
                     <s:if test="pageType==5">
-                        <s:url id="inactiveSelected" action="eprInactiveDivisionsAndDsDivisions.do">
+                        <s:url id="inactiveSelected" action="eprActivateOrInactivateDivisionsAndDsDivisions.do">
                             <s:param name="pageType" value="pageType"/>
                             <s:param name="courtId" value="courtUKey"/>
+                            <s:param name="activate" value="false"/>
                         </s:url>
-                        <s:url id="activeSelected" action="eprActiveDivisionsAndDsDivisions.do">
+                        <s:url id="activeSelected" action="eprActivateOrInactivateDivisionsAndDsDivisions.do">
                             <s:param name="pageType" value="pageType"/>
                             <s:param name="courtId" value="courtUKey"/>
+                            <s:param name="activate" value="true"/>
                         </s:url>
                     </s:if>
                     <s:if test="pageType==6">
-                        <s:url id="inactiveSelected" action="eprInactiveDivisionsAndDsDivisions.do">
+                        <s:url id="inactiveSelected" action="eprActivateOrInactivateDivisionsAndDsDivisions.do">
                             <s:param name="pageType" value="pageType"/>
                             <s:param name="locationId" value="locationUKey"/>
+                            <s:param name="activate" value="false"/>
                         </s:url>
-                        <s:url id="activeSelected" action="eprActiveDivisionsAndDsDivisions.do">
+                        <s:url id="activeSelected" action="eprActivateOrInactivateDivisionsAndDsDivisions.do">
                             <s:param name="pageType" value="pageType"/>
                             <s:param name="locationId" value="locationUKey"/>
+                            <s:param name="activate" value="true"/>
                         </s:url>
                     </s:if>
                     <td align="center">

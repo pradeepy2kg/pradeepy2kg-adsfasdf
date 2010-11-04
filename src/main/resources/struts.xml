@@ -935,12 +935,8 @@
                 method="initDivisionList">
             <result type="tiles" name="success">epr.addEditDivisions</result>
         </action>
-        <action name="eprActiveDivisionsAndDsDivisions" class="lk.rgd.crs.web.action.UserManagmentAction"
-                method="initActive">
-            <result type="tiles" name="success">epr.addEditDivisions</result>
-        </action>
-        <action name="eprInactiveDivisionsAndDsDivisions" class="lk.rgd.crs.web.action.UserManagmentAction"
-                method="initInactive">
+        <action name="eprActivateOrInactivateDivisionsAndDsDivisions" class="lk.rgd.crs.web.action.UserManagmentAction"
+                method="activeOrInactive">
             <result type="tiles" name="success">epr.addEditDivisions</result>
         </action>
         <action name="eprAddDivisionsAndDsDivisions" class="lk.rgd.crs.web.action.UserManagmentAction"

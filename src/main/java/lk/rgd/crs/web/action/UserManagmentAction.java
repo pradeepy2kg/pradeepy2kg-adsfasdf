@@ -63,6 +63,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     private boolean previousFlag;
     private int noOfRows;
     private int indexRecord;
+    private boolean activate;
 
     private String districtEn;
     private String dsDivisionEn;
@@ -137,54 +138,31 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
 
     public String createUser() {
         User updated = (User) session.get(WebConstants.SESSION_UPDATED_USER);
-        /*logger.debug("creat user called");
-        if (divisions.equals(getText("get_ds_divisions.label"))) {
-            generateDSDivisions();
-            populate();
-            return "pageLoad";
-        } else {*/
         // todo...
         User currentUser = (User) session.get(WebConstants.SESSION_USER_BEAN);
         user.setRole(roleDAO.getRole(roleId));
         user.setStatus(User.State.ACTIVE);
-
-        /*List<UserLocation> usersLocationList=null;
-        for (int i = 0; i < assignedLocations.length; i++) {
-             usersLocationList.add(locationDAO.getLocation(1));
-        }*/
-        //user.setLocations(assLocations);
 
         // creating assigned Districts
         Set assDistrict = new HashSet();
         for (int i = 0; i < assignedDistricts.length; i++) {
             assDistrict.add(districtDAO.getDistrict(assignedDistricts[i]));
         }
-        user.setAssignedBDDistricts(assDistrict);
-        user.setAssignedMRDistricts(assDistrict);
         Set assDSDivision = new HashSet();
         for (int i = 0; i < assignedDivisions.length; i++) {
             assDSDivision.add(dsDivisionDAO.getDSDivisionByPK(assignedDivisions[i]));
         }
-        user.setAssignedBDDSDivisions(assDSDivision);
         if (userId == null) {
+            user.setAssignedBDDistricts(assDistrict);
+            user.setAssignedMRDistricts(assDistrict);
+            user.setAssignedBDDSDivisions(assDSDivision);
             service.createUser(user, currentUser);
             addActionMessage(getText("data.Save.Success.label"));
             setPageNo(0);
         } else if (updated != null) {
-            //     user.setUserId(userId);
-            //setting new district list and division list and role
-            Set assgnDistrict = new HashSet();
-            for (int i = 0; i < assignedDistricts.length; i++) {
-                assgnDistrict.add(districtDAO.getDistrict(assignedDistricts[i]));
-            }
-            updated.setAssignedBDDistricts(assgnDistrict);
-            updated.setAssignedMRDistricts(assgnDistrict);
-
-            Set assgnDSDivision = new HashSet();
-            for (int i = 0; i < assignedDivisions.length; i++) {
-                assgnDSDivision.add(dsDivisionDAO.getDSDivisionByPK(assignedDivisions[i]));
-            }
-            updated.setAssignedBDDSDivisions(assgnDSDivision);
+            updated.setAssignedBDDistricts(assDistrict);
+            updated.setAssignedMRDistricts(assDistrict);
+            updated.setAssignedBDDSDivisions(assDSDivision);
             updated.setRole(roleDAO.getRole(roleId));
 
             service.updateUser(updated, currentUser);
@@ -357,70 +335,31 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         }
     }
 
-    public String initActive() {
+    public String activeOrInactive() {
         switch (pageType) {
             case 1:
-                dataManagementService.activateDistrict(UserDistrictId, currentUser);
-                logger.debug("Id of Active District ({}) is    :{}", districtDAO.getDistrict(UserDistrictId).getEnDistrictName(), UserDistrictId);
+                dataManagementService.activateOrInactivateDistrict(UserDistrictId, activate, currentUser);
                 break;
             case 2:
-                dataManagementService.activateDSDivision(dsDivisionId, currentUser);
-                logger.debug("Id of Active Ds Division ({}) is    :{}", dsDivisionDAO.getDSDivisionByPK(dsDivisionId).getEnDivisionName(), dsDivisionId);
+                dataManagementService.activateOrInactivateDSDivision(dsDivisionId, activate, currentUser);
                 break;
             case 3:
-                dataManagementService.activateBDDivision(divisionId, currentUser);
-                logger.debug("Id of Active Division ({}) is    :{}", bdDivisionDAO.getBDDivisionByPK(divisionId).getEnDivisionName(), divisionId);
+                dataManagementService.activateOrInactiveBDDivision(divisionId, activate, currentUser);
                 break;
             case 4:
-                dataManagementService.activateMRDivision(mrdivisionId, currentUser);
-                logger.debug("Id of Active MRDivision ({}) is    :{}", mrDivisionDAO.getMRDivisionByPK(mrdivisionId).getEnDivisionName(), mrdivisionId);
+                dataManagementService.activateOrInactivateMRDivision(mrdivisionId, activate, currentUser);
                 break;
             case 5:
-                dataManagementService.activateCourt(courtId, currentUser);
-                logger.debug("Id of the Active Court ({}) is  :{}", courtDAO.getNameByPK(courtId, "en"), courtId);
+                dataManagementService.activateOrInactivateCourt(courtId, activate, currentUser);
                 break;
             case 6:
-                dataManagementService.activateLocation(locationId, currentUser);
-                logger.debug("Id of the Active location( {} ) is  :{}", locationDAO.getLocation(locationId).getEnLocationName(), locationId);
+                dataManagementService.activateOrInactivateLocation(locationId, activate, currentUser);
                 break;
 
         }
         setDivisionList(true);
         return SUCCESS;
     }
-
-    public String initInactive() {
-        switch (pageType) {
-            case 1:
-                dataManagementService.inactivateDistrict(UserDistrictId, currentUser);
-                logger.debug("Id of Inactive District ({}) is    :{}", districtDAO.getDistrict(UserDistrictId).getEnDistrictName(), UserDistrictId);
-                break;
-            case 2:
-                dataManagementService.inactivateDSDivision(dsDivisionId, currentUser);
-                logger.debug("Id of Inactive Ds Division ({}) is    :{}", dsDivisionDAO.getDSDivisionByPK(dsDivisionId).getEnDivisionName(), dsDivisionId);
-                break;
-            case 3:
-                dataManagementService.inactivateBDDivision(divisionId, currentUser);
-                logger.debug("Id of Inactive Division ({}) is    :{}", bdDivisionDAO.getBDDivisionByPK(divisionId).getEnDivisionName(), divisionId);
-                break;
-            case 4:
-                dataManagementService.inactivateMRDivision(mrdivisionId, currentUser);
-                logger.debug("Id of Inactive MRDivision ({}) is    :{}", mrDivisionDAO.getMRDivisionByPK(mrdivisionId).getEnDivisionName(), mrdivisionId);
-                break;
-            case 5:
-                dataManagementService.inactivateCourt(courtId, currentUser);
-                logger.debug("Id of the Inactive Court ({}) is   :{}", courtDAO.getNameByPK(courtId, "en"), courtId);
-                break;
-            case 6:
-                dataManagementService.inactivateLocation(locationId, currentUser);
-                logger.debug("Id of the Inactive location( {} ) is  :{}", locationDAO.getLocation(locationId).getEnLocationName(), locationId);
-                break;
-
-        }
-        setDivisionList(true);
-        return SUCCESS;
-    }
-
 
     public String addDivisionsAndDsDivisions() {
         int checkDuplicate = 0;
@@ -640,7 +579,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         Iterator itr = set.iterator();
         while (itr.hasNext()) {
             DSDivision dsd = (DSDivision) itr.next();
-            ret.put(dsd.getDivisionId(), dsd.getEnDivisionName());
+            ret.put(dsd.getDsDivisionUKey(), dsd.getEnDivisionName());
         }
         return ret;
     }
@@ -1043,5 +982,13 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
 
     public void setIndexRecord(int indexRecord) {
         this.indexRecord = indexRecord;
+    }
+
+    public boolean isActivate() {
+        return activate;
+    }
+
+    public void setActivate(boolean activate) {
+        this.activate = activate;
     }
 }
