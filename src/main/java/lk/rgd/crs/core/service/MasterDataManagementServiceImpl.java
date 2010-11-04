@@ -72,21 +72,27 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
                     " was not allowed to add a new BD Division : " + bdDivision.getEnDivisionName());
         }
     }
-
-    /**
+/*
+    *//**
      * @inheritDoc
-     */
+     *//*
     @Transactional(propagation = Propagation.REQUIRED)
     public void inactivateBDDivision(int bdDivisionUKey, User user) {
         updateBDActivation(bdDivisionUKey, false, user);
     }
 
+    */
+
     /**
      * @inheritDoc
-     */
+     *//*
     @Transactional(propagation = Propagation.REQUIRED)
     public void activateBDDivision(int bdDivisionUKey, User user) {
         updateBDActivation(bdDivisionUKey, true, user);
+    }*/
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void activateOrInactiveBDDivision(int bdDivisionUKey, boolean active, User user) {
+        updateBDActivation(bdDivisionUKey, active, user);
     }
 
     private void updateBDActivation(int bdDivisionUKey, boolean activate, User user) {
@@ -141,6 +147,11 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
         updateMRActivation(mrDivisionUKey, false, user);
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void activateOrInactivateMRDivision(int mrDivisionUKey, boolean activate, User user) {
+        updateMRActivation(mrDivisionUKey, activate, user);
+    }
+
     /**
      * @inheritDoc
      */
@@ -190,6 +201,11 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
             logger.error("User : " + user.getUserId() +
                     " was not allowed to add a new DS Division : " + dsDivision.getEnDivisionName());
         }
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void activateOrInactivateDSDivision(int dsDivisionUKey, boolean active, User user) {
+        updateDSActivation(dsDivisionUKey, active, user);
     }
 
     /**
@@ -254,6 +270,11 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
         }
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void activateOrInactivateDistrict(int districtUKey, boolean active, User user) {
+        updateDistrictActivation(districtUKey, active, user);
+    }
+
     /**
      * @inheritDoc
      */
@@ -311,6 +332,11 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
             logger.error("User : " + user.getUserId() +
                     " was not allowed to add a new Location : " + location.getEnLocationName());
         }
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void activateOrInactivateLocation(int locationUKey, boolean activate, User user) {
+        updateLocationActivation(locationUKey, activate, user);
     }
 
 
@@ -376,6 +402,11 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
         }
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void activateOrInactivateCourt(int courtUKey, boolean activate, User user) {
+        updateCourtActivation(courtUKey, activate, user);
+    }
+
 
     /**
      * @inheritDoc
@@ -394,9 +425,7 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
     }
 
     private void updateCourtActivation(int courtUKey, boolean activate, User user) {
-        logger.debug("int tharanga Punchihewa  :{}", courtUKey);
         if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
-            logger.info("tharaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
             try {
                 Court existing = courtDAO.getCourt(courtUKey);
                 if (existing != null) {
