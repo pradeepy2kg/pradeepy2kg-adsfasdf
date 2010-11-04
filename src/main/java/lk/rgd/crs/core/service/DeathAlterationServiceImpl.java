@@ -210,7 +210,7 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<DeathAlteration> getAlterationByDeathPersonPin(String pin, User user) {
         List<DeathAlteration> result = deathAlterationDAO.getDeathAlterationByDeathPersonPin(pin);
-        for (DeathAlteration da : result) {
+        for (DeathAlteration da : result){
             loadValuesToDeathAlterationObject(da);
             validateAccessOfUserForApproval(da, user);
         }

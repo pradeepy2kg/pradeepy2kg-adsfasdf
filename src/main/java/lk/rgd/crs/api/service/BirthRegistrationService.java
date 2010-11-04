@@ -284,7 +284,7 @@ public interface BirthRegistrationService {
     /**
      * Returns the Birth Declaration object for a given Id
      *
-     * @param bdId Birth Declarion Id for the given declaration
+     * @param bdId Birth Declaration Id for the given declaration
      * @param user the user making the request
      * @return the BDF if found, and the user has access to the record
      */
@@ -293,14 +293,14 @@ public interface BirthRegistrationService {
     /**
      * Returns the Birth Declaration object for a given Id
      *
-     * @param bdId Birth Declarion Id for the given declaration
+     * @param bdId Birth Declaration Id for the given declaration
      * @return the BDF if found, and the user has access to the record
      */
     public BirthDeclaration getById(long bdId);
     /**
-     * Returns the Birth Declaration object with all relatinships for a given Id
+     * Returns the Birth Declaration object with all relationships for a given Id
      *
-     * @param bdId Birth Declarion Id for the given declaration
+     * @param bdId Birth Declaration Id for the given declaration
      * @param user the user making the request
      * @return the BDF if found, and the user has access to the record
      */

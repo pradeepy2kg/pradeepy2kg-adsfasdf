@@ -132,11 +132,11 @@ public interface DeathRegistrationService {
     /**
      * mark that death certificate for the death registration as printed
      *
-     * @param deathRegisterIdUKey the unique id of the death registration
-     * @param user                the user initiating the action
+     * @param deathRegister death register object to be mark as print
+     * @param user          the user initiating the action
      * @throws lk.rgd.crs.CRSRuntimeException for un-authorized operations
      */
-    public void markDeathCertificateAsPrinted(long deathRegisterIdUKey, User user);
+    public void markDeathCertificateAsPrinted(DeathRegister deathRegister, User user);
 
     /**
      * Returns a limited set of DeathRegister for selected BD Division and selected range of registration dates.
@@ -208,4 +208,13 @@ public interface DeathRegistrationService {
      * @return the related historical records - if any
      */
     public List<DeathRegister> getArchivedCorrectedEntriesForGivenSerialNo(BDDivision bdDivision, long serialNo, long deathId, User user);
+
+    /**
+     * get death register with transient values
+     *
+     * @param idUKey death idUKey
+     * @param user   the user making the request
+     * @return death register object
+     */
+    public DeathRegister getWithTransientValuesById(long idUKey, User user);
 }
