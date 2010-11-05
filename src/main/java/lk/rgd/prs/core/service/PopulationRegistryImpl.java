@@ -77,7 +77,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
                 cal.set(Calendar.DAY_OF_YEAR, rand.nextInt(364) + 1);
             }
         }
-        personDao.addPerson(person);
+        personDao.addPerson(person, user);
         return pin;
     }
 
@@ -103,7 +103,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             handleException("User : " + user.getUserId() + " is not allowed to add entries to the PRS",
                 ErrorCodes.PRS_ADD_RECORD_DENIED);
         }
-        
+
         // TODO add Solr searching results to following list
         final List<Person> exactRecord = new ArrayList<Person>();
         if (person.getTemporaryPin() != null) {
@@ -125,7 +125,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             pin = pinGenerator.generatePINNumber(person.getDateOfBirth(), person.getGender() == 0);
             person.setPin(pin);
 
-            personDao.addPerson(person);
+            personDao.addPerson(person, user);
             // add permanent address of the person to the PRS
             if (permanentAddress != null && permanentAddress.trim().length() > 0) {
                 final Address permanentAdd = new Address(permanentAddress);
@@ -140,7 +140,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
                 personDao.addAddress(currentAdd);
             }
             if (permanentAddress != null || currentAddress != null) {
-                personDao.updatePerson(person);
+                personDao.updatePerson(person, user);
             }
             // add citizenship list of the person to the PRS
             if (citizenshipList != null) {
@@ -203,7 +203,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             handleException("User : " + user.getUserId() + " is not allowed to update entries on the PRS",
                 ErrorCodes.PRS_ADD_RECORD_DENIED);
         }
-        personDao.updatePerson(person);
+        personDao.updatePerson(person, user);
     }
 
     /**
