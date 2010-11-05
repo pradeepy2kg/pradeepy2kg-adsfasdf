@@ -4,6 +4,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.*;
 import lk.rgd.common.api.service.UserManager;
+import lk.rgd.common.util.HashUtil;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.dao.CourtDAO;
 import lk.rgd.crs.api.dao.MRDivisionDAO;
@@ -64,6 +65,8 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     private int noOfRows;
     private int indexRecord;
     private boolean activate;
+    private boolean changePassword;
+    private String randomPassword;
 
     private String districtEn;
     private String dsDivisionEn;
@@ -152,27 +155,34 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         for (int i = 0; i < assignedDivisions.length; i++) {
             assDSDivision.add(dsDivisionDAO.getDSDivisionByPK(assignedDivisions[i]));
         }
+        //todo change password length
+        int randomPasswordLength = (int) (Math.random() * 6) + 10;
         if (userId == null) {
+            randomPassword = getRandomPassword(randomPasswordLength);
+            user.setPasswordHash(hashPassword(randomPassword));
             user.setAssignedBDDistricts(assDistrict);
             user.setAssignedMRDistricts(assDistrict);
             user.setAssignedBDDSDivisions(assDSDivision);
             service.createUser(user, currentUser);
+            userId = user.getUserId();
             addActionMessage(getText("data.Save.Success.label"));
-            setPageNo(0);
+            pageNo = 1;
         } else if (updated != null) {
             updated.setAssignedBDDistricts(assDistrict);
             updated.setAssignedMRDistricts(assDistrict);
             updated.setAssignedBDDSDivisions(assDSDivision);
             updated.setRole(roleDAO.getRole(roleId));
-
+            if (changePassword) {
+                randomPassword = getRandomPassword(randomPasswordLength);
+                updated.setPasswordHash(hashPassword(randomPassword));
+            }
             service.updateUser(updated, currentUser);
             session.remove(WebConstants.SESSION_UPDATED_USER);
             session.put("viewUsers", null);
             addActionMessage(getText("edit.Data.Save.Success.label"));
-            setPageNo(1);
-            populate();
         }
-        return "form" + pageNo;
+        populate();
+        return SUCCESS;
     }
 
 
@@ -584,6 +594,23 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         return ret;
     }
 
+    private String getRandomPassword(int length) {
+        StringBuffer buffer = new StringBuffer();
+        Random random = new Random();
+        char[] charArray = new char[]{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
+                'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G',
+                'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7',
+                '8', '9'};
+        for (int i = 0; i < length; i++) {
+            buffer.append(charArray[random.nextInt(charArray.length)]);
+        }
+        return buffer.toString();
+    }
+
+    private final String hashPassword(String password) {
+        return HashUtil.hashString(password);
+    }
+
     public User getUser() {
         return user;
     }
@@ -990,5 +1017,21 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
 
     public void setActivate(boolean activate) {
         this.activate = activate;
+    }
+
+    public boolean isChangePassword() {
+        return changePassword;
+    }
+
+    public void setChangePassword(boolean changePassword) {
+        this.changePassword = changePassword;
+    }
+
+    public String getRandomPassword() {
+        return randomPassword;
+    }
+
+    public void setRandomPassword(String randomPassword) {
+        this.randomPassword = randomPassword;
     }
 }

@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <script src="/ecivil/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
@@ -206,13 +205,26 @@
 
             </tr>
             <tr>
-                <td></td>
-                <td>
+
+                <td colspan="2">
                     <s:if test="userId != null">
                         <s:hidden name="userId" value="%{userId}"/>
-                        <div class="form-submit">
-                            <s:submit value="%{getText('edit_user.label')}"/>
-                        </div>
+                        <table style="width:65%;float:right;">
+                            <tr>
+                                <td style="width:75%">
+                                    <div>
+                                        <s:label value="Change User Password"/>
+                                        <s:checkbox name="changePassword"/>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-submit">
+                                        <s:submit value="%{getText('edit_user.label')}"/>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
                     </s:if>
                     <s:if test="userId == null">
                         <div class="form-submit">

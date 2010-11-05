@@ -904,8 +904,7 @@
         <action name="eprUserCreation" class="lk.rgd.crs.web.action.UserManagmentAction"
                 method="createUser">
             <result type="tiles" name="pageLoad">epr.creatUser</result>
-            <result type="tiles" name="form0">epr.home</result>
-            <result type="tiles" name="form1">epr.viewUsers</result>
+            <result type="tiles" name="success">epr.UserManagementResultPage</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
 
