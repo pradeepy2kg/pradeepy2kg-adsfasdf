@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <div id="error-page-outer">
-    <s:actionerror/>
+    <s:actionerror cssStyle="color:red;font-size:10pt"/>
     <hr/>
 <div class="error-title" > Error Message</div>
     <div class="form-submit">

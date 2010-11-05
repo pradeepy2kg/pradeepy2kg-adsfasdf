@@ -639,16 +639,19 @@
             <result type="tiles" name="successDR">epr.home</result>
             <result type="tiles" name="successADR">epr.adrhome</result>
             <result type="tiles" name="successDEO">epr.deohome</result>
-            <result name="error">/WEB-INF/pages/preferences/PasswordChange.jsp</result>
+            <result type="tiles" name="error">epr.passwordChange</result>
         </action>
 
         <action name="eprBackChangePass" class="lk.rgd.crs.web.action.UserPreferencesAction" method="back">
-            <result name="pageload" type="tiles">epr.UserPreferences</result>
+            <result name="pageload" type="tiles">epr.home</result>
         </action>
 
-        <action name="passChangePageLoad">
-            <result>/WEB-INF/pages/preferences/PasswordChange.jsp</result>
+        <action name="eprpassChangePageLoad" class="lk.rgd.crs.web.action.UserPreferencesAction" method="changePasswordInit">
+            <result name="success" type="tiles">epr.passwordChange</result>
         </action>
+        <!--<action name="eprpassChangePageLoad">-->
+            <!--<result>/WEB-INF/pages/preferences/PasswordChange.jsp</result>-->
+        <!--</action>-->
 
         <action name="eprUserPreferencesInit" class="lk.rgd.crs.web.action.UserPreferencesAction"
                 method="userPreferenceInit">

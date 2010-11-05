@@ -534,11 +534,11 @@
     <tr>
         <td class="font-9" colspan="3">
             පුද්ගලයකු ලියාපදිංචි කිරීමේ සහතිකය නිකුත් කල යුතු භාෂාව
-            <br>* Tamil
+            <br>நபரின் பதிவிற்கான சான்றிதழினை வழங்கப்படவேண்டிய மொழி 
             <br>Preferred Language for Person Registration Certificate
         </td>
         <td colspan="5">
-            <s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'Tamil'}" name="person.preferredLanguage"
+            <s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'தமிழ்'}" name="person.preferredLanguage"
                       cssStyle="width:190px; margin-left:5px;"/>
         </td>
     </tr>

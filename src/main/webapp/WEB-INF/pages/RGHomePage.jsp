@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<s:actionerror/>
+<s:actionerror cssStyle="color:red;font-size:10pt"/>
+<s:actionmessage/>
 
 <script type="text/javascript" src="lib/jquery/jquery.jqplot.js"></script>
 <script type="text/javascript" src="lib/jquery/jqplot.categoryAxisRenderer.js"></script>
@@ -21,7 +22,7 @@
     }
 </style>
 
-
+<s:actionerror/>
 <div id="ADR-home-page-outer">
     <s:hidden id="totalDeclarations" value="%{totalDeclarations}"/>
     <s:hidden id="totalDecArrivals" value="%{totalDecArrivals}"/>
