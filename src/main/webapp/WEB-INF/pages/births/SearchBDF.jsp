@@ -97,7 +97,7 @@
     function initPage(){}
 </script>
 <div id="birth-confirmation-search">
-    <s:actionerror cssClass="alreadyPrinted"/>
+    <s:actionerror cssStyle="color:red;font-size:10pt"/>
 
         <ul>
             <li><a href="#fragment-1"><span> <s:label name="registrationSearch"

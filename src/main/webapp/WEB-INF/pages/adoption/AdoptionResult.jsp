@@ -3,7 +3,7 @@
 --%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-    <s:actionerror/>
+    <s:actionerror cssStyle="color:red;font-size:10pt"/>
     <div id="adoption-page">
         <s:url id="approveAdoption" action="eprAdoptionDirectApproval.do">
             <s:param name="idUKey" value="#request.idUKey"/>      

@@ -194,12 +194,12 @@
         <td align="center" style="font-size:12pt;">
             <s:if test="certificateType.ordinal() == 0">
                 <label>උප්පැන්න සහතිකයක් ගැනීමේ සහ/නොහොත් ලේකම් පොත් සොයා බැලීමේ ඉල්ලුම් පත්‍රය
-                    <br>* Tamil
+                    <br>பிறப்புச் சான்றிதழ் பெறல் மற்றும் /அல்லது பதிவினை தேடுவதற்கான விண்ணப்ப படிவம்
                     <br>APPLICATION FOR BIRTH CERTIFICATE AND/OR SEARCH OF REGISTERS</label>
             </s:if>
             <s:elseif test="certificateType.ordinal() == 1">
                 <label>මරණ සහතිකයක් ගැනීමේ සහ/ නොහොත් ලේකම් පොත් සොයා බැලීමේ ඉල්ලුම් පත්‍රය
-                    <br>* Tamil
+                    <br>இறப்புச் சான்றிதழ் பெறல் மற்றும் /அல்லது பதிவினை தேடுவதற்கான விண்ணப்ப படிவம்
                     <br>APPLICATION FOR DEATH CERTIFICATE AND/OR SEARCH OF REGISTERS</label>
             </s:elseif>
         </td>
@@ -209,7 +209,8 @@
                     <s:fielderror name="duplicateApplicationNoError" cssStyle="color:red;font-size:10pt"/>
                 </tr>
                 <tr>
-                    <td><label><span class="font-8">ඉල්ලුම් පත්‍ර අංකය<br>*Tamil<br>Application No</span></label>
+                    <td><label><span
+                            class="font-8">ඉල්ලුම් පත්‍ර අංකය<br>விண்ணப்ப இலக்கம்<br>Application No</span></label>
                     </td>
                     <td><s:textfield name="certSearch.certificate.applicationNo" id="applicationNo"
                                      cssStyle="text-transform:uppercase;"/></td>
@@ -224,7 +225,8 @@
                 </tr>
                 <tr>
                     <td>
-                        <label><span class="font-8">භාරගත්  දිනය<br>* In Tamil<br>Submitted Date</span></label>
+                        <label><span
+                                class="font-8">භාරගත්  දිනය<br>பிறப்பைப் பதிவு திகதி <br>Submitted Date</span></label>
                     </td>
                     <td>
                             <s:label value="YYYY-MM-DD" cssStyle="margin-left:5px;font-size:10px"/><br>
@@ -238,13 +240,13 @@
         <td colspan="8">
             <s:if test="certificateType.ordinal() == 0">
                 <label>උපත සිදුවූ දිස්ත්‍රික්කයේ දිස්ත්‍රික් රෙජිස්ට්‍රාර් වෙත යැවිය යුතුය.
-                    <br>* Tamil
+                    <br>பிறப்பு நிகழ்ந்த மாவட்டத்தின் மாவட்ட பதிவாளருக்கு அனுப்பப்பட வேண்டும்
                     <br>To be sent to the Office of the District Registrar of the District in which the birth
                     occurred.</label>
             </s:if>
             <s:elseif test="certificateType.ordinal() == 1">
                 <label>මරණය සිදුවූ දිස්ත්‍රික්කයේ දිස්ත්‍රික් රෙජිස්ට්‍රාර් වෙත යැවිය යුතුය.
-                    <br>* Tamil
+                    <br>இறப்பு நிகழ்ந்த மாவட்டத்தின் மாவட்ட பதிவாளருக்கு அனுப்பப்பட வேண்டும்
                     <br>To be sent to the Office of the District Registrar of the District in which the death
                     occurred.</label>
             </s:elseif>
@@ -255,13 +257,13 @@
 
 <table class="table_reg_page_01" cellspacing="0" cellpadding="2px">
     <tr>
-        <td class="font-9" width="400px"><label>(1) ඉල්ලුම්කරුගේ සම්පූර්ණ නම<br>*Tamil<br>
+        <td class="font-9" width="400px"><label>(1) ඉල්ලුම්කරුගේ සම්පූර්ණ නම<br>விண்ணப்பதாரரின் முழுப் பெயர் <br>
             Full Name of the Applicant</label></td>
         <td colspan="6"><s:textarea name="certSearch.certificate.applicantFullName" id="applicantFullName"
                                     cssStyle="text-transform:uppercase;"/></td>
     </tr>
     <tr>
-        <td class="font-9"><label>ඉල්ලුම්කරුගේ ලිපිනය<br>*Tamil<br>
+        <td class="font-9"><label>ඉල්ලුම්කරුගේ ලිපිනය<br>விண்ணப்பதாரரின் முகவரி <br>
             Address of the Applicant</label></td>
         <td colspan="6"><s:textarea name="certSearch.certificate.applicantAddress" id="applicantAddress"
                                     cssStyle="text-transform:uppercase;"/></td>
@@ -270,12 +272,14 @@
         <td class="font-9">
             <s:if test="certificateType.ordinal() == 0">
                 <label>(2) ඉල්ලුම්කරන්නේ කාගේ උප්පැන්නය ගැනද? <br>එම අයගේ සම්පූර්ණ නම රාජ්‍ය භාෂාවෙන්
-                    (සිංහල / දෙමළ)<br>*Tamil<br>
+                    (සිංහල / දෙමළ)<br>விண்ணப்பிப்பது யாருடைய பிறப்பினை? <br>
+அவரின் முழுப்பெயர் அரச கரும மொழியில்(சிங்களம்/ தழிழ்) <br>
                     Full Name of the person respecting whose birth application is made (Sinhala/Tamil) ?</label>
             </s:if>
             <s:elseif test="certificateType.ordinal() == 1">
                 <label>(2) ඉල්ලුම් කරන්නේ කාගේ මරණය ගැනද? <br>එම අයගේ සම්පූර්ණ නම රාජ්‍ය භාෂාවෙන්
-                    (සිංහල / දෙමළ)<br>*Tamil<br>
+                    (සිංහල / දෙමළ)<br>விண்ணப்பிப்பது யாருடைய இறப்பினை?  <br>
+அவரின் முழுப்பெயர் அரச கரும மொழியில்(சிங்களம்/ தழிழ்) <br>
                     Full Name of the person respecting whose death application is made (Sinhala/Tamil) ?</label>
             </s:elseif>
         </td>
@@ -288,12 +292,14 @@
         <td class="font-9">
             <s:if test="certificateType.ordinal() == 0">
                 <label> ඉල්ලුම්කරන්නේ කාගේ උප්පැන්නය ගැනද? <br>එම අයගේ සම්පූර්ණ නම ඉංග්‍රීසි භාෂාවෙන්
-                    <br>*Tamil<br>
+                    <br>விண்ணப்பிப்பது யாருடைய பிறப்பினை? <br>
+அவரின் முழுப்பெயர் ஆங்கில மொழியில் <br>
                     Full Name of the person respecting whose birth application is made in English ?</label>
             </s:if>
             <s:if test="certificateType.ordinal() == 1">
                 <label> ඉල්ලුම් කරන්නේ කාගේ මරණය ගැනද? <br>එම අයගේ සම්පූර්ණ නම ඉංග්‍රීසි භාෂාවෙන්
-                    <br>*Tamil<br>
+                    <br>விண்ணப்பிப்பது யாருடைய இறப்பினை?
+அவரின் முழுப்பெயர் ஆங்கில மொழியில்<br>
                     Full Name of the person respecting whose birth application is made in English ?</label>
             </s:if>
         </td>
@@ -304,7 +310,7 @@
         <tr>
             <td class="font-9">
                 <label> මරණය සිදුවීමට හේතුව (දන්නවා නම්)
-                    <br>*Tamil<br>
+                    <br>இறப்பிற்கான காரணம்(தெரிந்திருந்தால்) <br>
                     Cause of Death (If known)</label>
             </td>
             <td colspan="6"><s:textarea name="certSearch.search.causeOfEvent"
@@ -317,18 +323,18 @@
                 list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
                 name="certSearch.search.gender" headerKey="0" headerValue="%{getText('select_gender.label')}"
                 cssStyle="width:190px; margin-left:5px;"/></td>
-        <td><label>අවශ‍ය පිටපත් ගණන<br>* Tamil<br>No. of Copies required</label></td>
+        <td><label>අවශ‍ය පිටපත් ගණන<br>தேவையான பிரதிகளின் எண்ணிக்கை<br>No. of Copies required</label></td>
         <td><s:textfield name="certSearch.certificate.noOfCopies" id="noOfCopies" maxLength="2"/></td>
     </tr>
     <tr>
         <td class="font-9">
             <s:if test="certificateType.ordinal() == 0">
-                <label>(3) පියාගේ සම්පූර්ණ නම<br>*Tamil<br>
+                <label>(3) පියාගේ සම්පූර්ණ නම<br>தந்தையின் முழுப்பெயர்<br>
                     Father's Full Name
                 </label>
             </s:if>
             <s:elseif test="certificateType.ordinal() == 1">
-                <label>(3) පියාගේ සම්පූර්ණ නම (දන්නවා නම්)<br>*Tamil<br>
+                <label>(3) පියාගේ සම්පූර්ණ නම (දන්නවා නම්)<br>தந்தையின் முழுப்பெயர்(தெரிந்திருந்தால்) <br>
                     Father's Full Name (If known)
                 </label>
             </s:elseif>
@@ -340,12 +346,12 @@
     <tr>
         <td class="font-9">
             <s:if test="certificateType.ordinal() == 0">
-                <label>(4) මවගේ සම්පූර්ණ නම (විවාහයට පෙර)<br>*Tamil<br>
+                <label>(4) මවගේ සම්පූර්ණ නම (විවාහයට පෙර)<br>தாயின் முழுப்பெயர்( கன்னிப்பெயர்) <br>
                     Mother's Full Name (maiden name)
                 </label>
             </s:if>
             <s:elseif test="certificateType.ordinal() == 1">
-                <label>(4) මවගේ සම්පූර්ණ නම (දන්නවා නම්)<br>*Tamil<br>
+                <label>(4) මවගේ සම්පූර්ණ නම (දන්නවා නම්)<br>தாயின் முழுப்பெயர்(தெரிந்திருந்தால்)<br>
                     Mother's Full Name (maiden name)
                 </label>
             </s:elseif>
@@ -360,7 +366,7 @@
                 <label>(5) උපන් දිනය<br> பிறந்த திகதி <br>Date of Birth</label>
             </s:if>
             <s:elseif test="certificateType.ordinal() == 1">
-                <label>(5) මරණය සිදු වූ දිනය<br>Tamil<br>Date of Death</label>
+                <label>(5) මරණය සිදු වූ දිනය<br>இறப்பு நிகழ்ந்த திகதி <br>Date of Death</label>
             </s:elseif>
         </td>
         <td>
@@ -372,14 +378,14 @@
                 <label> උපන් ස්ථානය<br>பிறந்த இடம்<br> Place of Birth</label>
             </s:if>
             <s:elseif test="certificateType.ordinal() == 1">
-                <label> සිදු වූ ස්ථානය<br>Tamil<br> Place of Occurrence</label>
+                <label> සිදු වූ ස්ථානය<br>நிகழ்விடம்<br> Place of Occurrence</label>
             </s:elseif>
         </td>
         <td><s:textfield name="certSearch.search.placeOfEvent" id="placeOfEvent"
                          cssStyle="text-transform:uppercase;"/></td>
     </tr>
     <tr>
-        <td class="font-9" rowspan="2"><label>(6) රෙජිසිට්‍රර්ගේ කොට්ඨාශය<br>*Tamil<br>Registrar's
+        <td class="font-9" rowspan="2"><label>(6) රෙජිසිට්‍රර්ගේ කොට්ඨාශය<br>பதிவாளர் பிரிவு <br>Registrar's
             Division</label></td>
         <td><label>දිස්ත්‍රික්කය மாவட்டம் District</label></td>
         <td colspan="6" class="table_reg_cell_01">
@@ -388,7 +394,7 @@
         </td>
     </tr>
     <tr>
-        <td><label>ප්‍රාදේශීය ලේකමි කොටිඨාශය<br>* In Tamil<br>Divisional Secretariat</label></td>
+        <td><label>ප්‍රාදේශීය ලේකමි කොටිඨාශය<br>பிரதேச செயலாளர் பிரிவு <br>Divisional Secretariat</label></td>
         <td colspan="6" class="table_reg_cell_01" id="table_reg_cell_01">
             <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
                       cssStyle="width:98.5%;"/>
@@ -397,10 +403,10 @@
     <tr>
         <td class="font-9">
             <s:if test="certificateType.ordinal() == 0">
-                <label>උපත් ප්‍රකාශනයේ අනුක්‍රමික අංකය<br>*Tamil<br>Birth Declaration Serial Number</label>
+                <label>උපත් ප්‍රකාශනයේ අනුක්‍රමික අංකය<br>பிறப்பு பிரதிக்கினையின் தொடர் இலக்கம்<br>Birth Declaration Serial Number</label>
             </s:if>
             <s:elseif test="certificateType.ordinal() == 1">
-                <label>මරණ ප්‍රකාශනයේ අනුක්‍රමික අංකය<br>*Tamil<br>Birth Declaration Serial Number</label>
+                <label>මරණ ප්‍රකාශනයේ අනුක්‍රමික අංකය<br>இறப்பு பிரதிக்கினையின் தொடர் இலக்கம்<br>Birth Declaration Serial Number</label>
             </s:elseif>
         </td>
         <td><s:textfield name="certSearch.search.searchSerialNo" id="searchSerialNo" maxLength="10"/></td>
@@ -415,15 +421,15 @@
     <tr>
         <td class="font-9">
             <s:if test="certificateType.ordinal() == 0">
-                <label>(7) උප්පැන්න සහතිකයේ අංකය<br>*Tamil<br>Birth Certificate Number</label>
+                <label>(7) උප්පැන්න සහතිකයේ අංකය<br>பிறப்புச் சான்றிதழின் இலக்கம் <br>Birth Certificate Number</label>
             </s:if>
             <s:elseif test="certificateType.ordinal() == 1">
-                <label>(7) මරණ සහතිකයේ අංකය<br>*Tamil<br>Birth Certificate Number</label>
+                <label>(7) මරණ සහතිකයේ අංකය<br>இறப்புச் சான்றிதழின் இலக்கம் <br>Birth Certificate Number</label>
             </s:elseif>
         </td>
         <td><s:textfield name="certSearch.search.certificateNo" id="certificateNo"/></td>
         <td class="font-9" width="150px">
-            <label>නිකුත් කළ දිනය<br>* Tamil<br>Date of Issue</label></td>
+            <label>නිකුත් කළ දිනය<br>வழங்கப்பட்ட திகதி<br>Date of Issue</label></td>
         <td>
             <s:label value="YYYY-MM-DD" cssStyle="margin-left:10px;font-size:10px"/><br>
             <s:textfield id="datePicker" name="certSearch.search.certificateIssueDate"
@@ -432,13 +438,13 @@
     </tr>
     <tr>
         <td class="font-9"><label>
-            (8) අනන්‍යතා අංකය <br>*Tamil<br>Identification Number</label>
+            (8) අනන්‍යතා අංකය <br>அடையாள எண் <br>Identification Number</label>
         </td>
         <td colspan="3"><s:textfield name="certSearch.search.searchPIN" maxLength="10"/></td>
     </tr>
     <tr>
         <td class="font-9"><label>
-            (9) මෙහි ඇලවූ මුද්දරවල වටිනාකම<br>*Tamil<br>Value of stamps affixed</label>
+            (9) මෙහි ඇලවූ මුද්දරවල වටිනාකම<br>இங்கு ஒட்டப்பட்ட முத்திரைகளின் பெறுமதி <br>Value of stamps affixed</label>
         </td>
         <td colspan="3"><s:textfield name="certSearch.certificate.stampCharges" id="stampCharges" maxLength="5"/></td>
     </tr>

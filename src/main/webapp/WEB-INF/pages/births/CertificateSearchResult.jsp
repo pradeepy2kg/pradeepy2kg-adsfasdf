@@ -27,7 +27,7 @@
     }
 </script>
 <div>
-    <s:actionerror/>
+    <s:actionerror cssStyle="color:red;font-size:10pt"/>
 </div>
 <div>
     <s:if test="searchResultList.size > 0">

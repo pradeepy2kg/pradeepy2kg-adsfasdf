@@ -158,6 +158,7 @@
                                  maxLength="10"/>
                     <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
                          id="notifier_lookup"/>
+                    <s:label value="*" cssStyle="color:red;font-size:15pt"/>
                 </td>
             </tr>
             <tr>
@@ -165,7 +166,7 @@
                     නම<br>கொடுப்பவரின் பெயர் <br>Name</label></td>
                 <td colspan="4">
                     <s:textarea name="notifyingAuthority.notifyingAuthorityName" id="notifyingAuthorityName"
-                                cssStyle="width:98%;"/>
+                                cssStyle="width:95%;"/><s:label value="*" cssStyle="color:red;font-size:15pt"/>
                 </td>
             </tr>
             <tr>
@@ -174,14 +175,16 @@
                     முகவரி <br>Postal Address</label></td>
                 <td colspan="4"><s:textarea name="notifyingAuthority.notifyingAuthorityAddress"
                                             id="notifyingAuthorityAddress"
-                                            cssStyle="width:98%;"/></td>
+                                            cssStyle="width:95%;"/>
+                    <s:label value="*" cssStyle="color:red;font-size:15pt"/>
+                </td>
             </tr>
             <tr>
                 <td width="200px"><label>දිනය <br>திகதி <br>Date</label></td>
                 <td colspan="4">
                     <s:label value="YYYY-MM-DD" cssStyle="margin-left:77%;font-size:10px"/><br>
                     <s:textfield name="notifyingAuthority.notifyingAuthoritySignDate" id="modifiedDatePicker"
-                                 cssStyle="margin-right:60px;" maxLength="10"/>
+                                 cssStyle="margin-right:60px;" maxLength="10"/><s:label value="*" cssStyle="color:red;font-size:15pt"/>
                 </td>
             </tr>
             </tbody>

@@ -60,7 +60,7 @@
 </script>
 <script type="text/javascript" src="<s:url value="/js/selectAll.js"/>"></script>
 
-<s:actionerror/>
+<s:actionerror cssStyle="color:red;font-size:10pt"/>
 <table cellpadding="5" cellspacing="0">
     <s:form action="eprAdoptionFilterByStatus" method="post">
 

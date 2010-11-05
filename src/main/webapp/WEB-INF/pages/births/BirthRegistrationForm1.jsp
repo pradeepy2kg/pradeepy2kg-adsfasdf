@@ -344,6 +344,7 @@ function initPage() {
                         </s:if>
                         <s:else>--%>
                             <s:textfield name="register.bdfSerialNo" id="bdfSerialNo" maxLength="10"/>
+    <s:label value="*" cssStyle="color:red;font-size:15pt"/>
                     <%--    </s:else>--%>
                     </td>
                 </tr>
@@ -355,6 +356,7 @@ function initPage() {
                         <br>For office use only
                         <hr>
                     </td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td>
@@ -364,6 +366,7 @@ function initPage() {
                     <td><s:label value="YYYY-MM-DD" cssStyle="margin-left:20px;font-size:10px"/><br>
                         <s:textfield name="register.dateOfRegistration" id="submitDatePicker" maxLength="10"/>
                     </td>
+                    <td><s:label value="*" cssStyle="color:red;font-size:15pt"/></td>
                 </tr>
             </table>
         </td>
@@ -465,6 +468,7 @@ function initPage() {
     <td colspan="3" style="border-right:none;">
         <s:label value="YYYY-MM-DD" cssStyle="margin-left:20px;font-size:10px"/><br>
         <s:textfield id="birthDatePicker" name="child.dateOfBirth" onchange="dateRange();" maxLength="10"/>
+        <s:label value="*" cssStyle="color:red;font-size:15pt"/>
     </td>
     <td colspan="4" style="border-left:none;">
         <div id="belatedError" style="color:red; font-size:11pt"/>
@@ -501,14 +505,16 @@ function initPage() {
 </tr>
 <tr>
     <td><label>සිංහල හෝ දෙමළ භාෂාවෙන් <br>சிங்களம்அல்லது தமிழ் மொழியில்<br>In Sinhala or Tamil</label></td>
-    <td colspan="6"><s:textfield name="child.placeOfBirth" id="placeOfBirth" cssStyle="width:97.6%;"
-                                 maxLength="255"/></td>
+    <td colspan="6"><s:textfield name="child.placeOfBirth" id="placeOfBirth" cssStyle="width:95%;"
+                                 maxLength="255"/>
+        <s:label value="*" cssStyle="color:red;font-size:15pt"/>
+    </td>
 </tr>
 <tr>
     <td><label>ඉංග්‍රීසි භාෂාවෙන් <br>ஆங்கில மொழியில்<br>In English</label></td>
     <td colspan="6">
         <s:textfield name="child.placeOfBirthEnglish" id="placeOfBirthEnglish"
-                     cssStyle="width:97.6%; text-transform:uppercase;"/>
+                     cssStyle="width:95%; text-transform:uppercase;"/>
         <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px;" id="place">
     </td>
 </tr>

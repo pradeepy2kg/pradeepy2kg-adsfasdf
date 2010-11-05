@@ -210,7 +210,7 @@
     </div>
     <s:hidden name="pageNumber" value="1"/>
 </s:form>
-<s:actionerror/>
+<s:actionerror cssStyle="color:red;font-size:10pt"/>
 <div id="cc">
     <s:if test="approvalList.size()>0">
         <fieldset>
