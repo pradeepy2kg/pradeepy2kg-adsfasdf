@@ -153,11 +153,10 @@
     </s:else>--%>
 
 <s:if test="#request.allowPrintCertificate">
-    <s:if test="deathRegister.status.ordinal()==1">
         <div id="birthRegistration-page" class="form-submit">
             <s:submit type="button" value="%{getText('mark_as_print.button')}"/>
         </div>
-    </s:if>
+
     <div class="form-submit">
         <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
         <s:hidden id="printMessage" value="%{getText('print.message')}"/>
@@ -563,7 +562,7 @@
 <s:hidden name="pageNo" value="%{#request.pageNo}"/>
 <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
 <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
-<s:hidden name="dsDivisionId" value="%{#request.dsDivisionId}"/>
-<s:hidden name="deathDivisionId" value="%{#request.deathDivisionId}"/>
+<s:hidden name="dsDivisionId" value="%{deathRegister.death.deathDivision.dsDivision.dsDivisionUKey}"/>
+<s:hidden name="deathDivisionId" value="%{deathRegister.death.deathDivision.bdDivisionUKey}"/>
 </s:form>
 

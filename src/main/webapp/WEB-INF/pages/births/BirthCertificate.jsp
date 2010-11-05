@@ -128,7 +128,7 @@
         <s:url id="print" value="eprMarkCertificateAsPrinted.do"/>
         <s:url id="cancel" action="eprBirthCancelCertificatePrint.do">
             <%--todo change--%>
-            <s:param name="pageNo" value="%{1}"/>
+            <s:param name="pageNo" value="%{pageNo}"/>
             <s:param name="birthDistrictId" value="#request.register.birthDivision.dsDivision.district.districtUKey"/>
             <s:param name="birthDivisionId" value="#request.register.birthDivision.bdDivisionUKey"/>
             <s:param name="dsDivisionId" value="#request.register.birthDivision.dsDivision.dsDivisionUKey"/>
@@ -536,4 +536,5 @@
 </s:form>
 
 </div>
+<s:property value="%{pageNo}"/>
 <%-- Styling Completed --%>
