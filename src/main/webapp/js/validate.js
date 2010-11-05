@@ -89,6 +89,43 @@ function validatePINorNIC(domElement, errorText, errorCode) {
     }
 }
 
+// validate NIC
+function validateNIC(domElement, errorText, errorCode) {
+    with (domElement) {
+        var reg = /^([0-9]{9}[X|x|V|v])$/;
+        if (reg.test(value.trim()) == false) {
+            printMessage(errorText, errorCode);
+        } else {
+            var regNIC = /^([0-9]{9}[X|x|V|v])$/;
+            if (domElement.value.search(regNIC) == 0) {
+                var day = domElement.value.substring(2, 5);
+                if ((day >= 367 && day <= 500) || (day >= 867)) {
+                    printMessage(errorText, errorCode);
+                }
+            }
+        }
+    }
+}
+
+// validate Temporary PIN
+function validateTemPIN(domElement, errorText, errorCode) {
+    with (domElement) {
+        var reg = /^([0-9]{10})$/;
+        if (reg.test(value.trim()) == false) {
+            printMessage(errorText, errorCode);
+        }
+    }
+}
+
+// only allows to enter numbers to any field calls this method
+function isNumberKey(evt) {
+    var charCode = (evt.which) ? evt.which : event.keyCode
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+}
+
 //add X or V at the end of the NIC
 function addXorV(domElement, letter, error) {
     var reg = /^([0-9]{9})$/;

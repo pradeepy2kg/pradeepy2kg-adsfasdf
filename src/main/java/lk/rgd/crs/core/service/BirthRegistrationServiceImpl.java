@@ -21,7 +21,6 @@ import lk.rgd.crs.api.dao.BirthDeclarationDAO;
 import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.core.ValidationUtils;
-import lk.rgd.prs.api.dao.PersonCitizenshipDAO;
 import lk.rgd.prs.api.domain.Address;
 import lk.rgd.prs.api.domain.Marriage;
 import lk.rgd.prs.api.domain.Person;
@@ -52,14 +51,13 @@ public class BirthRegistrationServiceImpl implements
     private final UserManager userManager;
     private final BirthRecordsIndexer birthRecordsIndexer;
     private final AdoptionOrderDAO adoptionOrderDAO;
-    private final PersonCitizenshipDAO citizenshipDAO;
     private final BirthDeclarationValidator birthDeclarationValidator;
 
     public BirthRegistrationServiceImpl(
         BirthDeclarationDAO birthDeclarationDAO, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
         BDDivisionDAO bdDivisionDAO, CountryDAO countryDAO, RaceDAO raceDAO, PopulationRegistry ecivil,
         AppParametersDAO appParametersDAO, UserManager userManager, BirthRecordsIndexer birthRecordsIndexer,
-        AdoptionOrderDAO adoptionOrderDAO, PersonCitizenshipDAO citizenshipDAO, BirthDeclarationValidator birthDeclarationValidator) {
+        AdoptionOrderDAO adoptionOrderDAO, BirthDeclarationValidator birthDeclarationValidator) {
         this.birthDeclarationDAO = birthDeclarationDAO;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
@@ -71,7 +69,6 @@ public class BirthRegistrationServiceImpl implements
         this.userManager = userManager;
         this.birthRecordsIndexer = birthRecordsIndexer;
         this.adoptionOrderDAO = adoptionOrderDAO;
-        this.citizenshipDAO = citizenshipDAO;
         this.birthDeclarationValidator = birthDeclarationValidator;
     }
 
@@ -525,8 +522,8 @@ public class BirthRegistrationServiceImpl implements
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public List<UserWarning> approveStillBirthDeclaration(long idUkey, boolean ignoreWarnings, User user) {
-        BirthDeclaration stillBirth = getById(idUkey, user);
+    public List<UserWarning> approveStillBirthDeclaration(long idUKey, boolean ignoreWarnings, User user) {
+        BirthDeclaration stillBirth = getById(idUKey, user);
         validateBirthType(stillBirth, BirthDeclaration.BirthType.STILL);
         logger.debug("Attempt to approve still birth declaration : {} Ignore warnings : {}", stillBirth.getIdUKey(), ignoreWarnings);
 
@@ -1570,7 +1567,7 @@ public class BirthRegistrationServiceImpl implements
                 ecivil.addPerson(mother, user);
                 // set mothers passport info
                 if (!isEmptyString(parent.getMotherPassportNo()) && parent.getMotherCountry() != null) {
-                    citizenshipDAO.addCitizenship(
+                    ecivil.addCitizenship(
                         getPersonCitizenship(parent.getMotherCountry(), parent.getMotherPassportNo(), mother), user);
                 }
                 if (mother.getPin() != null) {
@@ -1653,7 +1650,7 @@ public class BirthRegistrationServiceImpl implements
             ecivil.addPerson(father, user);
             // set fathers passport info
             if (!isEmptyString(parent.getFatherPassportNo()) && parent.getFatherCountry() != null) {
-                citizenshipDAO.addCitizenship(
+                ecivil.addCitizenship(
                     getPersonCitizenship(parent.getFatherCountry(), parent.getFatherPassportNo(), father), user);
             }
             if (father.getPin() != null) {

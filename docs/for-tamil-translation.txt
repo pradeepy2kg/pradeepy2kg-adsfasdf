@@ -40,3 +40,6 @@
 *(Preferred Language for Person Registration Certificate) நபரின் பதிவிற்கான சான்றிதழினை வழங்கப்படவேண்டிய மொழி 
 *(Marriages Details not available.) திருமணம் சம்மந்தமான விபரங்கள் அறிக்கையிடப்படவில்லை 
 *(Citizenships and Passport Details not available.) வேறு நாட்டினது பிரஜாவுரிமை சம்பந்தமான விபரங்கள் இல்லை 
+
+
+* (Preferred Language for Person Registration Certificate )පුද්ගලයකු ලියාපදිංචි කිරීමේ සහතිකය නිකුත් කල යුතු භාෂාව 

@@ -133,7 +133,6 @@
         <constructor-arg ref="userManagerService"/>
         <constructor-arg ref="birthRecordsIndexer"/>
         <constructor-arg ref="adoptionOrderDAOImpl"/>
-        <constructor-arg ref="personCitizenshipDAOImpl"/>
         <constructor-arg ref="birthDeclarationValidator"/>
     </bean>
 

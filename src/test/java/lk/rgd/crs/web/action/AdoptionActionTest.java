@@ -85,7 +85,7 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
 /*        assertNotNull("Dsdivision list", adoptionAction.getDsDivisionList());
         assertNotNull("District list", adoptionAction.getDistrictList());*/
 
-        assertEquals("Action erros for Adoption Declaration ", 0, adoptionAction.getActionErrors().size());
+        assertEquals("Action errors for Adoption Declaration ", 0, adoptionAction.getActionErrors().size());
         request.setParameter("adoption.applicantAddress", "Thalawathugoda Rd,Kotte.");
         request.setParameter("adoption.applicantCountryId", "3");
         request.setParameter("adoption.applicantMother", "false");
@@ -133,7 +133,7 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
         request.setParameter("idUKey", "1");
         initAndExucute("/adoption/eprAdoptionEditMode.do", session);
         session = adoptionAction.getSession();
-        assertEquals("Action erros for Adoption Declaration ", 0, adoptionAction.getActionErrors().size());
+        assertEquals("Action errors for Adoption Declaration ", 0, adoptionAction.getActionErrors().size());
         assertNotNull("adoption object", adoptionAction.getAdoption());
 
 
@@ -203,7 +203,7 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
         request.setParameter("previousFlag", "false");
         initAndExucute("/adoption/eprPrintAdoptionCertificate.do", session);
         session = adoptionAction.getSession();
-        assertEquals("Action erros for Adoption Declaration ", 0, adoptionAction.getActionErrors().size());
+        assertEquals("Action errors for Adoption Declaration ", 0, adoptionAction.getActionErrors().size());
 
         assertNotNull("child new name", adoptionAction.getAdoption().getChildNewName());
         assertNotNull("child birth day", adoptionAction.getAdoption().getChildAgeYears());
@@ -221,8 +221,8 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
         request.setParameter("idUKey", "4");
         initAndExucute("/adoption/eprApproveAdoption.do", session);
         session = adoptionAction.getSession();
-        assertEquals("Action erros for Adoption Declaration ", 1, adoptionAction.getActionErrors().size());
-        logger.debug("Sucsessfuly approved : {} ", adoptionAction.getIdUKey());
+        assertEquals("Action errors for Adoption Declaration ", 1, adoptionAction.getActionErrors().size());
+        logger.debug("Successfully approved : {} ", adoptionAction.getIdUKey());
     }
 
     public void testAdoptionApplicantInfo() throws Exception {
@@ -245,7 +245,7 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
         request.setParameter("search", "සොයන්න");
         initAndExucute("/adoption/eprAdoptionFind.do", session);
         session = adoptionAction.getSession();
-        assertEquals("Action erros for Adoption Declaration ", 0, adoptionAction.getActionErrors().size());
+        assertEquals("Action errors for Adoption Declaration ", 0, adoptionAction.getActionErrors().size());
         //assertNotNull("court ", adoptionAction.getAdoption().getCourt());
         assertNotNull("court ordernumber ", adoptionAction.getAdoption().getCourtOrderNumber());
         assertNotNull("child given name ", adoptionAction.getAdoption().getChildNewName());
@@ -259,7 +259,7 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
 
         initAndExucute("/adoption/eprAdoptionApplicantInfo.do", session);
         session = adoptionAction.getSession();
-        assertEquals("Action erros for Adoption Declaration ", 0, adoptionAction.getActionErrors().size());
+        assertEquals("Action errors for Adoption Declaration ", 0, adoptionAction.getActionErrors().size());
         //todo check follow
 /*        assertNotNull("ertificate Applicant Address", adoptionAction.getAdoption().getCertificateApplicantAddress());
         assertNotNull("certificate Applicant Name", adoptionAction.getAdoption().getCertificateApplicantName());*/
@@ -299,7 +299,7 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
         request.setParameter("previousFlag", "false");
         initAndExucute("/adoption/eprPrintAdoptionNotice.do", session);
         session = adoptionAction.getSession();
-        assertEquals("Action erros for Adoption Declaration ", 1, adoptionAction.getActionErrors().size());
+        assertEquals("Action errors for Adoption Declaration ", 1, adoptionAction.getActionErrors().size());
 
        // assertNotNull("Court ", adoptionAction.getAdoption().getCourt());
         assertNotNull("Court order Number ", adoptionAction.getAdoption().getCourtOrderNumber());

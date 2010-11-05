@@ -34,10 +34,23 @@ public interface PopulationRegistry {
      * @param currentAddress the current address to be added
      * @param user the user performing this action
      * @param citizenshipList the person citizenship list
+     * @param ignoreDuplicates
      * @return the PIN number generated for the Person - for verified records, or -1 for any other
      */
     public List<Person> addExistingPerson(Person person, String permanentAddress, String currentAddress, User user,
-        List<PersonCitizenship> citizenshipList);
+        List<PersonCitizenship> citizenshipList, boolean ignoreDuplicates);
+
+    /**
+     * Update existing person to the PRS
+     * @param person
+     * @param permanentAddress
+     * @param currentAddress
+     * @param user
+     * @param citizenshipList
+     * @param ignoreDuplicates
+     */
+    public void editExistingPerson(Person person, String permanentAddress, String currentAddress, User user,
+        List<PersonCitizenship> citizenshipList, boolean ignoreDuplicates);
 
     /**
      * Update a Person on the PRS
@@ -91,6 +104,20 @@ public interface PopulationRegistry {
      * @param user the user performing this action
      */
     public void updateAddress(Address a, User user);
+
+    /**
+     * Add PersonCitizenship to the PRS
+     * @param citizenship the PersonCitizenship to be added
+     * @param user the use performing this action
+     */
+    public void addCitizenship(PersonCitizenship citizenship, User user);
+
+    /**
+     * Update PersonCitizenship to the PRS
+     * @param citizenship the PersonCitizenship to be added
+     * @param user the use performing this action
+     */
+    public void updateCitizenship(PersonCitizenship citizenship, User user);
 
     /**
      * Return the Person object for the person with the given PIN

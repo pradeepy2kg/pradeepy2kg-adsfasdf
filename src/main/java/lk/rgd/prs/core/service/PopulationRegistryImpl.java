@@ -3,8 +3,8 @@ package lk.rgd.prs.core.service;
 import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
 import lk.rgd.common.api.Auditable;
-import lk.rgd.common.core.index.SolrIndexManager;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.core.index.SolrIndexManager;
 import lk.rgd.prs.PRSRuntimeException;
 import lk.rgd.prs.api.dao.PersonCitizenshipDAO;
 import lk.rgd.prs.api.dao.PersonDAO;
@@ -86,20 +86,25 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public List<Person> addExistingPerson(Person person, String permanentAddress, String currentAddress, User user,
-        List<PersonCitizenship> citizenshipList) {
+        List<PersonCitizenship> citizenshipList, boolean ignoreDuplicates) {
         long pin = -1;
+        logger.debug("Adding an existing person to the PRS");
 
-        // TODO validate inputs. NIC, permanent and current address, DOB
+        if (person.getDateOfBirth() == null || permanentAddress == null || person.getRace() == null ||
+            isEmptyString(person.getPlaceOfBirth()) || isEmptyString(person.getFullNameInOfficialLanguage()) ||
+            isEmptyString(person.getFullNameInEnglishLanguage()) || person.getDateOfRegistration() == null) {
+            handleException("Adding person is incomplete, Check required field values", ErrorCodes.INVALID_DATA);
+        }
         if (!user.isAuthorized(Permission.PRS_LOOKUP_PERSON_BY_KEYS)) {
             handleException("User : " + user.getUserId() + " is not allowed to lookup entries on the PRS by keys (nic/temporaryPIN)",
                 ErrorCodes.PRS_LOOKUP_BY_KEYS_DENIED);
         }
-
         if (!user.isAuthorized(Permission.PRS_ADD_PERSON)) {
             handleException("User : " + user.getUserId() + " is not allowed to add entries to the PRS",
                 ErrorCodes.PRS_ADD_RECORD_DENIED);
         }
-
+        
+        // TODO add Solr searching results to following list
         final List<Person> exactRecord = new ArrayList<Person>();
         if (person.getTemporaryPin() != null) {
             exactRecord.add(personDao.findPersonByTemporaryPIN(person.getTemporaryPin()));
@@ -108,12 +113,13 @@ public class PopulationRegistryImpl implements PopulationRegistry {
                 exactRecord.add(p);
             }
         }
-        if (!exactRecord.isEmpty()) {
+        if (!exactRecord.isEmpty() && !ignoreDuplicates) {
+            logger.debug("Duplicate {} records found for temporary PIN or NIC", exactRecord.size());
             return exactRecord;
         }
 
-        if (exactRecord.isEmpty()) {
-            person.setStatus(Person.Status.VERIFIED);
+        if (exactRecord.isEmpty() || ignoreDuplicates) {
+            person.setStatus(Person.Status.SEMI_VERIFIED);
             person.setLifeStatus(Person.LifeStatus.ALIVE);
             // generate a PIN for existing person
             pin = pinGenerator.generatePINNumber(person.getDateOfBirth(), person.getGender() == 0);
@@ -123,6 +129,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             // add permanent address of the person to the PRS
             if (permanentAddress != null && permanentAddress.trim().length() > 0) {
                 final Address permanentAdd = new Address(permanentAddress);
+                permanentAdd.setPermanent(true);
                 person.specifyAddress(permanentAdd);
                 personDao.addAddress(permanentAdd);
             }
@@ -143,7 +150,48 @@ public class PopulationRegistryImpl implements PopulationRegistry {
                 }
             }
         }
+        logger.debug("Added a new person to the PRS with PersonUKey : {} and PIN : {}", person.getPersonUKey(),
+            person.getPin());
         return Collections.emptyList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void editExistingPerson(Person person, String permanentAddress, String currentAddress, User user,
+        List<PersonCitizenship> citizenshipList, boolean ignoreDuplicates) {
+        throw new UnsupportedOperationException("Person Edit Still Under Construction");
+        // TODO still implementing
+//        Person existing = personDao.getByUKey(person.getPersonUKey());
+//        final Person.Status currentState = person.getStatus();
+//
+//        existing.setStatus(Person.Status.VERIFIED);
+//        existing.setLifeStatus(Person.LifeStatus.ALIVE);
+//        long pin = pinGenerator.generatePINNumber(person.getDateOfBirth(), person.getGender() == 0);
+//        existing.setPin(pin);
+
+//        personDao.addPerson(person);
+        // add permanent address of the person to the PRS
+//        if (permanentAddress != null && permanentAddress.trim().length() > 0) {
+//            final Address permanentAdd = new Address(permanentAddress);
+//            person.specifyAddress(permanentAdd);
+//            personDao.addAddress(permanentAdd);
+//        }
+//        // add current address of the person to the PRS
+//        if (currentAddress != null && currentAddress.trim().length() > 0) {
+//            final Address currentAdd = new Address(currentAddress);
+//            person.specifyAddress(currentAdd);
+//            personDao.addAddress(currentAdd);
+//        }
+//        personDao.updatePerson(existing);
+        // add citizenship list of the person to the PRS
+//        if (citizenshipList != null) {
+//            for (PersonCitizenship pc : citizenshipList) {
+//                pc.setPerson(person);
+//                citizenshipDAO.addCitizenship(pc, user);
+//            }
+//        }
     }
 
     /**
@@ -237,6 +285,30 @@ public class PopulationRegistryImpl implements PopulationRegistry {
                 ErrorCodes.PRS_ADD_RECORD_DENIED);
         }
         personDao.updateAddress(address);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void addCitizenship(PersonCitizenship citizenship, User user) {
+        if (!user.isAuthorized(Permission.PRS_ADD_PERSON)) {
+            handleException("User : " + user.getUserId() + " is not allowed to add citizenships to the PRS",
+                ErrorCodes.PRS_ADD_RECORD_DENIED);
+        }
+        citizenshipDAO.addCitizenship(citizenship, user);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void updateCitizenship(PersonCitizenship citizenship, User user) {
+        if (!user.isAuthorized(Permission.PRS_EDIT_PERSON)) {
+            handleException("User : " + user.getUserId() + " is not allowed to update citizenships to the PRS",
+                ErrorCodes.PRS_EDIT_RECORD_DENIED);
+        }
+        citizenshipDAO.updateCitizenship(citizenship, user);
     }
 
     /**
@@ -336,5 +408,9 @@ public class PopulationRegistryImpl implements PopulationRegistry {
 
     private boolean isBlankString(String s) {
         return s != null && s.trim().length() == 0;
+    }
+
+    private static final boolean isEmptyString(String s) {
+        return s == null || s.trim().length() == 0;
     }
 }

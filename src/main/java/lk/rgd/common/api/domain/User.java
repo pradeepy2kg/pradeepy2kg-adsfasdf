@@ -1,13 +1,12 @@
 package lk.rgd.common.api.domain;
 
+import lk.rgd.AppConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
-
-import lk.rgd.AppConstants;
 
 /**
  * Represents a User of the system and his groups, preferences and privileges

@@ -1,7 +1,6 @@
 package lk.rgd.prs.api.domain;
 
 import lk.rgd.AppConstants;
-import lk.rgd.common.api.domain.Country;
 import lk.rgd.common.api.domain.Race;
 import lk.rgd.common.util.WebUtils;
 
@@ -243,7 +242,7 @@ public class Person implements Serializable {
      * The Countries assigned to this person
      */
     @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
-    private Set<PersonCitizenship> countries = new HashSet<PersonCitizenship>();  
+    private Set<PersonCitizenship> countries = new HashSet<PersonCitizenship>();
 
     /**
      * Add a record of a marriage. Marks this marriage as the 'last' marriage
@@ -470,7 +469,7 @@ public class Person implements Serializable {
     }
 
     public void setMotherPINorNIC(String motherPINorNIC) {
-        this.motherPINorNIC = motherPINorNIC;
+        this.motherPINorNIC = WebUtils.filterBlanksAndToUpper(motherPINorNIC);
     }
 
     public String getFatherPINorNIC() {
@@ -478,7 +477,7 @@ public class Person implements Serializable {
     }
 
     public void setFatherPINorNIC(String fatherPINorNIC) {
-        this.fatherPINorNIC = fatherPINorNIC;
+        this.fatherPINorNIC = WebUtils.filterBlanksAndToUpper(fatherPINorNIC);
     }
 
     public Person getMother() {

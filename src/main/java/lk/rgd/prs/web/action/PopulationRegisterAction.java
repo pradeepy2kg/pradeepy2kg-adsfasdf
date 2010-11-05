@@ -1,6 +1,7 @@
 package lk.rgd.prs.web.action;
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.AppConstants;
 import lk.rgd.common.api.dao.CountryDAO;
 import lk.rgd.common.api.dao.RaceDAO;
 import lk.rgd.common.api.domain.Country;
@@ -39,7 +40,6 @@ public class PopulationRegisterAction extends ActionSupport implements SessionAw
 
     private Map session;
     private User user;
-
     private Person person;
 
     private long personUKey;
@@ -49,6 +49,8 @@ public class PopulationRegisterAction extends ActionSupport implements SessionAw
     private String permanentAddress;
     private String currentAddress;
     private String citizenship;
+    private String language;
+    private boolean ignoreDuplicate;
 
     public PopulationRegisterAction(PopulationRegistry service, RaceDAO raceDAO, CountryDAO countryDAO) {
         this.service = service;
@@ -64,13 +66,19 @@ public class PopulationRegisterAction extends ActionSupport implements SessionAw
         // TODO implement validation 
         validateExistingPersonRegistration();
 
-//        final List<PersonCitizenship> citizenshipList = new ArrayList<PersonCitizenship>();
         citizenshipList = new ArrayList<PersonCitizenship>();
         getCitizenshipList(citizenshipList);
         if (personCountryId != 0 && personPassportNo != null) {
             citizenshipList.add(createPersonCitizenship(countryDAO.getCountry(personCountryId), personPassportNo));
         }
-        personList = service.addExistingPerson(person, permanentAddress, currentAddress, user, citizenshipList);
+
+        if (personUKey == 0) {
+            personList = service.addExistingPerson(person, permanentAddress, currentAddress, user, citizenshipList, ignoreDuplicate);
+        } else {
+            logger.debug("Editing existing person in PRS with personUKey : {}", personUKey);
+            service.editExistingPerson(person, permanentAddress, currentAddress, user, citizenshipList, true);
+            personList = Collections.emptyList();
+        }
 
         if (personList.isEmpty()) {
             final long pin = person.getPin();
@@ -91,21 +99,10 @@ public class PopulationRegisterAction extends ActionSupport implements SessionAw
     }
 
     /**
-     * This method edits existing persons in the PRS
-     */
-    public String editPersonDetails() {
-        logger.debug("Edit Person Details with PersonUKey : {}", personUKey);
-        populate();
-        person = service.getByUKey(personUKey, user);
-        return SUCCESS;
-    }
-
-    /**
      * Returns citizenship list after processing citizenship String passed by the Existing Person Registration Form
      */
     private void getCitizenshipList(List<PersonCitizenship> list) {
         logger.debug("Received citizenship string : {}", citizenship);
-//        List<PersonCitizenship> list = new ArrayList<PersonCitizenship>();
         if (citizenship != null && citizenship.trim().length() > 0) {
 
             int countryId;
@@ -116,10 +113,6 @@ public class PopulationRegisterAction extends ActionSupport implements SessionAw
                 passportNo = tokenizer.nextToken();
                 list.add(createPersonCitizenship(countryDAO.getCountry(countryId), passportNo));
             }
-
-//            return list;
-        } else {
-//            return null;
         }
     }
 
@@ -145,11 +138,25 @@ public class PopulationRegisterAction extends ActionSupport implements SessionAw
     }
 
     /**
+     * This method edits existing persons in the PRS
+     */
+    public String personEditInit() {
+        logger.debug("Edit Person Details with PersonUKey : {}", personUKey);
+        populate();
+        person = service.getByUKey(personUKey, user);
+        return SUCCESS;
+    }
+
+    /**
      * This method is used to load existing person registration form
      */
     public String personRegistrationInit() {
         logger.debug("Registration of existing person to PRS page loaded");
         populate();
+        // followings used to load basic values in page load. e.g: gender:male, preferredLang:sinhala etc. 
+        person = new Person();
+        person.setPreferredLanguage(AppConstants.SINHALA);
+
         return SUCCESS;
     }
 
@@ -158,8 +165,6 @@ public class PopulationRegisterAction extends ActionSupport implements SessionAw
      */
     private void populate() {
         logger.debug("Populating initializing data");
-        String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
-
         raceList = raceDAO.getRaces(language);
         countryList = countryDAO.getCountries(language);
         logger.debug("Race list and Country list populated with size : {} and {}", raceList.size(), countryList.size());
@@ -172,7 +177,8 @@ public class PopulationRegisterAction extends ActionSupport implements SessionAw
     public void setSession(Map session) {
         this.session = session;
         user = (User) session.get(WebConstants.SESSION_USER_BEAN);
-        logger.debug("setting User: {}", user.getUserName());
+        language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
+        logger.debug("setting User: {} and Language : {}", user.getUserName(), language);
     }
 
     public Map<Integer, String> getRaceList() {
@@ -246,7 +252,7 @@ public class PopulationRegisterAction extends ActionSupport implements SessionAw
     }
 
     public void setPersonPassportNo(String personPassportNo) {
-        this.personPassportNo = personPassportNo;
+        this.personPassportNo = WebUtils.filterBlanksAndToUpper(personPassportNo);
     }
 
     public String getPermanentAddress() {
@@ -270,7 +276,15 @@ public class PopulationRegisterAction extends ActionSupport implements SessionAw
     }
 
     public void setCitizenship(String citizenship) {
-        this.citizenship = citizenship;
+        this.citizenship = WebUtils.filterBlanksAndToUpper(citizenship);
         logger.debug("setting citizenship list : {}", citizenship);
+    }
+
+    public boolean isIgnoreDuplicate() {
+        return ignoreDuplicate;
+    }
+
+    public void setIgnoreDuplicate(boolean ignoreDuplicate) {
+        this.ignoreDuplicate = ignoreDuplicate;
     }
 }
