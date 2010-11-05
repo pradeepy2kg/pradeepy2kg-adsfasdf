@@ -1,5 +1,6 @@
 <%@ page import="java.util.Date" %>
 <%@ page import="lk.rgd.common.util.DateTimeUtils" %>
+<%@ page import="lk.rgd.common.util.DeathTypeUtil" %>
 <%-- @author Duminda Dharmakeerthi --%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -185,7 +186,7 @@
                     <td>සහතික පත්‍රයේ අංකය<br>சான்றிதழ் இல<br>Certificate Number</td>
                 </tr>
                 <tr height="40px">
-                    <td align="center"><s:label name=""
+                    <td align="center"><s:label value="%{deathRegister.death.deathSerialNo}"
                                                 cssStyle="font-size:11pt;"/></td>
                     <td align="center"><s:label name="idUKey" cssStyle="font-size:11pt;"/></td>
                 </tr>
@@ -331,8 +332,10 @@
         <br>மரணத்தின் வகை
         <br>Type of Death
     </td>
-    <td colspan="7"><s:label name="" value="%{}"/>
-        <br><s:label name="" value="%{}"/>
+
+    <td colspan="7">
+        <%=DeathTypeUtil.getDeathType((Integer) request.getAttribute("deathRegister.deathType.ordinal()"),
+                (String) request.getAttribute("deathRegister.death.preferredLanguage"))%>
         <div class="changes-done">
             <s:if test="changedFields.get(0)">
                 **
