@@ -119,7 +119,7 @@
     <s:form action="eprBirthCertificateBulkPrint" name="birth_confirm_print">
     <div id="birth-register-approval-body">
         <s:actionmessage cssClass="alreadyPrinted"/>
-        <s:actionerror/>
+        <s:actionerror cssStyle="color:red;font-size:10pt"/>
         <s:if test="printList.size > 0">
             <fieldset style="border:none">
                 <table id="print-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">

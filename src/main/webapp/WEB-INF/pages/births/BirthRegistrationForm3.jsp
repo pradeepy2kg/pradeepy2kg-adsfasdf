@@ -429,7 +429,7 @@ function initPage() {
                     <tbody>
                     <tr>
                         <td><label>ඔව්<br>ஆம்<br>Yes</label></td>
-                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'MARRIED':''}" 
+                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'MARRIED':''}"
                                      onclick="disableMarriage(false);disableSigns(true)" id="marriedId"/>
                         </td>
                     </tr>
@@ -442,7 +442,8 @@ function initPage() {
                     <tr>
                         <td><label>නැත - පසුව විවාහවී ඇත<br>இல்லை, பின் விவாகமாணவா்கள்<br>No but since married</label>
                         </td>
-                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'NO_SINCE_MARRIED':''}" id="marriedId"
+                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'NO_SINCE_MARRIED':''}"
+                                     id="marriedId"
                                      onclick="disableMarriage(false);disableSigns(false)"/>
                         </td>
                     </tr>
@@ -665,13 +666,17 @@ function initPage() {
     <tr>
         <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) නම <br>கொடுப்பவரின் பெயர்
             <br>Name</label></td>
-        <td colspan="4"><s:textarea name="informant.informantName" id="informantName" cssStyle="width:98%;"/></td>
+        <td colspan="4"><s:textarea name="informant.informantName" id="informantName" cssStyle="width:95%;"/>
+            <s:label value="*" cssStyle="color:red;font-size:15pt"/>
+        </td>
     </tr>
     <tr>
         <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)තැපැල් ලිපිනය<br>தபால்
             முகவரி <br>Postal Address</label></td>
         <td colspan="4"><s:textarea name="informant.informantAddress" id="informantAddress"
-                                    cssStyle="width:98%;"/></td>
+                                    cssStyle="width:95%;"/>
+            <s:label value="*" cssStyle="color:red;font-size:15pt"/>
+        </td>
     </tr>
     <tr>
         <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ඇමතුම් විස්තර
@@ -691,6 +696,7 @@ function initPage() {
                 <s:label value="YYYY-MM-DD" cssStyle="float:right;margin-right:190px;font-size:10px"/><br>
                 <s:textfield name="informant.informantSignDate" id="informDatePicker" cssStyle="margin-right:70px;"
                              maxLength="10"/>
+                <s:label value="*" cssStyle="color:red;font-size:15pt"/>
     </tr>
     </tbody>
 </table>

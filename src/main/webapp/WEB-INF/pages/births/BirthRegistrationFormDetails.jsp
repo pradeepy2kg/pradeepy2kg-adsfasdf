@@ -7,7 +7,7 @@
 <div id="birth-register-approval">
     <div id="birth-register-approval-header">
         <s:actionmessage/>
-        <s:actionerror/>
+        <s:actionerror cssStyle="color:red;font-size:10pt"/>
     </div>
 
     <div id="birth-register-approval-body">

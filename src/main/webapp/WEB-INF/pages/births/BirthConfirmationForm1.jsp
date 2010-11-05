@@ -164,7 +164,7 @@
         <td>
             <form action="eprBirthConfirmationInit.do" method="post" onsubmit="javascript:return validateSearch()">
                 <table style=" border:1px solid #000000; width:300px">
-                    <tr><s:actionerror/></tr>
+                    <tr><s:actionerror cssStyle="color:red;font-size:10pt"/></tr>
                     <tr>
                         <td><label><span class="font-8">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span></label>
                         </td>

@@ -17,7 +17,7 @@
 <div id="death-registration-deatails-outer">
     <div id="death-registration-details-header">
         <s:actionmessage/>
-        <s:actionerror/>
+        <s:actionerror cssStyle="color:red;font-size:10pt"/>
     </div>
 
     <div id="death-registration-details-body">

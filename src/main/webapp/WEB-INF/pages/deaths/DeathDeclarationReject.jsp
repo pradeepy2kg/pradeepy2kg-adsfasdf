@@ -29,7 +29,7 @@
     </table>
     <br/>
 
-    <s:actionerror/>
+    <s:actionerror cssStyle="color:red;font-size:10pt"/>
 
     <s:form action="eprRejectDeath.do" method="post" onsubmit="javascript:return validate()">
         <fieldset>
