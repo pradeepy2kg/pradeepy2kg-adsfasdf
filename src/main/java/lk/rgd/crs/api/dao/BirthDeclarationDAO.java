@@ -55,7 +55,7 @@ public interface BirthDeclarationDAO {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getConfirmationPrintPending(BDDivision birthDivision,
-        int pageNo, int noOfRows, boolean printed);
+                                                              int pageNo, int noOfRows, boolean printed);
 
     /**
      * Get Paginated list of BDFs for the given state
@@ -67,7 +67,7 @@ public interface BirthDeclarationDAO {
      * @return approved list for print
      */
     public List<BirthDeclaration> getPaginatedListForState(BDDivision birthDivision,
-        int pageNo, int noOfRows, BirthDeclaration.State state);
+                                                           int pageNo, int noOfRows, BirthDeclaration.State state);
 
     /**
      * Get Paginated list of BDFs for the given state and birth type
@@ -80,7 +80,7 @@ public interface BirthDeclarationDAO {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getPaginatedListForStateAndBirthType(BDDivision birthDivision, int pageNo,
-        int noOfRows, BirthDeclaration.State state, BirthDeclaration.BirthType birthType);
+                                                                       int noOfRows, BirthDeclaration.State state, BirthDeclaration.BirthType birthType);
 
     /**
      * Returns the Birth Declaration object for a given Id
@@ -123,7 +123,7 @@ public interface BirthDeclarationDAO {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getByBDDivisionStatusAndRegisterDateRange(BDDivision birthDivision,
-        BirthDeclaration.State status, Date startDate, Date endDate, int pageNo, int noOfRows);
+                                                                            BirthDeclaration.State status, Date startDate, Date endDate, int pageNo, int noOfRows);
 
     /**
      * Returns a limited set of BirthDeclarations for a selected BD Division, selected range of registration dates in
@@ -140,8 +140,8 @@ public interface BirthDeclarationDAO {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getByBDDivisionStatusBirthTypeAndRegisterDateRange(BDDivision birthDivision,
-        BirthDeclaration.State status, BirthDeclaration.BirthType birthType, Date startDate, Date endDate, int pageNo,
-        int noOfRows);
+                                                                                     BirthDeclaration.State status, BirthDeclaration.BirthType birthType, Date startDate, Date endDate, int pageNo,
+                                                                                     int noOfRows);
 
     /**
      * Returns a limited set of BirthDeclarations for which confirmation changes captured are awaiting approval
@@ -156,7 +156,7 @@ public interface BirthDeclarationDAO {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getByBDDivisionStatusAndConfirmationReceiveDateRange(BDDivision birthDivision,
-        Date startDate, Date endDate, int pageNo, int noOfRows);
+                                                                                       Date startDate, Date endDate, int pageNo, int noOfRows);
 
     /**
      * Returns a limited set of BirthDeclarations for a given birthDivision
@@ -184,6 +184,16 @@ public interface BirthDeclarationDAO {
     public List<BirthDeclaration> getHistoricalRecordsForBDDivisionAndSerialNo(BDDivision birthDivision, long serialNo);
 
     /**
+     * get all the alterations done to this birth recode
+     *
+     * @param birthDivision birth recorded division
+     * @param serialNo      serial number of the birth certificate
+     * @param idUKey        idUKey of the record
+     * @return list of birth declaration objects .
+     */
+    public List<BirthDeclaration> getHistoricalAlterationRecordForBDDivisionAndSerialNo(BDDivision birthDivision, long serialNo, long idUKey);
+
+    /**
      * Get Paginated list of BDFs for the given state based on given DSDivision
      *
      * @param dsDivision the divisional Secretariat
@@ -193,7 +203,7 @@ public interface BirthDeclarationDAO {
      * @return approved list for print
      */
     public List<BirthDeclaration> getPaginatedListForStateByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows,
-        BirthDeclaration.State state);
+                                                                       BirthDeclaration.State state);
 
     /**
      * Get Paginated list of BDFs for the given state based on given DSDivision ,birth type and state
@@ -206,7 +216,7 @@ public interface BirthDeclarationDAO {
      * @return list of birth declarations
      */
     public List<BirthDeclaration> getPaginatedListForStateAndBirthTypeByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows,
-        BirthDeclaration.State state, BirthDeclaration.BirthType birthType);
+                                                                                   BirthDeclaration.State state, BirthDeclaration.BirthType birthType);
 
     /**
      * Returns a limited set of BirthDeclarations for a selected BD Division, selected range of registration dates in
@@ -222,7 +232,7 @@ public interface BirthDeclarationDAO {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getByDSDivisionStatusAndRegisterDateRange(DSDivision dsDivision,
-        BirthDeclaration.State status, Date startDate, Date endDate, int pageNo, int noOfRows);
+                                                                            BirthDeclaration.State status, Date startDate, Date endDate, int pageNo, int noOfRows);
 
     /**
      * Returns a limited set of BirthDeclarations for a selected BD Division, selected range of registration dates in
@@ -239,8 +249,8 @@ public interface BirthDeclarationDAO {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getByDSDivisionStatusBirthTypeAndRegisterDateRange(DSDivision dsDivision,
-        BirthDeclaration.State status, BirthDeclaration.BirthType birthType, Date startDate, Date endDate, int pageNo,
-        int noOfRows);
+                                                                                     BirthDeclaration.State status, BirthDeclaration.BirthType birthType, Date startDate, Date endDate, int pageNo,
+                                                                                     int noOfRows);
 
     /**
      * Returns a limited set of BirthDeclarations for which confirmation changes captured are awaiting approval
@@ -255,7 +265,7 @@ public interface BirthDeclarationDAO {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getByDSDivisionStatusAndConfirmationReceiveDateRange(DSDivision dsDivision,
-        Date startDate, Date endDate, int pageNo, int noOfRows);
+                                                                                       Date startDate, Date endDate, int pageNo, int noOfRows);
 
     /**
      * Returns a limited set of BirthDeclarations for a given dsDivision

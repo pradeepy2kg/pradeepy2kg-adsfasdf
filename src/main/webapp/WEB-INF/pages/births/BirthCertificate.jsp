@@ -1,4 +1,4 @@
-<%-- @author Duminda Dharmakeerthi. --%>
+<%-- @author Duminda Dharmakeerthi,amith jayasekara--%>
 <%@ page import="lk.rgd.common.util.DateTimeUtils" %>
 <%@ page import="java.util.Date" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
@@ -86,6 +86,34 @@
 </script>
 
 <div id="birth-certificate-outer">
+
+<div id="alterations">
+    <s:if test="archivedEntryList.size>0">
+        <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;width:400px;float:left;">
+            <legend><s:label value="%{getText('ArchivedData.label')}"/></legend>
+            <table>
+                <th></th>
+                <th><s:label value="%{getText('lastupdate.time.label')}"/></th>
+                <th><s:label name="viewlbl" value="%{getText('view.label')}"/></th>
+                <s:iterator status="archivedStatus" value="archivedEntryList" id="searchId">
+                    <tr class="<s:if test="#archivedStatus.odd == true">odd</s:if><s:else>even</s:else>">
+                        <td class="table-row-index"><s:property value="%{#archivedStatus.count}"/></td>
+                        <s:set value="getRegister().getStatus()" name="status"/>
+                        <td><s:property value="getLifeCycleInfo().getLastUpdatedTimestamp()"/></td>
+                        <s:set name="abc" value="getLifeCycleInfo().getLastUpdatedTimestamp()"/>
+
+                        <s:url id="viewSelected" action="eprBirthCertificate.do">
+                            <s:param name="bdId" value="idUKey"/>
+                        </s:url>
+                        <td><s:a href="%{viewSelected}" title="%{getText('view.label')}">
+                            <img src="<s:url value='/images/view_1.gif'/>" width="25" height="25" border="none"/></s:a>
+                        </td>
+                    </tr>
+                </s:iterator>
+            </table>
+        </fieldset>
+    </s:if>
+</div>
 <s:if test="directPrint">
     <s:url id="print" value="eprDirectPrintBirthCertificate.do"/>
     <s:url id="cancel" action="eprBirthRegistrationHome.do"/>
@@ -99,7 +127,8 @@
     <s:else>
         <s:url id="print" value="eprMarkCertificateAsPrinted.do"/>
         <s:url id="cancel" action="eprBirthCancelCertificatePrint.do">
-            <s:param name="pageNo" value="%{#request.pageNo}"/>
+            <%--todo change--%>
+            <s:param name="pageNo" value="%{1}"/>
             <s:param name="birthDistrictId" value="#request.register.birthDivision.dsDivision.district.districtUKey"/>
             <s:param name="birthDivisionId" value="#request.register.birthDivision.bdDivisionUKey"/>
             <s:param name="dsDivisionId" value="#request.register.birthDivision.dsDivision.dsDivisionUKey"/>
@@ -132,6 +161,7 @@
         </fieldset>
     </s:if>
 </div>
+
     <%--TODO remove--%>
 <s:hidden name="idUKey" value="%{#request.idUKey}"/>
 
@@ -147,7 +177,7 @@
             <s:submit value="%{getText('mark_as_print.button')}" type="submit"/>
         </div>
         <div class="form-submit" style="margin:15px 0 0 5px;">
-            <s:a href="%{printPage}" onclick="printPage()"><s:label value="%{getText('print.button')}" /></s:a>
+            <s:a href="%{printPage}" onclick="printPage()"><s:label value="%{getText('print.button')}"/></s:a>
             <s:hidden id="printMessage" value="%{getText('print.message')}"/>
         </div>
     </s:if>
@@ -312,7 +342,7 @@
             </td>
             <td colspan="2">
                 දරුවා මැරී උපදින විට ගර්භයට සති කීයක් ගත වී තිබුනේද යන්න
-                <br>பிள்ளை இறந்து பிறந்த பொழுது கர்ப்பந் தரித்து எத்தனை வாரம் 
+                <br>பிள்ளை இறந்து பிறந்த பொழுது கர்ப்பந் தரித்து எத்தனை வாரம்
                 <br>Number of weeks pregnant at the time of still-birth
             </td>
             <td><s:label name="" value="%{#request.child.weeksPregnant}"/></td>
@@ -496,7 +526,7 @@
         <s:submit value="%{getText('mark_as_print.button')}" type="submit"/>
     </div>
     <div class="form-submit" style="margin:15px 0 0 5px;">
-        <s:a href="%{printPage}" onclick="printPage()"><s:label value="%{getText('print.button')}" /></s:a>
+        <s:a href="%{printPage}" onclick="printPage()"><s:label value="%{getText('print.button')}"/></s:a>
         <s:hidden id="printMessage" value="%{getText('print.message')}"/>
     </div>
 </s:if>

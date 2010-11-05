@@ -127,8 +127,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public BirthRegisterAction(BirthRegistrationService service, AdoptionOrderService adoptionService, DistrictDAO districtDAO,
-        CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO,
-        AppParametersDAO appParametersDAO, UserLocationDAO userLocationDAO, LocationDAO locationDAO, AssignmentDAO assignmentDAO) {
+                               CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO,
+                               AppParametersDAO appParametersDAO, UserLocationDAO userLocationDAO, LocationDAO locationDAO, AssignmentDAO assignmentDAO) {
         this.service = service;
         this.adoptionService = adoptionService;
         this.districtDAO = districtDAO;
@@ -358,6 +358,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     //todo move following method to PrintAction
+
     /**
      * Load  List page which needs changes by parents
      *
@@ -388,7 +389,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 returnAddress = location.getEnLocationMailingAddress();
 
             if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
-                bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED)) {
+                    bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED)) {
                 return ERROR;
             } else {
                 beanPopulate(bdf);
@@ -502,7 +503,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
             if (existSerial != 0 && existBDivisionId != 0) {
                 existingBDF = service.getActiveRecordByBDDivisionAndSerialNo(
-                    bdDivisionDAO.getBDDivisionByPK(existBDivisionId), existSerial, user);
+                        bdDivisionDAO.getBDDivisionByPK(existBDivisionId), existSerial, user);
             } else {
                 addActionError(getText("adoption_invalid_BDivision_or_serialNo.label"));
             }
@@ -627,7 +628,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 logger.debug("bdId is {} ", bdId);
                 logger.debug("value of the status of bdf is :{}", bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED);
                 if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED) ||
-                    bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED) {
+                        bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED) {
                     addActionError(getText("cp1.error.editNotAllowed"));
                     //otherwise it will populate details while giving error massage cannot edit
                     bdf = new BirthDeclaration();
@@ -680,7 +681,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             birthType = bdf.getRegister().getBirthType();
 
             if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_GENERATED ||
-                bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_PRINTED)) {
+                    bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_PRINTED ||
+                    bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_ALTERED)) {
                 return ERROR;
             } else {
 
@@ -697,10 +699,10 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     }
                 }
                 if (bdf.getRegister().getOriginalBCIssueUser() == null &&
-                    bdf.getRegister().getOriginalBCPlaceOfIssue() == null &&
-                    BirthDeclaration.State.ARCHIVED_CERT_GENERATED == bdf.getRegister().getStatus()) {
+                        bdf.getRegister().getOriginalBCPlaceOfIssue() == null &&
+                        BirthDeclaration.State.ARCHIVED_CERT_GENERATED == bdf.getRegister().getStatus()) {
                     UserLocation userLocation = userLocationDAO.getUserLocation(
-                        userList.keySet().iterator().next(), locationList.keySet().iterator().next());
+                            userList.keySet().iterator().next(), locationList.keySet().iterator().next());
                     String prefLang = bdf.getRegister().getPreferredLanguage();
 
                     bdf.getRegister().setOriginalBCIssueUserSignPrint(userLocation.getUser().getUserSignature(prefLang));
@@ -729,6 +731,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
                 addActionMessage("message.print.success");
                 allowPrintCertificate = user.isAuthorized(Permission.PRINT_BIRTH_CERTIFICATE);
+                //loading alterations done to this certificate
+                archivedEntryList = service.getHistoricalAlterationRecordForBDDivisionAndSerialNo(bdf.getRegister().getBirthDivision(),
+                        bdf.getRegister().getBdfSerialNo(), bdf.getIdUKey(), user);
                 return "pageLoad";
             }
         } catch (Exception e) {
@@ -759,10 +764,10 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     private void populateRegistrars(BirthDeclaration bdf) {
         if (!addNewMode && (bdf.getRegister().getBirthDivision() == null ||
-            bdf.getRegister().getBirthDivision().getBdDivisionUKey() != birthDivisionId)) {
+                bdf.getRegister().getBirthDivision().getBdDivisionUKey() != birthDivisionId)) {
             // Registrar data populated to as Notifying authority considering the birthDivision
             List<Assignment> registrarAssigns = assignmentDAO.getAllAssignmentsByBDorMRDivisionAndType(
-                birthDivisionId, Assignment.Type.BIRTH, true, false);
+                    birthDivisionId, Assignment.Type.BIRTH, true, false);
             // only the first registrar in the assigned list is loaded as the notifying authority
             if (registrarAssigns.size() > 0) {
                 Registrar registrar = registrarAssigns.get(0).getRegistrar();
