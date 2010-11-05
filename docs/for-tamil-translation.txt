@@ -42,4 +42,8 @@
 *(Citizenships and Passport Details not available.) வேறு நாட்டினது பிரஜாவுரிமை சம்பந்தமான விபரங்கள் இல்லை 
 
 
+
 * (Preferred Language for Person Registration Certificate )පුද්ගලයකු ලියාපදිංචි කිරීමේ සහතිකය නිකුත් කල යුතු භාෂාව 
+Late registration,Normal Death in tamil
+Late registration,Sudden Death  in tamil
+Death of missing person in tamil

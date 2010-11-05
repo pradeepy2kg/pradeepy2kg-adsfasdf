@@ -296,6 +296,7 @@ public interface BirthRegistrationService {
      * @return the BDF if found, and the user has access to the record
      */
     public BirthDeclaration getById(long bdId);
+
     /**
      * Returns the Birth Declaration object with all relationships for a given Id
      *
@@ -527,7 +528,7 @@ public interface BirthRegistrationService {
 
     /**
      * Returns a limited set of BirthDeclarations for which confirmation changes captured are awaiting approval
-     * by an ADR for selected DS Division and selected range of confirmation recevied dates.
+     * by an ADR for selected DS Division and selected range of confirmation received dates.
      * Results are ordered on the descending confirmationProcessedTimestamp. pageNo  and noOfRows used for pagination
      *
      * @param dsDivision the divisional Secretariat
@@ -589,5 +590,16 @@ public interface BirthRegistrationService {
      * @return
      */
     public BirthDeclaration getByPINorNIC(long PINorNIC, User user);
+
+    /**
+     * get historical alteration record for the given birth record
+     *
+     * @param birthDivision birth recorded division
+     * @param serialNo      serial number of the birth certificate
+     * @param idUKey        idUKey of the record
+     * @param user          user who making the request
+     * @return list of historical birth declarations for given birth record.
+     */
+    public List<BirthDeclaration> getHistoricalAlterationRecordForBDDivisionAndSerialNo(BDDivision birthDivision, long serialNo, long idUKey, User user);
 }
 

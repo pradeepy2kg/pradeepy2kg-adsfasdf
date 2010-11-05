@@ -1236,7 +1236,7 @@ public class BirthRegistrationServiceImpl implements
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getDeclarationPendingByBDDivisionAndRegisterDateRange(BDDivision bdDivision,
-        Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
+                                                                                        Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
         if (logger.isDebugEnabled()) {
             logger.debug("Get records pending approval by BDDivision ID : " + bdDivision.getBdDivisionUKey() +
                 " and date range : " + startDate + " to " + endDate + " Page : " + pageNo +
@@ -1252,7 +1252,7 @@ public class BirthRegistrationServiceImpl implements
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getBelatedDeclarationPendingByBDDivisionAndRegisterDateRange(BDDivision bdDivision,
-        Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
+                                                                                               Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
         if (logger.isDebugEnabled()) {
             logger.debug("Get Belated records pending approval by BDDivision ID : " + bdDivision.getBdDivisionUKey() +
                 " and date range : " + startDate + " to " + endDate + " Page : " + pageNo +
@@ -1269,7 +1269,7 @@ public class BirthRegistrationServiceImpl implements
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getByBDDivisionStatusAndConfirmationReceiveDateRange(BDDivision bdDivision,
-        Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
+                                                                                       Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
 
         if (logger.isDebugEnabled()) {
             logger.debug("Get confirmation records pending approval by BDDivision ID : " +
@@ -1595,7 +1595,7 @@ public class BirthRegistrationServiceImpl implements
     }
 
     private Person processFatherToPRS(User user, Person person, ParentInfo parent, String prefLanguage,
-        Person mother, MarriageInfo marriage, InformantInfo informant) {
+                                      Person mother, MarriageInfo marriage, InformantInfo informant) {
 
         logger.debug("Processing details of father to the PRS");
         Person father = null;
@@ -1799,7 +1799,7 @@ public class BirthRegistrationServiceImpl implements
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getDeclarationPendingByDSDivisionAndRegisterDateRange(DSDivision dsDivision, Date startDate,
-        Date endDate, int pageNo, int noOfRows, User user) {
+                                                                                        Date endDate, int pageNo, int noOfRows, User user) {
         ValidationUtils.validateAccessToDSDivison(dsDivision, user);
         return birthDeclarationDAO.getByDSDivisionStatusAndRegisterDateRange(dsDivision, BirthDeclaration.State.DATA_ENTRY,
             startDate, endDate, pageNo, noOfRows);
@@ -1810,7 +1810,7 @@ public class BirthRegistrationServiceImpl implements
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getBelatedDeclarationPendingByDSDivisionAndRegisterDateRange(DSDivision dsDivision,
-        Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
+                                                                                               Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
         ValidationUtils.validateAccessToDSDivison(dsDivision, user);
         return birthDeclarationDAO.getByDSDivisionStatusBirthTypeAndRegisterDateRange(dsDivision,
             BirthDeclaration.State.DATA_ENTRY, BirthDeclaration.BirthType.BELATED, startDate, endDate, pageNo, noOfRows);
@@ -1903,6 +1903,18 @@ public class BirthRegistrationServiceImpl implements
         if (bdf != null)
             validateAccessOfUser(user, bdf);
         return bdf;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<BirthDeclaration> getHistoricalAlterationRecordForBDDivisionAndSerialNo(BDDivision birthDivision, long serialNo, long idUKey, User user) {
+        BirthDeclaration bdf = birthDeclarationDAO.getById(idUKey);
+        if (bdf != null) {
+            validateAccessOfUser(user, bdf);
+        }
+        return birthDeclarationDAO.getHistoricalAlterationRecordForBDDivisionAndSerialNo(birthDivision, serialNo, idUKey);
     }
 
     private PersonCitizenship getPersonCitizenship(Country country, String passportNo, Person person) {
