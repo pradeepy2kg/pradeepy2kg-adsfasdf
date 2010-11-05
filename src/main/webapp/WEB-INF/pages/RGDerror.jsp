@@ -1,7 +1,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div id="error-page-outer">
-    <s:actionerror/>
+    <s:actionerror cssStyle="color:red;font-size:10pt"/>
     <hr>
     <h3>RGD Error Message or code - <s:property value="%{getText('RGDerror.'+ exception.getErrorCode())}"/></h3>
     <p></p>

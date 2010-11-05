@@ -7,14 +7,14 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.Locale;
-import java.util.Set;
+import java.util.regex.Pattern;
 
 import lk.rgd.crs.web.WebConstants;
-import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.common.api.domain.User;
-import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.service.UserManager;
+import lk.rgd.common.util.WebUtils;
+import lk.rgd.common.util.HashUtil;
 
 /**
  * @author Duminda
@@ -22,6 +22,7 @@ import lk.rgd.common.api.service.UserManager;
  */
 public class UserPreferencesAction extends ActionSupport implements SessionAware {
 
+    private String existingPassword;
     private String newPassword;
     private String retypeNewPassword;
     private String prefLanguage;
@@ -29,6 +30,7 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
     private int birthDistrictId;
     private int dsDivisionId;
 
+    private User user;
     private Map session;
 
     private Map<Integer, String> districtList;
@@ -39,20 +41,20 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
     private final UserManager userManager;
     private static final Logger logger = LoggerFactory.getLogger(UserPreferencesAction.class);
 
-    //for home page charts
-    private int totalDeclarations;
-    private int totalDecArrivals;
-    private int approvalPendings;
-    private int totalConfirmChages;
-    private int confirmApproved;
-    private int confirmApprovedPending;
-    private int confirmPrinted;
-    private int confimPrintingPending;
-    private int BCprinted;
-    private int BCPrintPendings;
-    private int stillBirths;
-    private int SBPendingApprovals;
-    private int pageNo; //pageNo is used to decide the current pageNo of the Birth Registration Form
+    private boolean emptyFeild;
+    private Pattern pattern;
+
+    /**
+     * following properties are checked by  PASSWORD_PATTERN
+     * 
+     * Passwords will contain at least (1) upper case letter
+     * Passwords will contain at least (1) lower case letter
+     * Passwords will contain at least (1) number or special character
+     * Passwords will contain at least (8) characters in length
+     * Password maximum length is not limited
+     */
+    private static final String PASSWORD_PATTERN =
+            "(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$";
 
     public UserPreferencesAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, UserManager userManager) {
         this.districtDAO = districtDAO;
@@ -67,7 +69,7 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
 
     public String userPreferenceInit() {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
-        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
+//        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         userType = user.getRole().getRoleId();
         logger.debug("Role of the {} is  :{}", user.getUserName(), userType);
         if (!(userType.equals(WebConstants.SESSION_USER_ADMIN))) {
@@ -93,7 +95,6 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
         Locale newLocale = new Locale(prefLanguage, currentLocale.getCountry());
 
         session.put(WebConstants.SESSION_USER_LANG, newLocale);
-        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         user.setPrefLanguage(prefLanguage);
         user.setPrefBDDistrict(districtDAO.getDistrict(birthDistrictId));
         user.setPrefBDDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
@@ -106,6 +107,18 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
         return "success";
     }
 
+
+    /**
+     * Validate password with regular expression
+     *
+     * @param password password for validation
+     * @return true valid password, false invalid password
+     */
+    private boolean validate(final String password) {
+        pattern = Pattern.compile(PASSWORD_PATTERN);
+        return pattern.matcher(password).matches();
+    }
+
     /**
      * this method use to change a password of a user
      *
@@ -113,27 +126,33 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
      */
     public String changePassword() {
         logger.info("requesting a password change.......");
+
+        if(emptyFeild){
+            addActionError(getText("emptry.feild.lable"));
+            return "error";
+        }
+        if(!user.getPasswordHash().equals(HashUtil.hashString(existingPassword))){
+            addActionError(getText("existing.password.mismatch.lable"));
+            return "error";
+        }
+        if (!validate(newPassword)) {
+            addActionError(getText("password.not.Strong.Enough.lable"));
+            return "error";
+        }
         if (newPassword.equals(retypeNewPassword)) {
-            User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
             userManager.updatePassword(newPassword, user);
             String userRole = user.getRole().getRoleId();
-
-            totalDeclarations = 10;
-            totalDecArrivals = 11;
-            approvalPendings = 12;
-            totalConfirmChages = 13;
-            confirmApproved = 14;
-            confirmApprovedPending = 15;
-            confirmPrinted = 16;
-            confimPrintingPending = 17;
-            BCprinted = 18;
-            BCPrintPendings = 19;
-            stillBirths = 20;
-            SBPendingApprovals = 21;
             logger.debug("return value of change password method is,", "success" + userRole);
+            addActionMessage(getText("password.changed.success.label"));
             return "success" + userRole;
+        } else {
+            addActionError(getText("password.mismatch.lable"));
+            return "error";
         }
-        return "error";
+    }
+
+    public String changePasswordInit() {
+        return SUCCESS;
     }
 
     public String back() {
@@ -142,6 +161,7 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
 
     public void setSession(Map map) {
         this.session = map;
+        user = (User) session.get(WebConstants.SESSION_USER_BEAN);
     }
 
     public Map getSession() {
@@ -185,6 +205,9 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
     }
 
     public void setNewPassword(String newPassword) {
+        if (WebUtils.filterBlanks(newPassword) == null) {
+            setEmptyFeild(true);
+        }
         this.newPassword = newPassword;
     }
 
@@ -193,111 +216,10 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
     }
 
     public void setRetypeNewPassword(String retypeNewPassword) {
+        if (WebUtils.filterBlanks(retypeNewPassword) == null) {
+            setEmptyFeild(true);
+        }
         this.retypeNewPassword = retypeNewPassword;
-    }
-
-    public int getTotalDeclarations() {
-        return totalDeclarations;
-    }
-
-    public void setTotalDeclarations(int totalDeclarations) {
-        this.totalDeclarations = totalDeclarations;
-    }
-
-    public int getTotalDecArrivals() {
-        return totalDecArrivals;
-    }
-
-    public void setTotalDecArrivals(int totalDecArrivals) {
-        this.totalDecArrivals = totalDecArrivals;
-    }
-
-    public int getApprovalPendings() {
-        return approvalPendings;
-    }
-
-    public void setApprovalPendings(int approvalPendings) {
-        this.approvalPendings = approvalPendings;
-    }
-
-    public int getTotalConfirmChages() {
-        return totalConfirmChages;
-    }
-
-    public void setTotalConfirmChages(int totalConfirmChages) {
-        this.totalConfirmChages = totalConfirmChages;
-    }
-
-    public int getConfirmApproved() {
-        return confirmApproved;
-    }
-
-    public void setConfirmApproved(int confirmApproved) {
-        this.confirmApproved = confirmApproved;
-    }
-
-    public int getConfirmApprovedPending() {
-        return confirmApprovedPending;
-    }
-
-    public void setConfirmApprovedPending(int confirmApprovedPending) {
-        this.confirmApprovedPending = confirmApprovedPending;
-    }
-
-    public int getConfirmPrinted() {
-        return confirmPrinted;
-    }
-
-    public void setConfirmPrinted(int confirmPrinted) {
-        this.confirmPrinted = confirmPrinted;
-    }
-
-    public int getConfimPrintingPending() {
-        return confimPrintingPending;
-    }
-
-    public void setConfimPrintingPending(int confimPrintingPending) {
-        this.confimPrintingPending = confimPrintingPending;
-    }
-
-    public int getBCprinted() {
-        return BCprinted;
-    }
-
-    public void setBCprinted(int BCprinted) {
-        this.BCprinted = BCprinted;
-    }
-
-    public int getBCPrintPendings() {
-        return BCPrintPendings;
-    }
-
-    public void setBCPrintPendings(int BCPrintPendings) {
-        this.BCPrintPendings = BCPrintPendings;
-    }
-
-    public int getStillBirths() {
-        return stillBirths;
-    }
-
-    public void setStillBirths(int stillBirths) {
-        this.stillBirths = stillBirths;
-    }
-
-    public int getSBPendingApprovals() {
-        return SBPendingApprovals;
-    }
-
-    public void setSBPendingApprovals(int SBPendingApprovals) {
-        this.SBPendingApprovals = SBPendingApprovals;
-    }
-
-    public int getPageNo() {
-        return pageNo;
-    }
-
-    public void setPageNo(int pageNo) {
-        this.pageNo = pageNo;
     }
 
     public String getUserType() {
@@ -306,5 +228,40 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
 
     public void setUserType(String userType) {
         this.userType = userType;
+    }
+
+    public Pattern getPattern() {
+        return pattern;
+    }
+
+    public void setPattern(Pattern pattern) {
+        this.pattern = pattern;
+    }
+
+    public String getExistingPassword() {
+        return existingPassword;
+    }
+
+    public void setExistingPassword(String existingPassword) {
+        if (WebUtils.filterBlanks(existingPassword) == null) {
+            setEmptyFeild(true);
+        }
+        this.existingPassword = existingPassword;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public boolean isEmptyFeild() {
+        return emptyFeild;
+    }
+
+    public void setEmptyFeild(boolean emptyFeild) {
+        this.emptyFeild = emptyFeild;
     }
 }
