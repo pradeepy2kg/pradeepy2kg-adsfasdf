@@ -1,5 +1,6 @@
 package lk.rgd.prs.api.dao;
 
+import lk.rgd.common.api.domain.User;
 import lk.rgd.prs.api.domain.Address;
 import lk.rgd.prs.api.domain.Marriage;
 import lk.rgd.prs.api.domain.Person;
@@ -16,14 +17,16 @@ public interface PersonDAO {
     /**
      * Add a Person to the PRS
      * @param person the Person to be added
+     * @param user the User initiating the action
      */
-    public void addPerson(Person person);
+    public void addPerson(Person person, User user);
 
     /**
      * Update a Person on the PRS
      * @param person the Person to be updated. Note, the PRS does not allow deletion of rows
+     * @param user the User initiating the action
      */
-    public void updatePerson(Person person);
+    public void updatePerson(Person person, User user);
 
     /**
      * Add a Marriage to the PRS
@@ -67,7 +70,7 @@ public interface PersonDAO {
 
     /**
      * Return the Person object for the person with the given temporary PIN
-     * 
+     *
      * @param temporaryPIN the unique temporary Personal Identification Number
      * @return the matching person
      */

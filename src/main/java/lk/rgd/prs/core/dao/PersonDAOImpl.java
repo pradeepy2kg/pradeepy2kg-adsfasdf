@@ -1,5 +1,6 @@
 package lk.rgd.prs.core.dao;
 
+import lk.rgd.common.api.domain.User;
 import lk.rgd.common.core.dao.BaseDAO;
 import lk.rgd.common.util.HashUtil;
 import lk.rgd.prs.api.dao.PersonDAO;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,14 +25,20 @@ import java.util.List;
 public class PersonDAOImpl extends BaseDAO implements PersonDAO {
 
     @Transactional(propagation = Propagation.MANDATORY)
-    public void addPerson(Person person) {
+    public void addPerson(Person person, User user) {
         person.setHash(HashUtil.hashPerson(person));
+        person.getLifeCycleInfo().setCreatedTimestamp(new Date());
+        person.getLifeCycleInfo().setCreatedUser(user);
+        person.getLifeCycleInfo().setLastUpdatedTimestamp(new Date());
+        person.getLifeCycleInfo().setLastUpdatedUser(user);
         em.persist(person);
     }
 
     @Transactional(propagation = Propagation.MANDATORY)
-    public void updatePerson(Person person) {
+    public void updatePerson(Person person, User user) {
         person.setHash(HashUtil.hashPerson(person));
+        person.getLifeCycleInfo().setLastUpdatedTimestamp(new Date());
+        person.getLifeCycleInfo().setLastUpdatedUser(user);
         em.merge(person);
     }
 

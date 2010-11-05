@@ -319,7 +319,7 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
     /**
      * Checks if the user can edit or delete a death alteration entry before approval by an ARG
      * <p/>
-     * A DEO or ADR at the same "SubissionLocation" can edit or delete an entry at data entry stage. Any other who has
+     * A DEO or ADR at the same "SubmissionLocation" can edit or delete an entry at data entry stage. Any other who has
      * access to the BD division of the corresponding BDF has access to edit or delete
      *
      * @param da   the death alteration entry
