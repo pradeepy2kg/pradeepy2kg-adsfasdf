@@ -88,6 +88,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
                 int loginAttempts = user.getLoginAttempts();
                 logger.debug("value of loging attempts :{}", loginAttempts);
                 int maxLoginAttempts = appParaDao.getIntParameter(AppParameter.MAX_NUMBER_OF_LOGIN_ATTEMPTS);
+                logger.debug("value of loging attempts :{}", maxLoginAttempts);
                 if (loginAttempts > maxLoginAttempts) {
                     user.getLifeCycleInfo().setActive(false);
                     addActionError("Please contact Admin to Active your Account");

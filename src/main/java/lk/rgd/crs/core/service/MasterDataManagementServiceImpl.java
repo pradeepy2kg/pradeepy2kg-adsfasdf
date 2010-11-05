@@ -72,24 +72,6 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
                     " was not allowed to add a new BD Division : " + bdDivision.getEnDivisionName());
         }
     }
-/*
-    *//**
-     * @inheritDoc
-     *//*
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void inactivateBDDivision(int bdDivisionUKey, User user) {
-        updateBDActivation(bdDivisionUKey, false, user);
-    }
-
-    */
-
-    /**
-     * @inheritDoc
-     *//*
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void activateBDDivision(int bdDivisionUKey, User user) {
-        updateBDActivation(bdDivisionUKey, true, user);
-    }*/
     @Transactional(propagation = Propagation.REQUIRED)
     public void activateOrInactiveBDDivision(int bdDivisionUKey, boolean active, User user) {
         updateBDActivation(bdDivisionUKey, active, user);
@@ -143,21 +125,8 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void inactivateMRDivision(int mrDivisionUKey, User user) {
-        updateMRActivation(mrDivisionUKey, false, user);
-    }
-
-    @Transactional(propagation = Propagation.REQUIRED)
     public void activateOrInactivateMRDivision(int mrDivisionUKey, boolean activate, User user) {
         updateMRActivation(mrDivisionUKey, activate, user);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void activateMRDivision(int mrDivisionUKey, User user) {
-        updateMRActivation(mrDivisionUKey, true, user);
     }
 
     private void updateMRActivation(int mrDivisionUKey, boolean activate, User user) {
@@ -207,23 +176,6 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
     public void activateOrInactivateDSDivision(int dsDivisionUKey, boolean active, User user) {
         updateDSActivation(dsDivisionUKey, active, user);
     }
-
-    /**
-     * @inheritDoc
-     */
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void inactivateDSDivision(int dsDivisionUKey, User user) {
-        updateDSActivation(dsDivisionUKey, false, user);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void activateDSDivision(int dsDivisionUKey, User user) {
-        updateDSActivation(dsDivisionUKey, true, user);
-    }
-
     private void updateDSActivation(int dsDivisionUKey, boolean activate, User user) {
 
         if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
@@ -274,23 +226,6 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
     public void activateOrInactivateDistrict(int districtUKey, boolean active, User user) {
         updateDistrictActivation(districtUKey, active, user);
     }
-
-    /**
-     * @inheritDoc
-     */
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void inactivateDistrict(int districtUKey, User user) {
-        updateDistrictActivation(districtUKey, false, user);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void activateDistrict(int districtUKey, User user) {
-        updateDistrictActivation(districtUKey, true, user);
-    }
-
     private void updateDistrictActivation(int districtUKey, boolean activate, User user) {
 
         if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
@@ -337,23 +272,6 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
     @Transactional(propagation = Propagation.REQUIRED)
     public void activateOrInactivateLocation(int locationUKey, boolean activate, User user) {
         updateLocationActivation(locationUKey, activate, user);
-    }
-
-
-    /**
-     * @inheritDoc
-     */
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void activateLocation(int locationUKey, User user) {
-        updateLocationActivation(locationUKey, true, user);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void inactivateLocation(int locationUKey, User user) {
-        updateLocationActivation(locationUKey, false, user);
     }
 
     private void updateLocationActivation(int locationUKey, boolean activate, User user) {
@@ -405,23 +323,6 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
     @Transactional(propagation = Propagation.REQUIRED)
     public void activateOrInactivateCourt(int courtUKey, boolean activate, User user) {
         updateCourtActivation(courtUKey, activate, user);
-    }
-
-
-    /**
-     * @inheritDoc
-     */
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void activateCourt(int courtUKey, User user) {
-        updateCourtActivation(courtUKey, true, user);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void inactivateCourt(int courtUKey, User user) {
-        updateCourtActivation(courtUKey, false, user);
     }
 
     private void updateCourtActivation(int courtUKey, boolean activate, User user) {

@@ -46,27 +46,10 @@ public interface MasterDataManagementService {
      * Mark a MR Division as inactive
      *
      * @param mrDivisionUKey the MR Division to be updated
-     * @param user           the user invoking the action
-     */
-    void inactivateMRDivision(int mrDivisionUKey, User user);
-
-    /**
-     * Mark a MR Division as inactive
-     *
-     * @param mrDivisionUKey the MR Division to be updated
      * @param activate       to active inactive mrDivision
      * @param user           the user invoking the action
      */
     void activateOrInactivateMRDivision(int mrDivisionUKey, boolean activate, User user);
-
-    /**
-     * Mark a MR Division as active
-     *
-     * @param mrDivisionUKey the MR Division to be updated
-     * @param user           the user invoking the action
-     */
-    void activateMRDivision(int mrDivisionUKey, User user);
-
     /**
      * Add a new DS Division
      *
@@ -83,23 +66,6 @@ public interface MasterDataManagementService {
      * @param user           the user invoking the action
      */
     void activateOrInactivateDSDivision(int dsDivisionUKey, boolean active, User user);
-
-    /**
-     * Mark a DS Division as inactive
-     *
-     * @param dsDivisionUKey the DS Division to be updated
-     * @param user           the user invoking the action
-     */
-    void inactivateDSDivision(int dsDivisionUKey, User user);
-
-    /**
-     * Mark a DS Division as active
-     *
-     * @param dsDivisionUKey the DS Division to be updated
-     * @param user           the user invoking the action
-     */
-    void activateDSDivision(int dsDivisionUKey, User user);
-
     /**
      * Add a new District
      *
@@ -116,23 +82,6 @@ public interface MasterDataManagementService {
      * @param active       check that active or inactive district
      */
     void activateOrInactivateDistrict(int districtUKey, boolean active, User user);
-
-    /**
-     * Mark a District as inactive
-     *
-     * @param districtUKey the District to be updated
-     * @param user         the user invoking the action
-     */
-    void inactivateDistrict(int districtUKey, User user);
-
-    /**
-     * Mark a District as active
-     *
-     * @param districtUKey the District to be updated
-     * @param user         the user invoking the action
-     */
-    void activateDistrict(int districtUKey, User user);
-
     /**
      * Add a new Location as active
      *
@@ -149,23 +98,6 @@ public interface MasterDataManagementService {
      * @param user         user invoking the action
      */
     public void activateOrInactivateLocation(int locationUKey, boolean activate, User user);
-
-    /**
-     * Mark a Location as active
-     *
-     * @param locationUKey the location to mark as active
-     * @param user         user invoking the action
-     */
-    public void activateLocation(int locationUKey, User user);
-
-    /**
-     * Mark a Location as inactive
-     *
-     * @param locationUKey the location to mark as inactive
-     * @param user         user invoking the action
-     */
-    public void inactivateLocation(int locationUKey, User user);
-
     /**
      * Add a new Court as active
      *
@@ -182,21 +114,5 @@ public interface MasterDataManagementService {
      * @param user      user invoking the action
      */
     public void activateOrInactivateCourt(int courtUKey, boolean activate, User user);
-
-    /**
-     * Mark a Court as active
-     *
-     * @param courtUKey the court to mark as active
-     * @param user      user invoking the action
-     */
-    public void activateCourt(int courtUKey, User user);
-
-    /**
-     * Mark a court as inactive
-     *
-     * @param courtUKey the court to mark as inactive
-     * @param user      user invoking the action
-     */
-    public void inactivateCourt(int courtUKey, User user);
-
 }
+

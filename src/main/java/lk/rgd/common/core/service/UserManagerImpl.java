@@ -114,7 +114,6 @@ public class UserManagerImpl implements UserManager {
                 userToCreate.setPasswordExpiry(gCal.getTime());
 
                 // adding new default password
-                userToCreate.setPasswordHash(hashPassword(WebConstants.DEFAULT_PASS));
                 userDao.addUser(userToCreate, adminUser);
                 logger.debug("New user {} created by : {}", userToCreate.getUserName(), adminUser.getUserName());
 
