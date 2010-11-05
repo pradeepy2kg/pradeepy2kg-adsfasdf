@@ -98,7 +98,7 @@
             <result type="tiles" name="success">epr.personDetails</result>
         </action>
 
-        <action name="eprEditPerson" class="lk.rgd.prs.web.action.PopulationRegisterAction" method="editPersonDetails">
+        <action name="eprEditPerson" class="lk.rgd.prs.web.action.PopulationRegisterAction" method="personEditInit">
             <result type="tiles" name="success">epr.existingPersonRegistration</result>
         </action>
 

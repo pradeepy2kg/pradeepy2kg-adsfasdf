@@ -3,6 +3,7 @@ package lk.rgd.prs;
 import junit.framework.TestCase;
 import lk.rgd.UnitTestManager;
 import lk.rgd.common.api.dao.CountryDAO;
+import lk.rgd.common.api.dao.RaceDAO;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.core.AuthorizationException;
@@ -11,7 +12,10 @@ import lk.rgd.prs.api.domain.PersonCitizenship;
 import lk.rgd.prs.api.service.PopulationRegistry;
 import org.springframework.context.ApplicationContext;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author Chathuranga Withana
@@ -20,6 +24,7 @@ public class PersonCitizenshipTest extends TestCase {
     private final ApplicationContext ctx = UnitTestManager.ctx;
     private final PopulationRegistry eCivil;
     private final CountryDAO countryDAO;
+    private final RaceDAO raceDAO;
     private final UserManager userManager;
     private User deoColomboColombo;
 
@@ -31,6 +36,7 @@ public class PersonCitizenshipTest extends TestCase {
     public PersonCitizenshipTest() {
         eCivil = (PopulationRegistry) ctx.getBean("ecivilService", PopulationRegistry.class);
         countryDAO = (CountryDAO) ctx.getBean("countryDAOImpl", CountryDAO.class);
+        raceDAO = (RaceDAO) ctx.getBean("raceDAOImpl", RaceDAO.class);
         userManager = (UserManager) ctx.getBean("userManagerService", UserManager.class);
 
         try {
@@ -47,7 +53,7 @@ public class PersonCitizenshipTest extends TestCase {
         Person p1 = getMinimalPerson(dob.getTime());
         try {
             eCivil.addExistingPerson(
-                p1, "Permanent Address", "Current Address", deoColomboColombo, addSampleCitizenship());
+                p1, "Permanent Address", "Current Address", deoColomboColombo, addSampleCitizenship(), false);
         } catch (Exception e) {
             fail("Person failed to add PRS");
         }
@@ -61,6 +67,8 @@ public class PersonCitizenshipTest extends TestCase {
         person.setDateOfBirth(dob);
         person.setFullNameInOfficialLanguage("පුද්ගලයාගේ නම");
         person.setFullNameInEnglishLanguage("Person Name");
+        person.setPlaceOfBirth("Place of birth");
+        person.setRace(raceDAO.getRace(1));
 
         return person;
     }

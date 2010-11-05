@@ -1,14 +1,13 @@
 package lk.rgd.crs.api.service;
 
-import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.bean.UserWarning;
-import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.domain.BDDivision;
-import lk.rgd.crs.api.domain.CertificateSearch;
+import lk.rgd.crs.api.domain.BirthDeclaration;
 
-import java.util.List;
 import java.util.Date;
+import java.util.List;
 
 public interface BirthRegistrationService {
 
@@ -154,11 +153,11 @@ public interface BirthRegistrationService {
     /**
      * Approve a single BDF for a Still birth by an ADR or higher authority
      *
-     * @param idUkey
+     * @param idUKey
      * @param ignoreWarnings an explicit switch that indicates that the record should be approved ignoring warnings
      * @param user           the user initiating the action   @return a list of warnings, if ignoreWarnings is false
      */
-    public List<UserWarning> approveStillBirthDeclaration(long idUkey, boolean ignoreWarnings, User user);
+    public List<UserWarning> approveStillBirthDeclaration(long idUKey, boolean ignoreWarnings, User user);
 
     /**
      * Approve a single BDF for a Live birth by an ADR or higher authority
@@ -419,7 +418,7 @@ public interface BirthRegistrationService {
 
     /**
      * Returns a limited set of BirthDeclarations for which confirmation changes captured are awaiting approval
-     * by an ADR for selected BD Division and selected range of confirmation recevied dates.
+     * by an ADR for selected BD Division and selected range of confirmation received dates.
      * Results are ordered on the descending confirmationProcessedTimestamp. pageNo  and noOfRows used for pagination
      *
      * @param birthDivision the birth division
@@ -578,7 +577,7 @@ public interface BirthRegistrationService {
     /**
      * Returns the Birth Declaration object for a given Id
      *
-     * @param bdId Birth Declarion Id for the given declaration
+     * @param bdId Birth Declaration Id for the given declaration
      * @param user the user making the request
      * @return the BDF if found, and the user has access to the record
      */

@@ -12,12 +12,12 @@
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
 <script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
 <script>
-    //these input can not be null
+    // Basic form validation for PRS Person Registration
     var errormsg = "";
     function validate() {
-        // TODO complete this java script
         var returnVal = true;
         var domObject;
+
         domObject = document.getElementById("submitDatePicker");
         if (isFieldEmpty(domObject)) {
             isEmpty(domObject, "", 'error1');
@@ -25,14 +25,37 @@
             isDate(domObject.value, 'error0', 'error1');
         }
 
-        /*domObject = document.getElementById("person_PIN");
-         if (!isFieldEmpty(domObject)) {
-         validatePINorNIC(domObject, 'error0', 'error2');
-         }*/
-
-        domObject = document.getElementById("personPassportNo");
+        domObject = document.getElementById("person_NIC");
         if (!isFieldEmpty(domObject)) {
-            validatePassportNo(domObject, 'error0', 'error3');
+            validateNIC(domObject, 'error0', 'error11');
+        }
+
+        domObject = document.getElementById("temporaryPIN");
+        if (!isFieldEmpty(domObject)) {
+            validateTemPIN(domObject, 'error0', 'error2');
+        }
+
+        domObject = document.getElementById('personRaceId');
+        if (domObject.value == 0) {
+            errormsg = errormsg + "\n" + document.getElementById('error16').value;
+        }
+
+        // validate person passport number
+        domObject = document.getElementById('personPassportNo');
+        if (!isFieldEmpty(domObject)) {
+            if (validatePassportNo(domObject, 'error0', 'error3')) {
+                domObject = document.getElementById('personCountryId');
+                if (domObject.value == 0) {
+                    errormsg = errormsg + "\n" + document.getElementById('error13').value;
+                }
+            }
+        }
+        domObject = document.getElementById('personCountryId');
+        if (domObject.value != 0) {
+            domObject = document.getElementById('personPassportNo');
+            if (isFieldEmpty(domObject)) {
+                isEmpty(domObject, '', 'error3');
+            }
         }
 
         domObject = document.getElementById("birthDatePicker");
@@ -55,6 +78,18 @@
         domObject = document.getElementById("personFullNameEnglish");
         if (isFieldEmpty(domObject)) {
             isEmpty(domObject, "", 'error7');
+        }
+
+        checkCivilStatus();
+
+        domObject = document.getElementById("motherPINorNIC");
+        if (!isFieldEmpty(domObject)) {
+            validatePINorNIC(domObject, 'error0', 'error14');
+        }
+
+        domObject = document.getElementById("fatherPINorNIC");
+        if (!isFieldEmpty(domObject)) {
+            validatePINorNIC(domObject, 'error0', 'error15');
         }
 
         domObject = document.getElementById("permanentAddress");
@@ -80,6 +115,77 @@
         return returnVal;
     }
 
+    // Check country and passport number given before adding it to the citizenship table
+    function validateAddCitizenship() {
+        var returnVal = true;
+        var domObject;
+
+        domObject = document.getElementById('citizenCountryId');
+        if (domObject.value == 0) {
+            errormsg = document.getElementById('error13').value;
+            checkPassportNo();
+        } else {
+            checkPassportNo();
+        }
+
+        if (errormsg != "") {
+            alert(errormsg);
+            returnVal = false;
+        }
+        errormsg = "";
+        return returnVal;
+    }
+
+    // checks passport number available and valid
+    function checkPassportNo() {
+        domObject = document.getElementById('citizenPassportNo');
+        if (isFieldEmpty(domObject)) {
+            isEmpty(domObject, '', 'error3');
+        } else {
+            validatePassportNo(domObject, 'error0', 'error3');
+        }
+    }
+
+    // TODO for dob calculation for person, how to add??
+    /*function calculateBirthDay(id, datePicker, error) {
+     var reg = /^([0-9]{9}[X|x|V|v])$/;
+     var day = id.substring(2, 5);
+     var year = 19 + id.substring(0, 2);
+     var date = new Date(year);
+     if ((id.search(reg) == 0) && (day >= 501 && day <= 866)) {
+     if ((day > 559) && ((date.getFullYear() % 4) != 0 )) {
+     day = id.substring(2, 5) - 2;
+     date.setDate(date.getDate() + day - 500);
+     } else {
+     date.setDate(date.getDate() + day - 1500);
+     }
+     datePicker.datepicker('setDate', new Date(date.getYear(), date.getMonth(), date.getDate()));
+     } else if ((id.search(reg) == 0) && (day > 0 && day <= 366)) {
+     if ((day > 59) && ((date.getFullYear() % 4) != 0 )) {
+     day = id.substring(2, 5) - 2;
+     date.setDate(date.getDate() + day);
+     } else {
+     date.setDate(date.getDate() + day - 1000);
+     }
+
+     datePicker.datepicker('setDate', new Date(date.getYear(), date.getMonth(), date.getDate()));
+     }
+     }*/
+
+    // check whether any civil status selected
+    function checkCivilStatus() {
+        var domObject,unChecked = true;
+        for (i = 0; i < 6; i++) {
+            domObject = document.getElementsByName("person.civilStatus")[i];
+            if (domObject.checked) {
+                unChecked = false;
+                break;
+            }
+        }
+        if (unChecked) {
+            errormsg = errormsg + "\n" + document.getElementById('error17').value;
+        }
+    }
 </script>
 <script type="text/javascript">
 
@@ -105,12 +211,8 @@
 
     function processResponse1(respObj) {
         //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("textarea#personFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].
-        return[0].Text
-    )
-        ;
-    }
-    ;
+        $("textarea#personFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
+    };
 
     $(function() {
         $("#submitDatePicker").datepicker({
@@ -183,11 +285,13 @@
 
     // Add new citizen to the citizen list 
     function fnClickAddRow() {
-        $('#citizenship-table').dataTable().fnAddData([
-            $('select#citizenCountryId').attr('value'),
-            $('select#citizenCountryId option:selected').text(),
-            $('input#citizenPassportNo').val()
-        ]);
+        if (validateAddCitizenship()) {
+            $('#citizenship-table').dataTable().fnAddData([
+                $('select#citizenCountryId').attr('value'),
+                $('select#citizenCountryId option:selected').text(),
+                $('input#citizenPassportNo').val().toUpperCase()
+            ]);
+        }
     }
 
     var oTable;
@@ -294,21 +398,19 @@
 
 <s:if test="personList.size > 0">
     <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
-        <legend><b>Possible Duplicates</b></legend>
+        <legend><b><s:label value="%{getText('label.possibleDuplicates')}"/> </b></legend>
         <table id="persons-table" width="100%" cellpadding="0" cellspacing="0" class="display">
             <thead>
             <tr>
-                <th width="150px;">Id</th>
                 <th width="150px;">NIC</th>
-                <th width="480px;">Name</th>
+                <th width="480px;"><s:label name="name" value="%{getText('label.personName')}"/></th>
                 <th width="200px;">Status</th>
-                <th width="50px;"></th>
+                <th width="20px;"></th>
             </tr>
             </thead>
             <tbody>
             <s:iterator status="searchStatus" value="personList">
                 <tr class="<s:if test="#searchStatus.odd == true">odd</s:if><s:else>even</s:else>">
-                    <td align="center"><s:property value="personUKey"/></td>
                     <td align="center"><s:property value="nic"/></td>
                     <td>
                         <s:if test="fullNameInOfficialLanguage != null">
@@ -316,17 +418,29 @@
                         </s:if>
                     </td>
                     <td align="center"><s:property value="status"/></td>
-                    <td>
-                        <s:url id="editPerson" action="eprEditPerson.do">
-                            <s:param name="personUKey" value="personUKey"/>
-                        </s:url>
-                        <s:a href="%{editPerson}" title="%{getText('editTooltip.label')}">
-                            <img src="<s:url value='/images/edit.png'/>" width="25" height="25" border="none"/>
-                        </s:a>
+                    <td align="center">
+                        <s:if test="status.ordinal() != 2">
+                            <s:url id="editPerson" action="eprEditPerson.do">
+                                <s:param name="personUKey" value="personUKey"/>
+                            </s:url>
+                            <s:a href="%{editPerson}" title="%{getText('editTooltip.label')}">
+                                <img src="<s:url value='/images/edit.png'/>" width="25" height="25" border="none"/>
+                            </s:a>
+                        </s:if>
                     </td>
                 </tr>
             </s:iterator>
             </tbody>
+        </table>
+        <table width="60%" align="center" style="padding:0;cellspacing:0;cellpadding:0;">
+            <tr>
+                <td><s:checkbox name="ignoreDuplicate"/></td>
+                <td><s:label value="Add Person Ignore Duplicates" name="ignoreDuplicate"/></td>
+                <td>
+                    <div class="form-submit" style="padding:0;margin-top:0px;">
+                        <s:submit name="approve" value="Register"/></div>
+                </td>
+            </tr>
         </table>
     </fieldset>
 </s:if>
@@ -368,7 +482,7 @@
             <br>Temporary Identification number
         </td>
         <td colspan="2">
-            <s:textfield name="person.temporaryPin" id="person_PIN" maxLength="10"/>
+            <s:textfield name="person.temporaryPin" id="temporaryPIN" maxLength="10" onkeypress="return isNumberKey(event)"/>
         </td>
     </tr>
     <tr>
@@ -451,9 +565,9 @@
                     <td><s:radio name="person.civilStatus" list="#@java.util.HashMap@{'DIVORCED':''}"/></td>
                 </tr>
                 <tr>
-                    <td align="right">වැන්දබු<br>விதவை <br>Widowed</td>
+                    <td align="right">වැන්දඹු<br>விதவை <br>Widowed</td>
                     <td><s:radio name="person.civilStatus" list="#@java.util.HashMap@{'WIDOWED':''}"/></td>
-                    <td align="right">නිෂ්ප්‍රභාකර ඇත <br>தள்ளிவைத்தல் <br>Anulled</td>
+                    <td align="right">නිෂ්ප්‍රභාකර ඇත <br>தள்ளிவைத்தல் <br>Annulled</td>
                     <td><s:radio name="person.civilStatus" list="#@java.util.HashMap@{'ANNULLED':''}"/></td>
                     <td align="right">වෙන් වී ඇත<br>பிரிந்திருத்தல் <br>Separated</td>
                     <td><s:radio name="person.civilStatus" list="#@java.util.HashMap@{'SEPARATED':''}"/></td>
@@ -515,7 +629,8 @@
     <tr>
         <td>(15) දුරකථන අංක<br>தொலைபேசி இலக்கம்<br>Telephone Numbers</td>
         <td colspan="2">
-            <s:textfield name="person.personPhoneNo" id="personPhoneNo" maxLength="15"/>
+            <s:textfield name="person.personPhoneNo" id="personPhoneNo" maxLength="15"
+                         onkeypress="return isNumberKey(event)"/>
         </td>
         <td>(16) ඉ – තැපැල් <br>மின்னஞ்சல்<br>Email</td>
         <td colspan="4">
@@ -559,8 +674,8 @@
         </tr>
     </table>
     <div align="center">
-        <a href="javascript:void(0);" onclick="fnClickAddRow();">Add</a>&nbsp;&nbsp;
-        <a href="javascript:void(0)" id="delete">Delete</a>
+        <a href="javascript:void(0)" onclick="fnClickAddRow();"><s:label value="%{getText('label.add')}"/></a>&nbsp;&nbsp;
+        <a href="javascript:void(0)" id="delete"><s:label value="%{getText('label.delete')}"/></a>
     </div>
     <table id="citizenship-table" width="100%" cellpadding="0" cellspacing="0" class="display">
         <thead>
@@ -586,12 +701,13 @@
 </div>
 
 <s:hidden id="citizenship" name="citizenship"/>
+<s:hidden id="personUKey" name="personUKey" value="%{personUKey}"/>
 
 </s:form>
 
 <s:hidden id="error0" value="%{getText('er.invalid.inputType')}"/>
 <s:hidden id="error1" value="%{getText('er.label.submitDatePicker')}"/>
-<s:hidden id="error2" value="%{getText('er.label.person_PIN')}"/>
+<s:hidden id="error2" value="%{getText('er.label.temporaryPIN')}"/>
 <s:hidden id="error3" value="%{getText('er.label.personPassportNo')}"/>
 <s:hidden id="error4" value="%{getText('er.label.birthDatePicker')}"/>
 <s:hidden id="error5" value="%{getText('er.label.placeOfBirth')}"/>
@@ -600,4 +716,11 @@
 <s:hidden id="error8" value="%{getText('er.label.permanentAddress')}"/>
 <s:hidden id="error9" value="%{getText('er.label.personPhoneNo')}"/>
 <s:hidden id="error10" value="%{getText('er.label.personEmail')}"/>
+<s:hidden id="error11" value="%{getText('er.label.personNIC')}"/>
+<s:hidden id="error12" value="%{getText('er.label.personNIC')}"/>
+<s:hidden id="error13" value="%{getText('er.label.personCountry')}"/>
+<s:hidden id="error14" value="%{getText('er.label.motherPINorNIC')}"/>
+<s:hidden id="error15" value="%{getText('er.label.fatherPINorNIC')}"/>
+<s:hidden id="error16" value="%{getText('er.label.personRace')}"/>
+<s:hidden id="error17" value="%{getText('er.label.civilStatus')}"/>
 </div>
