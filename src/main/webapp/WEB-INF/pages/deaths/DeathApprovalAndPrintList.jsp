@@ -348,6 +348,42 @@
                 </s:if>
             </td>
         </s:if>
+        <s:if test="status.ordinal()==4 || status.ordinal()==5">
+
+            <s:url id="viewSelected" action="eprDeathViewMode.do">
+                <s:param name="idUKey" value="idUKey"/>
+            </s:url>
+
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+
+            <td align="center"><s:a href="%{viewSelected}"
+                                    title="%{getText('viewDeathRegistrationTooltip.label')}">
+                <img id='viewImage' src="<s:url value='/images/view.gif'/>" width="25" height="25"
+                     border="none"/></s:a>
+            </td>
+            <td align="center">
+                <s:url id="cetificatePrintUrl" action="eprDeathCertificate.do">
+                    <s:param name="idUKey" value="idUKey"/>
+                    <s:param name="currentStatus" value="%{#request.currentStatus}"/>
+                    <s:param name="pageNo" value="%{#request.pageNo}"/>
+                    <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+                    <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
+                    <s:param name="deathDivisionId" value="#request.deathDivisionId"/>
+                    <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+                </s:url>
+                <s:if test="#request.allowPrintCertificate">
+                    <s:a href="%{cetificatePrintUrl}"
+                         title="%{getText('printDeathRegistrationTooltipAgain.label')}">
+                        <img id="printImage" src="<s:url value='/images/print_icon.gif'/>" border="none"
+                             width="25"
+                             height="25"/>
+                    </s:a>
+                </s:if>
+            </td>
+        </s:if>
     </tr>
 </s:iterator>
 </tbody>
