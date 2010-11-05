@@ -514,14 +514,6 @@ function validateBirthYear(domElement, errorText, errorCode) {
             domobject.value = new Date().getFullYear() + "0";
         }
     }
-    function isNumberKey(evt) {
-        var charCode = (evt.which) ? evt.which : event.keyCode
-        if (charCode > 31 && (charCode < 48 || charCode > 57))
-            return false;
-
-        return true;
-    }
-
 </script>
 <s:if test="pageType==0">
     <div id="birth-confirmation-search">
