@@ -102,20 +102,27 @@
     <s:param name="dsDivisionId" value="%{#request.dsDivisionId}"/>
     <s:param name="deathDivisionId" value="%{#request.deathDivisionId}"/>
 </s:url>
-<s:url id="cancel" action="eprDeathBackToPreviousState.do">
-    <s:param name="nextFlag" value="%{#request.nextFlag}"/>
-    <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-    <%-- todo fix
-       <s:if test="deathRegister.status.ordinal()==4">
-            <s:param name="pageNo" value="%{1}"/>
-        </s:if><s:else>
-        <s:param name="pageNo" value="%{#request.pageNo}"/>
-    </s:else>--%>
-    <s:param name="pageNo" value="%{1}"/>
-    <s:param name="currentStatus" value="%{#request.currentStatus}"/>
-    <s:param name="dsDivisionId" value="%{deathRegister.death.deathDivision.dsDivision.dsDivisionUKey}"/>
-    <s:param name="deathDivisionId" value="%{deathRegister.death.deathDivision.bdDivisionUKey}"/>
-</s:url>
+<s:if test="%{pageNo>0}">
+    <s:url id="cancel" action="eprDeathBackToPreviousState.do">
+        <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+        <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+        <s:param name="pageNo" value="%{pageNo}"/>
+        <s:param name="currentStatus" value="%{#request.currentStatus}"/>
+        <s:param name="dsDivisionId" value="%{deathRegister.death.deathDivision.dsDivision.dsDivisionUKey}"/>
+        <s:param name="deathDivisionId" value="%{deathRegister.death.deathDivision.bdDivisionUKey}"/>
+    </s:url>
+</s:if>
+<s:else>
+    <s:url id="cancel" action="eprDeathBackToPreviousState.do">
+        <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+        <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+        <s:param name="pageNo" value="%{1}"/>
+        <s:param name="currentStatus" value="%{#request.currentStatus}"/>
+        <s:param name="dsDivisionId" value="%{deathRegister.death.deathDivision.dsDivision.dsDivisionUKey}"/>
+        <s:param name="deathDivisionId" value="%{deathRegister.death.deathDivision.bdDivisionUKey}"/>
+    </s:url>
+</s:else>
+
     <%--<s:if test="directPrint">
         <s:url id="print" action="eprDierctPrintDeathCertificate.do">
             <s:param name="idUKey" value="#request.idUKey"/>
@@ -153,9 +160,9 @@
     </s:else>--%>
 
 <s:if test="#request.allowPrintCertificate">
-        <div id="birthRegistration-page" class="form-submit">
-            <s:submit type="button" value="%{getText('mark_as_print.button')}"/>
-        </div>
+    <div id="birthRegistration-page" class="form-submit">
+        <s:submit type="button" value="%{getText('mark_as_print.button')}"/>
+    </div>
 
     <div class="form-submit">
         <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>

@@ -125,16 +125,30 @@
         </s:url>
     </s:if>
     <s:else>
+        <s:if test="%{pageNo>0}">
+            <s:url id="cancel" action="eprBirthCancelCertificatePrint.do">
+                <%--todo change--%>
+                <s:param name="pageNo" value="%{pageNo}"/>
+                <s:param name="birthDistrictId"
+                         value="#request.register.birthDivision.dsDivision.district.districtUKey"/>
+                <s:param name="birthDivisionId" value="#request.register.birthDivision.bdDivisionUKey"/>
+                <s:param name="dsDivisionId" value="#request.register.birthDivision.dsDivision.dsDivisionUKey"/>
+                <s:param name="printed" value="#request.printed"/>
+                <s:param name="printStart" value="#request.printStart"/>
+            </s:url>
+        </s:if>
+        <s:else>
+            <s:url id="cancel" action="eprBirthCancelCertificatePrint.do">
+                <s:param name="pageNo" value="1"/>
+                <s:param name="birthDistrictId"
+                         value="#request.register.birthDivision.dsDivision.district.districtUKey"/>
+                <s:param name="birthDivisionId" value="#request.register.birthDivision.bdDivisionUKey"/>
+                <s:param name="dsDivisionId" value="#request.register.birthDivision.dsDivision.dsDivisionUKey"/>
+                <s:param name="printed" value="#request.printed"/>
+                <s:param name="printStart" value="#request.printStart"/>
+            </s:url>
+        </s:else>
         <s:url id="print" value="eprMarkCertificateAsPrinted.do"/>
-        <s:url id="cancel" action="eprBirthCancelCertificatePrint.do">
-            <%--todo change--%>
-            <s:param name="pageNo" value="%{pageNo}"/>
-            <s:param name="birthDistrictId" value="#request.register.birthDivision.dsDivision.district.districtUKey"/>
-            <s:param name="birthDivisionId" value="#request.register.birthDivision.bdDivisionUKey"/>
-            <s:param name="dsDivisionId" value="#request.register.birthDivision.dsDivision.dsDivisionUKey"/>
-            <s:param name="printed" value="#request.printed"/>
-            <s:param name="printStart" value="#request.printStart"/>
-        </s:url>
     </s:else>
 </s:else>
 <div style="width:65%;float:left;margin-top:5px;" id="locationSignId">
@@ -536,5 +550,4 @@
 </s:form>
 
 </div>
-<s:property value="%{pageNo}"/>
 <%-- Styling Completed --%>
