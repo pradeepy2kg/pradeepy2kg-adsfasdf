@@ -24,63 +24,77 @@
     }
 </style>
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
+
 <script type="text/javascript">
     function initPage() {
     }
+
+    function warning() {
+        var ret = true;
+        ret = confirm(document.getElementById('confirmation').value)
+        return ret;
+    }
+
 </script>
+
 <div class="alteration-print-letter-outer">
-<div class="form-submit">
-    <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
-    <s:hidden id="printMessage" value="%{getText('print.message')}"/>
-</div>
-<hr style="border-style:dashed ; float:left;width:100% ;margin-bottom:30px;margin-top:20px;">
-<table border="0" cellspacing="0" width="100%">
-    <caption></caption>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <tbody>
-    <tr>
-        <td rowspan="8" width="200px" height="350px"></td>
-        <td colspan="2" width="600px" height="100px"
-            style="text-align:center;margin-left:auto;margin-right:auto;font-size:16pt">
-            <label>රාජ්‍ය සේවය පිණිසයි / அரச பணி
-                On State Service</label></td>
-        <td rowspan="8" width="200px"></td>
-    </tr>
-    <tr>
-        <td><s:label name="deathAlteration.declarant.declarantFullName" cssStyle="width:600px;font-size:12pt;"
-                     cssClass="disable"
-                     disabled="true"/></td>
-    </tr>
-    <tr>
-        <td><s:label name="deathAlteration.declarant.declarantAddress" cssStyle="width:600px;font-size:12pt;"
-                     cssClass="disable"
-                     disabled="true"/></td>
-    </tr>
-    <tr>
-        <td colspan="2"><p></p></td>
-    </tr>
-    <tr>
-        <td colspan="2"><p></p></td>
-    </tr>
-    <tr>
-        <td colspan="2"><p></p></td>
-    </tr>
-    <tr>
-        <td colspan="2"><p></p></td>
-    </tr>
-    <tr>
-        <td>
-            Printed On : <%= DateTimeUtils.getISO8601FormattedString(new Date()) %>
-        </td>
-        <td style="text-align:right;margin-left:auto;margin-right:0;">
-        </td>
-    </tr>
-    </tbody>
-</table>
-<hr style="border-style:dashed ; float:left;width:100% ;margin-bottom:30px;margin-top:20px;">
+<s:if test="%{!approvalPage}">
+    <div class="form-submit">
+        <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
+        <s:hidden id="printMessage" value="%{getText('print.message')}"/>
+    </div>
+
+
+    <hr style="border-style:dashed ; float:left;width:100% ;margin-bottom:30px;margin-top:20px;">
+    <table border="0" cellspacing="0" width="100%">
+        <caption></caption>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <tbody>
+        <tr>
+            <td rowspan="8" width="200px" height="350px"></td>
+            <td colspan="2" width="600px" height="100px"
+                style="text-align:center;margin-left:auto;margin-right:auto;font-size:16pt">
+                <label>රාජ්‍ය සේවය පිණිසයි / அரச பணி
+                    On State Service</label></td>
+            <td rowspan="8" width="200px"></td>
+        </tr>
+        <tr>
+            <td><s:label name="deathAlteration.declarant.declarantFullName" cssStyle="width:600px;font-size:12pt;"
+                         cssClass="disable"
+                         disabled="true"/></td>
+        </tr>
+        <tr>
+            <td><s:label name="deathAlteration.declarant.declarantAddress" cssStyle="width:600px;font-size:12pt;"
+                         cssClass="disable"
+                         disabled="true"/></td>
+        </tr>
+        <tr>
+            <td colspan="2"><p></p></td>
+        </tr>
+        <tr>
+            <td colspan="2"><p></p></td>
+        </tr>
+        <tr>
+            <td colspan="2"><p></p></td>
+        </tr>
+        <tr>
+            <td colspan="2"><p></p></td>
+        </tr>
+        <tr>
+            <td>
+                Printed On : <%= DateTimeUtils.getISO8601FormattedString(new Date()) %>
+            </td>
+            <td style="text-align:right;margin-left:auto;margin-right:0;">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <hr style="border-style:dashed ; float:left;width:100% ;margin-bottom:30px;margin-top:20px;">
+</s:if>
+
 <table class="table_reg_page_05" cellpadding="0" cellspacing="0" id="approvalTable" width="98%">
 <caption/>
 <col width="200px"/>
@@ -100,6 +114,7 @@
     String prefLang = ((DeathRegister) request.getAttribute("deathRegister")).getDeath().getPreferredLanguage();
     BitSet approval = ((DeathAlteration) request.getAttribute("deathAlteration")).getApprovalStatuses();
 %>
+<s:form action="eprDeathAlterationSetBits" method="post" onsubmit="javascript:return warning()">
 <s:if test="%{requested.get(0)==true}">
     <tr>
         <td> හදිසි මරණයක්ද ? <br>
@@ -108,9 +123,16 @@
         </td>
         <td></td>
         <td></td>
-        <td align="center">
-            <%=CommonUtil.getYesOrNo(approval.get(0), prefLang) %>
-        </td>
+        <s:if test="%{approvalPage}">
+            <td align="center">
+                <s:checkbox name="approvedIndex" fieldValue="1"/>
+            </td>
+        </s:if>
+        <s:else>
+            <td align="center">
+                <%=CommonUtil.getYesOrNo(approval.get(0), prefLang) %>
+            </td>
+        </s:else>
     </tr>
 </s:if>
 <s:if test="%{requested.get(1)==true}">
@@ -121,9 +143,17 @@
         </td>
         <td><s:label value="%{deathRegister.death.dateOfDeath}"/></td>
         <td><s:label value="%{deathAlteration.deathInfo.dateOfDeath}"/></td>
-        <td align="center">
-            <%=CommonUtil.getYesOrNo(approval.get(1), prefLang) %>
-        </td>
+
+        <s:if test="%{approvalPage}">
+            <td align="center">
+                <s:checkbox name="approvedIndex" fieldValue="1"/>
+            </td>
+        </s:if>
+        <s:else>
+            <td align="center">
+                <%=CommonUtil.getYesOrNo(approval.get(1), prefLang) %>
+            </td>
+        </s:else>
     </tr>
 </s:if>
 <s:if test="%{requested.get(2)==true}">
@@ -134,9 +164,17 @@
         </td>
         <td><s:label value="%{deathRegister.death.timeOfDeath}"/></td>
         <td><s:label value="%{deathAlteration.deathInfo.timeOfDeath}"/></td>
-        <td align="center">
-            <%=CommonUtil.getYesOrNo(approval.get(2), prefLang) %>
-        </td>
+
+        <s:if test="%{approvalPage}">
+            <td align="center">
+                <s:checkbox name="approvedIndex" fieldValue="2"/>
+            </td>
+        </s:if>
+        <s:else>
+            <td align="center">
+                <%=CommonUtil.getYesOrNo(approval.get(2), prefLang) %>
+            </td>
+        </s:else>
     </tr>
 </s:if>
 <s:if test="%{requested.get(3)==true}">
@@ -147,9 +185,17 @@
         </td>
         <td><s:label value="%{deathRegister.death.placeOfDeath}"/></td>
         <td><s:label value="%{deathAlteration.deathInfo.placeOfDeath}"/></td>
-        <td align="center">
-            <%=CommonUtil.getYesOrNo(approval.get(3), prefLang) %>
-        </td>
+
+        <s:if test="%{approvalPage}">
+            <td align="center">
+                <s:checkbox name="approvedIndex" fieldValue="3"/>
+            </td>
+        </s:if>
+        <s:else>
+            <td align="center">
+                <%=CommonUtil.getYesOrNo(approval.get(3), prefLang) %>
+            </td>
+        </s:else>
     </tr>
 </s:if>
 <s:if test="%{requested.get(4)==true}">
@@ -160,9 +206,17 @@
         </td>
         <td><s:label value="%{deathRegister.death.placeOfDeathInEnglish}"/></td>
         <td><s:label value="%{deathAlteration.deathInfo.placeOfDeathInEnglish}"/></td>
-        <td align="center">
-            <%=CommonUtil.getYesOrNo(approval.get(4), prefLang) %>
-        </td>
+
+        <s:if test="%{approvalPage}">
+            <td align="center">
+                <s:checkbox name="approvedIndex" fieldValue="4"/>
+            </td>
+        </s:if>
+        <s:else>
+            <td align="center">
+                <%=CommonUtil.getYesOrNo(approval.get(4), prefLang) %>
+            </td>
+        </s:else>
     </tr>
 </s:if>
 <s:if test="%{requested.get(5)==true}">
@@ -179,9 +233,16 @@
             <%=CommonUtil.getYesOrNo(((DeathAlteration) request.getAttribute("deathAlteration")).getDeathInfo().isCauseOfDeathEstablished(),
                     prefLang) %>
         </td>
-        <td align="center">
-            <%=CommonUtil.getYesOrNo(approval.get(5), prefLang) %>
-        </td>
+        <s:if test="%{approvalPage}">
+            <td align="center">
+                <s:checkbox name="approvedIndex" fieldValue="5"/>
+            </td>
+        </s:if>
+        <s:else>
+            <td align="center">
+                <%=CommonUtil.getYesOrNo(approval.get(5), prefLang) %>
+            </td>
+        </s:else>
     </tr>
 </s:if>
 <s:if test="%{requested.get(6)==true}">
@@ -192,9 +253,16 @@
         </td>
         <td><s:label value="%{deathRegister.death.causeOfDeath}"/></td>
         <td><s:label value="%{deathAlteration.deathInfo.causeOfDeath}"/></td>
-        <td align="center">
-            <%=CommonUtil.getYesOrNo(approval.get(6), prefLang) %>
-        </td>
+        <s:if test="%{approvalPage}">
+            <td align="center">
+                <s:checkbox name="approvedIndex" fieldValue="6"/>
+            </td>
+        </s:if>
+        <s:else>
+            <td align="center">
+                <%=CommonUtil.getYesOrNo(approval.get(6), prefLang) %>
+            </td>
+        </s:else>
     </tr>
 </s:if>
 <s:if test="%{requested.get(7)==true}">
@@ -205,9 +273,16 @@
         </td>
         <td><s:label value="%{deathRegister.death.icdCodeOfCause}"/></td>
         <td><s:label value="%{deathAlteration.deathInfo.icdCodeOfCause}"/></td>
-        <td align="center">
-            <%=CommonUtil.getYesOrNo(approval.get(7), prefLang) %>
-        </td>
+        <s:if test="%{approvalPage}">
+            <td align="center">
+                <s:checkbox name="approvedIndex" fieldValue="7"/>
+            </td>
+        </s:if>
+        <s:else>
+            <td align="center">
+                <%=CommonUtil.getYesOrNo(approval.get(7), prefLang) %>
+            </td>
+        </s:else>
     </tr>
 </s:if>
 <s:if test="%{requested.get(8)==true}">
@@ -218,9 +293,16 @@
         </td>
         <td><s:label value="%{deathRegister.death.placeOfBurial}"/></td>
         <td><s:label value="%{deathAlteration.deathInfo.placeOfBurial}"/></td>
-        <td align="center">
-            <%=CommonUtil.getYesOrNo(approval.get(8), prefLang) %>
-        </td>
+        <s:if test="%{approvalPage}">
+            <td align="center">
+                <s:checkbox name="approvedIndex" fieldValue="8"/>
+            </td>
+        </s:if>
+        <s:else>
+            <td align="center">
+                <%=CommonUtil.getYesOrNo(approval.get(8), prefLang) %>
+            </td>
+        </s:else>
     </tr>
 </s:if>
 
@@ -233,9 +315,16 @@
         </td>
         <td><s:label value="%{deathRegister.deathPerson.deathPersonPINorNIC}"/></td>
         <td><s:label value="%{deathAlteration.deathPerson.deathPersonPINorNIC}"/></td>
-        <td align="center">
-            <%=CommonUtil.getYesOrNo(approval.get(9), prefLang) %>
-        </td>
+        <s:if test="%{approvalPage}">
+            <td align="center">
+                <s:checkbox name="approvedIndex" fieldValue="9"/>
+            </td>
+        </s:if>
+        <s:else>
+            <td align="center">
+                <%=CommonUtil.getYesOrNo(approval.get(9), prefLang) %>
+            </td>
+        </s:else>
     </tr>
 </s:if>
 <s:if test="%{requested.get(10)==true}">
@@ -252,9 +341,16 @@
             <td><s:label value="%{deathRegister.deathPerson.deathPersonCountry.taCountryName}"/></td>
             <td><s:label value="%{deathAlteration.deathPerson.deathPersonCountry.taCountryName}"/></td>
         </s:else>
-        <td align="center">
-            <%=CommonUtil.getYesOrNo(approval.get(10), prefLang) %>
-        </td>
+        <s:if test="%{approvalPage}">
+            <td align="center">
+                <s:checkbox name="approvedIndex" fieldValue="10"/>
+            </td>
+        </s:if>
+        <s:else>
+            <td align="center">
+                <%=CommonUtil.getYesOrNo(approval.get(10), prefLang) %>
+            </td>
+        </s:else>
     </tr>
 </s:if>
 <s:if test="%{requested.get(11)==true}">
@@ -265,9 +361,17 @@
         </td>
         <td><s:label value="%{deathRegister.deathPerson.deathPersonPassportNo}"/></td>
         <td><s:label value="%{deathAlteration.deathPerson.deathPersonPassportNo}"/></td>
-        <td align="center">
-            <%=CommonUtil.getYesOrNo(approval.get(11), prefLang) %>
-        </td>
+
+        <s:if test="%{approvalPage}">
+            <td align="center">
+                <s:checkbox name="approvedIndex" fieldValue="11"/>
+            </td>
+        </s:if>
+        <s:else>
+            <td align="center">
+                <%=CommonUtil.getYesOrNo(approval.get(11), prefLang) %>
+            </td>
+        </s:else>
     </tr>
 </s:if>
 <s:if test="%{requested.get(12)==true}">
@@ -278,9 +382,16 @@
         </td>
         <td><s:label value="%{deathRegister.deathPerson.deathPersonAge}"/></td>
         <td><s:label value="%{deathAlteration.deathPerson.deathPersonAge}"/></td>
-        <td align="center">
-            <%=CommonUtil.getYesOrNo(approval.get(12), prefLang) %>
-        </td>
+        <s:if test="%{approvalPage}">
+            <td align="center">
+                <s:checkbox name="approvedIndex" fieldValue="12"/>
+            </td>
+        </s:if>
+        <s:else>
+            <td align="center">
+                <%=CommonUtil.getYesOrNo(approval.get(12), prefLang) %>
+            </td>
+        </s:else>
     </tr>
 </s:if>
 <s:if test="%{requested.get(13)==true}">
@@ -296,9 +407,17 @@
             <%= GenderUtil.getGender(((DeathAlteration) request.getAttribute("deathAlteration")).getDeathPerson().getDeathPersonGender(),
                     ((DeathRegister) request.getAttribute("deathRegister")).getDeath().getPreferredLanguage())%>
         </td>
-        <td align="center">
-            <%=CommonUtil.getYesOrNo(approval.get(13), prefLang) %>
-        </td>
+
+        <s:if test="%{approvalPage}">
+            <td align="center">
+                <s:checkbox name="approvedIndex" fieldValue="13"/>
+            </td>
+        </s:if>
+        <s:else>
+            <td align="center">
+                <%=CommonUtil.getYesOrNo(approval.get(13), prefLang) %>
+            </td>
+        </s:else>
     </tr>
 </s:if>
 <s:if test="%{requested.get(14)==true}">
@@ -315,9 +434,16 @@
             <td><s:label value="%{deathRegister.deathPerson.deathPersonRace.taRaceName}"/></td>
             <td><s:label value="%{deathAlteration.deathPerson.deathPersonRace.taRaceName}"/></td>
         </s:else>
-        <td align="center">
-            <%=CommonUtil.getYesOrNo(approval.get(14), prefLang) %>
-        </td>
+        <s:if test="%{approvalPage}">
+            <td align="center">
+                <s:checkbox name="approvedIndex" fieldValue="14"/>
+            </td>
+        </s:if>
+        <s:else>
+            <td align="center">
+                <%=CommonUtil.getYesOrNo(approval.get(14), prefLang) %>
+            </td>
+        </s:else>
     </tr>
 </s:if>
 <s:if test="%{requested.get(15)==true}">
@@ -329,9 +455,16 @@
         </td>
         <td><s:label value="%{deathRegister.deathPerson.deathPersonNameOfficialLang}"/></td>
         <td><s:label value="%{deathAlteration.deathPerson.deathPersonNameOfficialLang}"/></td>
-        <td align="center">
-            <%=CommonUtil.getYesOrNo(approval.get(15), prefLang) %>
-        </td>
+        <s:if test="%{approvalPage}">
+            <td align="center">
+                <s:checkbox name="approvedIndex" fieldValue="15"/>
+            </td>
+        </s:if>
+        <s:else>
+            <td align="center">
+                <%=CommonUtil.getYesOrNo(approval.get(15), prefLang) %>
+            </td>
+        </s:else>
     </tr>
 </s:if>
 <s:if test="%{requested.get(16)==true}">
@@ -342,9 +475,16 @@
         </td>
         <td><s:label value="%{deathRegister.deathPerson.deathPersonNameInEnglish}"/></td>
         <td><s:label value="%{deathAlteration.deathPerson.deathPersonNameInEnglish}"/></td>
-        <td align="center">
-            <%=CommonUtil.getYesOrNo(approval.get(16), prefLang) %>
-        </td>
+        <s:if test="%{approvalPage}">
+            <td align="center">
+                <s:checkbox name="approvedIndex" fieldValue="16"/>
+            </td>
+        </s:if>
+        <s:else>
+            <td align="center">
+                <%=CommonUtil.getYesOrNo(approval.get(16), prefLang) %>
+            </td>
+        </s:else>
     </tr>
 </s:if>
 <s:if test="%{requested.get(17)==true}">
@@ -355,9 +495,16 @@
         </td>
         <td><s:label value="%{deathRegister.deathPerson.deathPersonPermanentAddress}"/></td>
         <td><s:label value="%{deathAlteration.deathPerson.deathPersonPermanentAddress}"/></td>
-        <td align="center">
-            <%=CommonUtil.getYesOrNo(approval.get(17), prefLang) %>
-        </td>
+        <s:if test="%{approvalPage}">
+            <td align="center">
+                <s:checkbox name="approvedIndex" fieldValue="17"/>
+            </td>
+        </s:if>
+        <s:else>
+            <td align="center">
+                <%=CommonUtil.getYesOrNo(approval.get(17), prefLang) %>
+            </td>
+        </s:else>
     </tr>
 </s:if>
 <s:if test="%{requested.get(18)==true}">
@@ -368,9 +515,16 @@
         </td>
         <td><s:label value="%{deathRegister.deathPerson.deathPersonFatherPINorNIC}"/></td>
         <td><s:label value="%{deathAlteration.deathPerson.deathPersonFatherPINorNIC}"/></td>
-        <td align="center">
-            <%=CommonUtil.getYesOrNo(approval.get(18), prefLang) %>
-        </td>
+        <s:if test="%{approvalPage}">
+            <td align="center">
+                <s:checkbox name="approvedIndex" fieldValue="18"/>
+            </td>
+        </s:if>
+        <s:else>
+            <td align="center">
+                <%=CommonUtil.getYesOrNo(approval.get(18), prefLang) %>
+            </td>
+        </s:else>
     </tr>
 </s:if>
 <s:if test="%{requested.get(19)==true}">
@@ -381,9 +535,16 @@
         </td>
         <td><s:label value="%{deathRegister.deathPerson.deathPersonFatherFullName}"/></td>
         <td><s:label value="%{deathAlteration.deathPerson.deathPersonFatherFullName}"/></td>
-        <td align="center">
-            <%=CommonUtil.getYesOrNo(approval.get(19), prefLang) %>
-        </td>
+        <s:if test="%{approvalPage}">
+            <td align="center">
+                <s:checkbox name="approvedIndex" fieldValue="19"/>
+            </td>
+        </s:if>
+        <s:else>
+            <td align="center">
+                <%=CommonUtil.getYesOrNo(approval.get(19), prefLang) %>
+            </td>
+        </s:else>
     </tr>
 </s:if>
 <s:if test="%{requested.get(20)==true}">
@@ -394,9 +555,16 @@
         </td>
         <td><s:label value="%{deathRegister.deathPerson.deathPersonMotherPINorNIC}"/></td>
         <td><s:label value="%{deathAlteration.deathPerson.deathPersonMotherPINorNIC}"/></td>
-        <td align="center">
-            <%=CommonUtil.getYesOrNo(approval.get(20), prefLang) %>
-        </td>
+        <s:if test="%{approvalPage}">
+            <td align="center">
+                <s:checkbox name="approvedIndex" fieldValue="20"/>
+            </td>
+        </s:if>
+        <s:else>
+            <td align="center">
+                <%=CommonUtil.getYesOrNo(approval.get(20), prefLang) %>
+            </td>
+        </s:else>
     </tr>
 </s:if>
 <s:if test="%{requested.get(21)==true}">
@@ -407,20 +575,51 @@
         </td>
         <td><s:label value="%{deathRegister.deathPerson.deathPersonMotherFullName}"/></td>
         <td><s:label value="%{deathAlteration.deathPerson.deathPersonMotherFullName}"/></td>
-        <td align="center">
-            <%=CommonUtil.getYesOrNo(approval.get(21), prefLang) %>
-        </td>
+        <s:if test="%{approvalPage}">
+            <td align="center">
+                <s:checkbox name="approvedIndex" fieldValue="21"/>
+            </td>
+        </s:if>
+        <s:else>
+            <td align="center">
+                <%=CommonUtil.getYesOrNo(approval.get(21), prefLang) %>
+            </td>
+        </s:else>
     </tr>
 </s:if>
 </tbody>
-</table>
-<br>
-සටහන/note/***
-<br>
-අනුමතකල වෙනස්කම් සහිත නව මරණ සහතිකයක් සඳහා ඉල්ලුම් කල හැක.
-<br>
-You can apply for a new death certificate with altered values.
-<br>
-*****.
 
+</table>
+<s:if test="%{!approvalPage}">
+    <div>
+        <br>
+        සටහන/note/***
+        <br>
+        අනුමතකල වෙනස්කම් සහිත නව මරණ සහතිකයක් සඳහා ඉල්ලුම් කල හැක.
+        <br>
+        You can apply for a new death certificate with altered values.
+        <br>
+        *****
+    </div>
+    .
+</s:if>
+<s:else>
+    <table>
+        <caption/>
+        <col>
+        <col>
+        <tbody>
+        <tr>
+            <td width="1000px" align="right"><s:label value="%{getText('label.apply.changes')}"/></td>
+            <td align="right"><s:checkbox id="applyChanges" name="applyChanges"/></td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="form-submit">
+        <s:submit name="submit" value="%{getText('lable.update')}"/>
+        <s:hidden name="deathAlterationId" value="%{deathAlteration.idUKey}"/>
+    </div>
+</s:else>
+</s:form>
 </div>
+<s:hidden id="confirmation" value="%{getText('confirm.apply.changes')}"/>

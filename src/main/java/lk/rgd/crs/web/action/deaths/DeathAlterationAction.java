@@ -89,6 +89,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     private boolean editMode;
     private boolean editDeathInfo;
     private boolean editDeathPerson;
+    private boolean approvalPage;
 
     public enum Type {
 
@@ -375,7 +376,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
          * getting existing death recode and compare it with death alteration
          */
         deathRegister = deathRegistrationService.getById(deathAlteration.getDeathRegisterIDUkey(), user);
-
+        requested = deathAlteration.getRequestedAlterations();
         if (deathAlteration.getDeathInfo() != null) {
             String dateEx = null;
             String dateAlt = null;
@@ -385,62 +386,57 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             if (deathAlteration.getDeathInfo().getDateOfDeath() != null) {
                 dateAlt = DateTimeUtils.getISO8601FormattedString(deathAlteration.getDeathInfo().getDateOfDeath());
             }
+            /*     todo compare and remove
+  getDisplayList(DeathAlteration.CAUSE_OF_DEATH_ESTABLISHED, deathRegister.getDeath().isCauseOfDeathEstablished(),
+           deathAlteration.getDeathInfo().isCauseOfDeathEstablished(), Type.BOOLEAN.ordinal());*/
 
-            getDisplayList(DeathAlteration.DATE_OF_DEATH, dateEx, dateAlt, Type.STRING.ordinal());
-            getDisplayList(DeathAlteration.TIME_OF_DEATH, deathRegister.getDeath().getTimeOfDeath(),
-                deathAlteration.getDeathInfo().getTimeOfDeath(), Type.STRING.ordinal());
-            getDisplayList(DeathAlteration.PLACE_OF_DEATH, deathRegister.getDeath().getPlaceOfDeath(),
-                deathAlteration.getDeathInfo().getPlaceOfDeath(), Type.STRING.ordinal());
-            getDisplayList(DeathAlteration.PLACE_OF_DEATH_ENGLISH, deathRegister.getDeath().getPlaceOfDeathInEnglish(),
-                deathAlteration.getDeathInfo().getPlaceOfDeathInEnglish(), Type.STRING.ordinal());
-            getDisplayList(DeathAlteration.CAUSE_OF_DEATH_ESTABLISHED, deathRegister.getDeath().isCauseOfDeathEstablished(),
-                deathAlteration.getDeathInfo().isCauseOfDeathEstablished(), Type.BOOLEAN.ordinal());
-            getDisplayList(DeathAlteration.CAUSE_OF_DEATH, deathRegister.getDeath().getCauseOfDeath(),
-                deathAlteration.getDeathInfo().getCauseOfDeath(), Type.STRING.ordinal());
-            getDisplayList(DeathAlteration.ICD_CODE, deathRegister.getDeath().getIcdCodeOfCause(),
-                deathAlteration.getDeathInfo().getIcdCodeOfCause(), Type.STRING.ordinal());
-            getDisplayList(DeathAlteration.BURIAL_PLACE, deathRegister.getDeath().getPlaceOfBurial(),
-                deathAlteration.getDeathInfo().getPlaceOfBurial(), Type.STRING.ordinal());
+            compareString(deathRegister.getDeath().getPlaceOfBurial(),
+                deathAlteration.getDeathInfo().getPlaceOfBurial(), DeathAlteration.BURIAL_PLACE);
+            compareString(deathRegister.getDeath().getIcdCodeOfCause(),
+                deathAlteration.getDeathInfo().getIcdCodeOfCause(), DeathAlteration.ICD_CODE);
+            compareString(deathRegister.getDeath().getCauseOfDeath(),
+                deathAlteration.getDeathInfo().getCauseOfDeath(), DeathAlteration.CAUSE_OF_DEATH);
+            compareString(deathRegister.getDeath().getPlaceOfDeathInEnglish(),
+                deathAlteration.getDeathInfo().getPlaceOfDeathInEnglish(), DeathAlteration.PLACE_OF_DEATH_ENGLISH);
+            compareString(deathRegister.getDeath().getPlaceOfDeath(),
+                deathAlteration.getDeathInfo().getPlaceOfDeath(), DeathAlteration.PLACE_OF_DEATH);
+            compareString(deathRegister.getDeath().getTimeOfDeath(),
+                deathAlteration.getDeathInfo().getTimeOfDeath(), DeathAlteration.TIME_OF_DEATH);
+            compareString(dateEx, dateAlt, DeathAlteration.DATE_OF_DEATH);
         }
         if (deathAlteration.getDeathPerson() != null) {
-            getDisplayList(DeathAlteration.COUNTRY, deathRegister.getDeathPerson().getDeathPersonCountry(),
+
+/*      todo compare  and remove
+//todo remove jsp approval 
+        getDisplayList(DeathAlteration.COUNTRY, deathRegister.getDeathPerson().getDeathPersonCountry(),
                 deathAlteration.getDeathPerson().getDeathPersonCountry(), Type.COUNTRY.ordinal());
-            getDisplayList(DeathAlteration.PASSPORT, deathRegister.getDeathPerson().getDeathPersonPassportNo(),
-                deathAlteration.getDeathPerson().getDeathPersonPassportNo(), Type.STRING.ordinal());
             getDisplayList(DeathAlteration.AGE, deathRegister.getDeathPerson().getDeathPersonAge(),
                 deathAlteration.getDeathPerson().getDeathPersonAge(), Type.INTEGER.ordinal());
             getDisplayList(DeathAlteration.GENDER, deathRegister.getDeathPerson().getDeathPersonGender(),
                 deathAlteration.getDeathPerson().getDeathPersonGender(), Type.INTEGER.ordinal());
             getDisplayList(DeathAlteration.RACE, deathRegister.getDeathPerson().getDeathPersonRace(),
-                deathAlteration.getDeathPerson().getDeathPersonRace(), Type.RACE.ordinal());
-            getDisplayList(DeathAlteration.NAME, deathRegister.getDeathPerson().getDeathPersonNameOfficialLang(),
-                deathAlteration.getDeathPerson().getDeathPersonNameOfficialLang(), Type.STRING.ordinal());
-            getDisplayList(DeathAlteration.NAME_ENGLISH, deathRegister.getDeathPerson().getDeathPersonNameInEnglish(),
-                deathAlteration.getDeathPerson().getDeathPersonNameInEnglish(), Type.STRING.ordinal());
-            getDisplayList(DeathAlteration.ADDRESS, deathRegister.getDeathPerson().getDeathPersonPermanentAddress(),
-                deathAlteration.getDeathPerson().getDeathPersonPermanentAddress(), Type.STRING.ordinal());
-            getDisplayList(DeathAlteration.PIN_FATHER, deathRegister.getDeathPerson().getDeathPersonFatherPINorNIC(),
-                deathAlteration.getDeathPerson().getDeathPersonFatherPINorNIC(), Type.STRING.ordinal());
-            getDisplayList(DeathAlteration.NAME_FATHER, deathRegister.getDeathPerson().getDeathPersonFatherFullName(),
-                deathAlteration.getDeathPerson().getDeathPersonFatherFullName(), Type.STRING.ordinal());
-            getDisplayList(DeathAlteration.PIN_MOTHER, deathRegister.getDeathPerson().getDeathPersonMotherPINorNIC(),
-                deathAlteration.getDeathPerson().getDeathPersonMotherPINorNIC(), Type.STRING.ordinal());
-            getDisplayList(DeathAlteration.NAME_MOTHER, deathRegister.getDeathPerson().getDeathPersonMotherFullName(),
-                deathAlteration.getDeathPerson().getDeathPersonMotherFullName(), Type.STRING.ordinal());
-        }
+                deathAlteration.getDeathPerson().getDeathPersonRace(), Type.RACE.ordinal());*/
 
-        //applying requested bit set
-        if (deathAlteration.getRequestedAlterations().size() == 0) {
-            //this mean first time comparison
-            BitSet requested = deathAlteration.getRequestedAlterations();
-            for (Map.Entry e : approvalFieldList.entrySet()) {
-                requested.set((Integer) e.getKey(), true);
-            }
-            deathAlteration.setRequestedAlterations(requested);
-            //updating death alteration
-            deathAlterationService.updateDeathAlteration(deathAlteration, user);
+            compareString(deathRegister.getDeathPerson().getDeathPersonNameOfficialLang(),
+                deathAlteration.getDeathPerson().getDeathPersonNameOfficialLang(), DeathAlteration.NAME);
+            compareString(deathRegister.getDeathPerson().getDeathPersonNameInEnglish(),
+                deathAlteration.getDeathPerson().getDeathPersonNameInEnglish(), DeathAlteration.NAME_ENGLISH);
+            compareString(deathRegister.getDeathPerson().getDeathPersonPermanentAddress(),
+                deathAlteration.getDeathPerson().getDeathPersonPermanentAddress(), DeathAlteration.ADDRESS);
+            compareString(deathRegister.getDeathPerson().getDeathPersonFatherPINorNIC(),
+                deathAlteration.getDeathPerson().getDeathPersonFatherPINorNIC(), DeathAlteration.PIN_FATHER);
+            compareString(deathRegister.getDeathPerson().getDeathPersonFatherFullName(),
+                deathAlteration.getDeathPerson().getDeathPersonFatherFullName(), DeathAlteration.NAME_FATHER);
+            compareString(deathRegister.getDeathPerson().getDeathPersonMotherPINorNIC(),
+                deathAlteration.getDeathPerson().getDeathPersonMotherPINorNIC(), DeathAlteration.PIN_MOTHER);
+            compareString(deathRegister.getDeathPerson().getDeathPersonMotherFullName(),
+                deathAlteration.getDeathPerson().getDeathPersonMotherFullName(), DeathAlteration.NAME_MOTHER);
+            compareString(deathRegister.getDeathPerson().getDeathPersonPassportNo(),
+                deathAlteration.getDeathPerson().getDeathPersonPassportNo(), DeathAlteration.PASSPORT);
         }
-        populatePrimaryLists(districtUKey, dsDivisionId, language, user);
+        deathAlteration.setRequestedAlterations(requested);
+        deathAlterationService.updateDeathAlteration(deathAlteration, user);
+        approvalPage = true;
         return SUCCESS;
     }
 
@@ -496,232 +492,6 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         deathRegister = deathRegistrationService.getById(deathAlteration.getDeathRegisterIDUkey());
         requested = deathAlteration.getRequestedAlterations();
         approvedBitset = deathAlteration.getApprovalStatuses();
-
-/*                BitSet requested = deathAlteration.getRequestedAlterations();
-        BitSet approvedBitset = deathAlteration.getApprovalStatuses();
-        List values = null;
-
-*//*todo sudden death
-   if (requested.get(DeathAlteration.SUDDEN_DEATH)) {
-        approvalFieldList.put(DeathAlteration.indexMap.get(DeathAlteration.SUDDEN_DEATH),deathRegister.getDeathType(),deathAlteration.get)
-        }*//*
-        if (requested.get(DeathAlteration.DATE_OF_DEATH)) {
-            values = new LinkedList();
-            String dateEx = null;
-            String dateAlt = null;
-            if (deathRegister.getDeath().getDateOfDeath() != null)
-                dateEx = DateTimeUtils.getISO8601FormattedString(deathRegister.getDeath().getDateOfDeath());
-            if (deathAlteration.getDeathInfo().getDateOfDeath() != null)
-                dateAlt = DateTimeUtils.getISO8601FormattedString(deathAlteration.getDeathInfo().getDateOfDeath());
-            values.add(0, dateEx);
-            values.add(1, dateAlt);
-            values.add(2, approvedBitset.get(DeathAlteration.DATE_OF_DEATH));
-            approvalFieldList.put(DeathAlteration.DATE_OF_DEATH, values);
-        }
-
-        if (requested.get(DeathAlteration.TIME_OF_DEATH)) {
-            values = new LinkedList();
-            values.add(0, deathRegister.getDeath().getTimeOfDeath());
-            values.add(1, deathAlteration.getDeathInfo().getTimeOfDeath());
-            values.add(2, approvedBitset.get(DeathAlteration.TIME_OF_DEATH));
-            approvalFieldList.put(DeathAlteration.TIME_OF_DEATH, values);
-        }
-
-        if (requested.get(DeathAlteration.PLACE_OF_DEATH)) {
-            values = new LinkedList();
-            values.add(0, deathRegister.getDeath().getPlaceOfDeath());
-            values.add(1, deathAlteration.getDeathInfo().getPlaceOfDeath());
-            values.add(2, approvedBitset.get(DeathAlteration.PLACE_OF_DEATH));
-            approvalFieldList.put(DeathAlteration.PLACE_OF_DEATH, values);
-        }
-
-        if (requested.get(DeathAlteration.PLACE_OF_DEATH_ENGLISH)) {
-            values = new LinkedList();
-            values.add(0, deathRegister.getDeath().getPlaceOfDeathInEnglish());
-            values.add(1, deathAlteration.getDeathInfo().getPlaceOfDeathInEnglish());
-            values.add(2, approvedBitset.get(DeathAlteration.PLACE_OF_DEATH_ENGLISH));
-            approvalFieldList.put(DeathAlteration.PLACE_OF_DEATH_ENGLISH, values);
-        }
-
-        if (requested.get(DeathAlteration.CAUSE_OF_DEATH_ESTABLISHED)) {
-            values = new LinkedList();
-            values.add(0, deathRegister.getDeath().isCauseOfDeathEstablished());
-            values.add(1, deathAlteration.getDeathInfo().isCauseOfDeathEstablished());
-            values.add(2, approvedBitset.get(DeathAlteration.CAUSE_OF_DEATH_ESTABLISHED));
-            approvalFieldList.put(DeathAlteration.CAUSE_OF_DEATH_ESTABLISHED, values);
-        }
-
-        if (requested.get(DeathAlteration.CAUSE_OF_DEATH)) {
-            values = new LinkedList();
-            values.add(0, deathRegister.getDeath().getCauseOfDeath());
-            values.add(1, deathAlteration.getDeathInfo().getCauseOfDeath());
-            values.add(2, approvedBitset.get(DeathAlteration.CAUSE_OF_DEATH));
-            approvalFieldList.put(DeathAlteration.CAUSE_OF_DEATH, values);
-        }
-
-        if (requested.get(DeathAlteration.ICD_CODE)) {
-            values = new LinkedList();
-            values.add(0, deathRegister.getDeath().getIcdCodeOfCause());
-            values.add(1, deathAlteration.getDeathInfo().getIcdCodeOfCause());
-            values.add(2, approvedBitset.get(DeathAlteration.ICD_CODE));
-            approvalFieldList.put(DeathAlteration.ICD_CODE, values);
-        }
-
-        if (requested.get(DeathAlteration.BURIAL_PLACE)) {
-            values = new LinkedList();
-            values.add(0, deathRegister.getDeath().getPlaceOfBurial());
-            values.add(1, deathAlteration.getDeathInfo().getPlaceOfBurial());
-            values.add(2, approvedBitset.get(DeathAlteration.BURIAL_PLACE));
-            approvalFieldList.put(DeathAlteration.BURIAL_PLACE, values);
-        }
-
-        if (requested.get(DeathAlteration.PIN)) {
-            values = new LinkedList();
-            values.add(0, deathRegister.getDeathPerson().getDeathPersonPINorNIC());
-            values.add(1, deathAlteration.getDeathPerson().getDeathPersonPINorNIC());
-            values.add(2, approvedBitset.get(DeathAlteration.PIN));
-            approvalFieldList.put(DeathAlteration.PIN, values);
-        }
-
-        if (requested.get(DeathAlteration.COUNTRY)) {
-            values = new LinkedList();
-            Country existingCountry = deathRegister.getDeathPerson().getDeathPersonCountry();
-            Country alteredCountry = deathAlteration.getDeathPerson().getDeathPersonCountry();
-            String existingCountryName = null;
-            String alteredCountryName = null;
-
-            if (deathRegister.getDeath().getPreferredLanguage().equals(AppConstants.SINHALA)) {
-                if (existingCountry != null) {
-                    existingCountryName = deathRegister.getDeathPerson().getDeathPersonCountry().getSiCountryName();
-                }
-                if (alteredCountry != null) {
-                    alteredCountryName = deathAlteration.getDeathPerson().getDeathPersonCountry().getSiCountryName();
-                }
-            }
-            if (deathRegister.getDeath().getPreferredLanguage().equals(AppConstants.TAMIL)) {
-                if (existingCountry != null) {
-                    existingCountryName = deathRegister.getDeathPerson().getDeathPersonCountry().getTaCountryName();
-                }
-                if (alteredCountry != null) {
-                    alteredCountryName = deathAlteration.getDeathPerson().getDeathPersonCountry().getTaCountryName();
-                }
-            }
-            values.add(0, existingCountryName);
-            values.add(1, alteredCountryName);
-            values.add(2, approvedBitset.get(DeathAlteration.COUNTRY));
-            approvalFieldList.put(DeathAlteration.COUNTRY, values);
-        }
-
-        if (requested.get(DeathAlteration.PASSPORT)) {
-            values = new LinkedList();
-            values.add(0, deathRegister.getDeathPerson().getDeathPersonPassportNo());
-            values.add(1, deathAlteration.getDeathPerson().getDeathPersonPassportNo());
-            values.add(2, approvedBitset.get(DeathAlteration.PASSPORT));
-            approvalFieldList.put(DeathAlteration.PASSPORT, values);
-        }
-
-        if (requested.get(DeathAlteration.AGE)) {
-            values = new LinkedList();
-            values.add(0, deathRegister.getDeathPerson().getDeathPersonAge());
-            values.add(1, deathAlteration.getDeathPerson().getDeathPersonAge());
-            values.add(2, approvedBitset.get(DeathAlteration.AGE));
-            approvalFieldList.put(DeathAlteration.AGE, values);
-        }
-
-        if (requested.get(DeathAlteration.GENDER)) {
-            values = new LinkedList();
-            values.add(0, GenderUtil.getGender(deathRegister.getDeathPerson().getDeathPersonGender(),
-                    deathRegister.getDeath().getPreferredLanguage()));
-            values.add(1, GenderUtil.getGender(deathAlteration.getDeathPerson().getDeathPersonGender(),
-                    deathRegister.getDeath().getPreferredLanguage()));
-            values.add(2, approvedBitset.get(DeathAlteration.GENDER));
-            approvalFieldList.put(DeathAlteration.GENDER, values);
-        }
-
-        if (requested.get(DeathAlteration.RACE)) {
-            values = new LinkedList();
-            Race existingRace = deathRegister.getDeathPerson().getDeathPersonRace();
-            Race alteredRace = deathAlteration.getDeathPerson().getDeathPersonRace();
-            String existingRaceName = null;
-            String alteredRaceName = null;
-            if (deathRegister.getDeath().getPreferredLanguage().equals(AppConstants.SINHALA)) {
-                if (existingRace != null) {
-                    existingRaceName = deathRegister.getDeathPerson().getDeathPersonRace().getSiRaceName();
-                }
-                if (alteredRace != null) {
-                    alteredRaceName = deathAlteration.getDeathPerson().getDeathPersonRace().getSiRaceName();
-                }
-            }
-            if (deathRegister.getDeath().getPreferredLanguage().equals(AppConstants.TAMIL)) {
-                if (existingRace != null) {
-                    existingRaceName = deathRegister.getDeathPerson().getDeathPersonRace().getTaRaceName();
-                }
-                if (alteredRace != null) {
-                    alteredRaceName = deathAlteration.getDeathPerson().getDeathPersonRace().getTaRaceName();
-                }
-            }
-            values.add(0, existingRaceName);
-            values.add(1, alteredRaceName);
-            values.add(2, approvedBitset.get(DeathAlteration.AGE));
-            approvalFieldList.put(DeathAlteration.AGE, values);
-        }
-
-        if (requested.get(DeathAlteration.NAME)) {
-            values = new LinkedList();
-            values.add(0, deathRegister.getDeathPerson().getDeathPersonNameOfficialLang());
-            values.add(1, deathAlteration.getDeathPerson().getDeathPersonNameOfficialLang());
-            values.add(2, approvedBitset.get(DeathAlteration.NAME));
-            approvalFieldList.put(DeathAlteration.NAME, values);
-        }
-
-        if (requested.get(DeathAlteration.NAME_ENGLISH)) {
-            values = new LinkedList();
-            values.add(0, deathRegister.getDeathPerson().getDeathPersonNameInEnglish());
-            values.add(1, deathAlteration.getDeathPerson().getDeathPersonNameInEnglish());
-            values.add(2, approvedBitset.get(DeathAlteration.NAME_ENGLISH));
-            approvalFieldList.put(DeathAlteration.NAME_ENGLISH, values);
-        }
-
-        if (requested.get(DeathAlteration.ADDRESS)) {
-            values = new LinkedList();
-            values.add(0, deathRegister.getDeathPerson().getDeathPersonPermanentAddress());
-            values.add(1, deathAlteration.getDeathPerson().getDeathPersonPermanentAddress());
-            values.add(2, approvedBitset.get(DeathAlteration.ADDRESS));
-            approvalFieldList.put(DeathAlteration.ADDRESS, values);
-        }
-
-        if (requested.get(DeathAlteration.PIN_FATHER)) {
-            values = new LinkedList();
-            values.add(0, deathRegister.getDeathPerson().getDeathPersonFatherPINorNIC());
-            values.add(1, deathAlteration.getDeathPerson().getDeathPersonFatherPINorNIC());
-            values.add(2, approvedBitset.get(DeathAlteration.PIN_FATHER));
-            approvalFieldList.put(DeathAlteration.PIN_FATHER, values);
-        }
-
-        if (requested.get(DeathAlteration.NAME_FATHER)) {
-            values = new LinkedList();
-            values.add(0, deathRegister.getDeathPerson().getDeathPersonFatherFullName());
-            values.add(1, deathAlteration.getDeathPerson().getDeathPersonFatherFullName());
-            values.add(2, approvedBitset.get(DeathAlteration.NAME_FATHER));
-            approvalFieldList.put(DeathAlteration.NAME_FATHER, values);
-        }
-
-        if (requested.get(DeathAlteration.PIN_MOTHER)) {
-            values = new LinkedList();
-            values.add(0, deathRegister.getDeathPerson().getDeathPersonMotherPINorNIC());
-            values.add(1, deathAlteration.getDeathPerson().getDeathPersonMotherPINorNIC());
-            values.add(2, approvedBitset.get(DeathAlteration.PIN_MOTHER));
-            approvalFieldList.put(DeathAlteration.PIN_MOTHER, values);
-        }
-
-        if (requested.get(DeathAlteration.NAME_MOTHER)) {
-            values = new LinkedList();
-            values.add(0, deathRegister.getDeathPerson().getDeathPersonMotherFullName());
-            values.add(1, deathAlteration.getDeathPerson().getDeathPersonMotherFullName());
-            values.add(2, approvedBitset.get(DeathAlteration.NAME_MOTHER));
-            approvalFieldList.put(DeathAlteration.NAME_MOTHER, values);
-        }*/
-
         return "pageLoad";
     }
 
@@ -865,6 +635,15 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 }
                 break;
             default:
+        }
+    }
+
+    private void compareString(String exisiting, String alteration, int bit) {
+        if (alteration != null) {
+            int value = exisiting.compareTo(alteration.trim());
+            if (value != 0) {
+                requested.set(bit);
+            }
         }
     }
 
@@ -1283,5 +1062,13 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
 
     public void setApprovedBitset(BitSet approvedBitset) {
         this.approvedBitset = approvedBitset;
+    }
+
+    public boolean isApprovalPage() {
+        return approvalPage;
+    }
+
+    public void setApprovalPage(boolean approvalPage) {
+        this.approvalPage = approvalPage;
     }
 }

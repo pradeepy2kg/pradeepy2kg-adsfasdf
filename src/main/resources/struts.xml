@@ -1082,7 +1082,7 @@
         </action>
         <action name="eprApproveDeathAlterationsDirect" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"
                 method="directApprove">
-            <result type="tiles" name="success">epr.deathAlterationApproval</result>
+            <result type="tiles" name="success">epr.deathAlterationPrintLetter</result>
             <result type="tiles" name="error">epr.deathAlterationApprovalHome</result>
         </action>
 
