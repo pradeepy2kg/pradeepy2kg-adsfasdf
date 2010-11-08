@@ -118,8 +118,8 @@ public class User implements Serializable {
      */
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(schema = "COMMON", name = "USER_BDDISTRICTS",
-            joinColumns = @JoinColumn(name = "userId"),
-            inverseJoinColumns = @JoinColumn(name = "districtUKey"))
+        joinColumns = @JoinColumn(name = "userId"),
+        inverseJoinColumns = @JoinColumn(name = "districtUKey"))
     private Set<District> assignedBDDistricts;
 
     /**
@@ -127,8 +127,8 @@ public class User implements Serializable {
      */
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(schema = "COMMON", name = "USER_MRDISTRICTS",
-            joinColumns = @JoinColumn(name = "userId"),
-            inverseJoinColumns = @JoinColumn(name = "districtUKey"))
+        joinColumns = @JoinColumn(name = "userId"),
+        inverseJoinColumns = @JoinColumn(name = "districtUKey"))
     private Set<District> assignedMRDistricts;
 
     /**
@@ -136,8 +136,8 @@ public class User implements Serializable {
      */
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(schema = "COMMON", name = "USER_BDDSDIVISIONS",
-            joinColumns = @JoinColumn(name = "userId"),
-            inverseJoinColumns = @JoinColumn(name = "dsDivisionUKey"))
+        joinColumns = @JoinColumn(name = "userId"),
+        inverseJoinColumns = @JoinColumn(name = "dsDivisionUKey"))
     private Set<DSDivision> assignedBDDSDivisions;
 
     /**
@@ -389,6 +389,24 @@ public class User implements Serializable {
         return false;
     }
 
+    public boolean isAllowedAccessToLocation(int id) {
+        if (Role.ROLE_RG.equals(role.getRoleId())) {
+            // RG has full access without limitation
+            return true;
+        }
+
+        if (locations == null || locations.isEmpty()) {
+            return false;
+        }
+
+        for (UserLocation ul : locations) {
+            if (ul.getLifeCycleInfo().isActive() && ul.getLocationId() == id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public Map<Integer, String> getActiveLocations(String language) {
         Map<Integer, String> al = new HashMap<Integer, String>();
 
@@ -399,13 +417,13 @@ public class User implements Serializable {
             if (location.getLifeCycleInfo().isActive()) {
                 if (AppConstants.SINHALA.equals(language)) {
                     al.put(location.getLocation().getLocationUKey(),
-                            location.getLocation().getLocationCode() + " : " + location.getLocation().getSiLocationName());
+                        location.getLocation().getLocationCode() + " : " + location.getLocation().getSiLocationName());
                 } else if (AppConstants.ENGLISH.equals(language)) {
                     al.put(location.getLocation().getLocationUKey(),
-                            location.getLocation().getLocationCode() + " : " + location.getLocation().getEnLocationName());
+                        location.getLocation().getLocationCode() + " : " + location.getLocation().getEnLocationName());
                 } else if (AppConstants.TAMIL.equals(language)) {
                     al.put(location.getLocation().getLocationUKey(),
-                            location.getLocation().getLocationCode() + " : " + location.getLocation().getTaLocationName());
+                        location.getLocation().getLocationCode() + " : " + location.getLocation().getTaLocationName());
                 }
             }
         }

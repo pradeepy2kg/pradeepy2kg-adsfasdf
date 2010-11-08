@@ -73,10 +73,10 @@ public class PopulationRegisterAction extends ActionSupport implements SessionAw
         }
 
         if (personUKey == 0) {
-            personList = service.addExistingPerson(person, permanentAddress, currentAddress, user, citizenshipList, ignoreDuplicate);
+            personList = service.addExistingPerson(person, permanentAddress, currentAddress, citizenshipList, ignoreDuplicate, user);
         } else {
             logger.debug("Editing existing person in PRS with personUKey : {}", personUKey);
-            service.editExistingPerson(person, permanentAddress, currentAddress, user, citizenshipList, true);
+            service.editExistingPerson(person, permanentAddress, currentAddress, citizenshipList, user);
             personList = Collections.emptyList();
         }
 

@@ -53,7 +53,7 @@ public class PersonCitizenshipTest extends TestCase {
         Person p1 = getMinimalPerson(dob.getTime());
         try {
             eCivil.addExistingPerson(
-                p1, "Permanent Address", "Current Address", deoColomboColombo, addSampleCitizenship(), false);
+                p1, "Permanent Address", "Current Address", addSampleCitizenship(), false, deoColomboColombo);
         } catch (Exception e) {
             fail("Person failed to add PRS");
         }
