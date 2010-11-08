@@ -196,7 +196,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             }
             // update citizenship list of the person to the PRS
             // TODO need to find a better solution
-            if (citizenshipList != null) {
+            if (citizenshipList != null && !citizenshipList.isEmpty()) {
                 final Set<PersonCitizenship> existingCitizens = person.getCountries();
                 for (PersonCitizenship pc : existingCitizens) {
                     citizenshipDAO.deleteCitizenship(pc.getPersonUKey(), pc.getCountryId());

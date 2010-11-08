@@ -404,7 +404,7 @@
             <tr>
                 <th width="150px;">NIC</th>
                 <th width="480px;"><s:label name="name" value="%{getText('label.personName')}"/></th>
-                <th width="200px;">Status</th>
+                <th width="200px;"><s:label name="name" value="%{getText('label.state')}"/></th>
                 <th width="20px;"></th>
             </tr>
             </thead>
@@ -423,7 +423,7 @@
                             <s:url id="editPerson" action="eprEditPerson.do">
                                 <s:param name="personUKey" value="personUKey"/>
                             </s:url>
-                            <s:a href="%{editPerson}" title="%{getText('editTooltip.label')}">
+                            <s:a href="%{editPerson}" title="%{getText('label.editToolTip')}">
                                 <img src="<s:url value='/images/edit.png'/>" width="25" height="25" border="none"/>
                             </s:a>
                         </s:if>
@@ -432,13 +432,13 @@
             </s:iterator>
             </tbody>
         </table>
-        <table width="60%" align="center" style="padding:0;cellspacing:0;cellpadding:0;">
+        <table width="60%" align="right" style="padding:0;cellspacing:0;cellpadding:0;">
             <tr>
                 <td><s:checkbox name="ignoreDuplicate"/></td>
-                <td><s:label value="Add Person Ignore Duplicates" name="ignoreDuplicate"/></td>
+                <td><s:label value="%{getText('label.ignoreDuplicates')}" name="ignoreDuplicate"/></td>
                 <td>
                     <div class="form-submit" style="padding:0;margin-top:0px;">
-                        <s:submit name="approve" value="Register"/></div>
+                        <s:submit name="approve" value="%{getText('label.save')}"/></div>
                 </td>
             </tr>
         </table>
@@ -697,7 +697,7 @@
     </table>
 </div>
 <div class="form-submit">
-    <s:submit id="submitButton" value="%{getText('next.label')}" cssStyle="margin-top:10px;"/>
+    <s:submit id="submitButton" value="%{getText('label.save')}" cssStyle="margin-top:10px;"/>
 </div>
 
 <s:hidden id="citizenship" name="citizenship"/>
