@@ -7,7 +7,7 @@
     }
 </script>
 
-<s:actionmessage cssStyle="text-align:left;color:red;"/>
+<s:actionmessage cssStyle="text-align:left;"/>
 
 <s:url id="print" action="eprPRSCertificate.do">
     <s:param name="personId" value="#request.personUKey"/>

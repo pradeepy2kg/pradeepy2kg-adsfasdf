@@ -1,6 +1,7 @@
 package lk.rgd.prs.api.domain;
 
 import lk.rgd.AppConstants;
+import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.domain.Race;
 import lk.rgd.common.util.WebUtils;
 
@@ -243,6 +244,12 @@ public class Person implements Serializable {
      */
     @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
     private Set<PersonCitizenship> countries = new HashSet<PersonCitizenship>();
+    /**
+     * The primary location of the user who is adding a person to the PRS
+     */
+    @ManyToOne
+    @JoinColumn(name = "submitLocationUKey")
+    private Location submittedLocation;
 
     /**
      * Add a record of a marriage. Marks this marriage as the 'last' marriage
@@ -526,6 +533,14 @@ public class Person implements Serializable {
 
     public void setCountries(Set<PersonCitizenship> countries) {
         this.countries = countries;
+    }
+
+    public Location getSubmittedLocation() {
+        return submittedLocation;
+    }
+
+    public void setSubmittedLocation(Location submittedLocation) {
+        this.submittedLocation = submittedLocation;
     }
 
     public PRSLifeCycleInfo getLifeCycleInfo() {

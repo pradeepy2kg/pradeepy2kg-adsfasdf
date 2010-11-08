@@ -1746,7 +1746,7 @@ public class BirthRegistrationServiceImpl implements
                 " in invalid context", ErrorCodes.ILLEGAL_STATE);
         }
         if (logger.isDebugEnabled()) {
-            logger.debug("bith type checking for BDF : " + bdf.getIdUKey() + " passed for birth type as : " +
+            logger.debug("birth type checking for BDF : " + bdf.getIdUKey() + " passed for birth type as : " +
                 bdf.getRegister().getBirthType());
         }
     }
@@ -1759,7 +1759,7 @@ public class BirthRegistrationServiceImpl implements
                 ErrorCodes.ILLEGAL_STATE);
         }
         if (logger.isDebugEnabled()) {
-            logger.debug("bith type checking for BDF : {}  passed for birth type as : {}", bdf.getIdUKey(), current);
+            logger.debug("birth type checking for BDF : {}  passed for birth type as : {}", bdf.getIdUKey(), current);
         }
     }
 
