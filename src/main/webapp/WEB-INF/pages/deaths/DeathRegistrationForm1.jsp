@@ -523,7 +523,7 @@ function initPage() {
                     <s:fielderror name="duplicateSerialNumberError" cssStyle="color:red;font-size:9pt;"/>
                 </tr>
                 <tr>
-                    <td><label><span class="font-8">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span></label>
+                    <td><label><span class="font-8">අනුක්‍රමික අංකය<s:label value="*" cssStyle="color:red;font-size:10pt"/><br>தொடர் இலக்கம்<br>Serial Number</span></label>
                     </td>
                     <td>
                         <s:if test="editMode">
@@ -546,7 +546,7 @@ function initPage() {
                 <tr>
                     <td>
                         <label><span
-                                class="font-8">භාරගත්  දිනය<br>பிறப்பைப் பதிவு திகதி <br>Submitted Date</span></label>
+                                class="font-8">භාරගත්  දිනය<s:label value="*" cssStyle="color:red;font-size:10pt"/><br>பிறப்பைப் பதிவு திகதி <br>Submitted Date</span></label>
                     </td>
                     <td><s:label value="YYYY-MM-DD" cssStyle="margin-left:20px;font-size:10px"/><br>
                         <s:textfield name="death.dateOfRegistration" id="dateOfRegistrationDatePicker" maxLength="10"/>
@@ -639,7 +639,7 @@ function initPage() {
     </s:elseif>
     <tr>
         <td>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-            මරණය සිදු වූ දිනය
+            මරණය සිදු වූ දිනය <s:label value="*" cssStyle="color:red;font-size:10pt"/>
             <br>இறந்த திகதி
             <br>Date of Death
         </td>
@@ -658,7 +658,7 @@ function initPage() {
     </tr>
     <tr>
         <td rowspan="5">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-            මරණය සිදු වූ ස්ථානය
+            මරණය සිදු වූ ස්ථානය<s:label value="*" cssStyle="color:red;font-size:10pt"/>
             <br>இறப்பு நிகழந்த இடம்
             <br>Place of Death
         </td>
@@ -751,7 +751,7 @@ function initPage() {
     </tr>
     <tr>
         <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-            ආදාහන හෝ භූමදාන ස්ථානය
+            ආදාහන හෝ භූමදාන ස්ථානය<s:label value="*" cssStyle="color:red;font-size:10pt"/>
             <br>அடக்கம் செய்த அல்லது தகனஞ் செய்த இடம்
             <br>Place of burial or cremation
         </td>

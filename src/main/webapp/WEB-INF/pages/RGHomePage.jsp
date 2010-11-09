@@ -22,7 +22,7 @@
     }
 </style>
 
-<s:actionerror/>
+<s:actionerror cssStyle="color:red;"/>
 <div id="ADR-home-page-outer">
     <s:hidden id="totalDeclarations" value="%{totalDeclarations}"/>
     <s:hidden id="totalDecArrivals" value="%{totalDecArrivals}"/>

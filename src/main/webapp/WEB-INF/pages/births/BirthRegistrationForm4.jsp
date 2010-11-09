@@ -143,7 +143,7 @@
             </tr>
             <tr>
                 <td ><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-                    අනන්‍යතා අංකය
+                    අනන්‍යතා අංකය <s:label value="*" cssStyle="color:red;font-size:14pt;"/>
                     <br>அடையாள எண்
                     <br>Identification Number</label></td>
                 <td colspan="8" class="find-person" width="250px">
@@ -158,33 +158,35 @@
                                  maxLength="10"/>
                     <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
                          id="notifier_lookup"/>
-                    <s:label value="*" cssStyle="color:red;font-size:15pt"/>
+                    <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>--%>
                 </td>
             </tr>
             <tr>
                 <td width="200px" colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-                    නම<br>கொடுப்பவரின் பெயர் <br>Name</label></td>
+                    නම<s:label value="*" cssStyle="color:red;font-size:14pt;"/><br>கொடுப்பவரின் பெயர் <br>Name</label></td>
                 <td colspan="4">
                     <s:textarea name="notifyingAuthority.notifyingAuthorityName" id="notifyingAuthorityName"
-                                cssStyle="width:95%;"/><s:label value="*" cssStyle="color:red;font-size:15pt"/>
+                                cssStyle="width:95%;"/>
+                    <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>--%>
                 </td>
             </tr>
             <tr>
                 <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)තැපැල්
-                    ලිපිනය<br>தபால்
+                    ලිපිනය<s:label value="*" cssStyle="color:red;font-size:14pt;"/><br>தபால்
                     முகவரி <br>Postal Address</label></td>
                 <td colspan="4"><s:textarea name="notifyingAuthority.notifyingAuthorityAddress"
                                             id="notifyingAuthorityAddress"
                                             cssStyle="width:95%;"/>
-                    <s:label value="*" cssStyle="color:red;font-size:15pt"/>
+                    <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>--%>
                 </td>
             </tr>
             <tr>
-                <td width="200px"><label>දිනය <br>திகதி <br>Date</label></td>
+                <td width="200px"><label>දිනය<s:label value="*" cssStyle="color:red;font-size:14pt;"/> <br>திகதி <br>Date</label></td>
                 <td colspan="4">
-                    <s:label value="YYYY-MM-DD" cssStyle="margin-left:77%;font-size:10px"/><br>
+                    <s:label value="YYYY-MM-DD" cssStyle="float:left;margin-left:1%;font-size:10px"/><br>
                     <s:textfield name="notifyingAuthority.notifyingAuthoritySignDate" id="modifiedDatePicker"
-                                 cssStyle="margin-right:60px;" maxLength="10"/><s:label value="*" cssStyle="color:red;font-size:15pt"/>
+                                 cssStyle="float:left;margin-right:60px;" maxLength="10"/>
+                    <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>--%>
                 </td>
             </tr>
             </tbody>

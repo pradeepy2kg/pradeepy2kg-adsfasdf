@@ -602,7 +602,7 @@ function initPage() {
 
     <tr>
         <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)දැනුම් දෙන්නේ කවුරුන්
-            විසින් ද? <br>தகவல் வழங்குபவா் <br>Person Giving
+            විසින් ද? <s:label value="*" cssStyle="color:red;font-size:14pt;"/><br>தகவல் வழங்குபவா் <br>Person Giving
             Information</label></td>
         <td>
             <table class="sub_table">
@@ -664,18 +664,18 @@ function initPage() {
     </tr>
 
     <tr>
-        <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) නම <br>கொடுப்பவரின் பெயர்
+        <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) නම <s:label value="*" cssStyle="color:red;font-size:14pt;"/><br>கொடுப்பவரின் பெயர்
             <br>Name</label></td>
         <td colspan="4"><s:textarea name="informant.informantName" id="informantName" cssStyle="width:95%;"/>
-            <s:label value="*" cssStyle="color:red;font-size:15pt"/>
+            <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>--%>
         </td>
     </tr>
     <tr>
-        <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)තැපැල් ලිපිනය<br>தபால்
+        <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)තැපැල් ලිපිනය<s:label value="*" cssStyle="color:red;font-size:14pt;"/><br>தபால்
             முகவரி <br>Postal Address</label></td>
         <td colspan="4"><s:textarea name="informant.informantAddress" id="informantAddress"
                                     cssStyle="width:95%;"/>
-            <s:label value="*" cssStyle="color:red;font-size:15pt"/>
+            <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>--%>
         </td>
     </tr>
     <tr>
@@ -691,12 +691,12 @@ function initPage() {
 
     </tr>
     <tr>
-        <td colspan="1"><label>දිනය <br>திகதி<br>Date</label></td>
+        <td colspan="1"><label>දිනය <s:label value="*" cssStyle="color:red;font-size:14pt;"/><br>திகதி<br>Date</label></td>
         <td colspan="4">
-                <s:label value="YYYY-MM-DD" cssStyle="float:right;margin-right:190px;font-size:10px"/><br>
-                <s:textfield name="informant.informantSignDate" id="informDatePicker" cssStyle="margin-right:70px;"
+                <s:label value="YYYY-MM-DD" cssStyle="float:left;margin-right:190px;font-size:10px"/><br>
+                <s:textfield name="informant.informantSignDate" id="informDatePicker" cssStyle="float:left;margin-right:70px;"
                              maxLength="10"/>
-                <s:label value="*" cssStyle="color:red;font-size:15pt"/>
+                <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>--%>
     </tr>
     </tbody>
 </table>

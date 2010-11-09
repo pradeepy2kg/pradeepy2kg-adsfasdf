@@ -179,7 +179,7 @@
     </tr>
     <tr>
         <td rowspan="2" colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-            (20)දැනුම් දෙන්නේ කවරකු වශයෙන්ද
+            (20)දැනුම් දෙන්නේ කවරකු වශයෙන්ද <s:label value="*" cssStyle="color:red;font-size:10pt"/>
             <br>தகவல் வழங்குபவா்
             <br>Capacity for giving information
         </td>
@@ -230,7 +230,7 @@
     </tr>
     <tr>
         <td colspan="4">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-            අනන්‍යතා අංකය
+            අනන්‍යතා අංකය <s:label value="*" cssStyle="color:red;font-size:10pt"/>
             <br>அடையாள எண்
             <br>Identification No.
         </td>
@@ -247,7 +247,7 @@
     </tr>
     <tr>
         <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-            නම
+            නම <s:label value="*" cssStyle="color:red;font-size:10pt"/>
             <br>பெயர்
             <br>Name
         </td>
@@ -256,7 +256,7 @@
     </tr>
     <tr>
         <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-            තැපැල් ලිපිනය
+            තැපැල් ලිපිනය<s:label value="*" cssStyle="color:red;font-size:10pt"/>
             <br>தபால் முகவரி
             <br>Postal Address
         </td>
@@ -362,13 +362,13 @@
         </td>
         <td colspan="1"></td>
         <td colspan="1">
-            දිනය
+            දිනය<s:label value="*" cssStyle="color:red;font-size:10pt"/>
             <br>திகதி
             <br>Date
         </td>
         <td colspan="1">
-            <s:label value="YYYY-MM-DD" cssStyle="margin-left:50%;font-size:10px"/><br>
-            <s:textfield id="submitDatePicker"
+            <s:label value="YYYY-MM-DD" cssStyle="margin-left:2%;font-size:10px"/><br>
+            <s:textfield id="submitDatePicker" cssStyle="float:left;"
                          name="notifyingAuthority.notifyingAuthoritySignDate"/></td>
     </tr>
     </tbody>

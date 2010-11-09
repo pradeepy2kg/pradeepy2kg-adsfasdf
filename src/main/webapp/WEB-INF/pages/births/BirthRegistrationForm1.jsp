@@ -336,7 +336,7 @@ function initPage() {
                     <s:fielderror name="duplicateCourtOrderNumberError" cssStyle="color:red;font-size:9pt;"/>
                 </tr>
                 <tr>
-                    <td><label><span class="font-8">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span></label>
+                    <td><label><span class="font-8">අනුක්‍රමික අංකය<s:label value="*" cssStyle="color:red;font-size:10pt;"/> <br>தொடர் இலக்கம்<br>Serial Number</span></label>
                     </td>
                     <td>
 <%--                        <s:if test="editMode">
@@ -344,7 +344,7 @@ function initPage() {
                         </s:if>
                         <s:else>--%>
                             <s:textfield name="register.bdfSerialNo" id="bdfSerialNo" maxLength="10"/>
-    <s:label value="*" cssStyle="color:red;font-size:15pt"/>
+    <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>         --%>
                     <%--    </s:else>--%>
                     </td>
                 </tr>
@@ -356,17 +356,18 @@ function initPage() {
                         <br>For office use only
                         <hr>
                     </td>
-                    <td></td>
+
                 </tr>
                 <tr>
                     <td>
-                        <label><span
-                                class="font-8">භාරගත්  දිනය<br>பிறப்பைப் பதிவு திகதி <br>Submitted Date</span></label>
+                        <label>
+                            <span class="font-8">භාරගත්  දිනය<s:label value="*" cssStyle="color:red;font-size:10pt;"/> <br>பிறப்பைப் பதிவு திகதி <br>Submitted Date</span>
+                        </label>
                     </td>
                     <td><s:label value="YYYY-MM-DD" cssStyle="margin-left:20px;font-size:10px"/><br>
                         <s:textfield name="register.dateOfRegistration" id="submitDatePicker" maxLength="10"/>
                     </td>
-                    <td><s:label value="*" cssStyle="color:red;font-size:15pt"/></td>
+
                 </tr>
             </table>
         </td>
@@ -463,12 +464,13 @@ function initPage() {
 </s:if>
 <tr></tr>
 <tr style="border-left:1px solid #000000;">
-    <td width="150px" align="left"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)උපන් දිනය<br>
+    <td width="150px" align="left"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)උපන් දිනය
+        <s:label value="*" cssStyle="color:red;font-size:14pt;"/><br>
         பிறந்த திகதி<br>Date of Birth</label></td>
     <td colspan="3" style="border-right:none;">
         <s:label value="YYYY-MM-DD" cssStyle="margin-left:20px;font-size:10px"/><br>
         <s:textfield id="birthDatePicker" name="child.dateOfBirth" onchange="dateRange();" maxLength="10"/>
-        <s:label value="*" cssStyle="color:red;font-size:15pt"/>
+        <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>--%>
     </td>
     <td colspan="4" style="border-left:none;">
         <div id="belatedError" style="color:red; font-size:11pt"/>
@@ -476,7 +478,7 @@ function initPage() {
 </tr>
 <tr>
     <td rowspan="6"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපන්
-        ස්ථානය
+        ස්ථානය   <s:label value="*" cssStyle="color:red;font-size:14pt;"/>
         <br>பிறந்த இடம்
         <br> Place of Birth</label></td>
     <td><label>දිස්ත්‍රික්කය மாவட்டம் District</label></td>
@@ -507,7 +509,7 @@ function initPage() {
     <td><label>සිංහල හෝ දෙමළ භාෂාවෙන් <br>சிங்களம்அல்லது தமிழ் மொழியில்<br>In Sinhala or Tamil</label></td>
     <td colspan="6"><s:textfield name="child.placeOfBirth" id="placeOfBirth" cssStyle="width:95%;"
                                  maxLength="255"/>
-        <s:label value="*" cssStyle="color:red;font-size:15pt"/>
+        <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>          --%>
     </td>
 </tr>
 <tr>

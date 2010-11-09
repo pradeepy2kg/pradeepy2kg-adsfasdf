@@ -166,9 +166,11 @@
                 <table style=" border:1px solid #000000; width:300px">
                     <tr><s:actionerror cssStyle="color:red;font-size:10pt"/></tr>
                     <tr>
-                        <td><label><span class="font-8">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span></label>
+                        <td><label><span class="font-8">අනුක්‍රමික අංකය<s:label value="*" cssStyle="color:red;font-size:10pt"/><br>தொடர் இலக்கம்<br>Serial Number</span></label>
                         </td>
-                        <td><s:textfield name="bdId" id="SerialNo"/></td>
+                        <td><s:textfield name="bdId" id="SerialNo"/>
+                            <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>--%>
+                        </td>
                     </tr>
                 </table>
                 <table style=" width:300px">
@@ -264,13 +266,13 @@
             விபரம<br>Information included in Civil Registration System </label></td>
         <td class="cell_02" colspan="6"><label>
              ඇතුලත් කරඇති තොරතුරු හෝ යම් අක්ෂර දෝෂයක් නිවැරදි කල යුතුනම් , වෙනස් විය යුතු ආකාරය ඇතුලත් කරන්න
-            <br>உட்புகுத்தப்பட்ட விபரங்கள் அல்லது ஏதாவது தவறு திருத்தப்பட வேண்டுமாயின், திருத்தப்பட வேண்டிய  விதத்தினை குறிப்பிடவும்
+            <br>உட்புகுத்தப்பட்ட விபரங்கள் அல்லது ஏதாவது தவறு திருத்தப்பட வேண்டுமாயின், திருத்தப்படவெண்டிய விதத்தினை குறிப்பிடவும்  
             <br>If there are spelling mistakes or changes in existing details.</label></td>
     </tr>
     <tr>
         <td class="cell_01">2</td>
-        <td class="cell_04"><label>උපන් දිනය<br>பிறந்த திகதி<br>Date of birth</label></td>
-        <td class="cell_03"><label>අවුරුද්ද  <br>வருடம்  <br>Year</label></td>
+        <td class="cell_04"><label>උපන් දිනය<s:label value="*" cssStyle="color:red;font-size:14pt"/><br>பிறந்த திகதி<br>Date of birth</label></td>
+        <td class="cell_03"><label>අවුරුද්ද  <br>வருடம் <br>Year</label></td>
         <td class="cell_03"><s:textfield value="%{#session.birthConfirmation_db.child.dateOfBirth.year+1900}"
                                          cssClass="disable" disabled="true"
                                          size="4"/></td>
@@ -308,7 +310,7 @@
     </tr>
     <tr>
         <td>4</td>
-        <td colspan="14"><label>උපන් ස්ථානය / பிறந்தபிறந்த இடம் / Place of birth</label></td>
+        <td colspan="14"><label>උපන් ස්ථානය / பிறந்தபிறந்த இடம் / Place of birth<s:label value="*" cssStyle="color:red;font-size:14pt"/></label></td>
     </tr>
     <tr>
         <td rowspan="5"></td>

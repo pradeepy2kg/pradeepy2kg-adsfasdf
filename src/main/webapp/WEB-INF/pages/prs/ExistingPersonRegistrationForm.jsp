@@ -383,7 +383,7 @@
                 <tr>
                     <td>
                         <label><span
-                                class="font-8">භාරගත්  දිනය<br>பெறப்பட்ட திகதி <br>Date of Acceptance </span></label>
+                                class="font-8">භාරගත්  දිනය<s:label value="*" cssStyle="color:red;font-size:10pt"/><br>பெறப்பட்ட திகதி <br>Date of Acceptance </span></label>
                     </td>
                     <td>
                         <s:label value="YYYY-MM-DD" cssStyle="margin-left:10px;font-size:10px"/><br>
@@ -487,7 +487,7 @@
     </tr>
     <tr>
         <td>
-            (3) ජාතිය<br>இனம்<br>Race
+            (3) ජාතිය<s:label value="*" cssStyle="color:red;font-size:14pt"/><br>இனம்<br>Race
         </td>
         <td colspan="2">
             <s:select id="personRaceId" name="personRaceId" list="raceList" headerKey="0"
@@ -499,21 +499,21 @@
         </td>
     </tr>
     <tr>
-        <td>(5) උපන් දිනය<br>பிறந்த திகதி<br>Date of Birth</td>
+        <td>(5) උපන් දිනය<s:label value="*" cssStyle="color:red;font-size:14pt"/><br>பிறந்த திகதி<br>Date of Birth</td>
         <td colspan="7">
             <s:label value="YYYY-MM-DD" cssStyle="margin-left:5px;font-size:10px"/><br>
             <s:textfield id="birthDatePicker" name="person.dateOfBirth" maxLength="10"/>
         </td>
     </tr>
     <tr>
-        <td>(6) උපන් ස්ථානය<br>பிறந்த இடம்<br>Place of Birth</td>
+        <td>(6) උපන් ස්ථානය<s:label value="*" cssStyle="color:red;font-size:14pt"/><br>பிறந்த இடம்<br>Place of Birth</td>
         <td colspan="7">
             <s:textfield name="person.placeOfBirth" id="placeOfBirth" cssStyle="width:97.6%;" maxLength="255"/>
         </td>
     </tr>
     <tr>
         <td class="font-9">
-            (7) නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)
+            (7) නම රාජ්‍ය භාෂාවෙන් (සිංහල/දෙමළ)<s:label value="*" cssStyle="color:red;font-size:10pt"/>
             <br>பெயர் அரச கரும மொழியில் (சிங்களம் / தமிழ்)
             <br>Name in any of the official languages (Sinhala / Tamil)
         </td>
@@ -523,7 +523,7 @@
         </td>
     </tr>
     <tr>
-        <td class="font-9">(8) නම ඉංග්‍රීසි භාෂාවෙන් <br>பெயர் ஆங்கில மொழியில்<br>Name in English</td>
+        <td class="font-9">(8) නම ඉංග්‍රීසි භාෂාවෙන් <s:label value="*" cssStyle="color:red;font-size:10pt"/><br>பெயர் ஆங்கில மொழியில்<br>Name in English</td>
         <td colspan="7">
             <s:textarea name="person.fullNameInEnglishLanguage" id="personFullNameEnglish"
                         cssStyle="width:98.2%;"/>
@@ -552,7 +552,7 @@
                       list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"/>
         </td>
         <td>
-            (10) සිවිල් තත්ත්වය<br>சிவில் நிலைமை <br>Civil Status
+            (10) සිවිල් තත්ත්වය<s:label value="*" cssStyle="color:red;font-size:14pt"/><br>சிவில் நிலைமை <br>Civil Status
         </td>
         <td colspan="5" style="border:none;padding:0">
             <table style="border:none;" cellspacing="0;" width="100%">
@@ -609,7 +609,7 @@
     <tbody>
 
     <tr>
-        <td>(13) ස්ථිර ලිපිනය<br>நிரந்தர வதிவிட முகவரி<br>Permanent Address</td>
+        <td>(13) ස්ථිර ලිපිනය<s:label value="*" cssStyle="color:red;font-size:14pt"/><br>நிரந்தர வதிவிட முகவரி<br>Permanent Address</td>
         <td colspan="7">
             <s:textarea name="permanentAddress" id="permanentAddress" cssStyle="width:98.2%;text-transform:uppercase;"/>
         </td>
