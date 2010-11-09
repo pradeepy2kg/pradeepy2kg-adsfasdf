@@ -119,7 +119,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private String motherRacePrintEn;
     private String marriedStatus;
     private String marriedStatusEn;
-    private String returnAddress;
+    private String returnAddress;          
 
 
     public String welcome() {

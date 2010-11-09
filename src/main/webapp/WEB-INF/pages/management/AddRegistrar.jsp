@@ -106,17 +106,17 @@
             <col width="1000px"/>
             <tbody>
             <tr>
-                <td align="left"><s:property value="%{getText('registrar.full.name.officelaLang')}"/></td>
+                <td align="left"><s:property value="%{getText('registrar.full.name.officelaLang')}"/><s:label value="*" cssStyle="color:red;font-size:14pt;"/></td>
                 <td align="left"><s:textfield id="registrarNameInOfficelaLang" cssStyle="width:100%"
                                               name="registrar.fullNameInOfficialLanguage"/></td>
             </tr>
             <tr>
-                <td align="left"><s:property value="%{getText('registrar.full.name.english')}"/></td>
+                <td align="left"><s:property value="%{getText('registrar.full.name.english')}"/><s:label value="*" cssStyle="color:red;font-size:14pt;"/></td>
                 <td align="left"><s:textfield id="registrarNameInEnglish" cssStyle="width:100%"
                                               name="registrar.fullNameInEnglishLanguage"/></td>
             </tr>
             <tr>
-                <td align="left"><s:property value="%{getText('registrar.pin')}"/></td>
+                <td align="left"><s:property value="%{getText('registrar.pin')}"/><s:label value="*" cssStyle="color:red;font-size:14pt;"/></td>
                 <td align="left"><s:textfield id="registrarPin" name="registrar.pin" maxLength="10"/></td>
             </tr>
             <tr>
@@ -134,7 +134,7 @@
                 <td align="left"><s:textfield name="registrar.dateOfBirth" id="dateOfBirthDatePicker" maxLength="10"/></td>
             </tr>
             <tr>
-                <td align="left"><s:property value="%{getText('registrar.address')}"/></td>
+                <td align="left"><s:property value="%{getText('registrar.address')}"/><s:label value="*" cssStyle="color:red;font-size:14pt;"/></td>
                 <td align="left"><s:textarea id="registrarAddress" cssStyle="width:100%"
                                              name="registrar.currentAddress"/></td>
             </tr>
@@ -162,8 +162,7 @@
         <col width="1000px"/>
         <tbody>
         <tr>
-            <td><s:property value="%{getText('label.skip.validation')}"/><s:checkbox id="skipValidationId"
-                                                                                     name="skipValidationName"/></td>
+            <td><s:checkbox id="skipValidationId" name="skipValidationName"/><s:property value="%{getText('label.skip.validation')}"/></td>
             <td align="right">
                 <div id="addNew_button" class="button">
                     <s:submit name="refresh" value="%{getText('label.add.registrar')}"/>

@@ -275,7 +275,7 @@ function enableSerialNumber(mode) {
 <table class="adoption-reg-form-01-table01" cellspacing="0" cellpadding="0">
     <tr>
         <td width="330px">
-            නියෝගය ලැබුණු දිනය
+            නියෝගය ලැබුණු දිනය<s:label value="*" cssStyle="color:red;font-size:10pt"/>
             <br>கட்டளை பெறப்பட்ட திகதி
             <br>Received Date
         </td>
@@ -293,7 +293,7 @@ function enableSerialNumber(mode) {
     </tr>
     <tr>
         <td>
-            නියෝගය නිකුත් කල දිනය
+            නියෝගය නිකුත් කල දිනය<s:label value="*" cssStyle="color:red;font-size:10pt"/>
             <br>கட்டளை வழங்கப்பட்ட திகதி
             <br>Issued Date
         </td>
@@ -305,7 +305,7 @@ function enableSerialNumber(mode) {
     </tr>
     <tr>
         <td>
-            නියෝග අංකය
+            නියෝග අංකය <s:label value="*" cssStyle="color:red;font-size:10pt"/>
             <br>கட்டளை இலக்கம்
             <br>Serial number
         </td>
@@ -418,7 +418,7 @@ function enableSerialNumber(mode) {
     </tr>
     <tr>
         <td>
-            අයදුම් කරුගේ නම
+            අයදුම් කරුගේ නම  <s:label value="*" cssStyle="color:red;font-size:10pt"/>
             <br>விண்ணப்பதாரியின் பெயா்
             <br>Name of the Applicant
         </td>
@@ -427,7 +427,7 @@ function enableSerialNumber(mode) {
 
     <tr>
         <td>
-            ලිපිනය
+            ලිපිනය<s:label value="*" cssStyle="color:red;font-size:10pt"/>
             <br>முகவரி
             <br>Address
         </td>
@@ -551,7 +551,7 @@ function enableSerialNumber(mode) {
     </tr>
     <tr>
         <td>
-            වයස
+            වයස  <s:label value="*" cssStyle="color:red;font-size:10pt"/>
             <br>வயது
             <br>Age
         </td>
@@ -585,7 +585,7 @@ function enableSerialNumber(mode) {
     </tr>
     <tr>
         <td>
-            ලබා දෙන නම රාජ්‍ය භාෂාවෙන්
+            ලබා දෙන නම රාජ්‍ය භාෂාවෙන් <s:label value="*" cssStyle="color:red;font-size:10pt"/>
             <br>புதிய பெயா் அரச கரும மொழியில்
             <br>New name given in Official Language
         </td>
