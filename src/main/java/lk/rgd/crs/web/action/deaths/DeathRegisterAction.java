@@ -487,7 +487,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                         deathRegister.setOriginalDCPlaceOfIssue(locationDAO.getLocation(locationId));
                         service.markDeathCertificateAsPrinted(deathRegister, user);
                     } else {
-                        logger.warn("For the first time Birth certificate print issued location and user not valid");
+                        logger.warn("For the first time Death certificate print issued location and user not valid");
                         return ERROR;
                     }
                 }

@@ -67,32 +67,33 @@
             </table>
         </fieldset>
     </div>
-    <s:if test="deathRegister.status.ordinal()==1 ">
-        <div id="locations">
-            <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;width:500px">
-                <legend> <s:label value="%{getText('selectoption.label')}"/></b></legend>
-                <table>
-                    <tr>
-                        <td>
-                            <s:label value="%{getText('placeOfIssue.label')}"/>
-                        </td>
-                        <td>
-                            <s:select id="locationId" name="locationId" value="%{locationId}" list="locationList"
-                                      cssStyle="width:300px;"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><s:label value="%{getText('signOfficer.label')}"/></td>
-                        <td>
-                            <s:select id="issueUserId" name="issueUserId" value="%{issueUserId}" list="userList"
-                                      cssStyle="width:300px;"/>
-                        </td>
-                    </tr>
-                </table>
-            </fieldset>
-        </div>
-    </s:if>
 </s:if>
+<s:if test="deathRegister.status.ordinal()==1 ">
+    <div id="locations">
+        <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;width:500px">
+            <legend><s:label value="%{getText('selectoption.label')}"/></legend>
+            <table>
+                <tr>
+                    <td>
+                        <s:label value="%{getText('placeOfIssue.label')}"/>
+                    </td>
+                    <td>
+                        <s:select id="locationId" name="locationId" value="%{locationId}" list="locationList"
+                                  cssStyle="width:300px;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td><s:label value="%{getText('signOfficer.label')}"/></td>
+                    <td>
+                        <s:select id="issueUserId" name="issueUserId" value="%{issueUserId}" list="userList"
+                                  cssStyle="width:300px;"/>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </div>
+</s:if>
+
 <s:url id="print" action="eprPrintDeathCertificate.do">
     <s:param name="idUKey" value="#request.idUKey"/>
     <s:param name="currentStatus" value="%{#request.currentStatus}"/>
