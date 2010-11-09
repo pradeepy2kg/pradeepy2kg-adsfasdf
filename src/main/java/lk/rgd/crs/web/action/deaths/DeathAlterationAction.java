@@ -371,12 +371,13 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             populatePrimaryLists(districtUKey, dsDivisionId, language, user);
             return ERROR;
         }
-        //todo check sudden death   gender is print with 0 and 1 convert them 
+        //todo check sudden death
         /**
          * getting existing death recode and compare it with death alteration
          */
         deathRegister = deathRegistrationService.getById(deathAlteration.getDeathRegisterIDUkey(), user);
-        requested = deathAlteration.getRequestedAlterations();
+        requested = new BitSet();
+
         if (deathAlteration.getDeathInfo() != null) {
             String dateEx = null;
             String dateAlt = null;
@@ -386,10 +387,8 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             if (deathAlteration.getDeathInfo().getDateOfDeath() != null) {
                 dateAlt = DateTimeUtils.getISO8601FormattedString(deathAlteration.getDeathInfo().getDateOfDeath());
             }
-            /*     todo compare and remove
-  getDisplayList(DeathAlteration.CAUSE_OF_DEATH_ESTABLISHED, deathRegister.getDeath().isCauseOfDeathEstablished(),
-           deathAlteration.getDeathInfo().isCauseOfDeathEstablished(), Type.BOOLEAN.ordinal());*/
-
+            compareBoolean(deathRegister.getDeath().isCauseOfDeathEstablished(),
+                deathAlteration.getDeathInfo().isCauseOfDeathEstablished(), DeathAlteration.CAUSE_OF_DEATH_ESTABLISHED);
             compareString(deathRegister.getDeath().getPlaceOfBurial(),
                 deathAlteration.getDeathInfo().getPlaceOfBurial(), DeathAlteration.BURIAL_PLACE);
             compareString(deathRegister.getDeath().getIcdCodeOfCause(),
@@ -405,18 +404,19 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             compareString(dateEx, dateAlt, DeathAlteration.DATE_OF_DEATH);
         }
         if (deathAlteration.getDeathPerson() != null) {
-
-/*      todo compare  and remove
-//todo remove jsp approval 
-        getDisplayList(DeathAlteration.COUNTRY, deathRegister.getDeathPerson().getDeathPersonCountry(),
-                deathAlteration.getDeathPerson().getDeathPersonCountry(), Type.COUNTRY.ordinal());
-            getDisplayList(DeathAlteration.AGE, deathRegister.getDeathPerson().getDeathPersonAge(),
-                deathAlteration.getDeathPerson().getDeathPersonAge(), Type.INTEGER.ordinal());
-            getDisplayList(DeathAlteration.GENDER, deathRegister.getDeathPerson().getDeathPersonGender(),
-                deathAlteration.getDeathPerson().getDeathPersonGender(), Type.INTEGER.ordinal());
-            getDisplayList(DeathAlteration.RACE, deathRegister.getDeathPerson().getDeathPersonRace(),
-                deathAlteration.getDeathPerson().getDeathPersonRace(), Type.RACE.ordinal());*/
-
+            //todo remove jsp approval
+            compareString(deathRegister.getDeathPerson().getDeathPersonPINorNIC(),
+                deathAlteration.getDeathPerson().getDeathPersonPINorNIC(), DeathAlteration.PIN);
+            compareCountry(deathRegister.getDeathPerson().getDeathPersonCountry(),
+                deathAlteration.getDeathPerson().getDeathPersonCountry(), DeathAlteration.COUNTRY);
+            compareString(deathRegister.getDeathPerson().getDeathPersonPassportNo(),
+                deathAlteration.getDeathPerson().getDeathPersonPassportNo(), DeathAlteration.PASSPORT);
+            compareInteger(deathRegister.getDeathPerson().getDeathPersonAge(),
+                deathAlteration.getDeathPerson().getDeathPersonAge(), DeathAlteration.AGE);
+            compareInteger(deathRegister.getDeathPerson().getDeathPersonGender(),
+                deathAlteration.getDeathPerson().getDeathPersonGender(), DeathAlteration.GENDER);
+            compareRaces(deathRegister.getDeathPerson().getDeathPersonRace(),
+                deathAlteration.getDeathPerson().getDeathPersonRace(), DeathAlteration.RACE);
             compareString(deathRegister.getDeathPerson().getDeathPersonNameOfficialLang(),
                 deathAlteration.getDeathPerson().getDeathPersonNameOfficialLang(), DeathAlteration.NAME);
             compareString(deathRegister.getDeathPerson().getDeathPersonNameInEnglish(),
@@ -431,8 +431,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 deathAlteration.getDeathPerson().getDeathPersonMotherPINorNIC(), DeathAlteration.PIN_MOTHER);
             compareString(deathRegister.getDeathPerson().getDeathPersonMotherFullName(),
                 deathAlteration.getDeathPerson().getDeathPersonMotherFullName(), DeathAlteration.NAME_MOTHER);
-            compareString(deathRegister.getDeathPerson().getDeathPersonPassportNo(),
-                deathAlteration.getDeathPerson().getDeathPersonPassportNo(), DeathAlteration.PASSPORT);
+
         }
         deathAlteration.setRequestedAlterations(requested);
         deathAlterationService.updateDeathAlteration(deathAlteration, user);
@@ -495,6 +494,115 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         return "pageLoad";
     }
 
+    private DeathInfo populateDeathInfo(DeathAlterationInfo dai, DeathInfo di) {
+
+        di.setDateOfDeath(dai.getDateOfDeath());
+        di.setCauseOfDeath(dai.getCauseOfDeath());
+        di.setIcdCodeOfCause(dai.getIcdCodeOfCause());
+        di.setPlaceOfBurial(dai.getPlaceOfBurial());
+        di.setPlaceOfDeath(dai.getPlaceOfDeath());
+        di.setPlaceOfDeathInEnglish(dai.getPlaceOfDeathInEnglish());
+        di.setTimeOfDeath(dai.getTimeOfDeath());
+        di.setCauseOfDeathEstablished(dai.isCauseOfDeathEstablished());
+
+        return di;
+    }
+
+    private void compareString(String existing, String alteration, int bit) {
+        if (existing != null && alteration != null) {
+            if (existing.compareTo(alteration.trim()) != 0) {
+                requested.set(bit);
+            }
+        } else {
+            if (!((existing == null || existing.trim().length() == 0)
+                & (alteration == null || alteration.trim().length() == 0))) {
+                requested.set(bit);
+            }
+        }
+    }
+
+    private void compareBoolean(Boolean existing, Boolean alteration, int bit) {
+        logger.debug("called boolean");
+        if (existing != null && alteration != null) {
+            if (alteration.compareTo(existing) != 0) {
+                requested.set(bit);
+            }
+        } else {
+            if (!(existing == null & alteration == null))
+                requested.set(bit);
+        }
+    }
+
+    private void compareInteger(Integer existing, Integer alteration, int bit) {
+        if (existing != null && alteration != null) {
+            if (existing.compareTo(alteration) != 0) {
+                requested.set(bit);
+            }
+        } else {
+            if (!(alteration == null & existing == null)) {
+                requested.set(bit);
+            }
+        }
+
+    }
+
+    private void compareLong(Long existing, Long alteration, int bit) {
+        if (existing != null && alteration != null) {
+            if (existing.compareTo(alteration) != 0) {
+                requested.set(bit);
+            }
+        } else {
+            if (!(alteration == null & existing == null))
+                requested.set(bit);
+        }
+
+    }
+
+    private void compareCountry(Country existing, Country alteration, int bit) {
+        if (existing != null && alteration != null) {
+            if (existing.getCountryId() != alteration.getCountryId()) {
+                requested.set(bit);
+            }
+        } else {
+            if (!(existing == null & alteration == null)) {
+                requested.set(bit);
+            }
+        }
+
+    }
+
+    private void compareRaces(Race existing, Race alteration, int bit) {
+        if (existing != null && alteration != null) {
+            if (existing.getRaceId() != alteration.getRaceId()) {
+                requested.set(bit);
+            }
+        } else {
+            if (!(alteration == null & existing == null)) {
+                requested.set(bit);
+            }
+        }
+    }
+
+    /**
+     * basic list district/divisions/DS
+     */
+    private void populatePrimaryLists(int districtUKey, int dsDivisionId, String language, User user) {
+        districtList = districtDAO.getDistrictNames(language, user);
+        districtUKey = districtList.keySet().iterator().next();
+        dsDivisionList = dsDivisionDAO.getDSDivisionNames(districtUKey, language, user);
+        dsDivisionId = dsDivisionList.keySet().iterator().next();
+        bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
+        logger.debug("basic lists are populated");
+    }
+
+    /**
+     * other lists race/country
+     */
+    private void populateOtherLists() {
+        raceList = raceDAO.getRaces(language);
+        countryList = countryDAO.getCountries(language);
+        logger.debug("other lists are populated ");
+    }
 
     //todo paginations next and previous
     /*  public String nextPage() {
@@ -524,199 +632,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         populatePrimaryLists();
         return SUCCESS;
     }
-*/
-    private DeathInfo populateDeathInfo(DeathAlterationInfo dai, DeathInfo di) {
-
-        di.setDateOfDeath(dai.getDateOfDeath());
-        di.setCauseOfDeath(dai.getCauseOfDeath());
-        di.setIcdCodeOfCause(dai.getIcdCodeOfCause());
-        di.setPlaceOfBurial(dai.getPlaceOfBurial());
-        di.setPlaceOfDeath(dai.getPlaceOfDeath());
-        di.setPlaceOfDeathInEnglish(dai.getPlaceOfDeathInEnglish());
-        di.setTimeOfDeath(dai.getTimeOfDeath());
-        di.setCauseOfDeathEstablished(dai.isCauseOfDeathEstablished());
-
-        return di;
-    }
-
-
-    private void getDisplayList(int index, Object deathRegisterValue, Object deathAlterationValue, int type) {
-        List stringList = new ArrayList();
-        stringList.add(0, deathRegisterValue);
-        stringList.add(1, deathAlterationValue);
-        switch (type) {
-            case 0:
-                if (deathAlterationValue != null & deathRegisterValue != null) {
-                    if (compareStiring((String) deathRegisterValue, (String) deathAlterationValue)) {
-                        approvalFieldList.put(index, stringList);
-                    }
-                } else {
-                    if (!((deathAlterationValue == null || deathAlterationValue.toString().length() == 0)
-                        & (deathRegisterValue == null || deathRegisterValue.toString().length() == 0)))
-                        approvalFieldList.put(index, stringList);
-                }
-                break;
-            case 1:
-                if (deathAlterationValue != null & deathRegisterValue != null) {
-                    if (compareInteger((Integer) deathRegisterValue, (Integer) deathAlterationValue)) {
-                        approvalFieldList.put(index, stringList);
-                    }
-                } else {
-                    if (!(deathAlterationValue == null & deathRegisterValue == null))
-                        approvalFieldList.put(index, stringList);
-                }
-                break;
-            case 2:
-                if (deathAlterationValue != null & deathRegisterValue != null) {
-                    if (compareLong((Long) deathRegisterValue, (Long) deathAlterationValue)) {
-                        approvalFieldList.put(index, stringList);
-                    }
-                } else {
-                    if (!(deathAlterationValue == null & deathRegisterValue == null))
-                        approvalFieldList.put(index, stringList);
-                }
-                break;
-            case 3:
-                if (deathAlterationValue != null & deathRegisterValue != null) {
-                    if (compareBoolean((Boolean) deathRegisterValue, (Boolean) deathAlterationValue)) {
-                        approvalFieldList.put(index, stringList);
-                    }
-                } else {
-                    if (!(deathAlterationValue == null & deathRegisterValue == null))
-                        approvalFieldList.put(index, stringList);
-                }
-                break;
-            case 4:
-                List<String> countryList = new ArrayList<String>();
-                Country existing = (Country) deathRegisterValue;
-                Country current = (Country) deathAlterationValue;
-                if (existing != null & current != null) {
-                    countryList.add(0, existing.getEnCountryName());
-                    countryList.add(1, current.getEnCountryName());
-                    if (compareCountry(existing, current)) {
-                        approvalFieldList.put(index, countryList);
-                    }
-                } else {
-                    if (!(existing == null & current == null)) {
-                        if (existing != null) {
-                            countryList.add(0, existing.getEnCountryName());
-                            countryList.add(1, null);
-                        }
-                        if (current != null) {
-                            countryList.add(0, null);
-                            countryList.add(1, current.getEnCountryName());
-                        }
-                        approvalFieldList.put(index, countryList);
-                    }
-                }
-                break;
-            case 6:
-                List<String> raceList = new ArrayList<String>();
-                Race exRace = (Race) deathRegisterValue;
-                Race cuRace = (Race) deathAlterationValue;
-                if (exRace != null & cuRace != null) {
-                    raceList.add(0, exRace.getEnRaceName());
-                    raceList.add(1, cuRace.getEnRaceName());
-                    if (compareRaces((Race) deathRegisterValue, (Race) deathAlterationValue)) {
-                        approvalFieldList.put(index, raceList);
-                    }
-                } else {
-                    if (!(deathAlterationValue == null & deathRegisterValue == null)) {
-                        if (exRace != null) {
-                            raceList.add(0, exRace.getEnRaceName());
-                            raceList.add(1, null);
-                        }
-                        if (cuRace != null) {
-                            raceList.add(0, null);
-                            raceList.add(1, cuRace.getEnRaceName()); //due to bug array index out of bound cause by adding to 1 position when 0 position is empty
-                        }
-                        approvalFieldList.put(index, raceList);
-                    }
-                }
-                break;
-            default:
-        }
-    }
-
-    private void compareString(String exisiting, String alteration, int bit) {
-        if (alteration != null) {
-            int value = exisiting.compareTo(alteration.trim());
-            if (value != 0) {
-                requested.set(bit);
-            }
-        }
-    }
-
-    private boolean compareStiring(String exsisting, String current) {
-        if (current != null) {
-            int value = exsisting.compareTo(current.trim());
-            if (value == 0) {
-                return false;
-            } else {
-                return true;
-            }
-        }
-        return true;
-    }
-
-    private boolean compareInteger(Integer ex, Integer cu) {
-        if (ex.compareTo(cu) == 0) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    private boolean compareBoolean(Boolean ex, Boolean cu) {
-        if (ex.compareTo(cu) == 0) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    private boolean compareLong(Long ex, Long cu) {
-        if (ex.compareTo(cu) == 0)
-            return false;
-        else {
-            return true;
-        }
-    }
-
-    private boolean compareCountry(Country ex, Country cu) {
-        if (ex.getCountryId() == cu.getCountryId())
-            return false;
-        return true;
-    }
-
-    private boolean compareRaces(Race ex, Race cu) {
-        if (ex.getRaceId() == cu.getRaceId())
-            return false;
-        return true;
-    }
-
-
-    /**
-     * basic list district/divisions/DS
      */
-    private void populatePrimaryLists(int districtUKey, int dsDivisionId, String language, User user) {
-        districtList = districtDAO.getDistrictNames(language, user);
-        districtUKey = districtList.keySet().iterator().next();
-        dsDivisionList = dsDivisionDAO.getDSDivisionNames(districtUKey, language, user);
-        dsDivisionId = dsDivisionList.keySet().iterator().next();
-        bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
-        logger.debug("basic lists are populated");
-    }
-
-    /**
-     * other lists race/country
-     */
-    private void populateOtherLists() {
-        raceList = raceDAO.getRaces(language);
-        countryList = countryDAO.getCountries(language);
-        logger.debug("other lists are populated ");
-    }
-
     public void setSession(Map map) {
         this.session = map;
         user = (User) session.get(WebConstants.SESSION_USER_BEAN);
