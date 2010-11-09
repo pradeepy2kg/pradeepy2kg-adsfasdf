@@ -43,7 +43,7 @@
 
 
 
-* (Preferred Language for Person Registration Certificate )පුද්ගලයකු ලියාපදිංචි කිරීමේ සහතිකය නිකුත් කල යුතු භාෂාව 
-Late registration,Normal Death in tamil
-Late registration,Sudden Death  in tamil
-Death of missing person in tamil
+* (Preferred Language for Person Registration Certificate )நபரின் பதிவிற்கான சான்றிதழினை வழங்கப்படவேண்டிய மொழி 
+Late registration,Normal Death காலங்கடந்த பதிவு, இயற்கை மரணம் 
+Late registration,Sudden Death  காலங்கடந்த பதிவு, திடீர்  மரணம் 
+Death of missing person காணாமற் போன நபரின் இறப்பு 
