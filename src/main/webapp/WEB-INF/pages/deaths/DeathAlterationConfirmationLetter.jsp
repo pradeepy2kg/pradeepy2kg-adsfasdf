@@ -35,16 +35,8 @@
     }
 
 </script>
-<%--<div class="alteration-print-letter-outer">
-    hhhhhhhhhooooooooooooooooooooo     gggggggggggggggggg
-</div>
-<div class="form-submit">
-    <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
-    <s:hidden id="printMessage" value="%{getText('print.message')}"/>
-</div>--%>
 
-
-<div class="alteration-print-letter-outer">
+<div id="alteration-print-letter-outer">
 <s:if test="%{!approvalPage}">
     <div class="form-submit">
         <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
@@ -108,11 +100,13 @@
 <col width="375px"/>
 <col width="375px"/>
 <col/>
+<tr>
 <td>
+
 </td>
-<td>මරණ සහතිකයේ පැවති දත්තය<br> Before change <br> before change in tamil</td>
-<td>සිදුකල වෙනස්කම<br>Alteration<br>alteration in tamil</td>
-<td>අනුමැතිය<br> Approve <br> Approve in tamil</td>
+<td>මරණ සහතිකයේ පැවති දත්තය<br> இறப்புச் சான்றிதழில் உள்ள தரவு   <br> Before change </td>
+<td>සිදුකල වෙනස්කම<br>செய்யப்பட்ட திருத்தம் <br>Alteration </td>
+<td>අනුමැතිය<br> அனுமதி  <br> Approve </td>
 
 </tr>
 <tbody>
@@ -146,7 +140,7 @@
 <s:if test="%{requested.get(1)==true}">
     <tr>
         <td>මරණය සිදු වූ දිනය <br>
-            பிறந்த திகதி <br>
+            இறந்த திகதி <br>
             Date of Death
         </td>
         <td><s:label value="%{deathRegister.death.dateOfDeath}"/></td>
@@ -187,32 +181,36 @@
     </tr>
 </s:if>
 
-    <s:if test="%{requested.get(3)==true}">
-        <tr>
-            <td>මරණය සිදු වූ ස්ථානය සිංහල හෝ දෙමළ භාෂාවෙන <br>
-                பிறந்த இடம் சிங்களம் தமிழ்<br>
-                Place of Death In Sinhala or Tamil
-            </td>
-            <td><s:label value="%{deathRegister.death.placeOfDeath}"/></td>
-            <td><s:label value="%{deathAlteration.deathInfo.placeOfDeath}"/></td>
+<s:if test="%{requested.get(3)==true}">
+    <tr>
+        <td>මරණය සිදු වූ ස්ථානය සිංහල හෝ දෙමළ භාෂාවෙන <br>
+            இறந்த இடம் சிங்களம் தமிழ்<br>
+            Place of Death In Sinhala or Tamil
+        </td>
+        <td>
+            <s:label value="%{deathRegister.death.placeOfDeath}"/>
+        </td>
+        <td>
+            <s:label value="%{deathAlteration.deathInfo.placeOfDeath}"/>
+        </td>
 
-            <s:if test="%{approvalPage}">
-                <td align="center">
-                    <s:checkbox name="approvedIndex" fieldValue="3"/>
-                </td>
-            </s:if>
-            <s:else>
-                <td align="center">
-                    <%=CommonUtil.getYesOrNo(approval.get(3), prefLang) %>
-                </td>
-            </s:else>
-        </tr>
-    </s:if>
+        <s:if test="%{approvalPage}">
+            <td align="center">
+                <s:checkbox name="approvedIndex" fieldValue="3"/>
+            </td>
+        </s:if>
+        <s:else>
+            <td align="center">
+                <%=CommonUtil.getYesOrNo(approval.get(3), prefLang) %>
+            </td>
+        </s:else>
+    </tr>
+</s:if>
 
 <s:if test="%{requested.get(4)==true}">
     <tr>
         <td>මරණය සිදු වූ ස්ථානය ඉංග්‍රීසි භාෂාවෙන් <br>
-            பிறந்த இடம் ஆங்கில மொழியில்<br>
+            இறந்த இடம் ஆங்கில மொழியில்<br>
             Place of Death In In English
         </td>
         <td><s:label value="%{deathRegister.death.placeOfDeathInEnglish}"/></td>
@@ -296,28 +294,28 @@
         </s:else>
     </tr>
 </s:if>
-    <%--
-   <s:if test="%{requested.get(8)==true}">
-        <tr>
-            <td>ආදාහන හෝ භූමදාන ස්ථානය   <br>
-                அடக்கம் செய்த அல்லது தகனஞ் செய்த இடம் <br>
-                Place of burial or cremation <br>
+
+<s:if test="%{requested.get(8)==true}">
+    <tr>
+        <td>ආදාහන හෝ භූමදාන ස්ථානය <br>
+            அடக்கம் செய்த அல்லது தகனஞ் செய்த இடம் <br>
+            Place of burial or cremation <br>
+        </td>
+        <td><s:label value="%{deathRegister.death.placeOfBurial}"/></td>
+        <td><s:label value="%{deathAlteration.deathInfo.placeOfBurial}"/></td>
+        <s:if test="%{approvalPage}">
+            <td align="center">
+                <s:checkbox name="approvedIndex" fieldValue="8"/>
             </td>
-            <td><s:label value="%{deathRegister.death.placeOfBurial}"/></td>
-            <td><s:label value="%{deathAlteration.deathInfo.placeOfBurial}"/></td>
-            <s:if test="%{approvalPage}">
-                <td align="center">
-                    <s:checkbox name="approvedIndex" fieldValue="8"/>
-                </td>
-            </s:if>
-            <s:else>
-                <td align="center">
-                    <%=CommonUtil.getYesOrNo(approval.get(8), prefLang) %>
-                </td>
-            </s:else>
-        </tr>
-    </s:if>
-    --%>
+        </s:if>
+        <s:else>
+            <td align="center">
+                <%=CommonUtil.getYesOrNo(approval.get(8), prefLang) %>
+            </td>
+        </s:else>
+    </tr>
+</s:if>
+
 
 <s:if test="%{requested.get(9)==true}">
     <tr>
@@ -342,7 +340,7 @@
 <s:if test="%{requested.get(10)==true}">
     <tr>
         <td>විදේශිකය‍කු නම් රට <br>
-            வெளிநாட்டவர் நாடு <br>
+            வெளிநாட்டவர் எனின் நாடு <br>
             If a foreigner Country
         </td>
         <s:if test="%{deathRegister.death.preferredLanguage=='si'}">
@@ -368,7 +366,7 @@
 <s:if test="%{requested.get(11)==true}">
     <tr>
         <td>විදේශිකය‍කු නම් ගමන් බලපත්‍ර අංකය <br>
-            வெளிநாட்டவர் கடவுச் சீட்டு <br>
+            வெளிநாட்டவர் எனின் கடவுச் சீட்டு இலக்கம்  <br>
             If a foreigner Passport No.
         </td>
         <td><s:label value="%{deathRegister.deathPerson.deathPersonPassportNo}"/></td>
@@ -386,27 +384,32 @@
         </s:else>
     </tr>
 </s:if>
-    <%--    <s:if test="%{requested.get(12)==true}">
-        <tr>
-            <td>වයස හෝ අනුමාන වයස <br>
-                பிறப்ப <br>
-                Age or probable Age
+
+<s:if test="%{requested.get(12)==true}">
+    <tr>
+        <td>වයස හෝ අනුමාන වයස <br>
+           வயது அல்லது உத்தேச வயது  <br>
+            Age or probable Age
+        </td>
+        <td>
+            <s:label value="%{deathRegister.deathPerson.deathPersonAge}"/>
+        </td>
+        <td>
+            <s:label value="%{deathAlteration.deathPerson.deathPersonAge}"/>
+        </td>
+        <s:if test="%{approvalPage}">
+            <td align="center">
+                <s:checkbox name="approvedIndex" fieldValue="12"/>
             </td>
-            <td><s:label value="%{deathRegister.deathPerson.deathPersonAge}"/></td>
-            <td><s:label value="%{deathAlteration.deathPerson.deathPersonAge}"/></td>
-            <s:if test="%{approvalPage}">
-                <td align="center">
-                    <s:checkbox name="approvedIndex" fieldValue="12"/>
-                </td>
-            </s:if>
-            <s:else>
-                <td align="center">
-                    <%=CommonUtil.getYesOrNo(approval.get(12), prefLang) %>
-                </td>
-            </s:else>
-        </tr>
-    </s:if>
-    --%>
+        </s:if>
+        <s:else>
+            <td align="center">
+                <%=CommonUtil.getYesOrNo(approval.get(12), prefLang) %>
+            </td>
+        </s:else>
+    </tr>
+</s:if>
+
 
 <s:if test="%{requested.get(13)==true}">
     <tr>
@@ -437,7 +440,7 @@
 <s:if test="%{requested.get(14)==true}">
     <tr>
         <td>ජාතිය <br>
-            பிறப் <br>
+            இனம்  <br>
             Race
         </td>
         <s:if test="%{deathRegister.death.preferredLanguage=='si'}">
@@ -484,7 +487,7 @@
 <s:if test="%{requested.get(16)==true}">
     <tr>
         <td>නම ඉංග්‍රීසි භාෂාවෙන් <br>
-            பிறப்பு அத்தாட்சி ….. <br>
+          பெயர் ஆங்கில மொழியில் <br>
             Name in English
         </td>
         <td><s:label value="%{deathRegister.deathPerson.deathPersonNameInEnglish}"/></td>
@@ -504,7 +507,7 @@
 <s:if test="%{requested.get(17)==true}">
     <tr>
         <td>ස්ථිර ලිපිනය <br>
-            தாயின் நிரந்தர வதிவிட முகவரி <br>
+          நிரந்தர வதிவிட முகவரி <br>
             Permanent Address
         </td>
         <td><s:label value="%{deathRegister.deathPerson.deathPersonPermanentAddress}"/></td>
@@ -524,7 +527,7 @@
 <s:if test="%{requested.get(18)==true}">
     <tr>
         <td>පියාගේ අනන්‍යතා අංකය <br>
-            தனிநபர் அடையாள எண் <br>
+            தந்தையின் அடையாள எண் <br>
             Fathers Identification Number
         </td>
         <td><s:label value="%{deathRegister.deathPerson.deathPersonFatherPINorNIC}"/></td>
@@ -564,7 +567,7 @@
 <s:if test="%{requested.get(20)==true}">
     <tr>
         <td>මවගේ අනන්‍යතා අංකය <br>
-            தனிநபர் அடையாள எண் <br>
+           தாயின் அடையாள எண் <br>
             Mothers Identification Number
         </td>
         <td><s:label value="%{deathRegister.deathPerson.deathPersonMotherPINorNIC}"/></td>
@@ -583,7 +586,7 @@
 </s:if>
 <s:if test="%{requested.get(21)==true}">
     <tr>
-        <td>මවගේ සම්පුර්ණ නම <br>
+       <td>මවගේ සම්පුර්ණ නම <br>
             தாயின் முழுப் பெயர்<br>
             Mothers full name
         </td>
@@ -635,8 +638,8 @@
         <s:hidden name="deathAlterationId" value="%{deathAlteration.idUKey}"/>
     </div>
 </s:else>
-    </s:form>
-
+</s:form>
 </div>
 
 <s:hidden id="confirmation" value="%{getText('confirm.apply.changes')}"/>
+
