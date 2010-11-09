@@ -90,6 +90,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private int bdfLateOrBelated;
     private String caseFileNumber;
     private String newComment;
+    private String language;
     private long idUKey;
 
     private long serialNo; //to be used in the case where search is performed from confirmation 1 page.
@@ -127,8 +128,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public BirthRegisterAction(BirthRegistrationService service, AdoptionOrderService adoptionService, DistrictDAO districtDAO,
-                               CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO,
-                               AppParametersDAO appParametersDAO, UserLocationDAO userLocationDAO, LocationDAO locationDAO, AssignmentDAO assignmentDAO) {
+        CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO,
+        AppParametersDAO appParametersDAO, UserLocationDAO userLocationDAO, LocationDAO locationDAO, AssignmentDAO assignmentDAO) {
         this.service = service;
         this.adoptionService = adoptionService;
         this.districtDAO = districtDAO;
@@ -156,7 +157,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         if (back) {
             populate((BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN));
             if (pageNo == 1 && parent.getMotherDSDivision() != null)
-                populateAllDSDivisionList(parent.getMotherDSDivision().getDistrict().getDistrictUKey(), ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage());
+                populateAllDSDivisionList(parent.getMotherDSDivision().getDistrict().getDistrictUKey(), language);
             return "form" + pageNo;
         }
         if (pageNo < 1) {
@@ -231,8 +232,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     addActionMessage(getText("saveSuccess.label"));
                 } else {
                     //check before update
-                    BirthDeclaration exBdf = service.getActiveRecordByBDDivisionAndSerialNo(bdf.getRegister().getBirthDivision(), bdf.getRegister().getBdfSerialNo(), user);
-                    if (exBdf != null) {
+                    BirthDeclaration exBdf = service.getActiveRecordByBDDivisionAndSerialNo(
+                        bdf.getRegister().getBirthDivision(), bdf.getRegister().getBdfSerialNo(), user);
+                    if (exBdf != null && exBdf.getIdUKey() == 0) {
                         //trying to duplicate
                         addFieldError("duplicateSerialNumberError", getText("p1.duplicateSerialNumber.label"));
                         pageNo = 0;
@@ -250,7 +252,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 }
                 session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
                 session.remove(WebConstants.SESSION_OLD_BD_FOR_ADOPTION);
-                // used to check user have aproval authority and passed to BirthRegistationFormDetails jsp
+                // used to check user have approval authority and passed to BirthRegistrationFormDetails jsp
                 if (BirthDeclaration.BirthType.BELATED != birthType) {
                     allowApproveBDF = user.isAuthorized(Permission.APPROVE_BDF);
                 } else {
@@ -265,7 +267,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         }
         populate(bdf);
         if (pageNo == 1 && parent != null && parent.getMotherDSDivision() != null && parent.getMotherDSDivision().getDistrict() != null)
-            populateAllDSDivisionList(parent.getMotherDSDivision().getDistrict().getDistrictUKey(), ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage());
+            populateAllDSDivisionList(parent.getMotherDSDivision().getDistrict().getDistrictUKey(), language);
         logger.debug("Birth Declaration: PageNo=" + pageNo);
         return "form" + pageNo;
     }
@@ -366,7 +368,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      */
     public String confirmationPrintPageLoad() {
         try {
-            // String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
             BirthDeclaration bdf = service.getById(bdId, user);
             Calendar cal1 = new GregorianCalendar();
             cal1.add(Calendar.DATE, appParametersDAO.getIntParameter(AppParameter.CRS_BIRTH_CONFIRMATION_DAYS_PRINTED));
@@ -389,7 +390,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 returnAddress = location.getEnLocationMailingAddress();
 
             if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
-                    bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED)) {
+                bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED)) {
                 return ERROR;
             } else {
                 beanPopulate(bdf);
@@ -503,7 +504,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
             if (existSerial != 0 && existBDivisionId != 0) {
                 existingBDF = service.getActiveRecordByBDDivisionAndSerialNo(
-                        bdDivisionDAO.getBDDivisionByPK(existBDivisionId), existSerial, user);
+                    bdDivisionDAO.getBDDivisionByPK(existBDivisionId), existSerial, user);
             } else {
                 addActionError(getText("adoption_invalid_BDivision_or_serialNo.label"));
             }
@@ -555,7 +556,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      * @param existingBD existing birth declaration
      */
     private void populateOldBD(OldBDInfo oldBDInfo, BirthDeclaration existingBD) {
-        String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         BDDivision existBdDivision = existingBD.getRegister().getBirthDivision();
         oldBDInfo.setSerialNumber(existingBD.getRegister().getBdfSerialNo());
         oldBDInfo.setBdDivisionName(bdDivisionDAO.getNameByPK(existBdDivision.getBdDivisionUKey(), language));
@@ -628,7 +628,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 logger.debug("bdId is {} ", bdId);
                 logger.debug("value of the status of bdf is :{}", bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED);
                 if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED) ||
-                        bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED) {
+                    bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED) {
                     addActionError(getText("cp1.error.editNotAllowed"));
                     //otherwise it will populate details while giving error massage cannot edit
                     bdf = new BirthDeclaration();
@@ -681,14 +681,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             birthType = bdf.getRegister().getBirthType();
 
             if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_GENERATED ||
-                    bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_PRINTED ||
-                    bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_ALTERED)) {
+                bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_PRINTED ||
+                bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_ALTERED)) {
                 return ERROR;
             } else {
 
                 beanPopulate(bdf);
 
-                String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
                 locationList = user.getActiveLocations(language);
                 if (!locationList.isEmpty()) {
                     int selectedLocationId = locationList.keySet().iterator().next();
@@ -699,10 +698,10 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     }
                 }
                 if (bdf.getRegister().getOriginalBCIssueUser() == null &&
-                        bdf.getRegister().getOriginalBCPlaceOfIssue() == null &&
-                        BirthDeclaration.State.ARCHIVED_CERT_GENERATED == bdf.getRegister().getStatus()) {
+                    bdf.getRegister().getOriginalBCPlaceOfIssue() == null &&
+                    BirthDeclaration.State.ARCHIVED_CERT_GENERATED == bdf.getRegister().getStatus()) {
                     UserLocation userLocation = userLocationDAO.getUserLocation(
-                            userList.keySet().iterator().next(), locationList.keySet().iterator().next());
+                        userList.keySet().iterator().next(), locationList.keySet().iterator().next());
                     String prefLang = bdf.getRegister().getPreferredLanguage();
 
                     bdf.getRegister().setOriginalBCIssueUserSignPrint(userLocation.getUser().getUserSignature(prefLang));
@@ -733,7 +732,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 allowPrintCertificate = user.isAuthorized(Permission.PRINT_BIRTH_CERTIFICATE);
                 //loading alterations done to this certificate
                 archivedEntryList = service.getHistoricalAlterationRecordForBDDivisionAndSerialNo(bdf.getRegister().getBirthDivision(),
-                        bdf.getRegister().getBdfSerialNo(), bdf.getIdUKey(), user);
+                    bdf.getRegister().getBdfSerialNo(), bdf.getIdUKey(), user);
                 return "pageLoad";
             }
         } catch (Exception e) {
@@ -764,10 +763,10 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     private void populateRegistrars(BirthDeclaration bdf) {
         if (!addNewMode && (bdf.getRegister().getBirthDivision() == null ||
-                bdf.getRegister().getBirthDivision().getBdDivisionUKey() != birthDivisionId)) {
+            bdf.getRegister().getBirthDivision().getBdDivisionUKey() != birthDivisionId)) {
             // Registrar data populated to as Notifying authority considering the birthDivision
             List<Assignment> registrarAssigns = assignmentDAO.getAllAssignmentsByBDorMRDivisionAndType(
-                    birthDivisionId, Assignment.Type.BIRTH, true, false);
+                birthDivisionId, Assignment.Type.BIRTH, true, false);
             // only the first registrar in the assigned list is loaded as the notifying authority
             if (registrarAssigns.size() > 0) {
                 Registrar registrar = registrarAssigns.get(0).getRegistrar();
@@ -789,7 +788,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      * Populate master data to the UIs
      */
     private void populate(BirthDeclaration bdf) {
-        String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         populateBasicLists(language);
         birthType = bdf.getRegister().getBirthType();
 
@@ -969,7 +967,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     public void setSession(Map map) {
         this.session = map;
         user = (User) session.get(WebConstants.SESSION_USER_BEAN);
-        logger.debug("setting User: {}", user.getUserName());
+        language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
+        logger.debug("setting User: {} and UserLanguage : {}", user.getUserName(), language);
     }
 
     public Map getSession() {
@@ -1530,5 +1529,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setReturnAddress(String returnAddress) {
         this.returnAddress = returnAddress;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 }
