@@ -172,6 +172,7 @@ function commonTags() {
     else
         validateSerialNo(domObject, 'error13', 'error20');
 
+
     //date of register
     domObject = document.getElementById('submitDatePicker');
     if (isFieldEmpty(domObject))
