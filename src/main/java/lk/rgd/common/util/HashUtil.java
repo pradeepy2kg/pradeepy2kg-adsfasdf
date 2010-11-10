@@ -18,28 +18,21 @@ import org.slf4j.LoggerFactory;
 public class HashUtil {
     private static final Logger logger = LoggerFactory.getLogger(HashUtil.class);
 
-    public static final String hashPerson(Person person) {
-        StringBuffer buffer = new StringBuffer();
-        try {
-            buffer.append(URLEncoder.encode(person.getFullNameInOfficialLanguage(), "UTF-8"));
-        } catch (UnsupportedEncodingException e) {
-            logger.warn("UTF-8 encoding not supported !", e);
-            throw new RGDRuntimeException("UTF-8 encoding not supported", e);
+    public static String hashPerson(Person person) {
+        StringBuilder buffer = new StringBuilder();
+        if (person.getFullNameInEnglishLanguage() != null) {
+            buffer.append(person.getFullNameInEnglishLanguage());
         }
-        buffer.append(person.getFullNameInEnglishLanguage());
         buffer.append(person.getPin());
         buffer.append(person.getGender());
         buffer.append(person.getDateOfBirth());
-        //todo add lifecycleinfo to person and include record creation time.
-        // buffer.append(person.getLifeCycleInfo.)
-
         return hashString(buffer.toString());
     }
 
     /**
      * @inheritDoc
      */
-    public static final String hashString(String s) {
+    public static String hashString(String s) {
         MessageDigest sha = null;
         try {
             sha = MessageDigest.getInstance("SHA-1");
