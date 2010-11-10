@@ -43,9 +43,25 @@
 <body onload="initPage()">
 <div id="wrapper">
     <%-- Header  --%>
+
     <div id="layout-header">
         <tiles:insertAttribute name="header"/>
-         <s:label value="%{#session.user_bean.userName}" cssStyle="position:relative;left:1000px;color:red;"/>
+        <table>
+            <caption/>
+            <col width="600px"/>
+            <col width="650px"/>
+            <tbody>
+            <tr>
+                <td></td>
+                <td align="right">
+                    <s:label
+                            value="%{#session.user_bean.userId+'@' + #session.user_bean.primaryLocation.enLocationName}"
+                            cssStyle="color:#666666;"/>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <s:label value=""/>
     </div>
     <%-- Menu & Body--%>
     <div id="layout-body">
