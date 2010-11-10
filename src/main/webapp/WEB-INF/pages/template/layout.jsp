@@ -12,7 +12,7 @@
     <link rel="stylesheet" type="text/css" href='<s:url value="/css/webform.css"/> '/>
     <link rel="stylesheet" type="text/css" href='<s:url value="/css/style.css"/>'/>
     <link rel="stylesheet" type="text/css" media="print" href='<s:url value="/css/print.css"/>'/>
-<%--    <script type="text/javascript" src="/js/validate.js"/>--%>
+    <%--    <script type="text/javascript" src="/js/validate.js"/>--%>
     <style type="text/css">
         @font-face
         {
@@ -45,6 +45,7 @@
     <%-- Header  --%>
     <div id="layout-header">
         <tiles:insertAttribute name="header"/>
+         <s:label value="%{#session.user_bean.userName}" cssStyle="position:relative;left:1000px;color:red;"/>
     </div>
     <%-- Menu & Body--%>
     <div id="layout-body">
