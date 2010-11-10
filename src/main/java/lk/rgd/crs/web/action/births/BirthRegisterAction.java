@@ -120,7 +120,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private String motherRacePrintEn;
     private String marriedStatus;
     private String marriedStatusEn;
-    private String returnAddress;          
+    private String returnAddress;
 
 
     public String welcome() {
@@ -128,8 +128,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public BirthRegisterAction(BirthRegistrationService service, AdoptionOrderService adoptionService, DistrictDAO districtDAO,
-        CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO,
-        AppParametersDAO appParametersDAO, UserLocationDAO userLocationDAO, LocationDAO locationDAO, AssignmentDAO assignmentDAO) {
+                               CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO,
+                               AppParametersDAO appParametersDAO, UserLocationDAO userLocationDAO, LocationDAO locationDAO, AssignmentDAO assignmentDAO) {
         this.service = service;
         this.adoptionService = adoptionService;
         this.districtDAO = districtDAO;
@@ -380,15 +380,17 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             //populate location list
             String language = bdf.getRegister().getPreferredLanguage();
             locationList = user.getActiveLocations(language);
-            int defId = locationList.keySet().iterator().next();
-            Location location = locationDAO.getLocation(defId);
-            if (language.equals(AppConstants.SINHALA))
-                returnAddress = location.getSiLocationMailingAddress();
-            if (language.equals(AppConstants.TAMIL))
-                returnAddress = location.getTaLocationMailingAddress();
-            if (language.equals(AppConstants.ENGLISH))
-                returnAddress = location.getEnLocationMailingAddress();
+            if (locationList.size() > 0) {
+                int defId = locationList.keySet().iterator().next();
 
+                Location location = locationDAO.getLocation(defId);
+                if (language.equals(AppConstants.SINHALA))
+                    returnAddress = location.getSiLocationMailingAddress();
+                if (language.equals(AppConstants.TAMIL))
+                    returnAddress = location.getTaLocationMailingAddress();
+                if (language.equals(AppConstants.ENGLISH))
+                    returnAddress = location.getEnLocationMailingAddress();
+            }
             if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
                 bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED)) {
                 return ERROR;

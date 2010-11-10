@@ -6,17 +6,17 @@ package lk.rgd.crs.web.util;
  */
 public class FieldValue {
 
-    public FieldValue(String existingValue, String alterationValue, String fieldValue, boolean approved) {
+    public FieldValue(String existingValue, String alterationValue, int fieldConstant, String approved) {
         this.existingValue = existingValue;
         this.alterationValue = alterationValue;
-        this.fieldValue = fieldValue;
+        this.fieldConstant = fieldConstant;
         this.approved = approved;
     }
 
     private String existingValue;
     private String alterationValue;
-    private String fieldValue;
-    private boolean approved;
+    private int fieldConstant;
+    private String approved;
 
 
     public String getExistingValue() {
@@ -35,19 +35,19 @@ public class FieldValue {
         this.alterationValue = alterationValue;
     }
 
-    public boolean isApproved() {
+    public int getFieldConstant() {
+        return fieldConstant;
+    }
+
+    public void setFieldConstant(int fieldConstant) {
+        this.fieldConstant = fieldConstant;
+    }
+
+    public String getApproved() {
         return approved;
     }
 
-    public void setApproved(boolean approved) {
+    public void setApproved(String approved) {
         this.approved = approved;
-    }
-
-    public String getFieldValue() {
-        return fieldValue;
-    }
-
-    public void setFieldValue(String fieldValue) {
-        this.fieldValue = fieldValue;
     }
 }
