@@ -84,12 +84,6 @@ public class DeathAlterationActionTest extends CustomStrutsTestCase {
 
             protected void tearDown() throws Exception {
                 logger.info("tear down called ");
-                /*User sampleUser = loginSampleUser();
-                for (int i = 10; i < 20; i++) {
-                    DeathRegister dr = deathRegistrationService.getByBDDivisionAndDeathSerialNo(ambathalenPahala, 2010012345 + i, sampleUser);
-                    deathRegistrationService.deleteDeathRegistration(dr.getIdUKey(), sampleUser);
-                    logger.debug("death recode : serial number {} : deleted", 2010012345 + i);
-                }*/
                 super.tearDown();
             }
         };
@@ -298,6 +292,12 @@ public class DeathAlterationActionTest extends CustomStrutsTestCase {
         assertEquals("Death Person Age", 10, (Object) deathAlterationAction.getDeathAlteration().getDeathPerson().getDeathPersonAge());
         //check basic list are populated if success
         //todo check more
+    }
+
+    public void testRejectDeathAlteration() throws Exception {
+        Map session = userLogin("rg", "password");
+        request.setParameter("pageNumber", "1");
+        request.setParameter("deathAlterationId", "2");
     }
 
     private void basicLists(DeathAlterationAction deathAlterationAction) {

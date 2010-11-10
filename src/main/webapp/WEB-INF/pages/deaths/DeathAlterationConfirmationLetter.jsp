@@ -126,7 +126,7 @@
         <td></td>
         <s:if test="%{approvalPage}">
             <td align="center">
-                <s:checkbox name="approvedIndex" fieldValue="1"/>
+                <s:checkbox name="approvedIndex" fieldValue="0"/>
             </td>
         </s:if>
         <s:else>
