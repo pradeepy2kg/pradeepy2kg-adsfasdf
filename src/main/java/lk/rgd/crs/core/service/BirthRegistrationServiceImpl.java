@@ -1384,6 +1384,7 @@ public class BirthRegistrationServiceImpl implements
         }
 
         child.setDateOfBirth(childInfo.getDateOfBirth());
+        child.setPlaceOfBirth(childInfo.getPlaceOfBirth());
         child.setCivilStatus(Person.CivilStatus.NEVER_MARRIED);
         child.setGender(childInfo.getChildGender());
         child.setLifeStatus(Person.LifeStatus.ALIVE);
@@ -1542,55 +1543,56 @@ public class BirthRegistrationServiceImpl implements
                     }
                 }
             }
-
-            if (mother == null && parent.getMotherFullName() != null) {
-                // if we couldn't locate the mother, add an unverified record to the PRS
-                mother = new Person();
-                mother.setFullNameInOfficialLanguage(parent.getMotherFullName());
-                mother.setDateOfBirth(parent.getMotherDOB());
-                mother.setGender(AppConstants.Gender.FEMALE.ordinal());
-                mother.setPreferredLanguage(prefLanguage);
-                mother.setNic(motherNICorPIN);
-                if (motherNICorPIN != null) {
-                    mother.setNic(motherNICorPIN);
-                    mother.setStatus(Person.Status.SEMI_VERIFIED);
-                } else {
-                    mother.setStatus(Person.Status.UNVERIFIED);
-                }
-                mother.setLifeStatus(Person.LifeStatus.ALIVE);
-                mother.setPlaceOfBirth(parent.getMotherPlaceOfBirth());
-
-                // set mother race
-                mother.setRace(parent.getMotherRace());
-
-                // add mother to PRS
-                ecivil.addPerson(mother, user);
-                // set mothers passport info
-                if (!isEmptyString(parent.getMotherPassportNo()) && parent.getMotherCountry() != null) {
-                    ecivil.addCitizenship(
-                        getPersonCitizenship(parent.getMotherCountry(), parent.getMotherPassportNo(), mother), user);
-                }
-                if (mother.getPin() != null) {
-                    parent.setMotherNICorPIN(mother.getPin().toString());
-                }
-
-                if (parent.getMotherAddress() != null) {
-                    final Address address = new Address(parent.getMotherAddress());
-                    mother.specifyAddress(address);
-                    // save new address to PRS
-                    ecivil.addAddress(address, user);
-                    // update mother to reflect new address
-                    ecivil.updatePerson(mother, user);
-                }
-
-                logger.debug("Added an unverified record for the mother into the PRS : {}", mother.getPersonUKey());
-            }
-
-            // mark mother child relationship
-            if (mother != null) {
-                person.setMother(mother);
-            }
         }
+
+        if (mother == null && parent.getMotherFullName() != null) {
+            // if we couldn't locate the mother, add an unverified record to the PRS
+            mother = new Person();
+            mother.setFullNameInOfficialLanguage(parent.getMotherFullName());
+            mother.setDateOfBirth(parent.getMotherDOB());
+            mother.setGender(AppConstants.Gender.FEMALE.ordinal());
+            mother.setPreferredLanguage(prefLanguage);
+            mother.setNic(motherNICorPIN);
+            if (motherNICorPIN != null) {
+                mother.setNic(motherNICorPIN);
+                mother.setStatus(Person.Status.SEMI_VERIFIED);
+            } else {
+                mother.setStatus(Person.Status.UNVERIFIED);
+            }
+            mother.setLifeStatus(Person.LifeStatus.ALIVE);
+            mother.setPlaceOfBirth(parent.getMotherPlaceOfBirth());
+
+            // set mother race
+            mother.setRace(parent.getMotherRace());
+
+            // add mother to PRS
+            ecivil.addPerson(mother, user);
+            // set mothers passport info
+            if (!isEmptyString(parent.getMotherPassportNo()) && parent.getMotherCountry() != null) {
+                ecivil.addCitizenship(
+                    getPersonCitizenship(parent.getMotherCountry(), parent.getMotherPassportNo(), mother), user);
+            }
+            if (mother.getPin() != null) {
+                parent.setMotherNICorPIN(mother.getPin().toString());
+            }
+
+            if (parent.getMotherAddress() != null) {
+                final Address address = new Address(parent.getMotherAddress());
+                mother.specifyAddress(address);
+                // save new address to PRS
+                ecivil.addAddress(address, user);
+                // update mother to reflect new address
+                ecivil.updatePerson(mother, user);
+            }
+
+            logger.debug("Added an unverified record for the mother into the PRS : {}", mother.getPersonUKey());
+        }
+
+        // mark mother child relationship
+        if (mother != null) {
+            person.setMother(mother);
+        }
+
         return mother;
     }
 
@@ -1909,12 +1911,13 @@ public class BirthRegistrationServiceImpl implements
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<BirthDeclaration> getHistoricalAlterationRecordForBDDivisionAndSerialNo(BDDivision birthDivision, long serialNo, long idUKey, User user) {
+    public List<BirthDeclaration> getHistoricalBirthDeclarationRecordForBDDivisionAndSerialNo(BDDivision birthDivision, long serialNo, long idUKey, User user) {
         BirthDeclaration bdf = birthDeclarationDAO.getById(idUKey);
         if (bdf != null) {
             validateAccessOfUser(user, bdf);
+            return birthDeclarationDAO.getHistoricalAlterationRecordForBDDivisionAndSerialNo(birthDivision, serialNo, idUKey);
         }
-        return birthDeclarationDAO.getHistoricalAlterationRecordForBDDivisionAndSerialNo(birthDivision, serialNo, idUKey);
+        return null;
     }
 
     private PersonCitizenship getPersonCitizenship(Country country, String passportNo, Person person) {

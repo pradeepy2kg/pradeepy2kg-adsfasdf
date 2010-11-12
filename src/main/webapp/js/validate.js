@@ -43,8 +43,14 @@ function validateEmail(domElement, errorText, errorCode) {
 function validateSerialNo(domElement, errorText, errorCode) {
     with (domElement) {
         var reg = /^20([1-9][0-9])[0|1]([0-9]{5})$/;
-        if (reg.test(value.trim()) == false) {
+        var notbe = /^20([1-9][0-9])[0|1]([0]{5})$/;
+
+        if(notbe.test(value.trim()) == true) {
             printMessage(errorText, errorCode);
+        }else {
+            if (reg.test(value.trim()) == false) {
+                printMessage(errorText, errorCode);
+            }
         }
     }
 }

@@ -55,7 +55,6 @@ public interface BirthAlterationDAO {
     public List<BirthAlteration> getBulkOfAlterationByBDDivision(BDDivision BDDivision, int pageNo, int noOfRows);
 
 
-
     /**
      * Returns a limited set of BirthAlterations based on given idUKey
      *
@@ -65,13 +64,22 @@ public interface BirthAlterationDAO {
      * @return the birth alteration results
      */
     public BirthAlteration getBulkOfAlterationByIdUKey(long idUKey, int pageNo, int noOfRows);
+
     /**
      * Returns a limited set of BirthAlterations based on given user location
      *
-     * @param locationUKey   idUKey  of the user location
-     * @param pageNo        the page number for the results required (start from 1)
-     * @param noOfRows      number of rows
+     * @param locationUKey idUKey  of the user location
+     * @param pageNo       the page number for the results required (start from 1)
+     * @param noOfRows     number of rows
      * @return the birth alteration results
      */
     public List<BirthAlteration> getBulkOfAlterationByUserLocationIdUKey(int locationUKey, int pageNo, int noOfRows);
+
+    /**
+     * get birth alterations for given birth record.
+     *
+     * @param idUKey idUKey of birth record
+     * @return list of birth alterations for given birth certificate.
+     */
+    public List<BirthAlteration> getBirthAlterationByBirthCertificateNumber(long idUKey);
 }
