@@ -575,7 +575,7 @@ function initPage() {
 <s:if test="deathType.ordinal() == 2 || deathType.ordinal() == 3">
     <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse;" class="font-9">
         <tr>
-            <td width="150px">(1)මරණය ලියාපදිංචි කිරීම ප්‍රමාද වීමට කාරණය
+            <td width="150px">(1)මරණය ලියාපදිංචි කිරීම ප්‍රමාද වීමට කාරණය  <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
                 <br>இறப்பினை பதிவதற்கு தாமதித்ததற்கான காரணம்
                 <br>Reason for the late registration of the death
             </td>
