@@ -281,12 +281,9 @@
                 <br>முதல் பதிவின் பின் நிறைவேற்றிய மாற்றங்கள்
                 <br>Changes After First Registration
             </td>
-            <td style="font-size:9pt;">
-                නැත
-                <br>
-                இல்லை
-                <br>
-                No
+            <td style="font-size:9pt;">ඔව් - "**" ලකුණින් පෙන්වා ඈත<br>
+                ஆம் - "**" குறியீட்டில் குறிப்பிடப்பட்டுள்ளது <br>
+                Yes - marked with "**"
             </td>
         </tr>
     </s:if>
