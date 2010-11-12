@@ -240,8 +240,7 @@
             <img src="<s:url value="/images/alphabet-X.gif" />"
                  id="declarant_NIC_X" onclick="javascript:addXorV('declarant_pinOrNic','X','error12')">
             <br>
-            <s:textfield id="declarant_pinOrNic"
-                         name="declarant.declarantNICorPIN"/><img
+            <s:textfield id="declarant_pinOrNic" name="declarant.declarantNICorPIN" maxLength="10"/><img
                 src="<s:url value="/images/search-father.png"/>"
                 style="vertical-align:middle; margin-left:20px;" id="declarant_lookup"></td>
     </tr>
@@ -316,7 +315,7 @@
     </tr>
     <tr>
         <td colspan="2">
-            අනන්‍යතා අංකය
+            අනන්‍යතා අංකය  <s:label value="*" cssStyle="color:red;font-size:10pt"/>
             <br>அடையாள எண்
             <br>PIN
         </td>
@@ -328,15 +327,14 @@
                  id="notifying_authority_NIC_X"
                  onclick="javascript:addXorV('notifying_authority_NICorPIN','X','error12')">
             <br>
-            <s:textfield id="notifying_authority_NICorPIN"
-                         name="notifyingAuthority.notifyingAuthorityPIN"> </s:textfield>
+            <s:textfield id="notifying_authority_NICorPIN" name="notifyingAuthority.notifyingAuthorityPIN" maxLength="10"> </s:textfield>
             <img src="<s:url value="/images/search-father.png" />"
                  style="vertical-align:middle; margin-left:20px;" id="notifying_authority_lookup"></td>
         </td>
     </tr>
     <tr>
         <td colspan="1">
-            නම
+            නම <s:label value="*" cssStyle="color:red;font-size:10pt"/>
             <br>பெயர்
             <br>Name
         </td>
@@ -346,7 +344,7 @@
     </tr>
     <tr>
         <td colspan="1">
-            තැපැල් ලිපිනය
+            තැපැල් ලිපිනය  <s:label value="*" cssStyle="color:red;font-size:10pt"/>
             <br>தபால் முகவரி
             <br>Postal Address
         </td>
