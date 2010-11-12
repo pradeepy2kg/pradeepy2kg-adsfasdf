@@ -201,7 +201,6 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
             logger.debug("Get birth alterations pending approval - by User location id : " + locationUKey +
                 " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
-        //TODO usage of USER ????
         return birthAlterationDAO.getBulkOfAlterationByUserLocationIdUKey(locationUKey, pageNo, noOfRows);
     }
 
@@ -219,7 +218,8 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthAlteration> getBirthAlterationByBirthCertificateNumber(long idUKey, User user) {
-        return null;
+        //todo complete
+        throw new UnsupportedOperationException("method not implemented for getBirthAlterationsFor given birth certificate number");
     }
 
     /**

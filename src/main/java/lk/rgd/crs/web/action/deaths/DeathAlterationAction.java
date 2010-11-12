@@ -368,6 +368,61 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         return SUCCESS;
     }
 
+    public String setBitset() {
+        logger.info("setting bit set : {}", approvedIndex);
+        try {
+            Hashtable<Integer, Boolean> approveBitset = new Hashtable<Integer, Boolean>();
+            deathAlteration = deathAlterationService.getByIDUKey(deathAlterationId, user);
+            if (approvedIndex != null) {
+                for (int i = 0; i < approvedIndex.length; i++) {
+                    int bit = approvedIndex[i];
+                    approveBitset.put(bit, true);
+                }
+            }
+            deathAlterationService.approveDeathAlteration(deathAlteration, approveBitset, user);
+            populatePrimaryLists(districtUKey, dsDivisionId, language, user);
+            logger.debug("apply changes to death alteration : alteration id  {}", deathAlterationId);
+        }
+        catch (CRSRuntimeException e) {
+            logger.error("cannot set bit set for death alteration : {}", deathAlterationId);
+            return ERROR;
+        }
+        return SUCCESS;
+    }
+
+
+    public String deleteDeathAlteration() {
+        logger.debug("attempt to delete death alteration : idUKey :{} by User : {}", deathAlterationId, user.getUserName());
+        deathAlterationService.deleteDeathAlteration(deathAlterationId, user);
+        populatePrimaryLists(districtUKey, dsDivisionId, language, user);
+        logger.debug("death alteration deleted success : alteration id :{}", deathAlterationId);
+        return SUCCESS;
+    }
+
+    public String rejectDeathAlteration() {
+        if (pageNumber > 0) {
+            logger.debug("attempt to reject death alteration : idUKey : {} by User : {}", deathAlterationId, user.getUserName());
+            deathAlterationService.rejectDeathAlteration(deathAlterationId, user, rejectComment);
+            populatePrimaryLists(districtUKey, dsDivisionId, language, user);
+            logger.debug("death alteration rejected success : alteration id :{}", deathAlterationId);
+            return SUCCESS;
+        }
+        deathAlteration = deathAlterationService.getByIDUKey(deathAlterationId, user);
+        return "pageLoad";
+    }
+
+    /**
+     * printing confirmation letter to declarent who requested changes
+     */
+    public String printAlterationLetter() {
+        //loading requested alterations
+        deathAlteration = deathAlterationService.getByIDUKey(deathAlterationId, user);
+        deathRegister = deathRegistrationService.getById(deathAlteration.getDeathRegisterIDUkey());
+        String preferedLan = deathRegister.getDeath().getPreferredLanguage();
+        generateChangesList(deathRegister, deathAlteration, preferedLan);
+        return "pageLoad";
+    }
+
     private void generateChangesList(DeathRegister deathRegister, DeathAlteration deathAlteration, String preferedLan) {
         logger.debug("begin generating changes list");
         if (deathAlteration.getDeathInfo() != null && deathRegister.getDeath() != null) {
@@ -549,17 +604,18 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         } else if (deathRegister.getDeathPerson().getDeathPersonCountry() != null) {
             fv.setExistingValue(null);
             if (AppConstants.SINHALA.equals(preferedLan)) {
+                fv.setExistingValue(deathRegister.getDeathPerson().getDeathPersonCountry().getSiCountryName());
+
+            }
+            if (AppConstants.TAMIL.equals(preferedLan)) {
+                fv.setExistingValue(deathRegister.getDeathPerson().getDeathPersonCountry().getTaCountryName());
+            }
+        } else if (deathAlteration.getDeathPerson().getDeathPersonCountry() != null) {
+            if (AppConstants.SINHALA.equals(preferedLan)) {
                 fv.setAlterationValue(deathAlteration.getDeathPerson().getDeathPersonCountry().getSiCountryName());
             }
             if (AppConstants.TAMIL.equals(preferedLan)) {
                 fv.setAlterationValue(deathAlteration.getDeathPerson().getDeathPersonCountry().getTaCountryName());
-            }
-        } else if (deathAlteration.getDeathPerson().getDeathPersonCountry() != null) {
-            if (AppConstants.SINHALA.equals(preferedLan)) {
-                fv.setExistingValue(deathRegister.getDeathPerson().getDeathPersonCountry().getSiCountryName());
-            }
-            if (AppConstants.TAMIL.equals(preferedLan)) {
-                fv.setExistingValue(deathRegister.getDeathPerson().getDeathPersonCountry().getTaCountryName());
             }
         } else {
             return null;
@@ -586,18 +642,18 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         } else if (deathRegister.getDeathPerson().getDeathPersonRace() != null) {
             fv.setExistingValue(null);
             if (AppConstants.SINHALA.equals(preferedLan)) {
+                fv.setExistingValue(deathRegister.getDeathPerson().getDeathPersonRace().getSiRaceName());
+
+            }
+            if (AppConstants.TAMIL.equals(preferedLan)) {
+                fv.setExistingValue(deathRegister.getDeathPerson().getDeathPersonRace().getTaRaceName());
+            }
+        } else if (deathAlteration.getDeathPerson().getDeathPersonRace() != null) {
+            if (AppConstants.SINHALA.equals(preferedLan)) {
                 fv.setAlterationValue(deathAlteration.getDeathPerson().getDeathPersonRace().getSiRaceName());
             }
             if (AppConstants.TAMIL.equals(preferedLan)) {
                 fv.setAlterationValue(deathAlteration.getDeathPerson().getDeathPersonRace().getTaRaceName());
-            }
-        } else if (deathAlteration.getDeathPerson().getDeathPersonRace() != null) {
-            if (AppConstants.SINHALA.equals(preferedLan)) {
-                fv.setExistingValue(deathRegister.getDeathPerson().getDeathPersonRace().getSiRaceName());
-            }
-
-            if (AppConstants.TAMIL.equals(preferedLan)) {
-                fv.setExistingValue(deathRegister.getDeathPerson().getDeathPersonRace().getTaRaceName());
             }
         } else {
             return null;
@@ -605,61 +661,6 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         return fv;
     }
 
-
-    public String setBitset() {
-        logger.info("setting bit set : {}", approvedIndex);
-        try {
-            Hashtable<Integer, Boolean> approveBitset = new Hashtable<Integer, Boolean>();
-            deathAlteration = deathAlterationService.getByIDUKey(deathAlterationId, user);
-            if (approvedIndex != null) {
-                for (int i = 0; i < approvedIndex.length; i++) {
-                    int bit = approvedIndex[i];
-                    approveBitset.put(bit, true);
-                }
-            }
-            deathAlterationService.approveDeathAlteration(deathAlteration, approveBitset, user);
-            populatePrimaryLists(districtUKey, dsDivisionId, language, user);
-            logger.debug("apply changes to death alteration : alteration id  {}", deathAlterationId);
-        }
-        catch (CRSRuntimeException e) {
-            logger.error("cannot set bit set for death alteration : {}", deathAlterationId);
-            return ERROR;
-        }
-        return SUCCESS;
-    }
-
-
-    public String deleteDeathAlteration() {
-        logger.debug("attempt to delete death alteration : idUKey :{} by User : {}", deathAlterationId, user.getUserName());
-        deathAlterationService.deleteDeathAlteration(deathAlterationId, user);
-        populatePrimaryLists(districtUKey, dsDivisionId, language, user);
-        logger.debug("death alteration deleted success : alteration id :{}", deathAlterationId);
-        return SUCCESS;
-    }
-
-    public String rejectDeathAlteration() {
-        if (pageNumber > 0) {
-            logger.debug("attempt to reject death alteration : idUKey : {} by User : {}", deathAlterationId, user.getUserName());
-            deathAlterationService.rejectDeathAlteration(deathAlterationId, user, rejectComment);
-            populatePrimaryLists(districtUKey, dsDivisionId, language, user);
-            logger.debug("death alteration rejected success : alteration id :{}", deathAlterationId);
-            return SUCCESS;
-        }
-        deathAlteration = deathAlterationService.getByIDUKey(deathAlterationId, user);
-        return "pageLoad";
-    }
-
-    /**
-     * printing confirmation letter to declarent who requested changes
-     */
-    public String printAlterationLetter() {
-        //loading requested alterations
-        deathAlteration = deathAlterationService.getByIDUKey(deathAlterationId, user);
-        deathRegister = deathRegistrationService.getById(deathAlteration.getDeathRegisterIDUkey());
-        requested = deathAlteration.getRequestedAlterations();
-        approvedBitset = deathAlteration.getApprovalStatuses();
-        return "pageLoad";
-    }
 
     private DeathInfo populateDeathInfo(DeathAlterationInfo dai, DeathInfo di) {
 
