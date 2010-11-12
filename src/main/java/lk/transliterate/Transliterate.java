@@ -73,17 +73,17 @@ public class Transliterate {
 
     static {
         try {
-            enToPhRules = loadLangToPhoneticFile("rules-en.txt");
-            siToPhRules = loadLangToPhoneticFile("rules-si.txt");
-            taToPhRules = loadLangToPhoneticFile("rules-ta.txt");
+            enToPhRules = loadLangToPhoneticFile("lk/transliterate/rules-en.txt");
+            siToPhRules = loadLangToPhoneticFile("lk/transliterate/rules-si.txt");
+            taToPhRules = loadLangToPhoneticFile("lk/transliterate/rules-ta.txt");
 
-            phToSiRules = loadPhoneticToLangFile("phonetic-si.txt");
-            phToTaRules = loadPhoneticToLangFile("phonetic-ta.txt");
-            phToEnRules = loadPhoneticToLangFile("phonetic-en.txt");
+            phToSiRules = loadPhoneticToLangFile("lk/transliterate/phonetic-si.txt");
+            phToTaRules = loadPhoneticToLangFile("lk/transliterate/phonetic-ta.txt");
+            phToEnRules = loadPhoneticToLangFile("lk/transliterate/phonetic-en.txt");
 
-            loadMappingFile("en-to-si.txt", engToSinNames, engToSinOther, sinToEngNames, sinToEngOther);
-            loadMappingFile("en-to-ta.txt", engToTamNames, engToTamOther, tamToEngNames, tamToEngOther);
-            loadMappingFile("si-to-ta.txt", sinToTamNames, sinToTamOther, tamToSinNames, tamToSinOther);
+            loadMappingFile("lk/transliterate/en-to-si.txt", engToSinNames, engToSinOther, sinToEngNames, sinToEngOther);
+            loadMappingFile("lk/transliterate/en-to-ta.txt", engToTamNames, engToTamOther, tamToEngNames, tamToEngOther);
+            loadMappingFile("lk/transliterate/si-to-ta.txt", sinToTamNames, sinToTamOther, tamToSinNames, tamToSinOther);
 
             if (DEBUG) {
                 System.out.println("En to Ph rules : " + enToPhRules.length);
