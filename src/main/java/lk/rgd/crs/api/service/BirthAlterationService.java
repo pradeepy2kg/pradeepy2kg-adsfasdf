@@ -63,6 +63,7 @@ public interface BirthAlterationService {
      * @param user               the user initiating the action
      */
     public void approveBirthAlteration(BirthAlteration ba, Map<Integer, Boolean> fieldsToBeApproved, User user);
+
     /**
      * Returns a limited set of BirthAlterations for which one or more fields in the statement 27,27A or statement
      * 52_1 are awaiting approval by an ARG or higher authority based on given birth/death division.
@@ -87,7 +88,6 @@ public interface BirthAlterationService {
     public List<BirthAlteration> getApprovalPendingByBDDivision(BDDivision bdDivision, int pageNo, int noOfRows);
 
 
-
     /**
      * Returns a limited set of BirthAlterations for which one or more fields in the statement 27,27A or statement
      * 52_1 are awaiting approval by an ARG or higher authority based on user location
@@ -99,7 +99,7 @@ public interface BirthAlterationService {
      * @return the birth alteration results
      */
     public List<BirthAlteration> getApprovalPendingByUserLocationIdUKey
-            (int locationUKey, int pageNo, int noOfRows, User user);
+        (int locationUKey, int pageNo, int noOfRows, User user);
 
     /**
      * Returns a limited set of BirthAlterations for which one or more fields in the statement 27,27A or statement
@@ -112,5 +112,14 @@ public interface BirthAlterationService {
      * @return the birth alteration results
      */
     public BirthAlteration getApprovalPendingByIdUKey
-            (Long idUKey, int pageNo, int noOfRows, User user);
+        (Long idUKey, int pageNo, int noOfRows, User user);
+
+    /**
+     * get birth alterations done to given birth certificate
+     *
+     * @param idUKey idUKey of birth certificate
+     * @param user   the user initiating the action
+     * @return List of birth alterations done to given birth record.
+     */
+    public List<BirthAlteration> getBirthAlterationByBirthCertificateNumber(long idUKey, User user);
 }

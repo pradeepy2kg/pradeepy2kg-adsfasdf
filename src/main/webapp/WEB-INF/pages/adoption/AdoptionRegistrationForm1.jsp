@@ -574,7 +574,7 @@ function enableSerialNumber(mode) {
     <tr>
         <td>
             දැනට පවතින නම
-            (නමක් දී ඇති නම්)
+            (නමක් දී ඇති නම්)    <s:label value="*" cssStyle="color:blue;font-size:11pt"/>
             <br>தற்போதைய பெயா்
             (ஏற்கனவே பெயா் வழங்கப்பட்டிருந்தால்)
             <br>Existing Name
@@ -585,7 +585,7 @@ function enableSerialNumber(mode) {
     </tr>
     <tr>
         <td>
-            ලබා දෙන නම රාජ්‍ය භාෂාවෙන් <s:label value="*" cssStyle="color:red;font-size:10pt"/>
+            ලබා දෙන නම රාජ්‍ය භාෂාවෙන් <s:label value="*" cssStyle="color:blue;font-size:11pt"/>
             <br>புதிய பெயா் அரச கரும மொழியில்
             <br>New name given in Official Language
         </td>

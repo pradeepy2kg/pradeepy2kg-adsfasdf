@@ -17,12 +17,12 @@
                 <tr>
                     <td>type</td>
                     <td>eprLogin_userName</td>
-                    <td>ashoka</td>
+                    <td>rg</td>
                 </tr>
                 <tr>
                     <td>type</td>
                     <td>eprLogin_password</td>
-                    <td>ashoka</td>
+                    <td>password</td>
                 </tr>
                 <tr>
                     <td>clickAndWait</td>

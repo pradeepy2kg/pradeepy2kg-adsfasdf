@@ -128,7 +128,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
                 case TYPE_52_1_H:
                 case TYPE_52_1_I: {
                     logger.debug("Alteration is an amendment, inclusion of omission or correction. Type : {}",
-                            existing.getType().ordinal());
+                        existing.getType().ordinal());
                     bdf.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_ALTERED);
                     bdf.getLifeCycleInfo().setActiveRecord(false);      // mark old record as a non-active record
                     birthDeclarationDAO.updateBirthDeclaration(bdf, user);
@@ -152,7 +152,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
                     bdf.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CANCELLED);
                     birthDeclarationDAO.updateBirthDeclaration(bdf, user);
                     logger.debug("Alteration of type : {} is a cancellation of the existing record : {}",
-                            existing.getType().ordinal(), bdf.getIdUKey());
+                        existing.getType().ordinal(), bdf.getIdUKey());
 
                     // cancel any person on the PRS related to this same PIN
                     Person person = personDAO.findPersonByPIN(bdf.getChild().getPin());
@@ -162,7 +162,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
                 }
             }
 
-        } 
+        }
         existing.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
         existing.getLifeCycleInfo().setApprovalOrRejectUser(user);
         birthAlterationDAO.updateBirthAlteration(existing, user);
@@ -176,10 +176,10 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthAlteration> getApprovalPendingByBDDivision
-            (BDDivision bdDivision, int pageNo, int noOfRows, User user) {
+        (BDDivision bdDivision, int pageNo, int noOfRows, User user) {
         if (logger.isDebugEnabled()) {
             logger.debug("Get birth alteration pending approval by BDDivision ID : " + bdDivision.getBdDivisionUKey()
-                    + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
+                + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
         ValidationUtils.validateAccessToBDDivision(user, bdDivision);
         return birthAlterationDAO.getBulkOfAlterationByBDDivision(bdDivision, pageNo, noOfRows);
@@ -187,10 +187,10 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
 
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthAlteration> getApprovalPendingByBDDivision
-            (BDDivision bdDivision, int pageNo, int noOfRows) {
+        (BDDivision bdDivision, int pageNo, int noOfRows) {
         if (logger.isDebugEnabled()) {
             logger.debug("Get birth alteration pending approval by BDDivision ID : " + bdDivision.getBdDivisionUKey()
-                    + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
+                + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
         return birthAlterationDAO.getBulkOfAlterationByBDDivision(bdDivision, pageNo, noOfRows);
     }
@@ -198,8 +198,8 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthAlteration> getApprovalPendingByUserLocationIdUKey(int locationUKey, int pageNo, int noOfRows, User user) {
         if (logger.isDebugEnabled()) {
-            logger.debug("Get birth alterations pending approval - by User locaton id : " + locationUKey +
-                    " Page : " + pageNo + " with number of rows per page : " + noOfRows);
+            logger.debug("Get birth alterations pending approval - by User location id : " + locationUKey +
+                " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
         return birthAlterationDAO.getBulkOfAlterationByUserLocationIdUKey(locationUKey, pageNo, noOfRows);
     }
@@ -208,9 +208,18 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
     public BirthAlteration getApprovalPendingByIdUKey(Long idUKey, int pageNo, int noOfRows, User user) {
         if (logger.isDebugEnabled()) {
             logger.debug("Get birth alterations pending approval - by idUKey : " + idUKey +
-                    " Page : " + pageNo + " with number of rows per page : " + noOfRows);
+                " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
         return birthAlterationDAO.getBulkOfAlterationByIdUKey(idUKey, pageNo, noOfRows);
+    }
+
+    /**
+     * @inheriteDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<BirthAlteration> getBirthAlterationByBirthCertificateNumber(long idUKey, User user) {
+        //todo complete
+        throw new UnsupportedOperationException("method not implemented for getBirthAlterationsFor given birth certificate number");
     }
 
     /**
@@ -227,7 +236,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
         if (Role.ROLE_DEO.equals(user.getRole().getRoleId()) || Role.ROLE_ADR.equals(user.getRole().getRoleId())) {
             if (!BirthAlteration.State.DATA_ENTRY.equals(ba.getStatus())) {
                 handleException("Birth alteration ID : " + ba.getIdUKey() + " cannot be edited as its not in the " +
-                        "Data entry state", ErrorCodes.ILLEGAL_STATE);
+                    "Data entry state", ErrorCodes.ILLEGAL_STATE);
             }
             if (ba.getSubmittedLocation().equals(user.getPrimaryLocation())) {
                 return;
@@ -237,7 +246,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
         }
 
         ValidationUtils.validateAccessToBDDivision(user,
-                birthDeclarationDAO.getById(ba.getBdfIDUKey()).getRegister().getBirthDivision());
+            birthDeclarationDAO.getById(ba.getBdfIDUKey()).getRegister().getBirthDivision());
     }
 
     /**
@@ -252,15 +261,15 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
             // RG can approve any record
         } else if (Role.ROLE_ARG.equals(user.getRole().getRoleId())) {
             ValidationUtils.validateAccessToBDDivision(user,
-                    birthDeclarationDAO.getById(ba.getBdfIDUKey()).getRegister().getBirthDivision());
+                birthDeclarationDAO.getById(ba.getBdfIDUKey()).getRegister().getBirthDivision());
 
             if (!user.isAuthorized(Permission.APPROVE_BIRTH_ALTERATION)) {
                 handleException("User : " + user.getUserId() + " is not allowed to approve/reject birth alteration",
-                        ErrorCodes.PERMISSION_DENIED);
+                    ErrorCodes.PERMISSION_DENIED);
             }
         } else {
             handleException("User : " + user.getUserId() + " is not an ARG for alteration approval",
-                    ErrorCodes.PERMISSION_DENIED);
+                ErrorCodes.PERMISSION_DENIED);
         }
     }
 
@@ -331,7 +340,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
         if (ba.getApprovalStatuses().get(Alteration27A.FATHER_RACE)) {
             if (bdf.getParent().getFatherRace() != null) {
                 handleException("The fathers race cannot be changed under section 27A, when already specified." +
-                        " Use Section 52 (1) instead", ErrorCodes.ILLEGAL_STATE);
+                    " Use Section 52 (1) instead", ErrorCodes.ILLEGAL_STATE);
             } else {
                 bdf.getParent().setFatherRace(alt.getFather().getFatherRace());
             }

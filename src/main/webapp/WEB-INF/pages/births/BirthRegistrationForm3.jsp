@@ -77,8 +77,7 @@ $(function() {
 });
 
 var informPerson;
-function setInformPerson(id)
-{
+function setInformPerson(id) {
     var name,nICorPIN,address,phonoNo,email;
     var informantName = document.getElementById("informantName");
     var informantNICorPIN = document.getElementById("informantNICorPIN");
@@ -97,7 +96,8 @@ function setInformPerson(id)
             name = document.getElementById("fatherFullNameLable").value;
             nICorPIN = document.getElementById("fatherNICorPINLable").value;
             address = "";
-            if (document.getElementById("marriedId1").checked || document.getElementById("marriedId3").checked) {
+            if (document.getElementsByName("marriage.parentsMarried")[0].checked ||
+                    document.getElementsByName("marriage.parentsMarried")[2].checked) {
                 address = document.getElementById("motherAddressLable").value;
             }
             phonoNo = "";
@@ -196,7 +196,7 @@ function commonTags() {
 function generateGrandFatherBirthYear(grandFatherNIC, grandFatherBirthYear) {
     var regNIC = /^([0-9]{9}[X|x|V|v])$/;
     var domObject = document.getElementById(grandFatherNIC);
-    var domYear = document.getElementById(grandFatherBirthYear) ;
+    var domYear = document.getElementById(grandFatherBirthYear);
     if (domObject.value.search(regNIC) == 0) {
         domYear.value = 19 + domObject.value.substring(0, 2);
     }
@@ -430,7 +430,7 @@ function initPage() {
                     <tr>
                         <td><label>ඔව්<br>ஆம்<br>Yes</label></td>
                         <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'MARRIED':''}"
-                                     onclick="disableMarriage(false);disableSigns(true)" id="marriedId"/>
+                                     onclick="disableMarriage(false);disableSigns(true)" id="marriedId1"/>
                         </td>
                     </tr>
                     <tr>
@@ -443,7 +443,7 @@ function initPage() {
                         <td><label>නැත - පසුව විවාහවී ඇත<br>இல்லை, பின் விவாகமாணவா்கள்<br>No but since married</label>
                         </td>
                         <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'NO_SINCE_MARRIED':''}"
-                                     id="marriedId"
+                                     id="marriedId3"
                                      onclick="disableMarriage(false);disableSigns(false)"/>
                         </td>
                     </tr>
@@ -664,18 +664,21 @@ function initPage() {
     </tr>
 
     <tr>
-        <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) නම <s:label value="*" cssStyle="color:red;font-size:14pt;"/><br>கொடுப்பவரின் பெயர்
+        <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) නම <s:label value="*"
+                                                                                                          cssStyle="color:red;font-size:14pt;"/><br>கொடுப்பவரின்
+            பெயர்
             <br>Name</label></td>
         <td colspan="4"><s:textarea name="informant.informantName" id="informantName" cssStyle="width:95%;"/>
-            <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>--%>
+                <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>--%>
         </td>
     </tr>
     <tr>
-        <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)තැපැල් ලිපිනය<s:label value="*" cssStyle="color:red;font-size:14pt;"/><br>தபால்
+        <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)තැපැල් ලිපිනය<s:label
+                value="*" cssStyle="color:red;font-size:14pt;"/><br>தபால்
             முகவரி <br>Postal Address</label></td>
         <td colspan="4"><s:textarea name="informant.informantAddress" id="informantAddress"
                                     cssStyle="width:95%;"/>
-            <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>--%>
+                <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>--%>
         </td>
     </tr>
     <tr>
@@ -691,10 +694,12 @@ function initPage() {
 
     </tr>
     <tr>
-        <td colspan="1"><label>දිනය <s:label value="*" cssStyle="color:red;font-size:14pt;"/><br>திகதி<br>Date</label></td>
+        <td colspan="1"><label>දිනය <s:label value="*" cssStyle="color:red;font-size:14pt;"/><br>திகதி<br>Date</label>
+        </td>
         <td colspan="4">
                 <s:label value="YYYY-MM-DD" cssStyle="float:left;margin-right:190px;font-size:10px"/><br>
-                <s:textfield name="informant.informantSignDate" id="informDatePicker" cssStyle="float:left;margin-right:70px;"
+                <s:textfield name="informant.informantSignDate" id="informDatePicker"
+                             cssStyle="float:left;margin-right:70px;"
                              maxLength="10"/>
                 <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>--%>
     </tr>
