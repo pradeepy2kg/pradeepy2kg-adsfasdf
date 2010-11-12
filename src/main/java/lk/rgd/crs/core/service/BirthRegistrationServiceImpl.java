@@ -1384,6 +1384,7 @@ public class BirthRegistrationServiceImpl implements
         }
 
         child.setDateOfBirth(childInfo.getDateOfBirth());
+        child.setPlaceOfBirth(childInfo.getPlaceOfBirth());
         child.setCivilStatus(Person.CivilStatus.NEVER_MARRIED);
         child.setGender(childInfo.getChildGender());
         child.setLifeStatus(Person.LifeStatus.ALIVE);
