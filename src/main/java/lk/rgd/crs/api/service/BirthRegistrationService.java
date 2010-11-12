@@ -600,6 +600,6 @@ public interface BirthRegistrationService {
      * @param user          user who making the request
      * @return list of historical birth declarations for given birth record.
      */
-    public List<BirthDeclaration> getHistoricalAlterationRecordForBDDivisionAndSerialNo(BDDivision birthDivision, long serialNo, long idUKey, User user);
+    public List<BirthDeclaration> getHistoricalBirthDeclarationRecordForBDDivisionAndSerialNo(BDDivision birthDivision, long serialNo, long idUKey, User user);
 }
 

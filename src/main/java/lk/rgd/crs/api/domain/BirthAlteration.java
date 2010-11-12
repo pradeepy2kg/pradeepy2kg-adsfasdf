@@ -15,16 +15,17 @@ import java.util.BitSet;
 @Entity
 @Table(name = "ALT_BIRTH", schema = "CRS")
 @NamedQueries({
-        @NamedQuery(name = "filter.alteration.by.idUKey", query = "SELECT ba FROM BirthAlteration ba " +
-                "WHERE ba.idUKey =:idUKey AND (ba.status =:statusDataEntry OR ba.status =:statusFullyApproved) "+
-                "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
-        @NamedQuery(name = "filter.alteration.by.bddivision", query = "SELECT ba FROM BirthAlteration ba,BirthDeclaration bdf " +
-                "WHERE ba.bdfIDUKey =bdf.idUKey AND bdf.register.birthDivision = :bdDivision  AND " +
-                "(ba.status =:statusDataEntry OR ba.status =:statusFullyApproved) " +
-                "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
-        @NamedQuery(name = "filter.alteration.by.user.location", query = "SELECT ba FROM BirthAlteration ba " +
-                "WHERE ba.submittedLocation.locationUKey= :locationUKey AND (ba.status =:statusDataEntry OR ba.status =:statusFullyApproved) " +
-                "ORDER BY ba.lifeCycleInfo.createdTimestamp desc")
+    @NamedQuery(name = "filter.alteration.by.idUKey", query = "SELECT ba FROM BirthAlteration ba " +
+        "WHERE ba.idUKey =:idUKey AND (ba.status =:statusDataEntry OR ba.status =:statusFullyApproved) " +
+        "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
+    @NamedQuery(name = "filter.alteration.by.bddivision", query = "SELECT ba FROM BirthAlteration ba,BirthDeclaration bdf " +
+        "WHERE ba.bdfIDUKey =bdf.idUKey AND bdf.register.birthDivision = :bdDivision  AND " +
+        "(ba.status =:statusDataEntry OR ba.status =:statusFullyApproved) " +
+        "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
+    @NamedQuery(name = "filter.alteration.by.user.location", query = "SELECT ba FROM BirthAlteration ba " +
+        "WHERE ba.submittedLocation.locationUKey= :locationUKey AND (ba.status =:statusDataEntry OR ba.status =:statusFullyApproved) " +
+        "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
+    @NamedQuery(name = "get.alterations.by.birth.idUKey", query = "SELECT ba FROM BirthAlteration ba WHERE ba.bdfIDUKey =:idUKey")
 })
 
 public class BirthAlteration {
@@ -32,10 +33,10 @@ public class BirthAlteration {
     /**
      * Section 27
      * Name change
-     *
+     * <p/>
      * Section 27 A
      * Alteration of details
-     *
+     * <p/>
      * Section 52 - 1
      * a - The event did not occur although recorded [Requires a cancellation of the existing record]
      * b - Has been registered more than once [Requires a cancellation of the existing record]

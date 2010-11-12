@@ -65,7 +65,7 @@ public class BirthAlterationDAOImpl extends BaseDAO implements BirthAlterationDA
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthAlteration> getBulkOfAlterationByBDDivision(BDDivision BDDivision, int pageNo, int noOfRows) {
         Query q = em.createNamedQuery("filter.alteration.by.bddivision").
-                setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+            setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         logger.debug("get Approval pending list from bdDivision Number is :{}", BDDivision.getDivisionId());
         q.setParameter("bdDivision", BDDivision);
         q.setParameter("statusDataEntry", BirthAlteration.State.DATA_ENTRY);
@@ -76,7 +76,7 @@ public class BirthAlterationDAOImpl extends BaseDAO implements BirthAlterationDA
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public BirthAlteration getBulkOfAlterationByIdUKey(long idUKey, int pageNo, int noOfRows) {
         Query q = em.createNamedQuery("filter.alteration.by.idUKey").
-                setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+            setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         logger.debug("get Approval pending list from idUKey number is :{}", idUKey);
         q.setParameter("statusDataEntry", BirthAlteration.State.DATA_ENTRY);
         q.setParameter("statusFullyApproved", BirthAlteration.State.FULLY_APPROVED);
@@ -84,14 +84,21 @@ public class BirthAlterationDAOImpl extends BaseDAO implements BirthAlterationDA
         return (BirthAlteration) q.getSingleResult();
     }
 
-    
+
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthAlteration> getBulkOfAlterationByUserLocationIdUKey(int locationUKey, int pageNo, int noOfRows) {
         Query q = em.createNamedQuery("filter.alteration.by.user.location").
-                setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+            setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("locationUKey", locationUKey);
         q.setParameter("statusDataEntry", BirthAlteration.State.DATA_ENTRY);
         q.setParameter("statusFullyApproved", BirthAlteration.State.FULLY_APPROVED);
+        return q.getResultList();
+    }
+
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<BirthAlteration> getBirthAlterationByBirthCertificateNumber(long idUKey) {
+        Query q = em.createNamedQuery("get.alterations.by.birth.idUKey");
+        q.setParameter("idUKey", idUKey);
         return q.getResultList();
     }
 }
