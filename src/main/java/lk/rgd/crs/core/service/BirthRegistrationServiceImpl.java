@@ -1909,12 +1909,13 @@ public class BirthRegistrationServiceImpl implements
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<BirthDeclaration> getHistoricalAlterationRecordForBDDivisionAndSerialNo(BDDivision birthDivision, long serialNo, long idUKey, User user) {
+    public List<BirthDeclaration> getHistoricalBirthDeclarationRecordForBDDivisionAndSerialNo(BDDivision birthDivision, long serialNo, long idUKey, User user) {
         BirthDeclaration bdf = birthDeclarationDAO.getById(idUKey);
         if (bdf != null) {
             validateAccessOfUser(user, bdf);
+            return birthDeclarationDAO.getHistoricalAlterationRecordForBDDivisionAndSerialNo(birthDivision, serialNo, idUKey);
         }
-        return birthDeclarationDAO.getHistoricalAlterationRecordForBDDivisionAndSerialNo(birthDivision, serialNo, idUKey);
+        return null;
     }
 
     private PersonCitizenship getPersonCitizenship(Country country, String passportNo, Person person) {
