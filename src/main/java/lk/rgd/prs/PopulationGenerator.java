@@ -27,7 +27,7 @@ import java.util.*;
 public class PopulationGenerator {
 
     private static final int SKIP = 0;
-    private static final int LIMIT = 100;
+    private static final int LIMIT = 10000000;
 
     private final PopulationRegistry popreg;
     private final RaceDAO raceDAO;
