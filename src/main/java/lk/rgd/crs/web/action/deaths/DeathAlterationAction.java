@@ -31,29 +31,6 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     private static final Logger logger = LoggerFactory.getLogger(DeathAlterationAction.class);
     private static final String DA_APPROVAL_ROWS_PER_PAGE = "crs.br_approval_rows_per_page";
 
-    private static final String FIELD_SUDDEN_DEATH = "";
-    private static final String FIELD_DATE_DEATH = "";
-    private static final String FIELD_TIME_DEATH = "";
-    private static final String FIELD_PLACE_OF_DEATH = "";
-    private static final String FIELD_PLACE_OF_DEATH_ENGLISH = "";
-    private static final String FIELD_CAUSE_OF_DEATH_ESTABLISHED = "";
-    private static final String FIELD_CAUSE_OF_DEATH = "";
-    private static final String FIELD_ICD_CODE_OF_DEATH = "";
-    private static final String FIELD_BURIAL_PLACE = "";
-    private static final String FIELD_IDENTIFICATION_NUMBER = "";
-    private static final String FIELD_COUNTRY = "";
-    private static final String FIELD_PASSPORT = "";
-    private static final String FIELD_AGE = "";
-    private static final String FIELD_GENDER = "";
-    private static final String FIELD_RACE = "";
-    private static final String FIELD_NAME = "";
-    private static final String FIELD_NAME_ENGLISH = "";
-    private static final String FIELD_ADDRESS = "";
-    private static final String FIELD_IDENTIFICATION_FATHER = "";
-    private static final String FIELD_NAME_FATHER = "";
-    private static final String FIELD_IDENTIFICATION_MOTHER = "";
-    private static final String FIELD_NAME_MOTHER = "";
-
     private final DistrictDAO districtDAO;
     private final DSDivisionDAO dsDivisionDAO;
     private final BDDivisionDAO bdDivisionDAO;
@@ -554,6 +531,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     }
 
     private FieldValue compareCountry(DeathRegister deathRegister, DeathAlteration deathAlteration, String preferedLan) {
+        logger.debug("compare country for generating death alteration changes list");
         //one case null or both null in both null no need to add ,in other case need to add with out comparison
         //not both case null
         //case 1 : death register death country is null
@@ -568,7 +546,6 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 fv.setExistingValue(deathRegister.getDeathPerson().getDeathPersonCountry().getTaCountryName());
                 fv.setAlterationValue(deathAlteration.getDeathPerson().getDeathPersonCountry().getTaCountryName());
             }
-
         } else if (deathRegister.getDeathPerson().getDeathPersonCountry() != null) {
             fv.setExistingValue(null);
             if (AppConstants.SINHALA.equals(preferedLan)) {
@@ -581,18 +558,17 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             if (AppConstants.SINHALA.equals(preferedLan)) {
                 fv.setExistingValue(deathRegister.getDeathPerson().getDeathPersonCountry().getSiCountryName());
             }
-
             if (AppConstants.TAMIL.equals(preferedLan)) {
                 fv.setExistingValue(deathRegister.getDeathPerson().getDeathPersonCountry().getTaCountryName());
             }
         } else {
             return null;
         }
-
         return fv;
     }
 
     private FieldValue compareRace(DeathRegister deathRegister, DeathAlteration deathAlteration, String preferedLan) {
+        logger.debug("compare race for generating death alteration changes list");
         //one case null or both null in both null no need to add ,in other case need to add with out comparison
         //not both case null
         //case 1 : death register death country is null
@@ -607,7 +583,6 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 fv.setExistingValue(deathRegister.getDeathPerson().getDeathPersonRace().getTaRaceName());
                 fv.setAlterationValue(deathAlteration.getDeathPerson().getDeathPersonRace().getTaRaceName());
             }
-
         } else if (deathRegister.getDeathPerson().getDeathPersonRace() != null) {
             fv.setExistingValue(null);
             if (AppConstants.SINHALA.equals(preferedLan)) {
