@@ -243,7 +243,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                 deathRegister.getDeath().getDeathSerialNo(), idUKey, user);
             //create changed bit set to display *  marks
             if (archivedEntryList.size() > 0) {
-                displayChagesInStarMark(archivedEntryList);
+                displayChangesInStarMark(archivedEntryList);
             }
 
             //display user locations
@@ -263,7 +263,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         }
     }
 
-    private void displayChagesInStarMark(List<DeathRegister> deathRegisters) {
+    private void displayChangesInStarMark(List<DeathRegister> deathRegisters) {
         changedFields = new BitSet();
         for (int i = 0; i < deathRegisters.size(); i++) {
             DeathAlteration da = deathAlterationService.getAlterationByDeathCertificateNumber(deathRegisters.get(i).getIdUKey(), user).get(0);
