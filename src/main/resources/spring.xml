@@ -24,6 +24,14 @@
         <property name="createCleanDB" value="false"/>
     </bean>
 
+    <!--A special bean that creates a test population - DO NOT USE IN PRODUCTION -->
+    <!--<bean id="popInit" class="lk.rgd.prs.PopulationGenerator">
+        <constructor-arg ref="ecivilService"/>
+        <constructor-arg ref="raceDAOImpl"/>
+        <constructor-arg ref="dsDivisionDAOImpl"/>
+        <constructor-arg ref="userManagerService"/>
+    </bean>-->
+
     <bean name="proxyCreator" class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
         <property name="beanNames">
             <list>

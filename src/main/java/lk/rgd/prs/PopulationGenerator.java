@@ -1,8 +1,6 @@
 package lk.rgd.prs;
 
-import lk.transliterate.Transliterate;
 import lk.rgd.AppConstants;
-import lk.rgd.UnitTestManager;
 import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.dao.RaceDAO;
 import lk.rgd.common.api.domain.Race;
@@ -12,21 +10,25 @@ import lk.rgd.prs.api.domain.Address;
 import lk.rgd.prs.api.domain.Marriage;
 import lk.rgd.prs.api.domain.Person;
 import lk.rgd.prs.api.service.PopulationRegistry;
-import org.springframework.context.ApplicationContext;
+import lk.transliterate.Transliterate;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.InputStreamReader;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.*;
 
-
+/**
+ * This is NOT a main class of the system, although its defined under the main source
+ */
 public class PopulationGenerator {
 
-    private static final int SKIP  = 0;
+    private static final int SKIP = 0;
     private static final int LIMIT = 100;
 
-    private final ApplicationContext ctx = UnitTestManager.ctx;
     private final PopulationRegistry popreg;
     private final RaceDAO raceDAO;
     private final DSDivisionDAO dsDivisionDAO;
@@ -44,12 +46,10 @@ public class PopulationGenerator {
         }
     }
 
-    public static void main(String[] args) throws Exception {
-        PopulationGenerator p = new PopulationGenerator();
-        p.init();
-    }
+    public PopulationGenerator(PopulationRegistry popreg, RaceDAO raceDAO, DSDivisionDAO dsDivisionDAO,
+        UserManager userManager) throws Exception {
 
-    public PopulationGenerator() throws Exception {
+        System.out.println("\n\nStarting the Population Generator\n\n");
         for (char c = 'a'; c <= 'z'; c++) {
             names.put(c, new ArrayList());
         }
@@ -69,14 +69,15 @@ public class PopulationGenerator {
         }
         in.close();
 
-        popreg = (PopulationRegistry) ctx.getBean("ecivilService");
-        raceDAO = (RaceDAO) ctx.getBean("raceDAOImpl");
-        dsDivisionDAO = (DSDivisionDAO) ctx.getBean("dsDivisionDAOImpl");
+        this.popreg = popreg;
+        this.raceDAO = raceDAO;
+        this.dsDivisionDAO = dsDivisionDAO;
+        system = userManager.getSystemUser();
+
         SINHALA = raceDAO.getRace(1);
         sltConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SLT", "root", "");
         sltConn.setAutoCommit(false);
         sltConn.setReadOnly(true);
-        system = ((UserManager) ctx.getBean("userManagerService")).getSystemUser();
     }
 
     public void init() throws Exception {
@@ -85,7 +86,7 @@ public class PopulationGenerator {
         ResultSet rs = s.executeQuery("select * from tp");
 
         int count = 0;
-        int skip  = 0;
+        int skip = 0;
 
         while (rs.next()) {
             if (skip++ < SKIP) {
@@ -163,7 +164,7 @@ public class PopulationGenerator {
 
         sbEnglishName.append(lastname.toUpperCase());
         sbOfficialName.append(Transliterate.translateWord(lastname, Transliterate.ENGLISH,
-            race == SINHALA ? Transliterate.SINHALA : Transliterate.TAMIL , 
+            race == SINHALA ? Transliterate.SINHALA : Transliterate.TAMIL,
             gender == 0 ? Transliterate.MALE : Transliterate.FEMALE));
 
         Person person = new Person();
@@ -195,7 +196,7 @@ public class PopulationGenerator {
 
     private void generateSpouseAndChildren(Person person, int spouseGender, int age, Race race, String lastname, Address addr) {
 
-        Person father,mother;
+        Person father, mother;
 
         // decide spouse age
         if (rand.nextBoolean()) {
@@ -235,7 +236,7 @@ public class PopulationGenerator {
 
         // we have 326 DS divisions, pick one randomly
         m.setPlaceOfMarriage(
-            dsDivisionDAO.getNameByPK(1+rand.nextInt(325), race == SINHALA ? AppConstants.SINHALA : AppConstants.TAMIL));
+            dsDivisionDAO.getNameByPK(1 + rand.nextInt(325), race == SINHALA ? AppConstants.SINHALA : AppConstants.TAMIL));
         System.out.println("\tMarriage at : " + m.getPlaceOfMarriage() + " on : " + m.getDateOfMarriage());
         popreg.addMarriage(m, system);
 
@@ -249,9 +250,11 @@ public class PopulationGenerator {
 
         // minimum parent age will be 19
         int parentAge = age;
-        for (int i=0; i<children; i++) {
+        for (int i = 0; i < children; i++) {
             age = parentAge - (15 + rand.nextInt(20));
-            if (age < 0) age = 0;
+            if (age < 0) {
+                age = 0;
+            }
             Person child = generatePerson(spouseGender, age, race, lastname, addr);
             System.out.println("\tChild : " +
                 child.getFullNameInEnglishLanguage() + " | " + child.getFullNameInOfficialLanguage() + " | " +
@@ -266,12 +269,12 @@ public class PopulationGenerator {
 
         Person person = new Person();
         StringBuilder sbOfficialName = new StringBuilder();
-        StringBuilder sbEnglishName  = new StringBuilder();
+        StringBuilder sbEnglishName = new StringBuilder();
         StringBuilder initialsInEnglish = new StringBuilder();
 
         // decide on some random initials
         int initials = 1 + rand.nextInt(5);
-        for (int i=0; i<initials; i++) {
+        for (int i = 0; i < initials; i++) {
             List<String[]> nameList = names.get((char) (97 + rand.nextInt(26)));
             int index = rand.nextInt(nameList.size());
             String[] nameFound = nameList.get(index);
@@ -283,7 +286,7 @@ public class PopulationGenerator {
 
         sbEnglishName.append(lastname.toUpperCase());
         sbOfficialName.append(Transliterate.translateWord(lastname, Transliterate.ENGLISH,
-            race == SINHALA ? Transliterate.SINHALA : Transliterate.TAMIL ,
+            race == SINHALA ? Transliterate.SINHALA : Transliterate.TAMIL,
             gender == 0 ? Transliterate.MALE : Transliterate.FEMALE));
 
         person.setFullNameInEnglishLanguage(sbEnglishName.toString().trim());
@@ -334,7 +337,7 @@ public class PopulationGenerator {
                 }
             } catch (NumberFormatException ignore) {
                 addr.setCity(city);
-                addr.setLine1(line.substring(0, space));                
+                addr.setLine1(line.substring(0, space));
             }
         } else {
             addr.setLine1(line);
