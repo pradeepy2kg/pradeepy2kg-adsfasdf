@@ -1542,55 +1542,56 @@ public class BirthRegistrationServiceImpl implements
                     }
                 }
             }
-
-            if (mother == null && parent.getMotherFullName() != null) {
-                // if we couldn't locate the mother, add an unverified record to the PRS
-                mother = new Person();
-                mother.setFullNameInOfficialLanguage(parent.getMotherFullName());
-                mother.setDateOfBirth(parent.getMotherDOB());
-                mother.setGender(AppConstants.Gender.FEMALE.ordinal());
-                mother.setPreferredLanguage(prefLanguage);
-                mother.setNic(motherNICorPIN);
-                if (motherNICorPIN != null) {
-                    mother.setNic(motherNICorPIN);
-                    mother.setStatus(Person.Status.SEMI_VERIFIED);
-                } else {
-                    mother.setStatus(Person.Status.UNVERIFIED);
-                }
-                mother.setLifeStatus(Person.LifeStatus.ALIVE);
-                mother.setPlaceOfBirth(parent.getMotherPlaceOfBirth());
-
-                // set mother race
-                mother.setRace(parent.getMotherRace());
-
-                // add mother to PRS
-                ecivil.addPerson(mother, user);
-                // set mothers passport info
-                if (!isEmptyString(parent.getMotherPassportNo()) && parent.getMotherCountry() != null) {
-                    ecivil.addCitizenship(
-                        getPersonCitizenship(parent.getMotherCountry(), parent.getMotherPassportNo(), mother), user);
-                }
-                if (mother.getPin() != null) {
-                    parent.setMotherNICorPIN(mother.getPin().toString());
-                }
-
-                if (parent.getMotherAddress() != null) {
-                    final Address address = new Address(parent.getMotherAddress());
-                    mother.specifyAddress(address);
-                    // save new address to PRS
-                    ecivil.addAddress(address, user);
-                    // update mother to reflect new address
-                    ecivil.updatePerson(mother, user);
-                }
-
-                logger.debug("Added an unverified record for the mother into the PRS : {}", mother.getPersonUKey());
-            }
-
-            // mark mother child relationship
-            if (mother != null) {
-                person.setMother(mother);
-            }
         }
+
+        if (mother == null && parent.getMotherFullName() != null) {
+            // if we couldn't locate the mother, add an unverified record to the PRS
+            mother = new Person();
+            mother.setFullNameInOfficialLanguage(parent.getMotherFullName());
+            mother.setDateOfBirth(parent.getMotherDOB());
+            mother.setGender(AppConstants.Gender.FEMALE.ordinal());
+            mother.setPreferredLanguage(prefLanguage);
+            mother.setNic(motherNICorPIN);
+            if (motherNICorPIN != null) {
+                mother.setNic(motherNICorPIN);
+                mother.setStatus(Person.Status.SEMI_VERIFIED);
+            } else {
+                mother.setStatus(Person.Status.UNVERIFIED);
+            }
+            mother.setLifeStatus(Person.LifeStatus.ALIVE);
+            mother.setPlaceOfBirth(parent.getMotherPlaceOfBirth());
+
+            // set mother race
+            mother.setRace(parent.getMotherRace());
+
+            // add mother to PRS
+            ecivil.addPerson(mother, user);
+            // set mothers passport info
+            if (!isEmptyString(parent.getMotherPassportNo()) && parent.getMotherCountry() != null) {
+                ecivil.addCitizenship(
+                    getPersonCitizenship(parent.getMotherCountry(), parent.getMotherPassportNo(), mother), user);
+            }
+            if (mother.getPin() != null) {
+                parent.setMotherNICorPIN(mother.getPin().toString());
+            }
+
+            if (parent.getMotherAddress() != null) {
+                final Address address = new Address(parent.getMotherAddress());
+                mother.specifyAddress(address);
+                // save new address to PRS
+                ecivil.addAddress(address, user);
+                // update mother to reflect new address
+                ecivil.updatePerson(mother, user);
+            }
+
+            logger.debug("Added an unverified record for the mother into the PRS : {}", mother.getPersonUKey());
+        }
+
+        // mark mother child relationship
+        if (mother != null) {
+            person.setMother(mother);
+        }
+
         return mother;
     }
 
