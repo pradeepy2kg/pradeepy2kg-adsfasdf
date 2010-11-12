@@ -8,6 +8,9 @@ a\,a => b\,b
 fooaaa,baraaa,bazaaa
 
 # Some synonym groups specific to this example
+Ln,Lane
+Mw,Mawatha
+Rd,Road
 GB,gib,gigabyte,gigabytes
 MB,mib,megabyte,megabytes
 Television, Televisions, TV, TVs
