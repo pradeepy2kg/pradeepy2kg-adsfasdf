@@ -22,6 +22,9 @@
     }
 </style>
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
+<script type="text/javascript">
+    function initPage(){}
+</script>
 
 <s:form action="" method="post">
 <s:if test="(birthAlterationApprovalList.size() !=0) || (birthAlterationApprovedList.size() !=0)">

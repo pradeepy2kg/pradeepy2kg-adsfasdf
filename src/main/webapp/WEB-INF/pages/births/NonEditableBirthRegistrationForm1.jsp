@@ -1,6 +1,9 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <s:set value="1" name="row"/>
+<script type="text/javascript">
+    function initPage(){}
+</script>
 
 <style type="text/css">
     #birth-certificate-outer table tr td {

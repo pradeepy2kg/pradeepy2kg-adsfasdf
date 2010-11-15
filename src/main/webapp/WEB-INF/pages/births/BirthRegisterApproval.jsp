@@ -9,6 +9,7 @@
 <script type="text/javascript" src="../js/validate.js"></script>
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
 <script>
+    function initPage(){}
 
     $(function() {
         $("#searchStartDatePicker").datepicker({

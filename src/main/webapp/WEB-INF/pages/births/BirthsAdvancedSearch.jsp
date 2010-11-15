@@ -44,6 +44,9 @@
     $("#tabs").tabs();
     $('#queryDOBRange').daterangepicker({arrows:true});
   });
+
+  function initPage(){}
+    
 </script>
 
 
