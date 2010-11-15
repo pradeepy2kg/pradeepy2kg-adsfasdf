@@ -52,8 +52,7 @@ public class PersonCitizenshipTest extends TestCase {
 
         Person p1 = getMinimalPerson(dob.getTime());
         try {
-            eCivil.addExistingPerson(
-                p1, "Permanent Address", "Current Address", addSampleCitizenship(), false, deoColomboColombo);
+            eCivil.addExistingPerson(p1, addSampleCitizenship(), false, deoColomboColombo);
         } catch (Exception e) {
             fail("Person failed to add PRS");
         }
@@ -69,6 +68,8 @@ public class PersonCitizenshipTest extends TestCase {
         person.setFullNameInEnglishLanguage("Person Name");
         person.setPlaceOfBirth("Place of birth");
         person.setRace(raceDAO.getRace(1));
+        person.setPermanentAddress("Permanent Address");
+        person.setCurrentAddress("Current Address");
 
         return person;
     }

@@ -21,6 +21,10 @@
         margin: 5px 0 15px 0;
     }
 </style>
+<script type="text/javascript">
+    function initPage() {
+    }
+</script>
 
 <div id="birth-certificate-outer">
 
@@ -30,8 +34,8 @@
 <div class="form-submit" style="margin:15px 0 0 5px;">
     <s:a href="%{printPage}" onclick="printPage()"><s:label value="%{getText('print.button')}"/></s:a>
 </div>
-<div id="birthRegistration-page" class="form-submit" style="margin-top:15px;float:right;">
-    <s:a href="%{cancel}"><s:label value="%{getText('cancel.button')}"/></s:a>
+<div class="form-submit" style="margin-top:15px;float:right;">
+    <s:a href="%{cancel}"><s:label value="%{getText('previous.label')}"/></s:a>
 </div>
 
 <table style="width:100%; border:none; border-collapse:collapse;">
@@ -278,7 +282,7 @@
 <div class="form-submit" style="margin:15px 0 0 5px;">
     <s:a href="%{printPage}" onclick="printPage()"><s:label value="%{getText('print.button')}"/></s:a>
 </div>
-<div id="birthRegistration-page" class="form-submit" style="margin-top:15px;float:right;">
-    <s:a href="%{cancel}"><s:label value="%{getText('cancel.button')}"/></s:a>
+<div class="form-submit" style="margin-top:15px;float:right;">
+    <s:a href="%{cancel}"><s:label value="%{getText('previous.label')}"/></s:a>
 </div>
 </div>

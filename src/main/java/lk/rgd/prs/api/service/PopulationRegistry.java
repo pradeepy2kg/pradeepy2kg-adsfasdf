@@ -32,27 +32,40 @@ public interface PopulationRegistry {
      * Add existing person to the PRS
      *
      * @param person           the Person to be added
-     * @param permanentAddress the permanent address to be added
-     * @param currentAddress   the current address to be added
      * @param citizenshipList  the person citizenship list to be added
      * @param ignoreDuplicates an explicit switch to disable optional validations, to ignore duplicates
      * @param user             the user performing this action
      * @return the PIN number generated for the Person - for verified records, or -1 for any other
      */
-    public List<Person> addExistingPerson(Person person, String permanentAddress, String currentAddress,
-        List<PersonCitizenship> citizenshipList, boolean ignoreDuplicates, User user);
+    public List<Person> addExistingPerson(Person person, List<PersonCitizenship> citizenshipList,
+        boolean ignoreDuplicates, User user);
 
     /**
-     * Update existing person to the PRS
+     * Load person from PRS for edit with permanent address, current address, citizenship list etc.
      *
-     * @param person           the Person to be updated
-     * @param permanentAddress the permanent address to be updated
-     * @param currentAddress   the current address to be updated
-     * @param citizenshipList  the person citizenship list to be updated
-     * @param user             the user performing this action
+     * @param personUKey the unique database PK
+     * @param user       the user performing this action
+     * @return the matching person with values loaded for edit
      */
-    public void editExistingPerson(Person person, String permanentAddress, String currentAddress,
-        List<PersonCitizenship> citizenshipList, User user);
+    public Person loadPersonToEdit(long personUKey, User user);
+
+    /**
+     * Update existing person to the PRS before approval of ADR or higher authority
+     *
+     * @param person          the Person to be updated
+     * @param citizenshipList the person citizenship list to be updated
+     * @param user            the user performing this action
+     */
+    public void editExistingPersonBeforeApproval(Person person, List<PersonCitizenship> citizenshipList, User user);
+
+    /**
+     * Update existing person to the PRS after approval of ADR or higher. Cannot update all the fields of the person
+     * only limited number of fields can be updated for e.g. current address, permanent address etc.
+     *
+     * @param person the Person to be updated
+     * @param user   the user performing the action
+     */
+    public void editExistingPersonAfterApproval(Person person, User user);
 
     /**
      * Update a Person on the PRS

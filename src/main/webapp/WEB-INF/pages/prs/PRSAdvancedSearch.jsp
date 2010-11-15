@@ -61,6 +61,8 @@
         endDate:'2040-12-31'
     });
   });
+
+  function initPage(){}
 </script>
 
 
