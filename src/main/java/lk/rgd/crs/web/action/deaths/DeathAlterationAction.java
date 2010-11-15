@@ -119,7 +119,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
 
 
     /**
-     * capture death alterations      and edit death alteration
+     * capture death alterations and edit death alteration
      */
     public String captureDeathAlterations() {
         logger.debug("capturing death alteration alteration");
@@ -261,8 +261,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         if (race != null) {
             deathRaceId = race.getRaceId();
         }
-        //todo remove use java scripts setting receiving date to today
-        toDay = new Date();
+         toDay = new Date();
         return "pageLoad";
     }
 
@@ -527,8 +526,9 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
 
             if (!(deathRegister.getDeathPerson().getDeathPersonAge() ==
                 deathAlteration.getDeathPerson().getDeathPersonAge())) {
-                changesList.add(new FieldValue(Integer.toString(deathRegister.getDeathPerson().getDeathPersonAge()),
-                    Integer.toString(deathAlteration.getDeathPerson().getDeathPersonAge()),
+                changesList.add(new FieldValue(
+                    deathRegister.getDeathPerson().getDeathPersonAge() != null ? Integer.toString(deathRegister.getDeathPerson().getDeathPersonAge()) : null,
+                    deathAlteration.getDeathPerson().getDeathPersonAge() != null ? Integer.toString(deathAlteration.getDeathPerson().getDeathPersonAge()) : null,
                     DeathAlteration.AGE, CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(DeathAlteration.AGE), preferedLan)));
             }
 
@@ -693,21 +693,6 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         da.setDeathPerson(deathRegister.getDeathPerson());
         return da;
     }
-
-    private DeathInfo populateDeathInfo(DeathAlterationInfo dai, DeathInfo di) {
-
-        di.setDateOfDeath(dai.getDateOfDeath());
-        di.setCauseOfDeath(dai.getCauseOfDeath());
-        di.setIcdCodeOfCause(dai.getIcdCodeOfCause());
-        di.setPlaceOfBurial(dai.getPlaceOfBurial());
-        di.setPlaceOfDeath(dai.getPlaceOfDeath());
-        di.setPlaceOfDeathInEnglish(dai.getPlaceOfDeathInEnglish());
-        di.setTimeOfDeath(dai.getTimeOfDeath());
-        di.setCauseOfDeathEstablished(dai.isCauseOfDeathEstablished());
-
-        return di;
-    }
-
     /**
      * basic list district/divisions/DS
      */
