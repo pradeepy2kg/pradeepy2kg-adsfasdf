@@ -308,6 +308,11 @@ public class PopulationGenerator {
         System.out.println("\tMarriage at : " + m.getPlaceOfMarriage() + " on : " + m.getDateOfMarriage());
         popreg.addMarriage(m, system);
 
+        person.specifyMarriage(m);
+        popreg.updatePerson(person, system);
+        spouse.specifyMarriage(m);
+        popreg.updatePerson(spouse, system);
+
         // decide on the number of children
         int children = rand.nextInt(10);
         if (children == 5 || children == 6) {
