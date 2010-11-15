@@ -410,12 +410,13 @@
                     <td><label id="yes" class="label">ඔව්<br>ஆம்<br>Yes</label></td>
                     <td>
                         <s:radio name="marriage.parentsMarried" id="parentsMarried" list="#@java.util.HashMap@{'MARRIED':''}"
-                                 value="1"/>
+                                 value="marriage.parentsMarried"/>
+                        
                     </td>
                     <td><label class="label">නැත<br>இல்லை<br>No</label></td>
                     <td>
-                        <s:radio name="marriage.parentsMarried" id="parentsMarried"
-                                 list="#@java.util.HashMap@{'UNMARRIED':''}"/>
+                        <s:radio name="marriage.parentsMarried" id="parentsMarried" list="#@java.util.HashMap@{'UNMARRIED':''}"
+                                value="marriage.parentsMarried"/>
                     </td>
                 </tr>
                 <tr>
@@ -423,11 +424,12 @@
                         இல்லை, பின் விவாகமாணவா்கள்<br>
                         No but since married</label></td>
                     <td>
-                        <s:radio name="marriage.parentsMarried" id="parentsMarried"
-                                 list="#@java.util.HashMap@{'NO_SINCE_MARRIED':''}"/>
+                        <s:radio name="marriage.parentsMarried" id="parentsMarried" list="#@java.util.HashMap@{'NO_SINCE_MARRIED':''}"
+                                 value="marriage.parentsMarried"/>
                     </td>
                     <td><label>නොදනී<br>தெரியாது<br>Unknown</label></td>
-                    <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'UNKNOWN':''}"/></td>
+                    <td><s:radio name="marriage.parentsMarried" id="parentsMarried" list="#@java.util.HashMap@{'UNKNOWN':''}"
+                                 value="marriage.parentsMarried"/></td>
                 </tr>
             </table>
         </td>
