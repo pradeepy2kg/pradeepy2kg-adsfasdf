@@ -1083,18 +1083,18 @@
         </action>
 
         <action name="eprApproveDeathAlterations" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"
-                method="deathAlterationApproval">
+                method="deathAlterationApprovalList">
             <result type="tiles" name="success">epr.deathAlterationApprovalHome</result>
             <result type="tiles" name="error">epr.deathAlterationApprovalHome</result>
         </action>
         <action name="eprApproveDeathAlterationsDirect" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"
-                method="directApprove">
+                method="displayChangesForApproval">
             <result type="tiles" name="success">epr.deathAlterationPrintLetter</result>
             <result type="tiles" name="error">epr.deathAlterationApprovalHome</result>
         </action>
 
         <action name="eprDeathAlterationSetBits" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"
-                method="setBitset">
+                method="approveAlteration">
             <result type="redirectAction" name="success">
                 <param name="actionName">eprApproveDeathAlterations</param>
             </result>
@@ -1126,7 +1126,5 @@
             <result type="tiles" name="pageLoad">epr.deathAlterationCapture</result>
             <result type="tiles" name="error">epr.deathAlterationSearchHome</result>
         </action>
-
-
     </package>
 </struts>
