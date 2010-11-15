@@ -109,7 +109,7 @@
                     <li><a href="#fragment-1"><span> <s:label 
                                     value="%{getText('label.tab.search.by.certificate.number')}"/></span></a></li>
                     <li><a href="#fragment-2"><span><s:label
-                                    value="%{getText('label.tab.search.by.identification.number')}"/></span></a></li>
+                                    value="%{getText('label.search.by.death.person.pin')}"/></span></a></li>
                     <li><a href="#fragment-3"><span><s:label
                                     value="%{getText('label.tab.search.by.serial.number')}"/></span></a></li>
                 </ul>
@@ -126,7 +126,7 @@
                     <s:label value="%{getText('label.certificate.number')}"/>
                 </td>
                 <td align="left">
-                    <s:textfield name="certificateNumber" id="certificateNumber" value=""/>
+                    <s:textfield name="idUKey" id="idUKey" value=""/>
                 </td>
             </tr>
             </tbody>
@@ -134,7 +134,7 @@
 
     </div>
         <div id="fragment-2">
-    <%--section serch by identification number--%>
+    <%--section search by identification number--%>
 
         <table cellpadding="2px" cellspacing="0">
             <caption></caption>
@@ -143,7 +143,7 @@
             <tbody>
             <tr>
                 <td align="left">
-                    <s:label value="%{getText('label.identification.number')}"/>
+                    <s:label value="%{getText('label.death.person.pin')}"/>
                 </td>
                 <td align="left">
                     <s:textfield name="pin" id="identificationNumber" maxLength="10" value=""/>
@@ -154,7 +154,7 @@
 
     </div>
         <div id="fragment-3">
-    <%--secton search by serial number and bd/death division--%>
+    <%--section search by serial number and bd/death division--%>
 
         <table>
             <caption></caption>
