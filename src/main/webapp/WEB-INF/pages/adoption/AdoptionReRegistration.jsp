@@ -22,7 +22,9 @@
     }
 </style>
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
-
+<script type="text/javascript">
+    function initPage(){}
+</script>
 
 <div class="form-submit">
     <s:if test="#request.approved">
