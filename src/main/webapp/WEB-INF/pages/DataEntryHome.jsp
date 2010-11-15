@@ -87,6 +87,8 @@
 
         });
 
+        function initPage(){}
+
     </script>
     <div class="jqplot" id="chart1"></div>
 

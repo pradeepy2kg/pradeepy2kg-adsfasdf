@@ -161,6 +161,8 @@
             document.getElementById("web-browser").style.display = 'none';
             document.forms[0].userName.focus();
         }
+
+        function initPage(){}
     </script>
 </head>
 <body onload="setFocus()">
