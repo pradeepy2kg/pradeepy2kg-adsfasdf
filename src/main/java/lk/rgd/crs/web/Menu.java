@@ -114,6 +114,8 @@ public class Menu {
         prsLink.put("eprEditPerson.do", new Link(null, "/ecivil/prs/", "eprEditPerson.do", Permission.PRS_EDIT_PERSON));
         prsLink.put("eprPersonDetails.do", new Link(null, "/ecivil/prs/", "eprPersonDetails.do", Permission.PRS_VIEW_PERSON));
         prsLink.put("eprPRSCertificate.do", new Link(null, "/ecivil/prs/", "eprPRSCertificate.do", Permission.PRS_ADD_PERSON));
+        // TODO remove shan
+        prsLink.put("eprPRSCorrection.do", new Link(null, "/ecivil/prs/", "eprPRSCorrection.do", Permission.PRS_ADD_PERSON));
 
         // Birth Registration for DEO
         deoBirthLink.put("eprBirthRegistrationInit.do", new Link("birth_registration.label", "/ecivil/births/", "eprBirthRegistrationInit.do", Permission.EDIT_BDF));

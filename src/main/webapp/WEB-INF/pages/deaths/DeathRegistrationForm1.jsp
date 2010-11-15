@@ -430,7 +430,12 @@ $(function() {
         soapBody.appendChild(new SOAPObject('InputName')).val(id);
         soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
         soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
-        soapBody.appendChild(new SOAPObject('Gender')).val('U');
+        //soapBody.appendChild(new SOAPObject('Gender')).val('U');
+
+        //added by shan [ NOT Tested ] -> start
+        var genderVal = $("select#deathPersonGender").attr("value");
+        soapBody.appendChild(new SOAPObject('Gender')).value(genderVal);
+        //-> end
 
         //Create a new SOAP Request
         var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
@@ -459,6 +464,11 @@ $(function() {
         soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
         soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
         soapBody.appendChild(new SOAPObject('Gender')).val('U');
+
+        //added by shan [ NOT Tested ] -> start
+        var genderVal = $("select#deathPersonGender").attr("value");
+        soapBody.appendChild(new SOAPObject('Gender')).value(genderVal);
+        //-> end
 
         //Create a new SOAP Request
         var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent

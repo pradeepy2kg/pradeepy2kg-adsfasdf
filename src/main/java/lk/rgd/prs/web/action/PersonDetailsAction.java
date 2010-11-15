@@ -209,4 +209,9 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
     public CountryDAO getCountryDAO() {
         return countryDAO;
     }
+
+    // TODO remove shan
+    public String pageTest(){
+        return SUCCESS;
+    }
 }

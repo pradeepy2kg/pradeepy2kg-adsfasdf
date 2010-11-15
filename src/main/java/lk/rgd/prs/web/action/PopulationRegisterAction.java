@@ -75,7 +75,7 @@ public class PopulationRegisterAction extends ActionSupport implements SessionAw
         } else {
             logger.debug("Editing existing person in PRS with personUKey : {}", personUKey);
             service.editExistingPersonBeforeApproval(person, citizenshipList, user);
-            personList = Collections.emptyList();      
+            personList = Collections.emptyList();
         }
 
         if (personList.isEmpty()) {
