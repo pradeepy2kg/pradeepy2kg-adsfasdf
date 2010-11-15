@@ -76,7 +76,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     private int deathRaceId;
     private int locationUKey;
 
-    private long certificateNumber;
+    private long idUKey;
     private long serialNumber;
     private long alterationSerialNo;
     private long deathId;
@@ -122,71 +122,70 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
      * capture death alterations      and edit death alteration
      */
     public String captureDeathAlterations() {
-        if (!editMode) {
-            logger.debug("capturing death alteration alteration");
-            try {
-                DeathRegister dr = deathRegistrationService.getById(deathId);
-
-                deathAlteration.setDeathRegisterIDUkey(deathId);
-                deathAlteration.setStatus(DeathAlteration.State.DATA_ENTRY);
-                deathAlteration.setDeathRecordDivision(dr.getDeath().getDeathDivision());
-                deathAlteration.setDeathPersonPin(dr.getDeathPerson().getDeathPersonPINorNIC());
-                Country deathCountry;
-                if (deathPersonCountry > 0) {
-                    deathCountry = countryDAO.getCountry(deathPersonCountry);
-                    deathAlteration.getDeathPerson().setDeathPersonCountry(deathCountry);
-                }
-
-                Race deathRace;
-                if (deathPersonRace > 0) {
-                    deathRace = raceDAO.getRace(deathPersonRace);
-                    deathAlteration.getDeathPerson().setDeathPersonRace(deathRace);
-                }
-                if (!editDeathInfo) {
-                    deathAlteration.setDeathInfo(null);
-                }
-                if (!editDeathPerson) {
-                    deathAlteration.setDeathPerson(null);
-                }
-                deathAlterationService.addDeathAlteration(deathAlteration, user);
-                populatePrimaryLists(districtUKey, dsDivisionId, language, user);
-                addActionMessage(getText("alt.massage.success"));
-                logger.debug("capturing alteration success ");
-                return SUCCESS;
-
-            } catch (CRSRuntimeException e) {
-                //todo both cases(both object null and declerant info is null gives same error massage if need two add here)
-                logger.error("CRS exception while adding death alteration ");
-                addActionMessage(getText("alt.massage.cannot.add.alteration.validation.failed"));
-                populatePrimaryLists(districtUKey, dsDivisionId, language, user);
-                return ERROR;
+        logger.debug("capturing death alteration alteration");
+        try {
+            DeathRegister dr = deathRegistrationService.getById(deathId);
+            deathAlteration.setDeathRegisterIDUkey(deathId);
+            deathAlteration.setStatus(DeathAlteration.State.DATA_ENTRY);
+            deathAlteration.setDeathRecordDivision(dr.getDeath().getDeathDivision());
+            deathAlteration.setDeathPersonPin(dr.getDeathPerson().getDeathPersonPINorNIC());
+            Country deathCountry;
+            if (deathPersonCountry > 0) {
+                deathCountry = countryDAO.getCountry(deathPersonCountry);
+                deathAlteration.getDeathPerson().setDeathPersonCountry(deathCountry);
             }
-/*            catch (Exception e) {
-                logger.error("error accorded while adding death alteration ");
-                addActionMessage(getText("unknown.error"));
-                populatePrimaryLists(districtUKey, dsDivisionId, language, user);
-                return ERROR;
-            }*/
-        } else {
-            logger.debug("attempt to edit death alteration : idUKey : {}", deathAlteration.getIdUKey());
-            try {
-                DeathAlteration existing = deathAlterationService.getByIDUKey(deathAlterationId, user);
-                //todo check check box
+            Race deathRace;
+            if (deathPersonRace > 0) {
+                deathRace = raceDAO.getRace(deathPersonRace);
+                deathAlteration.getDeathPerson().setDeathPersonRace(deathRace);
+            }
+            if (!editDeathInfo) {
+                deathAlteration.setDeathInfo(null);
+            }
+            if (!editDeathPerson) {
+                deathAlteration.setDeathPerson(null);
+            }
+            deathAlterationService.addDeathAlteration(deathAlteration, user);
+            populatePrimaryLists(districtUKey, dsDivisionId, language, user);
+            addActionMessage(getText("alt.massage.success"));
+            logger.debug("capturing alteration success ");
+            return SUCCESS;
+
+        } catch (CRSRuntimeException e) {
+            //todo both cases(both object null and declerant info is null gives same error massage if need two add here)
+            logger.error("CRS exception while adding death alteration ");
+            addActionMessage(getText("alt.massage.cannot.add.alteration.validation.failed"));
+            populatePrimaryLists(districtUKey, dsDivisionId, language, user);
+            return ERROR;
+        }
+    }
+
+    public String deathAlterationEdit() {
+        logger.debug("attempt to edit death alteration : idUKey : {}", deathAlteration.getIdUKey());
+        try {
+            DeathAlteration existing = deathAlterationService.getByIDUKey(deathAlterationId, user);
+            deathRegister = deathRegistrationService.getById(existing.getDeathRegisterIDUkey(), user);
+            if (editDeathInfo) {
                 existing.setDeathInfo(deathAlteration.getDeathInfo());
-                existing.setDeathPerson(deathAlteration.getDeathPerson());
-                existing.setDeclarant(deathAlteration.getDeclarant());
-                deathAlterationService.updateDeathAlteration(existing, user);
-
-                addActionMessage(getText("alt.edit.massage.success"));
-                logger.debug("editing death alteration : idUKey : {} success", deathAlterationId);
-                populatePrimaryLists(districtUKey, dsDivisionId, language, user);
-                return SUCCESS;
-            } catch (CRSRuntimeException e) {
-                logger.debug("cannot edit death alteration");
-                addActionMessage(getText("alt.massage.cannot.edit.alteration.validation.failed"));
-                populatePrimaryLists(districtUKey, dsDivisionId, language, user);
-                return ERROR;
             }
+            if (editDeathPerson) {
+                existing.setDeathPerson(deathAlteration.getDeathPerson());
+            }
+            existing.setDeclarant(deathAlteration.getDeclarant());
+            deathAlterationService.updateDeathAlteration(existing, user);
+
+            addActionMessage(getText("alt.edit.massage.success"));
+            logger.debug("editing death alteration : idUKey : {} success", deathAlterationId);
+            populatePrimaryLists(deathRegister.getDeath().getDeathDistrict().getDistrictUKey(),
+                deathRegister.getDeath().getDeathDivision().getBdDivisionUKey(), language, user);
+            userLocations = user.getActiveLocations(language);
+            return SUCCESS;
+        } catch (CRSRuntimeException e) {
+            logger.debug("cannot edit death alteration");
+            addActionMessage(getText("alt.massage.cannot.edit.alteration.validation.failed"));
+            populatePrimaryLists(districtUKey, dsDivisionId, language, user);
+            userLocations = user.getActiveLocations(language);
+            return ERROR;
         }
     }
 
@@ -197,13 +196,13 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         logger.debug("attempting to load death alteration capture page");
         deathAlteration = new DeathAlteration();
         //search by certificate number
-        if (certificateNumber != 0) {
-            logger.debug("attempt to load death register by certificate number : {}", certificateNumber);
-            deathRegister = deathRegistrationService.getById(certificateNumber);
+        if (idUKey != 0) {
+            logger.debug("attempt to load death register by certificate number : {}", idUKey);
+            deathRegister = deathRegistrationService.getById(idUKey);
 
         }
         //search by pin
-        if (pin != null && Long.parseLong(pin) != 0) {
+        else if (pin != null && Long.parseLong(pin) != 0) {
             //only get first recode others ignored  because there can be NIC duplications
             logger.debug("attempt to load death register by pin number : {}", pin);
             List<DeathRegister> deathRegisterList = deathRegistrationService.getByPinOrNic(Long.parseLong(pin), user);
@@ -211,59 +210,62 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 deathRegister = deathRegisterList.get(0);
         }
         //search by  serial and death division
-        if (serialNumber != 0 && divisionUKey != 0) {
+        else if (serialNumber != 0 && divisionUKey != 0) {
             logger.debug("attempt to load death register by serial number : {} and death division : {}",
                 serialNumber, divisionUKey);
             BDDivision deathDivision = bdDivisionDAO.getBDDivisionByPK(divisionUKey);
             deathRegister = deathRegistrationService.getByBDDivisionAndDeathSerialNo(deathDivision, serialNumber, user);
         }
         if (deathRegister == null) {
-            logger.debug("can not find a death registrations for alterations :serial {} or :certificateNumber : {}",
-                serialNumber, certificateNumber);
+            logger.debug("can not find a death registrations for alterations :serial {} or :idUKey : {}",
+                serialNumber, idUKey);
             addActionError(getText("error.cannot.find.death.registration"));
             populatePrimaryLists(districtUKey, dsDivisionId, language, user);
             return ERROR;
-        }
-        //check is there a ongoing alteration for this certificate
-        List<DeathAlteration> existingAlterations =
-            deathAlterationService.getAlterationByDeathCertificateNumber(deathRegister.getIdUKey(), user);
-        Iterator<DeathAlteration> itr = existingAlterations.iterator();
-        while (itr.hasNext()) {
-            DeathAlteration da = itr.next();
-            if (!da.getStatus().equals(DeathAlteration.State.FULLY_APPROVED)) {
-                logger.error("there is a ongoing alteration so cannot add a new");
-                addActionError("error.existing.alterations.data.entry");
-                populatePrimaryLists(districtUKey, dsDivisionId, language, user);
-                return ERROR;
+        } else {
+            //check is there a ongoing alteration for this certificate
+            //check death register is not null and in data approved state
+            List<DeathAlteration> existingAlterations =
+                deathAlterationService.getAlterationByDeathCertificateNumber(deathRegister.getIdUKey(), user);
+            Iterator<DeathAlteration> itr = existingAlterations.iterator();
+            while (itr.hasNext()) {
+                DeathAlteration da = itr.next();
+                if (!da.getStatus().equals(DeathAlteration.State.FULLY_APPROVED)) {
+                    logger.error("there is a ongoing alteration so cannot add a new");
+                    addActionError("error.existing.alterations.data.entry");
+                    populatePrimaryLists(districtUKey, dsDivisionId, language, user);
+                    return ERROR;
+                }
             }
-        }
-        //check death register is not null and in data approved state
-        if (deathRegister != null) {
             if (!deathRegister.getStatus().equals(DeathRegister.State.ARCHIVED_CERT_GENERATED)) {
                 logger.error("cannot capture alterations certificate is not in correct state for alteration");
                 addActionError(getText("error.death.certificate.must.print.before"));
                 populatePrimaryLists(districtUKey, dsDivisionId, language, user);
                 return ERROR;
             }
-            populateOtherLists();
-            //setting up death district    ds and death division
-            district = districtDAO.getNameByPK(deathRegister.getDeath().getDeathDistrict().getDistrictUKey(), language);
-            DSDivision division = deathRegister.getDeath().getDeathDivision().getDsDivision();
-            dsDivision = dsDivisionDAO.getNameByPK(division.getDsDivisionUKey(), language);
-            deathDivision = bdDivisionDAO.getNameByPK(deathRegister.getDeath().getDeathDivision().getBdDivisionUKey(), language);
-            Country country = deathRegister.getDeathPerson().getDeathPersonCountry();
-            if (country != null) {
-                deathCountryId = country.getCountryId();
-            }
-            Race race = deathRegister.getDeathPerson().getDeathPersonRace();
-            if (race != null) {
-                deathRaceId = race.getRaceId();
-            }
-            //todo remove use java scripts setting receiving date to today
-            toDay = new Date();
         }
+        //todo remove this population
+        populateOtherLists();
+        deathAlteration = populateAlterationObject(deathRegister);
+        //setting up death district    ds and death division
+        district = districtDAO.getNameByPK(deathRegister.getDeath().getDeathDistrict().getDistrictUKey(), language);
+        DSDivision division = deathRegister.getDeath().getDeathDivision().getDsDivision();
+        dsDivision = dsDivisionDAO.getNameByPK(division.getDsDivisionUKey(), language);
+        deathDivision = bdDivisionDAO.getNameByPK(deathRegister.getDeath().getDeathDivision().getBdDivisionUKey(), language);
+        Country country = deathRegister.getDeathPerson().getDeathPersonCountry();
+        serialNumber = deathRegister.getDeath().getDeathSerialNo();
+        if (country != null) {
+            deathCountryId = country.getCountryId();
+        }
+        Race race = deathRegister.getDeathPerson().getDeathPersonRace();
+        if (race != null) {
+            deathRaceId = race.getRaceId();
+        }
+        //todo remove use java scripts setting receiving date to today
+        toDay = new Date();
         return "pageLoad";
     }
+
 
     public String editDeathAlterationInit() {
         logger.debug("attempt to edit a death alteration : idUKey : {} ", deathAlterationId);
@@ -272,10 +274,19 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             if (deathAlteration.getStatus().equals(DeathAlteration.State.DATA_ENTRY)) {
                 //populate death person info at alteration
                 deathRegister = deathRegistrationService.getById(deathAlteration.getDeathRegisterIDUkey(), user);
-                //this is no use bt cannot set for null object so populate it as well
-                deathRegister.setDeathPerson(deathAlteration.getDeathPerson());
-                //populate death info
-                deathRegister.setDeath(populateDeathInfo(deathAlteration.getDeathInfo(), deathRegister.getDeath()));
+                district = districtDAO.getNameByPK(deathRegister.getDeath().getDeathDistrict().getDistrictUKey(), language);
+                DSDivision division = deathRegister.getDeath().getDeathDivision().getDsDivision();
+                dsDivision = dsDivisionDAO.getNameByPK(division.getDsDivisionUKey(), language);
+                deathDivision = bdDivisionDAO.getNameByPK(deathRegister.getDeath().getDeathDivision().getBdDivisionUKey(), language);
+                Country country = deathAlteration.getDeathPerson().getDeathPersonCountry();
+                serialNumber = deathRegister.getDeath().getDeathSerialNo();
+                if (country != null) {
+                    deathCountryId = country.getCountryId();
+                }
+                Race race = deathAlteration.getDeathPerson().getDeathPersonRace();
+                if (race != null) {
+                    deathRaceId = race.getRaceId();
+                }
                 editMode = true;
                 toDay = deathAlteration.getDateReceived();
                 alterationSerialNo = deathAlteration.getIdUKey();
@@ -661,6 +672,27 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         return fv;
     }
 
+    private DeathAlteration populateAlterationObject(DeathRegister deathRegister) {
+        DeathAlteration da = new DeathAlteration();
+        //populate death alteration info object
+        DeathAlterationInfo daf = new DeathAlterationInfo();
+        daf.setCauseOfDeath(deathRegister.getDeath().getCauseOfDeath());
+        daf.setCauseOfDeathEstablished(deathRegister.getDeath().isCauseOfDeathEstablished());
+        daf.setDateOfDeath(deathRegister.getDeath().getDateOfDeath());
+        daf.setIcdCodeOfCause(deathRegister.getDeath().getIcdCodeOfCause());
+        daf.setPlaceOfBurial(deathRegister.getDeath().getPlaceOfBurial());
+        daf.setPlaceOfDeath(deathRegister.getDeath().getPlaceOfDeath());
+        daf.setPlaceOfDeathInEnglish(deathRegister.getDeath().getPlaceOfDeathInEnglish());
+        daf.setTimeOfDeath(deathRegister.getDeath().getTimeOfDeath());
+        //populate other fields
+        da.setDeathRegisterIDUkey(deathRegister.getIdUKey());
+        da.setDeathPersonPin(deathRegister.getDeathPerson().getDeathPersonPINorNIC());
+        da.setDeathRecordDivision(deathRegister.getDeath().getDeathDivision());
+        //merging objects
+        da.setDeathInfo(daf);
+        da.setDeathPerson(deathRegister.getDeathPerson());
+        return da;
+    }
 
     private DeathInfo populateDeathInfo(DeathAlterationInfo dai, DeathInfo di) {
 
@@ -809,12 +841,12 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         this.language = language;
     }
 
-    public long getCertificateNumber() {
-        return certificateNumber;
+    public long getIdUKey() {
+        return idUKey;
     }
 
-    public void setCertificateNumber(long certificateNumber) {
-        this.certificateNumber = certificateNumber;
+    public void setIdUKey(long idUKey) {
+        this.idUKey = idUKey;
     }
 
     public long getSerialNumber() {

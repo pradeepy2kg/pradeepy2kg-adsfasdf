@@ -57,13 +57,13 @@
         if (!isFieldEmpty(domObject)) {
             validatePINorNIC(domObject, 'error0', 'error8');
         }
-  //todo validate (declarent type is the only nullble false value in the object) 
+        //todo validate (declarent type is the only nullble false value in the object)
         if (errormsg != "") {
             alert(errormsg);
             returnval = false;
         }
         errormsg = "";
-        
+
         return returnval;
     }
 </script>
@@ -407,7 +407,14 @@ function initPage() {
 }
 </script>
 <div id="death-alteration-outer">
-<s:form method="post" action="eprCaptureDeathAlteration.do" onsubmit="javascript:return validate()">
+<s:if test="%{editMode==true}">
+    <s:url action="eprEditDeathAlteration" id="urlEditOrAdd" namespace="../alteration"/>
+    <%--TODO change other pages accourding to this S URL format --%>
+</s:if>
+<s:else>
+    <s:url action="eprCaptureDeathAlteration" id="urlEditOrAdd" namespace="../alteration"/>
+</s:else>
+<s:form method="post" action="%{urlEditOrAdd}" onsubmit="javascript:return validate()">
 <table class="death-alteration-table-style01" style="width:1030px;" cellpadding="2px">
     <tr>
         <td width="30%"></td>
@@ -506,14 +513,14 @@ function initPage() {
             Person Identification Number (PIN) stated in the Certificate
         </td>
         <td>
-            <s:property value="deathRegister.deathPerson.deathPersonPINorNIC"/>
+            <s:property value="%{deathAlteration.deathPersonPin}"/>
         </td>
         <td>(2)සහතික පත්‍රයේ අංකය <br>
             சான்றிதழ் இல <br>
             Certificate Number
         </td>
         <td>
-            <s:property value="deathRegister.idUKey"/>
+            <s:property value="deathAlteration.deathRegisterIDUkey"/>
         </td>
     </tr>
     <tr>
@@ -543,7 +550,7 @@ function initPage() {
             Registration Number
         </td>
         <td colspan="2">
-            <s:property value="deathRegister.death.deathSerialNo"/>
+            <s:property value="serialNumber"/>
         </td>
     </tr>
     </tbody>
@@ -668,7 +675,7 @@ function initPage() {
             </td>
             <td colspan="2" align="center">
                 <s:textfield name="deathAlteration.deathInfo.dateOfDeath" id="deathDatePicker"
-                             value="%{deathRegister.death.dateOfDeath}"/>
+                             value="%{deathAlteration.deathInfo.dateOfDeath}"/>
             </td>
             <td>
                 වෙලාව <br>
@@ -677,7 +684,7 @@ function initPage() {
             </td>
             <td align="center">
                 <s:textfield name="deathAlteration.deathInfo.timeOfDeath" id="deathTimePicker"
-                             value="%{deathRegister.death.timeOfDeath}"/>
+                             value="%{deathAlteration.deathInfo.timeOfDeath}"/>
             </td>
         </tr>
         <tr>
@@ -693,7 +700,7 @@ function initPage() {
             </td>
             <td colspan="3">
                 <s:textfield name="deathAlteration.deathInfo.placeOfDeath" cssStyle="width:99%;" id="placeOfDeath"
-                             value="%{deathRegister.death.placeOfDeath}"/>
+                             value="%{deathAlteration.deathInfo.placeOfDeath}"/>
             </td>
         </tr>
         <tr>
@@ -704,7 +711,7 @@ function initPage() {
             </td>
             <td colspan="3">
                 <s:textfield name="deathAlteration.deathInfo.placeOfDeathInEnglish" id="placeOfDeathInEnglish"
-                             cssStyle="width:99%;" value="%{deathRegister.death.placeOfDeathInEnglish}"/>
+                             cssStyle="width:99%;" value="%{deathAlteration.deathInfo.placeOfDeathInEnglish}"/>
                 <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px 0;"
                      id="place">
             </td>
@@ -720,13 +727,13 @@ function initPage() {
             <td align="center">
                 <s:radio name="deathAlteration.deathInfo.causeOfDeathEstablished"
                          list="#@java.util.HashMap@{'false':''}"
-                         id="cause_of_death_yes" value="%{deathRegister.death.causeOfDeathEstablished}"/>
+                         id="cause_of_death_yes" value="%{deathAlteration.deathInfo.causeOfDeathEstablished}"/>
             </td>
             <td>ඔව් / ஆம் /Yes</td>
             <td align="center">
                 <s:radio name="deathAlteration.deathInfo.causeOfDeathEstablished"
                          list="#@java.util.HashMap@{'true':''}"
-                         id="cause_of_death_no" value="%{deathRegister.death.causeOfDeathEstablished}"/>
+                         id="cause_of_death_no" value="%{deathAlteration.deathInfo.causeOfDeathEstablished}"/>
             </td>
         </tr>
         <tr>
@@ -735,7 +742,7 @@ function initPage() {
                 Cause of death
             </td>
             <td colspan="3">
-                <s:textarea name="deathAlteration.deathInfo.causeOfDeath" value="%{deathRegister.death.causeOfDeath}"
+                <s:textarea name="deathAlteration.deathInfo.causeOfDeath" value="%{deathAlteration.deathInfo.causeOfDeath}"
                             cssStyle="width:420px;" id="cause_of_death"/>
             </td>
             <td>
@@ -745,7 +752,7 @@ function initPage() {
             </td>
             <td>
                 <s:textfield name="deathAlteration.deathInfo.icdCodeOfCause"
-                             value="%{deathRegister.death.icdCodeOfCause}"
+                             value="%{deathAlteration.deathInfo.icdCodeOfCause}"
                              cssStyle="width:225px;" id="ICD_code"/>
             </td>
         </tr>
@@ -755,7 +762,7 @@ function initPage() {
                 Place of burial or cremation
             </td>
             <td colspan="5">
-                <s:textarea name="deathAlteration.deathInfo.placeOfBurial" value="%{deathRegister.death.placeOfBurial}"
+                <s:textarea name="deathAlteration.deathInfo.placeOfBurial" value="%{deathAlteration.deathInfo.placeOfBurial}"
                             id="placeOfBurial" cssStyle="width:99%;"/>
             </td>
         </tr>
@@ -813,7 +820,7 @@ function initPage() {
             </td>
             <td colspan="3" rowspan="2">
                 <s:textfield name="deathAlteration.deathPerson.deathPersonPINorNIC" id="deathPerson_PINorNIC"
-                             cssStyle="float:left;" value="%{deathRegister.deathPerson.deathPersonPINorNIC}"/>
+                             cssStyle="float:left;" value="%{deathAlteration.deathPerson.deathPersonPINorNIC}"/>
                 <img src="<s:url value="/images/search-father.png" />"
                      style="vertical-align:middle; margin-left:20px;" id="death_person_lookup">
             </td>
@@ -843,7 +850,7 @@ function initPage() {
             </td>
             <td>
                 <s:textfield name="deathAlteration.deathPerson.deathPersonPassportNo" cssStyle="width:180px;"
-                             id="passportNumber" value="%{deathRegister.deathPerson.deathPersonPassportNo}"/>
+                             id="passportNumber" value="%{deathAlteration.deathPerson.deathPersonPassportNo}"/>
             </td>
         </tr>
         <tr>
@@ -853,7 +860,7 @@ function initPage() {
                 Age or probable Age
             </td>
             <td><s:textfield name="deathAlteration.deathPerson.deathPersonAge" cssStyle="width:180px;"
-                             id="deathAge" value="%{deathRegister.deathPerson.deathPersonAge}"/></td>
+                             id="deathAge" value="%{deathAlteration.deathPerson.deathPersonAge}"/></td>
             <td>
                 (20)ස්ත්‍රී පුරුෂ භාවය <br>
                 பால் <br>
@@ -886,7 +893,7 @@ function initPage() {
             </td>
             <td colspan="6">
                 <s:textarea name="deathAlteration.deathPerson.deathPersonNameOfficialLang" cssStyle="width:99%;"
-                            id="nameOfficialLang" value="%{deathRegister.deathPerson.deathPersonNameOfficialLang}"/>
+                            id="nameOfficialLang" value="%{deathAlteration.deathPerson.deathPersonNameOfficialLang}"/>
             </td>
         </tr>
         <tr>
@@ -897,7 +904,7 @@ function initPage() {
             </td>
             <td colspan="6">
                 <s:textarea name="deathAlteration.deathPerson.deathPersonNameInEnglish" cssStyle="width:99%;"
-                            id="nameEnglish" value="%{deathRegister.deathPerson.deathPersonNameInEnglish}"/>
+                            id="nameEnglish" value="%{deathAlteration.deathPerson.deathPersonNameInEnglish}"/>
             </td>
         </tr>
         <tr>
@@ -908,7 +915,7 @@ function initPage() {
             </td>
             <td colspan="6">
                 <s:textarea name="deathAlteration.deathPerson.deathPersonPermanentAddress" cssStyle="width:99%;"
-                            id="address" value="%{deathRegister.deathPerson.deathPersonPermanentAddress}"/>
+                            id="address" value="%{deathAlteration.deathPerson.deathPersonPermanentAddress}"/>
             </td>
         </tr>
         <tr>
@@ -919,7 +926,7 @@ function initPage() {
             </td>
             <td colspan="6">
                 <s:textfield name="deathAlteration.deathPerson.deathPersonFatherPINorNIC" cssStyle="width:180px;"
-                             id="fatherPinNic" value="%{deathRegister.deathPerson.deathPersonFatherPINorNIC}"/>
+                             id="fatherPinNic" value="%{deathAlteration.deathPerson.deathPersonFatherPINorNIC}"/>
             </td>
         </tr>
         <tr>
@@ -930,7 +937,7 @@ function initPage() {
             </td>
             <td colspan="6">
                 <s:textarea name="deathAlteration.deathPerson.deathPersonFatherFullName" cssStyle="width:99%;"
-                            id="fatherName" value="%{deathRegister.deathPerson.deathPersonFatherFullName}"/>
+                            id="fatherName" value="%{deathAlteration.deathPerson.deathPersonFatherFullName}"/>
             </td>
         </tr>
         <tr>
@@ -941,7 +948,7 @@ function initPage() {
             </td>
             <td colspan="6">
                 <s:textfield name="deathAlteration.deathPerson.deathPersonMotherPINorNIC" cssStyle="width:180px;"
-                             id="motherNIC" value="%{deathRegister.deathPerson.deathPersonMotherPINorNIC}"/>
+                             id="motherNIC" value="%{deathAlteration.deathPerson.deathPersonMotherPINorNIC}"/>
             </td>
 
         </tr>
@@ -953,7 +960,7 @@ function initPage() {
             </td>
             <td colspan="6">
                 <s:textarea name="deathAlteration.deathPerson.deathPersonMotherFullName" cssStyle="width:99%;"
-                            id="motherName" value="%{deathRegister.deathPerson.deathPersonMotherFullName}"/>
+                            id="motherName" value="%{deathAlteration.deathPerson.deathPersonMotherFullName}"/>
             </td>
         </tr>
         </tbody>
@@ -1163,13 +1170,11 @@ function initPage() {
 <div class="form-submit">
     <s:submit value="%{getText('save.label')}"/>
 </div>
-<s:hidden name="pageNumber" value="1"/>
-<s:hidden name="deathId" value="%{deathRegister.idUKey}"/>
+<s:hidden name="deathId" value="%{deathAlteration.deathRegisterIDUkey}"/>
 <s:hidden name="editMode" value="%{editMode}"/>
 <s:hidden name="deathAlterationId" value="%{deathAlteration.idUKey}"/>
 <s:hidden id="deathPerson" name="editDeathPerson" value=""/>
 <s:hidden id="death" name="editDeathInfo" value=""/>
-
 </s:form>
 </div>
 <s:hidden id="error0" value="%{getText('er.invalid.inputType')}"/>
@@ -1183,5 +1188,4 @@ function initPage() {
 <s:hidden id="error8" value="%{getText('er.label.declarant_pinOrNic')}"/>
 <s:hidden id="error9" value="%{getText('er.label.cannot.empty')}"/>
 <s:hidden id="error10" value="%{getText('er.label.declarent.type')}"/>
-
 

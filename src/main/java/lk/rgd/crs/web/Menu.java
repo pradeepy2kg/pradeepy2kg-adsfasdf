@@ -283,6 +283,7 @@ public class Menu {
         deoAlterationLink.put("eprFilterAlteration.do", new Link(null, "/ecivil/alteration/", "eprFilterAlteration.do", Permission.EDIT_BIRTH_ALTERATION));
         deoAlterationLink.put("eprDeathAlterationPrintLetter.do", new Link(null, "/ecivil/alteration/", "eprDeathAlterationPrintLetter.do", Permission.EDIT_BIRTH_ALTERATION));
         deoAlterationLink.put("eprDeathAlterationPageLoad.do", new Link(null, "/ecivil/alteration/", "eprDeathAlterationPageLoad.do", Permission.EDIT_BIRTH_ALTERATION));
+        deoAlterationLink.put("eprEditDeathAlteration.do", new Link(null, "/ecivil/alteration/", "eprEditDeathAlteration.do", Permission.EDIT_BIRTH_ALTERATION));
 
         // Birth Alteration for ADR
         adrAlterationLink.putAll(deoAlterationLink);

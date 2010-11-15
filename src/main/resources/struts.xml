@@ -646,11 +646,12 @@
             <result name="pageload" type="tiles">epr.home</result>
         </action>
 
-        <action name="eprpassChangePageLoad" class="lk.rgd.crs.web.action.UserPreferencesAction" method="changePasswordInit">
+        <action name="eprpassChangePageLoad" class="lk.rgd.crs.web.action.UserPreferencesAction"
+                method="changePasswordInit">
             <result name="success" type="tiles">epr.passwordChange</result>
         </action>
         <!--<action name="eprpassChangePageLoad">-->
-            <!--<result>/WEB-INF/pages/preferences/PasswordChange.jsp</result>-->
+        <!--<result>/WEB-INF/pages/preferences/PasswordChange.jsp</result>-->
         <!--</action>-->
 
         <action name="eprUserPreferencesInit" class="lk.rgd.crs.web.action.UserPreferencesAction"
@@ -1073,6 +1074,12 @@
             <result type="tiles" name="pageload">epr.deathAlterationCapture</result>
             <result type="tiles" name="error">epr.deathAlterationSearchHome</result>
             <result type="tiles" name="success">epr.deathAlterationResult</result>
+        </action>
+
+        <action name="eprEditDeathAlteration" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"
+                method="deathAlterationEdit">
+            <result type="tiles" name="error">epr.deathAlterationSearchHome</result>
+            <result type="tiles" name="success">epr.deathAlterationApprovalHome</result>
         </action>
 
         <action name="eprApproveDeathAlterations" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"
