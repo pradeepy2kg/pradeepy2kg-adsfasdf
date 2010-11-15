@@ -115,7 +115,12 @@ $(function() {
         soapBody.appendChild(new SOAPObject('InputName')).val(id);
         soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
         soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
-        soapBody.appendChild(new SOAPObject('Gender')).val('U');
+        //soapBody.appendChild(new SOAPObject('Gender')).val('U');
+
+        //added by shan [ NOT Tested ] -> start
+        var genderVal = $("select#genderList").attr("value");
+        soapBody.appendChild(new SOAPObject('Gender')).value(genderVal);
+        //-> end
 
         //Create a new SOAP Request
         var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
@@ -572,7 +577,7 @@ function initPage() {
     <td colspan="3">
         <s:select
                 list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
-                name="child.childGender" cssStyle="width:190px; margin-left:5px;"/>
+                name="child.childGender" cssStyle="width:190px; margin-left:5px;" id="genderList"/>
     </td>
     <s:if test="birthType.ordinal() != 0">
         <s:if test="birthType.ordinal() == 1 || birthType.ordinal() == 3">
