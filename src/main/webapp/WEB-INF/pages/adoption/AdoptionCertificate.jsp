@@ -22,6 +22,10 @@
     }
 </style>
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
+<script type="text/javascript">
+    function initPage(){}
+</script>
+
 <s:url id="print" action="eprMarkAdoptionCertificateAsPrinted.do">
     <s:param name="alreadyPrinted" value="%{#request.alreadyPrinted}"/>
     <s:param name="previousFlag" value="%{#request.previousFlag}"/>

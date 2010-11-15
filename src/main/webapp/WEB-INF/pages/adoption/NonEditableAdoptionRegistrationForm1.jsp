@@ -1,6 +1,8 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<script type="text/javascript">
+    function initPage(){}
+</script>
 
 <div id="adoption-registration-form-outer">
 <s:form action="eprAdoptionBackToPreviousState" name="" id="" method="POST">
