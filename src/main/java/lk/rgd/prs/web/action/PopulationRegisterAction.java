@@ -46,8 +46,6 @@ public class PopulationRegisterAction extends ActionSupport implements SessionAw
     private int personCountryId;
     private int personRaceId;
     private String personPassportNo;
-    private String permanentAddress;
-    private String currentAddress;
     private String citizenship;
     private String language;
     private boolean ignoreDuplicate;
@@ -73,28 +71,79 @@ public class PopulationRegisterAction extends ActionSupport implements SessionAw
         }
 
         if (personUKey == 0) {
-            personList = service.addExistingPerson(person, permanentAddress, currentAddress, citizenshipList, ignoreDuplicate, user);
+            personList = service.addExistingPerson(person, citizenshipList, ignoreDuplicate, user);
         } else {
             logger.debug("Editing existing person in PRS with personUKey : {}", personUKey);
-            service.editExistingPerson(person, permanentAddress, currentAddress, citizenshipList, user);
-            personList = Collections.emptyList();
+            service.editExistingPersonBeforeApproval(person, citizenshipList, user);
+            personList = Collections.emptyList();      
         }
 
         if (personList.isEmpty()) {
-            final long pin = person.getPin();
             // personUKey used to redirect to PRS certificate page
             personUKey = person.getPersonUKey();
-            addActionMessage(getText("person_reg_success.message") + pin);
+            addActionMessage(getText("person_reg_success.message"));
 
             if (logger.isDebugEnabled()) {
                 logger.debug("Person with name : " + NameFormatUtil.getDisplayName(person.getFullNameInEnglishLanguage(), 30)
                     + " and dateOfBirth : " + DateTimeUtils.getISO8601FormattedString(person.getDateOfBirth())
-                    + " added to the PRS with PersonUKey : " + person.getPersonUKey() + " and generated PIN : " + pin);
+                    + " added to the PRS with PersonUKey : " + person.getPersonUKey());
             }
             return SUCCESS;
         } else {
             populate();
             return "form";
+        }
+    }
+
+    /**
+     * This method is used to load existing person registration form
+     */
+    public String personRegistrationInit() {
+        logger.debug("Registration of existing person to PRS page loaded");
+        populate();
+        // followings used to load basic values in page load. e.g: gender:male, preferredLang:sinhala etc.
+        person = new Person();
+        person.setPreferredLanguage(AppConstants.SINHALA);
+
+        return SUCCESS;
+    }
+
+    /**
+     * This method is used to load existing person registration form in edit mode for specified personUKey
+     */
+    public String personEditInit() {
+        logger.debug("Edit Person Details with PersonUKey : {}", personUKey);
+        populate();
+        person = service.loadPersonToEdit(personUKey, user);
+        // load person citizenship list
+        final Set<PersonCitizenship> citizenSet = person.getCountries();
+        if (citizenSet != null && !citizenSet.isEmpty()) {
+            citizenshipList = new ArrayList<PersonCitizenship>();
+            for (PersonCitizenship pc : citizenSet) {
+                citizenshipList.add(pc);
+            }
+        }
+        return SUCCESS;
+    }
+
+    /**
+     * Populate master data (race list, country list etc.) to the UI
+     */
+    private void populate() {
+        logger.debug("Populating initializing data");
+        raceList = raceDAO.getRaces(language);
+        countryList = countryDAO.getCountries(language);
+        logger.debug("Race list and Country list populated with size : {} and {}", raceList.size(), countryList.size());
+    }
+
+    /**
+     * Validations for existing person registration form
+     */
+    private void validateExistingPersonRegistration() {
+        if (person.getDateOfRegistration() == null || person.getDateOfBirth() == null || person.getRace() == null ||
+            person.getPlaceOfBirth() == null || person.getFullNameInOfficialLanguage() == null ||
+            person.getFullNameInEnglishLanguage() == null || person.getPermanentAddress() == null) {
+            addFieldError("requiredFieldsEmpty", getText("er.label.requiredFields"));
         }
     }
 
@@ -124,50 +173,6 @@ public class PopulationRegisterAction extends ActionSupport implements SessionAw
         pc.setCountry(country);
         pc.setPassportNo(passport);
         return pc;
-    }
-
-    /**
-     * Validations for existing person registration form
-     */
-    private void validateExistingPersonRegistration() {
-        // TODO validate inputs
-        /*if (person.getDateOfRegistration() == null || person.getDateOfBirth() == null || person.getPlaceOfBirth() == null
-            || person.getFullNameInOfficialLanguage() == null || person.getFullNameInEnglishLanguage() == null) {
-
-        }*/
-    }
-
-    /**
-     * This method edits existing persons in the PRS
-     */
-    public String personEditInit() {
-        logger.debug("Edit Person Details with PersonUKey : {}", personUKey);
-        populate();
-        person = service.getByUKey(personUKey, user);
-        return SUCCESS;
-    }
-
-    /**
-     * This method is used to load existing person registration form
-     */
-    public String personRegistrationInit() {
-        logger.debug("Registration of existing person to PRS page loaded");
-        populate();
-        // followings used to load basic values in page load. e.g: gender:male, preferredLang:sinhala etc. 
-        person = new Person();
-        person.setPreferredLanguage(AppConstants.SINHALA);
-
-        return SUCCESS;
-    }
-
-    /**
-     * Populate master data (race list, country list etc.) to the UI
-     */
-    private void populate() {
-        logger.debug("Populating initializing data");
-        raceList = raceDAO.getRaces(language);
-        countryList = countryDAO.getCountries(language);
-        logger.debug("Race list and Country list populated with size : {} and {}", raceList.size(), countryList.size());
     }
 
     public Map getSession() {
@@ -253,22 +258,6 @@ public class PopulationRegisterAction extends ActionSupport implements SessionAw
 
     public void setPersonPassportNo(String personPassportNo) {
         this.personPassportNo = WebUtils.filterBlanksAndToUpper(personPassportNo);
-    }
-
-    public String getPermanentAddress() {
-        return permanentAddress;
-    }
-
-    public void setPermanentAddress(String permanentAddress) {
-        this.permanentAddress = WebUtils.filterBlanksAndToUpper(permanentAddress);
-    }
-
-    public String getCurrentAddress() {
-        return currentAddress;
-    }
-
-    public void setCurrentAddress(String currentAddress) {
-        this.currentAddress = WebUtils.filterBlanksAndToUpper(currentAddress);
     }
 
     public String getCitizenship() {

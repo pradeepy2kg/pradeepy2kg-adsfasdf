@@ -230,7 +230,7 @@
         });
     });
 
-    // Enable citizen list minimized in page load 
+    // Enable citizen list minimized in page load
     function initPage() {
         document.getElementById('citizen-info-min').style.display = 'none';
         document.getElementById('citizenDetails').style.display = 'none';
@@ -291,6 +291,8 @@
                 $('select#citizenCountryId option:selected').text(),
                 $('input#citizenPassportNo').val().toUpperCase()
             ]);
+            $('input#citizenPassportNo').val('');
+            $('select#citizenCountryId').val('');
         }
     }
 
@@ -340,7 +342,7 @@
         return aReturn;
     }
 
-    // Set citizen list to a huddersfield
+    // Set citizen list string to "citizenship" hidden field
     $(document).ready(function() {
         $('#submitButton').click(function() {
 
@@ -375,6 +377,9 @@
         <td width="350px" align="right" style="margin-right:0;">
             <table class="table_reg_datePicker_page_01" style="width:90%;margin-right:0;">
                 <tr>
+                    <s:fielderror name="requiredFieldsEmpty" cssStyle="color:red;font-size:9pt;"/>
+                </tr>
+                <tr>
                     <td colspan="2">කාර්යාල ප්‍රයෝජනය සඳහා පමණි <br>அலுவலக பாவனைக்காக மட்டும்
                         <br>For office use only
                         <hr>
@@ -402,8 +407,8 @@
         <table id="persons-table" width="100%" cellpadding="0" cellspacing="0" class="display">
             <thead>
             <tr>
-                <th width="150px;">NIC</th>
-                <th width="480px;"><s:label name="name" value="%{getText('label.personName')}"/></th>
+                <th width="110px;">NIC</th>
+                <th width="700px;"><s:label name="name" value="%{getText('label.personName')}"/></th>
                 <th width="200px;"><s:label name="name" value="%{getText('label.state')}"/></th>
                 <th width="20px;"></th>
             </tr>
@@ -414,7 +419,7 @@
                     <td align="center"><s:property value="nic"/></td>
                     <td>
                         <s:if test="fullNameInOfficialLanguage != null">
-                            <%= NameFormatUtil.getDisplayName((String) request.getAttribute("fullNameInOfficialLanguage"), 50)%>
+                            <%= NameFormatUtil.getDisplayName((String) request.getAttribute("fullNameInOfficialLanguage"), 70)%>
                         </s:if>
                     </td>
                     <td align="center"><s:property value="status"/></td>
@@ -534,7 +539,7 @@
     <tr>
         <td class="font-9" colspan="3">
             පුද්ගලයකු ලියාපදිංචි කිරීමේ සහතිකය නිකුත් කල යුතු භාෂාව
-            <br>நபரின் பதிவிற்கான சான்றிதழினை வழங்கப்படவேண்டிய மொழி 
+            <br>நபரின் பதிவிற்கான சான்றிதழினை வழங்கப்படவேண்டிய மொழி
             <br>Preferred Language for Person Registration Certificate
         </td>
         <td colspan="5">
@@ -611,7 +616,7 @@
     <tr>
         <td>(13) ස්ථිර ලිපිනය<s:label value="*" cssStyle="color:red;font-size:14pt"/><br>நிரந்தர வதிவிட முகவரி<br>Permanent Address</td>
         <td colspan="7">
-            <s:textarea name="permanentAddress" id="permanentAddress" cssStyle="width:98.2%;text-transform:uppercase;"/>
+            <s:textarea name="person.permanentAddress" id="permanentAddress" cssStyle="width:98.2%;text-transform:uppercase;"/>
         </td>
     </tr>
     <tr>
@@ -623,14 +628,13 @@
     <tr>
         <td>(14) වර්තමාන ලිපිනය<br>தற்போதைய வதிவிட முகவரி<br>Current Address</td>
         <td colspan="7">
-            <s:textarea name="currentAddress" cssStyle="width:98.2%;text-transform:uppercase;"/>
+            <s:textarea name="person.currentAddress" cssStyle="width:98.2%;text-transform:uppercase;"/>
         </td>
     </tr>
     <tr>
         <td>(15) දුරකථන අංක<br>தொலைபேசி இலக்கம்<br>Telephone Numbers</td>
         <td colspan="2">
-            <s:textfield name="person.personPhoneNo" id="personPhoneNo" maxLength="15"
-                         onkeypress="return isNumberKey(event)"/>
+            <s:textfield name="person.personPhoneNo" id="personPhoneNo" maxLength="15" onkeypress="return isNumberKey(event)"/>
         </td>
         <td>(16) ඉ – තැපැල් <br>மின்னஞ்சல்<br>Email</td>
         <td colspan="4">
@@ -640,62 +644,68 @@
     </tbody>
 </table>
 
-<table class="table_reg_page_05" style="border-right:#000 solid 1px;border-bottom:#000 solid 1px;">
-    <tr>
-        <td align="center" style="font-size:11pt;border:none">
-            වෙනත් රටවල පුරවැසිභාවය ඇතිනම් ඒ පිලිබඳ විස්තර
-            <br>வேறு நாடுகளில் பிரஜாவுரிமை இருந்தால் அது பற்றிய தகவல்கள்
-            <br>If a citizen of any other countries, such details
-        </td>
-        <td width="2%" style="border:none">
-            <div id="citizen-info-min">[-]</div>
-            <div id="citizen-info-max">[+]</div>
-        </td>
-    </tr>
-</table>
-
-<div id="citizenDetails">
-    <table id="citizen" class="table_reg_page_05" cellspacing="0" cellpadding="0"
-           style="margin-bottom:10px;border-top:none;">
-        <col width="230px"/>
-        <col width="250px"/>
-        <col width="220px"/>
-        <col width="330px"/>
+<fieldset style="margin-bottom:5px;border:1px solid #000;width:97.9%;">
+    <table class="table_reg_page_05" style="border:none;margin-bottom:5px;margin-top:5px;width:100%;">
         <tr>
-            <td>රට<br>நாடு <br>Country</td>
-            <td>
-                <s:select id="citizenCountryId" list="countryList" headerKey="0"
-                          headerValue="%{getText('select_country.label')}" cssStyle="width:75%;margin-left:5px;"/>
+            <td align="center" style="font-size:11pt;border:none">
+                වෙනත් රටවල පුරවැසිභාවය ඇතිනම් ඒ පිලිබඳ විස්තර
+                <br>வேறு நாடுகளில் பிரஜாவுரிமை இருந்தால் அது பற்றிய தகவல்கள்
+                <br>If a citizen of any other countries, such details
             </td>
-            <td>ගමන් බලපත්‍ර අංකය<br>கடவுச் சீட்டு இல.<br>Passport No.</td>
-            <td>
-                <s:textfield id="citizenPassportNo" maxLength="15"/>
+            <td width="2%" style="border:none">
+                <div id="citizen-info-min">[-]</div>
+                <div id="citizen-info-max">[+]</div>
             </td>
         </tr>
     </table>
-    <div align="center">
-        <a href="javascript:void(0)" onclick="fnClickAddRow();"><s:label value="%{getText('label.add')}"/></a>&nbsp;&nbsp;
-        <a href="javascript:void(0)" id="delete"><s:label value="%{getText('label.delete')}"/></a>
-    </div>
-    <table id="citizenship-table" width="100%" cellpadding="0" cellspacing="0" class="display">
-        <thead>
-        <tr style="font-size:10pt;">
-            <th>Country Id</th>
-            <th>රට/நாடு /Country</th>
-            <th>ගමන් බලපත්‍ර අංකය/கடவுச் சீட்டு இல./Passport No.</th>
-        </tr>
-        </thead>
-        <tbody>
-        <s:iterator value="citizenshipList">
-            <tr>
-                <td><s:property value="countryId"/></td>
-                <td><s:property value="country.siCountryName"/></td>
-                <td><s:property value="passportNo"/></td>
+
+    <div id="citizenDetails">
+        <table id="citizenship-table" cellpadding="0" cellspacing="0" class="display" style="width:100%;">
+            <thead>
+            <tr style="font-size:10pt;">
+                <th>Country Id</th>
+                <th>රට/நாடு /Country</th>
+                <th>ගමන් බලපත්‍ර අංකය/கடவுச் சீட்டு இல./Passport No.</th>                  
             </tr>
-        </s:iterator>
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+            <s:iterator value="citizenshipList">
+                <tr>
+                    <td><s:property value="countryId"/></td>
+                    <td><s:property value="country.siCountryName"/></td>
+                    <td><s:property value="passportNo"/></td>
+                </tr>
+            </s:iterator>
+            </tbody>
+        </table>
+            <%--TODO remove this chathuranga--%>
+        <center><a href="javascript:void(0)" id="delete"><s:label value="%{getText('label.delete')}"/></a></center>
+
+        <table id="citizen" class="table_reg_page_05" cellspacing="0" cellpadding="0" style="margin-top:10px;width:100%;">
+            <col width="230px"/>
+            <col width="250px"/>
+            <col width="220px"/>
+            <col width="270px"/>
+            <col width="60px"/>
+            <tr>
+                <td>රට<br>நாடு <br>Country</td>
+                <td>
+                    <s:select id="citizenCountryId" list="countryList" headerKey="0"
+                              headerValue="%{getText('select_country.label')}" cssStyle="width:75%;margin-left:5px;"/>
+                </td>
+                <td>ගමන් බලපත්‍ර අංකය<br>கடவுச் சீட்டு இல.<br>Passport No.</td>
+                <td>
+                    <s:textfield id="citizenPassportNo" maxLength="15"/>
+                </td>
+                <td>
+                    <a href="javascript:void(0)" onclick="fnClickAddRow();">
+                        <img src="<s:url value="/images/add.png"/>" width="25" height="25" border="none" style="float:right;margin-right:15px;">
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</fieldset>
 <div class="form-submit">
     <s:submit id="submitButton" value="%{getText('label.save')}" cssStyle="margin-top:10px;"/>
 </div>

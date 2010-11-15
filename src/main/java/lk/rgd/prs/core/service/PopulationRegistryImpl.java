@@ -86,12 +86,12 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public List<Person> addExistingPerson(Person person, String permanentAddress, String currentAddress,
-        List<PersonCitizenship> citizenshipList, boolean ignoreDuplicates, User user) {
+    public List<Person> addExistingPerson(Person person, List<PersonCitizenship> citizenshipList,
+        boolean ignoreDuplicates, User user) {
         long pin = -1;
         logger.debug("Adding an existing person to the PRS");
 
-        validateRequiredFields(person, permanentAddress);
+        validateRequiredFields(person);
         if (!user.isAuthorized(Permission.PRS_LOOKUP_PERSON_BY_KEYS)) {
             handleException("User : " + user.getUserId() + " is not allowed to lookup entries on the PRS by keys (nic/temporaryPIN)",
                 ErrorCodes.PRS_LOOKUP_BY_KEYS_DENIED);
@@ -119,11 +119,10 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             person.setStatus(Person.Status.SEMI_VERIFIED);
             person.setLifeStatus(Person.LifeStatus.ALIVE);
             person.setSubmittedLocation(user.getPrimaryLocation());
-            // generate a PIN for existing person
-            pin = pinGenerator.generatePINNumber(person.getDateOfBirth(), person.getGender() == 0);
-            person.setPin(pin);
-
             personDao.addPerson(person, user);
+
+            final String permanentAddress = person.getPermanentAddress();
+            final String currentAddress = person.getCurrentAddress();
             // add permanent address of the person to the PRS
             if (permanentAddress != null && permanentAddress.trim().length() > 0) {
                 final Address permanentAdd = new Address(permanentAddress);
@@ -148,8 +147,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
                 }
             }
         }
-        logger.debug("Added a new person to the PRS with PersonUKey : {} and PIN : {}", person.getPersonUKey(),
-            person.getPin());
+        logger.debug("Added a new person to the PRS with PersonUKey : {}", person.getPersonUKey());
         return Collections.emptyList();
     }
 
@@ -157,22 +155,59 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void editExistingPerson(Person person, String permanentAddress, String currentAddress,
-        List<PersonCitizenship> citizenshipList, User user) {
+    public Person loadPersonToEdit(long personUKey, User user) {
+        validateAccessOfUserToEdit(user);
+        if (!user.isAuthorized(Permission.PRS_LOOKUP_PERSON_BY_KEYS)) {
+            handleException("User : " + user.getUserId() + " is not allowed to lookup entries on the PRS by keys (uKey)",
+                ErrorCodes.PRS_LOOKUP_BY_KEYS_DENIED);
+        }
+        if (!user.isAuthorized(Permission.PRS_EDIT_PERSON)) {
+            handleException("User : " + user.getUserId() + " is not allowed to update person to the PRS",
+                ErrorCodes.PRS_EDIT_RECORD_DENIED);
+        }
+        final Person person = personDao.getByUKey(personUKey);
 
-        validateAccessOfUserToEdit(person, user);
-        validateRequiredFields(person, permanentAddress);
+        // load permanent address to the transient field
+        final Set<Address> addresses = person.getAddresses();
+        for (Address add : addresses) {
+            if (add.isPermanent()) {
+                person.setPermanentAddress(add.getLine1());
+                break;
+            }
+        }
+        // load current address to the transient field
+        final Address currentAdd = person.getLastAddress();
+        if (currentAdd != null && isEmptyString(currentAdd.getLine1())) {
+            person.setCurrentAddress(currentAdd.getLine1());
+        }
+        logger.debug("Person citizenship list loaded for personUKey: {} with size : {} loaded", personUKey,
+            person.getCountries().size());
+
+        return person;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void editExistingPersonBeforeApproval(Person person, List<PersonCitizenship> citizenshipList, User user) {
+
+        validateAccessOfUserToEdit(user);
+        validateRequiredFields(person);
         Person existing = personDao.getByUKey(person.getPersonUKey());
+
+        // TODO if birth exist can not edit through this, throw exception (use alteration process)
 
         final Person.Status currentState = person.getStatus();
         if (currentState == Person.Status.SEMI_VERIFIED || currentState == Person.Status.UNVERIFIED) {
             person.setStatus(Person.Status.VERIFIED);
             person.setLifeStatus(Person.LifeStatus.ALIVE);
             person.setSubmittedLocation(user.getPrimaryLocation());
-            final long pin = pinGenerator.generatePINNumber(person.getDateOfBirth(), person.getGender() == 0);
-            person.setPin(pin);
 
             personDao.updatePerson(person, user);
+
+            final String permanentAddress = person.getPermanentAddress();
+            final String currentAddress = person.getCurrentAddress();
             // update permanent address of the person to the PRS
             if (permanentAddress != null && permanentAddress.trim().length() > 0) {
                 Set<Address> addresses = person.getAddresses();
@@ -210,6 +245,15 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             handleException("Cannot modify PRS record with personUKey : " + existing.getPersonUKey() +
                 " Illegal state : " + currentState, ErrorCodes.ILLEGAL_STATE);
         }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void editExistingPersonAfterApproval(Person person, User user) {
+        // TODO chathuranga
+        throw new UnsupportedOperationException("Edit person after approval operation not implemented yet...");
     }
 
     /**
@@ -453,8 +497,8 @@ public class PopulationRegistryImpl implements PopulationRegistry {
         }
     }
 
-    private void validateAccessOfUserToEdit(Person person, User user) {
-        if (person != null && user != null) {
+    private void validateAccessOfUserToEdit(User user) {
+        if (user != null) {
             if (!(User.State.ACTIVE == user.getStatus() && !Role.ROLE_ADMIN.equals(user.getRole().getRoleId()))) {
                 handleException("User : " + user.getUserId() + " is not allowed edit entries on the PRS",
                     ErrorCodes.PERMISSION_DENIED);
@@ -464,11 +508,15 @@ public class PopulationRegistryImpl implements PopulationRegistry {
         }
     }
 
-    private void validateRequiredFields(Person person, String permanentAddress) {
-        if (person.getDateOfBirth() == null || permanentAddress == null || person.getRace() == null ||
+    private void validateRequiredFields(Person person) {
+        if (person.getDateOfBirth() == null || person.getPermanentAddress() == null || person.getRace() == null ||
             isEmptyString(person.getPlaceOfBirth()) || isEmptyString(person.getFullNameInOfficialLanguage()) ||
             isEmptyString(person.getFullNameInEnglishLanguage()) || person.getDateOfRegistration() == null) {
             handleException("Adding person is incomplete, Check required field values", ErrorCodes.INVALID_DATA);
+        }
+        if (person.getPin() != null) {
+            handleException("PRS record being processed is invalid, processing record already exist PIN",
+                ErrorCodes.INVALID_DATA);
         }
     }
 

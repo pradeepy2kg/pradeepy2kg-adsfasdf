@@ -250,6 +250,16 @@ public class Person implements Serializable {
     @ManyToOne
     @JoinColumn(name = "submitLocationUKey")
     private Location submittedLocation;
+    /**
+     * The permanent address of this person
+     */
+    @Transient
+    private String permanentAddress;
+    /**
+     * The current address of this person
+     */
+    @Transient
+    private String currentAddress;
 
     /**
      * Add a record of a marriage. Marks this marriage as the 'last' marriage
@@ -549,6 +559,22 @@ public class Person implements Serializable {
 
     public void setLifeCycleInfo(PRSLifeCycleInfo lifeCycleInfo) {
         this.lifeCycleInfo = lifeCycleInfo;
+    }
+
+    public String getPermanentAddress() {
+        return permanentAddress;
+    }
+
+    public void setPermanentAddress(String permanentAddress) {
+        this.permanentAddress = WebUtils.filterBlanksAndToUpper(permanentAddress);
+    }
+
+    public String getCurrentAddress() {
+        return currentAddress;
+    }
+
+    public void setCurrentAddress(String currentAddress) {
+        this.currentAddress = WebUtils.filterBlanksAndToUpper(currentAddress);
     }
 
     private void setInitialsAndLastnameEnglish(String fullname) {
