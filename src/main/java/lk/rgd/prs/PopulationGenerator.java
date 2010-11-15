@@ -26,9 +26,6 @@ import java.util.*;
  */
 public class PopulationGenerator {
 
-    private static final int SKIP = 0;
-    private static final int LIMIT = 10000000;
-
     private final PopulationRegistry popreg;
     private final RaceDAO raceDAO;
     private final DSDivisionDAO dsDivisionDAO;
@@ -36,7 +33,8 @@ public class PopulationGenerator {
     private final Connection sltConn;
     private final User system;
     private final Random rand = new Random(System.currentTimeMillis());
-    private Map<Character, List<String[]>> names = new HashMap<Character, List<String[]>>();
+    private Map<Character, List<String[]>> names = new HashMap<Character, List<String[]>>(8000);
+    private List<String> lastNames = new ArrayList<String>(90000);
 
     static {
         try {
@@ -69,6 +67,13 @@ public class PopulationGenerator {
         }
         in.close();
 
+        in = new DataInputStream(this.getClass().getClassLoader().getResourceAsStream("lastnames.txt"));
+        br = new BufferedReader(new InputStreamReader(in));
+        while ((name = br.readLine()) != null) {
+            lastNames.add(name);
+        }
+        in.close();
+
         this.popreg = popreg;
         this.raceDAO = raceDAO;
         this.dsDivisionDAO = dsDivisionDAO;
@@ -85,26 +90,89 @@ public class PopulationGenerator {
         Statement s = sltConn.createStatement();
         ResultSet rs = s.executeQuery("select * from tp");
 
-        int count = 0;
-        int skip = 0;
-
         while (rs.next()) {
-            if (skip++ < SKIP) {
-                continue;
-            }
-
             String lastname = rs.getString("lastname");
             String firstname = rs.getString("firstname");
             String address = rs.getString("address");
             String phone = rs.getString("phone");
+            String areaCode    = phone.substring(0,2);
+            String phoneNumber = phone.substring(4);
 
             generateFamily(lastname, firstname, address, phone);
-
-            if (count++ > LIMIT) {
-                break;
-            }
+            generateFamily(getRandomLastname(), getRandomInitials(), getRandomAddress(address), areaCode + "4" + phoneNumber);
+            generateFamily(getRandomLastname(), getRandomInitials(), getRandomAddress(address), areaCode + "5" + phoneNumber);
+            generateFamily(getRandomLastname(), getRandomInitials(), getRandomAddress(address), getRandomMobile());
+            generateFamily(getRandomLastname(), getRandomInitials(), getRandomAddress(address), getRandomMobile());
+            generateFamily(getRandomLastname(), getRandomInitials(), getRandomAddress(address), getRandomMobile());
+            generateFamily(getRandomLastname(), getRandomInitials(), getRandomAddress(address), getRandomMobile());
+            generateFamily(getRandomLastname(), getRandomInitials(), getRandomAddress(address), getRandomMobile());
+            generateFamily(getRandomLastname(), getRandomInitials(), getRandomAddress(address), null);
+            generateFamily(getRandomLastname(), getRandomInitials(), getRandomAddress(address), null);
         }
         sltConn.close();
+    }
+
+    private String getRandomMobile() {
+        StringBuilder sb = new StringBuilder(12);
+        sb.append("07");
+        for (int i=0; i<8; i++) {
+            sb.append(rand.nextInt(10));
+        }
+        return sb.toString();
+    }
+
+    private String getRandomInitials() {
+        // decide on some random initials
+        StringBuilder sb = new StringBuilder(12);
+        int initials = 1 + rand.nextInt(5);
+        for (int i = 0; i < initials; i++) {
+            sb.append((char) ('A' + rand.nextInt(26))).append(' ');
+        }
+        if (rand.nextInt(10) < 4) {
+            sb.append("Mrs");
+        }
+        return sb.toString();
+    }
+
+    private String getRandomLastname() {
+        int pos = rand.nextInt(lastNames.size());
+        return lastNames.get(pos);
+    }
+
+    private String getRandomAddress(String address) {
+        if (address != null && address.length() > 5) {
+            try {
+                StringBuilder sb = new StringBuilder(60);
+                char[] chars = address.toCharArray();
+                int i=0;
+                for (; i<chars.length; i++) {
+                    if (Character.isDigit(chars[i])) {
+                        continue;
+                    } else {
+                        break;
+                    }
+                }
+
+                sb.append(rand.nextInt(300));
+                if (rand.nextInt(10) < 2) {
+                    sb.append('/');
+                    sb.append(rand.nextInt(10));
+                }
+                if (rand.nextInt(10) < 2) {
+                    sb.append( (char) ('A' + rand.nextInt(26)));
+                }
+
+                for (; i<chars.length; i++) {
+                    sb.append(chars[i]);
+                }
+                return sb.toString();
+            } catch (Exception e) {
+                return address;
+            }
+
+        } else {
+            return address;
+        }
     }
 
     private void generateFamily(String lastname, String firstname, String address, String phone) {
