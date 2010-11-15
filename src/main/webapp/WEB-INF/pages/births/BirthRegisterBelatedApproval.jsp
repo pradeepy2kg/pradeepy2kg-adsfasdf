@@ -101,6 +101,8 @@
         errormsg = "";
         return returnval;
     }
+
+    function initPage(){}
 </script>
 
 <%@ taglib prefix="s" uri="/struts-tags" %>

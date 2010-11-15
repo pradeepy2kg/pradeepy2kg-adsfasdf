@@ -152,6 +152,8 @@
             return false;
         }
     }
+
+    function initPage(){}
 </script>
 
 
