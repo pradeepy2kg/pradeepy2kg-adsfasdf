@@ -87,6 +87,8 @@
         errormsg = "";
         return returnval;
     }
+
+    function initPage(){}
 </script>
 <style type="text/css">
     .add-registrar-body {

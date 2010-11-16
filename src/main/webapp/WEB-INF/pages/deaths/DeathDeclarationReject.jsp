@@ -18,6 +18,8 @@
         return returnval;
     }
 
+    function initPage(){}
+
 </script>
 <div id="birth-declaration-reject-outer" class="birth-declaration-reject-outer">
     <table>

@@ -13,6 +13,8 @@
         }
     }
 
+    function initPage(){}
+
 </script>
 <div id="death-registration-deatails-outer">
     <div id="death-registration-details-header">

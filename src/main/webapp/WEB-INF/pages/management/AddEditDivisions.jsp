@@ -103,6 +103,8 @@
         }
         return true;
     }
+
+    function initPage(){}
 </script>
 
 <div id="add-inactive-divisions-outer">

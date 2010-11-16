@@ -39,6 +39,9 @@
     }
 </style>
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
+<script type="text/javascript">
+    function initPage(){}
+</script>
 <s:form action="eprPrintDeathCertificate.do" method="post">
 <div id="death-certificate-outer">
 <s:if test="#request.archivedEntryList.size>0">

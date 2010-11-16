@@ -1,6 +1,8 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<script type="text/javascript">
+    function initPage(){}
+</script>
 
 <div id="user-managment-outer">
     <table style="width:50%;" align="center">

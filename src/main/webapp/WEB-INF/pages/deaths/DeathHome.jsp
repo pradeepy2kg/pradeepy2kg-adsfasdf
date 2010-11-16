@@ -1,5 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<script type="text/javascript">
+    function initPage(){}
+</script>
 <style type="text/css">
     .bg1 {
         background: url('<s:url value="/images/death.png"/>') no-repeat;

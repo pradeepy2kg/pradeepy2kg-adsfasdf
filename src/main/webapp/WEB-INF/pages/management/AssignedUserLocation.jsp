@@ -51,6 +51,7 @@
         });
     });
 
+    function initPage(){}
 
 </script>
 <div id="user-locaton-outer">

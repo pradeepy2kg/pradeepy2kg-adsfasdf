@@ -1,6 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-tags" %>
+<script type="text/javascript">
+    function initPage(){}
+</script>
 
 <div id="Debug-details">
     <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">

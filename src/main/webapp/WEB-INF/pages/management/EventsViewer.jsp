@@ -103,6 +103,8 @@
         return returnval;
     }
 
+    function initPage(){}
+
 </script>
 
 <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">

@@ -19,6 +19,8 @@
         }
         erroMassage = "";
     }
+
+    function initPage(){}
 </script>
 <s:form method="post" action="eprDeathAlterationReject.do" onsubmit="javascript:return validate()">
     <table>

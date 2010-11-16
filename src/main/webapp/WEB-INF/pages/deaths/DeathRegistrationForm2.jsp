@@ -155,6 +155,8 @@
         return returnval;
     }
 
+    function initPage(){}
+
 </script>
 
 <div id="death-declaration-form-2-outer">

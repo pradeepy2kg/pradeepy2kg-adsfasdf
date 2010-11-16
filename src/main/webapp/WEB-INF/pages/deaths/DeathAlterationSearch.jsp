@@ -98,6 +98,8 @@
         return false;
     }
 
+    function initPage(){}
+
 </script>
 
 <s:actionerror cssStyle="color:red;font-size:10pt"/>

@@ -94,6 +94,8 @@
         });
     });
 
+    function initPage(){}
+
 </script>
 <%
     User user = (User) session.getAttribute("user_bean");

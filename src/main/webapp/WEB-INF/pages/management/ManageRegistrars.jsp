@@ -114,6 +114,8 @@
         });
     });
 
+    function initPage(){}
+
 
 </script>
 
