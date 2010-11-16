@@ -243,7 +243,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 return ERROR;
             }
         }
-         populateOtherLists();
+        populateOtherLists();
         deathAlteration = populateAlterationObject(deathRegister);
         //setting up death district    ds and death division
         district = districtDAO.getNameByPK(deathRegister.getDeath().getDeathDistrict().getDistrictUKey(), language);
@@ -440,9 +440,6 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     private void generateChangesList(DeathRegister deathRegister, DeathAlteration deathAlteration, String preferedLan) {
         logger.debug("begin generating changes list");
 
-        String registerValue = null;
-        String alterationValue = null;
-
         if (deathAlteration.getDeathInfo() != null && deathRegister.getDeath() != null) {
             //todo check sudden death
             String dateEx = null;
@@ -455,22 +452,22 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             }
 
             compareStringValues(deathRegister.getDeath().getPlaceOfBurial(),
-                deathAlteration.getDeathInfo().getPlaceOfBurial(),DeathAlteration.BURIAL_PLACE, preferedLan);
+                deathAlteration.getDeathInfo().getPlaceOfBurial(), DeathAlteration.BURIAL_PLACE, preferedLan);
 
             compareStringValues(deathRegister.getDeath().getIcdCodeOfCause(),
-                deathAlteration.getDeathInfo().getIcdCodeOfCause(),DeathAlteration.ICD_CODE, preferedLan);
+                deathAlteration.getDeathInfo().getIcdCodeOfCause(), DeathAlteration.ICD_CODE, preferedLan);
 
             compareStringValues(deathRegister.getDeath().getCauseOfDeath(),
-                deathAlteration.getDeathInfo().getCauseOfDeath(),DeathAlteration.CAUSE_OF_DEATH, preferedLan);
+                deathAlteration.getDeathInfo().getCauseOfDeath(), DeathAlteration.CAUSE_OF_DEATH, preferedLan);
 
             compareStringValues(deathRegister.getDeath().getPlaceOfDeathInEnglish(),
-                deathAlteration.getDeathInfo().getPlaceOfDeathInEnglish(),DeathAlteration.PLACE_OF_DEATH_ENGLISH, preferedLan);
+                deathAlteration.getDeathInfo().getPlaceOfDeathInEnglish(), DeathAlteration.PLACE_OF_DEATH_ENGLISH, preferedLan);
 
             compareStringValues(deathRegister.getDeath().getPlaceOfDeath(),
-                deathAlteration.getDeathInfo().getPlaceOfDeath(),DeathAlteration.PLACE_OF_DEATH, preferedLan);
+                deathAlteration.getDeathInfo().getPlaceOfDeath(), DeathAlteration.PLACE_OF_DEATH, preferedLan);
 
             compareStringValues(deathRegister.getDeath().getTimeOfDeath(),
-                deathAlteration.getDeathInfo().getTimeOfDeath(),DeathAlteration.TIME_OF_DEATH, preferedLan);
+                deathAlteration.getDeathInfo().getTimeOfDeath(), DeathAlteration.TIME_OF_DEATH, preferedLan);
 
             compareStringValues(dateEx, dateAlt, DeathAlteration.DATE_OF_DEATH, preferedLan);
 
@@ -488,31 +485,31 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         if (deathAlteration.getDeathPerson() != null && deathRegister.getDeathPerson() != null) {
 
             compareStringValues(deathRegister.getDeathPerson().getDeathPersonPINorNIC(), deathAlteration.getDeathPerson().
-                getDeathPersonPINorNIC(),DeathAlteration.PIN, preferedLan);
+                getDeathPersonPINorNIC(), DeathAlteration.PIN, preferedLan);
 
             compareStringValues(deathRegister.getDeathPerson().getDeathPersonNameOfficialLang(),
-                deathAlteration.getDeathPerson().getDeathPersonNameOfficialLang(),DeathAlteration.NAME, preferedLan);
+                deathAlteration.getDeathPerson().getDeathPersonNameOfficialLang(), DeathAlteration.NAME, preferedLan);
 
             compareStringValues(deathRegister.getDeathPerson().getDeathPersonNameInEnglish(),
-                deathAlteration.getDeathPerson().getDeathPersonNameInEnglish(),DeathAlteration.NAME_ENGLISH, preferedLan);
+                deathAlteration.getDeathPerson().getDeathPersonNameInEnglish(), DeathAlteration.NAME_ENGLISH, preferedLan);
 
             compareStringValues(deathRegister.getDeathPerson().getDeathPersonPermanentAddress(),
-                deathAlteration.getDeathPerson().getDeathPersonPermanentAddress(),DeathAlteration.ADDRESS, preferedLan);
+                deathAlteration.getDeathPerson().getDeathPersonPermanentAddress(), DeathAlteration.ADDRESS, preferedLan);
 
             compareStringValues(deathRegister.getDeathPerson().getDeathPersonFatherPINorNIC(),
-                deathAlteration.getDeathPerson().getDeathPersonFatherPINorNIC(),DeathAlteration.PIN_FATHER, preferedLan);
+                deathAlteration.getDeathPerson().getDeathPersonFatherPINorNIC(), DeathAlteration.PIN_FATHER, preferedLan);
 
             compareStringValues(deathRegister.getDeathPerson().getDeathPersonFatherFullName(),
-                deathAlteration.getDeathPerson().getDeathPersonFatherFullName(),DeathAlteration.NAME_FATHER, preferedLan);
+                deathAlteration.getDeathPerson().getDeathPersonFatherFullName(), DeathAlteration.NAME_FATHER, preferedLan);
 
             compareStringValues(deathRegister.getDeathPerson().getDeathPersonMotherPINorNIC(),
-                deathAlteration.getDeathPerson().getDeathPersonMotherPINorNIC(),DeathAlteration.PIN_MOTHER, preferedLan);
+                deathAlteration.getDeathPerson().getDeathPersonMotherPINorNIC(), DeathAlteration.PIN_MOTHER, preferedLan);
 
             compareStringValues(deathRegister.getDeathPerson().getDeathPersonMotherFullName(),
-                deathAlteration.getDeathPerson().getDeathPersonMotherFullName(),DeathAlteration.NAME_MOTHER, preferedLan);
+                deathAlteration.getDeathPerson().getDeathPersonMotherFullName(), DeathAlteration.NAME_MOTHER, preferedLan);
 
             compareStringValues(deathRegister.getDeathPerson().getDeathPersonPassportNo(),
-                deathAlteration.getDeathPerson().getDeathPersonPassportNo(),DeathAlteration.PASSPORT, preferedLan);
+                deathAlteration.getDeathPerson().getDeathPersonPassportNo(), DeathAlteration.PASSPORT, preferedLan);
 
             if (!(deathRegister.getDeathPerson().getDeathPersonAge() ==
                 deathAlteration.getDeathPerson().getDeathPersonAge())) {
@@ -530,12 +527,14 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             }
 
             //checking death country
-            FieldValue fv = compareCountry(deathRegister, deathAlteration, preferedLan);
+            FieldValue fv = compareCountry(deathRegister.getDeathPerson().getDeathPersonCountry(),
+                deathAlteration.getDeathPerson().getDeathPersonCountry(), preferedLan);
             if (fv != null) {
                 changesList.add(fv);
             }
 
-            fv = compareRace(deathRegister, deathAlteration, preferedLan);
+            fv = compareRace(deathRegister.getDeathPerson().getDeathPersonRace(),
+                deathAlteration.getDeathPerson().getDeathPersonRace(), preferedLan);
             if (fv != null) {
                 changesList.add(fv);
             }
@@ -553,42 +552,41 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         }
     }
 
-    private FieldValue compareCountry(DeathRegister deathRegister, DeathAlteration deathAlteration, String preferedLan) {
+    private FieldValue compareCountry(Country registerValue, Country alterationValue, String preferedLan) {
         logger.debug("compare country for generating death alteration changes list");
         //one case null or both null in both null no need to add ,in other case need to add with out comparison
         //not both case null
         //case 1 : death register death country is null
-        final FieldValue fv = new FieldValue(null, null, DeathAlteration.COUNTRY, CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(DeathAlteration.COUNTRY), preferedLan));
-        if (deathRegister.getDeathPerson().getDeathPersonCountry() != null && deathAlteration.getDeathPerson().getDeathPersonCountry() != null) {
-            if (deathRegister.getDeathPerson().getDeathPersonCountry().getCountryId() !=
-                deathAlteration.getDeathPerson().getDeathPersonCountry().getCountryId()) {
+        final FieldValue fv = new FieldValue(null, null, DeathAlteration.COUNTRY,
+            CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(DeathAlteration.COUNTRY), preferedLan));
+        if (registerValue != null && alterationValue != null) {
+            if (registerValue.getCountryId() != alterationValue.getCountryId()) {
                 if (AppConstants.SINHALA.equals(preferedLan)) {
-                    fv.setExistingValue(deathRegister.getDeathPerson().getDeathPersonCountry().getSiCountryName());
-                    fv.setAlterationValue(deathAlteration.getDeathPerson().getDeathPersonCountry().getSiCountryName());
+                    fv.setExistingValue(registerValue.getSiCountryName());
+                    fv.setAlterationValue(alterationValue.getSiCountryName());
                 }
                 if (AppConstants.TAMIL.equals(preferedLan)) {
-                    fv.setExistingValue(deathRegister.getDeathPerson().getDeathPersonCountry().getTaCountryName());
-                    fv.setAlterationValue(deathAlteration.getDeathPerson().getDeathPersonCountry().getTaCountryName());
+                    fv.setExistingValue(registerValue.getTaCountryName());
+                    fv.setAlterationValue(alterationValue.getTaCountryName());
                 }
             } else {
                 return null;
             }
         } else {
-            if (deathRegister.getDeathPerson().getDeathPersonCountry() != null) {
+            if (registerValue != null) {
                 fv.setExistingValue(null);
                 if (AppConstants.SINHALA.equals(preferedLan)) {
-                    fv.setExistingValue(deathRegister.getDeathPerson().getDeathPersonCountry().getSiCountryName());
-
+                    fv.setExistingValue(registerValue.getSiCountryName());
                 }
                 if (AppConstants.TAMIL.equals(preferedLan)) {
-                    fv.setExistingValue(deathRegister.getDeathPerson().getDeathPersonCountry().getTaCountryName());
+                    fv.setExistingValue(registerValue.getTaCountryName());
                 }
-            } else if (deathAlteration.getDeathPerson().getDeathPersonCountry() != null) {
+            } else if (alterationValue != null) {
                 if (AppConstants.SINHALA.equals(preferedLan)) {
-                    fv.setAlterationValue(deathAlteration.getDeathPerson().getDeathPersonCountry().getSiCountryName());
+                    fv.setAlterationValue(alterationValue.getSiCountryName());
                 }
                 if (AppConstants.TAMIL.equals(preferedLan)) {
-                    fv.setAlterationValue(deathAlteration.getDeathPerson().getDeathPersonCountry().getTaCountryName());
+                    fv.setAlterationValue(alterationValue.getTaCountryName());
                 }
             }
         }
@@ -596,22 +594,24 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         return fv;
     }
 
-    private FieldValue compareRace(DeathRegister deathRegister, DeathAlteration deathAlteration, String preferedLan) {
+    private FieldValue compareRace(Race registerValue, Race alterationValue, String preferedLan) {
         logger.debug("compare race for generating death alteration changes list");
         //one case null or both null in both null no need to add ,in other case need to add with out comparison
         //not both case null
         //case 1 : death register death country is null
-        final FieldValue fv = new FieldValue(null, null, DeathAlteration.RACE, CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(DeathAlteration.RACE), preferedLan));
-        if (deathRegister.getDeathPerson().getDeathPersonRace() != null && deathAlteration.getDeathPerson().getDeathPersonRace() != null) {
-            if (deathRegister.getDeathPerson().getDeathPersonRace().getRaceId() !=
+        final FieldValue fv = new FieldValue(null, null, DeathAlteration.RACE,
+            CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(DeathAlteration.RACE), preferedLan));
+
+        if (registerValue != null && alterationValue != null) {
+            if (registerValue.getRaceId() !=
                 deathAlteration.getDeathPerson().getDeathPersonRace().getRaceId()) {
                 if (AppConstants.SINHALA.equals(preferedLan)) {
-                    fv.setExistingValue(deathRegister.getDeathPerson().getDeathPersonRace().getSiRaceName());
-                    fv.setAlterationValue(deathAlteration.getDeathPerson().getDeathPersonRace().getSiRaceName());
+                    fv.setExistingValue(registerValue.getSiRaceName());
+                    fv.setAlterationValue(alterationValue.getSiRaceName());
                 }
                 if (AppConstants.TAMIL.equals(preferedLan)) {
-                    fv.setExistingValue(deathRegister.getDeathPerson().getDeathPersonRace().getTaRaceName());
-                    fv.setAlterationValue(deathAlteration.getDeathPerson().getDeathPersonRace().getTaRaceName());
+                    fv.setExistingValue(registerValue.getTaRaceName());
+                    fv.setAlterationValue(alterationValue.getTaRaceName());
                 }
             } else {
                 return null;
@@ -620,18 +620,18 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             if (deathRegister.getDeathPerson().getDeathPersonRace() != null) {
                 fv.setExistingValue(null);
                 if (AppConstants.SINHALA.equals(preferedLan)) {
-                    fv.setExistingValue(deathRegister.getDeathPerson().getDeathPersonRace().getSiRaceName());
+                    fv.setExistingValue(registerValue.getSiRaceName());
 
                 }
                 if (AppConstants.TAMIL.equals(preferedLan)) {
-                    fv.setExistingValue(deathRegister.getDeathPerson().getDeathPersonRace().getTaRaceName());
+                    fv.setExistingValue(registerValue.getTaRaceName());
                 }
             } else if (deathAlteration.getDeathPerson().getDeathPersonRace() != null) {
                 if (AppConstants.SINHALA.equals(preferedLan)) {
-                    fv.setAlterationValue(deathAlteration.getDeathPerson().getDeathPersonRace().getSiRaceName());
+                    fv.setAlterationValue(alterationValue.getSiRaceName());
                 }
                 if (AppConstants.TAMIL.equals(preferedLan)) {
-                    fv.setAlterationValue(deathAlteration.getDeathPerson().getDeathPersonRace().getTaRaceName());
+                    fv.setAlterationValue(alterationValue.getTaRaceName());
                 }
             }
         }
