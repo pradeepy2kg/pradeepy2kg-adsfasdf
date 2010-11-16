@@ -179,12 +179,12 @@
 
 <s:hidden id="invalideData" value="%{getText('invalide.data')}"/>
 <s:hidden id="cannotNull" value="%{getText('cannot.null')}"/>
-<s:hidden id="pin" value="%{getText('filed.pin')}"/>
-<s:hidden id="nic" value="%{getText('field.nic')}"/>
-<s:hidden id="dob" value="%{getText('field.dob')}"/>
-<s:hidden id="addressError" value="%{getText('field.address')}"/>
-<s:hidden id="phone" value="%{getText('field.phone')}"/>
-<s:hidden id="email" value="%{getText('field.email')}"/>
-<s:hidden id="nameOfficialError" value="%{getText('field.nameOfficial')}"/>
-<s:hidden id="nameEnglishError" value="%{getText('field.nameEnglish')}"/>
+<s:hidden id="pin" value="%{getText('registrar.pin')}"/>
+<s:hidden id="nic" value="%{getText('registrar.nic')}"/>
+<s:hidden id="dob" value="%{getText('registrar.dateofbirth')}"/>
+<s:hidden id="addressError" value="%{getText('registrar.address')}"/>
+<s:hidden id="phone" value="%{getText('registrar.phone')}"/>
+<s:hidden id="email" value="%{getText('registrar.email')}"/>
+<s:hidden id="nameOfficialError" value="%{getText('registrar.full.name.officelaLang')}"/>
+<s:hidden id="nameEnglishError" value="%{getText('registrar.full.name.english')}"/>
 <s:hidden id="emptry" value="%{getText('field.emptry')}"/>
