@@ -132,8 +132,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public BirthRegisterAction(BirthRegistrationService service, AdoptionOrderService adoptionService, DistrictDAO districtDAO,
-                               CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO,
-                               AppParametersDAO appParametersDAO, UserLocationDAO userLocationDAO, LocationDAO locationDAO, AssignmentDAO assignmentDAO, BirthAlterationService birthAlterationService) {
+        CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO,
+        AppParametersDAO appParametersDAO, UserLocationDAO userLocationDAO, LocationDAO locationDAO,
+        AssignmentDAO assignmentDAO, BirthAlterationService birthAlterationService) {
         this.service = service;
         this.adoptionService = adoptionService;
         this.districtDAO = districtDAO;
@@ -161,8 +162,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         BirthDeclaration bdf;
         if (back) {
             populate((BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN));
-            if (pageNo == 1 && parent.getMotherDSDivision() != null)
+            if (pageNo == 1 && parent.getMotherDSDivision() != null) {
                 populateAllDSDivisionList(parent.getMotherDSDivision().getDistrict().getDistrictUKey(), language);
+            }
             return "form" + pageNo;
         }
         if (pageNo < 1) {
@@ -173,7 +175,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             case 1:
                 // checking serial number is already used and skip this in edit mode
                 if (bdf.getIdUKey() == 0) {
-                    BirthDeclaration bd = service.getActiveRecordByBDDivisionAndSerialNo(register.getBirthDivision(), register.getBdfSerialNo(), user);
+                    BirthDeclaration bd = service.getActiveRecordByBDDivisionAndSerialNo(register.getBirthDivision(),
+                        register.getBdfSerialNo(), user);
                     if (bd != null) {
                         addFieldError("duplicateSerialNumberError", getText("p1.duplicateSerialNumber.label"));
                         pageNo = 0;
@@ -268,11 +271,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
         }
         if (logger.isDebugEnabled()) {
-            logger.debug("DistrictId: " + birthDistrictId + " ,BDDivisionId: " + birthDivisionId + " ,DSDivisionId: " + dsDivisionId);
+            logger.debug("DistrictId: " + birthDistrictId + " ,BDDivisionId: " + birthDivisionId + " ,DSDivisionId: " +
+                dsDivisionId);
         }
         populate(bdf);
-        if (pageNo == 1 && parent != null && parent.getMotherDSDivision() != null && parent.getMotherDSDivision().getDistrict() != null)
+        if (pageNo == 1 && parent != null && parent.getMotherDSDivision() != null && parent.getMotherDSDivision().getDistrict() != null) {
             populateAllDSDivisionList(parent.getMotherDSDivision().getDistrict().getDistrictUKey(), language);
+        }
         logger.debug("Birth Declaration: PageNo=" + pageNo);
         return "form" + pageNo;
     }
@@ -389,12 +394,15 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 int defId = locationList.keySet().iterator().next();
 
                 Location location = locationDAO.getLocation(defId);
-                if (language.equals(AppConstants.SINHALA))
+                if (language.equals(AppConstants.SINHALA)) {
                     returnAddress = location.getSiLocationMailingAddress();
-                if (language.equals(AppConstants.TAMIL))
+                }
+                if (language.equals(AppConstants.TAMIL)) {
                     returnAddress = location.getTaLocationMailingAddress();
-                if (language.equals(AppConstants.ENGLISH))
+                }
+                if (language.equals(AppConstants.ENGLISH)) {
                     returnAddress = location.getEnLocationMailingAddress();
+                }
             }
             if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
                 bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED)) {
@@ -732,8 +740,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     motherRacePrintEn = raceDAO.getNameByPK(parent.getMotherRace().getRaceId(), AppConstants.ENGLISH);
                 }
                 marriedStatus = marriage.getParentsMarriedPrint();
-                if (marriedStatus != null)
+                if (marriedStatus != null) {
                     marriedStatusEn = MarriedStatusUtil.getMarriedStatus(marriage.getParentsMarried(), AppConstants.ENGLISH);
+                }
 
                 addActionMessage("message.print.success");
                 //TODO is this line is suitable here ?,this condition should check before loading all those above stuff :D ??
@@ -757,7 +766,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private void displayChangesInStarMark(List<BirthDeclaration> birthDeclarations) {
         changedFields = new BitSet();
         for (int i = 0; i < birthDeclarations.size(); i++) {
-           BirthAlteration ba = birthAlterationService.getBirthAlterationByBirthCertificateNumber(birthDeclarations.get(i).getIdUKey(), user).get(0);
+            BirthAlteration ba = birthAlterationService.getBirthAlterationByBirthCertificateNumber(birthDeclarations.get(i).getIdUKey(), user).get(0);
             changedFields.or(ba.getApprovalStatuses());
         }
         logger.debug("bit sets merge and final bit set : {}", changedFields);

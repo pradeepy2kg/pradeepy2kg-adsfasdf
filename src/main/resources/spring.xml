@@ -234,6 +234,7 @@
         <constructor-arg ref="userLocationDAOImpl"/>
         <constructor-arg ref="locationDAOImpl"/>
         <constructor-arg ref="assignmentDAOImpl"/>
+        <constructor-arg ref="birthAlterationService"/>
     </bean>
     <bean id="alterationAction" scope="prototype" class="lk.rgd.crs.web.action.births.AlterationAction">
         <constructor-arg ref="manageBirthService"/>
@@ -337,7 +338,7 @@
         <constructor-arg ref="eventManagementService"/>
     </bean>
 
-    <bean id="populationRegisterAction" class="lk.rgd.prs.web.action.PopulationRegisterAction">
+    <bean id="personRegisterAction" class="lk.rgd.prs.web.action.PersonRegisterAction">
         <constructor-arg ref="ecivilService"/>
         <constructor-arg ref="raceDAOImpl"/>
         <constructor-arg ref="countryDAOImpl"/>
@@ -347,5 +348,9 @@
         <constructor-arg ref="ecivilService"/>
         <constructor-arg ref="raceDAOImpl"/>
         <constructor-arg ref="countryDAOImpl"/>
+    </bean>
+
+    <bean id="personApprovalAction" class="lk.rgd.prs.web.action.PersonApprovalAction">
+        <constructor-arg ref="ecivilService"/>
     </bean>
 </beans>

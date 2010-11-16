@@ -54,6 +54,7 @@ public class RolePermissionUtils {
         adrBitSet.set(Permission.APPROVE_DEATH);
         adrBitSet.set(Permission.PRINT_DEATH_CERTIFICATE);
         adrBitSet.set(Permission.REGISTRAR_MANAGEMENT);
+        adrBitSet.set(Permission.PRS_APPROVE_PERSON);
 
         // DR
         drBitSet = new BitSet();
@@ -141,16 +142,18 @@ public class RolePermissionUtils {
             BitSet onlyADR = adrBitSet;
             BitSet onlyDeo = deoBitSet;
             onlyADR.andNot(onlyDeo);
-            if (isContain(permissionBit, onlyADR))
+            if (isContain(permissionBit, onlyADR)) {
                 return 2;
+            }
         }
 
         if (role.getRoleId().equals("ARG") || role.getRoleId().equals("RG")) {
             BitSet onlyARG = argBitSet;
             BitSet onlyDR = drBitSet;
             onlyARG.andNot(onlyDR);
-            if (isContain(permissionBit, onlyARG))
+            if (isContain(permissionBit, onlyARG)) {
                 return 4;
+            }
         }
         return 7;
     }

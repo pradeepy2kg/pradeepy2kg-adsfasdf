@@ -82,12 +82,12 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
-        <action name="eprExistingPersonRegInit" class="lk.rgd.prs.web.action.PopulationRegisterAction"
+        <action name="eprExistingPersonRegInit" class="lk.rgd.prs.web.action.PersonRegisterAction"
                 method="personRegistrationInit">
             <result type="tiles" name="success">epr.existingPersonRegistration</result>
         </action>
 
-        <action name="eprExistingPersonRegistration" class="lk.rgd.prs.web.action.PopulationRegisterAction"
+        <action name="eprExistingPersonRegistration" class="lk.rgd.prs.web.action.PersonRegisterAction"
                 method="personRegistration">
             <result type="tiles" name="success">epr.personRegisterDetails</result>
             <result type="tiles" name="form">epr.existingPersonRegistration</result>
@@ -98,7 +98,7 @@
             <result type="tiles" name="success">epr.personDetails</result>
         </action>
 
-        <action name="eprEditPerson" class="lk.rgd.prs.web.action.PopulationRegisterAction" method="personEditInit">
+        <action name="eprEditPerson" class="lk.rgd.prs.web.action.PersonRegisterAction" method="personEditInit">
             <result type="tiles" name="success">epr.existingPersonRegistration</result>
         </action>
 
@@ -107,6 +107,10 @@
             <result type="tiles" name="success">epr.PRSCertificate</result>
         </action>
 
+        <action name="eprPersonApproval" class="lk.rgd.prs.web.action.PersonApprovalAction"
+                method="loadPersonApprovalPendingList">
+                <result type="tiles" name="success">epr.PersonApproval</result>
+        </action>
 
     </package>
 

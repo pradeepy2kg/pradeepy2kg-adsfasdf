@@ -22,9 +22,9 @@ import java.util.*;
 /**
  * @author Chathuranga Withana
  */
-public class PopulationRegisterAction extends ActionSupport implements SessionAware {
+public class PersonRegisterAction extends ActionSupport implements SessionAware {
 
-    private static final Logger logger = LoggerFactory.getLogger(PopulationRegisterAction.class);
+    private static final Logger logger = LoggerFactory.getLogger(PersonRegisterAction.class);
     // This delimiter used to delimit countryId and passportNo from citizenship string
     private static final String delimiter = ":,";
 
@@ -50,7 +50,7 @@ public class PopulationRegisterAction extends ActionSupport implements SessionAw
     private String language;
     private boolean ignoreDuplicate;
 
-    public PopulationRegisterAction(PopulationRegistry service, RaceDAO raceDAO, CountryDAO countryDAO) {
+    public PersonRegisterAction(PopulationRegistry service, RaceDAO raceDAO, CountryDAO countryDAO) {
         this.service = service;
         this.raceDAO = raceDAO;
         this.countryDAO = countryDAO;
