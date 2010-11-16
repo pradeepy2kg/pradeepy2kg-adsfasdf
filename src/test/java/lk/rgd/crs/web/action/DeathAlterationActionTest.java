@@ -16,6 +16,7 @@ import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.service.DeathAlterationService;
 import lk.rgd.crs.api.service.DeathRegistrationService;
 import lk.rgd.UnitTestManager;
+import lk.rgd.crs.web.util.FieldValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -327,6 +328,9 @@ public class DeathAlterationActionTest extends CustomStrutsTestCase {
         basicLists(deathAlterationAction);
     }
 
+    /**
+     * this test function test the process of generating changes list
+     */
     public void testDisplayChangesForApproval() throws Exception {
         //display changes between  alteration record 7 and  its death register
         Map session = userLogin("rg", "password");
@@ -343,6 +347,23 @@ public class DeathAlterationActionTest extends CustomStrutsTestCase {
         assertEquals("Correct objects to compare", deathAlterationAction.getDeathAlteration().getDeathRegisterIDUkey(),
             deathAlterationAction.getDeathRegister().getIdUKey());
         assertEquals("Approval page", true, deathAlterationAction.isApprovalPage());
+        List<FieldValue> x = deathAlterationAction.getChangesList();
+        Iterator itr = x.iterator();
+        while (itr.hasNext()) {
+            FieldValue f = (FieldValue) itr.next();
+            logger.debug("index : {}", f.getFieldConstant());
+        }
+    }
+
+    /**
+     * this method test the function of death alteration approval and apply changes to the original death record.
+     */
+    public void testApproveAndApplyChanges() throws Exception {
+        //8/3/1/10/12/14/15/16/17/18/19/20/21 are changed and assume 10/12/14/15/16/ are accepted
+        Map session = userLogin("rg", "password");
+        request.setParameter("approvedIndex", "{10,12,14,15,16}");
+        request.setParameter("deathAlterationId", "7");
+
     }
 
     private void basicLists(DeathAlterationAction deathAlterationAction) {

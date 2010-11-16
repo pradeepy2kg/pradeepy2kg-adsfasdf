@@ -437,6 +437,10 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
 
     private void generateChangesList(DeathRegister deathRegister, DeathAlteration deathAlteration, String preferedLan) {
         logger.debug("begin generating changes list");
+
+        String registerValue = null;
+        String alterationValue = null;
+
         if (deathAlteration.getDeathInfo() != null && deathRegister.getDeath() != null) {
             //todo check sudden death
             String dateEx = null;
@@ -448,6 +452,26 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 dateAlt = DateTimeUtils.getISO8601FormattedString(deathAlteration.getDeathInfo().getDateOfDeath());
             }
 
+            compareStringValues(deathRegister.getDeath().getPlaceOfBurial(), deathAlteration.getDeathInfo().getPlaceOfBurial(),
+                DeathAlteration.BURIAL_PLACE, preferedLan);
+
+            compareStringValues(deathRegister.getDeath().getIcdCodeOfCause(), deathAlteration.getDeathInfo().getIcdCodeOfCause(),
+                DeathAlteration.ICD_CODE, preferedLan);
+
+            compareStringValues(deathRegister.getDeath().getCauseOfDeath(), deathAlteration.getDeathInfo().getCauseOfDeath(),
+                DeathAlteration.CAUSE_OF_DEATH, preferedLan);
+
+            compareStringValues(deathRegister.getDeath().getPlaceOfDeathInEnglish(), deathAlteration.getDeathInfo().getPlaceOfDeathInEnglish(),
+                DeathAlteration.PLACE_OF_DEATH_ENGLISH, preferedLan);
+
+            compareStringValues(deathRegister.getDeath().getPlaceOfDeath(), deathAlteration.getDeathInfo().getPlaceOfDeath(),
+                DeathAlteration.PLACE_OF_DEATH, preferedLan);
+
+            compareStringValues(deathRegister.getDeath().getTimeOfDeath(), deathAlteration.getDeathInfo().getTimeOfDeath(),
+                DeathAlteration.TIME_OF_DEATH, preferedLan);
+
+            compareStringValues(dateEx, dateAlt, DeathAlteration.DATE_OF_DEATH, preferedLan);
+
             if (!(deathRegister.getDeath().isCauseOfDeathEstablished() ==
                 deathAlteration.getDeathInfo().isCauseOfDeathEstablished())) {
                 changesList.add(new FieldValue(CommonUtil.getYesOrNo(deathRegister.getDeath().isCauseOfDeathEstablished(), preferedLan),
@@ -457,105 +481,36 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 ));
             }
 
-            if (!(deathRegister.getDeath().getPlaceOfBurial() == null && deathAlteration.getDeathInfo().getPlaceOfBurial() == null)) {
-                boolean x = deathRegister.getDeath().getPlaceOfBurial() != null ?
-                    !(deathRegister.getDeath().getPlaceOfBurial().
-                        equals(deathAlteration.getDeathInfo().getPlaceOfBurial())) : true;
-                if (x) {
-                    changesList.add(new FieldValue(deathRegister.getDeath().getPlaceOfBurial(), deathAlteration.getDeathInfo().getPlaceOfBurial(),
-                        DeathAlteration.BURIAL_PLACE, CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(DeathAlteration.BURIAL_PLACE), preferedLan)));
-                }
-            }
-
-            if (!(deathRegister.getDeath().getIcdCodeOfCause() == null && deathAlteration.getDeathInfo().getIcdCodeOfCause() == null)) {
-                boolean x = deathRegister.getDeath().getIcdCodeOfCause() != null ?
-                    !(deathRegister.getDeath().getIcdCodeOfCause().
-                        equals(deathAlteration.getDeathInfo().getIcdCodeOfCause())) : true;
-                if (x) {
-                    changesList.add(new FieldValue(deathRegister.getDeath().getIcdCodeOfCause(), deathAlteration.getDeathInfo().getIcdCodeOfCause(),
-                        DeathAlteration.BURIAL_PLACE, CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(DeathAlteration.BURIAL_PLACE), preferedLan)));
-                }
-            }
-
-            if (!(deathRegister.getDeath().getCauseOfDeath() == null && deathAlteration.getDeathInfo().getCauseOfDeath() == null)) {
-                boolean x = deathRegister.getDeath().getCauseOfDeath() != null ?
-                    !(deathRegister.getDeath().getCauseOfDeath().
-                        equals(deathAlteration.getDeathInfo().getCauseOfDeath())) : true;
-                if (x) {
-                    changesList.add(new FieldValue(deathRegister.getDeath().getCauseOfDeath(), deathAlteration.getDeathInfo().getCauseOfDeath(),
-                        DeathAlteration.CAUSE_OF_DEATH, CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(DeathAlteration.CAUSE_OF_DEATH), preferedLan)));
-                }
-            }
-
-            if (!(deathRegister.getDeath().getPlaceOfDeathInEnglish() == null && deathAlteration.getDeathInfo().getPlaceOfDeathInEnglish() == null)) {
-                boolean x = deathRegister.getDeath().getPlaceOfDeathInEnglish() != null ?
-                    !(deathRegister.getDeath().getPlaceOfDeathInEnglish().
-                        equals(deathAlteration.getDeathInfo().getPlaceOfDeathInEnglish())) : true;
-                if (x) {
-                    changesList.add(new FieldValue(deathRegister.getDeath().getPlaceOfDeathInEnglish(), deathAlteration.getDeathInfo().getPlaceOfDeathInEnglish(),
-                        DeathAlteration.PLACE_OF_DEATH_ENGLISH, CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(DeathAlteration.PLACE_OF_DEATH_ENGLISH), preferedLan)));
-                }
-            }
-
-            if (!(deathRegister.getDeath().getPlaceOfDeath() == null && deathAlteration.getDeathInfo().getPlaceOfDeath() == null)) {
-                boolean x = deathRegister.getDeath().getPlaceOfDeath() != null ?
-                    !(deathRegister.getDeath().getPlaceOfDeath().
-                        equals(deathAlteration.getDeathInfo().getPlaceOfDeath())) : true;
-                if (x) {
-                    changesList.add(new FieldValue(deathRegister.getDeath().getPlaceOfDeath(), deathAlteration.getDeathInfo().getPlaceOfDeath(),
-                        DeathAlteration.PLACE_OF_DEATH, CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(DeathAlteration.PLACE_OF_DEATH), preferedLan)));
-                }
-            }
-
-            if (!(deathRegister.getDeath().getTimeOfDeath() == null && deathAlteration.getDeathInfo().getTimeOfDeath() == null)) {
-                boolean x = deathRegister.getDeath().getTimeOfDeath() != null ?
-                    !(deathRegister.getDeath().getTimeOfDeath().
-                        equals(deathAlteration.getDeathInfo().getTimeOfDeath())) : true;
-                if (x) {
-                    changesList.add(new FieldValue(deathRegister.getDeath().getTimeOfDeath(), deathAlteration.getDeathInfo().getTimeOfDeath(),
-                        DeathAlteration.TIME_OF_DEATH, CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(DeathAlteration.TIME_OF_DEATH), preferedLan)));
-                }
-            }
-
-            if (!(dateEx == null && dateAlt == null)) {
-                boolean x = dateEx != null ?
-                    !(dateEx.equals(dateAlt)) : true;
-                if (x) {
-                    changesList.add(new FieldValue(dateEx, dateAlt,
-                        DeathAlteration.DATE_OF_DEATH, CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(DeathAlteration.DATE_OF_DEATH), preferedLan)));
-                }
-            }
         }
 
         if (deathAlteration.getDeathPerson() != null && deathRegister.getDeathPerson() != null) {
 
-            if (!(deathRegister.getDeathPerson().getDeathPersonPINorNIC() == null && deathAlteration.getDeathPerson().getDeathPersonPINorNIC() == null)) {
-                boolean x = deathRegister.getDeathPerson().getDeathPersonPINorNIC() != null ?
-                    !(deathRegister.getDeathPerson().getDeathPersonPINorNIC().
-                        equals(deathAlteration.getDeathPerson().getDeathPersonPINorNIC())) : true;
-                if (x) {
-                    changesList.add(new FieldValue(deathRegister.getDeathPerson().getDeathPersonMotherFullName(),
-                        deathAlteration.getDeathPerson().getDeathPersonMotherFullName(),
-                        DeathAlteration.PIN, CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(DeathAlteration.PIN), preferedLan)));
-                }
-            }
-            //checking death country
-            FieldValue fv = compareCountry(deathRegister, deathAlteration, preferedLan);
-            if (fv != null) {
-                changesList.add(fv);
-            }
+            compareStringValues(deathRegister.getDeathPerson().getDeathPersonPINorNIC(), deathAlteration.getDeathPerson().getDeathPersonPINorNIC(),
+                DeathAlteration.PIN, preferedLan);
 
-            if (!(deathRegister.getDeathPerson().getDeathPersonPassportNo() == null && deathAlteration.getDeathPerson().getDeathPersonPassportNo() == null)) {
-                boolean x = deathRegister.getDeathPerson().getDeathPersonPassportNo() != null ?
-                    !(deathRegister.getDeathPerson().getDeathPersonPassportNo().
-                        equals(deathAlteration.getDeathPerson().getDeathPersonPassportNo())) : true;
-                if (x) {
-                    changesList.add(new FieldValue(deathRegister.getDeathPerson().getDeathPersonPassportNo(),
-                        deathAlteration.getDeathPerson().getDeathPersonPassportNo(),
-                        DeathAlteration.PASSPORT, CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(DeathAlteration.PASSPORT), preferedLan)));
-                }
-            }
+            compareStringValues(deathRegister.getDeathPerson().getDeathPersonNameOfficialLang(), deathAlteration.getDeathPerson().getDeathPersonNameOfficialLang(),
+                DeathAlteration.NAME, preferedLan);
 
+            compareStringValues(deathRegister.getDeathPerson().getDeathPersonNameInEnglish(), deathAlteration.getDeathPerson().getDeathPersonNameInEnglish(),
+                DeathAlteration.NAME_ENGLISH, preferedLan);
+
+            compareStringValues(deathRegister.getDeathPerson().getDeathPersonPermanentAddress(), deathAlteration.getDeathPerson().getDeathPersonPermanentAddress(),
+                DeathAlteration.ADDRESS, preferedLan);
+
+            compareStringValues(deathRegister.getDeathPerson().getDeathPersonFatherPINorNIC(), deathAlteration.getDeathPerson().getDeathPersonFatherPINorNIC(),
+                DeathAlteration.PIN_FATHER, preferedLan);
+
+            compareStringValues(deathRegister.getDeathPerson().getDeathPersonFatherFullName(), deathAlteration.getDeathPerson().getDeathPersonFatherFullName(),
+                DeathAlteration.NAME_FATHER, preferedLan);
+
+            compareStringValues(deathRegister.getDeathPerson().getDeathPersonMotherPINorNIC(), deathAlteration.getDeathPerson().getDeathPersonMotherPINorNIC(),
+                DeathAlteration.PIN_MOTHER, preferedLan);
+
+            compareStringValues(deathRegister.getDeathPerson().getDeathPersonMotherFullName(), deathAlteration.getDeathPerson().getDeathPersonMotherFullName(),
+                DeathAlteration.NAME_MOTHER, preferedLan);
+
+            compareStringValues(deathRegister.getDeathPerson().getDeathPersonPassportNo(), deathAlteration.getDeathPerson().getDeathPersonPassportNo(),
+                DeathAlteration.PASSPORT, preferedLan);
 
             if (!(deathRegister.getDeathPerson().getDeathPersonAge() ==
                 deathAlteration.getDeathPerson().getDeathPersonAge())) {
@@ -572,90 +527,28 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                     DeathAlteration.GENDER, CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(DeathAlteration.GENDER), preferedLan)));
             }
 
-            fv = compareRace(deathRegister, deathAlteration, preferedLan);
+            //checking death country
+            FieldValue fv = compareCountry(deathRegister, deathAlteration, preferedLan);
             if (fv != null) {
                 changesList.add(fv);
             }
 
-            if (!(deathRegister.getDeathPerson().getDeathPersonNameOfficialLang() == null && deathAlteration.getDeathPerson().getDeathPersonNameOfficialLang() == null)) {
-                boolean x = deathRegister.getDeathPerson().getDeathPersonNameOfficialLang() != null ?
-                    !(deathRegister.getDeathPerson().getDeathPersonNameOfficialLang().
-                        equals(deathAlteration.getDeathPerson().getDeathPersonNameOfficialLang())) : true;
-                if (x) {
-                    changesList.add(new FieldValue(deathRegister.getDeathPerson().getDeathPersonNameOfficialLang(),
-                        deathAlteration.getDeathPerson().getDeathPersonNameOfficialLang(),
-                        DeathAlteration.NAME, CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(DeathAlteration.NAME), preferedLan)));
-                }
-            }
-
-            if (!(deathRegister.getDeathPerson().getDeathPersonNameInEnglish() == null && deathAlteration.getDeathPerson().getDeathPersonNameInEnglish() == null)) {
-                boolean x = deathRegister.getDeathPerson().getDeathPersonNameInEnglish() != null ?
-                    !(deathRegister.getDeathPerson().getDeathPersonNameInEnglish().
-                        equals(deathAlteration.getDeathPerson().getDeathPersonNameInEnglish())) : true;
-                if (x) {
-                    changesList.add(new FieldValue(deathRegister.getDeathPerson().getDeathPersonNameInEnglish(),
-                        deathAlteration.getDeathPerson().getDeathPersonNameInEnglish(),
-                        DeathAlteration.NAME_ENGLISH, CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(DeathAlteration.NAME_ENGLISH), preferedLan)));
-                }
-            }
-
-            if (!(deathRegister.getDeathPerson().getDeathPersonPermanentAddress() == null && deathAlteration.getDeathPerson().getDeathPersonPermanentAddress() == null)) {
-                boolean x = deathRegister.getDeathPerson().getDeathPersonPermanentAddress() != null ?
-                    !(deathRegister.getDeathPerson().getDeathPersonPermanentAddress().
-                        equals(deathAlteration.getDeathPerson().getDeathPersonPermanentAddress())) : true;
-                if (x) {
-                    changesList.add(new FieldValue(deathRegister.getDeathPerson().getDeathPersonPermanentAddress(),
-                        deathAlteration.getDeathPerson().getDeathPersonPermanentAddress(),
-                        DeathAlteration.ADDRESS, CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(DeathAlteration.ADDRESS), preferedLan)));
-                }
-            }
-
-            if (!(deathRegister.getDeathPerson().getDeathPersonFatherPINorNIC() == null && deathAlteration.getDeathPerson().getDeathPersonFatherPINorNIC() == null)) {
-                boolean x = deathRegister.getDeathPerson().getDeathPersonFatherPINorNIC() != null ?
-                    !(deathRegister.getDeathPerson().getDeathPersonFatherPINorNIC().
-                        equals(deathAlteration.getDeathPerson().getDeathPersonFatherPINorNIC())) : true;
-                if (x) {
-                    changesList.add(new FieldValue(deathRegister.getDeathPerson().getDeathPersonFatherPINorNIC(),
-                        deathAlteration.getDeathPerson().getDeathPersonFatherPINorNIC(),
-                        DeathAlteration.PIN_FATHER, CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(DeathAlteration.PIN_FATHER), preferedLan)));
-                }
-            }
-
-            if (!(deathRegister.getDeathPerson().getDeathPersonFatherFullName() == null && deathAlteration.getDeathPerson().getDeathPersonFatherFullName() == null)) {
-                boolean x = deathRegister.getDeathPerson().getDeathPersonFatherFullName() != null ?
-                    !(deathRegister.getDeathPerson().getDeathPersonFatherFullName().
-                        equals(deathAlteration.getDeathPerson().getDeathPersonFatherFullName())) : true;
-                if (x) {
-                    changesList.add(new FieldValue(deathRegister.getDeathPerson().getDeathPersonFatherFullName(),
-                        deathAlteration.getDeathPerson().getDeathPersonFatherFullName(),
-                        DeathAlteration.NAME_FATHER, CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(DeathAlteration.NAME_FATHER), preferedLan)));
-                }
-            }
-
-            if (!(deathRegister.getDeathPerson().getDeathPersonMotherPINorNIC() == null && deathAlteration.getDeathPerson().getDeathPersonMotherPINorNIC() == null)) {
-                boolean x = deathRegister.getDeathPerson().getDeathPersonMotherPINorNIC() != null ?
-                    !(deathRegister.getDeathPerson().getDeathPersonMotherPINorNIC().
-                        equals(deathAlteration.getDeathPerson().getDeathPersonMotherPINorNIC())) : true;
-                if (x) {
-                    changesList.add(new FieldValue(deathRegister.getDeathPerson().getDeathPersonMotherPINorNIC(),
-                        deathAlteration.getDeathPerson().getDeathPersonMotherPINorNIC(),
-                        DeathAlteration.PIN_MOTHER, CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(DeathAlteration.PIN_MOTHER), preferedLan)));
-                }
-            }
-
-
-            if (!(deathRegister.getDeathPerson().getDeathPersonMotherFullName() == null && deathAlteration.getDeathPerson().getDeathPersonMotherFullName() == null)) {
-                boolean x = deathRegister.getDeathPerson().getDeathPersonMotherFullName() != null ?
-                    !(deathRegister.getDeathPerson().getDeathPersonMotherFullName().
-                        equals(deathAlteration.getDeathPerson().getDeathPersonMotherFullName())) : true;
-                if (x) {
-                    changesList.add(new FieldValue(deathRegister.getDeathPerson().getDeathPersonMotherFullName(),
-                        deathAlteration.getDeathPerson().getDeathPersonMotherFullName(),
-                        DeathAlteration.NAME_MOTHER, CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(DeathAlteration.NAME_MOTHER), preferedLan)));
-                }
+            fv = compareRace(deathRegister, deathAlteration, preferedLan);
+            if (fv != null) {
+                changesList.add(fv);
             }
         }
         logger.debug("ending generating changes list");
+    }
+
+    private void compareStringValues(String registerValue, String alterationValue, int constantValue, String preferedLan) {
+        if (!(registerValue == null && alterationValue == null)) {
+            boolean x = registerValue != null ? !(registerValue.equals(alterationValue)) : true;
+            if (x) {
+                changesList.add(new FieldValue(registerValue, alterationValue, constantValue,
+                    CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(constantValue), preferedLan)));
+            }
+        }
     }
 
     private FieldValue compareCountry(DeathRegister deathRegister, DeathAlteration deathAlteration, String preferedLan) {
