@@ -242,56 +242,49 @@ public class DeathAlterationActionTest extends CustomStrutsTestCase {
         return result;
     }
 
-    /**
-     * this test case testing loading death alteration capture page ,capturing death alterations and edit mode of a
-     * death alteration
-     *
-     * @throws Exception if fails to login.
-     */
-    public void testCaptureDeathAlteration() throws Exception {
-
+    public void testCaptureDeathAlterationInit() throws Exception {
         Map session = userLogin("rg", "password");
-        /*
-        check page load(loading death alteration page with existing values)
-        * */
-        request.setParameter("pageNumber", "0");
-        //searching by death serial number
+        //loading death register for alteration by serial number and death division
+        //loading a recoded death at 'ambathalen pahala' (idUKey 9 ) and serial number 2010012361
         request.setParameter("serialNumber", "2010012361");
-        request.setParameter("divisionUKey", "" + ambathalenPahala.getBdDivisionUKey());
+        request.setParameter("divisionUKey", "9");
         initAndExecute("/alteration/eprDeathAlterationPageLoad.do", session);
-        session = deathAlterationAction.getSession();
-        assertNotNull("session set", session);
-        //check death register is populated
-        assertNotNull("Death Register Object", deathAlterationAction.getDeathRegister());
-        //check basic list are populated if success
+        //check death register is populated without action errors
+        assertEquals("Action errors", 0, deathAlterationAction.getActionErrors().size());
+        assertNotNull("Death register object found ", deathAlterationAction.getDeathRegister());
+        //check alteration object populated
+        assertNotNull("Death alteration object populated", deathAlterationAction.getDeathAlteration());
+        //check other lists are populated
         otherLists(deathAlterationAction);
+        //check other fields(death division name/serial number/district name /ds division name)
+        assertNotNull("District name ", deathAlterationAction.getDistrict());
+        assertNotNull("DS Division name", deathAlterationAction.getDsDivision());
+        assertNotNull("Division name", deathAlterationAction.getDeathDivision());
+        assertNotNull("Serial number", deathAlterationAction.getSerialNumber());
+
+        //now we load the page with the information form the death register and page about to submit with changes to
     }
 
-    public void testCaptureAlterationNonEdit() throws Exception {
-
+    public void testDeathAlterationCapture() throws Exception {
         Map session = userLogin("rg", "password");
-        //checking capturing death alteration  with death id 2 non edit mode
-        request.setParameter("pageNumber", "1");
-        request.setParameter("serialNumber", "2010012361");
-        request.setParameter("divisionUKey", "" + ambathalenPahala.getBdDivisionUKey());
-        request.setParameter("editMode", "false");
-        request.setParameter("deathId", "2");
-        request.setParameter("deathAlteration.deathPerson.deathPersonPINorNIC", "7896541230");
-        request.setParameter("deathAlteration.deathPerson.deathPersonPassportNo", "963258741D");
-        request.setParameter("deathAlteration.deathPerson.deathPersonGender", "0");
-        request.setParameter("deathAlteration.deathPerson.deathPersonNameOfficialLang", "name");
-        request.setParameter("deathAlteration.deathPerson.deathPersonNameInEnglish", "name english");
-        request.setParameter("deathAlteration.deathPerson.deathPersonPermanentAddress", "address");
-        request.setParameter("comments", "comments");
-        request.setParameter("deathAlteration.deathPerson.deathPersonCountry", "2");
-        request.setParameter("deathAlteration.deathPerson.deathPersonRace", "2");
-        request.setParameter("deathAlteration.deathPerson.deathPersonAge", "10");
+        User user = loginSampleUser();
+        DeathRegister dr = deathRegistrationService.getByBDDivisionAndDeathSerialNo(ambathalenPahala, 2010012361, user);
+        //setting changed values
+        request.setParameter("deathId", "" + dr.getIdUKey());
+        request.setParameter("editDeathInfo", "true");
+        request.setParameter("editDeathPerson", "true");
+        request.setParameter("deathAlteration.dateReceived", "2010-11-16");
+
+        request.setParameter("deathAlteration.deathInfo.dateOfDeath", "2010-11-09");
+        request.setParameter("deathAlteration.deathInfo.placeOfDeath", "place of death changed value");
+
+        request.setParameter("deathAlteration.deathPerson.deathPersonNameOfficialLang", "name official language changed value");
+        request.setParameter("deathAlteration.deathPerson.deathPersonNameInEnglish", "name english changed value");
+
+        request.setParameter("deathAlteration.declarant.declarantFullName", "declerant name");
+        request.setParameter("deathAlteration.declarant.declarantType", "RELATIVE");
+
         initAndExecute("/alteration/eprCaptureDeathAlteration.do", session);
-        //check bean is populated
-        assertEquals("Action Errors", 0, deathAlterationAction.getActionErrors().size());
-        assertEquals("Death Person Age", 10, (Object) deathAlterationAction.getDeathAlteration().getDeathPerson().getDeathPersonAge());
-        //check basic list are populated if success
-        //todo check more
     }
 
     public void testRejectDeathAlteration() throws Exception {
