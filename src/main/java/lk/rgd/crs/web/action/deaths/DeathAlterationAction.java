@@ -243,8 +243,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 return ERROR;
             }
         }
-        //todo remove this population
-        populateOtherLists();
+         populateOtherLists();
         deathAlteration = populateAlterationObject(deathRegister);
         //setting up death district    ds and death division
         district = districtDAO.getNameByPK(deathRegister.getDeath().getDeathDistrict().getDistrictUKey(), language);
@@ -352,7 +351,9 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         if (deathAlterationId > 0) {
             //approving from death alteration approval list
             deathAlteration = deathAlterationService.getByIDUKey(deathAlterationId, user);
-        } else {
+        }
+        //todo remove follow else block
+        else {
             List<DeathAlteration> alterations = deathAlterationService.getAlterationByDeathId(deathId, user);
             Iterator<DeathAlteration> itr = alterations.iterator();
             while (itr.hasNext()) {
@@ -453,23 +454,23 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 dateAlt = DateTimeUtils.getISO8601FormattedString(deathAlteration.getDeathInfo().getDateOfDeath());
             }
 
-            compareStringValues(deathRegister.getDeath().getPlaceOfBurial(), deathAlteration.getDeathInfo().getPlaceOfBurial(),
-                DeathAlteration.BURIAL_PLACE, preferedLan);
+            compareStringValues(deathRegister.getDeath().getPlaceOfBurial(),
+                deathAlteration.getDeathInfo().getPlaceOfBurial(),DeathAlteration.BURIAL_PLACE, preferedLan);
 
-            compareStringValues(deathRegister.getDeath().getIcdCodeOfCause(), deathAlteration.getDeathInfo().getIcdCodeOfCause(),
-                DeathAlteration.ICD_CODE, preferedLan);
+            compareStringValues(deathRegister.getDeath().getIcdCodeOfCause(),
+                deathAlteration.getDeathInfo().getIcdCodeOfCause(),DeathAlteration.ICD_CODE, preferedLan);
 
-            compareStringValues(deathRegister.getDeath().getCauseOfDeath(), deathAlteration.getDeathInfo().getCauseOfDeath(),
-                DeathAlteration.CAUSE_OF_DEATH, preferedLan);
+            compareStringValues(deathRegister.getDeath().getCauseOfDeath(),
+                deathAlteration.getDeathInfo().getCauseOfDeath(),DeathAlteration.CAUSE_OF_DEATH, preferedLan);
 
-            compareStringValues(deathRegister.getDeath().getPlaceOfDeathInEnglish(), deathAlteration.getDeathInfo().getPlaceOfDeathInEnglish(),
-                DeathAlteration.PLACE_OF_DEATH_ENGLISH, preferedLan);
+            compareStringValues(deathRegister.getDeath().getPlaceOfDeathInEnglish(),
+                deathAlteration.getDeathInfo().getPlaceOfDeathInEnglish(),DeathAlteration.PLACE_OF_DEATH_ENGLISH, preferedLan);
 
-            compareStringValues(deathRegister.getDeath().getPlaceOfDeath(), deathAlteration.getDeathInfo().getPlaceOfDeath(),
-                DeathAlteration.PLACE_OF_DEATH, preferedLan);
+            compareStringValues(deathRegister.getDeath().getPlaceOfDeath(),
+                deathAlteration.getDeathInfo().getPlaceOfDeath(),DeathAlteration.PLACE_OF_DEATH, preferedLan);
 
-            compareStringValues(deathRegister.getDeath().getTimeOfDeath(), deathAlteration.getDeathInfo().getTimeOfDeath(),
-                DeathAlteration.TIME_OF_DEATH, preferedLan);
+            compareStringValues(deathRegister.getDeath().getTimeOfDeath(),
+                deathAlteration.getDeathInfo().getTimeOfDeath(),DeathAlteration.TIME_OF_DEATH, preferedLan);
 
             compareStringValues(dateEx, dateAlt, DeathAlteration.DATE_OF_DEATH, preferedLan);
 
@@ -486,32 +487,32 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
 
         if (deathAlteration.getDeathPerson() != null && deathRegister.getDeathPerson() != null) {
 
-            compareStringValues(deathRegister.getDeathPerson().getDeathPersonPINorNIC(), deathAlteration.getDeathPerson().getDeathPersonPINorNIC(),
-                DeathAlteration.PIN, preferedLan);
+            compareStringValues(deathRegister.getDeathPerson().getDeathPersonPINorNIC(), deathAlteration.getDeathPerson().
+                getDeathPersonPINorNIC(),DeathAlteration.PIN, preferedLan);
 
-            compareStringValues(deathRegister.getDeathPerson().getDeathPersonNameOfficialLang(), deathAlteration.getDeathPerson().getDeathPersonNameOfficialLang(),
-                DeathAlteration.NAME, preferedLan);
+            compareStringValues(deathRegister.getDeathPerson().getDeathPersonNameOfficialLang(),
+                deathAlteration.getDeathPerson().getDeathPersonNameOfficialLang(),DeathAlteration.NAME, preferedLan);
 
-            compareStringValues(deathRegister.getDeathPerson().getDeathPersonNameInEnglish(), deathAlteration.getDeathPerson().getDeathPersonNameInEnglish(),
-                DeathAlteration.NAME_ENGLISH, preferedLan);
+            compareStringValues(deathRegister.getDeathPerson().getDeathPersonNameInEnglish(),
+                deathAlteration.getDeathPerson().getDeathPersonNameInEnglish(),DeathAlteration.NAME_ENGLISH, preferedLan);
 
-            compareStringValues(deathRegister.getDeathPerson().getDeathPersonPermanentAddress(), deathAlteration.getDeathPerson().getDeathPersonPermanentAddress(),
-                DeathAlteration.ADDRESS, preferedLan);
+            compareStringValues(deathRegister.getDeathPerson().getDeathPersonPermanentAddress(),
+                deathAlteration.getDeathPerson().getDeathPersonPermanentAddress(),DeathAlteration.ADDRESS, preferedLan);
 
-            compareStringValues(deathRegister.getDeathPerson().getDeathPersonFatherPINorNIC(), deathAlteration.getDeathPerson().getDeathPersonFatherPINorNIC(),
-                DeathAlteration.PIN_FATHER, preferedLan);
+            compareStringValues(deathRegister.getDeathPerson().getDeathPersonFatherPINorNIC(),
+                deathAlteration.getDeathPerson().getDeathPersonFatherPINorNIC(),DeathAlteration.PIN_FATHER, preferedLan);
 
-            compareStringValues(deathRegister.getDeathPerson().getDeathPersonFatherFullName(), deathAlteration.getDeathPerson().getDeathPersonFatherFullName(),
-                DeathAlteration.NAME_FATHER, preferedLan);
+            compareStringValues(deathRegister.getDeathPerson().getDeathPersonFatherFullName(),
+                deathAlteration.getDeathPerson().getDeathPersonFatherFullName(),DeathAlteration.NAME_FATHER, preferedLan);
 
-            compareStringValues(deathRegister.getDeathPerson().getDeathPersonMotherPINorNIC(), deathAlteration.getDeathPerson().getDeathPersonMotherPINorNIC(),
-                DeathAlteration.PIN_MOTHER, preferedLan);
+            compareStringValues(deathRegister.getDeathPerson().getDeathPersonMotherPINorNIC(),
+                deathAlteration.getDeathPerson().getDeathPersonMotherPINorNIC(),DeathAlteration.PIN_MOTHER, preferedLan);
 
-            compareStringValues(deathRegister.getDeathPerson().getDeathPersonMotherFullName(), deathAlteration.getDeathPerson().getDeathPersonMotherFullName(),
-                DeathAlteration.NAME_MOTHER, preferedLan);
+            compareStringValues(deathRegister.getDeathPerson().getDeathPersonMotherFullName(),
+                deathAlteration.getDeathPerson().getDeathPersonMotherFullName(),DeathAlteration.NAME_MOTHER, preferedLan);
 
-            compareStringValues(deathRegister.getDeathPerson().getDeathPersonPassportNo(), deathAlteration.getDeathPerson().getDeathPersonPassportNo(),
-                DeathAlteration.PASSPORT, preferedLan);
+            compareStringValues(deathRegister.getDeathPerson().getDeathPersonPassportNo(),
+                deathAlteration.getDeathPerson().getDeathPersonPassportNo(),DeathAlteration.PASSPORT, preferedLan);
 
             if (!(deathRegister.getDeathPerson().getDeathPersonAge() ==
                 deathAlteration.getDeathPerson().getDeathPersonAge())) {
