@@ -200,7 +200,6 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         if (idUKey != 0) {
             logger.debug("attempt to load death register by certificate number : {}", idUKey);
             deathRegister = deathRegistrationService.getById(idUKey);
-
         }
         //search by pin
         else if (pin != null && Long.parseLong(pin) != 0) {
@@ -410,6 +409,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     }
 
     public String rejectDeathAlteration() {
+        logger.debug("attempt to load death alteration  rejection page for get comment : for death alteration id  {} ", deathAlterationId);
         if (pageNumber > 0) {
             logger.debug("attempt to reject death alteration : idUKey : {} by User : {}", deathAlterationId, user.getUserName());
             deathAlterationService.rejectDeathAlteration(deathAlterationId, user, rejectComment);
@@ -425,11 +425,13 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
      * printing confirmation letter to declarent who requested changes
      */
     public String printAlterationLetter() {
+        logger.debug("generating printing letter for death alteration id : {}", deathAlterationId);
         //loading requested alterations
         deathAlteration = deathAlterationService.getByIDUKey(deathAlterationId, user);
         deathRegister = deathRegistrationService.getById(deathAlteration.getDeathRegisterIDUkey());
         String preferedLan = deathRegister.getDeath().getPreferredLanguage();
         generateChangesList(deathRegister, deathAlteration, preferedLan);
+        logger.debug("complete generating printing letter for death alteration id : {}", deathAlterationId);
         return "pageLoad";
     }
 
@@ -695,6 +697,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 }
             }
         }
+        logger.debug("compare country for generating changes list completed");
         return fv;
     }
 
@@ -737,6 +740,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 }
             }
         }
+        logger.debug("complete comparing race");
         return fv;
     }
 
@@ -771,7 +775,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         dsDivisionList = dsDivisionDAO.getDSDivisionNames(districtUKey, language, user);
         dsDivisionId = dsDivisionList.keySet().iterator().next();
         bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
-        logger.debug("basic lists are populated");
+        logger.debug("basic lists (district list ,D.S Division list,death division list) are populated");
     }
 
     /**
@@ -780,7 +784,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     private void populateOtherLists() {
         raceList = raceDAO.getRaces(language);
         countryList = countryDAO.getCountries(language);
-        logger.debug("other lists are populated ");
+        logger.debug("other lists (race list,country list) are populated ");
     }
 
     //todo paginations next and previous
@@ -1174,4 +1178,5 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     public void setChangesList(List<FieldValue> changesList) {
         this.changesList = changesList;
     }
+
 }
