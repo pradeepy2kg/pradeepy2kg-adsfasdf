@@ -354,18 +354,18 @@
     </table>
     <div id="assignments" align="right">
         <s:url action="eprAssignmentAddDirect.do" id="x">
-            <s:param value="%{registrar.pin}" name="registrarPin"></s:param>
-            <s:param value="3" name="directAssignment"></s:param>
-            <s:param value="1" name="assignmentType"></s:param>
+            <s:param value="%{registrar.pin}" name="registrarPin"/>
+            <s:param value="3" name="directAssignment"/>
+            <s:param value="1" name="assignmentType"/>
         </s:url>
         <s:a href="%{x}" id="addText"><s:property
                 value="%{getText('assignment.add.new.assignment.birth.death')}"/></s:a>
     </div>
     <div id="assignments2" align="right">
         <s:url action="eprAssignmentAddDirect.do" id="x">
-            <s:param value="%{registrar.pin}" name="registrarPin"></s:param>
-            <s:param value="3" name="directAssignment"></s:param>
-            <s:param value="2" name="assignmentType"></s:param>
+            <s:param value="%{registrar.pin}" name="registrarPin"/>
+            <s:param value="3" name="directAssignment"/>
+            <s:param value="2" name="assignmentType"/>
         </s:url>
         <s:a href="%{x}" id="addText"><s:property value="%{getText('assignment.add.new.assignment.marriage')}"/></s:a>
     </div>

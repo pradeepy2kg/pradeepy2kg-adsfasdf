@@ -55,7 +55,7 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
     private int districtId;
     private int assignmentType;
     private int page;
-    private int registrarPin;
+    private long registrarPin;
     private int divisionId;//cannot determine witch type of division to set in struts layer
 
     private long registrarUkey;
@@ -480,11 +480,11 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
         this.directAssignment = directAssignment;
     }
 
-    public int getRegistrarPin() {
+    public long getRegistrarPin() {
         return registrarPin;
     }
 
-    public void setRegistrarPin(int registrarPin) {
+    public void setRegistrarPin(long registrarPin) {
         this.registrarPin = registrarPin;
     }
 
