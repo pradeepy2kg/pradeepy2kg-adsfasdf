@@ -235,7 +235,7 @@
                         <s:url id="editSelected" action="eprDeathAlterationEdit">
                             <s:param name="deathAlterationId" value="idUKey"/>
                         </s:url>
-                        <s:url id="deleteSelected" action="eprDeathAlterationDelate">
+                        <s:url id="deleteSelected" action="eprDeathAlterationDelete">
                             <s:param name="deathAlterationId" value="idUKey"/>
                         </s:url>
                         <s:url id="rejectSelected" action="eprDeathAlterationReject">

@@ -285,12 +285,64 @@ public class DeathAlterationActionTest extends CustomStrutsTestCase {
         request.setParameter("deathAlteration.declarant.declarantType", "RELATIVE");
 
         initAndExecute("/alteration/eprCaptureDeathAlteration.do", session);
+        //TODO
+    }
+
+    /**
+     * test case check loading page for death alteration edit mode
+     * death record serial 2010012361 and death division idUKey 9 now have an alteration
+     * this alteration record have idUKey 7
+     */
+    public void testDeathAlterationEditModeInit() throws Exception {
+        Map session = userLogin("rg", "password");
+        request.setParameter("deathAlterationId", "7");
+        initAndExecute("/alteration/eprDeathAlterationEdit.do", session);
+        //check death alteration object is populated
+        assertEquals("Action error", 0, deathAlterationAction.getActionErrors().size());
+        assertEquals("Death alteration idUKey", 7, deathAlterationAction.getDeathAlterationId());
+        assertNotNull("Death alteration object", deathAlterationAction.getDeathAlteration());
+        assertNotNull("Death register object", deathAlterationAction.getDeathRegister());
+        assertEquals("edit mode", true, deathAlterationAction.isEditMode());
+        otherLists(deathAlterationAction);
+    }
+
+    public void testDeathAlterationEdit() throws Exception {
+        //todo
     }
 
     public void testRejectDeathAlteration() throws Exception {
         Map session = userLogin("rg", "password");
         request.setParameter("pageNumber", "1");
+        //rejecting pre populated data entry mode alteration record
         request.setParameter("deathAlterationId", "2");
+        initAndExecute("/alteration/eprDeathAlterationReject.do", session);
+        basicLists(deathAlterationAction);
+    }
+
+    public void testDeleteDeathAlteration() throws Exception {
+        Map session = userLogin("rg", "password");
+        //deleting pre populated data entry mode alteration record  3
+        request.setParameter("deathAlterationId", "3");
+        initAndExecute("/alteration/eprDeathAlterationDelete.do", session);
+        basicLists(deathAlterationAction);
+    }
+
+    public void testDisplayChangesForApproval() throws Exception {
+        //display changes between  alteration record 7 and  its death register
+        Map session = userLogin("rg", "password");
+        request.setParameter("deathAlterationId", "7");
+        initAndExecute("/alteration/eprApproveDeathAlterationsDirect.do", session);
+        //checking no action errors
+        assertEquals("Action errors", 0, deathAlterationAction.getActionErrors().size());
+        //death alteration is populated and it's state is DATA_ENTRY
+        assertNotNull("Death alteration", deathAlterationAction.getDeathAlteration());
+        assertEquals("Death alteration state", DeathAlteration.State.DATA_ENTRY, deathAlterationAction.getDeathAlteration().getStatus());
+        //check death register is populated
+        assertNotNull("Death register", deathAlterationAction.getDeathRegister());
+        //if it is correct death register object
+        assertEquals("Correct objects to compare", deathAlterationAction.getDeathAlteration().getDeathRegisterIDUkey(),
+            deathAlterationAction.getDeathRegister().getIdUKey());
+        assertEquals("Approval page", true, deathAlterationAction.isApprovalPage());
     }
 
     private void basicLists(DeathAlterationAction deathAlterationAction) {
