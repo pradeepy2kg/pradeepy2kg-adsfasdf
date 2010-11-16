@@ -106,13 +106,6 @@
                 method="initPRSCertificate">
             <result type="tiles" name="success">epr.PRSCertificate</result>
         </action>
-
-        <action name="eprPRSCorrection" class="lk.rgd.prs.web.action.PersonDetailsAction"
-                method="pageTest">
-            <result type="tiles" name="success">epr.PRSCorrection</result>
-        </action>
-
-
     </package>
 
     <package name="births" namespace="/births" extends="NG">

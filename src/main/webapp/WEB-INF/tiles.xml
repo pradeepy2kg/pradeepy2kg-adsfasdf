@@ -455,9 +455,4 @@
         <put-attribute name="title" value="prs_certificate.title"/>
     </definition>
 
-    <definition name="epr.PRSCorrection" extends="epr.template">
-        <put-attribute name="body" value="/WEB-INF/pages/prs/PersonDetailCorrectionForm.jsp"/>
-        <put-attribute name="title" value="prs_correction.title"/>
-    </definition>
-
 </tiles-definitions>
