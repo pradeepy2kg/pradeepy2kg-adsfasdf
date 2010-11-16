@@ -1,7 +1,3 @@
-<%@ page import="lk.rgd.crs.api.domain.BirthDeclaration" %>
-<%@ page import="lk.rgd.common.api.domain.District" %>
-<%@ page import="java.util.Map" %>
-<%@ page import="lk.rgd.crs.web.WebConstants" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
