@@ -2,6 +2,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <html>
 <head>
+
 <style type="text/css">
 *{
     margin:auto;
@@ -15,6 +16,10 @@
 }
 .sub-table{
     border:0;
+}
+a:link,a:visited{
+    text-decoration:none;
+    color:black;
 }
 hr{
     margin-bottom:2px;
@@ -47,18 +52,34 @@ td
     padding-top:10px;
     padding-bottom:10px;
 }
-.title{
+#citizen_main{
+    display:block;
+    position:relative;    
+}
+.citizen_title{
     text-align:center;
     font-size:12pt;
     padding-top:10px;
     padding-bottom:10px;
+    height:70px;
+    float:left;
+    margin-left:180px;
 }
-
-/*textarea{
-    width:90%;
-} */
+#citizen_icon{
+    padding:0;
+    width:100px;
+    height:90px;
+    float:right;
+    margin:auto;
+}
+#citizen_blank{
+    padding:0;
+    width:100px;
+    height:90px;
+    float:left;
+    margin:auto;
+}
 body{
-
     background:#fff;
 }
 
@@ -124,135 +145,61 @@ body{
             </table>
 
         </tr>
+        <tr>
+            <td>
+                &nbsp;
+            </td>
+        </tr>
         <tr>  <!-- Form title -->
             <td>
                 <div id="main_title">
-                    ජනගහන ලේඛනයේ විස්තර නිවැරදි කිරීම<br/>
-                    குடிமதிப்பீட்டு ஆவணத்தில் ஆட்களை பதிவு செய்தல்  <br/>
-                    Correction of details in the Population Registry
+                    ජනගහන ලේඛනයේ විස්තර වෙනස් කිරීම<br/>
+                    குடிமதிப்பீட்டு ஆவணத்தில் ஆட்களை பதிவு செய்தல்   <br/>
+                    Updating details in the Population Registry
                 </div>
             </td>
         </tr>
         <tr>  <!-- Basic Details [ table ]   -->
             <table width="100%" class="inner-table" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td>
+                    <td width="25%" colspan="2">
                         (1) අනන්‍යතා අංකය  <br/>
                         அடையாள எண்  <br/>
                         Identification number
                     </td>
-                    <td width="20%">
+                    <td width="25%" colspan="2">
                         <s:textfield></s:textfield>
                     </td>
-                    <td width="30%">
+                    <td width="25%" colspan="2">
                         (2) ජාතික හැඳුනුම්පත් අංකය  <br/>
                         தேசிய அடையாள அட்டை இலக்கம்    <br/>
                         National Identity Card (NIC) Number
                     </td>
-                    <td>
+                    <td width="25%" colspan="2">
                         <s:textfield></s:textfield>
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                        (3) ජාතිය<br/>
-                        இனம்  <br/>
-                        Race
+                    <td rowspan="2" colspan="2">
+                        (3) සිවිල් තත්වය  <br/>
+                        சிவில் நிலைமை   <br/>
+                        Civil Status
                     </td>
-                    <td>
-                        <s:textfield></s:textfield>
-                    </td>
-                    <td>
-                        (4) උපන් දිනය <br/>
-                        பிறந்த திகதி   <br/>
-                        Date of Birth
-                    </td>
-                    <td>
-                        <s:textfield></s:textfield>
-                    </td>
+                    <td align="right" class="right_align">අවිවාහක<br>திருமணமாகாதவர் <br>Never Married</td>
+                    <td width="5%"><s:radio name="person.civilStatus_c" list="#@java.util.HashMap@{'NEVER_MARRIED':''}"/></td>
+                    <td align="right" class="right_align">විවාහක<br>திருமணமாணவர் <br>Married</td>
+                    <td width="5%"><s:radio name="person.civilStatus_c" list="#@java.util.HashMap@{'MARRIED':''}"/></td>
+                    <td align="right" class="right_align">දික්කසාද<br>திருமணம் தள்ளுபடி செய்தவர் <br>Divorced</td>
+                    <td width="5%"><s:radio name="person.civilStatus_c" list="#@java.util.HashMap@{'DIVORCED':''}"/></td>
                 </tr>
                 <tr>
-                    <td>
-                        (5) උපන් ස්ථානය<br/>
-                        பிறந்த இடம் <br/>
-                        Place of Birth
-                    </td>
-                    <td colspan="3">
-                        <s:textfield cssStyle="width:83%"></s:textfield>
-                    </td>
+                    <td align="right" class="right_align">වැන්දඹු<br>விதவை <br>Widowed</td>
+                    <td><s:radio name="person.civilStatus_c" list="#@java.util.HashMap@{'WIDOWED':''}"/></td>
+                    <td align="right" class="right_align">නිෂ්ප්‍රභාකර ඇත <br>தள்ளிவைத்தல் <br>Annulled</td>
+                    <td><s:radio name="person.civilStatus_c" list="#@java.util.HashMap@{'ANNULLED':''}"/></td>
+                    <td align="right" class="right_align">වෙන් වී ඇත<br>பிரிந்திருத்தல் <br>Separated</td>
+                    <td><s:radio name="person.civilStatus_c" list="#@java.util.HashMap@{'SEPARATED':''}"/></td>
                 </tr>
-                <tr>
-                    <td>
-                        (6) නම රාජ්‍ය භාෂාවෙන්  <br/>
-                        (සිංහල / දෙමළ)  <br/>
-                        பெயர் அரச கரும மொழியில்  (சிங்களம் / தமிழ்)<br/>
-                        Name in any of the official languages (Sinhala / Tamil)
-                    </td>
-                    <td colspan="3">
-                        <s:textarea name="prsn.personFullNameOfficialLang" id="personFullNameOfficialLang" cols="85" rows="3"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        (7) නම ඉංග්‍රීසි භාෂාවෙන්  <br/>
-                        பெயர் ஆங்கில மொழியில் <br/>
-                        Name in English
-                    </td>
-                    <td colspan="3">
-                        <s:textarea name="prsn.personFullNameEnglish" id="personFullNameEnglish" cols="85" rows="3"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        (8) ස්ත්‍රී පුරුෂ භාවය   <br/>
-                        பால்    <br/>
-                        Gender
-                    </td>
-                    <td>
-                        <s:select
-                list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
-                name="prsn.personGender" cssStyle="width:190px; margin-left:5px;" id="genderList"/>
-                    </td>
-                    <td colspan="2" class="special">
-                        <table width="100%" cellpadding="0" cellspacing="0">
-                            <tr>
-                                <td align="right" class="right_align">අවිවාහක<br>திருமணமாகாதவர் <br>Never Married</td>
-                                <td><s:radio name="person.civilStatus_c" list="#@java.util.HashMap@{'NEVER_MARRIED':''}"/></td>
-                                <td align="right" class="right_align">විවාහක<br>திருமணமாணவர் <br>Married</td>
-                                <td><s:radio name="person.civilStatus_c" list="#@java.util.HashMap@{'MARRIED':''}"/></td>
-                                <td align="right" class="right_align">දික්කසාද<br>திருமணம் தள்ளுபடி செய்தவர் <br>Divorced</td>
-                                <td><s:radio name="person.civilStatus_c" list="#@java.util.HashMap@{'DIVORCED':''}"/></td>
-                            </tr>
-                            <tr>
-                                <td align="right" class="right_align">වැන්දඹු<br>விதவை <br>Widowed</td>
-                                <td><s:radio name="person.civilStatus_c" list="#@java.util.HashMap@{'WIDOWED':''}"/></td>
-                                <td align="right" class="right_align">නිෂ්ප්‍රභාකර ඇත <br>தள்ளிவைத்தல் <br>Annulled</td>
-                                <td><s:radio name="person.civilStatus_c" list="#@java.util.HashMap@{'ANNULLED':''}"/></td>
-                                <td align="right" class="right_align">වෙන් වී ඇත<br>பிரிந்திருத்தல் <br>Separated</td>
-                                <td><s:radio name="person.civilStatus_c" list="#@java.util.HashMap@{'SEPARATED':''}"/></td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        (10) මවගේ අනන්‍යතා අංකය හෝ ජාතික හැඳුනුම්පත් අංකය  <br/>
-                        தாயின் அடையாள எண் அல்லது தேசிய அடையாள அட்டை இலக்கம்     <br/>
-                        Mothers Identification Number (PIN) or NIC
-                    </td>
-                    <td>
-                        <s:textfield></s:textfield>
-                    </td>
-                    <td>
-                        (11) පියාගේ අනන්‍යතා අංකය හෝ ජාතික හැඳුනුම්පත් අංකය  <br/>
-                        தந்தையின் அடையாள எண் அல்லது தேசிய அடையாள அட்டை இலக்கம்    <br/>
-                        Fathers Identification Number (PIN) or NIC
-                    </td>
-                    <td>
-                        <s:textfield></s:textfield>
-                    </td>
-                </tr>
-
             </table>
         </tr>
         <tr>
@@ -327,33 +274,20 @@ body{
                 </tr>
             </table>
         </tr>
-        <tr>
-            <td>&nbsp;</td>
-        </tr>
-        <tr>  <!-- Date and Signature   -->
-               <table width="100%" cellpadding="0" cellspacing="0"  class="inner-table">
-                    <td colspan="4" class="title_td">
-                        <div class="title">
-                        වෙනත් රටවල පුරවැසිභාවය ඇතිනම් ඒ පිලිබඳ විස්තර  <br/>
-                        வேறு நாடுகளில்  பிரஜாவுரிமை இருந்தால் அது பற்றிய தகவல்கள்   <br/>
-                        If a citizen of any other countries, such details
-                        </div>
-                    </td>
 
-                </tr>
-                <tr>
-                    <td>රට / நாடு /Country</td>
-                    <td><s:textfield></s:textfield></td>
-                    <td>ගමන් බලපත්‍ර අංකය / கடவுச் சீட்டு இல. /Passport No.</td>
-                    <td><s:textfield></s:textfield></td>
-                </tr>
-                <tr>
-                    <td>රට / நாடு /Country</td>
-                    <td><s:textfield></s:textfield></td>
-                    <td>ගමන් බලපත්‍ර අංකය / கடவுச் சீட்டு இல. /Passport No.</td>
-                    <td><s:textfield></s:textfield></td>
-               </tr>
-            </table>
+        <tr>
+            <td>
+                <table width="100%" cellpadding="0" cellspacing="0" id="citizen_table">
+                    
+                </table>
+            </td>
+        </tr>
+        <tr>
+            &nbsp;
+        </tr>
+        
+        <tr>
+            &nbsp;
         </tr>
     </tbody>
 </table>
