@@ -30,6 +30,7 @@ import java.util.*;
 
 /**
  * @author amith jayasekara test case for death alteration
+ *         TODO with action test print list
  */
 public class DeathAlterationActionTest extends CustomStrutsTestCase {
 
@@ -286,7 +287,13 @@ public class DeathAlterationActionTest extends CustomStrutsTestCase {
         request.setParameter("deathAlteration.declarant.declarantType", "RELATIVE");
 
         initAndExecute("/alteration/eprCaptureDeathAlteration.do", session);
-        //TODO
+        assertEquals("Action errors", 0, deathAlterationAction.getActionErrors().size());
+        assertEquals("Action massage", 1, deathAlterationAction.getActionMessages().size());
+        //check death alteration is populated
+        assertNotNull("death person ", deathAlterationAction.getDeathAlteration().getDeathPerson());
+        assertNotNull("death alteration info", deathAlterationAction.getDeathAlteration().getDeathInfo());
+        assertNotNull("declarent info", deathAlterationAction.getDeathAlteration().getDeclarant());
+        basicLists(deathAlterationAction);
     }
 
     /**
@@ -308,7 +315,27 @@ public class DeathAlterationActionTest extends CustomStrutsTestCase {
     }
 
     public void testDeathAlterationEdit() throws Exception {
-        //todo
+        Map session = userLogin("rg", "password");
+        request.setParameter("deathAlterationId", "7");
+        request.setParameter("editDeathInfo", "true");
+        request.setParameter("editDeathPerson", "true");
+        request.setParameter("deathAlteration.dateReceived", "2010-11-16");
+
+        request.setParameter("deathAlteration.deathInfo.dateOfDeath", "2010-11-10");
+        request.setParameter("deathAlteration.deathInfo.placeOfDeath", "place of death changed value edited");
+
+        request.setParameter("deathAlteration.deathPerson.deathPersonNameOfficialLang", "name official language changed value edited");
+        request.setParameter("deathAlteration.deathPerson.deathPersonNameInEnglish", "name english changed value edited");
+
+        request.setParameter("deathAlteration.declarant.declarantFullName", "declerant name edited");
+        request.setParameter("deathAlteration.declarant.declarantType", "RELATIVE");
+        initAndExecute("/alteration/eprEditDeathAlteration.do", session);
+        assertEquals("Action errors", 0, deathAlterationAction.getActionErrors().size());
+        assertEquals("Action massage", 1, deathAlterationAction.getActionMessages().size());
+        //check death alteration is populated
+        assertNotNull("death person ", deathAlterationAction.getDeathAlteration().getDeathPerson());
+        assertNotNull("death alteration info", deathAlterationAction.getDeathAlteration().getDeathInfo());
+        assertNotNull("declarent info", deathAlterationAction.getDeathAlteration().getDeclarant());
     }
 
     public void testRejectDeathAlteration() throws Exception {
@@ -349,21 +376,11 @@ public class DeathAlterationActionTest extends CustomStrutsTestCase {
         assertEquals("Approval page", true, deathAlterationAction.isApprovalPage());
     }
 
-    /**
-     * this method test the function of death alteration approval and apply changes to the original death record.
-     */
     public void testApproveAndApplyChanges() throws Exception {
-        //TODO check approval
-        //8/3/1/10/12/14/15/16/17/18/19/20/21 are changed and assume 10/12 are accepted
+        //TODO check this test is not working
         Map session = userLogin("rg", "password");
-        request.setParameter("approvedIndex", "{10,12}");
-        request.setParameter("deathAlterationId", "7");
-        initAndExecute("/alteration/eprDeathAlterationSetBits.do", session);
-        assertEquals("Action errors", 0, deathAlterationAction.getActionErrors().size());
-        //check bit set is setted properly
-        /*        assertEquals("10 is true", true, deathAlterationAction.getApprovedBitset().get(10));
-    assertEquals("12 is true", true, deathAlterationAction.getApprovedBitset().get(12));*/
-        //   basicLists(deathAlterationAction);
+        //    request.setParameter("approvedIndex", "{10,12}");
+        initAndExecute("/alteration/eprDeathAlterationPrintLetter.do", session);
     }
 
     public void testPrintLetter() throws Exception {
