@@ -8,6 +8,8 @@
 <%@ page import="lk.rgd.common.util.NameFormatUtil" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<script src="/ecivil/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
+<script src="/ecivil/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
 <script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
