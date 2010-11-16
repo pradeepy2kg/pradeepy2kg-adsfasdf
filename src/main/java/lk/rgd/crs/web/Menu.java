@@ -295,7 +295,7 @@ public class Menu {
         argAlterationLink.put("eprApproveDeathAlterationsDirect.do", new Link(null, "/ecivil/alteration/", "eprApproveDeathAlterationsDirect.do", Permission.APPROVE_BIRTH_ALTERATION));
         argAlterationLink.put("eprDeathAlterationSetBits.do", new Link(null, "/ecivil/alteration/", "eprDeathAlterationSetBits.do", Permission.APPROVE_BIRTH_ALTERATION));
         argAlterationLink.put("eprDeathAlterationReject.do", new Link(null, "/ecivil/alteration/", "eprDeathAlterationReject.do", Permission.APPROVE_BIRTH_ALTERATION));
-        argAlterationLink.put("eprDeathAlterationDelate.do", new Link(null, "/ecivil/alteration/", "eprDeathAlterationDelate.do", Permission.APPROVE_BIRTH_ALTERATION));
+        argAlterationLink.put("eprDeathAlterationDelete.do", new Link(null, "/ecivil/alteration/", "eprDeathAlterationDelete.do", Permission.APPROVE_BIRTH_ALTERATION));
         argAlterationLink.put("eprDeathAlterationEdit.do", new Link(null, "/ecivil/alteration/", "eprDeathAlterationEdit.do", Permission.APPROVE_BIRTH_ALTERATION));
         argAlterationLink.put("eprDeathAlterationApplyChanges.do", new Link(null, "/ecivil/alteration/", "eprDeathAlterationApplyChanges.do", Permission.APPROVE_BIRTH_ALTERATION));
 
