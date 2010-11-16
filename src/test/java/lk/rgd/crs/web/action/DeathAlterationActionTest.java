@@ -347,23 +347,40 @@ public class DeathAlterationActionTest extends CustomStrutsTestCase {
         assertEquals("Correct objects to compare", deathAlterationAction.getDeathAlteration().getDeathRegisterIDUkey(),
             deathAlterationAction.getDeathRegister().getIdUKey());
         assertEquals("Approval page", true, deathAlterationAction.isApprovalPage());
-        List<FieldValue> x = deathAlterationAction.getChangesList();
-        Iterator itr = x.iterator();
-        while (itr.hasNext()) {
-            FieldValue f = (FieldValue) itr.next();
-            logger.debug("index : {}", f.getFieldConstant());
-        }
     }
 
     /**
      * this method test the function of death alteration approval and apply changes to the original death record.
      */
     public void testApproveAndApplyChanges() throws Exception {
-        //8/3/1/10/12/14/15/16/17/18/19/20/21 are changed and assume 10/12/14/15/16/ are accepted
+        //TODO check approval
+        //8/3/1/10/12/14/15/16/17/18/19/20/21 are changed and assume 10/12 are accepted
         Map session = userLogin("rg", "password");
-        request.setParameter("approvedIndex", "{10,12,14,15,16}");
+        request.setParameter("approvedIndex", "{10,12}");
         request.setParameter("deathAlterationId", "7");
+        initAndExecute("/alteration/eprDeathAlterationSetBits.do", session);
+        assertEquals("Action errors", 0, deathAlterationAction.getActionErrors().size());
+        //check bit set is setted properly
+        /*        assertEquals("10 is true", true, deathAlterationAction.getApprovedBitset().get(10));
+    assertEquals("12 is true", true, deathAlterationAction.getApprovedBitset().get(12));*/
+        //   basicLists(deathAlterationAction);
+    }
 
+    public void testPrintLetter() throws Exception {
+        Map session = userLogin("rg", "password");
+        request.setParameter("deathAlterationId", "7");
+        initAndExecute("/alteration/eprDeathAlterationPrintLetter.do", session);
+        //checking no action errors
+        assertEquals("Action errors", 0, deathAlterationAction.getActionErrors().size());
+        //death alteration is populated and it's state is DATA_ENTRY
+        assertNotNull("Death alteration", deathAlterationAction.getDeathAlteration());
+        assertEquals("Death alteration state", DeathAlteration.State.DATA_ENTRY, deathAlterationAction.getDeathAlteration().getStatus());
+        //check death register is populated
+        assertNotNull("Death register", deathAlterationAction.getDeathRegister());
+        //if it is correct death register object
+        assertEquals("Correct objects to compare", deathAlterationAction.getDeathAlteration().getDeathRegisterIDUkey(),
+            deathAlterationAction.getDeathRegister().getIdUKey());
+        assertEquals("letter page", false, deathAlterationAction.isApprovalPage());
     }
 
     private void basicLists(DeathAlterationAction deathAlterationAction) {
