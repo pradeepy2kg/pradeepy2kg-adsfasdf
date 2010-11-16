@@ -56,7 +56,12 @@
             soapBody.appendChild(new SOAPObject('InputName')).val(id);
             soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
             soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
-            soapBody.appendChild(new SOAPObject('Gender')).val('U');
+            //soapBody.appendChild(new SOAPObject('Gender')).val('U');
+
+            //added by shan [ NOT Tested ] -> start
+            var genderVal = $("select#genderList").attr("value");
+            soapBody.appendChild(new SOAPObject('Gender')).value(genderVal);
+            //-> end
 
             //Create a new SOAP Request
             var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
@@ -302,7 +307,8 @@
         </td>
         <td colspan="6"><s:select
                 list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
-                name="child.childGender"/></td>
+                name="child.childGender" id="genderList"/>
+        </td>
     </tr>
     <tr>
         <td>4</td>
