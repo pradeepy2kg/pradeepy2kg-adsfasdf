@@ -55,7 +55,6 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     private Alteration52_1 alt52_1;
     private DeclarantInfo declarant;
     private ParentInfo parent;
-    private Date dateReceived;
     private int[] index;
     private BitSet indexCheck;
     private HashMap approveStatus = new HashMap();
@@ -69,6 +68,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     private NotifyingAuthorityInfo notifyingAuthority;
     private ConfirmantInfo confirmant;
     private BirthRegisterInfo register;
+    private BirthAlteration birthAlteration;
 
 
     private int pageNo;
@@ -79,12 +79,6 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     private String districtName;
     private String dsDivisionName;
     private String bdDivisionName;
-
-    private boolean bcOfFather;
-    private boolean bcOfMother;
-    private boolean mcOfParents;
-    private String otherDocuments;
-    private String comments;
 
     /* helper fields to capture input from pages, they will then be processed before populating the bean */
     private int birthDistrictId;
@@ -104,8 +98,6 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     private List<BirthAlteration> birthAlterationPendingApprovalList;
     private int divisionAltaration;
     private Date alterationRecivedDate;
-    private Date dateReceivedFrom;
-    private Date dateReceivedTo;
     private BirthAlteration.AlterationType alterationType;
 
 
@@ -150,7 +142,8 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     }
 
     public String birthAlterationSearch() {
-        BirthDeclaration bdf = new BirthDeclaration();
+        BirthDeclaration bdf = null;
+        birthAlteration = new BirthAlteration();
         populateBasicLists();
         pageType = 1;
 
@@ -168,31 +161,28 @@ public class AlterationAction extends ActionSupport implements SessionAware {
             pageType = 0;
         } else {
 
-            try {
+            if (bdf.getRegister() != null) {
                 if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_PRINTED)) {
                     addActionError(getText("cp1.error.entryNotPrinted"));
                     pageType = 0;
+                } else {
+                    getBirthCertificateInfo(bdf);
                 }
-                getBirthCertificateInfo(bdf);
-            }
-            catch (Exception e) {
-                handleErrors(e);
-                addActionError(getText("cp1.error.entryNotAvailable"));
-                pageType = 0;
             }
             if (pageType == 1) {
                 if (sectionOfAct == 3) {
-                    alt27A = new Alteration27A();
                     populateAlt27A(bdf);
                 } else if (sectionOfAct == 2) {
                     alt52_1 = new Alteration52_1();
                     populateAlt52_1(bdf);
                 }
+                //populate parent for populate declarent information  in javaScript
                 parent = bdf.getParent();
-                alt27 = new Alteration27();
+                Alteration27 alt27 = new Alteration27();
                 alt27.setChildFullNameOfficialLang(bdf.getChild().getChildFullNameOfficialLang());
                 alt27.setChildFullNameEnglish(bdf.getChild().getChildFullNameEnglish());
-                logger.debug("populate child in information of child :{}", alt27.getChildFullNameEnglish());
+                birthAlteration.setAlt27(alt27);
+                logger.debug("populate child  information of child :{}", alt27.getChildFullNameEnglish());
             }
             populateBasicLists();
             populateCountryRacesAndAllDSDivisions();
@@ -203,9 +193,16 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     }
 
     private void populateAlt52_1(BirthDeclaration bdf) {
-        parent = bdf.getParent();
+        Alteration52_1 alt52_1 = birthAlteration.getAlt52_1();
+        if (alt52_1 == null) {
+            alt52_1 = new Alteration52_1();
+        }
+        ParentInfo parent = bdf.getParent();
         child = bdf.getChild();
         InformantInfo bdfInformant = bdf.getInformant();
+        /*if informant is null then populate informant from bdf
+        *in the edit mode populate informant information if  informant information were not changed in first time
+        * */
         if (alt52_1.getInformant() == null) {
             if (bdfInformant != null) {
                 alt52_1.setInformant(new AlterationInformatInfo(bdfInformant.getInformantType(),
@@ -255,12 +252,17 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         alt52_1.setMother(mother);
         logger.debug("Loaded  Mother NIC or PIN Number of the {} is :{} ",
                 alt52_1.getMother().getMotherFullName(), alt52_1.getMother().getMotherNICorPIN());
+        birthAlteration.setAlt52_1(alt52_1);
 
     }
 
     private void populateAlt27A(BirthDeclaration bdf) {
+        Alteration27A alt27A = birthAlteration.getAlt27A();
+        if (alt27A == null) {
+            alt27A = new Alteration27A();
+        }
         if (bdf != null) {
-            parent = bdf.getParent();
+            ParentInfo parent = bdf.getParent();
             FatherInfo father = alt27A.getFather();
             if (father != null) {
                 //if father is not null,check box of the father information will check
@@ -309,25 +311,23 @@ public class AlterationAction extends ActionSupport implements SessionAware {
                 }
             }
         }
+        birthAlteration.setAlt27A(alt27A);
     }
 
     public String birthAlteration() {
-        BirthAlteration ba;
         if (idUKey != null) {
-            ba = alterationService.getByIDUKey(idUKey, user);
-        } else {
-            ba = new BirthAlteration();
+            birthAlteration = alterationService.getByIDUKey(idUKey, user);
         }
-        ba.setAlt27(alt27); /*Child's full name is save in any act*/
         switch (sectionOfAct) {
             //case 2 is used to set alteration52_1
             case 1:
-                ba.setType(BirthAlteration.AlterationType.TYPE_27);
-                ba.setApprovalStatuses(new BitSet(WebConstants.BIRTH_ALTERATION_APPROVE_ALT27));
+                birthAlteration.setType(BirthAlteration.AlterationType.TYPE_27);
+                birthAlteration.setApprovalStatuses(new BitSet(WebConstants.BIRTH_ALTERATION_APPROVE_ALT27));
                 break;
             //case 2 is used to set alteration27A
             case 2:
-                ba.setType(alterationType);
+                birthAlteration.setType(alterationType);
+                Alteration52_1 alt52_1 = birthAlteration.getAlt52_1();
                 if (divisionAltaration > 0) {
                     alt52_1.setBirthDivision(bdDivisionDAO.getBDDivisionByPK(divisionAltaration));
                 }
@@ -337,80 +337,64 @@ public class AlterationAction extends ActionSupport implements SessionAware {
                 if (motherRaceId > 0) {
                     alt52_1.getMother().setMotherRace(raceDAO.getRace(motherRaceId));
                 }
-                ba.setAlt52_1(alt52_1);
-                ba.setApprovalStatuses(new BitSet(WebConstants.BIRTH_ALTERATION_APPROVE_ALT52_1));
+                birthAlteration.setAlt52_1(alt52_1);
+                birthAlteration.setApprovalStatuses(new BitSet(WebConstants.BIRTH_ALTERATION_APPROVE_ALT52_1));
                 break;
             case 3:
-                ba.setType(BirthAlteration.AlterationType.TYPE_27A);
+                Alteration27A alt27A = birthAlteration.getAlt27A();
+                birthAlteration.setType(BirthAlteration.AlterationType.TYPE_27A);
                 logger.debug("father country id is :{}", fatherCountryId);
                 if (fatherCountryId > 0) {
                     alt27A.getFather().setFatherCountry(countryDAO.getCountry(fatherCountryId));
                 }
                 if (fatherRaceId > 0) alt27A.getFather().setFatherRace(raceDAO.getRace(fatherRaceId));
-                ba.setAlt27A(alt27A);
-                ba.setAlt52_1(null);
-                ba.setApprovalStatuses(new BitSet(WebConstants.BIRTH_ALTERATION_APPROVE_ALT27A));
+                birthAlteration.setAlt27A(alt27A);
+                birthAlteration.setAlt52_1(null);
+                birthAlteration.setApprovalStatuses(new BitSet(WebConstants.BIRTH_ALTERATION_APPROVE_ALT27A));
                 break;
 
         }
         if (birthDivisionId > 0) {
-            ba.setBirthRecordDivision(bdDivisionDAO.getBDDivisionByPK(birthDivisionId));
+            birthAlteration.setBirthRecordDivision(bdDivisionDAO.getBDDivisionByPK(birthDivisionId));
         }
-        ba.setBcOfFather(bcOfFather);
-        ba.setBcOfMother(bcOfMother);
-        ba.setMcOfParents(mcOfParents);
-        ba.setComments(comments);
-        ba.setOtherDocuments(otherDocuments);
-        ba.setStatus(BirthAlteration.State.DATA_ENTRY);
-        ba.setBdfIDUKey(bdId);
-        ba.setDeclarant(declarant);
-        ba.setDateReceived(dateReceived);
-/*        logger.debug("ba value is :{}",ba.getBdfIDUKey());*/
+        birthAlteration.setStatus(BirthAlteration.State.DATA_ENTRY);
+        birthAlteration.setBdfIDUKey(bdId);
         if (idUKey != null) {
-            alterationService.updateBirthAlteration(ba, user);
-            logger.debug("Updated a  Birth Alteration with Alteration idUKey  :{}", ba.getIdUKey());
+            alterationService.updateBirthAlteration(birthAlteration, user);
+            logger.debug("Updated a  Birth Alteration with Alteration idUKey  :{}", birthAlteration.getIdUKey());
         } else {
-            alterationService.addBirthAlteration(ba, user);
-            logger.debug("Add a new Birth Alteration with Alteration idUKey  :{}", ba.getIdUKey());
+            alterationService.addBirthAlteration(birthAlteration, user);
+            logger.debug("Add a new Birth Alteration with Alteration idUKey  :{}", birthAlteration.getIdUKey());
         }
         /*check permission to approval birth alteration  */
-        approveRightsToUser = user.isAllowedAccessToBDDSDivision(ba.getBirthRecordDivision().
+        approveRightsToUser = user.isAllowedAccessToBDDSDivision(birthAlteration.getBirthRecordDivision().
                 getDsDivision().getDsDivisionUKey());
-        idUKey = ba.getIdUKey();
-        bdId = ba.getBdfIDUKey();
+        idUKey = birthAlteration.getIdUKey();
+        bdId = birthAlteration.getBdfIDUKey();
         pageType = 1;
         initPermission();
         return SUCCESS;
     }
 
     public String editBirthAlteration() {
-        BirthAlteration ba = alterationService.getByIDUKey(idUKey, user);
-        if (ba != null) {
-            bdId = ba.getBdfIDUKey();
+        birthAlteration = alterationService.getByIDUKey(idUKey, user);
+        if (birthAlteration != null) {
+            bdId = birthAlteration.getBdfIDUKey();
             BirthDeclaration bdf = service.getById(bdId);
-            alt27 = ba.getAlt27();
-            alt27A = ba.getAlt27A();
-            alt52_1 = ba.getAlt52_1();
-            dateReceived = ba.getDateReceived();
-            declarant = ba.getDeclarant();
-            bcOfFather = ba.isBcOfFather();
-            bcOfMother = ba.isBcOfMother();
-            mcOfParents = ba.isMcOfParents();
-            comments = ba.getComments();
             pageType = 1;
             //information for search option
             if (bdf != null) {
                 getBirthCertificateInfo(bdf);
-                ba.setStatus(BirthAlteration.State.DATA_ENTRY);
+                birthAlteration.setStatus(BirthAlteration.State.DATA_ENTRY);
             }
-            if (ba.getType() == BirthAlteration.AlterationType.TYPE_27A) {
+            if (birthAlteration.getType() == BirthAlteration.AlterationType.TYPE_27A) {
                 populateAlt27A(bdf);
                 sectionOfAct = 3;
-            } else if (ba.getType() == BirthAlteration.AlterationType.TYPE_27) {
-                alt27 = ba.getAlt27();
+            } else if (birthAlteration.getType() == BirthAlteration.AlterationType.TYPE_27) {
+                alt27 = birthAlteration.getAlt27();
                 sectionOfAct = 1;
-            } else if (ba.getType() != BirthAlteration.AlterationType.TYPE_27
-                    && ba.getType() != BirthAlteration.AlterationType.TYPE_27A) {
+            } else if (birthAlteration.getType() != BirthAlteration.AlterationType.TYPE_27
+                    && birthAlteration.getType() != BirthAlteration.AlterationType.TYPE_27A) {
                 sectionOfAct = 2;
                 populateAlt52_1(bdf);
             }
@@ -1671,14 +1655,6 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         this.bdDivisionName = bdDivisionName;
     }
 
-    public Date getDateReceived() {
-        return dateReceived;
-    }
-
-    public void setDateReceived(Date dateReceived) {
-        this.dateReceived = dateReceived;
-    }
-
     public ChildInfo getChild() {
         return child;
     }
@@ -1791,45 +1767,6 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         this.parent = parent;
     }
 
-    public boolean isBcOfFather() {
-        return bcOfFather;
-    }
-
-    public void setBcOfFather(boolean bcOfFather) {
-        this.bcOfFather = bcOfFather;
-    }
-
-    public boolean isBcOfMother() {
-        return bcOfMother;
-    }
-
-    public void setBcOfMother(boolean bcOfMother) {
-        this.bcOfMother = bcOfMother;
-    }
-
-    public boolean isMcOfParents() {
-        return mcOfParents;
-    }
-
-    public void setMcOfParents(boolean mcOfParents) {
-        this.mcOfParents = mcOfParents;
-    }
-
-    public String getOtherDocuments() {
-        return otherDocuments;
-    }
-
-    public void setOtherDocuments(String otherDocuments) {
-        this.otherDocuments = otherDocuments;
-    }
-
-    public String getComments() {
-        return comments;
-    }
-
-    public void setComments(String comments) {
-        this.comments = comments;
-    }
 
     public int getPageType() {
         return pageType;
@@ -1845,22 +1782,6 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
     public void setAlterationRecivedDate(Date alterationRecivedDate) {
         this.alterationRecivedDate = alterationRecivedDate;
-    }
-
-    public Date getDateReceivedTo() {
-        return dateReceivedTo;
-    }
-
-    public void setDateReceivedTo(Date dateReceivedTo) {
-        this.dateReceivedTo = dateReceivedTo;
-    }
-
-    public Date getDateReceivedFrom() {
-        return dateReceivedFrom;
-    }
-
-    public void setDateReceivedFrom(Date dateReceivedFrom) {
-        this.dateReceivedFrom = dateReceivedFrom;
     }
 
     public boolean isEditChildInfo() {
@@ -2005,5 +1926,13 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
     public void setAllDsDivisionList(Map<Integer, String> allDsDivisionList) {
         this.allDsDivisionList = allDsDivisionList;
+    }
+
+    public BirthAlteration getBirthAlteration() {
+        return birthAlteration;
+    }
+
+    public void setBirthAlteration(BirthAlteration birthAlteration) {
+        this.birthAlteration = birthAlteration;
     }
 }
