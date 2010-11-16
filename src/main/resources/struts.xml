@@ -106,8 +106,6 @@
                 method="initPRSCertificate">
             <result type="tiles" name="success">epr.PRSCertificate</result>
         </action>
-
-
     </package>
 
     <package name="births" namespace="/births" extends="NG">
