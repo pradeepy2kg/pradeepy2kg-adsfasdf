@@ -261,7 +261,7 @@
         <put-attribute name="title" value="death.alteration.reject.comment"/>
     </definition>
 
-        <definition name="epr.deathAlterationPrintLetter" extends="epr.template">
+    <definition name="epr.deathAlterationPrintLetter" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/deaths/DeathAlterationConfirmationLetter.jsp"/>
         <put-attribute name="title" value="death.alteration.print.letter"/>
     </definition>
@@ -355,6 +355,11 @@
         <put-attribute name="title" value="registrars.veiw.title"/>
     </definition>
 
+    <definition name="epr.findRegistrar" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/management/RegistrarSearchHome.jsp"/>
+        <put-attribute name="title" value="search.registrar"/>
+    </definition>
+
     <definition name="epr.addAssignment" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/management/AddAssignment.jsp"/>
         <put-attribute name="title" value="assignment.add.title"/>
@@ -380,6 +385,7 @@
         <put-attribute name="body" value="/WEB-INF/pages/preferences/UserPreferences.jsp"/>
         <put-attribute name="title" value="UserPreferences.title"/>
     </definition>
+
     <definition name="epr.passwordChange" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/preferences/PasswordChange.jsp"/>
         <put-attribute name="title" value="changePassword.title"/>
@@ -444,7 +450,7 @@
         <put-attribute name="body" value="/WEB-INF/pages/prs/PersonDetails.jsp"/>
         <put-attribute name="title" value="person_details.title"/>
     </definition>
-    
+
     <definition name="epr.personRegisterDetails" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/prs/PersonRegisterDetails.jsp"/>
         <put-attribute name="title" value="person_register_details.title"/>

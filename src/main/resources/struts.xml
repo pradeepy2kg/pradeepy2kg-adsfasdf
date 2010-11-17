@@ -109,7 +109,7 @@
 
         <action name="eprPersonApproval" class="lk.rgd.prs.web.action.PersonApprovalAction"
                 method="loadPersonApprovalPendingList">
-                <result type="tiles" name="success">epr.PersonApproval</result>
+            <result type="tiles" name="success">epr.PersonApproval</result>
         </action>
 
     </package>
@@ -902,6 +902,12 @@
             <result type="tiles" name="error">epr.error</result>
         </action>-->
 
+        <action name="eprFindRegistrar" class="lk.rgd.crs.web.action.RegistrarsManagmentAction"
+                method="findRegistrar">
+            <result type="tiles" name="success">epr.findRegistrar</result>
+            <result type="tiles" name="error">epr.error</result>
+            <result type="tiles" name="pageLoad">epr.findRegistrar</result>
+        </action>
 
         <action name="eprInitUserCreation" class="lk.rgd.crs.web.action.UserManagmentAction"
                 method="initUser">

@@ -218,16 +218,14 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthAlteration> getBirthAlterationByBirthCertificateNumber(long idUKey, User user) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("attempt to get already done birth alterations for death register idUKey : {}", idUKey);
-        }
+        logger.debug("attempt to get already done birth alterations for birth register idUKey : {}", idUKey);
         return birthAlterationDAO.getBirthAlterationByBirthCertificateNumber(idUKey);
     }
 
     /**
      * Checks if the user can edit or delete a birth alteration entry before approval by an ARG
      * <p/>
-     * A DEO or ADR at the same "SubissionLocation" can edit or delete an entry at data entry stage. Any other who has
+     * A DEO or ADR at the same "SubmissionLocation" can edit or delete an entry at data entry stage. Any other who has
      * access to the BD division of the corresponding BDF has access to edit or delete
      *
      * @param ba   the birth alteration entry

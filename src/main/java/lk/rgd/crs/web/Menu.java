@@ -79,6 +79,8 @@ public class Menu {
         adminLink.put("eprActiveUserLocation.do", new Link(null, "/ecivil/management/", "eprActiveUserLocation.do", Permission.USER_MANAGEMENT));
         adminLink.put("eprEditAssignedUserLocation.do", new Link(null, "/ecivil/management/", "eprEditAssignedUserLocation.do", Permission.USER_MANAGEMENT));
         adminLink.put("eprIndexRecords.do", new Link("indexRecords.label", "/ecivil/management/", "eprIndexRecords.do", Permission.INDEX_RECORDS));
+        adminLink.put("eprFindRegistrar.do", new Link("search.registrar", "/ecivil/management/", "eprFindRegistrar.do", Permission.REGISTRAR_MANAGEMENT));
+
 
         adrAdminLink.put("eprRegistrarsManagment.do", new Link("registrars.managment", "/ecivil/management/", "eprRegistrarsManagment.do", Permission.REGISTRAR_MANAGEMENT));
         adrAdminLink.put("eprRegistrarsView.do", new Link(null, "/ecivil/management/", "eprRegistrarsView.do", Permission.REGISTRAR_MANAGEMENT));
@@ -89,6 +91,7 @@ public class Menu {
         adrAdminLink.put("eprSearchRegistrarByPin.do", new Link(null, "/ecivil/management/", "eprSearchRegistrarByPin.do", Permission.REGISTRAR_MANAGEMENT));
         adrAdminLink.put("eprAssignmentEdit.do", new Link(null, "/ecivil/management/", "eprAssignmentEdit.do", Permission.REGISTRAR_MANAGEMENT));
         adrAdminLink.put("eprUpdateRegistrar.do", new Link(null, "/ecivil/management/", "eprUpdateRegistrar.do", Permission.REGISTRAR_MANAGEMENT));
+        adrAdminLink.put("eprFindRegistrar.do", new Link("search.registrar", "/ecivil/management/", "eprFindRegistrar.do", Permission.REGISTRAR_MANAGEMENT));
 
         //User Preferance
         preferanceLink.put("eprUserPreferencesInit.do", new Link("userPreference.label", "/ecivil/preferences/", "eprUserPreferencesInit.do", Permission.USER_PREFERENCES));
