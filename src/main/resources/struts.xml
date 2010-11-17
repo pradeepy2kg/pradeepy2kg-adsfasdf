@@ -1002,68 +1002,68 @@
     <package name="alteration" namespace="/alteration" extends="NG">
         <default-interceptor-ref name="default"/>
 
-        <action name="eprBirthAlterationInit" class="lk.rgd.crs.web.action.births.AlterationAction"
+        <action name="eprBirthAlterationInit" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
                 method="initBirthAlteration">
             <result type="tiles" name="success">epr.birthAlteration</result>
         </action>
 
-        <action name="eprBirthAlterationSearch" class="lk.rgd.crs.web.action.births.AlterationAction"
+        <action name="eprBirthAlterationSearch" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
                 method="birthAlterationSearch">
             <result type="tiles" name="success">epr.birthAlteration</result>
         </action>
 
-        <action name="eprBirthAlteration" class="lk.rgd.crs.web.action.births.AlterationAction"
+        <action name="eprBirthAlteration" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
                 method="birthAlteration">
             <result type="tiles" name="success">epr.birthAlterationResult</result>
             <result type="tiles" name="error">epr.birthAlteration</result>
         </action>
-        <action name="eprEditSelectedAlteration" class="lk.rgd.crs.web.action.births.AlterationAction"
+        <action name="eprEditSelectedAlteration" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
                 method="editBirthAlteration">
             <result type="tiles" name="error">epr.birthAlteration</result>
         </action>
 
-        <action name="eprBirthAlterationPendingApproval" class="lk.rgd.crs.web.action.births.AlterationAction"
+        <action name="eprBirthAlterationPendingApproval" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
                 method="initBirthAlterationPendingApprovalList">
             <result type="tiles" name="success">epr.birthAlterationPendingApproval</result>
         </action>
 
-        <action name="eprAlterationApprovalPrevious" class="lk.rgd.crs.web.action.births.AlterationAction"
+        <action name="eprAlterationApprovalPrevious" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
                 method="previousPage">
             <result type="tiles" name="success">epr.birthAlterationPendingApproval</result>
         </action>
 
-        <action name="eprAlterationApprovalNext" class="lk.rgd.crs.web.action.births.AlterationAction"
+        <action name="eprAlterationApprovalNext" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
                 method="nextPage">
             <result type="tiles" name="success">epr.birthAlterationPendingApproval</result>
         </action>
 
-        <action name="eprFilterAlteration" class="lk.rgd.crs.web.action.births.AlterationAction"
+        <action name="eprFilterAlteration" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
                 method="filter">
             <result type="tiles" name="success">epr.birthAlterationPendingApproval</result>
         </action>
-        <action name="eprApproveAlteration" class="lk.rgd.crs.web.action.births.AlterationAction"
+        <action name="eprApproveAlteration" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
                 method="alterationApproval">
             <result type="tiles" name="success">epr.birthAlterationResult</result>
         </action>
-        <action name="eprBirthAlterationApplyChanges" class="lk.rgd.crs.web.action.births.AlterationAction"
+        <action name="eprBirthAlterationApplyChanges" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
                 method="birthAlterationApplyChanges">
             <result type="tiles" name="success">epr.birthAlterationResult</result>
         </action>
 
-        <action name="eprApproveSelectedAlteration" class="lk.rgd.crs.web.action.births.AlterationAction"
+        <action name="eprApproveSelectedAlteration" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
                 method="approveInit">
             <result type="tiles" name="success">epr.birthAlterationApproval</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
-        <action name="eprRejectSelectedAlteration" class="lk.rgd.crs.web.action.births.AlterationAction"
+        <action name="eprRejectSelectedAlteration" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
                 method="rejectAlteration">
             <result type="tiles" name="success">epr.birthAlterationResult</result>
         </action>
-        <action name="eprBirthAlterationHome" class="lk.rgd.crs.web.action.births.AlterationAction"
+        <action name="eprBirthAlterationHome" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
                 method="birthAlterationHome">
             <result type="tiles" name="success">epr.birthAlterationHome</result>
         </action>
-        <action name="eprPrintBirthAlterarionNotice" class="lk.rgd.crs.web.action.births.AlterationAction"
+        <action name="eprPrintBirthAlterarionNotice" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
                 method="printBirthAlterationNotice">
             <result type="tiles" name="success">epr.printBirthAlterarionNotice</result>
         </action>

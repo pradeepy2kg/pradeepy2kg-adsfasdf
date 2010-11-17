@@ -21,9 +21,9 @@ import java.util.*;
 /**
  * @author tharanga
  */
-public class AlterationAction extends ActionSupport implements SessionAware {
+public class BirthAlterationAction extends ActionSupport implements SessionAware {
 
-    private static final Logger logger = LoggerFactory.getLogger(AlterationAction.class);
+    private static final Logger logger = LoggerFactory.getLogger(BirthAlterationAction.class);
     private BirthRegistrationService service;
     private DistrictDAO districtDAO;
     private CountryDAO countryDAO;
@@ -115,7 +115,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     private boolean editGrandFatherInfo;
 
 
-    public AlterationAction(BirthRegistrationService service, DistrictDAO districtDAO, CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO,
+    public BirthAlterationAction(BirthRegistrationService service, DistrictDAO districtDAO, CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO,
                             DSDivisionDAO dsDivisionDAO, BirthAlterationService alterationService, AppParametersDAO appParametersDAO) {
         this.service = service;
         this.districtDAO = districtDAO;

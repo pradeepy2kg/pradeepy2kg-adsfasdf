@@ -236,7 +236,7 @@
         <constructor-arg ref="assignmentDAOImpl"/>
         <constructor-arg ref="birthAlterationService"/>
     </bean>
-    <bean id="alterationAction" scope="prototype" class="lk.rgd.crs.web.action.births.AlterationAction">
+    <bean id="alterationAction" scope="prototype" class="lk.rgd.crs.web.action.births.BirthAlterationAction">
         <constructor-arg ref="manageBirthService"/>
         <constructor-arg ref="districtDAOImpl"/>
         <constructor-arg ref="countryDAOImpl"/>

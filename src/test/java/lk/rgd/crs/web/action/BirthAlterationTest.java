@@ -14,12 +14,11 @@ import lk.rgd.common.api.domain.Race;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.core.AuthorizationException;
-import lk.rgd.common.util.DateTimeUtils;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.web.WebConstants;
-import lk.rgd.crs.web.action.births.AlterationAction;
+import lk.rgd.crs.web.action.births.BirthAlterationAction;
 import lk.rgd.crs.web.action.births.BirthRegisterAction;
 import org.apache.struts2.dispatcher.mapper.ActionMapping;
 import org.slf4j.Logger;
@@ -34,7 +33,7 @@ import java.util.*;
 public class BirthAlterationTest extends CustomStrutsTestCase {
     private static final Logger logger = LoggerFactory.getLogger(BirthAlterationTest.class);
     private ActionProxy proxy;
-    AlterationAction alterationAction;
+    BirthAlterationAction alterationAction;
     BirthRegisterAction registerAction;
     protected static BDDivision colomboBDDivision;
     protected static Country sriLanka;
@@ -96,7 +95,7 @@ public class BirthAlterationTest extends CustomStrutsTestCase {
         assertNotNull(proxy);
         logger.debug("nameSpace {} and actionName {}", mapping.getNamespace(), proxy.getMethod());
 
-        AlterationAction alterationAction = (AlterationAction) proxy.getAction();
+        BirthAlterationAction alterationAction = (BirthAlterationAction) proxy.getAction();
         assertNotNull(alterationAction);
     }
 
@@ -125,7 +124,7 @@ public class BirthAlterationTest extends CustomStrutsTestCase {
 
     private void initAndExecute(String mapping, Map session) {
         proxy = getActionProxy(mapping);
-        alterationAction = (AlterationAction) proxy.getAction();
+        alterationAction = (BirthAlterationAction) proxy.getAction();
         logger.debug("Action Method to be executed is {} ", proxy.getMethod());
         ActionContext.getContext().setSession(session);
         try {
@@ -286,7 +285,7 @@ public class BirthAlterationTest extends CustomStrutsTestCase {
         otherLists(alterationAction);
     }
 
-    private void otherLists(AlterationAction alterationAction) {
+    private void otherLists(BirthAlterationAction alterationAction) {
         assertNotNull("Race List", alterationAction.getRaceList());
         assertNotNull("Country List", alterationAction.getCountryList());
     }
