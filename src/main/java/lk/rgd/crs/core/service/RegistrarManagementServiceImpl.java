@@ -315,9 +315,9 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<Registrar> getRegistrarByNameOrPartOfTheName(String name, User user) {
-        throw new UnsupportedOperationException("not yet implemented method get registrar by name or part of the name");
+        logger.debug("requesting registrar list by name or part of the name : {} ", name);
+        return registrarDao.getRegistrarByNameOrPartOfTheName(name);
     }
-
 
     /**
      * @inheritedoc

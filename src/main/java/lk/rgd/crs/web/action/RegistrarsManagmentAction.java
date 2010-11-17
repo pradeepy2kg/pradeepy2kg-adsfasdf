@@ -283,8 +283,10 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
             logger.debug("attempt to search a registrar");
             if (registrarPin > 0) {
                 //search by registrar pin number
+                registrarList = service.getRegistrarByPin(registrarPin, user);
             } else if (registrarName != null) {
                 //search by name or part of the name
+                registrarList = service.getRegistrarByNameOrPartOfTheName(registrarName, user);
             }
             if (registrarList != null && registrarList.size() == 0) {
                 addActionError(getText("no.registrars.found"));
