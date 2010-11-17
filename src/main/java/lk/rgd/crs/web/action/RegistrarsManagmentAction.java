@@ -289,7 +289,7 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
                 registrarList = service.getRegistrarByNameOrPartOfTheName(registrarName, user);
             }
             if (registrarList != null && registrarList.size() == 0) {
-                addActionError(getText("no.registrars.found"));
+                addActionMessage(getText("no.registrars.found"));
             }
             return SUCCESS;
         }

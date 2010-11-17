@@ -22,18 +22,6 @@
 
 <script>
     $(document).ready(function() {
-        /**
-         *             "bPaginate": true,
-         "bLengthChange": false,
-         "bFilter": true,
-         ,
-         "sDom": 'T,C,H<"clear">lftipr'
-         "bSort": true,
-         "bInfo": false,
-         "bAutoWidth": false,
-         "bJQueryUI": true,
-         "sPaginationType": "full_numbers"
-         */
         $('#registrars-list-table').dataTable({
             "bPaginate": true,
             "bLengthChange": false,
@@ -43,7 +31,7 @@
             "bAutoWidth": false,
             "bJQueryUI": true,
             "sPaginationType": "full_numbers",
-            "sDom":'T,C,H<"clear">lft'
+            "sDom":'T,C,H<"clear">lftipr'
             /**
              * plugin and short key
              * TableTools T
@@ -122,8 +110,7 @@
 <div id="manage_registrars"/>
 <s:form action="eprRegistrarsFilter.do" method="post">
     <fieldset style="margin-bottom:0px;margin-top:2px;border:2px solid #c3dcee;">
-            <%--    <legend><s:property value="%{getText('filter.dsDivisions')}"/></legend>--%>
-        <table cellspacing="5" cellpadding="0">
+          <table cellspacing="5" cellpadding="0">
             <caption></caption>
             <col width="218px">
             <col width="500px">
@@ -151,7 +138,7 @@
             </tr>
             </tbody>
         </table>
-          <%-- <legend align="right"><s:property value="%{getText('filter.active.inactive')}"/></legend> --%>
+
         <table cellspacing="5" cellpadding="0">
             <caption></caption>
             <col width="218px">
