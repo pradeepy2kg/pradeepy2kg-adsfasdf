@@ -44,6 +44,7 @@ public class LoginActionTest extends CustomStrutsTestCase {
 
     public void testRGLogin() throws Exception {
         //set parameters before calling getActionProxy
+        request.setParameter("javaScript","true");
         request.setParameter("userName", "rg");
         request.setParameter("password", "password");
 
@@ -74,6 +75,7 @@ public class LoginActionTest extends CustomStrutsTestCase {
 
     
     public void testADRLogin() throws Exception {
+        request.setParameter("javaScript","true");
         request.setParameter("userName", "adr-colombo-colombo");
         request.setParameter("password", "password");
         String result = login();
@@ -87,6 +89,7 @@ public class LoginActionTest extends CustomStrutsTestCase {
 
     
     public void testDEOLogin() throws Exception {
+        request.setParameter("javaScript","true");
         request.setParameter("userName", "deo-gampaha-negambo");
         request.setParameter("password", "password");
         String result = login();
@@ -101,6 +104,7 @@ public class LoginActionTest extends CustomStrutsTestCase {
 
    
     public void testAdminLogin() throws Exception {
+        request.setParameter("javaScript","true");
         request.setParameter("userName", "admin");
         request.setParameter("password", "password");
         String result = login();
@@ -115,6 +119,7 @@ public class LoginActionTest extends CustomStrutsTestCase {
 
     
     public void testLogout() throws Exception {
+        request.setParameter("javaScript","true");
         request.setParameter("userName", "rg");
         request.setParameter("password", "password");
         String result = login();
@@ -132,6 +137,7 @@ public class LoginActionTest extends CustomStrutsTestCase {
 
     public void testIncorrectLogins1() throws Exception {
         // with incorrect password
+        request.setParameter("javaScript","true");
         request.setParameter("userName", "rg");
         request.setParameter("password", "passward");  // 'a' instead of 'o'
         String result = login();
@@ -143,6 +149,7 @@ public class LoginActionTest extends CustomStrutsTestCase {
 
     public void testIncorrectLogins2() throws Exception {
         // with incorrect user name
+        request.setParameter("javaScript","true");
         request.setParameter("userName", " rg");       // space before username.
         request.setParameter("password", "password");
         String result = login();
