@@ -410,6 +410,7 @@ public class DeathAlterationActionTest extends CustomStrutsTestCase {
     }
 
     private Map userLogin(String userName, String passWord) throws Exception {
+        request.setParameter("javaScript","true");
         request.setParameter("userName", userName);
         request.setParameter("password", passWord);
         ActionProxy proxy = getActionProxy("/eprLogin.do");

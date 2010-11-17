@@ -33,8 +33,9 @@ import java.util.*;
 public class BirthAlterationTest extends CustomStrutsTestCase {
     private static final Logger logger = LoggerFactory.getLogger(BirthAlterationTest.class);
     private ActionProxy proxy;
-    BirthAlterationAction alterationAction;
+    private BirthAlterationAction birthAlterationAction;
     BirthRegisterAction registerAction;
+    private LoginAction loginAction;
     protected static BDDivision colomboBDDivision;
     protected static Country sriLanka;
     protected static Race sinhalese;
@@ -95,8 +96,8 @@ public class BirthAlterationTest extends CustomStrutsTestCase {
         assertNotNull(proxy);
         logger.debug("nameSpace {} and actionName {}", mapping.getNamespace(), proxy.getMethod());
 
-        BirthAlterationAction alterationAction = (BirthAlterationAction) proxy.getAction();
-        assertNotNull(alterationAction);
+        BirthAlterationAction birthAlterationAction = (BirthAlterationAction) proxy.getAction();
+        assertNotNull(birthAlterationAction);
     }
 
 
@@ -112,11 +113,12 @@ public class BirthAlterationTest extends CustomStrutsTestCase {
         return rg;
     }
 
-    private Map UserLogin(String username, String passwd) throws Exception {
+    private Map UserLogin(String username, String password) throws Exception {
+        request.setParameter("javaScript","true");
         request.setParameter("userName", username);
-        request.setParameter("password", passwd);
+        request.setParameter("password", password);
         ActionProxy proxy = getActionProxy("/eprLogin.do");
-        LoginAction loginAction = (LoginAction) proxy.getAction();
+        loginAction = (LoginAction) proxy.getAction();
         ActionContext.getContext().setSession(new HashMap<String, Object>());
         proxy.execute();
         return loginAction.getSession();
@@ -124,7 +126,7 @@ public class BirthAlterationTest extends CustomStrutsTestCase {
 
     private void initAndExecute(String mapping, Map session) {
         proxy = getActionProxy(mapping);
-        alterationAction = (BirthAlterationAction) proxy.getAction();
+        birthAlterationAction = (BirthAlterationAction) proxy.getAction();
         logger.debug("Action Method to be executed is {} ", proxy.getMethod());
         ActionContext.getContext().setSession(session);
         try {
@@ -224,19 +226,19 @@ public class BirthAlterationTest extends CustomStrutsTestCase {
 
         Map session = UserLogin("rg", "password");
         initAndExecute("/alteration/eprBirthAlterationInit.do", session);
-        session = alterationAction.getSession();
-        BirthDeclaration bd = alterationAction.getService().getActiveRecordByBDDivisionAndSerialNo(
-                alterationAction.getBDDivisionDAO().getBDDivisionByPK(1), new Long("2010012401"), (User) session.get(WebConstants.SESSION_USER_BEAN));
+        session = birthAlterationAction.getSession();
+        BirthDeclaration bd = birthAlterationAction.getService().getActiveRecordByBDDivisionAndSerialNo(
+                birthAlterationAction.getBDDivisionDAO().getBDDivisionByPK(1), new Long("2010012401"), (User) session.get(WebConstants.SESSION_USER_BEAN));
         //logger.debug("current state of the record : {} ", bd.getRegister().getStatus());
         request.setParameter("pageNo", "1");
         request.setParameter("sectionOfAct", "3");
         initAndExecute("/alteration/eprBirthAlterationSearch.do", session);
-        session = alterationAction.getSession();
-        //assertEquals("Action errors after searching the fields to be altered  ", 0, alterationAction.getActionErrors().size());
+        session = birthAlterationAction.getSession();
+        //assertEquals("Action errors after searching the fields to be altered  ", 0, birthAlterationAction.getActionErrors().size());
 
        //todo 
-        bd = alterationAction.getService().getActiveRecordByBDDivisionAndSerialNo(
-                alterationAction.getBDDivisionDAO().getBDDivisionByPK(1), new Long("2010012401"), (User) session.get(WebConstants.SESSION_USER_BEAN));
+        bd = birthAlterationAction.getService().getActiveRecordByBDDivisionAndSerialNo(
+                birthAlterationAction.getBDDivisionDAO().getBDDivisionByPK(1), new Long("2010012401"), (User) session.get(WebConstants.SESSION_USER_BEAN));
         //set alt27A
         request.setParameter("birthAlteration.alt27.childFullNameOfficialLang", "RUWAN PERERA");    //todo get child name from bd
         request.setParameter("birthAlteration.alt27.childFullNameEnglish","RUWAN PERERA");          //todo get child name from bd
@@ -261,12 +263,12 @@ public class BirthAlterationTest extends CustomStrutsTestCase {
         request.setParameter("birthAlteration.alt27A.father.fatherPlaceOfBirth", "Colombo");
 
         initAndExecute("/alteration/eprBirthAlteration.do", session);
-        session = alterationAction.getSession();
+        session = birthAlterationAction.getSession();
 
-        assertEquals("Action errors after altering father information", 0, alterationAction.getActionErrors().size());
-        assertEquals("RUWAN PERERA", alterationAction.getBirthAlteration().getAlt27().getChildFullNameOfficialLang());
-        assertEquals("RUWAN PERERA", alterationAction.getBirthAlteration().getAlt27().getChildFullNameEnglish());
-        assertEquals("Anuradha Silva", alterationAction.getBirthAlteration().getAlt27A().getFather().getFatherFullName());
+        assertEquals("Action errors after altering father information", 0, birthAlterationAction.getActionErrors().size());
+        assertEquals("RUWAN PERERA", birthAlterationAction.getBirthAlteration().getAlt27().getChildFullNameOfficialLang());
+        assertEquals("RUWAN PERERA", birthAlterationAction.getBirthAlteration().getAlt27().getChildFullNameEnglish());
+        assertEquals("Anuradha Silva", birthAlterationAction.getBirthAlteration().getAlt27A().getFather().getFatherFullName());
     }
     public void testBirthAlterationSearch() throws Exception {
 
@@ -275,19 +277,19 @@ public class BirthAlterationTest extends CustomStrutsTestCase {
         request.setParameter("idUKey", "1");
         request.setParameter("sectionOfAct", "2");
         initAndExecute("/alteration/eprBirthAlterationSearch.do", session);
-        session = alterationAction.getSession();
+        session = birthAlterationAction.getSession();
         assertNotNull("session set", session);
-        assertEquals("RUWAN PERERA", alterationAction.getBirthAlteration().getAlt27().getChildFullNameOfficialLang());
-        assertEquals("RUWAN PERERA", alterationAction.getBirthAlteration().getAlt27().getChildFullNameEnglish());
+        assertEquals("RUWAN PERERA", birthAlterationAction.getBirthAlteration().getAlt27().getChildFullNameOfficialLang());
+        assertEquals("RUWAN PERERA", birthAlterationAction.getBirthAlteration().getAlt27().getChildFullNameEnglish());
         //check death register is populated
         //check basic list are populated if success
 
-        otherLists(alterationAction);
+        otherLists(birthAlterationAction);
     }
 
-    private void otherLists(BirthAlterationAction alterationAction) {
-        assertNotNull("Race List", alterationAction.getRaceList());
-        assertNotNull("Country List", alterationAction.getCountryList());
+    private void otherLists(BirthAlterationAction birthAlterationAction) {
+        assertNotNull("Race List", birthAlterationAction.getRaceList());
+        assertNotNull("Country List", birthAlterationAction.getCountryList());
     }
 
     @Override
