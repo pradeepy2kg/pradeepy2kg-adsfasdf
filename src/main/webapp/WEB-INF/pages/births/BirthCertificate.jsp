@@ -19,7 +19,7 @@
         .form-submit {
             display: none;
         }
-                                                                            
+
         #locationSignId {
             display: none;
         }
@@ -281,9 +281,21 @@
                 <br>முதல் பதிவின் பின் நிறைவேற்றிய மாற்றங்கள்
                 <br>Changes After First Registration
             </td>
-            <td style="font-size:9pt;">ඔව් - "**" ලකුණින් පෙන්වා ඈත<br>
-                ஆம் - "**" குறியீட்டில் குறிப்பிடப்பட்டுள்ளது <br>
-                Yes - marked with "**"
+            <td style="font-size:9pt;">
+                <s:if test="changedFields.size() > 0">
+                    ඔව් - “**” ලකුණින් පෙන්වා ඈත
+                    <br>
+                    ஆம்-”**” குறியீட்டில் குறிப்பிடப்பட்டுள்ளது
+                    <br>
+                    Yes - marked with “**”
+                </s:if>
+                <s:else>
+                    නැත
+                    <br>
+                    இல்லை
+                    <br>
+                    No
+                </s:else>
             </td>
         </tr>
     </s:if>

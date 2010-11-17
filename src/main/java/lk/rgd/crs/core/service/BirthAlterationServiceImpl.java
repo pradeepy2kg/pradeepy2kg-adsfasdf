@@ -218,8 +218,10 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthAlteration> getBirthAlterationByBirthCertificateNumber(long idUKey, User user) {
-        //todo complete
-        throw new UnsupportedOperationException("method not implemented for getBirthAlterationsFor given birth certificate number");
+        if (logger.isDebugEnabled()) {
+            logger.debug("attempt to get already done birth alterations for death register idUKey : {}", idUKey);
+        }
+        return birthAlterationDAO.getBirthAlterationByBirthCertificateNumber(idUKey);
     }
 
     /**

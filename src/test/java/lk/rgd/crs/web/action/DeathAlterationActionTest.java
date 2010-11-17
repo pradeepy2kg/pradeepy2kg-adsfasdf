@@ -16,7 +16,6 @@ import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.service.DeathAlterationService;
 import lk.rgd.crs.api.service.DeathRegistrationService;
 import lk.rgd.UnitTestManager;
-import lk.rgd.crs.web.util.FieldValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -70,7 +69,6 @@ public class DeathAlterationActionTest extends CustomStrutsTestCase {
                 for (int i = 0; i < deaths.size(); i++) {
                     deathRegistrationService.addNormalDeathRegistration((DeathRegister) deaths.get(i), sampleUser);
                 }
-
                 //change state to certificate printed otherwise cannot add alterations
                 DeathRegister dr;
                 dr = deathRegistrationService.getByBDDivisionAndDeathSerialNo(ambathalenPahala, 2010012361, sampleUser);
@@ -98,7 +96,7 @@ public class DeathAlterationActionTest extends CustomStrutsTestCase {
             rg = userManager.authenticateUser("rg", "password");
         }
         catch (AuthorizationException e) {
-            logger.debug("exception when authorizing a user :'rg' ");
+            logger.debug("exception when authorizing  user :'rg' ");
         }
         return rg;
     }
