@@ -511,16 +511,14 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             compareStringValues(deathRegister.getDeathPerson().getDeathPersonPassportNo(),
                 deathAlteration.getDeathPerson().getDeathPersonPassportNo(), DeathAlteration.PASSPORT, preferedLan);
 
-            if (!(deathRegister.getDeathPerson().getDeathPersonAge() ==
-                deathAlteration.getDeathPerson().getDeathPersonAge())) {
+            if (!(deathRegister.getDeathPerson().getDeathPersonAge() == deathAlteration.getDeathPerson().getDeathPersonAge())) {
                 changesList.add(new FieldValue(
                     deathRegister.getDeathPerson().getDeathPersonAge() != null ? Integer.toString(deathRegister.getDeathPerson().getDeathPersonAge()) : null,
                     deathAlteration.getDeathPerson().getDeathPersonAge() != null ? Integer.toString(deathAlteration.getDeathPerson().getDeathPersonAge()) : null,
                     DeathAlteration.AGE, CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(DeathAlteration.AGE), preferedLan)));
             }
 
-            if (!(deathAlteration.getDeathPerson().getDeathPersonGender() ==
-                deathAlteration.getDeathPerson().getDeathPersonGender())) {
+            if (!(deathAlteration.getDeathPerson().getDeathPersonGender() == deathAlteration.getDeathPerson().getDeathPersonGender())) {
                 changesList.add(new FieldValue(GenderUtil.getGender(deathAlteration.getDeathPerson().getDeathPersonGender(),
                     preferedLan), GenderUtil.getGender(deathAlteration.getDeathPerson().getDeathPersonGender(), preferedLan),
                     DeathAlteration.GENDER, CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(DeathAlteration.GENDER), preferedLan)));

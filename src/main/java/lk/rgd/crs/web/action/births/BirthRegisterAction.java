@@ -132,9 +132,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public BirthRegisterAction(BirthRegistrationService service, AdoptionOrderService adoptionService, DistrictDAO districtDAO,
-        CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO,
-        AppParametersDAO appParametersDAO, UserLocationDAO userLocationDAO, LocationDAO locationDAO,
-        AssignmentDAO assignmentDAO, BirthAlterationService birthAlterationService) {
+                               CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO,
+                               AppParametersDAO appParametersDAO, UserLocationDAO userLocationDAO, LocationDAO locationDAO,
+                               AssignmentDAO assignmentDAO, BirthAlterationService birthAlterationService) {
         this.service = service;
         this.adoptionService = adoptionService;
         this.districtDAO = districtDAO;
@@ -766,8 +766,12 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private void displayChangesInStarMark(List<BirthDeclaration> birthDeclarations) {
         changedFields = new BitSet();
         for (int i = 0; i < birthDeclarations.size(); i++) {
-            BirthAlteration ba = birthAlterationService.getBirthAlterationByBirthCertificateNumber(birthDeclarations.get(i).getIdUKey(), user).get(0);
-            changedFields.or(ba.getApprovalStatuses());
+            List<BirthAlteration> birthAlterations = birthAlterationService.getBirthAlterationByBirthCertificateNumber(birthDeclarations.get(i).getIdUKey(), user);
+            if (birthAlterations.size() == 1) {
+                BirthAlteration ba = birthAlterations.get(0);
+                changedFields.or(ba.getApprovalStatuses());
+            }
+
         }
         logger.debug("bit sets merge and final bit set : {}", changedFields);
     }
