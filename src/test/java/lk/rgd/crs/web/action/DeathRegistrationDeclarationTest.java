@@ -234,6 +234,7 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
 
 
     private Map userLogin(String username, String passwd) throws Exception {
+        request.setParameter("javaScript","true");
         request.setParameter("userName", username);
         request.setParameter("password", passwd);
         ActionProxy proxy = getActionProxy("/eprLogin.do");
