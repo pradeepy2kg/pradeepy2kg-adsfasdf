@@ -47,4 +47,12 @@ public interface RegistrarDAO {
      * @return list of registrars
      */
     public List<Registrar> getRegistrarByPin(long pin);
+
+    /**
+     * get registrars by name or part of the name
+     *
+     * @param name name or part of the name
+     * @return list of registrars
+     */
+    public List<Registrar> getRegistrarByNameOrPartOfTheName(String name);
 }
