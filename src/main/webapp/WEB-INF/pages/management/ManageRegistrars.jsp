@@ -123,7 +123,7 @@
 <s:form action="eprRegistrarsFilter.do" method="post">
     <fieldset style="margin-bottom:0px;margin-top:2px;border:2px solid #c3dcee;">
             <%--    <legend><s:property value="%{getText('filter.dsDivisions')}"/></legend>--%>
-        <table cellspacing="0" cellpadding="0">
+        <table cellspacing="5" cellpadding="0">
             <caption></caption>
             <col width="218px">
             <col width="500px">
@@ -151,30 +151,24 @@
             </tr>
             </tbody>
         </table>
-    </fieldset>
+    <%-- </fieldset>
     <fieldset style="margin-bottom:0px;margin-top:2px;border:2px solid #c3dcee;">
-            <%--<legend align="right"><s:property value="%{getText('filter.active.inactive')}"/></legend>--%>
-        <table cellspacing="0" cellpadding="0">
+           <legend align="right"><s:property value="%{getText('filter.active.inactive')}"/></legend>--%>
+        <table cellspacing="5" cellpadding="0">
             <caption></caption>
+            <col width="218px">
+            <col width="500px">
+            <col width="200px">
+            <col width="500px">
 
             <tbody>
             <tr>
-                <td width="129px"><s:property value="%{getText('label.state')}"/></td>
-                <td width="200px"><s:select
+                <td><s:property value="%{getText('label.state')}"/></td>
+                <td><s:select
                         list="#@java.util.HashMap@{'0':getText('label.state.active'),'1':getText('label.state.inactive')}"
                         name="assignmentState" cssStyle="width:240px; margin-left:5px;"/></td>
-            </tr>
-            </tbody>
-        </table>
-    </fieldset>
-    <fieldset style="margin-bottom:0px;margin-top:2px;border:2px solid #c3dcee;">
-        <table cellspacing="0" cellpadding="0">
-            <caption></caption>
-
-            <tbody>
-            <tr>
-                <td width="129px"><s:property value="%{getText('label.type')}"/></td>
-                <td width="200px"><s:select
+                <td><s:property value="%{getText('label.type')}"/></td>
+                <td><s:select
                         list="#@java.util.HashMap@{'0':getText('label.type.birth'),'1':getText('label.type.death'),'2':getText('label.type.marriage.general'),'3':getText('label.type.marriage.kandyan'),'4':getText('label.type.marriage.muslim')}"
                         name="assignmentType" cssStyle="width:240px; margin-left:5px;" headerKey="-1"
                         headerValue="%{getText('label.all.types')}"/></td>
@@ -182,7 +176,7 @@
             </tbody>
         </table>
     </fieldset>
-    </div>
+     </div>
     <div id="search_button" class="button">
         <s:submit name="refresh" value="%{getText('label.button.filter')}"/>
     </div>

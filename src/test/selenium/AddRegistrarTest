@@ -4,12 +4,12 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="" />
-<title>Add Registar</title>
+<title>AddRegistrarTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">New Test</td></tr>
+<tr><td rowspan="1" colspan="3">AddRegistrarTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -42,139 +42,139 @@
 	<td></td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>registrarNameInOfficelaLang</td>
-    <td>SAMPATH JAYASRI WIJESINGHE</td>
+	<td>type</td>
+	<td>registrarNameInOfficelaLang</td>
+	<td>SAMPATH JAYASRI WIJESINGHE</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>registrarNameInEnglish</td>
-    <td>SAMPATH JAYASRI WIJESINGHE</td>
+	<td>type</td>
+	<td>registrarNameInEnglish</td>
+	<td>SAMPATH JAYASRI WIJESINGHE</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>registrarPin</td>
-    <td>6564555460</td>
+	<td>type</td>
+	<td>registrarPin</td>
+	<td>6555555460</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>registrarNIC</td>
-    <td>773453434v</td>
+	<td>type</td>
+	<td>registrarNIC</td>
+	<td>773453434v</td>
 </tr>
 <tr>
-    <td>select</td>
-    <td>registrarGender</td>
-    <td>label=ගැහැණු</td>
+	<td>select</td>
+	<td>registrarGender</td>
+	<td>label=ගැහැණු</td>
 </tr>
 <tr>
-    <td>click</td>
-    <td>dateOfBirthDatePicker</td>
-    <td></td>
+	<td>click</td>
+	<td>dateOfBirthDatePicker</td>
+	<td></td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>dateOfBirthDatePicker</td>
-    <td>1979-08-18</td>
+	<td>type</td>
+	<td>dateOfBirthDatePicker</td>
+	<td>1979-08-18</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>registrarAddress</td>
-    <td>Colombo</td>
+	<td>type</td>
+	<td>registrarAddress</td>
+	<td>Colombo</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>registrarPhone</td>
-    <td>0774543543</td>
+	<td>type</td>
+	<td>registrarPhone</td>
+	<td>0774543543</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>registrarEmail</td>
-    <td>hfdfdfs@dd.sds</td>
+	<td>type</td>
+	<td>registrarEmail</td>
+	<td>hfdfdfs@dd.sds</td>
 </tr>
 <tr>
-    <td>select</td>
-    <td>eprRegistrarsAdd_registrar_preferredLanguage</td>
-    <td>label=සිංහල</td>
+	<td>select</td>
+	<td>eprRegistrarsAdd_registrar_preferredLanguage</td>
+	<td>label=සිංහල</td>
 </tr>
 <tr>
-    <td>clickAndWait</td>
-    <td>eprRegistrarsAdd_refresh</td>
-    <td></td>
+	<td>clickAndWait</td>
+	<td>eprRegistrarsAdd_refresh</td>
+	<td></td>
 </tr>
 <tr>
-    <td>clickAndWait</td>
-    <td>addText</td>
-    <td></td>
+	<td>clickAndWait</td>
+	<td>addText</td>
+	<td></td>
 </tr>
 <tr>
-    <td>select</td>
-    <td>type</td>
-    <td>label=උපත්</td>
+	<td>select</td>
+	<td>type</td>
+	<td>label=උපත්</td>
 </tr>
 <tr>
-    <td>click</td>
-    <td>dateOfAppoinmentDatePicker</td>
-    <td></td>
+	<td>click</td>
+	<td>dateOfAppoinmentDatePicker</td>
+	<td></td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>dateOfAppoinmentDatePicker</td>
-    <td>2010-08-01</td>
+	<td>type</td>
+	<td>dateOfAppoinmentDatePicker</td>
+	<td>2010-08-01</td>
 </tr>
 <tr>
-    <td>click</td>
-    <td>dateOfPermenentDatePicker</td>
-    <td></td>
+	<td>click</td>
+	<td>dateOfPermenentDatePicker</td>
+	<td></td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>dateOfPermenentDatePicker</td>
-    <td>2010-08-10</td>
+	<td>type</td>
+	<td>dateOfPermenentDatePicker</td>
+	<td>2010-08-10</td>
 </tr>
 <tr>
-    <td>clickAndWait</td>
-    <td>eprAssignmentAdd_assignMentSubmit</td>
-    <td></td>
+	<td>clickAndWait</td>
+	<td>eprAssignmentAdd_assignMentSubmit</td>
+	<td></td>
 </tr>
 <tr>
-    <td>clickAndWait</td>
-    <td>link=New Assignment (Marriage) in si</td>
-    <td></td>
+	<td>clickAndWait</td>
+	<td>link=New Assignment (Marriage) in si</td>
+	<td></td>
 </tr>
 <tr>
-    <td>click</td>
-    <td>dateOfAppoinmentDatePicker</td>
-    <td></td>
+	<td>click</td>
+	<td>dateOfAppoinmentDatePicker</td>
+	<td></td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>dateOfAppoinmentDatePicker</td>
-    <td>2010-08-01</td>
+	<td>type</td>
+	<td>dateOfAppoinmentDatePicker</td>
+	<td>2010-08-01</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>dateOfPermenentDatePicker</td>
-    <td>2010-08-25</td>
+	<td>type</td>
+	<td>dateOfPermenentDatePicker</td>
+	<td>2010-08-25</td>
 </tr>
 <tr>
-    <td>clickAndWait</td>
-    <td>eprAssignmentAdd_assignMentSubmit</td>
-    <td></td>
+	<td>clickAndWait</td>
+	<td>eprAssignmentAdd_assignMentSubmit</td>
+	<td></td>
 </tr>
 <tr>
-    <td>clickAndWait</td>
-    <td>registrars.managment</td>
-    <td></td>
+	<td>clickAndWait</td>
+	<td>registrars.managment</td>
+	<td></td>
 </tr>
 <tr>
-    <td>clickAndWait</td>
-    <td>link=SAMPATH JAYASRI WIJESINGHE</td>
-    <td></td>
+	<td>clickAndWait</td>
+	<td>link=SAMPATH JAYASRI WIJESINGHE</td>
+	<td></td>
 </tr>
 <tr>
-    <td>clickAndWait</td>
-    <td>logout-button</td>
-    <td></td>
+	<td>clickAndWait</td>
+	<td>logout-button</td>
+	<td></td>
 </tr>
 
 </tbody></table>
