@@ -169,6 +169,7 @@ public class BirthConfirmationTest extends CustomStrutsTestCase {
     }
 
     private Map UserLogin(String username, String passwd) throws Exception {
+        request.setParameter("javaScript","true");
         request.setParameter("userName", username);
         request.setParameter("password", passwd);
         ActionProxy proxy = getActionProxy("/eprLogin.do");
