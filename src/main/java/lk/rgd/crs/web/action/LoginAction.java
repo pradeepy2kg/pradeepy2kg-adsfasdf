@@ -3,6 +3,8 @@ package lk.rgd.crs.web.action;
 import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.common.api.dao.AppParametersDAO;
 import lk.rgd.common.api.domain.AppParameter;
+import org.apache.struts2.interceptor.RequestAware;
+import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +19,9 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.common.core.AuthorizationException;
 import lk.rgd.Permission;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Indunil Moremada
  * @authar amith jayasekara
@@ -27,6 +32,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
     private final AppParametersDAO appParaDao;
     private String userName;
+    private String javaScript;
     private String password;
     private Map session;
     private final UserManager userManager;
@@ -63,8 +69,19 @@ public class LoginAction extends ActionSupport implements SessionAware {
      *
      * @return String
      */
+
     public String login() {
 
+        /*if(!isJavaScriptEnabled()){
+            return "error";
+        }*/
+
+        if(javaScript.equals("false")) {
+            logger.debug("detected javaScript : {} ", javaScript);
+            return "error";
+        }
+
+        
         logger.debug("detected userName : {} ", userName);
         User user;
         try {
@@ -214,6 +231,15 @@ public class LoginAction extends ActionSupport implements SessionAware {
         return userName;
     }
 
+    public String getJavaScript() {
+        return javaScript;
+    }
+
+    public void setJavaScript(String javaScript) {
+        this.javaScript = javaScript;
+        logger.debug("setting javascript {} ", javaScript);
+    }
+
     public void setSession(Map map) {
         logger.debug("Set session {}", map);
         this.session = map;
@@ -318,4 +344,5 @@ public class LoginAction extends ActionSupport implements SessionAware {
     public void setSBPendingApprovals(int SBPendingApprovals) {
         this.SBPendingApprovals = SBPendingApprovals;
     }
+
 }

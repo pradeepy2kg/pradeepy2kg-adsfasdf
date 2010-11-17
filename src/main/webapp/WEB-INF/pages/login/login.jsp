@@ -141,7 +141,10 @@
 
         }
     }
+
+
 </script>
+
 <html>
 <head>
     <title>EPR Login</title>
@@ -163,6 +166,11 @@
         }
 
         function initPage(){}
+
+        function checkJS(){
+            document.getElementById("jstest").value = "true";
+        }
+
     </script>
 </head>
 <body onload="setFocus()">
@@ -185,8 +193,9 @@
         <div id="login-form-body">
             <div id="web-browser" style="text-align:center;width:100%;">
                 <script type="text/javascript">
-                    document.write('<p class="accent">* You\'re using ' + BrowserDetect.browser + ' ' + BrowserDetect.version +
-                                   ' on ' + BrowserDetect.OS + '!</p>');
+                    document.write('<p class="accent">* You\'re using ' +
+                            BrowserDetect.browser + ' ' + BrowserDetect.version +
+                            ' on ' + BrowserDetect.OS + '!</p>');
                 </script>
 
                 <div id="web-browser-lable-01">
@@ -203,21 +212,28 @@
                 </div>
             </div>
             <s:form action="/eprLogin.do" method="POST" name="eprLogin">
-                <table class="login-table" id="login-table">
-                    <tr>
-                        <td style="width:50%"><s:label value="User Name: "/></td>
-                        <td style="width:50%"><s:textfield name="userName" cssStyle="width:95%"/></td>
-                    </tr>
-                    <tr>
-                        <td><s:label value="Password: "/></td>
-                        <td><s:password name="password" cssStyle="width:95%"/></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <div><s:submit value="login"/></div>
-                        </td>
-                    </tr>
-                </table>
+                <s:hidden name="javaScript" id="jstest" value="false"/>
+                    <s:if test="javaScript">
+                        Java Script Disabled
+                    </s:if>
+                    <s:else>
+
+                        <table class="login-table" id="login-table">
+                        <tr>
+                            <td style="width:50%"><s:label value="User Name: "/></td>
+                            <td style="width:50%"><s:textfield name="userName" cssStyle="width:95%"/></td>
+                        </tr>
+                        <tr>
+                            <td><s:label value="Password: "/></td>
+                            <td><s:password name="password" cssStyle="width:95%"/></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div><s:submit value="login" onclick="checkJS()"/></div>
+                            </td>
+                        </tr>
+                        </table>
+                    </s:else>
             </s:form>
         </div>
     </div>
