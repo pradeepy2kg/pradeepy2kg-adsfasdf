@@ -82,12 +82,12 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
-        <action name="eprExistingPersonRegInit" class="lk.rgd.prs.web.action.PersonRegisterAction"
+        <action name="eprExistingPersonRegInit" class="lk.rgd.prs.web.action.PopulationRegisterAction"
                 method="personRegistrationInit">
             <result type="tiles" name="success">epr.existingPersonRegistration</result>
         </action>
 
-        <action name="eprExistingPersonRegistration" class="lk.rgd.prs.web.action.PersonRegisterAction"
+        <action name="eprExistingPersonRegistration" class="lk.rgd.prs.web.action.PopulationRegisterAction"
                 method="personRegistration">
             <result type="tiles" name="success">epr.personRegisterDetails</result>
             <result type="tiles" name="form">epr.existingPersonRegistration</result>
@@ -98,7 +98,7 @@
             <result type="tiles" name="success">epr.personDetails</result>
         </action>
 
-        <action name="eprEditPerson" class="lk.rgd.prs.web.action.PersonRegisterAction" method="personEditInit">
+        <action name="eprEditPerson" class="lk.rgd.prs.web.action.PopulationRegisterAction" method="personEditInit">
             <result type="tiles" name="success">epr.existingPersonRegistration</result>
         </action>
 

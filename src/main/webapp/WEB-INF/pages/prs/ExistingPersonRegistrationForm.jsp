@@ -201,7 +201,12 @@
         soapBody.appendChild(new SOAPObject('InputName')).val(id);
         soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
         soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
-        soapBody.appendChild(new SOAPObject('Gender')).val('U');
+        //soapBody.appendChild(new SOAPObject('Gender')).val('U');
+
+        //added by shan [ NOT Tested ] -> start
+        var genderVal = $("select#genderList").attr("value");
+        soapBody.appendChild(new SOAPObject('Gender')).value(genderVal);
+        //-> end
 
         //Create a new SOAP Request
         var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
@@ -555,7 +560,8 @@
             (9) ස්ත්‍රී පුරුෂ භාවය<br>பால் <br>Gender of the child
         </td>
         <td colspan="2">
-            <s:select name="person.gender" cssStyle="width:190px; margin-left:5px;"
+            <s:select name="person.gender"
+                      id ="genderList" cssStyle="width:190px; margin-left:5px;"
                       list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"/>
         </td>
         <td>
