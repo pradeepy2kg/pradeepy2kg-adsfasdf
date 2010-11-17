@@ -146,4 +146,13 @@ public interface RegistrarManagementService {
      */
     public List<Assignment> getAllActiveAssignment(boolean active, User user);
 
+    /**
+     * get registrar by name or part from the name
+     *
+     * @param name name or part of the name
+     * @param user user requesting the action
+     * @return list of registrar objects
+     */
+    public List<Registrar> getRegistrarByNameOrPartOfTheName(String name, User user);
+
 }

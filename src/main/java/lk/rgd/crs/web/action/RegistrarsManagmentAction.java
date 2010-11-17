@@ -1,6 +1,7 @@
 package lk.rgd.crs.web.action;
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.common.util.WebUtils;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.MRDivision;
 import org.apache.struts2.interceptor.SessionAware;
@@ -76,6 +77,7 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
     private String districtName;
     private String dsDivisionName;
     private String divisionName;
+    private String registrarName;//use to search by name or part of the name
 
     public RegistrarsManagmentAction(DistrictDAO districtDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO, RegistrarManagementService service, MRDivisionDAO mrDivisionDAO) {
         this.districtDAO = districtDAO;
@@ -191,7 +193,7 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
                 if (type.equals(Assignment.Type.DEATH))
                     assignment.setDeathDivision(bdDivisionDAO.getBDDivisionByPK(divisionId));
                 if (type.equals(Assignment.Type.GENERAL_MARRIAGE) || (type.equals(Assignment.Type.KANDYAN_MARRIAGE)) ||
-                        (type.equals(Assignment.Type.MUSLIM_MARRIAGE)))
+                    (type.equals(Assignment.Type.MUSLIM_MARRIAGE)))
                     assignment.setMarriageDivision(mrDivisionDAO.getMRDivisionByPK(divisionId));
 
                 assignment.setType(type);
@@ -274,6 +276,23 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
         populateLists(1, 1, assignmentType);
         directAssignment = 1;
         return SUCCESS;
+    }
+
+    public String findRegistrar() {
+        if (page > 0) {
+            logger.debug("attempt to search a registrar");
+            if (registrarPin > 0) {
+                //search by registrar pin number
+            } else if (registrarName != null) {
+                //search by name or part of the name
+            }
+            if (registrarList != null && registrarList.size() == 0) {
+                addActionError(getText("no.registrars.found"));
+            }
+            return SUCCESS;
+        }
+        logger.debug("attempt to load find registrar home page");
+        return "pageLoad";
     }
 
     //loads basic lists for separate types
@@ -598,5 +617,13 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
 
     public void setDivisionName(String divisionName) {
         this.divisionName = divisionName;
+    }
+
+    public String getRegistrarName() {
+        return registrarName;
+    }
+
+    public void setRegistrarName(String registrarName) {
+        this.registrarName = WebUtils.filterBlanks(registrarName);
     }
 }
