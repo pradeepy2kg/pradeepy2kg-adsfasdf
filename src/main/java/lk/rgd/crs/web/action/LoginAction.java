@@ -3,8 +3,6 @@ package lk.rgd.crs.web.action;
 import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.common.api.dao.AppParametersDAO;
 import lk.rgd.common.api.domain.AppParameter;
-import org.apache.struts2.interceptor.RequestAware;
-import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,9 +16,6 @@ import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.core.AuthorizationException;
 import lk.rgd.Permission;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Indunil Moremada
@@ -72,12 +67,8 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
     public String login() {
 
-        /*if(!isJavaScriptEnabled()){
-            return "error";
-        }*/
-
         if(javaScript.equals("false")) {
-            logger.debug("detected javaScript : {} ", javaScript);
+            addActionError("Please enable javaScript in your web browser");
             return "error";
         }
 
@@ -237,7 +228,6 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
     public void setJavaScript(String javaScript) {
         this.javaScript = javaScript;
-        logger.debug("setting javascript {} ", javaScript);
     }
 
     public void setSession(Map map) {
@@ -344,5 +334,4 @@ public class LoginAction extends ActionSupport implements SessionAware {
     public void setSBPendingApprovals(int SBPendingApprovals) {
         this.SBPendingApprovals = SBPendingApprovals;
     }
-
 }
