@@ -151,9 +151,7 @@
             </tr>
             </tbody>
         </table>
-    <%-- </fieldset>
-    <fieldset style="margin-bottom:0px;margin-top:2px;border:2px solid #c3dcee;">
-           <legend align="right"><s:property value="%{getText('filter.active.inactive')}"/></legend>--%>
+          <%-- <legend align="right"><s:property value="%{getText('filter.active.inactive')}"/></legend> --%>
         <table cellspacing="5" cellpadding="0">
             <caption></caption>
             <col width="218px">
