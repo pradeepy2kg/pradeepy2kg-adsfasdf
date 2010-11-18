@@ -14,18 +14,18 @@ import java.util.Date;
 @Entity
 @Table(name = "ALT_DEATH", schema = "CRS")
 @NamedQueries({
-        @NamedQuery(name = "get.alt.by.death.certificate.number", query = "SELECT da FROM DeathAlteration da" +
-                " WHERE da.deathRegisterIDUkey =:deathCertificateNumber"),
-        @NamedQuery(name = "get.alt.by.division.death.division", query = "SELECT da FROM DeathAlteration da," +
-                "DeathRegister dr WHERE da.deathRegisterIDUkey=dr.idUKey " +
-                "AND dr.death.deathDivision.bdDivisionUKey =:deathDivisionUkey AND da.lifeCycleInfo.activeRecord = true"),
-        @NamedQuery(name = "get.atl.by.death.id", query = "SELECT da FROM DeathAlteration da WHERE da.deathRegisterIDUkey=:deathId"),
-        @NamedQuery(name = "get.alt.by.user.location", query = "SELECT da FROM DeathAlteration  da" +
-                " WHERE da.submittedLocation.locationUKey =:locationUKey"),
-        @NamedQuery(name = "get.alt.by.death.person.pin", query = "SELECT da FROM DeathAlteration  da " +
-                "WHERE da.deathPersonPin =:pin"),
-        //todo
-        @NamedQuery(name = "get.alt.by.seral.number.death.division", query = "SELECT da FROM DeathAlteration da")
+    @NamedQuery(name = "get.alt.by.death.certificate.number", query = "SELECT da FROM DeathAlteration da" +
+        " WHERE da.deathRegisterIDUkey =:deathCertificateNumber"),
+    @NamedQuery(name = "get.alt.by.division.death.division", query = "SELECT da FROM DeathAlteration da," +
+        "DeathRegister dr WHERE da.deathRegisterIDUkey=dr.idUKey " +
+        "AND dr.death.deathDivision.bdDivisionUKey =:deathDivisionUkey AND da.lifeCycleInfo.activeRecord = true"),
+    @NamedQuery(name = "get.atl.by.death.id", query = "SELECT da FROM DeathAlteration da WHERE da.deathRegisterIDUkey=:deathId"),
+    @NamedQuery(name = "get.alt.by.user.location", query = "SELECT da FROM DeathAlteration  da" +
+        " WHERE da.submittedLocation.locationUKey =:locationUKey"),
+    @NamedQuery(name = "get.alt.by.death.person.pin", query = "SELECT da FROM DeathAlteration  da " +
+        "WHERE da.deathPersonPin =:pin"),
+    //todo
+    @NamedQuery(name = "get.alt.by.seral.number.death.division", query = "SELECT da FROM DeathAlteration da")
 })
 
 public class DeathAlteration {
@@ -146,9 +146,6 @@ public class DeathAlteration {
     @Column
     private String comments;
 
-    @Column
-    private float stampFee;
-
     @Column(name = "deathPersonPinOriginal")
     private String deathPersonPin;
 
@@ -238,14 +235,6 @@ public class DeathAlteration {
 
     public void setBcOfMother(boolean bcOfMother) {
         this.bcOfMother = bcOfMother;
-    }
-
-    public float getStampFee() {
-        return stampFee;
-    }
-
-    public void setStampFee(float stampFee) {
-        this.stampFee = stampFee;
     }
 
     public String getComments() {
