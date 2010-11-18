@@ -5,12 +5,15 @@
 <style type="text/css" title="currentStyle">
     @import "../lib/datatables/media/css/demo_page.css";
     @import "../lib/datatables/media/css/demo_table.css";
+    @import "../lib/datatables/media/css/ColVis.css";
     @import "../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css";
 </style>
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
+
+
 
 <script type="text/javascript">
 
@@ -91,10 +94,11 @@
     function initPage(){}
 </script>
 <style type="text/css">
-    .add-registrar-body {
-        background: #ffffff;
+    .add-registrar-body{
+        margin:10px;
+        padding:5px;
+        border: #99ccff 2px solid;
     }
-
 </style>
 <s:actionerror cssStyle="color:red;"/>
 <s:actionmessage cssStyle="color:blue;"/>
@@ -102,7 +106,7 @@
 <div class="add-registrar-body">
     <div class="block">
         <s:form action="eprRegistrarsAdd.do" method="post" onsubmit="javascript:return validate()">
-        <table border="0" style="width: 100%" cellpadding="5" cellspacing="5">
+        <table width="100%" cellpadding="5" cellspacing="5">
             <caption></caption>
             <col width="400px"/>
             <col width="1000px"/>
