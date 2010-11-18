@@ -110,7 +110,7 @@
 <div id="manage_registrars"/>
 <s:form action="eprRegistrarsFilter.do" method="post">
     <fieldset style="margin-bottom:0px;margin-top:2px;border:2px solid #c3dcee;">
-          <table cellspacing="5" cellpadding="0">
+          <table cellspacing="0" cellpadding="0">
             <caption></caption>
             <col width="218px">
             <col width="500px">
@@ -118,8 +118,11 @@
             <col width="500px">
             <tbody>
             <tr>
+                <td colspan="4">&nbsp;</td>
+            </tr>
+            <tr>
                 <td><s:property value="%{getText('label.district')}"/></td>
-                <td colspan="1" align="left">
+                <td align="left">
                     <s:if test="%{#session.user_bean.role.roleId.equals('ADMIN')}">
                         <s:select id="districtId" name="districtId" list="districtList" value="%{districtId}"
                                   cssStyle="width:98.5%; width:240px;" headerKey="0"
@@ -131,12 +134,15 @@
                     </s:else>
                 </td>
                 <td><s:property value="%{getText('label.DSDivision')}"/></td>
-                <td colspan="1" align="left"><s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList"
+                <td align="left"><s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList"
                                                        value="%{dsDivisionId}"
-                                                       cssStyle="float:left;  width:240px;"
-                        /></td>
+                                                       cssStyle="float:left;  width:240px;"/>
+                </td>
             </tr>
-            </tbody>
+            <tr>
+                <td colspan="4">&nbsp;</td>
+            </tr>
+            <%--</tbody>
         </table>
 
         <table cellspacing="5" cellpadding="0">
@@ -146,25 +152,31 @@
             <col width="200px">
             <col width="500px">
 
-            <tbody>
+            <tbody>--%>
             <tr>
                 <td><s:property value="%{getText('label.state')}"/></td>
-                <td><s:select
+                <td align="left"><s:select
                         list="#@java.util.HashMap@{'0':getText('label.state.active'),'1':getText('label.state.inactive')}"
-                        name="assignmentState" cssStyle="width:240px; margin-left:5px;"/></td>
+                        name="assignmentState" cssStyle="width:240px;"/></td>
                 <td><s:property value="%{getText('label.type')}"/></td>
-                <td><s:select
+                <td align="left"><s:select
                         list="#@java.util.HashMap@{'0':getText('label.type.birth'),'1':getText('label.type.death'),'2':getText('label.type.marriage.general'),'3':getText('label.type.marriage.kandyan'),'4':getText('label.type.marriage.muslim')}"
-                        name="assignmentType" cssStyle="width:240px; margin-left:5px;" headerKey="-1"
+                        name="assignmentType" cssStyle="width:240px;" headerKey="-1"
                         headerValue="%{getText('label.all.types')}"/></td>
+            </tr>
+            <tr>
+                <td colspan="4">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="4" align="right">
+                    <div id="search_button" class="button">
+                        <s:submit name="refresh" value="%{getText('label.button.filter')}" cssStyle="margin-right:128px;"/>
+                    </div>
+                </td>
             </tr>
             </tbody>
         </table>
     </fieldset>
-     </div>
-    <div id="search_button" class="button">
-        <s:submit name="refresh" value="%{getText('label.button.filter')}"/>
-    </div>
 </s:form>
 
 <div id="manage_registrars_body">
