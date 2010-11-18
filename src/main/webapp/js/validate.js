@@ -7,6 +7,14 @@ function isEmpty(domElement, errorMessage, errorCode) {
     }
 }
 
+function isMandatoryFieldsEmpty(domElement, errorElement, errorCode){
+    with (domElement) {
+        if (value == null || value.trim() == "") {
+            errormsg = errormsg + "\n" + errorElement + " " + document.getElementById(errorCode).value;
+        }
+    }
+}
+
 //check given element is empty and return true if empty else false
 function isFieldEmpty(domElement) {
     with (domElement) {
@@ -156,7 +164,7 @@ function validateBirthYearWithNIC(yearNIC, yearDatePicker, errorText) {
 
 // print error message
 function printMessage(errorText, errorCode) {
-    errormsg = errormsg + "\n" + document.getElementById(errorText).value + " : " + document.getElementById(errorCode).value;
+    errormsg = errormsg + "\n" + document.getElementById(errorText).value + " " + document.getElementById(errorCode).value;
 }
 
 //todo amith

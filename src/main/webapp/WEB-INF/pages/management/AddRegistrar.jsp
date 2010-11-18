@@ -62,26 +62,26 @@
         }
         if (!isFieldEmpty(pin) && isInteger(pin)) {
             //validate PIN or NIC
-            validatePINorNIC(pin, "invalideData", "pin")
+            validatePINorNIC(pin, "pin", "invalideData")
         }
         if (!isFieldEmpty(nic)) {
-            validatePINorNIC(nic, "invalideData", "nic")
+            validatePINorNIC(nic, "nic", "invalideData")
         }
         if (!isFieldEmpty(phone)) {
             //validate phone number
-            validatePhoneNo(phone, "invalideData", "phone")
+            validatePhoneNo(phone, "phone", "invalideData")
         }
         if (!isFieldEmpty(email)) {
             //validate email
-            validateEmail(email, "invalideData", "email")
+            validateEmail(email, "email", "invalideData")
         }
         /*        //validate date of birth
          isDate(dob, "invalideData", "email")*/
         /*todo validate compulsory fields*/
-        isEmpty(nameOfficialLang, document.getElementById('nameOfficialError').value, "cannotNull")
-        isEmpty(nameEnglish, document.getElementById('nameEnglishError').value, "cannotNull")
-        isEmpty(address, document.getElementById('addressError').value, "cannotNull")
-        isEmpty(pin, document.getElementById('pin').value, "cannotNull")
+        isMandatoryFieldsEmpty(nameOfficialLang, document.getElementById('nameOfficialError').value, "cannotNull")
+        isMandatoryFieldsEmpty(nameEnglish, document.getElementById('nameEnglishError').value, "cannotNull")
+        isMandatoryFieldsEmpty(address, document.getElementById('addressError').value, "cannotNull")
+        isMandatoryFieldsEmpty(pin, document.getElementById('pin').value, "cannotNull")
 
         if (errormsg != "") {
             alert(errormsg);
