@@ -20,7 +20,7 @@
                 <td style="width:80%;">
                     <s:if test="#request.allowApproveAlteration && approveRightsToUser">
                         <div class="form-submit" align="center">
-                            <s:form action="eprApproveSelectedAlteration.do">
+                            <s:form action="eprApproveBirthAlterationInit.do">
                                 <s:hidden name="idUKey"/>
                                 <s:hidden name="bdId"/>
                                 <s:submit name="approve" value="%{getText('approve.label')}"/>

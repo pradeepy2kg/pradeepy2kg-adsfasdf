@@ -160,7 +160,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <s:actionerror cssStyle="color:red;font-size:9pt;"/>
-<s:form action="eprFilterAlteration" method="post" onsubmit="javascript:return validate()">
+<s:form action="eprFilterBirthAlteration" method="post" onsubmit="javascript:return validate()">
     <%--<s:actionerror  cssStyle="color:red;font-size:9pt;"/>--%>
     <div id="tabs" style="font-size:10pt;">
         <ul>
@@ -260,7 +260,7 @@
                 <td align="center">
                     <s:if test="#request.allowApproveAlteration &&
                     alterationApprovalPermission.get(#approvalStatus.index) && (status.ordinal() ==0)">
-                        <s:url id="approveSelected" action="eprApproveSelectedAlteration.do">
+                        <s:url id="approveSelected" action="eprApproveBirthAlterationInit.do">
                             <s:param name="idUKey" value="idUKey"/>
                             <s:param name="bdId" value="bdfIDUKey"/>
                             <s:param name="nextFlag" value="%{#request.nextFlag}"/>
@@ -277,7 +277,7 @@
                 <td align="center">
                     <s:if test="#request.allowApproveAlteration &&
                     alterationApprovalPermission.get(#approvalStatus.index) && (status.ordinal() ==0)">
-                        <s:url id="rejectSelected" action="eprRejectSelectedAlteration.do">
+                        <s:url id="rejectSelected" action="eprRejectBirthAlteration.do">
                             <s:param name="idUKey" value="idUKey"/>
                             <s:param name="bdId" value="bdfIDUKey"/>
                             <s:param name="nextFlag" value="%{#request.nextFlag}"/>
@@ -294,7 +294,7 @@
 
                 <td align="center">
                     <s:if test="(status.ordinal() ==0)">
-                        <s:url id="editSelected" action="eprEditSelectedAlteration.do">
+                        <s:url id="editSelected" action="eprEditBirthAlteration.do">
                             <s:param name="idUKey" value="idUKey"/>
                             <s:param name="bdId" value="bdfIDUKey"/>
                             <s:param name="nextFlag" value="%{#request.nextFlag}"/>
@@ -334,7 +334,7 @@
 <div class="next-previous">
     <%-- Next link to visible next records will only visible if nextFlag is
   set to 1--%>
-    <s:url id="previousUrl" action="eprAlterationApprovalPrevious.do" encode="true">
+    <s:url id="previousUrl" action="eprBirthAlterationApprovalPrevious.do" encode="true">
         <s:param name="nextFlag" value="%{#request.nextFlag}"/>
         <s:param name="previousFlag" value="%{#request.previousFlag}"/>
         <s:param name="pageType" value="%{#request.pageType}"/>
@@ -344,7 +344,7 @@
         <%--<s:param name="recordCounter" value="#request.recordCounter"/>--%>
     </s:url>
 
-    <s:url id="nextUrl" action="eprAlterationApprovalNext.do" encode="true">
+    <s:url id="nextUrl" action="eprBirthAlterationApprovalNext.do" encode="true">
         <s:param name="nextFlag" value="%{#request.nextFlag}"/>
         <s:param name="previousFlag" value="%{#request.previousFlag}"/>
         <s:param name="pageType" value="%{#request.pageType}"/>
