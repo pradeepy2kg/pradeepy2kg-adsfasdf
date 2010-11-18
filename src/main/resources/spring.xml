@@ -295,7 +295,7 @@
         <constructor-arg ref="courtDAOImpl"/>
     </bean>
 
-    <bean id="userManagmentAction" class="lk.rgd.crs.web.action.UserManagmentAction">
+    <bean id="userManagmentAction" class="lk.rgd.crs.web.action.UserManagementAction">
         <constructor-arg ref="districtDAOImpl"/>
         <constructor-arg ref="bdDivisionDAOImpl"/>
         <constructor-arg ref="dsDivisionDAOImpl"/>
