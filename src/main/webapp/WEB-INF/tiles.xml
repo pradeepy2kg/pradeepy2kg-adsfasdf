@@ -245,11 +245,6 @@
         <put-attribute name="title" value="death.alteration.approval.list.title"/>
     </definition>
 
-    <definition name="epr.deathAlterationApproval" extends="epr.template">
-        <put-attribute name="body" value="/WEB-INF/pages/deaths/DeathAlterationApproval.jsp"/>
-        <put-attribute name="title" value="death.alteration.approval.title"/>
-    </definition>
-
     <definition name="epr.deathAlterationResult" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/deaths/DeathAlterationResult.jsp"/>
         <put-attribute name="title" value="death.alteration.results.title"/>
