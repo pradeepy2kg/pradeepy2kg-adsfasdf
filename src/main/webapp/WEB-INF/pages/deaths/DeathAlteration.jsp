@@ -5,6 +5,7 @@
 <script src="/ecivil/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
+<script type="text/javascript" src="<s:url value="/js/timePicker.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 <script>
     //these inpute can not be null
@@ -57,8 +58,7 @@
         if (!isFieldEmpty(domObject)) {
             validatePINorNIC(domObject, 'error0', 'error8');
         }
-        //todo validate (declarent type is the only nullble false value in the object)
-        if (errormsg != "") {
+               if (errormsg != "") {
             alert(errormsg);
             returnval = false;
         }
@@ -69,342 +69,130 @@
 </script>
 
 <script type="text/javascript">
-var act;
-var informPerson;
-function setInformPerson(nICorPIN, name, address, tp, email) {
-    var informantName = document.getElementById("declarant_pinOrNic").value = nICorPIN;
-    var informantNICorPIN = document.getElementById("declarantName").value = name;
-    var informantAddress = document.getElementById("declarantAddress").value = address;
-    var informantTP = document.getElementById("declarant_tp").value = tp;
-    var informantEmail = document.getElementById("declarant_email").value = email;
-}
+    var act;
+    var informPerson;
+    function setInformPerson(nICorPIN, name, address, tp, email) {
+        var informantName = document.getElementById("declarant_pinOrNic").value = nICorPIN;
+        var informantNICorPIN = document.getElementById("declarantName").value = name;
+        var informantAddress = document.getElementById("declarantAddress").value = address;
+        var informantTP = document.getElementById("declarant_tp").value = tp;
+        var informantEmail = document.getElementById("declarant_email").value = email;
+    }
 
 
-$(function() {
-    $("#deathDatePicker").datepicker({
-        changeYear: true,
-        yearRange: '1960:2020',
-        dateFormat:'yy-mm-dd',
-        startDate:'2000-01-01',
-        endDate:'2040-12-31'
-    });
-});
-
-$(function() {
-    $("#reciveDatePicker").datepicker({
-        changeYear: true,
-        yearRange: '1960:2020',
-        dateFormat:'yy-mm-dd',
-        startDate:'2000-01-01',
-        endDate:'2040-12-31'
-    });
-});
-
-/* time picker */
-(function($) {
-    $.cantipi = function(el, options) {
-        var base = this;
-        var minutes;
-        var hours;
-        var ctx;
-        var ampm = false;
-        var size;
-
-        base.$el = $(el);
-        base.el = el;
-        base.$el.data("cantipi", base);
-
-        base.init = function() {
-            base.options = $.extend({}, $.cantipi.defaultOptions, options);
-            size = base.options.size;
-
-            var canvas = document.createElement('canvas');
-            canvas.height = size;
-            canvas.width = size;
-            // Without this canvas can't get focus and can't fire blur event
-            canvas.tabIndex = 1;
-            canvas.style.display = 'none';
-            canvas.style.position = 'absolute';
-            canvas.style.background = '#FFF';
-            var offset = base.$el.offset();
-            canvas.style.top = offset.top + el.offsetHeight;
-            canvas.style.left = offset.left;
-
-            canvas.onmousedown = clickclock;
-            canvas.addEventListener('blur', function(e) {
-                canvas.style.display = 'none'
-            }, true);
-
-            ctx = canvas.getContext('2d');
-
-            var now = new Date();
-            minutes = now.getMinutes();
-            hours = now.getHours() % 12;
-
-            el.onfocus = function() {
-                canvas.style.display = 'block';
-                canvas.focus();
-            };
-
-            base.$el.after(canvas);
-            draw();
-        };
-
-        var clickclock = function(e) {
-            point = getMouse(e);
-            sethours(point);
-            var hr24 = ampm ? hours : hours + 12;
-            base.el.value = ('0' + hr24).substr(-2, 2) + ':' + ('0' + minutes).substr(-2, 2);
-            draw();
-        }
-
-        function draw() {
-
-            ctx.save();
-            ctx.clearRect(0, 0, size, size);
-            ctx.translate(size / 2, size / 2);
-            ctx.scale(size / 100, size / 100);
-            ctx.rotate(-Math.PI / 2);
-            ctx.strokeStyle = "#20";
-            ctx.fillStyle = "white";
-            ctx.lineWidth = 2;
-            ctx.lineCap = "round";
-
-            ctx.beginPath();
-            ctx.lineWidth = 2;
-            ctx.fillStyle = '#BABA00';
-            ctx.arc(0, 0, 35, 0, Math.PI * 2, true);
-            ctx.fill();
-
-
-            // Hour marks
-            ctx.save();
-            for (var i = 0; i < 12; i++) {
-                ctx.beginPath();
-                ctx.rotate(Math.PI / 6);
-                ctx.moveTo(41, 0);
-                ctx.lineTo(47, 0);
-                ctx.stroke();
-            }
-            ctx.restore();
-
-            // Minute marks
-            ctx.save();
-            ctx.lineWidth = 1;
-            for (i = 0; i < 60; i++) {
-                if (i % 5 != 0) {
-                    ctx.beginPath();
-                    ctx.moveTo(47, 0);
-                    ctx.lineTo(44, 0);
-                    ctx.stroke();
-                }
-                ctx.rotate(Math.PI / 30);
-            }
-            ctx.restore();
-
-            // write Hours
-            ctx.save();
-            ctx.rotate(hours * (Math.PI / 6) + (Math.PI / 360) * minutes)
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            ctx.moveTo(-12, 0);
-            ctx.lineTo(38, 0);
-            ctx.stroke();
-            ctx.beginPath();
-
-            ctx.beginPath();
-            ctx.arc(28, 0, 4, 0, Math.PI * 2, true);
-            ctx.stroke();
-
-            ctx.restore();
-
-            // write Minutes
-            ctx.save();
-            ctx.rotate((Math.PI / 30) * minutes)
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            ctx.moveTo(-14, 0);
-            ctx.lineTo(44, 0);
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.arc(34, 0, 5, 0, Math.PI * 2, true);
-            ctx.stroke();
-            ctx.restore();
-
-            ctx.beginPath();
-            ctx.lineWidth = 1;
-            ctx.strokeStyle = '#BABA00';
-            ctx.arc(0, 0, 49, 0, Math.PI * 2, true);
-            ctx.stroke();
-
-            ctx.save();
-            ctx.beginPath();
-            ctx.fillStyle = "white";
-            ctx.arc(0, 0, 10, 0, Math.PI * 2, true);
-            ctx.fill();
-            ctx.rotate(Math.PI / 2);
-            var i = ampm ? 'AM' : 'PM';
-            ctx.font = 'normal 900 9px Lucida Grande';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillStyle = "black";
-            ctx.fillText(i, 0, 0);
-            ctx.restore();
-
-            ctx.restore();
-
-        }
-
-        function getTrueOffsetLeft(ele) {
-            var n = 0;
-            while (ele) {
-                n += ele.offsetLeft || 0;
-                ele = ele.offsetParent;
-            }
-            return n;
-        }
-
-        function getTrueOffsetTop(ele) {
-            var n = 0;
-            while (ele) {
-                n += ele.offsetTop || 0;
-                ele = ele.offsetParent;
-            }
-            return n;
-        }
-
-
-        function getMouse(e) {
-            var x = e.clientX - getTrueOffsetLeft(e.target) + window.pageXOffset - size / 2;
-            var y = e.clientY - getTrueOffsetTop(e.target) + window.pageYOffset - size / 2;
-            return { x:x, y:y };
-        }
-
-        ;
-
-        function sethours(point) {
-            var tumbler = ctx.isPointInPath(point.x + size / 2, point.y + size / 2);
-            ampm = tumbler ? !ampm : ampm;
-            if (tumbler) return;
-
-            var angle = Math.atan2(point.y, point.x) + Math.PI * 2;
-            var distance = Math.sqrt(Math.pow(point.x, 2) + Math.pow(point.y, 2));
-            if (distance < size * 35 / 100) {
-                hours = (Math.floor(angle / (Math.PI / 6)) + 3) % 12;
-            } else {
-                minutes = Math.floor((Math.floor((angle / (Math.PI / 30)) + 15) % 60) / base.options.roundto) * base.options.roundto;
-            }
-        }
-
-        base.init();
-    };
-
-    $.cantipi.defaultOptions = {
-        size:150,
-        roundto: 1
-    };
-
-    $.fn.cantipi = function(options) {
-        return this.each(function() {
-            var clock = new $.cantipi(this, options);
+    $(function() {
+        $("#deathDatePicker").datepicker({
+            changeYear: true,
+            yearRange: '1960:2020',
+            dateFormat:'yy-mm-dd',
+            startDate:'2000-01-01',
+            endDate:'2040-12-31'
         });
-    };
-
-})(jQuery);
-
-
-$(function() {
-    $("#deathTimePicker").cantipi({size:140, roundto: 5});
-});
-<%--end of time picker--%>
-
-/*show hide*/
-$(function() {
-    $('#death-info-min').click(function() {
-        minimize("death-info");
     });
-    $('#death-info-max').click(function() {
-        maximize("death-info");
+
+    $(function() {
+        $("#reciveDatePicker").datepicker({
+            changeYear: true,
+            yearRange: '1960:2020',
+            dateFormat:'yy-mm-dd',
+            startDate:'2000-01-01',
+            endDate:'2040-12-31'
+        });
+    });
+
+    //time picker
+    $(function() {
+        $("#deathTimePicker").cantipi({size:140, roundto: 5});
     });
 
 
-    $('#death-person-info-min').click(function() {
-        minimize("death-person-info");
+    /*show hide*/
+    $(function() {
+        $('#death-info-min').click(function() {
+            minimize("death-info");
+        });
+        $('#death-info-max').click(function() {
+            maximize("death-info");
+        });
+
+
+        $('#death-person-info-min').click(function() {
+            minimize("death-person-info");
+        });
+        $('#death-person-info-max').click(function() {
+            maximize("death-person-info");
+        });
+        $('#death-info-check').click(function() {
+            document.getElementById("death-info-check").disabled = true;
+            document.getElementById('death').value = true;
+            var fieldIds = new Array('deathDatePicker', 'deathTimePicker', 'placeOfDeath', 'placeOfDeathInEnglish', 'cause_of_death',
+                    'ICD_code', 'placeOfBurial', 'act5353', 'act5252', 'cause_of_death_yesfalse', 'cause_of_death_notrue');
+            enableFields(fieldIds);
+        });
+
+        $('#death-person-info-check').click(function() {
+            document.getElementById("death-person-info-check").disabled = true;
+            document.getElementById('deathPerson').value = true;
+            var fieldIds = new Array('deathPerson_PINorNIC', 'deathPersonCountryList', 'passportNumber', 'deathAge', 'deathPersonGender'
+                    , 'deathPersonRaceList', 'fatherPinNic', 'nameEnglish', 'address', 'nameOfficialLang', 'motherNIC', 'motherName', 'fatherName');
+            enableFields(fieldIds);
+        });
     });
-    $('#death-person-info-max').click(function() {
-        maximize("death-person-info");
-    });
-    $('#death-info-check').click(function() {
-        document.getElementById("death-info-check").disabled = true;
-        document.getElementById('death').value = true;
-        var fieldIds = new Array('deathDatePicker', 'deathTimePicker', 'placeOfDeath', 'placeOfDeathInEnglish', 'cause_of_death',
-                'ICD_code', 'placeOfBurial', 'act5353', 'act5252', 'cause_of_death_yesfalse', 'cause_of_death_notrue');
-        enableFields(fieldIds);
-    });
-
-    $('#death-person-info-check').click(function() {
-        document.getElementById("death-person-info-check").disabled = true;
-        document.getElementById('deathPerson').value = true;
-        var fieldIds = new Array('deathPerson_PINorNIC', 'deathPersonCountryList', 'passportNumber', 'deathAge', 'deathPersonGender'
-                , 'deathPersonRaceList', 'fatherPinNic', 'nameEnglish', 'address', 'nameOfficialLang', 'motherNIC', 'motherName', 'fatherName');
-        enableFields(fieldIds);
-    });
-});
 
 
-function enableFields(fieldIds) {
-    for (var i = 0; i < fieldIds.length; i++) {
-        document.getElementById(fieldIds[i]).disabled = false;
-    }
-}
-
-function minimize(id) {
-    document.getElementById(id).style.display = 'none';
-    document.getElementById(id + "-min").style.display = 'none';
-    document.getElementById(id + "-max").style.display = 'block';
-    document.getElementById(id + "-check").style.display = 'none';
-    document.getElementById(id + "-check-lable").style.display = 'none';
-
-}
-
-function maximize(id, click) {
-    document.getElementById(id).style.display = 'block';
-    document.getElementById(id + "-max").style.display = 'none';
-    document.getElementById(id + "-min").style.display = 'block';
-    document.getElementById(id + "-check").style.display = 'block';
-    document.getElementById(id + "-check-lable").style.display = 'block';
-
-}
-
-
-function initPage() {
-    var idNames;
-    var checkIdNames;
-    var fieldIds;
-    idNames = new Array('death-info', 'death-person-info');
-    checkIdNames = new Array('death-person-info-check', 'death-info-check');
-    fieldIds = new Array('deathDatePicker', 'cause_of_death_yesfalse', 'act5252', 'motherNIC', 'motherName', 'fatherName',
-            'fatherPinNic', 'nameEnglish', 'address', 'nameOfficialLang', 'deathAge', 'deathPersonGender', 'deathPersonRaceList'
-            , 'deathPerson_PINorNIC', 'deathPersonCountryList', 'passportNumber', 'placeOfBurial', 'cause_of_death', 'ICD_code'
-            , 'cause_of_death_notrue', 'placeOfDeath', 'placeOfDeathInEnglish', 'act5353', 'act5252', 'deathTimePicker'
-            );
-
-    //set serial number
-
-    for (var i = 0; i < idNames.length; i++) {
-        document.getElementById(idNames[i]).style.display = 'none';
-        document.getElementById(idNames[i] + "-min").style.display = 'none';
-    }
-    for (var i = 0; i < checkIdNames.length; i++) {
-        document.getElementById(checkIdNames[i]).style.display = 'none';
-        document.getElementById(checkIdNames[i] + "-lable").style.display = 'none';
+    function enableFields(fieldIds) {
+        for (var i = 0; i < fieldIds.length; i++) {
+            document.getElementById(fieldIds[i]).disabled = false;
+        }
     }
 
-    for (var i = 0; i < fieldIds.length; i++) {
-        document.getElementById(fieldIds[i]).disabled = true;
+    function minimize(id) {
+        document.getElementById(id).style.display = 'none';
+        document.getElementById(id + "-min").style.display = 'none';
+        document.getElementById(id + "-max").style.display = 'block';
+        document.getElementById(id + "-check").style.display = 'none';
+        document.getElementById(id + "-check-lable").style.display = 'none';
+
     }
 
-}
+    function maximize(id, click) {
+        document.getElementById(id).style.display = 'block';
+        document.getElementById(id + "-max").style.display = 'none';
+        document.getElementById(id + "-min").style.display = 'block';
+        document.getElementById(id + "-check").style.display = 'block';
+        document.getElementById(id + "-check-lable").style.display = 'block';
+
+    }
+
+
+    function initPage() {
+        var idNames;
+        var checkIdNames;
+        var fieldIds;
+        idNames = new Array('death-info', 'death-person-info');
+        checkIdNames = new Array('death-person-info-check', 'death-info-check');
+        fieldIds = new Array('deathDatePicker', 'cause_of_death_yesfalse', 'act5252', 'motherNIC', 'motherName', 'fatherName',
+                'fatherPinNic', 'nameEnglish', 'address', 'nameOfficialLang', 'deathAge', 'deathPersonGender', 'deathPersonRaceList'
+                , 'deathPerson_PINorNIC', 'deathPersonCountryList', 'passportNumber', 'placeOfBurial', 'cause_of_death', 'ICD_code'
+                , 'cause_of_death_notrue', 'placeOfDeath', 'placeOfDeathInEnglish', 'act5353', 'act5252', 'deathTimePicker'
+                );
+
+        //set serial number
+
+        for (var i = 0; i < idNames.length; i++) {
+            document.getElementById(idNames[i]).style.display = 'none';
+            document.getElementById(idNames[i] + "-min").style.display = 'none';
+        }
+        for (var i = 0; i < checkIdNames.length; i++) {
+            document.getElementById(checkIdNames[i]).style.display = 'none';
+            document.getElementById(checkIdNames[i] + "-lable").style.display = 'none';
+        }
+
+        for (var i = 0; i < fieldIds.length; i++) {
+            document.getElementById(fieldIds[i]).disabled = true;
+        }
+
+    }
 </script>
 <div id="death-alteration-outer">
 <s:if test="%{editMode==true}">
@@ -556,49 +344,6 @@ function initPage() {
     </tbody>
 </table>
 <br>
-<%--
-<table class="death-alteration-table-style01" style="width:1030px;border-top:50px">
-    <tr>
-        <td colspan="3" style="font-size:11pt;text-align:center;margin-top:20px;">
-            <s:label value="ඇතුලත් කිරීම්, වෙනස් කිරීම් සහ ඉවත් කිරීම් තිබෙන තීරු අංක පහත සඳහන් කරන්න "/> <br>
-            <s:label value="in Tamil"/> <br>
-            <s:label value="Specify cage numbers for Insertions, Alterations and Omissions below"/>
-        </td>
-    </tr>
-</table>
-<br>
-
-<table border="1" style="margin-top:0px;width:100%;border:1px solid #000;border-collapse:collapse;" cellpadding="2px">
-    <caption></caption>
-    <col width="350px">
-    <col>
-    <tr>
-        <td>
-            (7)ඇතුලත් කිරීම් සහිත තීරු අංක / in tamil
-            <br>
-            Cage numbers for insertions
-        </td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>
-            (8)වෙනස් කිරීම් සහිත තීරු අංක / in tamil
-            <br>
-            Cage numbers for Alterations
-        </td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>
-            (9)ඉවත් කල යුතු තීරු අංක / in tamil
-            <br>
-            Cage numbers to be Deleted
-        </td>
-        <td></td>
-    </tr>
-</table>
-<br>
---%>
 
 <table class="death-alteration-table-style02" style=" margin-top:20px;width:100%" cellpadding="0" cellspacing="0">
     <caption/>
@@ -742,7 +487,8 @@ function initPage() {
                 Cause of death
             </td>
             <td colspan="3">
-                <s:textarea name="deathAlteration.deathInfo.causeOfDeath" value="%{deathAlteration.deathInfo.causeOfDeath}"
+                <s:textarea name="deathAlteration.deathInfo.causeOfDeath"
+                            value="%{deathAlteration.deathInfo.causeOfDeath}"
                             cssStyle="width:420px;" id="cause_of_death"/>
             </td>
             <td>
@@ -762,7 +508,8 @@ function initPage() {
                 Place of burial or cremation
             </td>
             <td colspan="5">
-                <s:textarea name="deathAlteration.deathInfo.placeOfBurial" value="%{deathAlteration.deathInfo.placeOfBurial}"
+                <s:textarea name="deathAlteration.deathInfo.placeOfBurial"
+                            value="%{deathAlteration.deathInfo.placeOfBurial}"
                             id="placeOfBurial" cssStyle="width:99%;"/>
             </td>
         </tr>
