@@ -27,9 +27,9 @@ import java.util.*;
  * @author amith jayasekara
  * @author Duminda Dharmakeerthi
  */
-public class UserManagmentAction extends ActionSupport implements SessionAware {
+public class UserManagementAction extends ActionSupport implements SessionAware {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserManagmentAction.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserManagementAction.class);
     private final UserManager service;
     private final MasterDataManagementService dataManagementService;
     private Map session;
@@ -118,7 +118,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         return roleId;
     }
 
-    public UserManagmentAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, RoleDAO roleDAO, UserManager service, CourtDAO courtDAO,
+    public UserManagementAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, RoleDAO roleDAO, UserManager service, CourtDAO courtDAO,
                                BDDivisionDAO bdDivisionDAO, MasterDataManagementService dataManagementService, MRDivisionDAO mrDivisionDAO, LocationDAO locationDAO,
                                AppParametersDAO appParametersDAO, UserLocationDAO userLocationDAO, UserDAO userDAO,
                                BirthRecordsIndexer birthRecordsIndexer, DeathRecordsIndexer deathRecordsIndexer, PRSRecordsIndexer prsRecordsIndexer) {
