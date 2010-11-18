@@ -39,7 +39,7 @@ public class PINGeneratorImpl implements PINGenerator {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public long generatePINNumber(Date dob, boolean male) {
+    public synchronized long generatePINNumber(Date dob, boolean male) {
 
         Calendar cal = Calendar.getInstance();
         cal.setTime(dob);

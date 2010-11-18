@@ -30,7 +30,6 @@ public class PopulationGenerator {
     private final RaceDAO raceDAO;
     private final DSDivisionDAO dsDivisionDAO;
     private final Race SINHALA;
-    private final Connection sltConn;
     private final User system;
     private final Random rand = new Random(System.currentTimeMillis());
     private Map<Character, List<String[]>> names = new HashMap<Character, List<String[]>>(8000);
@@ -80,36 +79,96 @@ public class PopulationGenerator {
         system = userManager.getSystemUser();
 
         SINHALA = raceDAO.getRace(1);
-        sltConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SLT", "root", "");
-        sltConn.setAutoCommit(false);
-        sltConn.setReadOnly(true);
     }
 
     public void init() throws Exception {
+        Thread t;
+        t = new Thread(new Worker(1, 7401, 100000));
+        t.start();
+        t = new Thread(new Worker(2, 102701, 200000));
+        t.start();
+        t = new Thread(new Worker(3, 202701, 300000));
+        t.start();
+        t = new Thread(new Worker(4, 304701, 400000));
+        t.start();
+        t = new Thread(new Worker(5, 402701, 500000));
+        t.start();
+        t = new Thread(new Worker(6, 505101, 600000));
+        t.start();
+        t = new Thread(new Worker(7, 609801, 700000));
+        t.start();
+        t = new Thread(new Worker(8, 704501, 800000));
+        t.start();
+        t = new Thread(new Worker(9, 811701, 900000));
+        t.start();
+        t = new Thread(new Worker(10, 903501, 1000000));
+        t.start();
+        t = new Thread(new Worker(11, 1005701, 1100000));
+        t.start();
+    }
 
-        Statement s = sltConn.createStatement();
-        ResultSet rs = s.executeQuery("select * from tp");
+    class Worker implements Runnable {
+        private int id;
+        private int start;
+        private int stop;
+        private Connection sltConn;
 
-        while (rs.next()) {
-            String lastname = rs.getString("lastname");
-            String firstname = rs.getString("firstname");
-            String address = rs.getString("address");
-            String phone = rs.getString("phone");
-            String areaCode    = phone.substring(0,2);
-            String phoneNumber = phone.substring(4);
-
-            generateFamily(lastname, firstname, address, phone);
-            generateFamily(getRandomLastname(), getRandomInitials(), getRandomAddress(address), areaCode + "4" + phoneNumber);
-            generateFamily(getRandomLastname(), getRandomInitials(), getRandomAddress(address), areaCode + "5" + phoneNumber);
-            generateFamily(getRandomLastname(), getRandomInitials(), getRandomAddress(address), getRandomMobile());
-            generateFamily(getRandomLastname(), getRandomInitials(), getRandomAddress(address), getRandomMobile());
-            generateFamily(getRandomLastname(), getRandomInitials(), getRandomAddress(address), getRandomMobile());
-            generateFamily(getRandomLastname(), getRandomInitials(), getRandomAddress(address), getRandomMobile());
-            generateFamily(getRandomLastname(), getRandomInitials(), getRandomAddress(address), getRandomMobile());
-            generateFamily(getRandomLastname(), getRandomInitials(), getRandomAddress(address), null);
-            generateFamily(getRandomLastname(), getRandomInitials(), getRandomAddress(address), null);
+        Worker(int id, int start, int stop) {
+            this.id = id;
+            this.start = start;
+            this.stop = stop;
+            try {
+                sltConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SLT", "root", "srilanka");
+                sltConn.setAutoCommit(false);
+                sltConn.setReadOnly(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-        sltConn.close();
+
+        public void run() {
+            int row = 0;
+            System.out.println("Starting Thread : " + id);
+            
+            try {
+                Statement s = sltConn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+                s.setFetchSize(Integer.MIN_VALUE);
+                ResultSet rs = s.executeQuery("select * from tp");
+                
+                while (rs.next()) {
+                    if (row++ % 100 == 0) {
+                        System.out.println("Thread : " + id + " row : " + row);
+                    }
+                    
+                    if (row < start) continue;
+                    if (row > stop)  break;
+
+                    String lastname = rs.getString("lastname");
+                    String firstname = rs.getString("firstname");
+                    String address = rs.getString("address");
+                    String phone = rs.getString("phone");
+                    String areaCode    = phone.substring(0,2);
+                    String phoneNumber = phone.substring(4);
+
+                    generateFamily(id, lastname, firstname, address, phone);
+                    generateFamily(id, getRandomLastname(), getRandomInitials(), getRandomAddress(address), areaCode + "4" + phoneNumber);
+                    generateFamily(id, getRandomLastname(), getRandomInitials(), getRandomAddress(address), areaCode + "5" + phoneNumber);
+                    generateFamily(id, getRandomLastname(), getRandomInitials(), getRandomAddress(address), getRandomMobile());
+                    generateFamily(id, getRandomLastname(), getRandomInitials(), getRandomAddress(address), getRandomMobile());
+                    generateFamily(id, getRandomLastname(), getRandomInitials(), getRandomAddress(address), getRandomMobile());
+                    generateFamily(id, getRandomLastname(), getRandomInitials(), getRandomAddress(address), getRandomMobile());
+                    generateFamily(id, getRandomLastname(), getRandomInitials(), getRandomAddress(address), getRandomMobile());
+                    generateFamily(id, getRandomLastname(), getRandomInitials(), getRandomAddress(address), null);
+                    generateFamily(id, getRandomLastname(), getRandomInitials(), getRandomAddress(address), null);
+                }
+                sltConn.close();
+                System.out.println("Ending Thread : " + id);
+
+            } catch (Exception e) {
+                System.out.println("Thread : " + id + " failed at : " + row + new Date());
+                e.printStackTrace();
+            }
+        }
     }
 
     private String getRandomMobile() {
@@ -175,90 +234,103 @@ public class PopulationGenerator {
         }
     }
 
-    private void generateFamily(String lastname, String firstname, String address, String phone) {
+    private void generateFamily(int id, String lastname, String firstname, String address, String phone) {
 
-        // select gender
-        int gender = 0;
-        int spouseGender = 1;
-        if (firstname.contains("Ms") || firstname.contains("Mrs") || firstname.contains("Miss")) {
-            gender = 1;
-            spouseGender = 0;
-        }
+        try {
+            // select gender
+            int gender = 0;
+            int spouseGender = 1;
+            if (firstname.contains("Ms") || firstname.contains("Mrs") || firstname.contains("Miss")) {
+                gender = 1;
+                spouseGender = 0;
+            }
 
-        // decide race
-        Race race = getRace(lastname);
+            // decide race
+            Race race = getRace(lastname);
 
-        // pick a DOB
-        int age = 25 + rand.nextInt(60);
-        int day = rand.nextInt(365);
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.YEAR, 2010 - age);
-        cal.set(Calendar.DAY_OF_YEAR, day);
-        String nic = generateNIC(gender, cal.get(Calendar.YEAR) % 100, day);
+            // pick a DOB
+            int age = 25 + rand.nextInt(60);
+            int day = rand.nextInt(365);
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.YEAR, 2010 - age);
+            cal.set(Calendar.DAY_OF_YEAR, day);
+            String nic = generateNIC(gender, cal.get(Calendar.YEAR) % 100, day);
 
-        // is married?
-        Person.CivilStatus civilStatus;
-        int r = rand.nextInt(100);
-        if (r < 75) {
-            civilStatus = Person.CivilStatus.MARRIED;
-        } else if (r < 85) {
-            civilStatus = Person.CivilStatus.NEVER_MARRIED;
-        } else if (r < 90) {
-            civilStatus = Person.CivilStatus.WIDOWED;
-        } else if (r < 95) {
-            civilStatus = Person.CivilStatus.DIVORCED;
-        } else if (r < 97) {
-            civilStatus = Person.CivilStatus.SEPARATED;
-        } else {
-            civilStatus = Person.CivilStatus.ANNULLED;
-        }
+            // is married?
+            Person.CivilStatus civilStatus;
+            int r = rand.nextInt(100);
+            if (r < 75) {
+                civilStatus = Person.CivilStatus.MARRIED;
+            } else if (r < 85) {
+                civilStatus = Person.CivilStatus.NEVER_MARRIED;
+            } else if (r < 90) {
+                civilStatus = Person.CivilStatus.WIDOWED;
+            } else if (r < 95) {
+                civilStatus = Person.CivilStatus.DIVORCED;
+            } else if (r < 97) {
+                civilStatus = Person.CivilStatus.SEPARATED;
+            } else {
+                civilStatus = Person.CivilStatus.ANNULLED;
+            }
 
-        // generate a name
-        StringBuilder sbOfficialName = new StringBuilder();
-        StringBuilder sbEnglishName = new StringBuilder();
+            // generate a name
+            StringBuilder sbOfficialName = new StringBuilder();
+            StringBuilder sbEnglishName = new StringBuilder();
 
-        String initString = firstname.replaceAll("Mr", "").
-            replaceAll("Ms", "").replaceAll("Miss", "").replaceAll("Mrs", "");
-        String[] initials = initString.split(" ");
+            String initString = firstname.replaceAll("Mr", "").
+                replaceAll("Ms", "").replaceAll("Miss", "").replaceAll("Mrs", "");
+            String[] initials = initString.split(" ");
 
-        for (String letter : initials) {
-            List<String[]> nameList = names.get(Character.toLowerCase(letter.charAt(0)));
-            int index = rand.nextInt(nameList.size());
-            String[] nameFound = nameList.get(index);
-            sbOfficialName.append(race == SINHALA ?
-                nameFound[gender == 0 ? 1 : 2] : nameFound[gender == 0 ? 3 : 4]).append(" ");
-            sbEnglishName.append(nameFound[0]).append(" ");
-        }
+            for (String letter : initials) {
+                List<String[]> nameList = null;
+                if (letter.length() == 0) {
+                    nameList = names.get((char) ('a' + rand.nextInt(26)));
+                } else {
+                    nameList = names.get(Character.toLowerCase(letter.charAt(0)));
+                    if (nameList == null) {
+                        nameList = names.get((char) ('a' + rand.nextInt(26)));
+                    }
+                }
+                int index = rand.nextInt(nameList.size());
+                String[] nameFound = nameList.get(index);
+                sbOfficialName.append(race == SINHALA ?
+                    nameFound[gender == 0 ? 1 : 2] : nameFound[gender == 0 ? 3 : 4]).append(" ");
+                sbEnglishName.append(nameFound[0]).append(" ");
+            }
 
-        sbEnglishName.append(lastname.toUpperCase());
-        sbOfficialName.append(Transliterate.translateWord(lastname, Transliterate.ENGLISH,
-            race == SINHALA ? Transliterate.SINHALA : Transliterate.TAMIL,
-            gender == 0 ? Transliterate.MALE : Transliterate.FEMALE));
+            sbEnglishName.append(lastname.toUpperCase());
+            sbOfficialName.append(Transliterate.translateWord(lastname, Transliterate.ENGLISH,
+                race == SINHALA ? Transliterate.SINHALA : Transliterate.TAMIL,
+                gender == 0 ? Transliterate.MALE : Transliterate.FEMALE));
 
-        Person person = new Person();
-        person.setFullNameInEnglishLanguage(sbEnglishName.toString().trim());
-        person.setInitialsInEnglish(firstname);
-        person.setFullNameInOfficialLanguage(sbOfficialName.toString().trim());
-        person.setDateOfBirth(cal.getTime());
-        person.setRace(race);
-        person.setGender(gender);
-        person.setNic(nic);
-        person.setCivilStatus(civilStatus);
-        person.setStatus(nic != null ? Person.Status.SEMI_VERIFIED : Person.Status.UNVERIFIED);
-        person.setPersonPhoneNo(phone);
+            Person person = new Person();
+            person.setFullNameInEnglishLanguage(sbEnglishName.toString().trim());
+            person.setInitialsInEnglish(firstname);
+            person.setFullNameInOfficialLanguage(sbOfficialName.toString().trim());
+            person.setDateOfBirth(cal.getTime());
+            person.setRace(race);
+            person.setGender(gender);
+            person.setNic(nic);
+            person.setCivilStatus(civilStatus);
+            person.setStatus(nic != null ? Person.Status.SEMI_VERIFIED : Person.Status.UNVERIFIED);
+            person.setPersonPhoneNo(phone);
 
-        System.out.println("@@ Person " + lastname + " " + firstname + " | " +
-            person.getFullNameInEnglishLanguage() + " | " + person.getFullNameInOfficialLanguage() + " | " +
-            (gender == 0 ? "M" : "F") + " | " + person.getDateOfBirth() + " | " + nic);
-        popreg.addPerson(person, system);
+    //        System.out.println("@@ Person " + lastname + " " + firstname + " | " +
+    //            person.getFullNameInEnglishLanguage() + " | " + person.getFullNameInOfficialLanguage() + " | " +
+    //            (gender == 0 ? "M" : "F") + " | " + person.getDateOfBirth() + " | " + nic);
+            popreg.addPerson(person, system);
 
-        Address addr = splitAddress(address);
-        addr.setPerson(person);
-        System.out.println("\tAddress : " + addr.getLine1() + " | " + addr.getCity());
-        popreg.addAddress(addr, system);
+            Address addr = splitAddress(address);
+            addr.setPerson(person);
+    //        System.out.println("\tAddress : " + addr.getLine1() + " | " + addr.getCity());
+            popreg.addAddress(addr, system);
 
-        if (civilStatus == Person.CivilStatus.MARRIED) {
-            generateSpouseAndChildren(person, spouseGender, age, race, lastname, addr);
+            if (civilStatus == Person.CivilStatus.MARRIED) {
+                generateSpouseAndChildren(person, spouseGender, age, race, lastname, addr);
+            }
+        } catch (Exception e) {
+            System.out.println("Thread : " + id + " encountered an error : " + e.getMessage() + " at : " + new Date());
+            e.printStackTrace();
         }
     }
 
@@ -274,9 +346,9 @@ public class PopulationGenerator {
         }
         Person spouse = generatePerson(spouseGender, age, race, lastname, addr);
         spouse.setCivilStatus(Person.CivilStatus.MARRIED);
-        System.out.println("\tSpouse : " +
-            spouse.getFullNameInEnglishLanguage() + " | " + spouse.getFullNameInOfficialLanguage() + " | " +
-            (spouse.getGender() == 0 ? "M" : "F") + " | " + spouse.getDateOfBirth() + " | " + spouse.getNic());
+//        System.out.println("\tSpouse : " +
+//            spouse.getFullNameInEnglishLanguage() + " | " + spouse.getFullNameInOfficialLanguage() + " | " +
+//            (spouse.getGender() == 0 ? "M" : "F") + " | " + spouse.getDateOfBirth() + " | " + spouse.getNic());
         popreg.addPerson(spouse, system);
 
         Marriage m = new Marriage();
@@ -305,7 +377,7 @@ public class PopulationGenerator {
         // we have 326 DS divisions, pick one randomly
         m.setPlaceOfMarriage(
             dsDivisionDAO.getNameByPK(1 + rand.nextInt(325), race == SINHALA ? AppConstants.SINHALA : AppConstants.TAMIL));
-        System.out.println("\tMarriage at : " + m.getPlaceOfMarriage() + " on : " + m.getDateOfMarriage());
+//        System.out.println("\tMarriage at : " + m.getPlaceOfMarriage() + " on : " + m.getDateOfMarriage());
         popreg.addMarriage(m, system);
 
         person.specifyMarriage(m);
@@ -329,9 +401,9 @@ public class PopulationGenerator {
                 age = 0;
             }
             Person child = generatePerson(spouseGender, age, race, lastname, addr);
-            System.out.println("\tChild : " +
-                child.getFullNameInEnglishLanguage() + " | " + child.getFullNameInOfficialLanguage() + " | " +
-                (child.getGender() == 0 ? "M" : "F") + " | " + child.getDateOfBirth() + " | " + child.getNic());
+//            System.out.println("\tChild : " +
+//                child.getFullNameInEnglishLanguage() + " | " + child.getFullNameInOfficialLanguage() + " | " +
+//                (child.getGender() == 0 ? "M" : "F") + " | " + child.getDateOfBirth() + " | " + child.getNic());
             child.setFather(father);
             child.setMother(mother);
             popreg.addPerson(child, system);
@@ -414,6 +486,12 @@ public class PopulationGenerator {
             }
         } else {
             addr.setLine1(line);
+        }
+
+        // if somehow this resulted in a null line1, set the original address as line1
+        if (addr.getLine1() == null || addr.getLine1().length() == 0) {
+            addr.setLine1(line);
+            addr.setCity(null);
         }
         return addr;
     }
