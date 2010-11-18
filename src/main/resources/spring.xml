@@ -313,7 +313,7 @@
         <constructor-arg ref="prsRecordsIndexer"/>
     </bean>
 
-    <bean id="registrarsManagmentAction" class="lk.rgd.crs.web.action.RegistrarsManagementAction">
+    <bean id="registrarsManagmentAction" class="lk.rgd.crs.web.action.RegistrarManagementAction">
         <constructor-arg ref="districtDAOImpl"/>
         <constructor-arg ref="bdDivisionDAOImpl"/>
         <constructor-arg ref="dsDivisionDAOImpl"/>

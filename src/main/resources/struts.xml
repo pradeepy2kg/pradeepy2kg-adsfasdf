@@ -831,25 +831,25 @@
 
         <!--registrars managment actions-->
 
-        <action name="eprRegistrarsManagment" class="lk.rgd.crs.web.action.RegistrarsManagementAction"
+        <action name="eprRegistrarsManagment" class="lk.rgd.crs.web.action.RegistrarManagementAction"
                 method="registrarsManagmentHome">
             <result type="tiles" name="success">epr.registrarsManagmentList</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
 
-        <action name="eprRegistrarsView" class="lk.rgd.crs.web.action.RegistrarsManagementAction"
+        <action name="eprRegistrarsView" class="lk.rgd.crs.web.action.RegistrarManagementAction"
                 method="registrarsVeiwInit">
             <result type="tiles" name="success">epr.registrarsView</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
 
-        <action name="eprRegistrarsFilter" class="lk.rgd.crs.web.action.RegistrarsManagementAction"
+        <action name="eprRegistrarsFilter" class="lk.rgd.crs.web.action.RegistrarManagementAction"
                 method="filter">
             <result type="tiles" name="success">epr.registrarsManagmentList</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
 
-        <action name="eprUpdateRegistrar" class="lk.rgd.crs.web.action.RegistrarsManagementAction"
+        <action name="eprUpdateRegistrar" class="lk.rgd.crs.web.action.RegistrarManagementAction"
                 method="updateRegistrar">
             <result type="redirectAction" name="success">
                 <param name="actionName">
@@ -859,7 +859,7 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
-        <action name="eprRegistrarsAdd" class="lk.rgd.crs.web.action.RegistrarsManagementAction"
+        <action name="eprRegistrarsAdd" class="lk.rgd.crs.web.action.RegistrarManagementAction"
                 method="registrarsAdd">
             <result type="tiles" name="pageLoad">epr.addRegistrar</result>
             <result type="redirectAction" name="success">
@@ -870,7 +870,7 @@
             <result type="tiles" name="error">epr.addRegistrar</result>
         </action>
 
-        <action name="eprAssignmentAdd" class="lk.rgd.crs.web.action.RegistrarsManagementAction"
+        <action name="eprAssignmentAdd" class="lk.rgd.crs.web.action.RegistrarManagementAction"
                 method="assignmentAdd">
             <result type="redirectAction" name="success">
                 <param name="actionName">
@@ -884,13 +884,13 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
-        <action name="eprAssignmentEdit" class="lk.rgd.crs.web.action.RegistrarsManagementAction"
+        <action name="eprAssignmentEdit" class="lk.rgd.crs.web.action.RegistrarManagementAction"
                 method="editAssignment">
             <result type="tiles" name="success">epr.addAssignment</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
 
-        <action name="eprAssignmentAddDirect" class="lk.rgd.crs.web.action.RegistrarsManagementAction"
+        <action name="eprAssignmentAddDirect" class="lk.rgd.crs.web.action.RegistrarManagementAction"
                 method="assignmentAddPageLoad">
             <result type="tiles" name="success">epr.addAssignment</result>
             <result type="tiles" name="error">epr.error</result>
@@ -902,7 +902,7 @@
             <result type="tiles" name="error">epr.error</result>
         </action>-->
 
-        <action name="eprFindRegistrar" class="lk.rgd.crs.web.action.RegistrarsManagementAction"
+        <action name="eprFindRegistrar" class="lk.rgd.crs.web.action.RegistrarManagementAction"
                 method="findRegistrar">
             <result type="tiles" name="success">epr.findRegistrar</result>
             <result type="tiles" name="error">epr.error</result>
