@@ -25,9 +25,9 @@ import lk.rgd.crs.web.WebConstants;
  *
  * @author amith jayasekara
  */
-public class RegistrarsManagmentAction extends ActionSupport implements SessionAware {
+public class RegistrarsManagementAction extends ActionSupport implements SessionAware {
 
-    private static final Logger logger = LoggerFactory.getLogger(RegistrarsManagmentAction.class);
+    private static final Logger logger = LoggerFactory.getLogger(RegistrarsManagementAction.class);
     private Map session;
     private User user;
 
@@ -79,7 +79,7 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
     private String divisionName;
     private String registrarName;//use to search by name or part of the name
 
-    public RegistrarsManagmentAction(DistrictDAO districtDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO, RegistrarManagementService service, MRDivisionDAO mrDivisionDAO) {
+    public RegistrarsManagementAction(DistrictDAO districtDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO, RegistrarManagementService service, MRDivisionDAO mrDivisionDAO) {
         this.districtDAO = districtDAO;
         this.bdDivisionDAO = bdDivisionDAO;
         this.dsDivisionDAO = dsDivisionDAO;
