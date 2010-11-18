@@ -103,9 +103,9 @@ public interface RegistrarManagementService {
      *
      * @param pin  registrars unique pin number
      * @param user user who is requesting registrars
-     * @return list of registrars
+     * @return registrars  object for given pin
      */
-    public List<Registrar> getRegistrarByPin(long pin, User user);
+    public Registrar getRegistrarByPin(long pin, User user);
 
     /**
      * get a assignment by assignmentUKey

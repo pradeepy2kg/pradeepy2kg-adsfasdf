@@ -41,12 +41,12 @@ public interface RegistrarDAO {
     public void updateRegistrar(Registrar registrar, User user);
 
     /**
-     * retriew registrars accourding to pin number
+     * retrieve registrars according to pin number
      *
      * @param pin unique pin number of registrar
-     * @return list of registrars
+     * @return  registrars object
      */
-    public List<Registrar> getRegistrarByPin(long pin);
+    public Registrar getRegistrarByPin(long pin);
 
     /**
      * get registrars by name or part of the name

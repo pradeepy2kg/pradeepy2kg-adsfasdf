@@ -157,8 +157,8 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
         session.remove(WebConstants.SESSION_EXSISTING_REGISTRAR);
         if (page > 0) {
             //check is there a registrar for that pin already exists
-            List<Registrar> existingRegistrarsList = service.getRegistrarByPin(registrar.getPin(), user);
-            if (existingRegistrarsList.size() > 1) { //there is already one before
+            Registrar existingRegistrar = service.getRegistrarByPin(registrar.getPin(), user);
+            if (existingRegistrar != null) {
                 addActionError(getText("error.registrar.already.exists"));
                 return "error";
             } else {
@@ -183,7 +183,7 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
                 //getting exiting
                 Registrar reg = (Registrar) session.get(WebConstants.SESSION_EXSISTING_REGISTRAR);
                 if (registrarPin > 0) {
-                    reg = service.getRegistrarByPin(registrarPin, user).get(0);
+                    reg = service.getRegistrarByPin(registrarPin, user);
                 }
 
                 assignment.setRegistrar(reg);
@@ -271,7 +271,7 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
         session.remove(WebConstants.SESSION_EXSISTING_REGISTRAR);
         //requesting addAssignment page directly
         if (registrarPin > 0) {
-            session.put(WebConstants.SESSION_EXSISTING_REGISTRAR, service.getRegistrarByPin(registrarPin, user).get(0));
+            session.put(WebConstants.SESSION_EXSISTING_REGISTRAR, service.getRegistrarByPin(registrarPin, user));
         }
         populateLists(1, 1, assignmentType);
         directAssignment = 1;
@@ -283,7 +283,9 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
             logger.debug("attempt to search a registrar");
             if (registrarPin > 0) {
                 //search by registrar pin number
-                registrarList = service.getRegistrarByPin(registrarPin, user);
+                Registrar existingRegistrar = service.getRegistrarByPin(registrarPin, user);
+                registrarList = new ArrayList<Registrar>();
+                registrarList.add(existingRegistrar);
             } else if (registrarName != null) {
                 //search by name or part of the name
                 registrarList = service.getRegistrarByNameOrPartOfTheName(registrarName, user);
