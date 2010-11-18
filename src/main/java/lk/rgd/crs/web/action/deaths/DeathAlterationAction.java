@@ -37,16 +37,14 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     private final RaceDAO raceDAO;
     private final CountryDAO countryDAO;
     private final AppParametersDAO appParametersDAO;
+    private DeathAlterationService deathAlterationService;
+    private DeathRegistrationService deathRegistrationService;
 
     private User user;
     private Date toDay;
-    private DeathAlterationService deathAlterationService;
-    private DeathRegistrationService deathRegistrationService;
+
     private DeathAlteration deathAlteration;
     private DeathRegister deathRegister;
-
-    private BitSet requested;
-    private BitSet approvedBitset;
 
     private Map session;
     private Map<Integer, String> districtList;
@@ -55,7 +53,6 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     private Map<Integer, String> raceList;
     private Map<Integer, String> countryList;
     private Map<Integer, String> userLocations;
-    private Map<Integer, List> approvalFieldList = new HashMap<Integer, List>();
 
     private List<DeathAlteration> approvalList;
     private List<FieldValue> changesList = new LinkedList<FieldValue>();
@@ -69,7 +66,6 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     private int divisionUKey;
     private int pageNo;  //to capture data table pagination
     private int rowNo;
-    private int pendingListSize;       //todo remove
     private int deathPersonCountry;
     private int deathPersonRace;
     private int deathCountryId;
@@ -354,15 +350,9 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         }
         //todo remove follow else block
         else {
-            List<DeathAlteration> alterations = deathAlterationService.getAlterationByDeathId(deathId, user);
-            Iterator<DeathAlteration> itr = alterations.iterator();
-            while (itr.hasNext()) {
-                DeathAlteration da = itr.next();
-                if (da.getStatus().equals(DeathAlteration.State.DATA_ENTRY)) {
-                    deathAlteration = da;
-                    break;
-                }
-            }
+            addActionError(getText("cannot.find.death.alteration.for.approval"));
+            populatePrimaryLists(districtUKey, dsDivisionId, language, user);
+            return ERROR;
         }
         //checking in data entry
         if (!(deathAlteration.getStatus().equals(DeathAlteration.State.DATA_ENTRY))) {
@@ -944,13 +934,6 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         this.approvedIndex = approvedIndex;
     }
 
-    public int getPendingListSize() {
-        return pendingListSize;
-    }
-
-    public void setPendingListSize(int pendingListSize) {
-        this.pendingListSize = pendingListSize;
-    }
 
     public int getDeathPersonCountry() {
         return deathPersonCountry;
@@ -1016,14 +999,6 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         this.userLocations = userLocations;
     }
 
-    public Map<Integer, List> getApprovalFieldList() {
-        return approvalFieldList;
-    }
-
-    public void setApprovalFieldList(Map<Integer, List> approvalFieldList) {
-        this.approvalFieldList = approvalFieldList;
-    }
-
     public boolean isEditDeathPerson() {
         return editDeathPerson;
     }
@@ -1038,22 +1013,6 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
 
     public void setEditDeathInfo(boolean editDeathInfo) {
         this.editDeathInfo = editDeathInfo;
-    }
-
-    public BitSet getRequested() {
-        return requested;
-    }
-
-    public void setRequested(BitSet requested) {
-        this.requested = requested;
-    }
-
-    public BitSet getApprovedBitset() {
-        return approvedBitset;
-    }
-
-    public void setApprovedBitset(BitSet approvedBitset) {
-        this.approvedBitset = approvedBitset;
     }
 
     public boolean isApprovalPage() {
