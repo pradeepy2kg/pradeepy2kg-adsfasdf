@@ -29,7 +29,7 @@ import junit.extensions.TestSetup;
  * To change this template use File | Settings | File Templates.
  */
 public class AdminTaskTest extends CustomStrutsTestCase {
-    private UserManagmentAction userManagementAction;
+    private UserManagementAction userManagementAction;
     private ActionProxy proxy;
     private static final Logger logger = LoggerFactory.getLogger(AdoptionActionTest.class);
     protected final static ApplicationContext ctx = UnitTestManager.ctx;
@@ -73,13 +73,13 @@ public class AdminTaskTest extends CustomStrutsTestCase {
         assertNotNull(proxy);
         logger.debug("nameSpace {} and actionName {}", mapping.getNamespace(), proxy.getMethod());
 
-        UserManagmentAction action = (UserManagmentAction) proxy.getAction();
+        UserManagementAction action = (UserManagementAction) proxy.getAction();
         assertNotNull(action);
     }
 
     private void initAndExucute(String mapping, Map session) {
         proxy = getActionProxy(mapping);
-        userManagementAction = (UserManagmentAction) proxy.getAction();
+        userManagementAction = (UserManagementAction) proxy.getAction();
         assertNotNull(userManagementAction);
         logger.debug("Action Method to be executed is {} ", proxy.getMethod());
         ActionContext.getContext().setSession(session);

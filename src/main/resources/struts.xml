@@ -909,70 +909,70 @@
             <result type="tiles" name="pageLoad">epr.findRegistrar</result>
         </action>
 
-        <action name="eprInitUserCreation" class="lk.rgd.crs.web.action.UserManagmentAction"
+        <action name="eprInitUserCreation" class="lk.rgd.crs.web.action.UserManagementAction"
                 method="initUser">
             <result type="tiles" name="pageLoad">epr.creatUser</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
 
-        <action name="eprUserCreation" class="lk.rgd.crs.web.action.UserManagmentAction"
+        <action name="eprUserCreation" class="lk.rgd.crs.web.action.UserManagementAction"
                 method="createUser">
             <result type="tiles" name="pageLoad">epr.creatUser</result>
             <result type="tiles" name="success">epr.UserManagementResultPage</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
 
-        <action name="eprViewUsers" class="lk.rgd.crs.web.action.UserManagmentAction"
+        <action name="eprViewUsers" class="lk.rgd.crs.web.action.UserManagementAction"
                 method="viewUsers">
             <result type="tiles" name="success">epr.viewUsers</result>
         </action>
-        <action name="eprInactiveUsers" class="lk.rgd.crs.web.action.UserManagmentAction"
+        <action name="eprInactiveUsers" class="lk.rgd.crs.web.action.UserManagementAction"
                 method="inactiveUser">
             <result type="tiles" name="success">epr.viewUsers</result>
         </action>
-        <action name="eprActiveUsers" class="lk.rgd.crs.web.action.UserManagmentAction"
+        <action name="eprActiveUsers" class="lk.rgd.crs.web.action.UserManagementAction"
                 method="activeUser">
             <result type="tiles" name="success">epr.viewUsers</result>
         </action>
 
-        <action name="eprViewSelectedUsers" class="lk.rgd.crs.web.action.UserManagmentAction"
+        <action name="eprViewSelectedUsers" class="lk.rgd.crs.web.action.UserManagementAction"
                 method="selectUsers">
             <result type="tiles" name="success">epr.viewUsers</result>
         </action>
 
-        <action name="eprInitAddDivisionsAndDsDivisions" class="lk.rgd.crs.web.action.UserManagmentAction"
+        <action name="eprInitAddDivisionsAndDsDivisions" class="lk.rgd.crs.web.action.UserManagementAction"
                 method="initAddDivisionsAndDsDivision">
             <result type="tiles" name="success">epr.addEditDivisions</result>
         </action>
-        <action name="eprInitDivisionList" class="lk.rgd.crs.web.action.UserManagmentAction"
+        <action name="eprInitDivisionList" class="lk.rgd.crs.web.action.UserManagementAction"
                 method="initDivisionList">
             <result type="tiles" name="success">epr.addEditDivisions</result>
         </action>
-        <action name="eprActivateOrInactivateDivisionsAndDsDivisions" class="lk.rgd.crs.web.action.UserManagmentAction"
+        <action name="eprActivateOrInactivateDivisionsAndDsDivisions" class="lk.rgd.crs.web.action.UserManagementAction"
                 method="activeOrInactive">
             <result type="tiles" name="success">epr.addEditDivisions</result>
         </action>
-        <action name="eprAddDivisionsAndDsDivisions" class="lk.rgd.crs.web.action.UserManagmentAction"
+        <action name="eprAddDivisionsAndDsDivisions" class="lk.rgd.crs.web.action.UserManagementAction"
                 method="addDivisionsAndDsDivisions">
             <result type="tiles" name="success">epr.addEditDivisions</result>
         </action>
-        <action name="eprInitAssignedUserLocation" class="lk.rgd.crs.web.action.UserManagmentAction"
+        <action name="eprInitAssignedUserLocation" class="lk.rgd.crs.web.action.UserManagementAction"
                 method="initAssignedUserLocation">
             <result type="tiles" name="success">epr.assignedUserLocation</result>
         </action>
-        <action name="eprEditAssignedUserLocation" class="lk.rgd.crs.web.action.UserManagmentAction"
+        <action name="eprEditAssignedUserLocation" class="lk.rgd.crs.web.action.UserManagementAction"
                 method="editAssignedUserLocation">
             <result type="tiles" name="success">epr.assignedUserLocation</result>
         </action>
-        <action name="eprInactiveUserLocation" class="lk.rgd.crs.web.action.UserManagmentAction"
+        <action name="eprInactiveUserLocation" class="lk.rgd.crs.web.action.UserManagementAction"
                 method="inactiveUserLocation">
             <result type="tiles" name="success">epr.assignedUserLocation</result>
         </action>
-        <action name="eprActiveUserLocation" class="lk.rgd.crs.web.action.UserManagmentAction"
+        <action name="eprActiveUserLocation" class="lk.rgd.crs.web.action.UserManagementAction"
                 method="activeUserLocation">
             <result type="tiles" name="success">epr.assignedUserLocation</result>
         </action>
-        <action name="eprAssignedUserLocation" class="lk.rgd.crs.web.action.UserManagmentAction"
+        <action name="eprAssignedUserLocation" class="lk.rgd.crs.web.action.UserManagementAction"
                 method="assignedUserLocation">
             <result type="tiles" name="success">epr.assignedUserLocation</result>
         </action>
@@ -999,7 +999,7 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
-        <action name="eprIndexRecords" class="lk.rgd.crs.web.action.UserManagmentAction" method="indexRecords">
+        <action name="eprIndexRecords" class="lk.rgd.crs.web.action.UserManagementAction" method="indexRecords">
             <result type="tiles" name="success">epr.indexRecords</result>
         </action>
 
