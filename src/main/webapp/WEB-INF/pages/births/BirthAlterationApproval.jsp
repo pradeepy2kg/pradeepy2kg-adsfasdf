@@ -50,7 +50,7 @@
 <s:if test="(birthAlterationApprovalList.size() !=0)">
     <div id="alteration-approval-list-outer">
     <fieldset style="border:none">
-    <s:form action="eprApproveAlteration.do" method="post" name="alterationApproval">
+    <s:form action="eprApproveBirthAlteration.do" method="post" name="alterationApproval">
         <table class="alteration-approval-list-table" width="100%" cellpadding="0" cellspacing="0">
             <tr>
                 <td style="width:15%;font-size:10pt;text-align:center;" >

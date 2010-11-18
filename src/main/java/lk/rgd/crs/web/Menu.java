@@ -273,7 +273,7 @@ public class Menu {
         deoAlterationLink.put("eprBirthAlteration.do", new Link(null, "/ecivil/alteration/", "eprBirthAlteration.do", Permission.EDIT_BIRTH_ALTERATION));
         deoAlterationLink.put("eprBirthAlterationSearch.do", new Link(null, "/ecivil/alteration/", "eprBirthAlterationSearch.do", Permission.EDIT_BIRTH_ALTERATION));
         deoAlterationLink.put("eprBirthAlterationHome.do", new Link(null, "/ecivil/alteration/", "eprBirthAlterationHome.do", Permission.EDIT_BIRTH_ALTERATION));
-        deoAlterationLink.put("eprEditSelectedAlteration.do", new Link(null, "/ecivil/alteration/", "eprEditSelectedAlteration.do", Permission.EDIT_BIRTH_ALTERATION));
+        deoAlterationLink.put("eprEditBirthAlteration.do", new Link(null, "/ecivil/alteration/", "eprEditBirthAlteration.do", Permission.EDIT_BIRTH_ALTERATION));
         deoAlterationLink.put("eprPrintBirthAlterarionNotice.do", new Link(null, "/ecivil/alteration/", "eprPrintBirthAlterarionNotice.do", Permission.EDIT_BIRTH_ALTERATION));
 
         //todo complete
@@ -282,9 +282,9 @@ public class Menu {
         deoAlterationLink.put("eprDeathAlterationSearchHome.do", new Link("death.registration.alteration", "/ecivil/alteration/", "eprDeathAlterationSearchHome.do", Permission.EDIT_BIRTH_ALTERATION));
         deoAlterationLink.put("eprCaptureDeathAlteration.do", new Link(null, "/ecivil/alteration/", "eprCaptureDeathAlteration.do", Permission.EDIT_BIRTH_ALTERATION));
         deoAlterationLink.put("eprApproveDeathAlterations.do", new Link("label.manage.alterations", "/ecivil/alteration/", "eprApproveDeathAlterations.do", Permission.EDIT_BIRTH_ALTERATION));
-        deoAlterationLink.put("eprAlterationApprovalNext.do", new Link(null, "/ecivil/alteration/", "eprAlterationApprovalNext.do", Permission.EDIT_BIRTH_ALTERATION));
-        deoAlterationLink.put("eprAlterationApprovalPrevious.do", new Link(null, "/ecivil/alteration/", "eprAlterationApprovalPrevious.do", Permission.EDIT_BIRTH_ALTERATION));
-        deoAlterationLink.put("eprFilterAlteration.do", new Link(null, "/ecivil/alteration/", "eprFilterAlteration.do", Permission.EDIT_BIRTH_ALTERATION));
+        deoAlterationLink.put("eprBirthAlterationApprovalNext.do", new Link(null, "/ecivil/alteration/", "eprBirthAlterationApprovalNext.do", Permission.EDIT_BIRTH_ALTERATION));
+        deoAlterationLink.put("eprBirthAlterationApprovalPrevious.do", new Link(null, "/ecivil/alteration/", "eprBirthAlterationApprovalPrevious.do", Permission.EDIT_BIRTH_ALTERATION));
+        deoAlterationLink.put("eprFilterBirthAlteration.do", new Link(null, "/ecivil/alteration/", "eprFilterBirthAlteration.do", Permission.EDIT_BIRTH_ALTERATION));
         deoAlterationLink.put("eprDeathAlterationPrintLetter.do", new Link(null, "/ecivil/alteration/", "eprDeathAlterationPrintLetter.do", Permission.EDIT_BIRTH_ALTERATION));
         deoAlterationLink.put("eprDeathAlterationPageLoad.do", new Link(null, "/ecivil/alteration/", "eprDeathAlterationPageLoad.do", Permission.EDIT_BIRTH_ALTERATION));
         deoAlterationLink.put("eprEditDeathAlteration.do", new Link(null, "/ecivil/alteration/", "eprEditDeathAlteration.do", Permission.EDIT_BIRTH_ALTERATION));
@@ -303,9 +303,9 @@ public class Menu {
         argAlterationLink.put("eprDeathAlterationEdit.do", new Link(null, "/ecivil/alteration/", "eprDeathAlterationEdit.do", Permission.APPROVE_BIRTH_ALTERATION));
         argAlterationLink.put("eprDeathAlterationApplyChanges.do", new Link(null, "/ecivil/alteration/", "eprDeathAlterationApplyChanges.do", Permission.APPROVE_BIRTH_ALTERATION));
 
-        argAlterationLink.put("eprApproveSelectedAlteration.do", new Link(null, "/ecivil/alteration/", "eprApproveSelectedAlteration.do", Permission.APPROVE_BIRTH_ALTERATION));
-        argAlterationLink.put("eprApproveAlteration.do", new Link(null, "/ecivil/births/", "eprApproveAlteration.do", Permission.APPROVE_BIRTH_ALTERATION));
-        argAlterationLink.put("eprRejectSelectedAlteration.do", new Link(null, "/ecivil/births/", "eprRejectSelectedAlteration", Permission.APPROVE_BIRTH_ALTERATION));
+        argAlterationLink.put("eprApproveBirthAlterationInit.do", new Link(null, "/ecivil/alteration/", "eprApproveBirthAlterationInit.do", Permission.APPROVE_BIRTH_ALTERATION));
+        argAlterationLink.put("eprApproveBirthAlteration.do", new Link(null, "/ecivil/births/", "eprApproveBirthAlteration.do", Permission.APPROVE_BIRTH_ALTERATION));
+        argAlterationLink.put("eprRejectBirthAlteration.do", new Link(null, "/ecivil/births/", "eprRejectBirthAlteration", Permission.APPROVE_BIRTH_ALTERATION));
         argAlterationLink.put("eprBirthAlterationApplyChanges.do", new Link(null, "/ecivil/alteration/", "eprBirthAlterationApplyChanges.do", Permission.APPROVE_BIRTH_ALTERATION));
 
         // assemble menu for admins : insertion - order

@@ -1023,7 +1023,7 @@
             <result type="tiles" name="success">epr.birthAlterationResult</result>
             <result type="tiles" name="error">epr.birthAlteration</result>
         </action>
-        <action name="eprEditSelectedAlteration" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
+        <action name="eprEditBirthAlteration" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
                 method="editBirthAlteration">
             <result type="tiles" name="error">epr.birthAlteration</result>
         </action>
@@ -1033,21 +1033,21 @@
             <result type="tiles" name="success">epr.birthAlterationPendingApproval</result>
         </action>
 
-        <action name="eprAlterationApprovalPrevious" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
+        <action name="eprBirthAlterationApprovalPrevious" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
                 method="previousPage">
             <result type="tiles" name="success">epr.birthAlterationPendingApproval</result>
         </action>
 
-        <action name="eprAlterationApprovalNext" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
+        <action name="eprBirthAlterationApprovalNext" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
                 method="nextPage">
             <result type="tiles" name="success">epr.birthAlterationPendingApproval</result>
         </action>
 
-        <action name="eprFilterAlteration" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
+        <action name="eprFilterBirthAlteration" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
                 method="filter">
             <result type="tiles" name="success">epr.birthAlterationPendingApproval</result>
         </action>
-        <action name="eprApproveAlteration" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
+        <action name="eprApproveBirthAlteration" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
                 method="alterationApproval">
             <result type="tiles" name="success">epr.birthAlterationResult</result>
         </action>
@@ -1056,12 +1056,12 @@
             <result type="tiles" name="success">epr.birthAlterationResult</result>
         </action>
 
-        <action name="eprApproveSelectedAlteration" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
+        <action name="eprApproveBirthAlterationInit" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
                 method="approveInit">
             <result type="tiles" name="success">epr.birthAlterationApproval</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
-        <action name="eprRejectSelectedAlteration" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
+        <action name="eprRejectBirthAlteration" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
                 method="rejectAlteration">
             <result type="tiles" name="success">epr.birthAlterationResult</result>
         </action>
