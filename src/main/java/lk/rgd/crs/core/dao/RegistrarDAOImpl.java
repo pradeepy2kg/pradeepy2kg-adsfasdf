@@ -58,10 +58,10 @@ public class RegistrarDAOImpl extends BaseDAO implements RegistrarDAO {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.SUPPORTS)
-    public List<Registrar> getRegistrarByPin(long pin) {
+    public Registrar getRegistrarByPin(long pin) {
         Query q = em.createNamedQuery("get.registrars.by.pin");
         q.setParameter("pin", pin);
-        return q.getResultList();
+        return (Registrar) q.getSingleResult();
     }
 
     /**
@@ -70,7 +70,7 @@ public class RegistrarDAOImpl extends BaseDAO implements RegistrarDAO {
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<Registrar> getRegistrarByNameOrPartOfTheName(String name) {
         Query q = em.createNamedQuery("get.registrar.by.name.or.part.of.name");
-        q.setParameter("name", "%"+name+"%");
+        q.setParameter("name", "%" + name + "%");
         return q.getResultList();
     }
 }
