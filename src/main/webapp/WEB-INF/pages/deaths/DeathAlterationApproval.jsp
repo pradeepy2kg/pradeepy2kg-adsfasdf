@@ -20,64 +20,55 @@
 
 </script>
 <div id="birth-register-approval-body">
-           <s:form action="eprDeathAlterationSetBits" method="post" onsubmit="javascript:return warning()">
-          <table id="pendingApprovalTable" border="1" width="100%" class="table_reg_page_05" cellpadding="0"
-                 cellspacing="0">
-              <tr>
-                  <td></td>
-                  <td><s:label value="%{getText('th.exsists')}"/></td>
-                  <td><s:label value="%{getText('th.alteration')}"/></td>
-                  <td><s:label value="%{getText('th.approve')}"/></td>
-              </tr>
-              <tbody>
-<%--                      <s:iterator value="approvalFieldList">
-                      <tr>
-                          <td align="left"><s:property value="%{getText('death.alteration.field.'+key)}"/></td>
-                          <td><s:property value="%{value.get(0)}"/></td>
-                          <td><s:property value="%{value.get(1)}"/></td>
-                          <td align="center">
-                              <s:checkbox name="approvedIndex" fieldValue="%{key}"/>
-                          </td>
-                      </tr>
-                  </s:iterator>--%>
-              <s:if test="%{requested.get()==true}">
-                              <tr>
-                  <td>person name</td>
-                  <td><s:label value="%{deathRegister.deathPerson.deathPersonNameOfficialLang}"/></td>
-                  <td><s:label value="%{deathAlteration.deathPerson.deathPersonNameOfficialLang}"/></td>
-                  <td>test val</td>
-              </tr>
-              </s:if>
+    <s:form action="eprDeathAlterationSetBits" method="post" onsubmit="javascript:return warning()">
+        <table id="pendingApprovalTable" border="1" width="100%" class="table_reg_page_05" cellpadding="0"
+               cellspacing="0">
+            <tr>
+                <td></td>
+                <td><s:label value="%{getText('th.exsists')}"/></td>
+                <td><s:label value="%{getText('th.alteration')}"/></td>
+                <td><s:label value="%{getText('th.approve')}"/></td>
+            </tr>
+            <tbody>
+
+            <s:if test="%{requested.get()==true}">
+                <tr>
+                    <td>person name</td>
+                    <td><s:label value="%{deathRegister.deathPerson.deathPersonNameOfficialLang}"/></td>
+                    <td><s:label value="%{deathAlteration.deathPerson.deathPersonNameOfficialLang}"/></td>
+                    <td>test val</td>
+                </tr>
+            </s:if>
 
 
-              <tr>
-                  <td>person name english</td>
-                  <td><s:label value="%{deathRegister.deathPerson.deathPersonNameInEnglish}"/></td>
-                  <td><s:label value="%{deathAlteration.deathPerson.deathPersonNameInEnglish}"/></td>
-                  <td>test val</td>
-              </tr>
+            <tr>
+                <td>person name english</td>
+                <td><s:label value="%{deathRegister.deathPerson.deathPersonNameInEnglish}"/></td>
+                <td><s:label value="%{deathAlteration.deathPerson.deathPersonNameInEnglish}"/></td>
+                <td>test val</td>
+            </tr>
 
-              </tbody>
-          </table>
+            </tbody>
+        </table>
 
-           <table>
-              <caption/>
-              <col>
-              <col>
-              <tbody>
-              <tr>
-                  <td width="1000px" align="right"><s:label value="%{getText('label.apply.changes')}"/></td>
-                  <td align="right"><s:checkbox id="applyChanges" name="applyChanges"/></td>
-              </tr>
-              </tbody>
-          </table>
-          <div class="form-submit">
-              <s:submit name="submit" value="%{getText('lable.update')}"/>
-              <s:hidden name="deathAlterationId" value="%{deathAlteration.idUKey}"/>
-          </div>
-      </s:form>
+        <table>
+            <caption/>
+            <col>
+            <col>
+            <tbody>
+            <tr>
+                <td width="1000px" align="right"><s:label value="%{getText('label.apply.changes')}"/></td>
+                <td align="right"><s:checkbox id="applyChanges" name="applyChanges"/></td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="form-submit">
+            <s:submit name="submit" value="%{getText('lable.update')}"/>
+            <s:hidden name="deathAlterationId" value="%{deathAlteration.idUKey}"/>
+        </div>
+    </s:form>
 
-   <%-- <s:else>
+    <%-- <s:else>
         <table align="center" style="width:50%">
             <tr>
                 <td style="width:60%">
