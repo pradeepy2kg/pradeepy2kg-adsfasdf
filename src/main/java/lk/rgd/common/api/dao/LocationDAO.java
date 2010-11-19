@@ -52,4 +52,5 @@ public interface LocationDAO {
     public Location getLocationByCode(int locationCode);
 
 
+    public Location getLocationByCodeAndByDSDivisionID(int locationCode, int dsDivisionId);
 }

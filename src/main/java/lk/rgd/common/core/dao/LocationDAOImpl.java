@@ -98,6 +98,19 @@ public class LocationDAOImpl extends BaseDAO implements LocationDAO, Preloadable
         }
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
+    public Location getLocationByCodeAndByDSDivisionID(int locationCode, int dsDivisionId){
+        Query q = em.createNamedQuery("get.location.by.code.and.by.dsDivisionId");
+        q.setParameter("locationCode", locationCode);
+        q.setParameter("dsDivisionId", dsDivisionId);
+        try{
+            return (Location) q.getSingleResult();
+        }
+        catch (NoResultException e) {
+            return null;
+        }
+    }
+
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public void preload() {
          Query q = em.createNamedQuery("getAllLocations");

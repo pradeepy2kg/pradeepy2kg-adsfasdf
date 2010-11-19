@@ -11,6 +11,8 @@ import lk.rgd.crs.api.domain.Registrar;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.Date;
 import java.util.List;
@@ -61,7 +63,13 @@ public class RegistrarDAOImpl extends BaseDAO implements RegistrarDAO {
     public Registrar getRegistrarByPin(long pin) {
         Query q = em.createNamedQuery("get.registrars.by.pin");
         q.setParameter("pin", pin);
-        return (Registrar) q.getSingleResult();
+        try {
+            Registrar existing = (Registrar) q.getSingleResult();
+            return existing;
+        }
+        catch (NoResultException e) {
+            return null;
+        }
     }
 
     /**
