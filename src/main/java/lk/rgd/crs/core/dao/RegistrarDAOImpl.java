@@ -64,8 +64,7 @@ public class RegistrarDAOImpl extends BaseDAO implements RegistrarDAO {
         Query q = em.createNamedQuery("get.registrars.by.pin");
         q.setParameter("pin", pin);
         try {
-            Registrar existing = (Registrar) q.getSingleResult();
-            return existing;
+            return (Registrar) q.getSingleResult();
         }
         catch (NoResultException e) {
             return null;
