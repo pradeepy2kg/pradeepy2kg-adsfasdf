@@ -2,6 +2,77 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
+<script src="/ecivil/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
+<script src="/ecivil/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
+<script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
+<link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
+
+<script type="text/javascript">
+    $(function() {
+        $("#submitDatePicker").datepicker({
+            changeYear: true,
+            yearRange: '1960:2020',
+            dateFormat:'yy-mm-dd',
+            startDate:'2000-01-01',
+            endDate:'2040-12-31'
+        });
+    });
+
+    $(function() {
+        $("#date_of_birth_male").datepicker({
+            changeYear: true,
+            yearRange: '1960:2020',
+            dateFormat:'yy-mm-dd',
+            startDate:'2000-01-01',
+            endDate:'2040-12-31'
+        });
+    });
+
+    $(function() {
+        $("#date_of_birth_female").datepicker({
+            changeYear: true,
+            yearRange: '1960:2020',
+            dateFormat:'yy-mm-dd',
+            startDate:'2000-01-01',
+            endDate:'2040-12-31'
+        });
+    });
+
+        $('select#districtId').bind('change', function(evt1) {
+            var id = $("select#districtId").attr("value");
+            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id},
+                    function(data) {
+                        var options1 = '';
+                        var ds = data.dsDivisionList;
+                        for (var i = 0; i < ds.length; i++) {
+                            options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                        }
+                        $("select#dsDivisionId").html(options1);
+
+                        var options2 = '';
+                        var bd = data.bdDivisionList;
+                        for (var j = 0; j < bd.length; j++) {
+                            options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
+                        }
+                        $("select#birthDivisionId").html(options2);
+                    });
+        });
+
+        $('select#dsDivisionId').bind('change', function(evt2) {
+            var id = $("select#dsDivisionId").attr("value");
+            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:2},
+                    function(data) {
+                        var options = '';
+                        var bd = data.bdDivisionList;
+                        for (var i = 0; i < bd.length; i++) {
+                            options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
+                        }
+                        $("select#birthDivisionId").html(options);
+                    });
+        });
+</script>
+
 <div class="marriage-notice-outer">
 <%--section for official usage--%>
 <table class="table_reg_header_01">
@@ -52,7 +123,7 @@
                     </td>
                     <td>
                         <s:label value="YYYY-MM-DD" cssStyle="margin-left:10px;font-size:10px"/><br>
-                        <s:textfield name="register.dateOfRegistration" id="submitDatePicker" maxLength="10"/>
+                        <s:textfield name="#" id="submitDatePicker" maxLength="10"/>
                     </td>
                 </tr>
             </table>
@@ -72,55 +143,10 @@
 </table>
 <br>
 
-<%--type pf marriage--%><%--
-<table border="1" style="margin-top:1px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
-       cellpadding="2px">
-    <caption/>
-    <col width="230px"/>
-    <col width="200px"/>
-    <col/>
-    <col width="200px"/>
-    <col/>
-    <col width="200px"/>
-    <col/>
-    <tbody>
-    <tr>
-        <td>
-            විවාහයේ ස්වභාවය <br>
-            type of marriage in tamil <br>
-            Type of Marriage
-        </td>
-        <td>
-            සාමාන්‍ය <br>
-            general marriage in tamil <br>
-            General
-        </td>
-        <td align="center">
-            <s:radio name="#" list="#@java.util.HashMap@{'true':''}" value="true"/>
-        </td>
-        <td>
-            උඩරට බින්න <br>
-            Kandyan binna in tamil <br>
-            Kandyan Binna
-        </td>
-        <td align="center">
-            <s:radio name="#" list="#@java.util.HashMap@{'true':''}" value="true"/>
-        </td>
-        <td>
-            උඩරට බින්න දීග <br>
-            kandyan deega in tamil <br>
-            Kandyan
-            Deega
-        </td>
-        <td align="center">
-            <s:radio name="#" list="#@java.util.HashMap@{'true':''}" value="true"/>
-        </td>
-    </tr>
-    </tbody>
-</table>--%>
+<%--type of marriage--%>
 
 <table border="1" style="margin-top:1px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
-       cellpadding="2px">
+       cellpadding="5px">
     <caption></caption>
     <col width="250px"/>
     <col/>
@@ -220,7 +246,7 @@
 <%--section male party--%>
 <table border="2"
        style="margin-top:10px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px;border-bottom:none"
-       cellpadding="2px">
+       cellpadding="5px">
     <caption/>
     <col width="250px"/>
     <col width="265px"/>
@@ -233,15 +259,17 @@
             அடையாள எண் <br>
             Identification Number.
         </td>
-        <td colspan="1" rowspan="2">
-            dddd
+        <td colspan="1" rowspan="2" align="left">
+            <s:textfield name="#" id="identification_male" maxLength="10"/>
         </td>
         <td colspan="1">
             උපන් දිනය <br>
             பிறந்த திகதி <br>
             Date of Birth
         </td>
-        <td colspan="1">dddd</td>
+        <td colspan="1">
+            <s:textfield name="#" id="date_of_birth_male" maxLength="10"/>
+        </td>
     </tr>
     <tr>
         <td colspan="1">
@@ -251,7 +279,7 @@
 
         </td>
         <td colspan="1">
-            xxxx
+            <s:textfield name="#" id="age_at_last_bd_male" maxLength="10"/>
         </td>
     </tr>
 
@@ -262,7 +290,9 @@
             பெயர் அரச கரும மொழியில் (சிங்களம் / தமிழ்) <br>
             Name in any of the official languages (Sinhala / Tamil)
         </td>
-        <td colspan="3"></td>
+        <td colspan="3">
+            <s:textarea name="#" id="name_official_male" cssStyle="width:98.2%;"/>
+        </td>
     </tr>
 
     <tr>
@@ -271,7 +301,9 @@
             பெயர் ஆங்கில மொழியில் <br>
             Name in English
         </td>
-        <td colspan="3"></td>
+        <td colspan="3">
+            <s:textarea name="#" id="name_english_male" cssStyle="width:98.2%;"/>
+        </td>
     </tr>
 
     <tr>
@@ -280,7 +312,9 @@
             தற்போதைய வதிவிட முகவரி <br>
             Resident Address
         </td>
-        <td colspan="3"></td>
+        <td colspan="3">
+            <s:textarea name="#" id="address_male" cssStyle="width:98.2%;"/>
+        </td>
     </tr>
 
     <tr>
@@ -289,13 +323,19 @@
             மாவட்டம் <br>
             District
         </td>
-        <td>aaa</td>
+        <td>
+            <s:select id="districtId" name="marriageDistrictId" list="districtList" value="marriageDistrictId"
+                      cssStyle="width:98.5%; width:240px;"/>
+        </td>
         <td>
             ප්‍රාදේශීය ලේකම් කොට්ඨාශය <br>
             பிரதேச செயளாளர் பிரிவு <br>
             Divisional Secretariat
         </td>
-        <td>ddd</td>
+        <td>
+            <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="dsDivisionId"
+                      cssStyle="width:98.5%; width:240px;"/>
+        </td>
     </tr>
     <tr>
         <td>
@@ -303,13 +343,18 @@
             பதிவுப் பிரிவு <br>
             Registration Division
         </td>
-        <td>aaa</td>
+        <td>
+            <s:select id="mrDivisionId" name="marriageDivisionId" list="mrDivisionList" value="marriageDivisionId"
+                      cssStyle="width:98.5%; width:240px;"/>
+        </td>
         <td>
             පදිංචි කාලය <br>
             தற்போதைய <br>
             Duration
         </td>
-        <td>ddd</td>
+        <td>
+            <s:textfield name="#" id="duration_male" cssStyle="width:98.2%;" maxLength="3"/>
+        </td>
     </tr>
     <tr>
         <td>
@@ -317,18 +362,20 @@
             தொலைபேசி இலக்கம் <br>
             Telephone Numbers
         </td>
-        <td>aaa</td>
+        <td>
+            <s:textfield name="#" id="tp_number_male" cssStyle="width:98.2%;" maxLength="10"/>
+        </td>
         <td>
             ඉ – තැපැල් <br>
             மின்னஞ்சல் <br>
             Email
         </td>
-        <td>ddd</td>
+        <td><s:textfield name="#" id="email_male" cssStyle="width:98.2%;"/></td>
     </tr>
     </tbody>
 </table>
 <table border="2" style="margin-top:0px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
-       cellpadding="2px">
+       cellpadding="5px">
     <caption/>
     <col width="250px"/>
     <col width="143px"/>
@@ -387,7 +434,10 @@
             தந்தையின் அடையாள எண் அல்லது தேசிய அடையாள அட்டை இலக்கம் <br>
             Fathers Identification Number (PIN) or NIC
         </td>
-        <td colspan="7"></td>
+        <td colspan="7" align="left">
+            <s:textfield name="#" id="father_pin_or_nic_male" cssStyle="width:240px;" maxLength="10"/>
+        </td>
+
     </tr>
     <tr>
         <td colspan="2">
@@ -395,7 +445,9 @@
             தந்தையின் அடையாள <br>
             Fathers full name
         </td>
-        <td colspan="7"></td>
+        <td colspan="7">
+            <s:textarea name="#" id="father_full_name_male" cssStyle="width:98.2%;"/>
+        </td>
     </tr>
     <tr>
         <td colspan="2">
@@ -403,7 +455,9 @@
             தந்தையின் அடையாள <br>
             Fathers rank or profession
         </td>
-        <td colspan="7"></td>
+        <td colspan="7">
+            <s:textarea name="#" id="father_rank_male" cssStyle="width:98.2%;"/>
+        </td>
     </tr>
     <tr>
         <td colspan="2">
@@ -411,7 +465,9 @@
             in tamil <br>
             Consent if any, by whom given
         </td>
-        <td colspan="7"></td>
+        <td colspan="7">
+            <s:textarea name="#" id="consent_if_any_male" cssStyle="width:98.2%;"/>
+        </td>
     </tr>
     <tr>
         <td colspan="2">
@@ -439,7 +495,7 @@
 <%--section female party--%>
 <table border="2"
        style="margin-top:10px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px;border-bottom:none"
-       cellpadding="2px">
+       cellpadding="5px">
     <caption/>
     <col width="250px"/>
     <col width="265px"/>
@@ -452,15 +508,17 @@
             அடையாள எண் <br>
             Identification Number.
         </td>
-        <td colspan="1" rowspan="2">
-            dddd
+        <td colspan="1" rowspan="2" align="left">
+            <s:textfield name="#" id="identification_female" maxLength="10"/>
         </td>
         <td colspan="1">
             උපන් දිනය <br>
             பிறந்த திகதி <br>
             Date of Birth
         </td>
-        <td colspan="1">dddd</td>
+        <td colspan="1">
+            <s:textfield name="#" id="date_of_birth_female" maxLength="10"/>
+        </td>
     </tr>
     <tr>
         <td colspan="1">
@@ -470,7 +528,7 @@
 
         </td>
         <td colspan="1">
-            xxxx
+            <s:textfield name="#" id="age_at_last_bd_female" maxLength="10"/>
         </td>
     </tr>
 
@@ -481,7 +539,9 @@
             பெயர் அரச கரும மொழியில் (சிங்களம் / தமிழ்) <br>
             Name in any of the official languages (Sinhala / Tamil)
         </td>
-        <td colspan="3"></td>
+        <td colspan="3">
+            <s:textarea name="#" id="name_official_female" cssStyle="width:98.2%;"/>
+        </td>
     </tr>
 
     <tr>
@@ -490,7 +550,9 @@
             பெயர் ஆங்கில மொழியில் <br>
             Name in English
         </td>
-        <td colspan="3"></td>
+        <td colspan="3">
+            <s:textarea name="#" id="name_english_female" cssStyle="width:98.2%;"/>
+        </td>
     </tr>
 
     <tr>
@@ -499,7 +561,9 @@
             தற்போதைய வதிவிட முகவரி <br>
             Resident Address
         </td>
-        <td colspan="3"></td>
+        <td colspan="3">
+            <s:textarea name="#" id="address_female" cssStyle="width:98.2%;"/>
+        </td>
     </tr>
 
     <tr>
@@ -508,13 +572,19 @@
             மாவட்டம் <br>
             District
         </td>
-        <td>aaa</td>
+        <td>
+            <s:select id="districtId" name="marriageDistrictIdFemale" list="districtList" value="marriageDistrictId"
+                      cssStyle="width:98.5%; width:240px;"/>
+        </td>
         <td>
             ප්‍රාදේශීය ලේකම් කොට්ඨාශය <br>
             பிரதேச செயளாளர் பிரிவு <br>
             Divisional Secretariat
         </td>
-        <td>ddd</td>
+        <td>
+            <s:select id="dsDivisionId" name="dsDivisionIdFemale" list="dsDivisionList" value="dsDivisionId"
+                      cssStyle="width:98.5%; width:240px;"/>
+        </td>
     </tr>
     <tr>
         <td>
@@ -522,13 +592,18 @@
             பதிவுப் பிரிவு <br>
             Registration Division
         </td>
-        <td>aaa</td>
+        <td>
+            <s:select id="mrDivisionId" name="marriageDivisionIdFemale" list="mrDivisionList" value="marriageDivisionId"
+                      cssStyle="width:98.5%; width:240px;"/>
+        </td>
         <td>
             පදිංචි කාලය <br>
             தற்போதைய <br>
             Duration
         </td>
-        <td>ddd</td>
+        <td>
+            <s:textfield name="#" id="duration_female" cssStyle="width:98.2%;" maxLength="3"/>
+        </td>
     </tr>
     <tr>
         <td>
@@ -536,18 +611,20 @@
             தொலைபேசி இலக்கம் <br>
             Telephone Numbers
         </td>
-        <td>aaa</td>
+        <td>
+            <s:textfield name="#" id="tp_number_female" cssStyle="width:98.2%;" maxLength="10"/>
+        </td>
         <td>
             ඉ – තැපැල් <br>
             மின்னஞ்சல் <br>
             Email
         </td>
-        <td>ddd</td>
+        <td><s:textfield name="#" id="email_female" cssStyle="width:98.2%;"/></td>
     </tr>
     </tbody>
 </table>
 <table border="2" style="margin-top:0px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
-       cellpadding="2px">
+       cellpadding="5px">
     <caption/>
     <col width="250px"/>
     <col width="143px"/>
@@ -606,7 +683,10 @@
             தந்தையின் அடையாள எண் அல்லது தேசிய அடையாள அட்டை இலக்கம் <br>
             Fathers Identification Number (PIN) or NIC
         </td>
-        <td colspan="7"></td>
+        <td colspan="7" align="left">
+            <s:textfield name="#" id="father_pin_or_nic_female" cssStyle="width:240px;" maxLength="10"/>
+        </td>
+
     </tr>
     <tr>
         <td colspan="2">
@@ -614,7 +694,9 @@
             தந்தையின் அடையாள <br>
             Fathers full name
         </td>
-        <td colspan="7"></td>
+        <td colspan="7">
+            <s:textarea name="#" id="father_full_name_female" cssStyle="width:98.2%;"/>
+        </td>
     </tr>
     <tr>
         <td colspan="2">
@@ -622,7 +704,9 @@
             தந்தையின் அடையாள <br>
             Fathers rank or profession
         </td>
-        <td colspan="7"></td>
+        <td colspan="7">
+            <s:textarea name="#" id="father_rank_female" cssStyle="width:98.2%;"/>
+        </td>
     </tr>
     <tr>
         <td colspan="2">
@@ -630,7 +714,9 @@
             in tamil <br>
             Consent if any, by whom given
         </td>
-        <td colspan="7"></td>
+        <td colspan="7">
+            <s:textarea name="#" id="consent_if_any_female" cssStyle="width:98.2%;"/>
+        </td>
     </tr>
     <tr>
         <td colspan="2">
@@ -658,7 +744,7 @@
 </table>
 
 <table border="2" style="margin-top:0px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
-       cellpadding="2px">
+       cellpadding="5px">
     <caption/>
     <col width="250px"/>
     <col width="390px"/>
@@ -675,32 +761,48 @@
             அடையாள எண் <br>
             Identification Number
         </td>
-        <td></td>
-        <td></td>
+        <td>
+              <s:textfield name="#" id="witness_1_pin" cssStyle="width:240px;" maxLength="10"/>
+        </td>
+        <td>
+              <s:textfield name="#" id="witness_2_pin" cssStyle="width:240px;" maxLength="10"/>
+        </td>
     </tr>
     <tr>
         <td>
             සම්පුර්ණ නම <br>
             Full Name <br>
         </td>
-        <td></td>
-        <td></td>
+        <td>
+            <s:textarea name="#" id="witness_1_full_name" cssStyle="width:98.2%;"/>
+        </td>
+        <td>
+            <s:textarea name="#" id="witness_2_full_name" cssStyle="width:98.2%;"/>
+        </td>
     </tr>
     <tr>
         <td>
             තරාතිරම හෝ රක්ෂාව <br>
             Rank or Profession <br>
         </td>
-        <td></td>
-        <td></td>
+        <td>
+            <s:textarea name="#" id="witness_1_rank" cssStyle="width:98.2%;"/>
+        </td>
+        <td>
+            <s:textarea name="#" id="witness_2_rank" cssStyle="width:98.2%;"/>
+        </td>
     </tr>
     <tr>
         <td>
             පදිංචි ස්ථානය <br>
             Place of Residence <br>
         </td>
-        <td></td>
-        <td></td>
+        <td>
+            <s:textarea name="#" id="witness_1_place_residence" cssStyle="width:98.2%;"/>
+        </td>
+        <td>
+            <s:textarea name="#" id="witness_2_place_residence" cssStyle="width:98.2%;"/>
+        </td>
     </tr>
     <tr>
         <td>
