@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This Struts Interceptor will be executed before all action calls to ensure the user has logged in and has priviledges to where he is going
+ * This Struts Interceptor will be executed before all action calls to ensure the user has logged in and has privileges to where he is going
  */
 public class SecurityInterceptor extends AbstractInterceptor {
     private static final Logger logger = LoggerFactory.getLogger(SecurityInterceptor.class);

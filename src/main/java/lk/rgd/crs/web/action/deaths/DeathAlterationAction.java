@@ -108,82 +108,10 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
      * loading death alteration search page
      */
     public String deathAlterationSearch() {
+        language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         logger.debug("loading death alteration search page");
         populatePrimaryLists(districtUKey, dsDivisionId, language, user);
         return SUCCESS;
-    }
-
-
-    /**
-     * capture death alterations and edit death alteration
-     */
-    public String captureDeathAlterations() {
-        logger.debug("capturing death alteration");
-        try {
-            DeathRegister dr = deathRegistrationService.getById(deathId);
-            deathAlteration.setDeathRegisterIDUkey(deathId);
-            deathAlteration.setStatus(DeathAlteration.State.DATA_ENTRY);
-            deathAlteration.setDeathRecordDivision(dr.getDeath().getDeathDivision());
-            deathAlteration.setDeathPersonPin(dr.getDeathPerson().getDeathPersonPINorNIC());
-            Country deathCountry;
-            if (deathPersonCountry > 0) {
-                deathCountry = countryDAO.getCountry(deathPersonCountry);
-                deathAlteration.getDeathPerson().setDeathPersonCountry(deathCountry);
-            }
-            Race deathRace;
-            if (deathPersonRace > 0) {
-                deathRace = raceDAO.getRace(deathPersonRace);
-                deathAlteration.getDeathPerson().setDeathPersonRace(deathRace);
-            }
-            if (!editDeathInfo) {
-                deathAlteration.setDeathInfo(null);
-            }
-            if (!editDeathPerson) {
-                deathAlteration.setDeathPerson(null);
-            }
-            deathAlterationService.addDeathAlteration(deathAlteration, user);
-            populatePrimaryLists(districtUKey, dsDivisionId, language, user);
-            addActionMessage(getText("alt.massage.success"));
-            logger.debug("capturing alteration success ");
-            return SUCCESS;
-
-        } catch (CRSRuntimeException e) {
-            //todo both cases(both object null and declerant info is null gives same error massage if need two add here)
-            logger.error("CRS exception while adding death alteration ");
-            addActionMessage(getText("alt.massage.cannot.add.alteration.validation.failed"));
-            populatePrimaryLists(districtUKey, dsDivisionId, language, user);
-            return ERROR;
-        }
-    }
-
-    public String deathAlterationEdit() {
-        logger.debug("attempt to edit death alteration : idUKey : {}", deathAlteration.getIdUKey());
-        DeathAlteration existing = deathAlterationService.getByIDUKey(deathAlterationId, user);
-        try {
-            deathRegister = deathRegistrationService.getById(existing.getDeathRegisterIDUkey(), user);
-            if (editDeathInfo) {
-                existing.setDeathInfo(deathAlteration.getDeathInfo());
-            }
-            if (editDeathPerson) {
-                existing.setDeathPerson(deathAlteration.getDeathPerson());
-            }
-            existing.setDeclarant(deathAlteration.getDeclarant());
-            deathAlterationService.updateDeathAlteration(existing, user);
-
-            addActionMessage(getText("alt.edit.massage.success"));
-            logger.debug("editing death alteration : idUKey : {} success", deathAlterationId);
-            populatePrimaryLists(deathRegister.getDeath().getDeathDistrict().getDistrictUKey(),
-                deathRegister.getDeath().getDeathDivision().getBdDivisionUKey(), language, user);
-            userLocations = user.getActiveLocations(language);
-            return SUCCESS;
-        }
-        catch (CRSRuntimeException e) {
-            logger.debug("cannot edit death alteration idUKey {}", existing.getIdUKey());
-            addActionMessage(getText("alt.message.cannot.edit.alteration.validation.failed"));
-            populatePrimaryLists(districtUKey, dsDivisionId, language, user);
-            userLocations = user.getActiveLocations(language);
-            return ERROR;
-        }
     }
 
     /**
@@ -257,6 +185,78 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         }
         toDay = new Date();
         return "pageLoad";
+    }
+
+    /**
+     * capture death alterations and edit death alteration
+     */
+    public String captureDeathAlterations() {
+        logger.debug("capturing death alteration");
+        try {
+            DeathRegister dr = deathRegistrationService.getById(deathId);
+            deathAlteration.setDeathRegisterIDUkey(deathId);
+            deathAlteration.setStatus(DeathAlteration.State.DATA_ENTRY);
+            deathAlteration.setDeathRecordDivision(dr.getDeath().getDeathDivision());
+            deathAlteration.setDeathPersonPin(dr.getDeathPerson().getDeathPersonPINorNIC());
+            Country deathCountry;
+            if (deathPersonCountry > 0) {
+                deathCountry = countryDAO.getCountry(deathPersonCountry);
+                deathAlteration.getDeathPerson().setDeathPersonCountry(deathCountry);
+            }
+            Race deathRace;
+            if (deathPersonRace > 0) {
+                deathRace = raceDAO.getRace(deathPersonRace);
+                deathAlteration.getDeathPerson().setDeathPersonRace(deathRace);
+            }
+            if (!editDeathInfo) {
+                deathAlteration.setDeathInfo(null);
+            }
+            if (!editDeathPerson) {
+                deathAlteration.setDeathPerson(null);
+            }
+            deathAlterationService.addDeathAlteration(deathAlteration, user);
+            populatePrimaryLists(districtUKey, dsDivisionId, language, user);
+            addActionMessage(getText("alt.massage.success"));
+            logger.debug("capturing alteration success ");
+            return SUCCESS;
+
+        } catch (CRSRuntimeException e) {
+            //todo both cases(both object null and declerant info is null gives same error massage if need two add here)
+            logger.error("CRS exception while adding death alteration ");
+            addActionMessage(getText("alt.massage.cannot.add.alteration.validation.failed"));
+            populatePrimaryLists(districtUKey, dsDivisionId, language, user);
+            return ERROR;
+        }
+    }
+
+    public String deathAlterationEdit() {
+        logger.debug("attempt to edit death alteration : idUKey : {}", deathAlteration.getIdUKey());
+        DeathAlteration existing = deathAlterationService.getByIDUKey(deathAlterationId, user);
+        try {
+            deathRegister = deathRegistrationService.getById(existing.getDeathRegisterIDUkey(), user);
+            if (editDeathInfo) {
+                existing.setDeathInfo(deathAlteration.getDeathInfo());
+            }
+            if (editDeathPerson) {
+                existing.setDeathPerson(deathAlteration.getDeathPerson());
+            }
+            existing.setDeclarant(deathAlteration.getDeclarant());
+            deathAlterationService.updateDeathAlteration(existing, user);
+
+            addActionMessage(getText("alt.edit.massage.success"));
+            logger.debug("editing death alteration : idUKey : {} success", deathAlterationId);
+            populatePrimaryLists(deathRegister.getDeath().getDeathDistrict().getDistrictUKey(),
+                deathRegister.getDeath().getDeathDivision().getBdDivisionUKey(), language, user);
+            userLocations = user.getActiveLocations(language);
+            return SUCCESS;
+        }
+        catch (CRSRuntimeException e) {
+            logger.debug("cannot edit death alteration idUKey {}", existing.getIdUKey());
+            addActionMessage(getText("alt.message.cannot.edit.alteration.validation.failed"));
+            populatePrimaryLists(districtUKey, dsDivisionId, language, user);
+            userLocations = user.getActiveLocations(language);
+            return ERROR;
+        }
     }
 
 
