@@ -32,6 +32,7 @@ public class Menu {
     private static final Map deoAdoptionLink = new LinkedHashMap();
     private static final Map deoDeathLink = new LinkedHashMap();
     private static final Map deoAlterationLink = new LinkedHashMap();
+    private static final Map deoMarriageLink = new LinkedHashMap();
 
     // adr menu items
     private static final Map adrBirthLink = new LinkedHashMap();
@@ -39,6 +40,7 @@ public class Menu {
     private static final Map adrDeathLink = new LinkedHashMap();
     private static final Map adrAlterationLink = new LinkedHashMap();
     private static final Map adrAdminLink = new LinkedHashMap();
+    private static final Map adrMarriageLink = new LinkedHashMap();
 
     //arg menu items
     private static final Map argBirthLink = new LinkedHashMap();
@@ -46,6 +48,7 @@ public class Menu {
     private static final Map argAdoptionLink = new LinkedHashMap();
     private static final Map argAlterationLink = new LinkedHashMap();
     private static final Map argAdminLink = new LinkedHashMap();
+    private static final Map argMarriageLink = new LinkedHashMap();
 
     static {
         //Admin
@@ -118,7 +121,7 @@ public class Menu {
         prsLink.put("eprEditPerson.do", new Link(null, "/ecivil/prs/", "eprEditPerson.do", Permission.PRS_EDIT_PERSON));
         prsLink.put("eprPersonDetails.do", new Link(null, "/ecivil/prs/", "eprPersonDetails.do", Permission.PRS_VIEW_PERSON));
         prsLink.put("eprPRSCertificate.do", new Link(null, "/ecivil/prs/", "eprPRSCertificate.do", Permission.PRS_ADD_PERSON));
-        
+
         // Birth Registration for DEO
         deoBirthLink.put("eprBirthRegistrationInit.do", new Link("birth_registration.label", "/ecivil/births/", "eprBirthRegistrationInit.do", Permission.EDIT_BDF));
         deoBirthLink.put("eprStillBirthRegistrationInit.do", new Link("still_birth_registration.label", "/ecivil/births/", "eprStillBirthRegistrationInit.do", Permission.EDIT_BDF));
@@ -158,6 +161,7 @@ public class Menu {
         deoBirthLink.put("eprCertificatePrintPrevious.do", new Link(null, "/ecivil/births/", "eprCertificatePrintPrevious.do", Permission.SEARCH_BDF));
         deoBirthLink.put("eprStillBirthCertificatePrint.do", new Link(null, "/ecivil/births/", "eprStillBirthCertificatePrint.do", Permission.PRINT_BDF));
         deoBirthLink.put("eprDirectPrintStillBirthCertificate.do", new Link(null, "/ecivil/births/", "eprDirectPrintStillBirthCertificate.do", Permission.PRINT_BDF));
+
 
         // Birth for ADR
         adrBirthLink.putAll(deoBirthLink);
@@ -308,6 +312,20 @@ public class Menu {
         argAlterationLink.put("eprRejectBirthAlteration.do", new Link(null, "/ecivil/births/", "eprRejectBirthAlteration", Permission.APPROVE_BIRTH_ALTERATION));
         argAlterationLink.put("eprBirthAlterationApplyChanges.do", new Link(null, "/ecivil/alteration/", "eprBirthAlterationApplyChanges.do", Permission.APPROVE_BIRTH_ALTERATION));
 
+        /*marriage related links
+        * include deo/adr/arg related links
+        * */
+        //deo marriages links
+        deoMarriageLink.put("eprMarriageNoticeInit.do", new Link("menu.marriage.notice", "/ecivil/marriages/", "eprMarriageNoticeInit.do", Permission.EDIT_MARRIAGE));
+
+        //adr marriage links
+        adrMarriageLink.putAll(deoMarriageLink);
+
+        //arg marriage links
+        argMarriageLink.putAll(adrMarriageLink);
+
+        //marriage related links ends
+
         // assemble menu for admins : insertion - order
         adminLinks.put("admin", adminLink);
         adminLinks.put("preference", preferanceLink);
@@ -320,6 +338,7 @@ public class Menu {
         deoLinks.put("alteration", deoAlterationLink);
         deoLinks.put("preference", preferanceLink);
         deoLinks.put("certificateSearch", searchLink);
+        deoLinks.put("marriage", deoMarriageLink);
 
         // assemble menu for adr
         adrLinks.put("birth", adrBirthLink);
@@ -330,6 +349,7 @@ public class Menu {
         adrLinks.put("prs", prsLink);
         adrLinks.put("certificateSearch", searchLink);
         adrLinks.put("admin", adrAdminLink);
+        adrLinks.put("marriage", adrMarriageLink);
 
         //assemble menu for arg
         argLinks.put("birth", argBirthLink);
@@ -340,6 +360,8 @@ public class Menu {
         argLinks.put("prs", prsLink);
         argLinks.put("certificateSearch", searchLink);
         argLinks.put("admin", argAdminLink);
+        argLinks.put("marriage", argMarriageLink);
+
     }
 
     public static Map<String, Map> getAllowedLinks(Role role) {

@@ -461,4 +461,13 @@
         <put-attribute name="title" value="person_approval.title"/>
     </definition>
 
+    <!--marriages related tiles definitions-->
+    <definition name="epr.marriageNoticeInit" extends="epr.template">
+        <description>
+            marriage notice jsp page
+        </description>
+        <put-attribute name="body" value="/WEB-INF/pages/marriages/MarriageNotice.jsp"/>
+        <put-attribute name="title" value="title.marriage.notice"/>
+    </definition>
+
 </tiles-definitions>
