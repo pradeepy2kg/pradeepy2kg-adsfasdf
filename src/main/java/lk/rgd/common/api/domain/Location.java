@@ -19,8 +19,11 @@ import java.util.Set;
         @NamedQuery(name = "getAllLocations", query = "SELECT l FROM Location l " +
                 "ORDER BY l.enLocationName desc"),
         @NamedQuery(name = "get.location.by.code", query = "SELECT l FROM Location l " +
-                "WHERE l.locationCode=:locationCode")
+                "WHERE l.locationCode=:locationCode"),
+        @NamedQuery(name = "get.location.by.code.and.by.dsDivisionId", query = "SELECT l FROM Location l " +
+                "WHERE l.locationCode=:locationCode AND l.dsDivisionId=:dsDivisionId ")
 })
+
 public class Location implements Serializable {
 
     /**
@@ -36,23 +39,23 @@ public class Location implements Serializable {
     @Column(nullable = false, unique = true, updatable = false)
     private int locationCode;
 
-    @Column(nullable = false, length = 120, unique = true, updatable = false)
+    @Column(nullable = false, length = 120, unique = false, updatable = false)
     private String siLocationName;
-    @Column(nullable = false, length = 120, unique = true, updatable = false)
+    @Column(nullable = false, length = 120, unique = false, updatable = false)
     private String enLocationName;
-    @Column(nullable = false, length = 120, unique = true, updatable = false)
+    @Column(nullable = false, length = 120, unique = false, updatable = false)
     private String taLocationName;
 
-    @Column(nullable = true, length = 120, unique = true, updatable = false)
+    @Column(nullable = true, length = 120, unique = false, updatable = false)
     private String siLocationMailingAddress;
-    @Column(nullable = true, length = 120, unique = true, updatable = false)
+    @Column(nullable = true, length = 120, unique = false, updatable = false)
     private String enLocationMailingAddress;
-    @Column(nullable = true, length = 120, unique = true, updatable = false)
+    @Column(nullable = true, length = 120, unique = false, updatable = false)
     private String taLocationMailingAddress;
 
-    @Column(nullable = true, length = 120, unique = true, updatable = false)
+    @Column(nullable = true, length = 120, unique = false, updatable = false)
     private String sienLocationSignature;
-    @Column(nullable = true, length = 120, unique = true, updatable = false)
+    @Column(nullable = true, length = 120, unique = false, updatable = false)
     private String taenLocationSignature;
 
     /**
@@ -60,6 +63,12 @@ public class Location implements Serializable {
      */
     @OneToMany(mappedBy = "location", fetch = FetchType.EAGER)
     private List<UserLocation> users = new ArrayList<UserLocation>();
+
+    /*
+        New field for DSDivisionUKey foreign key  TODO: this should be Foreign key of DSDivision. ->shan
+     */
+    @Column(nullable = true, updatable = false)
+    private int dsDivisionId;
 
     public int getLocationUKey() {
         return locationUKey;
@@ -151,6 +160,14 @@ public class Location implements Serializable {
 
     public void setTaenLocationSignature(String taenLocationSignature) {
         this.taenLocationSignature = taenLocationSignature;
+    }
+
+    public int getDsDivisionId() {
+        return dsDivisionId;
+    }
+
+    public void setDsDivisionId(int dsDivisionId) {
+        this.dsDivisionId = dsDivisionId;
     }
 
     public String getLocationName(String language) {

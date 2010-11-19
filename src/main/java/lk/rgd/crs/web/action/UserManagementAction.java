@@ -336,6 +336,8 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 if (setNull) court = null;
                 break;
             case 6:
+                districtEn = districtDAO.getNameByPK(UserDistrictId, "en");
+                dsDivisionEn = dsDivisionDAO.getNameByPK(dsDivisionId, "en");
                 locationNameList = locationDAO.getAllLocations();
                 logger.debug("Size of the loaded Lacation List is :{}", locationNameList.size());
                 if (setNull) location = null;
@@ -448,17 +450,19 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 }
                 break;
             case 6:
-                Location checkLocation = locationDAO.getLocationByCode(location.getLocationCode());
+                Location checkLocation = locationDAO.getLocationByCodeAndByDSDivisionID(location.getLocationCode(), dsDivisionId);
                 if (checkLocation != null) {
-                    addFieldError("duplicateIdNumberError", "Location Code Number Already Used. Please Insert Another Number");
+                    addFieldError("duplicateIdNumberError", "Location Code and DSDivision ID Already Used. Please check again");
                     logger.debug("Duplicate Location code number is :", checkLocation.getLocationCode());
                     checkDuplicate++;
                 }
                 if (checkDuplicate == 0) {
+                    location.setDsDivisionId(dsDivisionId);
                     dataManagementService.addLocation(location, currentUser);
                     logger.debug("New Id of New Location {} is  :{}", locationDAO.getLocation(locationId), locationId);
                     msg = "New Location Was Added  :" + location.getEnLocationName();
                 }
+
         }
         if (checkDuplicate == 0) setDivisionList(true);
         if (checkDuplicate == 1) setDivisionList(false);
