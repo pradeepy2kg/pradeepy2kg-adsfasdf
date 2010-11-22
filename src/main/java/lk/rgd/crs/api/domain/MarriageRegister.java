@@ -95,7 +95,7 @@ public class MarriageRegister implements Serializable, Cloneable {
 
     @Column
     @Temporal(value = TemporalType.DATE)
-    private long dateOfFirstNotice;
+    private Date dateOfFirstNotice;
 
     @Column
     private long registrarPINOfFirstNotice;
@@ -108,7 +108,7 @@ public class MarriageRegister implements Serializable, Cloneable {
 
     @Column
     @Temporal(value = TemporalType.DATE)
-    private long dateOfSecondNotice;
+    private Date dateOfSecondNotice;
 
     @Column
     private long registrarPINOfSecondNotice;
@@ -260,11 +260,11 @@ public class MarriageRegister implements Serializable, Cloneable {
         this.serialOfFirstNotice = serialOfFirstNotice;
     }
 
-    public long getDateOfFirstNotice() {
+    public Date getDateOfFirstNotice() {
         return dateOfFirstNotice;
     }
 
-    public void setDateOfFirstNotice(long dateOfFirstNotice) {
+    public void setDateOfFirstNotice(Date dateOfFirstNotice) {
         this.dateOfFirstNotice = dateOfFirstNotice;
     }
 
@@ -276,13 +276,14 @@ public class MarriageRegister implements Serializable, Cloneable {
         this.serialOfSecondNotice = serialOfSecondNotice;
     }
 
-    public long getDateOfSecondNotice() {
+    public Date getDateOfSecondNotice() {
         return dateOfSecondNotice;
     }
 
-    public void setDateOfSecondNotice(long dateOfSecondNotice) {
+    public void setDateOfSecondNotice(Date dateOfSecondNotice) {
         this.dateOfSecondNotice = dateOfSecondNotice;
     }
+
     public long getMrDivisionId() {
         return mrDivisionId;
     }
