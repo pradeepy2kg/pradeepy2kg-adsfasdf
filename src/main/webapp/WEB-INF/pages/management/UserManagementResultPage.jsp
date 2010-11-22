@@ -3,9 +3,21 @@
 <script type="text/javascript">
     function initPage(){}
 </script>
+<style type="text/css">
+#user-managment-outer{
+    width:600px;
+    background-color: #f0f8ff;
+    border:2px #bddaf6 solid;
+    text-align:center;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:30px;
+    padding:20px;
+}
 
+</style>
 <div id="user-managment-outer">
-    <table style="width:50%;" align="center">
+    <table align="center">
         <tr>
             <td style="text-align:center;">
                 <s:actionmessage/>
@@ -20,6 +32,21 @@
             </tr>
         </s:if>
         <tr>
+            <td>
+                <s:label value="The newly created user still INACTIVE."/>
+                <s:label value="To activate new user you should have to assign locations"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <s:url id="addLocations" action="eprInitAssignedUserLocation.do">
+                    <s:param name="userId" value="#request.userId"/>
+                    <s:param name="newUser" value="true"/>
+                </s:url>
+                <s:a href="%{addLocations}"><s:label value="Click Here To Assign Locations"/></s:a>
+            </td>
+        </tr>
+        <tr>
             <td style="text-align:center;">
                 <s:form action="eprInitUserCreation">
                     <div class="form-submit" align="center">
@@ -28,5 +55,9 @@
                 </s:form>
             </td>
         </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        
     </table>
 </div>

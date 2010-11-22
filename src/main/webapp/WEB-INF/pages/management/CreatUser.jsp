@@ -92,76 +92,82 @@
 </script>
 <div id="user-create-outer">
     <fieldset style="border:3px solid #c3dcee;margin-left:12em;margin-right:20.5em;margin-top:2.5em;">
-        <table class="user-create-table" cellspacing="0">
+        <table class="user-create-table" cellspacing="0" cellpadding="0">
             <s:form name="userCreationForm" action="eprUserCreation" method="POST"
                     onsubmit="javascript:return validate()">
             <s:if test="userId == null">
             <tr>
-                <td style="width:20em;">
-                    <s:label value="%{getText('user_id.label')}"/></td>
+                <td width="50%"><s:label value="%{getText('user_id.label')}"/></td>
+                <td width="50%">
+                    <s:textfield name="user.userId" id="checkUserId" cssStyle="text-transform:none;width:90%;margin-left:0;"/>
+                </td>
+            </tr>
+            </s:if>
+            <tr>
+                <td><s:label value="%{getText('user_name.label')}"/></td>
                 <td>
-                    <s:textfield name="user.userId" id="checkUserId" cssStyle="text-transform:none;"/></td>
-                </s:if>
+                    <s:textfield name="user.userName" id="userName" cssStyle="text-transform:none;width:90%;margin-left:0;"/>
+                </td>
             </tr>
             <tr>
-                <td style="width:25em;">
-                    <s:label value="%{getText('user_name.label')}"/></td>
+                <td><s:label value="%{getText('user_pin.label')}"/></td>
                 <td>
-                    <s:textfield name="user.userName" id="userName" cssStyle="text-transform:none;"/></td>
-            <tr>
-                <td>
-                    <s:label value="%{getText('user_pin.label')}"/></td>
-                <td>
-                    <s:textfield name="user.pin" id="userPin" cssStyle="text-transform:none;"/></td>
+                    <s:textfield name="user.pin" id="userPin" cssStyle="text-transform:none;width:90%;margin-left:0;"/>
+                </td>
 
-            <tr>
-            <tr>
-                <td>
-                    <s:label value="Signature in Sinhala And English"/></td>
-                <td>
-                    <s:textarea name="user.sienSignatureText" id="userName" cssStyle="text-transform:none;"/></td>
-            <tr>
-                <td>
-                    <s:label value="Signature in Tamil And English"/></td>
-                <td>
-                    <s:textarea name="user.taenSignatureText" id="userPin" cssStyle="text-transform:none;"/></td>
-
-            <tr>
-                <td>
-                    <s:label value="%{getText('preffered_language.label')}"/></td>
-                <td>
-                        <s:select list="#@java.util.HashMap@{'en':'English','si':'සිංහල','ta':'Tamil'}"
-                                  name="user.prefLanguage" id="prefferedLanguage"/>
             </tr>
+            <tr>
+                <td><s:label value="Signature in Sinhala And English"/></td>
+                <td>
+                    <s:textarea name="user.sienSignatureText" id="userName" cssStyle="text-transform:none;width:90%;margin-left:0;"/>
+                </td>
+            </tr>
+            <tr>
+                <td><s:label value="Signature in Tamil And English"/></td>
+                <td>
+                    <s:textarea name="user.taenSignatureText" id="userPin" cssStyle="text-transform:none;width:90%;margin-left:0;"/>
+                </td>
+            </tr>
+            <tr>
+                <td><s:label value="%{getText('preffered_language.label')}"/></td>
+                <td>
+                    <s:select list="#@java.util.HashMap@{'en':'English','si':'සිංහල','ta':'Tamil'}"
+                                  name="user.prefLanguage" id="prefferedLanguage" cssStyle="width:90%;margin-left:0;"/>
+                </td>
+            </tr>
+
             <div id="abc">
                 <tr>
-                    <td>
+                    <td width="50%">
                         <s:if test="user != null">
                             <s:label value="%{getText('assigned_districts.label')}"/>
                         </s:if>
                     </td>
-                    <td>
+                    <td width="50%">
                         <s:if test="user != null">
                             <s:select list="districtList" name="assignedDistricts" multiple="true"
+                                      cssStyle="width:90%;margin-left:0;padding-left:0;"
                                       size="10"
                                       id="districtIdCurrent" value="currentDistrictList"/>
                         </s:if>
                     </td>
-                <tr>
+                </tr>
             </div>
-            <s:label>
+            <tr>
+                <s:label>
                 <td>
                     <s:if test="user != null">
                         <s:label value="%{getText('assigned_ds_divisions.label')}"/>
                     </s:if>
                 </td>
-                <s:if test="user != null">
-                    <td><s:select list=" currentbdDivisionList" name="assignedDivisions" multiple="true"
+                <td>
+                    <s:if test="user != null">
+                        <s:select list="currentbdDivisionList" name="assignedDivisions" multiple="true"
                                   size="10"
                                   id="divisionIdCurrent" value="currentbdDivisionList"/>
-                </s:if>
+                    </s:if>
                 </td>
-            </s:label>
+                </s:label>
             </tr>
                 <%--todo--%>
             <div id="edit">
@@ -174,9 +180,10 @@
                     <td>
                         <s:if test="user == null">
                             <s:select list="districtList" name="assignedDistricts" multiple="true" size="10"
-                                      id="districtId"/>
+                                      id="districtId" cssStyle="width:90%;margin-left:0;"/>
                         </s:if>
                     </td>
+                </tr>
                 <tr>
                     <s:label>
                         <td>
@@ -186,7 +193,7 @@
                         </td>
                         <s:if test="user == null">
                             <td><s:select list=" dsDivisionList" name="assignedDivisions" multiple="true" size="10"
-                                          id="divisionId"/>
+                                          id="divisionId" cssStyle="width:90%;margin-left:0;"/>
                         </s:if>
                         </td>
                     </s:label>
@@ -196,10 +203,10 @@
 
 
             <tr>
-                <td style="border-bottom:none;">
+                <td>
                     <s:label>
-                        <s:label value="%{getText('user_role.label')}"/>
-                <td style="border-bottom:none;"><s:select list="roleList" name="roleId" id="role"/>
+                        <s:label value="%{getText('user_role.label')}"/></td>
+                <td><s:select list="roleList" name="roleId" id="role" cssStyle="width:90%;margin-left:0;"/>
                     </s:label>
                 </td>
 
@@ -219,7 +226,7 @@
                                 </td>
                                 <td>
                                     <div class="form-submit">
-                                        <s:submit value="%{getText('edit_user.label')}"/>
+                                        <s:submit value="%{getText('edit_user.label')}" cssStyle="margin-top:10px;margin-right:20px;"/>
                                     </div>
                                 </td>
                             </tr>
@@ -228,7 +235,7 @@
                     </s:if>
                     <s:if test="userId == null">
                         <div class="form-submit">
-                            <s:submit value="%{getText('create_user.label')}" cssStyle="margin-top:10px;"/>
+                            <s:submit value="%{getText('create_user.label')}" cssStyle="margin-top:10px;margin-right:20px;"/>
                         </div>
                     </s:if>
                 </td>
