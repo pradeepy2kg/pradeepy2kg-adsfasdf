@@ -58,37 +58,20 @@ public class MarriageRegister implements Serializable, Cloneable {
     @Embedded
     private CRSLifeCycleInfo lifeCycleInfo = new CRSLifeCycleInfo();
 
-    //witness 1 info
-    @Column(name = "W1_IDENTIFICATION_NUMBER", length = 10)
-    private String identificationNumberWitness1;
-
-    @Column(name = "W1_WITNESS_FULL_NAME", length = 600)
-    private String fullNameWitness1;
-
-    @Column(name = "W1_WITNESS_RANK_PROFESSION", length = 255)
-    private String rankOrProfessionWitness1;
-
-    @Column(name = "W1_WITNESS_ADDRESS", length = 255)
-    private String addressWitness1;
-
-    //witness 2 info
-    @Column(name = "W2_IDENTIFICATION_NUMBER", length = 10)
-    private String identificationNumberWitness2;
-
-    @Column(name = "W2_WITNESS_FULL_NAME", length = 600)
-    private String fullNameWitness2;
-
-    @Column(name = "W2_WITNESS_RANK_PROFESSION", length = 255)
-    private String rankOrProfessionWitness2;
-
-    @Column(name = "W2_WITNESS_ADDRESS", length = 255)
-    private String addressWitness2;
-
     @Column
     private long registrarOrMinisterPIN;
 
-    @Column
-    private long mrDivisionId;
+    @ManyToOne
+    @JoinColumn(name = "mrDivisionUKey", nullable = false, insertable=false, updatable=false)
+    private MRDivision mrDivision;
+
+    @OneToOne
+    @JoinColumn(name = "idukey", nullable = false, insertable=false, updatable=false)
+    private Witness witness1;
+
+    @OneToOne
+    @JoinColumn(name = "idukey", nullable = false, insertable=false, updatable=false)
+    private Witness witness2;
 
     @Column(length =10)
     private String serialOfFirstNotice;
@@ -100,8 +83,17 @@ public class MarriageRegister implements Serializable, Cloneable {
     @Column
     private long registrarPINOfFirstNotice;
 
-    @Column
-    private long mrDivisionIdofFirstNotice;
+    @ManyToOne
+    @JoinColumn(name = "mrDivisionUKey", nullable = false, insertable=false, updatable=false)
+    private MRDivision mrDivisionOfFirstNotice;
+
+    @OneToOne
+    @JoinColumn(name = "idukey", nullable = false, insertable=false, updatable=false)
+    private Witness witness1OfFirstNotice;
+
+    @OneToOne
+    @JoinColumn(name = "idukey", nullable = false, insertable=false, updatable=false)
+    private Witness witness2OfFirstNotice;
 
     @Column(length =10)
     private String serialOfSecondNotice;
@@ -113,8 +105,17 @@ public class MarriageRegister implements Serializable, Cloneable {
     @Column
     private long registrarPINOfSecondNotice;
 
-    @Column
-    private long mrDivisionIdofSecondNotice;
+    @ManyToOne
+    @JoinColumn(name = "mrDivisionUKey", nullable = false, insertable=false, updatable=false)
+    private MRDivision mrDivisionOfSecondNotice;
+
+    @OneToOne
+    @JoinColumn(name = "idukey", nullable = false, insertable=false, updatable=false)
+    private Witness witness1OfSecondNotice;
+
+    @OneToOne
+    @JoinColumn(name = "idukey", nullable = false, insertable=false, updatable=false)
+    private Witness witness2OfSecondNotice;
 
     public long getIdUKey() {
         return idUKey;
@@ -156,76 +157,12 @@ public class MarriageRegister implements Serializable, Cloneable {
         this.female = female;
     }
 
-    public String getIdentificationNumberWitness1() {
-        return identificationNumberWitness1;
-    }
-
-    public void setIdentificationNumberWitness1(String identificationNumberWitness1) {
-        this.identificationNumberWitness1 = identificationNumberWitness1;
-    }
-
-    public String getFullNameWitness1() {
-        return fullNameWitness1;
-    }
-
-    public void setFullNameWitness1(String fullNameWitness1) {
-        this.fullNameWitness1 = fullNameWitness1;
-    }
-
-    public String getRankOrProfessionWitness1() {
-        return rankOrProfessionWitness1;
-    }
-
-    public void setRankOrProfessionWitness1(String rankOrProfessionWitness1) {
-        this.rankOrProfessionWitness1 = rankOrProfessionWitness1;
-    }
-
-    public String getIdentificationNumberWitness2() {
-        return identificationNumberWitness2;
-    }
-
-    public void setIdentificationNumberWitness2(String identificationNumberWitness2) {
-        this.identificationNumberWitness2 = identificationNumberWitness2;
-    }
-
-    public String getFullNameWitness2() {
-        return fullNameWitness2;
-    }
-
-    public void setFullNameWitness2(String fullNameWitness2) {
-        this.fullNameWitness2 = fullNameWitness2;
-    }
-
-    public String getRankOrProfessionWitness2() {
-        return rankOrProfessionWitness2;
-    }
-
-    public void setRankOrProfessionWitness2(String rankOrProfessionWitness2) {
-        this.rankOrProfessionWitness2 = rankOrProfessionWitness2;
-    }
-
     public CRSLifeCycleInfo getLifeCycleInfo() {
         return lifeCycleInfo;
     }
 
     public void setLifeCycleInfo(CRSLifeCycleInfo lifeCycleInfo) {
         this.lifeCycleInfo = lifeCycleInfo;
-    }
-
-    public String getAddressWitness1() {
-        return addressWitness1;
-    }
-
-    public void setAddressWitness1(String addressWitness1) {
-        this.addressWitness1 = addressWitness1;
-    }
-
-    public String getAddressWitness2() {
-        return addressWitness2;
-    }
-
-    public void setAddressWitness2(String addressWitness2) {
-        this.addressWitness2 = addressWitness2;
     }
 
     public TypeOfMarriage getTypeOfMarriage() {
@@ -284,12 +221,12 @@ public class MarriageRegister implements Serializable, Cloneable {
         this.dateOfSecondNotice = dateOfSecondNotice;
     }
 
-    public long getMrDivisionId() {
-        return mrDivisionId;
+    public MRDivision getMrDivisionId() {
+        return mrDivision;
     }
 
-    public void setMrDivisionId(long mrDivisionId) {
-        this.mrDivisionId = mrDivisionId;
+    public void setMrDivisionId(MRDivision mrDivision) {
+        this.mrDivision = mrDivision;
     }
 
     public long getRegistrarPINOfFirstNotice() {
@@ -300,12 +237,12 @@ public class MarriageRegister implements Serializable, Cloneable {
         this.registrarPINOfFirstNotice = registrarPINOfFirstNotice;
     }
 
-    public long getMrDivisionIdofFirstNotice() {
-        return mrDivisionIdofFirstNotice;
+    public MRDivision getMrDivisionOfFirstNotice() {
+        return mrDivisionOfFirstNotice;
     }
 
-    public void setMrDivisionIdofFirstNotice(long mrDivisionIdofFirstNotice) {
-        this.mrDivisionIdofFirstNotice = mrDivisionIdofFirstNotice;
+    public void setMrDivisionIdofFirstNotice(MRDivision mrDivisionOfFirstNotice) {
+        this.mrDivisionOfFirstNotice = mrDivisionOfFirstNotice;
     }
 
     public long getRegistrarPINOfSecondNotice() {
@@ -316,11 +253,59 @@ public class MarriageRegister implements Serializable, Cloneable {
         this.registrarPINOfSecondNotice = registrarPINOfSecondNotice;
     }
 
-    public long getMrDivisionIdofSecondNotice() {
-        return mrDivisionIdofSecondNotice;
+    public MRDivision getMrDivisionIdofSecondNotice() {
+        return mrDivisionOfSecondNotice;
     }
 
-    public void setMrDivisionIdofSecondNotice(long mrDivisionIdofSecondNotice) {
-        this.mrDivisionIdofSecondNotice = mrDivisionIdofSecondNotice;
+    public void setMrDivisionIdofSecondNotice(MRDivision mrDivisionOfSecondNotice) {
+        this.mrDivisionOfSecondNotice = mrDivisionOfSecondNotice;
+    }
+
+    public Witness getWitness1() {
+        return witness1;
+    }
+
+    public void setWitness1(Witness witness1) {
+        this.witness1 = witness1;
+    }
+
+    public Witness getWitness2() {
+        return witness2;
+    }
+
+    public void setWitness2(Witness witness2) {
+        this.witness2 = witness2;
+    }
+
+    public Witness getWitness1OfFirstNotice() {
+        return witness1OfFirstNotice;
+    }
+
+    public void setWitness1OfFirstNotice(Witness witness1OfFirstNotice) {
+        this.witness1OfFirstNotice = witness1OfFirstNotice;
+    }
+
+    public Witness getWitness2OfFirstNotice() {
+        return witness2OfFirstNotice;
+    }
+
+    public void setWitness2OfFirstNotice(Witness witness2OfFirstNotice) {
+        this.witness2OfFirstNotice = witness2OfFirstNotice;
+    }
+
+    public Witness getWitness1OfSecondNotice() {
+        return witness1OfSecondNotice;
+    }
+
+    public void setWitness1OfSecondNotice(Witness witness1OfSecondNotice) {
+        this.witness1OfSecondNotice = witness1OfSecondNotice;
+    }
+
+    public Witness getWitness2OfSecondNotice() {
+        return witness2OfSecondNotice;
+    }
+
+    public void setWitness2OfSecondNotice(Witness witness2OfSecondNotice) {
+        this.witness2OfSecondNotice = witness2OfSecondNotice;
     }
 }
