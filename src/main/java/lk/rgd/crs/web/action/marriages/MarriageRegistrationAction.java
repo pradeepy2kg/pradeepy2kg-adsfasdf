@@ -5,6 +5,7 @@ import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.dao.MRDivisionDAO;
+import lk.rgd.crs.api.domain.MarriageNotice;
 import lk.rgd.crs.web.WebConstants;
 import org.apache.log4j.spi.LoggerFactory;
 import org.apache.struts2.interceptor.SessionAware;
@@ -51,6 +52,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
      */
     public String marriageNoticeInit() {
         logger.debug("attempt to load marriage notice page");
+/*        MarriageNotice marriageNotice = new MarriageNotice();*/
         populateBasicLists();
         return "pageLoad";
     }
