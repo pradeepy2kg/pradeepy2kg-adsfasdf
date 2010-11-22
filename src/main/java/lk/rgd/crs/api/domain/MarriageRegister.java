@@ -39,6 +39,12 @@ public class MarriageRegister implements Serializable, Cloneable {
     @Temporal(value = TemporalType.DATE)
     private Date receivedDate;
 
+    @Column(name = "TYPE_MARRIAGE", nullable = true)
+    private TypeOfMarriage typeOfMarriage;
+
+    @Column(name = "PLACE_MARRIAGE", nullable = true)
+    private PlaceOfMarriage placeOfMarriage;
+
     //party information male
     @Embedded
     private MaleParty male = new MaleParty();
@@ -46,6 +52,9 @@ public class MarriageRegister implements Serializable, Cloneable {
     //party female
     @Embedded
     private FemaleParty female = new FemaleParty();
+
+    @Embedded
+    private CRSLifeCycleInfo lifeCycleInfo = new CRSLifeCycleInfo();
 
     //witness 1 info
     @Column(name = "W1_IDENTIFICATION_NUMBER", length = 10)
@@ -57,6 +66,9 @@ public class MarriageRegister implements Serializable, Cloneable {
     @Column(name = "W1_WITNESS_RANK_PROFESSION", length = 255)
     private String rankOrProfessionWitness1;
 
+    @Column(name = "W1_WITNESS_ADDRESS", length = 255)
+    private String addressWitness1;
+
     //witness 2 info
     @Column(name = "W2_IDENTIFICATION_NUMBER", length = 10)
     private String identificationNumberWitness2;
@@ -67,6 +79,8 @@ public class MarriageRegister implements Serializable, Cloneable {
     @Column(name = "W2_WITNESS_RANK_PROFESSION", length = 255)
     private String rankOrProfessionWitness2;
 
+    @Column(name = "W2_WITNESS_ADDRESS", length = 255)
+    private String addressWitness2;
 
     public long getIdUKey() {
         return idUKey;
@@ -154,5 +168,45 @@ public class MarriageRegister implements Serializable, Cloneable {
 
     public void setRankOrProfessionWitness2(String rankOrProfessionWitness2) {
         this.rankOrProfessionWitness2 = rankOrProfessionWitness2;
+    }
+
+    public CRSLifeCycleInfo getLifeCycleInfo() {
+        return lifeCycleInfo;
+    }
+
+    public void setLifeCycleInfo(CRSLifeCycleInfo lifeCycleInfo) {
+        this.lifeCycleInfo = lifeCycleInfo;
+    }
+
+    public String getAddressWitness1() {
+        return addressWitness1;
+    }
+
+    public void setAddressWitness1(String addressWitness1) {
+        this.addressWitness1 = addressWitness1;
+    }
+
+    public String getAddressWitness2() {
+        return addressWitness2;
+    }
+
+    public void setAddressWitness2(String addressWitness2) {
+        this.addressWitness2 = addressWitness2;
+    }
+
+    public TypeOfMarriage getTypeOfMarriage() {
+        return typeOfMarriage;
+    }
+
+    public void setTypeOfMarriage(TypeOfMarriage typeOfMarriage) {
+        this.typeOfMarriage = typeOfMarriage;
+    }
+
+    public PlaceOfMarriage getPlaceOfMarriage() {
+        return placeOfMarriage;
+    }
+
+    public void setPlaceOfMarriage(PlaceOfMarriage placeOfMarriage) {
+        this.placeOfMarriage = placeOfMarriage;
     }
 }

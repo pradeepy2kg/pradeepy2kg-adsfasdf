@@ -5,6 +5,8 @@ import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.dao.MRDivisionDAO;
+import lk.rgd.crs.api.domain.MarriageRegister;
+import lk.rgd.crs.api.service.MarriageRegistrationService;
 import lk.rgd.crs.web.WebConstants;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
@@ -23,8 +25,10 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     private final DistrictDAO districtDAO;
     private final DSDivisionDAO dsDivisionDAO;
     private final MRDivisionDAO mrDivisionDAO;
+    private final MarriageRegistrationService marriageRegistrationService;
 
     private User user;
+    private MarriageRegister marriageNotice;
 
     private Map session;
     private Map<Integer, String> districtList;
@@ -37,10 +41,11 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     private String language;
 
-    public MarriageRegistrationAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, MRDivisionDAO mrDivisionDAO) {
+    public MarriageRegistrationAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, MRDivisionDAO mrDivisionDAO, MarriageRegistrationService marriageRegistrationService) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.mrDivisionDAO = mrDivisionDAO;
+        this.marriageRegistrationService = marriageRegistrationService;
     }
 
     /**
@@ -48,9 +53,17 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
      */
     public String marriageNoticeInit() {
         logger.debug("attempt to load marriage notice page");
-/*        MarriageNotice marriageNotice = new MarriageNotice();*/
+        marriageNotice = new MarriageRegister();
         populateBasicLists();
         return "pageLoad";
+    }
+
+    public String addMarriageNotice() {
+        logger.debug("attempt to add marriage notice serial number : {} ", marriageNotice.getSerialNumber());
+        //todo validations
+        marriageRegistrationService.addMarriageNotice(marriageNotice, user);
+        logger.debug("successfully added marriage notice serial number: {}", marriageNotice.getSerialNumber());
+        return SUCCESS;
     }
 
     /**
@@ -124,5 +137,37 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     public void setLanguage(String language) {
         this.language = language;
+    }
+
+    public MarriageRegister getMarriageNotice() {
+        return marriageNotice;
+    }
+
+    public void setMarriageNotice(MarriageRegister marriageNotice) {
+        this.marriageNotice = marriageNotice;
+    }
+
+    public int getMarriageDistrictId() {
+        return marriageDistrictId;
+    }
+
+    public void setMarriageDistrictId(int marriageDistrictId) {
+        this.marriageDistrictId = marriageDistrictId;
+    }
+
+    public int getDsDivisionId() {
+        return dsDivisionId;
+    }
+
+    public void setDsDivisionId(int dsDivisionId) {
+        this.dsDivisionId = dsDivisionId;
+    }
+
+    public int getMrDivisionId() {
+        return mrDivisionId;
+    }
+
+    public void setMrDivisionId(int mrDivisionId) {
+        this.mrDivisionId = mrDivisionId;
     }
 }

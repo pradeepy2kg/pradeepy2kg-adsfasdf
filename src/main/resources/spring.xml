@@ -165,6 +165,9 @@
         <constructor-arg ref="deathRegisterDAOImpl"/>
     </bean>
 
+    <bean id="marriageRegistrationService" class="lk.rgd.crs.core.service.MarriageRegistrationServiceImpl">
+    </bean>
+
     <bean id="masterDataManagementService" class="lk.rgd.crs.core.service.MasterDataManagementServiceImpl">
         <constructor-arg ref="bdDivisionDAOImpl"/>
         <constructor-arg ref="mrDivisionDAOImpl"/>
