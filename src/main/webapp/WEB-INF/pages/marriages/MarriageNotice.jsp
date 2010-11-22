@@ -39,38 +39,38 @@
         });
     });
 
-        $('select#districtId').bind('change', function(evt1) {
-            var id = $("select#districtId").attr("value");
-            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id},
-                    function(data) {
-                        var options1 = '';
-                        var ds = data.dsDivisionList;
-                        for (var i = 0; i < ds.length; i++) {
-                            options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
-                        }
-                        $("select#dsDivisionId").html(options1);
+    $('select#districtId').bind('change', function(evt1) {
+        var id = $("select#districtId").attr("value");
+        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:8},
+                function(data) {
+                    var options1 = '';
+                    var ds = data.dsDivisionList;
+                    for (var i = 0; i < ds.length; i++) {
+                        options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                    }
+                    $("select#dsDivisionId").html(options1);
 
-                        var options2 = '';
-                        var bd = data.bdDivisionList;
-                        for (var j = 0; j < bd.length; j++) {
-                            options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
-                        }
-                        $("select#birthDivisionId").html(options2);
-                    });
-        });
+                    var options2 = '';
+                    var bd = data.mrDivisionList;
+                    for (var j = 0; j < bd.length; j++) {
+                        options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
+                    }
+                    $("select#mrDivisionId").html(options2);
+                });
+    });
 
-        $('select#dsDivisionId').bind('change', function(evt2) {
-            var id = $("select#dsDivisionId").attr("value");
-            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:2},
-                    function(data) {
-                        var options = '';
-                        var bd = data.bdDivisionList;
-                        for (var i = 0; i < bd.length; i++) {
-                            options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
-                        }
-                        $("select#birthDivisionId").html(options);
-                    });
-        });
+    $('select#dsDivisionId').bind('change', function(evt2) {
+        var id = $("select#dsDivisionId").attr("value");
+        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:7},
+                function(data) {
+                    var options = '';
+                    var bd = data.mrDivisionList;
+                    for (var i = 0; i < bd.length; i++) {
+                        options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
+                    }
+                    $("select#mrDivisionId").html(options);
+                });
+    });
 </script>
 
 <div class="marriage-notice-outer">
@@ -762,10 +762,10 @@
             Identification Number
         </td>
         <td>
-              <s:textfield name="#" id="witness_1_pin" cssStyle="width:240px;" maxLength="10"/>
+            <s:textfield name="#" id="witness_1_pin" cssStyle="width:240px;" maxLength="10"/>
         </td>
         <td>
-              <s:textfield name="#" id="witness_2_pin" cssStyle="width:240px;" maxLength="10"/>
+            <s:textfield name="#" id="witness_2_pin" cssStyle="width:240px;" maxLength="10"/>
         </td>
     </tr>
     <tr>
