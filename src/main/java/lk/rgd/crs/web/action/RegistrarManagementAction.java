@@ -100,7 +100,7 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
 
     public String registrarsVeiwInit() {
 
-        logger.info("register view init called ");
+        logger.debug("registrar view init called - UserId : {}", user.getUserId());
 
         if (registrarSession) {
             Assignment asg = (Assignment) session.get(WebConstants.SESSION_UPDATED_ASSIGNMENT_REGISTRAR);
@@ -113,7 +113,7 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
             assignmentList = service.getAssignments(registrarUkey, user);
         }
         Registrar existing = (Registrar) session.get(WebConstants.SESSION_EXSISTING_REGISTRAR);
-        logger.info("existing  : {}", existing);
+        logger.debug("existing  : {}", existing);
         if (existing != null && existing.getRegistrarUKey() > 0) {
             registrar = existing;
             assignmentList = service.getAssignments(registrar.getRegistrarUKey(), user);
@@ -152,7 +152,7 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
     }
 
     public String registrarsAdd() {
-        logger.info("attempt to add new registrar");
+        logger.debug("attempt to add new registrar");
         //clearing session
         session.remove(WebConstants.SESSION_EXSISTING_REGISTRAR);
         if (page > 0) {
@@ -202,7 +202,7 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
                 addActionMessage("assignment.saved.successfully");
             }
         } else {
-            logger.info("attempt to edit a assignment with assignmentUKey : {}", assignmentUKey);
+            logger.debug("attempt to edit a assignment with assignmentUKey : {}", assignmentUKey);
             Assignment beforeEdit = (Assignment) session.get(WebConstants.SESSION_UPDATED_ASSIGNMENT_REGISTRAR);
             beforeEdit.setAppointmentDate(appoinmentDate);
             beforeEdit.setPermanentDate(permanentDate);
@@ -253,7 +253,7 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
     public String updateRegistrar() {
         Registrar existing = (Registrar) session.get(WebConstants.SESSION_EXSISTING_REGISTRAR);
 
-        logger.info("attempting to update registrar : {}", registrar.getFullNameInEnglishLanguage());
+        logger.debug("attempting to update registrar : {}", registrar.getFullNameInEnglishLanguage());
         //setting previous life cycle info
         registrar.setLifeCycleInfo(existing.getLifeCycleInfo());
         //setting current assignment

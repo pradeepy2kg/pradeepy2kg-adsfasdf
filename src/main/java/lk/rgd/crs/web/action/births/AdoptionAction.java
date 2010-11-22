@@ -172,7 +172,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     }
 
     public String adoptionDeclaration() {
-        logger.info("initializing adoption registration");
+        logger.debug("initializing adoption registration");
         if (idUKey == 0) {
             adoption = new AdoptionOrder();
         }
@@ -183,7 +183,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     }
 
     public String initApplicantInfo() {
-        logger.info("initializing applicant info");
+        logger.debug("initializing applicant info");
         return SUCCESS;
     }
 

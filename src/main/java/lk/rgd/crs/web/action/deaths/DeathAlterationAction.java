@@ -369,7 +369,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     }
 
     public String approveAlteration() {
-        logger.info("setting bit set : {}", approvedIndex);
+        logger.debug("setting bit set : {}", approvedIndex);
         try {
             Hashtable<Integer, Boolean> approveBitset = new Hashtable<Integer, Boolean>();
             deathAlteration = deathAlterationService.getByIDUKey(deathAlterationId, user);

@@ -227,6 +227,12 @@
         <constructor-arg ref="appParametersDAOImpl"/>
     </bean>
 
+    <bean id="divisionUtil" class="lk.rgd.crs.web.util.DivisionUtil">
+        <constructor-arg ref="districtDAOImpl"/>
+        <constructor-arg ref="dsDivisionDAOImpl"/>
+        <constructor-arg ref="bdDivisionDAOImpl"/>
+    </bean>
+
     <!--Web module related classes-->
     <bean id="birthRegisterAction" scope="prototype" class="lk.rgd.crs.web.action.births.BirthRegisterAction">
         <constructor-arg ref="manageBirthService"/>
@@ -241,6 +247,7 @@
         <constructor-arg ref="locationDAOImpl"/>
         <constructor-arg ref="assignmentDAOImpl"/>
         <constructor-arg ref="birthAlterationService"/>
+        <constructor-arg ref="divisionUtil"/>
     </bean>
     <bean id="birthAlterationAction" scope="prototype" class="lk.rgd.crs.web.action.births.BirthAlterationAction">
         <constructor-arg ref="manageBirthService"/>
