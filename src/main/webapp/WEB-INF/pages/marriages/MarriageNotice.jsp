@@ -814,4 +814,5 @@
     </tr>
     </tbody>
 </table>
+<s:property value="marriageNotice"/>
 </div>

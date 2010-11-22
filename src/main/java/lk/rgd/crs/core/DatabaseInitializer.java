@@ -70,6 +70,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
 
         entityClasses.add(BirthAlteration.class);
         entityClasses.add(DeathAlteration.class);
+        entityClasses.add(MarriageNotice.class);
     }
 
     public void setDataSource(DataSource dataSource) {
@@ -88,7 +89,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
         // detect the target DB 
         EntityManagerFactoryInfo emf = (EntityManagerFactoryInfo) ctx.getBean("entityManagerFactory");
         if ("org.hibernate.dialect.MySQLDialect".equals(emf.getPersistenceUnitInfo().getProperties().
-                getProperty("hibernate.dialect"))) {
+            getProperty("hibernate.dialect"))) {
             mysql = true;
             logger.debug("Detected MySQL as the target database");
         }
@@ -135,7 +136,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
         if (mysql) {
             try {
                 SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
-                        new ClassPathResource("database/drop_mysql_databases.sql"), false);
+                    new ClassPathResource("database/drop_mysql_databases.sql"), false);
                 logger.info("Drop existing MySQL databases : COMMON, CRS, PRS");
             } catch (Exception ignore) {
                 logger.warn("Exception while dropping existing MySQL databases", ignore);
@@ -146,7 +147,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
         if (mysql) {
             try {
                 SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
-                        new ClassPathResource("database/create_mysql_databases.sql"), false);
+                    new ClassPathResource("database/create_mysql_databases.sql"), false);
                 logger.info("Created MySQL databases : COMMON, CRS, PRS");
             } catch (Exception e) {
                 logger.error("Error creating MySQL databases - COMMON, CRS and PRS", e);
@@ -155,7 +156,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
         } else {
             try {
                 SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
-                        new ClassPathResource("database/create_schemas.sql"), false);
+                    new ClassPathResource("database/create_schemas.sql"), false);
                 logger.info("Created the schemas : COMMON, CRS, PRS");
             } catch (Exception ignore) {
             }
@@ -173,7 +174,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
         if (!mysql) {
             try {
                 SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
-                        new FileSystemResource(fileName[1]), false);
+                    new FileSystemResource(fileName[1]), false);
                 logger.info("Drop existing tables using generated script : " + fileName[1]);
             } catch (Exception e) {
                 logger.debug("Exception while dropping existing tables using script : " + fileName[1]);
@@ -183,7 +184,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
         // create tables
         try {
             SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
-                    new FileSystemResource(fileName[0]), false);
+                new FileSystemResource(fileName[0]), false);
             logger.info("Created tables using generated script : " + fileName[0]);
 
         } catch (Exception e) {
@@ -194,18 +195,18 @@ public class DatabaseInitializer implements ApplicationContextAware {
         try {
             // populate with sample data
             SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
-                    new ClassPathResource("database/populate_sample_data.sql"), false);
+                new ClassPathResource("database/populate_sample_data.sql"), false);
             logger.info("Populated the tables with sample data from : populate_sample_data.sql");
 
             // populate with migrated data
             if (mysql || Boolean.getBoolean("fulldb")) {
                 SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
-                        new ClassPathResource("database/populate_migrated_data.sql"), false);
+                    new ClassPathResource("database/populate_migrated_data.sql"), false);
                 logger.info("Populated the tables with sample data from : populate_migrated_data.sql");
             }
 
             SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
-                    new ClassPathResource("database/populate_sample_prs.sql"), false);
+                new ClassPathResource("database/populate_sample_prs.sql"), false);
             logger.info("Populated the tables with sample data from : populate_sample_prs.sql");
 
         } catch (Exception e) {
@@ -215,6 +216,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
     }
 
     // for testing
+
     public static void main(String[] args) {
         new DatabaseInitializer().generateSchemaFromHibernate(Dialect.DERBY);
         new DatabaseInitializer().generateSchemaFromHibernate(Dialect.MYSQL);
