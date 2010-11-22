@@ -93,6 +93,14 @@ public class JSONDivisionLookupService extends HttpServlet {
             } else if ("7".equals(mode)) {
                 // passing dsDivisionId, return the MR list
                 optionLists.put("bdDivisionList", getMRDivision(lang, divisionId, user));
+            } else if ("8".equals(mode)) {
+                // passing district id and , return the MR list and DS list
+                // passing districtId, return DS List and the BD List for the 1st DS division
+                List ds = getDSDivisions(lang, divisionId, user);
+                int dsDivisionId = Integer.parseInt(((SelectOption) ds.get(0)).getOptionValue());
+                List mr = getMRDivision(lang, dsDivisionId, user);
+                optionLists.put("dsDivisionList", ds);
+                optionLists.put("mrDivisionList", mr);
             } else {
                 // passing districtId, return DS List and the BD List for the 1st DS division
                 List ds = getDSDivisions(lang, divisionId, user);
@@ -102,7 +110,7 @@ public class JSONDivisionLookupService extends HttpServlet {
                 optionLists.put("bdDivisionList", bd);
             }
         } catch (Exception
-                e) {
+            e) {
             logger.error("Fatal Error : {}", e);
             return;
         }
