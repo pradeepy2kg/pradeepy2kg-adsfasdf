@@ -99,6 +99,8 @@
     <bean id="userLocationDAOImpl" class="lk.rgd.common.core.dao.UserLocationDAOImpl"/>
     <bean id="deathAlterationDAOImpl" class="lk.rgd.crs.core.dao.DeathAlterationDAOImpl"/>
     <bean id="personCitizenshipDAOImpl" class="lk.rgd.prs.core.dao.PersonCitizenshipDAOImpl"/>
+    <bean id="marriageRegistrationDAOImpl" class="lk.rgd.crs.core.dao.MarriageRegistrationDAOImpl"/>
+
 
     <!--Utility singletons-->
     <bean id="birthDeclarationValidator" class="lk.rgd.crs.core.service.BirthDeclarationValidator">
@@ -166,6 +168,7 @@
     </bean>
 
     <bean id="marriageRegistrationService" class="lk.rgd.crs.core.service.MarriageRegistrationServiceImpl">
+        <constructor-arg ref="marriageRegistrationDAOImpl"/>
     </bean>
 
     <bean id="masterDataManagementService" class="lk.rgd.crs.core.service.MasterDataManagementServiceImpl">
