@@ -18,6 +18,7 @@ import lk.rgd.crs.api.service.BirthAlterationService;
 import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.web.util.DateState;
+import lk.rgd.crs.web.util.DivisionUtil;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,6 +44,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private final UserLocationDAO userLocationDAO;
     private final LocationDAO locationDAO;
     private final AssignmentDAO assignmentDAO;
+    private final DivisionUtil divisionUtil;
 
     private Map<Integer, String> districtList;
     private Map<Integer, String> countryList;
@@ -134,7 +136,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     public BirthRegisterAction(BirthRegistrationService service, AdoptionOrderService adoptionService, DistrictDAO districtDAO,
                                CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO,
                                AppParametersDAO appParametersDAO, UserLocationDAO userLocationDAO, LocationDAO locationDAO,
-                               AssignmentDAO assignmentDAO, BirthAlterationService birthAlterationService) {
+                               AssignmentDAO assignmentDAO, BirthAlterationService birthAlterationService, DivisionUtil divisionUtil) {
         this.service = service;
         this.adoptionService = adoptionService;
         this.districtDAO = districtDAO;
@@ -147,6 +149,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.locationDAO = locationDAO;
         this.assignmentDAO = assignmentDAO;
         this.birthAlterationService = birthAlterationService;
+        this.divisionUtil = divisionUtil;
     }
 
     /**
@@ -705,6 +708,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
                 locationList = user.getActiveLocations(language);
                 if (!locationList.isEmpty()) {
+                    //TODO get primary location
                     int selectedLocationId = locationList.keySet().iterator().next();
                     userList = new HashMap<String, String>();
                     // TODO temporaray solution have to change this after caching done for user locations
@@ -715,6 +719,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 if (bdf.getRegister().getOriginalBCIssueUser() == null &&
                     bdf.getRegister().getOriginalBCPlaceOfIssue() == null &&
                     BirthDeclaration.State.ARCHIVED_CERT_GENERATED == bdf.getRegister().getStatus()) {
+                    //TODO use primary location to find Userlocation
                     UserLocation userLocation = userLocationDAO.getUserLocation(
                         userList.keySet().iterator().next(), locationList.keySet().iterator().next());
                     String prefLang = bdf.getRegister().getPreferredLanguage();
@@ -951,26 +956,14 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     private void populateDynamicLists(String language) {
-        if (birthDistrictId == 0) {
-            if (!districtList.isEmpty()) {
-                birthDistrictId = districtList.keySet().iterator().next();
-                logger.debug("first allowed district in the list {} was set", birthDistrictId);
-            }
-        }
-        dsDivisionList = dsDivisionDAO.getDSDivisionNames(birthDistrictId, language, user);
-
-        if (dsDivisionId == 0) {
-            if (!dsDivisionList.isEmpty()) {
-                dsDivisionId = dsDivisionList.keySet().iterator().next();
-                logger.debug("first allowed DS Div in the list {} was set", dsDivisionId);
-            }
-        }
-
-        bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
-        if (birthDivisionId == 0) {
-            birthDivisionId = bdDivisionList.keySet().iterator().next();
-            logger.debug("first allowed BD Div in the list {} was set", birthDivisionId);
-        }
+        dsDivisionList = new HashMap<Integer, String>();
+        bdDivisionList = new HashMap<Integer, String>();
+        //set first item of the district list as default value
+        birthDistrictId = divisionUtil.findDefaultListValue(districtList, birthDistrictId);
+        //populate dsdivision list and set first item as default.
+        dsDivisionId = divisionUtil.findDSDivisionList(dsDivisionList, dsDivisionId, birthDistrictId, user, language);
+        //populate bddivision list and set first item as default.
+        birthDivisionId = divisionUtil.findBDDivisionList(bdDivisionList, birthDivisionId, dsDivisionId, user, language);
     }
 
     private void populateBasicLists(String language) {

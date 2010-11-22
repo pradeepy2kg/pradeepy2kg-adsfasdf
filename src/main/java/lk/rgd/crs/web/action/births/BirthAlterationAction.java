@@ -480,7 +480,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             logger.debug("number of rows in Birth Alteration Approval List is :{}",
                     birthAlterationPendingApprovalList.size());
         } else {
-            logger.info("The Birth Alteration List is Null");
+            logger.info("The Birth Alteration List is empty");
         }
         checkPermissionToApproval();
         initPermission();

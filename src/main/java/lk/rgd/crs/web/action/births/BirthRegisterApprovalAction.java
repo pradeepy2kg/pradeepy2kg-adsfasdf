@@ -175,7 +175,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      * @return String
      */
     public String filter() {
-        logger.info("confirmation flag : {}", confirmationApprovalFlag);
+        logger.debug("confirmation flag : {}", confirmationApprovalFlag);
         //todo
         setPageNo(1);
         initPermission(approveBelated);
@@ -448,7 +448,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             addActionMessage(getText("messege.noSelected.items"));
         }
         populate();
-        logger.info("district list : {}", districtList.size());
+        logger.debug("district list : {}", districtList.size());
         noOfRows = appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE);
         if (confirmationApprovalFlag) {
             loadConfirmationApprovalPending();

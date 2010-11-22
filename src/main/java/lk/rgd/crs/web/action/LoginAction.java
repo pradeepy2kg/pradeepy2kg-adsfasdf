@@ -134,6 +134,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
             String userRole = user.getRole().getRoleId();
             logger.debug("Role of the {} is :{}", user.getUserName(), userRole);
 
+            //todo : to be removed when dashboard implemented
             totalDeclarations = 10;
             totalDecArrivals = 11;
             approvalPendings = 12;
