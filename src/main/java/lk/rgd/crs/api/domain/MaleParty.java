@@ -1,6 +1,7 @@
 package lk.rgd.crs.api.domain;
 
 import lk.rgd.common.api.domain.District;
+import lk.rgd.common.api.domain.Race;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -15,7 +16,7 @@ public class MaleParty {
         NEVER_MARRIED,
         DIVORCED,
         WIDOWED,
-        A_NULLED
+        ANULLED
     }
 
 
@@ -39,13 +40,14 @@ public class MaleParty {
     @Column(name = "M_ADDRESS", nullable = true, length = 255)
     private String residentAddressMale;
 
-    @ManyToOne
-    @JoinColumn()
-    private District districtMale;
 
     @ManyToOne
     @JoinColumn
     private MRDivision mrDivisionMale;
+
+    @ManyToOne
+    @JoinColumn
+    private Race maleRace;
 
     @Column(name = "M_DURATION", nullable = true)
     private int durationMale;
@@ -56,6 +58,9 @@ public class MaleParty {
     @Column(name = "M_TP_NUMBER", nullable = true, length = 10)
     private String tpNumberMale;
 
+    @Column(name = "M_CIVIL_STATE", nullable = true)
+    private CivilStatusMale civilStatusMale;
+
     @Column(name = "M_EMAIL", nullable = true)
     private String emailMale;
 
@@ -64,9 +69,6 @@ public class MaleParty {
 
     @Column(name = "M_FULL_NAME_FATHER", length = 600)
     private String fatherFullNameMale;
-
-    @Column(name = "M_FATHER_RANK_PROFESSION", length = 255)
-    private String fatherRankOrProfessionMale;
 
     @Column(name = "M_CONSENT", length = 255)
     private String consentIfAnyMale;
@@ -119,14 +121,6 @@ public class MaleParty {
 
     public void setResidentAddressMale(String residentAddressMale) {
         this.residentAddressMale = residentAddressMale;
-    }
-
-    public District getDistrictMale() {
-        return districtMale;
-    }
-
-    public void setDistrictMale(District districtMale) {
-        this.districtMale = districtMale;
     }
 
     public MRDivision getMrDivisionMale() {
@@ -185,19 +179,27 @@ public class MaleParty {
         this.fatherFullNameMale = fatherFullNameMale;
     }
 
-    public String getFatherRankOrProfessionMale() {
-        return fatherRankOrProfessionMale;
-    }
-
-    public void setFatherRankOrProfessionMale(String fatherRankOrProfessionMale) {
-        this.fatherRankOrProfessionMale = fatherRankOrProfessionMale;
-    }
-
     public String getConsentIfAnyMale() {
         return consentIfAnyMale;
     }
 
     public void setConsentIfAnyMale(String consentIfAnyMale) {
         this.consentIfAnyMale = consentIfAnyMale;
+    }
+
+    public Race getMaleRace() {
+        return maleRace;
+    }
+
+    public void setMaleRace(Race maleRace) {
+        this.maleRace = maleRace;
+    }
+
+    public CivilStatusMale getCivilStatusMale() {
+        return civilStatusMale;
+    }
+
+    public void setCivilStatusMale(CivilStatusMale civilStatusMale) {
+        this.civilStatusMale = civilStatusMale;
     }
 }

@@ -1146,5 +1146,11 @@
                 method="marriageNoticeInit">
             <result type="tiles" name="pageLoad">epr.marriageNoticeInit</result>
         </action>
+
+        <action name="eprMarriageNoticeAdd" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
+                method="addMarriageNotice">
+            <result type="tiles" name="success">epr.marriageNoticeResults</result>
+        </action>
+
     </package>
 </struts>

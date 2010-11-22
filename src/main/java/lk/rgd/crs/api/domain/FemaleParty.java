@@ -1,6 +1,7 @@
 package lk.rgd.crs.api.domain;
 
 import lk.rgd.common.api.domain.District;
+import lk.rgd.common.api.domain.Race;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -15,7 +16,7 @@ public class FemaleParty {
         NEVER_MARRIED,
         DIVORCED,
         WIDOWED,
-        A_NULLED
+        ANULLED
     }
 
 
@@ -39,13 +40,16 @@ public class FemaleParty {
     @Column(name = "F_ADDRESS", nullable = true, length = 255)
     private String residentAddressFemale;
 
-    @ManyToOne
-    @JoinColumn()
-    private District districtFemale;
+    @Column(name = "F_CIVIL_STATE", nullable = true)
+    private CivilStatusFemale civilStatusFemale;
 
     @ManyToOne
     @JoinColumn
     private MRDivision mrDivisionFemale;
+
+    @ManyToOne
+    @JoinColumn
+    private Race femaleRace;
 
     @Column(name = "F_DURATION", nullable = true)
     private int durationFemale;
@@ -64,9 +68,6 @@ public class FemaleParty {
 
     @Column(name = "F_FULL_NAME_FATHER", length = 600)
     private String fatherFullNameFemale;
-
-    @Column(name = "F_FATHER_RANK_PROFESSION", length = 255)
-    private String fatherRankOrProfessionFemale;
 
     @Column(name = "F_CONSENT", length = 255)
     private String consentIfAnyFemale;
@@ -119,14 +120,6 @@ public class FemaleParty {
 
     public void setResidentAddressFemale(String residentAddressFemale) {
         this.residentAddressFemale = residentAddressFemale;
-    }
-
-    public District getDistrictFemale() {
-        return districtFemale;
-    }
-
-    public void setDistrictFemale(District districtFemale) {
-        this.districtFemale = districtFemale;
     }
 
     public MRDivision getMrDivisionFemale() {
@@ -185,19 +178,27 @@ public class FemaleParty {
         this.fatherFullNameFemale = fatherFullNameFemale;
     }
 
-    public String getFatherRankOrProfessionFemale() {
-        return fatherRankOrProfessionFemale;
-    }
-
-    public void setFatherRankOrProfessionFemale(String fatherRankOrProfessionFemale) {
-        this.fatherRankOrProfessionFemale = fatherRankOrProfessionFemale;
-    }
-
     public String getConsentIfAnyFemale() {
         return consentIfAnyFemale;
     }
 
     public void setConsentIfAnyFemale(String consentIfAnyFemale) {
         this.consentIfAnyFemale = consentIfAnyFemale;
+    }
+
+    public CivilStatusFemale getCivilStatusFemale() {
+        return civilStatusFemale;
+    }
+
+    public void setCivilStatusFemale(CivilStatusFemale civilStatusFemale) {
+        this.civilStatusFemale = civilStatusFemale;
+    }
+
+    public Race getFemaleRace() {
+        return femaleRace;
+    }
+
+    public void setFemaleRace(Race femaleRace) {
+        this.femaleRace = femaleRace;
     }
 }
