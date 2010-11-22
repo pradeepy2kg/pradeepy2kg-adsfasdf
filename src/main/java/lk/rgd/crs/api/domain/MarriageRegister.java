@@ -14,7 +14,6 @@ import java.util.Date;
 @Entity
 @Table(name = "MARRIAGE_REGISTER", schema = "CRS")
 public class MarriageRegister implements Serializable, Cloneable {
-
     public enum PlaceOfMarriage {
         REGISTRAR_OFFICE,
         DS_OFFICE,
@@ -32,18 +31,21 @@ public class MarriageRegister implements Serializable, Cloneable {
     @GeneratedValue
     private long idUKey;
 
-    @Column(name = "SERIAL_NUMBER", nullable = false)
+    @Column(nullable = false)
     private Long serialNumber;
 
-    @Column(name = "RECEIVED_DATE", nullable = false)
+    @Column(nullable = false)
     @Temporal(value = TemporalType.DATE)
     private Date receivedDate;
 
-    @Column(name = "TYPE_MARRIAGE", nullable = true)
+    @Column(nullable = true)
     private TypeOfMarriage typeOfMarriage;
 
-    @Column(name = "PLACE_MARRIAGE", nullable = true)
+    @Column(nullable = true)
     private PlaceOfMarriage placeOfMarriage;
+
+    @Column(nullable = true)
+    private String strPlaceOfMarriage;
 
     //party information male
     @Embedded
@@ -81,6 +83,38 @@ public class MarriageRegister implements Serializable, Cloneable {
 
     @Column(name = "W2_WITNESS_ADDRESS", length = 255)
     private String addressWitness2;
+
+    @Column
+    private long registrarOrMinisterPIN;
+
+    @Column
+    private long mrDivisionId;
+
+    @Column(length =10)
+    private String serialOfFirstNotice;
+
+    @Column
+    @Temporal(value = TemporalType.DATE)
+    private long dateOfFirstNotice;
+
+    @Column
+    private long registrarPINOfFirstNotice;
+
+    @Column
+    private long mrDivisionIdofFirstNotice;
+
+    @Column(length =10)
+    private String serialOfSecondNotice;
+
+    @Column
+    @Temporal(value = TemporalType.DATE)
+    private long dateOfSecondNotice;
+
+    @Column
+    private long registrarPINOfSecondNotice;
+
+    @Column
+    private long mrDivisionIdofSecondNotice;
 
     public long getIdUKey() {
         return idUKey;
@@ -208,5 +242,84 @@ public class MarriageRegister implements Serializable, Cloneable {
 
     public void setPlaceOfMarriage(PlaceOfMarriage placeOfMarriage) {
         this.placeOfMarriage = placeOfMarriage;
+    }
+
+    public long getRegistrarOrMinisterPIN() {
+        return registrarOrMinisterPIN;
+    }
+
+    public void setRegistrarOrMinisterPIN(long registrarOrMinisterPIN) {
+        this.registrarOrMinisterPIN = registrarOrMinisterPIN;
+    }
+
+    public String getSerialOfFirstNotice() {
+        return serialOfFirstNotice;
+    }
+
+    public void setSerialOfFirstNotice(String serialOfFirstNotice) {
+        this.serialOfFirstNotice = serialOfFirstNotice;
+    }
+
+    public long getDateOfFirstNotice() {
+        return dateOfFirstNotice;
+    }
+
+    public void setDateOfFirstNotice(long dateOfFirstNotice) {
+        this.dateOfFirstNotice = dateOfFirstNotice;
+    }
+
+    public String getSerialOfSecondNotice() {
+        return serialOfSecondNotice;
+    }
+
+    public void setSerialOfSecondNotice(String serialOfSecondNotice) {
+        this.serialOfSecondNotice = serialOfSecondNotice;
+    }
+
+    public long getDateOfSecondNotice() {
+        return dateOfSecondNotice;
+    }
+
+    public void setDateOfSecondNotice(long dateOfSecondNotice) {
+        this.dateOfSecondNotice = dateOfSecondNotice;
+    }
+    public long getMrDivisionId() {
+        return mrDivisionId;
+    }
+
+    public void setMrDivisionId(long mrDivisionId) {
+        this.mrDivisionId = mrDivisionId;
+    }
+
+    public long getRegistrarPINOfFirstNotice() {
+        return registrarPINOfFirstNotice;
+    }
+
+    public void setRegistrarPINOfFirstNotice(long registrarPINOfFirstNotice) {
+        this.registrarPINOfFirstNotice = registrarPINOfFirstNotice;
+    }
+
+    public long getMrDivisionIdofFirstNotice() {
+        return mrDivisionIdofFirstNotice;
+    }
+
+    public void setMrDivisionIdofFirstNotice(long mrDivisionIdofFirstNotice) {
+        this.mrDivisionIdofFirstNotice = mrDivisionIdofFirstNotice;
+    }
+
+    public long getRegistrarPINOfSecondNotice() {
+        return registrarPINOfSecondNotice;
+    }
+
+    public void setRegistrarPINOfSecondNotice(long registrarPINOfSecondNotice) {
+        this.registrarPINOfSecondNotice = registrarPINOfSecondNotice;
+    }
+
+    public long getMrDivisionIdofSecondNotice() {
+        return mrDivisionIdofSecondNotice;
+    }
+
+    public void setMrDivisionIdofSecondNotice(long mrDivisionIdofSecondNotice) {
+        this.mrDivisionIdofSecondNotice = mrDivisionIdofSecondNotice;
     }
 }
