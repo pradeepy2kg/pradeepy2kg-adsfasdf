@@ -13,7 +13,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "MARRIAGE_REGISTER", schema = "CRS")
-public class MarriageNotice implements Serializable, Cloneable {
+public class MarriageRegister implements Serializable, Cloneable {
 
     public enum PlaceOfMarriage {
         REGISTRAR_OFFICE,
