@@ -98,12 +98,12 @@ public class LocationDAOImpl extends BaseDAO implements LocationDAO, Preloadable
         }
     }
 
-    @Transactional(propagation = Propagation.REQUIRED)
-    public Location getLocationByCodeAndByDSDivisionID(int locationCode, int dsDivisionId){
+    @Transactional(propagation = Propagation.NEVER)
+    public Location getLocationByCodeAndByDSDivisionID(int locationCode, int dsDivisionId) {
         Query q = em.createNamedQuery("get.location.by.code.and.by.dsDivisionId");
         q.setParameter("locationCode", locationCode);
         q.setParameter("dsDivisionId", dsDivisionId);
-        try{
+        try {
             return (Location) q.getSingleResult();
         }
         catch (NoResultException e) {
@@ -111,9 +111,21 @@ public class LocationDAOImpl extends BaseDAO implements LocationDAO, Preloadable
         }
     }
 
+    @Transactional(propagation = Propagation.NEVER)
+    public Map<Integer, String> getLocationByDSDivisionID(int dsDivisionId) {
+        Query q = em.createNamedQuery("get.location.by.dsDivisionId");
+        q.setParameter("dsDivisionId", dsDivisionId);
+        List<Location> list = q.getResultList();
+        Map<Integer, String> map = new HashMap<Integer, String>();
+        for (Location l : list) {
+            map.put(l.getLocationUKey(), l.getEnLocationName());
+        }
+        return map;
+    }
+
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public void preload() {
-         Query q = em.createNamedQuery("getAllLocations");
+        Query q = em.createNamedQuery("getAllLocations");
         List<Location> results = q.getResultList();
         logger.debug("Loaded : {} Locations from the database", results.size());
         for (Location l : results) {
