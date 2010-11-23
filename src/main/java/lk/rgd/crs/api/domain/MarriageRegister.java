@@ -1,7 +1,5 @@
 package lk.rgd.crs.api.domain;
 
-import lk.rgd.common.api.domain.District;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -69,27 +67,32 @@ public class MarriageRegister implements Serializable, Cloneable {
     private Witness witness2;
 
     @Column(length = 10)
-    private String serialOfFirstNotice;
+    private String serialOfMaleNotice;
 
     @Column
     @Temporal(value = TemporalType.DATE)
-    private Date dateOfFirstNotice;
+    private Date dateOfMaleNotice;
 
     @Column
-    private long registrarPINOfFirstNotice;
+    private long registrarPINOfMaleNotice;
 
     @ManyToOne
     @JoinColumn(name = "mrDivisionUKey", nullable = false, insertable = false, updatable = false)
     private MRDivision mrDivisionOfMaleNotice;
 
-
-    @ManyToOne
-    @JoinColumn(name = "mrDivisionUKey", nullable = false, insertable = false, updatable = false)
-    private MRDivision mrDivisionOfFemaleNotice;
-
     @OneToOne
     @JoinColumn(name = "idukey", nullable = false, insertable = false, updatable = false)
     private Witness maleNoticeWitness_1;
+
+    @Column(length = 10)
+    private String serialOfSecondNotice;
+
+    @Column
+    @Temporal(value = TemporalType.DATE)
+    private Date dateOfSecondNotice;
+
+    @Column
+    private long registrarPINOfFemaleNotice;
 
     @OneToOne
     @JoinColumn(name = "idukey", nullable = false, insertable = false, updatable = false)
@@ -103,17 +106,9 @@ public class MarriageRegister implements Serializable, Cloneable {
     @JoinColumn(name = "idukey", nullable = false, insertable = false, updatable = false)
     private Witness femaleNoticeWitness_2;
 
-
-    @Column(length = 10)
-    private String serialOfSecondNotice;
-
-    @Column
-    @Temporal(value = TemporalType.DATE)
-    private Date dateOfSecondNotice;
-
-    @Column
-    private long registrarPINOfSecondNotice;
-
+    @ManyToOne
+    @JoinColumn(name = "mrDivisionUKey", nullable = false, insertable = false, updatable = false)
+    private MRDivision mrDivisionOfFemaleNotice;
 
     //party information male
     @Embedded
@@ -198,20 +193,20 @@ public class MarriageRegister implements Serializable, Cloneable {
         this.registrarOrMinisterPIN = registrarOrMinisterPIN;
     }
 
-    public String getSerialOfFirstNotice() {
-        return serialOfFirstNotice;
+    public String getSerialOfMaleNotice() {
+        return serialOfMaleNotice;
     }
 
     public void setSerialOfFirstNotice(String serialOfFirstNotice) {
-        this.serialOfFirstNotice = serialOfFirstNotice;
+        this.serialOfMaleNotice = serialOfFirstNotice;
     }
 
-    public Date getDateOfFirstNotice() {
-        return dateOfFirstNotice;
+    public Date getDateOfMaleNotice() {
+        return dateOfMaleNotice;
     }
 
-    public void setDateOfFirstNotice(Date dateOfFirstNotice) {
-        this.dateOfFirstNotice = dateOfFirstNotice;
+    public void setDateOfMaleNotice(Date dateOfMaleNotice) {
+        this.dateOfMaleNotice = dateOfMaleNotice;
     }
 
     public String getSerialOfSecondNotice() {
@@ -239,18 +234,18 @@ public class MarriageRegister implements Serializable, Cloneable {
     }
 
     public long getRegistrarPINOfFirstNotice() {
-        return registrarPINOfFirstNotice;
+        return registrarPINOfMaleNotice;
     }
 
     public void setRegistrarPINOfFirstNotice(long registrarPINOfFirstNotice) {
-        this.registrarPINOfFirstNotice = registrarPINOfFirstNotice;
+        this.registrarPINOfMaleNotice = registrarPINOfFirstNotice;
     }
     public long getRegistrarPINOfSecondNotice() {
-        return registrarPINOfSecondNotice;
+        return registrarPINOfFemaleNotice;
     }
 
     public void setRegistrarPINOfSecondNotice(long registrarPINOfSecondNotice) {
-        this.registrarPINOfSecondNotice = registrarPINOfSecondNotice;
+        this.registrarPINOfFemaleNotice = registrarPINOfSecondNotice;
     }
 
     public Witness getWitness1() {
