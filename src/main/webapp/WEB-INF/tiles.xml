@@ -320,7 +320,7 @@
         <put-attribute name="title" value="User Management Result Page"/>
     </definition>
     <definition name="epr.creatUser" extends="epr.template">
-        <put-attribute name="body" value="/WEB-INF/pages/management/CreatUser.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/pages/management/CreateUser.jsp"/>
         <put-attribute name="title" value="CREATE USER"/>
     </definition>
 

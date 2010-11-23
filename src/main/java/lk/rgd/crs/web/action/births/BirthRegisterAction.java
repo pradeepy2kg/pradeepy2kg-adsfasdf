@@ -529,7 +529,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         }
         logger.debug("Existing birth declaration IDUKey : {}", existBDUKey);
         if (existingBDF != null) {
-            oldBDInfo = new OldBDInfo();
+            oldBDInfo = new OldBDInfo();                    N
             populateOldBD(oldBDInfo, existingBDF);
             session.put(WebConstants.SESSION_OLD_BD_FOR_ADOPTION, oldBDInfo);
         }
@@ -961,9 +961,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         //set first item of the district list as default value
         birthDistrictId = divisionUtil.findDefaultListValue(districtList, birthDistrictId);
         //populate dsdivision list and set first item as default.
-        dsDivisionId = divisionUtil.findDSDivisionList(dsDivisionList, dsDivisionId, birthDistrictId, user, language);
+        dsDivisionId = divisionUtil.findDivisionList(dsDivisionList, dsDivisionId, birthDistrictId, "DSDivision", user, language);
         //populate bddivision list and set first item as default.
-        birthDivisionId = divisionUtil.findBDDivisionList(bdDivisionList, birthDivisionId, dsDivisionId, user, language);
+        birthDivisionId = divisionUtil.findDivisionList(bdDivisionList, birthDivisionId, dsDivisionId, "BDDivision", user, language);
     }
 
     private void populateBasicLists(String language) {

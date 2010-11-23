@@ -16,7 +16,6 @@ import lk.rgd.crs.core.service.BirthRecordsIndexer;
 import lk.rgd.crs.core.service.DeathRecordsIndexer;
 import lk.rgd.crs.api.service.PRSRecordsIndexer;
 import lk.rgd.crs.web.WebConstants;
-import org.apache.commons.collections.ListUtils;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,7 +73,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
 
     private String userName;
 
-    private int UserDistrictId;
+    private int userDistrictId;
     private int dsDivisionId;
     private int divisionId;
     private int mrdivisionId;
@@ -358,14 +357,14 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 }
                 break;
             case 2:
-                districtEn = districtDAO.getNameByPK(UserDistrictId, "en");
-                dsDivisionNameList = dsDivisionDAO.getAllDSDivisionByDistrictKey(UserDistrictId);
+                districtEn = districtDAO.getNameByPK(userDistrictId, "en");
+                dsDivisionNameList = dsDivisionDAO.getAllDSDivisionByDistrictKey(userDistrictId);
                 if (setNull) {
                     dsDivision = null;
                 }
                 break;
             case 3:
-                districtEn = districtDAO.getNameByPK(UserDistrictId, "en");
+                districtEn = districtDAO.getNameByPK(userDistrictId, "en");
                 dsDivisionEn = dsDivisionDAO.getNameByPK(dsDivisionId, "en");
                 bdDivisionNameList = bdDivisionDAO.getAllDSDivisionByDsDivisionKey(dsDivisionId);
                 if (setNull) {
@@ -373,7 +372,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 }
                 break;
             case 4:
-                districtEn = districtDAO.getNameByPK(UserDistrictId, "en");
+                districtEn = districtDAO.getNameByPK(userDistrictId, "en");
                 dsDivisionEn = dsDivisionDAO.getNameByPK(dsDivisionId, "en");
                 mrDivisionNameList = mrDivisionDAO.findAll();
                 if (setNull) {
@@ -388,7 +387,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 }
                 break;
             case 6:
-                districtEn = districtDAO.getNameByPK(UserDistrictId, "en");
+                districtEn = districtDAO.getNameByPK(userDistrictId, "en");
                 dsDivisionEn = dsDivisionDAO.getNameByPK(dsDivisionId, "en");
                 locationNameList = locationDAO.getAllLocations();
                 logger.debug("Size of the loaded Lacation List is :{}", locationNameList.size());
@@ -404,7 +403,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     public String activeOrInactive() {
         switch (pageType) {
             case 1:
-                dataManagementService.activateOrInactivateDistrict(UserDistrictId, activate, currentUser);
+                dataManagementService.activateOrInactivateDistrict(userDistrictId, activate, currentUser);
                 break;
             case 2:
                 dataManagementService.activateOrInactivateDSDivision(dsDivisionId, activate, currentUser);
@@ -446,14 +445,14 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 break;
             case 2:
                 DSDivision checkDSDivision = dsDivisionDAO.getDSDivisionByCode(dsDivision.getDivisionId(),
-                    districtDAO.getDistrict(UserDistrictId));
+                    districtDAO.getDistrict(userDistrictId));
                 if (checkDSDivision != null) {
                     addFieldError("duplicateIdNumberError", "DS Division Id Number Already Used. Please Insert Another Number");
                     logger.debug("Duplicate District code number is :", checkDSDivision.getDivisionId());
                     checkDuplicate++;
                 }
                 if (checkDuplicate == 0) {
-                    dsDivision.setDistrict(districtDAO.getDistrict(UserDistrictId));
+                    dsDivision.setDistrict(districtDAO.getDistrict(userDistrictId));
                     dsDivision.setActive(true);
                     dataManagementService.addDSDivision(dsDivision, currentUser);
                     logger.debug("New Id of new Ds Division {} is   :{}", dsDivision.getEnDivisionName(), dsDivision.getDivisionId());
@@ -761,11 +760,11 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     }
 
     public int getUserDistrictId() {
-        return UserDistrictId;
+        return userDistrictId;
     }
 
     public void setUserDistrictId(int userDistrictId) {
-        UserDistrictId = userDistrictId;
+        this.userDistrictId = userDistrictId;
     }
 
     public List<User> getUsersList() {
