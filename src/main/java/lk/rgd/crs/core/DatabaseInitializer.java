@@ -71,6 +71,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
         entityClasses.add(DeathAlteration.class);
         entityClasses.add(MarriageRegister.class);
         entityClasses.add(Witness.class);
+        entityClasses.add(MarriageObjection.class);
     }
 
     public void setDataSource(DataSource dataSource) {
