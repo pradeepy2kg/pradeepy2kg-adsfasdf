@@ -14,6 +14,12 @@ import java.util.Date;
 @Entity
 @Table(name = "MARRIAGE_REGISTER", schema = "CRS")
 public class MarriageRegister implements Serializable, Cloneable {
+
+    public enum State {
+        NOTICE_RECEIVED,
+        NOTICE_APPROVED
+    }
+
     public enum PlaceOfMarriage {
         REGISTRAR_OFFICE,
         DS_OFFICE,
@@ -29,23 +35,84 @@ public class MarriageRegister implements Serializable, Cloneable {
 
     @Id
     @GeneratedValue
+    @Column(name = "IDUKEY")
     private long idUKey;
 
-    @Column(nullable = false)
+    @Column(name = "SERIAL_NUMBER", nullable = false)
     private Long serialNumber;
 
-    @Column(nullable = false)
+    @Column(name = "RECEIVED_DATE", nullable = false)
     @Temporal(value = TemporalType.DATE)
     private Date receivedDate;
 
-    @Column(nullable = true)
+    @Column(name = "TYPE_MARRIAGE", nullable = true)
     private TypeOfMarriage typeOfMarriage;
 
-    @Column(nullable = true)
+    @Column(name = "PLACE_MARRIAGE", nullable = true)
     private PlaceOfMarriage placeOfMarriage;
 
-    @Column(nullable = true)
-    private String strPlaceOfMarriage;
+    @Column(name = "STATE", nullable = false)
+    private State state;
+
+    @Column
+    private long registrarOrMinisterPIN;
+
+    @ManyToOne
+    @JoinColumn(name = "mrDivisionUKey", nullable = false, insertable = false, updatable = false)
+    private MRDivision mrDivision;
+
+    @OneToOne
+    @JoinColumn(name = "idukey", nullable = false, insertable = false, updatable = false)
+    private Witness witness1;
+
+    @OneToOne
+    @JoinColumn(name = "idukey", nullable = false, insertable = false, updatable = false)
+    private Witness witness2;
+
+    @Column(length = 10)
+    private String serialOfFirstNotice;
+
+    @Column
+    @Temporal(value = TemporalType.DATE)
+    private Date dateOfFirstNotice;
+
+    @Column
+    private long registrarPINOfFirstNotice;
+
+    @ManyToOne
+    @JoinColumn(name = "mrDivisionUKey", nullable = false, insertable = false, updatable = false)
+    private MRDivision mrDivisionOfFirstNotice;
+
+    @OneToOne
+    @JoinColumn(name = "idukey", nullable = false, insertable = false, updatable = false)
+    private Witness witness1OfFirstNotice;
+
+    @OneToOne
+    @JoinColumn(name = "idukey", nullable = false, insertable = false, updatable = false)
+    private Witness witness2OfFirstNotice;
+
+    @OneToOne
+    @JoinColumn(name = "idukey", nullable = false, insertable = false, updatable = false)
+    private Witness witness1OfSecondNotice;
+
+    @OneToOne
+    @JoinColumn(name = "idukey", nullable = false, insertable = false, updatable = false)
+    private Witness witness2OfSecondNotice;
+
+
+    @Column(length = 10)
+    private String serialOfSecondNotice;
+
+    @Column
+    @Temporal(value = TemporalType.DATE)
+    private Date dateOfSecondNotice;
+
+    @Column
+    private long registrarPINOfSecondNotice;
+
+    @ManyToOne
+    @JoinColumn(name = "mrDivisionUKey", nullable = false, insertable = false, updatable = false)
+    private MRDivision mrDivisionOfSecondNotice;
 
     //party information male
     @Embedded
@@ -57,65 +124,6 @@ public class MarriageRegister implements Serializable, Cloneable {
 
     @Embedded
     private CRSLifeCycleInfo lifeCycleInfo = new CRSLifeCycleInfo();
-
-    @Column
-    private long registrarOrMinisterPIN;
-
-    @OneToOne
-    @JoinColumn(name = "mrDivisionUKey", nullable = false, insertable=false, updatable=false)
-    private MRDivision mrDivision;
-
-    @OneToOne
-    @JoinColumn(name = "idukey", nullable = false, insertable=false, updatable=false)
-    private Witness witness1;
-
-    @OneToOne
-    @JoinColumn(name = "idukey", nullable = false, insertable=false, updatable=false)
-    private Witness witness2;
-
-    @Column(length =10)
-    private String serialOfFirstNotice;
-
-    @Column
-    @Temporal(value = TemporalType.DATE)
-    private Date dateOfFirstNotice;
-
-    @Column
-    private long registrarPINOfFirstNotice;
-
-    @OneToOne
-    @JoinColumn(name = "mrDivisionUKey", nullable = false, insertable=false, updatable=false)
-    private MRDivision mrDivisionOfFirstNotice;
-
-    @OneToOne
-    @JoinColumn(name = "idukey", nullable = false, insertable=false, updatable=false)
-    private Witness witness1OfFirstNotice;
-
-    @OneToOne
-    @JoinColumn(name = "idukey", nullable = false, insertable=false, updatable=false)
-    private Witness witness2OfFirstNotice;
-
-    @Column(length =10)
-    private String serialOfSecondNotice;
-
-    @Column
-    @Temporal(value = TemporalType.DATE)
-    private Date dateOfSecondNotice;
-
-    @Column
-    private long registrarPINOfSecondNotice;
-
-    @OneToOne
-    @JoinColumn(name = "mrDivisionUKey", nullable = false, insertable=false, updatable=false)
-    private MRDivision mrDivisionOfSecondNotice;
-
-    @OneToOne
-    @JoinColumn(name = "idukey", nullable = false, insertable=false, updatable=false)
-    private Witness witness1OfSecondNotice;
-
-    @OneToOne
-    @JoinColumn(name = "idukey", nullable = false, insertable=false, updatable=false)
-    private Witness witness2OfSecondNotice;
 
     public long getIdUKey() {
         return idUKey;
@@ -307,5 +315,29 @@ public class MarriageRegister implements Serializable, Cloneable {
 
     public void setWitness2OfSecondNotice(Witness witness2OfSecondNotice) {
         this.witness2OfSecondNotice = witness2OfSecondNotice;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
+    public MRDivision getMrDivision() {
+        return mrDivision;
+    }
+
+    public void setMrDivision(MRDivision mrDivision) {
+        this.mrDivision = mrDivision;
+    }
+
+    public MRDivision getMrDivisionOfSecondNotice() {
+        return mrDivisionOfSecondNotice;
+    }
+
+    public void setMrDivisionOfSecondNotice(MRDivision mrDivisionOfSecondNotice) {
+        this.mrDivisionOfSecondNotice = mrDivisionOfSecondNotice;
     }
 }

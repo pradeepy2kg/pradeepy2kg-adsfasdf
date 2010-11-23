@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 /**
  * @author Ashoka Ekanayaka
- * Entity to hold witness information in Marriages.
+ *         Entity to hold witness information in Marriages.
  */
 @Entity
 @Table(name = "WITNESS", schema = "CRS")
@@ -14,16 +14,16 @@ public class Witness {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idukey;
 
-    @Column(length = 10)
+    @Column(name = "IDENTIFICATION_NUMBER", length = 10)
     private String identificationNumber;
 
-    @Column(length = 600)
+    @Column(name = "WITNESS_NAME", length = 600)
     private String fullName;
 
-    @Column(length = 255)
+    @Column(name = "WITNESS_RANK_PROFESSION", length = 255)
     private String rankOrProfession;
 
-    @Column(length = 255)
+    @Column(name = "WITNESS_ADDRESS", length = 255)
     private String address;
 
     public long geIdUKey() {

@@ -6,11 +6,14 @@ import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.dao.MRDivisionDAO;
 import lk.rgd.crs.api.domain.MarriageRegister;
+import lk.rgd.crs.api.domain.Witness;
 import lk.rgd.crs.api.service.MarriageRegistrationService;
 import lk.rgd.crs.web.WebConstants;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -39,6 +42,8 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     private int dsDivisionId;
     private int mrDivisionId;
 
+    private boolean secondNotice;
+
     private String language;
 
     public MarriageRegistrationAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, MRDivisionDAO mrDivisionDAO, MarriageRegistrationService marriageRegistrationService) {
@@ -52,18 +57,29 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
      * loading marriage notice page
      */
     public String marriageNoticeInit() {
+        //loading notice page to adding a new notice
         logger.debug("attempt to load marriage notice page");
         marriageNotice = new MarriageRegister();
+        //witness objects
         populateBasicLists();
         return "pageLoad";
     }
 
     public String addMarriageNotice() {
         logger.debug("attempt to add marriage notice serial number : {} ", marriageNotice.getSerialNumber());
-        //todo validations
+        // todo validations
         marriageRegistrationService.addMarriageNotice(marriageNotice, user);
         logger.debug("successfully added marriage notice serial number: {}", marriageNotice.getSerialNumber());
         return SUCCESS;
+    }
+
+    /**
+     * loading search page for marriage notice search
+     */
+    public String marriageNoticeSearchInit() {
+        logger.debug("loading search page for marriage notice");
+        populateBasicLists();
+        return "pageLoad";
     }
 
     /**
@@ -169,5 +185,13 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     public void setMrDivisionId(int mrDivisionId) {
         this.mrDivisionId = mrDivisionId;
+    }
+
+    public boolean isSecondNotice() {
+        return secondNotice;
+    }
+
+    public void setSecondNotice(boolean secondNotice) {
+        this.secondNotice = secondNotice;
     }
 }
