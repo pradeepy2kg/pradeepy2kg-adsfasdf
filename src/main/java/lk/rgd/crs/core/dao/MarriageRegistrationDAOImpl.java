@@ -19,6 +19,7 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void addMarriageNotice(MarriageRegister notice, User user) {
+        notice.setState(MarriageRegister.State.NOTICE_RECEIVED);
         notice.getLifeCycleInfo().setCreatedTimestamp(new Date());
         notice.getLifeCycleInfo().setCreatedUser(user);
         notice.getLifeCycleInfo().setLastUpdatedTimestamp(new Date());

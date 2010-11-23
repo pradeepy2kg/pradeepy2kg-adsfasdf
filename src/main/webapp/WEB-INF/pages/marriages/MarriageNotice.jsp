@@ -804,6 +804,180 @@
     </tr>
     </tbody>
 </table>
+<s:if test="secondNotice">
+    <%--this is second notice--%>
+    <table border="2" style="margin-top:0px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
+           cellpadding="5px">
+        <caption/>
+        <col width="250px"/>
+        <col width="390px"/>
+        <col width="390px"/>
+        <tbody>
+        <tr>
+            <td></td>
+            <td align="center">(1)</td>
+            <td align="center">(2)</td>
+        </tr>
+        <tr>
+            <td>
+                අනන්‍යතා අංකය <br>
+                அடையாள எண் <br>
+                Identification Number
+            </td>
+            <td>
+                <s:textfield name="witness1OfSecondNotice.identificationNumber" id="witness_1_pin"
+                             cssStyle="width:240px;"
+                             maxLength="10"/>
+            </td>
+            <td>
+                <s:textfield name="witness2OfSecondNotice.identificationNumber" id="witness_2_pin"
+                             cssStyle="width:240px;"
+                             maxLength="10"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                සම්පුර්ණ නම <br>
+                Full Name <br>
+            </td>
+            <td>
+                <s:textarea name="witness1OfSecondNotice.fullName" id="witness_1_full_name"
+                            cssStyle="width:98.2%;"
+                        />
+            </td>
+            <td>
+                <s:textarea name="witness2OfSecondNotice.fullName" id="witness_2_full_name"
+                            cssStyle="width:98.2%;"
+                        />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                තරාතිරම හෝ රක්ෂාව <br>
+                Rank or Profession <br>
+            </td>
+            <td>
+                <s:textarea name="witness1OfSecondNotice.rankOrProfession" id="witness_1_rank"
+                            cssStyle="width:98.2%;"
+                        />
+            </td>
+            <td>
+                <s:textarea name="witness2OfSecondNotice.rankOrProfession" id="witness_2_rank"
+                            cssStyle="width:98.2%;"
+                        />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                පදිංචි ස්ථානය <br>
+                Place of Residence <br>
+            </td>
+            <td>
+                <s:textarea name="witness1OfSecondNotice.address" id="witness_1_place_residence"
+                            cssStyle="width:98.2%;"
+                        />
+            </td>
+            <td>
+                <s:textarea name="witness2OfSecondNotice.address" id="witness_2_place_residence"
+                            cssStyle="width:98.2%;"
+                        />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                අත්සන <br>
+                Signature <br>
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+    <%--todo hidden--%>
+</s:if><s:else>
+    <%--this is first notice--%>
+    <table border="2" style="margin-top:0px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
+           cellpadding="5px">
+        <caption/>
+        <col width="250px"/>
+        <col width="390px"/>
+        <col width="390px"/>
+        <tbody>
+        <tr>
+            <td></td>
+            <td align="center">(1)</td>
+            <td align="center">(2)</td>
+        </tr>
+        <tr>
+            <td>
+                අනන්‍යතා අංකය <br>
+                அடையாள எண் <br>
+                Identification Number
+            </td>
+            <td>
+                <s:textfield name="witness1OfFirstNotice.identificationNumber" id="witness_1_pin"
+                             cssStyle="width:240px;"
+                             maxLength="10"/>
+            </td>
+            <td>
+                <s:textfield name="witness2OfFirstNotice.identificationNumber" id="witness_2_pin"
+                             cssStyle="width:240px;"
+                             maxLength="10"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                සම්පුර්ණ නම <br>
+                Full Name <br>
+            </td>
+            <td>
+                <s:textarea name="witness1OfFirstNotice.fullName" id="witness_1_full_name" cssStyle="width:98.2%;"
+                        />
+            </td>
+            <td>
+                <s:textarea name="witness2OfFirstNotice.fullName" id="witness_2_full_name" cssStyle="width:98.2%;"
+                        />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                තරාතිරම හෝ රක්ෂාව <br>
+                Rank or Profession <br>
+            </td>
+            <td>
+                <s:textarea name="witness1OfFirstNotice.rankOrProfession" id="witness_1_rank" cssStyle="width:98.2%;"
+                        />
+            </td>
+            <td>
+                <s:textarea name="witness2OfFirstNotice.rankOrProfession" id="witness_2_rank" cssStyle="width:98.2%;"
+                        />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                පදිංචි ස්ථානය <br>
+                Place of Residence <br>
+            </td>
+            <td>
+                <s:textarea name="witness1OfFirstNotice.address" id="witness_1_place_residence" cssStyle="width:98.2%;"
+                        />
+            </td>
+            <td>
+                <s:textarea name="witness2OfFirstNotice.address" id="witness_2_place_residence" cssStyle="width:98.2%;"
+                        />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                අත්සන <br>
+                Signature <br>
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</s:else>
 
 <table border="2" style="margin-top:0px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
        cellpadding="5px">
@@ -824,12 +998,12 @@
             Identification Number
         </td>
         <td>
-            <s:textfield name="marriageNotice.identificationNumberWitness1" id="witness_1_pin" cssStyle="width:240px;"
-                         maxLength="10" value="%{marriageNotice.identificationNumberWitness1}"/>
+            <s:textfield name="noticeWitness_1.identificationNumberWitness1" id="witness_1_pin" cssStyle="width:240px;"
+                         maxLength="10"/>
         </td>
         <td>
-            <s:textfield name="marriageNotice.identificationNumberWitness2" id="witness_2_pin" cssStyle="width:240px;"
-                         maxLength="10" value="%{marriageNotice.identificationNumberWitness2}"/>
+            <s:textfield name="noticeWitness_2.identificationNumberWitness2" id="witness_2_pin" cssStyle="width:240px;"
+                         maxLength="10"/>
         </td>
     </tr>
     <tr>
@@ -838,12 +1012,12 @@
             Full Name <br>
         </td>
         <td>
-            <s:textarea name="marriageNotice.fullNameWitness1" id="witness_1_full_name" cssStyle="width:98.2%;"
-                        value="%{marriageNotice.fullNameWitness1}"/>
+            <s:textarea name="noticeWitness_1.fullNameWitness1" id="witness_1_full_name" cssStyle="width:98.2%;"
+                    />
         </td>
         <td>
-            <s:textarea name="marriageNotice.fullNameWitness2" id="witness_2_full_name" cssStyle="width:98.2%;"
-                        value="%{marriageNotice.fullNameWitness2}"/>
+            <s:textarea name="noticeWitness_2.fullNameWitness2" id="witness_2_full_name" cssStyle="width:98.2%;"
+                    />
         </td>
     </tr>
     <tr>
@@ -852,12 +1026,12 @@
             Rank or Profession <br>
         </td>
         <td>
-            <s:textarea name="marriageNotice.rankOrProfessionWitness1" id="witness_1_rank" cssStyle="width:98.2%;"
-                        value="%{marriageNotice.rankOrProfessionWitness1}"/>
+            <s:textarea name="noticeWitness_1.rankOrProfessionWitness1" id="witness_1_rank" cssStyle="width:98.2%;"
+                    />
         </td>
         <td>
-            <s:textarea name="marriageNotice.rankOrProfessionWitness1" id="witness_2_rank" cssStyle="width:98.2%;"
-                        value="%{marriageNotice.rankOrProfessionWitness2}"/>
+            <s:textarea name="noticeWitness_2.rankOrProfessionWitness1" id="witness_2_rank" cssStyle="width:98.2%;"
+                    />
         </td>
     </tr>
     <tr>
@@ -866,12 +1040,12 @@
             Place of Residence <br>
         </td>
         <td>
-            <s:textarea name="marriageNotice.addressWitness1" id="witness_1_place_residence" cssStyle="width:98.2%;"
-                        value="%{marriageNotice.addressWitness1}"/>
+            <s:textarea name="noticeWitness_1.addressWitness" id="witness_1_place_residence" cssStyle="width:98.2%;"
+                    />
         </td>
         <td>
-            <s:textarea name="marriageNotice.addressWitness2" id="witness_2_place_residence" cssStyle="width:98.2%;"
-                        value="%{marriageNotice.addressWitness2}"/>
+            <s:textarea name="noticeWitness_2.addressWitness" id="witness_2_place_residence" cssStyle="width:98.2%;"
+                    />
         </td>
     </tr>
     <tr>
