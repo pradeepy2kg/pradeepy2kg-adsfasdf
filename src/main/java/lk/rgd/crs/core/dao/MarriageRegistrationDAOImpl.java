@@ -15,15 +15,23 @@ import java.util.Date;
 public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegistrationDAO {
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     @Transactional(propagation = Propagation.MANDATORY)
     public void addMarriageNotice(MarriageRegister notice, User user) {
-        notice.setState(MarriageRegister.State.NOTICE_RECEIVED);
+        notice.setState(MarriageRegister.State.DATA_ENTRY);
         notice.getLifeCycleInfo().setCreatedTimestamp(new Date());
         notice.getLifeCycleInfo().setCreatedUser(user);
         notice.getLifeCycleInfo().setLastUpdatedTimestamp(new Date());
         notice.getLifeCycleInfo().setLastUpdatedUser(user);
         em.persist(notice);
+    }
+
+    /**
+     * @inheriteDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public MarriageRegister getByIdUKey(long idUKey) {
+        return em.find(MarriageRegister.class, idUKey);
     }
 }

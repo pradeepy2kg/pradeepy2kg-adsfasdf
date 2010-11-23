@@ -19,4 +19,12 @@ public interface MarriageRegistrationService {
      */
     public void addMarriageNotice(MarriageRegister notice, User user);
 
+    /**
+     * get marriage register object by its idUKey value
+     *
+     * @param idUKey primary key of the record
+     * @param user   user who performs the action
+     * @return marriage register object
+     */
+    public MarriageRegister getByIdUKey(long idUKey, User user);
 }

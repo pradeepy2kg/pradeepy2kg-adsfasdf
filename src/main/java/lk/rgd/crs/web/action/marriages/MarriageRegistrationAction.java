@@ -42,7 +42,9 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     private int dsDivisionId;
     private int mrDivisionId;
 
-    private boolean secondNotice;
+    private long idUKey;
+
+    private boolean maleNotice;
 
     private String language;
 
@@ -71,6 +73,19 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         marriageRegistrationService.addMarriageNotice(marriageNotice, user);
         logger.debug("successfully added marriage notice serial number: {}", marriageNotice.getSerialNumber());
         return SUCCESS;
+    }
+
+    public String editMarriageNoticeInit() {
+        logger.debug("attempt to edit marriage notice :idUKey {}", idUKey);
+        marriageNotice = marriageRegistrationService.getByIdUKey(idUKey, user);
+        if (marriageNotice == null) {
+            logger.debug("cannot find marriage register record to edit : idUKey {}", idUKey);
+            addActionError(getText("error.cannot.find.record.for.edit"));
+            populateBasicLists();
+            return ERROR;
+        }
+        populateBasicLists();
+        return "pageLoad";
     }
 
     /**
@@ -187,11 +202,12 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         this.mrDivisionId = mrDivisionId;
     }
 
-    public boolean isSecondNotice() {
-        return secondNotice;
+    public long getIdUKey() {
+        return idUKey;
     }
 
-    public void setSecondNotice(boolean secondNotice) {
-        this.secondNotice = secondNotice;
+    public void setIdUKey(long idUKey) {
+        this.idUKey = idUKey;
     }
+    
 }
