@@ -90,4 +90,19 @@ public class UserLocationDAOImpl extends BaseDAO implements UserLocationDAO {
         q.setParameter("active", active);
         return q.getResultList();
     }
+
+    /**
+     * Returns currently active UserLocations list for given user id
+     *
+     * @param userId
+     * @param active
+     * @return List<UserLocation> for given user id and active = true
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<UserLocation> getActiveUserLocations(String userId, boolean active) {
+        Query q = em.createNamedQuery("get.active.locations.by.userId");
+        q.setParameter("userId", userId);
+        q.setParameter("active", active);
+        return q.getResultList();
+    }
 }

@@ -51,7 +51,8 @@
         });
     });
 
-    function initPage(){}
+    function initPage() {
+    }
 
 </script>
 <div id="user-locaton-outer">
@@ -71,16 +72,13 @@
             <tr>
                 <td colspan="1"><s:label value="Location List" cssClass="user-locaton-outer-lable"/></td>
                 <td colspan="2">
-                   
                     <s:if test="pageType==1">
                         <s:select list="locationList" name="locationId" disabled="true"/>
-                         <s:hidden name="locationId"/>
+                        <s:hidden name="locationId"/>
                     </s:if>
                     <s:else>
                         <s:select list="locationList" name="locationId"/>
                     </s:else>
-
-
                 </td>
             </tr>
             <tr>
@@ -106,9 +104,11 @@
                 <td><s:label value="Start :" cssClass="user-locaton-outer-lable"/><s:textfield
                         name="userLocation.startDate" cssStyle="float:right;"
                         id="startDatePicker"/></td>
-                <td><s:label value="End :" cssClass="user-locaton-outer-lable"/><s:textfield name="userLocation.endDate"
-                                                                                             cssStyle="float:right;"
-                                                                                             id="endDatePicker"/></td>
+                <td><s:label value="End :" cssClass="user-locaton-outer-lable"/>
+                    <s:textfield name="userLocation.endDate"
+                                 cssStyle="float:right;"
+                                 id="endDatePicker"/>
+                </td>
             </tr>
         </table>
         <s:hidden name="userId"/>

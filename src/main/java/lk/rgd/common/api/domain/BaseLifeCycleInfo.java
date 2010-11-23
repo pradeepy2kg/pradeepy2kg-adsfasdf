@@ -19,14 +19,15 @@ public class BaseLifeCycleInfo implements Serializable {
     @Column(nullable = false)
     private boolean active = true;
 
-    @Column(nullable = true)     //(nullable = false, columnDefinition = "TIMESTAMP default '0000-00-00 00:00:00'")
+    @Column(nullable = true)
+    //(nullable = false, columnDefinition = "TIMESTAMP default '0000-00-00 00:00:00'")
     @Temporal(value = TemporalType.TIMESTAMP)
     /**
      * The database row level created timestamp (i.e. when a user first enters the record to the system)
      */
     private Date createdTimestamp;
 
-    @OneToOne (fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "createdUserId", nullable = true)
     /**
      * The database row level created user (i.e. user entering the record to the system)
@@ -40,7 +41,7 @@ public class BaseLifeCycleInfo implements Serializable {
      */
     private Date lastUpdatedTimestamp;
 
-    @OneToOne (fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lastUpdatedUserId", nullable = true)
     /**
      * The database row level last updated user

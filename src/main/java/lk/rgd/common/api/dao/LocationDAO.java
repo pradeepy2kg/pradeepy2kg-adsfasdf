@@ -56,11 +56,11 @@ public interface LocationDAO {
     public Location getLocationByCode(int locationCode);
 
     /**
-     * Return all locations that have given location code and DSDivision ID
+     * Return the location that have given location code and DSDivision ID
      *
      * @param locationCode
      * @param dsDivisionId
-     * @return
+     * @return one location that have given location code and dsdivision id
      */
     public Location getLocationByCodeAndByDSDivisionID(int locationCode, int dsDivisionId);
 
@@ -68,7 +68,7 @@ public interface LocationDAO {
      * Return list of locations that have given DSDivision ID
      *
      * @param dsDivisionId
-     * @return
+     * @return Map<Integer, String> of locations that have given DSDivision ID
      */
-    public Map<Integer, String> getLocationByDSDivisionID(int dsDivisionId);
+    public Map<Integer, String> getLocationByDSDivisionID(int dsDivisionId, String lang);
 }

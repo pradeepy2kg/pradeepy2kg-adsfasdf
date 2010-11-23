@@ -61,4 +61,13 @@ public interface UserLocationDAO {
      */
     public List<User> getBirthCertSignUsersByLocationId(int locationId, boolean active);
 
+    /**
+     * Return Active Locations list of given user 
+     *
+     * @param userId
+     * @param active
+     * @return list of active locations list of given user
+     */
+    public List<UserLocation> getActiveUserLocations(String userId, boolean active);
+
 }
