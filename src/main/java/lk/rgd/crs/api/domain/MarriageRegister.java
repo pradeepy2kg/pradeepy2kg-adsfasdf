@@ -61,7 +61,7 @@ public class MarriageRegister implements Serializable, Cloneable {
     @Column
     private long registrarOrMinisterPIN;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "mrDivisionUKey", nullable = false, insertable=false, updatable=false)
     private MRDivision mrDivision;
 
@@ -83,7 +83,7 @@ public class MarriageRegister implements Serializable, Cloneable {
     @Column
     private long registrarPINOfFirstNotice;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "mrDivisionUKey", nullable = false, insertable=false, updatable=false)
     private MRDivision mrDivisionOfFirstNotice;
 
@@ -105,7 +105,7 @@ public class MarriageRegister implements Serializable, Cloneable {
     @Column
     private long registrarPINOfSecondNotice;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "mrDivisionUKey", nullable = false, insertable=false, updatable=false)
     private MRDivision mrDivisionOfSecondNotice;
 
