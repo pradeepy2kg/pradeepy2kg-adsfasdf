@@ -15,4 +15,12 @@ public interface MarriageRegistrationDAO {
      * @param user   user who perform action
      */
     public void addMarriageNotice(MarriageRegister notice, User user);
+
+    /**
+     * get marriage register object by it's idUKey
+     *
+     * @param idUKey primary key of the record
+     * @return user who performs the action
+     */
+    public MarriageRegister getByIdUKey(long idUKey);
 }

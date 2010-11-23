@@ -16,8 +16,7 @@ import java.util.Date;
 public class MarriageRegister implements Serializable, Cloneable {
 
     public enum State {
-        NOTICE_RECEIVED,
-        NOTICE_APPROVED
+        DATA_ENTRY
     }
 
     public enum PlaceOfMarriage {
@@ -81,23 +80,28 @@ public class MarriageRegister implements Serializable, Cloneable {
 
     @ManyToOne
     @JoinColumn(name = "mrDivisionUKey", nullable = false, insertable = false, updatable = false)
-    private MRDivision mrDivisionOfFirstNotice;
+    private MRDivision mrDivisionOfMaleNotice;
+
+
+    @ManyToOne
+    @JoinColumn(name = "mrDivisionUKey", nullable = false, insertable = false, updatable = false)
+    private MRDivision mrDivisionOfFemaleNotice;
 
     @OneToOne
     @JoinColumn(name = "idukey", nullable = false, insertable = false, updatable = false)
-    private Witness witness1OfFirstNotice;
+    private Witness maleNoticeWitness_1;
 
     @OneToOne
     @JoinColumn(name = "idukey", nullable = false, insertable = false, updatable = false)
-    private Witness witness2OfFirstNotice;
+    private Witness maleNoticeWitness_2;
 
     @OneToOne
     @JoinColumn(name = "idukey", nullable = false, insertable = false, updatable = false)
-    private Witness witness1OfSecondNotice;
+    private Witness femaleNoticeWitness_1;
 
     @OneToOne
     @JoinColumn(name = "idukey", nullable = false, insertable = false, updatable = false)
-    private Witness witness2OfSecondNotice;
+    private Witness femaleNoticeWitness_2;
 
 
     @Column(length = 10)
@@ -110,9 +114,6 @@ public class MarriageRegister implements Serializable, Cloneable {
     @Column
     private long registrarPINOfSecondNotice;
 
-    @ManyToOne
-    @JoinColumn(name = "mrDivisionUKey", nullable = false, insertable = false, updatable = false)
-    private MRDivision mrDivisionOfSecondNotice;
 
     //party information male
     @Embedded
@@ -244,29 +245,12 @@ public class MarriageRegister implements Serializable, Cloneable {
     public void setRegistrarPINOfFirstNotice(long registrarPINOfFirstNotice) {
         this.registrarPINOfFirstNotice = registrarPINOfFirstNotice;
     }
-
-    public MRDivision getMrDivisionOfFirstNotice() {
-        return mrDivisionOfFirstNotice;
-    }
-
-    public void setMrDivisionIdofFirstNotice(MRDivision mrDivisionOfFirstNotice) {
-        this.mrDivisionOfFirstNotice = mrDivisionOfFirstNotice;
-    }
-
     public long getRegistrarPINOfSecondNotice() {
         return registrarPINOfSecondNotice;
     }
 
     public void setRegistrarPINOfSecondNotice(long registrarPINOfSecondNotice) {
         this.registrarPINOfSecondNotice = registrarPINOfSecondNotice;
-    }
-
-    public MRDivision getMrDivisionIdofSecondNotice() {
-        return mrDivisionOfSecondNotice;
-    }
-
-    public void setMrDivisionIdofSecondNotice(MRDivision mrDivisionOfSecondNotice) {
-        this.mrDivisionOfSecondNotice = mrDivisionOfSecondNotice;
     }
 
     public Witness getWitness1() {
@@ -285,38 +269,6 @@ public class MarriageRegister implements Serializable, Cloneable {
         this.witness2 = witness2;
     }
 
-    public Witness getWitness1OfFirstNotice() {
-        return witness1OfFirstNotice;
-    }
-
-    public void setWitness1OfFirstNotice(Witness witness1OfFirstNotice) {
-        this.witness1OfFirstNotice = witness1OfFirstNotice;
-    }
-
-    public Witness getWitness2OfFirstNotice() {
-        return witness2OfFirstNotice;
-    }
-
-    public void setWitness2OfFirstNotice(Witness witness2OfFirstNotice) {
-        this.witness2OfFirstNotice = witness2OfFirstNotice;
-    }
-
-    public Witness getWitness1OfSecondNotice() {
-        return witness1OfSecondNotice;
-    }
-
-    public void setWitness1OfSecondNotice(Witness witness1OfSecondNotice) {
-        this.witness1OfSecondNotice = witness1OfSecondNotice;
-    }
-
-    public Witness getWitness2OfSecondNotice() {
-        return witness2OfSecondNotice;
-    }
-
-    public void setWitness2OfSecondNotice(Witness witness2OfSecondNotice) {
-        this.witness2OfSecondNotice = witness2OfSecondNotice;
-    }
-
     public State getState() {
         return state;
     }
@@ -333,11 +285,51 @@ public class MarriageRegister implements Serializable, Cloneable {
         this.mrDivision = mrDivision;
     }
 
-    public MRDivision getMrDivisionOfSecondNotice() {
-        return mrDivisionOfSecondNotice;
+    public MRDivision getMrDivisionOfMaleNotice() {
+        return mrDivisionOfMaleNotice;
     }
 
-    public void setMrDivisionOfSecondNotice(MRDivision mrDivisionOfSecondNotice) {
-        this.mrDivisionOfSecondNotice = mrDivisionOfSecondNotice;
+    public void setMrDivisionOfMaleNotice(MRDivision mrDivisionOfMaleNotice) {
+        this.mrDivisionOfMaleNotice = mrDivisionOfMaleNotice;
+    }
+
+    public MRDivision getMrDivisionOfFemaleNotice() {
+        return mrDivisionOfFemaleNotice;
+    }
+
+    public void setMrDivisionOfFemaleNotice(MRDivision mrDivisionOfFemaleNotice) {
+        this.mrDivisionOfFemaleNotice = mrDivisionOfFemaleNotice;
+    }
+
+    public Witness getMaleNoticeWitness_1() {
+        return maleNoticeWitness_1;
+    }
+
+    public void setMaleNoticeWitness_1(Witness maleNoticeWitness_1) {
+        this.maleNoticeWitness_1 = maleNoticeWitness_1;
+    }
+
+    public Witness getMaleNoticeWitness_2() {
+        return maleNoticeWitness_2;
+    }
+
+    public void setMaleNoticeWitness_2(Witness maleNoticeWitness_2) {
+        this.maleNoticeWitness_2 = maleNoticeWitness_2;
+    }
+
+    public Witness getFemaleNoticeWitness_1() {
+        return femaleNoticeWitness_1;
+    }
+
+    public void setFemaleNoticeWitness_1(Witness femaleNoticeWitness_1) {
+        this.femaleNoticeWitness_1 = femaleNoticeWitness_1;
+    }
+
+    public Witness getFemaleNoticeWitness_2() {
+        return femaleNoticeWitness_2;
+    }
+
+    public void setFemaleNoticeWitness_2(Witness femaleNoticeWitness_2) {
+        this.femaleNoticeWitness_2 = femaleNoticeWitness_2;
     }
 }
