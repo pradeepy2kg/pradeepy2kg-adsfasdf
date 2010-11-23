@@ -240,6 +240,7 @@ public class MarriageRegister implements Serializable, Cloneable {
     public void setRegistrarPINOfFirstNotice(long registrarPINOfFirstNotice) {
         this.registrarPINOfMaleNotice = registrarPINOfFirstNotice;
     }
+
     public long getRegistrarPINOfSecondNotice() {
         return registrarPINOfFemaleNotice;
     }

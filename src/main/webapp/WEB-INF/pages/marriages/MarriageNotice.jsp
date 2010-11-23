@@ -9,6 +9,56 @@
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 
 <script type="text/javascript">
+
+
+    function initPage() {
+        disableFemaleWitnesses('none');
+        disableMaleWitnesses('none');
+    }
+    function disableFemaleWitnesses(mode) {
+
+        document.getElementById('f_witness_1_pin').style.display = mode;
+        document.getElementById('f_witness_1_full_name').style.display = mode;
+        document.getElementById('f_witness_1_rank').style.display = mode;
+        document.getElementById('f_witness_1_place_residence').style.display = mode;
+
+        document.getElementById('f_witness_2_pin').style.display = mode;
+        document.getElementById('f_witness_2_full_name').style.display = mode;
+        document.getElementById('f_witness_2_rank').style.display = mode;
+        document.getElementById('f_witness_2_place_residence').style.display = mode;
+    }
+
+    function disableMaleWitnesses(mode) {
+
+        document.getElementById('m_witness_1_pin').style.display = mode;
+        document.getElementById('m_witness_1_full_name').style.display = mode;
+        document.getElementById('m_witness_1_rank').style.display = mode;
+        document.getElementById('m_witness_1_place_residence').style.display = mode;
+
+        document.getElementById('m_witness_2_pin').style.display = mode;
+        document.getElementById('m_witness_2_full_name').style.display = mode;
+        document.getElementById('m_witness_2_rank').style.display = mode;
+        document.getElementById('m_witness_2_place_residence').style.display = mode;
+    }
+
+    function disableWitnessBaseOnParty() {
+        var partyMale = document.getElementById('submit_party0').checked
+        if (partyMale) {
+            disableMaleWitnesses('');
+            disableFemaleWitnesses('none');
+        }
+        var partyFemale = document.getElementById('submit_party1').checked
+        if (partyFemale) {
+            disableFemaleWitnesses('');
+            disableMaleWitnesses('none');
+        }
+        var partyBoth = document.getElementById('submit_party2').checked
+        if (partyBoth) {
+            disableFemaleWitnesses('');
+            disableMaleWitnesses('');
+        }
+    }
+
     $(function() {
         $("#submitDatePicker").datepicker({
             changeYear: true,
@@ -127,6 +177,17 @@
                         <s:textfield name="marriageNotice.receivedDate" id="submitDatePicker" maxLength="10"/>
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        submitted party in si<br>submitted party in ta <br> submitted party
+                    </td>
+                    <td colspan="1" align="center">
+                        <s:radio name="submitted_party" id="submit_party"
+                                 list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('both.label')}"
+                                 onclick="disableWitnessBaseOnParty()"/>
+                    </td>
+                </tr>
+
             </table>
         </td>
     </tr>
@@ -148,10 +209,8 @@
 
 <table border="1" style="margin-top:1px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
        cellpadding="5px">
-    <caption></caption>
+    <caption/>
     <col width="250px"/>
-    <col/>
-    <col/>
     <col/>
     <col/>
     <col/>
@@ -160,38 +219,59 @@
     <col/>
     <tbody>
     <tr>
-        <td rowspan="3">
-            විවාහයේ ස්වභාවය <br>
-            type of marriage in tamil <br>
-            Type of Marriage
+        <td colspan="3">
+            දෙපාර්ශ්වයම දැන්වීම දෙන්නේ එකම රෙජිස්ට්‍රාර් හෝ ප්‍රාදේශීය ලේකම් කාර්යාලයකටද? <br>
+            In tamil <br>
+            Is notice given by both parties to the same Registrar or Divisional Secretariat office? <br>
         </td>
-        <td colspan="6">
-            සාමාන්‍ය /
-            general marriage in tamil /
-            General
+        <td>
+            ඔව් <br>
+            ஆம் <br>
+            Yes <br>
         </td>
-        <td colspan="2" align="center">
+        <td align="center">
+                <%--todo change--%>
+            <s:radio name="marriageNotice.typeOfMarriage" list="#@java.util.HashMap@{'GENERAL':''}" value="true"/>
+        </td>
+        <td>
+            නැත <br>
+            இல்லை <br>
+            No <br>
+        </td>
+        <td align="center">
+                <%--todo change--%>
             <s:radio name="marriageNotice.typeOfMarriage" list="#@java.util.HashMap@{'GENERAL':''}" value="true"/>
         </td>
     </tr>
     <tr>
-        <td colspan="6">
-            උඩරට බින්න /
-            Kandyan binna in tamil /
+        <td>
+            විවාහයේ ස්වභාවය <br>
+            type of marriage in tamil <br>
+            Type of Marriage
+        </td>
+        <td>
+            සාමාන්‍ය <br>
+            general marriage in tamil<br>
+            General
+        </td>
+        <td align="center">
+            <s:radio name="marriageNotice.typeOfMarriage" list="#@java.util.HashMap@{'GENERAL':''}" value="true"/>
+        </td>
+        <td>
+            උඩරට බින්න <br>
+            Kandyan binna in tamil <br>
             Kandyan Binna
         </td>
-        <td colspan="2" align="center">
+        <td align="center">
             <s:radio name="marriageNotice.typeOfMarriage" list="#@java.util.HashMap@{'KANDYAN_BINNA':''}" value="true"/>
         </td>
-    </tr>
-    <tr>
-        <td colspan="6">
-            උඩරට බින්න දීග /
-            kandyan deega in tamil /
+        <td>
+            උඩරට බින්න දීග <br>
+            kandyan deega in tamil <br>
             Kandyan
             Deega
         </td>
-        <td colspan="2" align="center">
+        <td align="center">
             <s:radio name="marriageNotice.typeOfMarriage" list="#@java.util.HashMap@{'KANDYAN_DEEGA':''}" value="true"/>
         </td>
     </tr>
@@ -201,16 +281,8 @@
             Intended place of Marriage <br>
         </td>
         <td>
-            රෙජිස්ට්‍රාර් කන්තෝරුව <br>
-            Registrars Office <br>
-        </td>
-        <td align="center">
-            <s:radio name="marriageNotice.placeOfMarriage" list="#@java.util.HashMap@{'REGISTRAR_OFFICE':''}"
-                     value="true"/>
-        </td>
-        <td>
-            ප්‍රා. ලේ. කන්තෝරුව <br>
-            DS Office <br>
+            රෙජිස්ට්‍රාර් කන්තෝරුව / ප්‍රා. ලේ. කන්තෝරුව <br>
+            Registrars Office/ DS Office <br>
         </td>
         <td align="center">
             <s:radio name="marriageNotice.placeOfMarriage" list="#@java.util.HashMap@{'DS_OFFICE':''}" value="true"/>
@@ -232,7 +304,6 @@
     </tr>
     </tbody>
 </table>
-
 <%--section heading male party heading--%>
 <table style="margin-top:20px;margin-bottom:20px;width:100%;font-size:16px">
     <caption/>
@@ -804,181 +875,11 @@
     </tr>
     </tbody>
 </table>
-<s:if test="secondNotice">
-    <%--this is second notice--%>
-    <table border="2" style="margin-top:0px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
-           cellpadding="5px">
-        <caption/>
-        <col width="250px"/>
-        <col width="390px"/>
-        <col width="390px"/>
-        <tbody>
-        <tr>
-            <td></td>
-            <td align="center">(1)</td>
-            <td align="center">(2)</td>
-        </tr>
-        <tr>
-            <td>
-                අනන්‍යතා අංකය <br>
-                அடையாள எண் <br>
-                Identification Number
-            </td>
-            <td>
-                <s:textfield name="witness1OfSecondNotice.identificationNumber" id="witness_1_pin"
-                             cssStyle="width:240px;"
-                             maxLength="10"/>
-            </td>
-            <td>
-                <s:textfield name="witness2OfSecondNotice.identificationNumber" id="witness_2_pin"
-                             cssStyle="width:240px;"
-                             maxLength="10"/>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                සම්පුර්ණ නම <br>
-                Full Name <br>
-            </td>
-            <td>
-                <s:textarea name="witness1OfSecondNotice.fullName" id="witness_1_full_name"
-                            cssStyle="width:98.2%;"
-                        />
-            </td>
-            <td>
-                <s:textarea name="witness2OfSecondNotice.fullName" id="witness_2_full_name"
-                            cssStyle="width:98.2%;"
-                        />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                තරාතිරම හෝ රක්ෂාව <br>
-                Rank or Profession <br>
-            </td>
-            <td>
-                <s:textarea name="witness1OfSecondNotice.rankOrProfession" id="witness_1_rank"
-                            cssStyle="width:98.2%;"
-                        />
-            </td>
-            <td>
-                <s:textarea name="witness2OfSecondNotice.rankOrProfession" id="witness_2_rank"
-                            cssStyle="width:98.2%;"
-                        />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                පදිංචි ස්ථානය <br>
-                Place of Residence <br>
-            </td>
-            <td>
-                <s:textarea name="witness1OfSecondNotice.address" id="witness_1_place_residence"
-                            cssStyle="width:98.2%;"
-                        />
-            </td>
-            <td>
-                <s:textarea name="witness2OfSecondNotice.address" id="witness_2_place_residence"
-                            cssStyle="width:98.2%;"
-                        />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                අත්සන <br>
-                Signature <br>
-            </td>
-            <td></td>
-            <td></td>
-        </tr>
-        </tbody>
-    </table>
-    <%--todo hidden--%>
-</s:if><s:else>
-    <%--this is first notice--%>
-    <table border="2" style="margin-top:0px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
-           cellpadding="5px">
-        <caption/>
-        <col width="250px"/>
-        <col width="390px"/>
-        <col width="390px"/>
-        <tbody>
-        <tr>
-            <td></td>
-            <td align="center">(1)</td>
-            <td align="center">(2)</td>
-        </tr>
-        <tr>
-            <td>
-                අනන්‍යතා අංකය <br>
-                அடையாள எண் <br>
-                Identification Number
-            </td>
-            <td>
-                <s:textfield name="witness1OfFirstNotice.identificationNumber" id="witness_1_pin"
-                             cssStyle="width:240px;"
-                             maxLength="10"/>
-            </td>
-            <td>
-                <s:textfield name="witness2OfFirstNotice.identificationNumber" id="witness_2_pin"
-                             cssStyle="width:240px;"
-                             maxLength="10"/>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                සම්පුර්ණ නම <br>
-                Full Name <br>
-            </td>
-            <td>
-                <s:textarea name="witness1OfFirstNotice.fullName" id="witness_1_full_name" cssStyle="width:98.2%;"
-                        />
-            </td>
-            <td>
-                <s:textarea name="witness2OfFirstNotice.fullName" id="witness_2_full_name" cssStyle="width:98.2%;"
-                        />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                තරාතිරම හෝ රක්ෂාව <br>
-                Rank or Profession <br>
-            </td>
-            <td>
-                <s:textarea name="witness1OfFirstNotice.rankOrProfession" id="witness_1_rank" cssStyle="width:98.2%;"
-                        />
-            </td>
-            <td>
-                <s:textarea name="witness2OfFirstNotice.rankOrProfession" id="witness_2_rank" cssStyle="width:98.2%;"
-                        />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                පදිංචි ස්ථානය <br>
-                Place of Residence <br>
-            </td>
-            <td>
-                <s:textarea name="witness1OfFirstNotice.address" id="witness_1_place_residence" cssStyle="width:98.2%;"
-                        />
-            </td>
-            <td>
-                <s:textarea name="witness2OfFirstNotice.address" id="witness_2_place_residence" cssStyle="width:98.2%;"
-                        />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                අත්සන <br>
-                Signature <br>
-            </td>
-            <td></td>
-            <td></td>
-        </tr>
-        </tbody>
-    </table>
-</s:else>
-
+<%--this is first notice--%>
+<br>
+if male party is submitted the notice in si <br>
+if male party is submitted the notice in ta <br>
+if male party is submitted the notice
 <table border="2" style="margin-top:0px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
        cellpadding="5px">
     <caption/>
@@ -998,11 +899,13 @@
             Identification Number
         </td>
         <td>
-            <s:textfield name="noticeWitness_1.identificationNumberWitness1" id="witness_1_pin" cssStyle="width:240px;"
+            <s:textfield name="witness1OfFirstNotice.identificationNumber" id="m_witness_1_pin"
+                         cssStyle="width:240px;"
                          maxLength="10"/>
         </td>
         <td>
-            <s:textfield name="noticeWitness_2.identificationNumberWitness2" id="witness_2_pin" cssStyle="width:240px;"
+            <s:textfield name="witness2OfFirstNotice.identificationNumber" id="m_witness_2_pin"
+                         cssStyle="width:240px;"
                          maxLength="10"/>
         </td>
     </tr>
@@ -1012,11 +915,11 @@
             Full Name <br>
         </td>
         <td>
-            <s:textarea name="noticeWitness_1.fullNameWitness1" id="witness_1_full_name" cssStyle="width:98.2%;"
+            <s:textarea name="witness1OfFirstNotice.fullName" id="m_witness_1_full_name" cssStyle="width:98.2%;"
                     />
         </td>
         <td>
-            <s:textarea name="noticeWitness_2.fullNameWitness2" id="witness_2_full_name" cssStyle="width:98.2%;"
+            <s:textarea name="witness2OfFirstNotice.fullName" id="m_witness_2_full_name" cssStyle="width:98.2%;"
                     />
         </td>
     </tr>
@@ -1026,11 +929,11 @@
             Rank or Profession <br>
         </td>
         <td>
-            <s:textarea name="noticeWitness_1.rankOrProfessionWitness1" id="witness_1_rank" cssStyle="width:98.2%;"
+            <s:textarea name="witness1OfFirstNotice.rankOrProfession" id="m_witness_1_rank" cssStyle="width:98.2%;"
                     />
         </td>
         <td>
-            <s:textarea name="noticeWitness_2.rankOrProfessionWitness1" id="witness_2_rank" cssStyle="width:98.2%;"
+            <s:textarea name="witness2OfFirstNotice.rankOrProfession" id="m_witness_2_rank" cssStyle="width:98.2%;"
                     />
         </td>
     </tr>
@@ -1040,11 +943,97 @@
             Place of Residence <br>
         </td>
         <td>
-            <s:textarea name="noticeWitness_1.addressWitness" id="witness_1_place_residence" cssStyle="width:98.2%;"
+            <s:textarea name="witness1OfFirstNotice.address" id="m_witness_1_place_residence" cssStyle="width:98.2%;"
                     />
         </td>
         <td>
-            <s:textarea name="noticeWitness_2.addressWitness" id="witness_2_place_residence" cssStyle="width:98.2%;"
+            <s:textarea name="witness2OfFirstNotice.address" id="m_witness_2_place_residence" cssStyle="width:98.2%;"
+                    />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            අත්සන <br>
+            Signature <br>
+        </td>
+        <td></td>
+        <td></td>
+    </tr>
+    </tbody>
+</table>
+
+<br>
+if female party is submitted the notice in si <br>
+if female party is submitted the notice in ta <br>
+if female party is submitted the notice
+<table border="2" style="margin-top:0px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
+       cellpadding="5px">
+    <caption/>
+    <col width="250px"/>
+    <col width="390px"/>
+    <col width="390px"/>
+    <tbody>
+    <tr>
+        <td></td>
+        <td align="center">(1)</td>
+        <td align="center">(2)</td>
+    </tr>
+    <tr>
+        <td>
+            අනන්‍යතා අංකය <br>
+            அடையாள எண் <br>
+            Identification Number
+        </td>
+        <td>
+            <s:textfield name="noticeWitness_1.identificationNumberWitness1" id="f_witness_1_pin"
+                         cssStyle="width:240px;"
+                         maxLength="10"/>
+        </td>
+        <td>
+            <s:textfield name="noticeWitness_2.identificationNumberWitness2" id="f_witness_2_pin"
+                         cssStyle="width:240px;"
+                         maxLength="10"/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            සම්පුර්ණ නම <br>
+            Full Name <br>
+        </td>
+        <td>
+            <s:textarea name="noticeWitness_1.fullNameWitness1" id="f_witness_1_full_name" cssStyle="width:98.2%;"
+                    />
+        </td>
+        <td>
+            <s:textarea name="noticeWitness_2.fullNameWitness2" id="f_witness_2_full_name" cssStyle="width:98.2%;"
+                    />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            තරාතිරම හෝ රක්ෂාව <br>
+            Rank or Profession <br>
+        </td>
+        <td>
+            <s:textarea name="noticeWitness_1.rankOrProfessionWitness1" id="f_witness_1_rank" cssStyle="width:98.2%;"
+                    />
+        </td>
+        <td>
+            <s:textarea name="noticeWitness_2.rankOrProfessionWitness1" id="f_witness_2_rank" cssStyle="width:98.2%;"
+                    />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            පදිංචි ස්ථානය <br>
+            Place of Residence <br>
+        </td>
+        <td>
+            <s:textarea name="noticeWitness_1.addressWitness" id="f_witness_1_place_residence" cssStyle="width:98.2%;"
+                    />
+        </td>
+        <td>
+            <s:textarea name="noticeWitness_2.addressWitness" id="f_witness_2_place_residence" cssStyle="width:98.2%;"
                     />
         </td>
     </tr>
