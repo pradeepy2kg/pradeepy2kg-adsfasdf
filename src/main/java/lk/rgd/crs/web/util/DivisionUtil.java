@@ -12,7 +12,7 @@ import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
- * User: indunil
+ * User: Mahesha
  * Date: Nov 22, 2010
  * Time: 11:33:45 AM
  * To change this template use File | Settings | File Templates.
@@ -32,29 +32,15 @@ public class DivisionUtil {
 
     public void populateDynamicLists(Map<Integer, String> districtList, Map<Integer, String> dsDivisionList, Map<Integer, String> bdDivisionList, Integer districtId, Integer dsDivisionId, Integer bdDivisionId, User user, String language) {
 
-        if (districtList == null) {
-            districtList = districtDAO.getDistrictNames(language, user);
-        }
-        if (districtId == 0) {
-            if (!districtList.isEmpty()) {
-                districtId = districtList.keySet().iterator().next();
-                logger.debug("first district in the list {} was set", districtId);
-            }
-        }
+        districtList = districtDAO.getDistrictNames(language, user);
+        districtId = findDefaultListValue(districtList, districtId);
+
         dsDivisionList = dsDivisionDAO.getDSDivisionNames(districtId, language, user);
-        if (dsDivisionId == 0) {
-            if (!dsDivisionList.isEmpty()) {
-                dsDivisionId = dsDivisionList.keySet().iterator().next();
-                logger.debug("first DS Div in the list {} was set", dsDivisionId);
-            }
-        }
+        dsDivisionId = findDefaultListValue(dsDivisionList, dsDivisionId);
+
         bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
-        if (bdDivisionId == 0) {
-            if (!bdDivisionList.isEmpty()) {
-                bdDivisionId = bdDivisionList.keySet().iterator().next();
-                logger.debug("first BD Div in the list {} was set", bdDivisionId);
-            }
-        }
+        bdDivisionId = findDefaultListValue(bdDivisionList, bdDivisionId);
+
     }
 
     public int findDefaultListValue(Map<Integer, String> divisionList, int divisionId){
@@ -74,6 +60,15 @@ public class DivisionUtil {
 
     public int findBDDivisionList(Map<Integer, String> divisionList, int divisionId, int dsDivisionId, User user, String language){
         divisionList.putAll(bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user));
+        return findDefaultListValue(divisionList,divisionId);
+    }
+
+    public int findDivisionList(Map<Integer, String> divisionList, int divisionId, int parentId, String divisionType, User user, String language){
+        if (divisionType.equals("DSDivision")) {
+            divisionList.putAll(dsDivisionDAO.getDSDivisionNames(parentId, language, user));
+        } else if(divisionType.equals("BDDivision")) {
+            divisionList.putAll(bdDivisionDAO.getBDDivisionNames(parentId, language, user));
+        }
         return findDefaultListValue(divisionList,divisionId);
     }
 

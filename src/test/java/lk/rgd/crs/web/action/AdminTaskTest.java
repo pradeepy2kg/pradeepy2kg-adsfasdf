@@ -116,12 +116,12 @@ public class AdminTaskTest extends CustomStrutsTestCase {
         initAndExucute("/management/eprAddDivisionsAndDsDivisions.do", session);
         session = userManagementAction.getSession();
 
-        request.setParameter("UserDistrictId", "26");
+        request.setParameter("userDistrictId", "26");
         request.setParameter("pageNo", "2");
         initAndExucute("/management/eprInitAddDivisionsAndDsDivisions.do", session);
         session = userManagementAction.getSession();
 
-        request.setParameter("UserDistrictId", "26");
+        request.setParameter("userDistrictId", "26");
         request.setParameter("button", "ADD");
         request.setParameter("dsDivision.divisionId", "10");
         request.setParameter("dsDivision.enDivisionName", "New ds name en");
@@ -138,14 +138,14 @@ public class AdminTaskTest extends CustomStrutsTestCase {
         initAndExucute("/management/eprAddDivisionsAndDsDivisions.do", session);
         session = userManagementAction.getSession();
 
-        request.setParameter("UserDistrictId", "26");
+        request.setParameter("userDistrictId", "26");
         request.setParameter("button", "Division List");
         request.setParameter("dsDivisionId", "41");
         request.setParameter("pageNo", "3");
         initAndExucute("/management/eprInitAddDivisionsAndDsDivisions.do", session);
         session = userManagementAction.getSession();
 
-        request.setParameter("UserDistrictId", "1");
+        request.setParameter("userDistrictId", "1");
         request.setParameter("bdDivision.divisionId", "10");
         request.setParameter("bdDivision.enDivisionName", "new rggistration division EN");
         request.setParameter("bdDivision.siDivisionName", "new rggistration division si");
@@ -163,14 +163,14 @@ public class AdminTaskTest extends CustomStrutsTestCase {
         initAndExucute("/management/eprAddDivisionsAndDsDivisions.do", session);
         session = userManagementAction.getSession();
 
-        request.setParameter("UserDistrictId", "26");
+        request.setParameter("userDistrictId", "26");
         request.setParameter("button", "MRDivision List");
         request.setParameter("dsDivisionId", "41");
         request.setParameter("pageNo", "4");
         initAndExucute("/management/eprInitAddDivisionsAndDsDivisions.do", session);
         session = userManagementAction.getSession();
 
-        request.setParameter("UserDistrictId", "1");
+        request.setParameter("userDistrictId", "1");
         request.setParameter("button", "ADD");
         request.setParameter("dsDivisionId", "1");
         request.setParameter("mrDivision.divisionId", "5");
