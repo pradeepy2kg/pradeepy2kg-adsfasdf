@@ -1,6 +1,7 @@
 package lk.rgd.crs.api.domain;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * @author Ashoka Ekanayaka
@@ -9,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "WITNESS", schema = "CRS")
 
-public class Witness {
+public class Witness implements Serializable, Cloneable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idukey;
