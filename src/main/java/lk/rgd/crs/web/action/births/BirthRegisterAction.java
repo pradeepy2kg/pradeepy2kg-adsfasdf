@@ -529,7 +529,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         }
         logger.debug("Existing birth declaration IDUKey : {}", existBDUKey);
         if (existingBDF != null) {
-            oldBDInfo = new OldBDInfo();                    N
+            oldBDInfo = new OldBDInfo();
             populateOldBD(oldBDInfo, existingBDF);
             session.put(WebConstants.SESSION_OLD_BD_FOR_ADOPTION, oldBDInfo);
         }
