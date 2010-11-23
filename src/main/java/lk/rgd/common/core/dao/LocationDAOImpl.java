@@ -112,13 +112,13 @@ public class LocationDAOImpl extends BaseDAO implements LocationDAO, Preloadable
     }
 
     @Transactional(propagation = Propagation.NEVER)
-    public Map<Integer, String> getLocationByDSDivisionID(int dsDivisionId) {
+    public Map<Integer, String> getLocationByDSDivisionID(int dsDivisionId, String lang) {
         Query q = em.createNamedQuery("get.location.by.dsDivisionId");
         q.setParameter("dsDivisionId", dsDivisionId);
         List<Location> list = q.getResultList();
         Map<Integer, String> map = new HashMap<Integer, String>();
         for (Location l : list) {
-            map.put(l.getLocationUKey(), l.getEnLocationName());
+            map.put(l.getLocationUKey(), l.getLocationName(lang));
         }
         return map;
     }

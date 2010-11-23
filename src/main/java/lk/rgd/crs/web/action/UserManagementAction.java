@@ -50,26 +50,8 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     private List<Court> courtNameList;
     private List<Location> locationNameList;
     private List<UserLocation> userLocationNameList;
-    private List<Location> userLocationList;
-    private int selectedLocations;
     private String nameOfUser;
     private String userId;
-
-    public List<Location> getUserLocationList() {
-        return userLocationList;
-    }
-
-    public void setUserLocationList(List<Location> userLocationList) {
-        this.userLocationList = userLocationList;
-    }
-
-    public int getSelectedLocations() {
-        return selectedLocations;
-    }
-
-    public void setSelectedLocations(int selectedLocations) {
-        this.selectedLocations = selectedLocations;
-    }
 
     private String userName;
 
@@ -164,21 +146,15 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         // todo...
         User currentUser = (User) session.get(WebConstants.SESSION_USER_BEAN);
         user.setRole(roleDAO.getRole(roleId));
-        //TODO: User still inactive. Should check whether Location are assigned
-        //user.setStatus(User.State.ACTIVE);
+        user.setStatus(User.State.INACTIVE);
 
-        // creating assigned Districts
         Set assDistrict = new HashSet();
         for (int i = 0; i < assignedDistricts.length; i++) {
             assDistrict.add(districtDAO.getDistrict(assignedDistricts[i]));
         }
         Set assDSDivision = new HashSet();
-        userLocationList = new ArrayList<Location>();
         for (int i = 0; i < assignedDivisions.length; i++) {
             assDSDivision.add(dsDivisionDAO.getDSDivisionByPK(assignedDivisions[i]));
-            logger.debug("---------> {}", dsDivisionDAO.getDSDivisionByPK(assignedDivisions[i]).getEnDivisionName());
-            logger.debug("+++++++++++> {}", dsDivisionDAO.getDSDivisionByPK(assignedDivisions[i]).getDivisionId());
-            //userLocationList.addAll(locationDAO.getLocationByDSDivisionID(dsDivisionDAO.getDSDivisionByPK(assignedDivisions[i]).getDivisionId()));
         }
 
         //todo change password length
@@ -189,8 +165,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
             user.setAssignedBDDistricts(assDistrict);
             user.setAssignedMRDistricts(assDistrict);
             user.setAssignedBDDSDivisions(assDSDivision);
-            // TODO should assign locations [ shan 
-            user.setStatus(User.State.ACTIVE);
+            //user.setStatus(User.State.ACTIVE);
             service.createUser(user, currentUser);
             userId = user.getUserId();
             addActionMessage(getText("data.Save.Success.label"));
@@ -199,14 +174,11 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
             updated.setAssignedBDDistricts(assDistrict);
             updated.setAssignedMRDistricts(assDistrict);
             updated.setAssignedBDDSDivisions(assDSDivision);
-            //TODO Check whether user has assigned to locations [ shan ]
-            if (isAssignedLocations()) {
+            updated.setRole(roleDAO.getRole(roleId));
+            if (isAssignedLocations(updated)) {
                 user.setStatus(User.State.ACTIVE);
-            } else
-            // TODO Forward to Location assignment page [ shan ]
-
-            {
-                updated.setRole(roleDAO.getRole(roleId));
+            } else {
+                // TODO Forward to Location assignment page [ shan ]
             }
             if (changePassword) {
                 randomPassword = getRandomPassword(randomPasswordLength);
@@ -217,13 +189,16 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
             session.put("viewUsers", null);
             addActionMessage(getText("edit.Data.Save.Success.label"));
         }
-        //useridd = user.getUserId();
         populate();
         return SUCCESS;
     }
 
-    public boolean isAssignedLocations() {
-        return true;
+    public boolean isAssignedLocations(User u) {
+        if (u.getLocations().isEmpty()) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public String inactiveUser() {
@@ -273,7 +248,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         if (userLocationNameList != null) {
             logger.debug("size of the user location list is :{}", userLocationNameList.size());
         }
-        myCode();
+        populateLocationListOnly();
         //populate();
         return SUCCESS;
     }
@@ -306,7 +281,8 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 addFieldError("duplicateIdNumberError", "This Location Can Not Be Edit");
             }
         }
-        populate();
+        //populate();
+        populateLocationListOnly();
         userLocationNameList = userLocationDAO.getUserLocationsListByUserId(userId);
         return SUCCESS;
     }
@@ -315,7 +291,8 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         service.activeUserLocation(userId, locationId, currentUser);
         logger.debug("Active location of {} user is :{}", userId, locationDAO.getLocation(locationId).getEnLocationName());
         userLocationNameList = userLocationDAO.getUserLocationsListByUserId(userId);
-        populate();
+        //populate();
+        populateLocationListOnly();
         return SUCCESS;
     }
 
@@ -323,7 +300,8 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         service.inactiveUserLocation(userId, locationId, currentUser);
         logger.debug("Inactive location of {} user is :{}", userId, locationDAO.getLocation(locationId).getEnLocationName());
         userLocationNameList = userLocationDAO.getUserLocationsListByUserId(userId);
-        populate();
+        populateLocationListOnly();
+        //populate();
         return SUCCESS;
     }
 
@@ -590,11 +568,22 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         return SUCCESS;
     }
 
-    private void myCode() {
+    private void populateLocationListOnly() {
         locationList = new HashMap<Integer, String>();
         Set<DSDivision> st = userDAO.getUserByPK(userId).getAssignedBDDSDivisions();
         for (DSDivision ds : st) {
-            locationList.putAll(locationDAO.getLocationByDSDivisionID(ds.getDivisionId()));
+            locationList.putAll(locationDAO.getLocationByDSDivisionID(ds.getDivisionId(), userDAO.getUserByPK(userId).getPrefLanguage()));
+        }
+        if (userLocationDAO.getActiveUserLocations(userId, true).size() > 0) {
+            User u = userDAO.getUserByPK(userId);
+            u.setStatus(User.State.ACTIVE);
+            service.updateUser(u);
+            logger.debug("User Activated {}", userDAO.getUserByPK(userId).getUserName());
+        } else {
+            User u = userDAO.getUserByPK(userId);
+            u.setStatus(User.State.INACTIVE);
+            service.updateUser(u);
+            logger.debug("User Deactivated {}", userDAO.getUserByPK(userId).getUserName());
         }
         logger.debug("List : {}", locationList.size());
     }

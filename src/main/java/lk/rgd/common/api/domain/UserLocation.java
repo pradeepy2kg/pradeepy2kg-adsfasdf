@@ -18,7 +18,9 @@ import java.io.Serializable;
     @NamedQuery(name = "getUserLocationsByUserId", query = "SELECT ul FROM UserLocation ul " +
         "WHERE ul.userId = :userId ORDER BY ul.location.enLocationName desc"),
     @NamedQuery(name = "get.birthCertSign.user.by.locationId", query = "SELECT ul.user FROM UserLocation ul " +
-        "WHERE ul.locationId = :locationId AND ul.lifeCycleInfo.active = :active AND ul.signBirthCert IS TRUE")
+        "WHERE ul.locationId = :locationId AND ul.lifeCycleInfo.active = :active AND ul.signBirthCert IS TRUE"),
+    @NamedQuery(name = "get.active.locations.by.userId", query = "SELECT ul FROM UserLocation ul " +
+        "WHERE ul.lifeCycleInfo.active = :active AND ul.userId = :userId ORDER BY ul.location.enLocationName desc")
 })
 @org.hibernate.annotations.Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)
 public class UserLocation implements Serializable {

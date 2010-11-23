@@ -125,6 +125,7 @@ public interface UserManager {
      * @param adminUser    the user account creating the new user - must belong to role ADMIN
      */
     void createUser(User userToCreate, User adminUser);
+
     /**
      * Update a user
      *
@@ -132,6 +133,7 @@ public interface UserManager {
      * @param adminUser    the user account creating the new user - must belong to role ADMIN
      */
     void updateUser(User userToUpdate, User adminUser);
+
     /**
      * Update a user
      *
