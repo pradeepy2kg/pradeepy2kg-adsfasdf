@@ -61,7 +61,6 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     public String marriageNoticeInit() {
         //loading notice page to adding a new notice
         logger.debug("attempt to load marriage notice page");
-        marriageNotice = new MarriageRegister();
         //witness objects
         populateBasicLists();
         return "pageLoad";
@@ -69,8 +68,8 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     public String addMarriageNotice() {
         logger.debug("attempt to add marriage notice serial number : {} ", marriageNotice.getSerialNumber());
-        // todo validations
-        marriageRegistrationService.addMarriageNotice(marriageNotice, user);
+        // todo validations                             remove true
+        marriageRegistrationService.addMarriageNotice(marriageNotice, user, true);
         logger.debug("successfully added marriage notice serial number: {}", marriageNotice.getSerialNumber());
         return SUCCESS;
     }
@@ -216,5 +215,5 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     public void setIdUKey(long idUKey) {
         this.idUKey = idUKey;
     }
-    
+
 }

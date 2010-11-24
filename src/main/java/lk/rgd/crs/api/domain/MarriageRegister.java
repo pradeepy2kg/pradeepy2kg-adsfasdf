@@ -55,15 +55,15 @@ public class MarriageRegister implements Serializable, Cloneable {
     private long registrarOrMinisterPIN;
 
     @ManyToOne
-    @JoinColumn(name = "mrDivisionUKey", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "mrDivisionUKey", nullable = true, insertable = false, updatable = false)
     private MRDivision mrDivision;
 
-    @OneToOne
-    @JoinColumn(name = "idukey", nullable = false, insertable = false, updatable = false)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "idukey", nullable = true, insertable = false, updatable = false)
     private Witness witness1;
 
-    @OneToOne
-    @JoinColumn(name = "idukey", nullable = false, insertable = false, updatable = false)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "idukey", nullable = true, insertable = false, updatable = false)
     private Witness witness2;
 
     @Column(length = 10)
@@ -77,12 +77,9 @@ public class MarriageRegister implements Serializable, Cloneable {
     private long registrarPINOfMaleNotice;
 
     @ManyToOne
-    @JoinColumn(name = "mrDivisionUKey", nullable = false, insertable = false, updatable = false)
+    //todo remove nullable
+    @JoinColumn(name = "mrDivisionUKey", nullable = true, insertable = false, updatable = false)
     private MRDivision mrDivisionOfMaleNotice;
-
-    @OneToOne
-    @JoinColumn(name = "idukey", nullable = false, insertable = false, updatable = false)
-    private Witness maleNoticeWitness_1;
 
     @Column(length = 10)
     private String serialOfSecondNotice;
@@ -95,19 +92,24 @@ public class MarriageRegister implements Serializable, Cloneable {
     private long registrarPINOfFemaleNotice;
 
     @OneToOne
-    @JoinColumn(name = "idukey", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "IDUKEY_M_W_1", nullable = true)
+    private Witness maleNoticeWitness_1;
+
+    @OneToOne
+    @JoinColumn(name = "IDUKEY_M_W_2", nullable = true)
     private Witness maleNoticeWitness_2;
 
     @OneToOne
-    @JoinColumn(name = "idukey", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "IDUKEY_F_W_1", nullable = true)
     private Witness femaleNoticeWitness_1;
 
     @OneToOne
-    @JoinColumn(name = "idukey", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "IDUKEY_F_W_2", nullable = true)
     private Witness femaleNoticeWitness_2;
 
     @ManyToOne
-    @JoinColumn(name = "mrDivisionUKey", nullable = false, insertable = false, updatable = false)
+    //todo remove nullable
+    @JoinColumn(name = "mrDivisionUKey", nullable = true)
     private MRDivision mrDivisionOfFemaleNotice;
 
     //party information male
