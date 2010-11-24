@@ -85,16 +85,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         }
         populateBasicLists();
         return "pageLoad";
-    }
-
-    /**
-     * loading search page for marriage notice search
-     */
-    public String marriageNoticeSearchInit() {
-        logger.debug("loading search page for marriage notice");
-        populateBasicLists();
-        return "pageLoad";
-    }
+    }    
 
     public String marriageRegistrationInit() {
         logger.debug("loading marriage registration page");

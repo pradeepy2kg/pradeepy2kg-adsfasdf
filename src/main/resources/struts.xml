@@ -1151,16 +1151,15 @@
             <result type="tiles" name="success">epr.marriageNoticeResults</result>
         </action>
 
-        <action name="eprMarriageNoticeSearchInit" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
+        <action name="eprMarriageNoticeSearchInit" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
                 method="marriageNoticeSearchInit">
-            <result type="tiles" name="pageLoad">epr.marriageNoticeSearchHome</result>
+            <result type="tiles" name="success">epr.marriageNoticeSearchHome</result>
         </action>
 
         <action name="eprMarriageRegistrationInit" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
                 method="marriageRegistrationInit">
             <result type="tiles" name="pageLoad">epr.marriageRegistration</result>
         </action>
-
 
     </package>
 </struts>

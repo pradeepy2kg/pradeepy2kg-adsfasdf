@@ -16,19 +16,70 @@
     $(document).ready(function() {
         $("#tabs").tabs();
     });
+
+    function initPage() {
+    }
 </script>
 
-<div id="tabs">
+<div id="tabs" style="font-size:10pt;">
     <ul>
-        <li><a href="#fragment-1"><span> <s:label
-                value="%{getText('search.by.male.part.pin')}"/></span></a></li>
-        <li><a href="#fragment-2"><span><s:label
-                value="%{getText('search.by.female.part.pin')}"/></span></a></li>
-        <li><a href="#fragment-3"><span><s:label
-                value="%{getText('search.by.mr.division.serial.number')}"/></span></a></li>
+        <li>
+            <a href="#fragment-1"><span><s:label value="%{getText('search.by.MRDivision.label')}"/></span></a>
+        </li>
+        <li>
+            <a href="#fragment-2"><span> <s:label value="%{getText('search.by.male.part.pin')}"/></span></a>
+        </li>
+        <li>
+            <a href="#fragment-3"><span><s:label value="%{getText('search.by.female.part.pin')}"/></span></a>
+        </li>
     </ul>
 
     <div id="fragment-1">
+        <table>
+            <caption/>
+            <col width="250px"/>
+            <col width="250px"/>
+            <col width="24px"/>
+            <col width="250px"/>
+            <col width="250px"/>
+            <tbody>
+            <tr>
+                <td>
+                    <s:label value="%{getText('district.label')}"/>
+                </td>
+                <td>
+                    <s:select id="districtId" name="marriageDistrictIdFemale" list="districtList"
+                              value="marriageDistrictId"
+                              cssStyle="width:98.5%; width:240px;"/>
+                </td>
+                <td></td>
+                <td>
+                    <s:label value="%{getText('select_DS_division.label')}"/>
+                </td>
+                <td><s:select id="dsDivisionId" name="dsDivisionIdFemale" list="dsDivisionList" value="dsDivisionId"
+                              cssStyle="width:98.5%; width:240px;"/></td>
+            </tr>
+            <tr>
+                <td>
+                    <s:label value="%{getText('select_BD_division.label')}"/>
+                </td>
+                <td>
+                    <s:select id="mrDivisionId" name="marriageDivisionIdFemale" list="mrDivisionList"
+                              value="marriageDivisionId"
+                              cssStyle="width:98.5%; width:240px;"/>
+                </td>
+                <td></td>
+                <td>
+                    <s:label value="%{getText('label.serial.number')}"/>
+                </td>
+                <td>
+                    <s:textfield value="" name="serialNumber" maxLength="10" cssStyle="width:235px"/>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="fragment-2">
         <table>
             <caption/>
             <col width="400px"/>
@@ -47,7 +98,7 @@
             </tbody>
         </table>
     </div>
-    <div id="fragment-2">
+    <div id="fragment-3">
         <table>
             <caption/>
             <col width="400px"/>
@@ -66,52 +117,8 @@
             </tbody>
         </table>
     </div>
-    <div id="fragment-3">
-        <table>
-            <caption/>
-            <col width="250px"/>
-            <col width="250px"/>
-            <col width="24px"/>
-            <col width="250px"/>
-            <col width="250px"/>
-            <tbody>
-            <tr>
-                <td>
-                    <s:label value="%{getText('label.district')}"/>
-                </td>
-                <td>
-                    <s:select id="districtId" name="marriageDistrictIdFemale" list="districtList"
-                              value="marriageDistrictId"
-                              cssStyle="width:98.5%; width:240px;"/>
-                </td>
-                <td></td>
-                <td>
-                    <s:label value="%{getText('label.ds.division')}"/>
-                </td>
-                <td><s:select id="dsDivisionId" name="dsDivisionIdFemale" list="dsDivisionList" value="dsDivisionId"
-                              cssStyle="width:98.5%; width:240px;"/></td>
-            </tr>
-            <tr>
-                <td>
-                    <s:label value="%{getText('label.mr.division')}"/>
-                </td>
-                <td>
-                    <s:select id="mrDivisionId" name="marriageDivisionIdFemale" list="mrDivisionList"
-                              value="marriageDivisionId"
-                              cssStyle="width:98.5%; width:240px;"/>
-                </td>
-                <td></td>
-                <td>
-                    <s:label value="%{getText('label.serial.number')}"/>
-                </td>
-                <td>
-                    <s:textfield value="" name="serialNumber" maxLength="10" cssStyle="width:235px"/>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+
 </div>
 <div class="form-submit">
-    <s:submit value="%{getText('button.search')}"/>
+    <s:submit value="%{getText('bdfSearch.button')}"/>
 </div>
