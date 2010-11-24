@@ -1,5 +1,6 @@
 package lk.rgd.prs.api.service;
 
+import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.prs.api.domain.Address;
 import lk.rgd.prs.api.domain.Marriage;
@@ -197,4 +198,16 @@ public interface PopulationRegistry {
      */
     public List<Person> findPersonsByDOBGenderAndName(Date dob, int gender, String name);
 
+    /**
+     * Returns a list of Persons awaiting approval by ADR or higher based on the specified Location (given location
+     * should be a assigned active location of the specified User). Results are ordered in on the descending order of
+     * lastUpdatedTimestamp
+     *
+     * @param location the assigned location
+     * @param pageNo   the page number of the results required
+     * @param noOfRows the number of rows to return per page
+     * @param user     the user initiating the action
+     * @return the person pending approval results
+     */
+    public List<Person> getPRSPendingApprovalByLocation(Location location, int pageNo, int noOfRows, User user);
 }

@@ -1,5 +1,6 @@
 package lk.rgd.prs.api.dao;
 
+import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.prs.api.domain.Address;
 import lk.rgd.prs.api.domain.Marriage;
@@ -16,38 +17,44 @@ public interface PersonDAO {
 
     /**
      * Add a Person to the PRS
+     *
      * @param person the Person to be added
-     * @param user the User initiating the action
+     * @param user   the User initiating the action
      */
     public void addPerson(Person person, User user);
 
     /**
      * Update a Person on the PRS
+     *
      * @param person the Person to be updated. Note, the PRS does not allow deletion of rows
-     * @param user the User initiating the action
+     * @param user   the User initiating the action
      */
     public void updatePerson(Person person, User user);
 
     /**
      * Add a Marriage to the PRS
+     *
      * @param m the Marriage to be added
      */
     public void addMarriage(Marriage m);
 
     /**
      * Update a Marriage on the PRS
+     *
      * @param m the Marriage to be updated
      */
     public void updateMarriage(Marriage m);
 
     /**
      * Add an Address to the PRS
+     *
      * @param a the Address to be added
      */
     public void addAddress(Address a);
 
     /**
      * Update an Address to the PRS
+     *
      * @param a the Address to be added
      */
     public void updateAddress(Address a);
@@ -106,5 +113,15 @@ public interface PersonDAO {
      * @return all records
      */
     public List<Person> findAll();
+
+    /**
+     * Returns a list of approval pending persons.i.e. Persons whose status is UNVERIFIED or SEMI_VERIFIED
+     *
+     * @param location the location
+     * @param pageNo   the page number for the results required (start from 1)
+     * @param noOfRows the number of rows to return per page
+     * @return the approval pending list
+     */
+    public List<Person> getApprovalPendingPersonsByLocation(Location location, int pageNo, int noOfRows);
 
 }

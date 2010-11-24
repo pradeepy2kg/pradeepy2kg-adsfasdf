@@ -365,5 +365,7 @@
 
     <bean id="personApprovalAction" class="lk.rgd.prs.web.action.PersonApprovalAction">
         <constructor-arg ref="ecivilService"/>
+        <constructor-arg ref="locationDAOImpl"/>
+        <constructor-arg ref="appParametersDAOImpl"/>
     </bean>
 </beans>

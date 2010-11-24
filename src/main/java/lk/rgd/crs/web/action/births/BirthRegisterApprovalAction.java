@@ -356,8 +356,9 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
 
     public String approveIgnoringWarning() {
         if (logger.isDebugEnabled()) {
-            logger.debug("inside approveIgnoringWarning() : bdId {} requested isBirthConfirmatinConfirmationApproval {} ",
-                bdId, confirmationApprovalFlag + " IgnoreWarnings " + ignoreWarning);
+            logger.debug("inside approveIgnoringWarning() - bdId : " + bdId +
+                " , requested isBirthConfirmationConfirmationApproval : " + confirmationApprovalFlag +
+                " , IgnoreWarnings " + ignoreWarning);
         }
         initPermission(approveBelated);
         //direct birth approvalIgnoring warnings from birthDeclarationFormDetails page
