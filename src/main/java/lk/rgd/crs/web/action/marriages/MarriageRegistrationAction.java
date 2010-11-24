@@ -98,7 +98,6 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     public String marriageRegistrationInit() {
         logger.debug("loading marriage registration page");
-        marriageNotice = new MarriageRegister();
         populateBasicLists();
         return "pageLoad";
     }
