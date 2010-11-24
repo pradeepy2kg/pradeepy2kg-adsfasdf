@@ -478,12 +478,20 @@
         <put-attribute name="title" value="title.marriage.notice"/>
     </definition>
 
-        <definition name="epr.marriageNoticeSearchHome" extends="epr.template">
+    <definition name="epr.marriageNoticeSearchHome" extends="epr.template">
         <description>
             marriage notice search jsp page
         </description>
         <put-attribute name="body" value="/WEB-INF/pages/marriages/MarriageNoticeSearch.jsp"/>
         <put-attribute name="title" value="title.marriage.notice.search"/>
+    </definition>
+
+    <definition name="epr.marriageRegistration" extends="epr.template">
+        <description>
+            marriage registration
+        </description>
+        <put-attribute name="body" value="/WEB-INF/pages/marriages/MarriageRegistration.jsp"/>
+        <put-attribute name="title" value="title.marriage.registration"/>
     </definition>
 
 </tiles-definitions>
