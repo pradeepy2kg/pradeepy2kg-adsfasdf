@@ -9,13 +9,11 @@ import lk.rgd.crs.api.domain.MarriageRegister;
 import lk.rgd.crs.api.domain.Witness;
 import lk.rgd.crs.api.service.MarriageRegistrationService;
 import lk.rgd.crs.web.WebConstants;
+import lk.rgd.crs.web.util.DivisionUtil;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author amith
@@ -25,9 +23,6 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     private static final Logger logger = org.slf4j.LoggerFactory.getLogger(MarriageRegistrationAction.class);
 
-    private final DistrictDAO districtDAO;
-    private final DSDivisionDAO dsDivisionDAO;
-    private final MRDivisionDAO mrDivisionDAO;
     private final MarriageRegistrationService marriageRegistrationService;
 
     private User user;
@@ -48,11 +43,11 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     private String language;
 
-    public MarriageRegistrationAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, MRDivisionDAO mrDivisionDAO, MarriageRegistrationService marriageRegistrationService) {
-        this.districtDAO = districtDAO;
-        this.dsDivisionDAO = dsDivisionDAO;
-        this.mrDivisionDAO = mrDivisionDAO;
+    public MarriageRegistrationAction(MarriageRegistrationService marriageRegistrationService) {
         this.marriageRegistrationService = marriageRegistrationService;
+        districtList = new HashMap<Integer, String>();
+        dsDivisionList = new HashMap<Integer, String>();
+        mrDivisionList = new HashMap<Integer, String>();
     }
 
     /**
@@ -62,7 +57,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         //loading notice page to adding a new notice
         logger.debug("attempt to load marriage notice page");
         //witness objects
-        populateBasicLists();
+        DivisionUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
         return "pageLoad";
     }
 
@@ -80,47 +75,22 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         if (marriageNotice == null) {
             logger.debug("cannot find marriage register record to edit : idUKey {}", idUKey);
             addActionError(getText("error.cannot.find.record.for.edit"));
-            populateBasicLists();
+            DivisionUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
             return ERROR;
         }
-        populateBasicLists();
+        DivisionUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
         return "pageLoad";
     }    
 
     public String marriageRegistrationInit() {
         logger.debug("loading marriage registration page");
-        populateBasicLists();
+        DivisionUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
         return "pageLoad";
     }
 
     /**
      * populate basic list such as district list/ds division lis and mr division list
      */
-    private void populateBasicLists() {
-        //TODO remove
-        districtList = districtDAO.getDistrictNames(language, user);
-        if (marriageDistrictId == 0) {
-            if (!districtList.isEmpty()) {
-                marriageDistrictId = districtList.keySet().iterator().next();
-                logger.debug("first allowed district in the list {} was set", marriageDistrictId);
-            }
-        }
-        dsDivisionList = dsDivisionDAO.getDSDivisionNames(marriageDistrictId, language, user);
-
-        if (dsDivisionId == 0) {
-            if (!dsDivisionList.isEmpty()) {
-                dsDivisionId = dsDivisionList.keySet().iterator().next();
-                logger.debug("first allowed DS Div in the list {} was set", dsDivisionId);
-            }
-        }
-
-        mrDivisionList = mrDivisionDAO.getMRDivisionNames(dsDivisionId, language, user);
-        if (mrDivisionId == 0) {
-            mrDivisionId = mrDivisionList.keySet().iterator().next();
-            logger.debug("first allowed BD Div in the list {} was set", mrDivisionId);
-        }
-    }
-
     public Map getSession() {
         return session;
     }

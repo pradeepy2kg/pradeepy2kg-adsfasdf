@@ -26,7 +26,7 @@
                         <br>District
                     </td>
                     <td>
-                         <s:select id="districtId" name="marriageDistrictId" list="districtList" value="marriageDistrictId"
+                         <s:select id="districtId" name="marriageDistrictId" list="districtList" value="marriageDistrictId" headerKey="2"
                                 cssStyle="width:98.5%; width:240px;"/>
                     </td>
                 </tr>
@@ -34,23 +34,23 @@
                     <td><label><span class="font-8">
                         ප්‍රාදේශීය ලේකම් කොට්ඨාශය
                             <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-                            <br>பிரதேச செயளாளர் பிரிவு <br>Divisional Secretariat</span></label>
+                            <br>பிரதேச செயளாளர் பிரிவு <br>Divisional Secretariat</span>
+                        </label>
                     </td>
                     <td align="center">
-                        <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="dsDivisionId"
+                        <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="dsDivisionId" headerKey="2"
                                 cssStyle="width:98.5%; width:240px;"/>
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                        <label>
-                                <span class="font-8">ලියාපදිංචි කිරීමේ කොට්ඨාශය
-                                    <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
+                    <td><label><span class="font-8">
+                        ලියාපදිංචි කිරීමේ කොට්ඨාශය
+                               <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
                                     <br>பதிவுப் பிரிவு  <br>Registration Division</span>
-                        </label>
+                       </label>
                     </td>
                     <td>
-                          <s:select id="mrDivisionId" name="marriageDivisionId" list="mrDivisionList" value="marriageDivisionId"
+                          <s:select id="mrDivisionId" name="marriageDivisionId" list="mrDivisionList" value="marriageDivisionId" headerKey="1"
                                 cssStyle="width:98.5%; width:240px;"/>
                     </td>
                 </tr>
