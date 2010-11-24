@@ -97,6 +97,13 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         return "pageLoad";
     }
 
+    public String marriageRegistrationInit() {
+        logger.debug("loading marriage registration page");
+        marriageNotice = new MarriageRegister();
+        populateBasicLists();
+        return "pageLoad";
+    }
+
     /**
      * populate basic list such as district list/ds division lis and mr division list
      */
