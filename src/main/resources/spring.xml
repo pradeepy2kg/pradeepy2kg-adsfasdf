@@ -368,4 +368,11 @@
         <constructor-arg ref="locationDAOImpl"/>
         <constructor-arg ref="appParametersDAOImpl"/>
     </bean>
+
+    <bean id="marriageRegisterSearchAction" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction">
+        <constructor-arg ref="marriageRegistrationService"/>
+        <constructor-arg ref="districtDAOImpl"/>
+        <constructor-arg ref="dsDivisionDAOImpl"/>
+        <constructor-arg ref="mrDivisionDAOImpl"/>
+    </bean>
 </beans>

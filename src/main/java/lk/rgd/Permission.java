@@ -30,6 +30,7 @@ public final class Permission {
     public static final int INDEX_RECORDS = 25;
     public static final int REGISTRAR_MANAGEMENT_ADR = 26;
     public static final int EDIT_MARRIAGE = 27;
+    public static final int SEARCH_MARRIAGE = 28;
 
     // permission for PRS
     public static final int PRS_ADD_PERSON = 50;
