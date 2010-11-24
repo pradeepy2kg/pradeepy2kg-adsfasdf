@@ -450,7 +450,7 @@
                 <td><s:label value="%{getText('label.ignoreDuplicates')}" name="ignoreDuplicate"/></td>
                 <td>
                     <div class="form-submit" style="padding:0;margin-top:0px;">
-                        <s:submit name="approve" value="%{getText('label.save')}"/></div>
+                        <s:submit name="approve" value="%{getText('save.label')}"/></div>
                 </td>
             </tr>
         </table>
@@ -715,11 +715,12 @@
     </div>
 </fieldset>
 <div class="form-submit">
-    <s:submit id="submitButton" value="%{getText('label.save')}" cssStyle="margin-top:10px;"/>
+    <s:submit id="submitButton" value="%{getText('save.label')}" cssStyle="margin-top:10px;"/>
 </div>
 
 <s:hidden id="citizenship" name="citizenship"/>
-<s:hidden id="personUKey" name="personUKey" value="%{personUKey}"/>
+<s:hidden name="person.personUKey" value="%{#request.personUKey}"/>
+<s:hidden name="personUKey" value="%{#request.personUKey}"/>
 
 </s:form>
 

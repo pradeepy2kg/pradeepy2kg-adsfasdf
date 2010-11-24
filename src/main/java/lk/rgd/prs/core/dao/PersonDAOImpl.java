@@ -1,5 +1,6 @@
 package lk.rgd.prs.core.dao;
 
+import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.core.dao.BaseDAO;
 import lk.rgd.common.util.HashUtil;
@@ -137,6 +138,17 @@ public class PersonDAOImpl extends BaseDAO implements PersonDAO {
     @Transactional(propagation = Propagation.SUPPORTS)
     public List<Person> findAll() {
         Query q = em.createNamedQuery("findAllPersons");
+        return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<Person> getApprovalPendingPersonsByLocation(Location location, int pageNo, int noOfRows) {
+        Query q = em.createNamedQuery("get.pendingApproval").
+            setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+        q.setParameter("location", location);
         return q.getResultList();
     }
 }

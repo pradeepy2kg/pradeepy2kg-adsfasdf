@@ -3,10 +3,9 @@ package lk.rgd.prs.core.service;
 import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
 import lk.rgd.common.api.Auditable;
-import lk.rgd.common.api.domain.Role;
+import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.core.index.SolrIndexManager;
-import lk.rgd.prs.PRSRuntimeException;
 import lk.rgd.prs.api.dao.PersonCitizenshipDAO;
 import lk.rgd.prs.api.dao.PersonDAO;
 import lk.rgd.prs.api.domain.Address;
@@ -21,6 +20,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+
+import static lk.rgd.prs.core.PRSValidationUtils.*;
 
 /**
  * This is the main service interface for the PRS
@@ -177,7 +178,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
         }
         // load current address to the transient field
         final Address currentAdd = person.getLastAddress();
-        if (currentAdd != null && isEmptyString(currentAdd.getLine1())) {
+        if (currentAdd != null && !isEmptyString(currentAdd.getLine1())) {
             person.setCurrentAddress(currentAdd.getLine1());
         }
         logger.debug("Person citizenship list loaded for personUKey: {} with size : {} loaded", personUKey,
@@ -198,9 +199,9 @@ public class PopulationRegistryImpl implements PopulationRegistry {
 
         // TODO if birth exist can not edit through this, throw exception (use alteration process)
 
-        final Person.Status currentState = person.getStatus();
+        final Person.Status currentState = existing.getStatus();
         if (currentState == Person.Status.SEMI_VERIFIED || currentState == Person.Status.UNVERIFIED) {
-            person.setStatus(Person.Status.VERIFIED);
+            person.setStatus(Person.Status.SEMI_VERIFIED);
             person.setLifeStatus(Person.LifeStatus.ALIVE);
             person.setSubmittedLocation(user.getPrimaryLocation());
 
@@ -210,21 +211,25 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             final String currentAddress = person.getCurrentAddress();
             // update permanent address of the person to the PRS
             if (permanentAddress != null && permanentAddress.trim().length() > 0) {
-                Set<Address> addresses = person.getAddresses();
-                for (Address permanentAdd : addresses) {
-                    if (permanentAdd.isPermanent()) {
-                        permanentAdd.setLine1(permanentAddress);
-                        personDao.updateAddress(permanentAdd);
-                        break;
+                Set<Address> addresses = existing.getAddresses();
+                if (addresses != null) {
+                    for (Address permanentAdd : addresses) {
+                        if (permanentAdd.isPermanent()) {
+                            permanentAdd.setLine1(permanentAddress);
+                            personDao.updateAddress(permanentAdd);
+                            break;
+                        }
                     }
                 }
             }
             // update current address of the person to the PRS
             if (currentAddress != null && currentAddress.trim().length() > 0) {
-                final Address currentAdd = person.getLastAddress();
-                currentAdd.setLine1(currentAddress);
-                person.setLastAddress(currentAdd);
-                personDao.updateAddress(currentAdd);
+                final Address currentAdd = existing.getLastAddress();
+                if (currentAdd != null) {
+                    currentAdd.setLine1(currentAddress);
+                    existing.setLastAddress(currentAdd);
+                    personDao.updateAddress(currentAdd);
+                }
             }
             if (permanentAddress != null || currentAddress != null) {
                 personDao.updatePerson(person, user);
@@ -463,68 +468,16 @@ public class PopulationRegistryImpl implements PopulationRegistry {
         throw new UnsupportedOperationException("TODO method - asankha");
     }
 
-    private void handleException(String message, int code) {
-        logger.error(message);
-        throw new PRSRuntimeException(message, code);
-    }
-
-    private void validatePersonState(Person person, Person.Status state) {
-        if (state != person.getStatus()) {
-            handleException("Person with personUKey : " + person.getPersonUKey() + " , in invalid state : " +
-                person.getStatus(), ErrorCodes.ILLEGAL_STATE);
-        }
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<Person> getPRSPendingApprovalByLocation(Location location, int pageNo, int noOfRows, User user) {
         if (logger.isDebugEnabled()) {
-            logger.debug("Person with personUKey : " + person.getPersonUKey() + " , in valid state : " +
-                person.getStatus());
+            logger.debug("Get PRS records pending approval by LocationId : " + location.getLocationUKey() + " Page : "
+                + pageNo + " and with number of rows per page : " + noOfRows);
         }
-    }
-
-    private void validateAccessOfUser(Person person, User user) {
-        // TODO chathuranga
-        if (person != null && user != null) {
-            if (!(User.State.ACTIVE == user.getStatus()
-                &&
-                (Role.ROLE_RG.equals(user.getRole().getRoleId())
-                    ||
-                    user.isAllowedAccessToLocation(person.getSubmittedLocation().getLocationUKey())
-                )
-            )) {
-                handleException("User : " + user.getUserId() + " is not allowed access to the Location : " +
-                    person.getSubmittedLocation().getLocationUKey(), ErrorCodes.PERMISSION_DENIED);
-            }
-        } else {
-            handleException("Person or User performing the action not complete", ErrorCodes.INVALID_DATA);
-        }
-    }
-
-    private void validateAccessOfUserToEdit(User user) {
-        if (user != null) {
-            if (!(User.State.ACTIVE == user.getStatus() && !Role.ROLE_ADMIN.equals(user.getRole().getRoleId()))) {
-                handleException("User : " + user.getUserId() + " is not allowed edit entries on the PRS",
-                    ErrorCodes.PERMISSION_DENIED);
-            }
-        } else {
-            handleException("Person or User performing the action not complete", ErrorCodes.INVALID_DATA);
-        }
-    }
-
-    private void validateRequiredFields(Person person) {
-        if (person.getDateOfBirth() == null || person.getPermanentAddress() == null || person.getRace() == null ||
-            isEmptyString(person.getPlaceOfBirth()) || isEmptyString(person.getFullNameInOfficialLanguage()) ||
-            isEmptyString(person.getFullNameInEnglishLanguage()) || person.getDateOfRegistration() == null) {
-            handleException("Adding person is incomplete, Check required field values", ErrorCodes.INVALID_DATA);
-        }
-        if (person.getPin() != null) {
-            handleException("PRS record being processed is invalid, processing record already exist PIN",
-                ErrorCodes.INVALID_DATA);
-        }
-    }
-
-    private boolean isBlankString(String s) {
-        return s != null && s.trim().length() == 0;
-    }
-
-    private static final boolean isEmptyString(String s) {
-        return s == null || s.trim().length() == 0;
+        validateAccessToLocation(location, user);
+        return personDao.getApprovalPendingPersonsByLocation(location, pageNo, noOfRows);
     }
 }

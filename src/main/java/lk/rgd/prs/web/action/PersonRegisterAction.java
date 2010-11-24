@@ -57,11 +57,10 @@ public class PersonRegisterAction extends ActionSupport implements SessionAware 
     }
 
     /**
-     * This method used to register persons to the PRS
+     * This method used to register persons to the PRS and to edit existing PRS records before approval by ADR or higher
      */
     public String personRegistration() {
         logger.debug("Registration of exiting person to PRS");
-        // TODO implement validation 
         validateExistingPersonRegistration();
 
         citizenshipList = new ArrayList<PersonCitizenship>();
@@ -115,6 +114,10 @@ public class PersonRegisterAction extends ActionSupport implements SessionAware 
         logger.debug("Edit Person Details with PersonUKey : {}", personUKey);
         populate();
         person = service.loadPersonToEdit(personUKey, user);
+        // load race of the person
+        if (person.getRace() != null) {
+            personRaceId = person.getRace().getRaceId();
+        }
         // load person citizenship list
         final Set<PersonCitizenship> citizenSet = person.getCountries();
         if (citizenSet != null && !citizenSet.isEmpty()) {
