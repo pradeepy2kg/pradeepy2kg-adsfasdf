@@ -20,10 +20,14 @@
                 <col width="175px">
                 <col>
                 <tr>
-                    <td colspan="2">
+                    <td>
                         දිස්ත්‍රික්කය 
                         <br>மாவட்டம்
                         <br>District
+                    </td>
+                    <td>
+                         <s:select id="districtId" name="marriageDistrictId" list="districtList" value="marriageDistrictId"
+                                cssStyle="width:98.5%; width:240px;"/>
                     </td>
                 </tr>
                 <tr>
@@ -32,7 +36,9 @@
                             <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
                             <br>பிரதேச செயளாளர் பிரிவு <br>Divisional Secretariat</span></label>
                     </td>
-                    <td align="center">                        
+                    <td align="center">
+                        <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="dsDivisionId"
+                                cssStyle="width:98.5%; width:240px;"/>
                     </td>
                 </tr>
                 <tr>
@@ -44,6 +50,8 @@
                         </label>
                     </td>
                     <td>
+                          <s:select id="mrDivisionId" name="marriageDivisionId" list="mrDivisionList" value="marriageDivisionId"
+                                cssStyle="width:98.5%; width:240px;"/>
                     </td>
                 </tr>
             </table>
@@ -96,11 +104,9 @@
     </tr>
     <tr>
     <tr style="font-size:14pt">
-        <td colspan="1"></td>
-        <td colspan="1" align="center">
+        <td colspan="3" align="center">
             විවාහ ලේකම් පොත / குடிமதிப்பீட்டு ஆவணத்தில் / Register of Marriages
         </td>
-        <td></td>
     </tr>
     </tbody>
 </table>
