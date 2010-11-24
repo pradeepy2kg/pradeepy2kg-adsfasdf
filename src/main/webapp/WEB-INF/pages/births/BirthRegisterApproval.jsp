@@ -1,4 +1,6 @@
 <%@ page import="lk.rgd.common.util.NameFormatUtil" %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <style type="text/css" title="currentStyle">
     @import "../lib/datatables/media/css/demo_page.css";
     @import "../lib/datatables/media/css/demo_table.css";
@@ -55,6 +57,7 @@
 
                         var options2 = '';
                         var bd = data.bdDivisionList;
+                        options2 += '<option value="' + 0 + '">' + <s:label value="%{getText('all.divisions.label')}"/> + '</option>';
                         for (var j = 0; j < bd.length; j++) {
                             options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
                         }
@@ -68,6 +71,7 @@
                     function(data) {
                         var options = '';
                         var bd = data.bdDivisionList;
+                        options += '<option value="' + 0 + '">' + <s:label value="%{getText('all.divisions.label')}"/>  + '</option>';
                         for (var i = 0; i < bd.length; i++) {
                             options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
                         }
@@ -174,8 +178,6 @@
     }
 </script>
 
-<%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div id="birth-register-approval">
 <s:form action="eprApprovalRefresh" name="birth_register_approval_header" id="birth-register-approval-form"
         onsubmit="javascript:return validate()">
