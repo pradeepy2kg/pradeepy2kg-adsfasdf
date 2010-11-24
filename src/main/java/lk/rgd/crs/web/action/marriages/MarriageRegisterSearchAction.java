@@ -36,7 +36,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
 
     private String language;
 
-    private int marriageDistrictId;
+    private int districtId;
     private int dsDivisionId;
     private int mrDivisionId;
 
@@ -63,13 +63,13 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     private void populateBasicLists() {
         //TODO remove
         districtList = districtDAO.getDistrictNames(language, user);
-        if (marriageDistrictId == 0) {
+        if (districtId == 0) {
             if (!districtList.isEmpty()) {
-                marriageDistrictId = districtList.keySet().iterator().next();
-                logger.debug("first allowed district in the list {} was set", marriageDistrictId);
+                districtId = districtList.keySet().iterator().next();
+                logger.debug("first allowed district in the list {} was set", districtId);
             }
         }
-        dsDivisionList = dsDivisionDAO.getDSDivisionNames(marriageDistrictId, language, user);
+        dsDivisionList = dsDivisionDAO.getDSDivisionNames(districtId, language, user);
 
         if (dsDivisionId == 0) {
             if (!dsDivisionList.isEmpty()) {

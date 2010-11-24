@@ -17,6 +17,43 @@
         $("#tabs").tabs();
     });
 
+    $(function() {
+        $('select#districtId').bind('change', function(evt1) {
+            var id = $("select#districtId").attr("value");
+            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:8},
+                    function(data) {
+                        var options1 = '';
+                        var ds = data.dsDivisionList;
+                        for (var i = 0; i < ds.length; i++) {
+                            options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                        }
+                        $("select#dsDivisionId").html(options1);
+
+                        var options2 = '';
+                        var bd = data.mrDivisionList;
+                        options2 += '<option value="' + 0 + '">' + <s:label value="%{getText('all.divisions.label')}"/> + '</option>';
+                        for (var j = 0; j < bd.length; j++) {
+                            options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
+                        }
+                        $("select#mrDivisionId").html(options2);
+                    });
+        });
+
+        $('select#dsDivisionId').bind('change', function(evt2) {
+            var id = $("select#dsDivisionId").attr("value");
+            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:7},
+                    function(data) {
+                        var options = '';
+                        var bd = data.mrDivisionList;
+                        options += '<option value="' + 0 + '">' + <s:label value="%{getText('all.divisions.label')}"/> + '</option>';
+                        for (var i = 0; i < bd.length; i++) {
+                            options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
+                        }
+                        $("select#mrDivisionId").html(options);
+                    });
+        })
+    });
+
     function initPage() {
     }
 </script>
@@ -48,24 +85,25 @@
                     <s:label value="%{getText('district.label')}"/>
                 </td>
                 <td>
-                    <s:select id="districtId" name="marriageDistrictIdFemale" list="districtList"
-                              value="marriageDistrictId"
-                              cssStyle="width:98.5%; width:240px;"/>
+                    <s:select id="districtId" name="districtId" list="districtList"
+                              value="marriageDistrictId" cssStyle="width:98.5%; width:240px;"/>
                 </td>
                 <td></td>
                 <td>
                     <s:label value="%{getText('select_DS_division.label')}"/>
                 </td>
-                <td><s:select id="dsDivisionId" name="dsDivisionIdFemale" list="dsDivisionList" value="dsDivisionId"
-                              cssStyle="width:98.5%; width:240px;"/></td>
+                <td>
+                    <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="dsDivisionId"
+                              cssStyle="width:98.5%; width:240px;"/>
+                </td>
             </tr>
             <tr>
                 <td>
                     <s:label value="%{getText('select_BD_division.label')}"/>
                 </td>
                 <td>
-                    <s:select id="mrDivisionId" name="marriageDivisionIdFemale" list="mrDivisionList"
-                              value="marriageDivisionId"
+                    <s:select id="mrDivisionId" name="mrDivisionId" list="mrDivisionList"
+                              value="marriageDivisionId" headerKey="0" headerValue="%{getText('all.divisions.label')}"
                               cssStyle="width:98.5%; width:240px;"/>
                 </td>
                 <td></td>
