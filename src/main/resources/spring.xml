@@ -226,11 +226,15 @@
         <constructor-arg ref="personDAOImpl"/>
         <constructor-arg ref="appParametersDAOImpl"/>
     </bean>
-    <bean id="divisionUtil" class="lk.rgd.crs.web.util.DivisionUtil">
-        <property name="districtDAO" ref="districtDAOImpl"/>
-        <property name="dsDivisionDAO" ref="dsDivisionDAOImpl"/>
-        <property name="bdDivisionDAO" ref="bdDivisionDAOImpl"/>
-
+    <bean id="divisionBirthUtil" class="lk.rgd.crs.web.util.DivisionUtil" factory-method="createBirthInstance">
+        <constructor-arg ref="districtDAOImpl"/>
+        <constructor-arg ref="dsDivisionDAOImpl"/>
+        <constructor-arg ref="bdDivisionDAOImpl"/>
+    </bean>
+    <bean id="divisionMarriageUtil" class="lk.rgd.crs.web.util.DivisionUtil" factory-method="createMarriageInstance">
+        <constructor-arg ref="districtDAOImpl"/>
+        <constructor-arg ref="dsDivisionDAOImpl"/>
+        <constructor-arg ref="mrDivisionDAOImpl"/>
     </bean>
 
     <!--Web module related classes-->
