@@ -3,6 +3,7 @@ package lk.rgd.crs.core.service;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.dao.MarriageRegistrationDAO;
 import lk.rgd.crs.api.domain.MarriageRegister;
+import lk.rgd.crs.api.domain.Witness;
 import lk.rgd.crs.api.service.MarriageRegistrationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,8 +28,10 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void addMarriageNotice(MarriageRegister notice, User user) {
+    public void addMarriageNotice(MarriageRegister notice, User user, boolean isMale) {
         logger.debug("adding new marriage notice :serial number  {}", notice.getSerialNumber());
+        //persisting witness
+        addWitnesses(notice, isMale);
         marriageRegistrationDAO.addMarriageNotice(notice, user);
     }
 
@@ -39,5 +42,18 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     public MarriageRegister getByIdUKey(long idUKey, User user) {
         logger.debug("attempt to get marriage register by idUKey : {} ", idUKey);
         return marriageRegistrationDAO.getByIdUKey(idUKey);
+    }
+
+    private void addWitnesses(MarriageRegister marriageRegister, boolean isMale) {
+        if (isMale) {
+            //persisting male witnesses
+            marriageRegistrationDAO.addWitness(marriageRegister.getMaleNoticeWitness_1());
+            marriageRegistrationDAO.addWitness(marriageRegister.getMaleNoticeWitness_2());
+        } else {
+            //persisting female notice witnesses
+            marriageRegistrationDAO.addWitness(marriageRegister.getFemaleNoticeWitness_1());
+            marriageRegistrationDAO.addWitness(marriageRegister.getFemaleNoticeWitness_2());
+        }
+
     }
 }

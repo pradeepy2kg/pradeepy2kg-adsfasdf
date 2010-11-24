@@ -54,8 +54,8 @@
         }
         var partyBoth = document.getElementById('submit_party2').checked
         if (partyBoth) {
-            disableFemaleWitnesses('');
             disableMaleWitnesses('');
+            disableFemaleWitnesses('none');
         }
     }
 
@@ -352,7 +352,8 @@
 
         </td>
         <td colspan="1">
-            <s:textfield name="marriageNotice.male.ageAtLastBirthDayMale" id="age_at_last_bd_male" maxLength="10"/>
+            <s:textfield name="marriageNotice.male.ageAtLastBirthDayMale" id="age_at_last_bd_male" maxLength="10"
+                         value=""/>
         </td>
     </tr>
 
@@ -428,7 +429,7 @@
         </td>
         <td>
             <s:textfield name="marriageNotice.male.durationMale" id="duration_male" cssStyle="width:98.2%;"
-                         maxLength="3"/>
+                         maxLength="3" value=""/>
         </td>
     </tr>
     <tr>
@@ -629,7 +630,7 @@
 
         </td>
         <td colspan="1">
-            <s:textfield name="marriageNotice.female.ageAtLastBirthDayFemale" id="age_at_last_bd_female"
+            <s:textfield name="marriageNotice.female.ageAtLastBirthDayFemale" id="age_at_last_bd_female" value=""
                          maxLength="10"/>
         </td>
     </tr>
@@ -707,7 +708,7 @@
         </td>
         <td>
             <s:textfield name="marriageNotice.female.durationFemale" id="duration_female" cssStyle="width:98.2%;"
-                         maxLength="3"/>
+                         maxLength="3" value=""/>
         </td>
     </tr>
     <tr>
@@ -899,12 +900,12 @@ if male party is submitted the notice
             Identification Number
         </td>
         <td>
-            <s:textfield name="witness1OfFirstNotice.identificationNumber" id="m_witness_1_pin"
+            <s:textfield name="marriageNotice.maleNoticeWitness_1.identificationNumber" id="m_witness_1_pin"
                          cssStyle="width:240px;"
                          maxLength="10"/>
         </td>
         <td>
-            <s:textfield name="witness2OfFirstNotice.identificationNumber" id="m_witness_2_pin"
+            <s:textfield name="marriageNotice.maleNoticeWitness_2.identificationNumber" id="m_witness_2_pin"
                          cssStyle="width:240px;"
                          maxLength="10"/>
         </td>
@@ -915,11 +916,11 @@ if male party is submitted the notice
             Full Name <br>
         </td>
         <td>
-            <s:textarea name="witness1OfFirstNotice.fullName" id="m_witness_1_full_name" cssStyle="width:98.2%;"
+            <s:textarea name="marriageNotice.maleNoticeWitness_1.fullName" id="m_witness_1_full_name" cssStyle="width:98.2%;"
                     />
         </td>
         <td>
-            <s:textarea name="witness2OfFirstNotice.fullName" id="m_witness_2_full_name" cssStyle="width:98.2%;"
+            <s:textarea name="marriageNotice.maleNoticeWitness_2.fullName" id="m_witness_2_full_name" cssStyle="width:98.2%;"
                     />
         </td>
     </tr>
@@ -929,11 +930,11 @@ if male party is submitted the notice
             Rank or Profession <br>
         </td>
         <td>
-            <s:textarea name="witness1OfFirstNotice.rankOrProfession" id="m_witness_1_rank" cssStyle="width:98.2%;"
+            <s:textarea name="marriageNotice.maleNoticeWitness_1.rankOrProfession" id="m_witness_1_rank" cssStyle="width:98.2%;"
                     />
         </td>
         <td>
-            <s:textarea name="witness2OfFirstNotice.rankOrProfession" id="m_witness_2_rank" cssStyle="width:98.2%;"
+            <s:textarea name="marriageNotice.maleNoticeWitness_2.rankOrProfession" id="m_witness_2_rank" cssStyle="width:98.2%;"
                     />
         </td>
     </tr>
@@ -943,11 +944,11 @@ if male party is submitted the notice
             Place of Residence <br>
         </td>
         <td>
-            <s:textarea name="witness1OfFirstNotice.address" id="m_witness_1_place_residence" cssStyle="width:98.2%;"
+            <s:textarea name="marriageNotice.maleNoticeWitness_1.address" id="m_witness_1_place_residence" cssStyle="width:98.2%;"
                     />
         </td>
         <td>
-            <s:textarea name="witness2OfFirstNotice.address" id="m_witness_2_place_residence" cssStyle="width:98.2%;"
+            <s:textarea name="marriageNotice.maleNoticeWitness_2.address" id="m_witness_2_place_residence" cssStyle="width:98.2%;"
                     />
         </td>
     </tr>
@@ -985,12 +986,12 @@ if female party is submitted the notice
             Identification Number
         </td>
         <td>
-            <s:textfield name="noticeWitness_1.identificationNumberWitness1" id="f_witness_1_pin"
+            <s:textfield name="marriageNotice.femaleNoticeWitness_1.identificationNumber" id="f_witness_1_pin"
                          cssStyle="width:240px;"
                          maxLength="10"/>
         </td>
         <td>
-            <s:textfield name="noticeWitness_2.identificationNumberWitness2" id="f_witness_2_pin"
+            <s:textfield name="marriageNotice.femaleNoticeWitness_2.identificationNumber" id="f_witness_2_pin"
                          cssStyle="width:240px;"
                          maxLength="10"/>
         </td>
@@ -1001,11 +1002,11 @@ if female party is submitted the notice
             Full Name <br>
         </td>
         <td>
-            <s:textarea name="noticeWitness_1.fullNameWitness1" id="f_witness_1_full_name" cssStyle="width:98.2%;"
+            <s:textarea name="marriageNotice.femaleNoticeWitness_1.fullName" id="f_witness_1_full_name" cssStyle="width:98.2%;"
                     />
         </td>
         <td>
-            <s:textarea name="noticeWitness_2.fullNameWitness2" id="f_witness_2_full_name" cssStyle="width:98.2%;"
+            <s:textarea name="marriageNotice.femaleNoticeWitness_2.fullName" id="f_witness_2_full_name" cssStyle="width:98.2%;"
                     />
         </td>
     </tr>
@@ -1015,11 +1016,13 @@ if female party is submitted the notice
             Rank or Profession <br>
         </td>
         <td>
-            <s:textarea name="noticeWitness_1.rankOrProfessionWitness1" id="f_witness_1_rank" cssStyle="width:98.2%;"
+            <s:textarea name="marriageNotice.femaleNoticeWitness_1.rankOrProfession" id="f_witness_1_rank"
+                        cssStyle="width:98.2%;"
                     />
         </td>
         <td>
-            <s:textarea name="noticeWitness_2.rankOrProfessionWitness1" id="f_witness_2_rank" cssStyle="width:98.2%;"
+            <s:textarea name="marriageNotice.femaleNoticeWitness_2.rankOrProfession" id="f_witness_2_rank"
+                        cssStyle="width:98.2%;"
                     />
         </td>
     </tr>
@@ -1029,11 +1032,13 @@ if female party is submitted the notice
             Place of Residence <br>
         </td>
         <td>
-            <s:textarea name="noticeWitness_1.addressWitness" id="f_witness_1_place_residence" cssStyle="width:98.2%;"
+            <s:textarea name="marriageNotice.femaleNoticeWitness_1.address" id="f_witness_1_place_residence"
+                        cssStyle="width:98.2%;"
                     />
         </td>
         <td>
-            <s:textarea name="noticeWitness_2.addressWitness" id="f_witness_2_place_residence" cssStyle="width:98.2%;"
+            <s:textarea name="marriageNotice.femaleNoticeWitness_2.address" id="f_witness_2_place_residence"
+                        cssStyle="width:98.2%;"
                     />
         </td>
     </tr>
