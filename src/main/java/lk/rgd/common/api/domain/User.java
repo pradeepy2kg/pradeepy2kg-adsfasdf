@@ -409,7 +409,8 @@ public class User implements Serializable {
 
     public Map<Integer, String> getActiveLocations(String language) {
         Map<Integer, String> al = new LinkedHashMap<Integer, String>();
-        al.put(primaryLocation.getLocationUKey(), primaryLocation.getLocationCode() + " : " + primaryLocation.getEnLocationName());
+        al.put(primaryLocation.getLocationUKey(), primaryLocation.getLocationCode() + " : " +
+            primaryLocation.getEnLocationName());
 
         for (UserLocation ul : locations) {
             if (ul.getLifeCycleInfo().isActive()) {
