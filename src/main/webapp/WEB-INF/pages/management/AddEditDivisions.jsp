@@ -124,7 +124,7 @@
 <table style="border:1px;width:100%">
 <tr>
     <td style="width:50%">
-        <fieldset style="border:1px solid #c3dcee;width:96%;margin-top:8px;">
+        <fieldset style="border:2px solid #c3dcee;width:96%;margin-top:8px;">
             <s:form name="editDsDivisions" action="eprInitDivisionList.do" method="POST">
                 <table style="border:none;margin-top:15px;text-align:center;" align="center">
                     <tr style="height:15px;">
@@ -151,7 +151,7 @@
         </fieldset>
     </td>
     <td style="width:50%">
-        <fieldset style="border:1px solid #c3dcee;width:96%;margin-top:8px;">
+        <fieldset style="border:2px solid #c3dcee;width:96%;margin-top:8px;">
             <table style="border:none;margin-top:15px;text-align:center;" align="center">
                 <col style="width:25%"/>
                 <col style="width:25%"/>
@@ -202,7 +202,7 @@
 </tr>
 <tr>
     <td>
-        <fieldset style="border:1px solid #c3dcee;float:left;width:96%;">
+        <fieldset style="border:2px solid #c3dcee;float:left;width:96%;">
             <table style="border:none;margin-top:15px;text-align:center;margin-bottom:10px;" align="center">
                 <col style="width:25%"/>
                 <col style="width:25%"/>
@@ -255,7 +255,7 @@
         </fieldset>
     </td>
     <td>
-        <fieldset style="border:1px solid #c3dcee;width:96%">
+        <fieldset style="border:2px solid #c3dcee;width:96%">
             <table style="border:none;margin-top:15px;text-align:center;margin-bottom:10px;" align="center">
                 <col style="width:25%"/>
                 <col style="width:25%"/>
@@ -310,9 +310,9 @@
 </tr>
 <tr>
     <td>
-        <fieldset style="border:1px solid #c3dcee;width:96%">
+        <fieldset style="border:2px solid #c3dcee;width:96%">
             <s:form name="editDivisions" action="eprInitDivisionList.do" method="POST">
-                <table style="border:none;margin-top:15px;text-align:center;margin-bottom:10px;" align="center">
+                <table style="border:none;text-align:center;margin-top:0;margin-bottom:109px;" align="center">
                     <col style="width:25%"/>
                     <col style="width:25%"/>
                     <col style="width:25%"/>
@@ -341,7 +341,7 @@
         </fieldset>
     </td>
     <td>
-        <fieldset style="border:1px solid #c3dcee;width:96%;">
+        <fieldset style="border:2px solid #c3dcee;width:96%;">
             <%--<s:form name="editDivisions" action="eprInitDivisionList.do" method="POST">--%>
                 <table style="border:none;margin-top:15px;text-align:center;margin-bottom:10px;" align="center">
                     <col style="width:25%"/>
@@ -398,7 +398,7 @@
 </table>
 </s:if>
 <s:if test="!(pageType == 0)">
-<fieldset style="border:1px solid #c3dcee;margin-left:6em;margin-right:20.5em;margin-top:2.5em;width:80%">
+<fieldset style="border:2px solid #c3dcee;margin-left:6em;margin-right:20.5em;margin-top:2.5em;width:80%">
     <table style="border:none;font:12pt bold;" align="center">
         <tr>
             <td><s:label name="msg"/>

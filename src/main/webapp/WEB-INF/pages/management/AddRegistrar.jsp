@@ -97,7 +97,7 @@
     .add-registrar-body{
         margin:10px;
         padding:5px;
-        border: #99ccff 2px solid;
+        border: #c3dcee 2px solid;
     }
 </style>
 <s:actionerror cssStyle="color:red;"/>

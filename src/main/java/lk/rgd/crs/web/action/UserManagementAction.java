@@ -54,6 +54,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     private String userId;
 
     private String userName;
+    private String language;
 
     private int userDistrictId;
     private int dsDivisionId;
@@ -181,6 +182,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 // TODO Forward to Location assignment page [ shan ]
             }
             if (changePassword) {
+                logger.debug("Change password {}", userDAO.getUserByPK(userId).getUserName());
                 randomPassword = getRandomPassword(randomPasswordLength);
                 updated.setPasswordHash(hashPassword(randomPassword));
             }
@@ -316,7 +318,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
 
     public String initAddDivisionsAndDsDivision() {
         populate();
-        populateDynamicLists("en");
+        populateDynamicLists(language);
         return "success";
     }
 
@@ -590,7 +592,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
 
     private void populate() {
         logger.debug("USER ID = {}", userId);
-        String language = "en";//((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
+        logger.debug("lang : {}", language);
         if (districtList == null) {
             districtList = districtDAO.getAllDistrictNames(language, user);
         }
@@ -629,9 +631,9 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     private void generateDSDivisions() {
         for (int i = 0; i < assignedDistricts.length; i++) {
             if (i == 0) {
-                setDivisionList(dsDivisionDAO.getAllDSDivisionNames(assignedDistricts[i], ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage(), user));
+                setDivisionList(dsDivisionDAO.getAllDSDivisionNames(assignedDistricts[i], language, user));
             } else {
-                getDivisionList().putAll(dsDivisionDAO.getAllDSDivisionNames(assignedDistricts[i], ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage(), user));
+                getDivisionList().putAll(dsDivisionDAO.getAllDSDivisionNames(assignedDistricts[i], language, user));
             }
         }
     }
@@ -746,6 +748,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     public void setSession(Map map) {
         this.session = map;
         currentUser = (User) session.get(WebConstants.SESSION_USER_BEAN);
+        language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
     }
 
     public int getUserDistrictId() {

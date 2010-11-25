@@ -97,22 +97,31 @@
                     onsubmit="javascript:return validate()">
             <s:if test="userId == null">
             <tr>
-                <td width="50%"><s:label value="%{getText('user_id.label')}"/></td>
+                <td width="50%">
+                    <s:label value="%{getText('user_id.label')}"/>
+                    <s:label value="*" cssStyle="color:red;font-size:12pt;"/>
+                </td>
                 <td width="50%">
                     <s:textfield name="user.userId" id="checkUserId" cssStyle="text-transform:none;width:90%;margin-left:0;"/>
                 </td>
             </tr>
             </s:if>
             <tr>
-                <td><s:label value="%{getText('user_name.label')}"/></td>
+                <td>
+                    <s:label value="%{getText('user_name.label')}"/>
+                    <s:label value="*" cssStyle="color:red;font-size:12pt;"/>
+                </td>
                 <td>
                     <s:textfield name="user.userName" id="userName" cssStyle="text-transform:none;width:90%;margin-left:0;"/>
                 </td>
             </tr>
             <tr>
-                <td><s:label value="%{getText('user_pin.label')}"/></td>
                 <td>
-                    <s:textfield name="user.pin" id="userPin" cssStyle="text-transform:none;width:90%;margin-left:0;"/>
+                    <s:label value="%{getText('user_pin.label')}"/>
+                    <s:label value="*" cssStyle="color:red;font-size:12pt;"/>
+                </td>
+                <td>
+                    <s:textfield name="user.pin" id="userPin" cssStyle="text-transform:none;width:90%;margin-left:0;" maxLength="10"/>
                 </td>
 
             </tr>
@@ -141,6 +150,7 @@
                     <td width="50%">
                         <s:if test="user != null">
                             <s:label value="%{getText('assigned_districts.label')}"/>
+                            <s:label value="*" cssStyle="color:red;font-size:12pt;"/>
                         </s:if>
                     </td>
                     <td width="50%">
@@ -158,13 +168,14 @@
                 <td>
                     <s:if test="user != null">
                         <s:label value="%{getText('assigned_ds_divisions.label')}"/>
+                        <s:label value="*" cssStyle="color:red;font-size:12pt;"/>
                     </s:if>
                 </td>
                 <td>
                     <s:if test="user != null">
                         <s:select list="currentbdDivisionList" name="assignedDivisions" multiple="true"
                                   size="10"
-                                  id="divisionIdCurrent" value="currentbdDivisionList"/>
+                                  id="divisionIdCurrent" value="currentbdDivisionList" cssStyle="margin-left:0;width:90%"/>
                     </s:if>
                 </td>
                 </s:label>
@@ -175,6 +186,7 @@
                     <td>
                         <s:if test="user == null">
                             <s:label value="%{getText('assigned_districts.label')}"/>
+                            <s:label value="*" cssStyle="color:red;font-size:12pt;"/>
                         </s:if>
                     </td>
                     <td>
@@ -189,19 +201,20 @@
                         <td>
                             <s:if test="user == null">
                                 <s:label value="%{getText('assigned_ds_divisions.label')}"/>
+                                <s:label value="*" cssStyle="color:red;font-size:12pt;"/>
                             </s:if>
                         </td>
-                        <s:if test="user == null">
-                            <td><s:select list=" dsDivisionList" name="assignedDivisions" multiple="true" size="10"
+                        <td>
+                            <s:if test="user == null">
+                                <s:select list=" dsDivisionList" name="assignedDivisions" multiple="true"
+                                          size="10"
                                           id="divisionId" cssStyle="width:90%;margin-left:0;"/>
-                        </s:if>
+                            </s:if>
                         </td>
                     </s:label>
                 </tr>
             </div>
                 <%--todo end--%>
-
-
             <tr>
                 <td>
                     <s:label>
@@ -216,7 +229,7 @@
                 <td colspan="2">
                     <s:if test="userId != null">
                         <s:hidden name="userId" value="%{userId}"/>
-                        <table style="width:65%;float:right;">
+                        <table style="width:100%;float:right;">
                             <tr>
                                 <td style="width:75%">
                                     <div>
