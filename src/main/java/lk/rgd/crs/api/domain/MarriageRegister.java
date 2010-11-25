@@ -11,6 +11,11 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "MARRIAGE_REGISTER", schema = "CRS")
+@NamedQueries({
+//    TODO chathuranga consider about order by
+    @NamedQuery(name = "filter.by.dsDivision.and.state", query = "SELECT mr FROM MarriageRegister mr " +
+        "WHERE mr.mrDivision.dsDivision = :dsDivision AND mr.state = :state ORDER BY mr.dateOfMaleNotice")
+})
 public class MarriageRegister implements Serializable, Cloneable {
 
     public enum State {
