@@ -2,6 +2,7 @@ package lk.rgd.crs.api.domain;
 
 import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.Race;
+import lk.rgd.common.util.WebUtils;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -79,7 +80,7 @@ public class FemaleParty {
     }
 
     public void setIdentificationNumberFemale(String identificationNumberFemale) {
-        this.identificationNumberFemale = identificationNumberFemale;
+        this.identificationNumberFemale = WebUtils.filterBlanks(identificationNumberFemale);
     }
 
     public Date getDateOfBirthFemale() {
@@ -103,7 +104,7 @@ public class FemaleParty {
     }
 
     public void setNameInOfficialLanguageFemale(String nameInOfficialLanguageFemale) {
-        this.nameInOfficialLanguageFemale = nameInOfficialLanguageFemale;
+        this.nameInOfficialLanguageFemale = WebUtils.filterBlanks(nameInOfficialLanguageFemale);
     }
 
     public String getNameInEnglishFemale() {
@@ -111,7 +112,7 @@ public class FemaleParty {
     }
 
     public void setNameInEnglishFemale(String nameInEnglishFemale) {
-        this.nameInEnglishFemale = nameInEnglishFemale;
+        this.nameInEnglishFemale = WebUtils.filterBlanks(nameInEnglishFemale);
     }
 
     public String getResidentAddressFemale() {
@@ -119,7 +120,7 @@ public class FemaleParty {
     }
 
     public void setResidentAddressFemale(String residentAddressFemale) {
-        this.residentAddressFemale = residentAddressFemale;
+        this.residentAddressFemale = WebUtils.filterBlanks(residentAddressFemale);
     }
 
     public MRDivision getMrDivisionFemale() {
@@ -143,7 +144,7 @@ public class FemaleParty {
     }
 
     public void setRankOrProfessionFemale(String rankOrProfessionFemale) {
-        this.rankOrProfessionFemale = rankOrProfessionFemale;
+        this.rankOrProfessionFemale = WebUtils.filterBlanks(rankOrProfessionFemale);
     }
 
     public String getTpNumberFemale() {
@@ -151,7 +152,7 @@ public class FemaleParty {
     }
 
     public void setTpNumberFemale(String tpNumberFemale) {
-        this.tpNumberFemale = tpNumberFemale;
+        this.tpNumberFemale = WebUtils.filterBlanks(tpNumberFemale);
     }
 
     public String getEmailFemale() {
@@ -159,7 +160,7 @@ public class FemaleParty {
     }
 
     public void setEmailFemale(String emailFemale) {
-        this.emailFemale = emailFemale;
+        this.emailFemale = WebUtils.filterBlanks(emailFemale);
     }
 
     public String getFatherIdentificationNumberFemale() {
@@ -167,7 +168,7 @@ public class FemaleParty {
     }
 
     public void setFatherIdentificationNumberFemale(String fatherIdentificationNumberFemale) {
-        this.fatherIdentificationNumberFemale = fatherIdentificationNumberFemale;
+        this.fatherIdentificationNumberFemale = WebUtils.filterBlanks(fatherIdentificationNumberFemale);
     }
 
     public String getFatherFullNameFemale() {
@@ -175,7 +176,7 @@ public class FemaleParty {
     }
 
     public void setFatherFullNameFemale(String fatherFullNameFemale) {
-        this.fatherFullNameFemale = fatherFullNameFemale;
+        this.fatherFullNameFemale = WebUtils.filterBlanks(fatherFullNameFemale);
     }
 
     public String getConsentIfAnyFemale() {
@@ -183,7 +184,7 @@ public class FemaleParty {
     }
 
     public void setConsentIfAnyFemale(String consentIfAnyFemale) {
-        this.consentIfAnyFemale = consentIfAnyFemale;
+        this.consentIfAnyFemale = WebUtils.filterBlanks(consentIfAnyFemale);
     }
 
     public CivilStatusFemale getCivilStatusFemale() {

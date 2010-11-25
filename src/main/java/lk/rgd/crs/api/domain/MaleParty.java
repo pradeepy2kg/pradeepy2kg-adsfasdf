@@ -2,6 +2,7 @@ package lk.rgd.crs.api.domain;
 
 import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.Race;
+import lk.rgd.common.util.WebUtils;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -80,7 +81,7 @@ public class MaleParty {
     }
 
     public void setIdentificationNumberMale(String identificationNumberMale) {
-        this.identificationNumberMale = identificationNumberMale;
+        this.identificationNumberMale = WebUtils.filterBlanks(identificationNumberMale);
     }
 
     public Date getDateOfBirthMale() {
@@ -104,7 +105,7 @@ public class MaleParty {
     }
 
     public void setNameInOfficialLanguageMale(String nameInOfficialLanguageMale) {
-        this.nameInOfficialLanguageMale = nameInOfficialLanguageMale;
+        this.nameInOfficialLanguageMale = WebUtils.filterBlanks(nameInOfficialLanguageMale);
     }
 
     public String getNameInEnglishMale() {
@@ -112,7 +113,7 @@ public class MaleParty {
     }
 
     public void setNameInEnglishMale(String nameInEnglishMale) {
-        this.nameInEnglishMale = nameInEnglishMale;
+        this.nameInEnglishMale = WebUtils.filterBlanks(nameInEnglishMale);
     }
 
     public String getResidentAddressMale() {
@@ -120,7 +121,7 @@ public class MaleParty {
     }
 
     public void setResidentAddressMale(String residentAddressMale) {
-        this.residentAddressMale = residentAddressMale;
+        this.residentAddressMale = WebUtils.filterBlanks(residentAddressMale);
     }
 
     public MRDivision getMrDivisionMale() {
@@ -144,7 +145,7 @@ public class MaleParty {
     }
 
     public void setRankOrProfessionMale(String rankOrProfessionMale) {
-        this.rankOrProfessionMale = rankOrProfessionMale;
+        this.rankOrProfessionMale = WebUtils.filterBlanks(rankOrProfessionMale);
     }
 
     public String getTpNumberMale() {
@@ -152,7 +153,7 @@ public class MaleParty {
     }
 
     public void setTpNumberMale(String tpNumberMale) {
-        this.tpNumberMale = tpNumberMale;
+        this.tpNumberMale = WebUtils.filterBlanks(tpNumberMale);
     }
 
     public String getEmailMale() {
@@ -160,7 +161,7 @@ public class MaleParty {
     }
 
     public void setEmailMale(String emailMale) {
-        this.emailMale = emailMale;
+        this.emailMale = WebUtils.filterBlanks(emailMale);
     }
 
     public String getFatherIdentificationNumberMale() {
@@ -168,7 +169,7 @@ public class MaleParty {
     }
 
     public void setFatherIdentificationNumberMale(String fatherIdentificationNumberMale) {
-        this.fatherIdentificationNumberMale = fatherIdentificationNumberMale;
+        this.fatherIdentificationNumberMale = WebUtils.filterBlanks(fatherIdentificationNumberMale);
     }
 
     public String getFatherFullNameMale() {
@@ -176,7 +177,7 @@ public class MaleParty {
     }
 
     public void setFatherFullNameMale(String fatherFullNameMale) {
-        this.fatherFullNameMale = fatherFullNameMale;
+        this.fatherFullNameMale = WebUtils.filterBlanks(fatherFullNameMale);
     }
 
     public String getConsentIfAnyMale() {
@@ -184,7 +185,7 @@ public class MaleParty {
     }
 
     public void setConsentIfAnyMale(String consentIfAnyMale) {
-        this.consentIfAnyMale = consentIfAnyMale;
+        this.consentIfAnyMale = WebUtils.filterBlanks(consentIfAnyMale);
     }
 
     public Race getMaleRace() {
