@@ -1,14 +1,18 @@
 package lk.rgd.crs.core.service;
 
+import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.dao.MarriageRegistrationDAO;
 import lk.rgd.crs.api.domain.MarriageRegister;
 import lk.rgd.crs.api.domain.Witness;
 import lk.rgd.crs.api.service.MarriageRegistrationService;
+import lk.rgd.crs.core.ValidationUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * @author amith jayasekara
@@ -55,5 +59,17 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
             marriageRegistrationDAO.addWitness(marriageRegister.getFemaleNoticeWitness_2());
         }
 
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<MarriageRegister> getMarriageNoticePendingApprovalByDSDivision(DSDivision dsDivision, int pageNo,
+        int noOfRows, User user) {
+        logger.debug("Get MarriageNotices pending approval by DSDivision : {}", dsDivision.getDsDivisionUKey());
+        ValidationUtils.validateAccessToDSDivison(dsDivision, user);
+        return marriageRegistrationDAO.getPaginatedListForStateByDSDivision(dsDivision,
+            MarriageRegister.State.DATA_ENTRY, pageNo, noOfRows);
     }
 }
