@@ -1,5 +1,7 @@
 package lk.rgd.crs.api.domain;
 
+import lk.rgd.common.util.WebUtils;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -199,7 +201,7 @@ public class MarriageRegister implements Serializable, Cloneable {
     }
 
     public void setSerialOfFirstNotice(String serialOfFirstNotice) {
-        this.serialOfMaleNotice = serialOfFirstNotice;
+        this.serialOfMaleNotice = WebUtils.filterBlanks(serialOfFirstNotice);
     }
 
     public Date getDateOfMaleNotice() {
@@ -232,14 +234,6 @@ public class MarriageRegister implements Serializable, Cloneable {
 
     public void setRegistrarPINOfFirstNotice(long registrarPINOfFirstNotice) {
         this.registrarPINOfMaleNotice = registrarPINOfFirstNotice;
-    }
-
-    public long getRegistrarPINOfSecondNotice() {
-        return registrarPINOfFemaleNotice;
-    }
-
-    public void setRegistrarPINOfSecondNotice(long registrarPINOfSecondNotice) {
-        this.registrarPINOfFemaleNotice = registrarPINOfSecondNotice;
     }
 
     public Witness getWitness1() {
@@ -351,6 +345,7 @@ public class MarriageRegister implements Serializable, Cloneable {
     }
 
     public void setSerialOfFemaleNotice(String serialOfFemaleNotice) {
-        this.serialOfFemaleNotice = serialOfFemaleNotice;
+        this.serialOfFemaleNotice = WebUtils.filterBlanks(serialOfFemaleNotice);
     }
+
 }
