@@ -6,6 +6,7 @@ INSERT INTO COMMON.APP_PARAMETERS(NAME, VALUE) VALUES('crs.birth.confirmation_da
 INSERT INTO COMMON.APP_PARAMETERS(NAME, VALUE) VALUES('crs.birth.belated_reg_days', '365');
 INSERT INTO COMMON.APP_PARAMETERS(NAME, VALUE) VALUES('crs.certificate.search.record.limit', '100');
 INSERT INTO COMMON.APP_PARAMETERS(NAME, VALUE) VALUES('crs.br_approval_rows_per_page', '50');
+INSERT INTO COMMON.APP_PARAMETERS(NAME, VALUE) VALUES('crs.mr_approval_rows_per_page', '50');
 INSERT INTO COMMON.APP_PARAMETERS(NAME, VALUE) VALUES('crs.dr_rows_per_page', '50');
 INSERT INTO COMMON.APP_PARAMETERS(NAME, VALUE) VALUES('common.event_rows_per_page', '50');
 INSERT INTO COMMON.APP_PARAMETERS(NAME, VALUE) VALUES('rgd.max.number.of.login.attempts', '2');
