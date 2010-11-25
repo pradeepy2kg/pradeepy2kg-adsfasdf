@@ -30,7 +30,7 @@
 </script>
 
 <div id="birth-register-approval">
-    <s:form action="eprPersonApproval" method="POST">
+    <s:form action="eprPersonApproval.do" method="POST">
         <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
             <legend><b><s:label value="%{getText('searchOption.label')}"/></b></legend>
             <table width="100%" cellpadding="5" cellspacing="0">
@@ -57,6 +57,7 @@
         </fieldset>
     </s:form>
 
+    <s:actionmessage cssClass="alreadyPrinted"/>
     <s:if test="approvalPendingList.size > 0">
         <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;">
             <legend><b><s:label value="%{getText('searchResult.label')}"/></b></legend>
@@ -65,8 +66,8 @@
                 <tr>
                     <th width="60px"><s:label value="%{getText('locationCode.label')}"/></th>
                     <th width="110px">NIC</th>
-                    <th width="600px"><s:label value="%{getText('label.personName')}"/></th>
-                    <th width="200px"><s:label value="%{getText('label.state')}"/></th>
+                    <th width="780px"><s:label value="%{getText('label.personName')}"/></th>
+                    <th width="20px"></th>
                     <th width="20px"></th>
                     <th width="20px"></th>
                     <th width="20px"></th>
@@ -79,10 +80,9 @@
                         <td align="center"><s:property value="nic"/></td>
                         <td>
                             <s:if test="fullNameInOfficialLanguage != null">
-                                <%= NameFormatUtil.getDisplayName((String) request.getAttribute("fullNameInOfficialLanguage"), 40)%>
+                                <%= NameFormatUtil.getDisplayName((String) request.getAttribute("fullNameInOfficialLanguage"), 70)%>
                             </s:if>
                         </td>
-                        <td align="center"><s:property value="status"/></td>
                         <td align="center">
                             <s:url id="editSelected" action="eprEditPerson.do">
                                 <s:param name="personUKey" value="personUKey"/>
@@ -99,6 +99,11 @@
                         <td align="center">
                             <s:a href="%{rejectSelected}" title="%{getText('rejectToolTip.label')}">
                                 <img src="<s:url value='/images/reject.gif'/>" width="25" height="25" border="none"/>
+                            </s:a>
+                        </td>
+                        <td align="center">
+                            <s:a href="%{deleteSelected}" title="%{getText('deleteToolTip.label')}">
+                                <img src="<s:url value='/images/delete.gif'/>" width="25" height="25" border="none"/>
                             </s:a>
                         </td>
                     </tr>

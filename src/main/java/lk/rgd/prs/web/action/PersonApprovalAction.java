@@ -46,20 +46,32 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
     }
 
     /**
-     * This method used to load person pending approval list
+     * This method used to load person pending approval list by specified location id (only for page number 1)
      */
     public String loadPersonApprovalPendingList() {
         logger.debug("Loading approval pending person list");
         locationList = user.getActiveLocations(language);
-
-        noOfRows = appParametersDAO.getIntParameter(PRS_APPROVAL_ROWS_PER_PAGE);
-        pageNo = 1;
+        // use primary location for locationId
         if (locationId == 0) {
             locationId = user.getPrimaryLocation().getLocationUKey();
         }
-        approvalPendingList = service.getPRSPendingApprovalByLocation(locationDAO.getLocation(locationId), pageNo, noOfRows, user);
-        logger.debug("Loaded approval pending person list");
+        pageNo = 1;
+        getApprovalPendingPersons();
+
+        logger.debug("Loaded approval pending person list with size : {} for LocationId : {} ",
+            approvalPendingList.size(), locationId);
         return SUCCESS;
+    }
+
+    /**
+     * This method used to load approval pending person list for specified locationId, pageNo and noOfRows
+     */
+    private void getApprovalPendingPersons() {
+        noOfRows = appParametersDAO.getIntParameter(PRS_APPROVAL_ROWS_PER_PAGE);
+        approvalPendingList = service.getPRSPendingApprovalByLocation(locationDAO.getLocation(locationId), pageNo, noOfRows, user);
+        if (approvalPendingList.size() == 0) {
+            addActionMessage(getText("noitemMsg.label"));
+        }
     }
 
     public Map getSession() {
