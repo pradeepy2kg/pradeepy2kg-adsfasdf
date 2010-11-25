@@ -106,6 +106,9 @@
                 </td>
             </tr>
             </s:if>
+            <s:else>
+                <s:hidden name="user.userId" id="checkUserId"/>
+            </s:else>
             <tr>
                 <td>
                     <s:label value="%{getText('user_name.label')}"/>
