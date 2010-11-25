@@ -433,7 +433,7 @@
                                                           onkeypress="return isNumberKey(event)"/></s:if>
                     <s:if test="pageType==4"><s:textfield name="mrDivision.divisionId" id="id"
                                                           onkeypress="return isNumberKey(event)"/></s:if>
-                    <s:if test="pageType==5"><s:textfield name="mrDivision.divisionId" id="id"
+                    <s:if test="pageType==5"><s:textfield name="court.courtId" id="id"
                                                           onkeypress="return isNumberKey(event)"/></s:if>
                     <s:if test="pageType==6"><s:textfield name="location.locationCode" id="id"
                                                           onkeypress="return isNumberKey(event)"/></s:if>
