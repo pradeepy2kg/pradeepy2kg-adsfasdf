@@ -476,7 +476,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 Court checkCourt = courtDAO.getCourtByCode(court.getCourtId());
                 if (checkCourt != null) {
                     addFieldError("duplicateIdNumberError", "Court Id Code Already Used. Please Insert Another Number");
-                    logger.debug("Duplicate Court code number is :", checkCourt.getCourtId());
+                    logger.debug("Duplicate Court code number is :", court.getCourtId());
                     checkDuplicate++;
                 }
                 if (checkDuplicate == 0) {

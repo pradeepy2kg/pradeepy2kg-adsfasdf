@@ -46,6 +46,10 @@ public class Court implements Serializable {
         return courtId;
     }
 
+    public void setCourtId(int courtId) {
+        this.courtId = courtId;
+    }
+
     public String getSiCourtName() {
         return siCourtName;
     }
