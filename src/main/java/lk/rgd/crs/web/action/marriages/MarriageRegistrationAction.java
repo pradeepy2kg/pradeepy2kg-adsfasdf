@@ -41,9 +41,10 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     private long idUKey;
 
-    private boolean bothPartySubmitted;
+    private boolean male;
 
     private String language;
+    private String serialNumber;
 
     private Date noticeReceivedDate;
 
@@ -66,7 +67,8 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             logger.debug("load existing marriage notice : idUKey {}", idUKey);
             marriage = marriageRegistrationService.getByIdUKey(idUKey, user);
         }
-        DivisionUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
+        DivisionUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
+            marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
         return "pageLoad";
     }
 
@@ -86,10 +88,12 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         if (marriage == null) {
             logger.debug("cannot find marriage register record to edit : idUKey {}", idUKey);
             addActionError(getText("error.cannot.find.record.for.edit"));
-            DivisionUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
+            DivisionUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
+                marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
             return ERROR;
         }
-        DivisionUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
+        DivisionUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
+            marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
         return "pageLoad";
     }
 
@@ -98,13 +102,15 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
      */
     public String marriageNoticeSearchInit() {
         logger.debug("loading search page for marriage notice");
-        DivisionUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
+        DivisionUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
+            marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
         return "pageLoad";
     }
 
     public String marriageRegistrationInit() {
         logger.debug("loading marriage registration page");
-        DivisionUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
+        DivisionUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
+            marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
         return "pageLoad";
     }
 
@@ -117,27 +123,21 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
      */
     private void populateNoticeForPersists() {
         //populate mr division and submitted date
-        //todo simplify
-        String maleSerial = marriage.getSerialOfMaleNotice();
-        String femaleSerial = marriage.getSerialOfFemaleNotice();
         boolean isBothParty = marriage.isBothPartySubmitted();
-        //if male serial is available and isBothParty false : its a male party has submitted notice  --case 1
-        //if male serial is available and isBothParty true :its a both parties have submitted notice--case 2
-        //if female serial is available and isBothParty is false :it is female has party submitted notice--case 3
-        if (!isBothParty) {
-            if (maleSerial != null && !maleSerial.isEmpty()) {
-                // case 1   set mrdivision and submitted date for male notice
-                marriage.setMrDivisionOfMaleNotice(mrDivisionDAO.getMRDivisionByPK(marriageDivisionId));
-                marriage.setDateOfMaleNotice(noticeReceivedDate);
-            } else if (femaleSerial != null && !femaleSerial.isEmpty()) {
-                //case 3   set mrdivision and submitted date for female notice
-                marriage.setMrDivisionOfFemaleNotice(mrDivisionDAO.getMRDivisionByPK(marriageDivisionIdFemale));
-                marriage.setDateOfFemaleNotice(noticeReceivedDate);
-            }
-        } else {
-            //case 2  set mrdivision and submitted date for male notice(default is male)
+        if ((!isBothParty && male) || isBothParty) {
+            //male submitted   or both
             marriage.setMrDivisionOfMaleNotice(mrDivisionDAO.getMRDivisionByPK(marriageDivisionId));
             marriage.setDateOfMaleNotice(noticeReceivedDate);
+            marriage.setSerialOfMaleNotice(serialNumber);
+            marriage.setFemaleNoticeWitness_1(null);
+            marriage.setFemaleNoticeWitness_2(null);
+        } else {
+            //female
+            marriage.setMrDivisionOfFemaleNotice(mrDivisionDAO.getMRDivisionByPK(marriageDivisionIdFemale));
+            marriage.setDateOfFemaleNotice(noticeReceivedDate);
+            marriage.setSerialOfFemaleNotice(serialNumber);
+            marriage.setMaleNoticeWitness_1(null);
+            marriage.setMaleNoticeWitness_2(null);
         }
     }
 
@@ -226,14 +226,6 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         this.idUKey = idUKey;
     }
 
-    public boolean isBothPartySubmitted() {
-        return bothPartySubmitted;
-    }
-
-    public void setBothPartySubmitted(boolean bothPartySubmitted) {
-        this.bothPartySubmitted = bothPartySubmitted;
-    }
-
     public Date getNoticeReceivedDate() {
         return noticeReceivedDate;
     }
@@ -258,5 +250,20 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         this.marriageDivisionId = marriageDivisionId;
     }
 
+    public boolean isMale() {
+        return male;
+    }
+
+    public void setMale(boolean male) {
+        this.male = male;
+    }
+
+    public String getSerialNumber() {
+        return serialNumber;
+    }
+
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
+    }
 }
 
