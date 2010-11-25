@@ -378,5 +378,6 @@
         <constructor-arg ref="districtDAOImpl"/>
         <constructor-arg ref="dsDivisionDAOImpl"/>
         <constructor-arg ref="mrDivisionDAOImpl"/>
+        <constructor-arg ref="appParametersDAOImpl"/>
     </bean>
 </beans>
