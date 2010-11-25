@@ -32,6 +32,8 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     private Map<Integer, String> districtList;
     private Map<Integer, String> dsDivisionList;
     private Map<Integer, String> mrDivisionList;
+    private Map<Integer, String> countryList;
+    private Map<Integer, String> raceList;
 
     private int marriageDistrictId;
     private int dsDivisionId;
@@ -54,6 +56,8 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         districtList = new HashMap<Integer, String>();
         dsDivisionList = new HashMap<Integer, String>();
         mrDivisionList = new HashMap<Integer, String>();
+        raceList = new HashMap<Integer, String>();
+        countryList = new HashMap<Integer, String>();
     }
 
     /**
@@ -67,17 +71,20 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             logger.debug("load existing marriage notice : idUKey {}", idUKey);
             marriage = marriageRegistrationService.getByIdUKey(idUKey, user);
         }
+        //populating lists
         DivisionUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
             marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
+        DivisionUtil.populateCountryAndRaceLists(countryList, raceList, language);
+        logger.debug("successfully loaded the page");
         return "pageLoad";
     }
 
     public String addMarriageNotice() {
         logger.debug("attempt to add marriage notice serial number : {} ");
-        //todo      remove true
         /*check serial number is already exists*/
         populateNoticeForPersists();
-        marriageRegistrationService.addMarriageNotice(marriage, true, user);
+        boolean both = marriage.isBothPartySubmitted();
+        marriageRegistrationService.addMarriageNotice(marriage, (both || male), user);
         logger.debug("successfully added marriage notice serial number: {}");
         return SUCCESS;
     }
@@ -264,6 +271,22 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     public void setSerialNumber(String serialNumber) {
         this.serialNumber = serialNumber;
+    }
+
+    public Map<Integer, String> getRaceList() {
+        return raceList;
+    }
+
+    public void setRaceList(Map<Integer, String> raceList) {
+        this.raceList = raceList;
+    }
+
+    public Map<Integer, String> getCountryList() {
+        return countryList;
+    }
+
+    public void setCountryList(Map<Integer, String> countryList) {
+        this.countryList = countryList;
     }
 }
 

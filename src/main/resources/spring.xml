@@ -230,11 +230,15 @@
         <constructor-arg ref="districtDAOImpl"/>
         <constructor-arg ref="dsDivisionDAOImpl"/>
         <constructor-arg ref="bdDivisionDAOImpl"/>
+        <constructor-arg ref="countryDAOImpl"/>
+        <constructor-arg ref="raceDAOImpl"/>
     </bean>
     <bean id="divisionMarriageUtil" class="lk.rgd.crs.web.util.DivisionUtil" factory-method="createMarriageInstance">
         <constructor-arg ref="districtDAOImpl"/>
         <constructor-arg ref="dsDivisionDAOImpl"/>
         <constructor-arg ref="mrDivisionDAOImpl"/>
+        <constructor-arg ref="countryDAOImpl"/>
+        <constructor-arg ref="raceDAOImpl"/>
     </bean>
 
     <!--Web module related classes-->
