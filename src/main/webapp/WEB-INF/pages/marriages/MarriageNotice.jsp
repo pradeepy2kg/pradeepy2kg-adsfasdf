@@ -42,17 +42,21 @@
     }
 
     function disableWitnessBaseOnParty() {
-        var maleSerial = document.getElementById('fmSerial').value;
-        var femaleSerial = document.getElementById('mnSerial').value;
-        if (maleSerial != "") {
+
+        var male = document.getElementById('maleIdtrue').checked;
+        var female = document.getElementById('maleIdfalse').checked;
+        var both = document.getElementById('bothtrue').checked;
+
+
+        if (male) {
             disableMaleWitnesses('')
             disableFemaleWitnesses('none')
-        }
-        if (femaleSerial != "") {
+        } else if (female) {
             disableMaleWitnesses('none')
             disableFemaleWitnesses('')
         }
-        if (femaleSerial != "" & maleSerial != "") {
+        else if (both) {
+            /*todo remoe this*/
             disableMaleWitnesses('')
             disableFemaleWitnesses('none')
         }
@@ -150,38 +154,20 @@
                 <tr>
                     <td><label><span class="font-8">අනුක්‍රමික අංකය
                             <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-                            <br>தொடர் இலக்கம்<br>Serial Number (male party)</span></label>
+                            <br>தொடர் இலக்கம்<br>Serial Number</span></label>
                     </td>
                     <td align="center">
                         <s:if test="false==true">
                             <%-- for edit mode of the marriage notice--%>
-                            <s:textfield name="marriage.serialOfMaleNotice" id="mnSerial" readonly="true"
-                                         maxLength="10"
-                                         cssStyle="margin-left:20px" onblur="disableWitnessBaseOnParty()"/>
+                            <s:textfield name="serialNumber" id="mnSerial" readonly="true"
+                                         maxLength="10" cssStyle="margin-left:20px"/>
                         </s:if>
                         <s:else>
-                            <s:textfield name="marriage.serialOfMaleNotice" id="mnSerial" maxLength="10"
-                                         onblur="disableWitnessBaseOnParty()"/>
+                            <s:textfield name="serialNumber" id="mnSerial" maxLength="10"/>
                         </s:else>
                     </td>
                 </tr>
-                <tr>
-                    <td><label><span class="font-8">අනුක්‍රමික අංකය
-                            <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-                            <br>தொடர் இலக்கம்<br>Serial Number(Female Party)</span></label>
-                    </td>
-                    <td align="center">
-                        <s:if test="false==true">
-                            <%-- for edit mode of the marriage notice--%>
-                            <s:textfield name="marriage.serialOfFemaleNotice" id="fmSerial" readonly="true" maxLength="10"
-                                         cssStyle="margin-left:20px" onblur="disableWitnessBaseOnParty()"/>
-                        </s:if>
-                        <s:else>
-                            <s:textfield name="marriage.serialOfFemaleNotice" id="fmSerial" maxLength="10"
-                                         onblur="disableWitnessBaseOnParty()"/>
-                        </s:else>
-                    </td>
-                </tr>
+
                 <tr>
                     <td>
                         <label>
@@ -194,6 +180,13 @@
                         <s:label value="YYYY-MM-DD" cssStyle="margin-left:10px;font-size:10px"/><br>
                         <s:textfield name="noticeReceivedDate" id="submitDatePicker" maxLength="10"/>
                     </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="right">
+                        <s:radio id="maleId" name="male" list="#@java.util.HashMap@{'true':'male','false':'female'}"
+                                 onclick="disableWitnessBaseOnParty()"/>
+                    </td>
+
                 </tr>
             </table>
         </td>
@@ -238,7 +231,8 @@
         </td>
         <td align="center">
                 <%--todo change--%>
-            <s:radio name="marriage.bothPartySubmitted" list="#@java.util.HashMap@{'true':''}"/>
+            <s:radio name="marriage.bothPartySubmitted" list="#@java.util.HashMap@{'true':''}"
+                     onclick="disableWitnessBaseOnParty()" id="both"/>
         </td>
         <td>
             නැත <br>
@@ -359,7 +353,7 @@
 
         </td>
         <td colspan="1">
-            <s:textfield name="marriage.male.ageAtLastBirthDayMale" id="age_at_last_bd_male" maxLength="10"
+            <s:textfield name="marriage.male.ageAtLastBirthDayMale" id="age_at_last_bd_male" maxLength="3"
                          value=""/>
         </td>
     </tr>
@@ -447,7 +441,7 @@
         <td>
             <s:textfield name="marriage.male.rankOrProfessionMale" id="rank_male"
                          cssStyle="width:98.2%;"
-                         maxLength="10"/>
+                         maxLength="255"/>
         </td>
         <td>
             ජාතිය <br>
@@ -638,7 +632,7 @@
         </td>
         <td colspan="1">
             <s:textfield name="marriage.female.ageAtLastBirthDayFemale" id="age_at_last_bd_female" value=""
-                         maxLength="10"/>
+                         maxLength="3"/>
         </td>
     </tr>
 
@@ -726,7 +720,7 @@
         <td>
             <s:textfield name="marriage.female.rankOrProfessionFemale" id="rank_female"
                          cssStyle="width:98.2%;"
-                         maxLength="10"/>
+                         maxLength="255"/>
         </td>
         <td>
             ජාතිය <br>

@@ -43,7 +43,7 @@ public class MarriageRegister implements Serializable, Cloneable {
     private long idUKey;
 
     //received date for marriage registry
-    @Column(name = "RECEIVED_DATE", nullable = false)
+    @Column(name = "RECEIVED_DATE", nullable = true)
     @Temporal(value = TemporalType.DATE)
     private Date receivedDate;
 
@@ -200,8 +200,8 @@ public class MarriageRegister implements Serializable, Cloneable {
         return serialOfMaleNotice;
     }
 
-    public void setSerialOfFirstNotice(String serialOfFirstNotice) {
-        this.serialOfMaleNotice = WebUtils.filterBlanks(serialOfFirstNotice);
+    public void setSerialOfMaleNotice(String serialOfMaleNotice) {
+        this.serialOfMaleNotice = serialOfMaleNotice;
     }
 
     public Date getDateOfMaleNotice() {
