@@ -40,9 +40,7 @@ public class MarriageRegister implements Serializable, Cloneable {
     @Column(name = "IDUKEY")
     private long idUKey;
 
-    @Column(name = "SERIAL_NUMBER", nullable = false)
-    private Long serialNumber;
-
+    //received date for marriage registry
     @Column(name = "RECEIVED_DATE", nullable = false)
     @Temporal(value = TemporalType.DATE)
     private Date receivedDate;
@@ -56,22 +54,26 @@ public class MarriageRegister implements Serializable, Cloneable {
     @Column(name = "STATE", nullable = false)
     private State state;
 
-    @Column
+    @Column(name = "REG_MIN_PIN")
     private long registrarOrMinisterPIN;
 
+    @Column(name = "IS_BOTH")
+    private boolean bothPartySubmitted;
+
+    //mr division for marriage register
     @ManyToOne
     @JoinColumn(name = "mrDivisionUKey", nullable = true, insertable = false, updatable = false)
     private MRDivision mrDivision;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "idukey", nullable = true, insertable = false, updatable = false)
     private Witness witness1;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "idukey", nullable = true, insertable = false, updatable = false)
     private Witness witness2;
 
-    @Column(length = 10)
+    @Column(length = 10, name = "SERIAL_MALE")
     private String serialOfMaleNotice;
 
     @Column
@@ -86,12 +88,12 @@ public class MarriageRegister implements Serializable, Cloneable {
     @JoinColumn(name = "mrDivisionUKey", nullable = true, insertable = false, updatable = false)
     private MRDivision mrDivisionOfMaleNotice;
 
-    @Column(length = 10)
-    private String serialOfSecondNotice;
+    @Column(length = 10, name = "SERIAL_FEMALE")
+    private String serialOfFemaleNotice;
 
     @Column
     @Temporal(value = TemporalType.DATE)
-    private Date dateOfSecondNotice;
+    private Date dateOfFemaleNotice;
 
     @Column
     private long registrarPINOfFemaleNotice;
@@ -134,14 +136,6 @@ public class MarriageRegister implements Serializable, Cloneable {
 
     public void setIdUKey(long idUKey) {
         this.idUKey = idUKey;
-    }
-
-    public Long getSerialNumber() {
-        return serialNumber;
-    }
-
-    public void setSerialNumber(Long serialNumber) {
-        this.serialNumber = serialNumber;
     }
 
     public Date getReceivedDate() {
@@ -216,20 +210,12 @@ public class MarriageRegister implements Serializable, Cloneable {
         this.dateOfMaleNotice = dateOfMaleNotice;
     }
 
-    public String getSerialOfSecondNotice() {
-        return serialOfSecondNotice;
+    public Date getDateOfFemaleNotice() {
+        return dateOfFemaleNotice;
     }
 
-    public void setSerialOfSecondNotice(String serialOfSecondNotice) {
-        this.serialOfSecondNotice = serialOfSecondNotice;
-    }
-
-    public Date getDateOfSecondNotice() {
-        return dateOfSecondNotice;
-    }
-
-    public void setDateOfSecondNotice(Date dateOfSecondNotice) {
-        this.dateOfSecondNotice = dateOfSecondNotice;
+    public void setDateOfFemaleNotice(Date dateOfFemaleNotice) {
+        this.dateOfFemaleNotice = dateOfFemaleNotice;
     }
 
     public MRDivision getMrDivisionId() {
@@ -334,5 +320,37 @@ public class MarriageRegister implements Serializable, Cloneable {
 
     public void setFemaleNoticeWitness_2(Witness femaleNoticeWitness_2) {
         this.femaleNoticeWitness_2 = femaleNoticeWitness_2;
+    }
+
+    public long getRegistrarPINOfFemaleNotice() {
+        return registrarPINOfFemaleNotice;
+    }
+
+    public void setRegistrarPINOfFemaleNotice(long registrarPINOfFemaleNotice) {
+        this.registrarPINOfFemaleNotice = registrarPINOfFemaleNotice;
+    }
+
+    public long getRegistrarPINOfMaleNotice() {
+        return registrarPINOfMaleNotice;
+    }
+
+    public void setRegistrarPINOfMaleNotice(long registrarPINOfMaleNotice) {
+        this.registrarPINOfMaleNotice = registrarPINOfMaleNotice;
+    }
+
+    public boolean isBothPartySubmitted() {
+        return bothPartySubmitted;
+    }
+
+    public void setBothPartySubmitted(boolean bothPartySubmitted) {
+        this.bothPartySubmitted = bothPartySubmitted;
+    }
+
+    public String getSerialOfFemaleNotice() {
+        return serialOfFemaleNotice;
+    }
+
+    public void setSerialOfFemaleNotice(String serialOfFemaleNotice) {
+        this.serialOfFemaleNotice = serialOfFemaleNotice;
     }
 }

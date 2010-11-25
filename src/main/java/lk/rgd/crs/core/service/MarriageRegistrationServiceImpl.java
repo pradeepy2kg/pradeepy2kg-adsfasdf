@@ -32,8 +32,8 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void addMarriageNotice(MarriageRegister notice, User user, boolean isMale) {
-        logger.debug("adding new marriage notice :serial number  {}", notice.getSerialNumber());
+    public void addMarriageNotice(MarriageRegister notice, boolean isMale, User user) {
+        logger.debug("adding new marriage notice :male pin number  {}", notice.getMale().getIdentificationNumberMale());
         //persisting witness
         addWitnesses(notice, isMale);
         marriageRegistrationDAO.addMarriageNotice(notice, user);

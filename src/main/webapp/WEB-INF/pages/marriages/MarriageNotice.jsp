@@ -42,20 +42,19 @@
     }
 
     function disableWitnessBaseOnParty() {
-        var partyMale = document.getElementById('submit_party0').checked
-        if (partyMale) {
-            disableMaleWitnesses('');
-            disableFemaleWitnesses('none');
+        var maleSerial = document.getElementById('fmSerial').value;
+        var femaleSerial = document.getElementById('mnSerial').value;
+        if (maleSerial != "") {
+            disableMaleWitnesses('')
+            disableFemaleWitnesses('none')
         }
-        var partyFemale = document.getElementById('submit_party1').checked
-        if (partyFemale) {
-            disableFemaleWitnesses('');
-            disableMaleWitnesses('none');
+        if (femaleSerial != "") {
+            disableMaleWitnesses('none')
+            disableFemaleWitnesses('')
         }
-        var partyBoth = document.getElementById('submit_party2').checked
-        if (partyBoth) {
-            disableMaleWitnesses('');
-            disableFemaleWitnesses('none');
+        if (femaleSerial != "" & maleSerial != "") {
+            disableMaleWitnesses('')
+            disableFemaleWitnesses('none')
         }
     }
 
@@ -134,7 +133,7 @@
     <tbody>
     <tr style="font-size:9pt">
         <td colspan="1"></td>
-        <td align="center" style="font-size:12pt;"><img src="<s:url value="/images/official-logo.png"/>"
+        <td align="center" style="font-size:12pt;"><img src="<s:url value="/images/official-logo.png"/>"/>
         </td>
         <td>
             <table border="1" style="margin-top:1px;width:100%;border:1px solid #000;border-collapse:collapse;"
@@ -151,16 +150,35 @@
                 <tr>
                     <td><label><span class="font-8">අනුක්‍රමික අංකය
                             <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-                            <br>தொடர் இலக்கம்<br>Serial Number</span></label>
+                            <br>தொடர் இலக்கம்<br>Serial Number (male party)</span></label>
                     </td>
                     <td align="center">
                         <s:if test="false==true">
                             <%-- for edit mode of the marriage notice--%>
-                            <s:textfield name="marriageNotice.serialNumber" id="mnSerial" readonly="true" maxLength="10"
-                                         cssStyle="margin-left:20px"/>
+                            <s:textfield name="marriage.serialOfMaleNotice" id="mnSerial" readonly="true"
+                                         maxLength="10"
+                                         cssStyle="margin-left:20px" onblur="disableWitnessBaseOnParty()"/>
                         </s:if>
                         <s:else>
-                            <s:textfield name="marriageNotice.serialNumber" id="mnSerial" maxLength="10"/>
+                            <s:textfield name="marriage.serialOfMaleNotice" id="mnSerial" maxLength="10"
+                                         onblur="disableWitnessBaseOnParty()"/>
+                        </s:else>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label><span class="font-8">අනුක්‍රමික අංකය
+                            <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
+                            <br>தொடர் இலக்கம்<br>Serial Number(Female Party)</span></label>
+                    </td>
+                    <td align="center">
+                        <s:if test="false==true">
+                            <%-- for edit mode of the marriage notice--%>
+                            <s:textfield name="marriage.serialOfFemaleNotice" id="fmSerial" readonly="true" maxLength="10"
+                                         cssStyle="margin-left:20px" onblur="disableWitnessBaseOnParty()"/>
+                        </s:if>
+                        <s:else>
+                            <s:textfield name="marriage.serialOfFemaleNotice" id="fmSerial" maxLength="10"
+                                         onblur="disableWitnessBaseOnParty()"/>
                         </s:else>
                     </td>
                 </tr>
@@ -174,20 +192,9 @@
                     </td>
                     <td>
                         <s:label value="YYYY-MM-DD" cssStyle="margin-left:10px;font-size:10px"/><br>
-                        <s:textfield name="marriageNotice.receivedDate" id="submitDatePicker" maxLength="10"/>
+                        <s:textfield name="noticeReceivedDate" id="submitDatePicker" maxLength="10"/>
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        submitted party in si<br>submitted party in ta <br> submitted party
-                    </td>
-                    <td colspan="1" align="center">
-                        <s:radio name="submitted_party" id="submit_party"
-                                 list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('both.label')}"
-                                 onclick="disableWitnessBaseOnParty()"/>
-                    </td>
-                </tr>
-
             </table>
         </td>
     </tr>
@@ -231,7 +238,7 @@
         </td>
         <td align="center">
                 <%--todo change--%>
-            <s:radio name="marriageNotice.typeOfMarriage" list="#@java.util.HashMap@{'GENERAL':''}" value="true"/>
+            <s:radio name="marriage.bothPartySubmitted" list="#@java.util.HashMap@{'true':''}"/>
         </td>
         <td>
             නැත <br>
@@ -240,7 +247,7 @@
         </td>
         <td align="center">
                 <%--todo change--%>
-            <s:radio name="marriageNotice.typeOfMarriage" list="#@java.util.HashMap@{'GENERAL':''}" value="true"/>
+            <s:radio name="marriage.bothPartySubmitted" list="#@java.util.HashMap@{'false':''}"/>
         </td>
     </tr>
     <tr>
@@ -255,7 +262,7 @@
             General
         </td>
         <td align="center">
-            <s:radio name="marriageNotice.typeOfMarriage" list="#@java.util.HashMap@{'GENERAL':''}" value="true"/>
+            <s:radio name="marriage.typeOfMarriage" list="#@java.util.HashMap@{'GENERAL':''}" value="true"/>
         </td>
         <td>
             උඩරට බින්න <br>
@@ -263,7 +270,7 @@
             Kandyan Binna
         </td>
         <td align="center">
-            <s:radio name="marriageNotice.typeOfMarriage" list="#@java.util.HashMap@{'KANDYAN_BINNA':''}" value="true"/>
+            <s:radio name="marriage.typeOfMarriage" list="#@java.util.HashMap@{'KANDYAN_BINNA':''}" value="true"/>
         </td>
         <td>
             උඩරට බින්න දීග <br>
@@ -272,7 +279,7 @@
             Deega
         </td>
         <td align="center">
-            <s:radio name="marriageNotice.typeOfMarriage" list="#@java.util.HashMap@{'KANDYAN_DEEGA':''}" value="true"/>
+            <s:radio name="marriage.typeOfMarriage" list="#@java.util.HashMap@{'KANDYAN_DEEGA':''}" value="true"/>
         </td>
     </tr>
     <tr>
@@ -285,21 +292,21 @@
             Registrars Office/ DS Office <br>
         </td>
         <td align="center">
-            <s:radio name="marriageNotice.placeOfMarriage" list="#@java.util.HashMap@{'DS_OFFICE':''}" value="true"/>
+            <s:radio name="marriage.placeOfMarriage" list="#@java.util.HashMap@{'DS_OFFICE':''}" value="true"/>
         </td>
         <td>
             දේවස්ථානය <br>
             Church <br>
         </td>
         <td align="center">
-            <s:radio name="marriageNotice.placeOfMarriage" list="#@java.util.HashMap@{'CHURCH':''}" value="true"/>
+            <s:radio name="marriage.placeOfMarriage" list="#@java.util.HashMap@{'CHURCH':''}" value="true"/>
         </td>
         <td>වෙනත් <br>
             Other
         </td>
         <br>
         <td align="center">
-            <s:radio name="marriageNotice.placeOfMarriage" list="#@java.util.HashMap@{'OTHER':''}" value="true"/>
+            <s:radio name="marriage.placeOfMarriage" list="#@java.util.HashMap@{'OTHER':''}" value="true"/>
         </td>
     </tr>
     </tbody>
@@ -333,7 +340,7 @@
             Identification Number.
         </td>
         <td colspan="1" rowspan="2" align="left">
-            <s:textfield name="marriageNotice.male.identificationNumberMale" id="identification_male" maxLength="10"/>
+            <s:textfield name="marriage.male.identificationNumberMale" id="identification_male" maxLength="10"/>
         </td>
         <td colspan="1">
             උපන් දිනය <br>
@@ -341,7 +348,7 @@
             Date of Birth
         </td>
         <td colspan="1">
-            <s:textfield name="marriageNotice.male.dateOfBirthMale" id="date_of_birth_male" maxLength="10"/>
+            <s:textfield name="marriage.male.dateOfBirthMale" id="date_of_birth_male" maxLength="10"/>
         </td>
     </tr>
     <tr>
@@ -352,7 +359,7 @@
 
         </td>
         <td colspan="1">
-            <s:textfield name="marriageNotice.male.ageAtLastBirthDayMale" id="age_at_last_bd_male" maxLength="10"
+            <s:textfield name="marriage.male.ageAtLastBirthDayMale" id="age_at_last_bd_male" maxLength="10"
                          value=""/>
         </td>
     </tr>
@@ -365,7 +372,7 @@
             Name in any of the official languages (Sinhala / Tamil)
         </td>
         <td colspan="3">
-            <s:textarea name="marriageNotice.male.nameInOfficialLanguageMale" id="name_official_male"
+            <s:textarea name="marriage.male.nameInOfficialLanguageMale" id="name_official_male"
                         cssStyle="width:98.2%;"/>
         </td>
     </tr>
@@ -377,7 +384,7 @@
             Name in English
         </td>
         <td colspan="3">
-            <s:textarea name="marriageNotice.male.nameInEnglishMale" id="name_english_male" cssStyle="width:98.2%;"/>
+            <s:textarea name="marriage.male.nameInEnglishMale" id="name_english_male" cssStyle="width:98.2%;"/>
         </td>
     </tr>
 
@@ -388,7 +395,7 @@
             Resident Address
         </td>
         <td colspan="3">
-            <s:textarea name="marriageNotice.male.residentAddressMale" id="address_male" cssStyle="width:98.2%;"/>
+            <s:textarea name="marriage.male.residentAddressMale" id="address_male" cssStyle="width:98.2%;"/>
         </td>
     </tr>
 
@@ -428,7 +435,7 @@
             Duration
         </td>
         <td>
-            <s:textfield name="marriageNotice.male.durationMale" id="duration_male" cssStyle="width:98.2%;"
+            <s:textfield name="marriage.male.durationMale" id="duration_male" cssStyle="width:98.2%;"
                          maxLength="3" value=""/>
         </td>
     </tr>
@@ -438,7 +445,7 @@
             Rank or Profession <br>
         </td>
         <td>
-            <s:textfield name="marriageNotice.male.rankOrProfessionMale" id="rank_male"
+            <s:textfield name="marriage.male.rankOrProfessionMale" id="rank_male"
                          cssStyle="width:98.2%;"
                          maxLength="10"/>
         </td>
@@ -458,7 +465,7 @@
             Telephone Numbers
         </td>
         <td>
-            <s:textfield name="marriageNotice.male.tpNumberMale" id="tp_number_male" cssStyle="width:98.2%;"
+            <s:textfield name="marriage.male.tpNumberMale" id="tp_number_male" cssStyle="width:98.2%;"
                          maxLength="10"/>
         </td>
         <td>
@@ -466,7 +473,7 @@
             மின்னஞ்சல் <br>
             Email
         </td>
-        <td><s:textfield name="marriageNotice.male.emailMale" id="email_male" cssStyle="width:98.2%;"/></td>
+        <td><s:textfield name="marriage.male.emailMale" id="email_male" cssStyle="width:98.2%;"/></td>
     </tr>
     </tbody>
 </table>
@@ -496,7 +503,7 @@
 
         </td>
         <td align="center">
-            <s:radio name="marriageNotice.male.civilStatusMale" list="#@java.util.HashMap@{'NEVER_MARRIED':''}"
+            <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'NEVER_MARRIED':''}"
                      value="true"/>
         </td>
         <td>
@@ -505,7 +512,7 @@
             Divorced
         </td>
         <td align="center">
-            <s:radio name="marriageNotice.male.civilStatusMale" list="#@java.util.HashMap@{'DIVORCED':''}"
+            <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'DIVORCED':''}"
                      value="true"/>
         </td>
         <td>
@@ -514,7 +521,7 @@
             Widowed
         </td>
         <td align="center">
-            <s:radio name="marriageNotice.male.civilStatusMale" list="#@java.util.HashMap@{'WIDOWED':''}" value="true"/>
+            <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'WIDOWED':''}" value="true"/>
         </td>
         <td>
             නිෂ්ප්‍රභාකර ඇත <br>
@@ -522,7 +529,7 @@
             Anulled
         </td>
         <td align="center">
-            <s:radio name="marriageNotice.male.civilStatusMale" list="#@java.util.HashMap@{'ANULLED':''}" value="true"/>
+            <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'ANULLED':''}" value="true"/>
         </td>
     </tr>
 
@@ -533,7 +540,7 @@
             Fathers Identification Number (PIN) or NIC
         </td>
         <td colspan="7" align="left">
-            <s:textfield name="marriageNotice.male.fatherIdentificationNumberMale" id="father_pin_or_nic_male"
+            <s:textfield name="marriage.male.fatherIdentificationNumberMale" id="father_pin_or_nic_male"
                          cssStyle="width:240px;" maxLength="10"/>
         </td>
 
@@ -545,7 +552,7 @@
             Fathers full name
         </td>
         <td colspan="7">
-            <s:textarea name="marriageNotice.male.fatherFullNameMale" id="father_full_name_male"
+            <s:textarea name="marriage.male.fatherFullNameMale" id="father_full_name_male"
                         cssStyle="width:98.2%;"/>
         </td>
     </tr>
@@ -556,7 +563,7 @@
             Fathers rank or profession
         </td>
         <td colspan="7">
-            <s:textarea name="marriageNotice.male.fatherRankOrProfessionMale" id="father_rank_male"
+            <s:textarea name="marriage.male.fatherRankOrProfessionMale" id="father_rank_male"
                         cssStyle="width:98.2%;"/>
         </td>
     </tr>
@@ -567,7 +574,7 @@
             Consent if any, by whom given
         </td>
         <td colspan="7">
-            <s:textarea name="marriageNotice.male.consentIfAnyMale" id="consent_if_any_male" cssStyle="width:98.2%;"/>
+            <s:textarea name="marriage.male.consentIfAnyMale" id="consent_if_any_male" cssStyle="width:98.2%;"/>
         </td>
     </tr>
     <tr>
@@ -610,7 +617,7 @@
             Identification Number.
         </td>
         <td colspan="1" rowspan="2" align="left">
-            <s:textfield name="marriageNotice.female.identificationNumberFemale" id="identification_female"
+            <s:textfield name="marriage.female.identificationNumberFemale" id="identification_female"
                          maxLength="10"/>
         </td>
         <td colspan="1">
@@ -619,7 +626,7 @@
             Date of Birth
         </td>
         <td colspan="1">
-            <s:textfield name="marriageNotice.female.dateOfBirthFemale" id="date_of_birth_female" maxLength="10"/>
+            <s:textfield name="marriage.female.dateOfBirthFemale" id="date_of_birth_female" maxLength="10"/>
         </td>
     </tr>
     <tr>
@@ -630,7 +637,7 @@
 
         </td>
         <td colspan="1">
-            <s:textfield name="marriageNotice.female.ageAtLastBirthDayFemale" id="age_at_last_bd_female" value=""
+            <s:textfield name="marriage.female.ageAtLastBirthDayFemale" id="age_at_last_bd_female" value=""
                          maxLength="10"/>
         </td>
     </tr>
@@ -643,7 +650,7 @@
             Name in any of the official languages (Sinhala / Tamil)
         </td>
         <td colspan="3">
-            <s:textarea name="marriageNotice.female.nameInOfficialLanguageFemale" id="name_official_female"
+            <s:textarea name="marriage.female.nameInOfficialLanguageFemale" id="name_official_female"
                         cssStyle="width:98.2%;"/>
         </td>
     </tr>
@@ -655,7 +662,7 @@
             Name in English
         </td>
         <td colspan="3">
-            <s:textarea name="marriageNotice.female.nameInEnglishFemale" id="name_english_female"
+            <s:textarea name="marriage.female.nameInEnglishFemale" id="name_english_female"
                         cssStyle="width:98.2%;"/>
         </td>
     </tr>
@@ -667,7 +674,7 @@
             Resident Address
         </td>
         <td colspan="3">
-            <s:textarea name="marriageNotice.female.residentAddressFemale" id="address_female" cssStyle="width:98.2%;"/>
+            <s:textarea name="marriage.female.residentAddressFemale" id="address_female" cssStyle="width:98.2%;"/>
         </td>
     </tr>
 
@@ -707,7 +714,7 @@
             Duration
         </td>
         <td>
-            <s:textfield name="marriageNotice.female.durationFemale" id="duration_female" cssStyle="width:98.2%;"
+            <s:textfield name="marriage.female.durationFemale" id="duration_female" cssStyle="width:98.2%;"
                          maxLength="3" value=""/>
         </td>
     </tr>
@@ -717,7 +724,7 @@
             Rank or Profession <br>
         </td>
         <td>
-            <s:textfield name="marriageNotice.female.rankOrProfessionFemale" id="rank_female"
+            <s:textfield name="marriage.female.rankOrProfessionFemale" id="rank_female"
                          cssStyle="width:98.2%;"
                          maxLength="10"/>
         </td>
@@ -737,7 +744,7 @@
             Telephone Numbers
         </td>
         <td>
-            <s:textfield name="marriageNotice.female.tpNumberFemale" id="tp_number_female" cssStyle="width:98.2%;"
+            <s:textfield name="marriage.female.tpNumberFemale" id="tp_number_female" cssStyle="width:98.2%;"
                          maxLength="10"/>
         </td>
         <td>
@@ -745,7 +752,7 @@
             மின்னஞ்சல் <br>
             Email
         </td>
-        <td><s:textfield name="marriageNotice.female.emailFemale" id="email_female" cssStyle="width:98.2%;"/></td>
+        <td><s:textfield name="marriage.female.emailFemale" id="email_female" cssStyle="width:98.2%;"/></td>
     </tr>
     </tbody>
 </table>
@@ -775,7 +782,7 @@
 
         </td>
         <td align="center">
-            <s:radio name="marriageNotice.female.civilStatusFemale" list="#@java.util.HashMap@{'NEVER_MARRIED':''}"
+            <s:radio name="marriage.female.civilStatusFemale" list="#@java.util.HashMap@{'NEVER_MARRIED':''}"
                      value="true"/>
         </td>
         <td>
@@ -784,7 +791,7 @@
             Divorced
         </td>
         <td align="center">
-            <s:radio name="marriageNotice.female.civilStatusFemale" list="#@java.util.HashMap@{'DIVORCED':''}"
+            <s:radio name="marriage.female.civilStatusFemale" list="#@java.util.HashMap@{'DIVORCED':''}"
                      value="true"/>
         </td>
         <td>
@@ -793,7 +800,7 @@
             Widowed
         </td>
         <td align="center">
-            <s:radio name="marriageNotice.female.civilStatusFemale" list="#@java.util.HashMap@{'WIDOWED':''}"
+            <s:radio name="marriage.female.civilStatusFemale" list="#@java.util.HashMap@{'WIDOWED':''}"
                      value="true"/>
         </td>
         <td>
@@ -802,7 +809,7 @@
             Anulled
         </td>
         <td align="center">
-            <s:radio name="marriageNotice.female.civilStatusFemale" list="#@java.util.HashMap@{'ANULLED':''}"
+            <s:radio name="marriage.female.civilStatusFemale" list="#@java.util.HashMap@{'ANULLED':''}"
                      value="true"/>
         </td>
     </tr>
@@ -814,7 +821,7 @@
             Fathers Identification Number (PIN) or NIC
         </td>
         <td colspan="7" align="left">
-            <s:textfield name="marriageNotice.female.fatherIdentificationNumberFemale" id="father_pin_or_nic_female"
+            <s:textfield name="marriage.female.fatherIdentificationNumberFemale" id="father_pin_or_nic_female"
                          cssStyle="width:240px;" maxLength="10"/>
         </td>
 
@@ -826,7 +833,7 @@
             Fathers full name
         </td>
         <td colspan="7">
-            <s:textarea name="marriageNotice.female.fatherFullNameFemale" id="father_full_name_female"
+            <s:textarea name="marriage.female.fatherFullNameFemale" id="father_full_name_female"
                         cssStyle="width:98.2%;"/>
         </td>
     </tr>
@@ -837,7 +844,7 @@
             Fathers rank or profession
         </td>
         <td colspan="7">
-            <s:textarea name="marriageNotice.female.fatherRankOrProfessionFemale" id="father_rank_female"
+            <s:textarea name="marriage.female.fatherRankOrProfessionFemale" id="father_rank_female"
                         cssStyle="width:98.2%;"/>
         </td>
     </tr>
@@ -848,7 +855,7 @@
             Consent if any, by whom given
         </td>
         <td colspan="7">
-            <s:textarea name="marriageNotice.female.consentIfAnyFemale" id="consent_if_any_female"
+            <s:textarea name="marriage.female.consentIfAnyFemale" id="consent_if_any_female"
                         cssStyle="width:98.2%;"/>
         </td>
     </tr>
@@ -900,12 +907,12 @@ if male party is submitted the notice
             Identification Number
         </td>
         <td>
-            <s:textfield name="marriageNotice.maleNoticeWitness_1.identificationNumber" id="m_witness_1_pin"
+            <s:textfield name="marriage.maleNoticeWitness_1.identificationNumber" id="m_witness_1_pin"
                          cssStyle="width:240px;"
                          maxLength="10"/>
         </td>
         <td>
-            <s:textfield name="marriageNotice.maleNoticeWitness_2.identificationNumber" id="m_witness_2_pin"
+            <s:textfield name="marriage.maleNoticeWitness_2.identificationNumber" id="m_witness_2_pin"
                          cssStyle="width:240px;"
                          maxLength="10"/>
         </td>
@@ -916,11 +923,13 @@ if male party is submitted the notice
             Full Name <br>
         </td>
         <td>
-            <s:textarea name="marriageNotice.maleNoticeWitness_1.fullName" id="m_witness_1_full_name" cssStyle="width:98.2%;"
+            <s:textarea name="marriage.maleNoticeWitness_1.fullName" id="m_witness_1_full_name"
+                        cssStyle="width:98.2%;"
                     />
         </td>
         <td>
-            <s:textarea name="marriageNotice.maleNoticeWitness_2.fullName" id="m_witness_2_full_name" cssStyle="width:98.2%;"
+            <s:textarea name="marriage.maleNoticeWitness_2.fullName" id="m_witness_2_full_name"
+                        cssStyle="width:98.2%;"
                     />
         </td>
     </tr>
@@ -930,11 +939,13 @@ if male party is submitted the notice
             Rank or Profession <br>
         </td>
         <td>
-            <s:textarea name="marriageNotice.maleNoticeWitness_1.rankOrProfession" id="m_witness_1_rank" cssStyle="width:98.2%;"
+            <s:textarea name="marriage.maleNoticeWitness_1.rankOrProfession" id="m_witness_1_rank"
+                        cssStyle="width:98.2%;"
                     />
         </td>
         <td>
-            <s:textarea name="marriageNotice.maleNoticeWitness_2.rankOrProfession" id="m_witness_2_rank" cssStyle="width:98.2%;"
+            <s:textarea name="marriage.maleNoticeWitness_2.rankOrProfession" id="m_witness_2_rank"
+                        cssStyle="width:98.2%;"
                     />
         </td>
     </tr>
@@ -944,11 +955,13 @@ if male party is submitted the notice
             Place of Residence <br>
         </td>
         <td>
-            <s:textarea name="marriageNotice.maleNoticeWitness_1.address" id="m_witness_1_place_residence" cssStyle="width:98.2%;"
+            <s:textarea name="marriage.maleNoticeWitness_1.address" id="m_witness_1_place_residence"
+                        cssStyle="width:98.2%;"
                     />
         </td>
         <td>
-            <s:textarea name="marriageNotice.maleNoticeWitness_2.address" id="m_witness_2_place_residence" cssStyle="width:98.2%;"
+            <s:textarea name="marriage.maleNoticeWitness_2.address" id="m_witness_2_place_residence"
+                        cssStyle="width:98.2%;"
                     />
         </td>
     </tr>
@@ -986,12 +999,12 @@ if female party is submitted the notice
             Identification Number
         </td>
         <td>
-            <s:textfield name="marriageNotice.femaleNoticeWitness_1.identificationNumber" id="f_witness_1_pin"
+            <s:textfield name="marriage.femaleNoticeWitness_1.identificationNumber" id="f_witness_1_pin"
                          cssStyle="width:240px;"
                          maxLength="10"/>
         </td>
         <td>
-            <s:textfield name="marriageNotice.femaleNoticeWitness_2.identificationNumber" id="f_witness_2_pin"
+            <s:textfield name="marriage.femaleNoticeWitness_2.identificationNumber" id="f_witness_2_pin"
                          cssStyle="width:240px;"
                          maxLength="10"/>
         </td>
@@ -1002,11 +1015,13 @@ if female party is submitted the notice
             Full Name <br>
         </td>
         <td>
-            <s:textarea name="marriageNotice.femaleNoticeWitness_1.fullName" id="f_witness_1_full_name" cssStyle="width:98.2%;"
+            <s:textarea name="marriage.femaleNoticeWitness_1.fullName" id="f_witness_1_full_name"
+                        cssStyle="width:98.2%;"
                     />
         </td>
         <td>
-            <s:textarea name="marriageNotice.femaleNoticeWitness_2.fullName" id="f_witness_2_full_name" cssStyle="width:98.2%;"
+            <s:textarea name="marriage.femaleNoticeWitness_2.fullName" id="f_witness_2_full_name"
+                        cssStyle="width:98.2%;"
                     />
         </td>
     </tr>
@@ -1016,12 +1031,12 @@ if female party is submitted the notice
             Rank or Profession <br>
         </td>
         <td>
-            <s:textarea name="marriageNotice.femaleNoticeWitness_1.rankOrProfession" id="f_witness_1_rank"
+            <s:textarea name="marriage.femaleNoticeWitness_1.rankOrProfession" id="f_witness_1_rank"
                         cssStyle="width:98.2%;"
                     />
         </td>
         <td>
-            <s:textarea name="marriageNotice.femaleNoticeWitness_2.rankOrProfession" id="f_witness_2_rank"
+            <s:textarea name="marriage.femaleNoticeWitness_2.rankOrProfession" id="f_witness_2_rank"
                         cssStyle="width:98.2%;"
                     />
         </td>
@@ -1032,12 +1047,12 @@ if female party is submitted the notice
             Place of Residence <br>
         </td>
         <td>
-            <s:textarea name="marriageNotice.femaleNoticeWitness_1.address" id="f_witness_1_place_residence"
+            <s:textarea name="marriage.femaleNoticeWitness_1.address" id="f_witness_1_place_residence"
                         cssStyle="width:98.2%;"
                     />
         </td>
         <td>
-            <s:textarea name="marriageNotice.femaleNoticeWitness_2.address" id="f_witness_2_place_residence"
+            <s:textarea name="marriage.femaleNoticeWitness_2.address" id="f_witness_2_place_residence"
                         cssStyle="width:98.2%;"
                     />
         </td>
