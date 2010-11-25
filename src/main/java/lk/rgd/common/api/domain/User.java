@@ -400,7 +400,7 @@ public class User implements Serializable {
         }
 
         for (UserLocation ul : locations) {
-            if (ul.getLifeCycleInfo().isActive() && ul.getLocationId() == id) {
+            if (ul.getLocationId() == id && ul.getLifeCycleInfo().isActive()) {
                 return true;
             }
         }
@@ -408,22 +408,20 @@ public class User implements Serializable {
     }
 
     public Map<Integer, String> getActiveLocations(String language) {
-        Map<Integer, String> al = new HashMap<Integer, String>();
+        Map<Integer, String> al = new LinkedHashMap<Integer, String>();
+        al.put(primaryLocation.getLocationUKey(), primaryLocation.getLocationCode() + " : " + primaryLocation.getEnLocationName());
 
-        Iterator<UserLocation> it = getLocations().iterator();
-        while (it.hasNext()) {
-            UserLocation location = it.next();
-
-            if (location.getLifeCycleInfo().isActive()) {
+        for (UserLocation ul : locations) {
+            if (ul.getLifeCycleInfo().isActive()) {
                 if (AppConstants.SINHALA.equals(language)) {
-                    al.put(location.getLocation().getLocationUKey(),
-                        location.getLocation().getLocationCode() + " : " + location.getLocation().getSiLocationName());
+                    al.put(ul.getLocation().getLocationUKey(),
+                        ul.getLocation().getLocationCode() + " : " + ul.getLocation().getSiLocationName());
                 } else if (AppConstants.ENGLISH.equals(language)) {
-                    al.put(location.getLocation().getLocationUKey(),
-                        location.getLocation().getLocationCode() + " : " + location.getLocation().getEnLocationName());
+                    al.put(ul.getLocation().getLocationUKey(),
+                        ul.getLocation().getLocationCode() + " : " + ul.getLocation().getEnLocationName());
                 } else if (AppConstants.TAMIL.equals(language)) {
-                    al.put(location.getLocation().getLocationUKey(),
-                        location.getLocation().getLocationCode() + " : " + location.getLocation().getTaLocationName());
+                    al.put(ul.getLocation().getLocationUKey(),
+                        ul.getLocation().getLocationCode() + " : " + ul.getLocation().getTaLocationName());
                 }
             }
         }
