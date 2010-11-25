@@ -157,7 +157,9 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<BirthDeclaration> getByBDDivisionStatusBirthTypeAndRegisterDateRange(BDDivision birthDivision, BirthDeclaration.State status, BirthDeclaration.BirthType birthType, Date startDate, Date endDate, int pageNo, int noOfRows) {
+    public List<BirthDeclaration> getByBDDivisionStatusBirthTypeAndRegisterDateRange(BDDivision birthDivision,
+        BirthDeclaration.State status, BirthDeclaration.BirthType birthType, Date startDate, Date endDate, int pageNo,
+        int noOfRows) {
         Query q = em.createNamedQuery("get.by.division.status.birthType.register.date").
             setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("birthDivision", birthDivision);
@@ -218,7 +220,8 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<BirthDeclaration> getHistoricalAlterationRecordForBDDivisionAndSerialNo(BDDivision birthDivision, long serialNo, long idUKey) {
+    public List<BirthDeclaration> getHistoricalAlterationRecordForBDDivisionAndSerialNo(BDDivision birthDivision,
+        long serialNo, long idUKey) {
         Query q = em.createNamedQuery("get.historical.alteration.records.by.bdDivision.and.serialNo");
         q.setParameter("birthDivision", birthDivision.getBdDivisionUKey());
         q.setParameter("bdfSerialNo", serialNo);
@@ -245,7 +248,8 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getPaginatedListForStateAndBirthTypeByDSDivision(DSDivision dsDivision, int pageNo,
         int noOfRows, BirthDeclaration.State status, BirthDeclaration.BirthType birthType) {
-        Query q = em.createNamedQuery("filter.by.dsdivision.status.and.birthType");
+        Query q = em.createNamedQuery("filter.by.dsdivision.status.and.birthType").
+            setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("dsDivision", dsDivision);
         q.setParameter("status", status);
         q.setParameter("birthType", birthType);
@@ -272,7 +276,8 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getByDSDivisionStatusBirthTypeAndRegisterDateRange(DSDivision dsDivision,
-        BirthDeclaration.State status, BirthDeclaration.BirthType birthType, Date startDate, Date endDate, int pageNo, int noOfRows) {
+        BirthDeclaration.State status, BirthDeclaration.BirthType birthType, Date startDate, Date endDate, int pageNo,
+        int noOfRows) {
         Query q = em.createNamedQuery("get.by.dsdivision.status.birthType.register.date").
             setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("dsDivision", dsDivision);
@@ -287,8 +292,8 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<BirthDeclaration> getByDSDivisionStatusAndConfirmationReceiveDateRange(DSDivision dsDivision, Date startDate, Date endDate,
-        int pageNo, int noOfRows) {
+    public List<BirthDeclaration> getByDSDivisionStatusAndConfirmationReceiveDateRange(DSDivision dsDivision,
+        Date startDate, Date endDate, int pageNo, int noOfRows) {
         Query q = em.createNamedQuery("get.by.dsdivision.status.confirmation.receive.date").
             setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("dsDivision", dsDivision);
