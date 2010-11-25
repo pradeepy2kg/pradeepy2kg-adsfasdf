@@ -1,10 +1,7 @@
 package lk.rgd.crs.web.action.marriages;
 
 import com.opensymphony.xwork2.ActionSupport;
-import lk.rgd.common.api.dao.DSDivisionDAO;
-import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.domain.User;
-import lk.rgd.crs.api.dao.MRDivisionDAO;
 import lk.rgd.crs.api.domain.MarriageRegister;
 import lk.rgd.crs.api.domain.Witness;
 import lk.rgd.crs.api.service.MarriageRegistrationService;
@@ -88,9 +85,10 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         return "pageLoad";
     }
 
-    /**
-     * populate basic list such as district list/ds division lis and mr division list
-     */
+    public String registerMarriage() {
+        return "success";
+    }
+
     public Map getSession() {
         return session;
     }

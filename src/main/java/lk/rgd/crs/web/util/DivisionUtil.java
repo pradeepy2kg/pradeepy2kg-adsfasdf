@@ -12,6 +12,8 @@ import java.util.Map;
 
 /**
  * @author Mahesha
+ * populate basic and dynamic lists related to divisions such as 
+ * districts/ ds divisions/ birth divisions/ mr divisions.
  */
 public class DivisionUtil {
 
@@ -21,14 +23,12 @@ public class DivisionUtil {
     private static DSDivisionDAO dsDivisionDAO;
     private static BDDivisionDAO bdDivisionDAO;
     private static MRDivisionDAO mrDivisionDAO;
+    private static DivisionUtil divisionUtil = new DivisionUtil();
 
-    private DivisionUtil() {
-    }
-
-    public static DivisionUtil createInstance(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO) {
+    private static DivisionUtil createInstance(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO) {
         DivisionUtil.districtDAO = districtDAO;
         DivisionUtil.dsDivisionDAO = dsDivisionDAO;
-        return new DivisionUtil();
+        return divisionUtil;
     }
 
     public static DivisionUtil createBirthInstance(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO) {

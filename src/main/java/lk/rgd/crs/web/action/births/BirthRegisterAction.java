@@ -148,6 +148,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.locationDAO = locationDAO;
         this.assignmentDAO = assignmentDAO;
         this.birthAlterationService = birthAlterationService;
+
+        dsDivisionList = new HashMap<Integer, String>();
+        bdDivisionList = new HashMap<Integer, String>();
     }
 
     /**
@@ -954,13 +957,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     private void populateDynamicLists(String language) {
-        dsDivisionList = new HashMap<Integer, String>();
-        bdDivisionList = new HashMap<Integer, String>();
-        //set first item of the district list as default value
+        //Polulate division lists and set the first item as default
         birthDistrictId = DivisionUtil.findDefaultListValue(districtList, birthDistrictId);
-        //populate dsdivision list and set first item as default.
         dsDivisionId = DivisionUtil.findDivisionList(dsDivisionList, dsDivisionId, birthDistrictId, "DSDivision", user, language);
-        //populate bddivision list and set first item as default.
         birthDivisionId = DivisionUtil.findDivisionList(bdDivisionList, birthDivisionId, dsDivisionId, "BDDivision", user, language);
     }
 

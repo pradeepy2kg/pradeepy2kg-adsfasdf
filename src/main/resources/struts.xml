@@ -1160,6 +1160,9 @@
                 method="marriageRegistrationInit">
             <result type="tiles" name="pageLoad">epr.marriageRegistration</result>
         </action>
-
+        <action name="eprMarriageRegistration" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
+                method="registerMarriage">
+            <result type="tiles" name="success">epr.home</result>
+        </action>
     </package>
 </struts>
