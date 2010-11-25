@@ -1,8 +1,11 @@
 package lk.rgd.crs.api.dao;
 
+import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.domain.MarriageRegister;
 import lk.rgd.crs.api.domain.Witness;
+
+import java.util.List;
 
 /**
  * @author amith jayasekara
@@ -39,4 +42,16 @@ public interface MarriageRegistrationDAO {
      * @param user             use who performs action
      */
     public void updateMarriageRegister(MarriageRegister marriageRegister, User user);
+
+    /**
+     * Returns paginated list of Marriage Registrations for the given status based on the DSDivision
+     *
+     * @param dsDivision the divisional secretariat
+     * @param state      the state of the record to be returned
+     * @param pageNo     the page number (start from 1)
+     * @param noOfRows   the number of rows to return per page
+     * @return the matching list of marriage registrations
+     */
+    public List<MarriageRegister> getPaginatedListForStateByDSDivision(DSDivision dsDivision,
+        MarriageRegister.State state, int pageNo, int noOfRows);
 }

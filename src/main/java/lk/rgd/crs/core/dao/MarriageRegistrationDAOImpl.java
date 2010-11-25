@@ -1,5 +1,6 @@
 package lk.rgd.crs.core.dao;
 
+import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.core.dao.BaseDAO;
 import lk.rgd.crs.api.dao.MarriageRegistrationDAO;
@@ -8,7 +9,9 @@ import lk.rgd.crs.api.domain.Witness;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Query;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author amith jayasekara
@@ -52,5 +55,18 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
         marriageRegister.getLifeCycleInfo().setLastUpdatedTimestamp(new Date());
         marriageRegister.getLifeCycleInfo().setLastUpdatedUser(user);
         em.merge(marriageRegister);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<MarriageRegister> getPaginatedListForStateByDSDivision(DSDivision dsDivision,
+        MarriageRegister.State state, int pageNo, int noOfRows) {
+        Query q = em.createNamedQuery("filter.by.dsDivision.and.state").
+            setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+        q.setParameter("dsDivision", dsDivision);
+        q.setParameter("state", state);
+        return q.getResultList();
     }
 }
