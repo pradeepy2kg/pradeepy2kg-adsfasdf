@@ -449,7 +449,8 @@
 
         </td>
         <td>
-                <%--        todo--%>
+            <s:select list="raceList" name="fatherRace" headerKey="0" headerValue="%{getText('select_race.label')}"
+                      cssStyle="width:200px;"/>
         </td>
     </tr>
     <tr>
@@ -728,7 +729,8 @@
 
         </td>
         <td>
-                <%--        todo--%>
+            <s:select list="raceList" name="fatherRace" headerKey="0" headerValue="%{getText('select_race.label')}"
+                      cssStyle="width:200px;"/>
         </td>
     </tr>
     <tr>
