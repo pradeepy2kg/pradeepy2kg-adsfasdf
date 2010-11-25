@@ -54,6 +54,19 @@
         })
     });
 
+    $(document).ready(function() {
+        $('#search-result').dataTable({
+            "bPaginate": true,
+            "bLengthChange": false,
+            "bFilter": true,
+            "bSort": true,
+            "bInfo": false,
+            "bAutoWidth": false,
+            "bJQueryUI": true,
+            "sPaginationType": "full_numbers"
+        });
+    });
+
     function initPage() {
     }
 </script>
@@ -85,8 +98,8 @@
                     <s:label value="%{getText('district.label')}"/>
                 </td>
                 <td>
-                    <s:select id="districtId" name="districtId" list="districtList"
-                              value="marriageDistrictId" cssStyle="width:98.5%; width:240px;"/>
+                    <s:select id="districtId" name="districtId" list="districtList" value="districtId"
+                              cssStyle="width:98.5%; width:240px;"/>
                 </td>
                 <td></td>
                 <td>
@@ -103,7 +116,7 @@
                 </td>
                 <td>
                     <s:select id="mrDivisionId" name="mrDivisionId" list="mrDivisionList"
-                              value="marriageDivisionId" headerKey="0" headerValue="%{getText('all.divisions.label')}"
+                              value="mrDivisionId" headerKey="0" headerValue="%{getText('all.divisions.label')}"
                               cssStyle="width:98.5%; width:240px;"/>
                 </td>
                 <td></td>
@@ -155,8 +168,64 @@
             </tbody>
         </table>
     </div>
-
 </div>
 <div class="form-submit">
     <s:submit value="%{getText('bdfSearch.button')}"/>
+</div>
+
+<div id="marriage-notice-search" style="margin-top:30px;">
+    <s:actionmessage cssClass="alreadyPrinted"/>
+    <%--TODO uncomment--%>
+    <s:if test="searchList.size > 0">
+        <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;">
+            <legend><b><s:label value="%{getText('searchResult.label')}"/> </b></legend>
+            <table id="search-result" width="100%" cellpadding="0" cellspacing="0" class="display">
+                <thead>
+                <tr>
+                    <th width="20px"><s:label value="%{getText('division.label')}"/></th>
+                    <th width="70px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
+                    <th><s:label name="name" value="%{getText('name.label')}"/></th>
+                    <th width="90px"><s:label name="received" value="%{getText('received.label')}"/></th>
+                    <th width="40px"><s:label name="live" value="%{getText('live.label')}"/></th>
+                    <th width="20px"></th>
+                    <th width="20px"></th>
+                    <th width="20px"></th>
+                    <th width="20px"></th>
+                </tr>
+                </thead>
+                <tbody>
+                    <%--TODO uncomment--%>
+                    <%--<s:iterator status="approvalStatus" value="searchList">--%>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td align="center">
+                        <s:a href="%{editSelected}" title="%{getText('editToolTip.label')}">
+                            <img src="<s:url value='/images/edit.png'/>" width="25" height="25" border="none"/>
+                        </s:a>
+                    </td>
+                    <td align="center">
+                        <s:a href="%{approveSelected}" title="%{getText('approveToolTip.label')}">
+                            <img src="<s:url value='/images/approve.gif'/>" width="25" height="25" border="none"/>
+                        </s:a>
+                    </td>
+                    <td align="center">
+                        <s:a href="%{rejectSelected}" title="%{getText('rejectToolTip.label')}">
+                            <img src="<s:url value='/images/reject.gif'/>" width="25" height="25" border="none"/>
+                        </s:a>
+                    </td>
+                    <td align="center">
+                        <s:a href="%{deleteSelected}" title="%{getText('deleteToolTip.label')}">
+                            <img src="<s:url value='/images/delete.gif'/>" width="25" height="25" border="none"/>
+                        </s:a>
+                    </td>
+                </tr>
+                    <%--</s:iterator>--%>
+                </tbody>
+            </table>
+        </fieldset>
+    </s:if>
 </div>
