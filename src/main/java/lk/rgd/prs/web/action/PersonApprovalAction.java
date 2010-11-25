@@ -51,24 +51,14 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
     public String loadPersonApprovalPendingList() {
         logger.debug("Loading approval pending person list");
         locationList = user.getActiveLocations(language);
-        // TODO
-        noOfRows = appParametersDAO.getIntParameter(PRS_APPROVAL_ROWS_PER_PAGE);
-        if (locationId == 0) {
-            logger.debug("Load approval pending list for users all available locations");
-            // TODO
-        } else {
-            pageNo = 1;
-            approvalPendingList = service.getPRSPendingApprovalByLocation(locationDAO.getLocation(locationId), pageNo, noOfRows, user);
-        }
-        logger.debug("Loaded approval pending person list");
-        return SUCCESS;
-    }
 
-    /**
-     * This method used to redirect to person edit process in PersonRegisterAction from person pending approval list
-     * page
-     */
-    public String loadEditPage() {
+        noOfRows = appParametersDAO.getIntParameter(PRS_APPROVAL_ROWS_PER_PAGE);
+        pageNo = 1;
+        if (locationId == 0) {
+            locationId = user.getPrimaryLocation().getLocationUKey();
+        }
+        approvalPendingList = service.getPRSPendingApprovalByLocation(locationDAO.getLocation(locationId), pageNo, noOfRows, user);
+        logger.debug("Loaded approval pending person list");
         return SUCCESS;
     }
 

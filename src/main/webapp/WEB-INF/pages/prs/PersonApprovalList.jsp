@@ -43,8 +43,7 @@
                 <tr>
                     <td><s:label value="%{getText('registrationLocation.label')}"/></td>
                     <td>
-                        <s:select name="locationId" list="locationList" headerKey="0"
-                                  headerValue="%{getText('allLocation.label')}"/>
+                        <s:select name="locationId" list="locationList"/>
                     </td>
                     <td></td>
                     <td></td>
@@ -59,12 +58,12 @@
     </s:form>
 
     <s:if test="approvalPendingList.size > 0">
-        <fieldset style="margin-bottom:10px;margin-top:20px;border:none">
-            <legend></legend>
+        <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;">
+            <legend><b><s:label value="%{getText('searchResult.label')}"/></b></legend>
             <table id="person-approve-list" width="100%" cellpadding="0" cellspacing="0" class="display">
                 <thead>
                 <tr>
-                    <th width="60px"><s:label value="%{getText('locationCode.label')}"/> </th>
+                    <th width="60px"><s:label value="%{getText('locationCode.label')}"/></th>
                     <th width="110px">NIC</th>
                     <th width="600px"><s:label value="%{getText('label.personName')}"/></th>
                     <th width="200px"><s:label value="%{getText('label.state')}"/></th>
