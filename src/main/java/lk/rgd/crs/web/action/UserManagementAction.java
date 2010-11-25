@@ -166,16 +166,19 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
             user.setAssignedBDDistricts(assDistrict);
             user.setAssignedMRDistricts(assDistrict);
             user.setAssignedBDDSDivisions(assDSDivision);
-            //user.setStatus(User.State.ACTIVE);
             service.createUser(user, currentUser);
             userId = user.getUserId();
             addActionMessage(getText("data.Save.Success.label"));
             pageNo = 1;
         } else if (updated != null) {
-            updated.setAssignedBDDistricts(assDistrict);
-            updated.setAssignedMRDistricts(assDistrict);
-            updated.setAssignedBDDSDivisions(assDSDivision);
-            updated.setRole(roleDAO.getRole(roleId));
+            logger.debug("Edit user {}", updated.getUserName());
+            logger.debug("Edited user name {}", user.getUserName());
+
+            user.setAssignedBDDistricts(assDistrict);
+            user.setAssignedMRDistricts(assDistrict);
+            user.setAssignedBDDSDivisions(assDSDivision);
+            user.setRole(roleDAO.getRole(roleId));
+
             if (isAssignedLocations(updated)) {
                 user.setStatus(User.State.ACTIVE);
             } else {
@@ -186,7 +189,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 randomPassword = getRandomPassword(randomPasswordLength);
                 updated.setPasswordHash(hashPassword(randomPassword));
             }
-            service.updateUser(updated, currentUser);
+            service.updateUser(user, currentUser);
             session.remove(WebConstants.SESSION_UPDATED_USER);
             session.put("viewUsers", null);
             addActionMessage(getText("edit.Data.Save.Success.label"));
