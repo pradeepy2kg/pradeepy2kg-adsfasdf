@@ -16,7 +16,11 @@ import java.util.Date;
 @NamedQueries({
 //    TODO chathuranga consider about order by
     @NamedQuery(name = "filter.by.dsDivision.and.state", query = "SELECT mr FROM MarriageRegister mr " +
-        "WHERE mr.mrDivision.dsDivision = :dsDivision AND mr.state = :state ORDER BY mr.dateOfMaleNotice")
+        "WHERE mr.mrDivision.dsDivision = :dsDivision AND mr.state = :state ORDER BY mr.dateOfMaleNotice"),
+
+    @NamedQuery(name = "get.notice.by.male.and.female.identification", query = "SELECT mr FROM MarriageRegister mr" +
+        " WHERE (mr.male.identificationNumberMale = :male AND mr.female.identificationNumberFemale = :female " +
+        " AND mr.lifeCycleInfo.activeRecord =true AND mr.state=0) ORDER BY mr.idUKey desc")
 })
 public class MarriageRegister implements Serializable, Cloneable {
 

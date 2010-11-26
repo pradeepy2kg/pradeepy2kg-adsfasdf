@@ -103,10 +103,24 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
      */
     public String addMarriageNotice() {
         logger.debug("attempt to add marriage notice serial number : {} ");
+        //check existing marriage notice
+        MarriageRegister existingMarriage = checkExistingMarriageNotice(marriage.getMale().getIdentificationNumberMale(),
+            marriage.getFemale().getIdentificationNumberFemale());
+        if (existingMarriage != null) {
+            //there is already submitted notice so current one is second notice so, this action is forwarding to
+            //edit action of the 1 st notice   
+            logger.debug("existing marriage notice found for :  male pin :{} female pin : {}",
+                marriage.getMale().getIdentificationNumberMale(), marriage.getFemale().getIdentificationNumberFemale());
+
+            idUKey = existingMarriage.getIdUKey();
+            addActionMessage(getText("massage.existing.notice.found"));
+            return SUCCESS;
+        }
         //check serial number is already exists
         populateNoticeForPersists();
         //add mr division and race male party and female party
         populatePartyObjectsForPersisting();
+
         boolean both = marriage.isBothPartySubmitted();
         marriageRegistrationService.addMarriageNotice(marriage, (both || male), user);
         logger.debug("successfully added marriage notice serial number: {}");
@@ -123,16 +137,6 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
                 marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
             return ERROR;
         }
-        divisionUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
-            marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
-        return "pageLoad";
-    }
-
-    /**
-     * loading search page for marriage notice search
-     */
-    public String marriageNoticeSearchInit() {
-        logger.debug("loading search page for marriage notice");
         divisionUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
             marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
         return "pageLoad";
@@ -157,7 +161,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     private MarriageRegister checkExistingMarriageNotice(String malePinOrNic, String femalePinOrNic) {
         MarriageRegister notice = marriageRegistrationService.getActiveMarriageNoticeByMaleAndFemaleIdentification(
             malePinOrNic, femalePinOrNic, user);
-        return null;
+        return notice;
     }
 
     /**

@@ -54,4 +54,14 @@ public interface MarriageRegistrationDAO {
      */
     public List<MarriageRegister> getPaginatedListForStateByDSDivision(DSDivision dsDivision,
         MarriageRegister.State state, int pageNo, int noOfRows);
+
+    /**
+     * get active marriage notice(marriage register object) where male and female pin or nic numbers are matched
+     *
+     * @param maleIdentification   male party pin or nic
+     * @param femaleIdentification female party pin or nic
+     * @return marriage notice(register object)
+     */
+    public List<MarriageRegister> getActiveMarriageNoticeByMaleFemaleIdentification(String maleIdentification,
+        String femaleIdentification);
 }
