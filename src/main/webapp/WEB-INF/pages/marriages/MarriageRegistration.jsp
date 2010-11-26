@@ -1,8 +1,20 @@
 <%-- @author Mahesha Kalpanie --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-
+<script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="<s:url value="/js/division.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
+<script type="text/javascript">
+ $(function() {
+    $("#submitDatePicker").datepicker({
+        changeYear: true,
+        yearRange: '1960:2020',
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2040-12-31'
+    });
+});
+</script>
 <div class="marriage-notice-outer">
 <s:form action="eprMarriageRegistration" method="post">
 <%--section for official usage--%>
@@ -27,7 +39,7 @@
                     </td>
                     <td>
                          <s:select id="districtId" name="marriageDistrictId" list="districtList" value="marriageDistrictId" headerKey="2"
-                                cssStyle="width:98.5%; width:240px;"/>
+                                cssStyle="width:98.5%; width:240px;" onchange="populateDSDivisions('districtId','dsDivisionId','mrDivisionId')"/>
                     </td>
                 </tr>
                 <tr>
@@ -39,7 +51,7 @@
                     </td>
                     <td align="center">
                         <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="dsDivisionId" headerKey="2"
-                                cssStyle="width:98.5%; width:240px;"/>
+                                cssStyle="width:98.5%; width:240px;" onchange="populateDivisions('dsDivisionId', 'mrDivisionId')"/>
                     </td>
                 </tr>
                 <tr>
@@ -96,7 +108,7 @@
                     </td>
                     <td>
                         <s:label value="YYYY-MM-DD" cssStyle="margin-left:10px;font-size:10px"/><br>
-                        <s:textfield name="marriageNotice.receivedDate" id="submitDatePicker" maxLength="10"/>
+                        <s:textfield name="marriageNotice.receivedDate" id="submitDatePicker" maxLength="10" onclick="popupCalendar('submitDatePicker')"/>
                     </td>
                 </tr>
             </table>
@@ -197,7 +209,7 @@
     </tbody>
 </table>
 
-<%--section heading male party heading--%>
+<%--section heading Male/Female details --%>
 <table style="margin-top:20px;margin-bottom:20px;width:100%;font-size:16px">
     <caption/>
     <tbody>
@@ -358,10 +370,7 @@
     </tr>
     </tbody>
 </table>
-<%--this is first notice--%>
-if male party is submitted the notice in si <br>
-if male party is submitted the notice in ta <br>
-if male party is submitted the notice
+<br>
 <table border="2" style="margin-top:0px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
        cellpadding="5px">
     <caption/>
@@ -430,96 +439,6 @@ if male party is submitted the notice
         </td>
         <td>
             <s:textarea name="marriageNotice.maleNoticeWitness_2.address" id="m_witness_2_place_residence" cssStyle="width:98.2%;"
-                    />
-        </td>
-    </tr>
-    <tr>
-        <td>
-            අත්සන <br>
-            Signature <br>
-        </td>
-        <td></td>
-        <td></td>
-    </tr>
-    </tbody>
-</table>
-
-<br>
-if female party is submitted the notice in si <br>
-if female party is submitted the notice in ta <br>
-if female party is submitted the notice
-<table border="2" style="margin-top:0px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
-       cellpadding="5px">
-    <caption/>
-    <col width="250px"/>
-    <col width="390px"/>
-    <col width="390px"/>
-    <tbody>
-    <tr>
-        <td></td>
-        <td align="center">(1)</td>
-        <td align="center">(2)</td>
-    </tr>
-    <tr>
-        <td>
-            අනන්‍යතා අංකය <br>
-            அடையாள எண் <br>
-            Identification Number
-        </td>
-        <td>
-            <s:textfield name="marriageNotice.femaleNoticeWitness_1.identificationNumber" id="f_witness_1_pin"
-                         cssStyle="width:240px;"
-                         maxLength="10"/>
-        </td>
-        <td>
-            <s:textfield name="marriageNotice.femaleNoticeWitness_2.identificationNumber" id="f_witness_2_pin"
-                         cssStyle="width:240px;"
-                         maxLength="10"/>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            සම්පුර්ණ නම <br>
-            Full Name <br>
-        </td>
-        <td>
-            <s:textarea name="marriageNotice.femaleNoticeWitness_1.fullName" id="f_witness_1_full_name" cssStyle="width:98.2%;"
-                    />
-        </td>
-        <td>
-            <s:textarea name="marriageNotice.femaleNoticeWitness_2.fullName" id="f_witness_2_full_name" cssStyle="width:98.2%;"
-                    />
-        </td>
-    </tr>
-    <tr>
-        <td>
-            තරාතිරම හෝ රක්ෂාව <br>
-            Rank or Profession <br>
-        </td>
-        <td>
-            <s:textarea name="marriageNotice.femaleNoticeWitness_1.rankOrProfession" id="f_witness_1_rank"
-                        cssStyle="width:98.2%;"
-                    />
-        </td>
-        <td>
-            <s:textarea name="marriageNotice.femaleNoticeWitness_2.rankOrProfession" id="f_witness_2_rank"
-                        cssStyle="width:98.2%;"
-                    />
-        </td>
-    </tr>
-    <tr>
-        <td>
-            පදිංචි ස්ථානය <br>
-            Place of Residence <br>
-        </td>
-        <td>
-            <s:textarea name="marriageNotice.femaleNoticeWitness_1.address" id="f_witness_1_place_residence"
-                        cssStyle="width:98.2%;"
-                    />
-        </td>
-        <td>
-            <s:textarea name="marriageNotice.femaleNoticeWitness_2.address" id="f_witness_2_place_residence"
-                        cssStyle="width:98.2%;"
                     />
         </td>
     </tr>
