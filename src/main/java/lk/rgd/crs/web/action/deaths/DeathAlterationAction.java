@@ -2,25 +2,31 @@ package lk.rgd.crs.web.action.deaths;
 
 import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.AppConstants;
+import lk.rgd.common.api.dao.*;
+import lk.rgd.common.api.domain.Country;
+import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.api.domain.Race;
+import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.CommonUtil;
 import lk.rgd.common.util.DateTimeUtils;
 import lk.rgd.common.util.GenderUtil;
+import lk.rgd.common.util.WebUtils;
+import lk.rgd.crs.CRSRuntimeException;
+import lk.rgd.crs.api.dao.BDDivisionDAO;
+import lk.rgd.crs.api.domain.BDDivision;
+import lk.rgd.crs.api.domain.DeathAlteration;
+import lk.rgd.crs.api.domain.DeathAlterationInfo;
+import lk.rgd.crs.api.domain.DeathRegister;
+import lk.rgd.crs.api.service.DeathAlterationService;
+import lk.rgd.crs.api.service.DeathRegistrationService;
+import lk.rgd.crs.web.WebConstants;
+import lk.rgd.crs.web.util.DivisionUtil;
 import lk.rgd.crs.web.util.FieldValue;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
-
-import lk.rgd.common.api.domain.*;
-import lk.rgd.common.api.dao.*;
-import lk.rgd.common.util.WebUtils;
-import lk.rgd.crs.web.WebConstants;
-import lk.rgd.crs.api.service.DeathAlterationService;
-import lk.rgd.crs.api.service.DeathRegistrationService;
-import lk.rgd.crs.api.domain.*;
-import lk.rgd.crs.api.dao.BDDivisionDAO;
-import lk.rgd.crs.CRSRuntimeException;
 
 
 /**
@@ -37,6 +43,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     private final RaceDAO raceDAO;
     private final CountryDAO countryDAO;
     private final AppParametersDAO appParametersDAO;
+    private final DivisionUtil divisionUtil;
     private DeathAlterationService deathAlterationService;
     private DeathRegistrationService deathRegistrationService;
 
@@ -91,9 +98,9 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     private boolean approvalPage;
 
     public DeathAlterationAction(DeathAlterationService deathAlterationService,
-                                 DeathRegistrationService deathRegistrationService, DistrictDAO districtDAO,
-                                 DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO, RaceDAO raceDAO,
-                                 CountryDAO countryDAO, AppParametersDAO appParametersDAO) {
+        DeathRegistrationService deathRegistrationService, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
+        BDDivisionDAO bdDivisionDAO, RaceDAO raceDAO, CountryDAO countryDAO, AppParametersDAO appParametersDAO,
+        DivisionUtil divisionUtil) {
         this.deathAlterationService = deathAlterationService;
         this.deathRegistrationService = deathRegistrationService;
         this.districtDAO = districtDAO;
@@ -102,6 +109,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         this.raceDAO = raceDAO;
         this.countryDAO = countryDAO;
         this.appParametersDAO = appParametersDAO;
+        this.divisionUtil = divisionUtil;
     }
 
     /**
@@ -130,8 +138,9 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             //only get first recode others ignored  because there can be NIC duplications
             logger.debug("attempt to load death register by pin number : {}", pin);
             List<DeathRegister> deathRegisterList = deathRegistrationService.getByPinOrNic(Long.parseLong(pin), user);
-            if (deathRegisterList != null)
+            if (deathRegisterList != null) {
                 deathRegister = deathRegisterList.get(0);
+            }
         }
         //search by  serial and death division
         else if (serialNumber != 0 && divisionUKey != 0) {
@@ -247,14 +256,14 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             logger.debug("editing death alteration : idUKey : {} success", deathAlterationId);
             populatePrimaryLists(deathRegister.getDeath().getDeathDistrict().getDistrictUKey(),
                 deathRegister.getDeath().getDeathDivision().getBdDivisionUKey(), language, user);
-            userLocations = user.getActiveLocations(language);
+            userLocations = divisionUtil.populateActiveUserLocations(user, language);
             return SUCCESS;
         }
         catch (CRSRuntimeException e) {
             logger.debug("cannot edit death alteration idUKey {}", existing.getIdUKey());
             addActionMessage(getText("alt.message.cannot.edit.alteration.validation.failed"));
             populatePrimaryLists(districtUKey, dsDivisionId, language, user);
-            userLocations = user.getActiveLocations(language);
+            userLocations = divisionUtil.populateActiveUserLocations(user, language);
             return ERROR;
         }
     }
@@ -313,7 +322,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                     logger.error("cannot find a death alteration for pin : {}", pin);
                     addActionError(getText("no.pending.alterations"));
                     populatePrimaryLists(districtUKey, dsDivisionId, language, user);
-                    userLocations = user.getActiveLocations(language);
+                    userLocations = divisionUtil.populateActiveUserLocations(user, language);
                     locationUKey = 0;
                     return ERROR;
                 }
@@ -330,13 +339,13 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 logger.debug("no pending list found ");
                 addActionError(getText("no.pending.alterations"));
                 populatePrimaryLists(districtUKey, dsDivisionId, language, user);
-                userLocations = user.getActiveLocations(language);
+                userLocations = divisionUtil.populateActiveUserLocations(user, language);
                 locationUKey = 0;
                 return ERROR;
             }
         }
         populatePrimaryLists(districtUKey, dsDivisionId, language, user);
-        userLocations = user.getActiveLocations(language);
+        userLocations = divisionUtil.populateActiveUserLocations(user, language);
         locationUKey = 0;
         return SUCCESS;
     }

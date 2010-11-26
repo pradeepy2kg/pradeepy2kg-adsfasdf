@@ -407,25 +407,16 @@ public class User implements Serializable {
         return false;
     }
 
-    public Map<Integer, String> getActiveLocations(String language) {
-        Map<Integer, String> al = new LinkedHashMap<Integer, String>();
-        al.put(primaryLocation.getLocationUKey(), primaryLocation.getLocationCode() + " : " +
-            primaryLocation.getEnLocationName());
-
+    public List<Location> getActiveLocations() {
+        LinkedList<Location> al = new LinkedList<Location>();
         for (UserLocation ul : locations) {
             if (ul.getLifeCycleInfo().isActive()) {
-                if (AppConstants.SINHALA.equals(language)) {
-                    al.put(ul.getLocation().getLocationUKey(),
-                        ul.getLocation().getLocationCode() + " : " + ul.getLocation().getSiLocationName());
-                } else if (AppConstants.ENGLISH.equals(language)) {
-                    al.put(ul.getLocation().getLocationUKey(),
-                        ul.getLocation().getLocationCode() + " : " + ul.getLocation().getEnLocationName());
-                } else if (AppConstants.TAMIL.equals(language)) {
-                    al.put(ul.getLocation().getLocationUKey(),
-                        ul.getLocation().getLocationCode() + " : " + ul.getLocation().getTaLocationName());
-                }
+                al.add(ul.getLocation());
             }
         }
+        // add primary location as the first element
+        al.remove(primaryLocation.getLocationUKey());
+        al.addFirst(primaryLocation);
 
         return al;
     }

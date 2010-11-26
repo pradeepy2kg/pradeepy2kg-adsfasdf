@@ -1,20 +1,21 @@
 package lk.rgd.crs.web.action.births;
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.Permission;
+import lk.rgd.common.api.dao.*;
+import lk.rgd.common.api.domain.Country;
+import lk.rgd.common.api.domain.Race;
+import lk.rgd.common.api.domain.User;
+import lk.rgd.common.util.GenderUtil;
+import lk.rgd.crs.api.dao.BDDivisionDAO;
+import lk.rgd.crs.api.domain.*;
+import lk.rgd.crs.api.service.BirthAlterationService;
+import lk.rgd.crs.api.service.BirthRegistrationService;
+import lk.rgd.crs.web.WebConstants;
+import lk.rgd.crs.web.util.DivisionUtil;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import lk.rgd.crs.api.service.BirthRegistrationService;
-import lk.rgd.crs.api.service.BirthAlterationService;
-import lk.rgd.crs.api.dao.BDDivisionDAO;
-import lk.rgd.crs.api.domain.*;
-import lk.rgd.crs.web.WebConstants;
-import lk.rgd.common.api.dao.*;
-import lk.rgd.common.api.domain.User;
-import lk.rgd.common.api.domain.Country;
-import lk.rgd.common.api.domain.Race;
-import lk.rgd.common.util.GenderUtil;
-import lk.rgd.Permission;
 
 import java.util.*;
 
@@ -32,6 +33,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
     private DSDivisionDAO dsDivisionDAO;
     private BirthAlterationService alterationService;
     private AppParametersDAO appParametersDAO;
+    private final DivisionUtil divisionUtil;
     private static final String BA_APPROVAL_ROWS_PER_PAGE = "crs.br_approval_rows_per_page";
 
     private Map session;
@@ -115,8 +117,9 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
     private boolean editGrandFatherInfo;
 
 
-    public BirthAlterationAction(BirthRegistrationService service, DistrictDAO districtDAO, CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO,
-                            DSDivisionDAO dsDivisionDAO, BirthAlterationService alterationService, AppParametersDAO appParametersDAO) {
+    public BirthAlterationAction(BirthRegistrationService service, DistrictDAO districtDAO, CountryDAO countryDAO,
+        RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO, BirthAlterationService alterationService,
+        AppParametersDAO appParametersDAO, DivisionUtil divisionUtil) {
         this.service = service;
         this.districtDAO = districtDAO;
         this.countryDAO = countryDAO;
@@ -125,6 +128,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         this.dsDivisionDAO = dsDivisionDAO;
         this.alterationService = alterationService;
         this.appParametersDAO = appParametersDAO;
+        this.divisionUtil = divisionUtil;
     }
 
 
@@ -152,8 +156,8 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         } else if (nicOrPin != null) {
             bdf = service.getByPINorNIC(nicOrPin, user);
         } else if (birthDivisionId != 0 && serialNo != 0) {
-            bdf = service.getActiveRecordByBDDivisionAndSerialNo(bdDivisionDAO.getBDDivisionByPK
-                    (birthDivisionId), serialNo, user);
+            bdf = service.getActiveRecordByBDDivisionAndSerialNo(
+                bdDivisionDAO.getBDDivisionByPK(birthDivisionId), serialNo, user);
         }
 
         if (bdf == null) {
@@ -206,7 +210,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         if (alt52_1.getInformant() == null) {
             if (bdfInformant != null) {
                 alt52_1.setInformant(new AlterationInformatInfo(bdfInformant.getInformantType(),
-                        bdfInformant.getInformantName(), bdfInformant.getInformantNICorPIN(), bdfInformant.getInformantAddress()));
+                    bdfInformant.getInformantName(), bdfInformant.getInformantNICorPIN(), bdfInformant.getInformantAddress()));
             }
         } else {
             editInformantInfo = true;
@@ -251,7 +255,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         }
         alt52_1.setMother(mother);
         logger.debug("Loaded  Mother NIC or PIN Number of the {} is :{} ",
-                alt52_1.getMother().getMotherFullName(), alt52_1.getMother().getMotherNICorPIN());
+            alt52_1.getMother().getMotherFullName(), alt52_1.getMother().getMotherNICorPIN());
         birthAlteration.setAlt52_1(alt52_1);
 
     }
@@ -347,7 +351,9 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
                 if (fatherCountryId > 0) {
                     alt27A.getFather().setFatherCountry(countryDAO.getCountry(fatherCountryId));
                 }
-                if (fatherRaceId > 0) alt27A.getFather().setFatherRace(raceDAO.getRace(fatherRaceId));
+                if (fatherRaceId > 0) {
+                    alt27A.getFather().setFatherRace(raceDAO.getRace(fatherRaceId));
+                }
                 birthAlteration.setAlt27A(alt27A);
                 birthAlteration.setAlt52_1(null);
                 birthAlteration.setApprovalStatuses(new BitSet(WebConstants.BIRTH_ALTERATION_APPROVE_ALT27A));
@@ -368,7 +374,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         }
         /*check permission to approval birth alteration  */
         approveRightsToUser = user.isAllowedAccessToBDDSDivision(birthAlteration.getBirthRecordDivision().
-                getDsDivision().getDsDivisionUKey());
+            getDsDivision().getDsDivisionUKey());
         idUKey = birthAlteration.getIdUKey();
         bdId = birthAlteration.getBdfIDUKey();
         pageType = 1;
@@ -394,7 +400,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
                 alt27 = birthAlteration.getAlt27();
                 sectionOfAct = 1;
             } else if (birthAlteration.getType() != BirthAlteration.AlterationType.TYPE_27
-                    && birthAlteration.getType() != BirthAlteration.AlterationType.TYPE_27A) {
+                && birthAlteration.getType() != BirthAlteration.AlterationType.TYPE_27A) {
                 sectionOfAct = 2;
                 populateAlt52_1(bdf);
             }
@@ -417,7 +423,6 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             bdId = bdf.getIdUKey();
             nicOrPin = bdf.getChild().getPin();
             serialNo = bdf.getRegister().getBdfSerialNo();
-            String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
             districtName = districtDAO.getNameByPK(birthDistrictId, language);
             dsDivisionName = dsDivisionDAO.getNameByPK(dsDivisionId, language);
             bdDivisionName = bdDivisionDAO.getNameByPK(birthDivisionId, language);
@@ -454,7 +459,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         try {
             if (idUKey != null) {
                 BirthAlteration baApprovalPending = alterationService.getApprovalPendingByIdUKey
-                        (idUKey, pageNo, noOfRows, user);
+                    (idUKey, pageNo, noOfRows, user);
                 if (birthAlterationPendingApprovalList == null) {
                     birthAlterationPendingApprovalList = new ArrayList<BirthAlteration>();
                 }
@@ -463,11 +468,11 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             } else if (locationUKey != 0) {
                 logger.debug("filter Birth Alteration to approve by idUKey of the location :{}", locationUKey);
                 birthAlterationPendingApprovalList = alterationService.getApprovalPendingByUserLocationIdUKey(
-                        locationUKey, pageNo, noOfRows, user);
+                    locationUKey, pageNo, noOfRows, user);
             } else if (birthDivisionId != 0) {
                 logger.debug("filter Birth Alteration to approve by Birth Serial Number :{}", serialNo);
                 birthAlterationPendingApprovalList = alterationService.getApprovalPendingByBDDivision(
-                        bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows);
+                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows);
 
             }
         } catch (Exception CRSRuntimeException) {
@@ -478,7 +483,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         if (birthAlterationPendingApprovalList != null) {
             paginationHandler(birthAlterationPendingApprovalList.size());
             logger.debug("number of rows in Birth Alteration Approval List is :{}",
-                    birthAlterationPendingApprovalList.size());
+                birthAlterationPendingApprovalList.size());
         } else {
             logger.info("The Birth Alteration List is empty");
         }
@@ -513,7 +518,6 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         logger.debug("bdId :{} ,idUKey :{}", bdId, idUKey);
         BirthDeclaration bdf = service.getById(bdId);
         BirthAlteration ba = alterationService.getByIDUKey(idUKey, user);
-        setLanguage(((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage());
         if (ba == null || bdf == null) {
             return ERROR;
         } else {
@@ -525,7 +529,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             child = bdf.getChild();
             if (child != null && alt27 != null) {
                 if (child.getChildFullNameEnglish().equals(alt27.getChildFullNameEnglish()) &&
-                        child.getChildFullNameOfficialLang().equals(alt27.getChildFullNameOfficialLang())) {
+                    child.getChildFullNameOfficialLang().equals(alt27.getChildFullNameOfficialLang())) {
                     alt27 = null;
                 }
             }
@@ -535,13 +539,13 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             if (alterationType == BirthAlteration.AlterationType.TYPE_27) {
                 logger.debug("loading birth alteration record of alt27 of idUKey  :{}", ba.getIdUKey());
                 compareAndAdd(Alteration27.CHILD_FULL_NAME_OFFICIAL_LANG, bdf.getChild().
-                        getChildFullNameOfficialLang(), alt27.getChildFullNameOfficialLang(), 0);
+                    getChildFullNameOfficialLang(), alt27.getChildFullNameOfficialLang(), 0);
                 compareAndAdd(Alteration27.CHILD_FULL_NAME_ENGLISH, bdf.getChild().getChildFullNameEnglish(),
-                        alt27.getChildFullNameEnglish(), 0);
+                    alt27.getChildFullNameEnglish(), 0);
                 sectionOfAct = 1;
                 logger.debug("Child full name in English is :{}", alt27.getChildFullNameEnglish());
             } else if (alterationType != BirthAlteration.AlterationType.TYPE_27A &&
-                    alterationType != BirthAlteration.AlterationType.TYPE_27) {
+                alterationType != BirthAlteration.AlterationType.TYPE_27) {
                 logger.debug("loading birth alteration record of alt52_1 of idUKey  :{}", ba.getIdUKey());
                 sectionOfAct = 2;
                 changesOfAlt52_1(bdf, language);
@@ -552,7 +556,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             }
             if (birthAlterationApprovalList != null) {
                 logger.debug("number of changes in birth alteration of idUKey {} is :{}", idUKey,
-                        birthAlterationApprovalList.size());
+                    birthAlterationApprovalList.size());
             }
             int countApproved = 0;
             BitSet approvalsBitSet = ba.getApprovalStatuses();
@@ -599,23 +603,23 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         GrandFatherInfo grandFatherOriginal = bdf.getGrandFather();
         if (grandFather != null && grandFatherOriginal != null) {
             compareAndAdd(Alteration27A.GRAND_FATHER_FULLNAME, grandFatherOriginal.getGrandFatherFullName(),
-                    grandFather.getGrandFatherFullName(), 0);
+                grandFather.getGrandFatherFullName(), 0);
             compareAndAdd(Alteration27A.GRAND_FATHER_NIC_OR_PIN, grandFatherOriginal.getGrandFatherNICorPIN(),
-                    grandFather.getGrandFatherNICorPIN(), 0);
+                grandFather.getGrandFatherNICorPIN(), 0);
             compareAndAdd(Alteration27A.GRAND_FATHER_BIRTH_YEAR, grandFatherOriginal.getGrandFatherBirthYear(),
-                    grandFather.getGrandFatherBirthYear(), 0);
+                grandFather.getGrandFatherBirthYear(), 0);
             compareAndAdd(Alteration27A.GRAND_FATHER_BIRTH_PLACE, grandFatherOriginal.getGrandFatherBirthPlace(),
-                    grandFather.getGrandFatherBirthPlace(), 0);
+                grandFather.getGrandFatherBirthPlace(), 0);
             compareAndAdd(Alteration27A.GREAT_GRAND_FATHER_FULLNAME, grandFatherOriginal.getGreatGrandFatherFullName(),
-                    grandFather.getGreatGrandFatherFullName(), 0);
+                grandFather.getGreatGrandFatherFullName(), 0);
             compareAndAdd(Alteration27A.GREAT_GRAND_FATHER_NIC_OR_PIN, grandFatherOriginal.getGreatGrandFatherNICorPIN(),
-                    grandFather.getGreatGrandFatherNICorPIN(), 0);
+                grandFather.getGreatGrandFatherNICorPIN(), 0);
             compareAndAdd(Alteration27A.GREAT_GRAND_FATHER_BIRTH_YEAR, grandFatherOriginal.getGreatGrandFatherBirthYear(),
-                    grandFather.getGreatGrandFatherBirthYear(), 0);
+                grandFather.getGreatGrandFatherBirthYear(), 0);
             compareAndAdd(Alteration27A.GREAT_GRAND_FATHER_BIRTH_PLACE, grandFatherOriginal.getGreatGrandFatherBirthPlace(),
-                    grandFather.getGreatGrandFatherBirthPlace(), 0);
+                grandFather.getGreatGrandFatherBirthPlace(), 0);
             logger.debug("Check and add to approval list all information of {} (GrandFather) of idUKey :{}",
-                    grandFather.getGrandFatherFullName(), idUKey);
+                grandFather.getGrandFatherFullName(), idUKey);
 
         }
         if (father != null && parent != null) {
@@ -627,7 +631,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             compareAndAdd(Alteration27A.FATHER_PASSPORT, parent.getFatherPassportNo(), father.getFatherPassportNo(), 0);
             compareAndAdd(Alteration27A.FATHER_RACE, parent.getFatherRace(), father.getFatherRace(), 2);
             logger.debug("Check and add to approval list all information of {} (Father) of idUKey :{}",
-                    father.getFatherFullName(), idUKey);
+                father.getFatherFullName(), idUKey);
         }
         marriage = alt27A.getMarriage();
         MarriageInfo marriageOriginal = bdf.getMarriage();
@@ -639,7 +643,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         }
         if (alt27A.getMothersNameAfterMarriage() != null) {
             compareAndAdd(Alteration27A.MOTHER_NAME_AFTER_MARRIAGE, parent.getMotherFullName(),
-                    alt27A.getMothersNameAfterMarriage(), 0);
+                alt27A.getMothersNameAfterMarriage(), 0);
         }
 
     }
@@ -651,7 +655,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             compareAndAdd(Alteration52_1.DATE_OF_BIRTH, child.getDateOfBirth(), alt52_1.getDateOfBirth(), 0);
             compareAndAdd(Alteration52_1.PLACE_OF_BIRTH, child.getPlaceOfBirth(), alt52_1.getPlaceOfBirth(), 0);
             compareAndAdd(Alteration52_1.PLACE_OF_BIRTH_ENGLISH, child.getPlaceOfBirthEnglish(),
-                    alt52_1.getPlaceOfBirthEnglish(), 0);
+                alt52_1.getPlaceOfBirthEnglish(), 0);
             compareAndAdd(Alteration52_1.GENDER, child.getChildGender(), alt52_1.getChildGender(), 4);
         }
         compareAndAdd(Alteration52_1.BIRTH_DIVISION, register.getBirthDivision(), alt52_1.getBirthDivision(), 3);
@@ -871,7 +875,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
     public String nextPage() {
         if (logger.isDebugEnabled()) {
             logger.debug("inside nextPage() : current birthDistrictId {}, birthDivisionId {}", birthDistrictId, birthDivisionId +
-                    " requested from pageNo " + pageNo);
+                " requested from pageNo " + pageNo);
         }
         setPageNo(getPageNo() + 1);
 
@@ -883,7 +887,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
          */
         if (idUKey != null) {
             BirthAlteration baApprovalPending = alterationService.getApprovalPendingByIdUKey
-                    (idUKey, pageNo, noOfRows, user);
+                (idUKey, pageNo, noOfRows, user);
             if (birthAlterationPendingApprovalList == null) {
                 birthAlterationPendingApprovalList = new ArrayList<BirthAlteration>();
             }
@@ -892,11 +896,11 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         } else if (locationUKey != 0) {
             logger.debug("filter Birth Alteration to approve by idUKey of the location :{}", locationUKey);
             birthAlterationPendingApprovalList = alterationService.getApprovalPendingByUserLocationIdUKey(
-                    locationUKey, pageNo, noOfRows, user);
+                locationUKey, pageNo, noOfRows, user);
         } else if (birthDivisionId != 0) {
             logger.debug("filter Birth Alteration to approve by Birth Serial Number :{}", serialNo);
             birthAlterationPendingApprovalList = alterationService.getApprovalPendingByBDDivision(
-                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows);
+                bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows);
 
         }
         paginationHandler(birthAlterationPendingApprovalList.size());
@@ -915,7 +919,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
 
         if (logger.isDebugEnabled()) {
             logger.debug("inside previousPage() : current birthDistrictId {}, birthDivisionId {} ", birthDistrictId, birthDivisionId
-                    + " requested from pageNo " + pageNo);
+                + " requested from pageNo " + pageNo);
         }
         /**
          * UI related. decides whether to display
@@ -945,7 +949,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
 
         if (idUKey != null) {
             BirthAlteration baApprovalPending = alterationService.getApprovalPendingByIdUKey
-                    (idUKey, pageNo, noOfRows, user);
+                (idUKey, pageNo, noOfRows, user);
             if (birthAlterationPendingApprovalList == null) {
                 birthAlterationPendingApprovalList = new ArrayList<BirthAlteration>();
             }
@@ -954,11 +958,11 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         } else if (locationUKey != 0) {
             logger.debug("filter Birth Alteration to approve by idUKey of the location :{}", locationUKey);
             birthAlterationPendingApprovalList = alterationService.getApprovalPendingByUserLocationIdUKey(
-                    locationUKey, pageNo, noOfRows, user);
+                locationUKey, pageNo, noOfRows, user);
         } else if (birthDivisionId != 0) {
             logger.debug("filter Birth Alteration to approve by Birth Serial Number :{}", serialNo);
             birthAlterationPendingApprovalList = alterationService.getApprovalPendingByBDDivision(
-                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows);
+                bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows);
 
         }
         populateBasicLists();
@@ -970,7 +974,6 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
     public String printBirthAlterationNotice() {
         birthAlterationApprovalList = new ArrayList();
         birthAlterationApprovedList = new ArrayList();
-        setLanguage(((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage());
         BirthAlteration ba = alterationService.getByIDUKey(idUKey, user);
         BirthDeclaration bdf = service.getById(bdId);
         if (ba != null) {
@@ -1001,7 +1004,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
                 sectionOfAct = 1;
             }
             if (checkAlterationType != BirthAlteration.AlterationType.TYPE_27 && checkAlterationType !=
-                    BirthAlteration.AlterationType.TYPE_27A) {
+                BirthAlteration.AlterationType.TYPE_27A) {
                 alt52_1 = ba.getAlt52_1();
                 addToNoticeAlt52_1(bdf, approvedFields, rejectedFields);
                 sectionOfAct = 2;
@@ -1028,37 +1031,37 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             //check Grand father information
             if (approvedFields.get(0) || rejectedFields.get(0)) {
                 addToApprovalList(Alteration27A.GRAND_FATHER_FULLNAME, grandFatherBdf.getGrandFatherFullName()
-                        , grandFatherBa.getGrandFatherFullName(), approvedFields.get(0), rejectedFields.get(0), 0);
+                    , grandFatherBa.getGrandFatherFullName(), approvedFields.get(0), rejectedFields.get(0), 0);
             }
             if (approvedFields.get(1) || rejectedFields.get(1)) {
                 addToApprovalList(Alteration27A.GRAND_FATHER_NIC_OR_PIN, grandFatherBdf.getGrandFatherNICorPIN(),
-                        grandFatherBa.getGrandFatherNICorPIN(), approvedFields.get(1), rejectedFields.get(1), 0);
+                    grandFatherBa.getGrandFatherNICorPIN(), approvedFields.get(1), rejectedFields.get(1), 0);
             }
             if (approvedFields.get(2) || rejectedFields.get(2)) {
                 logger.debug("grand father birth year ");
                 addToApprovalList(Alteration27A.GRAND_FATHER_BIRTH_YEAR, grandFatherBdf.getGreatGrandFatherBirthYear()
-                        , grandFatherBa.getGreatGrandFatherBirthYear(), approvedFields.get(2), rejectedFields.get(2), 0);
+                    , grandFatherBa.getGreatGrandFatherBirthYear(), approvedFields.get(2), rejectedFields.get(2), 0);
             }
             if (approvedFields.get(3) || rejectedFields.get(3)) {
                 addToApprovalList(Alteration27A.GRAND_FATHER_BIRTH_PLACE, grandFatherBdf.getGrandFatherBirthPlace()
-                        , grandFatherBa.getGrandFatherBirthPlace(), approvedFields.get(3), rejectedFields.get(3), 0);
+                    , grandFatherBa.getGrandFatherBirthPlace(), approvedFields.get(3), rejectedFields.get(3), 0);
             }
             //check Grand grand father information
             if (approvedFields.get(4) || rejectedFields.get(4)) {
                 addToApprovalList(Alteration27A.GREAT_GRAND_FATHER_FULLNAME, grandFatherBdf.getGreatGrandFatherFullName()
-                        , grandFatherBa.getGreatGrandFatherFullName(), approvedFields.get(4), rejectedFields.get(4), 0);
+                    , grandFatherBa.getGreatGrandFatherFullName(), approvedFields.get(4), rejectedFields.get(4), 0);
             }
             if (approvedFields.get(5) || rejectedFields.get(5)) {
                 addToApprovalList(Alteration27A.GREAT_GRAND_FATHER_NIC_OR_PIN, grandFatherBdf.getGreatGrandFatherNICorPIN(),
-                        grandFatherBa.getGreatGrandFatherNICorPIN(), approvedFields.get(5), rejectedFields.get(5), 0);
+                    grandFatherBa.getGreatGrandFatherNICorPIN(), approvedFields.get(5), rejectedFields.get(5), 0);
             }
             if (approvedFields.get(6) || rejectedFields.get(6)) {
                 addToApprovalList(Alteration27A.GREAT_GRAND_FATHER_BIRTH_YEAR, grandFatherBdf.getGreatGrandFatherBirthYear(),
-                        grandFatherBa.getGreatGrandFatherBirthYear(), approvedFields.get(6), rejectedFields.get(6), 0);
+                    grandFatherBa.getGreatGrandFatherBirthYear(), approvedFields.get(6), rejectedFields.get(6), 0);
             }
             if (approvedFields.get(7) || rejectedFields.get(7)) {
                 addToApprovalList(Alteration27A.GREAT_GRAND_FATHER_BIRTH_PLACE, grandFatherBdf.getGreatGrandFatherBirthPlace(),
-                        grandFatherBa.getGreatGrandFatherBirthPlace(), approvedFields.get(7), rejectedFields.get(7), 0);
+                    grandFatherBa.getGreatGrandFatherBirthPlace(), approvedFields.get(7), rejectedFields.get(7), 0);
             }
         }
         ParentInfo fatherBdf = bdf.getParent();
@@ -1067,31 +1070,31 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             //check father information
             if (approvedFields.get(8) || rejectedFields.get(8)) {
                 addToApprovalList(Alteration27A.FATHER_FULLNAME, fatherBdf.getFatherFullName(), fatherBa.getFatherFullName()
-                        , approvedFields.get(8), rejectedFields.get(8), 0);
+                    , approvedFields.get(8), rejectedFields.get(8), 0);
             }
             if (approvedFields.get(9) || rejectedFields.get(9)) {
                 addToApprovalList(Alteration27A.FATHER_NIC_OR_PIN, fatherBdf.getFatherNICorPIN(), fatherBa.getFatherNICorPIN(),
-                        approvedFields.get(9), rejectedFields.get(9), 0);
+                    approvedFields.get(9), rejectedFields.get(9), 0);
             }
             if (approvedFields.get(10) || rejectedFields.get(10)) {
                 addToApprovalList(Alteration27A.FATHER_BIRTH_DATE, fatherBdf.getFatherDOB(), fatherBa.getFatherDOB(),
-                        approvedFields.get(10), rejectedFields.get(10), 0);
+                    approvedFields.get(10), rejectedFields.get(10), 0);
             }
             if (approvedFields.get(11) || rejectedFields.get(11)) {
                 addToApprovalList(Alteration27A.FATHER_BIRTH_PLACE, fatherBdf.getFatherPlaceOfBirth(),
-                        fatherBa.getFatherPlaceOfBirth(), approvedFields.get(11), rejectedFields.get(11), 0);
+                    fatherBa.getFatherPlaceOfBirth(), approvedFields.get(11), rejectedFields.get(11), 0);
             }
             if (approvedFields.get(12) || rejectedFields.get(12)) {
                 addToApprovalList(Alteration27A.FATHER_COUNTRY, fatherBdf.getFatherCountry(), fatherBa.getFatherCountry(),
-                        approvedFields.get(12), rejectedFields.get(12), 1);
+                    approvedFields.get(12), rejectedFields.get(12), 1);
             }
             if (approvedFields.get(13) || rejectedFields.get(13)) {
                 addToApprovalList(Alteration27A.FATHER_PASSPORT, fatherBdf.getFatherPassportNo(), fatherBa.getFatherPassportNo(),
-                        approvedFields.get(13), rejectedFields.get(13), 0);
+                    approvedFields.get(13), rejectedFields.get(13), 0);
             }
             if (approvedFields.get(14) || rejectedFields.get(14)) {
                 addToApprovalList(Alteration27A.FATHER_RACE, fatherBdf.getFatherRace(), fatherBa.getFatherRace(),
-                        approvedFields.get(14), rejectedFields.get(14), 2);
+                    approvedFields.get(14), rejectedFields.get(14), 2);
             }
 
         }
@@ -1100,21 +1103,21 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         if (marriageBdf != null && marriageBa != null) {
             if (approvedFields.get(15) || rejectedFields.get(15)) {
                 addToApprovalList(Alteration27A.WERE_PARENTS_MARRIED, marriageBdf.getParentsMarried(),
-                        marriageBa.getParentsMarried(), approvedFields.get(15), rejectedFields.get(15), 0);
+                    marriageBa.getParentsMarried(), approvedFields.get(15), rejectedFields.get(15), 0);
             }
             if (approvedFields.get(16) || rejectedFields.get(16)) {
                 addToApprovalList(Alteration27A.PLACE_OF_MARRIAGE, marriageBdf.getPlaceOfMarriage(), marriageBa.getParentsMarried(),
-                        approvedFields.get(16), rejectedFields.get(16), 0);
+                    approvedFields.get(16), rejectedFields.get(16), 0);
             }
             if (approvedFields.get(17) || rejectedFields.get(17)) {
                 addToApprovalList(Alteration27A.DATE_OF_MARRIAGE, marriageBdf.getDateOfMarriage(), marriageBa.getDateOfMarriage(),
-                        approvedFields.get(17), rejectedFields.get(17), 0);
+                    approvedFields.get(17), rejectedFields.get(17), 0);
             }
         }
         if (bdf.getParent() != null) {
             if (approvedFields.get(18) || rejectedFields.get(18)) {
                 addToApprovalList(Alteration27A.MOTHER_NAME_AFTER_MARRIAGE, bdf.getParent().getMotherFullName(),
-                        alt27A.getMothersNameAfterMarriage(), approvedFields.get(18), rejectedFields.get(18), 0);
+                    alt27A.getMothersNameAfterMarriage(), approvedFields.get(18), rejectedFields.get(18), 0);
             }
         }
 
@@ -1125,15 +1128,15 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         if (child != null) {
             if (approvedFields.get(0) || rejectedFields.get(0)) {
                 addToApprovalList(Alteration52_1.DATE_OF_BIRTH, child.getDateOfBirth(), alt52_1.getDateOfBirth(),
-                        approvedFields.get(0), rejectedFields.get(0), 0);
+                    approvedFields.get(0), rejectedFields.get(0), 0);
             }
             if (approvedFields.get(1) || rejectedFields.get(1)) {
                 addToApprovalList(Alteration52_1.PLACE_OF_BIRTH, child.getPlaceOfBirth(), alt52_1.getPlaceOfBirth(),
-                        approvedFields.get(1), rejectedFields.get(1), 0);
+                    approvedFields.get(1), rejectedFields.get(1), 0);
             }
             if (approvedFields.get(2) || rejectedFields.get(2)) {
                 addToApprovalList(Alteration52_1.PLACE_OF_BIRTH_ENGLISH, child.getPlaceOfBirthEnglish(), alt52_1.getPlaceOfBirthEnglish(),
-                        approvedFields.get(2), rejectedFields.get(2), 0);
+                    approvedFields.get(2), rejectedFields.get(2), 0);
             }
 
         }
@@ -1141,13 +1144,13 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         if (register != null) {
             if (approvedFields.get(3) || rejectedFields.get(3)) {
                 addToApprovalList(Alteration52_1.BIRTH_DIVISION, register.getBirthDivision(), alt52_1.getBirthDivision(),
-                        approvedFields.get(3), rejectedFields.get(3), 3);
+                    approvedFields.get(3), rejectedFields.get(3), 3);
             }
         }
         if (child != null) {
             if (approvedFields.get(4) || rejectedFields.get(4)) {
                 addToApprovalList(Alteration52_1.GENDER, child.getChildGender(), alt52_1.getChildGender(),
-                        approvedFields.get(4), rejectedFields.get(4), 4);
+                    approvedFields.get(4), rejectedFields.get(4), 4);
             }
         }
         ParentInfo motherBdf = bdf.getParent();
@@ -1155,39 +1158,39 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         if (motherBdf != null && motherBa != null) {
             if (approvedFields.get(5) || rejectedFields.get(5)) {
                 addToApprovalList(Alteration52_1.MOTHER_FULLNAME, motherBdf.getFatherFullName(), motherBa.getMotherFullName(),
-                        approvedFields.get(5), rejectedFields.get(5), 0);
+                    approvedFields.get(5), rejectedFields.get(5), 0);
             }
             if (approvedFields.get(6) || rejectedFields.get(6)) {
                 addToApprovalList(Alteration52_1.MOTHER_NIC_OR_PIN, motherBdf.getMotherNICorPIN(), motherBa.getMotherNICorPIN(),
-                        approvedFields.get(6), rejectedFields.get(6), 0);
+                    approvedFields.get(6), rejectedFields.get(6), 0);
             }
             if (approvedFields.get(7) || rejectedFields.get(7)) {
                 addToApprovalList(Alteration52_1.MOTHER_BIRTH_DATE, motherBdf.getMotherDOB(), motherBa.getMotherDOB(),
-                        approvedFields.get(7), rejectedFields.get(7), 0);
+                    approvedFields.get(7), rejectedFields.get(7), 0);
             }
             if (approvedFields.get(8) || rejectedFields.get(8)) {
                 addToApprovalList(Alteration52_1.MOTHER_BIRTH_PLACE, motherBdf.getMotherPlaceOfBirth(), motherBa.getMotherPlaceOfBirth(),
-                        approvedFields.get(8), rejectedFields.get(8), 0);
+                    approvedFields.get(8), rejectedFields.get(8), 0);
             }
             if (approvedFields.get(9) || rejectedFields.get(9)) {
                 addToApprovalList(Alteration52_1.MOTHER_COUNTRY, motherBdf.getMotherCountry(), motherBa.getMotherCountry(),
-                        approvedFields.get(9), rejectedFields.get(9), 1);
+                    approvedFields.get(9), rejectedFields.get(9), 1);
             }
             if (approvedFields.get(10) || rejectedFields.get(10)) {
                 addToApprovalList(Alteration52_1.MOTHER_PASSPORT, motherBdf.getMotherPassportNo(), motherBa.getMotherPassportNo(),
-                        approvedFields.get(10), rejectedFields.get(10), 0);
+                    approvedFields.get(10), rejectedFields.get(10), 0);
             }
             if (approvedFields.get(11) || rejectedFields.get(11)) {
                 addToApprovalList(Alteration52_1.MOTHER_RACE, motherBdf.getMotherRace(), motherBa.getMotherRace(),
-                        approvedFields.get(11), rejectedFields.get(11), 2);
+                    approvedFields.get(11), rejectedFields.get(11), 2);
             }
             if (approvedFields.get(12) || rejectedFields.get(12)) {
                 addToApprovalList(Alteration52_1.MOTHER_AGE_AT_BIRTH, motherBdf.getMotherAgeAtBirth(), motherBa.getMotherAgeAtBirth(),
-                        approvedFields.get(12), rejectedFields.get(12), 0);
+                    approvedFields.get(12), rejectedFields.get(12), 0);
             }
             if (approvedFields.get(13) || rejectedFields.get(13)) {
                 addToApprovalList(Alteration52_1.MOTHER_ADDRESS, motherBdf.getMotherAddress(), motherBa.getMotherAddress(),
-                        approvedFields.get(13), rejectedFields.get(13), 0);
+                    approvedFields.get(13), rejectedFields.get(13), 0);
             }
         }
         InformantInfo informantBdf = bdf.getInformant();
@@ -1195,19 +1198,19 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         if (informantBdf != null && informantBa != null) {
             if (approvedFields.get(14) || rejectedFields.get(14)) {
                 addToApprovalList(Alteration52_1.INFORMANT_TYPE, informantBdf.getInformantType(), informantBa.getInformantType(),
-                        approvedFields.get(14), rejectedFields.get(14), 0);
+                    approvedFields.get(14), rejectedFields.get(14), 0);
             }
             if (approvedFields.get(15) || rejectedFields.get(15)) {
                 addToApprovalList(Alteration52_1.INFORMANT_NIC_OR_PIN, informantBdf.getInformantNICorPIN(), informantBa.getInformantNICorPIN(),
-                        approvedFields.get(15), rejectedFields.get(15), 0);
+                    approvedFields.get(15), rejectedFields.get(15), 0);
             }
             if (approvedFields.get(16) || rejectedFields.get(16)) {
                 addToApprovalList(Alteration52_1.INFORMANT_NAME, informantBdf.getInformantName(), informantBa.getInformantName(),
-                        approvedFields.get(16), rejectedFields.get(16), 0);
+                    approvedFields.get(16), rejectedFields.get(16), 0);
             }
             if (approvedFields.get(17) || rejectedFields.get(17)) {
                 addToApprovalList(Alteration52_1.INFORMANT_ADDRESS, informantBdf.getInformantAddress(), informantBa.getInformantAddress(),
-                        approvedFields.get(17), rejectedFields.get(17), 0);
+                    approvedFields.get(17), rejectedFields.get(17), 0);
             }
         }
     }
@@ -1217,11 +1220,11 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         if (child != null) {
             if (approvedFields.get(0) || rejectedFields.get(0)) {
                 addToApprovalList(Alteration27.CHILD_FULL_NAME_OFFICIAL_LANG, child.getChildFullNameOfficialLang(),
-                        alt27.getChildFullNameOfficialLang(), approvedFields.get(0), rejectedFields.get(0), 0);
+                    alt27.getChildFullNameOfficialLang(), approvedFields.get(0), rejectedFields.get(0), 0);
             }
             if (approvedFields.get(1) || rejectedFields.get(1)) {
                 addToApprovalList(Alteration27.CHILD_FULL_NAME_ENGLISH, child.getChildFullNameEnglish(), alt27.getChildFullNameEnglish(),
-                        approvedFields.get(1), rejectedFields.get(1), 0);
+                    approvedFields.get(1), rejectedFields.get(1), 0);
             }
         }
     }
@@ -1332,7 +1335,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
     }
 
     private void populateBasicLists() {
-        userLocations = user.getActiveLocations(language);
+        userLocations = divisionUtil.populateActiveUserLocations(user, language);
         if (userLocations != null) {
             logger.debug("Loaded {} user locations", userLocations.size());
         }
@@ -1345,7 +1348,6 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
     }
 
     private void populateDistrictAndDSDivision() {
-        setLanguage(((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage());
         districtList = districtDAO.getDistrictNames(language, user);
         if (birthDistrictId == 0) {
             if (!districtList.isEmpty()) {
@@ -1402,7 +1404,8 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
     public void setSession(Map map) {
         this.session = map;
         user = (User) session.get(WebConstants.SESSION_USER_BEAN);
-        logger.debug("setting User: {}", user.getUserName());
+        language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
+        logger.debug("setting User: {} and language : {}", user.getUserName(), language);
     }
 
     public Map getSession() {

@@ -134,9 +134,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public BirthRegisterAction(BirthRegistrationService service, AdoptionOrderService adoptionService, DistrictDAO districtDAO,
-                               CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO,
-                               AppParametersDAO appParametersDAO, UserLocationDAO userLocationDAO, LocationDAO locationDAO,
-                               AssignmentDAO assignmentDAO, BirthAlterationService birthAlterationService, DivisionUtil divisionUtil) {
+        CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO,
+        AppParametersDAO appParametersDAO, UserLocationDAO userLocationDAO, LocationDAO locationDAO,
+        AssignmentDAO assignmentDAO, BirthAlterationService birthAlterationService, DivisionUtil divisionUtil) {
         this.service = service;
         this.adoptionService = adoptionService;
         this.districtDAO = districtDAO;
@@ -395,7 +395,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             populate(bdf);
             //populate location list
             String language = bdf.getRegister().getPreferredLanguage();
-            locationList = user.getActiveLocations(language);
+            locationList = divisionUtil.populateActiveUserLocations(user, language);
             if (locationList.size() > 0) {
                 int defId = locationList.keySet().iterator().next();
 
@@ -709,7 +709,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
                 beanPopulate(bdf);
 
-                locationList = user.getActiveLocations(language);
+                locationList = divisionUtil.populateActiveUserLocations(user, language);
                 if (!locationList.isEmpty()) {
                     //TODO get primary location
                     int selectedLocationId = locationList.keySet().iterator().next();

@@ -1,25 +1,25 @@
 package lk.rgd.crs.web.action.deaths;
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.AppConstants;
+import lk.rgd.Permission;
+import lk.rgd.common.api.dao.*;
+import lk.rgd.common.api.domain.User;
+import lk.rgd.common.util.GenderUtil;
 import lk.rgd.common.util.NameFormatUtil;
+import lk.rgd.crs.CRSRuntimeException;
+import lk.rgd.crs.api.bean.UserWarning;
+import lk.rgd.crs.api.dao.BDDivisionDAO;
+import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.DeathAlterationService;
+import lk.rgd.crs.api.service.DeathRegistrationService;
+import lk.rgd.crs.web.WebConstants;
+import lk.rgd.crs.web.util.DivisionUtil;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
-
-import lk.rgd.common.api.dao.*;
-import lk.rgd.common.api.domain.User;
-import lk.rgd.common.util.GenderUtil;
-import lk.rgd.crs.api.dao.BDDivisionDAO;
-import lk.rgd.crs.api.domain.*;
-import lk.rgd.crs.api.service.DeathRegistrationService;
-import lk.rgd.crs.api.bean.UserWarning;
-import lk.rgd.crs.web.WebConstants;
-import lk.rgd.AppConstants;
-import lk.rgd.crs.CRSRuntimeException;
-import lk.rgd.Permission;
 
 /**
  * @author Duminda Dharmakeerthi
@@ -56,6 +56,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private final DeathRegistrationService service;
     private final DeathAlterationService deathAlterationService;
     private final RaceDAO raceDAO;
+    private final DivisionUtil divisionUtil;
 
     private BitSet changedFields;
 
@@ -121,8 +122,9 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
 
     public DeathRegisterAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
-                               CountryDAO countryDAO, DeathRegistrationService deathRegistrationService,
-                               AppParametersDAO appParametersDAO, RaceDAO raceDAO, DeathAlterationService deathAlterationService, UserLocationDAO userLocationDAO, UserDAO userDAO, LocationDAO locationDAO) {
+        CountryDAO countryDAO, DeathRegistrationService deathRegistrationService, AppParametersDAO appParametersDAO,
+        RaceDAO raceDAO, DeathAlterationService deathAlterationService, UserLocationDAO userLocationDAO, UserDAO userDAO,
+        LocationDAO locationDAO, DivisionUtil divisionUtil) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
@@ -134,6 +136,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         this.userLocationDAO = userLocationDAO;
         this.userDAO = userDAO;
         this.locationDAO = locationDAO;
+        this.divisionUtil = divisionUtil;
     }
 
 
@@ -248,7 +251,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
             //display user locations
             String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
-            locationList = user.getActiveLocations(language);
+            locationList = divisionUtil.populateActiveUserLocations(user, language);
             if (!locationList.isEmpty()) {
                 int selectedLocationId = locationList.keySet().iterator().next();
                 userList = new HashMap<String, String>();

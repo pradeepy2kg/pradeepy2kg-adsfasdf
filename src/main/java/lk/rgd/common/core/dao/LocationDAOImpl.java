@@ -1,16 +1,15 @@
 package lk.rgd.common.core.dao;
 
+import lk.rgd.AppConstants;
+import lk.rgd.ErrorCodes;
 import lk.rgd.common.api.dao.LocationDAO;
 import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.domain.User;
-import lk.rgd.common.api.domain.Role;
-import lk.rgd.AppConstants;
-import lk.rgd.ErrorCodes;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.Query;
 import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import java.util.*;
 
 /**
@@ -85,6 +84,18 @@ public class LocationDAOImpl extends BaseDAO implements LocationDAO, Preloadable
         return result;
     }
 
+    public String getLocationNameByPK(int locationUKey, String language) {
+        if (AppConstants.SINHALA.equals(language)) {
+            return siLocationName.get(locationUKey);
+        } else if (AppConstants.ENGLISH.equals(language)) {
+            return enLocationName.get(locationUKey);
+        } else if (AppConstants.TAMIL.equals(language)) {
+            return taLocationName.get(locationUKey);
+        } else {
+            handleException("Unsupported language : " + language, ErrorCodes.INVALID_LANGUAGE);
+        }
+        return AppConstants.EMPTY_STRING;
+    }
 
     @Transactional(propagation = Propagation.REQUIRED)
     public Location getLocationByCode(int locationCode) {
