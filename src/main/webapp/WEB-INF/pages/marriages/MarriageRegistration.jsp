@@ -1,43 +1,11 @@
 <%-- @author Mahesha Kalpanie --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
+<script src="/ecivil/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
+<script src="/ecivil/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
+<script type="text/javascript" src="<s:url value="/js/division.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 <script type="text/javascript">
-$(function() {
-    $('select#districtId').bind('change', function(evt1) {
-        var id = $("select#districtId").attr("value");
-        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id},
-                function(data) {
-                    var options1 = '';
-                    var ds = data.dsDivisionList;
-                    for (var i = 0; i < ds.length; i++) {
-                        options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
-                    }
-                    $("select#dsDivisionId").html(options1);
-
-                    var options2 = '';
-                    var bd = data.bdDivisionList;
-                    for (var j = 0; j < bd.length; j++) {
-                        options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
-                    }
-                    $("select#mrDivisionId").html(options2);
-                });
-    });
-
-    $('select#dsDivisionId').bind('change', function(evt2) {
-        var id = $("select#dsDivisionId").attr("value");
-        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:2},
-                function(data) {
-                    var options = '';
-                    var bd = data.bdDivisionList;
-                    for (var i = 0; i < bd.length; i++) {
-                        options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
-                    }
-                    $("select#mrDivisionId").html(options);
-                });
-    });
-});
 </script>
 <div class="marriage-notice-outer">
 <s:form action="eprMarriageRegistration" method="post">
@@ -62,8 +30,8 @@ $(function() {
                         <br>District
                     </td>
                     <td>
-                         <s:select id="districtId" name="marriageDistrictId" list="districtList" value="marriageDistrictId" headerKey="2"
-                                cssStyle="width:98.5%; width:240px;" onchange="populateDSDivisions('districtId','dsDivisionId','mrDivisionId')"/>
+                         <s:select id="districtId" name="marriageDistrictId" list="districtList" value="marriageDistrictId"
+                                cssStyle="width:98.5%; width:240px;" onclick="populateDSDivisions('districtId','dsDivisionId','mrDivisionId')"/>
                     </td>
                 </tr>
                 <tr>
@@ -74,7 +42,7 @@ $(function() {
                         </label>
                     </td>
                     <td align="center">
-                        <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="dsDivisionId" headerKey="2"
+                        <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="dsDivisionId"
                                 cssStyle="width:98.5%; width:240px;" onchange="populateDivisions('dsDivisionId', 'mrDivisionId')"/>
                     </td>
                 </tr>

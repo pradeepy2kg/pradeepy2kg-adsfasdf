@@ -1,6 +1,4 @@
-/* @author Mahesha Kalpanie */
 function populateDSDivisions(districtId, dsDivisionId, divisionId){
-    alert("dfd");
     var id = document.getElementById(districtId).value
     $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:8},
     function(data) {
@@ -10,7 +8,7 @@ function populateDSDivisions(districtId, dsDivisionId, divisionId){
         for (var i = 0; i < ds.length; i++) {
             dsDivisionList.options[i]= new Option(ds[i].optionDisplay, ds[i].optionValue);
         }
-        var divisions divisions = data.bdDivisionList;
+        var divisions = data.mrDivisionList;
         var divisionList = document.getElementById(divisionId);
         clear_list(divisionList);
         for (var j = 0; j < divisions.length; j++) {
@@ -20,11 +18,10 @@ function populateDSDivisions(districtId, dsDivisionId, divisionId){
 }
 
 function populateDivisions(dsDivisionId, divisionId){
-    alert("dfd");
     var id = document.getElementById(dsDivisionId).value
     $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:7},
         function(data) {
-            var divisions = data.bdDivisionList;
+            var divisions = data.mrDivisionList;
             var divisionList = document.getElementById(divisionId);
             clear_list(divisionList);
             for (var i = 0; i < divisions.length; i++) {
