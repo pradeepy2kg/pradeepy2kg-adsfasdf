@@ -146,6 +146,16 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         return "pageLoad";
     }
 
+    /**
+     * editing(updating) a marriage notice (register)
+     */
+    public String editMarriageNotice() {
+        logger.debug("attempt to edit marriage notice : idUKey {}", marriage.getIdUKey());
+        marriageRegistrationService.updateMarriageRegister(marriage, user);
+        addActionMessage(getText("marriage.notice.updated.success"));
+        return SUCCESS;
+    }
+
     public String marriageRegistrationInit() {
         logger.debug("loading marriage registration page");
         divisionUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
@@ -155,15 +165,6 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     public String registerMarriage() {
         return "success";
-    }
-
-    /**
-     * editing(updating) a marriage notice (register)
-     */
-    public String editMarriageNotice() {
-        logger.debug("attempt to edit marriage notice : idUKey {}", marriage.getIdUKey());
-        addActionMessage(getText("marriage.notice.updated.success"));
-        return SUCCESS;
     }
 
     /**

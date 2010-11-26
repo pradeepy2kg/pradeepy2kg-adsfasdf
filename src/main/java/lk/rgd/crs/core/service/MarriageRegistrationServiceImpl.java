@@ -16,6 +16,7 @@ import java.util.List;
 
 /**
  * implementation of the marriage registration service interface
+ * todo check user permissions for performing tasks
  */
 public class MarriageRegistrationServiceImpl implements MarriageRegistrationService {
 
@@ -68,10 +69,24 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         String femaleIdentification, User user) {
         logger.debug("getting active marriage notice for male identification : {} :and female identification : {}",
             maleIdentification, femaleIdentification);
-        //getting latest record 
-        return marriageRegistrationDAO.getActiveMarriageNoticeByMaleFemaleIdentification(maleIdentification,
-            femaleIdentification).get(0);
+        //getting latest record
+        List<MarriageRegister> records = marriageRegistrationDAO.getActiveMarriageNoticeByMaleFemaleIdentification
+            (maleIdentification, femaleIdentification);
+        if (records.size() > 0) {
+            return records.get(0);
+        }
+        return null;
         //throw new UnsupportedOperationException("not yet implemented");
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+    public void updateMarriageRegister(MarriageRegister marriageRegister, User user) {
+        //todo check user permissions
+        //     marriageRegistrationDAO.updateMarriageRegister(marriageRegister,user);
+        throw new UnsupportedOperationException("not yet implemented");
     }
 
     private void addWitnesses(MarriageRegister marriageRegister, boolean isMale) {
