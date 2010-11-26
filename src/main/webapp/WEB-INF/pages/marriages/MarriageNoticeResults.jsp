@@ -7,6 +7,7 @@
 
             <s:submit value="%{getText('button.edit')}"/>
             <s:hidden name="idUKey" value="%{#request.idUKey}"/>
+            <s:hidden name="secondNotice" value="%{#request.secondNotice}"/>
         </s:form>
     </div>
     <div class="form-submit">

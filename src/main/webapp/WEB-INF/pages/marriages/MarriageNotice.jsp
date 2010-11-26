@@ -126,8 +126,15 @@
     });
 </script>
 
+<s:if test="editMode">
+    <s:url action="eprMarriageNoticeEdit" namespace="." id="addAction"></s:url>
+</s:if>
+<s:else>
+    <s:url action="eprMarriageNoticeAdd" namespace="." id="addAction"></s:url>
+</s:else>
+
 <div class="marriage-notice-outer">
-<s:form action="eprMarriageNoticeAdd" method="post">
+<s:form action="%{addAction}"  method="post">
 <%--section for official usage--%>
 <table class="table_reg_header_01">
     <caption></caption>
