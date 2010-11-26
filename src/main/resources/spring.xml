@@ -233,6 +233,7 @@
         <constructor-arg ref="mrDivisionDAOImpl"/>
         <constructor-arg ref="countryDAOImpl"/>
         <constructor-arg ref="raceDAOImpl"/>
+        <constructor-arg ref="locationDAOImpl"/>
     </bean>
 
     <!--Web module related classes-->
@@ -261,6 +262,7 @@
         <constructor-arg ref="dsDivisionDAOImpl"/>
         <constructor-arg ref="birthAlterationService"/>
         <constructor-arg ref="appParametersDAOImpl"/>
+        <constructor-arg ref="commonUtil"/>
     </bean>
 
     <bean id="birthPrintAction" scope="prototype" class="lk.rgd.crs.web.action.births.PrintAction">
@@ -346,6 +348,7 @@
         <constructor-arg ref="raceDAOImpl"/>
         <constructor-arg ref="countryDAOImpl"/>
         <constructor-arg ref="appParametersDAOImpl"/>
+        <constructor-arg ref="commonUtil"/>
     </bean>
 
     <bean id="eventsManagementAction" class="lk.rgd.crs.web.action.EventsViewerAction">
@@ -370,6 +373,7 @@
         <constructor-arg ref="ecivilService"/>
         <constructor-arg ref="locationDAOImpl"/>
         <constructor-arg ref="appParametersDAOImpl"/>
+        <constructor-arg ref="commonUtil"/>
     </bean>
 
     <bean id="marriageRegisterSearchAction" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction">

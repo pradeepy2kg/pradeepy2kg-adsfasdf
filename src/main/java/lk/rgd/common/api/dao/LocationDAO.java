@@ -50,6 +50,15 @@ public interface LocationDAO {
     public Map<Integer, String> getLocationList(String language, User user);
 
     /**
+     * Return the location code and location name in selected language
+     *
+     * @param locationUKey the location unique key
+     * @param language     the selected language
+     * @return the name and code of the location in selected language
+     */
+    public String getLocationNameByPK(int locationUKey, String language);
+
+    /**
      * @param locationCode
      * @return
      */
