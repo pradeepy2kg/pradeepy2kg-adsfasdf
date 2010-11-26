@@ -40,6 +40,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private final RaceDAO raceDAO;
     private final BDDivisionDAO bdDivisionDAO;
     private final DSDivisionDAO dsDivisionDAO;
+    private final DivisionUtil divisionUtil;
     private final AppParametersDAO appParametersDAO;
     private final UserLocationDAO userLocationDAO;
     private final LocationDAO locationDAO;
@@ -135,7 +136,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     public BirthRegisterAction(BirthRegistrationService service, AdoptionOrderService adoptionService, DistrictDAO districtDAO,
                                CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO,
                                AppParametersDAO appParametersDAO, UserLocationDAO userLocationDAO, LocationDAO locationDAO,
-                               AssignmentDAO assignmentDAO, BirthAlterationService birthAlterationService) {
+                               AssignmentDAO assignmentDAO, BirthAlterationService birthAlterationService, DivisionUtil divisionUtil) {
         this.service = service;
         this.adoptionService = adoptionService;
         this.districtDAO = districtDAO;
@@ -148,6 +149,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.locationDAO = locationDAO;
         this.assignmentDAO = assignmentDAO;
         this.birthAlterationService = birthAlterationService;
+        this.divisionUtil = divisionUtil;
 
         dsDivisionList = new HashMap<Integer, String>();
         bdDivisionList = new HashMap<Integer, String>();
@@ -958,9 +960,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     private void populateDynamicLists(String language) {
         //Polulate division lists and set the first item as default
-        birthDistrictId = DivisionUtil.findDefaultListValue(districtList, birthDistrictId);
-        dsDivisionId = DivisionUtil.findDivisionList(dsDivisionList, dsDivisionId, birthDistrictId, "DSDivision", user, language);
-        birthDivisionId = DivisionUtil.findDivisionList(bdDivisionList, birthDivisionId, dsDivisionId, "BDDivision", user, language);
+        birthDistrictId = divisionUtil.findDefaultListValue(districtList, birthDistrictId);
+        dsDivisionId = divisionUtil.findDivisionList(dsDivisionList, dsDivisionId, birthDistrictId, "DSDivision", user, language);
+        birthDivisionId = divisionUtil.findDivisionList(bdDivisionList, birthDivisionId, dsDivisionId, "BDDivision", user, language);
     }
 
     private void populateBasicLists(String language) {

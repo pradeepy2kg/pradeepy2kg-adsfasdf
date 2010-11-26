@@ -31,6 +31,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     private final MRDivisionDAO mrDivisionDAO;
     private final RaceDAO raceDAO;
     private final CountryDAO countryDAO;
+    private final DivisionUtil divisionUtil;
 
     private User user;
     private MarriageRegister marriage;
@@ -61,11 +62,14 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     private Date noticeReceivedDate;
 
-    public MarriageRegistrationAction(MarriageRegistrationService marriageRegistrationService, MRDivisionDAO mrDivisionDAO, RaceDAO raceDAO, CountryDAO countryDAO) {
+    public MarriageRegistrationAction(MarriageRegistrationService marriageRegistrationService,
+        MRDivisionDAO mrDivisionDAO, RaceDAO raceDAO, CountryDAO countryDAO, DivisionUtil divisionUtil) {
         this.marriageRegistrationService = marriageRegistrationService;
         this.mrDivisionDAO = mrDivisionDAO;
         this.raceDAO = raceDAO;
         this.countryDAO = countryDAO;
+        this.divisionUtil = divisionUtil;
+
         districtList = new HashMap<Integer, String>();
         dsDivisionList = new HashMap<Integer, String>();
         mrDivisionList = new HashMap<Integer, String>();
@@ -85,9 +89,9 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             marriage = marriageRegistrationService.getByIdUKey(idUKey, user);
         }
         //populating lists
-        DivisionUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
+        divisionUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
             marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
-        DivisionUtil.populateCountryAndRaceLists(countryList, raceList, language);
+        divisionUtil.populateCountryAndRaceLists(countryList, raceList, language);
         logger.debug("successfully loaded the page");
         return "pageLoad";
     }
@@ -115,11 +119,11 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         if (marriage == null) {
             logger.debug("cannot find marriage register record to edit : idUKey {}", idUKey);
             addActionError(getText("error.cannot.find.record.for.edit"));
-            DivisionUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
+            divisionUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
                 marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
             return ERROR;
         }
-        DivisionUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
+        divisionUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
             marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
         return "pageLoad";
     }
@@ -129,14 +133,14 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
      */
     public String marriageNoticeSearchInit() {
         logger.debug("loading search page for marriage notice");
-        DivisionUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
+        divisionUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
             marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
         return "pageLoad";
     }
 
     public String marriageRegistrationInit() {
         logger.debug("loading marriage registration page");
-        DivisionUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
+        divisionUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
             marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
         return "pageLoad";
     }

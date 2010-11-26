@@ -226,16 +226,10 @@
         <constructor-arg ref="personDAOImpl"/>
         <constructor-arg ref="appParametersDAOImpl"/>
     </bean>
-    <bean id="divisionBirthUtil" class="lk.rgd.crs.web.util.DivisionUtil" factory-method="createBirthInstance">
+    <bean id="commonUtil" class="lk.rgd.crs.web.util.DivisionUtil">
         <constructor-arg ref="districtDAOImpl"/>
         <constructor-arg ref="dsDivisionDAOImpl"/>
         <constructor-arg ref="bdDivisionDAOImpl"/>
-        <constructor-arg ref="countryDAOImpl"/>
-        <constructor-arg ref="raceDAOImpl"/>
-    </bean>
-    <bean id="divisionMarriageUtil" class="lk.rgd.crs.web.util.DivisionUtil" factory-method="createMarriageInstance">
-        <constructor-arg ref="districtDAOImpl"/>
-        <constructor-arg ref="dsDivisionDAOImpl"/>
         <constructor-arg ref="mrDivisionDAOImpl"/>
         <constructor-arg ref="countryDAOImpl"/>
         <constructor-arg ref="raceDAOImpl"/>
@@ -255,6 +249,7 @@
         <constructor-arg ref="locationDAOImpl"/>
         <constructor-arg ref="assignmentDAOImpl"/>
         <constructor-arg ref="birthAlterationService"/>
+        <constructor-arg ref="commonUtil"/>
     </bean>
 
     <bean id="birthAlterationAction" scope="prototype" class="lk.rgd.crs.web.action.births.BirthAlterationAction">

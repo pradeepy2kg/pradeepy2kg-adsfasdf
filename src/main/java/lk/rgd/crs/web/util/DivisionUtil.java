@@ -21,36 +21,21 @@ public class DivisionUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(DivisionUtil.class);
 
-    private static DistrictDAO districtDAO;
-    private static DSDivisionDAO dsDivisionDAO;
-    private static BDDivisionDAO bdDivisionDAO;
-    private static MRDivisionDAO mrDivisionDAO;
-    private static CountryDAO countryDAO;
-    private static RaceDAO raceDAO;
+    private final DistrictDAO districtDAO;
+    private final DSDivisionDAO dsDivisionDAO;
+    private final BDDivisionDAO bdDivisionDAO;
+    private final MRDivisionDAO mrDivisionDAO;
+    private final CountryDAO countryDAO;
+    private final RaceDAO raceDAO;
 
-    private static DivisionUtil divisionUtil = new DivisionUtil();
-
-    private static DivisionUtil createInstance(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
-                                               CountryDAO countryDAO, RaceDAO raceDAO) {
-        DivisionUtil.districtDAO = districtDAO;
-        DivisionUtil.dsDivisionDAO = dsDivisionDAO;
-        DivisionUtil.countryDAO = countryDAO;
-        DivisionUtil.raceDAO = raceDAO;
-
-        return divisionUtil;
-    }
-
-    public static DivisionUtil createBirthInstance(DistrictDAO districtDAO,
-                                                   DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
-                                                   RaceDAO raceDAO, CountryDAO countryDAO) {
-        DivisionUtil.bdDivisionDAO = bdDivisionDAO;
-        return DivisionUtil.createInstance(districtDAO, dsDivisionDAO, countryDAO, raceDAO);
-    }
-
-    public static DivisionUtil createMarriageInstance(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
-                                                      MRDivisionDAO mrDivisionDAO, CountryDAO countryDAO, RaceDAO raceDAO) {
-        DivisionUtil.mrDivisionDAO = mrDivisionDAO;
-        return DivisionUtil.createInstance(districtDAO, dsDivisionDAO, countryDAO, raceDAO);
+    public DivisionUtil(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
+        BDDivisionDAO bdDivisionDAO, MRDivisionDAO mrDivisionDAO, CountryDAO countryDAO, RaceDAO raceDAO) {
+        this.districtDAO = districtDAO;
+        this.dsDivisionDAO = dsDivisionDAO;
+        this.countryDAO = countryDAO;
+        this.raceDAO = raceDAO;
+        this.mrDivisionDAO = mrDivisionDAO;
+        this.bdDivisionDAO = bdDivisionDAO;
     }
 
     /**
@@ -66,9 +51,9 @@ public class DivisionUtil {
      * @param user
      * @param language
      */
-    public static void populateDynamicLists(Map<Integer, String> districtList, Map<Integer, String> dsDivisionList,
-                                            Map<Integer, String> divisionList, Integer districtId, Integer dsDivisionId,
-                                            Integer divisionId, String divisionType, User user, String language) {
+    public void populateDynamicLists(Map<Integer, String> districtList, Map<Integer, String> dsDivisionList,
+        Map<Integer, String> divisionList, Integer districtId, Integer dsDivisionId,
+        Integer divisionId, String divisionType, User user, String language) {
 
         districtList.putAll(districtDAO.getDistrictNames(language, user));
         districtId = findDefaultListValue(districtList, districtId);
@@ -85,7 +70,7 @@ public class DivisionUtil {
         }
     }
 
-    public static void populateCountryAndRaceLists(Map<Integer, String> countryList, Map<Integer, String> raceList,
+    public void populateCountryAndRaceLists(Map<Integer, String> countryList, Map<Integer, String> raceList,
                                                    String language) {
         logger.debug("generating country list and race lists");
         countryList.putAll(countryDAO.getCountries(language));
@@ -93,7 +78,7 @@ public class DivisionUtil {
     }
 
 
-    public static int findDefaultListValue(Map<Integer, String> divisionList, int divisionId) {
+    public int findDefaultListValue(Map<Integer, String> divisionList, int divisionId) {
         if (divisionId == 0) {
             if (!divisionList.isEmpty()) {
                 divisionId = divisionList.keySet().iterator().next();
@@ -103,7 +88,7 @@ public class DivisionUtil {
         return divisionId;
     }
 
-    public static int findDivisionList(Map<Integer, String> divisionList, int divisionId, int parentId, String divisionType, User user, String language) {
+    public int findDivisionList(Map<Integer, String> divisionList, int divisionId, int parentId, String divisionType, User user, String language) {
         if (divisionType.equals("DSDivision")) {
             divisionList.putAll(dsDivisionDAO.getDSDivisionNames(parentId, language, user));
         } else if (divisionType.equals("BDDivision")) {
