@@ -475,7 +475,7 @@
             marriage notice results jsp page
         </description>
         <put-attribute name="body" value="/WEB-INF/pages/marriages/MarriageNoticeResults.jsp"/>
-        <put-attribute name="title" value="title.marriage.notice"/>
+        <put-attribute name="title" value="title.marriage.notice.results"/>
     </definition>
 
     <definition name="epr.marriageNoticeSearchHome" extends="epr.template">

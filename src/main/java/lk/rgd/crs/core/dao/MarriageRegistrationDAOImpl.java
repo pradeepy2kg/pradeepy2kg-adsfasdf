@@ -69,4 +69,16 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
         q.setParameter("state", state);
         return q.getResultList();
     }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<MarriageRegister> getActiveMarriageNoticeByMaleFemaleIdentification(String maleIdentification,
+        String femaleIdentification) {
+        Query q = em.createNamedQuery("get.notice.by.male.and.female.identification");
+        q.setParameter("male", maleIdentification);
+        q.setParameter("female", femaleIdentification);
+        return q.getResultList();
+    }
 }

@@ -15,8 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * @author amith jayasekara
- *         implementation of the marriage registration service interface
+ * implementation of the marriage registration service interface
  */
 public class MarriageRegistrationServiceImpl implements MarriageRegistrationService {
 
@@ -49,25 +48,12 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         return marriageRegistrationDAO.getByIdUKey(idUKey);
     }
 
-    private void addWitnesses(MarriageRegister marriageRegister, boolean isMale) {
-        if (isMale) {
-            //persisting male witnesses
-            marriageRegistrationDAO.addWitness(marriageRegister.getMaleNoticeWitness_1());
-            marriageRegistrationDAO.addWitness(marriageRegister.getMaleNoticeWitness_2());
-        } else {
-            //persisting female notice witnesses
-            marriageRegistrationDAO.addWitness(marriageRegister.getFemaleNoticeWitness_1());
-            marriageRegistrationDAO.addWitness(marriageRegister.getFemaleNoticeWitness_2());
-        }
-
-    }
-
     /**
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<MarriageRegister> getMarriageNoticePendingApprovalByDSDivision(DSDivision dsDivision, int pageNo,
-                                                                               int noOfRows, User user) {
+        int noOfRows, User user) {
         logger.debug("Get MarriageNotices pending approval by DSDivision : {}", dsDivision.getDsDivisionUKey());
         ValidationUtils.validateAccessToDSDivison(dsDivision, user);
         return marriageRegistrationDAO.getPaginatedListForStateByDSDivision(dsDivision,
@@ -79,9 +65,25 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public MarriageRegister getActiveMarriageNoticeByMaleAndFemaleIdentification(String maleIdentification,
-                                                                                 String femaleIdentification, User user) {
+        String femaleIdentification, User user) {
         logger.debug("getting active marriage notice for male identification : {} :and female identification : {}",
             maleIdentification, femaleIdentification);
-        throw new UnsupportedOperationException("not yet implemented");
+        //getting latest record 
+        return marriageRegistrationDAO.getActiveMarriageNoticeByMaleFemaleIdentification(maleIdentification,
+            femaleIdentification).get(0);
+        //throw new UnsupportedOperationException("not yet implemented");
+    }
+
+    private void addWitnesses(MarriageRegister marriageRegister, boolean isMale) {
+        if (isMale) {
+            //persisting male witnesses
+            marriageRegistrationDAO.addWitness(marriageRegister.getMaleNoticeWitness_1());
+            marriageRegistrationDAO.addWitness(marriageRegister.getMaleNoticeWitness_2());
+        } else {
+            //persisting female notice witnesses
+            marriageRegistrationDAO.addWitness(marriageRegister.getFemaleNoticeWitness_1());
+            marriageRegistrationDAO.addWitness(marriageRegister.getFemaleNoticeWitness_2());
+        }
+
     }
 }

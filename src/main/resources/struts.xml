@@ -1164,5 +1164,13 @@
                 method="registerMarriage">
             <result type="tiles" name="success">epr.home</result>
         </action>
+
+        <action name="eprMarriageNoticeEditInit" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
+                method="editMarriageNoticeInit">
+            <!--todo do not forward to default error page-->
+            <result type="tiles" name="pageLoad">epr.marriageNoticeInit</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
     </package>
 </struts>
