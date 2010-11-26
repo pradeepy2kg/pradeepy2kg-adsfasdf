@@ -43,7 +43,7 @@ public interface MarriageRegistrationService {
      * @return the list of marriage notices pending approval
      */
     public List<MarriageRegister> getMarriageNoticePendingApprovalByDSDivision(DSDivision dsDivision, int pageNo,
-                                                                               int noOfRows, User user);
+        int noOfRows, User user);
 
     /**
      * get active marriage notice(marriage register objects) by male party and female party identification numbers
@@ -55,5 +55,13 @@ public interface MarriageRegistrationService {
      * @return marriage notice (marriage register object)
      */
     public MarriageRegister getActiveMarriageNoticeByMaleAndFemaleIdentification(String maleIdentification,
-                                                                                 String femaleIdentification, User user);
+        String femaleIdentification, User user);
+
+    /**
+     * update marriage notice/register
+     *
+     * @param marriageRegister marriage register object to be updated
+     * @param user             user who performs the action
+     */
+    public void updateMarriageRegister(MarriageRegister marriageRegister, User user);
 }
