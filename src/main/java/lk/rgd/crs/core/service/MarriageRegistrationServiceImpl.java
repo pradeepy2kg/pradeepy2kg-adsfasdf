@@ -34,6 +34,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     @Transactional(propagation = Propagation.REQUIRED)
     public void addMarriageNotice(MarriageRegister notice, boolean isMale, User user) {
         logger.debug("adding new marriage notice :male pin number  {}", notice.getMale().getIdentificationNumberMale());
+        //TODO check users permission to add marriage
         //persisting witness
         addWitnesses(notice, isMale);
         marriageRegistrationDAO.addMarriageNotice(notice, user);
@@ -66,10 +67,21 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<MarriageRegister> getMarriageNoticePendingApprovalByDSDivision(DSDivision dsDivision, int pageNo,
-        int noOfRows, User user) {
+                                                                               int noOfRows, User user) {
         logger.debug("Get MarriageNotices pending approval by DSDivision : {}", dsDivision.getDsDivisionUKey());
         ValidationUtils.validateAccessToDSDivison(dsDivision, user);
         return marriageRegistrationDAO.getPaginatedListForStateByDSDivision(dsDivision,
             MarriageRegister.State.DATA_ENTRY, pageNo, noOfRows);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public MarriageRegister getActiveMarriageNoticeByMaleAndFemaleIdentification(String maleIdentification,
+                                                                                 String femaleIdentification, User user) {
+        logger.debug("getting active marriage notice for male identification : {} :and female identification : {}",
+            maleIdentification, femaleIdentification);
+        throw new UnsupportedOperationException("not yet implemented");
     }
 }

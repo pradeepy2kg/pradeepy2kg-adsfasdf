@@ -43,5 +43,17 @@ public interface MarriageRegistrationService {
      * @return the list of marriage notices pending approval
      */
     public List<MarriageRegister> getMarriageNoticePendingApprovalByDSDivision(DSDivision dsDivision, int pageNo,
-        int noOfRows, User user);
+                                                                               int noOfRows, User user);
+
+    /**
+     * get active marriage notice(marriage register objects) by male party and female party identification numbers
+     * note: record must be active and in data entry mode
+     *
+     * @param maleIdentification   male pin or nic  number
+     * @param femaleIdentification female pin or nic number
+     * @param user                 the user initiating the action
+     * @return marriage notice (marriage register object)
+     */
+    public MarriageRegister getActiveMarriageNoticeByMaleAndFemaleIdentification(String maleIdentification,
+                                                                                 String femaleIdentification, User user);
 }
