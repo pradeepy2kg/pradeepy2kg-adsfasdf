@@ -1,8 +1,13 @@
 package lk.rgd.crs.web.action.marriages;
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.common.api.dao.CountryDAO;
+import lk.rgd.common.api.dao.RaceDAO;
+import lk.rgd.common.api.domain.Country;
+import lk.rgd.common.api.domain.Race;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.dao.MRDivisionDAO;
+import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.domain.MarriageRegister;
 import lk.rgd.crs.api.domain.Witness;
 import lk.rgd.crs.api.service.MarriageRegistrationService;
@@ -24,6 +29,8 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     private final MarriageRegistrationService marriageRegistrationService;
 
     private final MRDivisionDAO mrDivisionDAO;
+    private final RaceDAO raceDAO;
+    private final CountryDAO countryDAO;
 
     private User user;
     private MarriageRegister marriage;
@@ -40,6 +47,10 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     private int mrDivisionId;
     private int marriageDivisionId;
     private int marriageDivisionIdFemale;
+    private int raceIdMale;
+    private int raceIdFemale;
+    private int countryIdMale;
+    private int countryIdFemale;
 
     private long idUKey;
 
@@ -50,9 +61,11 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     private Date noticeReceivedDate;
 
-    public MarriageRegistrationAction(MarriageRegistrationService marriageRegistrationService, MRDivisionDAO mrDivisionDAO) {
+    public MarriageRegistrationAction(MarriageRegistrationService marriageRegistrationService, MRDivisionDAO mrDivisionDAO, RaceDAO raceDAO, CountryDAO countryDAO) {
         this.marriageRegistrationService = marriageRegistrationService;
         this.mrDivisionDAO = mrDivisionDAO;
+        this.raceDAO = raceDAO;
+        this.countryDAO = countryDAO;
         districtList = new HashMap<Integer, String>();
         dsDivisionList = new HashMap<Integer, String>();
         mrDivisionList = new HashMap<Integer, String>();
@@ -79,10 +92,17 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         return "pageLoad";
     }
 
+    /**
+     * adding a new marriage notice
+     * notes: if there is and already added notice (both parties submit notice separate)this will force user
+     * (who try to add second notice with same data) to edit existing record
+     */
     public String addMarriageNotice() {
         logger.debug("attempt to add marriage notice serial number : {} ");
-        /*check serial number is already exists*/
+        //check serial number is already exists
         populateNoticeForPersists();
+        //add mr division and race male party and female party
+        populatePartyObjectsForPersisting();
         boolean both = marriage.isBothPartySubmitted();
         marriageRegistrationService.addMarriageNotice(marriage, (both || male), user);
         logger.debug("successfully added marriage notice serial number: {}");
@@ -126,6 +146,17 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     }
 
     /**
+     * check existing record
+     *
+     * @return marriage notice (marriage register object if found) else return null
+     */
+    private MarriageRegister checkExistingMarriageNotice(String malePinOrNic, String femalePinOrNic) {
+        MarriageRegister notice = marriageRegistrationService.getActiveMarriageNoticeByMaleAndFemaleIdentification(
+            malePinOrNic, femalePinOrNic, user);
+        return null;
+    }
+
+    /**
      * populate additional fields for persisting notice
      */
     private void populateNoticeForPersists() {
@@ -145,6 +176,29 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             marriage.setSerialOfFemaleNotice(serialNumber);
             marriage.setMaleNoticeWitness_1(null);
             marriage.setMaleNoticeWitness_2(null);
+        }
+    }
+
+    /**
+     * populate male/female mr division,race,country(if foreign)
+     */
+    private void populatePartyObjectsForPersisting() {
+        if (marriageDivisionId != 0 && marriageDivisionIdFemale != 0) {
+            MRDivision mrDivision = mrDivisionDAO.getMRDivisionByPK(marriageDivisionId);
+            marriage.getMale().setMrDivisionMale(mrDivision);
+            mrDivision = mrDivisionDAO.getMRDivisionByPK(marriageDivisionIdFemale);
+            marriage.getFemale().setMrDivisionFemale(mrDivision);
+        }
+        if (raceIdMale != 0 && raceIdFemale != 0) {
+            Race race = raceDAO.getRace(raceIdMale);
+            marriage.getMale().setMaleRace(race);
+            race = raceDAO.getRace(raceIdFemale);
+            marriage.getFemale().setFemaleRace(race);
+        }
+        if (countryIdMale != 0 && countryIdFemale != 0) {
+            //todo add country
+            Country country = countryDAO.getCountry(countryIdMale);
+            country = countryDAO.getCountry(countryIdFemale);
         }
     }
 
@@ -287,6 +341,38 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     public void setCountryList(Map<Integer, String> countryList) {
         this.countryList = countryList;
+    }
+
+    public int getRaceIdMale() {
+        return raceIdMale;
+    }
+
+    public void setRaceIdMale(int raceIdMale) {
+        this.raceIdMale = raceIdMale;
+    }
+
+    public int getRaceIdFemale() {
+        return raceIdFemale;
+    }
+
+    public void setRaceIdFemale(int raceIdFemale) {
+        this.raceIdFemale = raceIdFemale;
+    }
+
+    public int getCountryIdMale() {
+        return countryIdMale;
+    }
+
+    public void setCountryIdMale(int countryIdMale) {
+        this.countryIdMale = countryIdMale;
+    }
+
+    public int getCountryIdFemale() {
+        return countryIdFemale;
+    }
+
+    public void setCountryIdFemale(int countryIdFemale) {
+        this.countryIdFemale = countryIdFemale;
     }
 }
 
