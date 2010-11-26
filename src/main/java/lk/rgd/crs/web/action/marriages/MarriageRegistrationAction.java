@@ -56,6 +56,8 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     private long idUKey;
 
     private boolean male;
+    private boolean secondNotice;
+    private boolean editMode;
 
     private String language;
     private String serialNumber;
@@ -113,6 +115,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
                 marriage.getMale().getIdentificationNumberMale(), marriage.getFemale().getIdentificationNumberFemale());
 
             idUKey = existingMarriage.getIdUKey();
+            secondNotice = true;
             addActionMessage(getText("massage.existing.notice.found"));
             return SUCCESS;
         }
@@ -139,6 +142,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         }
         divisionUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
             marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
+        editMode = true;
         return "pageLoad";
     }
 
@@ -151,6 +155,15 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     public String registerMarriage() {
         return "success";
+    }
+
+    /**
+     * editing(updating) a marriage notice (register)
+     */
+    public String editMarriageNotice() {
+        logger.debug("attempt to edit marriage notice : idUKey {}", marriage.getIdUKey());
+        addActionMessage(getText("marriage.notice.updated.success"));
+        return SUCCESS;
     }
 
     /**
@@ -208,6 +221,13 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             Country country = countryDAO.getCountry(countryIdMale);
             country = countryDAO.getCountry(countryIdFemale);
         }
+    }
+
+    /**
+     * populating marriage notice(register object) for edit mode
+     */
+    private void populateMarriageObjectForEditMode() {
+
     }
 
     public Map getSession() {
@@ -381,6 +401,22 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     public void setCountryIdFemale(int countryIdFemale) {
         this.countryIdFemale = countryIdFemale;
+    }
+
+    public boolean isSecondNotice() {
+        return secondNotice;
+    }
+
+    public void setSecondNotice(boolean secondNotice) {
+        this.secondNotice = secondNotice;
+    }
+
+    public boolean isEditMode() {
+        return editMode;
+    }
+
+    public void setEditMode(boolean editMode) {
+        this.editMode = editMode;
     }
 }
 
