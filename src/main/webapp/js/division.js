@@ -1,38 +1,40 @@
 /* @author Mahesha Kalpanie */
-// mode 1 = passing District, will return DS list
-// mode 2 = passing DsDivision, will return BD list
-// any other = passing district, will return DS list and the BD list for the first DS
-$(function() {
-    $('select#districtId').bind('change', function(evt1) {
-        var id = $("select#districtId").attr("value");
-        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id},
-                function(data) {
-                    var options1 = '';
-                    var ds = data.dsDivisionList;
-                    for (var i = 0; i < ds.length; i++) {
-                        options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
-                    }
-                    $("select#dsDivisionId").html(options1);
-
-                    var options2 = '';
-                    var bd = data.mrDivisionList;
-                    for (var j = 0; j < bd.length; j++) {
-                        options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
-                    }
-                    $("select#mrDivisionId").html(options2);
-                });
+function populateDSDivisions(districtId, dsDivisionId, divisionId){
+    alert("dfd");
+    var id = document.getElementById(districtId).value
+    $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:8},
+    function(data) {
+        var ds = data.dsDivisionList;
+        var dsDivisionList = document.getElementById(dsDivisionId);
+        clear_list(dsDivisionList);
+        for (var i = 0; i < ds.length; i++) {
+            dsDivisionList.options[i]= new Option(ds[i].optionDisplay, ds[i].optionValue);
+        }
+        var divisions divisions = data.bdDivisionList;
+        var divisionList = document.getElementById(divisionId);
+        clear_list(divisionList);
+        for (var j = 0; j < divisions.length; j++) {
+            divisionList.options[j]= new Option(divisions[j].optionDisplay, divisions[j].optionValue);
+        }
     });
+}
 
-    $('select#dsDivisionId').bind('change', function(evt2) {
-        var id = $("select#dsDivisionId").attr("value");
-        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:2},
-                function(data) {
-                    var options = '';
-                    var bd = data.mrDivisionList;
-                    for (var i = 0; i < bd.length; i++) {
-                        options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
-                    }
-                    $("select#mrDivisionId").html(options);
-                });
-    });
-});
+function populateDivisions(dsDivisionId, divisionId){
+    alert("dfd");
+    var id = document.getElementById(dsDivisionId).value
+    $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:7},
+        function(data) {
+            var divisions = data.bdDivisionList;
+            var divisionList = document.getElementById(divisionId);
+            clear_list(divisionList);
+            for (var i = 0; i < divisions.length; i++) {
+                divisionList.options[i]= new Option(divisions[i].optionDisplay, divisions[i].optionValue);
+            }
+        });
+}
+
+function clear_list(list) {
+    while( list.hasChildNodes() ) {
+        list.removeChild( list.lastChild );
+    }
+}
