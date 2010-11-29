@@ -415,7 +415,7 @@ public class User implements Serializable {
             }
         }
         // add primary location as the first element
-        al.remove(primaryLocation.getLocationUKey());
+        al.remove(primaryLocation);
         al.addFirst(primaryLocation);
 
         return al;
