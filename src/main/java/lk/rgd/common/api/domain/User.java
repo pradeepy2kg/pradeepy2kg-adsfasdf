@@ -141,6 +141,15 @@ public class User implements Serializable {
     private Set<DSDivision> assignedBDDSDivisions;
 
     /**
+     * The assigned Marriage Registration DSDivisions
+     */
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(schema = "COMMON", name = "USER_MRDSDIVISIONS",
+        joinColumns = @JoinColumn(name = "userId"),
+        inverseJoinColumns = @JoinColumn(name = "dsDivisionUKey"))
+    private Set<DSDivision> assignedMRDSDivisions;
+
+    /**
      * @see State
      */
     @Column(nullable = false, name = "STATUS", columnDefinition = "smallint not null default 1")
@@ -293,6 +302,14 @@ public class User implements Serializable {
         this.assignedBDDSDivisions = assignedBDDSDivisions;
     }
 
+    public Set<DSDivision> getAssignedMRDSDivisions() {
+        return assignedMRDSDivisions;
+    }
+
+    public void setAssignedMRDSDivisions(Set<DSDivision> assignedMRDSDivisions) {
+        this.assignedMRDSDivisions = assignedMRDSDivisions;
+    }
+
     public Date getPasswordExpiry() {
         return passwordExpiry;
     }
@@ -382,6 +399,42 @@ public class User implements Serializable {
         }
 
         for (DSDivision d : assignedBDDSDivisions) {
+            if (d.getDsDivisionUKey() == id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isAllowedAccessToMRDistrict(int id) {
+        // RG has full access without limitation
+        if (Role.ROLE_RG.equals(role.getRoleId())) {
+            return true;
+        }
+
+        if (assignedMRDistricts == null) {
+            return false;
+        }
+
+        for (District d : assignedMRDistricts) {
+            if (d.getDistrictUKey() == id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isAllowedAccessToMRDSDivision(int id) {
+        if (Role.ROLE_RG.equals(role.getRoleId())) {
+            // RG has full access without limitation
+            return true;
+        }
+
+        if (assignedMRDSDivisions == null) {
+            return false;
+        }
+
+        for (DSDivision d : assignedMRDSDivisions) {
             if (d.getDsDivisionUKey() == id) {
                 return true;
             }

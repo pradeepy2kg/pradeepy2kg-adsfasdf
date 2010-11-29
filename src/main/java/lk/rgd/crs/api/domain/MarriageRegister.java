@@ -14,11 +14,17 @@ import java.util.Date;
 @Entity
 @Table(name = "MARRIAGE_REGISTER", schema = "CRS")
 @NamedQueries({
+    // TODO review this query
     @NamedQuery(name = "filter.by.dsDivision.and.state", query = "SELECT mr FROM MarriageRegister mr " +
         "WHERE mr.mrDivisionOfMaleNotice IN (SELECT m FROM MRDivision m WHERE (m.dsDivision = mr.mrDivisionOfMaleNotice.dsDivision AND mr.mrDivisionOfMaleNotice.dsDivision = :dsDivision)) " +
         "OR mr.mrDivisionOfFemaleNotice IN (SELECT m FROM MRDivision m WHERE (m.dsDivision = mr.mrDivisionOfFemaleNotice.dsDivision AND mr.mrDivisionOfFemaleNotice.dsDivision = :dsDivision))" +
-        "AND mr.state = :state ORDER BY mr.dateOfMaleNotice, mr.dateOfFemaleNotice"),
+        "AND mr.state = :state AND mr.lifeCycleInfo.activeRecord = :active ORDER BY mr.dateOfMaleNotice, mr.dateOfFemaleNotice DESC "),
 
+    @NamedQuery(name = "filter.by.mrDivision.and.state", query = "SELECT mr FROM MarriageRegister mr " +
+        "WHERE ((mr.mrDivisionOfMaleNotice IS NOT NULL AND mr.mrDivisionOfMaleNotice = :mrDivision) " +
+        "OR (mr.mrDivisionOfFemaleNotice IS NOT NULL AND mr.mrDivisionOfFemaleNotice = :mrDivision)) " +
+        "AND mr.state = :state AND mr.lifeCycleInfo.activeRecord = :active ORDER BY mr.dateOfMaleNotice, mr.dateOfFemaleNotice DESC "),
+    
     @NamedQuery(name = "get.notice.by.male.and.female.identification", query = "SELECT mr FROM MarriageRegister mr" +
         " WHERE (mr.male.identificationNumberMale = :male AND mr.female.identificationNumberFemale = :female " +
         " AND mr.lifeCycleInfo.activeRecord =true AND mr.state=0) ORDER BY mr.idUKey desc")

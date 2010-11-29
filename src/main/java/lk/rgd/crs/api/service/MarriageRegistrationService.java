@@ -2,6 +2,7 @@ package lk.rgd.crs.api.service;
 
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.domain.MarriageRegister;
 
 import java.util.List;
@@ -39,11 +40,26 @@ public interface MarriageRegistrationService {
      * @param dsDivision the divisional secretariat
      * @param pageNo     the page number of the results required
      * @param noOfRows   the number of rows to return per page
+     * @param active     include currently active items
      * @param user       the user initiating the action
      * @return the list of marriage notices pending approval
      */
     public List<MarriageRegister> getMarriageNoticePendingApprovalByDSDivision(DSDivision dsDivision, int pageNo,
-        int noOfRows, User user);
+        int noOfRows, boolean active, User user);
+
+    /**
+     * Returns a paginated list of Marriage Registers for which marriage notices are awaiting approval by ADR or higher
+     * authority based on the specified MRDivision
+     *
+     * @param mrDivision the Marriage Registration Division
+     * @param pageNo     the page number of the results required
+     * @param noOfRows   the number of rows to return per page
+     * @param active     include currently active items
+     * @param user       the user initiating the action
+     * @return the list of marriage notices pending approval
+     */
+    public List<MarriageRegister> getMarriageNoticePendingApprovalByBDDivision(MRDivision mrDivision, int pageNo,
+        int noOfRows, boolean active, User user);
 
     /**
      * get active marriage notice(marriage register objects) by male party and female party identification numbers

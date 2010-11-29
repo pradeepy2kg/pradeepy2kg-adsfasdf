@@ -3,8 +3,8 @@ package lk.rgd.crs.core.service;
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.dao.MarriageRegistrationDAO;
+import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.domain.MarriageRegister;
-import lk.rgd.crs.api.domain.Witness;
 import lk.rgd.crs.api.service.MarriageRegistrationService;
 import lk.rgd.crs.core.ValidationUtils;
 import org.slf4j.Logger;
@@ -54,11 +54,25 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<MarriageRegister> getMarriageNoticePendingApprovalByDSDivision(DSDivision dsDivision, int pageNo,
-        int noOfRows, User user) {
-        logger.debug("Get MarriageNotices pending approval by DSDivision : {}", dsDivision.getDsDivisionUKey());
-        ValidationUtils.validateAccessToDSDivison(dsDivision, user);
+        int noOfRows, boolean active, User user) {
+        logger.debug("Get Active : {} MarriageNotices pending approval by DSDivision : {}", active,
+            dsDivision.getDsDivisionUKey());
+        ValidationUtils.validateAccessToDSDivision(dsDivision, user);
         return marriageRegistrationDAO.getPaginatedListForStateByDSDivision(dsDivision,
-            MarriageRegister.State.DATA_ENTRY, pageNo, noOfRows);
+            MarriageRegister.State.DATA_ENTRY, pageNo, noOfRows, active);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<MarriageRegister> getMarriageNoticePendingApprovalByBDDivision(MRDivision mrDivision, int pageNo,
+        int noOfRows, boolean active, User user) {
+        logger.debug("Get Active : {} MarriageNotices pending approval by MRDivision : {}", active,
+            mrDivision.getMrDivisionUKey());
+        ValidationUtils.validateAccessToMRDivision(mrDivision, user);
+        return marriageRegistrationDAO.getPaginatedListForStateByMRDivision(mrDivision,
+            MarriageRegister.State.DATA_ENTRY, pageNo, noOfRows, active);
     }
 
     /**
