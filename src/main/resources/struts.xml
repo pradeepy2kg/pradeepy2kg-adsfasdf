@@ -1179,6 +1179,11 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
-
+        <action name="eprMarriageSecondNoticeAdd" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
+                method="addSecondNotice">
+            <!--todo do not forward to default error page-->
+            <result type="tiles" name="success">epr.marriageNoticeResults</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
     </package>
 </struts>
