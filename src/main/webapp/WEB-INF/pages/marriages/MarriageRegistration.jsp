@@ -3,9 +3,19 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <script src="/ecivil/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
 <script src="/ecivil/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
+<script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<s:url value="/js/division.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 <script type="text/javascript">
+$(function() {
+    $("#submitDatePicker").datepicker({
+        changeYear: true,
+        yearRange: '1960:2020',
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2040-12-31'
+    });
+});
 </script>
 <div class="marriage-notice-outer">
 <s:form action="eprMarriageRegistration" method="post">
@@ -119,8 +129,8 @@
 <table border="1" style="margin-top:1px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
        cellpadding="5px">
     <caption></caption>
-    <col width="250px"/>
-    <col/>
+    <col width="200px"/>
+    <col width="100px"/>
     <col/>
     <col/>
     <col/>
@@ -135,67 +145,73 @@
             type of marriage in tamil <br>
             Type of Marriage
         </td>
-        <td colspan="6">
+       <td colspan="3" align="center">
+            <s:radio name="marriage.typeOfMarriage" list="#@java.util.HashMap@{'GENERAL':''}" value="true"/>
+       </td>
+        <td colspan="5">
             සාමාන්‍ය /
             general marriage in tamil /
             General
         </td>
-        <td colspan="2" align="center">
-       </td>
     </tr>
+    
     <tr>
-        <td colspan="6">
+        <td colspan="3" align="center">
+          <s:radio name="marriage.typeOfMarriage" list="#@java.util.HashMap@{'KANDYAN_BINNA':''}" value="true"/>
+        </td>
+        <td colspan="5">
             උඩරට බින්න /
             Kandyan binna in tamil /
             Kandyan Binna
         </td>
-        <td colspan="2" align="center">
-
-        </td>
     </tr>
     <tr>
-        <td colspan="6">
+        <td colspan="3" align="center">
+           <s:radio name="marriage.typeOfMarriage" list="#@java.util.HashMap@{'KANDYAN_DEEGA':''}" value="true"/>
+        </td>
+        <td colspan="5">
             උඩරට බින්න දීග /
             kandyan deega in tamil /
             Kandyan
             Deega
         </td>
-        <td colspan="2" align="center">
-
-        </td>
     </tr>
     <tr>
         <td>
-            විවාහය සිදුකරන ස්ථානය <br>
-            Intended place of Marriage <br>
+            විවාහය සිදු කල ස්ථානය<br>
+            in tamil <br>
+            place of Marriage
         </td>
-        <td>
-            රෙජිස්ට්‍රාර් කන්තෝරුව <br>
-            Registrars Office <br>
-        </td>
-        <td align="center">
-
-        </td>
-        <td>
-            ප්‍රා. ලේ. කන්තෝරුව <br>
-            DS Office <br>
-        </td>
-        <td align="center">
-
-        </td>
-        <td>
-            දේවස්ථානය <br>
-            Church <br>
-        </td>
-        <td align="center">
-
-        </td>
-        <td>වෙනත් <br>
-            Other
-        </td>
-        <br>
-        <td align="center">
-
+        <td colspan="8">
+            <table width="100%">
+                <caption/>
+                <col width="200px"/>
+                <col/>
+                <tbody>
+                <tr>
+                    <td>
+                        රාජ්‍ය භාෂාවෙන්<br>
+                        தமிழ் மொழியில்   <br>
+                        Official Language
+                    </td>
+                   <td>
+                        <s:textarea name="marriageNotice.placeInOfficialLanguage" id="place_official"
+                            cssStyle="width:98.2%;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        ඉංග්‍රීසි භාෂාවෙන්<br>
+                        ஆங்கில மொழியில்<br>
+                        In English
+                    </td>
+                    <td>
+                        <s:textarea name="marriageNotice.placeInEnglishLanguage" id="place_English"
+                            cssStyle="width:98.2%;"/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </td>
     </tr>
     </tbody>
@@ -274,8 +290,12 @@
 
         </td>
         <td>
+            <s:select list="raceList" name="fatherRace" headerKey="0" headerValue="%{getText('select_race.label')}"
+          cssStyle="width:200px;"/>
         </td>
         <td>
+            <s:select list="raceList" name="fatherRace" headerKey="0" headerValue="%{getText('select_race.label')}"
+          cssStyle="width:200px;"/>
         </td>
     </tr>
     <tr>
@@ -285,9 +305,106 @@
             Civil Status
         </td>
         <td>
+            <table>
+                <caption/>
+                <col width="50px"/>
+                <col/>
+                <tbody>
+                <tr>
+                    <td>
+                        <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'NEVER_MARRIED':''}"
+                            value="true"/>
+                    </td>
+                    <td> අවිවාහක <br>
+                        திருமணமாகாதவர் <br>
+                        Never Married
+                    </td>
+                </tr>
+                <tr>
+                    <td >
+                        <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'DIVORCED':''}"
+                                 value="true"/>
+                    </td>
+                    <td>
+                        දික්කසාද <br>
+                        திருமணம் தள்ளுபடி செய்தவர் <br>
+                        Divorced
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'WIDOWED':''}" value="true"/>
+                    </td>
+                    <td>
+                        වැන්දබු <br>
+                        விதவை <br>
+                        Widowed
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'ANULLED':''}" value="true"/>
+                    </td>                    
+                    <td>
+                        නිෂ්ප්‍රභාකර ඇත <br>
+                        தள்ளிவைத்தல் <br>
+                        Anulled
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </td>
+
         <td>
-        </td>
+              <table>
+                <caption/>
+                <col width="50px"/>
+                <col/>
+                <tbody>
+                <tr>
+                    <td>
+                        <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'NEVER_MARRIED':''}"
+                            value="true"/>
+                    </td>
+                    <td> අවිවාහක <br>
+                        திருமணமாகாதவர் <br>
+                        Never Married
+                    </td>
+                </tr>
+                <tr>
+                    <td >
+                        <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'DIVORCED':''}"
+                                 value="true"/>
+                    </td>
+                    <td>
+                        දික්කසාද <br>
+                        திருமணம் தள்ளுபடி செய்தவர் <br>
+                        Divorced
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'WIDOWED':''}" value="true"/>
+                    </td>
+                    <td>
+                        වැන්දබු <br>
+                        விதவை <br>
+                        Widowed
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'ANULLED':''}" value="true"/>
+                    </td>
+                    <td>
+                        නිෂ්ප්‍රභාකර ඇත <br>
+                        தள்ளிவைத்தல் <br>
+                        Anulled
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+       </td>
    </tr>
     <tr>
         <td>
