@@ -1,6 +1,7 @@
 package lk.rgd.crs.web.action;
 
 import lk.rgd.common.CustomStrutsTestCase;
+import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.DSDivisionDAO;
@@ -13,6 +14,9 @@ import java.util.HashMap;
 
 import com.opensymphony.xwork2.ActionProxy;
 import com.opensymphony.xwork2.ActionContext;
+import lk.rgd.crs.api.domain.Registrar;
+import lk.rgd.crs.api.service.RegistrarManagementService;
+import lk.rgd.crs.web.WebConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -28,43 +32,64 @@ import junit.extensions.TestSetup;
  * Time: 10:45:51 AM
  * To change this template use File | Settings | File Templates.
  */
+
+/**
+ * New Author: Shan Chathuranga
+ * Date: Nov 26, 2010
+ *
+ */
 public class AdminTaskTest extends CustomStrutsTestCase {
+
+    private static final String USER_MANAGEMENT_ACTION = "/management/eprInitAddDivisionsAndDsDivisions.do";
+    private static final String REGISTRAR_MANAGEMENT_ACTION = "/management/eprRegistrarsAdd.do";
+    private static final String LOGIN_MANAGEMENT_ACTION = "/eprLogin.do";
+
     private UserManagementAction userManagementAction;
+    private RegistrarManagementAction registrarManagementAction;
+    private LoginAction loginAction;
+    private Registrar registrar;
+    private User user;
+
+
     private ActionProxy proxy;
     private static final Logger logger = LoggerFactory.getLogger(AdoptionActionTest.class);
     protected final static ApplicationContext ctx = UnitTestManager.ctx;
-    protected final static UserManager userManager = (UserManager) ctx.getBean("userManagerService", UserManager.class);
-    private final static BDDivisionDAO bdDivisionDAO = (BDDivisionDAO) ctx.getBean("bdDivisionDAOImpl", BDDivisionDAO.class);
-    private final static DSDivisionDAO dsDivisionDAO = (DSDivisionDAO) ctx.getBean("dsDivisionDAOImpl", DSDivisionDAO.class);
-    private final static DistrictDAO districtDAO =(DistrictDAO) ctx.getBean("districtDAOImpl",DistrictDAO.class);
-    private final static MRDivisionDAO mrDivisionDAO =(MRDivisionDAO) ctx.getBean("mrDivisionDAOImpl",MRDivisionDAO.class);
 
-    public static Test suite() {
-        TestSetup setup = new TestSetup(new TestSuite(SampleTest.class)) {
+    protected final static RegistrarManagementService registrarMgtService = (RegistrarManagementService)ctx.getBean(
+        "registrarManagmentService", RegistrarManagementService.class);
+    protected final static UserManager userManager = (UserManager) ctx.getBean("userManagerService", UserManager.class);
+    protected final static BDDivisionDAO bdDivisionDAO = (BDDivisionDAO) ctx.getBean("bdDivisionDAOImpl", BDDivisionDAO.class);
+    protected final static DSDivisionDAO dsDivisionDAO = (DSDivisionDAO) ctx.getBean("dsDivisionDAOImpl", DSDivisionDAO.class);
+    protected final static DistrictDAO districtDAO =(DistrictDAO) ctx.getBean("districtDAOImpl",DistrictDAO.class);
+    protected final static MRDivisionDAO mrDivisionDAO =(MRDivisionDAO) ctx.getBean("mrDivisionDAOImpl",MRDivisionDAO.class);
+
+    public static Test suite(){
+        TestSetup setup = new TestSetup(new TestSuite(AdminTaskTest.class)) {
             protected void setUp() throws Exception {
-                logger.debug("=> show this once for class - setup");
+                logger.info("[MSG] setUp() called.");
                 super.setUp();
             }
-
             protected void tearDown() throws Exception {
-                logger.debug("=> show this once for class - tear");
+                logger.debug("[MSG] tearDown() called.");
                 super.tearDown();
             }
         };
         return setup;
     }
 
-    private Map UserLogin(String username, String passwd) throws Exception {
+    private String UserLogin(String username, String passwd) throws Exception {
+        request.setParameter("javaScript", "true");
         request.setParameter("userName", username);
         request.setParameter("password", passwd);
-        ActionProxy proxy = getActionProxy("/eprLogin.do");
-        LoginAction loginAction = (LoginAction) proxy.getAction();
+        proxy = getActionProxy(LOGIN_MANAGEMENT_ACTION);
+        loginAction = (LoginAction) proxy.getAction();
         ActionContext.getContext().setSession(new HashMap<String, Object>());
-        proxy.execute();
-        return loginAction.getSession();
+        String s = proxy.execute();
+        logger.debug("Loggin result {}", s);
+        return s;
     }
 
-    public void testActionMappingProxy() {
+    /*public void testActionMappingProxy() {
         ActionMapping mapping = getActionMapping("/management/eprInitAddDivisionsAndDsDivisions.do");
         assertNotNull("Mapping not null {}", mapping);
         assertEquals("/management", mapping.getNamespace());
@@ -75,12 +100,19 @@ public class AdminTaskTest extends CustomStrutsTestCase {
 
         UserManagementAction action = (UserManagementAction) proxy.getAction();
         assertNotNull(action);
-    }
+    }*/
 
     private void initAndExucute(String mapping, Map session) {
         proxy = getActionProxy(mapping);
-        userManagementAction = (UserManagementAction) proxy.getAction();
-        assertNotNull(userManagementAction);
+
+        if(USER_MANAGEMENT_ACTION.equals(mapping)) {
+            userManagementAction = (UserManagementAction) proxy.getAction();
+            assertNotNull(userManagementAction);
+        }else if(REGISTRAR_MANAGEMENT_ACTION.equals(mapping)) {
+            registrarManagementAction = (RegistrarManagementAction) proxy.getAction();
+            assertNotNull(registrarManagementAction);
+        }
+        
         logger.debug("Action Method to be executed is {} ", proxy.getMethod());
         ActionContext.getContext().setSession(session);
         try {
@@ -90,7 +122,7 @@ public class AdminTaskTest extends CustomStrutsTestCase {
         }
     }
 
-    public void testAddEditDivisionTest() throws Exception {
+    /*public void testAddEditDivisionTest() throws Exception {
         Map session = UserLogin("admin", "password");
 
         initAndExucute("/management/eprInitAddDivisionsAndDsDivisions.do", session);
@@ -190,10 +222,12 @@ public class AdminTaskTest extends CustomStrutsTestCase {
         session = userManagementAction.getSession();
         assertEquals("Action erros for Adoption Declaration ", 0, userManagementAction.getActionErrors().size());
 
-    }
+    }*/
 
     public void testCreateUserTest() throws Exception {
-        Map session = UserLogin("admin", "password");
+
+        String result = UserLogin("admin", "password");
+        Map session = loginAction.getSession();
 
         request.setParameter("assignedDistricts", "1");
         request.setParameter("assignedDivisions", "1");
@@ -202,11 +236,44 @@ public class AdminTaskTest extends CustomStrutsTestCase {
         request.setParameter("user.prefLanguage", "si");
         request.setParameter("user.userId", "Malith");
         request.setParameter("user.userName", "Malith");
-        initAndExucute("/management/eprInitUserCreation.do", session);
-        session = userManagementAction.getSession();
-        assertEquals("Action erros for Adoption Declaration ", 0, userManagementAction.getActionErrors().size());
-        assertNotNull("Added new user",userManager.getUserByID("Malith"));
-        assertNotNull("Added new user",userManager.getUsersByNameMatch("Malith"));
+
+        initAndExucute(USER_MANAGEMENT_ACTION, session);
+        user = userManagementAction.getUser();
+        
+        assertEquals("Action errors for Adoption Declaration ", 0, userManagementAction.getActionErrors().size());
+        assertNotNull("User name null",user.getUserName());
+        assertNotNull("User prefLanguage null",user.getPrefLanguage());
+        assertNotNull("AssignedBDDSDivisions null",user.getAssignedBDDSDivisions());
+        assertNotNull("AssignedBDDistricts null",user.getAssignedBDDistricts());
+        assertNotNull("User role null",user.getRole());
 
     }
+
+    public void testAddRegistrarTest() throws Exception {
+
+        String result = UserLogin("admin", "password");
+        Map session = loginAction.getSession();
+
+        request.setParameter("registrar.fullNameInOfficialLanguage","nissan");
+        request.setParameter("registrar.fullNameInEnglishLanguage", "nissan");
+        request.setParameter("registrar.pin", "2314");
+        request.setParameter("registrar.nic", "863357578v");
+        request.setParameter("registrar.gender", "0");
+        request.setParameter("registrar.dateOfBirth", "1986-12-01");
+        request.setParameter("registrar.currentAddress", "aaaaa");
+        request.setParameter("registrar.phoneNo", "0773922222");
+        request.setParameter("registrar.emailAddress", "dskdks@kdf.cdsj");
+        request.setParameter("registrar.preferredLanguage", "si");
+
+        initAndExucute(REGISTRAR_MANAGEMENT_ACTION, session);
+        registrar = registrarManagementAction.getRegistrar();
+
+        assertNotNull("Address NULL",registrar.getCurrentAddress());
+        assertNotNull("Name NULL", registrar.getFullNameInOfficialLanguage());
+        assertNotNull("En Name NULL", registrar.getFullNameInEnglishLanguage());
+        assertNotNull("PIN NULL", registrar.getPin());
+        assertNull("EXISTING REGISTRAR NOT NULL", session.get(WebConstants.SESSION_EXSISTING_REGISTRAR));
+
+    }
+    
 }

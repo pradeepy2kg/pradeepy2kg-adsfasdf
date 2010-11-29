@@ -45,7 +45,7 @@ public class LoginActionTest extends CustomStrutsTestCase {
     public void testRGLogin() throws Exception {
         //set parameters before calling getActionProxy
         request.setParameter("javaScript","true");
-        request.setParameter("userName", "rg");
+        request.setParameter("userName", "admin");
         request.setParameter("password", "password");
 
         String result = login();
