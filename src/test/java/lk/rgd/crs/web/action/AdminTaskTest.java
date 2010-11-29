@@ -17,6 +17,7 @@ import com.opensymphony.xwork2.ActionContext;
 import lk.rgd.crs.api.domain.Registrar;
 import lk.rgd.crs.api.service.RegistrarManagementService;
 import lk.rgd.crs.web.WebConstants;
+import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -40,9 +41,12 @@ import junit.extensions.TestSetup;
  */
 public class AdminTaskTest extends CustomStrutsTestCase {
 
-    private static final String USER_MANAGEMENT_ACTION = "/management/eprInitAddDivisionsAndDsDivisions.do";
-    private static final String REGISTRAR_MANAGEMENT_ACTION = "/management/eprRegistrarsAdd.do";
-    private static final String LOGIN_MANAGEMENT_ACTION = "/eprLogin.do";
+    private static final String LOGIN_MANAGEMENT_ACTION     = "/eprLogin.do";
+    private static final String USER_CREATION_ACTION_PAGE_LOAD = "/management/eprInitUserCreation.do";
+    private static final String USER_CREATION_ACTION        = "/management/eprUserCreation.do";
+    private static final String REGISTRAR_CREATION_ACTION_PAGE_LOAD = "/management/eprRegistrarsAdd.do";
+    private static final String REGISTRAR_CREATION_ACTION = "/management/eprRegistrarsView.do";
+    private static final String USER_MANAGEMENT_ACTION      = "/management/eprInitAddDivisionsAndDsDivisions.do";
 
     private UserManagementAction userManagementAction;
     private RegistrarManagementAction registrarManagementAction;
@@ -77,7 +81,7 @@ public class AdminTaskTest extends CustomStrutsTestCase {
         return setup;
     }
 
-    private String UserLogin(String username, String passwd) throws Exception {
+    private Map UserLogin(String username, String passwd) throws Exception {
         request.setParameter("javaScript", "true");
         request.setParameter("userName", username);
         request.setParameter("password", passwd);
@@ -86,7 +90,7 @@ public class AdminTaskTest extends CustomStrutsTestCase {
         ActionContext.getContext().setSession(new HashMap<String, Object>());
         String s = proxy.execute();
         logger.debug("Loggin result {}", s);
-        return s;
+        return loginAction.getSession();
     }
 
     /*public void testActionMappingProxy() {
@@ -108,9 +112,18 @@ public class AdminTaskTest extends CustomStrutsTestCase {
         if(USER_MANAGEMENT_ACTION.equals(mapping)) {
             userManagementAction = (UserManagementAction) proxy.getAction();
             assertNotNull(userManagementAction);
-        }else if(REGISTRAR_MANAGEMENT_ACTION.equals(mapping)) {
+        }else if(REGISTRAR_CREATION_ACTION_PAGE_LOAD.equals(mapping)) {
             registrarManagementAction = (RegistrarManagementAction) proxy.getAction();
             assertNotNull(registrarManagementAction);
+        }else if(REGISTRAR_CREATION_ACTION.equals(mapping)) {
+            registrarManagementAction = (RegistrarManagementAction) proxy.getAction();
+            assertNotNull(registrarManagementAction);
+        }else if(USER_CREATION_ACTION_PAGE_LOAD.equals(mapping)) {
+            userManagementAction = (UserManagementAction) proxy.getAction();
+            assertNotNull(userManagementAction);
+        }else if(USER_CREATION_ACTION.equals(mapping)) {
+            userManagementAction = (UserManagementAction) proxy.getAction();
+            assertNotNull(userManagementAction);
         }
         
         logger.debug("Action Method to be executed is {} ", proxy.getMethod());
@@ -122,15 +135,16 @@ public class AdminTaskTest extends CustomStrutsTestCase {
         }
     }
 
-    /*public void testAddEditDivisionTest() throws Exception {
-        Map session = UserLogin("admin", "password");
+/*    public void testAddEditDivisionTest() throws Exception {
+        String result = UserLogin("admin", "password");
+        Map session = loginAction.getSession();
 
-        initAndExucute("/management/eprInitAddDivisionsAndDsDivisions.do", session);
+        initAndExucute(USER_MANAGEMENT_ACTION, session);
         session = userManagementAction.getSession();
-        assertEquals("Action erros for Adoption Declaration ", 0, userManagementAction.getActionErrors().size());
+        assertEquals("Action errors for Adoption Declaration ", 0, userManagementAction.getActionErrors().size());
 
         assertNotNull("District list", userManagementAction.getDistrictList());
-        assertNotNull("Dsdivision list", userManagementAction.getDsDivisionList());
+        assertNotNull("DSDivision list", userManagementAction.getDsDivisionList());
 
         request.setParameter("button", "ADD");
         request.setParameter("district.districtId", "11");
@@ -226,8 +240,9 @@ public class AdminTaskTest extends CustomStrutsTestCase {
 
     public void testCreateUserTest() throws Exception {
 
-        String result = UserLogin("admin", "password");
-        Map session = loginAction.getSession();
+        Map session= UserLogin("admin", "password");
+        initAndExucute(USER_CREATION_ACTION_PAGE_LOAD, session);
+        session = userManagementAction.getSession();
 
         request.setParameter("assignedDistricts", "1");
         request.setParameter("assignedDivisions", "1");
@@ -237,13 +252,14 @@ public class AdminTaskTest extends CustomStrutsTestCase {
         request.setParameter("user.userId", "Malith");
         request.setParameter("user.userName", "Malith");
 
-        initAndExucute(USER_MANAGEMENT_ACTION, session);
+        initAndExucute(USER_CREATION_ACTION, session);
         user = userManagementAction.getUser();
+        Map ss = userManagementAction.getSession();
         
         assertEquals("Action errors for Adoption Declaration ", 0, userManagementAction.getActionErrors().size());
         assertNotNull("User name null",user.getUserName());
         assertNotNull("User prefLanguage null",user.getPrefLanguage());
-        assertNotNull("AssignedBDDSDivisions null",user.getAssignedBDDSDivisions());
+        assertNotNull("AssignedBDDSDivisions null",userManagementAction.getSession());
         assertNotNull("AssignedBDDistricts null",user.getAssignedBDDistricts());
         assertNotNull("User role null",user.getRole());
 
@@ -251,8 +267,9 @@ public class AdminTaskTest extends CustomStrutsTestCase {
 
     public void testAddRegistrarTest() throws Exception {
 
-        String result = UserLogin("admin", "password");
-        Map session = loginAction.getSession();
+        Map session = UserLogin("admin", "password");
+        initAndExucute(REGISTRAR_CREATION_ACTION_PAGE_LOAD, session);
+        session = registrarManagementAction.getSession();
 
         request.setParameter("registrar.fullNameInOfficialLanguage","nissan");
         request.setParameter("registrar.fullNameInEnglishLanguage", "nissan");
@@ -265,14 +282,15 @@ public class AdminTaskTest extends CustomStrutsTestCase {
         request.setParameter("registrar.emailAddress", "dskdks@kdf.cdsj");
         request.setParameter("registrar.preferredLanguage", "si");
 
-        initAndExucute(REGISTRAR_MANAGEMENT_ACTION, session);
+        initAndExucute(REGISTRAR_CREATION_ACTION, session);
         registrar = registrarManagementAction.getRegistrar();
 
+        assertEquals("Action errors for Adoption Declaration ", 0, registrarManagementAction.getActionErrors().size());
         assertNotNull("Address NULL",registrar.getCurrentAddress());
         assertNotNull("Name NULL", registrar.getFullNameInOfficialLanguage());
         assertNotNull("En Name NULL", registrar.getFullNameInEnglishLanguage());
         assertNotNull("PIN NULL", registrar.getPin());
-        assertNull("EXISTING REGISTRAR NOT NULL", session.get(WebConstants.SESSION_EXSISTING_REGISTRAR));
+        assertNotNull("EXISTING REGISTRAR NOT NULL", session.get(WebConstants.SESSION_EXSISTING_REGISTRAR));
 
     }
     
