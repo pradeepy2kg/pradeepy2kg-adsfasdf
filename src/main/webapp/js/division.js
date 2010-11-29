@@ -1,3 +1,6 @@
+/* @author Mahesha Kalpanie */
+//TODO: improve this script to populate lists according to the mode
+//TODO: load empty list if no mr divisions available for the selected ds division
 function populateDSDivisions(districtId, dsDivisionId, divisionId){
     var id = document.getElementById(districtId).value
     $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:8},
@@ -32,6 +35,6 @@ function populateDivisions(dsDivisionId, divisionId){
 
 function clear_list(list) {
     while( list.hasChildNodes() ) {
-        list.removeChild( list.lastChild );
+        list.removeChild(list.lastChild);
     }
 }
