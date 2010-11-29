@@ -130,7 +130,7 @@
     <s:if test="secondNotice">
         <%--second notice--%>
         <s:url action="eprMarriageSecondNoticeAdd" namespace="." id="addAction">
-            <s:param name="idUKey" value="2"/>
+            <s:param name="idUKey" value="idUKey"/>
         </s:url>
     </s:if>
     <s:else>
@@ -1083,5 +1083,3 @@ if female party is submitted the notice
 </div>
 </s:form>
 </div>
-
-<s:property value="secondNotice && editMode"/> 

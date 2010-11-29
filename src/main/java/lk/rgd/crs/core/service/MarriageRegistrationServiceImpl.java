@@ -36,9 +36,8 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         logger.debug("adding new marriage notice :male pin number  {}", notice.getMale().getIdentificationNumberMale());
         //TODO check users permission to add marriage
         //persisting witness
-        marriageRegistrationDAO.addMarriageNotice(notice, user);
         addWitnesses(notice, isMale);
-        marriageRegistrationDAO.updateMarriageRegister(notice, user);
+        marriageRegistrationDAO.addMarriageNotice(notice, user);
     }
 
     /**

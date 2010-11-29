@@ -253,7 +253,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
      * populating marriage notice(register object) for edit mode
      */
     private void populateMarriageObjectForEditMode() {
-
+      MarriageRegister notice=marriageRegistrationService.getByIdUKey(idUKey,user);
     }
 
     public Map getSession() {
