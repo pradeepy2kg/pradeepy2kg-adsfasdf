@@ -14,9 +14,10 @@ import java.util.Date;
 @Entity
 @Table(name = "MARRIAGE_REGISTER", schema = "CRS")
 @NamedQueries({
-//    TODO chathuranga consider about order by
     @NamedQuery(name = "filter.by.dsDivision.and.state", query = "SELECT mr FROM MarriageRegister mr " +
-        "WHERE mr.mrDivision.dsDivision = :dsDivision AND mr.state = :state ORDER BY mr.dateOfMaleNotice"),
+        "WHERE mr.mrDivisionOfMaleNotice IN (SELECT m FROM MRDivision m WHERE (m.dsDivision = mr.mrDivisionOfMaleNotice.dsDivision AND mr.mrDivisionOfMaleNotice.dsDivision = :dsDivision)) " +
+        "OR mr.mrDivisionOfFemaleNotice IN (SELECT m FROM MRDivision m WHERE (m.dsDivision = mr.mrDivisionOfFemaleNotice.dsDivision AND mr.mrDivisionOfFemaleNotice.dsDivision = :dsDivision))" +
+        "AND mr.state = :state ORDER BY mr.dateOfMaleNotice, mr.dateOfFemaleNotice"),
 
     @NamedQuery(name = "get.notice.by.male.and.female.identification", query = "SELECT mr FROM MarriageRegister mr" +
         " WHERE (mr.male.identificationNumberMale = :male AND mr.female.identificationNumberFemale = :female " +
@@ -89,9 +90,8 @@ public class MarriageRegister implements Serializable, Cloneable {
     @Column
     private long registrarPINOfMaleNotice;
 
-    @ManyToOne
     //todo remove nullable
-    @JoinColumn(name = "mrDivisionUKey", nullable = true, insertable = false, updatable = false)
+    @ManyToOne
     private MRDivision mrDivisionOfMaleNotice;
 
     @Column(length = 10, name = "SERIAL_FEMALE")
@@ -120,9 +120,8 @@ public class MarriageRegister implements Serializable, Cloneable {
     @JoinColumn(name = "IDUKEY_F_W_2", nullable = true)
     private Witness femaleNoticeWitness_2;
 
-    @ManyToOne
     //todo remove nullable
-    @JoinColumn(name = "mrDivisionUKey", nullable = true)
+    @ManyToOne
     private MRDivision mrDivisionOfFemaleNotice;
 
     //party information male
