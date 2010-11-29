@@ -45,19 +45,19 @@ public class LoginActionTest extends CustomStrutsTestCase {
     public void testRGLogin() throws Exception {
         //set parameters before calling getActionProxy
         request.setParameter("javaScript","true");
-        request.setParameter("userName", "admin");
+        request.setParameter("userName", "rg");
         request.setParameter("password", "password");
 
         String result = login();
         // todo uncomment this line after fixing testing framework bug -always return 'ERROR' forward.
         //assertEquals("success not returned.", Action.SUCCESS, result);
 
-        assertEquals("No Action erros.", 0, action.getActionErrors().size());
+        assertEquals("No Action errors.", 0, action.getActionErrors().size());
 
         // check for proper values in session after login
         Map session = action.getSession();
         Object obj = session.get(WebConstants.SESSION_USER_BEAN);
-        assertNotNull("Session User object peresence.", obj);
+        assertNotNull("Session User object presence.", obj);
         User user = (User) obj;
         assertEquals("Correctness of User object", "rg", user.getUserId());
 

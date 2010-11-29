@@ -283,6 +283,7 @@ public class AdminTaskTest extends CustomStrutsTestCase {
         request.setParameter("registrar.preferredLanguage", "si");
 
         initAndExucute(REGISTRAR_CREATION_ACTION, session);
+
         registrar = registrarManagementAction.getRegistrar();
 
         assertEquals("Action errors for Adoption Declaration ", 0, registrarManagementAction.getActionErrors().size());
