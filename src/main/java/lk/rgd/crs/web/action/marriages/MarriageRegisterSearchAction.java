@@ -97,10 +97,11 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         }
 
         mrDivisionList = mrDivisionDAO.getMRDivisionNames(dsDivisionId, language, user);
-        if (mrDivisionId == 0) {
+        // TODO
+        /*if (mrDivisionId == 0) {
             mrDivisionId = mrDivisionList.keySet().iterator().next();
             logger.debug("first allowed BD Div in the list {} was set", mrDivisionId);
-        }
+        }*/
     }
 
     public Map getSession() {
