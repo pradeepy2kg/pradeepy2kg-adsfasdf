@@ -14,7 +14,7 @@ import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.DeathAlterationService;
 import lk.rgd.crs.api.service.DeathRegistrationService;
 import lk.rgd.crs.web.WebConstants;
-import lk.rgd.crs.web.util.DivisionUtil;
+import lk.rgd.crs.web.util.CommonUtil;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,7 +56,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private final DeathRegistrationService service;
     private final DeathAlterationService deathAlterationService;
     private final RaceDAO raceDAO;
-    private final DivisionUtil divisionUtil;
+    private final CommonUtil commonUtil;
 
     private BitSet changedFields;
 
@@ -124,7 +124,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     public DeathRegisterAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
         CountryDAO countryDAO, DeathRegistrationService deathRegistrationService, AppParametersDAO appParametersDAO,
         RaceDAO raceDAO, DeathAlterationService deathAlterationService, UserLocationDAO userLocationDAO, UserDAO userDAO,
-        LocationDAO locationDAO, DivisionUtil divisionUtil) {
+        LocationDAO locationDAO, CommonUtil commonUtil) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
@@ -136,7 +136,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         this.userLocationDAO = userLocationDAO;
         this.userDAO = userDAO;
         this.locationDAO = locationDAO;
-        this.divisionUtil = divisionUtil;
+        this.commonUtil = commonUtil;
     }
 
 
@@ -251,7 +251,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
             //display user locations
             String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
-            locationList = divisionUtil.populateActiveUserLocations(user, language);
+            locationList = commonUtil.populateActiveUserLocations(user, language);
             if (!locationList.isEmpty()) {
                 int selectedLocationId = locationList.keySet().iterator().next();
                 userList = new HashMap<String, String>();

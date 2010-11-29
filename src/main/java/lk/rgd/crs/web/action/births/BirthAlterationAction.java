@@ -12,7 +12,7 @@ import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.BirthAlterationService;
 import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.web.WebConstants;
-import lk.rgd.crs.web.util.DivisionUtil;
+import lk.rgd.crs.web.util.CommonUtil;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +33,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
     private DSDivisionDAO dsDivisionDAO;
     private BirthAlterationService alterationService;
     private AppParametersDAO appParametersDAO;
-    private final DivisionUtil divisionUtil;
+    private final CommonUtil commonUtil;
     private static final String BA_APPROVAL_ROWS_PER_PAGE = "crs.br_approval_rows_per_page";
 
     private Map session;
@@ -119,7 +119,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
 
     public BirthAlterationAction(BirthRegistrationService service, DistrictDAO districtDAO, CountryDAO countryDAO,
         RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO, BirthAlterationService alterationService,
-        AppParametersDAO appParametersDAO, DivisionUtil divisionUtil) {
+        AppParametersDAO appParametersDAO, CommonUtil commonUtil) {
         this.service = service;
         this.districtDAO = districtDAO;
         this.countryDAO = countryDAO;
@@ -128,7 +128,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         this.dsDivisionDAO = dsDivisionDAO;
         this.alterationService = alterationService;
         this.appParametersDAO = appParametersDAO;
-        this.divisionUtil = divisionUtil;
+        this.commonUtil = commonUtil;
     }
 
 
@@ -1335,7 +1335,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
     }
 
     private void populateBasicLists() {
-        userLocations = divisionUtil.populateActiveUserLocations(user, language);
+        userLocations = commonUtil.populateActiveUserLocations(user, language);
         if (userLocations != null) {
             logger.debug("Loaded {} user locations", userLocations.size());
         }

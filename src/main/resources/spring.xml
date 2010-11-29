@@ -226,7 +226,7 @@
         <constructor-arg ref="personDAOImpl"/>
         <constructor-arg ref="appParametersDAOImpl"/>
     </bean>
-    <bean id="commonUtil" class="lk.rgd.crs.web.util.DivisionUtil">
+    <bean id="commonUtil" class="lk.rgd.crs.web.util.CommonUtil">
         <constructor-arg ref="districtDAOImpl"/>
         <constructor-arg ref="dsDivisionDAOImpl"/>
         <constructor-arg ref="bdDivisionDAOImpl"/>
