@@ -125,6 +125,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
         boolean both = marriage.isBothPartySubmitted();
         marriageRegistrationService.addMarriageNotice(marriage, (both || male), user);
+        addActionMessage("massage.notice.successfully.add");
         logger.debug("successfully added marriage notice serial number: {}");
         return SUCCESS;
     }
