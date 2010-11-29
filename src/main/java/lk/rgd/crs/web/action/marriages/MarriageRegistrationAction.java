@@ -150,8 +150,33 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
      */
     public String editMarriageNotice() {
         logger.debug("attempt to edit marriage notice : idUKey {}", marriage.getIdUKey());
-        marriageRegistrationService.updateMarriageRegister(marriage, user);
-        addActionMessage(getText("marriage.notice.updated.success"));
+        MarriageRegister notice = marriageRegistrationService.getByIdUKey(marriage.getIdUKey(), user);
+        if (notice != null) {
+            marriageRegistrationService.updateMarriageRegister(marriage, user);
+            addActionMessage(getText("marriage.notice.updated.success"));
+        } else {
+            logger.debug("marriage notice : idUKey {} : update fails");
+            addActionError(getText("marriage.notice.update.fails"));
+            return ERROR;
+        }
+        logger.debug("marriage notice : idUKey {} : edited success fully", marriage.getIdUKey());
+        return SUCCESS;
+    }
+
+    /**
+     * special case submit notices to two locations and second notice about to be add(actually updating same record)
+     */
+    public String addSecondNotice() {
+        logger.debug("attempt to add second notice : idUKey of the record : {}", idUKey);
+        MarriageRegister notice = marriageRegistrationService.getByIdUKey(idUKey, user);
+        if (notice != null) {
+            marriageRegistrationService.updateMarriageRegister(marriage, user);
+        } else {
+            logger.debug("cannot add second notice to idUKey : {}", idUKey);
+            addActionError(getText("cannot.add.second,notice.first.does.not.exist"));
+            return ERROR;
+        }
+        logger.debug("added second notice to idUKey : {}", idUKey);
         return SUCCESS;
     }
 
