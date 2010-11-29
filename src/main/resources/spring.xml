@@ -383,4 +383,13 @@
         <constructor-arg ref="mrDivisionDAOImpl"/>
         <constructor-arg ref="appParametersDAOImpl"/>
     </bean>
+
+    <bean id="MarriageRegistrationAction" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction">
+        <constructor-arg ref="marriageRegistrationService"/>
+        <constructor-arg ref="mrDivisionDAOImpl"/>
+        <constructor-arg ref="raceDAOImpl"/>
+        <constructor-arg ref="countryDAOImpl"/>
+        <constructor-arg ref="commonUtil"/>
+    </bean>
+
 </beans>
