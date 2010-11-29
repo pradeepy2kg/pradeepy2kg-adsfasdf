@@ -5,7 +5,7 @@ import lk.rgd.common.api.dao.AppParametersDAO;
 import lk.rgd.common.api.dao.LocationDAO;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.web.WebConstants;
-import lk.rgd.crs.web.util.DivisionUtil;
+import lk.rgd.crs.web.util.CommonUtil;
 import lk.rgd.prs.api.domain.Person;
 import lk.rgd.prs.api.service.PopulationRegistry;
 import org.apache.struts2.interceptor.SessionAware;
@@ -28,7 +28,7 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
     private PopulationRegistry service;
     private LocationDAO locationDAO;
     private AppParametersDAO appParametersDAO;
-    private final DivisionUtil divisionUtil;
+    private final CommonUtil commonUtil;
 
     private Map session;
     private User user;
@@ -42,11 +42,11 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
     private int noOfRows;
 
     public PersonApprovalAction(PopulationRegistry service, LocationDAO locationDAO, AppParametersDAO appParametersDAO,
-        DivisionUtil divisionUtil) {
+        CommonUtil commonUtil) {
         this.service = service;
         this.locationDAO = locationDAO;
         this.appParametersDAO = appParametersDAO;
-        this.divisionUtil = divisionUtil;
+        this.commonUtil = commonUtil;
     }
 
     /**
@@ -54,7 +54,7 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
      */
     public String loadPersonApprovalPendingList() {
         logger.debug("Loading approval pending person list");
-        locationList = divisionUtil.populateActiveUserLocations(user, language);
+        locationList = commonUtil.populateActiveUserLocations(user, language);
         // use primary location for locationId
         if (locationId == 0) {
             locationId = user.getPrimaryLocation().getLocationUKey();

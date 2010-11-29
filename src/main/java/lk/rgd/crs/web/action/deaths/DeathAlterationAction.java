@@ -7,7 +7,6 @@ import lk.rgd.common.api.domain.Country;
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.Race;
 import lk.rgd.common.api.domain.User;
-import lk.rgd.common.util.CommonUtil;
 import lk.rgd.common.util.DateTimeUtils;
 import lk.rgd.common.util.GenderUtil;
 import lk.rgd.common.util.WebUtils;
@@ -20,7 +19,7 @@ import lk.rgd.crs.api.domain.DeathRegister;
 import lk.rgd.crs.api.service.DeathAlterationService;
 import lk.rgd.crs.api.service.DeathRegistrationService;
 import lk.rgd.crs.web.WebConstants;
-import lk.rgd.crs.web.util.DivisionUtil;
+import lk.rgd.crs.web.util.CommonUtil;
 import lk.rgd.crs.web.util.FieldValue;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
@@ -43,7 +42,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     private final RaceDAO raceDAO;
     private final CountryDAO countryDAO;
     private final AppParametersDAO appParametersDAO;
-    private final DivisionUtil divisionUtil;
+    private final CommonUtil commonUtil;
     private DeathAlterationService deathAlterationService;
     private DeathRegistrationService deathRegistrationService;
 
@@ -100,7 +99,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     public DeathAlterationAction(DeathAlterationService deathAlterationService,
         DeathRegistrationService deathRegistrationService, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
         BDDivisionDAO bdDivisionDAO, RaceDAO raceDAO, CountryDAO countryDAO, AppParametersDAO appParametersDAO,
-        DivisionUtil divisionUtil) {
+        CommonUtil commonUtil) {
         this.deathAlterationService = deathAlterationService;
         this.deathRegistrationService = deathRegistrationService;
         this.districtDAO = districtDAO;
@@ -109,7 +108,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         this.raceDAO = raceDAO;
         this.countryDAO = countryDAO;
         this.appParametersDAO = appParametersDAO;
-        this.divisionUtil = divisionUtil;
+        this.commonUtil = commonUtil;
     }
 
     /**
@@ -256,14 +255,14 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             logger.debug("editing death alteration : idUKey : {} success", deathAlterationId);
             populatePrimaryLists(deathRegister.getDeath().getDeathDistrict().getDistrictUKey(),
                 deathRegister.getDeath().getDeathDivision().getBdDivisionUKey(), language, user);
-            userLocations = divisionUtil.populateActiveUserLocations(user, language);
+            userLocations = commonUtil.populateActiveUserLocations(user, language);
             return SUCCESS;
         }
         catch (CRSRuntimeException e) {
             logger.debug("cannot edit death alteration idUKey {}", existing.getIdUKey());
             addActionMessage(getText("alt.message.cannot.edit.alteration.validation.failed"));
             populatePrimaryLists(districtUKey, dsDivisionId, language, user);
-            userLocations = divisionUtil.populateActiveUserLocations(user, language);
+            userLocations = commonUtil.populateActiveUserLocations(user, language);
             return ERROR;
         }
     }
@@ -322,7 +321,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                     logger.error("cannot find a death alteration for pin : {}", pin);
                     addActionError(getText("no.pending.alterations"));
                     populatePrimaryLists(districtUKey, dsDivisionId, language, user);
-                    userLocations = divisionUtil.populateActiveUserLocations(user, language);
+                    userLocations = commonUtil.populateActiveUserLocations(user, language);
                     locationUKey = 0;
                     return ERROR;
                 }
@@ -339,13 +338,13 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 logger.debug("no pending list found ");
                 addActionError(getText("no.pending.alterations"));
                 populatePrimaryLists(districtUKey, dsDivisionId, language, user);
-                userLocations = divisionUtil.populateActiveUserLocations(user, language);
+                userLocations = commonUtil.populateActiveUserLocations(user, language);
                 locationUKey = 0;
                 return ERROR;
             }
         }
         populatePrimaryLists(districtUKey, dsDivisionId, language, user);
-        userLocations = divisionUtil.populateActiveUserLocations(user, language);
+        userLocations = commonUtil.populateActiveUserLocations(user, language);
         locationUKey = 0;
         return SUCCESS;
     }
@@ -472,10 +471,10 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
 
             if (!(deathRegister.getDeath().isCauseOfDeathEstablished() ==
                 deathAlteration.getDeathInfo().isCauseOfDeathEstablished())) {
-                changesList.add(new FieldValue(CommonUtil.getYesOrNo(deathRegister.getDeath().isCauseOfDeathEstablished(), preferedLan),
-                    CommonUtil.getYesOrNo(deathAlteration.getDeathInfo().isCauseOfDeathEstablished(), preferedLan),
+                changesList.add(new FieldValue(lk.rgd.common.util.CommonUtil.getYesOrNo(deathRegister.getDeath().isCauseOfDeathEstablished(), preferedLan),
+                    lk.rgd.common.util.CommonUtil.getYesOrNo(deathAlteration.getDeathInfo().isCauseOfDeathEstablished(), preferedLan),
                     DeathAlteration.CAUSE_OF_DEATH_ESTABLISHED,
-                    CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(DeathAlteration.CAUSE_OF_DEATH_ESTABLISHED), preferedLan)
+                    lk.rgd.common.util.CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(DeathAlteration.CAUSE_OF_DEATH_ESTABLISHED), preferedLan)
                 ));
             }
 
@@ -514,13 +513,13 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 changesList.add(new FieldValue(
                     deathRegister.getDeathPerson().getDeathPersonAge() != null ? Integer.toString(deathRegister.getDeathPerson().getDeathPersonAge()) : null,
                     deathAlteration.getDeathPerson().getDeathPersonAge() != null ? Integer.toString(deathAlteration.getDeathPerson().getDeathPersonAge()) : null,
-                    DeathAlteration.AGE, CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(DeathAlteration.AGE), preferedLan)));
+                    DeathAlteration.AGE, lk.rgd.common.util.CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(DeathAlteration.AGE), preferedLan)));
             }
 
             if (!(deathAlteration.getDeathPerson().getDeathPersonGender() == deathAlteration.getDeathPerson().getDeathPersonGender())) {
                 changesList.add(new FieldValue(GenderUtil.getGender(deathAlteration.getDeathPerson().getDeathPersonGender(),
                     preferedLan), GenderUtil.getGender(deathAlteration.getDeathPerson().getDeathPersonGender(), preferedLan),
-                    DeathAlteration.GENDER, CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(DeathAlteration.GENDER), preferedLan)));
+                    DeathAlteration.GENDER, lk.rgd.common.util.CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(DeathAlteration.GENDER), preferedLan)));
             }
 
             //checking death country
@@ -544,7 +543,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             boolean x = registerValue != null ? !(registerValue.equals(alterationValue)) : true;
             if (x) {
                 changesList.add(new FieldValue(registerValue, alterationValue, constantValue,
-                    CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(constantValue), preferedLan)));
+                    lk.rgd.common.util.CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(constantValue), preferedLan)));
             }
         }
     }
@@ -555,7 +554,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         //not both case null
         //case 1 : death register death country is null
         final FieldValue fv = new FieldValue(null, null, DeathAlteration.COUNTRY,
-            CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(DeathAlteration.COUNTRY), preferedLan));
+            lk.rgd.common.util.CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(DeathAlteration.COUNTRY), preferedLan));
         if (registerValue != null && alterationValue != null) {
             if (registerValue.getCountryId() != alterationValue.getCountryId()) {
                 if (AppConstants.SINHALA.equals(preferedLan)) {
@@ -597,7 +596,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         //not both case null
         //case 1 : death register death country is null
         final FieldValue fv = new FieldValue(null, null, DeathAlteration.RACE,
-            CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(DeathAlteration.RACE), preferedLan));
+            lk.rgd.common.util.CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(DeathAlteration.RACE), preferedLan));
 
         if (registerValue != null && alterationValue != null) {
             if (registerValue.getRaceId() !=

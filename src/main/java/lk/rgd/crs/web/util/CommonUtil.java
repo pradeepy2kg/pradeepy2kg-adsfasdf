@@ -17,9 +17,9 @@ import java.util.Map;
  *         populate basic and dynamic lists related to divisions such as
  *         districts/ ds divisions/ birth divisions/ mr divisions.
  */
-public class DivisionUtil {
+public class CommonUtil {
 
-    private static final Logger logger = LoggerFactory.getLogger(DivisionUtil.class);
+    private static final Logger logger = LoggerFactory.getLogger(CommonUtil.class);
 
     private final DistrictDAO districtDAO;
     private final DSDivisionDAO dsDivisionDAO;
@@ -29,7 +29,7 @@ public class DivisionUtil {
     private final RaceDAO raceDAO;
     private final LocationDAO locationDAO;
 
-    public DivisionUtil(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
+    public CommonUtil(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
         MRDivisionDAO mrDivisionDAO, CountryDAO countryDAO, RaceDAO raceDAO, LocationDAO locationDAO) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
