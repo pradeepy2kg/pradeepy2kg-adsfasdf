@@ -102,7 +102,8 @@
         });
     });
 
-    function initPage(){}
+    function initPage() {
+    }
 
 
 </script>
@@ -110,7 +111,7 @@
 <div id="manage_registrars"/>
 <s:form action="eprRegistrarsFilter.do" method="post">
     <fieldset style="margin-bottom:0px;margin-top:2px;border:2px solid #c3dcee;">
-          <table cellspacing="0" cellpadding="0">
+        <table cellspacing="0" cellpadding="0">
             <caption></caption>
             <col width="218px">
             <col width="500px">
@@ -134,25 +135,26 @@
                     </s:else>
                 </td>
                 <td><s:property value="%{getText('label.DSDivision')}"/></td>
-                <td align="left"><s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList"
-                                                       value="%{dsDivisionId}"
-                                                       cssStyle="float:left;  width:240px;"/>
+                <td align="left">
+                    <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList"
+                              value="%{dsDivisionId}"
+                              cssStyle="float:left;  width:240px;"/>
                 </td>
             </tr>
             <tr>
                 <td colspan="4">&nbsp;</td>
             </tr>
-            <%--</tbody>
-        </table>
+                <%--</tbody>
+            </table>
 
-        <table cellspacing="5" cellpadding="0">
-            <caption></caption>
-            <col width="218px">
-            <col width="500px">
-            <col width="200px">
-            <col width="500px">
+            <table cellspacing="5" cellpadding="0">
+                <caption></caption>
+                <col width="218px">
+                <col width="500px">
+                <col width="200px">
+                <col width="500px">
 
-            <tbody>--%>
+                <tbody>--%>
             <tr>
                 <td><s:property value="%{getText('label.state')}"/></td>
                 <td align="left"><s:select
@@ -170,7 +172,8 @@
             <tr>
                 <td colspan="4" align="right">
                     <div id="search_button" class="button">
-                        <s:submit name="refresh" value="%{getText('label.button.filter')}" cssStyle="margin-right:128px;"/>
+                        <s:submit name="refresh" value="%{getText('label.button.filter')}"
+                                  cssStyle="margin-right:128px;"/>
                     </div>
                 </td>
             </tr>

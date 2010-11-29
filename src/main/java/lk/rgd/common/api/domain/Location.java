@@ -182,8 +182,8 @@ public class Location implements Serializable {
             sb.append(this.getTaLocationName());
             sb.append(" / ");
             sb.append(this.getEnLocationName());
-        } else {
-            sb = null;
+        } else if(AppConstants.ENGLISH.equals(language)){
+            sb.append(this.getEnLocationName());
         }
         return sb.toString();
     }
