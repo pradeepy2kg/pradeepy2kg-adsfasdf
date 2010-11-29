@@ -184,6 +184,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         logger.debug("loading marriage registration page");
         commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
             marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
+        raceList = raceDAO.getRaces(language);
         return "pageLoad";
     }
 
