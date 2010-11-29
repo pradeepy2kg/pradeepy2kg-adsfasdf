@@ -1,6 +1,5 @@
 package lk.rgd.crs.core.service;
 
-import lk.rgd.AppConstants;
 import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
 import lk.rgd.common.api.domain.DSDivision;
@@ -286,7 +285,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
             logger.debug("Get death registrations with the state : " + status
                     + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
-        ValidationUtils.validateAccessToDSDivison(dsDivision, user);
+        ValidationUtils.validateAccessToDSDivision(dsDivision, user);
         return deathRegisterDAO.getPaginatedListForStateByDSDivision(dsDivision, pageNo, noOfRows, status);
     }
 
@@ -296,7 +295,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<DeathRegister> getPaginatedListForAllByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, User user) {
         logger.debug("Get all death registrations   Page : {}  with number of rows per page : {} ", pageNo, noOfRows);
-        ValidationUtils.validateAccessToDSDivison(dsDivision, user);
+        ValidationUtils.validateAccessToDSDivision(dsDivision, user);
         return deathRegisterDAO.getPaginatedListForAllByDSDivision(dsDivision, pageNo, noOfRows);
     }
 

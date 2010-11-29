@@ -6,6 +6,7 @@ import lk.rgd.common.api.domain.Role;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.domain.BDDivision;
+import lk.rgd.crs.api.domain.MRDivision;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,15 +34,30 @@ public class ValidationUtils {
         }
     }
 
-    public static void validateAccessToDSDivison(DSDivision dsDivision, User user) {
+    public static void validateAccessToDSDivision(DSDivision dsDivision, User user) {
         if (!(User.State.ACTIVE == user.getStatus() &&
             (Role.ROLE_RG.equals(user.getRole().getRoleId())
                 || (user.isAllowedAccessToBDDistrict(dsDivision.getDistrict().getDistrictUKey()))
                 || (user.isAllowedAccessToBDDSDivision(dsDivision.getDsDivisionUKey()))
             )
         )) {
-            handleException("User : " + user.getUserId() + " is not allowed access to the District : " +
+            handleException("User : " + user.getUserId() + " is not allowed access to the DSDivision : " +
                 dsDivision.getDistrictId(), ErrorCodes.PERMISSION_DENIED);
+        }
+    }
+
+    public static void validateAccessToMRDivision(MRDivision mrDivision, User user) {
+        if (!(User.State.ACTIVE == user.getStatus()
+            &&
+            (Role.ROLE_RG.equals(user.getRole().getRoleId()))
+            ||
+            (user.isAllowedAccessToMRDistrict(mrDivision.getDistrict().getDistrictUKey())
+                &&
+                user.isAllowedAccessToMRDSDivision(mrDivision.getDsDivision().getDsDivisionUKey()))
+        )) {
+            handleException("User : " + user.getUserId() + " is not allowed to access to the District : " +
+                mrDivision.getDistrict().getDistrictUKey() + " and/or DS Division : " +
+                mrDivision.getDsDivision().getDsDivisionUKey(), ErrorCodes.PERMISSION_DENIED);
         }
     }
 

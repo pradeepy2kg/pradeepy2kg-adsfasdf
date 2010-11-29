@@ -4,6 +4,7 @@ import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.core.dao.BaseDAO;
 import lk.rgd.crs.api.dao.MarriageRegistrationDAO;
+import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.domain.MarriageRegister;
 import lk.rgd.crs.api.domain.Witness;
 import org.springframework.transaction.annotation.Propagation;
@@ -62,11 +63,26 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<MarriageRegister> getPaginatedListForStateByDSDivision(DSDivision dsDivision,
-        MarriageRegister.State state, int pageNo, int noOfRows) {
+        MarriageRegister.State state, int pageNo, int noOfRows, boolean active) {
         Query q = em.createNamedQuery("filter.by.dsDivision.and.state").
             setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("dsDivision", dsDivision);
         q.setParameter("state", state);
+        q.setParameter("active", active);
+        return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<MarriageRegister> getPaginatedListForStateByMRDivision(MRDivision mrDivision,
+        MarriageRegister.State state, int pageNo, int noOfRows, boolean active) {
+        Query q = em.createNamedQuery("filter.by.mrDivision.and.state").
+            setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+        q.setParameter("mrDivision", mrDivision);
+        q.setParameter("state", state);
+        q.setParameter("active", active);
         return q.getResultList();
     }
 

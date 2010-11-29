@@ -66,11 +66,17 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
 
         pageNo = 1;
         noOfRows = appParametersDAO.getIntParameter(MR_APPROVAL_ROWS_PER_PAGE);
-        searchList = service.getMarriageNoticePendingApprovalByDSDivision(
-            dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);
+        if (mrDivisionId == 0) {
+            searchList = service.getMarriageNoticePendingApprovalByDSDivision(
+                dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, true, user);
+        } else {
+            searchList = service.getMarriageNoticePendingApprovalByBDDivision(
+                mrDivisionDAO.getMRDivisionByPK(mrDivisionId), pageNo, noOfRows, true, user);
+        }
         if (searchList.size() == 0) {
             addActionMessage(getText("noitemMsg.label"));
         }
+        logger.debug("Marriage notice search list loaded with size : {}", searchList.size());
 
         return SUCCESS;
     }
