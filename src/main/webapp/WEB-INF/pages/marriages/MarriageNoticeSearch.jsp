@@ -192,6 +192,7 @@
                     <th width="15px"></th>
                     <th width="15px"></th>
                     <th width="15px"></th>
+                    <th width="15px"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -226,6 +227,15 @@
                             <s:a href="%{editSelected}" title="%{getText('editToolTip.label')}">
                                 <img src="<s:url value='/images/edit.png'/>" width="25" height="25" border="none"/>
                             </s:a>
+                        </td>
+                        <td>
+                            <s:url id="addNextNotice">
+                                <s:param name="idUKey" value="idUKey"/>
+                            </s:url>
+                            <s:a href="%{addNextNotice}" title="%{getText('nextNoticeToolTip.label')}">
+                                <img src="<s:url value='/images/add_page.png'/>" width="25" height="25" border="none"/>
+                            </s:a>
+
                         </td>
                         <td align="center">
                             <s:url id="approveSelected">
