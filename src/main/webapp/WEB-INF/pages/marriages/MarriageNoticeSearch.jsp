@@ -1,3 +1,4 @@
+<%@ page import="lk.rgd.common.util.NameFormatUtil" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <style type="text/css" title="currentStyle">
@@ -122,7 +123,7 @@
                     </td>
                     <td></td>
                     <td>
-                        
+
                     </td>
                     <td>
                     </td>
@@ -176,32 +177,48 @@
 
 <div id="marriage-notice-search" style="margin-top:58px;">
     <s:actionmessage cssClass="alreadyPrinted"/>
-    <%--TODO uncomment--%>
     <s:if test="searchList.size > 0">
         <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;">
             <legend><b><s:label value="%{getText('searchResult.label')}"/> </b></legend>
-            <table id="search-result" width="100%" cellpadding="0" cellspacing="0" class="display">
+            <table id="search-result" width="100%" cellpadding="0" cellspacing="0" class="display"
+                   style="font-size:10pt;">
                 <thead>
                 <tr>
-                    <th width="70px">Male Serial</th>
-                    <th width="70px">Female Serial</th>
-                    <th width="70px">Male PIN</th>
-                    <th width="70px">Female PIN</th>
-                    <th></th>
-                    <th width="20px"></th>
-                    <th width="20px"></th>
-                    <th width="20px"></th>
-                    <th width="20px"></th>
+                    <th width="70px"><s:label value="%{getText('maleSerial.label')}"/></th>
+                    <th width="70px"><s:label value="%{getText('femaleSerial.label')}"/></th>
+                    <th width="415px"><s:label value="%{getText('maleParty.name.label')}"/></th>
+                    <th width="415px"><s:label value="%{getText('femaleParty.name.label')}"/></th>
+                    <th width="15px"></th>
+                    <th width="15px"></th>
+                    <th width="15px"></th>
+                    <th width="15px"></th>
                 </tr>
                 </thead>
                 <tbody>
                 <s:iterator status="approvalStatus" value="searchList">
                     <tr>
-                        <td><s:property value="serialOfMaleNotice"/></td>
-                        <td><s:property value="serialOfFemaleNotice"/></td>
-                        <td><s:property value="male.identificationNumberMale"/></td>
-                        <td><s:property value="female.identificationNumberFemale"/></td>
-                        <td></td>
+                        <td align="center">
+                            <s:if test="serialOfMaleNotice != null">
+                                <s:property value="serialOfMaleNotice"/>
+                            </s:if>
+                            <s:else>-</s:else>
+                        </td>
+                        <td align="center">
+                            <s:if test="serialOfFemaleNotice != null">
+                                <s:property value="serialOfFemaleNotice"/>
+                            </s:if>
+                            <s:else>-</s:else>
+                        </td>
+                        <td>
+                            <s:if test="male.nameInOfficialLanguageMale != null">
+                                <%= NameFormatUtil.getDisplayName((String) request.getAttribute("male.nameInOfficialLanguageMale"), 70)%>
+                            </s:if>
+                        </td>
+                        <td>
+                            <s:if test="female.nameInOfficialLanguageFemale != null">
+                                <%= NameFormatUtil.getDisplayName((String) request.getAttribute("female.nameInOfficialLanguageFemale"), 70)%>
+                            </s:if>
+                        </td>
                         <td align="center">
                             <s:url id="editSelected" action="eprMarriageNoticeEditInit.do">
                                 <s:param name="idUKey" value="idUKey"/>
