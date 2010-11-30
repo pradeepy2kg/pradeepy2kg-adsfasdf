@@ -41,6 +41,8 @@ public class AdminTaskTest extends CustomStrutsTestCase {
     private static final String ADD_DIVISIONS_ACTION = "/management/eprInitDivisionList.do";
     private static final String SEARCH_USERS_PAGE_LOAD = "/management/eprViewUsers.do";
     private static final String SEARCH_USERS_ACTION = "/management/eprViewSelectedUsers.do";
+    private static final String MANAGE_ASSIGNMENT_PAGE_LOAD = "/management/eprRegistrarsManagment.do";
+    private static final String MANAGE_ASSIGNMENT_ACTION = "/management/eprRegistrarsFilter.do";
 
     private UserManagementAction userManagementAction;
     private RegistrarManagementAction registrarManagementAction;
@@ -128,6 +130,12 @@ public class AdminTaskTest extends CustomStrutsTestCase {
         } else if (SEARCH_USERS_ACTION.equals(mapping)) {
             userManagementAction = (UserManagementAction) proxy.getAction();
             assertNotNull(userManagementAction);
+        } else if (MANAGE_ASSIGNMENT_PAGE_LOAD.equals(mapping)) {
+            registrarManagementAction = (RegistrarManagementAction) proxy.getAction();
+            assertNotNull(registrarManagementAction);
+        } else if (MANAGE_ASSIGNMENT_ACTION.equals(mapping)) {
+            registrarManagementAction = (RegistrarManagementAction) proxy.getAction();
+            assertNotNull(registrarManagementAction);
         }
 
         logger.debug("Action Method to be executed is {} ", proxy.getMethod());
@@ -320,7 +328,25 @@ public class AdminTaskTest extends CustomStrutsTestCase {
 
         initAndExecute(SEARCH_USERS_ACTION, session);
         session = userManagementAction.getSession();
-        assertEquals("Action errors for Search Users Action", 0, userManagementAction.getActionErrors().size());        
+        assertEquals("Action errors for Search Users Action", 0, userManagementAction.getActionErrors().size());
+        assertNotNull("Search List null", session.get(WebConstants.SEARCH_USERS_LIST));
+
+    }
+
+    public void testManageAssignments() throws Exception {
+
+        Map session = UserLogin("admin", "password");
+        initAndExecute(MANAGE_ASSIGNMENT_PAGE_LOAD, session);
+        session = registrarManagementAction.getSession();
+        assertEquals("Errors for Manage Assignments page load", 0, registrarManagementAction.getActionErrors().size());
+
+        request.setParameter("districtId", "1");
+        request.setParameter("dsDivisionId", "1");
+        request.setParameter("assignmentState", "1");
+        request.setParameter("assignmentType", "1");
+
+        initAndExecute(MANAGE_ASSIGNMENT_ACTION, session);
+        assertEquals("Errors for Manage Assignments action", 0, registrarManagementAction.getActionErrors().size());
 
     }
 
