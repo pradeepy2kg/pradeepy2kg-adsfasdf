@@ -1541,6 +1541,7 @@ INSERT INTO COMMON.USER_BDDSDIVISIONS VALUES('arg-western', 7);
 
 INSERT INTO COMMON.USER_BDDSDIVISIONS VALUES('arg-north-western', 227);
 
+INSERT INTO COMMON.USER_MRDSDIVISIONS VALUES('arg-western', 1);
 
 -- development team accounts
 INSERT INTO COMMON.USERS (USERID, ROLEID, PIN, PRIMARYLOCATIONUKEY, USERNAME, PASSWORDHASH, PREFLANGUAGE, PASSWORDEXPIRY, ACTIVE, SIENSIGNATURETEXT, TAENSIGNATURETEXT) VALUES('ashoka',      'ADR', 201, 1, 'Ashoka Ekanayake - ADR Colombo / Colombo Fort (Medical)',    'XJRyDE28JvEY2IGylnz+w5CnnTA=', 'si', '2012-12-31 12:00:00', 1, '@Ashoka Ekanayake\nAditional District Registrar\nColombo Fort@', '#Ashoka Ekanayake\nAditional District Registrar\nColombo Fort#');
