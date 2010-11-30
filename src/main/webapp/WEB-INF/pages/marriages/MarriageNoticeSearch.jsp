@@ -122,10 +122,9 @@
                     </td>
                     <td></td>
                     <td>
-                        <s:label value="%{getText('label.serial.number')}"/>
+                        
                     </td>
                     <td>
-                        <s:textfield value="" name="serialNumber" maxLength="10" cssStyle="width:235px"/>
                     </td>
                 </tr>
                 </tbody>
