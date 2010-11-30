@@ -301,14 +301,14 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
 
     //loads basic lists for separate types
 
-    private void populateLists(int distirictId, int dsDivisionId, int assignmentType) {
+    private void populateLists(int districtId, int dsDivisionId, int assignmentType) {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         if (user.getRole().getRoleId().equals(Role.ROLE_ADMIN)) {
             districtList = districtDAO.getAllDistrictNames(language, user);
-            dsDivisionList = dsDivisionDAO.getAllDSDivisionNames(distirictId, language, user);
+            dsDivisionList = dsDivisionDAO.getAllDSDivisionNames(districtId, language, user);
         } else {
             districtList = districtDAO.getDistrictNames(language, user);
-            dsDivisionList = dsDivisionDAO.getDSDivisionNames(distirictId, language, user);
+            dsDivisionList = dsDivisionDAO.getDSDivisionNames(districtId, language, user);
         }
         switch (assignmentType) {
             //requesting death /birth division list

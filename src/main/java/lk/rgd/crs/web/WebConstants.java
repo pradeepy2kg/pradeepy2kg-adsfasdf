@@ -57,6 +57,7 @@ public class WebConstants {
     public static final String USER_ID = "userId";
     public static final String CERTIFICATE_ID = "certificateId";
     public static final String PERSON_ID = "personId";
+    public static final String SEARCH_USERS_LIST = "viewUsers";
 
     //to track wtich has change in death alterations
    
