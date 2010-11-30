@@ -5,7 +5,9 @@ import lk.rgd.common.api.dao.AppParametersDAO;
 import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.util.WebUtils;
 import lk.rgd.crs.api.dao.MRDivisionDAO;
+import lk.rgd.crs.api.domain.MarriageNotice;
 import lk.rgd.crs.api.domain.MarriageRegister;
 import lk.rgd.crs.api.service.MarriageRegistrationService;
 import lk.rgd.crs.web.WebConstants;
@@ -38,7 +40,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     private Map<Integer, String> districtList;
     private Map<Integer, String> dsDivisionList;
     private Map<Integer, String> mrDivisionList;
-    private List<MarriageRegister> searchList;
+    private List<MarriageNotice> searchList;
 
     private String language;
 
@@ -67,11 +69,11 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         pageNo = 1;
         noOfRows = appParametersDAO.getIntParameter(MR_APPROVAL_ROWS_PER_PAGE);
         if (mrDivisionId == 0) {
-            searchList = service.getMarriageNoticePendingApprovalByDSDivision(
-                dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, true, user);
+            searchList = WebUtils.populateNoticeList(service.getMarriageNoticePendingApprovalByDSDivision(
+                dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, true, user));
         } else {
-            searchList = service.getMarriageNoticePendingApprovalByBDDivision(
-                mrDivisionDAO.getMRDivisionByPK(mrDivisionId), pageNo, noOfRows, true, user);
+            searchList = WebUtils.populateNoticeList(service.getMarriageNoticePendingApprovalByBDDivision(
+                mrDivisionDAO.getMRDivisionByPK(mrDivisionId), pageNo, noOfRows, true, user));
         }
         if (searchList.size() == 0) {
             addActionMessage(getText("noitemMsg.label"));
@@ -145,11 +147,11 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         this.mrDivisionList = mrDivisionList;
     }
 
-    public List<MarriageRegister> getSearchList() {
+    public List<MarriageNotice> getSearchList() {
         return searchList;
     }
 
-    public void setSearchList(List<MarriageRegister> searchList) {
+    public void setSearchList(List<MarriageNotice> searchList) {
         this.searchList = searchList;
     }
 

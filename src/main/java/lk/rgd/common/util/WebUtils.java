@@ -1,5 +1,7 @@
 package lk.rgd.common.util;
 
+import lk.rgd.crs.api.domain.MarriageNotice;
+import lk.rgd.crs.api.domain.MarriageRegister;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -7,6 +9,10 @@ import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Selection of utility methods to use in web apps, from struts actions and servlets or from other helper classes.
@@ -36,12 +42,12 @@ public class WebUtils {
             // Only copy writable attributes
             if (descriptor.getWriteMethod() != null) {
                 Object originalValue = descriptor.getReadMethod()
-                        .invoke(target);
+                    .invoke(target);
 
                 // Only copy values values where the destination values is null
                 if (originalValue == null) {
                     Object defaultValue = descriptor.getReadMethod().invoke(
-                            destination);
+                        destination);
                     descriptor.getWriteMethod().invoke(target, defaultValue);
                 }
 
@@ -97,12 +103,59 @@ public class WebUtils {
      * @return
      */
     public static String filterBlanksAndToUpper(String s) {
-        if (s == null) return null;
+        if (s == null) {
+            return null;
+        }
         s = s.trim();
         return s.length() == 0 ? null : s.toUpperCase();
     }
 
     public static String filterBlanks(String s) {
         return s == null ? null : (s = s.trim()).length() == 0 ? null : s;
+    }
+
+    /**
+     * get populated mock notice objects for given marriage register object list(only for displaying purposes)
+     *
+     * @param marriageRegisterList list of marriage register
+     * @return marriage notice list
+     */
+    public static List<MarriageNotice> populateNoticeList(List<MarriageRegister> marriageRegisterList) {
+        //if isBoth submitted  true it means this record is single notice record
+        //else
+        //  if male serial is available this is a male submitted notice
+        //  if female serial is available this is a female submitted notice
+        List<MarriageNotice> noticeList = new ArrayList<MarriageNotice>();
+        Iterator<MarriageRegister> itr = marriageRegisterList.iterator();
+        while (itr.hasNext()) {
+            MarriageRegister marriageRegister = itr.next();
+            //check register type
+            boolean isBothSubmitted = marriageRegister.isBothPartySubmitted();
+            String maleSerial = marriageRegister.getSerialOfMaleNotice();
+            String femaleSerial = marriageRegister.getSerialOfFemaleNotice();
+            if (isBothSubmitted) {
+                //one notice male notice
+                noticeList.add(new MarriageNotice(marriageRegister.getIdUKey(), marriageRegister.getTypeOfMarriage(),
+                    marriageRegister.getPlaceOfMarriage(), marriageRegister.getSerialOfMaleNotice(),
+                    marriageRegister.getDateOfMaleNotice(), marriageRegister.getMale().getNameInOfficialLanguageMale(),
+                    marriageRegister.getMale().getIdentificationNumberMale(), MarriageNotice.NoticeType.BOTH_HAVE_ONE_NOTICE));
+            } else {
+                if (maleSerial != null && maleSerial.length() > 0) {
+                    //male notice
+                    noticeList.add(new MarriageNotice(marriageRegister.getIdUKey(), marriageRegister.getTypeOfMarriage(),
+                        marriageRegister.getPlaceOfMarriage(), marriageRegister.getSerialOfMaleNotice(),
+                        marriageRegister.getDateOfMaleNotice(), marriageRegister.getMale().getNameInOfficialLanguageMale(),
+                        marriageRegister.getMale().getIdentificationNumberMale(), MarriageNotice.NoticeType.MALE_NOTICE));
+                                   }
+                if (femaleSerial != null && femaleSerial.length() > 0) {
+                    //female notice
+                    noticeList.add(new MarriageNotice(marriageRegister.getIdUKey(), marriageRegister.getTypeOfMarriage(),
+                        marriageRegister.getPlaceOfMarriage(), marriageRegister.getSerialOfMaleNotice(),
+                        marriageRegister.getDateOfMaleNotice(), marriageRegister.getMale().getNameInOfficialLanguageMale(),
+                        marriageRegister.getMale().getIdentificationNumberMale(), MarriageNotice.NoticeType.FEMALE_NOTICE));
+                }
+            }
+        }
+        return noticeList;
     }
 }
