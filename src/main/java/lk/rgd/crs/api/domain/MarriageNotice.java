@@ -46,7 +46,7 @@ public final class MarriageNotice {
     }
 
     public Date getDateOfNotice() {
-        return new Date(dateOfNotice.getTime());
+        return dateOfNotice == null ? dateOfNotice : new Date(dateOfNotice.getTime());
     }
 
     public String getPartyNameInOfficialLang() {
