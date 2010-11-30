@@ -16,10 +16,17 @@ public final class MarriageNotice {
     private final Date dateOfNotice;
     private final String partyNameInOfficialLang;
     private final String partyPIN;
+    private final NoticeType noticeType;
+
+    public enum NoticeType {
+        BOTH_HAVE_ONE_NOTICE, //only one notice
+        MALE_NOTICE,
+        FEMALE_NOTICE
+    }
 
     public MarriageNotice(long idUKey, MarriageRegister.TypeOfMarriage typeOfMarriage,
         MarriageRegister.PlaceOfMarriage placeOfMarriage, String serialOfNotice, Date dateOfNotice,
-        String partyNameInOfficialLang, String partyPIN) {
+        String partyNameInOfficialLang, String partyPIN, NoticeType noticeType) {
         this.idUKey = idUKey;
         this.typeOfMarriage = typeOfMarriage;
         this.placeOfMarriage = placeOfMarriage;
@@ -27,6 +34,7 @@ public final class MarriageNotice {
         this.dateOfNotice = dateOfNotice;
         this.partyNameInOfficialLang = partyNameInOfficialLang;
         this.partyPIN = partyPIN;
+        this.noticeType = noticeType;
     }
 
     public long getIdUKey() {
@@ -55,5 +63,9 @@ public final class MarriageNotice {
 
     public String getPartyPIN() {
         return partyPIN;
+    }
+
+    public NoticeType getNoticeType() {
+        return noticeType;
     }
 }
