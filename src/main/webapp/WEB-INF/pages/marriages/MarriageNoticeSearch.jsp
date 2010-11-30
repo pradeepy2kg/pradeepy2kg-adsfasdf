@@ -197,6 +197,8 @@
                 </thead>
                 <tbody>
                 <s:iterator status="approvalStatus" value="searchList">
+
+
                     <tr>
                         <td align="center">
                             <s:if test="serialOfMaleNotice != null">
@@ -229,8 +231,9 @@
                             </s:a>
                         </td>
                         <td>
-                            <s:url id="addNextNotice">
+                            <s:url id="addNextNotice" action="eprMarriageNoticeEditInit.do">
                                 <s:param name="idUKey" value="idUKey"/>
+                                <s:param name="secondNotice" value="true"/>
                             </s:url>
                             <s:a href="%{addNextNotice}" title="%{getText('nextNoticeToolTip.label')}">
                                 <img src="<s:url value='/images/add_page.png'/>" width="25" height="25" border="none"/>

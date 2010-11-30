@@ -80,4 +80,13 @@ public interface MarriageRegistrationService {
      * @param user             user who performs the action
      */
     public void updateMarriageRegister(MarriageRegister marriageRegister, User user);
+
+    /**
+     * adding second notice(actually updating the existing notice record)
+     *
+     * @param notice notice(marriage register object)
+     * @param isMale is male/both or a female notice
+     * @param user   the user who performing the action
+     */
+    public void addSecondMarriageNotice(MarriageRegister notice, boolean isMale, User user);
 }

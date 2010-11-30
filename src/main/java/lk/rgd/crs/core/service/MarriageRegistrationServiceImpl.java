@@ -90,18 +90,29 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
             return records.get(0);
         }
         return null;
-        //throw new UnsupportedOperationException("not yet implemented");
     }
 
     /**
      * @inheritDoc
      */
-    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+    @Transactional(propagation = Propagation.REQUIRED)
     public void updateMarriageRegister(MarriageRegister marriageRegister, User user) {
         //todo check user permissions
-        //     marriageRegistrationDAO.updateMarriageRegister(marriageRegister,user);
-        throw new UnsupportedOperationException("not yet implemented");
+        logger.debug("attempt to update marriage register/notice record : idUKey : {}", marriageRegister.getIdUKey());
+        marriageRegistrationDAO.updateMarriageRegister(marriageRegister, user);
+        // throw new UnsupportedOperationException("not yet implemented");
     }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void addSecondMarriageNotice(MarriageRegister notice, boolean isMale, User user) {
+        logger.debug("attempt to add a second notice for existing record : idUKey : {}", notice.getIdUKey());
+        addWitnesses(notice, isMale);
+        updateMarriageRegister(notice, user);
+    }
+
 
     private void addWitnesses(MarriageRegister marriageRegister, boolean isMale) {
         if (isMale) {
@@ -113,6 +124,5 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
             marriageRegistrationDAO.addWitness(marriageRegister.getFemaleNoticeWitness_1());
             marriageRegistrationDAO.addWitness(marriageRegister.getFemaleNoticeWitness_2());
         }
-
     }
 }

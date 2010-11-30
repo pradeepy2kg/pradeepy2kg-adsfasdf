@@ -12,8 +12,8 @@
 
 
     function initPage() {
-        disableFemaleWitnesses('none');
-        disableMaleWitnesses('none');
+      //  disableFemaleWitnesses('none');
+      //  disableMaleWitnesses('none');
     }
     function disableFemaleWitnesses(mode) {
 
@@ -134,7 +134,9 @@
         </s:url>
     </s:if>
     <s:else>
-        <s:url action="eprMarriageNoticeEdit" namespace="." id="addAction"></s:url>
+        <s:url action="eprMarriageNoticeEdit" namespace="." id="addAction">
+            <s:param name="idUKey" value="marriage.idUKey"/>
+        </s:url>
     </s:else>
 </s:if>
 <s:else>
@@ -1083,3 +1085,4 @@ if female party is submitted the notice
 </div>
 </s:form>
 </div>
+<s:property value="marriage.idUKey"/> 
