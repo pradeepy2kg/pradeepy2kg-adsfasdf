@@ -27,17 +27,8 @@ import junit.framework.TestSuite;
 import junit.extensions.TestSetup;
 
 /**
- * Created by IntelliJ IDEA.
- * User: widu
- * Date: Sep 2, 2010
- * Time: 10:45:51 AM
- * To change this template use File | Settings | File Templates.
- */
-
-/**
- * New Author: Shan Chathuranga
+ * @author: Shan Chathuranga
  * Date: Nov 26, 2010
- *
  */
 public class AdminTaskTest extends CustomStrutsTestCase {
 
@@ -48,6 +39,8 @@ public class AdminTaskTest extends CustomStrutsTestCase {
     private static final String REGISTRAR_CREATION_ACTION = "/management/eprRegistrarsView.do";
     private static final String ADD_DIVISIONS_AND_DS_DIVISIONS_PAGE_LOAD = "/management/eprInitAddDivisionsAndDsDivisions.do";
     private static final String ADD_DIVISIONS_ACTION = "/management/eprInitDivisionList.do";
+    private static final String SEARCH_USERS_PAGE_LOAD = "/management/eprViewUsers.do";
+    private static final String SEARCH_USERS_ACTION = "/management/eprViewSelectedUsers.do";
 
     private UserManagementAction userManagementAction;
     private RegistrarManagementAction registrarManagementAction;
@@ -60,20 +53,21 @@ public class AdminTaskTest extends CustomStrutsTestCase {
     private static final Logger logger = LoggerFactory.getLogger(AdoptionActionTest.class);
     protected final static ApplicationContext ctx = UnitTestManager.ctx;
 
-    protected final static RegistrarManagementService registrarMgtService = (RegistrarManagementService)ctx.getBean(
+    protected final static RegistrarManagementService registrarMgtService = (RegistrarManagementService) ctx.getBean(
         "registrarManagmentService", RegistrarManagementService.class);
     protected final static UserManager userManager = (UserManager) ctx.getBean("userManagerService", UserManager.class);
     protected final static BDDivisionDAO bdDivisionDAO = (BDDivisionDAO) ctx.getBean("bdDivisionDAOImpl", BDDivisionDAO.class);
     protected final static DSDivisionDAO dsDivisionDAO = (DSDivisionDAO) ctx.getBean("dsDivisionDAOImpl", DSDivisionDAO.class);
-    protected final static DistrictDAO districtDAO =(DistrictDAO) ctx.getBean("districtDAOImpl",DistrictDAO.class);
-    protected final static MRDivisionDAO mrDivisionDAO =(MRDivisionDAO) ctx.getBean("mrDivisionDAOImpl",MRDivisionDAO.class);
+    protected final static DistrictDAO districtDAO = (DistrictDAO) ctx.getBean("districtDAOImpl", DistrictDAO.class);
+    protected final static MRDivisionDAO mrDivisionDAO = (MRDivisionDAO) ctx.getBean("mrDivisionDAOImpl", MRDivisionDAO.class);
 
-    public static Test suite(){
+    public static Test suite() {
         TestSetup setup = new TestSetup(new TestSuite(AdminTaskTest.class)) {
             protected void setUp() throws Exception {
                 logger.info("[MSG] setUp() called.");
                 super.setUp();
             }
+
             protected void tearDown() throws Exception {
                 logger.debug("[MSG] tearDown() called.");
                 super.tearDown();
@@ -110,26 +104,32 @@ public class AdminTaskTest extends CustomStrutsTestCase {
     private void initAndExecute(String mapping, Map session) {
         proxy = getActionProxy(mapping);
 
-        if(ADD_DIVISIONS_AND_DS_DIVISIONS_PAGE_LOAD.equals(mapping)) {
+        if (ADD_DIVISIONS_AND_DS_DIVISIONS_PAGE_LOAD.equals(mapping)) {
             userManagementAction = (UserManagementAction) proxy.getAction();
             assertNotNull(userManagementAction);
-        }else if(REGISTRAR_CREATION_ACTION_PAGE_LOAD.equals(mapping)) {
+        } else if (REGISTRAR_CREATION_ACTION_PAGE_LOAD.equals(mapping)) {
             registrarManagementAction = (RegistrarManagementAction) proxy.getAction();
             assertNotNull(registrarManagementAction);
-        }else if(REGISTRAR_CREATION_ACTION.equals(mapping)) {
+        } else if (REGISTRAR_CREATION_ACTION.equals(mapping)) {
             registrarManagementAction = (RegistrarManagementAction) proxy.getAction();
             assertNotNull(registrarManagementAction);
-        }else if(USER_CREATION_ACTION_PAGE_LOAD.equals(mapping)) {
+        } else if (USER_CREATION_ACTION_PAGE_LOAD.equals(mapping)) {
             userManagementAction = (UserManagementAction) proxy.getAction();
             assertNotNull(userManagementAction);
-        }else if(USER_CREATION_ACTION.equals(mapping)) {
+        } else if (USER_CREATION_ACTION.equals(mapping)) {
             userManagementAction = (UserManagementAction) proxy.getAction();
             assertNotNull(userManagementAction);
-        }else if(ADD_DIVISIONS_ACTION.equals(mapping)) {
+        } else if (ADD_DIVISIONS_ACTION.equals(mapping)) {
+            userManagementAction = (UserManagementAction) proxy.getAction();
+            assertNotNull(userManagementAction);
+        } else if (SEARCH_USERS_PAGE_LOAD.equals(mapping)) {
+            userManagementAction = (UserManagementAction) proxy.getAction();
+            assertNotNull(userManagementAction);
+        } else if (SEARCH_USERS_ACTION.equals(mapping)) {
             userManagementAction = (UserManagementAction) proxy.getAction();
             assertNotNull(userManagementAction);
         }
-        
+
         logger.debug("Action Method to be executed is {} ", proxy.getMethod());
         ActionContext.getContext().setSession(session);
         try {
@@ -144,7 +144,7 @@ public class AdminTaskTest extends CustomStrutsTestCase {
 
         initAndExecute(ADD_DIVISIONS_AND_DS_DIVISIONS_PAGE_LOAD, session);
         session = userManagementAction.getSession();
-        assertEquals("Action errors for Adoption Declaration ", 0, userManagementAction.getActionErrors().size());
+        assertEquals("Action errors for AddEditDivisionTest", 0, userManagementAction.getActionErrors().size());
 
         assertNotNull("District list", userManagementAction.getDistrictList());
         assertNotNull("DSDivision list", userManagementAction.getDsDivisionList());
@@ -158,8 +158,8 @@ public class AdminTaskTest extends CustomStrutsTestCase {
 
         initAndExecute(ADD_DIVISIONS_ACTION, session);
         session = userManagementAction.getSession();
-        assertEquals("Action errors for Adoption Declaration ", 0, userManagementAction.getActionErrors().size());
-        assertNotNull("Added new District",districtDAO.getDistrict(11));
+        assertEquals("Action errors for AddEditDivisionTest", 0, userManagementAction.getActionErrors().size());
+        assertNotNull("Added new District", districtDAO.getDistrict(11));
 
         request.setParameter("button", "BACK");
         request.setParameter("pageNo", "0");
@@ -183,8 +183,8 @@ public class AdminTaskTest extends CustomStrutsTestCase {
 
         initAndExecute(ADD_DIVISIONS_ACTION, session);
         session = userManagementAction.getSession();
-        assertEquals("Action errors for Adoption Declaration ", 0, userManagementAction.getActionErrors().size());
-        assertNotNull("Added new dsDivision",dsDivisionDAO.getDSDivisionByPK(10)); 
+        assertEquals("Action errors for AddEditDivisionTest", 0, userManagementAction.getActionErrors().size());
+        assertNotNull("Added new dsDivision", dsDivisionDAO.getDSDivisionByPK(10));
 
         request.setParameter("button", "BACK");
         request.setParameter("pageNo", "0");
@@ -211,8 +211,8 @@ public class AdminTaskTest extends CustomStrutsTestCase {
 
         initAndExecute(ADD_DIVISIONS_ACTION, session);
         session = userManagementAction.getSession();
-        assertEquals("Action errors for Adoption Declaration ", 0, userManagementAction.getActionErrors().size());
-        assertNotNull("Added new bdDivisions",bdDivisionDAO.getBDDivisionByPK(10)); 
+        assertEquals("Action errors for AddEditDivisionTest", 0, userManagementAction.getActionErrors().size());
+        assertNotNull("Added new bdDivisions", bdDivisionDAO.getBDDivisionByPK(10));
 
         request.setParameter("button", "BACK");
         request.setParameter("pageNo", "0");
@@ -224,7 +224,7 @@ public class AdminTaskTest extends CustomStrutsTestCase {
         request.setParameter("button", "MRDivision List");
         request.setParameter("dsDivisionId", "41");
         request.setParameter("pageNo", "4");
-        
+
         initAndExecute(ADD_DIVISIONS_AND_DS_DIVISIONS_PAGE_LOAD, session);
         session = userManagementAction.getSession();
 
@@ -239,23 +239,23 @@ public class AdminTaskTest extends CustomStrutsTestCase {
 
         initAndExecute(ADD_DIVISIONS_ACTION, session);
         session = userManagementAction.getSession();
-        assertEquals("Action errors for Adoption Declaration ", 0, userManagementAction.getActionErrors().size());
+        assertEquals("Action errors for AddEditDivisionTest", 0, userManagementAction.getActionErrors().size());
         //assertNotNull("Added new mr division",mrDivisionDAO.getMRDivisionByPK(5));
 
         request.setParameter("button", "BACK");
         request.setParameter("pageNo", "0");
         initAndExecute(ADD_DIVISIONS_AND_DS_DIVISIONS_PAGE_LOAD, session);
         session = userManagementAction.getSession();
-        assertEquals("Action errors for Adoption Declaration ", 0, userManagementAction.getActionErrors().size());
+        assertEquals("Action errors for AddEditDivisionTest", 0, userManagementAction.getActionErrors().size());
 
     }
 
     public void testCreateUserTest() throws Exception {
 
-        Map session= UserLogin("admin", "password");
+        Map session = UserLogin("admin", "password");
         initAndExecute(USER_CREATION_ACTION_PAGE_LOAD, session);
         session = userManagementAction.getSession();
-        assertEquals("Action errors for Adoption Declaration ", 0, userManagementAction.getActionErrors().size());
+        assertEquals("Action errors for Create User Action", 0, userManagementAction.getActionErrors().size());
 
         request.setParameter("assignedDistricts", "1");
         request.setParameter("assignedDivisions", "1");
@@ -267,13 +267,13 @@ public class AdminTaskTest extends CustomStrutsTestCase {
 
         initAndExecute(USER_CREATION_ACTION, session);
         user = userManagementAction.getUser();
-        assertEquals("Action errors for Adoption Declaration ", 0, userManagementAction.getActionErrors().size());
+        assertEquals("Action errors for Create User Action", 0, userManagementAction.getActionErrors().size());
 
-        assertNotNull("User name null",user.getUserName());
-        assertNotNull("User prefLanguage null",user.getPrefLanguage());
-        assertNotNull("AssignedBDDSDivisions null",userManagementAction.getSession());
-        assertNotNull("AssignedBDDistricts null",user.getAssignedBDDistricts());
-        assertNotNull("User role null",user.getRole());
+        assertNotNull("User name null", user.getUserName());
+        assertNotNull("User prefLanguage null", user.getPrefLanguage());
+        assertNotNull("AssignedBDDSDivisions null", userManagementAction.getSession());
+        assertNotNull("AssignedBDDistricts null", user.getAssignedBDDistricts());
+        assertNotNull("User role null", user.getRole());
 
     }
 
@@ -284,7 +284,7 @@ public class AdminTaskTest extends CustomStrutsTestCase {
         session = registrarManagementAction.getSession();
         assertEquals("Action errors for 1 of 4BDF", 0, registrarManagementAction.getActionErrors().size());
 
-        request.setParameter("registrar.fullNameInOfficialLanguage","nissan");
+        request.setParameter("registrar.fullNameInOfficialLanguage", "nissan");
         request.setParameter("registrar.fullNameInEnglishLanguage", "nissan");
         request.setParameter("registrar.pin", "2314");
         request.setParameter("registrar.nic", "863357578v");
@@ -297,14 +297,31 @@ public class AdminTaskTest extends CustomStrutsTestCase {
 
         initAndExecute(REGISTRAR_CREATION_ACTION, session);
         registrar = registrarManagementAction.getRegistrar();
-        assertEquals("Action errors for Adoption Declaration ", 0, registrarManagementAction.getActionErrors().size());
+        assertEquals("Action errors for Add Registration Action ", 0, registrarManagementAction.getActionErrors().size());
 
-        assertNotNull("Address NULL",registrar.getCurrentAddress());
+        assertNotNull("Address NULL", registrar.getCurrentAddress());
         assertNotNull("Name NULL", registrar.getFullNameInOfficialLanguage());
         assertNotNull("En Name NULL", registrar.getFullNameInEnglishLanguage());
         assertNotNull("PIN NULL", registrar.getPin());
         assertNotNull("EXISTING REGISTRAR NOT NULL", session.get(WebConstants.SESSION_EXSISTING_REGISTRAR));
 
     }
-    
+
+    public void testSearchUsers() throws Exception {
+
+        Map session = UserLogin("admin", "password");
+        initAndExecute(SEARCH_USERS_PAGE_LOAD, session);
+        session = userManagementAction.getSession();
+        assertEquals("Action errors for Search Users page load", 0, userManagementAction.getActionErrors().size());
+
+        request.setParameter("roleId", "1");
+        request.setParameter("nameOfUser", "shan");
+        request.setParameter("userDistrictId", " 1");
+
+        initAndExecute(SEARCH_USERS_ACTION, session);
+        session = userManagementAction.getSession();
+        assertEquals("Action errors for Search Users Action", 0, userManagementAction.getActionErrors().size());        
+
+    }
+
 }
