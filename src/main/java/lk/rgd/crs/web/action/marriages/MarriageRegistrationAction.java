@@ -20,6 +20,7 @@ import java.util.*;
 /**
  * @author amith
  *         action class for marriage registration
+ *         //TODO remove bothSubmitted variable (actual meaning is there is only one or two notices)
  */
 public class MarriageRegistrationAction extends ActionSupport implements SessionAware {
 
@@ -150,9 +151,9 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
      * editing(updating) a marriage notice (register)
      */
     public String editMarriageNotice() {
-        logger.debug("attempt to edit marriage notice : idUKey {}", marriage.getIdUKey());
-        MarriageRegister notice = marriageRegistrationService.getByIdUKey(marriage.getIdUKey(), user);
-        if (notice != null) {
+        logger.debug("attempt to edit marriage notice : idUKey {}", idUKey);
+        MarriageRegister existingNotice = marriageRegistrationService.getByIdUKey(idUKey, user);
+        if (existingNotice != null) {
             marriageRegistrationService.updateMarriageRegister(marriage, user);
             addActionMessage(getText("marriage.notice.updated.success"));
         } else {
@@ -167,11 +168,15 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     /**
      * special case submit notices to two locations and second notice about to be add(actually updating same record)
      */
+    //todo add second notice
     public String addSecondNotice() {
         logger.debug("attempt to add second notice : idUKey of the record : {}", idUKey);
-        MarriageRegister notice = marriageRegistrationService.getByIdUKey(idUKey, user);
-        if (notice != null) {
-            marriageRegistrationService.updateMarriageRegister(marriage, user);
+        MarriageRegister existingNotice = marriageRegistrationService.getByIdUKey(idUKey, user);
+        if (existingNotice != null) {
+            populatePartyObjectsForPersisting();
+            populateMarriageObjectForEditMode(existingNotice, marriage);
+            //todo remove true
+            marriageRegistrationService.addSecondMarriageNotice(existingNotice, false, user);
         } else {
             logger.debug("cannot add second notice to idUKey : {}", idUKey);
             addActionError(getText("cannot.add.second,notice.first.does.not.exist"));
@@ -253,8 +258,30 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     /**
      * populating marriage notice(register object) for edit mode
      */
-    private void populateMarriageObjectForEditMode() {
-      MarriageRegister notice=marriageRegistrationService.getByIdUKey(idUKey,user);
+    private void populateMarriageObjectForEditMode(MarriageRegister noticeExisting, MarriageRegister noticeEdited) {
+        //if 1 st notice is submitted by male party or both parties(submitted only one notice form)
+        // we have to populate all male details when second  notice is coming and, vise versa
+        //check who submitted 1 st notice
+        boolean bothSubmitted = noticeExisting.isBothPartySubmitted();
+        if (bothSubmitted || noticeExisting.getSerialOfMaleNotice() != null) {
+            //this is the case for both submitted or male submitted case so we have to populate existing with female details
+            noticeExisting.setSerialOfFemaleNotice(serialNumber);
+            noticeExisting.setDateOfFemaleNotice(noticeReceivedDate);
+            noticeExisting.setFemaleNoticeWitness_1(noticeEdited.getFemaleNoticeWitness_1());
+            noticeExisting.setFemaleNoticeWitness_2(noticeEdited.getFemaleNoticeWitness_2());
+            noticeExisting.setMrDivisionOfFemaleNotice(noticeEdited.getMrDivisionOfFemaleNotice());
+        } else if (noticeExisting.getSerialOfFemaleNotice() != null) {
+            //this is the case for female submit case  so keep all female party related data
+            noticeExisting.setSerialOfMaleNotice(serialNumber);
+            noticeExisting.setDateOfMaleNotice(noticeReceivedDate);
+            noticeExisting.setMaleNoticeWitness_1(noticeEdited.getMaleNoticeWitness_1());
+            noticeExisting.setMaleNoticeWitness_2(noticeEdited.getMaleNoticeWitness_2());
+            noticeExisting.setMrDivisionOfMaleNotice(noticeEdited.getMrDivisionOfMaleNotice());
+        }
+        noticeExisting.setMale(noticeEdited.getMale());
+        noticeExisting.setFemale(noticeEdited.getFemale());
+        noticeExisting.setTypeOfMarriage(noticeEdited.getTypeOfMarriage());
+        noticeExisting.setPlaceOfMarriage(noticeEdited.getPlaceOfMarriage());
     }
 
     public Map getSession() {
