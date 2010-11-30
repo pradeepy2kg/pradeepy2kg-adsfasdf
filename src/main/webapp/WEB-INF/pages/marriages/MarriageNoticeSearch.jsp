@@ -184,10 +184,9 @@
                    style="font-size:10pt;">
                 <thead>
                 <tr>
-                    <th width="70px"><s:label value="%{getText('maleSerial.label')}"/></th>
-                    <th width="70px"><s:label value="%{getText('femaleSerial.label')}"/></th>
-                    <th width="415px"><s:label value="%{getText('maleParty.name.label')}"/></th>
-                    <th width="415px"><s:label value="%{getText('femaleParty.name.label')}"/></th>
+                    <th width="70px"><s:label value="%{getText('serial.label')}"/></th>
+                    <th><s:label value="%{getText('partyName.label')}"/></th>
+                    <th width="50px"></th>
                     <th width="15px"></th>
                     <th width="15px"></th>
                     <th width="15px"></th>
@@ -201,34 +200,18 @@
 
                     <tr>
                         <td align="center">
-                            <s:if test="serialOfMaleNotice != null">
-                                <s:property value="serialOfMaleNotice"/>
-                            </s:if>
-                            <s:else>-</s:else>
-                        </td>
-                        <td align="center">
-                            <s:if test="serialOfFemaleNotice != null">
-                                <s:property value="serialOfFemaleNotice"/>
+                            <s:if test="serialOfNotice != null">
+                                <s:property value="serialOfNotice"/>
                             </s:if>
                             <s:else>-</s:else>
                         </td>
                         <td>
-                            <s:if test="male.nameInOfficialLanguageMale != null">
-                                <%= NameFormatUtil.getDisplayName((String) request.getAttribute("male.nameInOfficialLanguageMale"), 70)%>
+                            <s:if test="partyNameInOfficialLang != null">
+                                <%= NameFormatUtil.getDisplayName((String) request.getAttribute("partyNameInOfficialLang"), 70)%>
                             </s:if>
                         </td>
                         <td>
-                            <s:if test="female.nameInOfficialLanguageFemale != null">
-                                <%= NameFormatUtil.getDisplayName((String) request.getAttribute("female.nameInOfficialLanguageFemale"), 70)%>
-                            </s:if>
-                        </td>
-                        <td align="center">
-                            <s:url id="editSelected" action="eprMarriageNoticeEditInit.do">
-                                <s:param name="idUKey" value="idUKey"/>
-                            </s:url>
-                            <s:a href="%{editSelected}" title="%{getText('editToolTip.label')}">
-                                <img src="<s:url value='/images/edit.png'/>" width="25" height="25" border="none"/>
-                            </s:a>
+                            <s:property value="noticeType"/>
                         </td>
                         <td>
                             <s:url id="addNextNotice" action="eprMarriageNoticeEditInit.do">
@@ -238,7 +221,14 @@
                             <s:a href="%{addNextNotice}" title="%{getText('nextNoticeToolTip.label')}">
                                 <img src="<s:url value='/images/add_page.png'/>" width="25" height="25" border="none"/>
                             </s:a>
-
+                        </td>
+                        <td align="center">
+                            <s:url id="editSelected" action="eprMarriageNoticeEditInit.do">
+                                <s:param name="idUKey" value="idUKey"/>
+                            </s:url>
+                            <s:a href="%{editSelected}" title="%{getText('editToolTip.label')}">
+                                <img src="<s:url value='/images/edit.png'/>" width="25" height="25" border="none"/>
+                            </s:a>
                         </td>
                         <td align="center">
                             <s:url id="approveSelected">
