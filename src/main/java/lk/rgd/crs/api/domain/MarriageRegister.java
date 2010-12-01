@@ -49,7 +49,7 @@ public class MarriageRegister implements Serializable, Cloneable {
     }
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IDUKEY")
     private long idUKey;
 
