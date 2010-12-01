@@ -10,9 +10,9 @@ import org.slf4j.LoggerFactory;
 public class GenderUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(GenderUtil.class);
-    private static final String GENDER_MALE_STRING = "පිරිමි / #Male# / Male";
-    private static final String GENDER_FEMALE_STRING = "ගැහැණු / #Female# / Female";
-    private static final String GENDER_UNKNOWN_STRING = "නොදත් / #Unknown# / Unknown";
+    private static final String GENDER_MALE_STRING = "පිරිමි / ஆண் / Male";
+    private static final String GENDER_FEMALE_STRING = "ගැහැණු / பெண் / Female";
+    private static final String GENDER_UNKNOWN_STRING = "නොදත් / தெரியாது / Unknown";
 
     public static String getGenderCharacter(int code) {
         switch (code) {
