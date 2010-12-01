@@ -37,9 +37,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         logger.debug("adding new marriage notice :male pin number  {}", notice.getMale().getIdentificationNumberMale());
         //TODO check users permission to add marriage
         //persisting witness
-        addWitnesses(notice, isMale);
-        notice.setWitness1(null);
-        notice.setWitness2(null);
+        addMaleOrFemaleWitnesses(notice, isMale);
         marriageRegistrationDAO.addMarriageNotice(notice, user);
     }
 
@@ -68,7 +66,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     /**
      * @inheritDoc
      */
-   
+
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<MarriageRegister> getMarriageNoticePendingApprovalByBDDivision(MRDivision mrDivision, int pageNo,
         int noOfRows, boolean active, User user) {
@@ -103,8 +101,9 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     public void updateMarriageRegister(MarriageRegister marriageRegister, User user) {
         //todo check user permissions
         logger.debug("attempt to update marriage register/notice record : idUKey : {}", marriageRegister.getIdUKey());
-        addWitness(marriageRegister.getWitness1());
-        addWitness(marriageRegister.getWitness2());
+/*   todo remove use a private method to add register witnesses
+     addWitness(marriageRegister.getWitness1());
+        addWitness(marriageRegister.getWitness2());*/
         marriageRegistrationDAO.updateMarriageRegister(marriageRegister, user);
     }
 
@@ -114,7 +113,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     @Transactional(propagation = Propagation.REQUIRED)
     public void addSecondMarriageNotice(MarriageRegister notice, boolean isMale, User user) {
         logger.debug("attempt to add a second notice for existing record : idUKey : {}", notice.getIdUKey());
-        addWitnesses(notice, isMale);
+        addMaleOrFemaleWitnesses(notice, isMale);
         updateMarriageRegister(notice, user);
     }
 
@@ -122,13 +121,29 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         marriageRegistrationDAO.addWitness(witness);
     }
 
-    private void addWitnesses(MarriageRegister marriageRegister, boolean isMale) {
+    private void addMaleOrFemaleWitnesses(MarriageRegister marriageRegister, boolean isMale) {
+        marriageRegister.setWitness1(null);
+        marriageRegister.setWitness2(null);
         if (isMale) {
             //persisting male witnesses
+            if (marriageRegister.getFemaleNoticeWitness_1().getIdUKey() == 0 &
+                marriageRegister.getFemaleNoticeWitness_2().getIdUKey() == 0) {
+                //usage of the check (by default those object are created when marriage notice object create, in some cases
+                // like there is a already added witness ,then we have to keep those witness objects other wise it can be
+                // null)
+                marriageRegister.setFemaleNoticeWitness_1(null);
+                marriageRegister.setFemaleNoticeWitness_2(null);
+            }
             marriageRegistrationDAO.addWitness(marriageRegister.getMaleNoticeWitness_1());
             marriageRegistrationDAO.addWitness(marriageRegister.getMaleNoticeWitness_2());
+
         } else {
-            //persisting female notice witnesses
+            if (marriageRegister.getMaleNoticeWitness_1().getIdUKey() == 0 &
+                marriageRegister.getMaleNoticeWitness_2().getIdUKey() == 0) {
+                //persisting female notice witnesses
+                marriageRegister.setMaleNoticeWitness_1(null);
+                marriageRegister.setMaleNoticeWitness_2(null);
+            }
             marriageRegistrationDAO.addWitness(marriageRegister.getFemaleNoticeWitness_1());
             marriageRegistrationDAO.addWitness(marriageRegister.getFemaleNoticeWitness_2());
         }

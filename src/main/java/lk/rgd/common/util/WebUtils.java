@@ -10,6 +10,7 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -123,7 +124,7 @@ public class WebUtils {
         //else
         //  if male serial is available this is a male submitted notice
         //  if female serial is available this is a female submitted notice
-        List<MarriageNotice> noticeList = new ArrayList<MarriageNotice>();
+        List<MarriageNotice> noticeList = new LinkedList<MarriageNotice>();
         for (MarriageRegister mr : marriageRegisterList) {
             boolean isBothSubmitted = mr.isBothPartySubmitted();
             String maleSerial = mr.getSerialOfMaleNotice();
