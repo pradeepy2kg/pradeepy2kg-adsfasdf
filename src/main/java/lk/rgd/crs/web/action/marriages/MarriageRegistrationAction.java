@@ -64,6 +64,8 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     private Date noticeReceivedDate;
 
+    private HashMap marriageType = new HashMap<MarriageRegister.TypeOfMarriage, String>();
+
     public MarriageRegistrationAction(MarriageRegistrationService marriageRegistrationService,
         MRDivisionDAO mrDivisionDAO, RaceDAO raceDAO, CountryDAO countryDAO, CommonUtil commonUtil) {
         this.marriageRegistrationService = marriageRegistrationService;
@@ -187,14 +189,35 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     }
 
     public String marriageRegistrationInit() {
-        logger.debug("loading marriage registration page");
+        //TODO : To be removed
+        idUKey = 1;
+
+        //TODO : TO be improved
+        marriageType.put(MarriageRegister.TypeOfMarriage.GENERAL, "      සාමාන්‍ය / general marriage in tamil / General");
+        marriageType.put(MarriageRegister.TypeOfMarriage.KANDYAN_BINNA, "     උඩරට බින්න / Kandyan binna in tamil / Kandyan Binna");
+        marriageType.put(MarriageRegister.TypeOfMarriage.KANDYAN_DEEGA, "    උඩරට බින්න දීග / kandyan deega in tamil / Kandyan Deega");
+        
         commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
             marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
         raceList = raceDAO.getRaces(language);
+        marriage = marriageRegistrationService.getByIdUKey(idUKey, user);
+        if (marriage == null) {
+            addActionError("Marriage Registration Record could not be found");
+            return ERROR;
+        } 
         return "pageLoad";
     }
 
     public String registerMarriage() {
+        MarriageRegister marriageRegister = marriageRegistrationService.getByIdUKey(marriage.getIdUKey(), user);
+        marriageRegister.setWitness1(marriage.getWitness1());
+        marriageRegister.setWitness2(marriage.getWitness2());
+        try {
+           marriageRegistrationService.updateMarriageRegister(marriageRegister, user);
+        } catch (Exception e){
+           addActionError(e.getMessage());
+           return ERROR;
+        }
         return "success";
     }
 
@@ -471,6 +494,14 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     public void setEditMode(boolean editMode) {
         this.editMode = editMode;
+    }
+
+    public HashMap getMarriageType() {
+        return marriageType;
+    }
+
+    public void setMarriageType(HashMap marriageType) {
+        this.marriageType = marriageType;
     }
 }
 

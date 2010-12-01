@@ -79,11 +79,11 @@ public class MarriageRegister implements Serializable, Cloneable {
     private MRDivision mrDivision;
 
     @OneToOne
-    @JoinColumn(name = "idukey", nullable = true, insertable = false, updatable = false)
+    @JoinColumn(name = "REG_WITNESS_1", nullable = true)
     private Witness witness1;
 
     @OneToOne
-    @JoinColumn(name = "idukey", nullable = true, insertable = false, updatable = false)
+    @JoinColumn(name = "REG_WITNESS_2", nullable = true)
     private Witness witness2;
 
     @Column(length = 10, name = "SERIAL_MALE")
