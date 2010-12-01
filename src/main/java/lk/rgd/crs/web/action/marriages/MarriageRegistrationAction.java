@@ -6,12 +6,15 @@ import lk.rgd.common.api.dao.RaceDAO;
 import lk.rgd.common.api.domain.Country;
 import lk.rgd.common.api.domain.Race;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.util.CivilStatusUtil;
 import lk.rgd.crs.api.dao.MRDivisionDAO;
 import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.domain.MarriageRegister;
+import lk.rgd.crs.api.domain.MaleParty;
 import lk.rgd.crs.api.service.MarriageRegistrationService;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.web.util.CommonUtil;
+import lk.rgd.prs.api.domain.Person;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 
@@ -64,7 +67,9 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     private Date noticeReceivedDate;
 
-    private HashMap marriageType = new HashMap<MarriageRegister.TypeOfMarriage, String>();
+    private HashMap marriageType;
+    private HashMap civilStatusMale;
+    private HashMap civilStatusFemale;
 
     public MarriageRegistrationAction(MarriageRegistrationService marriageRegistrationService,
         MRDivisionDAO mrDivisionDAO, RaceDAO raceDAO, CountryDAO countryDAO, CommonUtil commonUtil) {
@@ -79,6 +84,10 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         mrDivisionList = new HashMap<Integer, String>();
         raceList = new HashMap<Integer, String>();
         countryList = new HashMap<Integer, String>();
+
+        marriageType = new HashMap<MarriageRegister.TypeOfMarriage, String>();
+        civilStatusMale = new HashMap<Person.CivilStatus, String>();
+        civilStatusFemale = new HashMap<Person.CivilStatus, String>();
     }
 
     /**
@@ -199,7 +208,10 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         marriageType.put(MarriageRegister.TypeOfMarriage.GENERAL, "      සාමාන්‍ය / general marriage in tamil / General");
         marriageType.put(MarriageRegister.TypeOfMarriage.KANDYAN_BINNA, "     උඩරට බින්න / Kandyan binna in tamil / Kandyan Binna");
         marriageType.put(MarriageRegister.TypeOfMarriage.KANDYAN_DEEGA, "    උඩරට බින්න දීග / kandyan deega in tamil / Kandyan Deega");
-        
+
+        civilStatusMale = populateCivilStatus();
+        civilStatusFemale = populateCivilStatus();
+
         commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
             marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
         raceList = raceDAO.getRaces(language);
@@ -209,6 +221,15 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             return ERROR;
         } 
         return "pageLoad";
+    }
+
+    private HashMap<Person.CivilStatus, String> populateCivilStatus(){
+        HashMap<Person.CivilStatus, String> civilStatus = new HashMap<Person.CivilStatus, String>();
+        civilStatus.put(Person.CivilStatus.NEVER_MARRIED, CivilStatusUtil.getCivilStatusInAllLanguages(Person.CivilStatus.NEVER_MARRIED));
+        civilStatus.put(Person.CivilStatus.DIVORCED, CivilStatusUtil.getCivilStatusInAllLanguages(Person.CivilStatus.DIVORCED));
+        civilStatus.put(Person.CivilStatus.WIDOWED, CivilStatusUtil.getCivilStatusInAllLanguages(Person.CivilStatus.WIDOWED));
+        civilStatus.put(Person.CivilStatus.ANNULLED, CivilStatusUtil.getCivilStatusInAllLanguages(Person.CivilStatus.ANNULLED));
+        return civilStatus;
     }
 
     public String registerMarriage() {
@@ -510,6 +531,22 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     public void setMarriageType(HashMap marriageType) {
         this.marriageType = marriageType;
+    }
+
+    public HashMap getCivilStatusMale() {
+        return civilStatusMale;
+    }
+
+    public void setCivilStatusMale(HashMap civilStatusMale) {
+        this.civilStatusMale = civilStatusMale;
+    }
+
+    public HashMap getCivilStatusFemale() {
+        return civilStatusFemale;
+    }
+
+    public void setCivilStatusFemale(HashMap civilStatusFemale) {
+        this.civilStatusFemale = civilStatusFemale;
     }
 }
 

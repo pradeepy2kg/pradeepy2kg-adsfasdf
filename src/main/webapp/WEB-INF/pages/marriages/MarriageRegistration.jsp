@@ -287,97 +287,31 @@ $(function() {
         <td>
             <table>
                 <caption/>
-                <col width="50px"/>
                 <col/>
                 <tbody>
+                <s:iterator value="civilStatusMale">
                 <tr>
                     <td>
-                        <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'NEVER_MARRIED':''}"/>
-                    </td>
-                    <td> අවිවාහක <br>
-                        திருமணமாகாதவர் <br>
-                        Never Married
+                        <s:radio name="marriage.male.civilStatusMale" list="#{key:value}"/>
                     </td>
                 </tr>
-                <tr>
-                    <td >
-                        <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'DIVORCED':''}"/>
-                    </td>
-                    <td>
-                        දික්කසාද <br>
-                        திருமணம் தள்ளுபடி செய்தவர் <br>
-                        Divorced
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'WIDOWED':''}"/>
-                    </td>
-                    <td>
-                        වැන්දබු <br>
-                        விதவை <br>
-                        Widowed
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'ANULLED':''}"/>
-                    </td>                    
-                    <td>
-                        නිෂ්ප්‍රභාකර ඇත <br>
-                        தள்ளிவைத்தல் <br>
-                        Anulled
-                    </td>
-                </tr>
+                </s:iterator>
                 </tbody>
             </table>
         </td>
 
         <td>
-              <table>
+            <table>
                 <caption/>
-                <col width="50px"/>
                 <col/>
                 <tbody>
+                <s:iterator value="civilStatusFemale">
                 <tr>
                     <td>
-                        <s:radio name="marriage.female.civilStatusFemale" list="#@java.util.HashMap@{'NEVER_MARRIED':''}"/>
-                    </td>
-                    <td> අවිවාහක <br>
-                        திருமணமாகாதவர் <br>
-                        Never Married
+                        <s:radio name="marriage.female.civilStatusFemale" list="#{key:value}"/>
                     </td>
                 </tr>
-                <tr>
-                    <td >
-                        <s:radio name="marriage.female.civilStatusFemale" list="#@java.util.HashMap@{'DIVORCED':''}"/>
-                    </td>
-                    <td>
-                        දික්කසාද <br>
-                        திருமணம் தள்ளுபடி செய்தவர் <br>
-                        Divorced
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <s:radio name="marriage.female.civilStatusFemale" list="#@java.util.HashMap@{'WIDOWED':''}"/>
-                    </td>
-                    <td>
-                        වැන්දබු <br>
-                        விதவை <br>
-                        Widowed
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <s:radio name="marriage.female.civilStatusFemale" list="#@java.util.HashMap@{'ANULLED':''}"/>
-                    </td>
-                    <td>
-                        නිෂ්ප්‍රභාකර ඇත <br>
-                        தள்ளிவைத்தல் <br>
-                        Anulled
-                    </td>
-                </tr>
+                </s:iterator>
                 </tbody>
             </table>
        </td>
