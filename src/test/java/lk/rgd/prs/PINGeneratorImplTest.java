@@ -76,7 +76,8 @@ public class PINGeneratorImplTest extends TestCase {
             pin = pinGenerator.generatePINNumber(cal.getTime(), false);
             // should be 0757100002
             Assert.assertEquals("wrong pin generated", 757100002, pin);
-        } catch (Exception expected) {
+        } catch (Exception e) {
+            e.printStackTrace();
             fail("Did not expect a failure");
         }
 
@@ -97,7 +98,8 @@ public class PINGeneratorImplTest extends TestCase {
             pin = pinGenerator.generatePINNumber(cal.getTime(), false);
             // should be 0757110002
             Assert.assertEquals("wrong pin generated", 1107100002, pin);
-        } catch (Exception expected) {
+        } catch (Exception e) {
+            e.printStackTrace();
             fail("Did not expect a failure");
         }
 
@@ -118,7 +120,8 @@ public class PINGeneratorImplTest extends TestCase {
             pin = pinGenerator.generateTemporaryPINNumber(cal.getTime(), false);
             // should be 6107100002
             Assert.assertEquals("wrong pin generated", 6107100002L, pin);
-        } catch (Exception expected) {
+        } catch (Exception e) {
+            e.printStackTrace();
             fail("Did not expect a failure");
         }
     }

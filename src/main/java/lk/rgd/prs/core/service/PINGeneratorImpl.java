@@ -81,7 +81,7 @@ public class PINGeneratorImpl implements PINGenerator {
         long result = 0;
 
         if (lastPINNumber != null) {
-            int newSerial = lastPINNumber.getLastSerial() + 1;
+            long newSerial = lastPINNumber.getLastSerial() + 1;
             lastPINNumber.setLastSerial(newSerial);
             pinNumberDAO.updateLastPINNumber(lastPINNumber);
             result = (dateOfBirth * 10000) + newSerial;
