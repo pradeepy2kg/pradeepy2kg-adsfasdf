@@ -177,8 +177,11 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         if (existingNotice != null) {
             populatePartyObjectsForPersisting();
             populateMarriageObjectForEditMode(existingNotice, marriage);
-            //todo remove true
-            marriageRegistrationService.addSecondMarriageNotice(existingNotice, false, user);
+//check witch party is submitting second notice : note is both submitted true there cannot be a second notice
+            boolean secondNoticeSubmittedPartyMale = marriage.isBothPartySubmitted() ||
+                (marriage.getSerialOfMaleNotice() != null && marriage.getSerialOfMaleNotice().length() > 0);
+
+            marriageRegistrationService.addSecondMarriageNotice(existingNotice, secondNoticeSubmittedPartyMale, user);
         } else {
             logger.debug("cannot add second notice to idUKey : {}", idUKey);
             addActionError(getText("cannot.add.second,notice.first.does.not.exist"));
@@ -196,7 +199,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         marriageType.put(MarriageRegister.TypeOfMarriage.GENERAL, "      සාමාන්‍ය / general marriage in tamil / General");
         marriageType.put(MarriageRegister.TypeOfMarriage.KANDYAN_BINNA, "     උඩරට බින්න / Kandyan binna in tamil / Kandyan Binna");
         marriageType.put(MarriageRegister.TypeOfMarriage.KANDYAN_DEEGA, "    උඩරට බින්න දීග / kandyan deega in tamil / Kandyan Deega");
-        
+
         commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
             marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
         raceList = raceDAO.getRaces(language);
@@ -204,7 +207,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         if (marriage == null) {
             addActionError("Marriage Registration Record could not be found");
             return ERROR;
-        } 
+        }
         return "pageLoad";
     }
 
@@ -213,10 +216,10 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         marriageRegister.setWitness1(marriage.getWitness1());
         marriageRegister.setWitness2(marriage.getWitness2());
         try {
-           marriageRegistrationService.updateMarriageRegister(marriageRegister, user);
-        } catch (Exception e){
-           addActionError(e.getMessage());
-           return ERROR;
+            marriageRegistrationService.updateMarriageRegister(marriageRegister, user);
+        } catch (Exception e) {
+            addActionError(e.getMessage());
+            return ERROR;
         }
         return "success";
     }
