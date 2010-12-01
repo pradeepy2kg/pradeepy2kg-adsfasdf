@@ -5,6 +5,7 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.dao.MarriageRegistrationDAO;
 import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.domain.MarriageRegister;
+import lk.rgd.crs.api.domain.Witness;
 import lk.rgd.crs.api.service.MarriageRegistrationService;
 import lk.rgd.crs.core.ValidationUtils;
 import org.slf4j.Logger;
@@ -99,8 +100,9 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     public void updateMarriageRegister(MarriageRegister marriageRegister, User user) {
         //todo check user permissions
         logger.debug("attempt to update marriage register/notice record : idUKey : {}", marriageRegister.getIdUKey());
+        addWitness(marriageRegister.getWitness1());
+        addWitness(marriageRegister.getWitness2());
         marriageRegistrationDAO.updateMarriageRegister(marriageRegister, user);
-        // throw new UnsupportedOperationException("not yet implemented");
     }
 
     /**
@@ -113,6 +115,9 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         updateMarriageRegister(notice, user);
     }
 
+    private void addWitness(Witness witness) {
+        marriageRegistrationDAO.addWitness(witness);
+    }
 
     private void addWitnesses(MarriageRegister marriageRegister, boolean isMale) {
         if (isMale) {

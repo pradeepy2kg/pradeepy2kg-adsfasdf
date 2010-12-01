@@ -17,8 +17,10 @@ $(function() {
     });
 });
 </script>
+<s:actionerror/>
 <div class="marriage-notice-outer">
 <s:form action="eprMarriageRegistration" method="post">
+<s:hidden name="marriage.idUKey"/>
 <%--section for official usage--%>
 <table class="table_reg_header_01">
     <caption></caption>
@@ -92,11 +94,11 @@ $(function() {
                     <td align="center">
                         <s:if test="false==true">
                             <%-- for edit mode of the marriage notice--%>
-                            <s:textfield name="marriageNotice.serialNumber" id="mnSerial" readonly="true" maxLength="10"
+                            <s:textfield name="marriage.serialNumber" id="mnSerial" readonly="true" maxLength="10"
                                          cssStyle="margin-left:20px"/>
                         </s:if>
                         <s:else>
-                            <s:textfield name="marriageNotice.serialNumber" id="mnSerial" maxLength="10"/>
+                            <s:textfield name="marriage.serialNumber" id="mnSerial" maxLength="10"/>
                         </s:else>
                     </td>
                 </tr>
@@ -110,7 +112,7 @@ $(function() {
                     </td>
                     <td>
                         <s:label value="YYYY-MM-DD" cssStyle="margin-left:10px;font-size:10px"/><br>
-                        <s:textfield name="marriageNotice.receivedDate" id="submitDatePicker" maxLength="10" onclick="popupCalendar('submitDatePicker')"/>
+                        <s:textfield name="marriage.receivedDate" id="submitDatePicker" maxLength="10" onclick="popupCalendar('submitDatePicker')"/>
                     </td>
                 </tr>
             </table>
@@ -130,7 +132,7 @@ $(function() {
        cellpadding="5px">
     <caption></caption>
     <col width="200px"/>
-    <col width="100px"/>
+    <col/>
     <col/>
     <col/>
     <col/>
@@ -139,41 +141,26 @@ $(function() {
     <col/>
     <col/>
     <tbody>
-    <tr>
-        <td rowspan="3">
+     <tr>
+        <td>
             විවාහයේ ස්වභාවය <br>
             type of marriage in tamil <br>
             Type of Marriage
         </td>
-       <td colspan="3" align="center">
-            <s:radio name="marriage.typeOfMarriage" list="#@java.util.HashMap@{'GENERAL':''}" value="true"/>
-       </td>
-        <td colspan="5">
-            සාමාන්‍ය /
-            general marriage in tamil /
-            General
-        </td>
-    </tr>
-    
-    <tr>
-        <td colspan="3" align="center">
-          <s:radio name="marriage.typeOfMarriage" list="#@java.util.HashMap@{'KANDYAN_BINNA':''}" value="true"/>
-        </td>
-        <td colspan="5">
-            උඩරට බින්න /
-            Kandyan binna in tamil /
-            Kandyan Binna
-        </td>
-    </tr>
-    <tr>
-        <td colspan="3" align="center">
-           <s:radio name="marriage.typeOfMarriage" list="#@java.util.HashMap@{'KANDYAN_DEEGA':''}" value="true"/>
-        </td>
-        <td colspan="5">
-            උඩරට බින්න දීග /
-            kandyan deega in tamil /
-            Kandyan
-            Deega
+        <td colspan="8">
+            <table width="100%">
+                <caption/>
+                <col/>
+                <tbody>
+                <s:iterator value="marriageType">
+                <tr>
+                    <td>
+                        <s:radio name="marriage.typeOfMarriage" list="#{key:value}"/>
+                    </td>
+                </tr>
+                </s:iterator>
+                </tbody>
+            </table>
         </td>
     </tr>
     <tr>
@@ -195,7 +182,7 @@ $(function() {
                         Official Language
                     </td>
                    <td>
-                        <s:textarea name="marriageNotice.placeInOfficialLanguage" id="place_official"
+                        <s:textarea name="marriage.placeInOfficialLanguage" id="place_official"
                             cssStyle="width:98.2%;"/>
                     </td>
                 </tr>
@@ -206,7 +193,7 @@ $(function() {
                         In English
                     </td>
                     <td>
-                        <s:textarea name="marriageNotice.placeInEnglishLanguage" id="place_English"
+                        <s:textarea name="marriage.placeInEnglishLanguage" id="place_English"
                             cssStyle="width:98.2%;"/>
                     </td>
                 </tr>
@@ -248,10 +235,10 @@ $(function() {
             Identification Number.
         </td>
         <td colspan="1" align="left">
-            <s:textfield name="marriageNotice.male.identificationNumberMale" id="identification_male" maxLength="10"/>
+            <s:textfield name="marriage.male.identificationNumberMale" id="identification_male" maxLength="10"/>
         </td>
         <td colspan="1" align="left">
-            <s:textfield name="marriageNotice.male.identificationNumberMale" id="identification_male" maxLength="10"/>
+            <s:textfield name="marriage.female.identificationNumberFemale" id="identification_female" maxLength="10"/>
         </td>
     </tr>
     <tr>
@@ -261,10 +248,10 @@ $(function() {
             Date of Birth
         </td>
         <td colspan="1">
-            <s:textfield name="marriageNotice.male.dateOfBirthMale" id="date_of_birth_male" maxLength="10"/>
+            <s:textfield name="marriage.male.dateOfBirthMale" id="date_of_birth_male" maxLength="10"/>
         </td>
         <td colspan="1">
-            <s:textfield name="marriageNotice.male.dateOfBirthMale" id="date_of_birth_male" maxLength="10"/>
+            <s:textfield name="marriage.female.dateOfBirthFemale" id="date_of_birth_female" maxLength="10"/>
         </td>
     </tr>
     <tr>
@@ -275,11 +262,11 @@ $(function() {
 
         </td>
         <td colspan="1">
-            <s:textfield name="marriageNotice.male.ageAtLastBirthDayMale" id="age_at_last_bd_male" maxLength="10"
+            <s:textfield name="marriage.male.ageAtLastBirthDayMale" id="age_at_last_bd_male" maxLength="10"
                          value=""/>
         </td>
         <td colspan="1">
-            <s:textfield name="marriageNotice.male.ageAtLastBirthDayMale" id="age_at_last_bd_male" maxLength="10"
+            <s:textfield name="marriage.female.ageAtLastBirthDayFemale" id="age_at_last_bd_female" maxLength="10"
                          value=""/>
         </td>
     </tr>
@@ -312,8 +299,7 @@ $(function() {
                 <tbody>
                 <tr>
                     <td>
-                        <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'NEVER_MARRIED':''}"
-                            value="true"/>
+                        <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'NEVER_MARRIED':''}"/>
                     </td>
                     <td> අවිවාහක <br>
                         திருமணமாகாதவர் <br>
@@ -322,8 +308,7 @@ $(function() {
                 </tr>
                 <tr>
                     <td >
-                        <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'DIVORCED':''}"
-                                 value="true"/>
+                        <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'DIVORCED':''}"/>
                     </td>
                     <td>
                         දික්කසාද <br>
@@ -333,7 +318,7 @@ $(function() {
                 </tr>
                 <tr>
                     <td>
-                        <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'WIDOWED':''}" value="true"/>
+                        <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'WIDOWED':''}"/>
                     </td>
                     <td>
                         වැන්දබු <br>
@@ -343,7 +328,7 @@ $(function() {
                 </tr>
                 <tr>
                     <td>
-                        <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'ANULLED':''}" value="true"/>
+                        <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'ANULLED':''}"/>
                     </td>                    
                     <td>
                         නිෂ්ප්‍රභාකර ඇත <br>
@@ -363,8 +348,7 @@ $(function() {
                 <tbody>
                 <tr>
                     <td>
-                        <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'NEVER_MARRIED':''}"
-                            value="true"/>
+                        <s:radio name="marriage.female.civilStatusFemale" list="#@java.util.HashMap@{'NEVER_MARRIED':''}"/>
                     </td>
                     <td> අවිවාහක <br>
                         திருமணமாகாதவர் <br>
@@ -373,8 +357,7 @@ $(function() {
                 </tr>
                 <tr>
                     <td >
-                        <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'DIVORCED':''}"
-                                 value="true"/>
+                        <s:radio name="marriage.female.civilStatusFemale" list="#@java.util.HashMap@{'DIVORCED':''}"/>
                     </td>
                     <td>
                         දික්කසාද <br>
@@ -384,7 +367,7 @@ $(function() {
                 </tr>
                 <tr>
                     <td>
-                        <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'WIDOWED':''}" value="true"/>
+                        <s:radio name="marriage.female.civilStatusFemale" list="#@java.util.HashMap@{'WIDOWED':''}"/>
                     </td>
                     <td>
                         වැන්දබු <br>
@@ -394,7 +377,7 @@ $(function() {
                 </tr>
                 <tr>
                     <td>
-                        <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'ANULLED':''}" value="true"/>
+                        <s:radio name="marriage.female.civilStatusFemale" list="#@java.util.HashMap@{'ANULLED':''}"/>
                     </td>
                     <td>
                         නිෂ්ප්‍රභාකර ඇත <br>
@@ -414,11 +397,11 @@ $(function() {
             Name in any of the official languages (Sinhala / Tamil)
         </td>
         <td>
-            <s:textarea name="marriageNotice.male.nameInOfficialLanguageMale" id="name_official_male"
+            <s:textarea name="marriage.male.nameInOfficialLanguageMale" id="name_official_male"
                         cssStyle="width:98.2%;"/>
         </td>
         <td>
-            <s:textarea name="marriageNotice.male.nameInOfficialLanguageMale" id="name_official_male"
+            <s:textarea name="marriage.female.nameInOfficialLanguageFemale" id="name_official_female"
                         cssStyle="width:98.2%;"/>
         </td>
     </tr>
@@ -430,10 +413,10 @@ $(function() {
             Name in English
         </td>
         <td>
-            <s:textarea name="marriageNotice.male.nameInEnglishMale" id="name_english_male" cssStyle="width:98.2%;"/>
+            <s:textarea name="marriage.male.nameInEnglishMale" id="name_english_male" cssStyle="width:98.2%;"/>
         </td>
         <td>
-            <s:textarea name="marriageNotice.male.nameInEnglishMale" id="name_english_male" cssStyle="width:98.2%;"/>
+            <s:textarea name="marriage.female.nameInEnglishFemale" id="name_english_female" cssStyle="width:98.2%;"/>
         </td>        
     </tr>
 
@@ -444,10 +427,10 @@ $(function() {
             Resident Address
         </td>
         <td>
-            <s:textarea name="marriageNotice.male.residentAddressMale" id="address_male" cssStyle="width:98.2%;"/>
+            <s:textarea name="marriage.male.residentAddressMale" id="address_male" cssStyle="width:98.2%;"/>
         </td>
         <td>
-            <s:textarea name="marriageNotice.male.residentAddressMale" id="address_male" cssStyle="width:98.2%;"/>
+            <s:textarea name="marriage.female.residentAddressFemale" id="address_female" cssStyle="width:98.2%;"/>
         </td>
     </tr>
     <tr>
@@ -457,11 +440,11 @@ $(function() {
             Fathers full name
         </td>
         <td>
-            <s:textarea name="marriageNotice.male.fatherFullNameMale" id="father_full_name_male"
+            <s:textarea name="marriage.male.fatherFullNameMale" id="father_full_name_male"
                         cssStyle="width:98.2%;"/>
         </td>
         <td>
-            <s:textarea name="marriageNotice.male.fatherFullNameMale" id="father_full_name_male"
+            <s:textarea name="marriage.female.fatherFullNameFemale" id="father_full_name_female"
                         cssStyle="width:98.2%;"/>
         </td>
     </tr>
@@ -499,12 +482,12 @@ $(function() {
             Identification Number
         </td>
         <td>
-            <s:textfield name="marriageNotice.maleNoticeWitness_1.identificationNumber" id="m_witness_1_pin"
+            <s:textfield name="marriage.witness1.identificationNumber" id="m_witness_1_pin"
                          cssStyle="width:240px;"
                          maxLength="10"/>
         </td>
         <td>
-            <s:textfield name="marriageNotice.maleNoticeWitness_2.identificationNumber" id="m_witness_2_pin"
+            <s:textfield name="marriage.witness2.identificationNumber" id="f_witness_2_pin"
                          cssStyle="width:240px;"
                          maxLength="10"/>
         </td>
@@ -515,11 +498,11 @@ $(function() {
             Full Name <br>
         </td>
         <td>
-            <s:textarea name="marriageNotice.maleNoticeWitness_1.fullName" id="m_witness_1_full_name" cssStyle="width:98.2%;"
+            <s:textarea name="marriage.witness1.fullName" id="m_witness_1_full_name" cssStyle="width:98.2%;"
                     />
         </td>
         <td>
-            <s:textarea name="marriageNotice.maleNoticeWitness_2.fullName" id="m_witness_2_full_name" cssStyle="width:98.2%;"
+            <s:textarea name="marriage.witness2.fullName" id="f_witness_2_full_name" cssStyle="width:98.2%;"
                     />
         </td>
     </tr>
@@ -529,11 +512,11 @@ $(function() {
             Rank or Profession <br>
         </td>
         <td>
-            <s:textarea name="marriageNotice.maleNoticeWitness_1.rankOrProfession" id="m_witness_1_rank" cssStyle="width:98.2%;"
+            <s:textarea name="marriage.witness1.rankOrProfession" id="m_witness_1_rank" cssStyle="width:98.2%;"
                     />
         </td>
         <td>
-            <s:textarea name="marriageNotice.maleNoticeWitness_2.rankOrProfession" id="m_witness_2_rank" cssStyle="width:98.2%;"
+            <s:textarea name="marriage.witness2.rankOrProfession" id="f_witness_2_rank" cssStyle="width:98.2%;"
                     />
         </td>
     </tr>
@@ -543,11 +526,11 @@ $(function() {
             Place of Residence <br>
         </td>
         <td>
-            <s:textarea name="marriageNotice.maleNoticeWitness_1.address" id="m_witness_1_place_residence" cssStyle="width:98.2%;"
+            <s:textarea name="marriage.witness1.address" id="m_witness_1_place_residence" cssStyle="width:98.2%;"
                     />
         </td>
         <td>
-            <s:textarea name="marriageNotice.maleNoticeWitness_2.address" id="m_witness_2_place_residence" cssStyle="width:98.2%;"
+            <s:textarea name="marriage.witness2.address" id="f_witness_2_place_residence" cssStyle="width:98.2%;"
                     />
         </td>
     </tr>

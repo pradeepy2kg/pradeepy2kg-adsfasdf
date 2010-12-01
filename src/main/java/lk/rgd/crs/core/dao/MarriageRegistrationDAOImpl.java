@@ -53,6 +53,9 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
      */
     @Transactional(propagation = Propagation.MANDATORY)
     public void updateMarriageRegister(MarriageRegister marriageRegister, User user) {
+        marriageRegister.setState(MarriageRegister.State.DATA_ENTRY);
+        marriageRegister.getLifeCycleInfo().setCreatedTimestamp(new Date());
+        marriageRegister.getLifeCycleInfo().setCreatedUser(user);
         marriageRegister.getLifeCycleInfo().setLastUpdatedTimestamp(new Date());
         marriageRegister.getLifeCycleInfo().setLastUpdatedUser(user);
         em.merge(marriageRegister);
