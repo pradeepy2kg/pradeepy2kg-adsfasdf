@@ -12,10 +12,29 @@
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="../js/validate.js"></script>
 
 <script>
     $(document).ready(function() {
         $("#tabs").tabs();
+    });
+
+    $(function() {
+        $("#searchStartDatePicker").datepicker({
+            changeYear: true,
+            dateFormat:'yy-mm-dd',
+            startDate:'2000-01-01',
+            endDate:'2020-12-31'
+        });
+    });
+
+    $(function() {
+        $("#searchEndDatePicker").datepicker({
+            changeYear: true,
+            dateFormat:'yy-mm-dd',
+            startDate:'2000-01-01',
+            endDate:'2020-12-31'
+        });
     });
 
     $(function() {
@@ -68,21 +87,45 @@
         });
     });
 
+    var errormsg = "";
+    function validate() {
+        var domObject;
+        var returnVal = true;
+
+        // validate serial number
+        domObject = document.getElementById('noticeSerialNo');
+        if (!isFieldEmpty(domObject))
+            validateSerialNo(domObject, 'error1', 'error2');
+
+        // validate start and end date
+        domObject = document.getElementById('searchStartDatePicker');
+        if (!isFieldEmpty(domObject))
+            isDate(domObject.value, 'error1', 'error3');
+
+        domObject = document.getElementById('searchEndDatePicker');
+        if (!isFieldEmpty(domObject))
+            isDate(domObject.value, 'error1', 'error4');
+
+        if (errormsg != "") {
+            alert(errormsg);
+            returnVal = false;
+        }
+        errormsg = "";
+        return returnVal;
+    }
+
     function initPage() {
     }
 </script>
 
-<s:form action="eprMarriageNoticeSearchInit.do" method="POST">
+<s:form action="eprMarriageNoticeSearchInit.do" method="POST" onsubmit="javascript:return validate()">
     <div id="tabs" style="font-size:10pt;">
         <ul>
             <li>
                 <a href="#fragment-1"><span><s:label value="%{getText('search.by.MRDivision.label')}"/></span></a>
             </li>
             <li>
-                <a href="#fragment-2"><span> <s:label value="%{getText('search.by.malePin.label')}"/></span></a>
-            </li>
-            <li>
-                <a href="#fragment-3"><span><s:label value="%{getText('search.by.femalePin.label')}"/></span></a>
+                <a href="#fragment-2"><span> <s:label value="%{getText('search.by.pin.label')}"/></span></a>
             </li>
         </ul>
 
@@ -126,7 +169,24 @@
                         <s:label value="%{getText('serial.label')}"/>
                     </td>
                     <td>
-                        <s:textfield name="" cssStyle="width:232px;" maxLength="10"/>
+                        <s:textfield id="noticeSerialNo" name="" cssStyle="width:232px;" maxLength="10"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <s:label value="%{getText('date.from.label')}" cssStyle=" margin-right:5px;"/>
+                    </td>
+                    <td>
+                        <s:textfield id="searchStartDatePicker" name="searchStartDate" cssStyle="width:150px"
+                                     maxLength="10"/>
+                    </td>
+                    <td></td>
+                    <td>
+                        <s:label value="%{getText('date.to.label')}" cssStyle=" margin-right:5px;"/>
+                    </td>
+                    <td>
+                        <s:textfield id="searchEndDatePicker" name="searchEndDate" cssStyle="width:150px"
+                                     maxLength="10"/>
                     </td>
                 </tr>
                 </tbody>
@@ -141,30 +201,11 @@
                 <tbody>
                 <tr>
                     <td>
-                        <s:label value="%{getText('malePin.label')}"/>
+                        <s:label value="%{getText('pin.label')}"/>
                     </td>
                     <td></td>
                     <td>
                         <s:textfield name="#" id="identification_male" maxLength="10"/>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <div id="fragment-3">
-            <table>
-                <caption/>
-                <col width="280px"/>
-                <col width="10px"/>
-                <col/>
-                <tbody>
-                <tr>
-                    <td>
-                        <s:label value="%{getText('femalePin.label')}"/>
-                    </td>
-                    <td></td>
-                    <td>
-                        <s:textfield name="#" id="identification_female" maxLength="10"/>
                     </td>
                 </tr>
                 </tbody>
@@ -263,3 +304,7 @@
         </fieldset>
     </s:if>
 </div>
+<s:hidden id="error1" value="%{getText('p1.invalide.inputType')}"/>
+<s:hidden id="error2" value="%{getText('marriageNotice.serial.label')}"/>
+<s:hidden id="error3" value="%{getText('searchStartDate.label')}"/>
+<s:hidden id="error4" value="%{getText('searchEndDate.label')}"/>
