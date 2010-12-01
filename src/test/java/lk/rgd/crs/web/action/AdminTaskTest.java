@@ -44,6 +44,8 @@ public class AdminTaskTest extends CustomStrutsTestCase {
     private static final String MANAGE_ASSIGNMENT_PAGE_LOAD = "/management/eprRegistrarsManagment.do";
     private static final String MANAGE_ASSIGNMENT_ACTION = "/management/eprRegistrarsFilter.do";
     private static final String ADD_LOCATIONS_TO_NEW_USER = "/management/eprInitAssignedUserLocation.do";
+    private static final String SEARCH_REGISTRAR_PAGE_LOAD = "/management/eprFindRegistrar.do";
+    private static final String SEARCH_REGISTRAR_ACTION = "/management/eprFindRegistrar.do";
 
     private UserManagementAction userManagementAction;
     private RegistrarManagementAction registrarManagementAction;
@@ -140,6 +142,12 @@ public class AdminTaskTest extends CustomStrutsTestCase {
         } else if (ADD_LOCATIONS_TO_NEW_USER.equals(mapping)) {
             userManagementAction = (UserManagementAction) proxy.getAction();
             assertNotNull(userManagementAction);
+        } else if (SEARCH_REGISTRAR_PAGE_LOAD.equals(mapping)) {
+            registrarManagementAction = (RegistrarManagementAction) proxy.getAction();
+            assertNotNull(registrarManagementAction);
+        } else if (SEARCH_REGISTRAR_ACTION.equals(mapping)) {
+            registrarManagementAction = (RegistrarManagementAction) proxy.getAction();
+            assertNotNull(registrarManagementAction);
         }
 
         logger.debug("Action Method to be executed is {} ", proxy.getMethod());
@@ -366,6 +374,36 @@ public class AdminTaskTest extends CustomStrutsTestCase {
         assertEquals("Action errors for Create User Action", 0, userManagementAction.getActionErrors().size());
         assertNotNull("userId null", userManagementAction.getUserId());
         assertNotNull("", userManagementAction.getUserLocationNameList());
+
+    }
+
+    public void testSearchRegistrarsByName() throws Exception {
+
+        Map session = UserLogin("admin", "password");
+        initAndExecute(MANAGE_ASSIGNMENT_PAGE_LOAD, session);
+        session = registrarManagementAction.getSession();
+        assertEquals("Errors while page loading", 0, registrarManagementAction.getActionErrors().size());
+
+        request.setParameter("registrarName", "shan");
+        initAndExecute(MANAGE_ASSIGNMENT_ACTION, session);
+        session = registrarManagementAction.getSession();
+        assertEquals("Action errors for Search Registrar", 0, registrarManagementAction.getActionErrors().size());
+
+
+    }
+
+    public void testSearchRegistrarsByPin() throws Exception {
+
+        Map session = UserLogin("admin", "password");
+        initAndExecute(MANAGE_ASSIGNMENT_PAGE_LOAD, session);
+        session = registrarManagementAction.getSession();
+        assertEquals("Errors while page loading", 0, registrarManagementAction.getActionErrors().size());
+
+        request.setParameter("registrarPin", "1010101010");
+        initAndExecute(MANAGE_ASSIGNMENT_ACTION, session);
+        session = registrarManagementAction.getSession();
+        assertEquals("Action errors for Search Registrar", 0, registrarManagementAction.getActionErrors().size());
+
 
     }
 
