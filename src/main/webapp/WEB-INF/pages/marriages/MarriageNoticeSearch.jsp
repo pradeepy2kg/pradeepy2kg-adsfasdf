@@ -79,10 +79,10 @@
                 <a href="#fragment-1"><span><s:label value="%{getText('search.by.MRDivision.label')}"/></span></a>
             </li>
             <li>
-                <a href="#fragment-2"><span> <s:label value="%{getText('search.by.male.part.pin')}"/></span></a>
+                <a href="#fragment-2"><span> <s:label value="%{getText('search.by.malePin.label')}"/></span></a>
             </li>
             <li>
-                <a href="#fragment-3"><span><s:label value="%{getText('search.by.female.part.pin')}"/></span></a>
+                <a href="#fragment-3"><span><s:label value="%{getText('search.by.femalePin.label')}"/></span></a>
             </li>
         </ul>
 
@@ -123,9 +123,10 @@
                     </td>
                     <td></td>
                     <td>
-
+                        <s:label value="%{getText('serial.label')}"/>
                     </td>
                     <td>
+                        <s:textfield name="" cssStyle="width:232px;" maxLength="10"/>
                     </td>
                 </tr>
                 </tbody>
@@ -134,17 +135,17 @@
         <div id="fragment-2">
             <table>
                 <caption/>
-                <col width="400px"/>
-                <col width="75px"/>
+                <col width="280px"/>
+                <col width="10px"/>
                 <col/>
                 <tbody>
                 <tr>
                     <td>
-                        <s:label value="%{getText('male.party.identification.number')}"/>
+                        <s:label value="%{getText('malePin.label')}"/>
                     </td>
                     <td></td>
                     <td>
-                        <s:textfield name="#" value="" id="identification_male"/>
+                        <s:textfield name="#" id="identification_male" maxLength="10"/>
                     </td>
                 </tr>
                 </tbody>
@@ -153,17 +154,17 @@
         <div id="fragment-3">
             <table>
                 <caption/>
-                <col width="400px"/>
-                <col width="75px"/>
+                <col width="280px"/>
+                <col width="10px"/>
                 <col/>
                 <tbody>
                 <tr>
                     <td>
-                        <s:label value="%{getText('female.party.identification.number')}"/>
+                        <s:label value="%{getText('femalePin.label')}"/>
                     </td>
                     <td></td>
                     <td>
-                        <s:textfield name="#" value="" id="identification_female"/>
+                        <s:textfield name="#" id="identification_female" maxLength="10"/>
                     </td>
                 </tr>
                 </tbody>
@@ -196,8 +197,6 @@
                 </thead>
                 <tbody>
                 <s:iterator status="approvalStatus" value="searchList">
-
-
                     <tr>
                         <td align="center">
                             <s:if test="serialOfNotice != null">
@@ -211,16 +210,19 @@
                             </s:if>
                         </td>
                         <td>
-                            <s:property value="noticeType"/>
+                            <s:property value="type"/>
                         </td>
                         <td>
-                            <s:url id="addNextNotice" action="eprMarriageNoticeEditInit.do">
-                                <s:param name="idUKey" value="idUKey"/>
-                                <s:param name="secondNotice" value="true"/>
-                            </s:url>
-                            <s:a href="%{addNextNotice}" title="%{getText('nextNoticeToolTip.label')}">
-                                <img src="<s:url value='/images/add_page.png'/>" width="25" height="25" border="none"/>
-                            </s:a>
+                            <s:if test="type.ordinal() != 0">
+                                <s:url id="addNextNotice" action="eprMarriageNoticeEditInit.do">
+                                    <s:param name="idUKey" value="idUKey"/>
+                                    <s:param name="secondNotice" value="true"/>
+                                </s:url>
+                                <s:a href="%{addNextNotice}" title="%{getText('nextNoticeToolTip.label')}">
+                                    <img src="<s:url value='/images/add_page.png'/>" width="25" height="25"
+                                         border="none"/>
+                                </s:a>
+                            </s:if>
                         </td>
                         <td align="center">
                             <s:url id="editSelected" action="eprMarriageNoticeEditInit.do">

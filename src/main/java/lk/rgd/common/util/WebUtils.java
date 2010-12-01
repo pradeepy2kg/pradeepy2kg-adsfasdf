@@ -10,8 +10,6 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -126,36 +124,31 @@ public class WebUtils {
         //  if male serial is available this is a male submitted notice
         //  if female serial is available this is a female submitted notice
         List<MarriageNotice> noticeList = new ArrayList<MarriageNotice>();
-        Iterator<MarriageRegister> itr = marriageRegisterList.iterator();
-        while (itr.hasNext()) {
-            MarriageRegister marriageRegister = itr.next();
-            //check register type
-            boolean isBothSubmitted = marriageRegister.isBothPartySubmitted();
-            String maleSerial = marriageRegister.getSerialOfMaleNotice();
-            String femaleSerial = marriageRegister.getSerialOfFemaleNotice();
+        for (MarriageRegister mr : marriageRegisterList) {
+            boolean isBothSubmitted = mr.isBothPartySubmitted();
+            String maleSerial = mr.getSerialOfMaleNotice();
+            String femaleSerial = mr.getSerialOfFemaleNotice();
             if (isBothSubmitted) {
                 //one notice male notice
-                noticeList.add(new MarriageNotice(marriageRegister.getIdUKey(), marriageRegister.getTypeOfMarriage(),
-                    marriageRegister.getPlaceOfMarriage(), marriageRegister.getSerialOfMaleNotice(),
-                    marriageRegister.getDateOfMaleNotice(), marriageRegister.getMale().getNameInOfficialLanguageMale(),
-                    marriageRegister.getMale().getIdentificationNumberMale(), MarriageNotice.NoticeType.BOTH_HAVE_ONE_NOTICE));
+                noticeList.add(new MarriageNotice(mr.getIdUKey(), mr.getTypeOfMarriage(), mr.getPlaceOfMarriage(),
+                    mr.getSerialOfMaleNotice(), mr.getDateOfMaleNotice(), mr.getMale().getNameInOfficialLanguageMale(),
+                    mr.getMale().getIdentificationNumberMale(), MarriageNotice.Type.BOTH_NOTICE));
             } else {
-                if (maleSerial != null && maleSerial.length() > 0) {
+                if (maleSerial != null && maleSerial.length() > 0 && femaleSerial == null) {
                     //male notice
-                    noticeList.add(new MarriageNotice(marriageRegister.getIdUKey(), marriageRegister.getTypeOfMarriage(),
-                        marriageRegister.getPlaceOfMarriage(), marriageRegister.getSerialOfMaleNotice(),
-                        marriageRegister.getDateOfMaleNotice(), marriageRegister.getMale().getNameInOfficialLanguageMale(),
-                        marriageRegister.getMale().getIdentificationNumberMale(), MarriageNotice.NoticeType.MALE_NOTICE));
-                                   }
-                if (femaleSerial != null && femaleSerial.length() > 0) {
+                    noticeList.add(new MarriageNotice(mr.getIdUKey(), mr.getTypeOfMarriage(), mr.getPlaceOfMarriage(),
+                        mr.getSerialOfMaleNotice(), mr.getDateOfMaleNotice(), mr.getMale().getNameInOfficialLanguageMale(),
+                        mr.getMale().getIdentificationNumberMale(), MarriageNotice.Type.MALE_NOTICE));
+                }
+                if (femaleSerial != null && femaleSerial.length() > 0 && maleSerial == null) {
                     //female notice
-                    noticeList.add(new MarriageNotice(marriageRegister.getIdUKey(), marriageRegister.getTypeOfMarriage(),
-                        marriageRegister.getPlaceOfMarriage(), marriageRegister.getSerialOfMaleNotice(),
-                        marriageRegister.getDateOfMaleNotice(), marriageRegister.getMale().getNameInOfficialLanguageMale(),
-                        marriageRegister.getMale().getIdentificationNumberMale(), MarriageNotice.NoticeType.FEMALE_NOTICE));
+                    noticeList.add(new MarriageNotice(mr.getIdUKey(), mr.getTypeOfMarriage(), mr.getPlaceOfMarriage(),
+                        mr.getSerialOfMaleNotice(), mr.getDateOfMaleNotice(), mr.getMale().getNameInOfficialLanguageMale(),
+                        mr.getMale().getIdentificationNumberMale(), MarriageNotice.Type.FEMALE_NOTICE));
                 }
             }
         }
+
         return noticeList;
     }
 }
