@@ -17,10 +17,15 @@ public final class MarriageNotice {
     private final String partyNameInOfficialLang;
     private final String partyPIN;
     private final Type type;
+    private boolean hasSecond = true;
 
     public enum Type {
-        BOTH_NOTICE,    /** 0 - Male and female party have only a single marriage notice */
-        MALE_NOTICE,    /** 1 - Marriage notice of male party */
+        BOTH_NOTICE, /**
+         * 0 - Male and female party have only a single marriage notice
+         */
+        MALE_NOTICE, /**
+         * 1 - Marriage notice of male party
+         */
         FEMALE_NOTICE   /** 2 - Marriage notice of female party */
     }
 
@@ -40,6 +45,9 @@ public final class MarriageNotice {
             this.dateOfNotice = mr.getDateOfFemaleNotice();
             this.partyNameInOfficialLang = mr.getFemale().getNameInOfficialLanguageFemale();
             this.partyPIN = mr.getFemale().getIdentificationNumberFemale();
+        }
+        if (mr.isBothPartySubmitted() || (mr.getSerialOfMaleNotice() != null & mr.getSerialOfFemaleNotice() != null)) {
+            this.hasSecond = false;
         }
     }
 
@@ -73,5 +81,9 @@ public final class MarriageNotice {
 
     public Type getType() {
         return type;
+    }
+
+    public boolean isHasSecond() {
+        return hasSecond;
     }
 }

@@ -27,7 +27,7 @@ public class Witness implements Serializable, Cloneable {
     @Column(name = "WITNESS_ADDRESS", length = 255)
     private String address;
 
-    public long geIdUKey() {
+    public long getIdUKey() {
         return idukey;
     }
 

@@ -270,7 +270,7 @@
                             </s:elseif>
                         </td>
                         <td>
-                            <s:if test="type.ordinal() != 0">
+                            <s:if test="hasSecond==true">
                                 <s:url id="addNextNotice" action="eprMarriageNoticeEditInit.do">
                                     <s:param name="idUKey" value="idUKey"/>
                                     <s:param name="secondNotice" value="true"/>
