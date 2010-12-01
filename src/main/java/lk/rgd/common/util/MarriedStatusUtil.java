@@ -36,7 +36,7 @@ public class MarriedStatusUtil {
         } else if (AppConstants.TAMIL.equals(language)) {
             switch (state) {
                 case UNKNOWN:
-                    return "Unknown in Tamil";
+                    return "தெரியாது";
                 case MARRIED:
                     return "திருமணமாணவர்";
                 case UNMARRIED:

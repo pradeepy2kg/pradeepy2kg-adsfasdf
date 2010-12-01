@@ -50,9 +50,9 @@ public class GenderUtil {
             }
         } else if (AppConstants.TAMIL.equals(language)) {
             switch (code) {
-                case 0: return "#Male#ි";
-                case 1: return "#Female#";
-                case 2: return "#Unknown#";
+                case 0: return "ஆண்";
+                case 1: return "பெண்";
+                case 2: return "தெரியாது";
             }
         } else if (AppConstants.ENGLISH.equals(language)) {
             switch (code) {
