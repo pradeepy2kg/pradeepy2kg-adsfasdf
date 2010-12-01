@@ -16,17 +16,17 @@ public final class MarriageNotice {
     private final Date dateOfNotice;
     private final String partyNameInOfficialLang;
     private final String partyPIN;
-    private final NoticeType noticeType;
+    private final Type type;
 
-    public enum NoticeType {
-        BOTH_HAVE_ONE_NOTICE, //only one notice
-        MALE_NOTICE,
-        FEMALE_NOTICE
+    public enum Type {
+        BOTH_NOTICE, /** 0 - Male and female party have only a single marriage notice */
+        MALE_NOTICE, /** 1 - Marriage notice of male party */
+        FEMALE_NOTICE   /** 2 - Marriage notice of female party */
     }
 
     public MarriageNotice(long idUKey, MarriageRegister.TypeOfMarriage typeOfMarriage,
         MarriageRegister.PlaceOfMarriage placeOfMarriage, String serialOfNotice, Date dateOfNotice,
-        String partyNameInOfficialLang, String partyPIN, NoticeType noticeType) {
+        String partyNameInOfficialLang, String partyPIN, Type type) {
         this.idUKey = idUKey;
         this.typeOfMarriage = typeOfMarriage;
         this.placeOfMarriage = placeOfMarriage;
@@ -34,7 +34,7 @@ public final class MarriageNotice {
         this.dateOfNotice = dateOfNotice;
         this.partyNameInOfficialLang = partyNameInOfficialLang;
         this.partyPIN = partyPIN;
-        this.noticeType = noticeType;
+        this.type = type;
     }
 
     public long getIdUKey() {
@@ -65,7 +65,7 @@ public final class MarriageNotice {
         return partyPIN;
     }
 
-    public NoticeType getNoticeType() {
-        return noticeType;
+    public Type getType() {
+        return type;
     }
 }
