@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class PINNumberDAOImpl extends BaseDAO implements PINNumberDAO {
 
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public PINNumber getLastPINNumber(int dateOfBirth) {
+    public PINNumber getLastPINNumber(long dateOfBirth) {
         return em.find(PINNumber.class, dateOfBirth);
     }
 
