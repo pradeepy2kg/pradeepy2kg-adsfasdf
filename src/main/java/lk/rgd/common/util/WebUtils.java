@@ -130,21 +130,15 @@ public class WebUtils {
             String femaleSerial = mr.getSerialOfFemaleNotice();
             if (isBothSubmitted) {
                 //one notice male notice
-                noticeList.add(new MarriageNotice(mr.getIdUKey(), mr.getTypeOfMarriage(), mr.getPlaceOfMarriage(),
-                    mr.getSerialOfMaleNotice(), mr.getDateOfMaleNotice(), mr.getMale().getNameInOfficialLanguageMale(),
-                    mr.getMale().getIdentificationNumberMale(), MarriageNotice.Type.BOTH_NOTICE));
+                noticeList.add(new MarriageNotice(mr, MarriageNotice.Type.BOTH_NOTICE));
             } else {
                 if (maleSerial != null && maleSerial.length() > 0 && femaleSerial == null) {
                     //male notice
-                    noticeList.add(new MarriageNotice(mr.getIdUKey(), mr.getTypeOfMarriage(), mr.getPlaceOfMarriage(),
-                        mr.getSerialOfMaleNotice(), mr.getDateOfMaleNotice(), mr.getMale().getNameInOfficialLanguageMale(),
-                        mr.getMale().getIdentificationNumberMale(), MarriageNotice.Type.MALE_NOTICE));
+                    noticeList.add(new MarriageNotice(mr, MarriageNotice.Type.MALE_NOTICE));
                 }
                 if (femaleSerial != null && femaleSerial.length() > 0 && maleSerial == null) {
                     //female notice
-                    noticeList.add(new MarriageNotice(mr.getIdUKey(), mr.getTypeOfMarriage(), mr.getPlaceOfMarriage(),
-                        mr.getSerialOfMaleNotice(), mr.getDateOfMaleNotice(), mr.getMale().getNameInOfficialLanguageMale(),
-                        mr.getMale().getIdentificationNumberMale(), MarriageNotice.Type.FEMALE_NOTICE));
+                    noticeList.add(new MarriageNotice(mr, MarriageNotice.Type.FEMALE_NOTICE));
                 }
             }
         }
