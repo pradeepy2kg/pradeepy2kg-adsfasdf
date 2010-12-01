@@ -177,11 +177,11 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         if (existingNotice != null) {
             populatePartyObjectsForPersisting();
             populateMarriageObjectForEditMode(existingNotice, marriage);
-//check witch party is submitting second notice : note is both submitted true there cannot be a second notice
-            boolean secondNoticeSubmittedPartyMale = marriage.isBothPartySubmitted() ||
+            //following boolean use to check witch party is submitting second notice  note:true (male) false(female)
+            boolean secondNoticeSubmittedByPartyMale = marriage.isBothPartySubmitted() ||
                 (marriage.getSerialOfMaleNotice() != null && marriage.getSerialOfMaleNotice().length() > 0);
 
-            marriageRegistrationService.addSecondMarriageNotice(existingNotice, secondNoticeSubmittedPartyMale, user);
+            marriageRegistrationService.addSecondMarriageNotice(existingNotice, secondNoticeSubmittedByPartyMale, user);
         } else {
             logger.debug("cannot add second notice to idUKey : {}", idUKey);
             addActionError(getText("cannot.add.second,notice.first.does.not.exist"));

@@ -258,8 +258,16 @@
                                 <%= NameFormatUtil.getDisplayName((String) request.getAttribute("partyNameInOfficialLang"), 70)%>
                             </s:if>
                         </td>
-                        <td>
-                            <s:property value="type"/>
+                        <td align="center">
+                            <s:if test="type.ordinal()==0">
+                                <img src="<s:url value='/images/couple.jpg'/>" width="20" height="25" border="none"/>
+                            </s:if>
+                            <s:elseif test="type.ordinal()==1">
+                                <img src="<s:url value='/images/groom.jpg'/>" width="20" height="25" border="none"/>
+                            </s:elseif>
+                            <s:elseif test="type.ordinal()==2">
+                                <img src="<s:url value='/images/bride.jpg'/>" width="20" height="25" border="none"/>
+                            </s:elseif>
                         </td>
                         <td>
                             <s:if test="type.ordinal() != 0">

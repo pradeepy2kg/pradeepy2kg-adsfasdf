@@ -132,11 +132,11 @@ public class WebUtils {
                 //one notice male notice
                 noticeList.add(new MarriageNotice(mr, MarriageNotice.Type.BOTH_NOTICE));
             } else {
-                if (maleSerial != null && maleSerial.length() > 0 && femaleSerial == null) {
+                if (maleSerial != null && maleSerial.length() > 0) {
                     //male notice
                     noticeList.add(new MarriageNotice(mr, MarriageNotice.Type.MALE_NOTICE));
                 }
-                if (femaleSerial != null && femaleSerial.length() > 0 && maleSerial == null) {
+                if (femaleSerial != null && femaleSerial.length() > 0) {
                     //female notice
                     noticeList.add(new MarriageNotice(mr, MarriageNotice.Type.FEMALE_NOTICE));
                 }
