@@ -22,23 +22,23 @@ public class PINNumber {
      *  0 for births in 20th century ( January 1st, 1901 TO December 31st, 2000)
      *  1 for births in 21st century ( January 1st, 2001 TO December 31st, 2100)
      */
-    private int dateOfBirth;
+    private long dateOfBirth;
     @Column(nullable = false)
-    private int lastSerial;
+    private long lastSerial;
 
-    public int getDateOfBirth() {
+    public long getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(int dateOfBirth) {
+    public void setDateOfBirth(long dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public int getLastSerial() {
+    public long getLastSerial() {
         return lastSerial;
     }
 
-    public void setLastSerial(int lastSerial) {
+    public void setLastSerial(long lastSerial) {
         this.lastSerial = lastSerial;
     }
 }
