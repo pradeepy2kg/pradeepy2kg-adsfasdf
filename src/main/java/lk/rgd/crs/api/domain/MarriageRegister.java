@@ -27,7 +27,7 @@ import java.util.Date;
     
     @NamedQuery(name = "get.notice.by.male.and.female.identification", query = "SELECT mr FROM MarriageRegister mr" +
         " WHERE (mr.male.identificationNumberMale = :male AND mr.female.identificationNumberFemale = :female " +
-        " AND mr.lifeCycleInfo.activeRecord =true AND mr.state=0) ORDER BY mr.idUKey desc")
+        " AND mr.lifeCycleInfo.activeRecord IS TRUE AND mr.state=0) ORDER BY mr.idUKey desc")
 })
 public class MarriageRegister implements Serializable, Cloneable {
 
@@ -79,12 +79,12 @@ public class MarriageRegister implements Serializable, Cloneable {
     private MRDivision mrDivision;
 
     @OneToOne
-    @JoinColumn(name = "REG_WITNESS_1", nullable = true)
-    private Witness witness1;
+    @JoinColumn(name = "witness1idukey", nullable = true, insertable = false, updatable = false)
+    private Witness witness1 = new Witness();
 
     @OneToOne
-    @JoinColumn(name = "REG_WITNESS_2", nullable = true)
-    private Witness witness2;
+    @JoinColumn(name = "witness2idukey", nullable = true, insertable = false, updatable = false)
+    private Witness witness2 = new Witness();
 
     @Column(length = 10, name = "SERIAL_MALE")
     private String serialOfMaleNotice;
@@ -112,19 +112,19 @@ public class MarriageRegister implements Serializable, Cloneable {
 
     @OneToOne
     @JoinColumn(name = "IDUKEY_M_W_1", nullable = true)
-    private Witness maleNoticeWitness_1;
+    private Witness maleNoticeWitness_1 = new Witness();
 
     @OneToOne
     @JoinColumn(name = "IDUKEY_M_W_2", nullable = true)
-    private Witness maleNoticeWitness_2;
+    private Witness maleNoticeWitness_2 = new Witness();
 
     @OneToOne
     @JoinColumn(name = "IDUKEY_F_W_1", nullable = true)
-    private Witness femaleNoticeWitness_1;
+    private Witness femaleNoticeWitness_1 = new Witness();
 
     @OneToOne
     @JoinColumn(name = "IDUKEY_F_W_2", nullable = true)
-    private Witness femaleNoticeWitness_2;
+    private Witness femaleNoticeWitness_2 = new Witness();
 
     //todo remove nullable
     @ManyToOne
