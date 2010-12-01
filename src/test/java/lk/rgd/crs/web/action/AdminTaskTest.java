@@ -43,6 +43,7 @@ public class AdminTaskTest extends CustomStrutsTestCase {
     private static final String SEARCH_USERS_ACTION = "/management/eprViewSelectedUsers.do";
     private static final String MANAGE_ASSIGNMENT_PAGE_LOAD = "/management/eprRegistrarsManagment.do";
     private static final String MANAGE_ASSIGNMENT_ACTION = "/management/eprRegistrarsFilter.do";
+    private static final String ADD_LOCATIONS_TO_NEW_USER = "/management/eprInitAssignedUserLocation.do";
 
     private UserManagementAction userManagementAction;
     private RegistrarManagementAction registrarManagementAction;
@@ -136,6 +137,9 @@ public class AdminTaskTest extends CustomStrutsTestCase {
         } else if (MANAGE_ASSIGNMENT_ACTION.equals(mapping)) {
             registrarManagementAction = (RegistrarManagementAction) proxy.getAction();
             assertNotNull(registrarManagementAction);
+        } else if (ADD_LOCATIONS_TO_NEW_USER.equals(mapping)) {
+            userManagementAction = (UserManagementAction) proxy.getAction();
+            assertNotNull(userManagementAction);
         }
 
         logger.debug("Action Method to be executed is {} ", proxy.getMethod());
@@ -265,12 +269,13 @@ public class AdminTaskTest extends CustomStrutsTestCase {
         session = userManagementAction.getSession();
         assertEquals("Action errors for Create User Action", 0, userManagementAction.getActionErrors().size());
 
+        String uID = "Malith";
         request.setParameter("assignedDistricts", "1");
         request.setParameter("assignedDivisions", "1");
         request.setParameter("roleId", "ADR");
         request.setParameter("user.pin", "300");
         request.setParameter("user.prefLanguage", "si");
-        request.setParameter("user.userId", "Malith");
+        request.setParameter("user.userId", uID);
         request.setParameter("user.userName", "Malith");
 
         initAndExecute(USER_CREATION_ACTION, session);
@@ -282,6 +287,8 @@ public class AdminTaskTest extends CustomStrutsTestCase {
         assertNotNull("AssignedBDDSDivisions null", userManagementAction.getSession());
         assertNotNull("AssignedBDDistricts null", user.getAssignedBDDistricts());
         assertNotNull("User role null", user.getRole());
+
+        addLocationsToNewUser(session, uID);
 
     }
 
@@ -347,6 +354,18 @@ public class AdminTaskTest extends CustomStrutsTestCase {
 
         initAndExecute(MANAGE_ASSIGNMENT_ACTION, session);
         assertEquals("Errors for Manage Assignments action", 0, registrarManagementAction.getActionErrors().size());
+
+    }
+
+    public void addLocationsToNewUser (Map session, String uID) {
+
+        request.setParameter("userId", uID);
+        request.setParameter("newUser", "true");
+
+        initAndExecute(ADD_LOCATIONS_TO_NEW_USER, session);
+        assertEquals("Action errors for Create User Action", 0, userManagementAction.getActionErrors().size());
+        assertNotNull("userId null", userManagementAction.getUserId());
+        assertNotNull("", userManagementAction.getUserLocationNameList());
 
     }
 
