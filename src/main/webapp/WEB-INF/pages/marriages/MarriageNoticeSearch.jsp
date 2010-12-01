@@ -94,17 +94,25 @@
 
         // validate serial number
         domObject = document.getElementById('noticeSerialNo');
-        if (!isFieldEmpty(domObject))
+        if (!isFieldEmpty(domObject)) {
             validateSerialNo(domObject, 'error1', 'error2');
+        }
 
         // validate start and end date
         domObject = document.getElementById('searchStartDatePicker');
-        if (!isFieldEmpty(domObject))
+        if (!isFieldEmpty(domObject)) {
             isDate(domObject.value, 'error1', 'error3');
+        }
 
         domObject = document.getElementById('searchEndDatePicker');
-        if (!isFieldEmpty(domObject))
+        if (!isFieldEmpty(domObject)) {
             isDate(domObject.value, 'error1', 'error4');
+        }
+
+        domObject = document.getElementById('partyPIN');
+        if (!isFieldEmpty(domObject)) {
+            validatePINorNIC(domObject, 'error1', 'error5');
+        }
 
         if (errormsg != "") {
             alert(errormsg);
@@ -205,7 +213,7 @@
                     </td>
                     <td></td>
                     <td>
-                        <s:textfield name="#" id="identification_male" maxLength="10"/>
+                        <s:textfield name="#" id="partyPIN" maxLength="10"/>
                     </td>
                 </tr>
                 </tbody>
@@ -308,3 +316,4 @@
 <s:hidden id="error2" value="%{getText('marriageNotice.serial.label')}"/>
 <s:hidden id="error3" value="%{getText('searchStartDate.label')}"/>
 <s:hidden id="error4" value="%{getText('searchEndDate.label')}"/>
+<s:hidden id="error5" value="%{getText('pin.label')}"/>
