@@ -51,3 +51,23 @@ Death of missing person காணாமற் போன நபரின் இ�
 කාලය ඉකුත් වූ මරණ(සාමාන්‍ය මරණ)  in ta
 කාලය ඉකුත් වූ මරණ(හදිසි මරණ )  in ta
 You can apply for a new death certificate with altered value in ta
+
+# following in LifeStatusUtil class
+* ජීවතුන් අතර ඇත (Alive)
+* ජීවතුන් අතර නැත  (Dead)
+* අතුරුදන්(Missing)
+* පදිංචිව නැත (Non resident)
+
+# following in DeathTypeUtil class
+* සාමාන්‍ය මරණ/Normal Death
+* හදිසි මරණ/Sudden Death
+* කාලය ඉකුත් වූ සාමාන්‍ය මරණ /Late registration,Normal Death
+* කාලය ඉකුත් වූ හදිසි මරණ/Late registration,Sudden Death
+* නැතිවුණු පුද්ගලයෙකුගේ මරණ/Death of missing person
+
+# following in AssignmentUtil class
+* උපත්(Birth)
+* මරණ (Death)
+* සාමාන්‍ය විවාහ(General Marriage)
+* උඩරට විවාහ (Kandyan Marriage)
+* මුස්ලිම් විවාහ(Muslim Marriage)
