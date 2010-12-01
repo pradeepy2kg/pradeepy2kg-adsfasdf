@@ -92,14 +92,7 @@ $(function() {
                             <br>தொடர் இலக்கம்<br>Serial Number</span></label>
                     </td>
                     <td align="center">
-                        <s:if test="false==true">
-                            <%-- for edit mode of the marriage notice--%>
-                            <s:textfield name="marriage.serialNumber" id="mnSerial" readonly="true" maxLength="10"
-                                         cssStyle="margin-left:20px"/>
-                        </s:if>
-                        <s:else>
-                            <s:textfield name="marriage.serialNumber" id="mnSerial" maxLength="10"/>
-                        </s:else>
+                        <s:textfield name="marriage.regSerial" id="regSerial" maxLength="10"/>
                     </td>
                 </tr>
                 <tr>
@@ -112,7 +105,7 @@ $(function() {
                     </td>
                     <td>
                         <s:label value="YYYY-MM-DD" cssStyle="margin-left:10px;font-size:10px"/><br>
-                        <s:textfield name="marriage.receivedDate" id="submitDatePicker" maxLength="10" onclick="popupCalendar('submitDatePicker')"/>
+                        <s:textfield name="marriage.regSubmittedDate" id="submitDatePicker" maxLength="10" onclick="popupCalendar('submitDatePicker')"/>
                     </td>
                 </tr>
             </table>
@@ -182,7 +175,7 @@ $(function() {
                         Official Language
                     </td>
                    <td>
-                        <s:textarea name="marriage.placeInOfficialLanguage" id="place_official"
+                        <s:textarea name="marriage.regPlaceInOfficialLang" id="reg_place_official"
                             cssStyle="width:98.2%;"/>
                     </td>
                 </tr>
@@ -193,7 +186,7 @@ $(function() {
                         In English
                     </td>
                     <td>
-                        <s:textarea name="marriage.placeInEnglishLanguage" id="place_English"
+                        <s:textarea name="marriage.regPlaceInEnglishLang" id="reg_place_English"
                             cssStyle="width:98.2%;"/>
                     </td>
                 </tr>

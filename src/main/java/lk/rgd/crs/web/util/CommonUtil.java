@@ -78,7 +78,7 @@ public class CommonUtil {
         countryList.putAll(countryDAO.getCountries(language));
         raceList.putAll(raceDAO.getRaces(language));
     }
-
+                           
 
     public int findDefaultListValue(Map<Integer, String> divisionList, int divisionId) {
         if (divisionId == 0) {
