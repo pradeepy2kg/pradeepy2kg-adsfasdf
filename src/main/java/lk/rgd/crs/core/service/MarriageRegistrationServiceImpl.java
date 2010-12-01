@@ -38,6 +38,8 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         //TODO check users permission to add marriage
         //persisting witness
         addWitnesses(notice, isMale);
+        notice.setWitness1(null);
+        notice.setWitness2(null);
         marriageRegistrationDAO.addMarriageNotice(notice, user);
     }
 
@@ -66,6 +68,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     /**
      * @inheritDoc
      */
+   
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<MarriageRegister> getMarriageNoticePendingApprovalByBDDivision(MRDivision mrDivision, int pageNo,
         int noOfRows, boolean active, User user) {
