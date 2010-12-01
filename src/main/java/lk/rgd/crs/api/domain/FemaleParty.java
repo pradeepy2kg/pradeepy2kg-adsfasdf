@@ -3,6 +3,8 @@ package lk.rgd.crs.api.domain;
 import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.Race;
 import lk.rgd.common.util.WebUtils;
+import lk.rgd.common.util.CivilStatusUtil;
+import lk.rgd.prs.api.domain.Person;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -12,14 +14,6 @@ import java.util.Date;
  */
 @Embeddable
 public class FemaleParty {
-
-    public enum CivilStatusFemale {
-        NEVER_MARRIED,
-        DIVORCED,
-        WIDOWED,
-        ANULLED
-    }
-
 
     @Column(name = "F_IDENTIFICATION_NUMBER", nullable = true)
     //pin or nic
@@ -42,7 +36,7 @@ public class FemaleParty {
     private String residentAddressFemale;
 
     @Column(name = "F_CIVIL_STATE", nullable = true)
-    private CivilStatusFemale civilStatusFemale;
+    private Person.CivilStatus civilStatusFemale;
 
     @ManyToOne
     @JoinColumn
@@ -187,19 +181,19 @@ public class FemaleParty {
         this.consentIfAnyFemale = WebUtils.filterBlanks(consentIfAnyFemale);
     }
 
-    public CivilStatusFemale getCivilStatusFemale() {
-        return civilStatusFemale;
-    }
-
-    public void setCivilStatusFemale(CivilStatusFemale civilStatusFemale) {
-        this.civilStatusFemale = civilStatusFemale;
-    }
-
     public Race getFemaleRace() {
         return femaleRace;
     }
 
     public void setFemaleRace(Race femaleRace) {
         this.femaleRace = femaleRace;
+    }
+
+    public Person.CivilStatus getCivilStatusFemale() {
+        return civilStatusFemale;
+    }
+
+    public void setCivilStatusFemale(Person.CivilStatus civilStatusFemale) {
+        this.civilStatusFemale = civilStatusFemale;
     }
 }

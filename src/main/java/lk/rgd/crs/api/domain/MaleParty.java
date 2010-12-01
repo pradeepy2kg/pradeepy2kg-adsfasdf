@@ -3,6 +3,8 @@ package lk.rgd.crs.api.domain;
 import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.Race;
 import lk.rgd.common.util.WebUtils;
+import lk.rgd.common.util.CivilStatusUtil;
+import lk.rgd.prs.api.domain.Person;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -12,14 +14,6 @@ import java.util.Date;
  */
 @Embeddable
 public class MaleParty {
-
-    public enum CivilStatusMale {
-        NEVER_MARRIED,
-        DIVORCED,
-        WIDOWED,
-        ANULLED
-    }
-
 
     @Column(name = "M_IDENTIFICATION_NUMBER", nullable = true)
     //pin or nic
@@ -60,7 +54,7 @@ public class MaleParty {
     private String tpNumberMale;
 
     @Column(name = "M_CIVIL_STATE", nullable = true)
-    private CivilStatusMale civilStatusMale;
+    private Person.CivilStatus civilStatusMale;
 
     @Column(name = "M_EMAIL", nullable = true)
     private String emailMale;
@@ -196,11 +190,11 @@ public class MaleParty {
         this.maleRace = maleRace;
     }
 
-    public CivilStatusMale getCivilStatusMale() {
+    public Person.CivilStatus getCivilStatusMale() {
         return civilStatusMale;
     }
 
-    public void setCivilStatusMale(CivilStatusMale civilStatusMale) {
+    public void setCivilStatusMale(Person.CivilStatus civilStatusMale) {
         this.civilStatusMale = civilStatusMale;
     }
 }

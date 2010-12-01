@@ -96,4 +96,8 @@ public class CivilStatusUtil {
         logger.error("Invalid civil status : {}", state);
         throw new IllegalArgumentException("Invalid civil status : " + state);
     }
+
+    public static String getCivilStatusInAllLanguages(Person.CivilStatus state) {
+        return getCivilStatus(state, AppConstants.SINHALA) + " / " + getCivilStatus(state, AppConstants.TAMIL) + " / " + getCivilStatus(state, AppConstants.ENGLISH);
+    }
 }
