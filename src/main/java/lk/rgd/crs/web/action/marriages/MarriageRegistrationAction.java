@@ -199,7 +199,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         marriageType.put(MarriageRegister.TypeOfMarriage.GENERAL, "      සාමාන්‍ය / general marriage in tamil / General");
         marriageType.put(MarriageRegister.TypeOfMarriage.KANDYAN_BINNA, "     උඩරට බින්න / Kandyan binna in tamil / Kandyan Binna");
         marriageType.put(MarriageRegister.TypeOfMarriage.KANDYAN_DEEGA, "    උඩරට බින්න දීග / kandyan deega in tamil / Kandyan Deega");
-
+        
         commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
             marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
         raceList = raceDAO.getRaces(language);
@@ -207,21 +207,28 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         if (marriage == null) {
             addActionError("Marriage Registration Record could not be found");
             return ERROR;
-        }
+        } 
         return "pageLoad";
     }
 
     public String registerMarriage() {
         MarriageRegister marriageRegister = marriageRegistrationService.getByIdUKey(marriage.getIdUKey(), user);
-        marriageRegister.setWitness1(marriage.getWitness1());
-        marriageRegister.setWitness2(marriage.getWitness2());
-        try {
-            marriageRegistrationService.updateMarriageRegister(marriageRegister, user);
-        } catch (Exception e) {
-            addActionError(e.getMessage());
+        if(marriageRegister == null){
+            addActionError("Marriage Registration Record could not be found");
             return ERROR;
         }
+        populateRegistrationDetails(marriageRegister);
+        marriageRegistrationService.updateMarriageRegister(marriageRegister, user);
         return "success";
+    }
+
+    private void populateRegistrationDetails(MarriageRegister marriageRegister){
+        marriageRegister.setWitness1(marriage.getWitness1());
+        marriageRegister.setWitness2(marriage.getWitness2());
+        marriageRegister.setRegSerial(marriage.getRegSerial());
+        marriageRegister.setRegSubmittedDate(marriage.getRegSubmittedDate());
+        marriageRegister.setRegPlaceInOfficialLang(marriage.getRegPlaceInOfficialLang());
+        marriageRegister.setRegPlaceInEnglishLang(marriage.getRegPlaceInEnglishLang());
     }
 
     /**

@@ -86,6 +86,19 @@ public class MarriageRegister implements Serializable, Cloneable {
     @JoinColumn(name = "witness2idukey", nullable = true, insertable = false, updatable = false)
     private Witness witness2 = new Witness();
 
+    @Column(length = 10, name = "REG_SERIAL", nullable = true)
+    private String regSerial;
+
+    @Column(name = "REG_SUBMITTED_DATE", nullable = true)
+    @Temporal(value = TemporalType.DATE)
+    private Date regSubmittedDate;
+
+    @Column(name = "REG_PLACE_MARRIAGE_OFFICIAL_LANG", nullable = true)
+    private String regPlaceInOfficialLang;
+
+    @Column(name = "REG_PLACE_MARRIAGE_ENGLISH_LANG", nullable = true)
+    private String regPlaceInEnglishLang;
+
     @Column(length = 10, name = "SERIAL_MALE")
     private String serialOfMaleNotice;
 
@@ -357,4 +370,35 @@ public class MarriageRegister implements Serializable, Cloneable {
         this.serialOfFemaleNotice = WebUtils.filterBlanks(serialOfFemaleNotice);
     }
 
+    public String getRegSerial() {
+        return regSerial;
+    }
+
+    public void setRegSerial(String regSerial) {
+        this.regSerial = regSerial;
+    }
+
+    public Date getRegSubmittedDate() {
+        return regSubmittedDate;
+    }
+
+    public void setRegSubmittedDate(Date regSubmittedDate) {
+        this.regSubmittedDate = regSubmittedDate;
+    }
+
+    public String getRegPlaceInEnglishLang() {
+        return regPlaceInEnglishLang;
+    }
+
+    public void setRegPlaceInEnglishLang(String regPlaceInEnglishLang) {
+        this.regPlaceInEnglishLang = regPlaceInEnglishLang;
+    }
+
+    public String getRegPlaceInOfficialLang() {
+        return regPlaceInOfficialLang;
+    }
+
+    public void setRegPlaceInOfficialLang(String regPlaceInOfficialLang) {
+        this.regPlaceInOfficialLang = regPlaceInOfficialLang;
+    }
 }
