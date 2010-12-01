@@ -7,7 +7,7 @@ import lk.rgd.prs.api.domain.PINNumber;
  */
 public interface PINNumberDAO {
 
-    public PINNumber getLastPINNumber(int dateOfBirth);
+    public PINNumber getLastPINNumber(long dateOfBirth);
 
     public void updateLastPINNumber(PINNumber lastPIN);
 
