@@ -109,7 +109,7 @@
             isDate(domObject.value, 'error1', 'error4');
         }
 
-        domObject = document.getElementById('partyPIN');
+        domObject = document.getElementById('partyIdNumber');
         if (!isFieldEmpty(domObject)) {
             validatePINorNIC(domObject, 'error1', 'error5');
         }
@@ -213,7 +213,7 @@
                     </td>
                     <td></td>
                     <td>
-                        <s:textfield name="#" id="partyPIN" maxLength="10"/>
+                        <s:textfield name="partyIdNumber" id="partyIdNumber" maxLength="10"/>
                     </td>
                 </tr>
                 </tbody>
