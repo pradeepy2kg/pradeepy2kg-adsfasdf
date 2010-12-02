@@ -8,13 +8,13 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.WebUtils;
 import lk.rgd.crs.api.dao.MRDivisionDAO;
 import lk.rgd.crs.api.domain.MarriageNotice;
-import lk.rgd.crs.api.domain.MarriageRegister;
 import lk.rgd.crs.api.service.MarriageRegistrationService;
 import lk.rgd.crs.web.WebConstants;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -42,7 +42,12 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     private Map<Integer, String> mrDivisionList;
     private List<MarriageNotice> searchList;
 
+    private Date searchStartDate;
+    private Date searchEndDate;
+
     private String language;
+    private String pinOrNic;
+    private Long noticeSerialNo;
 
     private int districtId;
     private int dsDivisionId;
@@ -66,19 +71,36 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         logger.debug("Marriage notice search page loaded");
         populateBasicLists();
 
-        pageNo = 1;
+        pageNo += 1;
         noOfRows = appParametersDAO.getIntParameter(MR_APPROVAL_ROWS_PER_PAGE);
-        if (mrDivisionId == 0) {
-            searchList = WebUtils.populateNoticeList(service.getMarriageNoticePendingApprovalByDSDivision(
-                dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, true, user));
+
+        if (noticeSerialNo != null) {
+            if (mrDivisionId != 0) {
+                searchList = WebUtils.populateNoticeList(service.getMarriageNoticePendingApprovalByMRDivisionAndSerial(
+                    mrDivisionDAO.getMRDivisionByPK(mrDivisionId), noticeSerialNo, user));
+            }
         } else {
-            searchList = WebUtils.populateNoticeList(service.getMarriageNoticePendingApprovalByBDDivision(
-                mrDivisionDAO.getMRDivisionByPK(mrDivisionId), pageNo, noOfRows, true, user));
+
+            if (isEmpty(pinOrNic) && noticeSerialNo == null) {
+                if (mrDivisionId == 0) {
+                    searchList = WebUtils.populateNoticeList(service.getMarriageNoticePendingApprovalByDSDivision(
+                        dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, true, user));
+                } else {
+                    searchList = WebUtils.populateNoticeList(service.getMarriageNoticePendingApprovalByMRDivision(
+                        mrDivisionDAO.getMRDivisionByPK(mrDivisionId), pageNo, noOfRows, true, user));
+                }
+            } else {
+                searchList = WebUtils.populateNoticeList(
+                    service.getMarriageNoticePendingApprovalByPINorNIC(pinOrNic, true, user));
+            }
         }
         if (searchList.size() == 0) {
             addActionMessage(getText("noitemMsg.label"));
         }
         logger.debug("Marriage notice search list loaded with size : {}", searchList.size());
+
+        noticeSerialNo = null;
+        pinOrNic = null;
 
         return SUCCESS;
     }
@@ -110,6 +132,10 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
             mrDivisionId = mrDivisionList.keySet().iterator().next();
             logger.debug("first allowed BD Div in the list {} was set", mrDivisionId);
         }*/
+    }
+
+    private boolean isEmpty(String s) {
+        return s == null || s.trim().length() != 10;
     }
 
     public Map getSession() {
@@ -153,6 +179,38 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
 
     public void setSearchList(List<MarriageNotice> searchList) {
         this.searchList = searchList;
+    }
+
+    public Date getSearchStartDate() {
+        return searchStartDate;
+    }
+
+    public void setSearchStartDate(Date searchStartDate) {
+        this.searchStartDate = searchStartDate;
+    }
+
+    public Date getSearchEndDate() {
+        return searchEndDate;
+    }
+
+    public void setSearchEndDate(Date searchEndDate) {
+        this.searchEndDate = searchEndDate;
+    }
+
+    public String getPinOrNic() {
+        return pinOrNic;
+    }
+
+    public void setPinOrNic(String pinOrNic) {
+        this.pinOrNic = WebUtils.filterBlanks(pinOrNic);
+    }
+
+    public Long getNoticeSerialNo() {
+        return noticeSerialNo;
+    }
+
+    public void setNoticeSerialNo(Long noticeSerialNo) {
+        this.noticeSerialNo = noticeSerialNo;
     }
 
     public int getDistrictId() {

@@ -111,7 +111,7 @@
             isDate(domObject.value, 'error1', 'error4');
         }
 
-        domObject = document.getElementById('partyIdNumber');
+        domObject = document.getElementById('pinOrNic');
         if (!isFieldEmpty(domObject)) {
             validatePINorNIC(domObject, 'error1', 'error5');
         }
@@ -179,7 +179,7 @@
                         <s:label value="%{getText('serial.label')}"/>
                     </td>
                     <td>
-                        <s:textfield id="noticeSerialNo" name="" cssStyle="width:232px;" maxLength="10"/>
+                        <s:textfield id="noticeSerialNo" name="noticeSerialNo" cssStyle="width:232px;" maxLength="10"/>
                     </td>
                 </tr>
                 <tr>
@@ -215,7 +215,7 @@
                     </td>
                     <td></td>
                     <td>
-                        <s:textfield name="partyIdNumber" id="partyIdNumber" maxLength="10"/>
+                        <s:textfield name="pinOrNic" id="pinOrNic" maxLength="10"/>
                     </td>
                 </tr>
                 </tbody>

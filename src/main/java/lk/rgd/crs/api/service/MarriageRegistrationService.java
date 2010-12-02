@@ -58,8 +58,31 @@ public interface MarriageRegistrationService {
      * @param user       the user initiating the action
      * @return the list of marriage notices pending approval
      */
-    public List<MarriageRegister> getMarriageNoticePendingApprovalByBDDivision(MRDivision mrDivision, int pageNo,
+    public List<MarriageRegister> getMarriageNoticePendingApprovalByMRDivision(MRDivision mrDivision, int pageNo,
         int noOfRows, boolean active, User user);
+
+    /**
+     * Returns the active/inactive list of approval pending marriage notices awaiting approval by ADR or higher
+     * authority
+     *
+     * @param pinOrNic the unique PIN or NIC of male or female party
+     * @param active   include currently active items
+     * @param user     the user initiating the action
+     * @return list of marriage records
+     */
+    public List<MarriageRegister> getMarriageNoticePendingApprovalByPINorNIC(String pinOrNic, boolean active, User user);
+
+    /**
+     * Returns the active/inactive MarriageRegister record for given serial number of any party and under selected
+     * MRDivision
+     *
+     * @param mrDivision the Marriage Registration Division
+     * @param serialNo   the serial number of the marriage notice (male or female party)
+     * @param user       the user initiating the action
+     * @return list of marriage records, but should be a single marriage record
+     */
+    public List<MarriageRegister> getMarriageNoticePendingApprovalByMRDivisionAndSerial(MRDivision mrDivision,
+        long serialNo, User user);
 
     /**
      * get active marriage notice(marriage register objects) by male party and female party identification numbers
@@ -90,13 +113,4 @@ public interface MarriageRegistrationService {
      */
     public void addSecondMarriageNotice(MarriageRegister notice, boolean isMale, User user);
 
-    /**
-     * get pending approvals(marriage notices) by pin or nic(bride or groom)
-     *
-     * @param idNumber pin or nic number
-     * @param active   active or inactive record(active : true)
-     * @param user     user who performs action
-     * @return list of marriage records
-     */
-    public List<MarriageRegister> getMarriageNoticePendingApprovalByPINorNIC(String idNumber, boolean active, User user);
 }
