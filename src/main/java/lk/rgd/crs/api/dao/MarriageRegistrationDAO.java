@@ -50,9 +50,10 @@ public interface MarriageRegistrationDAO {
      * @param mrDivision the Marriage Registration Division
      * @param state      the state of the record to be returned
      * @param serialNo   the Serial Number(male or female party) with in the MRDivision
-     * @param active     include currently active or inactive items   @return the MarriageRegister if exist, or null if not exist
+     * @param active     include currently active or inactive items
+     * @return the MarriageRegister if exist
      */
-    public MarriageRegister getByMRDivisionAndSerialNo(MRDivision mrDivision, MarriageRegister.State state,
+    public List<MarriageRegister> getByMRDivisionAndSerialNo(MRDivision mrDivision, MarriageRegister.State state,
         long serialNo, boolean active);
 
     /**
@@ -90,8 +91,7 @@ public interface MarriageRegistrationDAO {
      * @param active include currently active or inactive items
      * @return the matching list of marriage registrations
      */
-    public List<MarriageRegister> getByStateAndPINorNIC(MarriageRegister.State state,
-        String id, boolean active);
+    public List<MarriageRegister> getByStateAndPINorNIC(MarriageRegister.State state, String id, boolean active);
 
     /**
      * get active marriage notice(marriage register object) where male and female pin or nic numbers are matched

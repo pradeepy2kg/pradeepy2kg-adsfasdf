@@ -13,8 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -68,9 +66,44 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     /**
      * @inheritDoc
      */
-
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<MarriageRegister> getMarriageNoticePendingApprovalByBDDivision(MRDivision mrDivision, int pageNo,
+    public List<MarriageRegister> getMarriageNoticePendingApprovalByPINorNIC(String pinOrNic, boolean active, User user) {
+        logger.debug("Attempt to get marriage notice pending results for identification number : {} ", pinOrNic);
+        List<MarriageRegister> results = marriageRegistrationDAO.getByStateAndPINorNIC(
+            MarriageRegister.State.DATA_ENTRY, pinOrNic, active);
+
+        for (MarriageRegister reg : results) {
+            if (!checkUserAccessPermissionToMarriageRecord(reg, user)) {
+                logger.debug("User : {} :does not have permission to edit/approve marriage record idUKey : {} ",
+                    user.getUserName(), reg.getIdUKey());
+                results.remove(reg);
+            }
+        }
+        return results;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<MarriageRegister> getMarriageNoticePendingApprovalByMRDivisionAndSerial(MRDivision mrDivision, long serialNo,
+        User user) {
+        logger.debug("Get active record by MRDivision : {} and Serial No : {}", mrDivision.getMrDivisionUKey(), serialNo);
+        List<MarriageRegister> results = marriageRegistrationDAO.getByMRDivisionAndSerialNo(mrDivision,
+            MarriageRegister.State.DATA_ENTRY, serialNo, true);
+        for (MarriageRegister mr : results) {
+            if (!checkUserAccessPermissionToMarriageRecord(mr, user)) {
+                results.remove(mr);
+            }
+        }
+        return results;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<MarriageRegister> getMarriageNoticePendingApprovalByMRDivision(MRDivision mrDivision, int pageNo,
         int noOfRows, boolean active, User user) {
         logger.debug("Get Active : {} MarriageNotices pending approval by MRDivision : {}", active,
             mrDivision.getMrDivisionUKey());
@@ -120,26 +153,6 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         logger.debug("attempt to add a second notice for existing record : idUKey : {}", notice.getIdUKey());
         addMaleOrFemaleWitnesses(notice, isMale);
         updateMarriageRegister(notice, user);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    @Transactional(propagation = Propagation.NEVER)
-    public List<MarriageRegister> getMarriageNoticePendingApprovalByPINorNIC(String idNumber, boolean active, User user) {
-        logger.debug("attempt to get marriage notice pending results for identification number : {} ", idNumber);
-        List<MarriageRegister> results = marriageRegistrationDAO.getByStateAndPINorNIC(
-            MarriageRegister.State.DATA_ENTRY, idNumber, active);
-        Iterator<MarriageRegister> itr = results.iterator();
-        while (itr.hasNext()) {
-            MarriageRegister reg = itr.next();
-            if (!checkUserAccessPermissionToMarriageRecord(reg, user)) {
-                logger.debug("user : {} :does not have permission to edit/approve marriage record idUKey : {} ",
-                    user.getUserName(), reg.getIdUKey());
-                results.remove(reg);
-            }
-        }
-        return results;
     }
 
     private void addWitness(Witness witness) {
