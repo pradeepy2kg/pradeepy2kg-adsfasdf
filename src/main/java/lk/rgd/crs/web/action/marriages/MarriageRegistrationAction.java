@@ -10,10 +10,10 @@ import lk.rgd.common.util.CivilStatusUtil;
 import lk.rgd.crs.api.dao.MRDivisionDAO;
 import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.domain.MarriageRegister;
-import lk.rgd.crs.api.domain.MaleParty;
 import lk.rgd.crs.api.service.MarriageRegistrationService;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.web.util.CommonUtil;
+import lk.rgd.crs.web.util.MarriageType;
 import lk.rgd.prs.api.domain.Person;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
@@ -67,9 +67,10 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     private Date noticeReceivedDate;
 
-    private HashMap marriageType;
     private HashMap civilStatusMale;
     private HashMap civilStatusFemale;
+    MarriageType[] marriageType;
+
 
     public MarriageRegistrationAction(MarriageRegistrationService marriageRegistrationService,
         MRDivisionDAO mrDivisionDAO, RaceDAO raceDAO, CountryDAO countryDAO, CommonUtil commonUtil) {
@@ -85,9 +86,6 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         raceList = new HashMap<Integer, String>();
         countryList = new HashMap<Integer, String>();
 
-        marriageType = new HashMap<MarriageRegister.TypeOfMarriage, String>();
-        civilStatusMale = new HashMap<Person.CivilStatus, String>();
-        civilStatusFemale = new HashMap<Person.CivilStatus, String>();
     }
 
     /**
@@ -205,9 +203,8 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         idUKey = 1;
 
         //TODO : TO be improved
-        marriageType.put(MarriageRegister.TypeOfMarriage.GENERAL, "      සාමාන්‍ය / general marriage in tamil / General");
-        marriageType.put(MarriageRegister.TypeOfMarriage.KANDYAN_BINNA, "     උඩරට බින්න / Kandyan binna in tamil / Kandyan Binna");
-        marriageType.put(MarriageRegister.TypeOfMarriage.KANDYAN_DEEGA, "    උඩරට බින්න දීග / kandyan deega in tamil / Kandyan Deega");
+
+        marriageType = MarriageType.values();
 
         civilStatusMale = populateCivilStatus();
         civilStatusFemale = populateCivilStatus();
@@ -219,11 +216,11 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         if (marriage == null) {
             addActionError("Marriage Registration Record could not be found");
             return ERROR;
-        } 
+        }
         return "pageLoad";
     }
 
-    private HashMap<Person.CivilStatus, String> populateCivilStatus(){
+    private HashMap<Person.CivilStatus, String> populateCivilStatus() {
         HashMap<Person.CivilStatus, String> civilStatus = new HashMap<Person.CivilStatus, String>();
         civilStatus.put(Person.CivilStatus.NEVER_MARRIED, CivilStatusUtil.getCivilStatusInAllLanguages(Person.CivilStatus.NEVER_MARRIED));
         civilStatus.put(Person.CivilStatus.DIVORCED, CivilStatusUtil.getCivilStatusInAllLanguages(Person.CivilStatus.DIVORCED));
@@ -234,7 +231,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     public String registerMarriage() {
         MarriageRegister marriageRegister = marriageRegistrationService.getByIdUKey(marriage.getIdUKey(), user);
-        if(marriageRegister == null){
+        if (marriageRegister == null) {
             addActionError("Marriage Registration Record could not be found");
             return ERROR;
         }
@@ -243,7 +240,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         return "success";
     }
 
-    private void populateRegistrationDetails(MarriageRegister marriageRegister){
+    private void populateRegistrationDetails(MarriageRegister marriageRegister) {
         marriageRegister.setWitness1(marriage.getWitness1());
         marriageRegister.setWitness2(marriage.getWitness2());
         marriageRegister.setRegSerial(marriage.getRegSerial());
@@ -525,14 +522,6 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         this.editMode = editMode;
     }
 
-    public HashMap getMarriageType() {
-        return marriageType;
-    }
-
-    public void setMarriageType(HashMap marriageType) {
-        this.marriageType = marriageType;
-    }
-
     public HashMap getCivilStatusMale() {
         return civilStatusMale;
     }
@@ -547,6 +536,14 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     public void setCivilStatusFemale(HashMap civilStatusFemale) {
         this.civilStatusFemale = civilStatusFemale;
+    }
+
+    public MarriageType[] getMarriageType() {
+        return marriageType;
+    }
+
+    public void setMarriageType(MarriageType[] marriageType) {
+        this.marriageType = marriageType;
     }
 }
 

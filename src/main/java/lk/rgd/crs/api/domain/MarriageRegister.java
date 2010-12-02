@@ -1,6 +1,7 @@
 package lk.rgd.crs.api.domain;
 
 import lk.rgd.common.util.WebUtils;
+import lk.rgd.crs.web.util.MarriageType;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -54,12 +55,6 @@ public class MarriageRegister implements Serializable, Cloneable {
         OTHER
     }
 
-    public enum TypeOfMarriage {
-        GENERAL,
-        KANDYAN_BINNA,
-        KANDYAN_DEEGA
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IDUKEY")
@@ -71,7 +66,7 @@ public class MarriageRegister implements Serializable, Cloneable {
     private Date receivedDate;
 
     @Column(name = "TYPE_MARRIAGE", nullable = true)
-    private TypeOfMarriage typeOfMarriage;
+    private MarriageType typeOfMarriage;
 
     @Column(name = "PLACE_MARRIAGE", nullable = true)
     private PlaceOfMarriage placeOfMarriage;
@@ -206,11 +201,11 @@ public class MarriageRegister implements Serializable, Cloneable {
         this.lifeCycleInfo = lifeCycleInfo;
     }
 
-    public TypeOfMarriage getTypeOfMarriage() {
+    public MarriageType getTypeOfMarriage() {
         return typeOfMarriage;
     }
 
-    public void setTypeOfMarriage(TypeOfMarriage typeOfMarriage) {
+    public void setTypeOfMarriage(MarriageType typeOfMarriage) {
         this.typeOfMarriage = typeOfMarriage;
     }
 

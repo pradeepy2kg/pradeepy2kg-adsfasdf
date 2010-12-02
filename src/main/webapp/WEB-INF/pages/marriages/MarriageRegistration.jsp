@@ -7,15 +7,15 @@
 <script type="text/javascript" src="<s:url value="/js/division.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 <script type="text/javascript">
-$(function() {
-    $("#submitDatePicker").datepicker({
-        changeYear: true,
-        yearRange: '1960:2020',
-        dateFormat:'yy-mm-dd',
-        startDate:'2000-01-01',
-        endDate:'2040-12-31'
+    $(function() {
+        $("#submitDatePicker").datepicker({
+            changeYear: true,
+            yearRange: '1960:2020',
+            dateFormat:'yy-mm-dd',
+            startDate:'2000-01-01',
+            endDate:'2040-12-31'
+        });
     });
-});
 </script>
 <s:actionerror/>
 <div class="marriage-notice-outer">
@@ -30,20 +30,22 @@ $(function() {
     <tbody>
     <tr style="font-size:9pt">
         <td colspan="1">
-             <table border="1" style="margin-top:1px;width:100%;border:1px solid #000;border-collapse:collapse;"
+            <table border="1" style="margin-top:1px;width:100%;border:1px solid #000;border-collapse:collapse;"
                    cellpadding="2px">
                 <caption/>
                 <col width="175px">
                 <col>
                 <tr>
                     <td>
-                        දිස්ත්‍රික්කය 
+                        දිස්ත්‍රික්කය
                         <br>மாவட்டம்
                         <br>District
                     </td>
                     <td>
-                         <s:select id="districtId" name="marriageDistrictId" list="districtList" value="marriageDistrictId"
-                                cssStyle="width:98.5%; width:240px;" onclick="populateDSDivisions('districtId','dsDivisionId','mrDivisionId')"/>
+                        <s:select id="districtId" name="marriageDistrictId" list="districtList"
+                                  value="marriageDistrictId"
+                                  cssStyle="width:98.5%; width:240px;"
+                                  onclick="populateDSDivisions('districtId','dsDivisionId','mrDivisionId')"/>
                     </td>
                 </tr>
                 <tr>
@@ -51,11 +53,12 @@ $(function() {
                         ප්‍රාදේශීය ලේකම් කොට්ඨාශය
                             <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
                             <br>பிரதேச செயளாளர் பிரிவு <br>Divisional Secretariat</span>
-                        </label>
+                    </label>
                     </td>
                     <td align="center">
                         <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="dsDivisionId"
-                                cssStyle="width:98.5%; width:240px;" onchange="populateDivisions('dsDivisionId', 'mrDivisionId')"/>
+                                  cssStyle="width:98.5%; width:240px;"
+                                  onchange="populateDivisions('dsDivisionId', 'mrDivisionId')"/>
                     </td>
                 </tr>
                 <tr>
@@ -63,11 +66,12 @@ $(function() {
                         ලියාපදිංචි කිරීමේ කොට්ඨාශය
                                <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
                                     <br>பதிவுப் பிரிவு  <br>Registration Division</span>
-                       </label>
+                    </label>
                     </td>
                     <td>
-                          <s:select id="mrDivisionId" name="marriageDivisionId" list="mrDivisionList" value="marriageDivisionId" headerKey="1"
-                                cssStyle="width:98.5%; width:240px;"/>
+                        <s:select id="mrDivisionId" name="marriageDivisionId" list="mrDivisionList"
+                                  value="marriageDivisionId" headerKey="1"
+                                  cssStyle="width:98.5%; width:240px;"/>
                     </td>
                 </tr>
             </table>
@@ -105,13 +109,16 @@ $(function() {
                     </td>
                     <td>
                         <s:label value="YYYY-MM-DD" cssStyle="margin-left:10px;font-size:10px"/><br>
-                        <s:textfield name="marriage.regSubmittedDate" id="submitDatePicker" maxLength="10" onclick="popupCalendar('submitDatePicker')"/>
+                        <s:textfield name="marriage.regSubmittedDate" id="submitDatePicker" maxLength="10"
+                                     onclick="popupCalendar('submitDatePicker')"/>
                     </td>
                 </tr>
             </table>
         </td>
     </tr>
-    <tr><td>&nbsp;</td></tr>
+    <tr>
+        <td>&nbsp;</td>
+    </tr>
     <tr style="font-size:14pt">
         <td colspan="3" align="center">
             විවාහ ලේකම් පොත / குடிமதிப்பீட்டு ஆவணத்தில் / Register of Marriages
@@ -134,7 +141,7 @@ $(function() {
     <col/>
     <col/>
     <tbody>
-     <tr>
+    <tr>
         <td>
             විවාහයේ ස්වභාවය <br>
             type of marriage in tamil <br>
@@ -146,11 +153,11 @@ $(function() {
                 <col/>
                 <tbody>
                 <s:iterator value="marriageType">
-                <tr>
-                    <td>
-                        <s:radio name="marriage.typeOfMarriage" list="#{key:value}"/>
-                    </td>
-                </tr>
+                    <tr>
+                        <td>
+                            <s:radio name="marriage.typeOfMarriage.Id" list="#{id:type}"/>
+                        </td>
+                    </tr>
                 </s:iterator>
                 </tbody>
             </table>
@@ -171,12 +178,12 @@ $(function() {
                 <tr>
                     <td>
                         රාජ්‍ය භාෂාවෙන්<br>
-                        தமிழ் மொழியில்   <br>
+                        தமிழ் மொழியில் <br>
                         Official Language
                     </td>
-                   <td>
+                    <td>
                         <s:textarea name="marriage.regPlaceInOfficialLang" id="reg_place_official"
-                            cssStyle="width:98.2%;"/>
+                                    cssStyle="width:98.2%;"/>
                     </td>
                 </tr>
                 <tr>
@@ -187,7 +194,7 @@ $(function() {
                     </td>
                     <td>
                         <s:textarea name="marriage.regPlaceInEnglishLang" id="reg_place_English"
-                            cssStyle="width:98.2%;"/>
+                                    cssStyle="width:98.2%;"/>
                     </td>
                 </tr>
                 </tbody>
@@ -207,7 +214,7 @@ $(function() {
             පුරුෂ පාර්ශ්වය / in tamil / Male Party
         </td>
         <td align="center">
-           ස්ත්‍රී පාර්ශ්වය / in tamil / Female Party
+            ස්ත්‍රී පාර්ශ්වය / in tamil / Female Party
         </td>
     </tr>
     </tbody>
@@ -271,11 +278,11 @@ $(function() {
         </td>
         <td>
             <s:select list="raceList" name="fatherRace" headerKey="0" headerValue="%{getText('select_race.label')}"
-          cssStyle="width:200px;"/>
+                      cssStyle="width:200px;"/>
         </td>
         <td>
             <s:select list="raceList" name="fatherRace" headerKey="0" headerValue="%{getText('select_race.label')}"
-          cssStyle="width:200px;"/>
+                      cssStyle="width:200px;"/>
         </td>
     </tr>
     <tr>
@@ -290,11 +297,11 @@ $(function() {
                 <col/>
                 <tbody>
                 <s:iterator value="civilStatusMale">
-                <tr>
-                    <td>
-                        <s:radio name="marriage.male.civilStatusMale" list="#{key:value}"/>
-                    </td>
-                </tr>
+                    <tr>
+                        <td>
+                            <s:radio name="marriage.male.civilStatusMale" list="#{key:value}"/>
+                        </td>
+                    </tr>
                 </s:iterator>
                 </tbody>
             </table>
@@ -306,16 +313,16 @@ $(function() {
                 <col/>
                 <tbody>
                 <s:iterator value="civilStatusFemale">
-                <tr>
-                    <td>
-                        <s:radio name="marriage.female.civilStatusFemale" list="#{key:value}"/>
-                    </td>
-                </tr>
+                    <tr>
+                        <td>
+                            <s:radio name="marriage.female.civilStatusFemale" list="#{key:value}"/>
+                        </td>
+                    </tr>
                 </s:iterator>
                 </tbody>
             </table>
-       </td>
-   </tr>
+        </td>
+    </tr>
     <tr>
         <td>
             නම රාජ්‍ය භාෂාවෙන්
@@ -344,7 +351,7 @@ $(function() {
         </td>
         <td>
             <s:textarea name="marriage.female.nameInEnglishFemale" id="name_english_female" cssStyle="width:98.2%;"/>
-        </td>        
+        </td>
     </tr>
 
     <tr>

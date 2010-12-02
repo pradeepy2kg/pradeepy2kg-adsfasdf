@@ -3,7 +3,6 @@ package lk.rgd.crs.api.domain;
 import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.Race;
 import lk.rgd.common.util.WebUtils;
-import lk.rgd.common.util.CivilStatusUtil;
 import lk.rgd.prs.api.domain.Person;
 
 import javax.persistence.*;
