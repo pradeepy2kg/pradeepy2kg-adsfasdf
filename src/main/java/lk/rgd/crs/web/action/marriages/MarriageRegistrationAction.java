@@ -219,11 +219,11 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         if (marriage == null) {
             addActionError("Marriage Registration Record could not be found");
             return ERROR;
-        } 
+        }
         return "pageLoad";
     }
 
-    private HashMap<Person.CivilStatus, String> populateCivilStatus(){
+    private HashMap<Person.CivilStatus, String> populateCivilStatus() {
         HashMap<Person.CivilStatus, String> civilStatus = new HashMap<Person.CivilStatus, String>();
         civilStatus.put(Person.CivilStatus.NEVER_MARRIED, CivilStatusUtil.getCivilStatusInAllLanguages(Person.CivilStatus.NEVER_MARRIED));
         civilStatus.put(Person.CivilStatus.DIVORCED, CivilStatusUtil.getCivilStatusInAllLanguages(Person.CivilStatus.DIVORCED));
@@ -234,7 +234,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     public String registerMarriage() {
         MarriageRegister marriageRegister = marriageRegistrationService.getByIdUKey(marriage.getIdUKey(), user);
-        if(marriageRegister == null){
+        if (marriageRegister == null) {
             addActionError("Marriage Registration Record could not be found");
             return ERROR;
         }
@@ -243,7 +243,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         return "success";
     }
 
-    private void populateRegistrationDetails(MarriageRegister marriageRegister){
+    private void populateRegistrationDetails(MarriageRegister marriageRegister) {
         marriageRegister.setWitness1(marriage.getWitness1());
         marriageRegister.setWitness2(marriage.getWitness2());
         marriageRegister.setRegSerial(marriage.getRegSerial());
@@ -280,7 +280,6 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             marriage.setMrDivisionOfFemaleNotice(mrDivisionDAO.getMRDivisionByPK(marriageDivisionIdFemale));
             marriage.setDateOfFemaleNotice(noticeReceivedDate);
             marriage.setSerialOfFemaleNotice(serialNumber);
-
         }
     }
 
