@@ -127,17 +127,17 @@ public class WebUtils {
         List<MarriageNotice> noticeList = new LinkedList<MarriageNotice>();
         for (MarriageRegister mr : marriageRegisterList) {
             boolean isBothSubmitted = mr.isBothPartySubmitted();
-            String maleSerial = mr.getSerialOfMaleNotice();
-            String femaleSerial = mr.getSerialOfFemaleNotice();
+            Long maleSerial = mr.getSerialOfMaleNotice();
+            Long femaleSerial = mr.getSerialOfFemaleNotice();
             if (isBothSubmitted) {
                 //one notice male notice
                 noticeList.add(new MarriageNotice(mr, MarriageNotice.Type.BOTH_NOTICE));
             } else {
-                if (maleSerial != null && maleSerial.length() > 0) {
+                if (maleSerial != null) {
                     //male notice
                     noticeList.add(new MarriageNotice(mr, MarriageNotice.Type.MALE_NOTICE));
                 }
-                if (femaleSerial != null && femaleSerial.length() > 0) {
+                if (femaleSerial != null) {
                     //female notice
                     noticeList.add(new MarriageNotice(mr, MarriageNotice.Type.FEMALE_NOTICE));
                 }
