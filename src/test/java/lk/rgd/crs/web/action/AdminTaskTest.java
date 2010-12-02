@@ -65,7 +65,7 @@ public class AdminTaskTest extends CustomStrutsTestCase {
 
 
     private ActionProxy proxy;
-    private static final Logger logger = LoggerFactory.getLogger(AdoptionActionTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(AdminTaskTest.class);
     protected final static ApplicationContext ctx = UnitTestManager.ctx;
 
     protected final static RegistrarManagementService registrarMgtService = (RegistrarManagementService) ctx.getBean(
@@ -183,7 +183,7 @@ public class AdminTaskTest extends CustomStrutsTestCase {
         try {
             proxy.execute();
         } catch (Exception e) {
-            logger.error("Handle Error {} : {}", e.getMessage(), e);
+            logger.error("This Error cant avoid ! {} : {}", e.getMessage(), e);
         }
     }
 
