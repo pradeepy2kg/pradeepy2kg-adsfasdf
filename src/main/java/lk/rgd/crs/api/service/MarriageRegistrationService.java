@@ -89,4 +89,14 @@ public interface MarriageRegistrationService {
      * @param user   the user who performing the action
      */
     public void addSecondMarriageNotice(MarriageRegister notice, boolean isMale, User user);
+
+    /**
+     * get pending approvals(marriage notices) by pin or nic(bride or groom)
+     *
+     * @param idNumber pin or nic number
+     * @param active   active or inactive record(active : true)
+     * @param user     user who performs action
+     * @return list of marriage records
+     */
+    public List<MarriageRegister> getMarriageNoticePendingApprovalByPINorNIC(String idNumber, boolean active, User user);
 }
