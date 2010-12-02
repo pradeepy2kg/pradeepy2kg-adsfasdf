@@ -277,7 +277,6 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             marriage.setMrDivisionOfFemaleNotice(mrDivisionDAO.getMRDivisionByPK(marriageDivisionIdFemale));
             marriage.setDateOfFemaleNotice(noticeReceivedDate);
             marriage.setSerialOfFemaleNotice(serialNumber);
-
         }
     }
 
