@@ -4,6 +4,7 @@ import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.dao.MarriageRegistrationDAO;
 import lk.rgd.crs.api.domain.MRDivision;
+import lk.rgd.crs.api.domain.MarriageNotice;
 import lk.rgd.crs.api.domain.MarriageRegister;
 import lk.rgd.crs.api.domain.Witness;
 import lk.rgd.crs.api.service.MarriageRegistrationService;
@@ -13,11 +14,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
  * implementation of the marriage registration service interface
- * todo check user permissions for performing tasks
+ *
+ * @author amith jayasekara
+ * @author chathuranga withana
+ *         todo check user permissions for performing tasks
  */
 public class MarriageRegistrationServiceImpl implements MarriageRegistrationService {
 
@@ -153,6 +159,77 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         logger.debug("attempt to add a second notice for existing record : idUKey : {}", notice.getIdUKey());
         addMaleOrFemaleWitnesses(notice, isMale);
         updateMarriageRegister(notice, user);
+    }
+
+
+    /**
+     * @inheritDoc <br> notes :
+     * <u>delete operation works as follows </u>
+     * there are three cases in removing a marriage notice
+     * case 1: isBothSubmitted is true that means only one notice is available for delete
+     * in that case we can simple remove the data base row
+     * case 2 : isBothSubmitted is false that means there can be more than one marriage notices(at most 2)
+     * case 2.1:
+     * having only one marriage notice is available(it could be male party submitted one or female party submitted one)
+     * in this case also we can just remove data base row
+     * <p/>
+     * case 2.2 : there are two notices are remaining in the marriage register row so we cannot simple remove the data
+     * base row because it is removing the other notice as well.
+     * So we have to update the data base row for that removing
+     * <i>as an example :
+     * if both male and female party submitted notices are available and you just need to remove female party
+     * submitted notice in that case we have to update the data base row by removing female party notice related columns
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void deleteMarriageNotice(long idUKey, MarriageNotice.Type noticeType, User user) {
+        logger.debug("attempt to remove marriage notice : idUKey : {} and notice type : {}", idUKey, noticeType);
+        //todo check user permission for removing data
+        MarriageRegister notice = marriageRegistrationDAO.getByIdUKey(idUKey);
+        boolean isBothSubmitted = notice.isBothPartySubmitted();
+        if (isBothSubmitted) {
+            //case 1
+            marriageRegistrationDAO.deleteMarriageRegister(idUKey);
+        } else {
+            if (notice.getSerialOfMaleNotice() != 0 && notice.getSerialOfFemaleNotice() != 0) {
+                //case 2.2
+                if (noticeType == MarriageNotice.Type.MALE_NOTICE) {
+                    //clearing male notice related data
+                    clearingNoticeDetails(notice, MarriageNotice.Type.MALE_NOTICE);
+                } else if (noticeType == MarriageNotice.Type.FEMALE_NOTICE) {
+                    //clearing female notice related data
+                    clearingNoticeDetails(notice, MarriageNotice.Type.FEMALE_NOTICE);
+                }
+                marriageRegistrationDAO.updateMarriageRegister(notice, user);
+                //notice type BOTH want came here (because it is came with is both submit true)
+            } else {
+                //case 2.1
+                //there can't be a case both of the serial numbers are Zero so we are not handling that case
+                marriageRegistrationDAO.deleteMarriageRegister(idUKey);
+            }
+        }
+    }
+
+    /**
+     * clearing notice related data for given notice type
+     */
+    private void clearingNoticeDetails(MarriageRegister notice, MarriageNotice.Type type) {
+        switch (type) {
+            case BOTH_NOTICE:
+            case MALE_NOTICE:
+                notice.setMrDivisionOfMaleNotice(null);
+                notice.setSerialOfMaleNotice(null);
+                notice.setDateOfMaleNotice(null);
+                notice.setMaleNoticeWitness_1(null);
+                notice.setMaleNoticeWitness_2(null);
+                break;
+            case FEMALE_NOTICE:
+                notice.setMrDivisionOfFemaleNotice(null);
+                notice.setSerialOfFemaleNotice(null);
+                notice.setDateOfFemaleNotice(null);
+                notice.setFemaleNoticeWitness_1(null);
+                notice.setFemaleNoticeWitness_2(null);
+        }
+
     }
 
     private void addWitness(Witness witness) {

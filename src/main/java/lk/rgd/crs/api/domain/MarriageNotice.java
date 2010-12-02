@@ -20,6 +20,7 @@ public final class MarriageNotice {
     private final String partyPIN;
     private final Type type;
     private boolean hasSecond = true;
+    private final MarriageRegister.State state;
 
     public enum Type {
         BOTH_NOTICE, /**
@@ -36,6 +37,7 @@ public final class MarriageNotice {
         this.typeOfMarriage = mr.getTypeOfMarriage();
         this.placeOfMarriage = mr.getPlaceOfMarriage();
         this.type = type;
+        this.state = mr.getState();
 
         if (Type.BOTH_NOTICE == type || Type.MALE_NOTICE == type) {
             this.serialOfNotice = mr.getSerialOfMaleNotice();
@@ -87,5 +89,9 @@ public final class MarriageNotice {
 
     public boolean isHasSecond() {
         return hasSecond;
+    }
+
+    public MarriageRegister.State getState() {
+        return state;
     }
 }

@@ -218,6 +218,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
      * special case submit notices to two locations and second notice about to be add(actually updating same record)
      */
     public String addSecondNotice() {
+        //todo check process
         logger.debug("attempt to add second notice : idUKey of the record : {}", idUKey);
         MarriageRegister existingNotice = marriageRegistrationService.getByIdUKey(idUKey, user);
         if (existingNotice != null) {
@@ -234,6 +235,24 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             return ERROR;
         }
         logger.debug("added second notice to idUKey : {}", idUKey);
+        return SUCCESS;
+    }
+
+    /**
+     * deleting a marriage notice
+     * notes:
+     * when removing a notice(have 2 notices) it just updating the data row
+     * if there is only one notice (BOTH) delete the row
+     */
+    public String deleteMarriageNotice() {
+        logger.debug("attempt to delete marriage notice : idUKey {} : notice type : {}", idUKey, noticeType);
+        MarriageRegister notice = marriageRegistrationService.getByIdUKey(idUKey, user);
+        if (notice != null && notice.getState() == MarriageRegister.State.DATA_ENTRY) {
+            marriageRegistrationService.deleteMarriageNotice(idUKey, noticeType, user);
+        } else {
+            addActionError("error.delete.notice");
+            return ERROR;
+        }
         return SUCCESS;
     }
 

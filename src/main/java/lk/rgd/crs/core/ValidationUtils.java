@@ -66,4 +66,5 @@ public class ValidationUtils {
         throw new CRSRuntimeException(message, code);
     }
 
+    //todo checkUserAccessPermissionToMarriageRecord
 }

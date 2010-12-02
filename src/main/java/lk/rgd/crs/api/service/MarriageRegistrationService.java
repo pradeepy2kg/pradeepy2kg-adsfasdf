@@ -3,6 +3,7 @@ package lk.rgd.crs.api.service;
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.domain.MRDivision;
+import lk.rgd.crs.api.domain.MarriageNotice;
 import lk.rgd.crs.api.domain.MarriageRegister;
 
 import java.util.List;
@@ -113,4 +114,13 @@ public interface MarriageRegistrationService {
      */
     public void addSecondMarriageNotice(MarriageRegister notice, boolean isMale, User user);
 
+
+    /**
+     * removing a marriage notice record
+     *
+     * @param idUKey     idUKey ot the record to be removed
+     * @param noticeType type of the notice needs to be remove.
+     * @param user       user who performs the action
+     */
+    public void deleteMarriageNotice(long idUKey, MarriageNotice.Type noticeType, User user);
 }

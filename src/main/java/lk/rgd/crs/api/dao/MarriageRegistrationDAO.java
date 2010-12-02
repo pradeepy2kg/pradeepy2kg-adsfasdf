@@ -102,4 +102,11 @@ public interface MarriageRegistrationDAO {
      */
     public List<MarriageRegister> getActiveMarriageNoticeByMaleFemaleIdentification(String maleIdentification,
         String femaleIdentification);
+
+    /**
+     * removing marriage register object from the data base
+     *
+     * @param idUKey idUKey of the record
+     */
+    public void deleteMarriageRegister(long idUKey);
 }

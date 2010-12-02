@@ -126,4 +126,12 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
         q.setParameter("female", femaleIdentification);
         return q.getResultList();
     }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.MANDATORY)
+    public void deleteMarriageRegister(long idUKey) {
+        em.remove(getByIdUKey(idUKey));
+    }
 }
