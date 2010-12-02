@@ -11,7 +11,6 @@ import lk.rgd.crs.api.dao.MRDivisionDAO;
 import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.domain.MarriageNotice;
 import lk.rgd.crs.api.domain.MarriageRegister;
-import lk.rgd.crs.api.domain.MaleParty;
 import lk.rgd.crs.api.service.MarriageRegistrationService;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.web.util.CommonUtil;
@@ -20,7 +19,10 @@ import lk.rgd.prs.api.domain.Person;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author amith
@@ -65,7 +67,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     private boolean editMode;
 
     private String language;
-    private String serialNumber;
+    private Long serialNumber;
 
     private Date noticeReceivedDate;
 
@@ -223,7 +225,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             populateMarriageObjectForEditMode(existingNotice, marriage);
             //following boolean use to check witch party is submitting second notice  note:true (male) false(female)
             boolean secondNoticeSubmittedByPartyMale = marriage.isBothPartySubmitted() ||
-                (marriage.getSerialOfMaleNotice() != null && marriage.getSerialOfMaleNotice().length() > 0);
+                (marriage.getSerialOfMaleNotice() != null);
 
             marriageRegistrationService.addSecondMarriageNotice(existingNotice, secondNoticeSubmittedByPartyMale, user);
         } else {
@@ -486,11 +488,11 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         this.male = male;
     }
 
-    public String getSerialNumber() {
+    public Long getSerialNumber() {
         return serialNumber;
     }
 
-    public void setSerialNumber(String serialNumber) {
+    public void setSerialNumber(Long serialNumber) {
         this.serialNumber = serialNumber;
     }
 

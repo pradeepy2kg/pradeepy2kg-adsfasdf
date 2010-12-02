@@ -15,6 +15,7 @@ import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.api.service.CertificateSearchService;
 import lk.rgd.crs.api.service.MarriageRegistrationService;
+import lk.rgd.crs.web.util.MarriageType;
 import lk.rgd.prs.api.service.PopulationRegistry;
 import org.springframework.context.ApplicationContext;
 
@@ -65,7 +66,7 @@ public class MarriageRegistrationServiceTest extends TestCase {
 
     public void testAddMinimalMarriageNotice() {
         //adding a marriage notice with minimal requirements
-        MarriageRegister notice = getMinimalMarriageNotice("2010012345", "1234567890", "1234567899");
+        MarriageRegister notice = getMinimalMarriageNotice(2010012345L, "1234567890", "1234567899");
         //this is submitted by male so  true
         marriageRegistrationService.addMarriageNotice(notice, true, deoColomboColombo);
 
@@ -73,7 +74,7 @@ public class MarriageRegistrationServiceTest extends TestCase {
         //add with same pin numbers 
     }
 
-    private MarriageRegister getMinimalMarriageNotice(String serialMale, String malePin, String femalePin) {
+    private MarriageRegister getMinimalMarriageNotice(long serialMale, String malePin, String femalePin) {
         MarriageRegister notice = new MarriageRegister();
         //male party
         MaleParty male = new MaleParty();
@@ -104,7 +105,7 @@ public class MarriageRegistrationServiceTest extends TestCase {
         notice.setDateOfMaleNotice(new Date());
         notice.setMrDivisionOfMaleNotice(colomboMRDivision);
         notice.setSerialOfMaleNotice(serialMale);
-        notice.setTypeOfMarriage(MarriageRegister.TypeOfMarriage.GENERAL);
+        notice.setTypeOfMarriage(MarriageType.GENERAL);
         notice.setPlaceOfMarriage(MarriageRegister.PlaceOfMarriage.DS_OFFICE);
 
         return notice;

@@ -1,5 +1,7 @@
 package lk.rgd.crs.api.domain;
 
+import lk.rgd.crs.web.util.MarriageType;
+
 import java.util.Date;
 
 /**
@@ -10,9 +12,9 @@ import java.util.Date;
 public final class MarriageNotice {
 
     private final long idUKey;
-    private final MarriageRegister.TypeOfMarriage typeOfMarriage;
+    private final MarriageType typeOfMarriage;
     private final MarriageRegister.PlaceOfMarriage placeOfMarriage;
-    private final String serialOfNotice;
+    private final Long serialOfNotice;
     private final Date dateOfNotice;
     private final String partyNameInOfficialLang;
     private final String partyPIN;
@@ -55,7 +57,7 @@ public final class MarriageNotice {
         return idUKey;
     }
 
-    public MarriageRegister.TypeOfMarriage getTypeOfMarriage() {
+    public MarriageType getTypeOfMarriage() {
         return typeOfMarriage;
     }
 
@@ -63,7 +65,7 @@ public final class MarriageNotice {
         return placeOfMarriage;
     }
 
-    public String getSerialOfNotice() {
+    public Long getSerialOfNotice() {
         return serialOfNotice;
     }
 
