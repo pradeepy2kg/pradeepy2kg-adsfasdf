@@ -45,6 +45,17 @@ public interface MarriageRegistrationDAO {
     public void updateMarriageRegister(MarriageRegister marriageRegister, User user);
 
     /**
+     * Get active or inactive record by MRDivision and Serial Number of male or female party
+     *
+     * @param mrDivision the Marriage Registration Division
+     * @param state      the state of the record to be returned
+     * @param serialNo   the Serial Number(male or female party) with in the MRDivision
+     * @param active     include currently active or inactive items   @return the MarriageRegister if exist, or null if not exist
+     */
+    public MarriageRegister getByMRDivisionAndSerialNo(MRDivision mrDivision, MarriageRegister.State state,
+        long serialNo, boolean active);
+
+    /**
      * Returns paginated list of active/inactive Marriage Registrations for the given status based on the DSDivision
      *
      * @param dsDivision the divisional secretariat
@@ -69,6 +80,18 @@ public interface MarriageRegistrationDAO {
      */
     public List<MarriageRegister> getPaginatedListForStateByMRDivision(MRDivision mrDivision,
         MarriageRegister.State state, int pageNo, int noOfRows, boolean active);
+
+    /**
+     * Returns a limited list of MarriageRegistrations for given status and identification number (it can be male or
+     * female NIC or unique PIN)
+     *
+     * @param state  the state of the record to be returned
+     * @param id     the identification number (male or female PIN or NIC)
+     * @param active include currently active or inactive items
+     * @return the matching list of marriage registrations
+     */
+    public List<MarriageRegister> getByStateAndPINorNIC(MarriageRegister.State state,
+        String id, boolean active);
 
     /**
      * get active marriage notice(marriage register object) where male and female pin or nic numbers are matched
