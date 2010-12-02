@@ -10,6 +10,7 @@ import lk.rgd.crs.api.domain.Witness;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.Date;
 import java.util.List;
@@ -62,6 +63,24 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
     }
 
     /**
+     * @inheriteDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public MarriageRegister getByMRDivisionAndSerialNo(MRDivision mrDivision, MarriageRegister.State state,
+        long serialNo, boolean active) {
+        Query q = em.createNamedQuery("filter.by.mrDivision.serial.and.state");
+        q.setParameter("mrDivision", mrDivision);
+        q.setParameter("serialNo", serialNo);
+        q.setParameter("state", state);
+        q.setParameter("active", active);
+        try {
+            return (MarriageRegister) q.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    /**
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
@@ -84,6 +103,19 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
         Query q = em.createNamedQuery("filter.by.mrDivision.and.state").
             setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("mrDivision", mrDivision);
+        q.setParameter("state", state);
+        q.setParameter("active", active);
+        return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<MarriageRegister> getByStateAndPINorNIC(MarriageRegister.State state,
+        String id, boolean active) {
+        Query q = em.createNamedQuery("filter.by.pinOrNic.and.state");
+        q.setParameter("id", id);
         q.setParameter("state", state);
         q.setParameter("active", active);
         return q.getResultList();
