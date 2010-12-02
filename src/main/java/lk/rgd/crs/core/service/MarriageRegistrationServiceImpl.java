@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -117,6 +119,26 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         updateMarriageRegister(notice, user);
     }
 
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER)
+    public List<MarriageRegister> getMarriageNoticePendingApprovalByPINorNIC(String idNumber, boolean active, User user) {
+        logger.debug("attempt to get marriage notice pending results for identification number : {} ", idNumber);
+        List<MarriageRegister> results = marriageRegistrationDAO.getByStateAndPINorNIC(
+            MarriageRegister.State.DATA_ENTRY, idNumber, active);
+        Iterator<MarriageRegister> itr = results.iterator();
+        while (itr.hasNext()) {
+            MarriageRegister reg = itr.next();
+            if (!checkUserAccessPermissionToMarriageRecord(reg, user)) {
+                logger.debug("user : {} :does not have permission to edit/approve marriage record idUKey : {} ",
+                    user.getUserName(), reg.getIdUKey());
+                results.remove(reg);
+            }
+        }
+        return results;
+    }
+
     private void addWitness(Witness witness) {
         marriageRegistrationDAO.addWitness(witness);
     }
@@ -147,5 +169,21 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
             marriageRegistrationDAO.addWitness(marriageRegister.getFemaleNoticeWitness_1());
             marriageRegistrationDAO.addWitness(marriageRegister.getFemaleNoticeWitness_2());
         }
+    }
+
+    /**
+     * private method which check that current user have permission for ds divisions that allowed to
+     * edit/approve/delete/reject  marriage notice/register record
+     * note :we can not throw an exception (for unauthorized access) here because we just want to remove those unauthorized
+     * records from the display list
+     */
+    private boolean checkUserAccessPermissionToMarriageRecord(MarriageRegister marriageRegister, User user) {
+        //logic : if A and B submit two notices from two ds (a and b) only users in ds 'a' and ds 'b'
+        // can perform functions to the record
+        MRDivision maleMrDivision = marriageRegister.getMrDivisionOfMaleNotice();   //MR division male notice submitted
+        MRDivision femaleMrDivision = marriageRegister.getMrDivisionOfFemaleNotice(); //MR division female notice submitted
+        boolean haveAccess = ((maleMrDivision != null && user.isAllowedAccessToMRDSDivision(maleMrDivision.getMrDivisionUKey())) ||
+            (femaleMrDivision != null && user.isAllowedAccessToMRDSDivision(femaleMrDivision.getMrDivisionUKey())));
+        return haveAccess;
     }
 }

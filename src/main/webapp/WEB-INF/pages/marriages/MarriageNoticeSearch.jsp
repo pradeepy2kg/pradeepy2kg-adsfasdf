@@ -83,7 +83,9 @@
             "bInfo": false,
             "bAutoWidth": false,
             "bJQueryUI": true,
-            "sPaginationType": "full_numbers"
+            "sPaginationType": "full_numbers"   ,
+            "aaSorting": [[ 3, "desc" ]]
+            
         });
     });
 
