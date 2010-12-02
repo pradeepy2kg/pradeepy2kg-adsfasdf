@@ -107,7 +107,7 @@ public class MarriageRegister implements Serializable, Cloneable {
     private String regPlaceInEnglishLang;
 
     @Column(length = 10, name = "SERIAL_MALE")
-    private String serialOfMaleNotice;
+    private Long serialOfMaleNotice;
 
     @Column
     @Temporal(value = TemporalType.DATE)
@@ -121,7 +121,7 @@ public class MarriageRegister implements Serializable, Cloneable {
     private MRDivision mrDivisionOfMaleNotice;
 
     @Column(length = 10, name = "SERIAL_FEMALE")
-    private String serialOfFemaleNotice;
+    private Long serialOfFemaleNotice;
 
     @Column
     @Temporal(value = TemporalType.DATE)
@@ -225,11 +225,11 @@ public class MarriageRegister implements Serializable, Cloneable {
         this.registrarOrMinisterPIN = registrarOrMinisterPIN;
     }
 
-    public String getSerialOfMaleNotice() {
+    public Long getSerialOfMaleNotice() {
         return serialOfMaleNotice;
     }
 
-    public void setSerialOfMaleNotice(String serialOfMaleNotice) {
+    public void setSerialOfMaleNotice(Long serialOfMaleNotice) {
         this.serialOfMaleNotice = serialOfMaleNotice;
     }
 
@@ -369,12 +369,12 @@ public class MarriageRegister implements Serializable, Cloneable {
         this.bothPartySubmitted = bothPartySubmitted;
     }
 
-    public String getSerialOfFemaleNotice() {
+    public Long getSerialOfFemaleNotice() {
         return serialOfFemaleNotice;
     }
 
-    public void setSerialOfFemaleNotice(String serialOfFemaleNotice) {
-        this.serialOfFemaleNotice = WebUtils.filterBlanks(serialOfFemaleNotice);
+    public void setSerialOfFemaleNotice(Long serialOfFemaleNotice) {
+        this.serialOfFemaleNotice = serialOfFemaleNotice;
     }
 
     public String getRegSerial() {
