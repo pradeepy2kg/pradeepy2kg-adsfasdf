@@ -190,7 +190,8 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
             //case 1
             marriageRegistrationDAO.deleteMarriageRegister(idUKey);
         } else {
-            if (notice.getSerialOfMaleNotice() != 0 && notice.getSerialOfFemaleNotice() != 0) {
+            if ((notice.getSerialOfMaleNotice() != null && notice.getSerialOfMaleNotice() != 0) &&
+                (notice.getSerialOfFemaleNotice() != null && notice.getSerialOfFemaleNotice() != 0)) {
                 //case 2.2
                 if (noticeType == MarriageNotice.Type.MALE_NOTICE) {
                     //clearing male notice related data

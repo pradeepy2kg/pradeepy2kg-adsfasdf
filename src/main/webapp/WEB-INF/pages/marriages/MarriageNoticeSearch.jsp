@@ -84,8 +84,10 @@
             "bAutoWidth": false,
             "bJQueryUI": true,
             "sPaginationType": "full_numbers"   ,
-            "aaSorting": [[ 3, "desc" ]]
-            
+            "aaSorting": [
+                [ 3, "desc" ]
+            ]
+
         });
     });
 
@@ -286,7 +288,7 @@
                         <td align="center">
                             <s:url id="editSelected" action="eprMarriageNoticeEditInit.do">
                                 <s:param name="idUKey" value="idUKey"/>
-                                 <s:param name="noticeType" value="type"/> 
+                                <s:param name="noticeType" value="type"/>
                             </s:url>
                             <s:a href="%{editSelected}" title="%{getText('editToolTip.label')}">
                                 <img src="<s:url value='/images/edit.png'/>" width="25" height="25" border="none"/>
@@ -309,8 +311,9 @@
                             </s:a>
                         </td>
                         <td align="center">
-                            <s:url id="deleteSelected">
+                            <s:url id="deleteSelected" action="eprMarriageNoticeDelete.do">
                                 <s:param name="idUKey" value="idUKey"/>
+                                <s:param name="noticeType" value="type"/>
                             </s:url>
                             <s:a href="%{deleteSelected}" title="%{getText('deleteToolTip.label')}">
                                 <img src="<s:url value='/images/delete.gif'/>" width="25" height="25" border="none"/>
