@@ -286,6 +286,7 @@
                         <td align="center">
                             <s:url id="editSelected" action="eprMarriageNoticeEditInit.do">
                                 <s:param name="idUKey" value="idUKey"/>
+                                 <s:param name="noticeType" value="type"/> 
                             </s:url>
                             <s:a href="%{editSelected}" title="%{getText('editToolTip.label')}">
                                 <img src="<s:url value='/images/edit.png'/>" width="25" height="25" border="none"/>

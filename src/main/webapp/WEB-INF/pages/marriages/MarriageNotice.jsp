@@ -1083,6 +1083,10 @@ if female party is submitted the notice
 <div class="form-submit">
     <s:submit value="add.notice"/>
 </div>
+<s:if test="editMode">
+    <s:hidden name="noticeType" value="MALE_NOTICE"/>
+</s:if>
 </s:form>
 </div>
-<s:property value="marriage.idUKey"/> 
+
+<s:property value="noticeType"/> 

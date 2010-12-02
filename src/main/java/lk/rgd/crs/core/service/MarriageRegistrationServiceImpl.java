@@ -88,6 +88,9 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         logger.debug("getting active marriage notice for male identification : {} :and female identification : {}",
             maleIdentification, femaleIdentification);
         //getting latest record
+        //note :in some cases legally notice become expired in 3 months but system does not expire it with in exact 3 months
+        //in some situations a new notice will be submitted a day after legal expiration so there is a existing active record
+        //but new notice is the latest and we take that
         List<MarriageRegister> records = marriageRegistrationDAO.getActiveMarriageNoticeByMaleFemaleIdentification
             (maleIdentification, femaleIdentification);
         if (records.size() > 0) {

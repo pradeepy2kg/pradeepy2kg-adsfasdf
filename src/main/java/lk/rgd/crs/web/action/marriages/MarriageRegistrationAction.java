@@ -9,7 +9,9 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.CivilStatusUtil;
 import lk.rgd.crs.api.dao.MRDivisionDAO;
 import lk.rgd.crs.api.domain.MRDivision;
+import lk.rgd.crs.api.domain.MarriageNotice;
 import lk.rgd.crs.api.domain.MarriageRegister;
+import lk.rgd.crs.api.domain.MaleParty;
 import lk.rgd.crs.api.service.MarriageRegistrationService;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.web.util.CommonUtil;
@@ -71,6 +73,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     private HashMap civilStatusFemale;
     MarriageType[] marriageType;
 
+    private MarriageNotice.Type noticeType;
 
     public MarriageRegistrationAction(MarriageRegistrationService marriageRegistrationService,
         MRDivisionDAO mrDivisionDAO, RaceDAO raceDAO, CountryDAO countryDAO, CommonUtil commonUtil) {
@@ -85,7 +88,6 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         mrDivisionList = new HashMap<Integer, String>();
         raceList = new HashMap<Integer, String>();
         countryList = new HashMap<Integer, String>();
-
     }
 
     /**
@@ -150,10 +152,23 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
                 marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
             return ERROR;
         }
+        populateNoticeForInitEdit(marriage, noticeType);
         commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
             marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
         editMode = true;
         return "pageLoad";
+    }
+
+    private void populateNoticeForInitEdit(MarriageRegister marriage, MarriageNotice.Type type) {
+        if (type == MarriageNotice.Type.BOTH_NOTICE || type == MarriageNotice.Type.MALE_NOTICE) {
+            //populate male notice
+            serialNumber = marriage.getSerialOfMaleNotice();
+            noticeReceivedDate = marriage.getDateOfMaleNotice();
+        } else {
+            //populate female notice
+            serialNumber = marriage.getSerialOfFemaleNotice();
+            noticeReceivedDate = marriage.getDateOfFemaleNotice();
+        }
     }
 
     /**
@@ -163,7 +178,8 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         logger.debug("attempt to edit marriage notice : idUKey {}", idUKey);
         MarriageRegister existingNotice = marriageRegistrationService.getByIdUKey(idUKey, user);
         if (existingNotice != null) {
-            marriageRegistrationService.updateMarriageRegister(marriage, user);
+            populateNoticeForEdit(marriage, existingNotice, noticeType);
+            marriageRegistrationService.updateMarriageRegister(existingNotice, user);
             addActionMessage(getText("marriage.notice.updated.success"));
         } else {
             logger.debug("marriage notice : idUKey {} : update fails");
@@ -174,10 +190,31 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         return SUCCESS;
     }
 
+    private void populateNoticeForEdit(MarriageRegister marriageRegister, MarriageRegister existing, MarriageNotice.Type type) {
+        existing.setMale(marriage.getMale());
+        existing.setFemale(marriage.getFemale());
+        if (type == MarriageNotice.Type.BOTH_NOTICE || type == MarriageNotice.Type.MALE_NOTICE) {
+            //populate male notice
+            existing.setSerialOfMaleNotice(serialNumber);
+            existing.setDateOfMaleNotice(noticeReceivedDate);
+            marriageRegister.getMaleNoticeWitness_1().setIdukey(existing.getMaleNoticeWitness_1().getIdUKey());
+            marriageRegister.getMaleNoticeWitness_2().setIdukey(existing.getMaleNoticeWitness_2().getIdUKey());
+            existing.setMaleNoticeWitness_1(marriageRegister.getMaleNoticeWitness_1());
+            existing.setMaleNoticeWitness_2(marriageRegister.getMaleNoticeWitness_2());
+        } else {
+            //populate female notice
+            existing.setSerialOfFemaleNotice(serialNumber);
+            existing.setDateOfFemaleNotice(noticeReceivedDate);
+            marriageRegister.getFemaleNoticeWitness_1().setIdukey(existing.getFemaleNoticeWitness_1().getIdUKey());
+            marriageRegister.getFemaleNoticeWitness_2().setIdukey(existing.getFemaleNoticeWitness_2().getIdUKey());
+            existing.setFemaleNoticeWitness_1(marriageRegister.getFemaleNoticeWitness_1());
+            existing.setFemaleNoticeWitness_2(marriageRegister.getFemaleNoticeWitness_2());
+        }
+    }
+
     /**
      * special case submit notices to two locations and second notice about to be add(actually updating same record)
      */
-    //todo add second notice
     public String addSecondNotice() {
         logger.debug("attempt to add second notice : idUKey of the record : {}", idUKey);
         MarriageRegister existingNotice = marriageRegistrationService.getByIdUKey(idUKey, user);
@@ -535,6 +572,14 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     public void setCivilStatusFemale(HashMap civilStatusFemale) {
         this.civilStatusFemale = civilStatusFemale;
+    }
+
+    public MarriageNotice.Type getNoticeType() {
+        return noticeType;
+    }
+
+    public void setNoticeType(MarriageNotice.Type noticeType) {
+        this.noticeType = noticeType;
     }
 
     public MarriageType[] getMarriageType() {
