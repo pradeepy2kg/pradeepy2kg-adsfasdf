@@ -9,6 +9,8 @@ import lk.rgd.UnitTestManager;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.dao.MRDivisionDAO;
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -46,9 +48,17 @@ public class AdminTaskTest extends CustomStrutsTestCase {
     private static final String ADD_LOCATIONS_TO_NEW_USER = "/management/eprInitAssignedUserLocation.do";
     private static final String SEARCH_REGISTRAR_PAGE_LOAD = "/management/eprFindRegistrar.do";
     private static final String SEARCH_REGISTRAR_ACTION = "/management/eprFindRegistrar.do";
+    private static final String VIEW_EVENTS_PAGE_LOAD = "/management/eprInitEventsManagement.do";
+    private static final String VIEW_EVENTS_ACTION = "/management/eprFilterEventsList.do";
+    private static final String USER_PREFERENCES_PAGE_LOAD = "/preferences/eprUserPreferencesInit.do";
+    private static final String USER_PREFERENCES_ACTION = "/preferences/eprUserPreferencesAction.do";
+    private static final String CHANGE_PASSWORD_PAGE_LOAD = "/preferences/eprpassChangePageLoad.do";
+    private static final String CHANGE_PASSWORD_ACTION = "/preferences/eprChangePass.do";
 
     private UserManagementAction userManagementAction;
     private RegistrarManagementAction registrarManagementAction;
+    private EventsViewerAction eventViewerAction;
+    private UserPreferencesAction userPreferencesAction;
     private LoginAction loginAction;
     private Registrar registrar;
     private User user;
@@ -148,6 +158,24 @@ public class AdminTaskTest extends CustomStrutsTestCase {
         } else if (SEARCH_REGISTRAR_ACTION.equals(mapping)) {
             registrarManagementAction = (RegistrarManagementAction) proxy.getAction();
             assertNotNull(registrarManagementAction);
+        } else if (VIEW_EVENTS_PAGE_LOAD.equals(mapping)) {
+            eventViewerAction = (EventsViewerAction) proxy.getAction();
+            assertNotNull(eventViewerAction);
+        } else if (VIEW_EVENTS_ACTION.equals(mapping)) {
+            eventViewerAction = (EventsViewerAction) proxy.getAction();
+            assertNotNull(eventViewerAction);
+        } else if (USER_PREFERENCES_PAGE_LOAD.equals(mapping)) {
+            userPreferencesAction = (UserPreferencesAction) proxy.getAction();
+            assertNotNull(userPreferencesAction);
+        } else if (USER_PREFERENCES_ACTION.equals(mapping)) {
+            userPreferencesAction = (UserPreferencesAction) proxy.getAction();
+            assertNotNull(userPreferencesAction);
+        } else if (CHANGE_PASSWORD_PAGE_LOAD.equals(mapping)) {
+            userPreferencesAction = (UserPreferencesAction) proxy.getAction();
+            assertNotNull(userPreferencesAction);
+        } else if (CHANGE_PASSWORD_ACTION.equals(mapping)) {
+            userPreferencesAction = (UserPreferencesAction) proxy.getAction();
+            assertNotNull(userPreferencesAction);
         }
 
         logger.debug("Action Method to be executed is {} ", proxy.getMethod());
@@ -222,9 +250,9 @@ public class AdminTaskTest extends CustomStrutsTestCase {
 
         request.setParameter("userDistrictId", "1");
         request.setParameter("bdDivision.divisionId", "10");
-        request.setParameter("bdDivision.enDivisionName", "new rggistration division EN");
-        request.setParameter("bdDivision.siDivisionName", "new rggistration division si");
-        request.setParameter("bdDivision.taDivisionName", "new rggistration division ta");
+        request.setParameter("bdDivision.enDivisionName", "new registration division EN");
+        request.setParameter("bdDivision.siDivisionName", "new registration division si");
+        request.setParameter("bdDivision.taDivisionName", "new registration division ta");
         request.setParameter("button", "ADD");
         request.setParameter("dsDivisionId", "1");
         request.setParameter("pageNo", "3");
@@ -344,7 +372,15 @@ public class AdminTaskTest extends CustomStrutsTestCase {
         initAndExecute(SEARCH_USERS_ACTION, session);
         session = userManagementAction.getSession();
         assertEquals("Action errors for Search Users Action", 0, userManagementAction.getActionErrors().size());
-        assertNotNull("Search List null", session.get(WebConstants.SEARCH_USERS_LIST));
+        //assertNotNull("Search List null", session.get(WebConstants.SEARCH_USERS_LIST));
+
+        List<User> ul = (List<User>) session.get(WebConstants.SEARCH_USERS_LIST);
+        Iterator<User> it = ul.iterator();
+
+        while (it.hasNext()) {
+            addLocationsToNewUser(session, it.next().getUserId());
+            break;
+        }
 
     }
 
@@ -353,7 +389,7 @@ public class AdminTaskTest extends CustomStrutsTestCase {
         Map session = UserLogin("admin", "password");
         initAndExecute(MANAGE_ASSIGNMENT_PAGE_LOAD, session);
         session = registrarManagementAction.getSession();
-        assertEquals("Errors for Manage Assignments page load", 0, registrarManagementAction.getActionErrors().size());
+        assertEquals("Errors while Manage Assignments page loading", 0, registrarManagementAction.getActionErrors().size());
 
         request.setParameter("districtId", "1");
         request.setParameter("dsDivisionId", "1");
@@ -365,7 +401,7 @@ public class AdminTaskTest extends CustomStrutsTestCase {
 
     }
 
-    public void addLocationsToNewUser (Map session, String uID) {
+    public void addLocationsToNewUser(Map session, String uID) {
 
         request.setParameter("userId", uID);
         request.setParameter("newUser", "true");
@@ -382,13 +418,12 @@ public class AdminTaskTest extends CustomStrutsTestCase {
         Map session = UserLogin("admin", "password");
         initAndExecute(MANAGE_ASSIGNMENT_PAGE_LOAD, session);
         session = registrarManagementAction.getSession();
-        assertEquals("Errors while page loading", 0, registrarManagementAction.getActionErrors().size());
+        assertEquals("Errors while Search Registrar By Name page loading", 0, registrarManagementAction.getActionErrors().size());
 
         request.setParameter("registrarName", "shan");
         initAndExecute(MANAGE_ASSIGNMENT_ACTION, session);
         session = registrarManagementAction.getSession();
         assertEquals("Action errors for Search Registrar", 0, registrarManagementAction.getActionErrors().size());
-
 
     }
 
@@ -397,13 +432,62 @@ public class AdminTaskTest extends CustomStrutsTestCase {
         Map session = UserLogin("admin", "password");
         initAndExecute(MANAGE_ASSIGNMENT_PAGE_LOAD, session);
         session = registrarManagementAction.getSession();
-        assertEquals("Errors while page loading", 0, registrarManagementAction.getActionErrors().size());
+        assertEquals("Errors while Search Registrar By Pin page loading", 0, registrarManagementAction.getActionErrors().size());
 
         request.setParameter("registrarPin", "1010101010");
         initAndExecute(MANAGE_ASSIGNMENT_ACTION, session);
         session = registrarManagementAction.getSession();
         assertEquals("Action errors for Search Registrar", 0, registrarManagementAction.getActionErrors().size());
 
+    }
+
+    public void testViewEvents() throws Exception {
+
+        Map session = UserLogin("admin", "password");
+        initAndExecute(VIEW_EVENTS_PAGE_LOAD, session);
+        assertEquals("Errors while View Events page loading", 0, eventViewerAction.getActionErrors().size());
+
+        request.setParameter("searchStartDate", "");
+        request.setParameter("searchEndDate", "");
+        request.setParameter("startTime", "");
+        request.setParameter("endTime", "");
+
+        initAndExecute(VIEW_EVENTS_ACTION, session);
+        assertEquals("Errors while page loading", 0, eventViewerAction.getActionErrors().size());
+
+    }
+
+    public void testUserPreferences() throws Exception {
+
+        Map session = UserLogin("admin", "password");
+        initAndExecute(USER_PREFERENCES_PAGE_LOAD, session);
+        session = userPreferencesAction.getSession();
+        assertEquals("Errors while View Events page loading", 0, userPreferencesAction.getActionErrors().size());
+
+        request.setParameter("prefLanguage", "en");
+        initAndExecute(USER_PREFERENCES_ACTION, session);
+        session = userPreferencesAction.getSession();
+
+        assertNotNull("User Preferred Language null", session.get(WebConstants.SESSION_USER_LANG));
+        assertNotNull("Form's Preferred Language null", userPreferencesAction.getPrefLanguage());
+        assertNotNull("Updated User bean null", session.get(WebConstants.SESSION_USER_BEAN));
+        
+    }
+
+    public void testChangePassword() throws Exception {
+
+        Map session = UserLogin("admin", "password");
+        initAndExecute(CHANGE_PASSWORD_PAGE_LOAD, session);
+        session = userPreferencesAction.getSession();
+        assertEquals("Errors while Change Password page loading", 0, userPreferencesAction.getActionErrors().size());
+
+        request.setParameter("existingPassword","password");
+        request.setParameter("newPassword","Abcd@123");
+        request.setParameter("retypeNewPassword","Abcd@123");
+
+        initAndExecute(CHANGE_PASSWORD_ACTION, session);
+        session = userPreferencesAction.getSession();
+        assertEquals("Errors for Change password action", 0, userPreferencesAction.getActionErrors().size());
 
     }
 
