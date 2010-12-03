@@ -22,7 +22,7 @@ import java.util.List;
  * implementation of the marriage registration service interface
  *
  * @author amith jayasekara
- * @author chathuranga withana
+ * @author Chathuranga Withana
  *         todo check user permissions for performing tasks
  */
 public class MarriageRegistrationServiceImpl implements MarriageRegistrationService {
