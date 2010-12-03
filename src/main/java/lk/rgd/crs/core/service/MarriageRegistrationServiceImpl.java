@@ -225,6 +225,20 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
             serialNumber, active);
     }
 
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<MarriageRegister> getMarriageRegisterPendingApprovalByDSDivision(DSDivision dsDivision, int pageNumber,
+        int numOfRows, boolean active, User user) {
+        logger.debug("attempt to get pending marriage register list by DSDivision idUKey : {}", dsDivision.getDsDivisionUKey());
+        //validate user access to the ds division
+        ValidationUtils.validateAccessToDSDivision(dsDivision, user);
+        return marriageRegistrationDAO.getPaginatedListForStateByDSDivision(dsDivision,
+            MarriageRegister.State.REG_DATA_ENTRY, pageNumber, numOfRows, true);
+    }
+
     /**
      * clearing notice related data for given notice type
      */

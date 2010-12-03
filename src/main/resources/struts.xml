@@ -1208,5 +1208,10 @@
             <result type="tiles" name="pageLoad">epr.marriageCertificate</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
+
+        <action name="eprMarriageCertificateLoad" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
+                method="marriageRegisterSearch">
+            <result type="tiles" name="success">epr.marriageNoticeSearchHome</result>
+        </action>
     </package>
 </struts>

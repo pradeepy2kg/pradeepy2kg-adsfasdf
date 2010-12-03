@@ -138,4 +138,17 @@ public interface MarriageRegistrationService {
      */
     public List<MarriageRegister> getMarriageRegisterPendingApprovalBySerialAndMRDivision(long serialNumber,
         MRDivision mrDivision, int pageNumber, int numOfRows, boolean active, User user);
+
+    /**
+     * get pending marriage registration list by given DSDivision
+     *
+     * @param dsDivision DSDivision
+     * @param pageNumber page number(for pagination)
+     * @param numOfRows  number of results need to be fetched
+     * @param active     record type (active or inactive)
+     * @param user       user who performs the action
+     * @return list of marriage register objects in a given DS Division
+     */
+    public List<MarriageRegister> getMarriageRegisterPendingApprovalByDSDivision(DSDivision dsDivision, int pageNumber,
+        int numOfRows, boolean active, User user);
 }
