@@ -12,23 +12,23 @@ public class CivilStatusUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(CivilStatusUtil.class);
 
-    public static String getStatusAsString(Person.CivilStatus s) {
+    public static String getStatusAsString(Integer s) {
         if (s == null) {
             return "U"; // unknown
         }
 
         switch (s) {
-            case NEVER_MARRIED:
+            case 0:
                 return "N";
-            case MARRIED:
+            case 1:
                 return "M";
-            case ANNULLED:
+            case 2:
                 return "A";
-            case SEPARATED:
+            case 3:
                 return "S";
-            case DIVORCED:
+            case 4:
                 return "D";
-            case WIDOWED:
+            case 5:
                 return "W";
         }
         throw new IllegalArgumentException("Illegal civil status : " + s);

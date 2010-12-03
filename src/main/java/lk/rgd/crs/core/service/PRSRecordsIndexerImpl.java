@@ -6,6 +6,7 @@ import lk.rgd.common.util.CivilStatusUtil;
 import lk.rgd.common.util.GenderUtil;
 import lk.rgd.common.util.LifeStatusUtil;
 import lk.rgd.crs.api.service.PRSRecordsIndexer;
+import lk.rgd.crs.core.DatabaseInitializer;
 import lk.rgd.prs.api.dao.PersonDAO;
 import lk.rgd.prs.api.domain.Address;
 import lk.rgd.prs.api.domain.Person;
@@ -17,7 +18,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.sql.DataSource;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 /**
@@ -55,16 +61,15 @@ public class PRSRecordsIndexerImpl implements PRSRecordsIndexer {
     private static final Logger logger = LoggerFactory.getLogger(PRSRecordsIndexerImpl.class);
 
     private final SolrIndexManager solrIndexManager;
-    private final PersonDAO personDao;
-    private final AppParametersDAO appParametersDAO;
+    private final DataSource dataSource;
+    private final PersonDAO personDAO;
 
-    public PRSRecordsIndexerImpl(SolrIndexManager solrIndexManager, PersonDAO personDao, AppParametersDAO appParametersDAO) {
+    public PRSRecordsIndexerImpl(SolrIndexManager solrIndexManager, DataSource dataSource, PersonDAO personDAO) {
         this.solrIndexManager = solrIndexManager;
-        this.personDao = personDao;
-        this.appParametersDAO = appParametersDAO;
+        this.dataSource = dataSource;
+        this.personDAO = personDAO;
     }
 
-    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public boolean indexAll() {
 
         if (solrIndexManager.getPRSServer() == null) {
@@ -80,23 +85,37 @@ public class PRSRecordsIndexerImpl implements PRSRecordsIndexer {
             logger.error("Error deleting existing PRS records off Solr index");
         }
 
-        List<Person> personList = personDao.findAll();
+        Connection conn = null;
 
-        int count = 0;
         try {
             logger.info("Begin re-indexing of all PRS records into Solr");
-            for (Person person : personList) {
-                addRecord(person);
+
+            long start = System.currentTimeMillis();
+            conn = dataSource.getConnection();
+            conn.setAutoCommit(false);
+            conn.setReadOnly(true);
+
+            Statement s = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+            if (Boolean.getBoolean("ecivildb.mysql")) {
+                s.setFetchSize(Integer.MIN_VALUE);
+            }
+            ResultSet rs = s.executeQuery("SELECT * FROM PRS.PERSON");
+
+            int count = 0;
+            while (rs.next()) {
+                addRecord(rs);
                 count++;
                 if (count % 10000 == 0) {
-                    logger.info("Indexed : {} records..", count);
+                    logger.info("Indexed : {} records in : {}s", count, (System.currentTimeMillis() - start)/1000);
                 }
             }
 
+            logger.debug("Indexed : " + count + " PRS records in " + (System.currentTimeMillis() - start) / 1000 + "s");
+            start = System.currentTimeMillis();
             solrIndexManager.getPRSServer().optimize();
             solrIndexManager.getPRSServer().commit();
-
-            logger.debug("Successfully indexed : " + count + " PRS records..");
+            logger.debug("Optimized indexed of : " + count + " PRS records in : " + 
+                (System.currentTimeMillis() - start) / 1000 + "s");
             return true;
 
             // TODO we do not print the stack trace for now..
@@ -106,59 +125,70 @@ public class PRSRecordsIndexerImpl implements PRSRecordsIndexer {
             logger.error("IO Exception encountered during PRS record re-indexing", e);
         } catch (Exception e) {
             logger.error("Unexpected Exception encountered during PRS record re-indexing", e);
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (Exception e) {}
+            }
         }
         return false;
     }
 
-    public void addRecord(Person p) throws IOException, SolrServerException {
+    public void addRecord(ResultSet rs) throws SQLException, IOException, SolrServerException {
 
         SolrInputDocument d = new SolrInputDocument();
 
-        d.addField(FIELD_PERSON_UKEY, p.getPersonUKey());
-        d.addField(FIELD_FULL_NAME_ENGLISH, p.getFullNameInEnglishLanguage());
-        d.addField(FIELD_FULL_NAME_OFFICIAL_LANG, p.getFullNameInOfficialLanguage());
-        d.addField(FIELD_ALL_NAMES, p.getFullNameInOfficialLanguage());
-        d.addField(FIELD_GENDER, GenderUtil.getGenderCharacter(p.getGender()));
-        d.addField(FIELD_NIC, p.getNic());
-        d.addField(FIELD_PIN, p.getPin());
+        final long personUKey = rs.getLong(FIELD_PERSON_UKEY);
+        d.addField(FIELD_PERSON_UKEY, personUKey);
+        d.addField(FIELD_FULL_NAME_ENGLISH, rs.getString(FIELD_FULL_NAME_ENGLISH));
+        d.addField(FIELD_FULL_NAME_OFFICIAL_LANG, rs.getString(FIELD_FULL_NAME_OFFICIAL_LANG));
+        d.addField(FIELD_ALL_NAMES, rs.getString(FIELD_FULL_NAME_ENGLISH));
+        d.addField(FIELD_ALL_NAMES, rs.getString(FIELD_FULL_NAME_OFFICIAL_LANG));
+        d.addField(FIELD_GENDER, GenderUtil.getGenderCharacter(rs.getInt(FIELD_GENDER)));
+        d.addField(FIELD_NIC, rs.getString(FIELD_NIC));
+        d.addField(FIELD_PIN, rs.getLong(FIELD_PIN));
 
-        d.addField(FIELD_PLACE_OF_BIRTH, p.getPlaceOfBirth());
-        d.addField(FIELD_DATE_OF_BIRTH, p.getDateOfBirth());
-        d.addField(FIELD_DATE_OF_DEATH, p.getDateOfDeath());
+        d.addField(FIELD_PLACE_OF_BIRTH, rs.getString(FIELD_PLACE_OF_BIRTH));
+        d.addField(FIELD_DATE_OF_BIRTH, rs.getDate(FIELD_DATE_OF_BIRTH));
+        d.addField(FIELD_DATE_OF_DEATH, rs.getDate(FIELD_DATE_OF_DEATH));
 
-        if (p.getCountries().isEmpty()) {
+        //List<PersonCitizenship> pcList = personDAO.getCitizenshipsByPersonUKey(personUKey);
+        //if (pcList.isEmpty()) {
             d.addField(FIELD_CITIZENSHIP, SRI_LANKA);
-        } else {
-            for (PersonCitizenship c : p.getCountries()) {
-                d.addField(FIELD_CITIZENSHIP, c.getCountry().getCountryCode());
-                d.addField(FIELD_PASSPORT, c.getPassportNo());
-            }
+        //} else {
+        //    for (PersonCitizenship c : pcList) {
+        //        d.addField(FIELD_CITIZENSHIP, c.getCountry().getCountryCode());
+        //        d.addField(FIELD_PASSPORT, c.getPassportNo());
+        //    }
+        //}
+
+        Long lastAddressUKey = rs.getLong("lastAddressUKey");
+        if (lastAddressUKey != null && lastAddressUKey > 0) {
+            d.addField(FIELD_LAST_ADDRESS, personDAO.getAddressByUKey(lastAddressUKey).toString());
+
+            // process any other addressed
+            //for (Address a : personDAO.getAddressesByPersonUKey(personUKey)) {
+            //    d.addField(FIELD_ALL_ADDRESSES, a.toString());
+            //}
         }
 
-        if (p.getLastAddress() != null) {
-            d.addField(FIELD_LAST_ADDRESS, p.getLastAddress().toString());
-        }
-        
-        for (Address a : p.getAddresses()) {
-            d.addField(FIELD_ALL_ADDRESSES, a.toString());
-        }
+        d.addField(FIELD_EMAIL, rs.getString("personEmail"));
+        d.addField(FIELD_PHONE, rs.getString("personPhoneNo"));
 
-        d.addField(FIELD_EMAIL, p.getPersonEmail());
-        d.addField(FIELD_PHONE, p.getPersonPhoneNo());
-
-        d.addField(FIELD_LIFE_STATUS,   LifeStatusUtil.getStatusAsString(p.getLifeStatus()));
-        d.addField(FIELD_CIVIL_STATUS,  CivilStatusUtil.getStatusAsString(p.getCivilStatus()));
-        d.addField(FIELD_RECORD_STATUS, getRecordStatus(p.getStatus()));
+        d.addField(FIELD_LIFE_STATUS,   LifeStatusUtil.getStatusAsString(rs.getInt(FIELD_LIFE_STATUS)));
+        d.addField(FIELD_CIVIL_STATUS,  CivilStatusUtil.getStatusAsString(rs.getInt(FIELD_CIVIL_STATUS)));
+        d.addField(FIELD_RECORD_STATUS, getRecordStatus(rs.getInt("status")));
 
         solrIndexManager.getPRSServer().add(d);
     }
 
-    private static String getRecordStatus(Person.Status s) {
+    private static String getRecordStatus(int s) {
         switch (s) {
-            case UNVERIFIED: return "U";
-            case SEMI_VERIFIED: return "S";
-            case VERIFIED: return "V";
-            case CANCELLED: return "C";
+            case 0: return "U";
+            case 1: return "S";
+            case 2: return "V";
+            case 3: return "C";
         }
         throw new IllegalArgumentException("Illegal record state : " + s);
     }

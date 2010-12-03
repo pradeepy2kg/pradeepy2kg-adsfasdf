@@ -92,6 +92,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
         if ("org.hibernate.dialect.MySQLDialect".equals(emf.getPersistenceUnitInfo().getProperties().
             getProperty("hibernate.dialect"))) {
             mysql = true;
+            System.setProperty("ecivildb.mysql", "true");
             logger.debug("Detected MySQL as the target database");
         }
 

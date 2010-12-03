@@ -12,6 +12,9 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "ADDRESS", schema = "PRS")
+@NamedQueries({
+    @NamedQuery(name = "addresses.by.idukey", query = "SELECT a FROM Address a WHERE a.person.personUKey = :idUKey")
+})
 public class Address implements Serializable {
 
     /**

@@ -8,6 +8,7 @@ import lk.rgd.prs.api.dao.PersonDAO;
 import lk.rgd.prs.api.domain.Address;
 import lk.rgd.prs.api.domain.Marriage;
 import lk.rgd.prs.api.domain.Person;
+import lk.rgd.prs.api.domain.PersonCitizenship;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,6 +52,25 @@ public class PersonDAOImpl extends BaseDAO implements PersonDAO {
     @Transactional(propagation = Propagation.MANDATORY)
     public void updateMarriage(Marriage m) {
         em.merge(m);
+    }
+
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public Address getAddressByUKey(long addressUKey) {
+        return em.find(Address.class, addressUKey);
+    }
+
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<Address> getAddressesByPersonUKey(long idUKey) {
+        Query q = em.createNamedQuery("addresses.by.idukey");
+        q.setParameter("idUKey", idUKey);
+        return q.getResultList();
+    }
+
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<PersonCitizenship> getCitizenshipsByPersonUKey(long idUKey) {
+        Query q = em.createNamedQuery("citizenship.by.idukey");
+        q.setParameter("idUKey", idUKey);
+        return q.getResultList();
     }
 
     @Transactional(propagation = Propagation.MANDATORY)

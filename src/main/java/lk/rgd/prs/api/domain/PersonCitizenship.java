@@ -17,7 +17,9 @@ import java.io.Serializable;
 @IdClass(PersonCitizenshipID.class)
 @NamedQueries({
     @NamedQuery(name = "get.citizenship.by.personId", query = "SELECT pc FROM PersonCitizenship pc " +
-        "WHERE pc.personUKey = :personUKey ORDER BY pc.country.enCountryName ASC")
+        "WHERE pc.personUKey = :personUKey ORDER BY pc.country.enCountryName ASC"),
+    @NamedQuery(name = "citizenship.by.idukey", query = "SELECT pc FROM PersonCitizenship pc " +
+        "WHERE pc.personUKey = :idUKey")
 })
 public class PersonCitizenship implements Serializable {
     @Id

@@ -5,6 +5,7 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.prs.api.domain.Address;
 import lk.rgd.prs.api.domain.Marriage;
 import lk.rgd.prs.api.domain.Person;
+import lk.rgd.prs.api.domain.PersonCitizenship;
 
 import java.util.List;
 
@@ -44,6 +45,33 @@ public interface PersonDAO {
      * @param m the Marriage to be updated
      */
     public void updateMarriage(Marriage m);
+
+    /**
+     * Return the Address object for the given unique key
+     * NOTE: TO BE ONLY USED BY THE PRS INDEXER
+     *
+     * @param addressUKey the unique database PK
+     * @return the matching address
+     */
+    public Address getAddressByUKey(long addressUKey);
+
+    /**
+     * Return the Address objects for the given person UKey
+     * NOTE: TO BE ONLY USED BY THE PRS INDEXER
+     *
+     * @param idUKey the unique key of the person
+     * @return the matching addresses
+     */
+    public List<Address> getAddressesByPersonUKey(long idUKey);
+
+    /**
+     * Return the Citizenship objects for the given person UKey
+     * NOTE: TO BE ONLY USED BY THE PRS INDEXER
+     *
+     * @param idUKey the unique key of the person
+     * @return the matching citizenships
+     */
+    public List<PersonCitizenship> getCitizenshipsByPersonUKey(long idUKey);
 
     /**
      * Add an Address to the PRS

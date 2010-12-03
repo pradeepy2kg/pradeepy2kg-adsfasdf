@@ -15,21 +15,21 @@ import lk.rgd.AppConstants;
 public class LifeStatusUtil {
     private static final Logger logger = LoggerFactory.getLogger(LifeStatusUtil.class);
 
-    public static String getStatusAsString(Person.LifeStatus s) {
+    public static String getStatusAsString(Integer s) {
         if (s == null) {
             return "U";
         }
 
         switch (s) {
-            case UNKNOWN:
+            case 0:
                 return "U";
-            case ALIVE:
+            case 1:
                 return "A";
-            case DEAD:
+            case 2:
                 return "D";
-            case MISSING:
+            case 3:
                 return "M";
-            case NON_RESIDENT:
+            case 4:
                 return "N";
         }
         throw new IllegalArgumentException("Illegal civil status : " + s);
