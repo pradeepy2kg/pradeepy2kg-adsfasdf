@@ -80,7 +80,6 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
                     mrDivisionDAO.getMRDivisionByPK(mrDivisionId), noticeSerialNo, user));
             }
         } else {
-
             if (isEmpty(pinOrNic) && noticeSerialNo == null) {
                 if (mrDivisionId == 0) {
                     searchList = WebUtils.populateNoticeList(service.getMarriageNoticePendingApprovalByDSDivision(
@@ -99,6 +98,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         }
         logger.debug("Marriage notice search list loaded with size : {}", searchList.size());
 
+        // by doing following previously user entered values will be removed in jsp page
         noticeSerialNo = null;
         pinOrNic = null;
 
