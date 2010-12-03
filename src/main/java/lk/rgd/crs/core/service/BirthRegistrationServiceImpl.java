@@ -1578,6 +1578,7 @@ public class BirthRegistrationServiceImpl implements
 
             if (parent.getMotherAddress() != null) {
                 final Address address = new Address(parent.getMotherAddress());
+                address.setPermanent(true);
                 mother.specifyAddress(address);
                 // save new address to PRS
                 ecivil.addAddress(address, user);
@@ -1662,6 +1663,7 @@ public class BirthRegistrationServiceImpl implements
             // locate address of father if he is the informant
             if (InformantInfo.InformantType.FATHER.equals(informant.getInformantType())) {
                 final Address address = new Address(informant.getInformantAddress());
+                address.setPermanent(true);
                 father.specifyAddress(address);
                 // add new address to the PRS
                 ecivil.addAddress(address, user);
@@ -1692,6 +1694,7 @@ public class BirthRegistrationServiceImpl implements
                 if (!InformantInfo.InformantType.FATHER.equals(informant.getInformantType()) &&
                     parent.getMotherAddress() != null) {
                     final Address address = new Address(parent.getMotherAddress());
+                    address.setPermanent(true);
                     father.specifyAddress(address);
                     // add new address
                     ecivil.addAddress(address, user);

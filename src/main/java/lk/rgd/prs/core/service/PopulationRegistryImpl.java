@@ -80,6 +80,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
                 cal.set(Calendar.DAY_OF_YEAR, rand.nextInt(364) + 1);
             }
         }
+        person.setSubmittedLocation(user.getPrimaryLocation());
         personDao.addPerson(person, user);
         return pin;
     }
@@ -90,7 +91,6 @@ public class PopulationRegistryImpl implements PopulationRegistry {
     @Transactional(propagation = Propagation.REQUIRED)
     public List<Person> addExistingPerson(Person person, List<PersonCitizenship> citizenshipList,
         boolean ignoreDuplicates, User user) {
-        long pin = -1;
         logger.debug("Adding an existing person to the PRS");
 
         validateRequiredFields(person);
@@ -267,7 +267,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public List<UserWarning> approvePerson(long personUKey, boolean ignoreWarnings, User user) {
-         // TODO still implementing don't review
+        // TODO still implementing don't review
         // TODO validate access(location??) and (required fields) minimum requirements
         // check approve permission
         if (!user.isAuthorized(Permission.PRS_APPROVE_PERSON)) {
