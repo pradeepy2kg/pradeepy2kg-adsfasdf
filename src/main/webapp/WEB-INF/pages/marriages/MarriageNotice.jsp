@@ -12,8 +12,8 @@
 
 
     function initPage() {
-      //  disableFemaleWitnesses('none');
-      //  disableMaleWitnesses('none');
+        //  disableFemaleWitnesses('none');
+        //  disableMaleWitnesses('none');
     }
     function disableFemaleWitnesses(mode) {
 
@@ -1084,9 +1084,10 @@ if female party is submitted the notice
     <s:submit value="add.notice"/>
 </div>
 <s:if test="editMode">
-    <s:hidden name="noticeType" value="MALE_NOTICE"/>
+    <s:hidden name="noticeType" value="%{noticeType}"/>
 </s:if>
 </s:form>
 </div>
 
-<s:property value="noticeType"/> 
+<s:property value="noticeType"/>
+<s:property value="secondNotice"/> 

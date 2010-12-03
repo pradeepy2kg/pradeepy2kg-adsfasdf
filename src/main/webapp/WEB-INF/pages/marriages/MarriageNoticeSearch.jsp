@@ -278,6 +278,7 @@
                                 <s:url id="addNextNotice" action="eprMarriageNoticeEditInit.do">
                                     <s:param name="idUKey" value="idUKey"/>
                                     <s:param name="secondNotice" value="true"/>
+                                    <s:param name="noticeType" value="type"/>
                                 </s:url>
                                 <s:a href="%{addNextNotice}" title="%{getText('nextNoticeToolTip.label')}">
                                     <img src="<s:url value='/images/add_page.png'/>" width="25" height="25"
