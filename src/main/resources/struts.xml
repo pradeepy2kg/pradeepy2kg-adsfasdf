@@ -1189,7 +1189,9 @@
         <action name="eprMarriageNoticeDelete" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
                 method="deleteMarriageNotice">
             <!--todo do not forward to default error page todo redirect to search results-->
-            <result type="tiles" name="success">epr.marriageNoticeResults</result>
+            <result type="redirectAction">
+                <param name="actionName">eprMarriageNoticeSearchInit</param>
+            </result>
             <result type="tiles" name="error">epr.error</result>
         </action>
     </package>
