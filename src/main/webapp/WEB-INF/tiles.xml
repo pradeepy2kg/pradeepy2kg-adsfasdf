@@ -499,4 +499,13 @@
         <put-attribute name="title" value="title.marriage.registration"/>
     </definition>
 
+    <definition name="epr.marriageCertificate" extends="epr.template">
+        <description>
+            marriage certificate
+        </description>
+        <put-attribute name="body" value="/WEB-INF/pages/marriages/MarriageCertificate.jsp"/>
+        <put-attribute name="title" value="title.marriage.certificate"/>
+    </definition>
+
+
 </tiles-definitions>

@@ -1200,5 +1200,13 @@
             </result>
             <result type="tiles" name="error">epr.error</result>
         </action>
+
+
+        <action name="eprMarriageCertificateLoad" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
+                method="marriageCertificateInit">
+            <!--todo do not forward to default error page todo redirect to search results-->
+            <result type="tiles" name="pageLoad">epr.marriageCertificate</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
     </package>
 </struts>

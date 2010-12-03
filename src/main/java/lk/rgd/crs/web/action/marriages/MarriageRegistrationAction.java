@@ -304,6 +304,12 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         return "pageLoad";
     }
 
+    public String marriageCertificateInit() {
+        logger.debug("loading marriage certificate : idUKey : {}", idUKey);
+        //TODO all loading stuffs
+        return "pageLoad";
+    }
+
     private Map<Person.CivilStatus, String> populateCivilStatus() {
         Map<Person.CivilStatus, String> civilStatus = new HashMap<Person.CivilStatus, String>();
         civilStatus.put(Person.CivilStatus.NEVER_MARRIED, CivilStatusUtil.getCivilStatusInAllLanguages(Person.CivilStatus.NEVER_MARRIED));
