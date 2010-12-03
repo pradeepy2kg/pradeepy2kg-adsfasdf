@@ -1088,6 +1088,3 @@ if female party is submitted the notice
 </s:if>
 </s:form>
 </div>
-
-<s:property value="noticeType"/>
-<s:property value="secondNotice"/> 

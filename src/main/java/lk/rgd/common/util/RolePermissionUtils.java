@@ -57,6 +57,7 @@ public class RolePermissionUtils {
         adrBitSet.set(Permission.REGISTRAR_MANAGEMENT);
         adrBitSet.set(Permission.PRS_APPROVE_PERSON);
         adrBitSet.set(Permission.SEARCH_MARRIAGE);
+        adrBitSet.set(Permission.PRINT_MARRIAGE_CERTIFICATE);
 
         // DR
         drBitSet = new BitSet();

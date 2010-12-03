@@ -330,6 +330,7 @@ public class Menu {
         //adr marriage links
         adrMarriageLink.putAll(deoMarriageLink);
         adrMarriageLink.put("eprMarriageNoticeSearchInit.do", new Link("menu.marriage.notice.search", "/ecivil/marriages/", "eprMarriageNoticeSearchInit.do", Permission.SEARCH_MARRIAGE));
+        adrMarriageLink.put("eprMarriageCertificateLoad.do", new Link(null, "/ecivil/marriages/", "eprMarriageCertificateLoad.do", Permission.PRINT_MARRIAGE_CERTIFICATE));
 
         //arg marriage links
         argMarriageLink.putAll(adrMarriageLink);
