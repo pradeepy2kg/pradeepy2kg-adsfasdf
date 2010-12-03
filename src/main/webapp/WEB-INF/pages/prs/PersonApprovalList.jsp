@@ -67,10 +67,10 @@
                     <th width="60px"><s:label value="%{getText('locationCode.label')}"/></th>
                     <th width="110px">NIC</th>
                     <th width="780px"><s:label value="%{getText('label.personName')}"/></th>
-                    <th width="20px"></th>
-                    <th width="20px"></th>
-                    <th width="20px"></th>
-                    <th width="20px"></th>
+                    <th width="15px"></th>
+                    <th width="15px"></th>
+                    <th width="15px"></th>
+                    <th width="15px"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -92,16 +92,25 @@
                             </s:a>
                         </td>
                         <td align="center">
+                            <s:url id="approveSelected" action="eprApprovePerson.do">
+                                <s:param name="personUKey" value="personUKey"/>
+                            </s:url>
                             <s:a href="%{approveSelected}" title="%{getText('approveToolTip.label')}">
                                 <img src="<s:url value='/images/approve.gif'/>" width="25" height="25" border="none"/>
                             </s:a>
                         </td>
                         <td align="center">
+                            <s:url id="rejectSelected">
+                                <s:param name="personUKey" value="personUKey"/>
+                            </s:url>
                             <s:a href="%{rejectSelected}" title="%{getText('rejectToolTip.label')}">
                                 <img src="<s:url value='/images/reject.gif'/>" width="25" height="25" border="none"/>
                             </s:a>
                         </td>
                         <td align="center">
+                            <s:url id="deleteSelected">
+                                <s:param name="personUKey" value="personUKey"/>
+                            </s:url>
                             <s:a href="%{deleteSelected}" title="%{getText('deleteToolTip.label')}">
                                 <img src="<s:url value='/images/delete.gif'/>" width="25" height="25" border="none"/>
                             </s:a>

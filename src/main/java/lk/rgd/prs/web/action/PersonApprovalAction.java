@@ -4,6 +4,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.common.api.dao.AppParametersDAO;
 import lk.rgd.common.api.dao.LocationDAO;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.web.util.CommonUtil;
 import lk.rgd.prs.api.domain.Person;
@@ -23,11 +24,12 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
 
     private static final Logger logger = LoggerFactory.getLogger(PersonApprovalAction.class);
     private static final String PRS_APPROVAL_ROWS_PER_PAGE = "prs.prs_approval_rows_per_page";
+    private static final String WARNING = "warning";
 
     // services and DAOs
-    private PopulationRegistry service;
-    private LocationDAO locationDAO;
-    private AppParametersDAO appParametersDAO;
+    private final PopulationRegistry service;
+    private final LocationDAO locationDAO;
+    private final AppParametersDAO appParametersDAO;
     private final CommonUtil commonUtil;
 
     private Map session;
@@ -35,11 +37,13 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
 
     private Map<Integer, String> locationList;
     private List<Person> approvalPendingList;
+    private List<UserWarning> warnings;
 
-    private String language;
     private int locationId;
     private int pageNo;
     private int noOfRows;
+    private long personUKey;
+    private String language;
 
     public PersonApprovalAction(PopulationRegistry service, LocationDAO locationDAO, AppParametersDAO appParametersDAO,
         CommonUtil commonUtil) {
@@ -54,12 +58,7 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
      */
     public String loadPersonApprovalPendingList() {
         logger.debug("Loading approval pending person list");
-        locationList = commonUtil.populateActiveUserLocations(user, language);
-        // use primary location for locationId
-        if (locationId == 0) {
-            locationId = user.getPrimaryLocation().getLocationUKey();
-        }
-        pageNo = 1;
+        populateLocations();
         getApprovalPendingPersons();
 
         logger.debug("Loaded approval pending person list with size : {} for LocationId : {} ",
@@ -68,9 +67,46 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
     }
 
     /**
+     * This method used to approve person pending approval
+     */
+    public String approveSelectedPerson() {
+        logger.debug("Approving Person with PersonUKey : {}", personUKey);
+        warnings = service.approvePerson(personUKey, false, user);
+
+        if (warnings.isEmpty()) {
+            populateLocations();
+            getApprovalPendingList();
+            final Person existing = service.getByUKey(personUKey, user);
+            addActionMessage(getText("message.approval.success", new String[]{existing.getPin().toString()}));
+            return SUCCESS;
+        } else {
+            return WARNING;
+        }
+    }
+
+    /**
+     * This method used to approve persons pending approval by ignoring warnings
+     */
+    public String approveIgnoreWarnings() {
+        return SUCCESS;
+    }
+
+    /**
+     * This method used to populate users active user location list
+     */
+    private void populateLocations() {
+        locationList = commonUtil.populateActiveUserLocations(user, language);
+        // use primary location for locationId
+        if (locationId == 0) {
+            locationId = user.getPrimaryLocation().getLocationUKey();
+        }
+    }
+
+    /**
      * This method used to load approval pending person list for specified locationId, pageNo and noOfRows
      */
     private void getApprovalPendingPersons() {
+        pageNo += 1;
         noOfRows = appParametersDAO.getIntParameter(PRS_APPROVAL_ROWS_PER_PAGE);
         approvalPendingList = service.getPRSPendingApprovalByLocation(locationDAO.getLocation(locationId), pageNo, noOfRows, user);
         if (approvalPendingList.size() == 0) {
@@ -105,6 +141,14 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
         this.approvalPendingList = approvalPendingList;
     }
 
+    public List<UserWarning> getWarnings() {
+        return warnings;
+    }
+
+    public void setWarnings(List<UserWarning> warnings) {
+        this.warnings = warnings;
+    }
+
     public int getLocationId() {
         return locationId;
     }
@@ -127,5 +171,13 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
 
     public void setNoOfRows(int noOfRows) {
         this.noOfRows = noOfRows;
+    }
+
+    public long getPersonUKey() {
+        return personUKey;
+    }
+
+    public void setPersonUKey(long personUKey) {
+        this.personUKey = personUKey;
     }
 }
