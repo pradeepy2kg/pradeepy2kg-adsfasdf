@@ -45,7 +45,8 @@ import java.util.Date;
 public class MarriageRegister implements Serializable, Cloneable {
 
     public enum State {
-        DATA_ENTRY
+        DATA_ENTRY,
+        REG_DATA_ENTRY
     }
 
     public enum PlaceOfMarriage {

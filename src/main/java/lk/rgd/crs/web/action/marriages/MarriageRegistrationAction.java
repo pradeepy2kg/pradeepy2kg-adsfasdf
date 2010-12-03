@@ -71,8 +71,8 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     private Date noticeReceivedDate;
 
-    private HashMap civilStatusMale;
-    private HashMap civilStatusFemale;
+    private Map<Person.CivilStatus, String> civilStatusMale;
+    private Map<Person.CivilStatus, String> civilStatusFemale;
     MarriageType[] marriageType;
 
     private MarriageNotice.Type noticeType;
@@ -284,7 +284,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     public String marriageRegistrationInit() {
         //TODO : To be removed
-        idUKey = 1;
+        idUKey = 4;
 
         //TODO : TO be improved
 
@@ -304,8 +304,8 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         return "pageLoad";
     }
 
-    private HashMap<Person.CivilStatus, String> populateCivilStatus() {
-        HashMap<Person.CivilStatus, String> civilStatus = new HashMap<Person.CivilStatus, String>();
+    private Map<Person.CivilStatus, String> populateCivilStatus() {
+        Map<Person.CivilStatus, String> civilStatus = new HashMap<Person.CivilStatus, String>();
         civilStatus.put(Person.CivilStatus.NEVER_MARRIED, CivilStatusUtil.getCivilStatusInAllLanguages(Person.CivilStatus.NEVER_MARRIED));
         civilStatus.put(Person.CivilStatus.DIVORCED, CivilStatusUtil.getCivilStatusInAllLanguages(Person.CivilStatus.DIVORCED));
         civilStatus.put(Person.CivilStatus.WIDOWED, CivilStatusUtil.getCivilStatusInAllLanguages(Person.CivilStatus.WIDOWED));
@@ -331,6 +331,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         marriageRegister.setRegSubmittedDate(marriage.getRegSubmittedDate());
         marriageRegister.setRegPlaceInOfficialLang(marriage.getRegPlaceInOfficialLang());
         marriageRegister.setRegPlaceInEnglishLang(marriage.getRegPlaceInEnglishLang());
+        marriageRegister.setState(MarriageRegister.State.REG_DATA_ENTRY);
     }
 
     /**
@@ -576,19 +577,19 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         this.editMode = editMode;
     }
 
-    public HashMap getCivilStatusMale() {
+    public Map<Person.CivilStatus, String> getCivilStatusMale() {
         return civilStatusMale;
     }
 
-    public void setCivilStatusMale(HashMap civilStatusMale) {
+    public void setCivilStatusMale(Map<Person.CivilStatus, String> civilStatusMale) {
         this.civilStatusMale = civilStatusMale;
     }
 
-    public HashMap getCivilStatusFemale() {
+    public Map<Person.CivilStatus, String> getCivilStatusFemale() {
         return civilStatusFemale;
     }
 
-    public void setCivilStatusFemale(HashMap civilStatusFemale) {
+    public void setCivilStatusFemale(Map<Person.CivilStatus, String> civilStatusFemale) {
         this.civilStatusFemale = civilStatusFemale;
     }
 
