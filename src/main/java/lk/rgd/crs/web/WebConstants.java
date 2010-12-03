@@ -23,11 +23,6 @@ public class WebConstants {
     public static final String SESSION_BIRTH_CONFIRMATION_BEAN = "birthConfirmation";
     public static final String SESSION_BIRTH_ALTERATION_BEAN = "birthAlteration";
 
-    public static final String RETURN_TYPE_ERROR = "error";
-    public static final String RETURN_TYPE_SUCCESS = "success";
-
-    public static final String RADIO_ALREADY_PRINT = "Printed";
-
     public static final String DEFAULT_PASS = "password";
     public static final String SESSION_REQUEST_CONTEXT = "context";
     public static final String SESSION_BIRTH_CONFIRMATION_DB_BEAN = "birthConfirmation_db";
@@ -58,8 +53,5 @@ public class WebConstants {
     public static final String CERTIFICATE_ID = "certificateId";
     public static final String PERSON_ID = "personId";
     public static final String SEARCH_USERS_LIST = "viewUsers";
-
-    //to track wtich has change in death alterations
-   
-
+    
 }
