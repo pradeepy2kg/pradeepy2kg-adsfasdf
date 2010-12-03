@@ -151,14 +151,13 @@
             <table width="100%">
                 <caption/>
                 <col/>
+                <col/>
                 <tbody>
-                <s:iterator value="marriageType">
-                    <tr>
-                        <td>
-                            <s:radio name="marriage.typeOfMarriage.Id" list="#{id:type}"/>
-                        </td>
-                    </tr>
-                </s:iterator>
+                <tr>
+                    <td>
+                        <s:radio name="marriage.typeOfMarriage.id" list="marriageType" listKey="id" theme="horizontal"/>
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </td>
@@ -225,7 +224,7 @@
        cellpadding="5px">
     <caption/>
     <col width="200px"/>
-    <col width="400px"/>
+    <col width="410px"/>
     <col/>
     <tbody>
     <tr>
@@ -277,11 +276,13 @@
 
         </td>
         <td>
-            <s:select list="raceList" name="fatherRace" headerKey="0" headerValue="%{getText('select_race.label')}"
+            <s:select list="raceList" name="marriage.male.maleRace.raceId" headerKey="0"
+                      headerValue="%{getText('select_race.label')}"
                       cssStyle="width:200px;"/>
         </td>
         <td>
-            <s:select list="raceList" name="fatherRace" headerKey="0" headerValue="%{getText('select_race.label')}"
+            <s:select list="raceList" name="marriage.female.femaleRace.raceId" headerKey="0"
+                      headerValue="%{getText('select_race.label')}"
                       cssStyle="width:200px;"/>
         </td>
     </tr>
@@ -296,13 +297,11 @@
                 <caption/>
                 <col/>
                 <tbody>
-                <s:iterator value="civilStatusMale">
                     <tr>
                         <td>
-                            <s:radio name="marriage.male.civilStatusMale" list="#{key:value}"/>
+                            <s:radio name="marriage.male.civilStatusMale" list="civilStatusMale" theme="horizontal"/>
                         </td>
                     </tr>
-                </s:iterator>
                 </tbody>
             </table>
         </td>
@@ -312,13 +311,11 @@
                 <caption/>
                 <col/>
                 <tbody>
-                <s:iterator value="civilStatusFemale">
                     <tr>
                         <td>
-                            <s:radio name="marriage.female.civilStatusFemale" list="#{key:value}"/>
+                            <s:radio name="marriage.female.civilStatusFemale" list="civilStatusFemale" theme="horizontal"/>
                         </td>
                     </tr>
-                </s:iterator>
                 </tbody>
             </table>
         </td>

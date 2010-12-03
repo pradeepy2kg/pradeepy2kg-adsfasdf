@@ -42,7 +42,7 @@ public class FemaleParty {
     private MRDivision mrDivisionFemale;
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "F_RACE_IDUKEY", nullable = true)
     private Race femaleRace;
 
     @Column(name = "F_DURATION", nullable = true)
