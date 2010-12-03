@@ -77,7 +77,6 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         logger.debug("Attempt to get marriage notice pending results for identification number : {} ", pinOrNic);
         List<MarriageRegister> results = marriageRegistrationDAO.getByStateAndPINorNIC(
             MarriageRegister.State.DATA_ENTRY, pinOrNic, active);
-
         for (MarriageRegister reg : results) {
             if (!checkUserAccessPermissionToMarriageRecord(reg, user)) {
                 logger.debug("User : {} :does not have permission to edit/approve marriage record idUKey : {} ",
@@ -184,7 +183,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     @Transactional(propagation = Propagation.REQUIRED)
     public void deleteMarriageNotice(long idUKey, MarriageNotice.Type noticeType, User user) {
         logger.debug("attempt to remove marriage notice : idUKey : {} and notice type : {}", idUKey, noticeType);
-        //todo check user permission for removing data
+        //todo AMITH check user permission for removing data
         MarriageRegister notice = marriageRegistrationDAO.getByIdUKey(idUKey);
         boolean isBothSubmitted = notice.isBothPartySubmitted();
         if (isBothSubmitted) {
@@ -209,6 +208,21 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
                 marriageRegistrationDAO.deleteMarriageRegister(idUKey);
             }
         }
+    }
+
+    /**
+     * @inheritDoc only REGISTER_DATA_ENTRY state records are consider as pending marriage register records
+     * only record captured division users are allowed to access the marriage record
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<MarriageRegister> getMarriageRegisterPendingApprovalBySerialAndMRDivision(long serialNumber,
+        MRDivision mrDivision, int pageNumber, int numOfRows, boolean active, User user) {
+        logger.debug("attempt to get pending marriage register record for marriage serial number : {}" +
+            " and MRDivision name : {} ", serialNumber, mrDivision.getEnDivisionName());
+        //validating user  access to the MR division
+        ValidationUtils.validateAccessToMRDivision(mrDivision, user);
+        return marriageRegistrationDAO.getByMRDivisionAndSerialNo(mrDivision, MarriageRegister.State.REG_DATA_ENTRY,
+            serialNumber, active);
     }
 
     /**
