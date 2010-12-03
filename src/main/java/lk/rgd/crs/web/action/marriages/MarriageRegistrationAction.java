@@ -135,7 +135,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         //check serial number is already exists
         populateNoticeForPersists();
         //add mr division and race male party and female party
-        populatePartyObjectsForPersisting();
+        populatePartyObjectsForPersisting(marriage);
 
         boolean both = marriage.isBothPartySubmitted();
         marriageRegistrationService.addMarriageNotice(marriage, (both || male), user);
@@ -224,7 +224,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         logger.debug("attempt to add second notice : idUKey of the record : {}", idUKey);
         MarriageRegister existingNotice = marriageRegistrationService.getByIdUKey(idUKey, user);
         if (existingNotice != null) {
-            populatePartyObjectsForPersisting();
+            populatePartyObjectsForPersisting(existingNotice);
             populateNoticeForAddingSecondNotice(existingNotice, marriage);
             //following boolean use to check which party is submitting second notice  note:true (male) false(female)
             boolean secondNoticeSubmittedByPartyMale = (noticeType == MarriageNotice.Type.MALE_NOTICE) ? false : true;
@@ -249,13 +249,13 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             noticeExisting.setDateOfMaleNotice(noticeReceivedDate);
             noticeExisting.setMaleNoticeWitness_1(noticeEdited.getMaleNoticeWitness_1());
             noticeExisting.setMaleNoticeWitness_2(noticeEdited.getMaleNoticeWitness_2());
-            noticeExisting.setMrDivisionOfMaleNotice(noticeEdited.getMrDivisionOfMaleNotice());
+            noticeExisting.setMrDivisionOfMaleNotice(noticeExisting.getMale().getMrDivisionMale());
         } else {
             noticeExisting.setSerialOfFemaleNotice(serialNumber);
             noticeExisting.setDateOfFemaleNotice(noticeReceivedDate);
             noticeExisting.setFemaleNoticeWitness_1(noticeEdited.getFemaleNoticeWitness_1());
             noticeExisting.setFemaleNoticeWitness_2(noticeEdited.getFemaleNoticeWitness_2());
-            noticeExisting.setMrDivisionOfFemaleNotice(noticeEdited.getMrDivisionOfFemaleNotice());
+            noticeExisting.setMrDivisionOfFemaleNotice(noticeExisting.getFemale().getMrDivisionFemale());
         }
         noticeExisting.setMale(noticeEdited.getMale());
         noticeExisting.setFemale(noticeEdited.getFemale());
@@ -368,7 +368,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     /**
      * populate male/female mr division,race,country(if foreign)
      */
-    private void populatePartyObjectsForPersisting() {
+    private void populatePartyObjectsForPersisting(MarriageRegister marriage) {
         if (marriageDivisionId != 0 && marriageDivisionIdFemale != 0) {
             MRDivision mrDivision = mrDivisionDAO.getMRDivisionByPK(marriageDivisionId);
             marriage.getMale().setMrDivisionMale(mrDivision);
