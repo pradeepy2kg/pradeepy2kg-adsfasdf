@@ -111,6 +111,12 @@
             <result type="tiles" name="success">epr.PersonApproval</result>
         </action>
 
+        <action name="eprApprovePerson" class="lk.rgd.prs.web.action.PersonApprovalAction"
+                method="approveSelectedPerson">
+            <result type="tiles" name="success">epr.PersonApproval</result>
+            <result type="tiles" name="warning">epr.personApproveWarning</result>
+        </action>
+
     </package>
 
     <package name="births" namespace="/births" extends="NG">

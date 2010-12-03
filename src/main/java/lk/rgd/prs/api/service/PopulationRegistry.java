@@ -2,6 +2,7 @@ package lk.rgd.prs.api.service;
 
 import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.prs.api.domain.Address;
 import lk.rgd.prs.api.domain.Marriage;
 import lk.rgd.prs.api.domain.Person;
@@ -51,7 +52,7 @@ public interface PopulationRegistry {
     public Person loadPersonToEdit(long personUKey, User user);
 
     /**
-     * Update existing person to the PRS before approval of ADR or higher authority
+     * Update existing person to the PRS <b>before</b> approval of ADR or higher authority
      *
      * @param person          the Person to be updated
      * @param citizenshipList the person citizenship list to be updated
@@ -60,13 +61,42 @@ public interface PopulationRegistry {
     public void editExistingPersonBeforeApproval(Person person, List<PersonCitizenship> citizenshipList, User user);
 
     /**
-     * Update existing person to the PRS after approval of ADR or higher. Cannot update all the fields of the person
+     * Update an existing person to the PRS <b>after</b> approval of ADR or higher. Cannot update all the fields of the person
      * only limited number of fields can be updated for e.g. current address, permanent address etc.
      *
      * @param person the Person to be updated
      * @param user   the user performing the action
      */
     public void editExistingPersonAfterApproval(Person person, User user);
+
+    /**
+     * Approve a Person by ADR or higher authority
+     * <p/>
+     * An unique Person Identification Number is generated for successfully approved persons or returns a list of
+     * warnings while without ignoring warnings, if ignore warnings is true eliminate warning list 
+     *
+     * @param personUKey     the unique database PK
+     * @param ignoreWarnings an explicit switch that indicates that the record should be approved ignoring warnings
+     * @param user           the user performing the action
+     * @return a list of warnings, if ignoreWarnings is false
+     */
+    public List<UserWarning> approvePerson(long personUKey, boolean ignoreWarnings, User user);
+
+    /**
+     * Delete an existing person <b>before</b> approval(i.e. before PIN generation) by ADR or higher authority
+     *
+     * @param personUKey the unique database PK
+     * @param user       the user performing the action
+     */
+    public void deletePersonBeforeApproval(long personUKey, User user);
+
+    /**
+     * Reject a Person ADR or higher authority
+     *
+     * @param personUKey the unique database PK
+     * @param user       the user performing the action
+     */
+    public void rejectPerson(long personUKey, User user);
 
     /**
      * Update a Person on the PRS

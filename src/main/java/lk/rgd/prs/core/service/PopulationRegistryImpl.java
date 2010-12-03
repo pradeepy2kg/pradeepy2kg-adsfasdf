@@ -6,6 +6,7 @@ import lk.rgd.common.api.Auditable;
 import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.core.index.SolrIndexManager;
+import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.prs.api.dao.PersonCitizenshipDAO;
 import lk.rgd.prs.api.dao.PersonDAO;
 import lk.rgd.prs.api.domain.Address;
@@ -259,6 +260,65 @@ public class PopulationRegistryImpl implements PopulationRegistry {
     public void editExistingPersonAfterApproval(Person person, User user) {
         // TODO chathuranga
         throw new UnsupportedOperationException("Edit person after approval operation not implemented yet...");
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public List<UserWarning> approvePerson(long personUKey, boolean ignoreWarnings, User user) {
+         // TODO still implementing don't review
+        // TODO validate access(location??) and (required fields) minimum requirements
+        // check approve permission
+        if (!user.isAuthorized(Permission.PRS_APPROVE_PERSON)) {
+            handleException("User : " + user.getUserId() + " is not allowed to approve entries on the PRS by keys (uKey)",
+                ErrorCodes.PRS_APPROVE_RECORD_DENIED);
+        }
+
+        Person existing = getByUKey(personUKey, user);
+        // is the person record currently existing in a state for approval
+        final Person.Status currentState = existing.getStatus();
+        if (Person.Status.SEMI_VERIFIED != currentState) {
+            handleException("Cannot approve PRS entry : " + personUKey + " Illegal state : " + currentState,
+                ErrorCodes.INVALID_STATE_FOR_PRS_APPROVAL);
+        }
+        // TODO validate and output warning list
+        List<UserWarning> warnings = Collections.emptyList();
+
+        if (!warnings.isEmpty() && ignoreWarnings) {
+            logger.debug("inside warning list");
+
+        }
+
+        if (warnings.isEmpty() || ignoreWarnings) {
+            existing.setStatus(Person.Status.VERIFIED);
+            existing.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
+            existing.getLifeCycleInfo().setApprovalOrRejectUser(user);
+            addPerson(existing, user);
+            updatePerson(existing, user);
+            logger.debug("Approved of PRS entry : {} Ignore warnings : {}", personUKey, ignoreWarnings);
+        } else {
+            logger.debug("Approval of PRS entry : {} stopped due to warnings", personUKey);
+        }
+        return warnings;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void deletePersonBeforeApproval(long personUKey, User user) {
+        // TODO chathuranga
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void rejectPerson(long personUKey, User user) {
+        // TODO chathuranga
+        throw new UnsupportedOperationException();
     }
 
     /**
