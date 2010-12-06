@@ -141,18 +141,6 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     public void updateMarriageRegister(MarriageRegister marriageRegister, User user) {
         //todo check user permissions
         logger.debug("attempt to update marriage register/notice record : idUKey : {}", marriageRegister.getIdUKey());
-/*TODO remove witness
-  if (marriageRegister.getState() == MarriageRegister.State.REG_DATA_ENTRY) {
-            if (marriageRegister.getWitness1().getIdUKey()==0){
-               addWitness(marriageRegister.getWitness1());
-            }
-            if (marriageRegister.getWitness2().getIdUKey()==0){
-               addWitness(marriageRegister.getWitness2());
-            }
-        }
-        logger.debug("Updating marriage registar with witness 1 {}", marriageRegister.getWitness1().getIdUKey());
-        logger.debug("Updating marriage registar with witness 1 - Name - {}", marriageRegister.getWitness1().getFullName());
-        logger.debug("Updating marriage registar with witness 2 {}", marriageRegister.getWitness2().getIdUKey());*/
         marriageRegistrationDAO.updateMarriageRegister(marriageRegister, user);
     }
 
