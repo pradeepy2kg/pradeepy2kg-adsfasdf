@@ -319,7 +319,8 @@ public class Menu {
         */
 
         //deo marriages links
-        deoMarriageLink.put("eprMarriageNoticeInit.do", new Link("menu.marriage.notice", "/ecivil/marriages/", "eprMarriageNoticeInit.do", Permission.EDIT_MARRIAGE));
+        deoMarriageLink.put("eprMarriageNoticeInit.do", new Link(null, "/ecivil/marriages/", "eprMarriageNoticeInit.do", Permission.EDIT_MARRIAGE));
+        deoMarriageLink.put("eprSelectNoticeType.do", new Link("menu.marriage.notice", "/ecivil/marriages/", "eprSelectNoticeType.do", Permission.EDIT_MARRIAGE));
         deoMarriageLink.put("eprMarriageNoticeAdd.do", new Link(null, "/ecivil/marriages/", "eprMarriageNoticeAdd.do", Permission.EDIT_MARRIAGE));
         deoMarriageLink.put("eprMarriageRegistrationInit.do", new Link("menu.marriage.registration", "/ecivil/marriages/", "eprMarriageRegistrationInit.do", Permission.EDIT_MARRIAGE));
         deoMarriageLink.put("eprMarriageNoticeEditInit.do", new Link(null, "/ecivil/marriages/", "eprMarriageNoticeEditInit.do", Permission.EDIT_MARRIAGE));

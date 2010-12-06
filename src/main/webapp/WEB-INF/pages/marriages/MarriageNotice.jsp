@@ -1235,377 +1235,386 @@ if female party is submitted the notice
     </tr>
 </table>
 
-<%--section male party--%>
-<table style="margin-top:20px">
-    <caption/>
-    <col width="500px"/>
-    <col width="524px"/>
-    <tr>
-        <td colspan="2" align="center">
-            පුරුෂ පාර්ශ්වය / in tamil / Male Party
-        </td>
-    </tr>
-</table>
+<s:if test="%{noticeType.ordinal()==0 || noticeType.ordinal()==1}">
 
-<table border="1" style="margin-top:10px;width:100%;border:1px solid #000;border-collapse:collapse;border-bottom:none "
-       cellpadding="2px">
-    <caption/>
-    <col width="250px"/>
-    <col width="200px"/>
-    <col/>
-    <col width="200px"/>
-    <col/>
-    <col width="200px"/>
-    <col/>
-    <tr>
-        <td colspan="1">
-            අනන්‍යතා අංකය <br>
-            அடையாள எண் <br>
-            Identification number
-        </td>
-        <td colspan="2"></td>
-        <td colspan="1">
-            උපන් දිනය <br>
-            பிறந்த திகதி <br>
-            Date of Birth
-        </td>
-        <td colspan="3"></td>
-    </tr>
-    <tr>
-        <td colspan="1">
-            ජාතිය <br>
-            in tamil <br>
-            Race
-        </td>
-        <td colspan="2"></td>
-        <td colspan="1">
-            පසුවූ උපන් දිනයට වයස <br>
-            in tamil <br>
-            Age at last Birthday
-        </td>
-        <td colspan="3"></td>
-    </tr>
-    <tr>
-        <td>
-            විදේශිකයකු නම් <br>
-            வெளிநாட்டவர் எனின் <br>
-            If a foreigner
-        </td>
-        <td>
-            රට <br>
-            நாடு <br>
-            Country
-        </td>
-        <td></td>
-        <td>
-            ගමන් බලපත්‍ර අංකය <br>
-            கடவுச் சீட்டு இல. <br>
-            Passport No.
-        </td>
-        <td></td>
-        <td>ලංකාවට පැමිණි දිනය <br>
-            in tamil <br>
-            Date of Arrival
-        </td>
-        <td></td>
-    </tr>
-    <tr>
-        <td colspan="1" height="100x">
-            නම රාජ්‍ය භාෂාවෙන් <br>
-            (සිංහල / දෙමළ)
-            பெயர் அரச கரும மொழியில் (சிங்களம் / தமிழ்) <br>
-            Name in any of the official languages (Sinhala / Tamil)
-        </td>
-        <td colspan="6" height="100x"></td>
-    </tr>
-    <tr>
-        <td colspan="1" height="100x">
-            නම ඉංග්‍රීසි භාෂාවෙන් <br>
-            பெயர் ஆங்கில மொழியில் <br>
-            Name in English
-        </td>
-        <td colspan="6" height="100x"></td>
-    </tr>
-</table>
-<table border="1" style="margin-top:0px;width:100%;border:1px solid #000;border-collapse:collapse;"
-       cellpadding="2px">
-    <caption></caption>
-    <col width="250px"/>
-    <col width="140px"/>
-    <col width="50px"/>
-    <col width="140px"/>
-    <col width="50px"/>
-    <col width="150px"/>
-    <col width="50px"/>
-    <col width="150px"/>
-    <col width="50px"/>
-    <tbody>
-    <tr>
-        <td rowspan="2">
-            පදිංචි ලිපිනය <br>
-            தற்போதைய வதிவிட முகவரி <br>
-            Resident Address
-        </td>
-        <td colspan="4" height="20px">රාජ්‍ය භාෂාවෙන් / in tamil / in Official Language</td>
-        <td colspan="4" height="20px">ඉංග්‍රීසි භාෂාවෙන් / in tamil / In English</td>
-    </tr>
-    <tr>
-        <td colspan="4" height="100px">d</td>
-        <td colspan="4" height="100px">e</td>
-    </tr>
-    <tr>
-        <td rowspan="2">
-            තරාතිරම නොහොත් රක්ෂාව <br>
-            in tamil <br>
-            Rank or Profession
-        </td>
-        <td colspan="4" height="20px">රාජ්‍ය භාෂාවෙන් / in tamil / in Official Language</td>
-        <td colspan="4" height="20px">ඉංග්‍රීසි භාෂාවෙන් / in tamil / In English</td>
-    </tr>
-    <tr>
-        <td colspan="4" height="40px"></td>
-        <td colspan="4" height="40px"></td>
-    </tr>
-    <tr>
-        <td>
-            සිවිල් තත්වය <br>
-            சிவில் நிலைமை <br>
-            Civil Status
-        </td>
-        <td>
-            අවිවාහක <br>
-            திருமணமாகாதவர் <br>
-            Never Married
-        </td>
-        <td></td>
-        <td>
-            දික්කසාද <br>
-            திருமணம் தள்ளுபடி செய்தவர் <br>
-            Divorced
-        </td>
-        <td></td>
-        <td>
-            වැන්දබු <br>
-            விதவை <br>
-            Widowed
-        </td>
-        <td></td>
-        <td>
-            නිෂ්ප්‍රභාකර ඇත <br>
-            தள்ளிவைத்தல் <br>
-            Anulled
-        </td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>
-            පියාගේ අනන්‍යතා අංකය
-            தந்தையின் அடையாள எண்
-            Fathers Identification Number
-        </td>
-        <td colspan="8"></td>
-    </tr>
-    <tr>
-        <td rowspan="2">
-            පියාගේ සම්පුර්ණ නම
-            தந்தையின் அடையாள
-            Fathers full name
-        </td>
-        <td colspan="4" height="20px">රාජ්‍ය භාෂාවෙන් / in tamil / in Official Language</td>
-        <td colspan="4" height="20px">ඉංග්‍රීසි භාෂාවෙන් / in tamil / In English</td>
-    </tr>
-    <tr>
-        <td colspan="4" height="100px"></td>
-        <td colspan="4" height="100px"></td>
-    </tr>
-    </tbody>
-</table>
+    <%--section male party--%>
+    <table style="margin-top:20px">
+        <caption/>
+        <col width="500px"/>
+        <col width="524px"/>
+        <tr>
+            <td colspan="2" align="center">
+                පුරුෂ පාර්ශ්වය / in tamil / Male Party
+            </td>
+        </tr>
+    </table>
 
-<%--section female party--%>
-<table style="margin-top:20px">
-    <caption/>
-    <col width="500px"/>
-    <col width="524px"/>
-    <tr>
-        <td colspan="2" align="center">
-            ස්ත්‍රී පාර්ශ්වය / in tamil / Female Party
-        </td>
-    </tr>
-</table>
+    <table border="1"
+           style="margin-top:10px;width:100%;border:1px solid #000;border-collapse:collapse;border-bottom:none "
+           cellpadding="2px">
+        <caption/>
+        <col width="250px"/>
+        <col width="200px"/>
+        <col/>
+        <col width="200px"/>
+        <col/>
+        <col width="200px"/>
+        <col/>
+        <tr>
+            <td colspan="1">
+                අනන්‍යතා අංකය <br>
+                அடையாள எண் <br>
+                Identification number
+            </td>
+            <td colspan="2"></td>
+            <td colspan="1">
+                උපන් දිනය <br>
+                பிறந்த திகதி <br>
+                Date of Birth
+            </td>
+            <td colspan="3"></td>
+        </tr>
+        <tr>
+            <td colspan="1">
+                ජාතිය <br>
+                in tamil <br>
+                Race
+            </td>
+            <td colspan="2"></td>
+            <td colspan="1">
+                පසුවූ උපන් දිනයට වයස <br>
+                in tamil <br>
+                Age at last Birthday
+            </td>
+            <td colspan="3"></td>
+        </tr>
+        <tr>
+            <td>
+                විදේශිකයකු නම් <br>
+                வெளிநாட்டவர் எனின் <br>
+                If a foreigner
+            </td>
+            <td>
+                රට <br>
+                நாடு <br>
+                Country
+            </td>
+            <td></td>
+            <td>
+                ගමන් බලපත්‍ර අංකය <br>
+                கடவுச் சீட்டு இல. <br>
+                Passport No.
+            </td>
+            <td></td>
+            <td>ලංකාවට පැමිණි දිනය <br>
+                in tamil <br>
+                Date of Arrival
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="1" height="100x">
+                නම රාජ්‍ය භාෂාවෙන් <br>
+                (සිංහල / දෙමළ)
+                பெயர் அரச கரும மொழியில் (சிங்களம் / தமிழ்) <br>
+                Name in any of the official languages (Sinhala / Tamil)
+            </td>
+            <td colspan="6" height="100x"></td>
+        </tr>
+        <tr>
+            <td colspan="1" height="100x">
+                නම ඉංග්‍රීසි භාෂාවෙන් <br>
+                பெயர் ஆங்கில மொழியில் <br>
+                Name in English
+            </td>
+            <td colspan="6" height="100x"></td>
+        </tr>
+    </table>
+    <table border="1" style="margin-top:0px;width:100%;border:1px solid #000;border-collapse:collapse;"
+           cellpadding="2px">
+        <caption></caption>
+        <col width="250px"/>
+        <col width="140px"/>
+        <col width="50px"/>
+        <col width="140px"/>
+        <col width="50px"/>
+        <col width="150px"/>
+        <col width="50px"/>
+        <col width="150px"/>
+        <col width="50px"/>
+        <tbody>
+        <tr>
+            <td rowspan="2">
+                පදිංචි ලිපිනය <br>
+                தற்போதைய வதிவிட முகவரி <br>
+                Resident Address
+            </td>
+            <td colspan="4" height="20px">රාජ්‍ය භාෂාවෙන් / in tamil / in Official Language</td>
+            <td colspan="4" height="20px">ඉංග්‍රීසි භාෂාවෙන් / in tamil / In English</td>
+        </tr>
+        <tr>
+            <td colspan="4" height="100px">d</td>
+            <td colspan="4" height="100px">e</td>
+        </tr>
+        <tr>
+            <td rowspan="2">
+                තරාතිරම නොහොත් රක්ෂාව <br>
+                in tamil <br>
+                Rank or Profession
+            </td>
+            <td colspan="4" height="20px">රාජ්‍ය භාෂාවෙන් / in tamil / in Official Language</td>
+            <td colspan="4" height="20px">ඉංග්‍රීසි භාෂාවෙන් / in tamil / In English</td>
+        </tr>
+        <tr>
+            <td colspan="4" height="40px"></td>
+            <td colspan="4" height="40px"></td>
+        </tr>
+        <tr>
+            <td>
+                සිවිල් තත්වය <br>
+                சிவில் நிலைமை <br>
+                Civil Status
+            </td>
+            <td>
+                අවිවාහක <br>
+                திருமணமாகாதவர் <br>
+                Never Married
+            </td>
+            <td></td>
+            <td>
+                දික්කසාද <br>
+                திருமணம் தள்ளுபடி செய்தவர் <br>
+                Divorced
+            </td>
+            <td></td>
+            <td>
+                වැන්දබු <br>
+                விதவை <br>
+                Widowed
+            </td>
+            <td></td>
+            <td>
+                නිෂ්ප්‍රභාකර ඇත <br>
+                தள்ளிவைத்தல் <br>
+                Anulled
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>
+                පියාගේ අනන්‍යතා අංකය
+                தந்தையின் அடையாள எண்
+                Fathers Identification Number
+            </td>
+            <td colspan="8"></td>
+        </tr>
+        <tr>
+            <td rowspan="2">
+                පියාගේ සම්පුර්ණ නම
+                தந்தையின் அடையாள
+                Fathers full name
+            </td>
+            <td colspan="4" height="20px">රාජ්‍ය භාෂාවෙන් / in tamil / in Official Language</td>
+            <td colspan="4" height="20px">ඉංග්‍රීසි භාෂාවෙන් / in tamil / In English</td>
+        </tr>
+        <tr>
+            <td colspan="4" height="100px"></td>
+            <td colspan="4" height="100px"></td>
+        </tr>
+        </tbody>
+    </table>
 
-<table border="1" style="margin-top:10px;width:100%;border:1px solid #000;border-collapse:collapse;border-bottom:none "
-       cellpadding="2px">
-    <caption/>
-    <col width="250px"/>
-    <col width="200px"/>
-    <col/>
-    <col width="200px"/>
-    <col/>
-    <col width="200px"/>
-    <col/>
-    <tr>
-        <td colspan="1">
-            අනන්‍යතා අංකය <br>
-            அடையாள எண் <br>
-            Identification number
-        </td>
-        <td colspan="2"></td>
-        <td colspan="1">
-            උපන් දිනය <br>
-            பிறந்த திகதி <br>
-            Date of Birth
-        </td>
-        <td colspan="3"></td>
-    </tr>
-    <tr>
-        <td colspan="1">
-            ජාතිය <br>
-            in tamil <br>
-            Race
-        </td>
-        <td colspan="2"></td>
-        <td colspan="1">
-            පසුවූ උපන් දිනයට වයස <br>
-            in tamil <br>
-            Age at last Birthday
-        </td>
-        <td colspan="3"></td>
-    </tr>
-    <tr>
-        <td>
-            විදේශිකයකු නම් <br>
-            வெளிநாட்டவர் எனின் <br>
-            If a foreigner
-        </td>
-        <td>
-            රට <br>
-            நாடு <br>
-            Country
-        </td>
-        <td></td>
-        <td>
-            ගමන් බලපත්‍ර අංකය <br>
-            கடவுச் சீட்டு இல. <br>
-            Passport No.
-        </td>
-        <td></td>
-        <td>ලංකාවට පැමිණි දිනය <br>
-            in tamil <br>
-            Date of Arrival
-        </td>
-        <td></td>
-    </tr>
-    <tr>
-        <td colspan="1" height="100x">
-            නම රාජ්‍ය භාෂාවෙන් <br>
-            (සිංහල / දෙමළ)
-            பெயர் அரச கரும மொழியில் (சிங்களம் / தமிழ்) <br>
-            Name in any of the official languages (Sinhala / Tamil)
-        </td>
-        <td colspan="6" height="100x"></td>
-    </tr>
-    <tr>
-        <td colspan="1" height="100x">
-            නම ඉංග්‍රීසි භාෂාවෙන් <br>
-            பெயர் ஆங்கில மொழியில் <br>
-            Name in English
-        </td>
-        <td colspan="6" height="100x"></td>
-    </tr>
-</table>
-<table border="1" style="margin-top:0px;width:100%;border:1px solid #000;border-collapse:collapse;"
-       cellpadding="2px">
-    <caption></caption>
-    <col width="250px"/>
-    <col width="140px"/>
-    <col width="50px"/>
-    <col width="140px"/>
-    <col width="50px"/>
-    <col width="150px"/>
-    <col width="50px"/>
-    <col width="150px"/>
-    <col width="50px"/>
-    <tbody>
-    <tr>
-        <td rowspan="2">
-            පදිංචි ලිපිනය <br>
-            தற்போதைய வதிவிட முகவரி <br>
-            Resident Address
-        </td>
-        <td colspan="4" height="20px">රාජ්‍ය භාෂාවෙන් / in tamil / in Official Language</td>
-        <td colspan="4" height="20px">ඉංග්‍රීසි භාෂාවෙන් / in tamil / In English</td>
-    </tr>
-    <tr>
-        <td colspan="4" height="100px">d</td>
-        <td colspan="4" height="100px">e</td>
-    </tr>
-    <tr>
-        <td rowspan="2">
-            තරාතිරම නොහොත් රක්ෂාව <br>
-            in tamil <br>
-            Rank or Profession
-        </td>
-        <td colspan="4" height="20px">රාජ්‍ය භාෂාවෙන් / in tamil / in Official Language</td>
-        <td colspan="4" height="20px">ඉංග්‍රීසි භාෂාවෙන් / in tamil / In English</td>
-    </tr>
-    <tr>
-        <td colspan="4" height="40px"></td>
-        <td colspan="4" height="40px"></td>
-    </tr>
-    <tr>
-        <td>
-            සිවිල් තත්වය <br>
-            சிவில் நிலைமை <br>
-            Civil Status
-        </td>
-        <td>
-            අවිවාහක <br>
-            திருமணமாகாதவர் <br>
-            Never Married
-        </td>
-        <td></td>
-        <td>
-            දික්කසාද <br>
-            திருமணம் தள்ளுபடி செய்தவர் <br>
-            Divorced
-        </td>
-        <td></td>
-        <td>
-            වැන්දබු <br>
-            விதவை <br>
-            Widowed
-        </td>
-        <td></td>
-        <td>
-            නිෂ්ප්‍රභාකර ඇත <br>
-            தள்ளிவைத்தல் <br>
-            Anulled
-        </td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>
-            පියාගේ අනන්‍යතා අංකය
-            தந்தையின் அடையாள எண்
-            Fathers Identification Number
-        </td>
-        <td colspan="8"></td>
-    </tr>
-    <tr>
-        <td rowspan="2">
-            පියාගේ සම්පුර්ණ නම
-            தந்தையின் அடையாள
-            Fathers full name
-        </td>
-        <td colspan="4" height="20px">රාජ්‍ය භාෂාවෙන් / in tamil / in Official Language</td>
-        <td colspan="4" height="20px">ඉංග්‍රීසි භාෂාවෙන් / in tamil / In English</td>
-    </tr>
-    <tr>
-        <td colspan="4" height="100px"></td>
-        <td colspan="4" height="100px"></td>
-    </tr>
-    </tbody>
-</table>
+</s:if>
+
+
+<s:if test="%{noticeType.ordinal()==0 || noticeType.ordinal()==2}">
+    <%--section female party--%>
+    <table style="margin-top:20px">
+        <caption/>
+        <col width="500px"/>
+        <col width="524px"/>
+        <tr>
+            <td colspan="2" align="center">
+                ස්ත්‍රී පාර්ශ්වය / in tamil / Female Party
+            </td>
+        </tr>
+    </table>
+
+    <table border="1"
+           style="margin-top:10px;width:100%;border:1px solid #000;border-collapse:collapse;border-bottom:none "
+           cellpadding="2px">
+        <caption/>
+        <col width="250px"/>
+        <col width="200px"/>
+        <col/>
+        <col width="200px"/>
+        <col/>
+        <col width="200px"/>
+        <col/>
+        <tr>
+            <td colspan="1">
+                අනන්‍යතා අංකය <br>
+                அடையாள எண் <br>
+                Identification number
+            </td>
+            <td colspan="2"></td>
+            <td colspan="1">
+                උපන් දිනය <br>
+                பிறந்த திகதி <br>
+                Date of Birth
+            </td>
+            <td colspan="3"></td>
+        </tr>
+        <tr>
+            <td colspan="1">
+                ජාතිය <br>
+                in tamil <br>
+                Race
+            </td>
+            <td colspan="2"></td>
+            <td colspan="1">
+                පසුවූ උපන් දිනයට වයස <br>
+                in tamil <br>
+                Age at last Birthday
+            </td>
+            <td colspan="3"></td>
+        </tr>
+        <tr>
+            <td>
+                විදේශිකයකු නම් <br>
+                வெளிநாட்டவர் எனின் <br>
+                If a foreigner
+            </td>
+            <td>
+                රට <br>
+                நாடு <br>
+                Country
+            </td>
+            <td></td>
+            <td>
+                ගමන් බලපත්‍ර අංකය <br>
+                கடவுச் சீட்டு இல. <br>
+                Passport No.
+            </td>
+            <td></td>
+            <td>ලංකාවට පැමිණි දිනය <br>
+                in tamil <br>
+                Date of Arrival
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="1" height="100x">
+                නම රාජ්‍ය භාෂාවෙන් <br>
+                (සිංහල / දෙමළ)
+                பெயர் அரச கரும மொழியில் (சிங்களம் / தமிழ்) <br>
+                Name in any of the official languages (Sinhala / Tamil)
+            </td>
+            <td colspan="6" height="100x"></td>
+        </tr>
+        <tr>
+            <td colspan="1" height="100x">
+                නම ඉංග්‍රීසි භාෂාවෙන් <br>
+                பெயர் ஆங்கில மொழியில் <br>
+                Name in English
+            </td>
+            <td colspan="6" height="100x"></td>
+        </tr>
+    </table>
+    <table border="1" style="margin-top:0px;width:100%;border:1px solid #000;border-collapse:collapse;"
+           cellpadding="2px">
+        <caption></caption>
+        <col width="250px"/>
+        <col width="140px"/>
+        <col width="50px"/>
+        <col width="140px"/>
+        <col width="50px"/>
+        <col width="150px"/>
+        <col width="50px"/>
+        <col width="150px"/>
+        <col width="50px"/>
+        <tbody>
+        <tr>
+            <td rowspan="2">
+                පදිංචි ලිපිනය <br>
+                தற்போதைய வதிவிட முகவரி <br>
+                Resident Address
+            </td>
+            <td colspan="4" height="20px">රාජ්‍ය භාෂාවෙන් / in tamil / in Official Language</td>
+            <td colspan="4" height="20px">ඉංග්‍රීසි භාෂාවෙන් / in tamil / In English</td>
+        </tr>
+        <tr>
+            <td colspan="4" height="100px">d</td>
+            <td colspan="4" height="100px">e</td>
+        </tr>
+        <tr>
+            <td rowspan="2">
+                තරාතිරම නොහොත් රක්ෂාව <br>
+                in tamil <br>
+                Rank or Profession
+            </td>
+            <td colspan="4" height="20px">රාජ්‍ය භාෂාවෙන් / in tamil / in Official Language</td>
+            <td colspan="4" height="20px">ඉංග්‍රීසි භාෂාවෙන් / in tamil / In English</td>
+        </tr>
+        <tr>
+            <td colspan="4" height="40px"></td>
+            <td colspan="4" height="40px"></td>
+        </tr>
+        <tr>
+            <td>
+                සිවිල් තත්වය <br>
+                சிவில் நிலைமை <br>
+                Civil Status
+            </td>
+            <td>
+                අවිවාහක <br>
+                திருமணமாகாதவர் <br>
+                Never Married
+            </td>
+            <td></td>
+            <td>
+                දික්කසාද <br>
+                திருமணம் தள்ளுபடி செய்தவர் <br>
+                Divorced
+            </td>
+            <td></td>
+            <td>
+                වැන්දබු <br>
+                விதவை <br>
+                Widowed
+            </td>
+            <td></td>
+            <td>
+                නිෂ්ප්‍රභාකර ඇත <br>
+                தள்ளிவைத்தல் <br>
+                Anulled
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>
+                පියාගේ අනන්‍යතා අංකය
+                தந்தையின் அடையாள எண்
+                Fathers Identification Number
+            </td>
+            <td colspan="8"></td>
+        </tr>
+        <tr>
+            <td rowspan="2">
+                පියාගේ සම්පුර්ණ නම
+                தந்தையின் அடையாள
+                Fathers full name
+            </td>
+            <td colspan="4" height="20px">රාජ්‍ය භාෂාවෙන් / in tamil / in Official Language</td>
+            <td colspan="4" height="20px">ඉංග්‍රීසි භාෂාවෙන් / in tamil / In English</td>
+        </tr>
+        <tr>
+            <td colspan="4" height="100px"></td>
+            <td colspan="4" height="100px"></td>
+        </tr>
+        </tbody>
+    </table>
+</s:if>
 <div class="form-submit">
     <s:submit value="add.notice"/>
 </div>

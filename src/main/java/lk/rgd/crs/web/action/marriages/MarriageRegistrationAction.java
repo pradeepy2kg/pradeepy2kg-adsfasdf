@@ -112,6 +112,11 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         return "pageLoad";
     }
 
+    public String selectMarriageNoticeType() {
+        //nothing to do use to load the notice type selection JSP
+        return SUCCESS;
+    }
+
     /**
      * adding a new marriage notice
      * notes: if there is and already added notice (both parties submit notice separate)this will force user
