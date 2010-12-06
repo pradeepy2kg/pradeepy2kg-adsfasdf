@@ -13,7 +13,7 @@ import java.io.Serializable;
 public class Witness implements Serializable, Cloneable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idukey;
+    private long idUKey;
 
     @Column(name = "IDENTIFICATION_NUMBER", length = 10)
     private String identificationNumber;
@@ -28,11 +28,11 @@ public class Witness implements Serializable, Cloneable {
     private String address;
 
     public long getIdUKey() {
-        return idukey;
+        return idUKey;
     }
 
-    public void setIdukey(long idukey) {
-        this.idukey = idukey;
+    public void setIdUKey(long idUKey) {
+        this.idUKey = idUKey;
     }
 
     public String getIdentificationNumber() {

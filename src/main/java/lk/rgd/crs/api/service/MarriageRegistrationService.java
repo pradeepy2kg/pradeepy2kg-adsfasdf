@@ -123,4 +123,32 @@ public interface MarriageRegistrationService {
      * @param user       user who performs the action
      */
     public void deleteMarriageNotice(long idUKey, MarriageNotice.Type noticeType, User user);
+
+    /**
+     * get pending (REG_DATA_ENTRY state) marriage register objects by serial number of the marriage register record
+     * and the idUKey of the MRDivision
+     *
+     * @param serialNumber serial number of the marriage register record
+     * @param mrDivision   mr division  which marriage captured
+     * @param pageNumber   page number(for pagination)
+     * @param numOfRows    number of results need to be fetched
+     * @param active       what kind of records (active or inactive records)
+     * @param user         user who performs the task
+     * @return
+     */
+    public List<MarriageRegister> getMarriageRegisterPendingApprovalBySerialAndMRDivision(long serialNumber,
+        MRDivision mrDivision, int pageNumber, int numOfRows, boolean active, User user);
+
+    /**
+     * get pending marriage registration list by given DSDivision
+     *
+     * @param dsDivision DSDivision
+     * @param pageNumber page number(for pagination)
+     * @param numOfRows  number of results need to be fetched
+     * @param active     record type (active or inactive)
+     * @param user       user who performs the action
+     * @return list of marriage register objects in a given DS Division
+     */
+    public List<MarriageRegister> getMarriageRegisterPendingApprovalByDSDivision(DSDivision dsDivision, int pageNumber,
+        int numOfRows, boolean active, User user);
 }

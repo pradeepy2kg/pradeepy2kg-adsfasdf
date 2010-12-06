@@ -41,7 +41,7 @@
 * Styles for the Birth Registration Form apply according to the 4 pages in 4 seperate sections.
 */
 
-.birth-registration-form-outer, #birth-confirmation-form-outer, .birth-confirmation-print-form-outer, .still-birth-registration-form-outer, #bdaw-outer, .birth-certificate-search-form-outer, .prs-existing-person-register-outer , .prs-person-report-outer, .alteration-print-letter-outer ,.prs-certificate-outer,.marriage-notice-outer{
+.birth-registration-form-outer, #birth-confirmation-form-outer,.marriage-certificate-outer ,.birth-confirmation-print-form-outer, .still-birth-registration-form-outer, #bdaw-outer, .birth-certificate-search-form-outer, .prs-existing-person-register-outer , .prs-person-report-outer, .alteration-print-letter-outer ,.prs-certificate-outer,.marriage-notice-outer{
     width: 1030px;
     background: #ffffff;
     padding: 10px;
@@ -2193,6 +2193,8 @@ death-alteration-table-style01 td {
 .search-alteration-option-table input {
     width: 230px;
 }
+
+
 
 
 

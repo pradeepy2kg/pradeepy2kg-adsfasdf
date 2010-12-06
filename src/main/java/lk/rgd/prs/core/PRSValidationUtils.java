@@ -77,6 +77,10 @@ public class PRSValidationUtils {
         return s != null && s.trim().length() == 0;
     }
 
+    public static boolean isNotEmpty(String s) {
+        return s != null && s.trim().length() > 0;
+    }
+
     public static void handleException(String message, int code) {
         logger.error(message);
         throw new PRSRuntimeException(message, code);

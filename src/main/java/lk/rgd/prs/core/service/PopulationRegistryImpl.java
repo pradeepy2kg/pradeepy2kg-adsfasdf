@@ -78,8 +78,10 @@ public class PopulationRegistryImpl implements PopulationRegistry {
                 Calendar cal = Calendar.getInstance();
                 cal.set(Calendar.YEAR, 2800 + rand.nextInt(100));   // 2800 ~ 2899 which is the temporary range for unknown DOB
                 cal.set(Calendar.DAY_OF_YEAR, rand.nextInt(364) + 1);
+                // TODO is this part complete?
             }
         }
+        person.setSubmittedLocation(user.getPrimaryLocation());
         personDao.addPerson(person, user);
         return pin;
     }
@@ -90,7 +92,6 @@ public class PopulationRegistryImpl implements PopulationRegistry {
     @Transactional(propagation = Propagation.REQUIRED)
     public List<Person> addExistingPerson(Person person, List<PersonCitizenship> citizenshipList,
         boolean ignoreDuplicates, User user) {
-        long pin = -1;
         logger.debug("Adding an existing person to the PRS");
 
         validateRequiredFields(person);
@@ -126,14 +127,14 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             final String permanentAddress = person.getPermanentAddress();
             final String currentAddress = person.getCurrentAddress();
             // add permanent address of the person to the PRS
-            if (permanentAddress != null && permanentAddress.trim().length() > 0) {
+            if (isNotEmpty(permanentAddress)) {
                 final Address permanentAdd = new Address(permanentAddress);
                 permanentAdd.setPermanent(true);
                 person.specifyAddress(permanentAdd);
                 personDao.addAddress(permanentAdd);
             }
             // add current address of the person to the PRS
-            if (currentAddress != null && currentAddress.trim().length() > 0) {
+            if (isNotEmpty(currentAddress)) {
                 final Address currentAdd = new Address(currentAddress);
                 person.specifyAddress(currentAdd);
                 personDao.addAddress(currentAdd);
@@ -211,7 +212,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             final String permanentAddress = person.getPermanentAddress();
             final String currentAddress = person.getCurrentAddress();
             // update permanent address of the person to the PRS
-            if (permanentAddress != null && permanentAddress.trim().length() > 0) {
+            if (isNotEmpty(permanentAddress)) {
                 Set<Address> addresses = existing.getAddresses();
                 if (addresses != null) {
                     for (Address permanentAdd : addresses) {
@@ -224,7 +225,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
                 }
             }
             // update current address of the person to the PRS
-            if (currentAddress != null && currentAddress.trim().length() > 0) {
+            if (isNotEmpty(currentAddress)) {
                 final Address currentAdd = existing.getLastAddress();
                 if (currentAdd != null) {
                     currentAdd.setLine1(currentAddress);
@@ -267,7 +268,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public List<UserWarning> approvePerson(long personUKey, boolean ignoreWarnings, User user) {
-         // TODO still implementing don't review
+        // TODO still implementing don't review
         // TODO validate access(location??) and (required fields) minimum requirements
         // check approve permission
         if (!user.isAuthorized(Permission.PRS_APPROVE_PERSON)) {
@@ -294,6 +295,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             existing.setStatus(Person.Status.VERIFIED);
             existing.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
             existing.getLifeCycleInfo().setApprovalOrRejectUser(user);
+            // TODO change this
             addPerson(existing, user);
             updatePerson(existing, user);
             logger.debug("Approved of PRS entry : {} Ignore warnings : {}", personUKey, ignoreWarnings);
