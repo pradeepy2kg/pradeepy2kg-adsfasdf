@@ -28,6 +28,7 @@ import static lk.rgd.prs.core.PRSValidationUtils.*;
  * This is the main service interface for the PRS
  *
  * @author asankha
+ * @author Chathuranga Withana
  *         <p/>
  *         TODO Autit calls and log metrics of use
  */
@@ -93,6 +94,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
     public List<Person> addExistingPerson(Person person, List<PersonCitizenship> citizenshipList,
         boolean ignoreDuplicates, User user) {
         logger.debug("Adding an existing person to the PRS");
+        long pin = -1;
 
         validateRequiredFields(person);
         if (!user.isAuthorized(Permission.PRS_LOOKUP_PERSON_BY_KEYS)) {
@@ -122,6 +124,10 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             person.setStatus(Person.Status.SEMI_VERIFIED);
             person.setLifeStatus(Person.LifeStatus.ALIVE);
             person.setSubmittedLocation(user.getPrimaryLocation());
+            // generate a PIN for existing person
+            pin = pinGenerator.generatePINNumber(person.getDateOfBirth(), person.getGender() == 0);
+            person.setPin(pin);
+            
             personDao.addPerson(person, user);
 
             final String permanentAddress = person.getPermanentAddress();
@@ -149,8 +155,9 @@ public class PopulationRegistryImpl implements PopulationRegistry {
                     citizenshipDAO.addCitizenship(pc, user);
                 }
             }
+            logger.debug("Added a new person to the PRS with PersonUKey : {} and generated PIN : {}",
+                person.getPersonUKey(), pin);
         }
-        logger.debug("Added a new person to the PRS with PersonUKey : {}", person.getPersonUKey());
         return Collections.emptyList();
     }
 
@@ -296,7 +303,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             existing.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
             existing.getLifeCycleInfo().setApprovalOrRejectUser(user);
             // TODO change this
-            addPerson(existing, user);
+//            addPerson(existing, user);
             updatePerson(existing, user);
             logger.debug("Approved of PRS entry : {} Ignore warnings : {}", personUKey, ignoreWarnings);
         } else {

@@ -78,9 +78,8 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
 
         if (warnings.isEmpty()) {
             populateLocations();
-            getApprovalPendingList();
-            final Person existing = service.getByUKey(personUKey, user);
-            addActionMessage(getText("message.approval.success", new String[]{existing.getPin().toString()}));
+            getApprovalPendingPersons();            
+            addActionMessage(getText("message.approval.success"));
             return SUCCESS;
         } else {
             return WARNING;

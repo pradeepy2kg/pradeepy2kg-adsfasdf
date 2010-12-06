@@ -80,7 +80,7 @@ public class PersonRegisterAction extends ActionSupport implements SessionAware 
         if (personList.isEmpty()) {
             // personUKey used to redirect to PRS certificate page
             personUKey = person.getPersonUKey();
-            addActionMessage(getText("person_reg_success.message"));
+            addActionMessage(getText("person_reg_success.message", new String[]{person.getPin().toString()}));
 
             if (logger.isDebugEnabled()) {
                 logger.debug("Person with name : " + NameFormatUtil.getDisplayName(person.getFullNameInEnglishLanguage(), 30)
