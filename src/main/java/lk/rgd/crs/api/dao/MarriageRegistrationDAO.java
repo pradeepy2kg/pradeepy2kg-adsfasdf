@@ -4,7 +4,6 @@ import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.domain.MarriageRegister;
-import lk.rgd.crs.api.domain.Witness;
 
 import java.util.List;
 
@@ -20,13 +19,6 @@ public interface MarriageRegistrationDAO {
      * @param user   user who perform action
      */
     public void addMarriageNotice(MarriageRegister notice, User user);
-
-    /**
-     * adding a witness
-     *
-     * @param witness witness object to be add
-     */
-    public void addWitness(Witness witness);
 
     /**
      * get marriage register object by it's idUKey

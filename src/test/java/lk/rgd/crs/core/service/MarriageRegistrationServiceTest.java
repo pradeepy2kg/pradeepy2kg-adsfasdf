@@ -7,16 +7,11 @@ import lk.rgd.common.api.dao.RaceDAO;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.core.AuthorizationException;
-import lk.rgd.crs.api.dao.BDDivisionDAO;
-import lk.rgd.crs.api.dao.BirthDeclarationDAO;
 import lk.rgd.crs.api.dao.MRDivisionDAO;
 import lk.rgd.crs.api.dao.MarriageRegistrationDAO;
 import lk.rgd.crs.api.domain.*;
-import lk.rgd.crs.api.service.BirthRegistrationService;
-import lk.rgd.crs.api.service.CertificateSearchService;
 import lk.rgd.crs.api.service.MarriageRegistrationService;
 import lk.rgd.crs.web.util.MarriageType;
-import lk.rgd.prs.api.service.PopulationRegistry;
 import org.springframework.context.ApplicationContext;
 
 import java.util.Date;
@@ -89,15 +84,15 @@ public class MarriageRegistrationServiceTest extends TestCase {
         notice.setFemale(female);
 
         //setting witness for male (assume notice is submitted by male party)
-        Witness m_1 = new Witness();
-        m_1.setIdentificationNumber((Integer.parseInt(malePin)) + 10 + "");
-        m_1.setFullName("full name witness 1 " + malePin);
-        notice.setMaleNoticeWitness_1(m_1);
-
-        Witness m_2 = new Witness();
-        m_2.setIdentificationNumber((Integer.parseInt(malePin)) + 20 + "");
-        m_2.setFullName("full name witness 2 " + malePin);
-        notice.setMaleNoticeWitness_2(m_2);
+//        Witness m_1 = new Witness();
+//        m_1.setIdentificationNumber((Integer.parseInt(malePin)) + 10 + "");
+//        m_1.setFullName("full name witness 1 " + malePin);
+//        notice.setMaleNoticeWitness_1(m_1);
+//
+//        Witness m_2 = new Witness();
+//        m_2.setIdentificationNumber((Integer.parseInt(malePin)) + 20 + "");
+//        m_2.setFullName("full name witness 2 " + malePin);
+//        notice.setMaleNoticeWitness_2(m_2);
 
         //setting mandatory fields
         //this is submitted by male party
