@@ -113,7 +113,7 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
         noOfRows = appParametersDAO.getIntParameter(PRS_APPROVAL_ROWS_PER_PAGE);
         approvalPendingList = service.getPRSPendingApprovalByLocation(locationDAO.getLocation(locationId), pageNo, noOfRows, user);
         if (approvalPendingList.size() == 0) {
-            addActionMessage(getText("noitemMsg.label"));
+            addActionMessage(getText("noItemMsg.label"));
         }
     }
 

@@ -143,7 +143,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             }
         }
         if (approvalPendingList.size() == 0) {
-            addActionMessage(getText("noitemMsg.label"));
+            addActionMessage(getText("noItemMsg.label"));
         }
         paginationHandler(approvalPendingList.size());
         setPreviousFlag(false);
@@ -235,7 +235,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         }
 
         if (approvalPendingList.size() == 0) {
-            addActionMessage(getText("noitemMsg.label"));
+            addActionMessage(getText("noItemMsg.label"));
         }
         paginationHandler(approvalPendingList.size());
         setRecordCounter(0);

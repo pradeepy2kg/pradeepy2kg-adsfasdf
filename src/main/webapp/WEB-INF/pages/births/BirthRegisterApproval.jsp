@@ -251,7 +251,7 @@
 <div id="birth-register-approval-body">
     <%--todo permission handling--%>
     <%--<s:if test="approvalPendingList.size==0">--%>
-    <%--<p class="alreadyPrinted" align="center"><s:label value="%{getText('noitemMsg.label')}"/></p>--%>
+    <%--<p class="alreadyPrinted" align="center"><s:label value="%{getText('noItemMsg.label')}"/></p>--%>
     <%--</s:if>--%>
     <s:form action="eprApproveBulk" name="birth_register_approval_body" method="POST">
         <s:if test="approvalPendingList.size>0">
