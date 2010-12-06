@@ -180,7 +180,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
                     }
                     logger.debug("Certificate search result size : {}", searchResultList.size());
                     if (searchResultList.size() == 0) {
-                        addActionMessage(getText("noitemMsg.label"));
+                        addActionMessage(getText("noItemMsg.label"));
                     }
                 }
             } catch (CRSRuntimeException e) {

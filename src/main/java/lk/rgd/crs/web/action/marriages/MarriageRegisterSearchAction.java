@@ -97,7 +97,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
             }
         }
         if (searchList.size() == 0) {
-            addActionMessage(getText("noitemMsg.label"));
+            addActionMessage(getText("noItemMsg.label"));
         }
         logger.debug("Marriage notice search list loaded with size : {}", searchList.size());
 
@@ -143,7 +143,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
             }
         }
         if (marriageRegisterSearchList.size() == 0) {
-            addActionMessage(getText("noitemMsg.label"));
+            addActionMessage(getText("noItemMsg.label"));
         }
         logger.debug("Marriage notice search list loaded with size : {}", marriageRegisterSearchList.size());
 

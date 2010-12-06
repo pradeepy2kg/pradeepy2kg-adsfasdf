@@ -122,7 +122,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
             logger.debug("Initializing certificate Print list with {} items ", printList.size());
         }
         if (printList.size() == 0) {
-            addActionMessage(getText("noitemMsg.label"));
+            addActionMessage(getText("noItemMsg.label"));
         }
     }
 
@@ -161,7 +161,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
             logger.debug("Certificate Print list {}  items  found ", printList.size());
         }
         if (printList.size() == 0) {
-            addActionMessage(getText("noitemMsg.label"));
+            addActionMessage(getText("noItemMsg.label"));
         }
         // TODO remove this
         populate();
@@ -242,7 +242,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
         }
         if (!directPrint) {
             if (printList.size() == 0) {
-                addActionMessage(getText("noitemMsg.label"));
+                addActionMessage(getText("noItemMsg.label"));
             }
             populate();
         }
