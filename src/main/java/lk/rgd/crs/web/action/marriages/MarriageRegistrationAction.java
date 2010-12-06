@@ -104,6 +104,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             marriage = marriageRegistrationService.getByIdUKey(idUKey, user);
         }
         //populating lists
+        //marriageType = MarriageType.values();
         commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
             marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
         commonUtil.populateCountryAndRaceLists(countryList, raceList, language);
@@ -155,6 +156,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             return ERROR;
         }
         populateNoticeForInitEdit(marriage, noticeType);
+        //marriageType = MarriageType.values();
         commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
             marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
         editMode = true;
@@ -199,16 +201,16 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             //populate male notice
             existing.setSerialOfMaleNotice(serialNumber);
             existing.setDateOfMaleNotice(noticeReceivedDate);
-            marriageRegister.getMaleNoticeWitness_1().setIdukey(existing.getMaleNoticeWitness_1().getIdUKey());
-            marriageRegister.getMaleNoticeWitness_2().setIdukey(existing.getMaleNoticeWitness_2().getIdUKey());
+            marriageRegister.getMaleNoticeWitness_1().setIdUKey(existing.getMaleNoticeWitness_1().getIdUKey());
+            marriageRegister.getMaleNoticeWitness_2().setIdUKey(existing.getMaleNoticeWitness_2().getIdUKey());
             existing.setMaleNoticeWitness_1(marriageRegister.getMaleNoticeWitness_1());
             existing.setMaleNoticeWitness_2(marriageRegister.getMaleNoticeWitness_2());
         } else {
             //populate female notice
             existing.setSerialOfFemaleNotice(serialNumber);
             existing.setDateOfFemaleNotice(noticeReceivedDate);
-            marriageRegister.getFemaleNoticeWitness_1().setIdukey(existing.getFemaleNoticeWitness_1().getIdUKey());
-            marriageRegister.getFemaleNoticeWitness_2().setIdukey(existing.getFemaleNoticeWitness_2().getIdUKey());
+            marriageRegister.getFemaleNoticeWitness_1().setIdUKey(existing.getFemaleNoticeWitness_1().getIdUKey());
+            marriageRegister.getFemaleNoticeWitness_2().setIdUKey(existing.getFemaleNoticeWitness_2().getIdUKey());
             existing.setFemaleNoticeWitness_1(marriageRegister.getFemaleNoticeWitness_1());
             existing.setFemaleNoticeWitness_2(marriageRegister.getFemaleNoticeWitness_2());
         }
@@ -284,12 +286,9 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     public String marriageRegistrationInit() {
         //TODO : To be removed
-        idUKey = 4;
-
-        //TODO : TO be improved
-
+        idUKey = 2;
         marriageType = MarriageType.values();
-
+        //TODO : To be improved and remove populate method
         civilStatusMale = populateCivilStatus();
         civilStatusFemale = populateCivilStatus();
 

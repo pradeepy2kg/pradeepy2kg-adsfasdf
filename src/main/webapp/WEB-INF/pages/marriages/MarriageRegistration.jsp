@@ -21,6 +21,8 @@
 <div class="marriage-notice-outer">
 <s:form action="eprMarriageRegistration" method="post">
 <s:hidden name="marriage.idUKey"/>
+<s:hidden name="marriage.witness1.idUKey"/>
+<s:hidden name="marriage.witness2.idUKey"/>
 <%--section for official usage--%>
 <table class="table_reg_header_01">
     <caption></caption>
@@ -155,7 +157,7 @@
                 <tbody>
                 <tr>
                     <td>
-                        <s:radio name="marriage.typeOfMarriage.id" list="marriageType" listKey="id" theme="horizontal"/>
+                        <s:radio name="marriage.typeOfMarriage" list="marriageType" listValue="type" theme="horizontal"/>
                     </td>
                 </tr>
                 </tbody>

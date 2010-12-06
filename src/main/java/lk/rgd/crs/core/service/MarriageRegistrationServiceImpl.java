@@ -145,10 +145,21 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         //todo check user permissions
         logger.debug("attempt to update marriage register/notice record : idUKey : {}", marriageRegister.getIdUKey());
         if (marriageRegister.getState() == MarriageRegister.State.REG_DATA_ENTRY) {
-            addWitness(marriageRegister.getWitness1());
-            addWitness(marriageRegister.getWitness2());
+            if (marriageRegister.getWitness1().getIdUKey()==0){
+               addWitness(marriageRegister.getWitness1());
+            }
+            if (marriageRegister.getWitness2().getIdUKey()==0){
+               addWitness(marriageRegister.getWitness2());
+            }
         }
+        logger.debug("Updating marriage registar with witness 1 {}", marriageRegister.getWitness1().getIdUKey());
+        logger.debug("Updating marriage registar with witness 1 - Name - {}", marriageRegister.getWitness1().getFullName());
+        logger.debug("Updating marriage registar with witness 2 {}", marriageRegister.getWitness2().getIdUKey());
         marriageRegistrationDAO.updateMarriageRegister(marriageRegister, user);
+    }
+
+    private void addWitness(Witness witness) {
+        marriageRegistrationDAO.addWitness(witness);
     }
 
     /**
@@ -260,10 +271,6 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
                 notice.setFemaleNoticeWitness_2(null);
         }
 
-    }
-
-    private void addWitness(Witness witness) {
-        marriageRegistrationDAO.addWitness(witness);
     }
 
     private void addMaleOrFemaleWitnesses(MarriageRegister marriageRegister, boolean isMale) {
