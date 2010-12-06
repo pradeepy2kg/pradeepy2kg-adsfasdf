@@ -34,7 +34,6 @@ public class MaleParty {
     @Column(name = "M_ADDRESS", nullable = true, length = 255)
     private String residentAddressMale;
 
-
     @ManyToOne
     @JoinColumn
     private MRDivision mrDivisionMale;

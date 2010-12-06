@@ -47,6 +47,7 @@ public class MarriageRegister implements Serializable, Cloneable {
     public enum State {
         DATA_ENTRY,
         REG_DATA_ENTRY
+
     }
 
     public enum PlaceOfMarriage {
@@ -87,12 +88,12 @@ public class MarriageRegister implements Serializable, Cloneable {
     private MRDivision mrDivision;
 
     @OneToOne
-    @JoinColumn(name = "witness1idukey", nullable = true, insertable = false, updatable = false)
-    private Witness witness1 = new Witness();
+    @JoinColumn(name = "witness1idukey")
+    private Witness witness1;
 
     @OneToOne
-    @JoinColumn(name = "witness2idukey", nullable = true, insertable = false, updatable = false)
-    private Witness witness2 = new Witness();
+    @JoinColumn(name = "witness2idukey")
+    private Witness witness2;
 
     @Column(length = 10, name = "REG_SERIAL", nullable = true)
     private String regSerial;

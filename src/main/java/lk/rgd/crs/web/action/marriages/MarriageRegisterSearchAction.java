@@ -8,6 +8,7 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.WebUtils;
 import lk.rgd.crs.api.dao.MRDivisionDAO;
 import lk.rgd.crs.api.domain.MarriageNotice;
+import lk.rgd.crs.api.domain.MarriageRegister;
 import lk.rgd.crs.api.service.MarriageRegistrationService;
 import lk.rgd.crs.web.WebConstants;
 import org.apache.struts2.interceptor.SessionAware;
@@ -21,6 +22,7 @@ import java.util.Map;
 
 /**
  * @author Chathuranga Withana
+ * @author amith jayasekara
  */
 public class MarriageRegisterSearchAction extends ActionSupport implements SessionAware {
 
@@ -41,6 +43,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     private Map<Integer, String> dsDivisionList;
     private Map<Integer, String> mrDivisionList;
     private List<MarriageNotice> searchList;
+    private List<MarriageRegister> marriageRegisterSearchList;
 
     private Date searchStartDate;
     private Date searchEndDate;
@@ -102,6 +105,51 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         noticeSerialNo = null;
         pinOrNic = null;
 
+        return SUCCESS;
+    }
+
+    /**
+     * loading searching page for marriage register searching
+     * by default this method loads marriage register records for first element if the ds  division list
+     */
+    public String marriageRegisterSearch() {
+        //todo complete **amith
+        logger.debug("loading marriage register search page");
+        populateBasicLists();
+        pageNo += 1;
+        //number of results rows that fetch at a time
+        noOfRows = appParametersDAO.getIntParameter(MR_APPROVAL_ROWS_PER_PAGE);
+        if (noticeSerialNo != null) {
+            //search by serial number and MR division u Key
+            logger.debug("attempt to search marriage register list by serial number :{} and mr division idUKey : {}",
+                noticeSerialNo, mrDivisionId);
+            if (mrDivisionId != 0) {
+                marriageRegisterSearchList = service.getMarriageRegisterPendingApprovalBySerialAndMRDivision
+                    (noticeSerialNo, mrDivisionDAO.getMRDivisionByPK(mrDivisionId), pageNo, noOfRows, true, user);
+            }
+        } else {
+            if (isEmpty(pinOrNic) && noticeSerialNo == null) {
+                if (mrDivisionId == 0) {
+                    //default search option use when page is loaded(search all the marriage records in DS division)
+                    marriageRegisterSearchList = service.getMarriageRegisterPendingApprovalByDSDivision
+                        (dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, true, user);
+                } else {
+                    searchList = WebUtils.populateNoticeList(service.getMarriageNoticePendingApprovalByMRDivision(
+                        mrDivisionDAO.getMRDivisionByPK(mrDivisionId), pageNo, noOfRows, true, user));
+                }
+            } else {
+                searchList = WebUtils.populateNoticeList(
+                    service.getMarriageNoticePendingApprovalByPINorNIC(pinOrNic, true, user));
+            }
+        }
+        if (marriageRegisterSearchList.size() == 0) {
+            addActionMessage(getText("noitemMsg.label"));
+        }
+        logger.debug("Marriage notice search list loaded with size : {}", marriageRegisterSearchList.size());
+
+        // by doing following previously user entered values will be removed in jsp page
+        noticeSerialNo = null;
+        pinOrNic = null;
         return SUCCESS;
     }
 
@@ -251,5 +299,13 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
 
     public void setNoOfRows(int noOfRows) {
         this.noOfRows = noOfRows;
+    }
+
+    public List<MarriageRegister> getMarriageRegisterSearchList() {
+        return marriageRegisterSearchList;
+    }
+
+    public void setMarriageRegisterSearchList(List<MarriageRegister> marriageRegisterSearchList) {
+        this.marriageRegisterSearchList = marriageRegisterSearchList;
     }
 }

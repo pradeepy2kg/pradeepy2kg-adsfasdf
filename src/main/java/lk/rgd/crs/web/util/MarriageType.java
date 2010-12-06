@@ -12,6 +12,7 @@ public enum MarriageType {
     private String siType;
     private String taType;
     private String enType;
+    private String type;
 
     MarriageType(int id, String siType, String taType, String enType) {
         this.id = id;
@@ -24,24 +25,12 @@ public enum MarriageType {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getEnType() {
         return enType;
     }
 
-    public void setEnType(String enType) {
-        this.enType = enType;
-    }
-
     public String getSiType() {
         return siType;
-    }
-
-    public void setSiType(String siType) {
-        this.siType = siType;
     }
 
     public String getTaType() {
@@ -52,10 +41,10 @@ public enum MarriageType {
         this.taType = taType;
     }
 
-    @Override
-    public String toString() {
+    public String getType() {
         StringBuilder sb = new StringBuilder(siType).append(" / ").append(taType).append(" / ").append(enType);
-        return sb.toString();
+        type = sb.toString();
+        return type;
     }
 
 }
