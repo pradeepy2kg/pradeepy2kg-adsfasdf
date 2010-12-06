@@ -43,7 +43,9 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
     private int pageNo;
     private int noOfRows;
     private long personUKey;
+    private Long searchTempPin;
     private String language;
+    private String searchNic;
 
     public PersonApprovalAction(PopulationRegistry service, LocationDAO locationDAO, AppParametersDAO appParametersDAO,
         CommonUtil commonUtil) {
@@ -63,6 +65,7 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
 
         logger.debug("Loaded approval pending person list with size : {} for LocationId : {} ",
             approvalPendingList.size(), locationId);
+        setSearchFieldsToEmpty();
         return SUCCESS;
     }
 
@@ -112,6 +115,14 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
         if (approvalPendingList.size() == 0) {
             addActionMessage(getText("noitemMsg.label"));
         }
+    }
+
+    /**
+     * This method used to set searching fields back to initial state
+     */
+    private void setSearchFieldsToEmpty() {
+        searchNic = null;
+        searchTempPin = null;
     }
 
     public Map getSession() {
@@ -179,5 +190,21 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
 
     public void setPersonUKey(long personUKey) {
         this.personUKey = personUKey;
+    }
+
+    public Long getSearchTempPin() {
+        return searchTempPin;
+    }
+
+    public void setSearchTempPin(Long searchTempPin) {
+        this.searchTempPin = searchTempPin;
+    }
+
+    public String getSearchNic() {
+        return searchNic;
+    }
+
+    public void setSearchNic(String searchNic) {
+        this.searchNic = searchNic;
     }
 }
