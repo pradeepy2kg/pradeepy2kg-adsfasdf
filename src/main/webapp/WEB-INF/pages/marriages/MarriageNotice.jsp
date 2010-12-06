@@ -293,6 +293,28 @@
             <s:radio name="marriage.typeOfMarriage" list="#@java.util.HashMap@{'KANDYAN_DEEGA':''}" value="true"/>
         </td>
     </tr>
+  <%--     <tr>
+        <td>
+            විවාහයේ ස්වභාවය <br>
+            type of marriage in tamil <br>
+            Type of Marriage
+        </td>
+        <td colspan="6">
+            <table width="100%">
+                <caption/>
+                <col/>
+                <col/>
+                <tbody>
+                <tr>
+                    <td>
+                        <s:radio name="marriage.typeOfMarriage" list="marriageType" listValue="type" theme="horizontal"/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    --%>
     <tr>
         <td>
             විවාහය සිදුකරන ස්ථානය <br>
