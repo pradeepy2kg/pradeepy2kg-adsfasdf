@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
  *
  * @author Chathuranga Withana
  */
-public class PersonRegisterValidator {
+public class PopulationRegisterValidator {
 
     private static final ResourceBundle rb_si =
         ResourceBundle.getBundle("messages/prs_validation_messages", AppConstants.LK_SI);
@@ -26,9 +26,9 @@ public class PersonRegisterValidator {
     private static final ResourceBundle rb_en =
         ResourceBundle.getBundle("messages/prs_validation_messages", AppConstants.LK_EN);
 
-    private static final Logger logger = LoggerFactory.getLogger(PersonRegisterValidator.class);
+    private static final Logger logger = LoggerFactory.getLogger(PopulationRegisterValidator.class);
 
-    public PersonRegisterValidator() {
+    public PopulationRegisterValidator() {
     }
 
     /**

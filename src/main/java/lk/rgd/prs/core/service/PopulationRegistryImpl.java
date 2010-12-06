@@ -295,6 +295,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             existing.setStatus(Person.Status.VERIFIED);
             existing.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
             existing.getLifeCycleInfo().setApprovalOrRejectUser(user);
+            // TODO change this
             addPerson(existing, user);
             updatePerson(existing, user);
             logger.debug("Approved of PRS entry : {} Ignore warnings : {}", personUKey, ignoreWarnings);
