@@ -201,18 +201,18 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             //populate male notice
             existing.setSerialOfMaleNotice(serialNumber);
             existing.setDateOfMaleNotice(noticeReceivedDate);
-            marriageRegister.getMaleNoticeWitness_1().setIdUKey(existing.getMaleNoticeWitness_1().getIdUKey());
+/*            marriageRegister.getMaleNoticeWitness_1().setIdUKey(existing.getMaleNoticeWitness_1().getIdUKey());
             marriageRegister.getMaleNoticeWitness_2().setIdUKey(existing.getMaleNoticeWitness_2().getIdUKey());
             existing.setMaleNoticeWitness_1(marriageRegister.getMaleNoticeWitness_1());
-            existing.setMaleNoticeWitness_2(marriageRegister.getMaleNoticeWitness_2());
+            existing.setMaleNoticeWitness_2(marriageRegister.getMaleNoticeWitness_2());*/
         } else {
             //populate female notice
             existing.setSerialOfFemaleNotice(serialNumber);
             existing.setDateOfFemaleNotice(noticeReceivedDate);
-            marriageRegister.getFemaleNoticeWitness_1().setIdUKey(existing.getFemaleNoticeWitness_1().getIdUKey());
+/*            marriageRegister.getFemaleNoticeWitness_1().setIdUKey(existing.getFemaleNoticeWitness_1().getIdUKey());
             marriageRegister.getFemaleNoticeWitness_2().setIdUKey(existing.getFemaleNoticeWitness_2().getIdUKey());
             existing.setFemaleNoticeWitness_1(marriageRegister.getFemaleNoticeWitness_1());
-            existing.setFemaleNoticeWitness_2(marriageRegister.getFemaleNoticeWitness_2());
+            existing.setFemaleNoticeWitness_2(marriageRegister.getFemaleNoticeWitness_2());*/
         }
     }
 
@@ -249,14 +249,14 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         if (noticeType == MarriageNotice.Type.FEMALE_NOTICE) {
             noticeExisting.setSerialOfMaleNotice(serialNumber);
             noticeExisting.setDateOfMaleNotice(noticeReceivedDate);
-            noticeExisting.setMaleNoticeWitness_1(noticeEdited.getMaleNoticeWitness_1());
-            noticeExisting.setMaleNoticeWitness_2(noticeEdited.getMaleNoticeWitness_2());
+/*            noticeExisting.setMaleNoticeWitness_1(noticeEdited.getMaleNoticeWitness_1());
+            noticeExisting.setMaleNoticeWitness_2(noticeEdited.getMaleNoticeWitness_2());*/
             noticeExisting.setMrDivisionOfMaleNotice(noticeExisting.getMale().getMrDivisionMale());
         } else {
             noticeExisting.setSerialOfFemaleNotice(serialNumber);
             noticeExisting.setDateOfFemaleNotice(noticeReceivedDate);
-            noticeExisting.setFemaleNoticeWitness_1(noticeEdited.getFemaleNoticeWitness_1());
-            noticeExisting.setFemaleNoticeWitness_2(noticeEdited.getFemaleNoticeWitness_2());
+/*            noticeExisting.setFemaleNoticeWitness_1(noticeEdited.getFemaleNoticeWitness_1());
+            noticeExisting.setFemaleNoticeWitness_2(noticeEdited.getFemaleNoticeWitness_2());*/
             noticeExisting.setMrDivisionOfFemaleNotice(noticeExisting.getFemale().getMrDivisionFemale());
         }
         noticeExisting.setMale(noticeEdited.getMale());
@@ -330,8 +330,8 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     }
 
     private void populateRegistrationDetails(MarriageRegister marriageRegister) {
-        marriageRegister.setWitness1(marriage.getWitness1());
-        marriageRegister.setWitness2(marriage.getWitness2());
+/*        marriageRegister.setWitness1(marriage.getWitness1());
+        marriageRegister.setWitness2(marriage.getWitness2());*/
         marriageRegister.setRegSerial(marriage.getRegSerial());
         marriageRegister.setRegSubmittedDate(marriage.getRegSubmittedDate());
         marriageRegister.setRegPlaceInOfficialLang(marriage.getRegPlaceInOfficialLang());

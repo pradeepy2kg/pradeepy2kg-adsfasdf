@@ -1,6 +1,5 @@
 package lk.rgd.crs.api.domain;
 
-import lk.rgd.common.util.WebUtils;
 import lk.rgd.crs.web.util.MarriageType;
 
 import javax.persistence.*;
@@ -87,14 +86,6 @@ public class MarriageRegister implements Serializable, Cloneable {
     @JoinColumn(name = "mrDivisionUKey", nullable = true, insertable = false, updatable = false)
     private MRDivision mrDivision;
 
-    @OneToOne
-    @JoinColumn(name = "witness1idukey")
-    private Witness witness1;
-
-    @OneToOne
-    @JoinColumn(name = "witness2idukey")
-    private Witness witness2;
-
     @Column(length = 10, name = "REG_SERIAL", nullable = true)
     private String regSerial;
 
@@ -131,22 +122,6 @@ public class MarriageRegister implements Serializable, Cloneable {
 
     @Column
     private long registrarPINOfFemaleNotice;
-
-    @OneToOne
-    @JoinColumn(name = "IDUKEY_M_W_1", nullable = true)
-    private Witness maleNoticeWitness_1 = new Witness();
-
-    @OneToOne
-    @JoinColumn(name = "IDUKEY_M_W_2", nullable = true)
-    private Witness maleNoticeWitness_2 = new Witness();
-
-    @OneToOne
-    @JoinColumn(name = "IDUKEY_F_W_1", nullable = true)
-    private Witness femaleNoticeWitness_1 = new Witness();
-
-    @OneToOne
-    @JoinColumn(name = "IDUKEY_F_W_2", nullable = true)
-    private Witness femaleNoticeWitness_2 = new Witness();
 
     //todo remove nullable
     @ManyToOne
@@ -267,22 +242,6 @@ public class MarriageRegister implements Serializable, Cloneable {
         this.registrarPINOfMaleNotice = registrarPINOfFirstNotice;
     }
 
-    public Witness getWitness1() {
-        return witness1;
-    }
-
-    public void setWitness1(Witness witness1) {
-        this.witness1 = witness1;
-    }
-
-    public Witness getWitness2() {
-        return witness2;
-    }
-
-    public void setWitness2(Witness witness2) {
-        this.witness2 = witness2;
-    }
-
     public State getState() {
         return state;
     }
@@ -313,38 +272,6 @@ public class MarriageRegister implements Serializable, Cloneable {
 
     public void setMrDivisionOfFemaleNotice(MRDivision mrDivisionOfFemaleNotice) {
         this.mrDivisionOfFemaleNotice = mrDivisionOfFemaleNotice;
-    }
-
-    public Witness getMaleNoticeWitness_1() {
-        return maleNoticeWitness_1;
-    }
-
-    public void setMaleNoticeWitness_1(Witness maleNoticeWitness_1) {
-        this.maleNoticeWitness_1 = maleNoticeWitness_1;
-    }
-
-    public Witness getMaleNoticeWitness_2() {
-        return maleNoticeWitness_2;
-    }
-
-    public void setMaleNoticeWitness_2(Witness maleNoticeWitness_2) {
-        this.maleNoticeWitness_2 = maleNoticeWitness_2;
-    }
-
-    public Witness getFemaleNoticeWitness_1() {
-        return femaleNoticeWitness_1;
-    }
-
-    public void setFemaleNoticeWitness_1(Witness femaleNoticeWitness_1) {
-        this.femaleNoticeWitness_1 = femaleNoticeWitness_1;
-    }
-
-    public Witness getFemaleNoticeWitness_2() {
-        return femaleNoticeWitness_2;
-    }
-
-    public void setFemaleNoticeWitness_2(Witness femaleNoticeWitness_2) {
-        this.femaleNoticeWitness_2 = femaleNoticeWitness_2;
     }
 
     public long getRegistrarPINOfFemaleNotice() {
