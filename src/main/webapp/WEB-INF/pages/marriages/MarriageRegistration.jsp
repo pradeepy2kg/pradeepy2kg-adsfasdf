@@ -111,8 +111,7 @@
                     </td>
                     <td>
                         <s:label value="YYYY-MM-DD" cssStyle="margin-left:10px;font-size:10px"/><br>
-                        <s:textfield name="marriage.regSubmittedDate" id="submitDatePicker" maxLength="10"
-                                     onclick="popupCalendar('submitDatePicker')"/>
+                        <s:textfield name="marriage.regSubmittedDate" id="submitDatePicker" maxLength="10"/>
                     </td>
                 </tr>
             </table>
@@ -145,23 +144,22 @@
     <tbody>
     <tr>
         <td>
-            විවාහයේ ස්වභාවය <br>
-            type of marriage in tamil <br>
-            Type of Marriage
+            <label>
+                <span class="font-8">විවාහ දිනය
+                    <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
+                    <br>in tamil<br>Date of Marriage</span>
+            </label>
         </td>
-        <td colspan="8">
-            <table width="100%">
-                <caption/>
-                <col/>
-                <col/>
-                <tbody>
-                <tr>
-                    <td>
-                        <s:radio name="marriage.typeOfMarriage" list="marriageType" listValue="type" theme="horizontal"/>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+        <td colspan="2">
+            <s:label value="YYYY-MM-DD" cssStyle="margin-left:50px;font-size:10px"/><br>
+            <s:textfield name="marriage.dateOfMarriage" id="submitDatePicker" maxLength="10"/>
+        </td>
+        <td colspan="3"><label><span class="font-8">රෙජිස්ට්‍රාර්ගේ/දේවගැතිගේ අනන්‍යතා අංකය
+                    <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
+                    <br>அடையாள எண் <br>Identification number of Registrar/Minister</span></label>
+        </td>
+        <td align="center" colspan="3">
+            <s:textfield name="marriage.regPIN" id="regPIN" maxLength="10"/>
         </td>
     </tr>
     <tr>
@@ -173,7 +171,7 @@
         <td colspan="8">
             <table width="100%">
                 <caption/>
-                <col width="200px"/>
+                <col width="150px"/>
                 <col/>
                 <tbody>
                 <tr>
@@ -196,6 +194,67 @@
                     <td>
                         <s:textarea name="marriage.regPlaceInEnglishLang" id="reg_place_English"
                                     cssStyle="width:98.2%;"/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            රෙජිස්ට්‍රාර්තැන / දේවගැතිතැන<br>
+            in tamil <br>
+            Registrar / Minister
+        </td>
+        <td colspan="8">
+            <table width="100%">
+                <caption/>
+                <col width="150px"/>
+                <col/>
+                <tbody>
+                <tr>
+                    <td>
+                        රාජ්‍ය භාෂාවෙන්<br>
+                        தமிழ் மொழியில் <br>
+                        Official Language
+                    </td>
+                    <td>
+                        <s:textarea name="marriage.regNameInOfficialLang" id="reg_place_official"
+                                    cssStyle="width:98.2%;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        ඉංග්‍රීසි භාෂාවෙන්<br>
+                        ஆங்கில மொழியில்<br>
+                        In English
+                    </td>
+                    <td>
+                        <s:textarea name="marriage.regNameInEnglishLang" id="reg_place_English"
+                                    cssStyle="width:98.2%;"/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            විවාහයේ ස්වභාවය <br>
+            type of marriage in tamil <br>
+            Type of Marriage
+        </td>
+        <td colspan="8">
+            <table width="100%">
+                <caption/>
+                <col/>
+                <col/>
+                <tbody>
+                <tr>
+                    <td>
+                        <s:radio name="marriage.typeOfMarriage" list="marriageType" listValue="type"
+                                 theme="horizontal"/>
                     </td>
                 </tr>
                 </tbody>
@@ -299,11 +358,11 @@
                 <caption/>
                 <col/>
                 <tbody>
-                    <tr>
-                        <td>
-                            <s:radio name="marriage.male.civilStatusMale" list="civilStatusMale" theme="horizontal"/>
-                        </td>
-                    </tr>
+                <tr>
+                    <td>
+                        <s:radio name="marriage.male.civilStatusMale" list="civilStatusMale" theme="horizontal"/>
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </td>
@@ -313,11 +372,11 @@
                 <caption/>
                 <col/>
                 <tbody>
-                    <tr>
-                        <td>
-                            <s:radio name="marriage.female.civilStatusFemale" list="civilStatusFemale" theme="horizontal"/>
-                        </td>
-                    </tr>
+                <tr>
+                    <td>
+                        <s:radio name="marriage.female.civilStatusFemale" list="civilStatusFemale" theme="horizontal"/>
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </td>
@@ -366,25 +425,9 @@
             <s:textarea name="marriage.female.residentAddressFemale" id="address_female" cssStyle="width:98.2%;"/>
         </td>
     </tr>
-    <tr>
-        <td>
-            පියාගේ සම්පුර්ණ නම <br>
-            தந்தையின் அடையாள <br>
-            Fathers full name
-        </td>
-        <td>
-            <s:textarea name="marriage.male.fatherFullNameMale" id="father_full_name_male"
-                        cssStyle="width:98.2%;"/>
-        </td>
-        <td>
-            <s:textarea name="marriage.female.fatherFullNameFemale" id="father_full_name_female"
-                        cssStyle="width:98.2%;"/>
-        </td>
-    </tr>
-
     </tbody>
 </table>
-<%--section heading witness --%>
+<%--section heading witness
 <table style="margin-top:20px;margin-bottom:20px;width:100%;font-size:16px">
     <caption/>
     <tbody>
@@ -476,7 +519,7 @@
         <td></td>
     </tr>
     </tbody>
-</table>
+</table>    --%>
 <div class="form-submit">
     <s:submit/>
 </div>

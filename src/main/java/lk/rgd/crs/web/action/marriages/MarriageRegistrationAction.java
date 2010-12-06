@@ -296,7 +296,6 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         //TODO : To be improved and remove populate method
         civilStatusMale = populateCivilStatus();
         civilStatusFemale = populateCivilStatus();
-
         commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
             marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
         raceList = raceDAO.getRaces(language);
@@ -335,8 +334,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     }
 
     private void populateRegistrationDetails(MarriageRegister marriageRegister) {
-/*        marriageRegister.setWitness1(marriage.getWitness1());
-        marriageRegister.setWitness2(marriage.getWitness2());*/
+        marriageRegister.setDateOfMarriage(marriage.getDateOfMarriage());
         marriageRegister.setRegSerial(marriage.getRegSerial());
         marriageRegister.setRegSubmittedDate(marriage.getRegSubmittedDate());
         marriageRegister.setRegPlaceInOfficialLang(marriage.getRegPlaceInOfficialLang());
