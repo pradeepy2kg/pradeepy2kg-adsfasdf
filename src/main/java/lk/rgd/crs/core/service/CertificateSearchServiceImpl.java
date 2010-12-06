@@ -89,14 +89,14 @@ public class CertificateSearchServiceImpl implements CertificateSearchService {
 
             // add exact match using Generated Identification Number
             if (exactRecord == null && search.getSearchPIN() != null) {
-                logger.debug("Search narrowed against Child/Persion PIN");
+                logger.debug("Search narrowed against Child/Person PIN");
                 exactRecord = birthDeclarationDAO.getByPINorNIC(search.getSearchPIN());
                 addMatchingBirth(results, exactRecord, search);
             }
 
             // add exact match using Birth Declaration serial no and BDDivision
             if (exactRecord == null && search.getSearchSerialNo() != null && search.getBdDivision() != null) {
-                logger.debug("Search narrowed against Birth declaration Serail No : {} and BDDivision : {}",
+                logger.debug("Search narrowed against Birth declaration Serial No : {} and BDDivision : {}",
                     search.getSearchSerialNo(), search.getBdDivision().getBdDivisionUKey());
                 exactRecord = birthDeclarationDAO.getActiveRecordByBDDivisionAndSerialNo(
                     search.getBdDivision(), search.getSearchSerialNo());
@@ -161,7 +161,7 @@ public class CertificateSearchServiceImpl implements CertificateSearchService {
 
             // add exact match using Identification Number
             if (exactRecord == null && search.getSearchPIN() != null) {
-                logger.debug("Search narrowed against Persion PIN");
+                logger.debug("Search narrowed against Person PIN");
                 possibleRecords =
                     deathRegisterDAO.getDeathRegisterByDeathPersonPINorNIC(search.getSearchPIN().toString());
                 for (DeathRegister record : possibleRecords) {
@@ -171,7 +171,7 @@ public class CertificateSearchServiceImpl implements CertificateSearchService {
 
             // add exact match using Death Register serial no and BDDivision
             if (exactRecord == null && search.getSearchSerialNo() != null && search.getBdDivision() != null) {
-                logger.debug("Search narrowed against Death declaration Serail No : {} and BDDivision : {}",
+                logger.debug("Search narrowed against Death declaration Serial No : {} and BDDivision : {}",
                     search.getSearchSerialNo(), search.getBdDivision().getBdDivisionUKey());
                 exactRecord = deathRegisterDAO.getActiveRecordByBDDivisionAndDeathSerialNo(
                     search.getBdDivision(), search.getSearchSerialNo());

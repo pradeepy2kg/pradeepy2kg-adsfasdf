@@ -13,9 +13,8 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        $("#tabs").tabs();
-        $('#tabs2').tabs();
         $('#tab1').tabs();
+        $('#tabs2').tabs();
     });
 
 
@@ -34,43 +33,42 @@
             "sPaginationType": "full_numbers"
         });
     });
+
+    var errormsg = "";
+    function validate() {
+        var domObject;
+        var returnVal = true;
+
+        // validate serial number
+        domObject = document.getElementById('searchNic');
+        if (!isFieldEmpty(domObject)) {
+            validateNIC(domObject, 'error1', 'error2');
+        }
+
+        // validate start and end date
+        domObject = document.getElementById('searchTempPin');
+        if (!isFieldEmpty(domObject)) {
+            validateTemPIN(domObject.value, 'error1', 'error3');
+        }
+
+        if (errormsg != "") {
+            alert(errormsg);
+            returnVal = false;
+        }
+        errormsg = "";
+        return returnVal;
+    }
 </script>
 
-<div id="birth-register-approval">
-    <%--<s:form action="eprPersonApproval.do" method="POST">--%>
-    <%--<fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">--%>
-    <%--<legend><b><s:label value="%{getText('searchOption.label')}"/></b></legend>--%>
-    <%--<table width="100%" cellpadding="5" cellspacing="0">--%>
-    <%--<col width="300px"/>--%>
-    <%--<col/>--%>
-    <%--<col width="100px"/>--%>
-    <%--<col width="300px"/>--%>
-    <%--<col/>--%>
-    <%--<tbody>--%>
-    <%--<tr>--%>
-    <%--<td><s:label value="%{getText('registrationLocation.label')}"/></td>--%>
-    <%--<td>--%>
-    <%--<s:select name="locationId" list="locationList"/>--%>
-    <%--</td>--%>
-    <%--<td></td>--%>
-    <%--<td></td>--%>
-    <%--<td class="button" align="right">--%>
-    <%--<s:submit name="refresh" value="%{getText('bdfSearch.button')}"/>--%>
-    <%--</td>--%>
-    <%--</tr>--%>
-    <%--</tbody>--%>
-    <%--</table>--%>
-    <%--</fieldset>--%>
-    <%--</s:form>--%>
-
-    <s:form action="eprPersonApproval.do" method="POST">
-        <div id="tabs2" style="font-size:10pt;">
+<div id="person-approval-list">
+    <s:form action="eprPersonApproval.do" method="POST" onsubmit="javascript:return validate()">
+        <div id="tab1" style="font-size:10pt;">
             <ul>
-                <li><a href="#tab1"><span><s:label value="%{getText('searchOption.label')}"/></span></a></li>
+                <li><a href="#tab1"><span><b><s:label value="%{getText('searchOption.label')}"/></b></span></a></li>
             </ul>
 
-            <div id="tab1">
-                <table width="100%" cellpadding="5" cellspacing="0" style="margin-bottom:5px;">
+            <div id="tabs2">
+                <table width="100%" cellpadding="5" cellspacing="0" style="margin-bottom:5px;margin-left:10px;">
                     <col width="300px"/>
                     <col/>
                     <col width="100px"/>
@@ -106,7 +104,7 @@
                             </td>
                             <td></td>
                             <td>
-                                <s:textfield name="" id="" maxLength="10"/>
+                                <s:textfield name="searchNic" id="searchNic" maxLength="10"/>
                             </td>
                         </tr>
                         </tbody>
@@ -125,7 +123,7 @@
                             </td>
                             <td></td>
                             <td>
-                                <s:textfield name="" id="" maxLength="10"/>
+                                <s:textfield name="searchTempPin" id="searchTempPin" maxLength="10"/>
                             </td>
                         </tr>
                         </tbody>
@@ -209,3 +207,6 @@
         </div>
     </s:form>
 </div>
+<s:hidden id="error1" value="%{getText('p1.invalide.inputType')}"/>
+<s:hidden id="error2" value="%{getText('nic.label')}"/>
+<s:hidden id="error3" value="%{getText('tempPin.label')}"/>
