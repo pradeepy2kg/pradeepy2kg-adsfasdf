@@ -46,7 +46,6 @@ public class MarriageRegister implements Serializable, Cloneable {
     public enum State {
         DATA_ENTRY,
         REG_DATA_ENTRY
-
     }
 
     public enum PlaceOfMarriage {
@@ -61,37 +60,27 @@ public class MarriageRegister implements Serializable, Cloneable {
     @Column(name = "IDUKEY")
     private long idUKey;
 
-    //received date for marriage registry
-    @Column(name = "RECEIVED_DATE", nullable = true)
-    @Temporal(value = TemporalType.DATE)
-    private Date receivedDate;
-
-    @Column(name = "TYPE_MARRIAGE", nullable = true)
-    private MarriageType typeOfMarriage;
-
-    @Column(name = "PLACE_MARRIAGE", nullable = true)
-    private PlaceOfMarriage placeOfMarriage;
-
     @Column(name = "STATE", nullable = false)
     private State state;
 
-    @Column(name = "REG_MIN_PIN")
-    private long registrarOrMinisterPIN;
-
-    @Column(name = "IS_BOTH")
-    private boolean bothPartySubmitted;
-
-    //mr division for marriage register
+    //marriage register related columns
+    //received date for marriage registry
     @ManyToOne
-    @JoinColumn(name = "mrDivisionUKey", nullable = true, insertable = false, updatable = false)
+    @JoinColumn(name = "REG_MRDIVISIONUKEY", nullable = true, insertable = false, updatable = false)
     private MRDivision mrDivision;
 
-    @Column(length = 10, name = "REG_SERIAL", nullable = true)
-    private String regSerial;
-
-    @Column(name = "MARRIAGE_DATE", nullable = true)
+    @Column(name = "REG_RECEIVED_DATE", nullable = true)
     @Temporal(value = TemporalType.DATE)
-    private Date dateOfMarriage;
+    private Date receivedDate;
+
+    @Column(name = "REG_TYPE_MARRIAGE", nullable = true)
+    private MarriageType typeOfMarriage;
+
+    @Column(name = "REG_PLACE_MARRIAGE", nullable = true)
+    private PlaceOfMarriage placeOfMarriage;
+
+    @Column(name = "REG_MIN_PIN")
+    private long registrarOrMinisterPIN;
 
     @Column(name = "REG_SUBMITTED_DATE", nullable = true)
     @Temporal(value = TemporalType.DATE)
@@ -103,37 +92,50 @@ public class MarriageRegister implements Serializable, Cloneable {
     @Column(name = "REG_PLACE_MARRIAGE_ENGLISH_LANG", nullable = true)
     private String regPlaceInEnglishLang;
 
-    @Column(length = 10, name = "SERIAL_MALE")
+    @Column(length = 10, name = "REG_SERIAL", nullable = true)
+    private String regSerial;
+
+    //marriage notice related columns
+
+    @Column(name = "NOTICE_IS_BOTH")
+    private boolean bothPartySubmitted;
+
+    //male notice related columns
+
+    @Column(length = 10, name = "NOTICE_SERIAL_MALE")
     private Long serialOfMaleNotice;
 
-    @Column
+    @Column(name = "NOTICE_DATE_M_N")
     @Temporal(value = TemporalType.DATE)
     private Date dateOfMaleNotice;
 
-    @Column
+    @Column(name = "NOTICE_PIN_M_N")
     private long registrarPINOfMaleNotice;
 
-    //todo remove nullable
     @ManyToOne
+    @JoinColumn(name = "NOTICE_MRDIVISIONUKEY_M", nullable = true, insertable = false, updatable = false)
     private MRDivision mrDivisionOfMaleNotice;
 
-    @Column(length = 10, name = "SERIAL_FEMALE")
-    private Long serialOfFemaleNotice;
-
-    @Column
-    @Temporal(value = TemporalType.DATE)
-    private Date dateOfFemaleNotice;
-
-    @Column
-    private long registrarPINOfFemaleNotice;
-
-    //todo remove nullable
-    @ManyToOne
-    private MRDivision mrDivisionOfFemaleNotice;
 
     //party information male
     @Embedded
     private MaleParty male = new MaleParty();
+
+    //female notice related columns
+
+    @Column(length = 10, name = "NOTICE_SERIAL_FEMALE")
+    private Long serialOfFemaleNotice;
+
+    @Column(name = "NOTICE_DATE_F_N")
+    @Temporal(value = TemporalType.DATE)
+    private Date dateOfFemaleNotice;
+
+    @Column(name = "NOTICE_PIN_F_N")
+    private long registrarPINOfFemaleNotice;
+
+    @ManyToOne
+    @JoinColumn(name = "NOTICE_MRDIVISIONUKEY_F", nullable = true, insertable = false, updatable = false)
+    private MRDivision mrDivisionOfFemaleNotice;
 
     //party female
     @Embedded
@@ -342,11 +344,4 @@ public class MarriageRegister implements Serializable, Cloneable {
         this.regPlaceInOfficialLang = regPlaceInOfficialLang;
     }
 
-    public Date getDateOfMarriage() {
-        return dateOfMarriage;
-    }
-
-    public void setDateOfMarriage(Date dateOfMarriage) {
-        this.dateOfMarriage = dateOfMarriage;
-    }
 }

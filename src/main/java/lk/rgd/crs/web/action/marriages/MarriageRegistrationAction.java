@@ -256,13 +256,13 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             noticeExisting.setDateOfMaleNotice(noticeReceivedDate);
 /*            noticeExisting.setMaleNoticeWitness_1(noticeEdited.getMaleNoticeWitness_1());
             noticeExisting.setMaleNoticeWitness_2(noticeEdited.getMaleNoticeWitness_2());*/
-            noticeExisting.setMrDivisionOfMaleNotice(noticeExisting.getMale().getMrDivisionMale());
+        //    noticeExisting.setMrDivisionOfMaleNotice(noticeExisting.getMale().getMrDivisionMale());
         } else {
             noticeExisting.setSerialOfFemaleNotice(serialNumber);
             noticeExisting.setDateOfFemaleNotice(noticeReceivedDate);
 /*            noticeExisting.setFemaleNoticeWitness_1(noticeEdited.getFemaleNoticeWitness_1());
             noticeExisting.setFemaleNoticeWitness_2(noticeEdited.getFemaleNoticeWitness_2());*/
-            noticeExisting.setMrDivisionOfFemaleNotice(noticeExisting.getFemale().getMrDivisionFemale());
+          //  noticeExisting.setMrDivisionOfFemaleNotice(noticeExisting.getFemale().getMrDivisionFemale());
         }
         noticeExisting.setMale(noticeEdited.getMale());
         noticeExisting.setFemale(noticeEdited.getFemale());
@@ -334,7 +334,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     }
 
     private void populateRegistrationDetails(MarriageRegister marriageRegister) {
-        marriageRegister.setDateOfMarriage(marriage.getDateOfMarriage());
+      //  marriageRegister.setDateOfMarriage(marriage.getDateOfMarriage());
         marriageRegister.setRegSerial(marriage.getRegSerial());
         marriageRegister.setRegSubmittedDate(marriage.getRegSubmittedDate());
         marriageRegister.setRegPlaceInOfficialLang(marriage.getRegPlaceInOfficialLang());
@@ -379,9 +379,9 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     private void populatePartyObjectsForPersisting(MarriageRegister marriage) {
         if (marriageDivisionId != 0 && marriageDivisionIdFemale != 0) {
             MRDivision mrDivision = mrDivisionDAO.getMRDivisionByPK(marriageDivisionId);
-            marriage.getMale().setMrDivisionMale(mrDivision);
+         //   marriage.getMale().setMrDivisionMale(mrDivision);
             mrDivision = mrDivisionDAO.getMRDivisionByPK(marriageDivisionIdFemale);
-            marriage.getFemale().setMrDivisionFemale(mrDivision);
+          //  marriage.getFemale().setMrDivisionFemale(mrDivision);
         }
         if (raceIdMale != 0 && raceIdFemale != 0) {
             Race race = raceDAO.getRace(raceIdMale);

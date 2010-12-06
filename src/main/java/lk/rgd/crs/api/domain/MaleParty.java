@@ -1,5 +1,6 @@
 package lk.rgd.crs.api.domain;
 
+import lk.rgd.common.api.domain.Country;
 import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.Race;
 import lk.rgd.common.util.WebUtils;
@@ -14,7 +15,7 @@ import java.util.Date;
 @Embeddable
 public class MaleParty {
 
-    @Column(name = "M_IDENTIFICATION_NUMBER", nullable = true)
+    @Column(name = "M_IDENTIFICATION_NUMBER", nullable = false)
     //pin or nic
     private String identificationNumberMale;
 
@@ -22,8 +23,23 @@ public class MaleParty {
     @Temporal(value = TemporalType.DATE)
     private Date dateOfBirthMale;
 
-    @Column(name = "M_AGE_LAST_BD", nullable = true)
+    @ManyToOne
+    @JoinColumn(name = "M_RACE_IDUKEY", nullable = true)
+    private Race maleRace;
+
+    @Column(name = "M_AGE_LAST_BD", nullable = false)
     private int ageAtLastBirthDayMale;
+
+    @ManyToOne
+    @JoinColumn(name = "M_COUNTRY_IDUKEY", nullable = true)
+    private Country country;
+
+    @Column(name = "M_PASSPORT",nullable = true)
+    private String passport;
+
+    @Column(name = "M_DATE_ARRIVAL",nullable = true)
+    @Temporal(value = TemporalType.DATE)
+    private Date dateOfArrival;
 
     @Column(name = "M_NAME_OFFICIAL", nullable = true, length = 600)
     private String nameInOfficialLanguageMale;
@@ -31,49 +47,44 @@ public class MaleParty {
     @Column(name = "M_NAME_ENGLISH", nullable = true, length = 600)
     private String nameInEnglishMale;
 
-    @Column(name = "M_ADDRESS", nullable = true, length = 255)
-    private String residentAddressMale;
+    @Column(name = "M_ADDRESS_OFFICIAL", nullable = true, length = 255)
+    private String residentAddressMaleInOfficialLang;
 
-    @ManyToOne
-    @JoinColumn
-    private MRDivision mrDivisionMale;
+    @Column(name = "M_ADDRESS_ENGLISH", nullable = true, length = 255)
+    private String residentAddressMaleInEnglish;
 
-    @ManyToOne
-    @JoinColumn(name = "M_RACE_IDUKEY", nullable = true)
-    private Race maleRace;
+    @Column(name = "M_RANK_PROFESSION_OFFICIAL", nullable = true, length = 255)
+    private String rankOrProfessionMaleInOfficialLang;
 
-    @Column(name = "M_DURATION", nullable = true)
-    private int durationMale;
-
-    @Column(name = "M_RANK_PROFESSION", nullable = true, length = 255)
-    private String rankOrProfessionMale;
-
-    @Column(name = "M_TP_NUMBER", nullable = true, length = 10)
-    private String tpNumberMale;
+    @Column(name = "M_RANK_PROFESSION_ENGLISh", nullable = true, length = 255)
+    private String rankOrProfessionMaleInEnglish;
 
     @Column(name = "M_CIVIL_STATE", nullable = true)
     private Person.CivilStatus civilStatusMale;
 
-    @Column(name = "M_EMAIL", nullable = true)
-    private String emailMale;
-
-    @Column(name = "M_IDENTIFICATION_FATHER", length = 10)
+    @Column(name = "M_IDENTIFICATION_FATHER", length = 10, nullable = true)
     private String fatherIdentificationNumberMale;
 
-    @Column(name = "M_FULL_NAME_FATHER", length = 600)
-    private String fatherFullNameMale;
+    @Column(name = "M_FULL_NAME_FATHER_OFFICIAL", length = 600, nullable = true)
+    private String fatherFullNameMaleInOfficialLang;
 
-    @Column(name = "M_CONSENT", length = 255)
-    private String consentIfAnyMale;
-
-    //sign
+    @Column(name = "M_FULL_NAME_FATHER_ENGLISH", length = 600, nullable = true)
+    private String fatherFullNameMaleInEnglish;
 
     public String getIdentificationNumberMale() {
         return identificationNumberMale;
     }
 
     public void setIdentificationNumberMale(String identificationNumberMale) {
-        this.identificationNumberMale = WebUtils.filterBlanks(identificationNumberMale);
+        this.identificationNumberMale = identificationNumberMale;
+    }
+
+    public String getFatherFullNameMaleInEnglish() {
+        return fatherFullNameMaleInEnglish;
+    }
+
+    public void setFatherFullNameMaleInEnglish(String fatherFullNameMaleInEnglish) {
+        this.fatherFullNameMaleInEnglish = fatherFullNameMaleInEnglish;
     }
 
     public Date getDateOfBirthMale() {
@@ -84,102 +95,6 @@ public class MaleParty {
         this.dateOfBirthMale = dateOfBirthMale;
     }
 
-    public int getAgeAtLastBirthDayMale() {
-        return ageAtLastBirthDayMale;
-    }
-
-    public void setAgeAtLastBirthDayMale(int ageAtLastBirthDayMale) {
-        this.ageAtLastBirthDayMale = ageAtLastBirthDayMale;
-    }
-
-    public String getNameInOfficialLanguageMale() {
-        return nameInOfficialLanguageMale;
-    }
-
-    public void setNameInOfficialLanguageMale(String nameInOfficialLanguageMale) {
-        this.nameInOfficialLanguageMale = WebUtils.filterBlanks(nameInOfficialLanguageMale);
-    }
-
-    public String getNameInEnglishMale() {
-        return nameInEnglishMale;
-    }
-
-    public void setNameInEnglishMale(String nameInEnglishMale) {
-        this.nameInEnglishMale = WebUtils.filterBlanks(nameInEnglishMale);
-    }
-
-    public String getResidentAddressMale() {
-        return residentAddressMale;
-    }
-
-    public void setResidentAddressMale(String residentAddressMale) {
-        this.residentAddressMale = WebUtils.filterBlanks(residentAddressMale);
-    }
-
-    public MRDivision getMrDivisionMale() {
-        return mrDivisionMale;
-    }
-
-    public void setMrDivisionMale(MRDivision mrDivisionMale) {
-        this.mrDivisionMale = mrDivisionMale;
-    }
-
-    public int getDurationMale() {
-        return durationMale;
-    }
-
-    public void setDurationMale(int durationMale) {
-        this.durationMale = durationMale;
-    }
-
-    public String getRankOrProfessionMale() {
-        return rankOrProfessionMale;
-    }
-
-    public void setRankOrProfessionMale(String rankOrProfessionMale) {
-        this.rankOrProfessionMale = WebUtils.filterBlanks(rankOrProfessionMale);
-    }
-
-    public String getTpNumberMale() {
-        return tpNumberMale;
-    }
-
-    public void setTpNumberMale(String tpNumberMale) {
-        this.tpNumberMale = WebUtils.filterBlanks(tpNumberMale);
-    }
-
-    public String getEmailMale() {
-        return emailMale;
-    }
-
-    public void setEmailMale(String emailMale) {
-        this.emailMale = WebUtils.filterBlanks(emailMale);
-    }
-
-    public String getFatherIdentificationNumberMale() {
-        return fatherIdentificationNumberMale;
-    }
-
-    public void setFatherIdentificationNumberMale(String fatherIdentificationNumberMale) {
-        this.fatherIdentificationNumberMale = WebUtils.filterBlanks(fatherIdentificationNumberMale);
-    }
-
-    public String getFatherFullNameMale() {
-        return fatherFullNameMale;
-    }
-
-    public void setFatherFullNameMale(String fatherFullNameMale) {
-        this.fatherFullNameMale = WebUtils.filterBlanks(fatherFullNameMale);
-    }
-
-    public String getConsentIfAnyMale() {
-        return consentIfAnyMale;
-    }
-
-    public void setConsentIfAnyMale(String consentIfAnyMale) {
-        this.consentIfAnyMale = WebUtils.filterBlanks(consentIfAnyMale);
-    }
-
     public Race getMaleRace() {
         return maleRace;
     }
@@ -188,11 +103,107 @@ public class MaleParty {
         this.maleRace = maleRace;
     }
 
+    public int getAgeAtLastBirthDayMale() {
+        return ageAtLastBirthDayMale;
+    }
+
+    public void setAgeAtLastBirthDayMale(int ageAtLastBirthDayMale) {
+        this.ageAtLastBirthDayMale = ageAtLastBirthDayMale;
+    }
+
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
+    }
+
+    public String getPassport() {
+        return passport;
+    }
+
+    public void setPassport(String passport) {
+        this.passport = passport;
+    }
+
+    public Date getDateOfArrival() {
+        return dateOfArrival;
+    }
+
+    public void setDateOfArrival(Date dateOfArrival) {
+        this.dateOfArrival = dateOfArrival;
+    }
+
+    public String getNameInOfficialLanguageMale() {
+        return nameInOfficialLanguageMale;
+    }
+
+    public void setNameInOfficialLanguageMale(String nameInOfficialLanguageMale) {
+        this.nameInOfficialLanguageMale = nameInOfficialLanguageMale;
+    }
+
+    public String getNameInEnglishMale() {
+        return nameInEnglishMale;
+    }
+
+    public void setNameInEnglishMale(String nameInEnglishMale) {
+        this.nameInEnglishMale = nameInEnglishMale;
+    }
+
+    public String getResidentAddressMaleInOfficialLang() {
+        return residentAddressMaleInOfficialLang;
+    }
+
+    public void setResidentAddressMaleInOfficialLang(String residentAddressMaleInOfficialLang) {
+        this.residentAddressMaleInOfficialLang = residentAddressMaleInOfficialLang;
+    }
+
+    public String getResidentAddressMaleInEnglish() {
+        return residentAddressMaleInEnglish;
+    }
+
+    public void setResidentAddressMaleInEnglish(String residentAddressMaleInEnglish) {
+        this.residentAddressMaleInEnglish = residentAddressMaleInEnglish;
+    }
+
+    public String getRankOrProfessionMaleInOfficialLang() {
+        return rankOrProfessionMaleInOfficialLang;
+    }
+
+    public void setRankOrProfessionMaleInOfficialLang(String rankOrProfessionMaleInOfficialLang) {
+        this.rankOrProfessionMaleInOfficialLang = rankOrProfessionMaleInOfficialLang;
+    }
+
+    public String getRankOrProfessionMaleInEnglish() {
+        return rankOrProfessionMaleInEnglish;
+    }
+
+    public void setRankOrProfessionMaleInEnglish(String rankOrProfessionMaleInEnglish) {
+        this.rankOrProfessionMaleInEnglish = rankOrProfessionMaleInEnglish;
+    }
+
     public Person.CivilStatus getCivilStatusMale() {
         return civilStatusMale;
     }
 
     public void setCivilStatusMale(Person.CivilStatus civilStatusMale) {
         this.civilStatusMale = civilStatusMale;
+    }
+
+    public String getFatherIdentificationNumberMale() {
+        return fatherIdentificationNumberMale;
+    }
+
+    public void setFatherIdentificationNumberMale(String fatherIdentificationNumberMale) {
+        this.fatherIdentificationNumberMale = fatherIdentificationNumberMale;
+    }
+
+    public String getFatherFullNameMaleInOfficialLang() {
+        return fatherFullNameMaleInOfficialLang;
+    }
+
+    public void setFatherFullNameMaleInOfficialLang(String fatherFullNameMaleInOfficialLang) {
+        this.fatherFullNameMaleInOfficialLang = fatherFullNameMaleInOfficialLang;
     }
 }
