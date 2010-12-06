@@ -101,7 +101,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
         if (Boolean.getBoolean(USE_NW_DERBY)) {
             logger.debug("Networked Derby selected as the target database..");
             try {
-                SimpleJdbcTestUtils.countRowsInTable(new SimpleJdbcTemplate(dataSource), "PRS.PERSON");
+                SimpleJdbcTestUtils.countRowsInTable(new SimpleJdbcTemplate(dataSource), "COMMON.COUNTRIES");
             } catch (Exception ignore) {
                 recreateDb = true;
             }
