@@ -15,6 +15,7 @@ import lk.rgd.crs.api.service.MarriageRegistrationService;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.web.util.CommonUtil;
 import lk.rgd.crs.web.util.MarriageType;
+import lk.rgd.crs.web.util.TypeOfMarriagePlace;
 import lk.rgd.prs.api.domain.Person;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
@@ -75,6 +76,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     private Map<Person.CivilStatus, String> civilStatusMale;
     private Map<Person.CivilStatus, String> civilStatusFemale;
     MarriageType[] marriageType;
+    TypeOfMarriagePlace[] typeOfMarriagePlace;
 
     private MarriageNotice.Type noticeType;
 
@@ -259,6 +261,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         noticeExisting.setMale(noticeEdited.getMale());
         noticeExisting.setFemale(noticeEdited.getFemale());
         noticeExisting.setTypeOfMarriage(noticeEdited.getTypeOfMarriage());
+        //TODO : to be removed 
         noticeExisting.setPlaceOfMarriage(noticeEdited.getPlaceOfMarriage());
     }
 
@@ -285,6 +288,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         //TODO : To be removed
         idUKey = 2;
         marriageType = MarriageType.values();
+        typeOfMarriagePlace = TypeOfMarriagePlace.values();
         //TODO : To be improved and remove populate method
         civilStatusMale = populateCivilStatus();
         civilStatusFemale = populateCivilStatus();
@@ -591,6 +595,14 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     public void setMarriageType(MarriageType[] marriageType) {
         this.marriageType = marriageType;
+    }
+
+    public TypeOfMarriagePlace[] getTypeOfMarriagePlace() {
+        return typeOfMarriagePlace;
+    }
+
+    public void setTypeOfMarriagePlace(TypeOfMarriagePlace[] typeOfMarriagePlace) {
+        this.typeOfMarriagePlace = typeOfMarriagePlace;
     }
 }
 

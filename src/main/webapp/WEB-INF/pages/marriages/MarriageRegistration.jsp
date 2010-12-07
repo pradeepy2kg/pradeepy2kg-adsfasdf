@@ -16,6 +16,15 @@
             endDate:'2040-12-31'
         });
     });
+    $(function() {
+        $("#marriageDatePicker").datepicker({
+            changeYear: true,
+            yearRange: '1960:2020',
+            dateFormat:'yy-mm-dd',
+            startDate:'2000-01-01',
+            endDate:'2040-12-31'
+        });
+    });
 </script>
 <s:actionerror/>
 <div class="marriage-notice-outer">
@@ -122,7 +131,12 @@
     </tr>
     <tr style="font-size:14pt">
         <td colspan="3" align="center">
-            විවාහ ලේකම් පොත / குடிமதிப்பீட்டு ஆவணத்தில் / Register of Marriages
+            ශ්‍රී ලංකා / ﻿இலங்கை / SRI LANKA
+        </td>
+    </tr>
+    <tr style="font-size:14pt">
+        <td colspan="3" align="center">
+විවාහ ලේඛනයේ උපුටාගැනීම / குடிமதிப்பீட்டு ஆவணத்தில் / Extract of Marriage Register
         </td>
     </tr>
     </tbody>
@@ -152,7 +166,7 @@
         </td>
         <td colspan="2">
             <s:label value="YYYY-MM-DD" cssStyle="margin-left:50px;font-size:10px"/><br>
-            <s:textfield name="marriage.dateOfMarriage" id="submitDatePicker" maxLength="10"/>
+            <s:textfield name="marriage.dateOfMarriage" id="marriageDatePicker" maxLength="10"/>
         </td>
         <td colspan="3"><label><span class="font-8">රෙජිස්ට්‍රාර්ගේ/දේවගැතිගේ අනන්‍යතා අංකය
                     <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
@@ -160,6 +174,15 @@
         </td>
         <td align="center" colspan="3">
             <s:textfield name="marriage.regPIN" id="regPIN" maxLength="10"/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            විවාහ ස්ථානයේ ස්වභාවය<br>
+            Type of Marriage Place<br>
+        </td>
+        <td align="center" colspan="8">
+            <s:radio name="marriage.placeOfMarriage" list="typeOfMarriagePlace" listValue="type" theme="horizontal"/>
         </td>
     </tr>
     <tr>
