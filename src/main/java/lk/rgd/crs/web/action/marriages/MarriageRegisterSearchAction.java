@@ -112,6 +112,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
      * loading searching page for marriage register searching
      * by default this method loads marriage register records for first element if the ds  division list
      */
+    //TODO: to be removed
     public String marriageRegisterSearch() {
         //todo complete **amith
         logger.debug("loading marriage register search page");
@@ -150,6 +151,46 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         // by doing following previously user entered values will be removed in jsp page
         noticeSerialNo = null;
         pinOrNic = null;
+        return SUCCESS;
+    }
+
+    /**
+     * loading search page for marriage register
+     */
+    public String marriageRegisterSearchInit() {
+        populateBasicLists();
+
+        pageNo += 1;
+        noOfRows = appParametersDAO.getIntParameter(MR_APPROVAL_ROWS_PER_PAGE);
+
+        if (noticeSerialNo != null) {
+            if (mrDivisionId != 0) {
+                searchList = WebUtils.populateNoticeList(service.getMarriageNoticePendingApprovalByMRDivisionAndSerial(
+                    mrDivisionDAO.getMRDivisionByPK(mrDivisionId), noticeSerialNo, user));
+            }
+        } else {
+            if (isEmpty(pinOrNic) && noticeSerialNo == null) {
+                if (mrDivisionId == 0) {
+                    searchList = WebUtils.populateNoticeList(service.getMarriageNoticePendingApprovalByDSDivision(
+                        dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, true, user));
+                } else {
+                    searchList = WebUtils.populateNoticeList(service.getMarriageNoticePendingApprovalByMRDivision(
+                        mrDivisionDAO.getMRDivisionByPK(mrDivisionId), pageNo, noOfRows, true, user));
+                }
+            } else {
+                searchList = WebUtils.populateNoticeList(
+                    service.getMarriageNoticePendingApprovalByPINorNIC(pinOrNic, true, user));
+            }
+        }
+        if (searchList.size() == 0) {
+            addActionMessage(getText("noItemMsg.label"));
+        }
+        logger.debug("Marriage notice search list loaded with size : {}", searchList.size());
+
+        // by doing following previously user entered values will be removed in jsp page
+        noticeSerialNo = null;
+        pinOrNic = null;
+
         return SUCCESS;
     }
 
