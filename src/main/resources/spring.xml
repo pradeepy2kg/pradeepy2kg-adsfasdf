@@ -387,6 +387,7 @@
         <constructor-arg ref="dsDivisionDAOImpl"/>
         <constructor-arg ref="mrDivisionDAOImpl"/>
         <constructor-arg ref="appParametersDAOImpl"/>
+        <constructor-arg ref="commonUtil"/>
     </bean>
 
     <bean id="marriageRegistrationAction" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction">

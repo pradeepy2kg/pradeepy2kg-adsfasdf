@@ -11,6 +11,7 @@ import lk.rgd.crs.api.domain.MarriageNotice;
 import lk.rgd.crs.api.domain.MarriageRegister;
 import lk.rgd.crs.api.service.MarriageRegistrationService;
 import lk.rgd.crs.web.WebConstants;
+import lk.rgd.crs.web.util.CommonUtil;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +36,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     private final DSDivisionDAO dsDivisionDAO;
     private final MRDivisionDAO mrDivisionDAO;
     private final AppParametersDAO appParametersDAO;
+    private final CommonUtil commonUtil;
 
     private User user;
 
@@ -59,12 +61,15 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     private int noOfRows;
 
     public MarriageRegisterSearchAction(MarriageRegistrationService service, DistrictDAO districtDAO,
-        DSDivisionDAO dsDivisionDAO, MRDivisionDAO mrDivisionDAO, AppParametersDAO appParametersDAO) {
+        DSDivisionDAO dsDivisionDAO, MRDivisionDAO mrDivisionDAO, AppParametersDAO appParametersDAO,
+        CommonUtil commonUtil) {
         this.service = service;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.mrDivisionDAO = mrDivisionDAO;
         this.appParametersDAO = appParametersDAO;
+        this.commonUtil = commonUtil;
+
     }
 
     /**
@@ -159,38 +164,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
      */
     public String marriageRegisterSearchInit() {
         populateBasicLists();
-
-        pageNo += 1;
-        noOfRows = appParametersDAO.getIntParameter(MR_APPROVAL_ROWS_PER_PAGE);
-
-        if (noticeSerialNo != null) {
-            if (mrDivisionId != 0) {
-                searchList = WebUtils.populateNoticeList(service.getMarriageNoticePendingApprovalByMRDivisionAndSerial(
-                    mrDivisionDAO.getMRDivisionByPK(mrDivisionId), noticeSerialNo, user));
-            }
-        } else {
-            if (isEmpty(pinOrNic) && noticeSerialNo == null) {
-                if (mrDivisionId == 0) {
-                    searchList = WebUtils.populateNoticeList(service.getMarriageNoticePendingApprovalByDSDivision(
-                        dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, true, user));
-                } else {
-                    searchList = WebUtils.populateNoticeList(service.getMarriageNoticePendingApprovalByMRDivision(
-                        mrDivisionDAO.getMRDivisionByPK(mrDivisionId), pageNo, noOfRows, true, user));
-                }
-            } else {
-                searchList = WebUtils.populateNoticeList(
-                    service.getMarriageNoticePendingApprovalByPINorNIC(pinOrNic, true, user));
-            }
-        }
-        if (searchList.size() == 0) {
-            addActionMessage(getText("noItemMsg.label"));
-        }
-        logger.debug("Marriage notice search list loaded with size : {}", searchList.size());
-
-        // by doing following previously user entered values will be removed in jsp page
-        noticeSerialNo = null;
-        pinOrNic = null;
-
+        commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId, dsDivisionId, mrDivisionId, "Marriage", user, language);
         return SUCCESS;
     }
 
