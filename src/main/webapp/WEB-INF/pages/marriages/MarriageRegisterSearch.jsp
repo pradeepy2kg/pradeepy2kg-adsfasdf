@@ -10,126 +10,15 @@
 <script src="/ecivil/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
 <script src="/ecivil/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="<s:url value="/js/division.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
 <script type="text/javascript" src="../js/validate.js"></script>
-
 <script>
     $(document).ready(function() {
         $("#tabs").tabs();
     });
-
-    $(function() {
-        $("#searchStartDatePicker").datepicker({
-            changeYear: true,
-            dateFormat:'yy-mm-dd',
-            startDate:'2000-01-01',
-            endDate:'2020-12-31'
-        });
-    });
-
-    $(function() {
-        $("#searchEndDatePicker").datepicker({
-            changeYear: true,
-            dateFormat:'yy-mm-dd',
-            startDate:'2000-01-01',
-            endDate:'2020-12-31'
-        });
-    });
-
-    $(function() {
-        $('select#districtId').bind('change', function(evt1) {
-            var id = $("select#districtId").attr("value");
-            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:8},
-                    function(data) {
-                        var options1 = '';
-                        var ds = data.dsDivisionList;
-                        for (var i = 0; i < ds.length; i++) {
-                            options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
-                        }
-                        $("select#dsDivisionId").html(options1);
-
-                        var options2 = '';
-                        var bd = data.mrDivisionList;
-                        options2 += '<option value="' + 0 + '">' + <s:label value="%{getText('all.divisions.label')}"/> + '</option>';
-                        for (var j = 0; j < bd.length; j++) {
-                            options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
-                        }
-                        $("select#mrDivisionId").html(options2);
-                    });
-        });
-
-        $('select#dsDivisionId').bind('change', function(evt2) {
-            var id = $("select#dsDivisionId").attr("value");
-            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:7},
-                    function(data) {
-                        var options = '';
-                        var bd = data.mrDivisionList;
-                        options += '<option value="' + 0 + '">' + <s:label value="%{getText('all.divisions.label')}"/> + '</option>';
-                        for (var i = 0; i < bd.length; i++) {
-                            options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
-                        }
-                        $("select#mrDivisionId").html(options);
-                    });
-        })
-    });
-
-    $(document).ready(function() {
-        $('#search-result').dataTable({
-            "bPaginate": true,
-            "bLengthChange": false,
-            "bFilter": true,
-            "bSort": true,
-            "bInfo": false,
-            "bAutoWidth": false,
-            "bJQueryUI": true,
-            "sPaginationType": "full_numbers"   ,
-            "aaSorting": [
-                [ 3, "desc" ]
-            ]
-
-        });
-    });
-
-    var errormsg = "";
-    function validate() {
-        var domObject;
-        var returnVal = true;
-
-        // validate serial number
-        domObject = document.getElementById('noticeSerialNo');
-        if (!isFieldEmpty(domObject)) {
-            validateSerialNo(domObject, 'error1', 'error2');
-        }
-
-        // validate start and end date
-        domObject = document.getElementById('searchStartDatePicker');
-        if (!isFieldEmpty(domObject)) {
-            isDate(domObject.value, 'error1', 'error3');
-        }
-
-        domObject = document.getElementById('searchEndDatePicker');
-        if (!isFieldEmpty(domObject)) {
-            isDate(domObject.value, 'error1', 'error4');
-        }
-
-        domObject = document.getElementById('pinOrNic');
-        if (!isFieldEmpty(domObject)) {
-            validatePINorNIC(domObject, 'error1', 'error5');
-        }
-
-        if (errormsg != "") {
-            alert(errormsg);
-            returnVal = false;
-        }
-        errormsg = "";
-        return returnVal;
-    }
-
-    function initPage() {
-    }
 </script>
-
 <s:form action="eprMarriageNoticeSearchInit.do" method="POST" onsubmit="javascript:return validate()">
     <div id="tabs" style="font-size:10pt;">
         <ul>
@@ -156,7 +45,7 @@
                     </td>
                     <td>
                         <s:select id="districtId" name="districtId" list="districtList" value="districtId"
-                                  cssStyle="width:98.5%; width:240px;"/>
+                                  cssStyle="width:98.5%; width:240px;" onclick="populateDSDivisions('districtId','dsDivisionId','mrDivisionId')"/>
                     </td>
                     <td></td>
                     <td>
@@ -164,7 +53,7 @@
                     </td>
                     <td>
                         <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="dsDivisionId"
-                                  cssStyle="width:98.5%; width:240px;"/>
+                                  cssStyle="width:98.5%; width:240px;" onchange="populateDivisions('dsDivisionId', 'mrDivisionId')"/>
                     </td>
                 </tr>
                 <tr>

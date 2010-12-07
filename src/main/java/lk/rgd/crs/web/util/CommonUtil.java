@@ -11,7 +11,6 @@ import lk.rgd.crs.api.dao.MRDivisionDAO;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 
 /**
  * @author Mahesha
@@ -22,7 +21,7 @@ public class CommonUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(CommonUtil.class);
 
-    private final DistrictDAO districtDAO;
+    private final DistrictDAO districtDAO;                                       
     private final DSDivisionDAO dsDivisionDAO;
     private final BDDivisionDAO bdDivisionDAO;
     private final MRDivisionDAO mrDivisionDAO;
