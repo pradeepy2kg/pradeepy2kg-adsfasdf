@@ -191,8 +191,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         logger.debug("attempt to remove marriage notice : idUKey : {} and notice type : {}", idUKey, noticeType);
         //todo AMITH check user permission for removing data
         MarriageRegister notice = marriageRegistrationDAO.getByIdUKey(idUKey);
-        // todo remove boolean isBothSubmitted = notice.isBothPartySubmitted();
-        if (true) {
+        if (noticeType == MarriageNotice.Type.BOTH_NOTICE) {
             //case 1
             marriageRegistrationDAO.deleteMarriageRegister(idUKey);
         } else {

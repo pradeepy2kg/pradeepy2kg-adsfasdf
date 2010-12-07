@@ -796,6 +796,6 @@
 </div>
 </s:form>
 </div>
-<s:property value="noticeType"/>
+
 
 
