@@ -1214,6 +1214,11 @@
             <result type="tiles" name="success">epr.marriageRegisterSearchInit</result>
         </action>
 
+        <action name="eprMarriageRegisterSearch" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
+                method="marriageRegisterSearchResult">
+            <result type="tiles" name="success">epr.marriageRegisterSearchInit</result>
+        </action>
+
         <action name="eprSelectNoticeType" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
                 method="selectMarriageNoticeType">
             <result type="tiles" name="success">epr.marriageNoticeTypeSelect</result>

@@ -131,12 +131,7 @@
     </tr>
     <tr style="font-size:14pt">
         <td colspan="3" align="center">
-            ශ්‍රී ලංකා / ﻿இலங்கை / SRI LANKA
-        </td>
-    </tr>
-    <tr style="font-size:14pt">
-        <td colspan="3" align="center">
-විවාහ ලේඛනයේ උපුටාගැනීම / குடிமதிப்பீட்டு ஆவணத்தில் / Extract of Marriage Register
+ Marriage Details
         </td>
     </tr>
     </tbody>
@@ -450,99 +445,7 @@
     </tr>
     </tbody>
 </table>
-<%--section heading witness
-<table style="margin-top:20px;margin-bottom:20px;width:100%;font-size:16px">
-    <caption/>
-    <tbody>
-    <tr>
-        <td align="center">
-            සහතික කරන සාක්ෂිකාරයෝ / in tamil / Attesting Witnesses
-        </td>
-    </tr>
-    </tbody>
-</table>
-<br>
-<table border="2" style="margin-top:0px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
-       cellpadding="5px">
-    <caption/>
-    <col width="250px"/>
-    <col width="390px"/>
-    <col width="390px"/>
-    <tbody>
-    <tr>
-        <td></td>
-        <td align="center">(1)</td>
-        <td align="center">(2)</td>
-    </tr>
-    <tr>
-        <td>
-            අනන්‍යතා අංකය <br>
-            அடையாள எண் <br>
-            Identification Number
-        </td>
-        <td>
-            <s:textfield name="marriage.witness1.identificationNumber" id="m_witness_1_pin"
-                         cssStyle="width:240px;"
-                         maxLength="10"/>
-        </td>
-        <td>
-            <s:textfield name="marriage.witness2.identificationNumber" id="f_witness_2_pin"
-                         cssStyle="width:240px;"
-                         maxLength="10"/>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            සම්පුර්ණ නම <br>
-            Full Name <br>
-        </td>
-        <td>
-            <s:textarea name="marriage.witness1.fullName" id="m_witness_1_full_name" cssStyle="width:98.2%;"
-                    />
-        </td>
-        <td>
-            <s:textarea name="marriage.witness2.fullName" id="f_witness_2_full_name" cssStyle="width:98.2%;"
-                    />
-        </td>
-    </tr>
-    <tr>
-        <td>
-            තරාතිරම හෝ රක්ෂාව <br>
-            Rank or Profession <br>
-        </td>
-        <td>
-            <s:textarea name="marriage.witness1.rankOrProfession" id="m_witness_1_rank" cssStyle="width:98.2%;"
-                    />
-        </td>
-        <td>
-            <s:textarea name="marriage.witness2.rankOrProfession" id="f_witness_2_rank" cssStyle="width:98.2%;"
-                    />
-        </td>
-    </tr>
-    <tr>
-        <td>
-            පදිංචි ස්ථානය <br>
-            Place of Residence <br>
-        </td>
-        <td>
-            <s:textarea name="marriage.witness1.address" id="m_witness_1_place_residence" cssStyle="width:98.2%;"
-                    />
-        </td>
-        <td>
-            <s:textarea name="marriage.witness2.address" id="f_witness_2_place_residence" cssStyle="width:98.2%;"
-                    />
-        </td>
-    </tr>
-    <tr>
-        <td>
-            අත්සන <br>
-            Signature <br>
-        </td>
-        <td></td>
-        <td></td>
-    </tr>
-    </tbody>
-</table>    --%>
+
 <div class="form-submit">
     <s:submit/>
 </div>

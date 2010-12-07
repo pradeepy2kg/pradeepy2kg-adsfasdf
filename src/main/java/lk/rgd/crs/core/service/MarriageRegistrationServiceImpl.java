@@ -245,6 +245,19 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     }
 
     /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<MarriageRegister> getMarriageRegisterByMRDivision(MRDivision mrDivision, int pageNumber,
+        int numOfRows, boolean active, User user) {
+        logger.debug("attempt to get pending marriage register list by MRDivision idUKey : {}", mrDivision.getMrDivisionUKey());
+        //validate user access to the mr division
+        ValidationUtils.validateAccessToMRDivision(mrDivision, user);
+        return marriageRegistrationDAO.getPaginatedListForStateByMRDivision(mrDivision,
+            MarriageRegister.State.REG_DATA_ENTRY, pageNumber, numOfRows, true);
+    }
+
+    /**
      * clearing notice related data for given notice type
      */
     private void clearingNoticeDetails(MarriageRegister notice, MarriageNotice.Type type) {
