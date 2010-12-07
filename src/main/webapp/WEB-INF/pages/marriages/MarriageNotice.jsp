@@ -140,7 +140,12 @@
     </s:else>
 </s:if>
 <s:else>
-    <s:url action="eprMarriageNoticeAdd" namespace="." id="addAction"></s:url>
+    <s:url action="eprMarriageNoticeAdd" namespace="." id="addAction">
+        <%--
+                <s:hidden name="noticeType" value="%{noticeType}"/>
+        --%>
+        <s:param name="noticeType" value="%{noticeType}"/>
+    </s:url>
 </s:else>
 
 <div class="marriage-notice-outer">
@@ -789,7 +794,8 @@
 <div class="form-submit">
     <s:submit value="add.notice"/>
 </div>
-<s:hidden name="noticeType" value="%{noticeType}"/>
 </s:form>
 </div>
+<s:property value="noticeType"/>
+
 
