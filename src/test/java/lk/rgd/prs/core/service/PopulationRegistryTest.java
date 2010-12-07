@@ -38,13 +38,9 @@ public class PopulationRegistryTest extends TestCase {
         super.setUp();
 
         PINNumberDAO pinNumberDAO = (PINNumberDAO) ctx.getBean("pinNumberDAOImpl", PINNumberDAO.class);
-
         try {
             pinNumberDAO.deleteLastPINNumber(pinNumberDAO.getLastPINNumber(75210));
         } catch (Exception ignore) {}
-//        try {
-//            pinNumberDAO.deleteLastPINNumber(pinNumberDAO.getLastPINNumber(752100002));
-//        } catch (Exception ignore) {}
     }
 
     public PopulationRegistryTest() {
