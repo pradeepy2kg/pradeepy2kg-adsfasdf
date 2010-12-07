@@ -191,15 +191,18 @@ public class Person implements Serializable {
     @Column(nullable = true)
     private LifeStatus lifeStatus;
     /**
-     *
+     * Registering persons mothers PIN or NIC
      */
     @Column(nullable = true, length = 10)
     private String motherPINorNIC;
     /**
-     *
+     * Registering persons fathers PIN or NIC
      */
     @Column(nullable = true, length = 10)
     private String fatherPINorNIC;
+
+    // TODO add comment fields. to capture warnings etc.
+
     /**
      * The mother of this person
      */

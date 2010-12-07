@@ -24,7 +24,6 @@ public class Menu {
 
     // common menu items
     private static final Map preferanceLink = new LinkedHashMap();
-    private static final Map prsLink = new LinkedHashMap();
     private static final Map searchLink = new LinkedHashMap();
 
     // deo menu items
@@ -33,6 +32,7 @@ public class Menu {
     private static final Map deoDeathLink = new LinkedHashMap();
     private static final Map deoAlterationLink = new LinkedHashMap();
     private static final Map deoMarriageLink = new LinkedHashMap();
+    private static final Map deoPRSLink = new LinkedHashMap();
 
     // adr menu items
     private static final Map adrBirthLink = new LinkedHashMap();
@@ -41,6 +41,7 @@ public class Menu {
     private static final Map adrAlterationLink = new LinkedHashMap();
     private static final Map adrAdminLink = new LinkedHashMap();
     private static final Map adrMarriageLink = new LinkedHashMap();
+    private static final Map adrPRSLink = new LinkedHashMap();
 
     //arg menu items
     private static final Map argBirthLink = new LinkedHashMap();
@@ -49,6 +50,7 @@ public class Menu {
     private static final Map argAlterationLink = new LinkedHashMap();
     private static final Map argAdminLink = new LinkedHashMap();
     private static final Map argMarriageLink = new LinkedHashMap();
+    private static final Map argPRSLink = new LinkedHashMap();
 
     static {
         //Admin
@@ -113,15 +115,22 @@ public class Menu {
         searchLink.put("eprMarkBirthCertificateSearch.do", new Link(null, "/ecivil/births/", "eprMarkBirthCertificateSearch.do", Permission.PRINT_BDF));
         searchLink.put("eprMarkDeathCertificateSearch.do", new Link(null, "/ecivil/deaths/", "eprMarkDeathCertificateSearch.do", Permission.PRINT_DDF));
 
-        // PRS links
-        prsLink.put("eprPRSAdvancedSearch.do", new Link("prs.advanceSearch.label", "/ecivil/prs/", "eprPRSAdvancedSearch.do", Permission.SEARCH_PRS));
-        prsLink.put("eprExistingPersonRegInit.do", new Link("prs.personRegistration.label", "/ecivil/prs/", "eprExistingPersonRegInit.do", Permission.PRS_ADD_PERSON));
-        prsLink.put("eprPersonApproval.do", new Link("prs.personApproval.label", "/ecivil/prs/", "eprPersonApproval.do", Permission.PRS_APPROVE_PERSON));
-        prsLink.put("eprExistingPersonRegistration.do", new Link(null, "/ecivil/prs/", "eprExistingPersonRegistration.do", Permission.PRS_ADD_PERSON));
-        prsLink.put("eprEditPerson.do", new Link(null, "/ecivil/prs/", "eprEditPerson.do", Permission.PRS_EDIT_PERSON));
-        prsLink.put("eprPersonDetails.do", new Link(null, "/ecivil/prs/", "eprPersonDetails.do", Permission.PRS_VIEW_PERSON));
-        prsLink.put("eprPRSCertificate.do", new Link(null, "/ecivil/prs/", "eprPRSCertificate.do", Permission.PRS_ADD_PERSON));
-        prsLink.put("eprApprovePerson.do", new Link(null, "/ecivil/prs/", "eprApprovePerson.do", Permission.PRS_APPROVE_PERSON));
+        // PRS links for DEO
+        deoPRSLink.put("eprExistingPersonRegInit.do", new Link("prs.personRegistration.label", "/ecivil/prs/", "eprExistingPersonRegInit.do", Permission.PRS_ADD_PERSON));
+        deoPRSLink.put("eprExistingPersonRegistration.do", new Link(null, "/ecivil/prs/", "eprExistingPersonRegistration.do", Permission.PRS_ADD_PERSON));
+        deoPRSLink.put("eprEditPerson.do", new Link(null, "/ecivil/prs/", "eprEditPerson.do", Permission.PRS_EDIT_PERSON));
+        // TODO chathuranga this should be moved to ADR later
+        deoPRSLink.put("eprPRSCertificate.do", new Link(null, "/ecivil/prs/", "eprPRSCertificate.do", Permission.PRS_ADD_PERSON));
+
+        // PRS links for ADR
+        adrPRSLink.putAll(deoPRSLink);
+        adrPRSLink.put("eprPRSAdvancedSearch.do", new Link("prs.advanceSearch.label", "/ecivil/prs/", "eprPRSAdvancedSearch.do", Permission.SEARCH_PRS));
+        adrPRSLink.put("eprPersonApproval.do", new Link("prs.personApproval.label", "/ecivil/prs/", "eprPersonApproval.do", Permission.PRS_APPROVE_PERSON));
+        adrPRSLink.put("eprApprovePerson.do", new Link(null, "/ecivil/prs/", "eprApprovePerson.do", Permission.PRS_APPROVE_PERSON));
+        adrPRSLink.put("eprPersonDetails.do", new Link(null, "/ecivil/prs/", "eprPersonDetails.do", Permission.PRS_VIEW_PERSON));
+
+        // PRS links for ARG
+        argPRSLink.putAll(adrPRSLink);
 
         // Birth Registration for DEO
         deoBirthLink.put("eprBirthRegistrationInit.do", new Link("birth_registration.label", "/ecivil/births/", "eprBirthRegistrationInit.do", Permission.EDIT_BDF));
@@ -349,6 +358,7 @@ public class Menu {
         deoLinks.put("adoption", deoAdoptionLink);
         deoLinks.put("alteration", deoAlterationLink);
         deoLinks.put("preference", preferanceLink);
+        deoLinks.put("prs", deoPRSLink);
         deoLinks.put("certificateSearch", searchLink);
         deoLinks.put("marriage", deoMarriageLink);
 
@@ -358,7 +368,7 @@ public class Menu {
         adrLinks.put("adoption", adrAdoptionLink);
         adrLinks.put("alteration", adrAlterationLink);
         adrLinks.put("preference", preferanceLink);
-        adrLinks.put("prs", prsLink);
+        adrLinks.put("prs", adrPRSLink);
         adrLinks.put("certificateSearch", searchLink);
         adrLinks.put("admin", adrAdminLink);
         adrLinks.put("marriage", adrMarriageLink);
@@ -369,7 +379,7 @@ public class Menu {
         argLinks.put("adoption", argAdoptionLink);
         argLinks.put("alteration", argAlterationLink);
         argLinks.put("preference", preferanceLink);
-        argLinks.put("prs", prsLink);
+        argLinks.put("prs", argPRSLink);
         argLinks.put("certificateSearch", searchLink);
         argLinks.put("admin", argAdminLink);
         argLinks.put("marriage", argMarriageLink);
