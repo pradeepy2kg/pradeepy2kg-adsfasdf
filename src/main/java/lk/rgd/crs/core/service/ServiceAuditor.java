@@ -71,6 +71,7 @@ public class ServiceAuditor implements MethodInterceptor {
         xstream.alias("registrar", Registrar.class);
         xstream.alias("birthAlteration", BirthAlteration.class);
         xstream.alias("deathAlteration", DeathAlteration.class);
+        xstream.alias("marriageRegister", MarriageRegister.class);
 
 
         // the service classes that need to be audited
@@ -84,6 +85,7 @@ public class ServiceAuditor implements MethodInterceptor {
         serviceClasses.put(DeathAlterationService.class, DeathAlterationServiceImpl.class);
         serviceClasses.put(CertificateSearchService.class, CertificateSearchServiceImpl.class);
         serviceClasses.put(UserManager.class, UserManagerImpl.class);
+        serviceClasses.put(MarriageRegistrationService.class, MarriageRegistrationServiceImpl.class);
 
         // the domain objects to be debug audited
         debugClasses = new ArrayList<Class>();
@@ -95,6 +97,7 @@ public class ServiceAuditor implements MethodInterceptor {
         debugClasses.add(CertificateSearch.class);
         debugClasses.add(BirthAlteration.class);
         debugClasses.add(DeathAlteration.class);
+        debugClasses.add(MarriageRegister.class);
     }
 
     /**
@@ -117,16 +120,16 @@ public class ServiceAuditor implements MethodInterceptor {
         // Do we need to audit this call? If this a transactional service call we should
         if (serviceClass != null) {
             Transactional transactional = serviceClass.getMethod(
-                    method.getName(), method.getParameterTypes()).getAnnotation(Transactional.class);
+                method.getName(), method.getParameterTypes()).getAnnotation(Transactional.class);
 
             auditInvocation = (transactional != null && (
-                    transactional.propagation().equals(Propagation.REQUIRED) ||
-                            transactional.propagation().equals(Propagation.REQUIRES_NEW)));
+                transactional.propagation().equals(Propagation.REQUIRED) ||
+                    transactional.propagation().equals(Propagation.REQUIRES_NEW)));
 
             // if not a transactional method, capture those marked auditable
             if (!auditInvocation) {
                 auditInvocation = serviceClass.getMethod(
-                        method.getName(), method.getParameterTypes()).getAnnotation(Auditable.class) != null;
+                    method.getName(), method.getParameterTypes()).getAnnotation(Auditable.class) != null;
             }
         }
 
@@ -135,7 +138,7 @@ public class ServiceAuditor implements MethodInterceptor {
 
         if (logger.isDebugEnabled()) {
             logger.debug("Service method : " + method.getDeclaringClass().getName() + "." + method.getName() +
-                    "() - audit : " + auditInvocation + " debug : " + debugInvocation);
+                "() - audit : " + auditInvocation + " debug : " + debugInvocation);
         }
 
         // the Event for this invocation
