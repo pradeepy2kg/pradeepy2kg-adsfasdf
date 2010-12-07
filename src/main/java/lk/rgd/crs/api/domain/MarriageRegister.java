@@ -63,6 +63,7 @@ public class MarriageRegister implements Serializable, Cloneable {
     @Column(name = "STATE", nullable = false)
     private State state;
 
+
     //marriage register related columns
     //received date for marriage registry
     @ManyToOne
@@ -97,8 +98,8 @@ public class MarriageRegister implements Serializable, Cloneable {
 
     //marriage notice related columns
 
-    @Column(name = "NOTICE_IS_BOTH")
-    private boolean bothPartySubmitted;
+    @Column(name = "SINGLE_NOTICE", nullable = false)
+    private boolean singleNotice;
 
     //male notice related columns
 
@@ -296,14 +297,6 @@ public class MarriageRegister implements Serializable, Cloneable {
         this.registrarPINOfMaleNotice = registrarPINOfMaleNotice;
     }
 
-    public boolean isBothPartySubmitted() {
-        return bothPartySubmitted;
-    }
-
-    public void setBothPartySubmitted(boolean bothPartySubmitted) {
-        this.bothPartySubmitted = bothPartySubmitted;
-    }
-
     public Long getSerialOfFemaleNotice() {
         return serialOfFemaleNotice;
     }
@@ -344,4 +337,11 @@ public class MarriageRegister implements Serializable, Cloneable {
         this.regPlaceInOfficialLang = regPlaceInOfficialLang;
     }
 
+    public boolean isSingleNotice() {
+        return singleNotice;
+    }
+
+    public void setSingleNotice(boolean singleNotice) {
+        this.singleNotice = singleNotice;
+    }
 }

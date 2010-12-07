@@ -20,10 +20,10 @@ public interface MarriageRegistrationService {
      * add a new marriage notice
      *
      * @param notice marriage notice
-     * @param isMale true if notice type is male or both
+     * @param type   notice type
      * @param user   user who perform the action
      */
-    public void addMarriageNotice(MarriageRegister notice, boolean isMale, User user);
+    public void addMarriageNotice(MarriageRegister notice, MarriageNotice.Type type, User user);
 
     /**
      * get marriage register object by its idUKey value

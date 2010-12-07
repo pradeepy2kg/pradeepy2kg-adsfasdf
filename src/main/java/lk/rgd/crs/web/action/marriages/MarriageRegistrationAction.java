@@ -50,11 +50,11 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     private Map<Integer, String> countryList;
     private Map<Integer, String> raceList;
 
-    private int marriageDistrictId;
+    private int marriageDistrictId;           //use for both male /female and both cases
     private int dsDivisionId;
-    private int mrDivisionId;
-    private int marriageDivisionId;
-    private int marriageDivisionIdFemale;
+    private int mrDivisionId;             //use for both male /female and both cases
+    private int marriageDivisionId;                    //todo remove
+    private int marriageDivisionIdFemale; //todo remove
     private int raceIdMale;
     private int raceIdFemale;
     private int countryIdMale;
@@ -67,6 +67,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     private boolean editMode;
 
     private String language;
+
     private Long serialNumber;
 
     private Date noticeReceivedDate;
@@ -118,33 +119,24 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     }
 
     /**
-     * adding a new marriage notice
-     * notes: if there is and already added notice (both parties submit notice separate)this will force user
-     * (who try to add second notice with same data) to edit existing record
+     * adding a new marriage notice     if serial number is not unique redirect to notice add page
      */
     public String addMarriageNotice() {
         logger.debug("attempt to add marriage notice serial number : {} ");
-        //check existing marriage notice
-        MarriageRegister existingMarriage = checkExistingMarriageNotice(marriage.getMale().getIdentificationNumberMale(),
-            marriage.getFemale().getIdentificationNumberFemale());
+        //check existing serial number
+        MarriageRegister existingMarriage = null; //todo complete
         if (existingMarriage != null) {
-            //there is already submitted notice so current one is second notice so, this action is forwarding to
-            //edit action of the 1 st notice   
-            logger.debug("existing marriage notice found for :  male pin :{} female pin : {}",
-                marriage.getMale().getIdentificationNumberMale(), marriage.getFemale().getIdentificationNumberFemale());
-
-            idUKey = existingMarriage.getIdUKey();
-            secondNotice = true;
+            //there is an existing marriage notice for this serial number for this mr division
+            logger.debug("existing marriage notice found for :  serialNumber : {} : mrDivision idUKey : {}",
+                serialNumber, mrDivisionId);
+            //todo redirect to notice page with values like birth registration
             addActionMessage(getText("massage.existing.notice.found"));
             return SUCCESS;
         }
-        //check serial number is already exists
         populateNoticeForPersists();
-        //add mr division and race male party and female party
+        //add race,country to  male party and female party
         populatePartyObjectsForPersisting(marriage);
-
-        boolean both = marriage.isBothPartySubmitted();
-        marriageRegistrationService.addMarriageNotice(marriage, (both || male), user);
+        marriageRegistrationService.addMarriageNotice(marriage, noticeType, user);
         addActionMessage("massage.notice.successfully.add");
         logger.debug("successfully added marriage notice serial number: {}");
         return SUCCESS;
@@ -256,13 +248,13 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             noticeExisting.setDateOfMaleNotice(noticeReceivedDate);
 /*            noticeExisting.setMaleNoticeWitness_1(noticeEdited.getMaleNoticeWitness_1());
             noticeExisting.setMaleNoticeWitness_2(noticeEdited.getMaleNoticeWitness_2());*/
-        //    noticeExisting.setMrDivisionOfMaleNotice(noticeExisting.getMale().getMrDivisionMale());
+            //    noticeExisting.setMrDivisionOfMaleNotice(noticeExisting.getMale().getMrDivisionMale());
         } else {
             noticeExisting.setSerialOfFemaleNotice(serialNumber);
             noticeExisting.setDateOfFemaleNotice(noticeReceivedDate);
 /*            noticeExisting.setFemaleNoticeWitness_1(noticeEdited.getFemaleNoticeWitness_1());
             noticeExisting.setFemaleNoticeWitness_2(noticeEdited.getFemaleNoticeWitness_2());*/
-          //  noticeExisting.setMrDivisionOfFemaleNotice(noticeExisting.getFemale().getMrDivisionFemale());
+            //  noticeExisting.setMrDivisionOfFemaleNotice(noticeExisting.getFemale().getMrDivisionFemale());
         }
         noticeExisting.setMale(noticeEdited.getMale());
         noticeExisting.setFemale(noticeEdited.getFemale());
@@ -334,7 +326,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     }
 
     private void populateRegistrationDetails(MarriageRegister marriageRegister) {
-      //  marriageRegister.setDateOfMarriage(marriage.getDateOfMarriage());
+        //  marriageRegister.setDateOfMarriage(marriage.getDateOfMarriage());
         marriageRegister.setRegSerial(marriage.getRegSerial());
         marriageRegister.setRegSubmittedDate(marriage.getRegSubmittedDate());
         marriageRegister.setRegPlaceInOfficialLang(marriage.getRegPlaceInOfficialLang());
@@ -343,56 +335,40 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     }
 
     /**
-     * check existing record
-     *
-     * @return marriage notice (marriage register object if found) else return null
-     */
-    private MarriageRegister checkExistingMarriageNotice(String malePinOrNic, String femalePinOrNic) {
-        MarriageRegister notice = marriageRegistrationService.getActiveMarriageNoticeByMaleAndFemaleIdentification(
-            malePinOrNic, femalePinOrNic, user);
-        return notice;
-    }
-
-    /**
      * populate additional fields for persisting notice
+     * setting notice serial numbers and receiving dates
      */
     private void populateNoticeForPersists() {
-        //populate mr division and submitted date
-        boolean isBothParty = marriage.isBothPartySubmitted();
-        if ((!isBothParty && male) || isBothParty) {
-            //male submitted   or both
-            marriage.setMrDivisionOfMaleNotice(mrDivisionDAO.getMRDivisionByPK(marriageDivisionId));
-            marriage.setDateOfMaleNotice(noticeReceivedDate);
+        //both NOTICE_MALE and BOTH are treated as male notices and populate male notice related fields
+        MRDivision mr = mrDivisionDAO.getMRDivisionByPK(mrDivisionId);
+        if (noticeType == MarriageNotice.Type.BOTH_NOTICE || noticeType == MarriageNotice.Type.MALE_NOTICE) {
+            marriage.setMrDivisionOfMaleNotice(mr);
             marriage.setSerialOfMaleNotice(serialNumber);
-
+            marriage.setDateOfMaleNotice(noticeReceivedDate);
         } else {
-            //female
-            marriage.setMrDivisionOfFemaleNotice(mrDivisionDAO.getMRDivisionByPK(marriageDivisionIdFemale));
-            marriage.setDateOfFemaleNotice(noticeReceivedDate);
+            //FEMALE notice
+            marriage.setMrDivisionOfFemaleNotice(mr);
             marriage.setSerialOfFemaleNotice(serialNumber);
+            marriage.setDateOfFemaleNotice(noticeReceivedDate);
         }
     }
 
     /**
-     * populate male/female mr division,race,country(if foreign)
+     * populate male/female race,country(if foreign)
      */
     private void populatePartyObjectsForPersisting(MarriageRegister marriage) {
-        if (marriageDivisionId != 0 && marriageDivisionIdFemale != 0) {
-            MRDivision mrDivision = mrDivisionDAO.getMRDivisionByPK(marriageDivisionId);
-         //   marriage.getMale().setMrDivisionMale(mrDivision);
-            mrDivision = mrDivisionDAO.getMRDivisionByPK(marriageDivisionIdFemale);
-          //  marriage.getFemale().setMrDivisionFemale(mrDivision);
+//todo simplify
+        if (raceIdMale != 0) {
+            marriage.getMale().setMaleRace(raceDAO.getRace(raceIdMale));
         }
-        if (raceIdMale != 0 && raceIdFemale != 0) {
-            Race race = raceDAO.getRace(raceIdMale);
-            marriage.getMale().setMaleRace(race);
-            race = raceDAO.getRace(raceIdFemale);
-            marriage.getFemale().setFemaleRace(race);
+        if (raceIdFemale != 0) {
+            marriage.getFemale().setFemaleRace(raceDAO.getRace(raceIdFemale));
         }
-        if (countryIdMale != 0 && countryIdFemale != 0) {
-            //todo add country
-            Country country = countryDAO.getCountry(countryIdMale);
-            country = countryDAO.getCountry(countryIdFemale);
+        if (countryIdMale != 0) {
+            marriage.getMale().setCountry(countryDAO.getCountry(countryIdMale));
+        }
+        if (countryIdFemale != 0) {
+            marriage.getFemale().setCountry(countryDAO.getCountry(countryIdFemale));
         }
     }
 

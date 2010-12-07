@@ -15,7 +15,7 @@ import java.util.Date;
 @Embeddable
 public class FemaleParty {
 
-    @Column(name = "F_IDENTIFICATION_NUMBER", nullable = false)
+    @Column(name = "F_IDENTIFICATION_NUMBER", nullable = true)
     //pin or nic
     private String identificationNumberFemale;
 
@@ -27,7 +27,7 @@ public class FemaleParty {
     @JoinColumn(name = "F_RACE_IDUKEY", nullable = true)
     private Race femaleRace;
 
-    @Column(name = "F_AGE_LAST_BD", nullable = false)
+    @Column(name = "F_AGE_LAST_BD", nullable = true)
     private int ageAtLastBirthDayFemale;
 
     @ManyToOne
