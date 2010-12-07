@@ -64,6 +64,7 @@ public class MarriageRegistrationServiceTest extends TestCase {
         //adding a marriage notice with minimal requirements
         MarriageRegister notice = getMinimalMarriageNotice(2010012345L, "1234567890", "1234567899");
         //this is submitted by male so  true
+        //TODO: improve this method. temporary change applied to get this compiled
         marriageRegistrationService.addMarriageNotice(notice, MarriageNotice.Type.MALE_NOTICE, deoColomboColombo);
 
         //adding second notice
@@ -97,6 +98,7 @@ public class MarriageRegistrationServiceTest extends TestCase {
 
         //setting mandatory fields
         //this is submitted by male party
+        //TODO: improve this method. temporary change applied to get this compiled
         notice.setSingleNotice(true);
         notice.setDateOfMaleNotice(new Date());
         notice.setMrDivisionOfMaleNotice(colomboMRDivision);
