@@ -15,7 +15,7 @@ import java.util.Date;
 @Embeddable
 public class MaleParty {
 
-    @Column(name = "M_IDENTIFICATION_NUMBER", nullable = false)
+    @Column(name = "M_IDENTIFICATION_NUMBER", nullable = true)
     //pin or nic
     private String identificationNumberMale;
 
@@ -27,17 +27,17 @@ public class MaleParty {
     @JoinColumn(name = "M_RACE_IDUKEY", nullable = true)
     private Race maleRace;
 
-    @Column(name = "M_AGE_LAST_BD", nullable = false)
+    @Column(name = "M_AGE_LAST_BD", nullable = true)
     private int ageAtLastBirthDayMale;
 
     @ManyToOne
     @JoinColumn(name = "M_COUNTRY_IDUKEY", nullable = true)
     private Country country;
 
-    @Column(name = "M_PASSPORT",nullable = true)
+    @Column(name = "M_PASSPORT", nullable = true)
     private String passport;
 
-    @Column(name = "M_DATE_ARRIVAL",nullable = true)
+    @Column(name = "M_DATE_ARRIVAL", nullable = true)
     @Temporal(value = TemporalType.DATE)
     private Date dateOfArrival;
 

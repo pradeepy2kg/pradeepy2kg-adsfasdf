@@ -145,971 +145,6 @@
 
 <div class="marriage-notice-outer">
 <s:form action="%{addAction}" method="post">
-<%--
-&lt;%&ndash;section for official usage&ndash;%&gt;
-<table class="table_reg_header_01">
-    <caption></caption>
-    <col width="360px"/>
-    <col width="270px"/>
-    <col/>
-    <tbody>
-    <tr style="font-size:9pt">
-        <td colspan="1"></td>
-        <td align="center" style="font-size:12pt;"><img src="<s:url value="/images/official-logo.png"/>"/>
-        </td>
-        <td>
-            <table border="1" style="margin-top:1px;width:100%;border:1px solid #000;border-collapse:collapse;"
-                   cellpadding="2px">
-                <caption/>
-                <col width="175px">
-                <col>
-                <tr>
-                    <td colspan="2">
-                        කාර්යාල ප්‍රයෝජනය සඳහා පමණි <br>அலுவலக பாவனைக்காக மட்டும்
-                        <br>For office use only
-                    </td>
-                </tr>
-                <tr>
-                    <td><label><span class="font-8">අනුක්‍රමික අංකය
-                            <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-                            <br>தொடர் இலக்கம்<br>Serial Number</span></label>
-                    </td>
-                    <td align="center">
-                        <s:if test="false==true">
-                            &lt;%&ndash; for edit mode of the marriage notice&ndash;%&gt;
-                            <s:textfield name="serialNumber" id="mnSerial" readonly="true"
-                                         maxLength="10" cssStyle="margin-left:20px"/>
-                        </s:if>
-                        <s:else>
-                            <s:textfield name="serialNumber" id="mnSerial" maxLength="10"/>
-                        </s:else>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        <label>
-                                <span class="font-8">භාරගත්  දිනය
-                                    <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-                                    <br>பிறப்பைப் பதிவு திகதி <br>Submitted Date</span>
-                        </label>
-                    </td>
-                    <td>
-                        <s:label value="YYYY-MM-DD" cssStyle="margin-left:10px;font-size:10px"/><br>
-                        <s:textfield name="noticeReceivedDate" id="submitDatePicker" maxLength="10"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" align="right">
-                        <s:radio id="maleId" name="male" list="#@java.util.HashMap@{'true':'male','false':'female'}"
-                                 onclick="disableWitnessBaseOnParty()"/>
-                    </td>
-
-                </tr>
-            </table>
-        </td>
-    </tr>
-    <tr>
-    <tr style="font-size:14pt">
-        <td colspan="1"></td>
-        <td colspan="1" align="center">
-            විවාහ දැන්වීම <br>
-            குடிமதிப்பீட்டு ஆவணத்தில் <br>
-            Notice of Marriage
-        </td>
-        <td></td>
-    </tr>
-    </tbody>
-</table>
-<br>
-
-&lt;%&ndash;type of marriage&ndash;%&gt;
-
-<table border="1" style="margin-top:1px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
-       cellpadding="5px">
-    <caption/>
-    <col width="250px"/>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <tbody>
-    <tr>
-        <td colspan="3">
-            දෙපාර්ශ්වයම දැන්වීම දෙන්නේ එකම රෙජිස්ට්‍රාර් හෝ ප්‍රාදේශීය ලේකම් කාර්යාලයකටද? <br>
-            In tamil <br>
-            Is notice given by both parties to the same Registrar or Divisional Secretariat office? <br>
-        </td>
-        <td>
-            ඔව් <br>
-            ஆம் <br>
-            Yes <br>
-        </td>
-        <td align="center">
-                &lt;%&ndash;todo change&ndash;%&gt;
-            <s:radio name="marriage.bothPartySubmitted" list="#@java.util.HashMap@{'true':''}"
-                     onclick="disableWitnessBaseOnParty()" id="both"/>
-        </td>
-        <td>
-            නැත <br>
-            இல்லை <br>
-            No <br>
-        </td>
-        <td align="center">
-                &lt;%&ndash;todo change&ndash;%&gt;
-            <s:radio name="marriage.bothPartySubmitted" list="#@java.util.HashMap@{'false':''}"/>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            විවාහයේ ස්වභාවය <br>
-            type of marriage in tamil <br>
-            Type of Marriage
-        </td>
-        <td>
-            සාමාන්‍ය <br>
-            general marriage in tamil<br>
-            General
-        </td>
-        <td align="center">
-            <s:radio name="marriage.typeOfMarriage" list="#@java.util.HashMap@{'GENERAL':''}" value="true"/>
-        </td>
-        <td>
-            උඩරට බින්න <br>
-            Kandyan binna in tamil <br>
-            Kandyan Binna
-        </td>
-        <td align="center">
-            <s:radio name="marriage.typeOfMarriage" list="#@java.util.HashMap@{'KANDYAN_BINNA':''}" value="true"/>
-        </td>
-        <td>
-            උඩරට බින්න දීග <br>
-            kandyan deega in tamil <br>
-            Kandyan
-            Deega
-        </td>
-        <td align="center">
-            <s:radio name="marriage.typeOfMarriage" list="#@java.util.HashMap@{'KANDYAN_DEEGA':''}" value="true"/>
-        </td>
-    </tr>
-  &lt;%&ndash;     <tr>
-        <td>
-            විවාහයේ ස්වභාවය <br>
-            type of marriage in tamil <br>
-            Type of Marriage
-        </td>
-        <td colspan="6">
-            <table width="100%">
-                <caption/>
-                <col/>
-                <col/>
-                <tbody>
-                <tr>
-                    <td>
-                        <s:radio name="marriage.typeOfMarriage" list="marriageType" listValue="type" theme="horizontal"/>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </td>
-    </tr>
-    &ndash;%&gt;
-    <tr>
-        <td>
-            විවාහය සිදුකරන ස්ථානය <br>
-            Intended place of Marriage <br>
-        </td>
-        <td>
-            රෙජිස්ට්‍රාර් කන්තෝරුව / ප්‍රා. ලේ. කන්තෝරුව <br>
-            Registrars Office/ DS Office <br>
-        </td>
-        <td align="center">
-            <s:radio name="marriage.placeOfMarriage" list="#@java.util.HashMap@{'DS_OFFICE':''}" value="true"/>
-        </td>
-        <td>
-            දේවස්ථානය <br>
-            Church <br>
-        </td>
-        <td align="center">
-            <s:radio name="marriage.placeOfMarriage" list="#@java.util.HashMap@{'CHURCH':''}" value="true"/>
-        </td>
-        <td>වෙනත් <br>
-            Other
-        </td>
-        <br>
-        <td align="center">
-            <s:radio name="marriage.placeOfMarriage" list="#@java.util.HashMap@{'OTHER':''}" value="true"/>
-        </td>
-    </tr>
-    </tbody>
-</table>
-&lt;%&ndash;section heading male party heading&ndash;%&gt;
-<table style="margin-top:20px;margin-bottom:20px;width:100%;font-size:16px">
-    <caption/>
-    <tbody>
-    <tr>
-        <td align="center">
-            පුරුෂ පාර්ශ්වය / in tamil / Male Party
-        </td>
-    </tr>
-    </tbody>
-</table>
-
-&lt;%&ndash;section male party&ndash;%&gt;
-<table border="2"
-       style="margin-top:10px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px;border-bottom:none"
-       cellpadding="5px">
-    <caption/>
-    <col width="250px"/>
-    <col width="265px"/>
-    <col width="250px"/>
-    <col/>
-    <tbody>
-    <tr>
-        <td colspan="1" rowspan="2">
-            අනන්‍යතා අංකය <br>
-            அடையாள எண் <br>
-            Identification Number.
-        </td>
-        <td colspan="1" rowspan="2" align="left">
-            <s:textfield name="marriage.male.identificationNumberMale" id="identification_male" maxLength="10"/>
-        </td>
-        <td colspan="1">
-            උපන් දිනය <br>
-            பிறந்த திகதி <br>
-            Date of Birth
-        </td>
-        <td colspan="1">
-            <s:textfield name="marriage.male.dateOfBirthMale" id="date_of_birth_male" maxLength="10"/>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="1">
-            පසුවූ උපන් දිනයට වයස <br>
-            in tamil <br>
-            Age at last Birthday
-
-        </td>
-        <td colspan="1">
-            <s:textfield name="marriage.male.ageAtLastBirthDayMale" id="age_at_last_bd_male" maxLength="3"
-                         value=""/>
-        </td>
-    </tr>
-
-    <tr>
-        <td>
-            නම රාජ්‍ය භාෂාවෙන්
-            (සිංහල / දෙමළ) <br>
-            பெயர் அரச கரும மொழியில் (சிங்களம் / தமிழ்) <br>
-            Name in any of the official languages (Sinhala / Tamil)
-        </td>
-        <td colspan="3">
-            <s:textarea name="marriage.male.nameInOfficialLanguageMale" id="name_official_male"
-                        cssStyle="width:98.2%;"/>
-        </td>
-    </tr>
-
-    <tr>
-        <td>
-            නම ඉංග්‍රීසි භාෂාවෙන් <br>
-            பெயர் ஆங்கில மொழியில் <br>
-            Name in English
-        </td>
-        <td colspan="3">
-            <s:textarea name="marriage.male.nameInEnglishMale" id="name_english_male" cssStyle="width:98.2%;"/>
-        </td>
-    </tr>
-
-    <tr>
-        <td>
-            පදිංචි ලිපිනය <br>
-            தற்போதைய வதிவிட முகவரி <br>
-            Resident Address
-        </td>
-        <td colspan="3">
-            <s:textarea name="marriage.male.residentAddressMale" id="address_male" cssStyle="width:98.2%;"/>
-        </td>
-    </tr>
-
-    <tr>
-        <td>
-            දිස්ත්‍රික්කය <br>
-            மாவட்டம் <br>
-            District
-        </td>
-        <td>
-            <s:select id="districtId" name="marriageDistrictId" list="districtList" value="marriageDistrictId"
-                      cssStyle="width:98.5%; width:240px;"/>
-        </td>
-        <td>
-            ප්‍රාදේශීය ලේකම් කොට්ඨාශය <br>
-            பிரதேச செயளாளர் பிரிவு <br>
-            Divisional Secretariat
-        </td>
-        <td>
-            <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="dsDivisionId"
-                      cssStyle="width:98.5%; width:240px;"/>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            ලියාපදිංචි කිරීමේ කොට්ඨාශය <br>
-            பதிவுப் பிரிவு <br>
-            Registration Division
-        </td>
-        <td>
-            <s:select id="mrDivisionId" name="marriageDivisionId" list="mrDivisionList" value="marriageDivisionId"
-                      cssStyle="width:98.5%; width:240px;"/>
-        </td>
-        <td>
-            පදිංචි කාලය <br>
-            தற்போதைய <br>
-            Duration
-        </td>
-        <td>
-            <s:textfield name="marriage.male.durationMale" id="duration_male" cssStyle="width:98.2%;"
-                         maxLength="3" value=""/>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            තරාතිරම නොහොත් රක්ෂාව <br>
-            Rank or Profession <br>
-        </td>
-        <td>
-            <s:textfield name="marriage.male.rankOrProfessionMale" id="rank_male"
-                         cssStyle="width:98.2%;"
-                         maxLength="255"/>
-        </td>
-        <td>
-            ජාතිය <br>
-            Race <br>
-
-        </td>
-        <td>
-            <s:select list="raceList" name="fatherRace" headerKey="0" headerValue="%{getText('select_race.label')}"
-                      cssStyle="width:200px;"/>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            දුරකථන අංක <br>
-            தொலைபேசி இலக்கம் <br>
-            Telephone Numbers
-        </td>
-        <td>
-            <s:textfield name="marriage.male.tpNumberMale" id="tp_number_male" cssStyle="width:98.2%;"
-                         maxLength="10"/>
-        </td>
-        <td>
-            ඉ – තැපැල් <br>
-            மின்னஞ்சல் <br>
-            Email
-        </td>
-        <td><s:textfield name="marriage.male.emailMale" id="email_male" cssStyle="width:98.2%;"/></td>
-    </tr>
-    </tbody>
-</table>
-<table border="2" style="margin-top:0px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
-       cellpadding="5px">
-    <caption/>
-    <col width="250px"/>
-    <col width="143px"/>
-    <col width="50px"/>
-    <col width="142px"/>
-    <col width="50px"/>
-    <col width="143px"/>
-    <col width="50px"/>
-    <col width="150px"/>
-    <col/>
-    <tbody>
-    <tr>
-        <td>
-            සිවිල් තත්වය<br>
-            சிவில் நிலைமை <br>
-            Civil Status
-        </td>
-        <td>
-            අවිවාහක <br>
-            திருமணமாகாதவர் <br>
-            Never Married
-
-        </td>
-        <td align="center">
-            <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'NEVER_MARRIED':''}"
-                     value="true"/>
-        </td>
-        <td>
-            දික්කසාද <br>
-            திருமணம் தள்ளுபடி செய்தவர் <br>
-            Divorced
-        </td>
-        <td align="center">
-            <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'DIVORCED':''}"
-                     value="true"/>
-        </td>
-        <td>
-            වැන්දබු <br>
-            விதவை <br>
-            Widowed
-        </td>
-        <td align="center">
-            <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'WIDOWED':''}" value="true"/>
-        </td>
-        <td>
-            නිෂ්ප්‍රභාකර ඇත <br>
-            தள்ளிவைத்தல் <br>
-            Anulled
-        </td>
-        <td align="center">
-            <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'ANULLED':''}" value="true"/>
-        </td>
-    </tr>
-
-    <tr>
-        <td colspan="2">
-            පියාගේ අනන්‍යතා අංකය හෝ ජාතික හැඳුනුම්පත් අංකය <br>
-            தந்தையின் அடையாள எண் அல்லது தேசிய அடையாள அட்டை இலக்கம் <br>
-            Fathers Identification Number (PIN) or NIC
-        </td>
-        <td colspan="7" align="left">
-            <s:textfield name="marriage.male.fatherIdentificationNumberMale" id="father_pin_or_nic_male"
-                         cssStyle="width:240px;" maxLength="10"/>
-        </td>
-
-    </tr>
-    <tr>
-        <td colspan="2">
-            පියාගේ සම්පුර්ණ නම <br>
-            தந்தையின் அடையாள <br>
-            Fathers full name
-        </td>
-        <td colspan="7">
-            <s:textarea name="marriage.male.fatherFullNameMale" id="father_full_name_male"
-                        cssStyle="width:98.2%;"/>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="2">
-            පියාගේ තරාතිරම නොහොත් රක්ෂාව <br>
-            தந்தையின் அடையாள <br>
-            Fathers rank or profession
-        </td>
-        <td colspan="7">
-            <s:textarea name="marriage.male.fatherRankOrProfessionMale" id="father_rank_male"
-                        cssStyle="width:98.2%;"/>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="2">
-            යමෙකු විසින් කැමැත්ත දුන්නා නම්, ඒ කා විසින්ද යන වග <br>
-            in tamil <br>
-            Consent if any, by whom given
-        </td>
-        <td colspan="7">
-            <s:textarea name="marriage.male.consentIfAnyMale" id="consent_if_any_male" cssStyle="width:98.2%;"/>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="2">
-            කැමැත්ත දුන් අයගේ අත්සන, නොහොත් කැමැත්ත දුන් ලියවිල්ල <br>
-            in tamil <br>
-            Signature of the person, or reference to the document giving consent
-        </td>
-        <td colspan="7"></td>
-    </tr>
-
-    </tbody>
-</table>
-&lt;%&ndash;section heading female party heading&ndash;%&gt;
-<table style="margin-top:20px;margin-bottom:20px;width:100%;font-size:16px">
-    <caption/>
-    <tbody>
-    <tr>
-        <td align="center">
-            ස්ත්‍රී පාර්ශ්වය / in tamil / Female Party
-        </td>
-    </tr>
-    </tbody>
-</table>
-
-&lt;%&ndash;section female party&ndash;%&gt;
-<table border="2"
-       style="margin-top:10px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px;border-bottom:none"
-       cellpadding="5px">
-    <caption/>
-    <col width="250px"/>
-    <col width="265px"/>
-    <col width="250px"/>
-    <col/>
-    <tbody>
-    <tr>
-        <td colspan="1" rowspan="2">
-            අනන්‍යතා අංකය <br>
-            அடையாள எண் <br>
-            Identification Number.
-        </td>
-        <td colspan="1" rowspan="2" align="left">
-            <s:textfield name="marriage.female.identificationNumberFemale" id="identification_female"
-                         maxLength="10"/>
-        </td>
-        <td colspan="1">
-            උපන් දිනය <br>
-            பிறந்த திகதி <br>
-            Date of Birth
-        </td>
-        <td colspan="1">
-            <s:textfield name="marriage.female.dateOfBirthFemale" id="date_of_birth_female" maxLength="10"/>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="1">
-            පසුවූ උපන් දිනයට වයස <br>
-            in tamil <br>
-            Age at last Birthday
-
-        </td>
-        <td colspan="1">
-            <s:textfield name="marriage.female.ageAtLastBirthDayFemale" id="age_at_last_bd_female" value=""
-                         maxLength="3"/>
-        </td>
-    </tr>
-
-    <tr>
-        <td>
-            නම රාජ්‍ය භාෂාවෙන්
-            (සිංහල / දෙමළ) <br>
-            பெயர் அரச கரும மொழியில் (சிங்களம் / தமிழ்) <br>
-            Name in any of the official languages (Sinhala / Tamil)
-        </td>
-        <td colspan="3">
-            <s:textarea name="marriage.female.nameInOfficialLanguageFemale" id="name_official_female"
-                        cssStyle="width:98.2%;"/>
-        </td>
-    </tr>
-
-    <tr>
-        <td>
-            නම ඉංග්‍රීසි භාෂාවෙන් <br>
-            பெயர் ஆங்கில மொழியில் <br>
-            Name in English
-        </td>
-        <td colspan="3">
-            <s:textarea name="marriage.female.nameInEnglishFemale" id="name_english_female"
-                        cssStyle="width:98.2%;"/>
-        </td>
-    </tr>
-
-    <tr>
-        <td>
-            පදිංචි ලිපිනය <br>
-            தற்போதைய வதிவிட முகவரி <br>
-            Resident Address
-        </td>
-        <td colspan="3">
-            <s:textarea name="marriage.female.residentAddressFemale" id="address_female" cssStyle="width:98.2%;"/>
-        </td>
-    </tr>
-
-    <tr>
-        <td>
-            දිස්ත්‍රික්කය <br>
-            மாவட்டம் <br>
-            District
-        </td>
-        <td>
-            <s:select id="districtId" name="marriageDistrictIdFemale" list="districtList" value="marriageDistrictId"
-                      cssStyle="width:98.5%; width:240px;"/>
-        </td>
-        <td>
-            ප්‍රාදේශීය ලේකම් කොට්ඨාශය <br>
-            பிரதேச செயளாளர் பிரிவு <br>
-            Divisional Secretariat
-        </td>
-        <td>
-            <s:select id="dsDivisionId" name="dsDivisionIdFemale" list="dsDivisionList" value="dsDivisionId"
-                      cssStyle="width:98.5%; width:240px;"/>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            ලියාපදිංචි කිරීමේ කොට්ඨාශය <br>
-            பதிவுப் பிரிவு <br>
-            Registration Division
-        </td>
-        <td>
-            <s:select id="mrDivisionId" name="marriageDivisionIdFemale" list="mrDivisionList" value="marriageDivisionId"
-                      cssStyle="width:98.5%; width:240px;"/>
-        </td>
-        <td>
-            පදිංචි කාලය <br>
-            தற்போதைய <br>
-            Duration
-        </td>
-        <td>
-            <s:textfield name="marriage.female.durationFemale" id="duration_female" cssStyle="width:98.2%;"
-                         maxLength="3" value=""/>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            තරාතිරම නොහොත් රක්ෂාව <br>
-            Rank or Profession <br>
-        </td>
-        <td>
-            <s:textfield name="marriage.female.rankOrProfessionFemale" id="rank_female"
-                         cssStyle="width:98.2%;"
-                         maxLength="255"/>
-        </td>
-        <td>
-            ජාතිය <br>
-            Race <br>
-
-        </td>
-        <td>
-            <s:select list="raceList" name="fatherRace" headerKey="0" headerValue="%{getText('select_race.label')}"
-                      cssStyle="width:200px;"/>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            දුරකථන අංක <br>
-            தொலைபேசி இலக்கம் <br>
-            Telephone Numbers
-        </td>
-        <td>
-            <s:textfield name="marriage.female.tpNumberFemale" id="tp_number_female" cssStyle="width:98.2%;"
-                         maxLength="10"/>
-        </td>
-        <td>
-            ඉ – තැපැල් <br>
-            மின்னஞ்சல் <br>
-            Email
-        </td>
-        <td><s:textfield name="marriage.female.emailFemale" id="email_female" cssStyle="width:98.2%;"/></td>
-    </tr>
-    </tbody>
-</table>
-<table border="2" style="margin-top:0px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
-       cellpadding="5px">
-    <caption/>
-    <col width="250px"/>
-    <col width="143px"/>
-    <col width="50px"/>
-    <col width="142px"/>
-    <col width="50px"/>
-    <col width="143px"/>
-    <col width="50px"/>
-    <col width="150px"/>
-    <col/>
-    <tbody>
-    <tr>
-        <td>
-            සිවිල් තත්වය<br>
-            சிவில் நிலைமை <br>
-            Civil Status
-        </td>
-        <td>
-            අවිවාහක <br>
-            திருமணமாகாதவர் <br>
-            Never Married
-
-        </td>
-        <td align="center">
-            <s:radio name="marriage.female.civilStatusFemale" list="#@java.util.HashMap@{'NEVER_MARRIED':''}"
-                     value="true"/>
-        </td>
-        <td>
-            දික්කසාද <br>
-            திருமணம் தள்ளுபடி செய்தவர் <br>
-            Divorced
-        </td>
-        <td align="center">
-            <s:radio name="marriage.female.civilStatusFemale" list="#@java.util.HashMap@{'DIVORCED':''}"
-                     value="true"/>
-        </td>
-        <td>
-            වැන්දබු <br>
-            விதவை <br>
-            Widowed
-        </td>
-        <td align="center">
-            <s:radio name="marriage.female.civilStatusFemale" list="#@java.util.HashMap@{'WIDOWED':''}"
-                     value="true"/>
-        </td>
-        <td>
-            නිෂ්ප්‍රභාකර ඇත <br>
-            தள்ளிவைத்தல் <br>
-            Anulled
-        </td>
-        <td align="center">
-            <s:radio name="marriage.female.civilStatusFemale" list="#@java.util.HashMap@{'ANULLED':''}"
-                     value="true"/>
-        </td>
-    </tr>
-
-    <tr>
-        <td colspan="2">
-            පියාගේ අනන්‍යතා අංකය හෝ ජාතික හැඳුනුම්පත් අංකය <br>
-            தந்தையின் அடையாள எண் அல்லது தேசிய அடையாள அட்டை இலக்கம் <br>
-            Fathers Identification Number (PIN) or NIC
-        </td>
-        <td colspan="7" align="left">
-            <s:textfield name="marriage.female.fatherIdentificationNumberFemale" id="father_pin_or_nic_female"
-                         cssStyle="width:240px;" maxLength="10"/>
-        </td>
-
-    </tr>
-    <tr>
-        <td colspan="2">
-            පියාගේ සම්පුර්ණ නම <br>
-            தந்தையின் அடையாள <br>
-            Fathers full name
-        </td>
-        <td colspan="7">
-            <s:textarea name="marriage.female.fatherFullNameFemale" id="father_full_name_female"
-                        cssStyle="width:98.2%;"/>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="2">
-            පියාගේ තරාතිරම නොහොත් රක්ෂාව <br>
-            தந்தையின் அடையாள <br>
-            Fathers rank or profession
-        </td>
-        <td colspan="7">
-            <s:textarea name="marriage.female.fatherRankOrProfessionFemale" id="father_rank_female"
-                        cssStyle="width:98.2%;"/>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="2">
-            යමෙකු විසින් කැමැත්ත දුන්නා නම්, ඒ කා විසින්ද යන වග <br>
-            in tamil <br>
-            Consent if any, by whom given
-        </td>
-        <td colspan="7">
-            <s:textarea name="marriage.female.consentIfAnyFemale" id="consent_if_any_female"
-                        cssStyle="width:98.2%;"/>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="2">
-            කැමැත්ත දුන් අයගේ අත්සන, නොහොත් කැමැත්ත දුන් ලියවිල්ල <br>
-            in tamil <br>
-            Signature of the person, or reference to the document giving consent
-        </td>
-        <td colspan="7"></td>
-    </tr>
-
-    </tbody>
-</table>
-
-&lt;%&ndash;section heading witness &ndash;%&gt;
-
-<table style="margin-top:20px;margin-bottom:20px;width:100%;font-size:16px">
-    <caption/>
-    <tbody>
-    <tr>
-        <td align="center">
-            සහතික කරන සාක්ෂිකාරයෝ / in tamil / Attesting Witnesses
-        </td>
-    </tr>
-    </tbody>
-</table>
-&lt;%&ndash;this is first notice&ndash;%&gt;
-<br>
-if male party is submitted the notice in si <br>
-if male party is submitted the notice in ta <br>
-if male party is submitted the notice
-<table border="2" style="margin-top:0px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
-       cellpadding="5px">
-    <caption/>
-    <col width="250px"/>
-    <col width="390px"/>
-    <col width="390px"/>
-    <tbody>
-    <tr>
-        <td></td>
-        <td align="center">(1)</td>
-        <td align="center">(2)</td>
-    </tr>
-    <tr>
-        <td>
-            අනන්‍යතා අංකය <br>
-            அடையாள எண் <br>
-            Identification Number
-        </td>
-        <td>
-            <s:textfield name="marriage.maleNoticeWitness_1.identificationNumber" id="m_witness_1_pin"
-                         cssStyle="width:240px;"
-                         maxLength="10"/>
-        </td>
-        <td>
-            <s:textfield name="marriage.maleNoticeWitness_2.identificationNumber" id="m_witness_2_pin"
-                         cssStyle="width:240px;"
-                         maxLength="10"/>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            සම්පුර්ණ නම <br>
-            Full Name <br>
-        </td>
-        <td>
-            <s:textarea name="marriage.maleNoticeWitness_1.fullName" id="m_witness_1_full_name"
-                        cssStyle="width:98.2%;"
-                    />
-        </td>
-        <td>
-            <s:textarea name="marriage.maleNoticeWitness_2.fullName" id="m_witness_2_full_name"
-                        cssStyle="width:98.2%;"
-                    />
-        </td>
-    </tr>
-    <tr>
-        <td>
-            තරාතිරම හෝ රක්ෂාව <br>
-            Rank or Profession <br>
-        </td>
-        <td>
-            <s:textarea name="marriage.maleNoticeWitness_1.rankOrProfession" id="m_witness_1_rank"
-                        cssStyle="width:98.2%;"
-                    />
-        </td>
-        <td>
-            <s:textarea name="marriage.maleNoticeWitness_2.rankOrProfession" id="m_witness_2_rank"
-                        cssStyle="width:98.2%;"
-                    />
-        </td>
-    </tr>
-    <tr>
-        <td>
-            පදිංචි ස්ථානය <br>
-            Place of Residence <br>
-        </td>
-        <td>
-            <s:textarea name="marriage.maleNoticeWitness_1.address" id="m_witness_1_place_residence"
-                        cssStyle="width:98.2%;"
-                    />
-        </td>
-        <td>
-            <s:textarea name="marriage.maleNoticeWitness_2.address" id="m_witness_2_place_residence"
-                        cssStyle="width:98.2%;"
-                    />
-        </td>
-    </tr>
-    <tr>
-        <td>
-            අත්සන <br>
-            Signature <br>
-        </td>
-        <td></td>
-        <td></td>
-    </tr>
-    </tbody>
-</table>
-
-<br>
-if female party is submitted the notice in si <br>
-if female party is submitted the notice in ta <br>
-if female party is submitted the notice
-<table border="2" style="margin-top:0px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
-       cellpadding="5px">
-    <caption/>
-    <col width="250px"/>
-    <col width="390px"/>
-    <col width="390px"/>
-    <tbody>
-    <tr>
-        <td></td>
-        <td align="center">(1)</td>
-        <td align="center">(2)</td>
-    </tr>
-    <tr>
-        <td>
-            අනන්‍යතා අංකය <br>
-            அடையாள எண் <br>
-            Identification Number
-        </td>
-        <td>
-            <s:textfield name="marriage.femaleNoticeWitness_1.identificationNumber" id="f_witness_1_pin"
-                         cssStyle="width:240px;"
-                         maxLength="10"/>
-        </td>
-        <td>
-            <s:textfield name="marriage.femaleNoticeWitness_2.identificationNumber" id="f_witness_2_pin"
-                         cssStyle="width:240px;"
-                         maxLength="10"/>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            සම්පුර්ණ නම <br>
-            Full Name <br>
-        </td>
-        <td>
-            <s:textarea name="marriage.femaleNoticeWitness_1.fullName" id="f_witness_1_full_name"
-                        cssStyle="width:98.2%;"
-                    />
-        </td>
-        <td>
-            <s:textarea name="marriage.femaleNoticeWitness_2.fullName" id="f_witness_2_full_name"
-                        cssStyle="width:98.2%;"
-                    />
-        </td>
-    </tr>
-    <tr>
-        <td>
-            තරාතිරම හෝ රක්ෂාව <br>
-            Rank or Profession <br>
-        </td>
-        <td>
-            <s:textarea name="marriage.femaleNoticeWitness_1.rankOrProfession" id="f_witness_1_rank"
-                        cssStyle="width:98.2%;"
-                    />
-        </td>
-        <td>
-            <s:textarea name="marriage.femaleNoticeWitness_2.rankOrProfession" id="f_witness_2_rank"
-                        cssStyle="width:98.2%;"
-                    />
-        </td>
-    </tr>
-    <tr>
-        <td>
-            පදිංචි ස්ථානය <br>
-            Place of Residence <br>
-        </td>
-        <td>
-            <s:textarea name="marriage.femaleNoticeWitness_1.address" id="f_witness_1_place_residence"
-                        cssStyle="width:98.2%;"
-                    />
-        </td>
-        <td>
-            <s:textarea name="marriage.femaleNoticeWitness_2.address" id="f_witness_2_place_residence"
-                        cssStyle="width:98.2%;"
-                    />
-        </td>
-    </tr>
-    <tr>
-        <td>
-            අත්සන <br>
-            Signature <br>
-        </td>
-        <td></td>
-        <td></td>
-    </tr>
-    </tbody>
-</table>
-<div class="form-submit">
-    <s:submit value="add.notice"/>
-</div>
-<s:if test="editMode">
-    <s:hidden name="noticeType" value="%{noticeType}"/>
-</s:if>
---%>
 <%--section official usage--%>
 <table>
     <caption/>
@@ -1131,7 +166,11 @@ if female party is submitted the notice
                         மாவட்டம் <br>
                         District <br>
                     </td>
-                    <td></td>
+                    <td>
+                        <s:select id="districtId" name="marriageDistrictId" list="districtList"
+                                  value="marriageDistrictId"
+                                  cssStyle="width:98.5%; width:195px;"/>
+                    </td>
                 </tr>
                 <tr>
                     <td>
@@ -1139,7 +178,10 @@ if female party is submitted the notice
                         பிரதேச செயளாளர் பிரிவு <br>
                         Divisional Secretariat <br>
                     </td>
-                    <td></td>
+                    <td>
+                        <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="dsDivisionId"
+                                  cssStyle="width:98.5%; width:195px;"/>
+                    </td>
                 </tr>
                 <tr>
                     <td>
@@ -1147,7 +189,10 @@ if female party is submitted the notice
                         பதிவுப் பிரிவு <br>
                         Registration Division <br>
                     </td>
-                    <td></td>
+                    <td>
+                        <s:select id="mrDivisionId" name="mrDivisionId" list="mrDivisionList" value="marriageDivisionId"
+                                  cssStyle="width:98.5%; width:195px;"/>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -1174,7 +219,9 @@ if female party is submitted the notice
                         தொடர் இலக்கம் <br>
                         Serial Number <br>
                     </td>
-                    <td></td>
+                    <td align="center">
+                        <s:textfield name="serialNumber" id="mnSerial" maxLength="10"/>
+                    </td>
                 </tr>
                 <tr>
                     <td>
@@ -1182,7 +229,9 @@ if female party is submitted the notice
                         பெறப்பட்ட திகதி <br>
                         Date of Acceptance <br>
                     </td>
-                    <td></td>
+                    <td>
+                        <s:textfield name="noticeReceivedDate" id="submitDatePicker" maxLength="10"/>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -1219,404 +268,528 @@ if female party is submitted the notice
             in tamil <br>
             General
         </td>
-        <td></td>
+        <td align="center">
+            <s:radio name="marriage.typeOfMarriage" list="#@java.util.HashMap@{'GENERAL':''}" value="true"/>
+        </td>
         <td>
             උඩරට බින්න <br>
             in tamil <br>
             Kandyan Binna
         </td>
-        <td></td>
+        <td align="center">
+            <s:radio name="marriage.typeOfMarriage" list="#@java.util.HashMap@{'KANDYAN_BINNA':''}" value="true"/>
+        </td>
         <td>
             උඩරට දීග <br>
             in tamil <br>
             Kandyan Deega
         </td>
-        <td></td>
+        <td align="center">
+            <s:radio name="marriage.typeOfMarriage" list="#@java.util.HashMap@{'KANDYAN_DEEGA':''}" value="true"/>
+        </td>
     </tr>
 </table>
 
 <s:if test="%{noticeType.ordinal()==0 || noticeType.ordinal()==1}">
 
-    <%--section male party--%>
-    <table style="margin-top:20px">
-        <caption/>
-        <col width="500px"/>
-        <col width="524px"/>
-        <tr>
-            <td colspan="2" align="center">
-                පුරුෂ පාර්ශ්වය / in tamil / Male Party
-            </td>
-        </tr>
-    </table>
+<%--section male party--%>
+<table style="margin-top:20px">
+    <caption/>
+    <col width="500px"/>
+    <col width="524px"/>
+    <tr>
+        <td colspan="2" align="center">
+            පුරුෂ පාර්ශ්වය / in tamil / Male Party
+        </td>
+    </tr>
+</table>
 
-    <table border="1"
-           style="margin-top:10px;width:100%;border:1px solid #000;border-collapse:collapse;border-bottom:none "
-           cellpadding="2px">
-        <caption/>
-        <col width="250px"/>
-        <col width="200px"/>
-        <col/>
-        <col width="200px"/>
-        <col/>
-        <col width="200px"/>
-        <col/>
-        <tr>
-            <td colspan="1">
-                අනන්‍යතා අංකය <br>
-                அடையாள எண் <br>
-                Identification number
-            </td>
-            <td colspan="2"></td>
-            <td colspan="1">
-                උපන් දිනය <br>
-                பிறந்த திகதி <br>
-                Date of Birth
-            </td>
-            <td colspan="3"></td>
-        </tr>
-        <tr>
-            <td colspan="1">
-                ජාතිය <br>
-                in tamil <br>
-                Race
-            </td>
-            <td colspan="2"></td>
-            <td colspan="1">
-                පසුවූ උපන් දිනයට වයස <br>
-                in tamil <br>
-                Age at last Birthday
-            </td>
-            <td colspan="3"></td>
-        </tr>
-        <tr>
-            <td>
-                විදේශිකයකු නම් <br>
-                வெளிநாட்டவர் எனின் <br>
-                If a foreigner
-            </td>
-            <td>
-                රට <br>
-                நாடு <br>
-                Country
-            </td>
-            <td></td>
-            <td>
-                ගමන් බලපත්‍ර අංකය <br>
-                கடவுச் சீட்டு இல. <br>
-                Passport No.
-            </td>
-            <td></td>
-            <td>ලංකාවට පැමිණි දිනය <br>
-                in tamil <br>
-                Date of Arrival
-            </td>
-            <td></td>
-        </tr>
-        <tr>
-            <td colspan="1" height="100x">
-                නම රාජ්‍ය භාෂාවෙන් <br>
-                (සිංහල / දෙමළ)
-                பெயர் அரச கரும மொழியில் (சிங்களம் / தமிழ்) <br>
-                Name in any of the official languages (Sinhala / Tamil)
-            </td>
-            <td colspan="6" height="100x"></td>
-        </tr>
-        <tr>
-            <td colspan="1" height="100x">
-                නම ඉංග්‍රීසි භාෂාවෙන් <br>
-                பெயர் ஆங்கில மொழியில் <br>
-                Name in English
-            </td>
-            <td colspan="6" height="100x"></td>
-        </tr>
-    </table>
-    <table border="1" style="margin-top:0px;width:100%;border:1px solid #000;border-collapse:collapse;"
-           cellpadding="2px">
-        <caption></caption>
-        <col width="250px"/>
-        <col width="140px"/>
-        <col width="50px"/>
-        <col width="140px"/>
-        <col width="50px"/>
-        <col width="150px"/>
-        <col width="50px"/>
-        <col width="150px"/>
-        <col width="50px"/>
-        <tbody>
-        <tr>
-            <td rowspan="2">
-                පදිංචි ලිපිනය <br>
-                தற்போதைய வதிவிட முகவரி <br>
-                Resident Address
-            </td>
-            <td colspan="4" height="20px">රාජ්‍ය භාෂාවෙන් / in tamil / in Official Language</td>
-            <td colspan="4" height="20px">ඉංග්‍රීසි භාෂාවෙන් / in tamil / In English</td>
-        </tr>
-        <tr>
-            <td colspan="4" height="100px">d</td>
-            <td colspan="4" height="100px">e</td>
-        </tr>
-        <tr>
-            <td rowspan="2">
-                තරාතිරම නොහොත් රක්ෂාව <br>
-                in tamil <br>
-                Rank or Profession
-            </td>
-            <td colspan="4" height="20px">රාජ්‍ය භාෂාවෙන් / in tamil / in Official Language</td>
-            <td colspan="4" height="20px">ඉංග්‍රීසි භාෂාවෙන් / in tamil / In English</td>
-        </tr>
-        <tr>
-            <td colspan="4" height="40px"></td>
-            <td colspan="4" height="40px"></td>
-        </tr>
-        <tr>
-            <td>
-                සිවිල් තත්වය <br>
-                சிவில் நிலைமை <br>
-                Civil Status
-            </td>
-            <td>
-                අවිවාහක <br>
-                திருமணமாகாதவர் <br>
-                Never Married
-            </td>
-            <td></td>
-            <td>
-                දික්කසාද <br>
-                திருமணம் தள்ளுபடி செய்தவர் <br>
-                Divorced
-            </td>
-            <td></td>
-            <td>
-                වැන්දබු <br>
-                விதவை <br>
-                Widowed
-            </td>
-            <td></td>
-            <td>
-                නිෂ්ප්‍රභාකර ඇත <br>
-                தள்ளிவைத்தல் <br>
-                Anulled
-            </td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>
-                පියාගේ අනන්‍යතා අංකය
-                தந்தையின் அடையாள எண்
-                Fathers Identification Number
-            </td>
-            <td colspan="8"></td>
-        </tr>
-        <tr>
-            <td rowspan="2">
-                පියාගේ සම්පුර්ණ නම
-                தந்தையின் அடையாள
-                Fathers full name
-            </td>
-            <td colspan="4" height="20px">රාජ්‍ය භාෂාවෙන් / in tamil / in Official Language</td>
-            <td colspan="4" height="20px">ඉංග්‍රීසි භාෂාවෙන් / in tamil / In English</td>
-        </tr>
-        <tr>
-            <td colspan="4" height="100px"></td>
-            <td colspan="4" height="100px"></td>
-        </tr>
-        </tbody>
-    </table>
+<table border="1"
+       style="margin-top:10px;width:100%;border:1px solid #000;border-collapse:collapse;border-bottom:none "
+       cellpadding="2px">
+    <caption/>
+    <col width="250px"/>
+    <col width="100px"/>
+    <col/>
+    <col width="170px"/>
+    <col/>
+    <col width="170px"/>
+    <col/>
+    <tr>
+        <td colspan="1">
+            අනන්‍යතා අංකය <br>
+            அடையாள எண் <br>
+            Identification number
+        </td>
+        <td colspan="2">
+            <s:textfield name="marriage.male.identificationNumberMale" id="identification_male" maxLength="10"/>
+        </td>
+        </td>
+        <td colspan="1">
+            උපන් දිනය <br>
+            பிறந்த திகதி <br>
+            Date of Birth
+        </td>
+        <td colspan="3">
+            <s:textfield name="marriage.male.dateOfBirthMale" id="date_of_birth_male" maxLength="10"/>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="1">
+            ජාතිය <br>
+            in tamil <br>
+            Race
+        </td>
+        <td colspan="2">
+            <s:select list="raceList" name="raceIdMale" headerKey="0" headerValue="%{getText('select_race.label')}"
+                      cssStyle="width:200px;"/>
+        </td>
+        <td colspan="1">
+            පසුවූ උපන් දිනයට වයස <br>
+            in tamil <br>
+            Age at last Birthday
+        </td>
+        <td colspan="3">
+            <s:textfield name="marriage.male.ageAtLastBirthDayMale" id="age_at_last_bd_male" maxLength="3"
+                         value=""/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            විදේශිකයකු නම් <br>
+            வெளிநாட்டவர் எனின் <br>
+            If a foreigner
+        </td>
+        <td>
+            රට <br>
+            நாடு <br>
+            Country
+        </td>
+        <td>
+            <s:select list="countryList" name="countryIdMale" headerKey="0"
+                      headerValue="%{getText('select_country.label')}"
+                      cssStyle="width:150px;"/>
+        </td>
+        <td>
+            ගමන් බලපත්‍ර අංකය <br>
+            கடவுச் சீட்டு இல. <br>
+            Passport No.
+        </td>
+        <td>
+            <s:textfield name="marriage.male.passport" id="passport_male" maxLength="15" cssStyle="width:120px"/>
+        </td>
+        <td>ලංකාවට පැමිණි දිනය <br>
+            in tamil <br>
+            Date of Arrival
+        </td>
+        <td>
+            <s:textfield name="marriage.male.dateOfArrival" id="date_arrival_male" maxLength="10"
+                         cssStyle="width:80px"/>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="1" height="100x">
+            නම රාජ්‍ය භාෂාවෙන්
+            (සිංහල / දෙමළ) <br>
+            பெயர் அரச கரும மொழியில் (சிங்களம் / தமிழ்) <br>
+            Name in any of the official languages (Sinhala / Tamil)
+        </td>
+        <td colspan="6" height="100x">
+            <s:textarea name="marriage.male.nameInOfficialLanguageMale" id="name_official_male"
+                        cssStyle="width:98.2%;"/>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="1" height="100x">
+            නම ඉංග්‍රීසි භාෂාවෙන් <br>
+            பெயர் ஆங்கில மொழியில் <br>
+            Name in English
+        </td>
+        <td colspan="6" height="100x">
+            <s:textarea name="marriage.male.nameInEnglishMale" id="name_english_male" cssStyle="width:98.2%;"/>
+        </td>
+    </tr>
+</table>
+<table border="1" style="margin-top:0px;width:100%;border:1px solid #000;border-collapse:collapse;"
+       cellpadding="2px">
+    <caption></caption>
+    <col width="233px"/>
+    <col width="140px"/>
+    <col width="50px"/>
+    <col width="140px"/>
+    <col width="50px"/>
+    <col width="150px"/>
+    <col width="50px"/>
+    <col width="150px"/>
+    <col width="50px"/>
+    <tbody>
+    <tr>
+        <td rowspan="2">
+            පදිංචි ලිපිනය <br>
+            தற்போதைய வதிவிட முகவரி <br>
+            Resident Address
+        </td>
+        <td colspan="4" height="20px">රාජ්‍ය භාෂාවෙන් / in tamil / in Official Language</td>
+        <td colspan="4" height="20px">ඉංග්‍රීසි භාෂාවෙන් / in tamil / In English</td>
+    </tr>
+    <tr>
+        <td colspan="4" height="100px">
+            <s:textarea name="marriage.male.residentAddressMaleInOfficialLang" id="address_male_official"
+                        cssStyle="width:98.2%;"/>
+        </td>
+        <td colspan="4" height="100px">
+            <s:textarea name="marriage.male.residentAddressMaleInEnglish" id="address_male_english"
+                        cssStyle="width:98.2%;"/>
+        </td>
+    </tr>
+    <tr>
+        <td rowspan="2">
+            තරාතිරම නොහොත් රක්ෂාව <br>
+            in tamil <br>
+            Rank or Profession
+        </td>
+        <td colspan="4" height="20px">රාජ්‍ය භාෂාවෙන් / in tamil / in Official Language</td>
+        <td colspan="4" height="20px">ඉංග්‍රීසි භාෂාවෙන් / in tamil / In English</td>
+    </tr>
+    <tr>
+        <td colspan="4" height="40px">
+            <s:textfield name="marriage.male.rankOrProfessionMaleInOfficialLang" id="rank_male_official"
+                         cssStyle="width:98.2%;"
+                         maxLength="255"/>
+        </td>
+        <td colspan="4" height="40px">
+            <s:textfield name="marriage.male.rankOrProfessionMaleInEnglish" id="rank_male_english"
+                         cssStyle="width:98.2%;"
+                         maxLength="255"/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            සිවිල් තත්වය <br>
+            சிவில் நிலைமை <br>
+            Civil Status
+        </td>
+        <td>
+            අවිවාහක <br>
+            திருமணமாகாதவர் <br>
+            Never Married
+        </td>
+        <td>
+            <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'NEVER_MARRIED':''}"
+                     value="true"/>
+        </td>
+        <td>
+            දික්කසාද <br>
+            திருமணம் தள்ளுபடி செய்தவர் <br>
+            Divorced
+        </td>
+        <td>
+            <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'DIVORCED':''}"
+                     value="true"/>
+        </td>
+        <td>
+            වැන්දබු <br>
+            விதவை <br>
+            Widowed
+        </td>
+        <td>
+            <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'WIDOWED':''}" value="true"/>
+        </td>
+        <td>
+            නිෂ්ප්‍රභාකර ඇත <br>
+            தள்ளிவைத்தல் <br>
+            Anulled
+        </td>
+        <td>
+            <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'ANULLED':''}" value="true"/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            පියාගේ අනන්‍යතා අංකය <br>
+            தந்தையின் அடையாள எண் <br>
+            Fathers Identification Number
+        </td>
+        <td colspan="8">
+            <s:textfield name="marriage.male.fatherIdentificationNumberMale" id="father_pin_or_nic_male"
+                         cssStyle="width:240px;" maxLength="10"/>
+        </td>
+    </tr>
+    <tr>
+        <td rowspan="2">
+            පියාගේ සම්පුර්ණ නම
+            தந்தையின் அடையாள
+            Fathers full name
+        </td>
+        <td colspan="4" height="20px">රාජ්‍ය භාෂාවෙන් / in tamil / in Official Language</td>
+        <td colspan="4" height="20px">ඉංග්‍රීසි භාෂාවෙන් / in tamil / In English</td>
+    </tr>
+    <tr>
+        <td colspan="4" height="100px">
+            <s:textarea name="marriage.male.fatherFullNameMaleInOfficialLang" id="father_full_name_male_official"
+                        cssStyle="width:98.2%;"/>
+        </td>
+        <td colspan="4" height="100px">
+            <s:textarea name="marriage.male.fatherFullNameMaleInEnglish" id="father_full_name_male_english"
+                        cssStyle="width:98.2%;"/>
+        </td>
+    </tr>
+    </tbody>
+</table>
 
 </s:if>
 
 
 <s:if test="%{noticeType.ordinal()==0 || noticeType.ordinal()==2}">
-    <%--section female party--%>
-    <table style="margin-top:20px">
-        <caption/>
-        <col width="500px"/>
-        <col width="524px"/>
-        <tr>
-            <td colspan="2" align="center">
-                ස්ත්‍රී පාර්ශ්වය / in tamil / Female Party
-            </td>
-        </tr>
-    </table>
+<%--section female party--%>
+<table style="margin-top:20px">
+    <caption/>
+    <col width="500px"/>
+    <col width="524px"/>
+    <tr>
+        <td colspan="2" align="center">
+            ස්ත්‍රී පාර්ශ්වය / in tamil / Female Party
+        </td>
+    </tr>
+</table>
 
-    <table border="1"
-           style="margin-top:10px;width:100%;border:1px solid #000;border-collapse:collapse;border-bottom:none "
-           cellpadding="2px">
-        <caption/>
-        <col width="250px"/>
-        <col width="200px"/>
-        <col/>
-        <col width="200px"/>
-        <col/>
-        <col width="200px"/>
-        <col/>
-        <tr>
-            <td colspan="1">
-                අනන්‍යතා අංකය <br>
-                அடையாள எண் <br>
-                Identification number
-            </td>
-            <td colspan="2"></td>
-            <td colspan="1">
-                උපන් දිනය <br>
-                பிறந்த திகதி <br>
-                Date of Birth
-            </td>
-            <td colspan="3"></td>
-        </tr>
-        <tr>
-            <td colspan="1">
-                ජාතිය <br>
-                in tamil <br>
-                Race
-            </td>
-            <td colspan="2"></td>
-            <td colspan="1">
-                පසුවූ උපන් දිනයට වයස <br>
-                in tamil <br>
-                Age at last Birthday
-            </td>
-            <td colspan="3"></td>
-        </tr>
-        <tr>
-            <td>
-                විදේශිකයකු නම් <br>
-                வெளிநாட்டவர் எனின் <br>
-                If a foreigner
-            </td>
-            <td>
-                රට <br>
-                நாடு <br>
-                Country
-            </td>
-            <td></td>
-            <td>
-                ගමන් බලපත්‍ර අංකය <br>
-                கடவுச் சீட்டு இல. <br>
-                Passport No.
-            </td>
-            <td></td>
-            <td>ලංකාවට පැමිණි දිනය <br>
-                in tamil <br>
-                Date of Arrival
-            </td>
-            <td></td>
-        </tr>
-        <tr>
-            <td colspan="1" height="100x">
-                නම රාජ්‍ය භාෂාවෙන් <br>
-                (සිංහල / දෙමළ)
-                பெயர் அரச கரும மொழியில் (சிங்களம் / தமிழ்) <br>
-                Name in any of the official languages (Sinhala / Tamil)
-            </td>
-            <td colspan="6" height="100x"></td>
-        </tr>
-        <tr>
-            <td colspan="1" height="100x">
-                නම ඉංග්‍රීසි භාෂාවෙන් <br>
-                பெயர் ஆங்கில மொழியில் <br>
-                Name in English
-            </td>
-            <td colspan="6" height="100x"></td>
-        </tr>
-    </table>
-    <table border="1" style="margin-top:0px;width:100%;border:1px solid #000;border-collapse:collapse;"
-           cellpadding="2px">
-        <caption></caption>
-        <col width="250px"/>
-        <col width="140px"/>
-        <col width="50px"/>
-        <col width="140px"/>
-        <col width="50px"/>
-        <col width="150px"/>
-        <col width="50px"/>
-        <col width="150px"/>
-        <col width="50px"/>
-        <tbody>
-        <tr>
-            <td rowspan="2">
-                පදිංචි ලිපිනය <br>
-                தற்போதைய வதிவிட முகவரி <br>
-                Resident Address
-            </td>
-            <td colspan="4" height="20px">රාජ්‍ය භාෂාවෙන් / in tamil / in Official Language</td>
-            <td colspan="4" height="20px">ඉංග්‍රීසි භාෂාවෙන් / in tamil / In English</td>
-        </tr>
-        <tr>
-            <td colspan="4" height="100px">d</td>
-            <td colspan="4" height="100px">e</td>
-        </tr>
-        <tr>
-            <td rowspan="2">
-                තරාතිරම නොහොත් රක්ෂාව <br>
-                in tamil <br>
-                Rank or Profession
-            </td>
-            <td colspan="4" height="20px">රාජ්‍ය භාෂාවෙන් / in tamil / in Official Language</td>
-            <td colspan="4" height="20px">ඉංග්‍රීසි භාෂාවෙන් / in tamil / In English</td>
-        </tr>
-        <tr>
-            <td colspan="4" height="40px"></td>
-            <td colspan="4" height="40px"></td>
-        </tr>
-        <tr>
-            <td>
-                සිවිල් තත්වය <br>
-                சிவில் நிலைமை <br>
-                Civil Status
-            </td>
-            <td>
-                අවිවාහක <br>
-                திருமணமாகாதவர் <br>
-                Never Married
-            </td>
-            <td></td>
-            <td>
-                දික්කසාද <br>
-                திருமணம் தள்ளுபடி செய்தவர் <br>
-                Divorced
-            </td>
-            <td></td>
-            <td>
-                වැන්දබු <br>
-                விதவை <br>
-                Widowed
-            </td>
-            <td></td>
-            <td>
-                නිෂ්ප්‍රභාකර ඇත <br>
-                தள்ளிவைத்தல் <br>
-                Anulled
-            </td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>
-                පියාගේ අනන්‍යතා අංකය
-                தந்தையின் அடையாள எண்
-                Fathers Identification Number
-            </td>
-            <td colspan="8"></td>
-        </tr>
-        <tr>
-            <td rowspan="2">
-                පියාගේ සම්පුර්ණ නම
-                தந்தையின் அடையாள
-                Fathers full name
-            </td>
-            <td colspan="4" height="20px">රාජ්‍ය භාෂාවෙන් / in tamil / in Official Language</td>
-            <td colspan="4" height="20px">ඉංග්‍රීසි භාෂාවෙන් / in tamil / In English</td>
-        </tr>
-        <tr>
-            <td colspan="4" height="100px"></td>
-            <td colspan="4" height="100px"></td>
-        </tr>
-        </tbody>
-    </table>
+<table border="1"
+       style="margin-top:10px;width:100%;border:1px solid #000;border-collapse:collapse;border-bottom:none "
+       cellpadding="2px">
+    <caption/>
+    <col width="250px"/>
+    <col width="100px"/>
+    <col/>
+    <col width="170px"/>
+    <col/>
+    <col width="170px"/>
+    <col/>
+    <tr>
+        <td colspan="1">
+            අනන්‍යතා අංකය <br>
+            அடையாள எண் <br>
+            Identification number
+        </td>
+        <td colspan="2">
+            <s:textfield name="marriage.female.identificationNumberFemale" id="identification_female" maxLength="10"/>
+        </td>
+        </td>
+        <td colspan="1">
+            උපන් දිනය <br>
+            பிறந்த திகதி <br>
+            Date of Birth
+        </td>
+        <td colspan="3">
+            <s:textfield name="marriage.female.dateOfBirthFemale" id="date_of_birth_female" maxLength="10"/>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="1">
+            ජාතිය <br>
+            in tamil <br>
+            Race
+        </td>
+        <td colspan="2">
+            <s:select list="raceList" name="raceIdFemale" headerKey="0" headerValue="%{getText('select_race.label')}"
+                      cssStyle="width:200px;"/>
+        </td>
+        <td colspan="1">
+            පසුවූ උපන් දිනයට වයස <br>
+            in tamil <br>
+            Age at last Birthday
+        </td>
+        <td colspan="3">
+            <s:textfield name="marriage.female.ageAtLastBirthDayFemale" id="age_at_last_bd_female" maxLength="3"
+                         value=""/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            විදේශිකයකු නම් <br>
+            வெளிநாட்டவர் எனின் <br>
+            If a foreigner
+        </td>
+        <td>
+            රට <br>
+            நாடு <br>
+            Country
+        </td>
+        <td>
+            <s:select list="countryList" name="countryIdFemale" headerKey="0"
+                      headerValue="%{getText('select_country.label')}"
+                      cssStyle="width:150px;"/>
+        </td>
+        <td>
+            ගමන් බලපත්‍ර අංකය <br>
+            கடவுச் சீட்டு இல. <br>
+            Passport No.
+        </td>
+        <td>
+            <s:textfield name="marriage.female.passport" id="passport_female" maxLength="15" cssStyle="width:120px"/>
+        </td>
+        <td>ලංකාවට පැමිණි දිනය <br>
+            in tamil <br>
+            Date of Arrival
+        </td>
+        <td>
+            <s:textfield name="marriage.female.dateOfArrival" id="date_arrival_female" maxLength="10"
+                         cssStyle="width:80px"/>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="1" height="100x">
+            නම රාජ්‍ය භාෂාවෙන්
+            (සිංහල / දෙමළ) <br>
+            பெயர் அரச கரும மொழியில் (சிங்களம் / தமிழ்) <br>
+            Name in any of the official languages (Sinhala / Tamil)
+        </td>
+        <td colspan="6" height="100x">
+            <s:textarea name="marriage.female.nameInOfficialLanguageFemale" id="name_official_female"
+                        cssStyle="width:98.2%;"/>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="1" height="100x">
+            නම ඉංග්‍රීසි භාෂාවෙන් <br>
+            பெயர் ஆங்கில மொழியில் <br>
+            Name in English
+        </td>
+        <td colspan="6" height="100x">
+            <s:textarea name="marriage.female.nameInEnglishFemale" id="name_english_female" cssStyle="width:98.2%;"/>
+        </td>
+    </tr>
+</table>
+<table border="1" style="margin-top:0px;width:100%;border:1px solid #000;border-collapse:collapse;"
+       cellpadding="2px">
+    <caption></caption>
+    <col width="233px"/>
+    <col width="140px"/>
+    <col width="50px"/>
+    <col width="140px"/>
+    <col width="50px"/>
+    <col width="150px"/>
+    <col width="50px"/>
+    <col width="150px"/>
+    <col width="50px"/>
+    <tbody>
+    <tr>
+        <td rowspan="2">
+            පදිංචි ලිපිනය <br>
+            தற்போதைய வதிவிட முகவரி <br>
+            Resident Address
+        </td>
+        <td colspan="4" height="20px">රාජ්‍ය භාෂාවෙන් / in tamil / in Official Language</td>
+        <td colspan="4" height="20px">ඉංග්‍රීසි භාෂාවෙන් / in tamil / In English</td>
+    </tr>
+    <tr>
+        <td colspan="4" height="100px">
+            <s:textarea name="marriage.female.residentAddressFemaleInOfficialLang" id="address_female_official"
+                        cssStyle="width:98.2%;"/>
+        </td>
+        <td colspan="4" height="100px">
+            <s:textarea name="marriage.female.residentAddressFemaleInEnglish" id="address_female_english"
+                        cssStyle="width:98.2%;"/>
+        </td>
+    </tr>
+    <tr>
+        <td rowspan="2">
+            තරාතිරම නොහොත් රක්ෂාව <br>
+            in tamil <br>
+            Rank or Profession
+        </td>
+        <td colspan="4" height="20px">රාජ්‍ය භාෂාවෙන් / in tamil / in Official Language</td>
+        <td colspan="4" height="20px">ඉංග්‍රීසි භාෂාවෙන් / in tamil / In English</td>
+    </tr>
+    <tr>
+        <td colspan="4" height="40px">
+            <s:textfield name="marriage.female.rankOrProfessionFemaleInOfficialLang" id="rank_female_official"
+                         cssStyle="width:98.2%;"
+                         maxLength="255"/>
+        </td>
+        <td colspan="4" height="40px">
+            <s:textfield name="marriage.female.rankOrProfessionFemaleInEnglish" id="rank_female_english"
+                         cssStyle="width:98.2%;"
+                         maxLength="255"/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            සිවිල් තත්වය <br>
+            சிவில் நிலைமை <br>
+            Civil Status
+        </td>
+        <td>
+            අවිවාහක <br>
+            திருமணமாகாதவர் <br>
+            Never Married
+        </td>
+        <td>
+            <s:radio name="marriage.female.civilStatusFemale" list="#@java.util.HashMap@{'NEVER_MARRIED':''}"
+                     value="true"/>
+        </td>
+        <td>
+            දික්කසාද <br>
+            திருமணம் தள்ளுபடி செய்தவர் <br>
+            Divorced
+        </td>
+        <td>
+            <s:radio name="marriage.female.civilStatusFemale" list="#@java.util.HashMap@{'DIVORCED':''}"
+                     value="true"/>
+        </td>
+        <td>
+            වැන්දබු <br>
+            விதவை <br>
+            Widowed
+        </td>
+        <td>
+            <s:radio name="marriage.female.civilStatusFemale" list="#@java.util.HashMap@{'WIDOWED':''}" value="true"/>
+        </td>
+        <td>
+            නිෂ්ප්‍රභාකර ඇත <br>
+            தள்ளிவைத்தல் <br>
+            Anulled
+        </td>
+        <td>
+            <s:radio name="marriage.female.civilStatusFemale" list="#@java.util.HashMap@{'ANULLED':''}" value="true"/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            පියාගේ අනන්‍යතා අංකය <br>
+            தந்தையின் அடையாள எண் <br>
+            Fathers Identification Number
+        </td>
+        <td colspan="8">
+            <s:textfield name="marriage.female.fatherIdentificationNumberFemale" id="father_pin_or_nic_female"
+                         cssStyle="width:240px;" maxLength="10"/>
+        </td>
+    </tr>
+    <tr>
+        <td rowspan="2">
+            පියාගේ සම්පුර්ණ නම
+            தந்தையின் அடையாள
+            Fathers full name
+        </td>
+        <td colspan="4" height="20px">රාජ්‍ය භාෂාවෙන් / in tamil / in Official Language</td>
+        <td colspan="4" height="20px">ඉංග්‍රීසි භාෂාවෙන් / in tamil / In English</td>
+    </tr>
+    <tr>
+        <td colspan="4" height="100px">
+            <s:textarea name="marriage.female.fatherFullNameFemaleInOfficialLang" id="father_full_name_female_official"
+                        cssStyle="width:98.2%;"/>
+        </td>
+        <td colspan="4" height="100px">
+            <s:textarea name="marriage.female.fatherFullNameFemaleInEnglish" id="father_full_name_female_english"
+                        cssStyle="width:98.2%;"/>
+        </td>
+    </tr>
+    </tbody>
+</table>
 </s:if>
 <div class="form-submit">
     <s:submit value="add.notice"/>
 </div>
+<s:hidden name="noticeType" value="%{noticeType}"/>
 </s:form>
 </div>
+

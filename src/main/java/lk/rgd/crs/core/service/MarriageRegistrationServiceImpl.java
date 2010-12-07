@@ -36,12 +36,22 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void addMarriageNotice(MarriageRegister notice, boolean isMale, User user) {
-        logger.debug("adding new marriage notice :male pin number  {}", notice.getMale().getIdentificationNumberMale());
+    public void addMarriageNotice(MarriageRegister notice, MarriageNotice.Type type, User user) {
+        //todo complete log massage
         //TODO check users permission to add marriage
-        //persisting witness
-/*        addMaleOrFemaleWitnesses(notice, isMale);*/
+        logger.debug("attempt to add marriage notice ");
+        populateObjectForPersisting(notice, type);
         marriageRegistrationDAO.addMarriageNotice(notice, user);
+    }
+
+    /**
+     * populate notice for persisting
+     * if notice type is BOTH single notice will be true
+     */
+    private void populateObjectForPersisting(MarriageRegister marriageRegister, MarriageNotice.Type type) {
+        if (type == MarriageNotice.Type.BOTH_NOTICE) {
+            marriageRegister.setSingleNotice(true);
+        }
     }
 
     /**
@@ -151,7 +161,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     @Transactional(propagation = Propagation.REQUIRED)
     public void addSecondMarriageNotice(MarriageRegister notice, boolean isMale, User user) {
         logger.debug("attempt to add a second notice for existing record : idUKey : {}", notice.getIdUKey());
-    /*    addMaleOrFemaleWitnesses(notice, isMale);*/
+        /*    addMaleOrFemaleWitnesses(notice, isMale);*/
         updateMarriageRegister(notice, user);
     }
 
@@ -179,8 +189,8 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         logger.debug("attempt to remove marriage notice : idUKey : {} and notice type : {}", idUKey, noticeType);
         //todo AMITH check user permission for removing data
         MarriageRegister notice = marriageRegistrationDAO.getByIdUKey(idUKey);
-        boolean isBothSubmitted = notice.isBothPartySubmitted();
-        if (isBothSubmitted) {
+        // todo remove boolean isBothSubmitted = notice.isBothPartySubmitted();
+        if (true) {
             //case 1
             marriageRegistrationDAO.deleteMarriageRegister(idUKey);
         } else {
@@ -251,32 +261,6 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         }
 
     }
-
-/*    private void addMaleOrFemaleWitnesses(MarriageRegister marriageRegister, boolean isMale) {
-        if (isMale) {
-            //persisting male witnesses
-            if (marriageRegister.getFemaleNoticeWitness_1().getIdUKey() == 0 &
-                marriageRegister.getFemaleNoticeWitness_2().getIdUKey() == 0) {
-                //usage of the check (by default those object are created when marriage notice object create, in some cases
-                // like there is a already added witness ,then we have to keep those witness objects other wise it can be
-                // null)
-                marriageRegister.setFemaleNoticeWitness_1(null);
-                marriageRegister.setFemaleNoticeWitness_2(null);
-            }
-            marriageRegistrationDAO.addWitness(marriageRegister.getMaleNoticeWitness_1());
-            marriageRegistrationDAO.addWitness(marriageRegister.getMaleNoticeWitness_2());
-
-        } else {
-            if (marriageRegister.getMaleNoticeWitness_1().getIdUKey() == 0 &
-                marriageRegister.getMaleNoticeWitness_2().getIdUKey() == 0) {
-                //persisting female notice witnesses
-                marriageRegister.setMaleNoticeWitness_1(null);
-                marriageRegister.setMaleNoticeWitness_2(null);
-            }
-            marriageRegistrationDAO.addWitness(marriageRegister.getFemaleNoticeWitness_1());
-            marriageRegistrationDAO.addWitness(marriageRegister.getFemaleNoticeWitness_2());
-        }
-    }*/
 
     /**
      * private method which check that current user have permission for ds divisions that allowed to
