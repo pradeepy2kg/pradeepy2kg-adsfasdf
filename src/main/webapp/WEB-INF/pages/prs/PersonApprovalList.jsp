@@ -14,9 +14,13 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $('#tab1').tabs();
-        $('#tabs2').tabs();
+        $('#tabs2').tabs({
+            select: function(ui) {
+                document.getElementById('searchNic').value = null;
+                document.getElementById('searchTempPin').value = null;
+            }
+        });
     });
-
 
     function initPage() {
     }
