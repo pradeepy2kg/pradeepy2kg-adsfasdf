@@ -75,6 +75,7 @@ public class PersonDAOImpl extends BaseDAO implements PersonDAO {
 
     @Transactional(propagation = Propagation.MANDATORY)
     public void addAddress(Address a) {
+        a.setStartDate(new Date());
         em.persist(a);
     }
 

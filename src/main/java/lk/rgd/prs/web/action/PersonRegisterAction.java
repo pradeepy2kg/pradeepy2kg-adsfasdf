@@ -71,26 +71,21 @@ public class PersonRegisterAction extends ActionSupport implements SessionAware 
 
         if (personUKey == 0) {
             personList = service.addExistingPerson(person, citizenshipList, ignoreDuplicate, user);
+            addActionMessage(getText("person_reg_success.message", new String[]{person.getPin().toString()}));
         } else {
             logger.debug("Editing existing person in PRS with personUKey : {}", personUKey);
             service.editExistingPersonBeforeApproval(person, citizenshipList, user);
             personList = Collections.emptyList();
+            addActionMessage(getText("person_edit_success.message"));
         }
 
         if (personList.isEmpty()) {
             // personUKey used to redirect to PRS certificate page
             personUKey = person.getPersonUKey();
-            if (personUKey == 0) {
-                addActionMessage(getText("person_reg_success.message", new String[]{person.getPin().toString()}));
-                if (logger.isDebugEnabled()) {
-                    logger.debug("Person with name : " + NameFormatUtil.getDisplayName(person.getFullNameInEnglishLanguage(), 30)
-                        + " and dateOfBirth : " + DateTimeUtils.getISO8601FormattedString(person.getDateOfBirth())
-                        + " added to the PRS with PersonUKey : " + person.getPersonUKey());
-                }
-            } else {
-                if(logger.isDebugEnabled()){
-                    logger.debug("Person with PersonUKey : {} edited while registering existing persons to the PRS");
-                }
+            if (logger.isDebugEnabled()) {
+                logger.debug("Person with name : " + NameFormatUtil.getDisplayName(person.getFullNameInEnglishLanguage(), 30)
+                    + " and dateOfBirth : " + DateTimeUtils.getISO8601FormattedString(person.getDateOfBirth())
+                    + " added to the PRS with PersonUKey : " + person.getPersonUKey());
             }
             return SUCCESS;
         } else {

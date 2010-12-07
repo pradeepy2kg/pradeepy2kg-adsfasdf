@@ -10,7 +10,7 @@
     <tbody>
     <tr>
         <td rowspan="2" align="center">
-            <img src="<s:url value="../images/official-logo.png" />"
+            <img src="<s:url value="../../images/official-logo.png" />"
                  style="display: block; text-align: center;" width="100" height="120">
         </td>
 
@@ -573,7 +573,9 @@
             <br>தேசிய
             <br>Last Updated
         </td>
-        <td></td>
+        <td>
+            <s:label value="%{person.lifeCycleInfo.lastUpdatedTimestamp}"/>
+        </td>
         <td>
             අවසන් වෙනස් කිරීම කල පුද්ගලයා
             <br>தேசிய
