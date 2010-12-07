@@ -106,6 +106,10 @@
     <bean id="birthDeclarationValidator" class="lk.rgd.crs.core.service.BirthDeclarationValidator">
         <constructor-arg ref="ecivilService"/>
     </bean>
+
+    <bean id="marriageRegistrationValidator" class="lk.rgd.crs.core.service.MarriageRegistrationValidator">
+    </bean>
+
     <bean id="serviceAuditor" class="lk.rgd.crs.core.service.ServiceAuditor">
         <constructor-arg value="true"/>
         <constructor-arg ref="eventDAOImpl"/>
@@ -169,6 +173,7 @@
 
     <bean id="marriageRegistrationService" class="lk.rgd.crs.core.service.MarriageRegistrationServiceImpl">
         <constructor-arg ref="marriageRegistrationDAOImpl"/>
+        <constructor-arg ref="marriageRegistrationValidator"/>
     </bean>
 
     <bean id="masterDataManagementService" class="lk.rgd.crs.core.service.MasterDataManagementServiceImpl">

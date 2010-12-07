@@ -87,4 +87,7 @@ public class ErrorCodes {
     public static final int PRS_LOOKUP_BY_KEYS_DENIED = 5003;
     public static final int PRS_APPROVE_RECORD_DENIED = 5004;
     public static final int INVALID_STATE_FOR_PRS_APPROVAL = 5005;
+
+    //marriage registration related error codes 6001-6999
+    public static final int MR_INCOMPLETE_OBJECT = 6001;
 }

@@ -27,9 +27,11 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     private static final Logger logger = LoggerFactory.getLogger(MarriageRegistrationServiceImpl.class);
 
     private final MarriageRegistrationDAO marriageRegistrationDAO;
+    private final MarriageRegistrationValidator marriageRegistrationValidator;
 
-    public MarriageRegistrationServiceImpl(MarriageRegistrationDAO marriageRegistrationDAO) {
+    public MarriageRegistrationServiceImpl(MarriageRegistrationDAO marriageRegistrationDAO, MarriageRegistrationValidator marriageRegistrationValidator) {
         this.marriageRegistrationDAO = marriageRegistrationDAO;
+        this.marriageRegistrationValidator = marriageRegistrationValidator;
     }
 
     /**
@@ -37,9 +39,9 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void addMarriageNotice(MarriageRegister notice, MarriageNotice.Type type, User user) {
-        //todo complete log massage
-        //TODO check users permission to add marriage
-        logger.debug("attempt to add marriage notice ");
+        logger.debug("attempt to add marriage notice male serial :{} female serial : {}", notice.getSerialOfMaleNotice(),
+            notice.getSerialOfFemaleNotice() + ": notice type :" + type);
+        marriageRegistrationValidator.validateMarriageNotice(notice, type);
         populateObjectForPersisting(notice, type);
         marriageRegistrationDAO.addMarriageNotice(notice, user);
     }
