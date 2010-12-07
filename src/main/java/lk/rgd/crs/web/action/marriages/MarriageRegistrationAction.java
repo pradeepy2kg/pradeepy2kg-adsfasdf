@@ -165,7 +165,6 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             return ERROR;
         }
         populateNoticeForInitEdit(marriage, noticeType);
-        //marriageType = MarriageType.values();
         commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
             marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
         editMode = true;
@@ -203,6 +202,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         logger.debug("attempt to edit marriage notice : idUKey {}", idUKey);
         MarriageRegister existingNotice = marriageRegistrationService.getByIdUKey(idUKey, user);
         if (existingNotice != null) {
+            populatePartyObjectsForPersisting(marriage);
             populateNoticeForEdit(marriage, existingNotice, noticeType);
             marriageRegistrationService.updateMarriageRegister(existingNotice, user);
             addActionMessage(getText("marriage.notice.updated.success"));
@@ -216,24 +216,23 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     }
 
     private void populateNoticeForEdit(MarriageRegister marriageRegister, MarriageRegister existing, MarriageNotice.Type type) {
-        existing.setMale(marriage.getMale());
-        existing.setFemale(marriage.getFemale());
-        if (type == MarriageNotice.Type.BOTH_NOTICE || type == MarriageNotice.Type.MALE_NOTICE) {
-            //populate male notice
-            existing.setSerialOfMaleNotice(serialNumber);
-            existing.setDateOfMaleNotice(noticeReceivedDate);
-/*            marriageRegister.getMaleNoticeWitness_1().setIdUKey(existing.getMaleNoticeWitness_1().getIdUKey());
-            marriageRegister.getMaleNoticeWitness_2().setIdUKey(existing.getMaleNoticeWitness_2().getIdUKey());
-            existing.setMaleNoticeWitness_1(marriageRegister.getMaleNoticeWitness_1());
-            existing.setMaleNoticeWitness_2(marriageRegister.getMaleNoticeWitness_2());*/
-        } else {
-            //populate female notice
-            existing.setSerialOfFemaleNotice(serialNumber);
-            existing.setDateOfFemaleNotice(noticeReceivedDate);
-/*            marriageRegister.getFemaleNoticeWitness_1().setIdUKey(existing.getFemaleNoticeWitness_1().getIdUKey());
-            marriageRegister.getFemaleNoticeWitness_2().setIdUKey(existing.getFemaleNoticeWitness_2().getIdUKey());
-            existing.setFemaleNoticeWitness_1(marriageRegister.getFemaleNoticeWitness_1());
-            existing.setFemaleNoticeWitness_2(marriageRegister.getFemaleNoticeWitness_2());*/
+        switch (type) {
+            case BOTH_NOTICE: {
+                existing.setFemale(marriageRegister.getFemale());
+            }
+            case MALE_NOTICE: {
+                existing.setMale(marriageRegister.getMale());//BOTH also executing this block
+                existing.setSerialOfMaleNotice(serialNumber);
+                existing.setDateOfMaleNotice(noticeReceivedDate);
+                existing.setMrDivisionOfMaleNotice(marriageRegister.getMrDivisionOfMaleNotice());
+            }
+            break;
+            case FEMALE_NOTICE: {
+                existing.setFemale(marriageRegister.getFemale());
+                existing.setSerialOfFemaleNotice(serialNumber);
+                existing.setDateOfFemaleNotice(noticeReceivedDate);
+                existing.setMrDivisionOfFemaleNotice(marriageRegister.getMrDivisionOfFemaleNotice());
+            }
         }
     }
 
