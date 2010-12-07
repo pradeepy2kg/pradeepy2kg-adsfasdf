@@ -7,6 +7,7 @@ import lk.rgd.common.api.domain.Country;
 import lk.rgd.common.api.domain.Race;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.CivilStatusUtil;
+import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.dao.MRDivisionDAO;
 import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.domain.MarriageNotice;
@@ -125,23 +126,32 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
      */
     public String addMarriageNotice() {
         logger.debug("attempt to add marriage notice serial number : {} ");
-        //check existing serial number
-        MarriageRegister existingMarriage = null; //todo complete
-        if (existingMarriage != null) {
-            //there is an existing marriage notice for this serial number for this mr division
-            logger.debug("existing marriage notice found for :  serialNumber : {} : mrDivision idUKey : {}",
-                serialNumber, mrDivisionId);
-            //todo redirect to notice page with values like birth registration
-            addActionMessage(getText("massage.existing.notice.found"));
+        try {
+            //check existing serial number
+            MarriageRegister existingMarriage = null; //todo complete
+            if (existingMarriage != null) {
+                //there is an existing marriage notice for this serial number for this mr division
+                logger.debug("existing marriage notice found for :  serialNumber : {} : mrDivision idUKey : {}",
+                    serialNumber, mrDivisionId);
+                //todo redirect to notice page with values like birth registration
+                addActionMessage(getText("massage.existing.notice.found"));
+                return SUCCESS;
+            }
+            populateNoticeForPersists();
+            //add race,country to  male party and female party
+            populatePartyObjectsForPersisting(marriage);
+            marriageRegistrationService.addMarriageNotice(marriage, noticeType, user);
+            addActionMessage("massage.notice.successfully.add");
+            logger.debug("successfully added marriage notice serial number: {}");
             return SUCCESS;
         }
-        populateNoticeForPersists();
-        //add race,country to  male party and female party
-        populatePartyObjectsForPersisting(marriage);
-        marriageRegistrationService.addMarriageNotice(marriage, noticeType, user);
-        addActionMessage("massage.notice.successfully.add");
-        logger.debug("successfully added marriage notice serial number: {}");
-        return SUCCESS;
+        catch (CRSRuntimeException e) {
+            //todo return to error with redirect
+            logger.debug("incomplete marriage notice : male serial number : {} : female serial number : {}",
+                marriage.getSerialOfMaleNotice(), marriage.getSerialOfFemaleNotice());
+            addActionError(getText("error.incomplete.notice"));
+            return SUCCESS;
+        }
     }
 
     public String editMarriageNoticeInit() {
