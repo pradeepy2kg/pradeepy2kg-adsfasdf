@@ -163,7 +163,6 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
      * loading search page for marriage register
      */
     public String marriageRegisterSearchInit() {
-        populateBasicLists();
         commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId, dsDivisionId, mrDivisionId, "Marriage", user, language);
         return SUCCESS;
     }
