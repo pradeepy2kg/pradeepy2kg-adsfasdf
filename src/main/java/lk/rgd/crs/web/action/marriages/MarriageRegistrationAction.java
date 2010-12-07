@@ -173,14 +173,26 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     }
 
     private void populateNoticeForInitEdit(MarriageRegister marriage, MarriageNotice.Type type) {
-        if (type == MarriageNotice.Type.BOTH_NOTICE || type == MarriageNotice.Type.MALE_NOTICE) {
-            //populate male notice
-            serialNumber = marriage.getSerialOfMaleNotice();
-            noticeReceivedDate = marriage.getDateOfMaleNotice();
+        if (secondNotice) {
+            logger.debug("attempt to add second notice for marriage notice idUKey : {}", idUKey);
+            //notice type BOTH cannot have a second notice
+            if (noticeType == MarriageNotice.Type.MALE_NOTICE) {
+                //that means first notice is male notice so second must ne female notice so we have to init female notice page
+                noticeType = MarriageNotice.Type.FEMALE_NOTICE;
+            } else {
+                noticeType = MarriageNotice.Type.MALE_NOTICE;
+            }
         } else {
-            //populate female notice
-            serialNumber = marriage.getSerialOfFemaleNotice();
-            noticeReceivedDate = marriage.getDateOfFemaleNotice();
+            logger.debug("init edit page for notice idUKey : {}", idUKey);
+            if (type == MarriageNotice.Type.BOTH_NOTICE || type == MarriageNotice.Type.MALE_NOTICE) {
+                //populate male notice
+                serialNumber = marriage.getSerialOfMaleNotice();
+                noticeReceivedDate = marriage.getDateOfMaleNotice();
+            } else {
+                //populate female notice
+                serialNumber = marriage.getSerialOfFemaleNotice();
+                noticeReceivedDate = marriage.getDateOfFemaleNotice();
+            }
         }
     }
 
@@ -236,9 +248,16 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         MarriageRegister existingNotice = marriageRegistrationService.getByIdUKey(idUKey, user);
         if (existingNotice != null) {
             populatePartyObjectsForPersisting(existingNotice);
+            //check who submit the second notice
+            boolean secondNoticeSubmittedByPartyMale = false;
+            if (!existingNotice.isSingleNotice() && existingNotice.getSerialOfMaleNotice() == null) {
+                secondNoticeSubmittedByPartyMale = true;
+                noticeType = MarriageNotice.Type.MALE_NOTICE;
+            } else {
+                noticeType = MarriageNotice.Type.FEMALE_NOTICE;
+            }
             populateNoticeForAddingSecondNotice(existingNotice, marriage);
             //following boolean use to check which party is submitting second notice  note:true (male) false(female)
-            boolean secondNoticeSubmittedByPartyMale = (noticeType == MarriageNotice.Type.MALE_NOTICE) ? false : true;
             marriageRegistrationService.addSecondMarriageNotice(existingNotice, secondNoticeSubmittedByPartyMale, user);
         } else {
             logger.debug("cannot add second notice to idUKey : {}", idUKey);
@@ -255,24 +274,19 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     private void populateNoticeForAddingSecondNotice(MarriageRegister noticeExisting, MarriageRegister noticeEdited) {
         //BOTH type does not have a second notice  so we are not handling it
-        if (noticeType == MarriageNotice.Type.FEMALE_NOTICE) {
+        MRDivision mr = mrDivisionDAO.getMRDivisionByPK(mrDivisionId);
+        if (noticeType == MarriageNotice.Type.MALE_NOTICE) {
             noticeExisting.setSerialOfMaleNotice(serialNumber);
             noticeExisting.setDateOfMaleNotice(noticeReceivedDate);
-/*            noticeExisting.setMaleNoticeWitness_1(noticeEdited.getMaleNoticeWitness_1());
-            noticeExisting.setMaleNoticeWitness_2(noticeEdited.getMaleNoticeWitness_2());*/
-            //    noticeExisting.setMrDivisionOfMaleNotice(noticeExisting.getMale().getMrDivisionMale());
+            noticeExisting.setMale(noticeEdited.getMale());
+            noticeExisting.setMrDivisionOfMaleNotice(mr);
         } else {
             noticeExisting.setSerialOfFemaleNotice(serialNumber);
             noticeExisting.setDateOfFemaleNotice(noticeReceivedDate);
-/*            noticeExisting.setFemaleNoticeWitness_1(noticeEdited.getFemaleNoticeWitness_1());
-            noticeExisting.setFemaleNoticeWitness_2(noticeEdited.getFemaleNoticeWitness_2());*/
-            //  noticeExisting.setMrDivisionOfFemaleNotice(noticeExisting.getFemale().getMrDivisionFemale());
+            noticeExisting.setFemale(noticeEdited.getFemale());
+            noticeExisting.setMrDivisionOfMaleNotice(mr);
         }
-        noticeExisting.setMale(noticeEdited.getMale());
-        noticeExisting.setFemale(noticeEdited.getFemale());
         noticeExisting.setTypeOfMarriage(noticeEdited.getTypeOfMarriage());
-        //TODO : to be removed 
-        noticeExisting.setPlaceOfMarriage(noticeEdited.getPlaceOfMarriage());
     }
 
 

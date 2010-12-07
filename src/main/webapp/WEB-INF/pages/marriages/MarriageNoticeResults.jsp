@@ -1,6 +1,8 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <s:actionmessage cssStyle="color:black;"/>
+<br>
+<s:actionerror cssErrorStyle="color:red;"/>
 <s:if test="idUKey>0">
     <div class="form-submit">
         <s:form action="eprMarriageNoticeEditInit" method="post">
