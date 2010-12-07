@@ -169,6 +169,31 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     }
 
     /**
+     * loading search result page for marriage register
+     */
+    public String marriageRegisterSearchResult() {
+        commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId, dsDivisionId, mrDivisionId, "Marriage", user, language);
+        pageNo += 1;
+        noOfRows = appParametersDAO.getIntParameter(MR_APPROVAL_ROWS_PER_PAGE);
+        if (noticeSerialNo != null) {
+            //TODO: search by serial number, clear tabs
+        } else {
+                if (mrDivisionId == 0) {
+                    //default search option use when page is loaded(search all the marriage records in DS division)
+                    marriageRegisterSearchList = service.getMarriageRegisterPendingApprovalByDSDivision
+                        (dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, true, user);
+                } else {
+                    marriageRegisterSearchList = service.getMarriageRegisterByMRDivision
+                        (mrDivisionDAO.getMRDivisionByPK(mrDivisionId), pageNo, noOfRows, true, user);
+                }
+        }
+        if (marriageRegisterSearchList.size() == 0) {
+            addActionMessage(getText("noItemMsg.label"));
+        }
+        return SUCCESS;
+    }
+
+    /**
      * populate basic list such as districts, DSDivisions and MRDivision
      */
     private void populateBasicLists() {
