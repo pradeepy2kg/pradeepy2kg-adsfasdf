@@ -80,12 +80,17 @@ public class PersonRegisterAction extends ActionSupport implements SessionAware 
         if (personList.isEmpty()) {
             // personUKey used to redirect to PRS certificate page
             personUKey = person.getPersonUKey();
-            addActionMessage(getText("person_reg_success.message", new String[]{person.getPin().toString()}));
-
-            if (logger.isDebugEnabled()) {
-                logger.debug("Person with name : " + NameFormatUtil.getDisplayName(person.getFullNameInEnglishLanguage(), 30)
-                    + " and dateOfBirth : " + DateTimeUtils.getISO8601FormattedString(person.getDateOfBirth())
-                    + " added to the PRS with PersonUKey : " + person.getPersonUKey());
+            if (personUKey == 0) {
+                addActionMessage(getText("person_reg_success.message", new String[]{person.getPin().toString()}));
+                if (logger.isDebugEnabled()) {
+                    logger.debug("Person with name : " + NameFormatUtil.getDisplayName(person.getFullNameInEnglishLanguage(), 30)
+                        + " and dateOfBirth : " + DateTimeUtils.getISO8601FormattedString(person.getDateOfBirth())
+                        + " added to the PRS with PersonUKey : " + person.getPersonUKey());
+                }
+            } else {
+                if(logger.isDebugEnabled()){
+                    logger.debug("Person with PersonUKey : {} edited while registering existing persons to the PRS");
+                }
             }
             return SUCCESS;
         } else {
