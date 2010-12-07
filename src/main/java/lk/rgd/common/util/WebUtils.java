@@ -126,7 +126,7 @@ public class WebUtils {
         //  if female serial is available this is a female submitted notice
         List<MarriageNotice> noticeList = new LinkedList<MarriageNotice>();
         for (MarriageRegister mr : marriageRegisterList) {
-            boolean isBothSubmitted = mr.isBothPartySubmitted();
+            boolean isBothSubmitted = mr.isSingleNotice();
             Long maleSerial = mr.getSerialOfMaleNotice();
             Long femaleSerial = mr.getSerialOfFemaleNotice();
             if (isBothSubmitted) {

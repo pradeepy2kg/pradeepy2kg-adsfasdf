@@ -507,13 +507,20 @@
         <put-attribute name="title" value="title.marriage.certificate"/>
     </definition>
 
-        <definition name="epr.marriageNoticeTypeSelect" extends="epr.template">
+    <definition name="epr.marriageNoticeTypeSelect" extends="epr.template">
         <description>
             select marriage notice type
         </description>
         <put-attribute name="body" value="/WEB-INF/pages/marriages/SelectMarriageNoticeType.jsp"/>
         <put-attribute name="title" value="title.marriage.notice.type.select"/>
     </definition>
-
+    
+    <definition name="epr.marriageRegisterSearchInit" extends="epr.template">
+        <description>
+            marriage register search jsp page
+        </description>
+        <put-attribute name="body" value="/WEB-INF/pages/marriages/MarriageRegisterSearch.jsp"/>
+        <put-attribute name="title" value="title.marriage.register.search"/>
+    </definition>
 
 </tiles-definitions>

@@ -286,7 +286,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     public String marriageRegistrationInit() {
         //TODO : To be removed
-        idUKey = 2;
+        idUKey = 1;
         marriageType = MarriageType.values();
         typeOfMarriagePlace = TypeOfMarriagePlace.values();
         //TODO : To be improved and remove populate method

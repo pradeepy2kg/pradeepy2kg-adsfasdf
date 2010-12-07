@@ -181,7 +181,7 @@
             විවාහ ස්ථානයේ ස්වභාවය<br>
             Type of Marriage Place<br>
         </td>
-        <td align="center" colspan="8">
+        <td colspan="8">
             <s:radio name="marriage.placeOfMarriage" list="typeOfMarriagePlace" listValue="type" theme="horizontal"/>
         </td>
     </tr>
