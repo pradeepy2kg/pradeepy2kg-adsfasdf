@@ -1,4 +1,4 @@
-package lk.rgd.prs;
+package lk.rgd.prs.core.service;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;
