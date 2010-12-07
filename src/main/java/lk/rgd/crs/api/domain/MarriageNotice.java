@@ -50,7 +50,7 @@ public final class MarriageNotice {
             this.partyNameInOfficialLang = mr.getFemale().getNameInOfficialLanguageFemale();
             this.partyPIN = mr.getFemale().getIdentificationNumberFemale();
         }
-        if (mr.isBothPartySubmitted() || (mr.getSerialOfMaleNotice() != null & mr.getSerialOfFemaleNotice() != null)) {
+        if (mr.isSingleNotice() || (mr.getSerialOfMaleNotice() != null & mr.getSerialOfFemaleNotice() != null)) {
             this.hasSecond = false;
         }
     }

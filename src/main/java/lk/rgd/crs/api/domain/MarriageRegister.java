@@ -125,7 +125,7 @@ public class MarriageRegister implements Serializable, Cloneable {
     private long registrarPINOfMaleNotice;
 
     @ManyToOne
-    @JoinColumn(name = "NOTICE_MRDIVISIONUKEY_M", nullable = true, insertable = false, updatable = false)
+    @JoinColumn(name = "NOTICE_MRDIVISIONUKEY_M", nullable = true, updatable = false)
     private MRDivision mrDivisionOfMaleNotice;
 
 
@@ -146,7 +146,7 @@ public class MarriageRegister implements Serializable, Cloneable {
     private long registrarPINOfFemaleNotice;
 
     @ManyToOne
-    @JoinColumn(name = "NOTICE_MRDIVISIONUKEY_F", nullable = true, insertable = false, updatable = false)
+    @JoinColumn(name = "NOTICE_MRDIVISIONUKEY_F", nullable = true, updatable = false)
     private MRDivision mrDivisionOfFemaleNotice;
 
     //party female
