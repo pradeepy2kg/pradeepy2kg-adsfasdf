@@ -12,6 +12,7 @@ import lk.rgd.crs.api.dao.MarriageRegistrationDAO;
 import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.MarriageRegistrationService;
 import lk.rgd.crs.web.util.MarriageType;
+import lk.rgd.crs.web.util.TypeOfMarriagePlace;
 import org.springframework.context.ApplicationContext;
 
 import java.util.Date;
@@ -63,7 +64,7 @@ public class MarriageRegistrationServiceTest extends TestCase {
         //adding a marriage notice with minimal requirements
         MarriageRegister notice = getMinimalMarriageNotice(2010012345L, "1234567890", "1234567899");
         //this is submitted by male so  true
-        marriageRegistrationService.addMarriageNotice(notice, true, deoColomboColombo);
+        marriageRegistrationService.addMarriageNotice(notice, MarriageNotice.Type.MALE_NOTICE, deoColomboColombo);
 
         //adding second notice
         //add with same pin numbers 
@@ -96,12 +97,12 @@ public class MarriageRegistrationServiceTest extends TestCase {
 
         //setting mandatory fields
         //this is submitted by male party
-        notice.setBothPartySubmitted(false);
+        notice.setSingleNotice(true);
         notice.setDateOfMaleNotice(new Date());
         notice.setMrDivisionOfMaleNotice(colomboMRDivision);
         notice.setSerialOfMaleNotice(serialMale);
         notice.setTypeOfMarriage(MarriageType.GENERAL);
-        notice.setPlaceOfMarriage(MarriageRegister.PlaceOfMarriage.DS_OFFICE);
+        notice.setTypeOfMarriagePlace(TypeOfMarriagePlace.REGISTRAR_OFFICE);
 
         return notice;
     }

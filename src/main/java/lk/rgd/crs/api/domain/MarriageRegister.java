@@ -1,6 +1,7 @@
 package lk.rgd.crs.api.domain;
 
 import lk.rgd.crs.web.util.MarriageType;
+import lk.rgd.crs.web.util.TypeOfMarriagePlace;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -63,25 +64,34 @@ public class MarriageRegister implements Serializable, Cloneable {
     @Column(name = "STATE", nullable = false)
     private State state;
 
-
-    //marriage register related columns
-    //received date for marriage registry
     @ManyToOne
     @JoinColumn(name = "REG_MRDIVISIONUKEY", nullable = true, insertable = false, updatable = false)
     private MRDivision mrDivision;
 
-    @Column(name = "REG_RECEIVED_DATE", nullable = true)
+    //received date for marriage registry
+    @Column(name = "RECEIVED_DATE", nullable = true)
     @Temporal(value = TemporalType.DATE)
     private Date receivedDate;
 
-    @Column(name = "REG_TYPE_MARRIAGE", nullable = true)
+    @Column(name = "TYPE_MARRIAGE", nullable = true)
     private MarriageType typeOfMarriage;
 
-    @Column(name = "REG_PLACE_MARRIAGE", nullable = true)
+    //TODO : to be removed
+    @Column(name = "PLACE_MARRIAGE", nullable = true)
     private PlaceOfMarriage placeOfMarriage;
+
+    @Column(name = "TYPE_MARRIAGE_PLACE", nullable = true)
+    private TypeOfMarriagePlace typeOfMarriagePlace;
 
     @Column(name = "REG_MIN_PIN")
     private long registrarOrMinisterPIN;
+
+    @Column(length = 10, name = "REG_SERIAL", nullable = true)
+    private String regSerial;
+
+    @Column(name = "MARRIAGE_DATE", nullable = true)
+    @Temporal(value = TemporalType.DATE)
+    private Date dateOfMarriage;
 
     @Column(name = "REG_SUBMITTED_DATE", nullable = true)
     @Temporal(value = TemporalType.DATE)
@@ -93,8 +103,9 @@ public class MarriageRegister implements Serializable, Cloneable {
     @Column(name = "REG_PLACE_MARRIAGE_ENGLISH_LANG", nullable = true)
     private String regPlaceInEnglishLang;
 
-    @Column(length = 10, name = "REG_SERIAL", nullable = true)
-    private String regSerial;
+    @ManyToOne
+    @JoinColumn(name = "REGISTRAR_IDUKEY", nullable = true)
+    private Registrar registrar;
 
     //marriage notice related columns
 
@@ -193,6 +204,7 @@ public class MarriageRegister implements Serializable, Cloneable {
         this.typeOfMarriage = typeOfMarriage;
     }
 
+    //todo: tobe removed
     public PlaceOfMarriage getPlaceOfMarriage() {
         return placeOfMarriage;
     }
@@ -335,6 +347,30 @@ public class MarriageRegister implements Serializable, Cloneable {
 
     public void setRegPlaceInOfficialLang(String regPlaceInOfficialLang) {
         this.regPlaceInOfficialLang = regPlaceInOfficialLang;
+    }
+
+    public Date getDateOfMarriage() {
+        return dateOfMarriage;
+    }
+
+    public void setDateOfMarriage(Date dateOfMarriage) {
+        this.dateOfMarriage = dateOfMarriage;
+    }
+
+    public TypeOfMarriagePlace getTypeOfMarriagePlace() {
+        return typeOfMarriagePlace;
+    }
+
+    public void setTypeOfMarriagePlace(TypeOfMarriagePlace typeOfMarriagePlace) {
+        this.typeOfMarriagePlace = typeOfMarriagePlace;
+    }
+
+    public Registrar getRegistrar() {
+        return registrar;
+    }
+
+    public void setRegistrar(Registrar registrar) {
+        this.registrar = registrar;
     }
 
     public boolean isSingleNotice() {
