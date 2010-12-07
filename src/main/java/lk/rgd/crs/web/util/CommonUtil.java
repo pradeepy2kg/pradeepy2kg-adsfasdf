@@ -11,6 +11,7 @@ import lk.rgd.crs.api.dao.MRDivisionDAO;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 
 /**
  * @author Mahesha
@@ -78,7 +79,7 @@ public class CommonUtil {
         countryList.putAll(countryDAO.getCountries(language));
         raceList.putAll(raceDAO.getRaces(language));
     }
-                           
+
 
     public int findDefaultListValue(Map<Integer, String> divisionList, int divisionId) {
         if (divisionId == 0) {

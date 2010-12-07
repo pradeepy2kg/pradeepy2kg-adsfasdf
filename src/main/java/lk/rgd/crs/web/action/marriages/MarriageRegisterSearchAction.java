@@ -16,10 +16,7 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Chathuranga Withana
@@ -69,6 +66,10 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         this.mrDivisionDAO = mrDivisionDAO;
         this.appParametersDAO = appParametersDAO;
         this.commonUtil = commonUtil;
+
+        districtList = new HashMap<Integer, String>();
+        dsDivisionList = new HashMap<Integer, String>();
+        mrDivisionList = new HashMap<Integer, String>();
 
     }
 
