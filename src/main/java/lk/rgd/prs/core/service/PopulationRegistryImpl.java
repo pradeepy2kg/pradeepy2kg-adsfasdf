@@ -545,6 +545,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
     /**
      * @inheritDoc
      */
+    // TODO change method name
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<Person> getPRSPendingApprovalByLocation(Location location, int pageNo, int noOfRows, User user) {
         if (logger.isDebugEnabled()) {

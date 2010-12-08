@@ -43,6 +43,7 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
     private int pageNo;
     private int noOfRows;
     private long personUKey;
+    private Long searchPin;
     private Long searchTempPin;
     private String language;
     private String searchNic;
@@ -189,6 +190,14 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
 
     public void setPersonUKey(long personUKey) {
         this.personUKey = personUKey;
+    }
+
+    public Long getSearchPin() {
+        return searchPin;
+    }
+
+    public void setSearchPin(Long searchPin) {
+        this.searchPin = searchPin;
     }
 
     public Long getSearchTempPin() {

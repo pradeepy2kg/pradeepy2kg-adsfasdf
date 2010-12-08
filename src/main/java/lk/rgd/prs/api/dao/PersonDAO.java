@@ -143,7 +143,8 @@ public interface PersonDAO {
     public List<Person> findAll();
 
     /**
-     * Returns a list of approval pending persons.i.e. Persons whose status is UNVERIFIED or SEMI_VERIFIED
+     * Returns a list of approval pending persons or PRS registration certificate printing pending persons.
+     * i.e. Persons whose status is UNVERIFIED , SEMI_VERIFIED or VERIFIED
      *
      * @param location the location
      * @param pageNo   the page number for the results required (start from 1)
