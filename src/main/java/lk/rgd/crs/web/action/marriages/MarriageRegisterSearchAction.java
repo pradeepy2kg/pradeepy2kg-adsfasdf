@@ -131,14 +131,14 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
             logger.debug("attempt to search marriage register list by serial number :{} and mr division idUKey : {}",
                 noticeSerialNo, mrDivisionId);
             if (mrDivisionId != 0) {
-                marriageRegisterSearchList = service.getMarriageRegisterPendingApprovalBySerialAndMRDivision
+                marriageRegisterSearchList = service.getMarriageRegisterBySerialAndMRDivision
                     (noticeSerialNo, mrDivisionDAO.getMRDivisionByPK(mrDivisionId), pageNo, noOfRows, true, user);
             }
         } else {
             if (isEmpty(pinOrNic) && noticeSerialNo == null) {
                 if (mrDivisionId == 0) {
                     //default search option use when page is loaded(search all the marriage records in DS division)
-                    marriageRegisterSearchList = service.getMarriageRegisterPendingApprovalByDSDivision
+                    marriageRegisterSearchList = service.getMarriageRegistersByDSDivision
                         (dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, true, user);
                 } else {
                     searchList = WebUtils.populateNoticeList(service.getMarriageNoticePendingApprovalByMRDivision(
@@ -180,7 +180,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         } else {
                 if (mrDivisionId == 0) {
                     //default search option use when page is loaded(search all the marriage records in DS division)
-                    marriageRegisterSearchList = service.getMarriageRegisterPendingApprovalByDSDivision
+                    marriageRegisterSearchList = service.getMarriageRegistersByDSDivision
                         (dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, true, user);
                 } else {
                     marriageRegisterSearchList = service.getMarriageRegisterByMRDivision

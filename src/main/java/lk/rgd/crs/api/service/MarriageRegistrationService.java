@@ -136,7 +136,7 @@ public interface MarriageRegistrationService {
      * @param user         user who performs the task
      * @return
      */
-    public List<MarriageRegister> getMarriageRegisterPendingApprovalBySerialAndMRDivision(long serialNumber,
+    public List<MarriageRegister> getMarriageRegisterBySerialAndMRDivision(long serialNumber,
         MRDivision mrDivision, int pageNumber, int numOfRows, boolean active, User user);
 
     /**
@@ -149,7 +149,7 @@ public interface MarriageRegistrationService {
      * @param user       user who performs the action
      * @return list of marriage register objects in a given DS Division
      */
-    public List<MarriageRegister> getMarriageRegisterPendingApprovalByDSDivision(DSDivision dsDivision, int pageNumber,
+    public List<MarriageRegister> getMarriageRegistersByDSDivision(DSDivision dsDivision, int pageNumber,
         int numOfRows, boolean active, User user);
 
     /**
@@ -164,6 +164,17 @@ public interface MarriageRegistrationService {
      */
     public List<MarriageRegister> getMarriageRegisterByMRDivision(MRDivision mrDivision, int pageNumber,
         int numOfRows, boolean active, User user);
+
+    /**
+     * Returns the active/inactive list of Marriage Registers by PIN or NIC of male or female party
+     *
+     * @param pinOrNic the unique PIN or NIC of male or female party
+     * @param active   include currently active items
+     * @param user     the user initiating the action
+     * @return list of marriage records
+     */
+    public List<MarriageRegister> getMarriageRegisterByPINorNIC(String pinOrNic, boolean active,
+        User user);
 
     /**
      * approving marriage notice by idUKey and notice type
