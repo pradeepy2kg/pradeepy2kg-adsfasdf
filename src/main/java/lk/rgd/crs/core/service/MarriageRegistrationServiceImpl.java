@@ -1,7 +1,9 @@
 package lk.rgd.crs.core.service;
 
+import lk.rgd.ErrorCodes;
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.dao.MarriageRegistrationDAO;
 import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.domain.MarriageNotice;
@@ -245,6 +247,65 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     }
 
     /**
+     * @inheritDoc<br> <h3><i><b>approving process work as follow</i></b> </h3>
+     * <p>
+     * if the <b>notice is single</b> that means (both parties only submit one marriage notice) record <b><u>must</b></u>
+     * be in DATA_ENTRY state and after approving notice change it's state in to NOTICE_APPROVED state that mean register
+     * record is completely approved and editing for that notice is not allowed </p>
+     * <p/>
+     * else
+     * there are two approving cases<br>
+     * <i>(do not care about how many notices are available there can be 1 or 2 notices)</i>
+     * </p>
+     * case 1;
+     * no notice has been approved as an example there are 2 notices are available but nothing has approved a
+     * assume we are trying to approve MALE_NOTICE
+     * in this case this method change state of the marriage notice(register) into MALE_NOTICE_APPROVED and same
+     * same scenario for approving FEMALE_NOTICE(actually vise-versa)
+     * case 2:
+     * one notice has been approved
+     * assume case 1 is completed that mean MALE_NOTICE is approved and register in state MALE_NOTICE approved
+     * and now we are trying to approve FEMALE_NOTICE
+     * in this scenario we change notice state in to NOTICE_APPROVED state directly <b><u>not in to  FEMALE_NOTICE_APPROVED
+     * now notice is fully approved
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void approveMarriageNotice(long idUKey, MarriageNotice.Type type, User user) {
+        //TODO amith check permission for approval
+        logger.debug("attempt to approve marriage notice with idUKey : {} and notice type : {}", idUKey, type);
+        MarriageRegister existingNotice = marriageRegistrationDAO.getByIdUKey(idUKey);
+        if (existingNotice.isSingleNotice()) {
+            //directly change state in to NOTICE_APPROVED
+            if (existingNotice.getState() == MarriageRegister.State.DATA_ENTRY) {
+                existingNotice.setState(MarriageRegister.State.NOTICE_APPROVED);
+            } else {
+                handleException("unable to approve single :" + existingNotice.isSingleNotice() + "notice type:" + type +
+                    ",idUKey" + idUKey, ErrorCodes.INVALID_STATE_FOR_APPROVAL);
+            }
+        } else {
+            if (existingNotice.getState() == MarriageRegister.State.DATA_ENTRY) {
+                //case 1 req must in DATA_ENTRY
+                switch (type) {
+                    case MALE_NOTICE:
+                        existingNotice.setState(MarriageRegister.State.MALE_NOTICE_APPROVED);
+                        break;
+                    case FEMALE_NOTICE:
+                        existingNotice.setState(MarriageRegister.State.FEMALE_NOTICE_APPROVED);
+                }
+            } else if ((existingNotice.getState() == MarriageRegister.State.MALE_NOTICE_APPROVED) ||
+                (existingNotice.getState() == MarriageRegister.State.FEMALE_NOTICE_APPROVED)) {
+                //case 2     change state in to NOTICE_APPROVED
+                existingNotice.setState(MarriageRegister.State.NOTICE_APPROVED);
+            } else {
+                handleException("unable to approve single :" + existingNotice.isSingleNotice() + "notice type:" + type +
+                    ",idUKey" + idUKey, ErrorCodes.INVALID_STATE_FOR_APPROVAL);
+            }
+        }
+        marriageRegistrationDAO.updateMarriageRegister(existingNotice, user);
+        logger.debug("successfully  approved marriage notice with idUKey : {} and notice type : {}", idUKey, type);
+    }
+
+    /**
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
@@ -290,5 +351,10 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         boolean haveAccess = ((maleMrDivision != null && user.isAllowedAccessToMRDSDivision(maleMrDivision.getMrDivisionUKey())) ||
             (femaleMrDivision != null && user.isAllowedAccessToMRDSDivision(femaleMrDivision.getMrDivisionUKey())));
         return haveAccess;
+    }
+
+    private static void handleException(String msg, int errorCode) {
+        logger.error(msg);
+        throw new CRSRuntimeException(msg, errorCode);
     }
 }

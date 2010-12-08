@@ -51,12 +51,12 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     private Map<Integer, String> mrDivisionList;
     private Map<Integer, String> countryList;
     private Map<Integer, String> raceList;
+    private Map<Person.CivilStatus, String> civilStatusMale;
+    private Map<Person.CivilStatus, String> civilStatusFemale;
 
     private int marriageDistrictId;           //use for both male /female and both cases
     private int dsDivisionId;
     private int mrDivisionId;             //use for both male /female and both cases
-    private int marriageDivisionId;                    //todo remove
-    private int marriageDivisionIdFemale; //todo remove
     private int raceIdMale;
     private int raceIdFemale;
     private int countryIdMale;
@@ -74,8 +74,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     private Date noticeReceivedDate;
 
-    private Map<Person.CivilStatus, String> civilStatusMale;
-    private Map<Person.CivilStatus, String> civilStatusFemale;
+
     MarriageType[] marriageType;
     TypeOfMarriagePlace[] typeOfMarriagePlace;
 
@@ -96,6 +95,11 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         countryList = new HashMap<Integer, String>();
     }
 
+    public String selectMarriageNoticeType() {
+        //nothing to do use to load the notice type selection JSP
+        return SUCCESS;
+    }
+
     /**
      * loading marriage notice page
      */
@@ -114,11 +118,6 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         commonUtil.populateCountryAndRaceLists(countryList, raceList, language);
         logger.debug("successfully loaded the page");
         return "pageLoad";
-    }
-
-    public String selectMarriageNoticeType() {
-        //nothing to do use to load the notice type selection JSP
-        return SUCCESS;
     }
 
     /**
@@ -171,29 +170,6 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         return "pageLoad";
     }
 
-    private void populateNoticeForInitEdit(MarriageRegister marriage, MarriageNotice.Type type) {
-        if (secondNotice) {
-            logger.debug("attempt to add second notice for marriage notice idUKey : {}", idUKey);
-            //notice type BOTH cannot have a second notice
-            if (noticeType == MarriageNotice.Type.MALE_NOTICE) {
-                //that means first notice is male notice so second must ne female notice so we have to init female notice page
-                noticeType = MarriageNotice.Type.FEMALE_NOTICE;
-            } else {
-                noticeType = MarriageNotice.Type.MALE_NOTICE;
-            }
-        } else {
-            logger.debug("init edit page for notice idUKey : {}", idUKey);
-            if (type == MarriageNotice.Type.BOTH_NOTICE || type == MarriageNotice.Type.MALE_NOTICE) {
-                //populate male notice
-                serialNumber = marriage.getSerialOfMaleNotice();
-                noticeReceivedDate = marriage.getDateOfMaleNotice();
-            } else {
-                //populate female notice
-                serialNumber = marriage.getSerialOfFemaleNotice();
-                noticeReceivedDate = marriage.getDateOfFemaleNotice();
-            }
-        }
-    }
 
     /**
      * editing(updating) a marriage notice (register)
@@ -215,34 +191,12 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         return SUCCESS;
     }
 
-    private void populateNoticeForEdit(MarriageRegister marriageRegister, MarriageRegister existing, MarriageNotice.Type type) {
-        switch (type) {
-            case BOTH_NOTICE: {
-                existing.setFemale(marriageRegister.getFemale());
-            }
-            case MALE_NOTICE: {
-                existing.setMale(marriageRegister.getMale());//BOTH also executing this block
-                existing.setSerialOfMaleNotice(serialNumber);
-                existing.setDateOfMaleNotice(noticeReceivedDate);
-                existing.setMrDivisionOfMaleNotice(marriageRegister.getMrDivisionOfMaleNotice());
-            }
-            break;
-            case FEMALE_NOTICE: {
-                existing.setFemale(marriageRegister.getFemale());
-                existing.setSerialOfFemaleNotice(serialNumber);
-                existing.setDateOfFemaleNotice(noticeReceivedDate);
-                existing.setMrDivisionOfFemaleNotice(marriageRegister.getMrDivisionOfFemaleNotice());
-            }
-        }
-    }
-
     /**
      * special case submit notices to two locations and second notice about to be add(actually updating same record)
      * if isBoth submitted is true there cannot be a second notice
      * else if existing notice is male second is female vise versa
      */
     public String addSecondNotice() {
-        //todo check process
         logger.debug("attempt to add second notice : idUKey of the record : {}", idUKey);
         MarriageRegister existingNotice = marriageRegistrationService.getByIdUKey(idUKey, user);
         if (existingNotice != null) {
@@ -268,28 +222,6 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     }
 
     /**
-
-     */
-
-    private void populateNoticeForAddingSecondNotice(MarriageRegister noticeExisting, MarriageRegister noticeEdited) {
-        //BOTH type does not have a second notice  so we are not handling it
-        MRDivision mr = mrDivisionDAO.getMRDivisionByPK(mrDivisionId);
-        if (noticeType == MarriageNotice.Type.MALE_NOTICE) {
-            noticeExisting.setSerialOfMaleNotice(serialNumber);
-            noticeExisting.setDateOfMaleNotice(noticeReceivedDate);
-            noticeExisting.setMale(noticeEdited.getMale());
-            noticeExisting.setMrDivisionOfMaleNotice(mr);
-        } else {
-            noticeExisting.setSerialOfFemaleNotice(serialNumber);
-            noticeExisting.setDateOfFemaleNotice(noticeReceivedDate);
-            noticeExisting.setFemale(noticeEdited.getFemale());
-            noticeExisting.setMrDivisionOfMaleNotice(mr);
-        }
-        noticeExisting.setTypeOfMarriage(noticeEdited.getTypeOfMarriage());
-    }
-
-
-    /**
      * deleting a marriage notice
      * notes:
      * when removing a notice(have 2 notices) it just updating the data row
@@ -304,6 +236,28 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             addActionError("error.delete.notice");
             return ERROR;
         }
+        return SUCCESS;
+    }
+
+    /**
+     * action method use to approve a notice this could be male notice or female notice or a single notice type(BOTH)
+     */
+    public String approveMarriageNotice() {
+        logger.debug("approving marriage notice idUKey : {} and notice type : {}", idUKey, noticeType);
+        try {
+            marriageRegistrationService.approveMarriageNotice(idUKey, noticeType, user);
+            addActionMessage(getText("massage.approve.success", new String[]{Long.toString(idUKey), noticeType.toString()}));
+            logger.debug("successfully approved marriage notice idUKey : {} and notice type :{ }", idUKey, noticeType);
+        } catch (CRSRuntimeException e) {
+            //error happens when approving marriage notice
+            addActionError(getText("error.approval.failed", new String[]{Long.toString(idUKey), noticeType.toString()}));
+            //TODO redirect to list page with action error and remove this population of lists
+            commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, marriageDistrictId,
+                dsDivisionId, mrDivisionId, "Marriage", user, language);
+            return ERROR;
+        }
+        commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, marriageDistrictId, dsDivisionId,
+            mrDivisionId, "Marriage", user, language);
         return SUCCESS;
     }
 
@@ -330,15 +284,6 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         return "pageLoad";
     }
 
-    private Map<Person.CivilStatus, String> populateCivilStatus() {
-        Map<Person.CivilStatus, String> civilStatus = new HashMap<Person.CivilStatus, String>();
-        civilStatus.put(Person.CivilStatus.NEVER_MARRIED, CivilStatusUtil.getCivilStatusInAllLanguages(Person.CivilStatus.NEVER_MARRIED));
-        civilStatus.put(Person.CivilStatus.DIVORCED, CivilStatusUtil.getCivilStatusInAllLanguages(Person.CivilStatus.DIVORCED));
-        civilStatus.put(Person.CivilStatus.WIDOWED, CivilStatusUtil.getCivilStatusInAllLanguages(Person.CivilStatus.WIDOWED));
-        civilStatus.put(Person.CivilStatus.ANNULLED, CivilStatusUtil.getCivilStatusInAllLanguages(Person.CivilStatus.ANNULLED));
-        return civilStatus;
-    }
-
     public String registerMarriage() {
         MarriageRegister marriageRegister = marriageRegistrationService.getByIdUKey(marriage.getIdUKey(), user);
         if (marriageRegister == null) {
@@ -348,6 +293,88 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         populateRegistrationDetails(marriageRegister);
         marriageRegistrationService.updateMarriageRegister(marriageRegister, user);
         return "success";
+    }
+
+    private Map<Person.CivilStatus, String> populateCivilStatus() {
+        Map<Person.CivilStatus, String> civilStatus = new HashMap<Person.CivilStatus, String>();
+        civilStatus.put(Person.CivilStatus.NEVER_MARRIED, CivilStatusUtil.getCivilStatusInAllLanguages(Person.CivilStatus.NEVER_MARRIED));
+        civilStatus.put(Person.CivilStatus.DIVORCED, CivilStatusUtil.getCivilStatusInAllLanguages(Person.CivilStatus.DIVORCED));
+        civilStatus.put(Person.CivilStatus.WIDOWED, CivilStatusUtil.getCivilStatusInAllLanguages(Person.CivilStatus.WIDOWED));
+        civilStatus.put(Person.CivilStatus.ANNULLED, CivilStatusUtil.getCivilStatusInAllLanguages(Person.CivilStatus.ANNULLED));
+        return civilStatus;
+    }
+
+    /**
+     * this private method populate existing marriage notice record when adding second notice
+     * if second notice is male updating marriage notice with new male notice related data and vise-versa
+     * note:notice type "BOTH" doesn't have second notice so this method does not handle that senario
+     */
+    private void populateNoticeForAddingSecondNotice(MarriageRegister noticeExisting, MarriageRegister noticeEdited) {
+        //BOTH type does not have a second notice  so we are not handling it
+        MRDivision mr = mrDivisionDAO.getMRDivisionByPK(mrDivisionId);
+        if (noticeType == MarriageNotice.Type.MALE_NOTICE) {
+            noticeExisting.setSerialOfMaleNotice(serialNumber);
+            noticeExisting.setDateOfMaleNotice(noticeReceivedDate);
+            noticeExisting.setMale(noticeEdited.getMale());
+            noticeExisting.setMrDivisionOfMaleNotice(mr);
+        } else {
+            noticeExisting.setSerialOfFemaleNotice(serialNumber);
+            noticeExisting.setDateOfFemaleNotice(noticeReceivedDate);
+            noticeExisting.setFemale(noticeEdited.getFemale());
+            noticeExisting.setMrDivisionOfMaleNotice(mr);
+        }
+        noticeExisting.setTypeOfMarriage(noticeEdited.getTypeOfMarriage());
+    }
+
+    /**
+     * this private method populate notice(marriage register object)for edit mode
+     * if editing notice is female notice we only chane female notice related data and vise versa
+     * the special case notice type "BOTH" including both male and female party information and holds
+     * male notice related data as well
+     */
+    private void populateNoticeForEdit(MarriageRegister marriageRegister, MarriageRegister existing, MarriageNotice.Type type) {
+        switch (type) {
+            case BOTH_NOTICE: {
+                existing.setFemale(marriageRegister.getFemale());
+            }
+            case MALE_NOTICE: {
+                existing.setMale(marriageRegister.getMale());//BOTH also executing this block
+                existing.setSerialOfMaleNotice(serialNumber);
+                existing.setDateOfMaleNotice(noticeReceivedDate);
+                existing.setMrDivisionOfMaleNotice(marriageRegister.getMrDivisionOfMaleNotice());
+            }
+            break;
+            case FEMALE_NOTICE: {
+                existing.setFemale(marriageRegister.getFemale());
+                existing.setSerialOfFemaleNotice(serialNumber);
+                existing.setDateOfFemaleNotice(noticeReceivedDate);
+                existing.setMrDivisionOfFemaleNotice(marriageRegister.getMrDivisionOfFemaleNotice());
+            }
+        }
+    }
+
+    private void populateNoticeForInitEdit(MarriageRegister marriage, MarriageNotice.Type type) {
+        if (secondNotice) {
+            logger.debug("attempt to add second notice for marriage notice idUKey : {}", idUKey);
+            //notice type BOTH cannot have a second notice
+            if (noticeType == MarriageNotice.Type.MALE_NOTICE) {
+                //that means first notice is male notice so second must ne female notice so we have to init female notice page
+                noticeType = MarriageNotice.Type.FEMALE_NOTICE;
+            } else {
+                noticeType = MarriageNotice.Type.MALE_NOTICE;
+            }
+        } else {
+            logger.debug("init edit page for notice idUKey : {}", idUKey);
+            if (type == MarriageNotice.Type.BOTH_NOTICE || type == MarriageNotice.Type.MALE_NOTICE) {
+                //populate male notice
+                serialNumber = marriage.getSerialOfMaleNotice();
+                noticeReceivedDate = marriage.getDateOfMaleNotice();
+            } else {
+                //populate female notice
+                serialNumber = marriage.getSerialOfFemaleNotice();
+                noticeReceivedDate = marriage.getDateOfFemaleNotice();
+            }
+        }
     }
 
     private void populateRegistrationDetails(MarriageRegister marriageRegister) {
@@ -487,22 +514,6 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     public void setNoticeReceivedDate(Date noticeReceivedDate) {
         this.noticeReceivedDate = noticeReceivedDate;
-    }
-
-    public int getMarriageDivisionIdFemale() {
-        return marriageDivisionIdFemale;
-    }
-
-    public void setMarriageDivisionIdFemale(int marriageDivisionIdFemale) {
-        this.marriageDivisionIdFemale = marriageDivisionIdFemale;
-    }
-
-    public int getMarriageDivisionId() {
-        return marriageDivisionId;
-    }
-
-    public void setMarriageDivisionId(int marriageDivisionId) {
-        this.marriageDivisionId = marriageDivisionId;
     }
 
     public boolean isMale() {

@@ -152,7 +152,7 @@ public interface MarriageRegistrationService {
     public List<MarriageRegister> getMarriageRegisterPendingApprovalByDSDivision(DSDivision dsDivision, int pageNumber,
         int numOfRows, boolean active, User user);
 
-     /**
+    /**
      * get marriage registration list by given MRDivision
      *
      * @param mrDivision MRDivision
@@ -164,4 +164,13 @@ public interface MarriageRegistrationService {
      */
     public List<MarriageRegister> getMarriageRegisterByMRDivision(MRDivision mrDivision, int pageNumber,
         int numOfRows, boolean active, User user);
+
+    /**
+     * approving marriage notice by idUKey and notice type
+     *
+     * @param idUKey idUKey of the marriage notice
+     * @param type   type of the notice
+     * @param user   user who performing the action
+     */
+    public void approveMarriageNotice(long idUKey, MarriageNotice.Type type, User user);
 }
