@@ -42,9 +42,6 @@
 <s:actionerror/>
 <div class="marriage-notice-outer">
 <s:form action="eprMarriageRegistration" method="post">
-<s:hidden name="marriage.idUKey"/>
-<%--section for official usage--%>
-<%--type of marriage--%>
 <table border="1" style="margin-top:1px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
        cellpadding="5px">
     <caption></caption>
@@ -75,7 +72,7 @@
                     <br>அடையாள எண் <br>Identification number of Registrar/Minister</span></label>
         </td>
         <td align="center" colspan="3">
-            <s:textfield name="marriage.regPIN" id="regPIN" maxLength="10"/><img
+            <s:textfield name="marriage.registrarOrMinisterPIN" id="regPIN" maxLength="10"/><img
                     src="<s:url value="/images/search-father.png" />"
                     style="vertical-align:middle; margin-left:20px;" id="registrar_lookup">
         </td>
@@ -86,7 +83,7 @@
             Type of Marriage Place<br>
         </td>
         <td colspan="8">
-            <s:radio name="marriage.placeOfMarriage" list="typeOfMarriagePlace" listValue="type" theme="horizontal"/>
+            <s:radio name="marriage.typeOfMarriagePlace" list="typeOfMarriagePlace" listValue="type" theme="horizontal"/>
         </td>
     </tr>
     <tr>
@@ -122,8 +119,7 @@
         </label>
         </td>
         <td colspan="8">
-            <s:select id="mrDivisionId" name="marriageDivisionId" list="mrDivisionList"
-                      value="marriageDivisionId" headerKey="1"
+            <s:select id="mrDivisionId" name="mrDivisionId" list="mrDivisionList" value="mrDivisionId" headerKey="1"
                       cssStyle="width:98.5%; width:240px;"/>
         </td>
     </tr>
@@ -385,10 +381,10 @@
             Resident Address
         </td>
         <td>
-            <s:textarea name="marriage.male.residentAddressMale" id="address_male" cssStyle="width:98.2%;"/>
+            <s:textarea name="marriage.male.residentAddressMaleInOfficialLang" id="address_male" cssStyle="width:98.2%;"/>
         </td>
         <td>
-            <s:textarea name="marriage.female.residentAddressFemale" id="address_female" cssStyle="width:98.2%;"/>
+            <s:textarea name="marriage.female.residentAddressFemaleInOfficialLang" id="address_female" cssStyle="width:98.2%;"/>
         </td>
     </tr>
     </tbody>
