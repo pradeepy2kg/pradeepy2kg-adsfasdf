@@ -47,6 +47,7 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
     private Registrar registrar;
     private Assignment assignment;
     private Assignment.Type type;
+    private int[] mrgType;
 
     private boolean state;
 
@@ -188,18 +189,40 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
 
                 assignment.setRegistrar(reg);
                 //setting correct division type
-                if (type.equals(Assignment.Type.BIRTH))
+                if (type.equals(Assignment.Type.BIRTH)) {
                     assignment.setBirthDivision(bdDivisionDAO.getBDDivisionByPK(divisionId));
-                if (type.equals(Assignment.Type.DEATH))
+                }
+                if (type.equals(Assignment.Type.DEATH)) {
                     assignment.setDeathDivision(bdDivisionDAO.getBDDivisionByPK(divisionId));
+                }
                 if (type.equals(Assignment.Type.GENERAL_MARRIAGE) || (type.equals(Assignment.Type.KANDYAN_MARRIAGE)) ||
-                    (type.equals(Assignment.Type.MUSLIM_MARRIAGE)))
+                    (type.equals(Assignment.Type.MUSLIM_MARRIAGE))) {
                     assignment.setMarriageDivision(mrDivisionDAO.getMRDivisionByPK(divisionId));
-
-                assignment.setType(type);
-                service.addAssignment(assignment, user);
-                assignment = null;
-                addActionMessage("assignment.saved.successfully");
+                }
+                if (mrgType.length > 0) {
+                    int i = 0;
+                    while (i < mrgType.length) {
+                        if (mrgType[i] == Assignment.Type.GENERAL_MARRIAGE.ordinal()) {
+                            assignment.setType(Assignment.Type.GENERAL_MARRIAGE);
+                            service.addAssignment(assignment, user);
+                        } else if (mrgType[i] == Assignment.Type.KANDYAN_MARRIAGE.ordinal()) {
+                            assignment.setType(Assignment.Type.KANDYAN_MARRIAGE);
+                            service.addAssignment(assignment, user);
+                        } else if (mrgType[i] == Assignment.Type.MUSLIM_MARRIAGE.ordinal()) {
+                            assignment.setType(Assignment.Type.MUSLIM_MARRIAGE);
+                            service.addAssignment(assignment, user);
+                        }
+                        assignment.setAssignmentUKey(0);
+                        i++;
+                    }
+                    assignment = null;
+                    addActionMessage("assignment.saved.successfully");
+                } else {
+                    assignment.setType(type);
+                    service.addAssignment(assignment, user);
+                    assignment = null;
+                    addActionMessage("assignment.saved.successfully");
+                }
             }
         } else {
             logger.debug("attempt to edit a assignment with assignmentUKey : {}", assignmentUKey);
@@ -629,5 +652,14 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
 
     public void setRegistrarName(String registrarName) {
         this.registrarName = WebUtils.filterBlanks(registrarName);
+    }
+
+    public int[] getMrgType() {
+        return mrgType;
+    }
+
+    public void setMrgType(int[] mrgType) {
+        this.mrgType = mrgType;
+        this.type = Assignment.Type.GENERAL_MARRIAGE;
     }
 }

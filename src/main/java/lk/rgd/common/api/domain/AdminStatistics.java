@@ -8,9 +8,8 @@ import java.util.*;
  * Represents statistics of the system
  *
  * @author Shan Chathuranga
- * Date: Dec 3, 2010
- * Time: 1:42:22 PM
- * 
+ *         Date: Dec 3, 2010
+ *         Time: 1:42:22 PM
  */
 public class AdminStatistics {
 
@@ -38,7 +37,6 @@ public class AdminStatistics {
     }
 
     /**
-     *
      * @return List of all the inactive users
      */
     public List<User> getAllInactiveUsers() {
@@ -69,7 +67,6 @@ public class AdminStatistics {
     }
 
     /**
-     *
      * @return List of all the password changed users
      */
     public List<User> getAllPasswordResetting() {
@@ -100,7 +97,6 @@ public class AdminStatistics {
     }
 
     /**
-     *
      * @return List of all the newly created users
      */
     public List<User> getAllUserCreations() {
