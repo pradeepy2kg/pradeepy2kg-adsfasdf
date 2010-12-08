@@ -341,6 +341,7 @@ public class Menu {
         adrMarriageLink.putAll(deoMarriageLink);
         adrMarriageLink.put("eprMarriageNoticeSearchInit.do", new Link("menu.marriage.notice.search", "/ecivil/marriages/", "eprMarriageNoticeSearchInit.do", Permission.SEARCH_MARRIAGE));
         adrMarriageLink.put("eprMarriageRegisterSearchInit.do", new Link("menu.marriage.register.search", "/ecivil/marriages/", "eprMarriageRegisterSearchInit.do", Permission.SEARCH_MARRIAGE));
+        adrMarriageLink.put("eprApproveMarriageNotice.do", new Link(null, "/ecivil/marriages/", "eprApproveMarriageNotice.do", Permission.SEARCH_MARRIAGE));  //TODO change permission to approve
 
         //arg marriage links
         argMarriageLink.putAll(adrMarriageLink);

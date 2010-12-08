@@ -46,7 +46,10 @@ public class MarriageRegister implements Serializable, Cloneable {
 
     public enum State {
         DATA_ENTRY,
-        REG_DATA_ENTRY
+        MALE_NOTICE_APPROVED,  //approve only male notice   still able to edit female notice  (only single notice false)
+        FEMALE_NOTICE_APPROVED,    //approve female notice only still able to edit male notice (only single notice false)
+        NOTICE_APPROVED,   //change to this state when single notice true or when approving second notice(1 st notice is already approved)
+        REG_DATA_ENTRY,
     }
 
     public enum PlaceOfMarriage {
@@ -205,6 +208,7 @@ public class MarriageRegister implements Serializable, Cloneable {
     }
 
     //todo: tobe removed
+
     public PlaceOfMarriage getPlaceOfMarriage() {
         return placeOfMarriage;
     }

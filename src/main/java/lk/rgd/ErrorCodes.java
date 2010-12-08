@@ -90,4 +90,5 @@ public class ErrorCodes {
 
     //marriage registration related error codes 6001-6999
     public static final int MR_INCOMPLETE_OBJECT = 6001;
+    public static final int INVALID_STATE_FOR_APPROVAL = 6002;
 }

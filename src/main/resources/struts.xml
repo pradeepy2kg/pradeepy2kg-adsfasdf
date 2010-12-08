@@ -1209,7 +1209,8 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
-        <action name="eprMarriageRegisterSearchInit" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
+        <action name="eprMarriageRegisterSearchInit"
+                class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
                 method="marriageRegisterSearchInit">
             <result type="tiles" name="success">epr.marriageRegisterSearchInit</result>
         </action>
@@ -1222,6 +1223,12 @@
         <action name="eprSelectNoticeType" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
                 method="selectMarriageNoticeType">
             <result type="tiles" name="success">epr.marriageNoticeTypeSelect</result>
+        </action>
+
+        <action name="eprApproveMarriageNotice" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
+                method="approveMarriageNotice">
+            <result type="redirectAction" name="success">eprMarriageNoticeSearchInit</result>
+            <result type="redirectAction" name="error">eprMarriageNoticeSearchInit</result>
         </action>
     </package>
 </struts>

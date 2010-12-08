@@ -21,7 +21,7 @@ import java.util.Calendar;
 
 /**
  * @author Chathuranga Withana
- * @authar amith jayasekara
+ * @author amith jayasekara
  */
 public class DeathRegistrationServiceTest extends TestCase {
 

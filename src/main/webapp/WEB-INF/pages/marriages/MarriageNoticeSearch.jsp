@@ -297,8 +297,9 @@
                             </s:a>
                         </td>
                         <td align="center">
-                            <s:url id="approveSelected">
+                            <s:url id="approveSelected" action="eprApproveMarriageNotice.do">
                                 <s:param name="idUKey" value="idUKey"/>
+                                <s:param name="noticeType" value="type"/>
                             </s:url>
                             <s:a href="%{approveSelected}" title="%{getText('approveToolTip.label')}">
                                 <img src="<s:url value='/images/approve.gif'/>" width="25" height="25" border="none"/>
@@ -393,8 +394,9 @@
                             </s:a>
                         </td>
                         <td align="center">
-                            <s:url id="approveSelected">
+                            <s:url id="approveSelected" action="eprApproveMarriageNotice.do">
                                 <s:param name="idUKey" value="idUKey"/>
+                                <s:param name="noticeType" value="type"/>
                             </s:url>
                             <s:a href="%{approveSelected}" title="%{getText('approveToolTip.label')}">
                                 <img src="<s:url value='/images/approve.gif'/>" width="25" height="25" border="none"/>
