@@ -79,29 +79,8 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     public String marriageNoticeSearchInit() {
         logger.debug("Marriage notice search page loaded");
         populateBasicLists();
+        getApprovalPendingNotices();
 
-        pageNo += 1;
-        noOfRows = appParametersDAO.getIntParameter(MR_APPROVAL_ROWS_PER_PAGE);
-
-        if (noticeSerialNo != null) {
-            if (mrDivisionId != 0) {
-                searchList = WebUtils.populateNoticeList(service.getMarriageNoticePendingApprovalByMRDivisionAndSerial(
-                    mrDivisionDAO.getMRDivisionByPK(mrDivisionId), noticeSerialNo, user));
-            }
-        } else {
-            if (isEmpty(pinOrNic) && noticeSerialNo == null) {
-                if (mrDivisionId == 0) {
-                    searchList = WebUtils.populateNoticeList(service.getMarriageNoticePendingApprovalByDSDivision(
-                        dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, true, user));
-                } else {
-                    searchList = WebUtils.populateNoticeList(service.getMarriageNoticePendingApprovalByMRDivision(
-                        mrDivisionDAO.getMRDivisionByPK(mrDivisionId), pageNo, noOfRows, true, user));
-                }
-            } else {
-                searchList = WebUtils.populateNoticeList(
-                    service.getMarriageNoticePendingApprovalByPINorNIC(pinOrNic, true, user));
-            }
-        }
         if (searchList.size() == 0) {
             addActionMessage(getText("noItemMsg.label"));
         }
@@ -178,19 +157,47 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         if (noticeSerialNo != null) {
             //TODO: search by serial number, clear tabs
         } else {
-                if (mrDivisionId == 0) {
-                    //default search option use when page is loaded(search all the marriage records in DS division)
-                    marriageRegisterSearchList = service.getMarriageRegistersByDSDivision
-                        (dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, true, user);
-                } else {
-                    marriageRegisterSearchList = service.getMarriageRegisterByMRDivision
-                        (mrDivisionDAO.getMRDivisionByPK(mrDivisionId), pageNo, noOfRows, true, user);
-                }
+            if (mrDivisionId == 0) {
+                //default search option use when page is loaded(search all the marriage records in DS division)
+                marriageRegisterSearchList = service.getMarriageRegistersByDSDivision
+                    (dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, true, user);
+            } else {
+                marriageRegisterSearchList = service.getMarriageRegisterByMRDivision
+                    (mrDivisionDAO.getMRDivisionByPK(mrDivisionId), pageNo, noOfRows, true, user);
+            }
         }
         if (marriageRegisterSearchList.size() == 0) {
             addActionMessage(getText("noItemMsg.label"));
         }
         return SUCCESS;
+    }
+
+    /**
+     * This method used to load approval pending Marriage Notices list
+     */
+    private void getApprovalPendingNotices() {
+        pageNo += 1;
+        noOfRows = appParametersDAO.getIntParameter(MR_APPROVAL_ROWS_PER_PAGE);
+
+        if (noticeSerialNo != null) {
+            if (mrDivisionId != 0) {
+                searchList = WebUtils.populateNoticeList(service.getMarriageNoticePendingApprovalByMRDivisionAndSerial(
+                    mrDivisionDAO.getMRDivisionByPK(mrDivisionId), noticeSerialNo, user));
+            }
+        } else {
+            if (isEmpty(pinOrNic) && noticeSerialNo == null) {
+                if (mrDivisionId == 0) {
+                    searchList = WebUtils.populateNoticeList(service.getMarriageNoticePendingApprovalByDSDivision(
+                        dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, true, user));
+                } else {
+                    searchList = WebUtils.populateNoticeList(service.getMarriageNoticePendingApprovalByMRDivision(
+                        mrDivisionDAO.getMRDivisionByPK(mrDivisionId), pageNo, noOfRows, true, user));
+                }
+            } else {
+                searchList = WebUtils.populateNoticeList(
+                    service.getMarriageNoticePendingApprovalByPINorNIC(pinOrNic, true, user));
+            }
+        }
     }
 
     /**
