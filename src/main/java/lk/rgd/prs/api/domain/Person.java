@@ -37,7 +37,9 @@ public class Person implements Serializable {
         UNVERIFIED,      /** 0 - Record may be inaccurate - no PIN or NIC */
         SEMI_VERIFIED,   /** 1 - Record may be inaccurate - NIC is available */
         VERIFIED,        /** 2 - Record is confirmed to be accurate - PIN is available */
-        CANCELLED        /** 3 - Record is is cancelled as a duplicate or error */
+        CERT_GENERATED,  /** 3 - PRS certificate is printed */
+        CANCELLED,       /** 4 - Record is cancelled as a duplicate or error */
+        DELETED          /** 5 - Record is deleted before approval by ADR or higher */
     }
 
     /**
