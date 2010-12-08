@@ -79,7 +79,7 @@ public class AssignmentUtill {
         } else {
             logger.error("Invalid language : {}", lang);
             throw new IllegalArgumentException("Invalid language : " + lang);
-            //invalide code
+            //invalid language code
         }
         logger.error("Invalid type code : {}", code);
         throw new IllegalArgumentException("Invalid gender code : {}");

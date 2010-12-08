@@ -32,6 +32,7 @@ public final class Permission {
     public static final int EDIT_MARRIAGE = 27;
     public static final int SEARCH_MARRIAGE = 28;
     public static final int PRINT_MARRIAGE_CERTIFICATE = 29;
+    public static final int APPROVE_MARRIAGE = 30;
 
     // permission for PRS
     public static final int PRS_ADD_PERSON = 50;

@@ -74,7 +74,7 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
         Query q = em.createNamedQuery("filter.by.dsDivision.and.state").
             setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("dsDivision", dsDivision);
-        q.setParameter("state", state);
+//        q.setParameter("state", state);
         q.setParameter("active", active);
         return q.getResultList();
     }
