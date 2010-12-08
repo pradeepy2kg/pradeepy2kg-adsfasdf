@@ -17,9 +17,9 @@ import java.util.Date;
 @NamedQueries({
     // TODO review this query
     @NamedQuery(name = "filter.by.dsDivision.and.state", query = "SELECT mr FROM MarriageRegister mr " +
-        "WHERE mr.mrDivisionOfMaleNotice IN (SELECT m FROM MRDivision m WHERE (m.dsDivision = mr.mrDivisionOfMaleNotice.dsDivision AND mr.mrDivisionOfMaleNotice.dsDivision = :dsDivision)) " +
+        "WHERE mr.state = 0 AND mr.lifeCycleInfo.activeRecord = :active AND mr.mrDivisionOfMaleNotice IN (SELECT m FROM MRDivision m WHERE (m.dsDivision = mr.mrDivisionOfMaleNotice.dsDivision AND mr.mrDivisionOfMaleNotice.dsDivision = :dsDivision)) " +
         "OR mr.mrDivisionOfFemaleNotice IN (SELECT m FROM MRDivision m WHERE (m.dsDivision = mr.mrDivisionOfFemaleNotice.dsDivision AND mr.mrDivisionOfFemaleNotice.dsDivision = :dsDivision))" +
-        "AND mr.state = :state AND mr.lifeCycleInfo.activeRecord = :active ORDER BY mr.idUKey DESC "),
+        "ORDER BY mr.idUKey DESC "),
 
     @NamedQuery(name = "filter.by.mrDivision.and.state", query = "SELECT mr FROM MarriageRegister mr " +
         "WHERE ((mr.mrDivisionOfMaleNotice IS NOT NULL AND mr.mrDivisionOfMaleNotice = :mrDivision) " +
@@ -45,7 +45,7 @@ import java.util.Date;
 public class MarriageRegister implements Serializable, Cloneable {
 
     public enum State {
-        DATA_ENTRY,
+        DATA_ENTRY,    //0
         MALE_NOTICE_APPROVED,  //approve only male notice   still able to edit female notice  (only single notice false)
         FEMALE_NOTICE_APPROVED,    //approve female notice only still able to edit male notice (only single notice false)
         NOTICE_APPROVED,   //change to this state when single notice true or when approving second notice(1 st notice is already approved)
