@@ -53,5 +53,12 @@ public class WebConstants {
     public static final String CERTIFICATE_ID = "certificateId";
     public static final String PERSON_ID = "personId";
     public static final String SEARCH_USERS_LIST = "viewUsers";
-    
+
+    //to indicate time durations for statistics
+    public static final int WEEK = 1;
+    public static final int MONTH = 2;
+    public static final int YEAR = 3;
+    public static final long DAY_IN_MILLISECONDS = 1000 * 60 * 60 * 24;
+   
+
 }
