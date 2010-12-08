@@ -146,49 +146,7 @@
 </script>
 <s:actionerror cssStyle="color:red;"/>
 
-<s:actionmessage name="registrarFound" cssStyle="color:blue;font-size:10pt"/><s:property
-        value="%{#session.exsisting_registrar.fullNameInOfficialLanguage}"/>
-
 <s:set name="indirect" value="directAssignment"/>
-<%--<s:if test="directAssignment>0">
-
-    <form action="eprSearchRegistrarByPin.do" method="post">
-        <table>
-            <caption/>
-            <col width="300px"/>
-            <col width="200px"/>
-            <col/>
-            <col/>
-            <tbody>
-            <tr>
-                <td>
-                    <s:if test="%{(#session.exsisting_registrar == null  &&  directAssignment!=0)}">
-                        <s:textfield id="registrarPin" name="registrarPin" value="%{registrarPin}"/>
-                    </s:if>
-                    <s:else>
-                    </s:else>
-                </td>
-                <td>
-                    <div id="search_button" class="button">
-                        <s:if test="%{#session.exsisting_registrar == null  &&  directAssignment!=0}">
-                            <s:submit name="refresh" value="%{getText('label.button.searchr')}"
-                                      onclick="javascript:searchButtonClick();"/>
-                        </s:if>
-                        <s:else>
-
-                        </s:else>
-                    </div>
-                </td>
-                <td>
-                    <s:fielderror name="noRegistrar" cssStyle="color:red;font-size:10pt" id="noregistrarError"/>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </form>
-    --%><%--    </fieldset>--%><%--
-
-</s:if>--%>
 
 <s:form action="eprAssignmentAdd.do" method="post" onsubmit="javascript:return validateForm()">
 
@@ -272,9 +230,11 @@
                                 name="assignmentType" cssStyle="width:240px; margin-left:5px;" id="type"/></td>
                     </s:if>
                     <s:if test="%{assignmentType == 2}">
-                        <td colspan="1" align=left><s:select
-                                list="#@java.util.HashMap@{'2':getText('label.type.marriage.general'),'3':getText('label.type.marriage.kandyan'),'4':getText('label.type.marriage.muslim')}"
-                                name="assignmentType" cssStyle="width:240px; margin-left:5px;" id="type"/></td>
+                        <td colspan="1" align=left>
+                            <s:checkboxlist
+                                    list="#@java.util.HashMap@{'2':getText('label.type.marriage.general'),'3':getText('label.type.marriage.kandyan'),'4':getText('label.type.marriage.muslim')}"
+                                    name="mrgType" cssStyle="width:240px; margin-left:5px;" id="type"/>
+                        </td>
                     </s:if>
                 </s:else>
             </tr>
