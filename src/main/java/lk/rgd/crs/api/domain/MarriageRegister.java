@@ -85,7 +85,7 @@ public class MarriageRegister implements Serializable, Cloneable {
     private State state;
 
     @ManyToOne
-    @JoinColumn(name = "REG_MRDIVISIONUKEY", nullable = true, insertable = false, updatable = false)
+    @JoinColumn(name = "REG_MRDIVISIONUKEY", nullable = true)
     private MRDivision mrDivision;
 
     //received date for marriage registry
@@ -116,6 +116,12 @@ public class MarriageRegister implements Serializable, Cloneable {
     @Column(name = "REG_SUBMITTED_DATE", nullable = true)
     @Temporal(value = TemporalType.DATE)
     private Date registrationDate;
+
+    @Column(name = "REGISTRAR_NAME_OFFICIAL_LANG", nullable = true)
+    private String regNameInOfficialLang;
+
+    @Column(name = "REGISTRAR_NAME_ENGLISH_LANG", nullable = true)
+    private String regNameInEnglishLang;
 
     @Column(name = "REG_PLACE_MARRIAGE_OFFICIAL_LANG", nullable = true)
     private String regPlaceInOfficialLang;
@@ -400,5 +406,21 @@ public class MarriageRegister implements Serializable, Cloneable {
 
     public void setSingleNotice(boolean singleNotice) {
         this.singleNotice = singleNotice;
+    }
+
+    public String getRegNameInOfficialLang() {
+        return regNameInOfficialLang;
+    }
+
+    public void setRegNameInOfficialLang(String regNameInOfficialLang) {
+        this.regNameInOfficialLang = regNameInOfficialLang;
+    }
+
+    public String getRegNameInEnglishLang() {
+        return regNameInEnglishLang;
+    }
+
+    public void setRegNameInEnglishLang(String regNameInEnglishLang) {
+        this.regNameInEnglishLang = regNameInEnglishLang;
     }
 }

@@ -295,6 +295,20 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         return "success";
     }
 
+    private void populateRegistrationDetails(MarriageRegister marriageRegister) {
+        marriageRegister.setDateOfMarriage(marriage.getDateOfMarriage());
+        marriageRegister.setRegistrarOrMinisterPIN(marriage.getRegistrarOrMinisterPIN());
+        marriageRegister.setTypeOfMarriagePlace(marriage.getTypeOfMarriagePlace());
+        logger.debug("find MR division by UKey {}", mrDivisionId);
+        marriageRegister.setMrDivision(mrDivisionDAO.getMRDivisionByPK(mrDivisionId));
+        marriageRegister.setRegPlaceInEnglishLang(marriage.getRegPlaceInEnglishLang());
+        marriageRegister.setRegPlaceInOfficialLang(marriage.getRegPlaceInOfficialLang());
+        marriageRegister.setRegNameInEnglishLang(marriage.getRegNameInEnglishLang());
+        marriageRegister.setRegNameInOfficialLang(marriage.getRegNameInOfficialLang());
+        marriageRegister.setRegistrationDate(marriage.getRegistrationDate());
+        marriageRegister.setState(MarriageRegister.State.REG_DATA_ENTRY);
+    }
+
     private Map<Person.CivilStatus, String> populateCivilStatus() {
         Map<Person.CivilStatus, String> civilStatus = new HashMap<Person.CivilStatus, String>();
         civilStatus.put(Person.CivilStatus.NEVER_MARRIED, CivilStatusUtil.getCivilStatusInAllLanguages(Person.CivilStatus.NEVER_MARRIED));
@@ -375,14 +389,6 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
                 noticeReceivedDate = marriage.getDateOfFemaleNotice();
             }
         }
-    }
-
-    private void populateRegistrationDetails(MarriageRegister marriageRegister) {
-        marriageRegister.setRegSerial(marriage.getRegSerial());
-        marriageRegister.setRegistrationDate(marriage.getRegistrationDate());
-        marriageRegister.setRegPlaceInOfficialLang(marriage.getRegPlaceInOfficialLang());
-        marriageRegister.setRegPlaceInEnglishLang(marriage.getRegPlaceInEnglishLang());
-        marriageRegister.setState(MarriageRegister.State.REG_DATA_ENTRY);
     }
 
     /**
