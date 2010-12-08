@@ -25,6 +25,19 @@
             endDate:'2040-12-31'
         });
     });
+
+    $(function() {
+        $('img#registrar_lookup').bind('click', function(evt3) {
+            var id1 = $("input#regPIN").attr("value");
+            $.getJSON('/ecivil/crs/RegistrarLookupService', {pinOrNic:id1},
+                    function(data1) {
+                        $("textarea#regNameInOfficialLang").val(data1.fullNameInOfficialLanguage);
+                        $("textarea#regNameInEnglishLang").val(data1.fullNameInEnglishLanguage);
+                        $("textarea#regPlaceInOfficialLang").val(data1.address);
+                        $("textarea#regPlaceInEnglishLang").val(data1.address);
+                    });
+        });
+    });
 </script>
 <s:actionerror/>
 <div class="marriage-notice-outer">
@@ -62,7 +75,9 @@
                     <br>அடையாள எண் <br>Identification number of Registrar/Minister</span></label>
         </td>
         <td align="center" colspan="3">
-            <s:textfield name="marriage.regPIN" id="regPIN" maxLength="10"/>
+            <s:textfield name="marriage.regPIN" id="regPIN" maxLength="10"/><img
+                    src="<s:url value="/images/search-father.png" />"
+                    style="vertical-align:middle; margin-left:20px;" id="registrar_lookup">
         </td>
     </tr>
     <tr>
@@ -93,7 +108,7 @@
                         Official Language
                     </td>
                     <td>
-                        <s:textarea name="marriage.regPlaceInOfficialLang" id="reg_place_official"
+                        <s:textarea name="marriage.regPlaceInOfficialLang" id="regPlaceInOfficialLang"
                                     cssStyle="width:98.2%;"/>
                     </td>
                 </tr>
@@ -104,7 +119,7 @@
                         In English
                     </td>
                     <td>
-                        <s:textarea name="marriage.regPlaceInEnglishLang" id="reg_place_English"
+                        <s:textarea name="marriage.regPlaceInEnglishLang" id="regPlaceInEnglishLang"
                                     cssStyle="width:98.2%;"/>
                     </td>
                 </tr>
@@ -169,7 +184,7 @@
                         Official Language
                     </td>
                     <td>
-                        <s:textarea name="marriage.regNameInOfficialLang" id="reg_place_official"
+                        <s:textarea name="marriage.regNameInOfficialLang" id="regNameInOfficialLang"
                                     cssStyle="width:98.2%;"/>
                     </td>
                 </tr>
@@ -180,7 +195,7 @@
                         In English
                     </td>
                     <td>
-                        <s:textarea name="marriage.regNameInEnglishLang" id="reg_place_English"
+                        <s:textarea name="marriage.regNameInEnglishLang" id="regNameInEnglishLang"
                                     cssStyle="width:98.2%;"/>
                     </td>
                 </tr>

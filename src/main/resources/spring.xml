@@ -125,7 +125,7 @@
         <constructor-arg ref="userLocationDAOImpl"/>
     </bean>
 
-    <bean id="registrarManagmentService" class="lk.rgd.crs.core.service.RegistrarManagementServiceImpl">
+    <bean id="registrarManagementService" class="lk.rgd.crs.core.service.RegistrarManagementServiceImpl">
         <constructor-arg ref="registrarDAOImpl"/>
         <constructor-arg ref="assignmentDAOImpl"/>
         <constructor-arg ref="districtDAOImpl"/>
@@ -340,7 +340,7 @@
         <constructor-arg ref="districtDAOImpl"/>
         <constructor-arg ref="bdDivisionDAOImpl"/>
         <constructor-arg ref="dsDivisionDAOImpl"/>
-        <constructor-arg ref="registrarManagmentService"/>
+        <constructor-arg ref="registrarManagementService"/>
         <constructor-arg ref="mrDivisionDAOImpl"/>
     </bean>
 
