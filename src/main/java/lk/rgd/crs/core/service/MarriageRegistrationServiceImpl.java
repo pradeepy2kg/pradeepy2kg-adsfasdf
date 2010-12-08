@@ -70,6 +70,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     /**
      * @inheritDoc
      */
+    // TODO chathuranga later
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<MarriageRegister> getMarriageNoticePendingApprovalByDSDivision(DSDivision dsDivision, int pageNo,
         int noOfRows, boolean active, User user) {
@@ -86,8 +87,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<MarriageRegister> getMarriageNoticePendingApprovalByPINorNIC(String pinOrNic, boolean active, User user) {
         logger.debug("Attempt to get marriage notice pending results for identification number : {} ", pinOrNic);
-        List<MarriageRegister> results = marriageRegistrationDAO.getByStateAndPINorNIC(
-            MarriageRegister.State.DATA_ENTRY, pinOrNic, active);
+        List<MarriageRegister> results = marriageRegistrationDAO.getNoticeByPINorNIC(pinOrNic, active);
         for (MarriageRegister reg : results) {
             if (!checkUserAccessPermissionToMarriageRecord(reg, user)) {
                 logger.debug("User : {} :does not have permission to edit/approve marriage record idUKey : {} ",
@@ -105,8 +105,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     public List<MarriageRegister> getMarriageNoticePendingApprovalByMRDivisionAndSerial(MRDivision mrDivision, long serialNo,
         User user) {
         logger.debug("Get active record by MRDivision : {} and Serial No : {}", mrDivision.getMrDivisionUKey(), serialNo);
-        List<MarriageRegister> results = marriageRegistrationDAO.getByMRDivisionAndSerialNo(mrDivision,
-            MarriageRegister.State.DATA_ENTRY, serialNo, true);
+        List<MarriageRegister> results = marriageRegistrationDAO.getNoticeByMRDivisionAndSerialNo(mrDivision, serialNo, true);
         for (MarriageRegister mr : results) {
             if (!checkUserAccessPermissionToMarriageRecord(mr, user)) {
                 results.remove(mr);
@@ -124,8 +123,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         logger.debug("Get Active : {} MarriageNotices pending approval by MRDivision : {}", active,
             mrDivision.getMrDivisionUKey());
         ValidationUtils.validateAccessToMRDivision(mrDivision, user);
-        return marriageRegistrationDAO.getPaginatedListForStateByMRDivision(mrDivision,
-            MarriageRegister.State.DATA_ENTRY, pageNo, noOfRows, active);
+        return marriageRegistrationDAO.getPaginatedNoticeListByMRDivision(mrDivision, pageNo, noOfRows, active);
     }
 
     /**
@@ -222,7 +220,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      * only record captured division users are allowed to access the marriage record
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<MarriageRegister> getMarriageRegisterPendingApprovalBySerialAndMRDivision(long serialNumber,
+    public List<MarriageRegister> getMarriageRegisterBySerialAndMRDivision(long serialNumber,
         MRDivision mrDivision, int pageNumber, int numOfRows, boolean active, User user) {
         logger.debug("attempt to get pending marriage register record for marriage serial number : {}" +
             " and MRDivision name : {} ", serialNumber, mrDivision.getEnDivisionName());
@@ -237,7 +235,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<MarriageRegister> getMarriageRegisterPendingApprovalByDSDivision(DSDivision dsDivision, int pageNumber,
+    public List<MarriageRegister> getMarriageRegistersByDSDivision(DSDivision dsDivision, int pageNumber,
         int numOfRows, boolean active, User user) {
         logger.debug("attempt to get pending marriage register list by DSDivision idUKey : {}", dsDivision.getDsDivisionUKey());
         //validate user access to the ds division
@@ -316,6 +314,22 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         ValidationUtils.validateAccessToMRDivision(mrDivision, user);
         return marriageRegistrationDAO.getPaginatedListForStateByMRDivision(mrDivision,
             MarriageRegister.State.REG_DATA_ENTRY, pageNumber, numOfRows, true);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<MarriageRegister> getMarriageRegisterByPINorNIC(String pinOrNic, boolean active, User user) {
+        logger.debug("Attempt to get marriage registers results for identification number : {} ", pinOrNic);
+        List<MarriageRegister> results =
+            marriageRegistrationDAO.getByStateAndPINorNIC(MarriageRegister.State.REG_DATA_ENTRY, pinOrNic, active);
+        for (MarriageRegister reg : results) {
+            if (!checkUserAccessPermissionToMarriageRecord(reg, user)) {
+                results.remove(reg);
+            }
+        }
+        return results;
     }
 
     /**

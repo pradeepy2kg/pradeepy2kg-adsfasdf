@@ -55,9 +55,22 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
      * @inheriteDoc
      */
     @Transactional(propagation = Propagation.SUPPORTS)
+    public List<MarriageRegister> getNoticeByMRDivisionAndSerialNo(MRDivision mrDivision,
+        long serialNo, boolean active) {
+        Query q = em.createNamedQuery("get.notice.by.mrDivision.and.serial");
+        q.setParameter("mrDivision", mrDivision);
+        q.setParameter("serialNo", serialNo);
+        q.setParameter("active", active);
+        return q.getResultList();
+    }
+
+    /**
+     * @inheriteDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
     public List<MarriageRegister> getByMRDivisionAndSerialNo(MRDivision mrDivision, MarriageRegister.State state,
         long serialNo, boolean active) {
-        Query q = em.createNamedQuery("filter.by.mrDivision.serial.and.state");
+        Query q = em.createNamedQuery("get.register.by.mrDivision.and.serial");
         q.setParameter("mrDivision", mrDivision);
         q.setParameter("serialNo", serialNo);
         q.setParameter("state", state);
@@ -68,6 +81,7 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
     /**
      * @inheritDoc
      */
+    // TODO chathuranga later
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<MarriageRegister> getPaginatedListForStateByDSDivision(DSDivision dsDivision,
         MarriageRegister.State state, int pageNo, int noOfRows, boolean active) {
@@ -83,12 +97,36 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<MarriageRegister> getPaginatedNoticeListByMRDivision(MRDivision mrDivision, int pageNo, int noOfRows,
+        boolean active) {
+        Query q = em.createNamedQuery("filter.notice.by.mrDivision").
+            setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+        q.setParameter("mrDivision", mrDivision);
+        q.setParameter("active", active);
+        return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<MarriageRegister> getPaginatedListForStateByMRDivision(MRDivision mrDivision,
         MarriageRegister.State state, int pageNo, int noOfRows, boolean active) {
         Query q = em.createNamedQuery("filter.by.mrDivision.and.state").
             setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("mrDivision", mrDivision);
         q.setParameter("state", state);
+        q.setParameter("active", active);
+        return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<MarriageRegister> getNoticeByPINorNIC(String id, boolean active) {
+        Query q = em.createNamedQuery("filter.notice.by.pinOrNic");
+        q.setParameter("id", id);
         q.setParameter("active", active);
         return q.getResultList();
     }
