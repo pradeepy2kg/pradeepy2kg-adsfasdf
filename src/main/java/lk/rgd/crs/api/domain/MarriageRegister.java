@@ -95,7 +95,7 @@ public class MarriageRegister implements Serializable, Cloneable {
 
     @Column(name = "REG_SUBMITTED_DATE", nullable = true)
     @Temporal(value = TemporalType.DATE)
-    private Date regSubmittedDate;
+    private Date registrationDate;
 
     @Column(name = "REG_PLACE_MARRIAGE_OFFICIAL_LANG", nullable = true)
     private String regPlaceInOfficialLang;
@@ -325,12 +325,12 @@ public class MarriageRegister implements Serializable, Cloneable {
         this.regSerial = regSerial;
     }
 
-    public Date getRegSubmittedDate() {
-        return regSubmittedDate;
+    public Date getRegistrationDate() {
+        return registrationDate;
     }
 
-    public void setRegSubmittedDate(Date regSubmittedDate) {
-        this.regSubmittedDate = regSubmittedDate;
+    public void setRegistrationDate(Date registrationDate) {
+        this.registrationDate = registrationDate;
     }
 
     public String getRegPlaceInEnglishLang() {
