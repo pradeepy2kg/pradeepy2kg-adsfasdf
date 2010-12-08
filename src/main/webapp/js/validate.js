@@ -7,7 +7,7 @@ function isEmpty(domElement, errorMessage, errorCode) {
     }
 }
 
-function isMandatoryFieldsEmpty(domElement, errorElement, errorCode){
+function isMandatoryFieldsEmpty(domElement, errorElement, errorCode) {
     with (domElement) {
         if (value == null || value.trim() == "") {
             errormsg = errormsg + "\n" + errorElement + " " + document.getElementById(errorCode).value;
@@ -121,8 +121,19 @@ function validateNIC(domElement, errorText, errorCode) {
     }
 }
 
+// TODO not complete
 // validate Temporary PIN
 function validateTemPIN(domElement, errorText, errorCode) {
+    with (domElement) {
+        var reg = /^([0-9]{10})$/;
+        if (reg.test(value.trim()) == false) {
+            printMessage(errorText, errorCode);
+        }
+    }
+}
+
+// TODO not complete
+function validatePIN(domElement, errorText, errorCode) {
     with (domElement) {
         var reg = /^([0-9]{10})$/;
         if (reg.test(value.trim()) == false) {
@@ -178,7 +189,9 @@ function isInteger(s) {
     for (i = 0; i < s.length; i++) {
         // Check that current character is number.
         var c = s.charAt(i);
-        if (((c < "0") || (c > "9"))) return false;
+        if (((c < "0") || (c > "9"))) {
+            return false;
+        }
     }
     // All characters are numbers.
     return true;
@@ -191,7 +204,9 @@ function stripCharsInBag(s, bag) {
     // If character is not in bag, append to returnString.
     for (i = 0; i < s.length; i++) {
         var c = s.charAt(i);
-        if (bag.indexOf(c) == -1) returnString += c;
+        if (bag.indexOf(c) == -1) {
+            returnString += c;
+        }
     }
     return returnString;
 }
@@ -231,10 +246,16 @@ function isDate(dtStr, errorText, errorCode) {
         var strDay = dtStr.substring(pos2 + 1)
 
         strYr = strYear
-        if (strDay.charAt(0) == "0" && strDay.length > 1) strDay = strDay.substring(1)
-        if (strMonth.charAt(0) == "0" && strMonth.length > 1) strMonth = strMonth.substring(1)
+        if (strDay.charAt(0) == "0" && strDay.length > 1) {
+            strDay = strDay.substring(1)
+        }
+        if (strMonth.charAt(0) == "0" && strMonth.length > 1) {
+            strMonth = strMonth.substring(1)
+        }
         for (var i = 1; i <= 3; i++) {
-            if (strYr.charAt(0) == "0" && strYr.length > 1) strYr = strYr.substring(1)
+            if (strYr.charAt(0) == "0" && strYr.length > 1) {
+                strYr = strYr.substring(1)
+            }
         }
 
         month = parseInt(strMonth)

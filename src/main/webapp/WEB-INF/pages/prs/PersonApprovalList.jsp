@@ -16,13 +16,18 @@
         $('#tab1').tabs();
         $('#tabs2').tabs({
             select: function(ui) {
-                document.getElementById('searchNic').value = null;
-                document.getElementById('searchTempPin').value = null;
+                setValuesEmpty();
             }
         });
     });
 
     function initPage() {
+    }
+
+    function setValuesEmpty() {
+        document.getElementById('searchPin').value = null;
+        document.getElementById('searchNic').value = null;
+        document.getElementById('searchTempPin').value = null;
     }
 
     $(function() {
@@ -43,16 +48,22 @@
         var domObject;
         var returnVal = true;
 
-        // validate serial number
+        // validate searching PIN
+        domObject = document.getElementById('searchPin');
+        if (!isFieldEmpty(domObject)) {
+            validatePIN(domObject, 'error1', 'error4');
+        }
+
+        // validate searching NIC
         domObject = document.getElementById('searchNic');
         if (!isFieldEmpty(domObject)) {
             validateNIC(domObject, 'error1', 'error2');
         }
 
-        // validate start and end date
+        // validate searching temporary PIN
         domObject = document.getElementById('searchTempPin');
         if (!isFieldEmpty(domObject)) {
-            validateTemPIN(domObject.value, 'error1', 'error3');
+            validateTemPIN(domObject, 'error1', 'error3');
         }
 
         if (errormsg != "") {
@@ -60,6 +71,7 @@
             returnVal = false;
         }
         errormsg = "";
+        setValuesEmpty();
         return returnVal;
     }
 </script>
@@ -92,12 +104,31 @@
                     </tbody>
                 </table>
                 <ul>
-                    <li><a href="#subtab1"><span><s:label value="%{getText('by.nic.label')}"/></span></a></li>
-                    <li><a href="#subtab2"><span><s:label value="%{getText('by.tempPin.label')}"/></span></a></li>
+                    <li><a href="#subtab1"><span><s:label value="%{getText('by.pin.label')}"/></span></a></li>
+                    <li><a href="#subtab2"><span><s:label value="%{getText('by.nic.label')}"/></span></a></li>
+                    <li><a href="#subtab3"><span><s:label value="%{getText('by.tempPin.label')}"/></span></a></li>
                 </ul>
                 <div id="subtab1" style="margin-left:10px;">
                     <table>
-                        <caption/>
+                        <col width="280px"/>
+                        <col width="10px"/>
+                        <col/>
+                        <tbody>
+                        <tr>
+                            <td>
+                                <s:label value="%{getText('searchPin.label')}"/>
+                            </td>
+                            <td></td>
+                            <td>
+                                <s:textfield name="searchPin" id="searchPin" maxLength="10"
+                                             onkeypress="return isNumberKey(event)"/>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="subtab2" style="margin-left:10px;">
+                    <table>
                         <col width="280px"/>
                         <col width="10px"/>
                         <col/>
@@ -114,9 +145,8 @@
                         </tbody>
                     </table>
                 </div>
-                <div id="subtab2">
+                <div id="subtab3">
                     <table style="margin-left:10px;">
-                        <caption/>
                         <col width="280px"/>
                         <col width="10px"/>
                         <col/>
@@ -127,13 +157,15 @@
                             </td>
                             <td></td>
                             <td>
-                                <s:textfield name="searchTempPin" id="searchTempPin" maxLength="10"/>
+                                <s:textfield name="searchTempPin" id="searchTempPin" maxLength="10"
+                                             onkeypress="return isNumberKey(event)"/>
                             </td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
+            <s:submit value="%{getText('bdfSearch.button')}"/>
         </div>
         <div class="form-submit" style="float:right;">
             <s:submit value="%{getText('bdfSearch.button')}"/>
@@ -147,13 +179,14 @@
                     <table id="person-approve-list" width="100%" cellpadding="0" cellspacing="0" class="display">
                         <thead>
                         <tr>
-                            <th width="60px"><s:label value="%{getText('locationCode.label')}"/></th>
-                            <th width="110px">NIC</th>
-                            <th width="780px"><s:label value="%{getText('label.personName')}"/></th>
-                            <th width="15px"></th>
-                            <th width="15px"></th>
-                            <th width="15px"></th>
-                            <th width="15px"></th>
+                            <th width="50px"><s:label value="%{getText('locationCode.label')}"/></th>
+                            <th width="80px">NIC</th>
+                            <th><s:label value="%{getText('label.personName')}"/></th>
+                            <th width="15px" style="padding:3px 3px;"></th>
+                            <th width="15px" style="padding:3px 3px;"></th>
+                            <th width="15px" style="padding:3px 3px;"></th>
+                            <th width="15px" style="padding:3px 3px;"></th>
+                            <th width="15px" style="padding:3px 3px;"></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -167,40 +200,59 @@
                                     </s:if>
                                 </td>
                                 <td align="center">
-                                    <s:url id="editSelected" action="eprEditPerson.do">
-                                        <s:param name="personUKey" value="personUKey"/>
-                                    </s:url>
-                                    <s:a href="%{editSelected}" title="%{getText('editToolTip.label')}">
-                                        <img src="<s:url value='/images/edit.png'/>" width="25" height="25"
-                                             border="none"/>
-                                    </s:a>
+                                    <s:if test="status.ordinal() != 2">
+                                        <s:url id="editSelected" action="eprEditPerson.do">
+                                            <s:param name="personUKey" value="personUKey"/>
+                                        </s:url>
+                                        <s:a href="%{editSelected}" title="%{getText('editToolTip.label')}">
+                                            <img src="<s:url value='/images/edit.png'/>" width="25" height="25"
+                                                 border="none"/>
+                                        </s:a>
+                                    </s:if>
                                 </td>
                                 <td align="center">
-                                    <s:url id="approveSelected" action="eprApprovePerson.do">
-                                        <s:param name="personUKey" value="personUKey"/>
-                                    </s:url>
-                                    <s:a href="%{approveSelected}" title="%{getText('approveToolTip.label')}">
-                                        <img src="<s:url value='/images/approve.gif'/>" width="25" height="25"
-                                             border="none"/>
-                                    </s:a>
+                                    <s:if test="status.ordinal() != 2">
+                                        <s:url id="approveSelected" action="eprApprovePerson.do">
+                                            <s:param name="personUKey" value="personUKey"/>
+                                        </s:url>
+                                        <s:a href="%{approveSelected}" title="%{getText('approveToolTip.label')}">
+                                            <img src="<s:url value='/images/approve.gif'/>" width="25" height="25"
+                                                 border="none"/>
+                                        </s:a>
+                                    </s:if>
                                 </td>
                                 <td align="center">
-                                    <s:url id="rejectSelected">
-                                        <s:param name="personUKey" value="personUKey"/>
-                                    </s:url>
-                                    <s:a href="%{rejectSelected}" title="%{getText('rejectToolTip.label')}">
-                                        <img src="<s:url value='/images/reject.gif'/>" width="25" height="25"
-                                             border="none"/>
-                                    </s:a>
+                                    <s:if test="status.ordinal() != 2">
+                                        <s:url id="rejectSelected">
+                                            <s:param name="personUKey" value="personUKey"/>
+                                        </s:url>
+                                        <s:a href="%{rejectSelected}" title="%{getText('rejectToolTip.label')}">
+                                            <img src="<s:url value='/images/reject.gif'/>" width="25" height="25"
+                                                 border="none"/>
+                                        </s:a>
+                                    </s:if>
                                 </td>
                                 <td align="center">
-                                    <s:url id="deleteSelected">
-                                        <s:param name="personUKey" value="personUKey"/>
-                                    </s:url>
-                                    <s:a href="%{deleteSelected}" title="%{getText('deleteToolTip.label')}">
-                                        <img src="<s:url value='/images/delete.gif'/>" width="25" height="25"
-                                             border="none"/>
-                                    </s:a>
+                                    <s:if test="status.ordinal() != 2">
+                                        <s:url id="deleteSelected">
+                                            <s:param name="personUKey" value="personUKey"/>
+                                        </s:url>
+                                        <s:a href="%{deleteSelected}" title="%{getText('deleteToolTip.label')}">
+                                            <img src="<s:url value='/images/delete.gif'/>" width="25" height="25"
+                                                 border="none"/>
+                                        </s:a>
+                                    </s:if>
+                                </td>
+                                <td>
+                                    <s:if test="status.ordinal() == 2">
+                                        <s:url id="printSelected">
+                                            <s:param name="personUKey" value="personUKey"/>
+                                        </s:url>
+                                        <s:a href="%{printSelected}" title="%{getText('print.label')}">
+                                            <img src="<s:url value='/images/print_icon.gif'/>" width="25" height="25"
+                                                 border="none"/>
+                                        </s:a>
+                                    </s:if>
                                 </td>
                             </tr>
                         </s:iterator>
@@ -214,3 +266,4 @@
 <s:hidden id="error1" value="%{getText('p1.invalide.inputType')}"/>
 <s:hidden id="error2" value="%{getText('nic.label')}"/>
 <s:hidden id="error3" value="%{getText('tempPin.label')}"/>
+<s:hidden id="error4" value="%{getText('searchPin.label')}"/>
