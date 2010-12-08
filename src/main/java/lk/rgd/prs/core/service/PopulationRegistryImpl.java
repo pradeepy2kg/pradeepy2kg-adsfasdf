@@ -109,10 +109,15 @@ public class PopulationRegistryImpl implements PopulationRegistry {
         // TODO add Solr searching results to following list
         final List<Person> exactRecord = new ArrayList<Person>();
         if (person.getTemporaryPin() != null) {
-            exactRecord.add(personDao.findPersonByTemporaryPIN(person.getTemporaryPin()));
+            Person p = personDao.findPersonByTemporaryPIN(person.getTemporaryPin());
+            if (p.getStatus() == Person.Status.SEMI_VERIFIED || p.getStatus() == Person.Status.UNVERIFIED) {
+                exactRecord.add(personDao.findPersonByTemporaryPIN(person.getTemporaryPin()));
+            }
         } else if (person.getNic() != null) {
             for (Person p : personDao.findPersonsByNIC(person.getNic())) {
-                exactRecord.add(p);
+                if (p.getStatus() == Person.Status.SEMI_VERIFIED || p.getStatus() == Person.Status.UNVERIFIED) {
+                    exactRecord.add(p);
+                }
             }
         }
         if (!exactRecord.isEmpty() && !ignoreDuplicates) {
@@ -127,7 +132,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             // generate a PIN for existing person
             pin = pinGenerator.generatePINNumber(person.getDateOfBirth(), person.getGender() == 0);
             person.setPin(pin);
-            
+
             personDao.addPerson(person, user);
 
             final String permanentAddress = person.getPermanentAddress();
