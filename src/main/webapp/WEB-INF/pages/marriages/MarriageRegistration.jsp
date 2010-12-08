@@ -91,44 +91,6 @@
     </tr>
     <tr>
         <td>
-            විවාහය සිදු කල ස්ථානය<br>
-            in tamil <br>
-            place of Marriage
-        </td>
-        <td colspan="8">
-            <table width="100%">
-                <caption/>
-                <col width="150px"/>
-                <col/>
-                <tbody>
-                <tr>
-                    <td>
-                        රාජ්‍ය භාෂාවෙන්<br>
-                        தமிழ் மொழியில் <br>
-                        Official Language
-                    </td>
-                    <td>
-                        <s:textarea name="marriage.regPlaceInOfficialLang" id="regPlaceInOfficialLang"
-                                    cssStyle="width:98.2%;"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        ඉංග්‍රීසි භාෂාවෙන්<br>
-                        ஆங்கில மொழியில்<br>
-                        In English
-                    </td>
-                    <td>
-                        <s:textarea name="marriage.regPlaceInEnglishLang" id="regPlaceInEnglishLang"
-                                    cssStyle="width:98.2%;"/>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </td>
-    </tr>
-    <tr>
-        <td>
             දිස්ත්‍රික්කය
             <br>மாவட்டம்
             <br>District
@@ -165,6 +127,45 @@
                       cssStyle="width:98.5%; width:240px;"/>
         </td>
     </tr>
+    <tr>
+        <td>
+            විවාහය සිදු කල ස්ථානය<br>
+            in tamil <br>
+            place of Marriage
+        </td>
+        <td colspan="8">
+            <table width="100%">
+                <caption/>
+                <col width="150px"/>
+                <col/>
+                <tbody>
+                <tr>
+                    <td>
+                        රාජ්‍ය භාෂාවෙන්<br>
+                        தமிழ் மொழியில் <br>
+                        Official Language
+                    </td>
+                    <td>
+                        <s:textarea name="marriage.regPlaceInOfficialLang" id="regPlaceInOfficialLang"
+                                    cssStyle="width:98.2%;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        ඉංග්‍රීසි භාෂාවෙන්<br>
+                        ஆங்கில மொழியில்<br>
+                        In English
+                    </td>
+                    <td>
+                        <s:textarea name="marriage.regPlaceInEnglishLang" id="regPlaceInEnglishLang"
+                                    cssStyle="width:98.2%;"/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+
     <tr>
         <td>
             රෙජිස්ට්‍රාර්තැන / දේවගැතිතැන<br>

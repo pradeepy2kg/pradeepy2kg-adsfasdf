@@ -69,7 +69,7 @@ public class AdminTaskTest extends CustomStrutsTestCase {
     protected final static ApplicationContext ctx = UnitTestManager.ctx;
 
     protected final static RegistrarManagementService registrarMgtService = (RegistrarManagementService) ctx.getBean(
-        "registrarManagmentService", RegistrarManagementService.class);
+        "registrarManagementService", RegistrarManagementService.class);
     protected final static UserManager userManager = (UserManager) ctx.getBean("userManagerService", UserManager.class);
     protected final static BDDivisionDAO bdDivisionDAO = (BDDivisionDAO) ctx.getBean("bdDivisionDAOImpl", BDDivisionDAO.class);
     protected final static DSDivisionDAO dsDivisionDAO = (DSDivisionDAO) ctx.getBean("dsDivisionDAOImpl", DSDivisionDAO.class);

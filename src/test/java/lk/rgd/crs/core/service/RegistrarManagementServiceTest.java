@@ -35,7 +35,7 @@ public class RegistrarManagementServiceTest extends TestCase {
 
     public RegistrarManagementServiceTest() {
 
-        regMgtSvc = (RegistrarManagementService) ctx.getBean("registrarManagmentService", RegistrarManagementService.class);
+        regMgtSvc = (RegistrarManagementService) ctx.getBean("registrarManagementService", RegistrarManagementService.class);
         bdDivisionDAO = (BDDivisionDAO) ctx.getBean("bdDivisionDAOImpl", BDDivisionDAO.class);
         mrDivisionDAO = (MRDivisionDAO) ctx.getBean("mrDivisionDAOImpl", MRDivisionDAO.class);
 
