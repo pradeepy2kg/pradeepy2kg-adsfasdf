@@ -165,7 +165,6 @@
                     </table>
                 </div>
             </div>
-            <s:submit value="%{getText('bdfSearch.button')}"/>
         </div>
         <div class="form-submit" style="float:right;">
             <s:submit value="%{getText('bdfSearch.button')}"/>
