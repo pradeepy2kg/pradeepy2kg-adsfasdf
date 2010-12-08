@@ -90,7 +90,7 @@
                     </td>
                     <td>
                         <s:label value="YYYY-MM-DD" cssStyle="margin-left:10px;font-size:10px"/><br>
-                        <s:textfield name="marriage.regSubmittedDate" id="submitDatePicker" maxLength="10"/>
+                        <s:textfield name="marriage.registrationDate" id="registrationDatePicker" maxLength="10"/>
                     </td>
                 </tr>
             </table>

@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 <script type="text/javascript">
     $(function() {
-        $("#submitDatePicker").datepicker({
+        $("#registrationDatePicker").datepicker({
             changeYear: true,
             yearRange: '1960:2020',
             dateFormat:'yy-mm-dd',
@@ -30,113 +30,7 @@
 <div class="marriage-notice-outer">
 <s:form action="eprMarriageRegistration" method="post">
 <s:hidden name="marriage.idUKey"/>
-<s:hidden name="marriage.witness1.idUKey"/>
-<s:hidden name="marriage.witness2.idUKey"/>
 <%--section for official usage--%>
-<table class="table_reg_header_01">
-    <caption></caption>
-    <col width="420px"/>
-    <col width="200px"/>
-    <col/>
-    <tbody>
-    <tr style="font-size:9pt">
-        <td colspan="1">
-            <table border="1" style="margin-top:1px;width:100%;border:1px solid #000;border-collapse:collapse;"
-                   cellpadding="2px">
-                <caption/>
-                <col width="175px">
-                <col>
-                <tr>
-                    <td>
-                        දිස්ත්‍රික්කය
-                        <br>மாவட்டம்
-                        <br>District
-                    </td>
-                    <td>
-                        <s:select id="districtId" name="marriageDistrictId" list="districtList"
-                                  value="marriageDistrictId"
-                                  cssStyle="width:98.5%; width:240px;"
-                                  onclick="populateDSDivisions('districtId','dsDivisionId','mrDivisionId')"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td><label><span class="font-8">
-                        ප්‍රාදේශීය ලේකම් කොට්ඨාශය
-                            <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-                            <br>பிரதேச செயளாளர் பிரிவு <br>Divisional Secretariat</span>
-                    </label>
-                    </td>
-                    <td align="center">
-                        <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="dsDivisionId"
-                                  cssStyle="width:98.5%; width:240px;"
-                                  onchange="populateDivisions('dsDivisionId', 'mrDivisionId')"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td><label><span class="font-8">
-                        ලියාපදිංචි කිරීමේ කොට්ඨාශය
-                               <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-                                    <br>பதிவுப் பிரிவு  <br>Registration Division</span>
-                    </label>
-                    </td>
-                    <td>
-                        <s:select id="mrDivisionId" name="marriageDivisionId" list="mrDivisionList"
-                                  value="marriageDivisionId" headerKey="1"
-                                  cssStyle="width:98.5%; width:240px;"/>
-                    </td>
-                </tr>
-            </table>
-        </td>
-        <td align="center" style="font-size:12pt;"><img src="<s:url value="/images/official-logo.png"/>"
-        </td>
-        <td>
-            <table border="1" style="margin-top:1px;width:100%;border:1px solid #000;border-collapse:collapse;"
-                   cellpadding="2px">
-                <caption/>
-                <col width="175px">
-                <col>
-                <tr>
-                    <td colspan="2">
-                        කාර්යාල ප්‍රයෝජනය සඳහා පමණි <br>அலுவலக பாவனைக்காக மட்டும்
-                        <br>For office use only
-                    </td>
-                </tr>
-                <tr>
-                    <td><label><span class="font-8">අනුක්‍රමික අංකය
-                            <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-                            <br>தொடர் இலக்கம்<br>Serial Number</span></label>
-                    </td>
-                    <td align="center">
-                        <s:textfield name="marriage.regSerial" id="regSerial" maxLength="10"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>
-                                <span class="font-8">භාරගත්  දිනය
-                                    <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-                                    <br>பிறப்பைப் பதிவு திகதி <br>Submitted Date</span>
-                        </label>
-                    </td>
-                    <td>
-                        <s:label value="YYYY-MM-DD" cssStyle="margin-left:10px;font-size:10px"/><br>
-                        <s:textfield name="marriage.regSubmittedDate" id="submitDatePicker" maxLength="10"/>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-    <tr>
-        <td>&nbsp;</td>
-    </tr>
-    <tr style="font-size:14pt">
-        <td colspan="3" align="center">
- Marriage Details
-        </td>
-    </tr>
-    </tbody>
-</table>
-<br>
 <%--type of marriage--%>
 <table border="1" style="margin-top:1px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
        cellpadding="5px">
@@ -216,6 +110,44 @@
                 </tr>
                 </tbody>
             </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            දිස්ත්‍රික්කය
+            <br>மாவட்டம்
+            <br>District
+        </td>
+        <td colspan="3">
+            <s:select id="districtId" name="marriageDistrictId" list="districtList"
+                      value="marriageDistrictId"
+                      cssStyle="width:98.5%; width:240px;"
+                      onclick="populateDSDivisions('districtId','dsDivisionId','mrDivisionId')"/>
+        </td>
+        <td colspan="2"><label><span class="font-8">
+            ප්‍රාදේශීය ලේකම් කොට්ඨාශය
+                <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
+                <br>பிரதேச செயளாளர் பிரிவு <br>Divisional Secretariat</span>
+        </label>
+        </td>
+        <td align="center" colspan="3">
+            <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="dsDivisionId"
+                      cssStyle="width:98.5%; width:240px;"
+                      onchange="populateDivisions('dsDivisionId', 'mrDivisionId')"/>
+        </td>
+    </tr>
+
+    <tr>
+        <td><label><span class="font-8">
+        ලියාපදිංචි කිරීමේ කොට්ඨාශය
+               <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
+                    <br>பதிவுப் பிரிவு  <br>Registration Division</span>
+        </label>
+        </td>
+        <td colspan="8">
+            <s:select id="mrDivisionId" name="marriageDivisionId" list="mrDivisionList"
+                      value="marriageDivisionId" headerKey="1"
+                      cssStyle="width:98.5%; width:240px;"/>
         </td>
     </tr>
     <tr>
@@ -445,6 +377,35 @@
     </tr>
     </tbody>
 </table>
+<table border="1" style="margin-top:1px;width:100%;border:1px solid #000;border-collapse:collapse;"
+       cellpadding="2px">
+    <caption/>
+    <col width="200px">
+    <col>
+    <col>
+    <col>
+    <tr>
+        <td><label><span class="font-8">අනුක්‍රමික අංකය
+                <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
+                <br>தொடர் இலக்கம்<br>Serial Number</span></label>
+        </td>
+        <td align="center">
+            <s:textfield name="marriage.idUKey" id="idUKey" maxLength="10"/>
+        </td>
+        <td>
+            <label>
+                    <span class="font-8">ලියාපදිංචි දිනය
+                        <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
+                        <br>பெறப்பட்ட திகதி  <br>Date of Registration</span>
+            </label>
+        </td>
+        <td>
+            <s:label value="YYYY-MM-DD" cssStyle="margin-left:10px;font-size:10px"/><br>
+            <s:textfield name="marriage.registrationDate" id="registrationDatePicker" maxLength="10"/>
+        </td>
+    </tr>
+</table>
+
 
 <div class="form-submit">
     <s:submit/>

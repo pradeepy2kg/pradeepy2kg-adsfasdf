@@ -308,8 +308,6 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     }
 
     public String marriageRegistrationInit() {
-        //TODO : To be removed
-        idUKey = 1;
         marriageType = MarriageType.values();
         typeOfMarriagePlace = TypeOfMarriagePlace.values();
         //TODO : To be improved and remove populate method
@@ -353,9 +351,8 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     }
 
     private void populateRegistrationDetails(MarriageRegister marriageRegister) {
-        //  marriageRegister.setDateOfMarriage(marriage.getDateOfMarriage());
         marriageRegister.setRegSerial(marriage.getRegSerial());
-        marriageRegister.setRegSubmittedDate(marriage.getRegSubmittedDate());
+        marriageRegister.setRegistrationDate(marriage.getRegistrationDate());
         marriageRegister.setRegPlaceInOfficialLang(marriage.getRegPlaceInOfficialLang());
         marriageRegister.setRegPlaceInEnglishLang(marriage.getRegPlaceInEnglishLang());
         marriageRegister.setState(MarriageRegister.State.REG_DATA_ENTRY);
