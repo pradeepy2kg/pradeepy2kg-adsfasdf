@@ -6,7 +6,8 @@ package lk.rgd.crs.web.util;
 public enum MarriageType {
     GENERAL(1, "සාමාන්‍ය ", "general marriage in tamil", "General"),
     KANDYAN_BINNA(2, "උඩරට බින්න ", "Kandyan binna in tamil", "Kandyan Binna"),
-    KANDYAN_DEEGA(3, "උඩරට බින්න දීග ","kandyan deega in tamil", "Kandyan Deega");
+    KANDYAN_DEEGA(3, "උඩරට බින්න දීග ","kandyan deega in tamil", "Kandyan Deega"),
+    MUSLIM(4, "Muslim in Sinhala","Muslim in Tamil", "Muslim");
 
     private int id;
     private String siType;
