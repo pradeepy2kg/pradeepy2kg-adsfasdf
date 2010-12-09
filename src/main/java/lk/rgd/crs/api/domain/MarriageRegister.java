@@ -16,9 +16,17 @@ import java.util.Date;
 @Table(name = "MARRIAGE_REGISTER", schema = "CRS")
 @NamedQueries({
     // TODO review this query
+    @NamedQuery(name = "filter.notice.by.dsDivision", query = "SELECT mr FROM MarriageRegister mr " +
+        "WHERE (mr.state = 0 OR mr.state = 1 OR mr.state = 2 OR mr.state = 3) AND mr.lifeCycleInfo.activeRecord = :active " +
+        "AND (mr.mrDivisionOfMaleNotice IN (SELECT m FROM MRDivision m WHERE (m.dsDivision = mr.mrDivisionOfMaleNotice.dsDivision AND mr.mrDivisionOfMaleNotice.dsDivision = :dsDivision)) " +
+        "OR mr.mrDivisionOfFemaleNotice IN (SELECT m FROM MRDivision m WHERE (m.dsDivision = mr.mrDivisionOfFemaleNotice.dsDivision AND mr.mrDivisionOfFemaleNotice.dsDivision = :dsDivision)))" +
+        "ORDER BY mr.idUKey DESC "),
+
+    // TODO review this query
     @NamedQuery(name = "filter.by.dsDivision.and.state", query = "SELECT mr FROM MarriageRegister mr " +
-        "WHERE mr.state = 0 AND mr.lifeCycleInfo.activeRecord = :active AND mr.mrDivisionOfMaleNotice IN (SELECT m FROM MRDivision m WHERE (m.dsDivision = mr.mrDivisionOfMaleNotice.dsDivision AND mr.mrDivisionOfMaleNotice.dsDivision = :dsDivision)) " +
-        "OR mr.mrDivisionOfFemaleNotice IN (SELECT m FROM MRDivision m WHERE (m.dsDivision = mr.mrDivisionOfFemaleNotice.dsDivision AND mr.mrDivisionOfFemaleNotice.dsDivision = :dsDivision))" +
+        "WHERE mr.state = :state AND mr.lifeCycleInfo.activeRecord = :active " +
+        "AND (mr.mrDivisionOfMaleNotice IN (SELECT m FROM MRDivision m WHERE (m.dsDivision = mr.mrDivisionOfMaleNotice.dsDivision AND mr.mrDivisionOfMaleNotice.dsDivision = :dsDivision)) " +
+        "OR mr.mrDivisionOfFemaleNotice IN (SELECT m FROM MRDivision m WHERE (m.dsDivision = mr.mrDivisionOfFemaleNotice.dsDivision AND mr.mrDivisionOfFemaleNotice.dsDivision = :dsDivision)))" +
         "ORDER BY mr.idUKey DESC "),
 
     @NamedQuery(name = "filter.notice.by.mrDivision", query = "SELECT mr FROM MarriageRegister mr " +
