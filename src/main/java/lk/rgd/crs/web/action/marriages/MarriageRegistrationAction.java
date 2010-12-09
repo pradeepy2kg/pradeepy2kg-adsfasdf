@@ -330,10 +330,11 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     /**
      * this private method populate existing marriage notice record when adding second notice
      * if second notice is male updating marriage notice with new male notice related data and vise-versa
-     * note:notice type "BOTH" doesn't have second notice so this method does not handle that senario
+     * note:notice type "BOTH" doesn't have second notice so this method does not handle that scenario
      */
     private void populateNoticeForAddingSecondNotice(MarriageRegister noticeExisting, MarriageRegister noticeEdited) {
         //BOTH type does not have a second notice  so we are not handling it
+        //todo license request by when add second notice
         MRDivision mr = mrDivisionDAO.getMRDivisionByPK(mrDivisionId);
         if (noticeType == MarriageNotice.Type.MALE_NOTICE) {
             noticeExisting.setSerialOfMaleNotice(serialNumber);
