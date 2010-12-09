@@ -76,25 +76,16 @@ public class MarriageRegistrationServiceTest extends TestCase {
         //male party
         MaleParty male = new MaleParty();
         male.setIdentificationNumberMale(malePin);
+        male.setDateOfBirthMale(new Date());
         male.setNameInEnglishMale("name in english" + malePin);
         notice.setMale(male);
 
         //female party
         FemaleParty female = new FemaleParty();
         female.setIdentificationNumberFemale(femalePin);
+        female.setDateOfBirthFemale(new Date());
         female.setNameInEnglishFemale("name in english" + femalePin);
         notice.setFemale(female);
-
-        //setting witness for male (assume notice is submitted by male party)
-//        Witness m_1 = new Witness();
-//        m_1.setIdentificationNumber((Integer.parseInt(malePin)) + 10 + "");
-//        m_1.setFullName("full name witness 1 " + malePin);
-//        notice.setMaleNoticeWitness_1(m_1);
-//
-//        Witness m_2 = new Witness();
-//        m_2.setIdentificationNumber((Integer.parseInt(malePin)) + 20 + "");
-//        m_2.setFullName("full name witness 2 " + malePin);
-//        notice.setMaleNoticeWitness_2(m_2);
 
         //setting mandatory fields
         //this is submitted by male party
