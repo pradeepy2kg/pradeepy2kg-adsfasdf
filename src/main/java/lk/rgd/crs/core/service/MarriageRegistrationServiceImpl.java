@@ -22,12 +22,10 @@ import java.util.List;
  *
  * @author amith jayasekara
  * @author Chathuranga Withana
- *         todo check user permissions for performing tasks
  */
 public class MarriageRegistrationServiceImpl implements MarriageRegistrationService {
 
     private static final Logger logger = LoggerFactory.getLogger(MarriageRegistrationServiceImpl.class);
-
     private final MarriageRegistrationDAO marriageRegistrationDAO;
     private final MarriageRegistrationValidator marriageRegistrationValidator;
 
@@ -46,16 +44,6 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         marriageRegistrationValidator.validateMarriageNotice(notice, type);
         populateObjectForPersisting(notice, type);
         marriageRegistrationDAO.addMarriageNotice(notice, user);
-    }
-
-    /**
-     * populate notice for persisting
-     * if notice type is BOTH single notice will be true
-     */
-    private void populateObjectForPersisting(MarriageRegister marriageRegister, MarriageNotice.Type type) {
-        if (type == MarriageNotice.Type.BOTH_NOTICE) {
-            marriageRegister.setSingleNotice(true);
-        }
     }
 
     /**
@@ -149,11 +137,9 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void updateMarriageRegister(MarriageRegister marriageRegister, User user) {
-        //todo check user permissions
         logger.debug("attempt to update marriage register/notice record : idUKey : {}", marriageRegister.getIdUKey());
         marriageRegistrationDAO.updateMarriageRegister(marriageRegister, user);
     }
-
 
     /**
      * @inheritDoc
@@ -161,10 +147,8 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     @Transactional(propagation = Propagation.REQUIRED)
     public void addSecondMarriageNotice(MarriageRegister notice, boolean isMale, User user) {
         logger.debug("attempt to add a second notice for existing record : idUKey : {}", notice.getIdUKey());
-        /*    addMaleOrFemaleWitnesses(notice, isMale);*/
         updateMarriageRegister(notice, user);
     }
-
 
     /**
      * @inheritDoc <br> notes :
@@ -186,12 +170,14 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      * note:states regarding to removal
      * case 1:  record must be in DATA_ENTRY
      * for removal of male notice record must be in either DATA_ENTRY or FEMALE_NOTICE_APPROVE state
+     * for removal of female notice record must in either DATA_ENTRY or MALE_NOTICE_APPROVE state
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void deleteMarriageNotice(long idUKey, MarriageNotice.Type noticeType, User user) {
         logger.debug("attempt to remove marriage notice : idUKey : {} and notice type : {}", idUKey, noticeType);
-        //todo AMITH check user permission for removing data
         MarriageRegister notice = marriageRegistrationDAO.getByIdUKey(idUKey);
+        checkUserPermissionForDeleteApproveAndRejectNotice(notice, noticeType, user);
+        checkStateForDeleteNotice(notice, noticeType);
         if (noticeType == MarriageNotice.Type.BOTH_NOTICE) {
             //case 1
             marriageRegistrationDAO.deleteMarriageRegister(idUKey);
@@ -231,7 +217,6 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
             serialNumber, active);
     }
 
-
     /**
      * @inheritDoc
      */
@@ -257,13 +242,14 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      * <i>(do not care about how many notices are available there can be 1 or 2 notices)</i>
      * </p>
      * case 1;
-     * no notice has been approved as an example there are 2 notices are available but nothing has approved a
+     * no notice has been approved,
+     * as an example there are 2 notices available but both are not approved
      * assume we are trying to approve MALE_NOTICE
      * in this case this method change state of the marriage notice(register) into MALE_NOTICE_APPROVED and same
      * same scenario for approving FEMALE_NOTICE(actually vise-versa)
      * case 2:
      * one notice has been approved
-     * assume case 1 is completed that mean MALE_NOTICE is approved and register in state MALE_NOTICE approved
+     * assume case 1 is completed that mean MALE_NOTICE is approved and register in state MALE_NOTICE_APPROVED
      * and now we are trying to approve FEMALE_NOTICE
      * in this scenario we change notice state in to NOTICE_APPROVED state directly <b><u>not in to  FEMALE_NOTICE_APPROVED
      * now notice is fully approved
@@ -273,9 +259,9 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void approveMarriageNotice(long idUKey, MarriageNotice.Type type, User user) {
-        //TODO amith check permission for approval
         logger.debug("attempt to approve marriage notice with idUKey : {} and notice type : {}", idUKey, type);
         MarriageRegister existingNotice = marriageRegistrationDAO.getByIdUKey(idUKey);
+        checkUserPermissionForDeleteApproveAndRejectNotice(existingNotice, type, user);
         if (existingNotice.isSingleNotice()) {
             //directly change state in to NOTICE_APPROVED
             if (existingNotice.getState() == MarriageRegister.State.DATA_ENTRY) {
@@ -303,6 +289,8 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
                     ",idUKey" + idUKey, ErrorCodes.INVALID_STATE_FOR_APPROVAL);
             }
         }
+        //now we change state in to approving but if we changed state in to notice approve state there can't be another
+        //record that have same state for same male party and female party pin numbers
         if (existingNotice.getState() == MarriageRegister.State.NOTICE_APPROVED) {
             MarriageRegister existingActiveApprovedNotice = getActiveMarriageNoticeByMaleAndFemaleIdentification(
                 existingNotice.getMale().getIdentificationNumberMale(), existingNotice.getFemale().getIdentificationNumberFemale(), user);
@@ -346,6 +334,57 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     }
 
     /**
+     * check user permission for removing marriage notice
+     * note : to remove user must in
+     * BOTH : mrDivision of male notice
+     * MALE : mrDivision of male notice
+     * FEMALE : mrDivision of female notice
+     */
+    private void checkUserPermissionForDeleteApproveAndRejectNotice(MarriageRegister register, MarriageNotice.Type type, User user) {
+        switch (type) {
+            case BOTH_NOTICE:
+            case MALE_NOTICE: {
+                ValidationUtils.validateAccessToMRDivision(register.getMrDivisionOfMaleNotice(), user);
+            }
+            break;
+            case FEMALE_NOTICE: {
+                ValidationUtils.validateAccessToMRDivision(register.getMrDivisionOfFemaleNotice(), user);
+            }
+        }
+    }
+
+    /**
+     * check register state for removal
+     */
+    private void checkStateForDeleteNotice(MarriageRegister register, MarriageNotice.Type type) {
+        boolean validState = false;
+        switch (type) {
+            case BOTH_NOTICE:
+                if (register.getState() == MarriageRegister.State.DATA_ENTRY) {
+                    validState = true;
+                }
+                break;
+            case FEMALE_NOTICE:
+                if (register.getState() == MarriageRegister.State.DATA_ENTRY ||
+                    register.getState() == MarriageRegister.State.MALE_NOTICE_APPROVED) {
+                    validState = true;
+                }
+                break;
+            case MALE_NOTICE:
+                if (register.getState() == MarriageRegister.State.DATA_ENTRY ||
+                    register.getState() == MarriageRegister.State.FEMALE_NOTICE_APPROVED) {
+                    validState = true;
+                }
+                break;
+        }
+        if (!validState) {
+            handleException("invalid state" + register.getState() + "for removing notice idUKey " + register.getIdUKey()
+                , ErrorCodes.INVALID_STATE_FOR_REMOVAL);
+        }
+    }
+
+
+    /**
      * clearing notice related data for given notice type
      */
     private void clearingNoticeDetails(MarriageRegister notice, MarriageNotice.Type type) {
@@ -362,6 +401,16 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
                 notice.setDateOfFemaleNotice(null);
         }
 
+    }
+
+    /**
+     * populate notice for persisting
+     * if notice type is BOTH single notice will be true
+     */
+    private void populateObjectForPersisting(MarriageRegister marriageRegister, MarriageNotice.Type type) {
+        if (type == MarriageNotice.Type.BOTH_NOTICE) {
+            marriageRegister.setSingleNotice(true);
+        }
     }
 
     /**

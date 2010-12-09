@@ -209,14 +209,14 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
      */
     public String deleteMarriageNotice() {
         logger.debug("attempt to delete marriage notice : idUKey {} : notice type : {}", idUKey, noticeType);
-        MarriageRegister notice = service.getByIdUKey(idUKey, user);
-        if (notice != null && notice.getState() == MarriageRegister.State.DATA_ENTRY) {
+        try {
             service.deleteMarriageNotice(idUKey, noticeType, user);
-        } else {
-            addActionError(getText("error.delete.notice"));
+        }
+        catch (CRSRuntimeException e) {
             commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId,
                 dsDivisionId, mrDivisionId, "Marriage", user, language);
             getApprovalPendingNotices();
+            addActionError(getText("error.delete.notice"));
             return ERROR;
         }
         addActionMessage(getText("massage.delete.successfully"));
