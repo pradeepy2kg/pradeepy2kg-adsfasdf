@@ -61,8 +61,8 @@ public interface PopulationRegistry {
     public void editExistingPersonBeforeApproval(Person person, List<PersonCitizenship> citizenshipList, User user);
 
     /**
-     * Update an existing person to the PRS <b>after</b> approval of ADR or higher. Cannot update all the fields of the person
-     * only limited number of fields can be updated for e.g. current address, permanent address etc.
+     * Update an existing person to the PRS <b>after</b> approval of ADR or higher. Cannot update all the fields of the
+     * person only limited number of fields can be updated for e.g. current address, permanent address etc.
      *
      * @param person the Person to be updated
      * @param user   the user performing the action
@@ -73,7 +73,7 @@ public interface PopulationRegistry {
      * Approve a Person by ADR or higher authority
      * <p/>
      * An unique Person Identification Number is generated for successfully approved persons or returns a list of
-     * warnings while without ignoring warnings, if ignore warnings is true eliminate warning list 
+     * warnings while without ignoring warnings, if ignore warnings is true eliminate warning list
      *
      * @param personUKey     the unique database PK
      * @param ignoreWarnings an explicit switch that indicates that the record should be approved ignoring warnings
@@ -83,20 +83,22 @@ public interface PopulationRegistry {
     public List<UserWarning> approvePerson(long personUKey, boolean ignoreWarnings, User user);
 
     /**
-     * Delete an existing person <b>before</b> approval(i.e. before PIN generation) by ADR or higher authority
+     * Delete an existing person <b>before</b> approval by DEO or higher authority
      *
      * @param personUKey the unique database PK
+     * @param comment    the comment specifying the reason for deletion
      * @param user       the user performing the action
      */
-    public void deletePersonBeforeApproval(long personUKey, User user);
+    public void deletePersonBeforeApproval(long personUKey, String comment, User user);
 
     /**
-     * Reject a Person ADR or higher authority
+     * Reject an existing Person <b>before</b> approval by ADR or higher authority
      *
      * @param personUKey the unique database PK
+     * @param comment    the comment specifying the reason for rejection
      * @param user       the user performing the action
      */
-    public void rejectPerson(long personUKey, User user);
+    public void rejectPersonBeforeApproval(long personUKey, String comment, User user);
 
     /**
      * Update a Person on the PRS

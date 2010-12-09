@@ -1,14 +1,13 @@
 package lk.rgd.common.util;
 
+import lk.rgd.Permission;
 import lk.rgd.common.api.dao.RoleDAO;
 import lk.rgd.common.api.domain.Role;
-import lk.rgd.Permission;
-
-import java.util.BitSet;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
+
+import java.util.BitSet;
 
 /**
  * utill class for permission settings and related methods
@@ -36,13 +35,14 @@ public class RolePermissionUtils {
         deoBitSet.set(Permission.SEARCH_BDF);
         deoBitSet.set(Permission.SEARCH_DDF);
         deoBitSet.set(Permission.EDIT_DEATH);
-        deoBitSet.set(Permission.PRS_LOOKUP_PERSON_BY_KEYS);
-        deoBitSet.set(Permission.PRS_ADD_PERSON);
-        deoBitSet.set(Permission.PRS_EDIT_PERSON);
-        deoBitSet.set(Permission.SEARCH_PRS);
         deoBitSet.set(Permission.USER_PREFERENCES);
         deoBitSet.set(Permission.EDIT_BIRTH_ALTERATION);
+        deoBitSet.set(Permission.SEARCH_PRS);
+        deoBitSet.set(Permission.PRS_LOOKUP_PERSON_BY_KEYS);
         deoBitSet.set(Permission.PRS_VIEW_PERSON);
+        deoBitSet.set(Permission.PRS_ADD_PERSON);
+        deoBitSet.set(Permission.PRS_EDIT_PERSON);
+        deoBitSet.set(Permission.PRS_DELETE_PERSON);
         deoBitSet.set(Permission.EDIT_MARRIAGE);
         deoBitSet.set(Permission.ADD_MARRIAGE);
         deoBitSet.set(Permission.DELETE_MARRIAGE);
@@ -58,6 +58,7 @@ public class RolePermissionUtils {
         adrBitSet.set(Permission.PRINT_DEATH_CERTIFICATE);
         adrBitSet.set(Permission.REGISTRAR_MANAGEMENT);
         adrBitSet.set(Permission.PRS_APPROVE_PERSON);
+        adrBitSet.set(Permission.PRS_REJECT_PERSON);
         adrBitSet.set(Permission.SEARCH_MARRIAGE);
         adrBitSet.set(Permission.PRINT_MARRIAGE_CERTIFICATE);
         adrBitSet.set(Permission.APPROVE_MARRIAGE);
