@@ -24,6 +24,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -63,6 +64,8 @@ public class PRSRecordsIndexerImpl implements PRSRecordsIndexer {
     private final SolrIndexManager solrIndexManager;
     private final DataSource dataSource;
     private final PersonDAO personDAO;
+    private int retryCount = 1000;
+    private volatile boolean executing = false;
 
     public PRSRecordsIndexerImpl(SolrIndexManager solrIndexManager, DataSource dataSource, PersonDAO personDAO) {
         this.solrIndexManager = solrIndexManager;
@@ -70,7 +73,18 @@ public class PRSRecordsIndexerImpl implements PRSRecordsIndexer {
         this.personDAO = personDAO;
     }
 
+    public void setRetryCount(int retryCount) {
+        this.retryCount = retryCount;
+    }
+
     public boolean indexAll() {
+
+        if (executing) {
+            logger.warn("Already executing");
+            return false;
+        } else {
+            executing = true;
+        }
 
         if (solrIndexManager.getPRSServer() == null) {
             logger.error("Cannot connect to Solr server to index all PRS records");
@@ -85,53 +99,74 @@ public class PRSRecordsIndexerImpl implements PRSRecordsIndexer {
             logger.error("Error deleting existing PRS records off Solr index");
         }
 
-        Connection conn = null;
+        logger.info("Begin re-indexing of all PRS records into Solr");
+        long start = System.currentTimeMillis();
+        long count = 0;
+        int retries = retryCount;
 
-        try {
-            logger.info("Begin re-indexing of all PRS records into Solr");
+        while (retries-- > 0) {
 
-            long start = System.currentTimeMillis();
-            conn = dataSource.getConnection();
-            conn.setAutoCommit(false);
-            conn.setReadOnly(true);
+            long openTime = System.currentTimeMillis(), lastUse = System.currentTimeMillis();
+            Connection conn = null;
 
-            Statement s = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-            if (Boolean.getBoolean("ecivildb.mysql")) {
-                s.setFetchSize(Integer.MIN_VALUE);
-            }
-            ResultSet rs = s.executeQuery("SELECT * FROM PRS.PERSON");
+            try {
+                conn = dataSource.getConnection();
+                conn.setAutoCommit(false);
+                conn.setReadOnly(true);
 
-            int count = 0;
-            while (rs.next()) {
-                addRecord(rs);
-                count++;
-                if (count % 10000 == 0) {
-                    logger.info("Indexed : {} records in : {}s", count, (System.currentTimeMillis() - start)/1000);
+                Statement s = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+                if (Boolean.getBoolean("ecivildb.mysql")) {
+                    s.setFetchSize(Integer.MIN_VALUE);
+                }
+                ResultSet rs = s.executeQuery("SELECT * FROM PRS.PERSON");
+                openTime = System.currentTimeMillis();
+
+                if (count > 0) {
+                    logger.info("Restart re-indexing from database row : " + count);
+                    for (int i=0; i<count; i++) {
+                        rs.next();
+                    }
+                }
+
+                while (rs.next()) {
+                    lastUse = System.currentTimeMillis();
+                    addRecord(rs);
+                    count++;
+                    if (count % 10000 == 0) {
+                        logger.info("Indexed : {} records in : {}s", count, (System.currentTimeMillis() - start)/1000);
+                    }
+                }
+
+                logger.debug("Indexed : " + count + " PRS records in " + (System.currentTimeMillis() - start) / 1000 + "s");
+                start = System.currentTimeMillis();
+                solrIndexManager.getPRSServer().optimize();
+                solrIndexManager.getPRSServer().commit();
+                logger.debug("Optimized indexed of : " + count + " PRS records in : " +
+                    (System.currentTimeMillis() - start) / 1000 + "s");
+                executing = false;
+                return true;
+
+            } catch (SolrServerException e) {
+                logger.error("Error from Solr server during PRS record re-indexing", e);
+            } catch (SQLException e) {
+                logger.error("Database Exception encountered during PRS record re-indexing. " +
+                    "DB connection open at : " + new Date(openTime) + " last use : " + new Date(lastUse) +
+                    " failure detected at : " + new Date(), e);
+            } catch (IOException e) {
+                logger.error("IO Exception encountered during PRS record re-indexing", e);
+            } catch (Exception e) {
+                logger.error("Unexpected Exception encountered during PRS record re-indexing", e);
+            } finally {
+                if (conn != null) {
+                    try {
+                        conn.close();
+                    } catch (Exception e) {}
                 }
             }
-
-            logger.debug("Indexed : " + count + " PRS records in " + (System.currentTimeMillis() - start) / 1000 + "s");
-            start = System.currentTimeMillis();
-            solrIndexManager.getPRSServer().optimize();
-            solrIndexManager.getPRSServer().commit();
-            logger.debug("Optimized indexed of : " + count + " PRS records in : " + 
-                (System.currentTimeMillis() - start) / 1000 + "s");
-            return true;
-
-            // TODO we do not print the stack trace for now..
-        } catch (SolrServerException e) {
-            logger.error("Error from Solr server during PRS record re-indexing", e);
-        } catch (IOException e) {
-            logger.error("IO Exception encountered during PRS record re-indexing", e);
-        } catch (Exception e) {
-            logger.error("Unexpected Exception encountered during PRS record re-indexing", e);
-        } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (Exception e) {}
-            }
         }
+
+        logger.error("Failed to re-index PRS. Giving up after : {} retries", retryCount);
+        executing = false;
         return false;
     }
 

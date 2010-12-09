@@ -2,3 +2,5 @@ MySQL tables are bound by the underlying file systems space. Thus enough space s
 
 Tuning innodb_buffer_pool_size - http://www.mysqlperformanceblog.com/2007/11/03/choosing-innodb_buffer_pool_size/
 Its better to run MySQL on a separate machine, and allocate enough RAM to it - as much as possible
+
+Use separate tablespaces for each table using innodb_file_per_table See http://vdachev.net/2007/02/22/mysql-reducing-ibdata1/
