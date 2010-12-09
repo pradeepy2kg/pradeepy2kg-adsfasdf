@@ -6,6 +6,7 @@ import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.WebUtils;
+import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.dao.MRDivisionDAO;
 import lk.rgd.crs.api.domain.MarriageNotice;
 import lk.rgd.crs.api.domain.MarriageRegister;
@@ -56,6 +57,9 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     private int mrDivisionId;
     private int pageNo;
     private int noOfRows;
+    private long idUKey;
+
+    private MarriageNotice.Type noticeType;
 
     public MarriageRegisterSearchAction(MarriageRegistrationService service, DistrictDAO districtDAO,
         DSDivisionDAO dsDivisionDAO, MRDivisionDAO mrDivisionDAO, AppParametersDAO appParametersDAO,
@@ -169,6 +173,56 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         if (marriageRegisterSearchList.size() == 0) {
             addActionMessage(getText("noItemMsg.label"));
         }
+        return SUCCESS;
+    }
+
+    /**
+     * action method use to approve a notice this could be male notice or female notice or a single notice type(BOTH)
+     */
+    public String approveMarriageNotice() {
+        logger.debug("approving marriage notice idUKey : {} and notice type : {}", idUKey, noticeType);
+        try {
+            service.approveMarriageNotice(idUKey, noticeType, user);
+            addActionMessage(getText("massage.approve.success", new String[]{Long.toString(idUKey), noticeType.toString()}));
+            logger.debug("successfully approved marriage notice idUKey : {} and notice type :{ }", idUKey, noticeType);
+        } catch (CRSRuntimeException e) {
+            //error happens when approving marriage notice
+            addActionError(getText("error.approval.failed", new String[]{Long.toString(idUKey), noticeType.toString()}));
+            commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId,
+                dsDivisionId, mrDivisionId, "Marriage", user, language);
+            getApprovalPendingNotices();
+            return ERROR;
+        }
+        commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId, dsDivisionId,
+            mrDivisionId, "Marriage", user, language);
+        getApprovalPendingNotices();
+        addActionMessage(getText("massage.approve.successfully"));
+        return SUCCESS;
+    }
+
+
+    /**
+     * deleting a marriage notice
+     * notes:
+     * when removing a notice(have 2 notices) it just updating the data row
+     * if there is only one notice (BOTH) delete the row
+     */
+    public String deleteMarriageNotice() {
+        logger.debug("attempt to delete marriage notice : idUKey {} : notice type : {}", idUKey, noticeType);
+        MarriageRegister notice = service.getByIdUKey(idUKey, user);
+        if (notice != null && notice.getState() == MarriageRegister.State.DATA_ENTRY) {
+            service.deleteMarriageNotice(idUKey, noticeType, user);
+        } else {
+            addActionError(getText("error.delete.notice"));
+            commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId,
+                dsDivisionId, mrDivisionId, "Marriage", user, language);
+            getApprovalPendingNotices();
+            return ERROR;
+        }
+        addActionMessage(getText("massage.delete.successfully"));
+        commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId,
+            dsDivisionId, mrDivisionId, "Marriage", user, language);
+        getApprovalPendingNotices();
         return SUCCESS;
     }
 
@@ -354,5 +408,21 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
 
     public void setMarriageRegisterSearchList(List<MarriageRegister> marriageRegisterSearchList) {
         this.marriageRegisterSearchList = marriageRegisterSearchList;
+    }
+
+    public MarriageNotice.Type getNoticeType() {
+        return noticeType;
+    }
+
+    public void setNoticeType(MarriageNotice.Type noticeType) {
+        this.noticeType = noticeType;
+    }
+
+    public long getIdUKey() {
+        return idUKey;
+    }
+
+    public void setIdUKey(long idUKey) {
+        this.idUKey = idUKey;
     }
 }
