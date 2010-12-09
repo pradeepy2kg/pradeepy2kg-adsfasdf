@@ -166,12 +166,14 @@
                 </div>
             </div>
         </div>
+        <div style="float:left;">
+            <s:actionmessage/>
+        </div>
         <div class="form-submit" style="float:right;">
             <s:submit value="%{getText('bdfSearch.button')}"/>
         </div>
 
         <div id="person-approval-search" style="margin-top:58px;">
-            <s:actionmessage cssClass="alreadyPrinted"/>
             <s:if test="approvalPendingList.size > 0">
                 <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;">
                     <legend><b><s:label value="%{getText('searchResult.label')}"/></b></legend>
