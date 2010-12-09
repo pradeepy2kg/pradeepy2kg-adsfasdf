@@ -70,15 +70,13 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     /**
      * @inheritDoc
      */
-    // TODO chathuranga later
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<MarriageRegister> getMarriageNoticePendingApprovalByDSDivision(DSDivision dsDivision, int pageNo,
         int noOfRows, boolean active, User user) {
         logger.debug("Get Active : {} MarriageNotices pending approval by DSDivision : {}", active,
             dsDivision.getDsDivisionUKey());
         ValidationUtils.validateAccessToDSDivision(dsDivision, user);
-        return marriageRegistrationDAO.getPaginatedListForStateByDSDivision(dsDivision,
-            MarriageRegister.State.DATA_ENTRY, pageNo, noOfRows, active);
+        return marriageRegistrationDAO.getPaginatedNoticeListByDSDivision(dsDivision, pageNo, noOfRows, active);
     }
 
     /**

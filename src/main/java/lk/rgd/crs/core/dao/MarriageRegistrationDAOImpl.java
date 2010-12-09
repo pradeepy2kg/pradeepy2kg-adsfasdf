@@ -81,14 +81,25 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
     /**
      * @inheritDoc
      */
-    // TODO chathuranga later
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<MarriageRegister> getPaginatedNoticeListByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, boolean active) {
+        Query q = em.createNamedQuery("filter.notice.by.dsDivision").
+            setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+        q.setParameter("dsDivision", dsDivision);
+        q.setParameter("active", active);
+        return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<MarriageRegister> getPaginatedListForStateByDSDivision(DSDivision dsDivision,
         MarriageRegister.State state, int pageNo, int noOfRows, boolean active) {
         Query q = em.createNamedQuery("filter.by.dsDivision.and.state").
             setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("dsDivision", dsDivision);
-//        q.setParameter("state", state);
+        q.setParameter("state", state);
         q.setParameter("active", active);
         return q.getResultList();
     }

@@ -59,6 +59,18 @@ public interface MarriageRegistrationDAO {
         long serialNo, boolean active);
 
     /**
+     * Returns paginated list of active/inactive Marriage Notices based on the DSDivision
+     *
+     * @param dsDivision the divisional secretariat
+     * @param pageNo     the page number (start from 1)
+     * @param noOfRows   the number of rows to return per page
+     * @param active     include currently active or inactive items
+     * @return the matching list of marriage registrations (marriage notices)
+     */
+    public List<MarriageRegister> getPaginatedNoticeListByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows,
+        boolean active);
+
+    /**
      * Returns paginated list of active/inactive Marriage Registrations for the given status based on the DSDivision
      *
      * @param dsDivision the divisional secretariat
