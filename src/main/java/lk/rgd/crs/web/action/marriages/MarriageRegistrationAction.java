@@ -221,45 +221,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         return SUCCESS;
     }
 
-    /**
-     * deleting a marriage notice
-     * notes:
-     * when removing a notice(have 2 notices) it just updating the data row
-     * if there is only one notice (BOTH) delete the row
-     */
-    public String deleteMarriageNotice() {
-        logger.debug("attempt to delete marriage notice : idUKey {} : notice type : {}", idUKey, noticeType);
-        MarriageRegister notice = marriageRegistrationService.getByIdUKey(idUKey, user);
-        if (notice != null && notice.getState() == MarriageRegister.State.DATA_ENTRY) {
-            marriageRegistrationService.deleteMarriageNotice(idUKey, noticeType, user);
-        } else {
-            addActionError("error.delete.notice");
-            return ERROR;
-        }
-        return SUCCESS;
-    }
 
-    /**
-     * action method use to approve a notice this could be male notice or female notice or a single notice type(BOTH)
-     */
-    public String approveMarriageNotice() {
-        logger.debug("approving marriage notice idUKey : {} and notice type : {}", idUKey, noticeType);
-        try {
-            marriageRegistrationService.approveMarriageNotice(idUKey, noticeType, user);
-            addActionMessage(getText("massage.approve.success", new String[]{Long.toString(idUKey), noticeType.toString()}));
-            logger.debug("successfully approved marriage notice idUKey : {} and notice type :{ }", idUKey, noticeType);
-        } catch (CRSRuntimeException e) {
-            //error happens when approving marriage notice
-            addActionError(getText("error.approval.failed", new String[]{Long.toString(idUKey), noticeType.toString()}));
-            //TODO redirect to list page with action error and remove this population of lists
-            commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, marriageDistrictId,
-                dsDivisionId, mrDivisionId, "Marriage", user, language);
-            return ERROR;
-        }
-        commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, marriageDistrictId, dsDivisionId,
-            mrDivisionId, "Marriage", user, language);
-        return SUCCESS;
-    }
 
     public String marriageRegistrationInit() {
         marriageType = MarriageType.values();

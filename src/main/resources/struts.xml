@@ -19,7 +19,6 @@
             <interceptor name="exception" class="com.opensymphony.xwork2.interceptor.ExceptionMappingInterceptor"/>
             <interceptor name="security" class="lk.rgd.crs.web.action.SecurityInterceptor"/>
             <interceptor name="cacheControl" class="lk.rgd.crs.web.action.CacheControlInterceptor"/>
-            <interceptor name="redirectMassage" class="lk.rgd.crs.web.action.RedirectMessageInterceptor"/>
             <interceptor-stack name="default">
                 <interceptor-ref name="exception"/>
                 <interceptor-ref name="security"/>
@@ -1159,6 +1158,9 @@
 
         <action name="eprMarriageNoticeSearchInit" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
                 method="marriageNoticeSearchInit">
+            <!--            <interceptor-ref name="test">
+                <param name="operationMode">RETRIEVE</param>
+            </interceptor-ref>-->
             <result type="tiles" name="success">epr.marriageNoticeSearchHome</result>
         </action>
 
@@ -1192,13 +1194,10 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
-        <action name="eprMarriageNoticeDelete" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
+        <action name="eprMarriageNoticeDelete" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
                 method="deleteMarriageNotice">
-            <!--todo do not forward to default error page todo redirect to search results-->
-            <result type="redirectAction">
-                <param name="actionName">eprMarriageNoticeSearchInit</param>
-            </result>
-            <result type="tiles" name="error">epr.error</result>
+            <result type="tiles" name="success">epr.marriageNoticeSearchHome</result>
+            <result type="tiles" name="error">epr.marriageNoticeSearchHome</result>
         </action>
 
 
@@ -1225,10 +1224,10 @@
             <result type="tiles" name="success">epr.marriageNoticeTypeSelect</result>
         </action>
 
-        <action name="eprApproveMarriageNotice" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
+        <action name="eprApproveMarriageNotice" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
                 method="approveMarriageNotice">
-            <result type="redirectAction" name="success">eprMarriageNoticeSearchInit</result>
-            <result type="redirectAction" name="error">eprMarriageNoticeSearchInit</result>
+            <result type="tiles" name="success">epr.marriageNoticeSearchHome</result>
+            <result type="tiles" name="error">epr.marriageNoticeSearchHome</result>
         </action>
     </package>
 </struts>

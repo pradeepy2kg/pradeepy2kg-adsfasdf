@@ -185,6 +185,9 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      * <i>as an example :
      * if both male and female party submitted notices are available and you just need to remove female party
      * submitted notice in that case we have to update the data base row by removing female party notice related columns
+     * note:states regarding to removal
+     * case 1:  record must be in DATA_ENTRY
+     * for removal of male notice record must be in either DATA_ENTRY or FEMALE_NOTICE_APPROVE state
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void deleteMarriageNotice(long idUKey, MarriageNotice.Type noticeType, User user) {
@@ -266,6 +269,9 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      * and now we are trying to approve FEMALE_NOTICE
      * in this scenario we change notice state in to NOTICE_APPROVED state directly <b><u>not in to  FEMALE_NOTICE_APPROVED
      * now notice is fully approved
+     * <p/>
+     * note:if any case change its state in to notice approved it means this is the only active notice that can be have
+     * for that couple
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void approveMarriageNotice(long idUKey, MarriageNotice.Type type, User user) {
@@ -297,6 +303,15 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
             } else {
                 handleException("unable to approve single :" + existingNotice.isSingleNotice() + "notice type:" + type +
                     ",idUKey" + idUKey, ErrorCodes.INVALID_STATE_FOR_APPROVAL);
+            }
+        }
+        if (existingNotice.getState() == MarriageRegister.State.NOTICE_APPROVED) {
+            MarriageRegister existingActiveApprovedNotice = getActiveMarriageNoticeByMaleAndFemaleIdentification(
+                existingNotice.getMale().getIdentificationNumberMale(), existingNotice.getFemale().getIdentificationNumberFemale(), user);
+            if (existingActiveApprovedNotice != null) {
+                handleException("existing active approved notice for male pin" + existingNotice.getMale().
+                    getIdentificationNumberMale() + "and female pin " + existingNotice.getFemale().
+                    getIdentificationNumberFemale() + "so can not approve", ErrorCodes.EXISTING_ACTIVE_APPROVED_NOTICE);
             }
         }
         marriageRegistrationDAO.updateMarriageRegister(existingNotice, user);
