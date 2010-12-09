@@ -82,7 +82,8 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<MarriageRegister> getPaginatedNoticeListByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, boolean active) {
+    public List<MarriageRegister> getPaginatedNoticeListByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows,
+        boolean active) {
         Query q = em.createNamedQuery("filter.notice.by.dsDivision").
             setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("dsDivision", dsDivision);
