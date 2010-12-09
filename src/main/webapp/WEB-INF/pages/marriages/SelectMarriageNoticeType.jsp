@@ -4,7 +4,7 @@
 <s:form action="eprMarriageNoticeInit.do" method="post">
     <table>
         <caption/>
-        <col width="150px"/>
+        <col width="300px"/>
         <col width="30px"/>
         <col/>
         <tbody>
@@ -16,13 +16,26 @@
 
             </td>
             <td align="left">
-                <s:select list="#@java.util.HashMap@{'BOTH_NOTICE':getText('both.submit.label'),'MALE_NOTICE':getText('male.submit.label'),'FEMALE_NOTICE':getText('female.submit.label')}"
+                <s:select
+                        list="#@java.util.HashMap@{'BOTH_NOTICE':getText('both.submit.label'),
+                        'MALE_NOTICE':getText('male.submit.label'),'FEMALE_NOTICE':getText('female.submit.label')}"
                         name="noticeType" cssStyle="width:190px;"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <s:label value="%{getText('label.who.request.license')}"/>
+            </td>
+            <td></td>
+            <td align="left">
+                <s:select
+                        list="#@java.util.HashMap@{'true':getText('label.req.by.male'),'false':getText('label.req.by.female')}"
+                        name="licenseReqByMale" cssStyle="width:190px;"/>
             </td>
         </tr>
         </tbody>
     </table>
-<div class="form-submit">
-    <s:submit value="go.notice"/>
-</div>
+    <div class="form-submit">
+        <s:submit value="%{button.go}"/>
+    </div>
 </s:form>

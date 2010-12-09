@@ -3,7 +3,10 @@
 <s:actionmessage cssStyle="color:black;"/>
 <br>
 <s:actionerror cssErrorStyle="color:red;"/>
+<%--
 <s:if test="idUKey>0">
+--%>
+<s:if test="false==true">
     <div class="form-submit">
         <s:form action="eprMarriageNoticeEditInit" method="post">
 
