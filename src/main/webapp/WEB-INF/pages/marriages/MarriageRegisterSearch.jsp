@@ -45,7 +45,8 @@
                     </td>
                     <td>
                         <s:select id="districtId" name="districtId" list="districtList" value="districtId"
-                                  cssStyle="width:98.5%; width:240px;" onclick="populateDSDivisions('districtId','dsDivisionId','mrDivisionId')"/>
+                                  cssStyle="width:98.5%; width:240px;"
+                                  onclick="populateDSDivisions('districtId','dsDivisionId','mrDivisionId')"/>
                     </td>
                     <td></td>
                     <td>
@@ -53,7 +54,8 @@
                     </td>
                     <td>
                         <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="dsDivisionId"
-                                  cssStyle="width:98.5%; width:240px;" onchange="populateDivisions('dsDivisionId', 'mrDivisionId')"/>
+                                  cssStyle="width:98.5%; width:240px;"
+                                  onchange="populateDivisions('dsDivisionId', 'mrDivisionId')"/>
                     </td>
                 </tr>
                 <tr>
@@ -120,7 +122,7 @@
 
 <div id="marriage-notice-search" style="margin-top:58px;">
     <s:actionmessage cssClass="alreadyPrinted"/>
-      <s:if test="marriageRegisterSearchList.size > 0">
+    <s:if test="marriageRegisterSearchList.size > 0">
         <%--table for displaying marriage registers--%>
         <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;">
             <legend><b><s:label value="%{getText('searchResult.label')}"/> </b></legend>
@@ -136,16 +138,17 @@
                     <th width="15px"></th>
                     <th width="15px"></th>
                     <th width="15px"></th>
+                    <th width="15px"></th>
                 </tr>
                 </thead>
                 <tbody>
                 <s:iterator status="approvalStatus" value="marriageRegisterSearchList">
                     <tr>
                         <td align="center">
-                                <s:property value="idUKey"/>
+                            <s:property value="idUKey"/>
                         </td>
                         <td>
-                             <s:property value="male.nameInOfficialLanguageMale"/>
+                            <s:property value="male.nameInOfficialLanguageMale"/>
                         </td>
                         <td align="center">
                         </td>
@@ -154,7 +157,7 @@
                         <td align="center">
                             <s:url id="editSelected" action="eprMarriageRegistrationInit.do">
                                 <s:param name="idUKey" value="idUKey"/>
-                                <s:param name="licensedMarriage" value="true"/>                                
+                                <s:param name="licensedMarriage" value="true"/>
                             </s:url>
                             <s:a href="%{editSelected}" title="%{getText('editToolTip.label')}">
                                 <img src="<s:url value='/images/edit.png'/>" width="25" height="25" border="none"/>
@@ -183,6 +186,14 @@
                             </s:url>
                             <s:a href="%{deleteSelected}" title="%{getText('deleteToolTip.label')}">
                                 <img src="<s:url value='/images/delete.gif'/>" width="25" height="25" border="none"/>
+                            </s:a>
+                        </td>
+                        <td>
+                            <s:url id="cetificatePrintUrl" action="eprMarriageExtractInit.do">
+                                <s:param name="idUKey" value="idUKey"/>
+                            </s:url>
+                            <s:a href="%{cetificatePrintUrl}">
+                                <img src="<s:url value='/images/print_icon.gif'/>" border="none" height="25"/>
                             </s:a>
                         </td>
                     </tr>
