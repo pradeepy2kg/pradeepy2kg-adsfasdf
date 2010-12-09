@@ -43,4 +43,6 @@ public final class Permission {
     public static final int PRS_LOOKUP_PERSON_BY_KEYS = 52;
     public static final int PRS_VIEW_PERSON = 53;
     public static final int PRS_APPROVE_PERSON = 54;
+    public static final int PRS_DELETE_PERSON = 55;
+    public static final int PRS_REJECT_PERSON = 56;
 }

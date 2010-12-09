@@ -202,9 +202,12 @@ public class Person implements Serializable {
      */
     @Column(nullable = true, length = 10)
     private String fatherPINorNIC;
-
-    // TODO add comment fields. to capture warnings etc.
-
+    /**
+     * Status comment - e.g. reason for deletion or rejection
+     */
+    @Lob
+    @Column(nullable = true, length = 4096)
+    private String comments;
     /**
      * The mother of this person
      */
@@ -502,6 +505,14 @@ public class Person implements Serializable {
 
     public void setFatherPINorNIC(String fatherPINorNIC) {
         this.fatherPINorNIC = WebUtils.filterBlanksAndToUpper(fatherPINorNIC);
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 
     public Person getMother() {

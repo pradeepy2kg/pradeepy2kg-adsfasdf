@@ -160,7 +160,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
                     citizenshipDAO.addCitizenship(pc, user);
                 }
             }
-            logger.debug("Added a new person to the PRS with PersonUKey : {} and generated PIN : {}",
+            logger.debug("Added a new person to the PRS with personUKey : {} and generated PIN : {}",
                 person.getPersonUKey(), pin);
         }
         return Collections.emptyList();
@@ -288,7 +288,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
                 ErrorCodes.PRS_APPROVE_RECORD_DENIED);
         }
 
-        Person existing = getByUKey(personUKey, user);
+        Person existing = personDao.getByUKey(personUKey);
         // is the person record currently existing in a state for approval
         final Person.Status currentState = existing.getStatus();
         if (Person.Status.SEMI_VERIFIED != currentState) {
@@ -321,18 +321,92 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void deletePersonBeforeApproval(long personUKey, User user) {
-        // TODO chathuranga
-        throw new UnsupportedOperationException();
+    public void deletePersonBeforeApproval(long personUKey, String comment, User user) {
+        logger.debug("Attempt to delete PRS entry with personUKey : {}", personUKey);
+        if (!user.isAuthorized(Permission.PRS_DELETE_PERSON)) {
+            handleException("User : " + user.getUserId() + " is not allowed to delete entries on the PRS by UKey",
+                ErrorCodes.PRS_DELETE_RECORD_DENIED);
+        }
+        if (comment == null || comment.trim().length() < 1) {
+            handleException("A comment is required to delete PRS entry with personUKey : " + personUKey,
+                ErrorCodes.COMMENT_REQUIRED_PRS_DELETE);
+        }
+
+        final Person existing = personDao.getByUKey(personUKey);
+        // does the user have access to existing records submitted location
+        validateAccessToLocation(existing.getSubmittedLocation(), user);
+
+        final StringBuilder sb = new StringBuilder();
+        if (existing.getComments() == null) {
+            sb.append("DELETED\n");
+            sb.append(comment);
+            existing.setComments(sb.toString());
+        } else {
+            sb.append(existing.getComments());
+            sb.append("\nDELETED\n");
+            sb.append(comment);
+            existing.setComments(sb.toString());
+        }
+
+        // a PRS entry can be deleted by DEO or higher before approval
+        final Person.Status currentState = existing.getStatus();
+        if (currentState == Person.Status.SEMI_VERIFIED || currentState == Person.Status.UNVERIFIED) {
+            existing.setStatus(Person.Status.DELETED);
+            existing.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
+            existing.getLifeCycleInfo().setApprovalOrRejectUser(user);
+            existing.setSubmittedLocation(user.getPrimaryLocation());
+            personDao.updatePerson(existing, user);
+            logger.debug("Deleted PRS entry with peronUKey : {} by user : {}", personUKey, user.getUserId());
+        } else {
+            handleException("Cannot delete PRS entry with personUKey : " + personUKey +
+                " Illegal state : " + currentState, ErrorCodes.ILLEGAL_STATE);
+        }
     }
 
     /**
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void rejectPerson(long personUKey, User user) {
-        // TODO chathuranga
-        throw new UnsupportedOperationException();
+    public void rejectPersonBeforeApproval(long personUKey, String comment, User user) {
+        logger.debug("Attempt to reject PRS entry with personUKey : {}", personUKey);
+        if (!user.isAuthorized(Permission.PRS_REJECT_PERSON)) {
+            handleException("User : " + user.getUserId() + " is not allowed to reject entries on the PRS by UKey",
+                ErrorCodes.COMMENT_REQUIRED_PRS_REJECT);
+        }
+        if (comment == null || comment.trim().length() < 1) {
+            handleException("A comment is required to REJECT PRS entry with personUKey : " + personUKey,
+                ErrorCodes.COMMENT_REQUIRED_PRS_DELETE);
+        }
+
+        final Person existing = personDao.getByUKey(personUKey);
+        // does the user have access to existing records submitted location
+        validateAccessToLocation(existing.getSubmittedLocation(), user);
+
+        final StringBuilder sb = new StringBuilder();
+        if (existing.getComments() == null) {
+            sb.append("REJECTED\n");
+            sb.append(comment);
+            existing.setComments(sb.toString());
+        } else {
+            sb.append(existing.getComments());
+            sb.append("\nREJECTED\n");
+            sb.append(comment);
+            existing.setComments(sb.toString());
+        }
+
+        // a PRS entry can be rejected by ADR or higher before approval
+        final Person.Status currentState = existing.getStatus();
+        if (currentState == Person.Status.SEMI_VERIFIED || currentState == Person.Status.UNVERIFIED) {
+            existing.setStatus(Person.Status.CANCELLED);
+            existing.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
+            existing.getLifeCycleInfo().setApprovalOrRejectUser(user);
+            existing.setSubmittedLocation(user.getPrimaryLocation());
+            personDao.updatePerson(existing, user);
+            logger.debug("Rejected PRS entry with personUKey : {} by user : {}", personUKey, user.getUserId());
+        } else {
+            handleException("Cannot reject PRS entry with personUKey : " + personUKey +
+                " Illegal State : " + currentState, ErrorCodes.ILLEGAL_STATE);
+        }
     }
 
     /**
