@@ -795,6 +795,7 @@
     <s:submit value="add.notice"/>
 </div>
 <s:hidden name="noticeType" value="%{noticeType}"/>
+<s:hidden name="licenseReqByMale" value="%{licenseReqByMale}"/>
 </s:form>
 </div>
 

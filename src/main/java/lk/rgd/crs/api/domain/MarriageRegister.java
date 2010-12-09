@@ -148,6 +148,9 @@ public class MarriageRegister implements Serializable, Cloneable {
 
     //male notice related columns
 
+    @Column(name = "LI_REQ_PARTY", nullable = true)
+    private boolean licenseRequestByMale;    //1 male party 0 female party      
+
     @Column(length = 10, name = "NOTICE_SERIAL_MALE")
     private Long serialOfMaleNotice;
 
@@ -430,5 +433,13 @@ public class MarriageRegister implements Serializable, Cloneable {
 
     public void setRegNameInEnglishLang(String regNameInEnglishLang) {
         this.regNameInEnglishLang = regNameInEnglishLang;
+    }
+
+    public boolean isLicenseRequestByMale() {
+        return licenseRequestByMale;
+    }
+
+    public void setLicenseRequestByMale(boolean licenseRequestByMale) {
+        this.licenseRequestByMale = licenseRequestByMale;
     }
 }
