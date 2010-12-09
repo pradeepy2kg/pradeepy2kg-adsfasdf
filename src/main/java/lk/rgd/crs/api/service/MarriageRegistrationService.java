@@ -87,11 +87,12 @@ public interface MarriageRegistrationService {
      *
      * @param mrDivision the Marriage Registration Division
      * @param serialNo   the serial number of the marriage notice (male or female party)
+     * @param active     include currently active items
      * @param user       the user initiating the action
      * @return list of marriage records, but should be a single marriage record
      */
     public List<MarriageRegister> getMarriageNoticePendingApprovalByMRDivisionAndSerial(MRDivision mrDivision,
-        long serialNo, User user);
+        long serialNo, boolean active, User user);
 
     /**
      * get active marriage notice(marriage register objects) by male party and female party identification numbers
