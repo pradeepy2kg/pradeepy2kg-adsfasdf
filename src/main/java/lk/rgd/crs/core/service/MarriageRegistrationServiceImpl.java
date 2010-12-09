@@ -1,6 +1,7 @@
 package lk.rgd.crs.core.service;
 
 import lk.rgd.ErrorCodes;
+import lk.rgd.Permission;
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.CRSRuntimeException;
@@ -41,6 +42,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     public void addMarriageNotice(MarriageRegister notice, MarriageNotice.Type type, User user) {
         logger.debug("attempt to add marriage notice male serial :{} female serial : {}", notice.getSerialOfMaleNotice(),
             notice.getSerialOfFemaleNotice() + ": notice type :" + type);
+        checkUserPermission(Permission.ADD_MARRIAGE, ErrorCodes.PERMISSION_DENIED, "add second notice to marriage register", user);
         marriageRegistrationValidator.validateMarriageNotice(notice, type);
         populateObjectForPersisting(notice, type);
         marriageRegistrationDAO.addMarriageNotice(notice, user);
@@ -138,6 +140,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     @Transactional(propagation = Propagation.REQUIRED)
     public void updateMarriageRegister(MarriageRegister marriageRegister, User user) {
         logger.debug("attempt to update marriage register/notice record : idUKey : {}", marriageRegister.getIdUKey());
+        checkUserPermission(Permission.EDIT_MARRIAGE, ErrorCodes.PERMISSION_DENIED, "edit  marriage register", user);
         marriageRegistrationDAO.updateMarriageRegister(marriageRegister, user);
     }
 
@@ -147,6 +150,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     @Transactional(propagation = Propagation.REQUIRED)
     public void addSecondMarriageNotice(MarriageRegister notice, boolean isMale, User user) {
         logger.debug("attempt to add a second notice for existing record : idUKey : {}", notice.getIdUKey());
+        checkUserPermission(Permission.ADD_MARRIAGE, ErrorCodes.PERMISSION_DENIED, "add second notice to marriage register", user);
         updateMarriageRegister(notice, user);
     }
 
@@ -175,7 +179,11 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     @Transactional(propagation = Propagation.REQUIRED)
     public void deleteMarriageNotice(long idUKey, MarriageNotice.Type noticeType, User user) {
         logger.debug("attempt to remove marriage notice : idUKey : {} and notice type : {}", idUKey, noticeType);
+        checkUserPermission(Permission.DELETE_MARRIAGE, ErrorCodes.PERMISSION_DENIED, "delete marriage notice ", user);
         MarriageRegister notice = marriageRegistrationDAO.getByIdUKey(idUKey);
+        if (notice == null) {
+            handleException("cannot find record for approval" + idUKey, ErrorCodes.CAN_NOT_FIND_MARRIAGE_NOTICE);
+        }
         checkUserPermissionForDeleteApproveAndRejectNotice(notice, noticeType, user);
         checkStateForDeleteNotice(notice, noticeType);
         if (noticeType == MarriageNotice.Type.BOTH_NOTICE) {
@@ -260,7 +268,11 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     @Transactional(propagation = Propagation.REQUIRED)
     public void approveMarriageNotice(long idUKey, MarriageNotice.Type type, User user) {
         logger.debug("attempt to approve marriage notice with idUKey : {} and notice type : {}", idUKey, type);
+        checkUserPermission(Permission.APPROVE_MARRIAGE, ErrorCodes.PERMISSION_DENIED, "approve marriage notice", user);
         MarriageRegister existingNotice = marriageRegistrationDAO.getByIdUKey(idUKey);
+        if (existingNotice == null) {
+            handleException("cannot find record for approval" + idUKey, ErrorCodes.CAN_NOT_FIND_MARRIAGE_NOTICE);
+        }
         checkUserPermissionForDeleteApproveAndRejectNotice(existingNotice, type, user);
         if (existingNotice.isSingleNotice()) {
             //directly change state in to NOTICE_APPROVED
@@ -331,6 +343,12 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
             }
         }
         return results;
+    }
+
+    private void checkUserPermission(int permissionBit, int errorCode, String msg, User user) {
+        if (!user.isAuthorized(permissionBit)) {
+            handleException("User : " + user.getUserId() + " is not allowed to " + msg, errorCode);
+        }
     }
 
     /**

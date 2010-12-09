@@ -44,6 +44,8 @@ public class RolePermissionUtils {
         deoBitSet.set(Permission.EDIT_BIRTH_ALTERATION);
         deoBitSet.set(Permission.PRS_VIEW_PERSON);
         deoBitSet.set(Permission.EDIT_MARRIAGE);
+        deoBitSet.set(Permission.ADD_MARRIAGE);
+        deoBitSet.set(Permission.DELETE_MARRIAGE);
 
         // ADR
 

@@ -197,6 +197,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
             mrDivisionId, "Marriage", user, language);
         getApprovalPendingNotices();
         addActionMessage(getText("massage.approve.successfully"));
+        logger.debug("successfully approved :idUKey : {}", idUKey);
         return SUCCESS;
     }
 

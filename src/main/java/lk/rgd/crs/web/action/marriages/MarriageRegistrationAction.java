@@ -134,7 +134,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
                     serialNumber, mrDivisionId);
                 //todo redirect to notice page with values like birth registration
                 addActionMessage(getText("massage.existing.notice.found"));
-                return SUCCESS;
+                return ERROR;
             }
             populateNoticeForPersists();
             //add race,country to  male party and female party
@@ -149,11 +149,12 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             logger.debug("incomplete marriage notice : male serial number : {} : female serial number : {}",
                 marriage.getSerialOfMaleNotice(), marriage.getSerialOfFemaleNotice());
             addActionError(getText("error.incomplete.notice"));
-            return SUCCESS;
+            return ERROR;
         }
     }
 
     public String editMarriageNoticeInit() {
+        //todo check state for editing record
         logger.debug("attempt to edit marriage notice :idUKey {}", idUKey);
         marriage = marriageRegistrationService.getByIdUKey(idUKey, user);
         if (marriage == null) {
@@ -175,6 +176,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
      * editing(updating) a marriage notice (register)
      */
     public String editMarriageNotice() {
+        //todo if notice is approved cannot edit in notice stage
         logger.debug("attempt to edit marriage notice : idUKey {}", idUKey);
         MarriageRegister existingNotice = marriageRegistrationService.getByIdUKey(idUKey, user);
         if (existingNotice != null) {
@@ -220,7 +222,6 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         logger.debug("added second notice to idUKey : {}", idUKey);
         return SUCCESS;
     }
-
 
 
     public String marriageRegistrationInit() {
