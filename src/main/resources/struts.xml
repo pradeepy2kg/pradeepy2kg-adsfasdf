@@ -1229,5 +1229,11 @@
             <result type="tiles" name="success">epr.marriageNoticeSearchHome</result>
             <result type="tiles" name="error">epr.marriageNoticeSearchHome</result>
         </action>
+
+       <action name="eprMarriageExtractInit" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
+                method="marriageExtractInit">
+            <result type="tiles" name="success">epr.marriageExtract</result>
+            <result type="tiles" name="error">epr.error</result>
+       </action>
     </package>
 </struts>
