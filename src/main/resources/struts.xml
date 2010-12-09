@@ -1166,7 +1166,7 @@
 
         <action name="eprMarriageRegistrationInit" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
                 method="marriageRegistrationInit">
-            <result type="tiles" name="pageLoad">epr.marriageRegistration</result>
+            <result type="tiles" name="success">epr.marriageRegistration</result>
         </action>
         <action name="eprMarriageRegistration" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
                 method="registerNewMarriage">

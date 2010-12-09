@@ -416,6 +416,17 @@
             <s:textfield name="marriage.registrationDate" id="registrationDatePicker" maxLength="10"/>
         </td>
     </tr>
+   <tr>
+        <td class="font-8">
+        සහතිකය නිකුත් කල යුතු භාෂාව
+            <br>நபரின் பதிவிற்கான சான்றிதழினை வழங்கப்படவேண்டிய மொழி
+            <br>Preferred Language for Marriage Certificate
+        </td>
+        <td colspan="3">
+            <s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'தமிழ்'}" name="marriage.preferredLanguage"
+                      cssStyle="width:190px; margin-left:5px;"/>
+        </td>
+    </tr>
 </table>
 
 

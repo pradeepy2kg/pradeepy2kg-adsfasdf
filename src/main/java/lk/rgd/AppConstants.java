@@ -42,5 +42,17 @@ public class AppConstants {
      * Language identifier for Tamil
      */
     public static final String TAMIL = "ta";
+    /**
+     * Register Type for Birth
+     */
+    public static final String BIRTH = "Birth";
+    /**
+     * Register Type for Death
+     */
+    public static final String DEATH = "Death";
+    /**
+     * Register Type for Marriage
+     */
+    public static final String MARRIAGE = "Marriage";
 
 }

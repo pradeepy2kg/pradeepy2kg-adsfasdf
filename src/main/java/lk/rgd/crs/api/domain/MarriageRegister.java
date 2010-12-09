@@ -88,6 +88,11 @@ public class MarriageRegister implements Serializable, Cloneable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IDUKEY")
     private long idUKey;
+    /**
+     * The preferred language to print the Extract of Marriage Register
+     */
+    @Column(nullable = true, columnDefinition="char(2) default 'si'")
+    private String preferredLanguage;
 
     @Column(name = "STATE", nullable = false)
     private State state;
@@ -149,7 +154,7 @@ public class MarriageRegister implements Serializable, Cloneable {
     //male notice related columns
 
     @Column(name = "LI_REQ_PARTY", nullable = true)
-    private boolean licenseRequestByMale;    //1 male party 0 female party      
+    private boolean licenseRequestByMale;    //1 male party 0 female party
 
     @Column(length = 10, name = "NOTICE_SERIAL_MALE")
     private Long serialOfMaleNotice;
@@ -441,5 +446,13 @@ public class MarriageRegister implements Serializable, Cloneable {
 
     public void setLicenseRequestByMale(boolean licenseRequestByMale) {
         this.licenseRequestByMale = licenseRequestByMale;
+    }
+
+    public String getPreferredLanguage() {
+        return preferredLanguage;
+    }
+
+    public void setPreferredLanguage(String preferredLanguage) {
+        this.preferredLanguage = preferredLanguage;
     }
 }

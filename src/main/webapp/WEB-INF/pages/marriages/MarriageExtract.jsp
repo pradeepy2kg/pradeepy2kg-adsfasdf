@@ -1,47 +1,37 @@
 <%-- @author Mahesha Kalpanie --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<script src="/ecivil/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
-<script src="/ecivil/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
-<script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
-<script type="text/javascript" src="<s:url value="/js/division.js"/>"></script>
-<link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
-<script type="text/javascript">
-    $(function() {
-        $("#registrationDatePicker").datepicker({
-            changeYear: true,
-            yearRange: '1960:2020',
-            dateFormat:'yy-mm-dd',
-            startDate:'2000-01-01',
-            endDate:'2040-12-31'
-        });
-    });
-    $(function() {
-        $("#marriageDatePicker").datepicker({
-            changeYear: true,
-            yearRange: '1960:2020',
-            dateFormat:'yy-mm-dd',
-            startDate:'2000-01-01',
-            endDate:'2040-12-31'
-        });
-    });
-
-    $(function() {
-        $('img#registrar_lookup').bind('click', function(evt3) {
-            var id1 = $("input#regPIN").attr("value");
-            $.getJSON('/ecivil/crs/RegistrarLookupService', {pinOrNic:id1},
-                    function(data1) {
-                        $("textarea#regNameInOfficialLang").val(data1.fullNameInOfficialLanguage);
-                        $("textarea#regNameInEnglishLang").val(data1.fullNameInEnglishLanguage);
-                        $("textarea#regPlaceInOfficialLang").val(data1.address);
-                        $("textarea#regPlaceInEnglishLang").val(data1.address);
-                    });
-        });
-    });
-</script>
-<s:actionerror/>
 <div class="marriage-notice-outer">
 <s:form action="eprMarriageRegistration" method="post">
+<table class="table_reg_header_01">
+    <caption></caption>
+    <col width="420px"/>
+    <col width="200px"/>
+    <col/>
+    <tbody>
+    <tr style="font-size:9pt">
+        <td colspan="1">
+        </td>
+        <td align="center" style="font-size:12pt;"><img src="<s:url value="/images/official-logo.png"/>"
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+    </tr>
+    <tr style="font-size:14pt">
+        <td colspan="3" align="center">
+            ශ්‍රී ලංකා / ﻿இலங்கை / SRI LANKA
+        </td>
+    </tr>
+    <tr style="font-size:14pt">
+        <td colspan="3" align="center">
+            විවාහ ලේඛනයේ උපුටාගැනීම / குடிமதிப்பீட்டு ஆவணத்தில் / Extract of Marriage Register
+        </td>
+    </tr>
+    </tbody>
+</table>
 <table border="1" style="margin-top:1px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
        cellpadding="5px">
     <caption></caption>
@@ -57,46 +47,12 @@
     <tbody>
     <tr>
         <td>
-            <label>
-                <span class="font-8">විවාහ දිනය
-                    <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-                    <br>in tamil<br>Date of Marriage</span>
-            </label>
-        </td>
-        <td colspan="2">
-            <s:label value="YYYY-MM-DD" cssStyle="margin-left:50px;font-size:10px"/><br>
-            <s:textfield name="marriage.dateOfMarriage" id="marriageDatePicker" maxLength="10"/>
-        </td>
-        <td colspan="3"><label><span class="font-8">රෙජිස්ට්‍රාර්ගේ/දේවගැතිගේ අනන්‍යතා අංකය
-                    <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-                    <br>அடையாள எண் <br>Identification number of Registrar/Minister</span></label>
-        </td>
-        <td align="center" colspan="3">
-            <s:textfield name="marriage.registrarOrMinisterPIN" id="regPIN" maxLength="10"/><img
-                    src="<s:url value="/images/search-father.png" />"
-                    style="vertical-align:middle; margin-left:20px;" id="registrar_lookup">
-        </td>
-    </tr>
-    <tr>
-        <td>
-            විවාහ ස්ථානයේ ස්වභාවය<br>
-            Type of Marriage Place<br>
-        </td>
-        <td colspan="8">
-            <s:radio name="marriage.typeOfMarriagePlace" list="typeOfMarriagePlace" listValue="type" theme="horizontal"/>
-        </td>
-    </tr>
-    <tr>
-        <td>
             දිස්ත්‍රික්කය
             <br>மாவட்டம்
             <br>District
         </td>
         <td colspan="3">
-            <s:select id="districtId" name="marriageDistrictId" list="districtList"
-                      value="marriageDistrictId"
-                      cssStyle="width:98.5%; width:240px;"
-                      onclick="populateDSDivisions('districtId','dsDivisionId','mrDivisionId')"/>
+
         </td>
         <td colspan="2"><label><span class="font-8">
             ප්‍රාදේශීය ලේකම් කොට්ඨාශය
@@ -105,12 +61,9 @@
         </label>
         </td>
         <td align="center" colspan="3">
-            <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="dsDivisionId"
-                      cssStyle="width:98.5%; width:240px;"
-                      onchange="populateDivisions('dsDivisionId', 'mrDivisionId')"/>
+
         </td>
     </tr>
-
     <tr>
         <td><label><span class="font-8">
         ලියාපදිංචි කිරීමේ කොට්ඨාශය
@@ -119,8 +72,43 @@
         </label>
         </td>
         <td colspan="8">
-            <s:select id="mrDivisionId" name="mrDivisionId" list="mrDivisionList" value="marriage.mrDivision.mrDivisionUKey" headerKey="1"
-                      cssStyle="width:98.5%; width:240px;"/>
+            <s:if test="preferredLanguage=='si'">
+                <s:label name="marriage.mrDivision.siDivisionName" cssStyle="font-size:11pt;"/>
+            </s:if>
+            <s:elseif test="preferredLanguage=='si'">
+                <s:label name="marriage.mrDivision.taDivisionName" cssStyle="font-size:11pt;"/>
+            </s:elseif>
+            <br/>
+            <s:label name="marriage.mrDivision.enDivisionName"/><br/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label>
+                <span class="font-8">විවාහ දිනය
+                    <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
+                    <br>in tamil<br>Date of Marriage</span>
+            </label>
+        </td>
+        <td colspan="2">
+            <s:label name="marriage.dateOfMarriage"/>
+        </td>
+        <td colspan="3"><label><span class="font-8">රෙජිස්ට්‍රාර්ගේ/දේවගැතිගේ අනන්‍යතා අංකය
+                    <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
+                    <br>அடையாள எண் <br>Identification number of Registrar/Minister</span></label>
+        </td>
+        <td align="center" colspan="3">
+            <s:label name="marriage.registrarOrMinisterPIN"/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            විවාහ ස්ථානයේ ස්වභාවය<br>
+            Type of Marriage Place<br>
+        </td>
+        <td colspan="8">
+            <s:radio name="marriage.typeOfMarriagePlace" list="typeOfMarriagePlace" listValue="type"
+                     theme="horizontal"/>
         </td>
     </tr>
     <tr>
@@ -257,10 +245,10 @@
             Identification Number.
         </td>
         <td colspan="1" align="left">
-            <s:textfield name="marriage.male.identificationNumberMale" id="identification_male" maxLength="10"/>
+            <s:label name="marriage.male.identificationNumberMale"/>
         </td>
         <td colspan="1" align="left">
-            <s:textfield name="marriage.female.identificationNumberFemale" id="identification_female" maxLength="10"/>
+            <s:label name="marriage.female.identificationNumberFemale"/>
         </td>
     </tr>
     <tr>
@@ -270,10 +258,10 @@
             Date of Birth
         </td>
         <td colspan="1">
-            <s:textfield name="marriage.male.dateOfBirthMale" id="date_of_birth_male" maxLength="10"/>
+            <s:label name="marriage.male.dateOfBirthMale"/>
         </td>
         <td colspan="1">
-            <s:textfield name="marriage.female.dateOfBirthFemale" id="date_of_birth_female" maxLength="10"/>
+            <s:label name="marriage.female.dateOfBirthFemale"/>
         </td>
     </tr>
     <tr>
@@ -284,12 +272,10 @@
 
         </td>
         <td colspan="1">
-            <s:textfield name="marriage.male.ageAtLastBirthDayMale" id="age_at_last_bd_male" maxLength="10"
-                         value=""/>
+            <s:label name="marriage.male.ageAtLastBirthDayMale"/>
         </td>
         <td colspan="1">
-            <s:textfield name="marriage.female.ageAtLastBirthDayFemale" id="age_at_last_bd_female" maxLength="10"
-                         value=""/>
+            <s:label name="marriage.female.ageAtLastBirthDayFemale"/>
         </td>
     </tr>
     <tr>
@@ -381,10 +367,12 @@
             Resident Address
         </td>
         <td>
-            <s:textarea name="marriage.male.residentAddressMaleInOfficialLang" id="address_male" cssStyle="width:98.2%;"/>
+            <s:textarea name="marriage.male.residentAddressMaleInOfficialLang" id="address_male"
+                        cssStyle="width:98.2%;"/>
         </td>
         <td>
-            <s:textarea name="marriage.female.residentAddressFemaleInOfficialLang" id="address_female" cssStyle="width:98.2%;"/>
+            <s:textarea name="marriage.female.residentAddressFemaleInOfficialLang" id="address_female"
+                        cssStyle="width:98.2%;"/>
         </td>
     </tr>
     </tbody>
@@ -402,7 +390,7 @@
                 <br>தொடர் இலக்கம்<br>Serial Number</span></label>
         </td>
         <td align="center">
-            <s:textfield name="marriage.idUKey" id="idUKey" maxLength="10"/>
+            <s:label name="marriage.idUKey"/>
         </td>
         <td>
             <label>
@@ -413,14 +401,11 @@
         </td>
         <td>
             <s:label value="YYYY-MM-DD" cssStyle="margin-left:10px;font-size:10px"/><br>
-            <s:textfield name="marriage.registrationDate" id="registrationDatePicker" maxLength="10"/>
+            <s:label name="marriage.registrationDate"/>
         </td>
     </tr>
 </table>
-
-
 <div class="form-submit">
-    <s:submit/>
 </div>
 </s:form>
 </div>
