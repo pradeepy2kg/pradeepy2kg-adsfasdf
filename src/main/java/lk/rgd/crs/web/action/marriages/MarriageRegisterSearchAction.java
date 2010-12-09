@@ -237,7 +237,9 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         if (noticeSerialNo != null) {
             if (mrDivisionId != 0) {
                 searchList = WebUtils.populateNoticeList(service.getMarriageNoticePendingApprovalByMRDivisionAndSerial(
-                    mrDivisionDAO.getMRDivisionByPK(mrDivisionId), noticeSerialNo, user));
+                    mrDivisionDAO.getMRDivisionByPK(mrDivisionId), noticeSerialNo, true, user));
+            } else {
+                searchList = Collections.emptyList();
             }
         } else {
             if (isEmpty(pinOrNic) && noticeSerialNo == null) {
