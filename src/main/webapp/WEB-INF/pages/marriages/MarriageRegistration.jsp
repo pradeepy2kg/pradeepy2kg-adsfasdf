@@ -119,7 +119,7 @@
         </label>
         </td>
         <td colspan="8">
-            <s:select id="mrDivisionId" name="mrDivisionId" list="mrDivisionList" value="mrDivisionId" headerKey="1"
+            <s:select id="mrDivisionId" name="mrDivisionId" list="mrDivisionList" value="marriage.mrDivision.mrDivisionUKey" headerKey="1"
                       cssStyle="width:98.5%; width:240px;"/>
         </td>
     </tr>

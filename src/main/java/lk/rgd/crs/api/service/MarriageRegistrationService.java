@@ -26,6 +26,14 @@ public interface MarriageRegistrationService {
     public void addMarriageNotice(MarriageRegister notice, MarriageNotice.Type type, User user);
 
     /**
+     * add a new marriage Register
+     *
+     * @param marriageRegister marriage register Entry for muslim marriages
+     * @param user             user who perform the action
+     */
+    public void addMarriageRegister(MarriageRegister marriageRegister, User user);
+
+    /**
      * get marriage register object by its idUKey value
      *
      * @param idUKey primary key of the record

@@ -51,6 +51,14 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void addMarriageRegister(MarriageRegister marriageRegister, User user) {
+        marriageRegistrationDAO.addMarriageNotice(marriageRegister, user);
+    }
+
+    /**
+     * @inheritDoc
+     */
     @Transactional(propagation = Propagation.SUPPORTS)
     public MarriageRegister getByIdUKey(long idUKey, User user) {
         logger.debug("attempt to get marriage register by idUKey : {} ", idUKey);

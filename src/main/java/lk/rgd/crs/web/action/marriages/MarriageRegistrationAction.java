@@ -73,6 +73,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     private Long serialNumber;
 
     private Date noticeReceivedDate;
+    private boolean licensedMarriage;
 
 
     MarriageType[] marriageType;
@@ -225,18 +226,23 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
 
     public String marriageRegistrationInit() {
+
         marriageType = MarriageType.values();
         typeOfMarriagePlace = TypeOfMarriagePlace.values();
-        //TODO : To be improved and remove populate method
         civilStatusMale = populateCivilStatus();
         civilStatusFemale = populateCivilStatus();
+
         commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
             marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
+
         raceList = raceDAO.getRaces(language);
-        marriage = marriageRegistrationService.getByIdUKey(idUKey, user);
-        if (marriage == null) {
-            addActionError("Marriage Registration Record could not be found");
-            return ERROR;
+
+        if (licensedMarriage) {
+            marriage = marriageRegistrationService.getByIdUKey(idUKey, user);
+            if (marriage == null) {
+                addActionError("Marriage Registration Record could not be found");
+                return ERROR;
+            }
         }
         return "pageLoad";
     }
@@ -247,7 +253,12 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         return "pageLoad";
     }
 
-    public String registerMarriage() {
+    public String registerNewMarriage() {
+        marriageRegistrationService.addMarriageRegister(marriage, user);
+        return "success";
+    }
+
+    public String registerExistingMarriage() {
         MarriageRegister marriageRegister = marriageRegistrationService.getByIdUKey(marriage.getIdUKey(), user);
         if (marriageRegister == null) {
             addActionError("Marriage Registration Record could not be found");
@@ -262,7 +273,6 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         marriageRegister.setDateOfMarriage(marriage.getDateOfMarriage());
         marriageRegister.setRegistrarOrMinisterPIN(marriage.getRegistrarOrMinisterPIN());
         marriageRegister.setTypeOfMarriagePlace(marriage.getTypeOfMarriagePlace());
-        logger.debug("find MR division by UKey {}", mrDivisionId);
         marriageRegister.setMrDivision(mrDivisionDAO.getMRDivisionByPK(mrDivisionId));
         marriageRegister.setRegPlaceInEnglishLang(marriage.getRegPlaceInEnglishLang());
         marriageRegister.setRegPlaceInOfficialLang(marriage.getRegPlaceInOfficialLang());
@@ -603,6 +613,14 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     public void setTypeOfMarriagePlace(TypeOfMarriagePlace[] typeOfMarriagePlace) {
         this.typeOfMarriagePlace = typeOfMarriagePlace;
+    }
+
+    public boolean isLicensedMarriage() {
+        return licensedMarriage;
+    }
+
+    public void setLicensedMarriage(boolean licensedMarriage) {
+        this.licensedMarriage = licensedMarriage;
     }
 }
 
