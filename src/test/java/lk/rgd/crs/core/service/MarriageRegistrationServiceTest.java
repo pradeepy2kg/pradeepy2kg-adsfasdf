@@ -62,41 +62,55 @@ public class MarriageRegistrationServiceTest extends TestCase {
 
     public void testAddMinimalMarriageNotice() {
         //adding a marriage notice with minimal requirements
-        MarriageRegister notice = getMinimalMarriageNotice(2010012345L, "1234567890", "1234567899");
-        //this is submitted by male so  true
-        //TODO: improve this method. temporary change applied to get this compiled
+        MarriageRegister notice = getMinimalMarriageNotice(2010012345L, colomboMRDivision, false, "1234567890",
+            "1234567899", MarriageNotice.Type.MALE_NOTICE);
+        //assuming this is male notice
+        //and male party is expecting the license
+/*
+        notice.setLicenseRequestByMale(true);
+*/
         marriageRegistrationService.addMarriageNotice(notice, MarriageNotice.Type.MALE_NOTICE, deoColomboColombo);
-
-        //adding second notice
-        //add with same pin numbers 
+        //add with same pin numbers
     }
 
-    private MarriageRegister getMinimalMarriageNotice(long serialMale, String malePin, String femalePin) {
+    public void testMarriageNoticeApproval() {
+
+    }
+
+    private MarriageRegister getMinimalMarriageNotice(long serialMale, MRDivision mrDivision, boolean isSingleNotice,
+        String malePin, String femalePin, MarriageNotice.Type type) {
+
         MarriageRegister notice = new MarriageRegister();
         //male party
         MaleParty male = new MaleParty();
         male.setIdentificationNumberMale(malePin);
         male.setDateOfBirthMale(new Date());
         male.setNameInEnglishMale("name in english" + malePin);
-        notice.setMale(male);
-
         //female party
         FemaleParty female = new FemaleParty();
         female.setIdentificationNumberFemale(femalePin);
         female.setDateOfBirthFemale(new Date());
         female.setNameInEnglishFemale("name in english" + femalePin);
-        notice.setFemale(female);
 
-        //setting mandatory fields
-        //this is submitted by male party
-        //TODO: improve this method. temporary change applied to get this compiled
-        notice.setSingleNotice(true);
-        notice.setDateOfMaleNotice(new Date());
-        notice.setMrDivisionOfMaleNotice(colomboMRDivision);
-        notice.setSerialOfMaleNotice(serialMale);
+        notice.setSingleNotice(isSingleNotice);
         notice.setTypeOfMarriage(MarriageType.GENERAL);
         notice.setTypeOfMarriagePlace(TypeOfMarriagePlace.REGISTRAR_OFFICE);
 
+        switch (type) {
+            case BOTH_NOTICE:
+                notice.setFemale(female);
+            case MALE_NOTICE:
+                notice.setMale(male);
+                notice.setDateOfMaleNotice(new Date());
+                notice.setMrDivisionOfMaleNotice(mrDivision);
+                notice.setSerialOfMaleNotice(serialMale);
+                break;
+            case FEMALE_NOTICE:
+                notice.setFemale(female);
+                notice.setDateOfFemaleNotice(new Date());
+                notice.setMrDivisionOfFemaleNotice(mrDivision);
+                notice.setSerialOfFemaleNotice(serialMale);
+        }
         return notice;
     }
 
