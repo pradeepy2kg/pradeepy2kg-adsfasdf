@@ -371,7 +371,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
         logger.debug("Attempt to reject PRS entry with personUKey : {}", personUKey);
         if (!user.isAuthorized(Permission.PRS_REJECT_PERSON)) {
             handleException("User : " + user.getUserId() + " is not allowed to reject entries on the PRS by UKey",
-                ErrorCodes.COMMENT_REQUIRED_PRS_REJECT);
+                ErrorCodes.PRS_REJECT_RECORD_DENIED);
         }
         if (comment == null || comment.trim().length() < 1) {
             handleException("A comment is required to REJECT PRS entry with personUKey : " + personUKey,
