@@ -230,7 +230,8 @@
 </s:form>
 
 <div id="marriage-notice-search" style="margin-top:58px;">
-<s:actionmessage cssClass="alreadyPrinted"/>
+<s:actionmessage cssStyle="color:black;"/>
+<s:actionerror cssStyle="color:red;"/>
 <s:if test="searchList.size > 0">
     <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;">
         <legend><b><s:label value="%{getText('searchResult.label')}"/> </b></legend>
