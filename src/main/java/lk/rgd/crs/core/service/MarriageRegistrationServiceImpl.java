@@ -271,17 +271,35 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      * now notice is fully approved
      * <p/>
      * note:if any case change its state in to notice approved it means this is the only active notice that can be have
-     * for that couple
+     * for that couple.
+     * the other fact we have to consider when approving marriage notice is weather other party has approved
+     * (not the license requesting party)
+     * it is looks like this
+     * <p/>
+     * if(SINGLE NOTICE)
+     * no need to check
+     * else
+     * if(male party request license)
+     * then
+     * to approve male notice and complete approval female party must be approved
+     * and vise-versa
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void approveMarriageNotice(long idUKey, MarriageNotice.Type type, User user) {
         logger.debug("attempt to approve marriage notice with idUKey : {} and notice type : {}", idUKey, type);
+        //todo check way to improve readability and maintainability :( :( (amith)
+        //check is user has permission to perform this task
         checkUserPermission(Permission.APPROVE_MARRIAGE, ErrorCodes.PERMISSION_DENIED, "approve marriage notice", user);
         MarriageRegister existingNotice = marriageRegistrationDAO.getByIdUKey(idUKey);
+        //check is there a existing record for approving
         if (existingNotice == null) {
             handleException("cannot find record for approval" + idUKey, ErrorCodes.CAN_NOT_FIND_MARRIAGE_NOTICE);
         }
+        //check is user has permission to deal with this marriage notice
         checkUserPermissionForDeleteApproveAndRejectNotice(existingNotice, type, user);
+        //check is pre request are full filled before approve
+        isNoticeAllowedToApprove(existingNotice, type);
+
         if (existingNotice.isSingleNotice()) {
             //directly change state in to NOTICE_APPROVED
             if (existingNotice.getState() == MarriageRegister.State.DATA_ENTRY) {
@@ -311,15 +329,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         }
         //now we change state in to approving but if we changed state in to notice approve state there can't be another
         //record that have same state for same male party and female party pin numbers
-        if (existingNotice.getState() == MarriageRegister.State.NOTICE_APPROVED) {
-            MarriageRegister existingActiveApprovedNotice = getActiveMarriageNoticeByMaleAndFemaleIdentification(
-                existingNotice.getMale().getIdentificationNumberMale(), existingNotice.getFemale().getIdentificationNumberFemale(), user);
-            if (existingActiveApprovedNotice != null) {
-                handleException("existing active approved notice for male pin" + existingNotice.getMale().
-                    getIdentificationNumberMale() + "and female pin " + existingNotice.getFemale().
-                    getIdentificationNumberFemale() + "so can not approve", ErrorCodes.EXISTING_ACTIVE_APPROVED_NOTICE);
-            }
-        }
+        checkExistingActiveApprovedNotices(existingNotice, user);
         marriageRegistrationDAO.updateMarriageRegister(existingNotice, user);
         logger.debug("successfully  approved marriage notice with idUKey : {} and notice type : {}", idUKey, type);
     }
@@ -358,6 +368,41 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
             handleException("User : " + user.getUserId() + " is not allowed to " + msg, errorCode);
         }
     }
+
+    /**
+     * check notice can be approve(not checking state and user permission for DS or user permission for approving notice)
+     * only checking is it allowed to approve
+     * scenario
+     * FEMALE notice is approving and MALE notice is present and FEMALE party is requesting the license
+     * in that scenario unless MALE notice is approved FEMALE notice cannot be approved
+     */
+    private void isNoticeAllowedToApprove(MarriageRegister register, MarriageNotice.Type type) {
+        boolean check = false;
+        switch (type) {
+            case MALE_NOTICE:
+                if (!register.isSingleNotice() && register.isLicenseRequestByMale() &&
+                    (register.getState() != MarriageRegister.State.FEMALE_NOTICE_APPROVED)) {
+                    //that means state must ne on FEMALE_NOTICE approved or
+                    check = true;
+                }
+                break;
+            case FEMALE_NOTICE:
+                if (!register.isSingleNotice() && register.isLicenseRequestByMale() &&
+                    (register.getState() == MarriageRegister.State.MALE_NOTICE_APPROVED)) {
+                    //that means state must be in MALE_NOTICE
+                    check = true;
+                }
+                break;
+            default:
+        }
+
+        if (check) {
+            handleException("unable to approve single :" + register.isSingleNotice() + "notice type:" + type
+                + "License request by male :" + register.isLicenseRequestByMale() + ",idUKey" +
+                register.getIdUKey(), ErrorCodes.OTHER_PARTY_MUST_APPROVE_FIRST);
+        }
+    }
+
 
     /**
      * check user permission for removing marriage notice
@@ -453,6 +498,18 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         boolean haveAccess = ((maleMrDivision != null && user.isAllowedAccessToMRDSDivision(maleMrDivision.getMrDivisionUKey())) ||
             (femaleMrDivision != null && user.isAllowedAccessToMRDSDivision(femaleMrDivision.getMrDivisionUKey())));
         return haveAccess;
+    }
+
+    private void checkExistingActiveApprovedNotices(MarriageRegister register, User user) {
+        if (register.getState() == MarriageRegister.State.NOTICE_APPROVED) {
+            MarriageRegister existingActiveApprovedNotice = getActiveMarriageNoticeByMaleAndFemaleIdentification(
+                register.getMale().getIdentificationNumberMale(), register.getFemale().getIdentificationNumberFemale(), user);
+            if (existingActiveApprovedNotice != null) {
+                handleException("existing active approved notice for male pin" + register.getMale().
+                    getIdentificationNumberMale() + "and female pin " + register.getFemale().
+                    getIdentificationNumberFemale() + "so can not approve", ErrorCodes.EXISTING_ACTIVE_APPROVED_NOTICE);
+            }
+        }
     }
 
     private static void handleException(String msg, int errorCode) {
