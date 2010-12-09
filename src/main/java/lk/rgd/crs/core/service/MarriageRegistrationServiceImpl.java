@@ -98,10 +98,11 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<MarriageRegister> getMarriageNoticePendingApprovalByMRDivisionAndSerial(MRDivision mrDivision, long serialNo,
-        User user) {
+    public List<MarriageRegister> getMarriageNoticePendingApprovalByMRDivisionAndSerial(MRDivision mrDivision,
+        long serialNo, boolean active, User user) {
         logger.debug("Get active record by MRDivision : {} and Serial No : {}", mrDivision.getMrDivisionUKey(), serialNo);
-        List<MarriageRegister> results = marriageRegistrationDAO.getNoticeByMRDivisionAndSerialNo(mrDivision, serialNo, true);
+        List<MarriageRegister> results =
+            marriageRegistrationDAO.getNoticeByMRDivisionAndSerialNo(mrDivision, serialNo, active);
         for (MarriageRegister mr : results) {
             if (!checkUserAccessPermissionToMarriageRecord(mr, user)) {
                 results.remove(mr);
@@ -247,7 +248,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     }
 
     /**
-     * @inheritDoc<br> <h3><i><b>approving process work as follow</i></b> </h3>
+     * @inheritDoc <br> <h3><i><b>approving process work as follow</i></b> </h3>
      * <p>
      * if the <b>notice is single</b> that means (both parties only submit one marriage notice) record <b><u>must</b></u>
      * be in DATA_ENTRY state and after approving notice change it's state in to NOTICE_APPROVED state that mean register
