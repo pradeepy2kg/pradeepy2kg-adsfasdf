@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -86,7 +85,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     public List<MarriageRegister> getMarriageNoticePendingApprovalByPINorNIC(String pinOrNic, boolean active, User user) {
         logger.debug("Attempt to get marriage notice pending results for identification number : {} ", pinOrNic);
         List<MarriageRegister> results = marriageRegistrationDAO.getNoticeByPINorNIC(pinOrNic, active);
-        return removingAccessDeniedNoticesFromList(results, user);
+        return removingAccessDeniedItemsFromList(results, user);
     }
 
     /**
@@ -97,10 +96,10 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         , boolean active, User user) {
         logger.debug("Get active record by MRDivision : {} and Serial No : {}", mrDivision.getMrDivisionUKey(), serialNo);
         List<MarriageRegister> results = marriageRegistrationDAO.getNoticeByMRDivisionAndSerialNo(mrDivision, serialNo, true);
-        return removingAccessDeniedNoticesFromList(results, user);
+        return removingAccessDeniedItemsFromList(results, user);
     }
 
-    private List<MarriageRegister> removingAccessDeniedNoticesFromList(List<MarriageRegister> registerList, User user) {
+    private List<MarriageRegister> removingAccessDeniedItemsFromList(List<MarriageRegister> registerList, User user) {
         List<MarriageRegister> toBeRemoved = new ArrayList<MarriageRegister>();
         for (MarriageRegister mr : registerList) {
             if (!checkUserAccessPermissionToMarriageRecord(mr, user)) {
@@ -358,12 +357,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         logger.debug("Attempt to get marriage registers results for identification number : {} ", pinOrNic);
         List<MarriageRegister> results =
             marriageRegistrationDAO.getByStateAndPINorNIC(MarriageRegister.State.REG_DATA_ENTRY, pinOrNic, active);
-        for (MarriageRegister reg : results) {
-            if (!checkUserAccessPermissionToMarriageRecord(reg, user)) {
-                results.remove(reg);
-            }
-        }
-        return results;
+        return removingAccessDeniedItemsFromList(results, user);
     }
 
     private void checkUserPermission(int permissionBit, int errorCode, String msg, User user) {
