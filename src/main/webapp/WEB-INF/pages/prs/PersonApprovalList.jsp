@@ -246,8 +246,8 @@
                                 </td>
                                 <td>
                                     <s:if test="status.ordinal() == 2">
-                                        <s:url id="printSelected">
-                                            <s:param name="personUKey" value="personUKey"/>
+                                        <s:url id="printSelected" action="eprPRSCertificate.do">
+                                            <s:param name="personId" value="personUKey"/>
                                         </s:url>
                                         <s:a href="%{printSelected}" title="%{getText('print.label')}">
                                             <img src="<s:url value='/images/print_icon.gif'/>" width="25" height="25"
