@@ -71,7 +71,7 @@ public class MarriageRegistrationServiceTest extends TestCase {
             "1234567899", MarriageNotice.Type.MALE_NOTICE, true);
         //assuming this is male notice
         //and male party is expecting the license
-        notice.setLicenseRequestByMale(true);
+        //   notice.setLicenseRequestByMale(true);
         marriageRegistrationService.addMarriageNotice(notice, MarriageNotice.Type.MALE_NOTICE, rg);
         //add with same pin numbers
         //todo amith
@@ -106,7 +106,7 @@ public class MarriageRegistrationServiceTest extends TestCase {
         existingMaleNotice.setFemale(female);
         existingMaleNotice.setDateOfFemaleNotice(new Date());
         existingMaleNotice.setSerialOfFemaleNotice(2010012347L);
-        marriageRegistrationService.addSecondMarriageNotice(existingMaleNotice, false, rg);
+        marriageRegistrationService.addSecondMarriageNotice(existingMaleNotice, MarriageNotice.Type.FEMALE_NOTICE, rg);
         //still male notice cannot be approved
         try {
             marriageRegistrationService.approveMarriageNotice(marriageRegistrationService.getMarriageNoticePendingApprovalByMRDivisionAndSerial
@@ -153,7 +153,7 @@ public class MarriageRegistrationServiceTest extends TestCase {
         female.setNameInEnglishFemale("name in english" + femalePin);
 
         notice.setSingleNotice(isSingleNotice);
-        notice.setLicenseRequestByMale(maleExpectingLicense);
+        //   notice.setLicenseRequestByMale(maleExpectingLicense);
         notice.setTypeOfMarriage(MarriageType.GENERAL);
         notice.setTypeOfMarriagePlace(TypeOfMarriagePlace.REGISTRAR_OFFICE);
 

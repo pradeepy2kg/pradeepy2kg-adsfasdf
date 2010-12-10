@@ -141,9 +141,6 @@
 </s:if>
 <s:else>
     <s:url action="eprMarriageNoticeAdd" namespace="." id="addAction">
-        <%--
-                <s:hidden name="noticeType" value="%{noticeType}"/>
-        --%>
         <s:param name="noticeType" value="%{noticeType}"/>
     </s:url>
 </s:else>
@@ -151,12 +148,21 @@
 <div class="marriage-notice-outer">
 <s:form action="%{addAction}" method="post">
 <%--section official usage--%>
+<fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
+    <legend align="right"><b><s:label value="%{getText('label.how.collect.license')}"/></b></legend>
+    <s:radio list="#@java.util.HashMap@{'HAND_COLLECT_MALE':getText('label.collect.by.male'),
+                        'MAIL_TO_MALE':getText('label.mail.male'),'HAND_COLLECT_FEMALE':getText('label.collect.by.female'),'MAIL_TO_FEMALE':getText('label.mail.female')}"
+             name="marriage.licenseCollectType"/>
+</fieldset>
 <table>
     <caption/>
     <col width="400px"/>
     <col width="224px"/>
     <col/>
     <tbody>
+    <tr>
+        <td colspan="3" height="30px"></td>
+    </tr>
     <tr>
         <td>
             <table border="1" style="margin-top:1px;width:100%;border:1px solid #000;border-collapse:collapse;"

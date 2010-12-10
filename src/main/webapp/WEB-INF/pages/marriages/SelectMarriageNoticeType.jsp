@@ -22,17 +22,18 @@
                         name="noticeType" cssStyle="width:190px;"/>
             </td>
         </tr>
-        <tr>
+        <%--<tr>
             <td>
                 <s:label value="%{getText('label.who.request.license')}"/>
             </td>
             <td></td>
             <td align="left">
                 <s:select
-                        list="#@java.util.HashMap@{'true':getText('label.req.by.male'),'false':getText('label.req.by.female')}"
-                        name="licenseReqByMale" cssStyle="width:190px;"/>
+                        list="#@java.util.HashMap@{'HAND_COLLECT_MALE':getText('label.collect.by.male'),
+                        'MAIL_TO_MALE':getText('label.mail.male'),'HAND_COLLECT_FEMALE':getText('label.collect.by.female'),'MAIL_TO_FEMALE':getText('label.mail.female')}"
+                        name="licenseCollectType" cssStyle="width:190px;"/>
             </td>
-        </tr>
+        </tr>--%>
         </tbody>
     </table>
     <div class="form-submit">

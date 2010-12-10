@@ -514,7 +514,7 @@
         <put-attribute name="body" value="/WEB-INF/pages/marriages/SelectMarriageNoticeType.jsp"/>
         <put-attribute name="title" value="title.marriage.notice.type.select"/>
     </definition>
-    
+
     <definition name="epr.marriageRegisterSearchInit" extends="epr.template">
         <description>
             marriage register search jsp page
@@ -529,6 +529,14 @@
         </description>
         <put-attribute name="body" value="/WEB-INF/pages/marriages/MarriageExtract.jsp"/>
         <put-attribute name="title" value="title.marriage.extract"/>
+    </definition>
+
+    <definition name="epr.marriageNoticeWarn" extends="epr.template">
+        <description>
+            Extract of Marriage Register
+        </description>
+        <put-attribute name="body" value="/WEB-INF/pages/marriages/MarriageNoticeWarnings.jsp"/>
+        <put-attribute name="title" value="title.marriage.notice.warnings"/>
     </definition>
 
 </tiles-definitions>
