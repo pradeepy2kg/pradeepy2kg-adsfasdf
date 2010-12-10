@@ -16,6 +16,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -84,31 +86,30 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     public List<MarriageRegister> getMarriageNoticePendingApprovalByPINorNIC(String pinOrNic, boolean active, User user) {
         logger.debug("Attempt to get marriage notice pending results for identification number : {} ", pinOrNic);
         List<MarriageRegister> results = marriageRegistrationDAO.getNoticeByPINorNIC(pinOrNic, active);
-        for (MarriageRegister reg : results) {
-            if (!checkUserAccessPermissionToMarriageRecord(reg, user)) {
-                logger.debug("User : {} :does not have permission to edit/approve marriage record idUKey : {} ",
-                    user.getUserName(), reg.getIdUKey());
-                results.remove(reg);
-            }
-        }
-        return results;
+        return removingAccessDeniedNoticesFromList(results, user);
     }
 
     /**
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<MarriageRegister> getMarriageNoticePendingApprovalByMRDivisionAndSerial(MRDivision mrDivision,
-        long serialNo, boolean active, User user) {
+    public List<MarriageRegister> getMarriageNoticePendingApprovalByMRDivisionAndSerial(MRDivision mrDivision, long serialNo
+        , boolean active, User user) {
         logger.debug("Get active record by MRDivision : {} and Serial No : {}", mrDivision.getMrDivisionUKey(), serialNo);
-        List<MarriageRegister> results =
-            marriageRegistrationDAO.getNoticeByMRDivisionAndSerialNo(mrDivision, serialNo, active);
-        for (MarriageRegister mr : results) {
+        List<MarriageRegister> results = marriageRegistrationDAO.getNoticeByMRDivisionAndSerialNo(mrDivision, serialNo, true);
+        return removingAccessDeniedNoticesFromList(results, user);
+    }
+
+    private List<MarriageRegister> removingAccessDeniedNoticesFromList(List<MarriageRegister> registerList, User user) {
+        List<MarriageRegister> toBeRemoved = new ArrayList<MarriageRegister>();
+        for (MarriageRegister mr : registerList) {
             if (!checkUserAccessPermissionToMarriageRecord(mr, user)) {
-                results.remove(mr);
+                toBeRemoved.add(mr);
             }
         }
-        return results;
+        //removing
+        registerList.removeAll(toBeRemoved);
+        return registerList;
     }
 
     /**
@@ -248,7 +249,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     }
 
     /**
-     * @inheritDoc <br> <h3><i><b>approving process work as follow</i></b> </h3>
+     * @inheritDoc<br> <h3><i><b>approving process work as follow</i></b> </h3>
      * <p>
      * if the <b>notice is single</b> that means (both parties only submit one marriage notice) record <b><u>must</b></u>
      * be in DATA_ENTRY state and after approving notice change it's state in to NOTICE_APPROVED state that mean register

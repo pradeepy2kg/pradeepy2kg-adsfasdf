@@ -1,12 +1,14 @@
 package lk.rgd.crs.core.service;
 
 import junit.framework.TestCase;
+import lk.rgd.ErrorCodes;
 import lk.rgd.UnitTestManager;
 import lk.rgd.common.api.dao.CountryDAO;
 import lk.rgd.common.api.dao.RaceDAO;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.core.AuthorizationException;
+import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.dao.MRDivisionDAO;
 import lk.rgd.crs.api.dao.MarriageRegistrationDAO;
 import lk.rgd.crs.api.domain.*;
@@ -16,6 +18,7 @@ import lk.rgd.crs.web.util.TypeOfMarriagePlace;
 import org.springframework.context.ApplicationContext;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author amith jayasekara
@@ -34,6 +37,7 @@ public class MarriageRegistrationServiceTest extends TestCase {
     protected User deoGampahaNegambo;
     protected User adrColomboColombo;
     protected User adrGampahaNegambo;
+    protected User rg;
 
     @Override
     protected void setUp() throws Exception {
@@ -54,6 +58,7 @@ public class MarriageRegistrationServiceTest extends TestCase {
             adrColomboColombo = userManager.authenticateUser("adr-colombo-colombo", "password");
             deoGampahaNegambo = userManager.authenticateUser("deo-gampaha-negambo", "password");
             adrGampahaNegambo = userManager.authenticateUser("adr-gampaha-negambo", "password");
+            rg = userManager.authenticateUser("rg", "password");
         } catch (AuthorizationException e) {
             throw new IllegalArgumentException("Cannot authenticate sample users");
         }
@@ -63,22 +68,35 @@ public class MarriageRegistrationServiceTest extends TestCase {
     public void testAddMinimalMarriageNotice() {
         //adding a marriage notice with minimal requirements
         MarriageRegister notice = getMinimalMarriageNotice(2010012345L, colomboMRDivision, false, "1234567890",
-            "1234567899", MarriageNotice.Type.MALE_NOTICE);
+            "1234567899", MarriageNotice.Type.MALE_NOTICE, true);
         //assuming this is male notice
         //and male party is expecting the license
-/*
         notice.setLicenseRequestByMale(true);
-*/
-        marriageRegistrationService.addMarriageNotice(notice, MarriageNotice.Type.MALE_NOTICE, deoColomboColombo);
+        marriageRegistrationService.addMarriageNotice(notice, MarriageNotice.Type.MALE_NOTICE, rg);
         //add with same pin numbers
+        //todo amith
     }
 
     public void testMarriageNoticeApproval() {
-
+        //add male notice license is expecting by male party
+        MarriageRegister malePartySubmittedNotice = getMinimalMarriageNotice(2010012346L, colomboMRDivision, false,
+            "1234567899", "1234567898", MarriageNotice.Type.MALE_NOTICE, true);
+        marriageRegistrationService.addMarriageNotice(malePartySubmittedNotice, MarriageNotice.Type.MALE_NOTICE, rg);
+        try {//now try to approve this record
+            //this record is not a single record so it is expecting FEMALE notice and unless female party notice is approved
+            // this record can't be approved }
+            List<MarriageRegister> noticeList = marriageRegistrationService.getMarriageNoticePendingApprovalByMRDivisionAndSerial
+                (colomboMRDivision, 2010012346L, true, rg);
+            marriageRegistrationService.approveMarriageNotice(noticeList.get(0).getIdUKey(), MarriageNotice.Type.MALE_NOTICE, rg);
+        }
+        catch (CRSRuntimeException expected) {
+            //expected exception is approve female first 6006
+            assertEquals("Other party must approve first", ErrorCodes.OTHER_PARTY_MUST_APPROVE_FIRST, expected.getErrorCode());
+        }
     }
 
     private MarriageRegister getMinimalMarriageNotice(long serialMale, MRDivision mrDivision, boolean isSingleNotice,
-        String malePin, String femalePin, MarriageNotice.Type type) {
+        String malePin, String femalePin, MarriageNotice.Type type, boolean maleExpectingLicense) {
 
         MarriageRegister notice = new MarriageRegister();
         //male party
@@ -93,6 +111,7 @@ public class MarriageRegistrationServiceTest extends TestCase {
         female.setNameInEnglishFemale("name in english" + femalePin);
 
         notice.setSingleNotice(isSingleNotice);
+        notice.setLicenseRequestByMale(maleExpectingLicense);
         notice.setTypeOfMarriage(MarriageType.GENERAL);
         notice.setTypeOfMarriagePlace(TypeOfMarriagePlace.REGISTRAR_OFFICE);
 
