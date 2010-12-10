@@ -83,7 +83,7 @@ public interface PopulationRegistry {
     public List<UserWarning> approvePerson(long personUKey, boolean ignoreWarnings, User user);
 
     /**
-     * Delete an existing person <b>before</b> approval by DEO or higher authority
+     * Delete an existing person <b>before</b> approval by ADR or higher authority
      *
      * @param personUKey the unique database PK
      * @param comment    the comment specifying the reason for deletion
