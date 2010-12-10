@@ -158,7 +158,7 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
     /**
      * @inheritDoc
      */
-    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<MarriageRegister> getActiveMarriageNoticeByMaleFemaleIdentification(String maleIdentification,
         String femaleIdentification) {
         Query q = em.createNamedQuery("get.notice.by.male.and.female.identification");

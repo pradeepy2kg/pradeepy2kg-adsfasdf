@@ -127,7 +127,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     /**
      * @inheritDoc
      */
-    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public MarriageRegister getActiveMarriageNoticeByMaleAndFemaleIdentification(String maleIdentification,
         String femaleIdentification, User user) {
         logger.debug("getting active marriage notice for male identification : {} :and female identification : {}",
@@ -161,6 +161,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     public void addSecondMarriageNotice(MarriageRegister notice, boolean isMale, User user) {
         logger.debug("attempt to add a second notice for existing record : idUKey : {}", notice.getIdUKey());
         checkUserPermission(Permission.ADD_MARRIAGE, ErrorCodes.PERMISSION_DENIED, "add second notice to marriage register", user);
+        //todo check is there an active existing record      isMale is unused remove it
         updateMarriageRegister(notice, user);
     }
 

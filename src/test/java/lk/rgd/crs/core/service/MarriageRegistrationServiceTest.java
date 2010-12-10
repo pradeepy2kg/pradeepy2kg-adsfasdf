@@ -93,6 +93,48 @@ public class MarriageRegistrationServiceTest extends TestCase {
             //expected exception is approve female first 6006
             assertEquals("Other party must approve first", ErrorCodes.OTHER_PARTY_MUST_APPROVE_FIRST, expected.getErrorCode());
         }
+        //now we are adding second notice for existing male notice
+        //getting existing
+        MarriageRegister existingMaleNotice = marriageRegistrationService.getMarriageNoticePendingApprovalByMRDivisionAndSerial
+            (colomboMRDivision, 2010012346L, true, rg).get(0);
+        //now setting mandatory female notice info
+        FemaleParty female = new FemaleParty();
+        female.setIdentificationNumberFemale("1234567897");
+        female.setDateOfBirthFemale(new Date());
+        female.setNameInOfficialLanguageFemale("name in official language");
+        //add female notice related data
+        existingMaleNotice.setFemale(female);
+        existingMaleNotice.setDateOfFemaleNotice(new Date());
+        existingMaleNotice.setSerialOfFemaleNotice(2010012347L);
+        marriageRegistrationService.addSecondMarriageNotice(existingMaleNotice, false, rg);
+        //still male notice cannot be approved
+        try {
+            marriageRegistrationService.approveMarriageNotice(marriageRegistrationService.getMarriageNoticePendingApprovalByMRDivisionAndSerial
+                (colomboMRDivision, 2010012346L, true, rg).get(0).getIdUKey(), MarriageNotice.Type.MALE_NOTICE, rg);
+        } catch (CRSRuntimeException expected) {
+            //expected exception is approve female first 6006
+            assertEquals("still other party must approve first", ErrorCodes.OTHER_PARTY_MUST_APPROVE_FIRST, expected.getErrorCode());
+        }
+
+        //now we are approving female notice and it does not have any restriction only need to be in DATA entry state
+        MarriageRegister existingFemaleNotice = marriageRegistrationService.getMarriageNoticePendingApprovalByMRDivisionAndSerial
+            (colomboMRDivision, 2010012347L, true, rg).get(0);
+        try {
+            //approving female notice
+            marriageRegistrationService.approveMarriageNotice(existingFemaleNotice.getIdUKey(), MarriageNotice.Type.FEMALE_NOTICE, rg);
+        } catch (CRSRuntimeException notExpecting) {
+            //we are not expecting exceptions here
+            fail("exception not expecting while approve female notice");
+        }
+        //now there is no restriction for approving male notice
+        MarriageRegister existingMaleNoticeCanApprove = marriageRegistrationService.getMarriageNoticePendingApprovalByMRDivisionAndSerial
+            (colomboMRDivision, 2010012346L, true, rg).get(0);
+        try {
+            marriageRegistrationService.approveMarriageNotice(existingMaleNoticeCanApprove.getIdUKey(), MarriageNotice.Type.MALE_NOTICE, rg);
+        } catch (CRSRuntimeException notExpected) {
+            //we are not expecting exceptions here
+            fail("exception not expecting while approve male notice");
+        }
     }
 
     private MarriageRegister getMinimalMarriageNotice(long serialMale, MRDivision mrDivision, boolean isSingleNotice,
