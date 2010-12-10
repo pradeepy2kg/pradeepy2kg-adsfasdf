@@ -375,7 +375,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
         }
         if (comment == null || comment.trim().length() < 1) {
             handleException("A comment is required to REJECT PRS entry with personUKey : " + personUKey,
-                ErrorCodes.COMMENT_REQUIRED_PRS_DELETE);
+                ErrorCodes.COMMENT_REQUIRED_PRS_REJECT);
         }
 
         final Person existing = personDao.getByUKey(personUKey);

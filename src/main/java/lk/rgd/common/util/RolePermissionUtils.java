@@ -41,8 +41,6 @@ public class RolePermissionUtils {
         deoBitSet.set(Permission.PRS_LOOKUP_PERSON_BY_KEYS);
         deoBitSet.set(Permission.PRS_VIEW_PERSON);
         deoBitSet.set(Permission.PRS_ADD_PERSON);
-        deoBitSet.set(Permission.PRS_EDIT_PERSON);
-        deoBitSet.set(Permission.PRS_DELETE_PERSON);
         deoBitSet.set(Permission.EDIT_MARRIAGE);
         deoBitSet.set(Permission.ADD_MARRIAGE);
         deoBitSet.set(Permission.DELETE_MARRIAGE);
@@ -57,7 +55,9 @@ public class RolePermissionUtils {
         adrBitSet.set(Permission.APPROVE_DEATH);
         adrBitSet.set(Permission.PRINT_DEATH_CERTIFICATE);
         adrBitSet.set(Permission.REGISTRAR_MANAGEMENT);
+        adrBitSet.set(Permission.PRS_EDIT_PERSON);
         adrBitSet.set(Permission.PRS_APPROVE_PERSON);
+        adrBitSet.set(Permission.PRS_DELETE_PERSON);
         adrBitSet.set(Permission.PRS_REJECT_PERSON);
         adrBitSet.set(Permission.SEARCH_MARRIAGE);
         adrBitSet.set(Permission.PRINT_MARRIAGE_CERTIFICATE);
