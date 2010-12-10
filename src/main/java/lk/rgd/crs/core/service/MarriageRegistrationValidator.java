@@ -2,12 +2,15 @@ package lk.rgd.crs.core.service;
 
 import lk.rgd.ErrorCodes;
 import lk.rgd.crs.CRSRuntimeException;
+import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.domain.MarriageNotice;
 import lk.rgd.crs.api.domain.MarriageRegister;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author amith jayasekara
@@ -43,6 +46,26 @@ public class MarriageRegistrationValidator {
             validateBasicNeeds(notice.getSerialOfFemaleNotice(), notice.getDateOfFemaleNotice(),
                 notice.getFemale().getIdentificationNumberFemale(), notice.getFemale().getDateOfBirthFemale());
         }
+    }
+
+    /**
+     * this warning is issued in special case
+     * assume male is submitting first and he nominate female is to be capture the license ,
+     * then before submitting female notice male notice is being approved,
+     * now female is submitting and she declare male should get the license but the cannot happen because LP(license party)
+     * must be approved second in that case warning is given for the user for asking should female keep the license
+     * or should rollback the approval of male's approval
+     *
+     * @param existing notice to be check
+     * @param type     type of the second notice
+     * @return
+     */
+    public List<UserWarning> validateAddingSecondNotice(MarriageRegister existing, MarriageNotice.Type type) {
+        List<UserWarning> warning = new ArrayList<UserWarning>();
+        if (true) {
+            warning.add(new UserWarning("warn.add.or.rollback.other.party.approval", UserWarning.Severity.WARN));
+        }
+        return warning;
     }
 
     private void validateBasicNeeds(Long serial, Date recDate, String identificationNumber, Date dob) {

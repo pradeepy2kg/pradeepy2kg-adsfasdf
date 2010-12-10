@@ -3,11 +3,10 @@ package lk.rgd.crs.web.action.marriages;
 import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.common.api.dao.CountryDAO;
 import lk.rgd.common.api.dao.RaceDAO;
-import lk.rgd.common.api.domain.Country;
-import lk.rgd.common.api.domain.Race;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.CivilStatusUtil;
 import lk.rgd.crs.CRSRuntimeException;
+import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.MRDivisionDAO;
 import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.domain.MarriageNotice;
@@ -26,6 +25,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.List;
 
 /**
  * @author amith
@@ -54,6 +54,8 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     private Map<Integer, String> raceList;
     private Map<Person.CivilStatus, String> civilStatusMale;
     private Map<Person.CivilStatus, String> civilStatusFemale;
+
+    private List<UserWarning> userWarnings;
 
     private int marriageDistrictId;           //use for both male /female and both cases
     private int dsDivisionId;
@@ -198,6 +200,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
      * special case submit notices to two locations and second notice about to be add(actually updating same record)
      * if isBoth submitted is true there cannot be a second notice
      * else if existing notice is male second is female vise versa
+     * when warn found forward to warning page
      */
     public String addSecondNotice() {
         logger.debug("attempt to add second notice : idUKey of the record : {}", idUKey);
@@ -205,16 +208,18 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         if (existingNotice != null) {
             populatePartyObjectsForPersisting(existingNotice);
             //check who submit the second notice
-            boolean secondNoticeSubmittedByPartyMale = false;
             if (!existingNotice.isSingleNotice() && existingNotice.getSerialOfMaleNotice() == null) {
-                secondNoticeSubmittedByPartyMale = true;
                 noticeType = MarriageNotice.Type.MALE_NOTICE;
             } else {
                 noticeType = MarriageNotice.Type.FEMALE_NOTICE;
             }
             populateNoticeForAddingSecondNotice(existingNotice, marriage);
-            //following boolean use to check which party is submitting second notice  note:true (male) false(female)
-            marriageRegistrationService.addSecondMarriageNotice(existingNotice, secondNoticeSubmittedByPartyMale, user);
+            userWarnings = marriageRegistrationService.addSecondMarriageNotice(existingNotice, noticeType, user);
+            if (userWarnings.size() > 0) {
+                //no need to null check we returning empty set if no warnings
+                logger.debug("user warnings found for adding second notice for existing notice idUKey : {}", idUKey);
+                return "warn";
+            }
         } else {
             logger.debug("cannot add second notice to idUKey : {}", idUKey);
             addActionError(getText("cannot.add.second,notice.first.does.not.exist"));
@@ -329,7 +334,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
      * populate male/female race,country(if foreign)
      */
     private void populatePartyObjectsForPersisting(MarriageRegister marriage) {
-//todo simplify
+//todo simplify  amith
         if (raceIdMale != 0) {
             marriage.getMale().setMaleRace(raceDAO.getRace(raceIdMale));
         }
@@ -651,6 +656,14 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     public void setLicensedMarriage(boolean licensedMarriage) {
         this.licensedMarriage = licensedMarriage;
+    }
+
+    public List<UserWarning> getUserWarnings() {
+        return userWarnings;
+    }
+
+    public void setUserWarnings(List<UserWarning> userWarnings) {
+        this.userWarnings = userWarnings;
     }
 }
 

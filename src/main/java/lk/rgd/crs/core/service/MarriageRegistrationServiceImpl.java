@@ -5,6 +5,7 @@ import lk.rgd.Permission;
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.CRSRuntimeException;
+import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.MarriageRegistrationDAO;
 import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.domain.MarriageNotice;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -137,19 +139,29 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     @Transactional(propagation = Propagation.REQUIRED)
     public void updateMarriageRegister(MarriageRegister marriageRegister, User user) {
         logger.debug("attempt to update marriage register/notice record : idUKey : {}", marriageRegister.getIdUKey());
-        checkUserPermission(Permission.EDIT_MARRIAGE, ErrorCodes.PERMISSION_DENIED, "edit  marriage register", user);
+        checkUserPermission(Permission.EDIT_MARRIAGE, ErrorCodes.PERMISSION_DENIED, " edit  marriage register ", user);
         marriageRegistrationDAO.updateMarriageRegister(marriageRegister, user);
     }
 
     /**
      * @inheritDoc
      */
+    //todo isMale is unused here remove later (amith)
+    //todo issue user warnings
     @Transactional(propagation = Propagation.REQUIRED)
-    public void addSecondMarriageNotice(MarriageRegister notice, boolean isMale, User user) {
+    public List<UserWarning> addSecondMarriageNotice(MarriageRegister notice, MarriageNotice.Type type, User user) {
         logger.debug("attempt to add a second notice for existing record : idUKey : {}", notice.getIdUKey());
-        checkUserPermission(Permission.ADD_MARRIAGE, ErrorCodes.PERMISSION_DENIED, "add second notice to marriage register", user);
-        //todo check is there an active existing record      isMale is unused remove it
+        checkUserPermission(Permission.ADD_MARRIAGE, ErrorCodes.PERMISSION_DENIED,
+            " add second notice to marriage register ", user);
+        //get user warnings when adding  second notice   and return warnings
+        List<UserWarning> warnings = marriageRegistrationValidator.validateAddingSecondNotice(notice, type);
+        if (warnings != null && warnings.size() > 0) {
+            logger.debug("warnings found while adding second notice to the existing marriage notice idUKey : {}",
+                notice.getIdUKey());
+            return warnings;
+        }
         updateMarriageRegister(notice, user);
+        return Collections.emptyList();
     }
 
     /**
@@ -161,7 +173,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         checkUserPermission(Permission.DELETE_MARRIAGE, ErrorCodes.PERMISSION_DENIED, "delete marriage notice ", user);
         MarriageRegister notice = marriageRegistrationDAO.getByIdUKey(idUKey);
         if (notice == null) {
-            handleException("cannot find record for approval" + idUKey, ErrorCodes.CAN_NOT_FIND_MARRIAGE_NOTICE);
+            handleException("cannot find record for approval idUKey : " + idUKey, ErrorCodes.CAN_NOT_FIND_MARRIAGE_NOTICE);
         }
         checkUserPermissionForDeleteApproveAndRejectNotice(notice, noticeType, user);
         checkStateForDeleteNotice(notice, noticeType);
@@ -229,7 +241,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         MarriageRegister existingNotice = marriageRegistrationDAO.getByIdUKey(idUKey);
         //check is there a existing record for approving
         if (existingNotice == null) {
-            handleException("cannot find record for approval" + idUKey, ErrorCodes.CAN_NOT_FIND_MARRIAGE_NOTICE);
+            handleException("cannot find record for approval idUKey :" + idUKey, ErrorCodes.CAN_NOT_FIND_MARRIAGE_NOTICE);
         }
         //check is user has permission to deal with this marriage notice
         checkUserPermissionForDeleteApproveAndRejectNotice(existingNotice, type, user);
