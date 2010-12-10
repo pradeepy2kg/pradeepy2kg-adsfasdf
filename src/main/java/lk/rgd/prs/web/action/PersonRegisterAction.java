@@ -71,7 +71,9 @@ public class PersonRegisterAction extends ActionSupport implements SessionAware 
 
         if (personUKey == 0) {
             personList = service.addExistingPerson(person, citizenshipList, ignoreDuplicate, user);
-            addActionMessage(getText("person_reg_success.message", new String[]{person.getPin().toString()}));
+            if (personList.isEmpty()) {
+                addActionMessage(getText("person_reg_success.message", new String[]{person.getPin().toString()}));
+            }
         } else {
             logger.debug("Editing existing person in PRS with personUKey : {}", personUKey);
             service.editExistingPersonBeforeApproval(person, citizenshipList, user);
