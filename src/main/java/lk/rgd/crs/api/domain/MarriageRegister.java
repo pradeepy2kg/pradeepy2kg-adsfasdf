@@ -84,6 +84,13 @@ public class MarriageRegister implements Serializable, Cloneable {
         OTHER
     }
 
+    public enum LicenseCollectType {
+        HAND_COLLECT_MALE,  //male hand collect the license
+        MAIL_TO_MALE,       //mail to mail party mailing address
+        HAND_COLLECT_FEMALE,
+        MAIL_TO_FEMALE
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IDUKEY")
@@ -91,7 +98,7 @@ public class MarriageRegister implements Serializable, Cloneable {
     /**
      * The preferred language to print the Extract of Marriage Register
      */
-    @Column(nullable = true, columnDefinition="char(2) default 'si'")
+    @Column(nullable = true, columnDefinition = "char(2) default 'si'")
     private String preferredLanguage;
 
     @Column(name = "STATE", nullable = false)
@@ -154,7 +161,7 @@ public class MarriageRegister implements Serializable, Cloneable {
     //male notice related columns
 
     @Column(name = "LI_REQ_PARTY", nullable = true)
-    private boolean licenseRequestByMale;    //1 male party 0 female party
+    private LicenseCollectType licenseCollectType;
 
     @Column(length = 10, name = "NOTICE_SERIAL_MALE")
     private Long serialOfMaleNotice;
@@ -246,7 +253,7 @@ public class MarriageRegister implements Serializable, Cloneable {
         this.typeOfMarriage = typeOfMarriage;
     }
 
-    //todo: tobe removed
+    //todo: to be removed
 
     public PlaceOfMarriage getPlaceOfMarriage() {
         return placeOfMarriage;
@@ -440,12 +447,12 @@ public class MarriageRegister implements Serializable, Cloneable {
         this.regNameInEnglishLang = regNameInEnglishLang;
     }
 
-    public boolean isLicenseRequestByMale() {
-        return licenseRequestByMale;
+    public LicenseCollectType getLicenseCollectType() {
+        return licenseCollectType;
     }
 
-    public void setLicenseRequestByMale(boolean licenseRequestByMale) {
-        this.licenseRequestByMale = licenseRequestByMale;
+    public void setLicenseCollectType(LicenseCollectType licenseCollectType) {
+        this.licenseCollectType = licenseCollectType;
     }
 
     public String getPreferredLanguage() {
