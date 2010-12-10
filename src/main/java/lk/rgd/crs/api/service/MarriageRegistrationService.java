@@ -130,6 +130,26 @@ public interface MarriageRegistrationService {
      * @param idUKey     idUKey ot the record to be removed
      * @param noticeType type of the notice needs to be remove.
      * @param user       user who performs the action
+     *                   <br> notes :
+     *                   <u>delete operation works as follows </u>
+     *                   there are three cases in removing a marriage notice
+     *                   case 1: isBothSubmitted is true that means only one notice is available for delete
+     *                   in that case we can simple remove the data base row
+     *                   case 2 : isBothSubmitted is false that means there can be more than one marriage notices(at most 2)
+     *                   case 2.1:
+     *                   having only one marriage notice is available(it could be male party submitted one or female party submitted one)
+     *                   in this case also we can just remove data base row
+     *                   <p/>
+     *                   case 2.2 : there are two notices are remaining in the marriage register row so we cannot simple remove the data
+     *                   base row because it is removing the other notice as well.
+     *                   So we have to update the data base row for that removing
+     *                   <i>as an example :
+     *                   if both male and female party submitted notices are available and you just need to remove female party
+     *                   submitted notice in that case we have to update the data base row by removing female party notice related columns
+     *                   note:states regarding to removal
+     *                   case 1:  record must be in DATA_ENTRY
+     *                   for removal of male notice record must be in either DATA_ENTRY or FEMALE_NOTICE_APPROVE state
+     *                   for removal of female notice record must in either DATA_ENTRY or MALE_NOTICE_APPROVE state
      */
     public void deleteMarriageNotice(long idUKey, MarriageNotice.Type noticeType, User user);
 
@@ -191,6 +211,43 @@ public interface MarriageRegistrationService {
      * @param idUKey idUKey of the marriage notice
      * @param type   type of the notice
      * @param user   user who performing the action
+     *               <p/>
+     *               <br> <h3><i><b>approving process work as follow</i></b> </h3>
+     *               <p>
+     *               if the <b>notice is single</b> that means (both parties only submit one marriage notice) record <b><u>must</b></u>
+     *               be in DATA_ENTRY state and after approving notice change it's state in to NOTICE_APPROVED state that mean register
+     *               record is completely approved and editing for that notice is not allowed </p>
+     *               <p/>
+     *               else
+     *               there are two approving cases<br>
+     *               <i>(do not care about how many notices are available there can be 1 or 2 notices)</i>
+     *               </p>
+     *               case 1;
+     *               no notice has been approved,
+     *               as an example there are 2 notices available but both are not approved
+     *               assume we are trying to approve MALE_NOTICE
+     *               in this case this method change state of the marriage notice(register) into MALE_NOTICE_APPROVED and
+     *               same scenario for approving FEMALE_NOTICE(actually vise-versa)
+     *               case 2:
+     *               one notice has been approved
+     *               assume case 1 is completed that mean MALE_NOTICE is approved and register in state MALE_NOTICE_APPROVED
+     *               and now we are trying to approve FEMALE_NOTICE
+     *               in this scenario we change notice state in to NOTICE_APPROVED state directly <b><u>not in to  FEMALE_NOTICE_APPROVED
+     *               now notice is fully approved
+     *               <p/>
+     *               note:if any case change its state in to notice approved it means this is the only active notice that can be have
+     *               for that couple.
+     *               the other fact we have to consider when approving marriage notice is weather other party has approved
+     *               (not the license requesting party)
+     *               it is looks like this
+     *               <p/>
+     *               if(SINGLE NOTICE)
+     *               no need to check
+     *               else
+     *               if(male party request license)
+     *               then
+     *               to approve male notice and complete approval female party must be approved
+     *               and vise-versa
      */
     public void approveMarriageNotice(long idUKey, MarriageNotice.Type type, User user);
 }

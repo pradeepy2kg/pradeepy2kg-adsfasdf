@@ -68,15 +68,13 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     private boolean male;
     private boolean secondNotice;
     private boolean editMode;
-    private boolean licenseReqByMale;
+    private boolean licensedMarriage;
 
     private String language;
 
     private Long serialNumber;
 
     private Date noticeReceivedDate;
-    private boolean licensedMarriage;
-
 
     MarriageType[] marriageType;
     TypeOfMarriagePlace[] typeOfMarriagePlace;
@@ -226,7 +224,8 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         return SUCCESS;
     }
 
-   //TODO : to be removed
+    //TODO : to be removed
+
     public String marriageCertificateInit() {
         logger.debug("loading marriage certificate : idUKey : {}", idUKey);
         //TODO all loading stuffs
@@ -312,7 +311,6 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
      * setting notice serial numbers and receiving dates
      */
     private void populateNoticeForPersists() {
-        marriage.setLicenseRequestByMale(licenseReqByMale);
         //both NOTICE_MALE and BOTH are treated as male notices and populate male notice related fields
         MRDivision mr = mrDivisionDAO.getMRDivisionByPK(mrDivisionId);
         if (noticeType == MarriageNotice.Type.BOTH_NOTICE || noticeType == MarriageNotice.Type.MALE_NOTICE) {
@@ -653,14 +651,6 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     public void setLicensedMarriage(boolean licensedMarriage) {
         this.licensedMarriage = licensedMarriage;
-    }
-
-    public boolean isLicenseReqByMale() {
-        return licenseReqByMale;
-    }
-
-    public void setLicenseReqByMale(boolean licenseReqByMale) {
-        this.licenseReqByMale = licenseReqByMale;
     }
 }
 
