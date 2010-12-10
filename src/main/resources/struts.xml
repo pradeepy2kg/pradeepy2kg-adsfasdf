@@ -1158,9 +1158,6 @@
 
         <action name="eprMarriageNoticeSearchInit" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
                 method="marriageNoticeSearchInit">
-            <!--            <interceptor-ref name="test">
-                <param name="operationMode">RETRIEVE</param>
-            </interceptor-ref>-->
             <result type="tiles" name="success">epr.marriageNoticeSearchHome</result>
         </action>
 
@@ -1192,6 +1189,7 @@
             <!--todo do not forward to default error page-->
             <result type="tiles" name="success">epr.marriageNoticeResults</result>
             <result type="tiles" name="error">epr.error</result>
+            <result type="tiles" name="warn">epr.marriageNoticeWarn</result>
         </action>
 
         <action name="eprMarriageNoticeDelete" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
@@ -1230,10 +1228,10 @@
             <result type="tiles" name="error">epr.marriageNoticeSearchHome</result>
         </action>
 
-       <action name="eprMarriageExtractInit" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
+        <action name="eprMarriageExtractInit" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
                 method="marriageExtractInit">
             <result type="tiles" name="success">epr.marriageExtract</result>
             <result type="tiles" name="error">epr.error</result>
-       </action>
+        </action>
     </package>
 </struts>
