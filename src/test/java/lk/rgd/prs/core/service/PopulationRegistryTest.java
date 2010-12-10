@@ -1,6 +1,7 @@
 package lk.rgd.prs.core.service;
 
 import junit.framework.TestCase;
+import lk.rgd.ErrorCodes;
 import lk.rgd.UnitTestManager;
 import lk.rgd.common.api.dao.CountryDAO;
 import lk.rgd.common.api.dao.RaceDAO;
@@ -40,7 +41,8 @@ public class PopulationRegistryTest extends TestCase {
         PINNumberDAO pinNumberDAO = (PINNumberDAO) ctx.getBean("pinNumberDAOImpl", PINNumberDAO.class);
         try {
             pinNumberDAO.deleteLastPINNumber(pinNumberDAO.getLastPINNumber(75210));
-        } catch (Exception ignore) {}
+        } catch (Exception ignore) {
+        }
     }
 
     public PopulationRegistryTest() {
@@ -108,6 +110,140 @@ public class PopulationRegistryTest extends TestCase {
         }
         // TODO
 
+    }
+
+    public void testDeletePersonBeforeApproval() throws Exception {
+        GregorianCalendar cal = new GregorianCalendar();
+        List<PersonCitizenship> citizenshipList = getSampleCitizenshipList();
+
+        // test saving of minimal Person for colombo by DEO with primaryLocationUKey 2 (Generic Location 1)
+        cal.set(1975, Calendar.JULY, 29, 20, 15, 00);
+
+        // test colombo DEO adding for Generic Location 1 ignoring duplicates
+        Person p1 = getMinimalPerson(1000, cal.getTime(), "756985623V", null);
+        eCivil.addExistingPerson(p1, citizenshipList, true, deoColomboColombo);
+        long personUKey = p1.getPersonUKey();
+        String comment = "Comment added for Deletion";
+
+        // colombo DEO cannot delete
+        try {
+            eCivil.deletePersonBeforeApproval(personUKey, null, deoColomboColombo);
+            fail("Colombo DEO cannot delete PRS entry");
+        } catch (PRSRuntimeException expected) {
+            assertEquals("Error code invalid", ErrorCodes.PRS_DELETE_RECORD_DENIED, expected.getErrorCode());
+        }
+
+        // negambo DEO cannot delete either
+        try {
+            eCivil.deletePersonBeforeApproval(personUKey, comment, deoGampahaNegambo);
+            fail("Negambo DEO cannot delete PRS entry");
+        } catch (PRSRuntimeException expected) {
+            assertEquals("Error code invalid", ErrorCodes.PRS_DELETE_RECORD_DENIED, expected.getErrorCode());
+        }
+
+        // colombo ADR cannot delete without a comment
+        try {
+            eCivil.deletePersonBeforeApproval(personUKey, null, adrColomboColombo);
+            fail("Colombo ADR cannot delete PRS entry without comment");
+        } catch (PRSRuntimeException expected) {
+            assertEquals("Error code invalid", ErrorCodes.COMMENT_REQUIRED_PRS_DELETE, expected.getErrorCode());
+        }
+
+        // North western ARG cannot delete due to :Colombo DEO location not accessible
+        try {
+            eCivil.deletePersonBeforeApproval(personUKey, comment, argNorthWestern);
+            fail("North west ARG cannot delete PRS entry");
+        } catch (PRSRuntimeException expected) {
+            assertEquals("Error code invalid", ErrorCodes.PERMISSION_DENIED, expected.getErrorCode());
+        }
+
+        // TODO approve person and try to delete by adrColomboColombo and argWestern
+
+        // colombo ADR can delete added person
+        try {
+            eCivil.deletePersonBeforeApproval(personUKey, comment, adrColomboColombo);
+        } catch (Exception unexpected) {
+            fail("Unexpected exception occurred");
+        }
+
+        // negambo DEO adding PRS entry
+        Person p2 = getMinimalPerson(1001, cal.getTime(), "756985624V", null);
+        eCivil.addExistingPerson(p2, citizenshipList, true, deoGampahaNegambo);
+        personUKey = p2.getPersonUKey();
+
+        // western ARG can delete negambo DEO added PRS entry
+        try {
+            eCivil.deletePersonBeforeApproval(personUKey, comment, argWestern);
+        } catch (Exception unexpected) {
+            fail("Unexpected exception occurred");
+        }
+    }
+
+    public void testRejectPersonBeforeApproval() throws Exception {
+        GregorianCalendar cal = new GregorianCalendar();
+        List<PersonCitizenship> citizenshipList = getSampleCitizenshipList();
+
+        // test saving of minimal Person for colombo by DEO with primaryLocationUKey 2 (Generic Location 1)
+        cal.set(1975, Calendar.JULY, 29, 20, 15, 00);
+
+        // test colombo DEO adding for Generic Location 1 ignoring duplicates
+        Person p1 = getMinimalPerson(1000, cal.getTime(), "756985623V", null);
+        eCivil.addExistingPerson(p1, citizenshipList, true, deoColomboColombo);
+        long personUKey = p1.getPersonUKey();
+        String comment = "Comment added for Rejection";
+
+        // colombo DEO cannot reject
+        try {
+            eCivil.rejectPersonBeforeApproval(personUKey, comment, deoColomboColombo);
+            fail("Colombo DEO cannot reject PRS entry");
+        } catch (PRSRuntimeException expected) {
+            assertEquals("Error code invalid", ErrorCodes.PRS_REJECT_RECORD_DENIED, expected.getErrorCode());
+        }
+
+        // negambo DEO cannot reject either
+        try {
+            eCivil.rejectPersonBeforeApproval(personUKey, comment, deoGampahaNegambo);
+            fail("Negambo DEO cannot reject PRS entry");
+        } catch (PRSRuntimeException expected) {
+            assertEquals("Error code invalid", ErrorCodes.PRS_REJECT_RECORD_DENIED, expected.getErrorCode());
+        }
+
+        // colombo ADR cannot reject without a comment
+        try {
+            eCivil.rejectPersonBeforeApproval(personUKey, null, adrColomboColombo);
+            fail("Colombo ADR cannot reject PRS entry without comment");
+        } catch (PRSRuntimeException expected) {
+            assertEquals("Error code invalid", ErrorCodes.COMMENT_REQUIRED_PRS_REJECT, expected.getErrorCode());
+        }
+
+        // North western ARG cannot reject due to :Colombo DEO location not accessible
+        try {
+            eCivil.rejectPersonBeforeApproval(personUKey, comment, argNorthWestern);
+            fail("North west ARG cannot reject PRS entry");
+        } catch (PRSRuntimeException expected) {
+            assertEquals("Error code invalid", ErrorCodes.PERMISSION_DENIED, expected.getErrorCode());
+        }
+
+        // TODO approve person and try to reject by adrColomboColombo and argWestern
+
+        // colombo ADR can reject PRS entry
+        try {
+            eCivil.rejectPersonBeforeApproval(personUKey, comment, adrColomboColombo);
+        } catch (Exception unexpected) {
+            fail("Unexpected exception occurred");
+        }
+
+        // negambo DEO adding PRS entry
+        Person p2 = getMinimalPerson(1001, cal.getTime(), "756985624V", null);
+        eCivil.addExistingPerson(p2, citizenshipList, true, deoGampahaNegambo);
+        personUKey = p2.getPersonUKey();
+
+        // western ARG can reject negambo DEO added PRS entry
+        try {
+            eCivil.rejectPersonBeforeApproval(personUKey, comment, argWestern);
+        } catch (Exception unexpected) {
+            fail("Unexpected exception occurred");
+        }
     }
 
     private Person getMinimalPerson(long id, Date dob, String nic, Long tempPIN) {
