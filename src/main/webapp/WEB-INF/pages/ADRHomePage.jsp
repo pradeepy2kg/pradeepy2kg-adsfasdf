@@ -37,47 +37,56 @@
 
 
     <script type="text/javascript">
+
         $(document).ready(function() {
-            $.jqplot.config.enablePlugins = true;
+                var id = 9;
+                $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:9},
+                    function(data) {
+                        $("#totalDeclarations").attr("value", data.totalDeclarations);
+                        $("#totalDecArrivals").attr("value", data.totalDecArrivals);
+                        $("#approvalPendings").attr("value", data.approvalPendings);
+                        $("#totalConfirmChagess").attr("value", data.totalConfirmChagess);
+                        $("#confirmApproved").attr("value", data.confirmApproved);
 
-            line = [
-                ['Total <br/> Declarations <br/> This Month', document.getElementById("totalDeclarations").value],
-                ['Total <br/> Declaration <br/> Arrivals', document.getElementById("totalDecArrivals").value],
-                [' Pending <br/> Approvals',document.getElementById("approvalPendings").value],
-                ['Total <br/> Confirmation <br/> Changes <br/> Entered', document.getElementById("totalConfirmChagess").value],
-                ['Confirmation <br/> Changes <br/> Approved',  document.getElementById("confirmApproved").value],
-                ['Confirmation <br/> Changes <br/> Approval <br/> Pending', document.getElementById("confirmApprovedPending").value],
-                ['Confirmations <br/> Printed',document.getElementById("confirmPrinted").value],
-                ['Confirmation  <br/> Printing <br/> Pending', document.getElementById("confimPrintingPending").value],
-                [ 'Birth <br/> Certifications <br/> Printed', document.getElementById("BCprinted").value],
-                ['Birth <br/> Certifications <br/> Print <br/> Pending', document.getElementById("BCPrintPendings").value],
-                ['Still <br/> Births', document.getElementById("stillBirths").value],
-                ['Still <br/> Births <br/> Pending <br/> Approvals', document.getElementById("SBPendingApprovals").value]
-            ];
-
-
-            plot1 = $.jqplot('chart1', [line], {
-                title: 'ADR',
-                series:[
-                    {
-                        renderer:$.jqplot.BarRenderer
-                    }
-                ],
-                axes: {
-                    xaxis: {
-                        renderer: $.jqplot.CategoryAxisRenderer,
-                        label: ''
+                        $.jqplot.config.enablePlugins = true;
+                        line = [
+                            ['Total <br/> Declarations <br/> This Month', document.getElementById("totalDeclarations").value],
+                            ['Total <br/> Declaration <br/> Arrivals', document.getElementById("totalDecArrivals").value],
+                            [' Pending <br/> Approvals',document.getElementById("approvalPendings").value],
+                            ['Total <br/> Confirmation <br/> Changes <br/> Entered', document.getElementById("totalConfirmChagess").value],
+                            ['Confirmation <br/> Changes <br/> Approved',  document.getElementById("confirmApproved").value],
+                            ['Confirmation <br/> Changes <br/> Approval <br/> Pending', document.getElementById("confirmApprovedPending").value],
+                            ['Confirmations <br/> Printed',document.getElementById("confirmPrinted").value],
+                            ['Confirmation  <br/> Printing <br/> Pending', document.getElementById("confimPrintingPending").value],
+                            [ 'Birth <br/> Certifications <br/> Printed', document.getElementById("BCprinted").value],
+                            ['Birth <br/> Certifications <br/> Print <br/> Pending', document.getElementById("BCPrintPendings").value],
+                            ['Still <br/> Births', document.getElementById("stillBirths").value],
+                            ['Still <br/> Births <br/> Pending <br/> Approvals', document.getElementById("SBPendingApprovals").value]
+                        ];
 
 
-                    },
-                    yaxis: {
-                        autoscale:true,
-                        label: ''
+                        plot1 = $.jqplot('chart1', [line], {
+                            title: 'ADR',
+                            series:[
+                                {
+                                    renderer:$.jqplot.BarRenderer
+                                }
+                            ],
+                            axes: {
+                                xaxis: {
+                                    renderer: $.jqplot.CategoryAxisRenderer,
+                                    label: ''
 
-                    }
-                }
-            });
 
+                                },
+                                yaxis: {
+                                    autoscale:true,
+                                    label: ''
+
+                                }
+                            }
+                        });
+                });
 
         });
 
