@@ -257,6 +257,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             noticeExisting.setFemale(noticeEdited.getFemale());
             noticeExisting.setMrDivisionOfMaleNotice(mr);
         }
+        noticeExisting.setLicenseCollectType(noticeEdited.getLicenseCollectType());
         noticeExisting.setTypeOfMarriage(noticeEdited.getTypeOfMarriage());
     }
 
