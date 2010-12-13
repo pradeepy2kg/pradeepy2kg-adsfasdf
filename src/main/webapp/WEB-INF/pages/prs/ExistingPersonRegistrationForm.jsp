@@ -218,8 +218,12 @@
 
     function processResponse1(respObj) {
         //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("textarea#personFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
-    };
+        $("textarea#personFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].
+        return[0].Text
+    )
+        ;
+    }
+    ;
 
     $(function() {
         $("#submitDatePicker").datepicker({
@@ -409,47 +413,57 @@
 </table>
 
 <s:if test="personList.size > 0">
-    <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
+    <fieldset style="margin-bottom:10px;margin-top:10px;border:2px solid #c3dcee;">
         <legend><b><s:label value="%{getText('label.possibleDuplicates')}"/> </b></legend>
         <table id="persons-table" width="100%" cellpadding="0" cellspacing="0" class="display">
             <thead>
             <tr>
-                <th width="110px;">NIC</th>
-                <th width="700px;"><s:label name="name" value="%{getText('label.personName')}"/></th>
-                <th width="200px;"><s:label name="name" value="%{getText('label.state')}"/></th>
-                <th width="20px;"></th>
+                <th width="60px;">NIC</th>
+                <th width="60px">DOB</th>
+                <th><s:label name="name" value="%{getText('label.personName')}"/></th>
+                <th width="140px;"><s:label name="name" value="%{getText('label.state')}"/></th>
+                <s:if test="allowEdit">
+                    <th width="20px;" style="padding:3px 3px;"></th>
+                </s:if>
             </tr>
             </thead>
             <tbody>
             <s:iterator status="searchStatus" value="personList">
                 <tr class="<s:if test="#searchStatus.odd == true">odd</s:if><s:else>even</s:else>">
                     <td align="center"><s:property value="nic"/></td>
+                    <td align="center"><s:property value="dateOfBirth"/></td>
                     <td>
                         <s:if test="fullNameInOfficialLanguage != null">
                             <%= NameFormatUtil.getDisplayName((String) request.getAttribute("fullNameInOfficialLanguage"), 70)%>
                         </s:if>
                     </td>
                     <td align="center"><s:property value="status"/></td>
-                    <td align="center">
-                        <s:if test="status.ordinal() != 2">
-                            <s:url id="editPerson" action="eprEditPerson.do">
-                                <s:param name="personUKey" value="personUKey"/>
-                            </s:url>
-                            <s:a href="%{editPerson}" title="%{getText('label.editToolTip')}">
-                                <img src="<s:url value='/images/edit.png'/>" width="25" height="25" border="none"/>
-                            </s:a>
-                        </s:if>
-                    </td>
+                    <s:if test="allowEdit">
+                        <td align="center">
+                            <s:if test="status.ordinal() != 2">
+                                <s:url id="editPerson" action="eprEditPerson.do">
+                                    <s:param name="personUKey" value="personUKey"/>
+                                </s:url>
+                                <s:a href="%{editPerson}" title="%{getText('label.editToolTip')}">
+                                    <img src="<s:url value='/images/edit.png'/>" width="25" height="25" border="none"/>
+                                </s:a>
+                            </s:if>
+                        </td>
+                    </s:if>
                 </tr>
             </s:iterator>
             </tbody>
         </table>
-        <table width="60%" align="right" style="padding:0;cellspacing:0;cellpadding:0;">
+        <table width="80%" align="right" style="padding:0;cellspacing:0;cellpadding:0;">
             <tr>
-                <td><s:checkbox name="ignoreDuplicate"/></td>
-                <td><s:label value="%{getText('label.ignoreDuplicates')}" name="ignoreDuplicate"/></td>
+                <td height="10px;"><s:checkbox name="ignoreDuplicate"/></td>
                 <td>
-                    <div class="form-submit" style="padding:0;margin-top:0px;">
+                    <span style="color:red;">
+                    <s:label value="%{getText('label.ignoreDuplicates')}" name="ignoreDuplicate"/>
+                    </span>
+                </td>
+                <td style="padding:0 0">
+                    <div class="form-submit" style="padding:0 0;margin-top:0px;">
                         <s:submit name="approve" value="%{getText('save.label')}"/></div>
                 </td>
             </tr>
@@ -494,7 +508,8 @@
             <br>Temporary Identification number
         </td>
         <td colspan="2">
-            <s:textfield name="person.temporaryPin" id="temporaryPIN" maxLength="10" onkeypress="return isNumberKey(event)"/>
+            <s:textfield name="person.temporaryPin" id="temporaryPIN" maxLength="10"
+                         onkeypress="return isNumberKey(event)"/>
         </td>
     </tr>
     <tr>
@@ -518,7 +533,8 @@
         </td>
     </tr>
     <tr>
-        <td>(6) උපන් ස්ථානය<s:label value="*" cssStyle="color:red;font-size:14pt"/><br>பிறந்த இடம்<br>Place of Birth</td>
+        <td>(6) උපන් ස්ථානය<s:label value="*" cssStyle="color:red;font-size:14pt"/><br>பிறந்த இடம்<br>Place of Birth
+        </td>
         <td colspan="7">
             <s:textfield name="person.placeOfBirth" id="placeOfBirth" cssStyle="width:97.6%;" maxLength="255"/>
         </td>
@@ -535,7 +551,9 @@
         </td>
     </tr>
     <tr>
-        <td class="font-9">(8) නම ඉංග්‍රීසි භාෂාවෙන් <s:label value="*" cssStyle="color:red;font-size:10pt"/><br>பெயர் ஆங்கில மொழியில்<br>Name in English</td>
+        <td class="font-9">(8) නම ඉංග්‍රීසි භාෂාවෙන් <s:label value="*" cssStyle="color:red;font-size:10pt"/><br>பெயர்
+            ஆங்கில மொழியில்<br>Name in English
+        </td>
         <td colspan="7">
             <s:textarea name="person.fullNameInEnglishLanguage" id="personFullNameEnglish"
                         cssStyle="width:98.2%;"/>
@@ -561,11 +579,12 @@
         </td>
         <td colspan="2">
             <s:select name="person.gender"
-                      id ="genderList" cssStyle="width:190px; margin-left:5px;"
+                      id="genderList" cssStyle="width:190px; margin-left:5px;"
                       list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"/>
         </td>
         <td>
-            (10) සිවිල් තත්ත්වය<s:label value="*" cssStyle="color:red;font-size:14pt"/><br>சிவில் நிலைமை <br>Civil Status
+            (10) සිවිල් තත්ත්වය<s:label value="*" cssStyle="color:red;font-size:14pt"/><br>சிவில் நிலைமை <br>Civil
+            Status
         </td>
         <td colspan="5" style="border:none;padding:0">
             <table style="border:none;" cellspacing="0;" width="100%">
@@ -622,9 +641,12 @@
     <tbody>
 
     <tr>
-        <td>(13) ස්ථිර ලිපිනය<s:label value="*" cssStyle="color:red;font-size:14pt"/><br>நிரந்தர வதிவிட முகவரி<br>Permanent Address</td>
+        <td>(13) ස්ථිර ලිපිනය<s:label value="*" cssStyle="color:red;font-size:14pt"/><br>நிரந்தர வதிவிட முகவரி<br>Permanent
+            Address
+        </td>
         <td colspan="7">
-            <s:textarea name="person.permanentAddress" id="permanentAddress" cssStyle="width:98.2%;text-transform:uppercase;"/>
+            <s:textarea name="person.permanentAddress" id="permanentAddress"
+                        cssStyle="width:98.2%;text-transform:uppercase;"/>
         </td>
     </tr>
     <tr>
@@ -642,7 +664,8 @@
     <tr>
         <td>(15) දුරකථන අංක<br>தொலைபேசி இலக்கம்<br>Telephone Numbers</td>
         <td colspan="2">
-            <s:textfield name="person.personPhoneNo" id="personPhoneNo" maxLength="15" onkeypress="return isNumberKey(event)"/>
+            <s:textfield name="person.personPhoneNo" id="personPhoneNo" maxLength="15"
+                         onkeypress="return isNumberKey(event)"/>
         </td>
         <td>(16) ඉ – තැපැල් <br>மின்னஞ்சல்<br>Email</td>
         <td colspan="4">
@@ -673,7 +696,7 @@
             <tr style="font-size:10pt;">
                 <th>Country Id</th>
                 <th>රට/நாடு /Country</th>
-                <th>ගමන් බලපත්‍ර අංකය/கடவுச் சீட்டு இல./Passport No.</th>                  
+                <th>ගමන් බලපත්‍ර අංකය/கடவுச் சீட்டு இல./Passport No.</th>
             </tr>
             </thead>
             <tbody>
@@ -689,7 +712,8 @@
             <%--TODO remove this chathuranga--%>
         <center><a href="javascript:void(0)" id="delete"><s:label value="%{getText('label.delete')}"/></a></center>
 
-        <table id="citizen" class="table_reg_page_05" cellspacing="0" cellpadding="0" style="margin-top:10px;width:100%;">
+        <table id="citizen" class="table_reg_page_05" cellspacing="0" cellpadding="0"
+               style="margin-top:10px;width:100%;">
             <col width="230px"/>
             <col width="250px"/>
             <col width="220px"/>
@@ -707,7 +731,8 @@
                 </td>
                 <td>
                     <a href="javascript:void(0)" onclick="fnClickAddRow();">
-                        <img src="<s:url value="/images/add.png"/>" width="25" height="25" border="none" style="float:right;margin-right:15px;">
+                        <img src="<s:url value="/images/add.png"/>" width="25" height="25" border="none"
+                             style="float:right;margin-right:15px;">
                     </a>
                 </td>
             </tr>
