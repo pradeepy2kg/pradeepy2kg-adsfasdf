@@ -1,22 +1,24 @@
 package lk.rgd.prs.web.action;
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.AppConstants;
+import lk.rgd.common.api.dao.CountryDAO;
+import lk.rgd.common.api.dao.RaceDAO;
+import lk.rgd.common.api.domain.User;
+import lk.rgd.common.util.CivilStatusUtil;
+import lk.rgd.common.util.GenderUtil;
+import lk.rgd.common.util.LifeStatusUtil;
+import lk.rgd.crs.web.WebConstants;
+import lk.rgd.prs.api.domain.Address;
+import lk.rgd.prs.api.domain.Person;
+import lk.rgd.prs.api.service.PopulationRegistry;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import lk.rgd.prs.api.service.PopulationRegistry;
-import lk.rgd.prs.api.domain.Person;
-import lk.rgd.prs.api.domain.Address;
-import lk.rgd.common.api.dao.RaceDAO;
-import lk.rgd.common.api.dao.CountryDAO;
-import lk.rgd.common.api.domain.User;
-import lk.rgd.common.util.GenderUtil;
-import lk.rgd.common.util.CivilStatusUtil;
-import lk.rgd.common.util.LifeStatusUtil;
-import lk.rgd.crs.web.WebConstants;
-import lk.rgd.AppConstants;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class PersonDetailsAction extends ActionSupport implements SessionAware {
 
