@@ -282,13 +282,8 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
                     case FEMALE_NOTICE:
                         existingNotice.setState(MarriageRegister.State.FEMALE_NOTICE_APPROVED);
                 }
-            } else if ((existingNotice.getState() == MarriageRegister.State.MALE_NOTICE_APPROVED) ||
-                (existingNotice.getState() == MarriageRegister.State.FEMALE_NOTICE_APPROVED)) {
-                //case 2     change state in to NOTICE_APPROVED
-                existingNotice.setState(MarriageRegister.State.NOTICE_APPROVED);
             } else {
-                handleException("unable to approve single :" + existingNotice.isSingleNotice() + "notice type:" + type +
-                    ",idUKey" + idUKey, ErrorCodes.INVALID_STATE_FOR_APPROVAL);
+                existingNotice.setState(MarriageRegister.State.NOTICE_APPROVED);
             }
         }
         //now we change state in to approving but if we changed state in to notice approve state there can't be another
@@ -309,6 +304,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
             logger.debug("attempt to roll back notice : idUKey " + idUKey + "state to previous state : current state : "
                 + notice.getState());
         }
+        //todo is it more use full if this hardcoded remove ?? amith
         notice.setState(MarriageRegister.State.DATA_ENTRY);
         //updating the marriage register object
         marriageRegistrationDAO.updateMarriageRegister(notice, user);

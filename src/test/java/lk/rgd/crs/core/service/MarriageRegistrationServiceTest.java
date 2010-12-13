@@ -68,7 +68,7 @@ public class MarriageRegistrationServiceTest extends TestCase {
     public void testAddMinimalMarriageNotice() {
         //adding a marriage notice with minimal requirements
         MarriageRegister notice = getMinimalMarriageNotice(2010012345L, colomboMRDivision, false, "1234567890",
-            "1234567899", MarriageNotice.Type.MALE_NOTICE, true);
+            "1234567899", MarriageNotice.Type.MALE_NOTICE, MarriageRegister.LicenseCollectType.MAIL_TO_MALE);
         //assuming this is male notice
         //and male party is expecting the license
         //   notice.setLicenseRequestByMale(true);
@@ -80,7 +80,8 @@ public class MarriageRegistrationServiceTest extends TestCase {
     public void testMarriageNoticeApproval() {
         //add male notice license is expecting by male party
         MarriageRegister malePartySubmittedNotice = getMinimalMarriageNotice(2010012346L, colomboMRDivision, false,
-            "1234567899", "1234567898", MarriageNotice.Type.MALE_NOTICE, true);
+            "1234567899", "1234567898", MarriageNotice.Type.MALE_NOTICE, MarriageRegister.LicenseCollectType.MAIL_TO_MALE);
+        //set female as the license request party
         marriageRegistrationService.addMarriageNotice(malePartySubmittedNotice, MarriageNotice.Type.MALE_NOTICE, rg);
         try {//now try to approve this record
             //this record is not a single record so it is expecting FEMALE notice and unless female party notice is approved
@@ -121,6 +122,7 @@ public class MarriageRegistrationServiceTest extends TestCase {
             (colomboMRDivision, 2010012347L, true, rg).get(0);
         try {
             //approving female notice
+
             marriageRegistrationService.approveMarriageNotice(existingFemaleNotice.getIdUKey(), MarriageNotice.Type.FEMALE_NOTICE, rg);
         } catch (CRSRuntimeException notExpecting) {
             //we are not expecting exceptions here
@@ -135,10 +137,12 @@ public class MarriageRegistrationServiceTest extends TestCase {
             //we are not expecting exceptions here
             fail("exception not expecting while approve male notice");
         }
+
     }
 
+
     private MarriageRegister getMinimalMarriageNotice(long serialMale, MRDivision mrDivision, boolean isSingleNotice,
-        String malePin, String femalePin, MarriageNotice.Type type, boolean maleExpectingLicense) {
+        String malePin, String femalePin, MarriageNotice.Type type, MarriageRegister.LicenseCollectType licenseCollectType) {
 
         MarriageRegister notice = new MarriageRegister();
         //male party
@@ -153,10 +157,9 @@ public class MarriageRegistrationServiceTest extends TestCase {
         female.setNameInEnglishFemale("name in english" + femalePin);
 
         notice.setSingleNotice(isSingleNotice);
-        //   notice.setLicenseRequestByMale(maleExpectingLicense);
         notice.setTypeOfMarriage(MarriageType.GENERAL);
         notice.setTypeOfMarriagePlace(TypeOfMarriagePlace.REGISTRAR_OFFICE);
-
+        notice.setLicenseCollectType(licenseCollectType);
         switch (type) {
             case BOTH_NOTICE:
                 notice.setFemale(female);
