@@ -1233,5 +1233,11 @@
             <result type="tiles" name="success">epr.marriageExtract</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
+
+        <action name="eprRollBackNoticeToPrevious" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
+                method="rollBackApprovedToNonApproved">
+            <result type="tiles" name="success">epr.marriageNoticeResults</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
     </package>
 </struts>

@@ -17,8 +17,11 @@
         </tbody>
     </table>
     <div class="form-submit">
-        <s:form action="">
+        <s:form action="eprRollBackNoticeToPrevious.do">
             <s:submit cssStyle="width:150px" value="%{getText('button.roll.back')}"/>
+            <s:hidden name="ignoreWarnings" value="true"/>
+            <s:hidden value="%{#request.idUKey}" name="idUKey"/>
+            <s:hidden value="%{#request.noticeType}" name="noticeType"/>
         </s:form>
     </div>
 

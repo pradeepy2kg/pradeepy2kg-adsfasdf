@@ -259,4 +259,35 @@ public interface MarriageRegistrationService {
      *               and vise-versa
      */
     public void approveMarriageNotice(long idUKey, MarriageNotice.Type type, User user);
+
+    /**
+     * roll back notice to previous state
+     *
+     * @param idUKey idUKey of the marriage notice.
+     * @param user   user who perform the action
+     *               <p/>
+     *               this is the scenario that can be happen in many rare cases and in can only encounter when there are two notice
+     *               submitted by two parties
+     *               <p/>
+     *               assume Male party is submitting the notice first and he declare female party as the license owner
+     *               and before female party submit the notice Male notice is being approved by the ADR
+     *               this scenario happens now
+     *               assume now female is submitting the notice and she declare male party as the license owner but the approval process
+     *               says  LP (license party) can only be approved iff OP get approved
+     *               but now Male party is being approved first so This party cannot hold the license
+     *               in that case DEO is asked to choose two options
+     *               <p/>
+     *               1>ask female party to keep to be the license owner as the previous party declare
+     *               or
+     *               <p/>
+     *               2>if female party does not want to be the license party and if she said male must get the license ,in that case we
+     *               roll back the approval of the female party and allow female to declare male as the license owner in that case
+     *               male notice has to approve again by the ADR after female party get approved
+     *               and vise versa
+     *               <p/>
+     *               note in funny situations male party (im referring to the above story) may refuse and he may declare female as the
+     *               owner again this process can be repeating over and over again and we cannot avoid that pragmatically so it should resolve
+     *               manually
+     */
+    public void rollBackNoticeToPreviousState(long idUKey, User user);
 }

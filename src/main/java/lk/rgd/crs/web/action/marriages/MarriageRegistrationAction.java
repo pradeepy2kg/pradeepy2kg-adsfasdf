@@ -223,7 +223,6 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
                 }
                 ///setting to license collection party tp prev
                 marriage.setLicenseCollectType(existingNotice.getLicenseCollectType());
-                session.remove(WebConstants.SESSION_NOTICE_WARNINGS);
             }
             populateNoticeForAddingSecondNotice(existingNotice, marriage);
             userWarnings = marriageRegistrationService.addSecondMarriageNotice(existingNotice, noticeType, ignoreWarnings, user);
@@ -265,6 +264,18 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
      * manually
      */
     public String rollBackApprovedToNonApproved() {
+        logger.debug("attempt to roll back the approval of the marriage notice idUKey : {} :and the notice type : {}",
+            idUKey, noticeType);
+        //roll back
+        marriageRegistrationService.rollBackNoticeToPreviousState(idUKey, user);
+        //now adding second notice
+        //getting previous notice related data from the session and remove from the session
+        getAndRemoveNoticeFromSession();
+        MarriageRegister existingNotice = marriageRegistrationService.getByIdUKey(idUKey, user);
+        populateNoticeForAddingSecondNotice(existingNotice, marriage);
+        marriageRegistrationService.addSecondMarriageNotice(existingNotice, noticeType, ignoreWarnings, user);
+        addActionMessage(getText("massage.successfully.roll.back.to.prev.and.add.second.notice"));
+        logger.debug("roll back success for marriage notice idUKey : {}", idUKey);
         return SUCCESS;
     }
 
