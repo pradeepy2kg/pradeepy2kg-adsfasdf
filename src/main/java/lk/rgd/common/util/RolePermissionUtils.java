@@ -41,6 +41,7 @@ public class RolePermissionUtils {
         deoBitSet.set(Permission.PRS_LOOKUP_PERSON_BY_KEYS);
         deoBitSet.set(Permission.PRS_VIEW_PERSON);
         deoBitSet.set(Permission.PRS_ADD_PERSON);
+        deoBitSet.set(Permission.PRS_PRINT_CERT);
         deoBitSet.set(Permission.EDIT_MARRIAGE);
         deoBitSet.set(Permission.ADD_MARRIAGE);
         deoBitSet.set(Permission.DELETE_MARRIAGE);

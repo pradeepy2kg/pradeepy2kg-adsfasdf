@@ -93,7 +93,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
     @Transactional(propagation = Propagation.REQUIRED)
     public List<Person> addExistingPerson(Person person, List<PersonCitizenship> citizenshipList,
         boolean ignoreDuplicates, User user) {
-        logger.debug("Adding an existing person to the PRS");
+        logger.debug("Adding an existing person to the PRS by user : {}", user.getUserId());
         long pin = -1;
 
         validateRequiredFields(person);
@@ -171,6 +171,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public Person loadPersonToEdit(long personUKey, User user) {
+        logger.debug("Attempt to load PRS entry to edit with personUKey : {} and user : {}", personUKey, user.getUserId());
         validateAccessOfUserToEdit(user);
         if (!user.isAuthorized(Permission.PRS_LOOKUP_PERSON_BY_KEYS)) {
             handleException("User : " + user.getUserId() + " is not allowed to lookup entries on the PRS by keys (uKey)",
