@@ -301,6 +301,22 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void rollBackNoticeToPreviousState(long idUKey, User user) {
+        //if MALE is about to roll back it chane its state form MALE_APPROVAL to DATA_ENTRY  and vise-versa
+        MarriageRegister notice = marriageRegistrationDAO.getByIdUKey(idUKey);
+        if (logger.isDebugEnabled()) {
+            logger.debug("attempt to roll back notice : idUKey " + idUKey + "state to previous state : current state : "
+                + notice.getState());
+        }
+        notice.setState(MarriageRegister.State.DATA_ENTRY);
+        //updating the marriage register object
+        marriageRegistrationDAO.updateMarriageRegister(notice, user);
+    }
+
+    /**
+     * @inheritDoc
+     */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<MarriageRegister> getMarriageRegisterByMRDivision(MRDivision mrDivision, int pageNumber,
         int numOfRows, boolean active, User user) {

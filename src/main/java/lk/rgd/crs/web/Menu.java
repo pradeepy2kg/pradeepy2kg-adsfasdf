@@ -336,6 +336,7 @@ public class Menu {
         deoMarriageLink.put("eprMarriageNoticeEdit.do", new Link(null, "/ecivil/marriages/", "eprMarriageNoticeEdit.do", Permission.EDIT_MARRIAGE));
         deoMarriageLink.put("eprMarriageSecondNoticeAdd.do", new Link(null, "/ecivil/marriages/", "eprMarriageSecondNoticeAdd.do", Permission.EDIT_MARRIAGE));
         deoMarriageLink.put("eprMarriageNoticeDelete.do", new Link(null, "/ecivil/marriages/", "eprMarriageNoticeDelete.do", Permission.DELETE_MARRIAGE));
+        deoMarriageLink.put("eprRollBackNoticeToPrevious.do", new Link(null, "/ecivil/marriages/", "eprMarriageNoticeDelete.do", Permission.EDIT_MARRIAGE));
 
         //adr marriage links
         adrMarriageLink.putAll(deoMarriageLink);
