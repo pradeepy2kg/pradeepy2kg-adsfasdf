@@ -79,7 +79,7 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
 
         if (warnings.isEmpty()) {
             populateLocations();
-            getApprovalPendingPersons();            
+            getApprovalPendingPersons();
             addActionMessage(getText("message.approval.success"));
             return SUCCESS;
         } else {

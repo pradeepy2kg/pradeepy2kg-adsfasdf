@@ -2,6 +2,7 @@ package lk.rgd.prs.web.action;
 
 import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.AppConstants;
+import lk.rgd.Permission;
 import lk.rgd.common.api.dao.CountryDAO;
 import lk.rgd.common.api.dao.RaceDAO;
 import lk.rgd.common.api.domain.Country;
@@ -42,13 +43,15 @@ public class PersonRegisterAction extends ActionSupport implements SessionAware 
     private User user;
     private Person person;
 
+    private boolean ignoreDuplicate;
+    private boolean allowEdit;
+
     private long personUKey;
     private int personCountryId;
     private int personRaceId;
     private String personPassportNo;
     private String citizenship;
     private String language;
-    private boolean ignoreDuplicate;
 
     public PersonRegisterAction(PopulationRegistry service, RaceDAO raceDAO, CountryDAO countryDAO) {
         this.service = service;
@@ -92,6 +95,7 @@ public class PersonRegisterAction extends ActionSupport implements SessionAware 
             return SUCCESS;
         } else {
             populate();
+            initPermissions();
             return "form";
         }
     }
@@ -139,6 +143,14 @@ public class PersonRegisterAction extends ActionSupport implements SessionAware 
         raceList = raceDAO.getRaces(language);
         countryList = countryDAO.getCountries(language);
         logger.debug("Race list and Country list populated with size : {} and {}", raceList.size(), countryList.size());
+    }
+
+    /**
+     * This method used to show/hide specific links in JSPs according to user permissions
+     */
+    private void initPermissions() {
+        allowEdit = user.isAuthorized(Permission.PRS_EDIT_PERSON);
+        logger.debug("User : {} is allowed to edit PRS entries : {}", user.getUserId(), allowEdit);
     }
 
     /**
@@ -221,6 +233,14 @@ public class PersonRegisterAction extends ActionSupport implements SessionAware 
 
     public void setCitizenshipList(List<PersonCitizenship> citizenshipList) {
         this.citizenshipList = citizenshipList;
+    }
+
+    public boolean isAllowEdit() {
+        return allowEdit;
+    }
+
+    public void setAllowEdit(boolean allowEdit) {
+        this.allowEdit = allowEdit;
     }
 
     public long getPersonUKey() {
