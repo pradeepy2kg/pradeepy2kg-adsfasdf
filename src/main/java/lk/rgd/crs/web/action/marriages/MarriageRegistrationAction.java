@@ -116,7 +116,6 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             marriage = marriageRegistrationService.getByIdUKey(idUKey, user);
         }
         //populating lists
-        //marriageType = MarriageType.values();
         commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
             marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
         commonUtil.populateCountryAndRaceLists(countryList, raceList, language);
@@ -149,7 +148,6 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             return SUCCESS;
         }
         catch (CRSRuntimeException e) {
-            //todo return to error with redirect
             logger.debug("incomplete marriage notice : male serial number : {} : female serial number : {}",
                 marriage.getSerialOfMaleNotice(), marriage.getSerialOfFemaleNotice());
             addActionError(getText("error.incomplete.notice"));
@@ -220,7 +218,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
                 getAndRemoveNoticeFromSession();
                 //check idUKey and sessions idUKey is same
                 if (marriage.getIdUKey() != idUKey) {
-                    //todo throw an error                check serila is not setting in OP
+                    //todo throw an error                check serial is not setting in OP
                     //that mean session value ans idUKey is not sync
                 }
                 ///setting to license collection party tp prev
@@ -244,22 +242,30 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         return SUCCESS;
     }
 
-    private void getAndRemoveNoticeFromSession() {
-        marriage = (MarriageRegister) session.get(WebConstants.SESSION_NOTICE_WARNINGS);
-        mrDivisionId = (Integer) session.get(WebConstants.SESSION_NOTICE_MR_DIVISION_KEY);
-        noticeReceivedDate = (Date) session.get(WebConstants.SESSION_NOTICE_RECEIVED_DATE);
-        serialNumber = (Long) session.get(WebConstants.SESSION_NOTICE_SERIAL);
-        session.remove(WebConstants.SESSION_NOTICE_WARNINGS);
-        session.remove(WebConstants.SESSION_NOTICE_MR_DIVISION_KEY);
-        session.remove(WebConstants.SESSION_NOTICE_RECEIVED_DATE);
-        session.remove(WebConstants.SESSION_NOTICE_SERIAL);
-    }
-
-    private void addNoticeToSession(MarriageRegister existingNotice) {
-        session.put(WebConstants.SESSION_NOTICE_WARNINGS, existingNotice);
-        session.put(WebConstants.SESSION_NOTICE_MR_DIVISION_KEY, mrDivisionId);
-        session.put(WebConstants.SESSION_NOTICE_RECEIVED_DATE, noticeReceivedDate);
-        session.put(WebConstants.SESSION_NOTICE_SERIAL, serialNumber);
+    /**
+     * this is the scenario that can be happen in many rare cases and in can only encounter when there are two notice
+     * submitted by two parties
+     * <p/>
+     * assume Male party is submitting the notice first and he declare female party as the license owner
+     * and before female party submit the notice Male notice is being approved by the ADR
+     * this scenario happens now
+     * assume now female is submitting the notice and she declare male party as the license owner but the approval process
+     * says  LP (license party) can only be approved iff OP get approved
+     * but now Male party is being approved first so This party cannot hold the license
+     * in that case DEO is asked to choose two options
+     * 1>ask female party to keep to be the license owner as the previous party declare
+     * or
+     * 2>if female party does not want to be the license party and if she said male must get the license ,in that case we
+     * roll back the approval of the female party and allow female to declare male as the license owner in that case
+     * male notice has to approve again by the ADR after female party get approved
+     * and vise versa
+     * <p/>
+     * note in funny situations male party (im referring to the above story) may refuse and he may declare female as the
+     * owner again this process can be repeating over and over again and we cannot avoid that pragmatically so it should resolve
+     * manually
+     */
+    public String rollBackApprovedToNonApproved() {
+        return SUCCESS;
     }
 
     //TODO : to be removed
@@ -426,7 +432,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     }
 
     /**
-     * Marriage Registration - Loding the extract of marriage register for print
+     * Marriage Registration - Loading the extract of marriage register for print
      */
     public String marriageExtractInit() {
         marriageType = MarriageType.values();
@@ -440,6 +446,24 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
         marriage = marriageRegistrationService.getByIdUKey(idUKey, user);
         return SUCCESS;
+    }
+
+    private void getAndRemoveNoticeFromSession() {
+        marriage = (MarriageRegister) session.get(WebConstants.SESSION_NOTICE_WARNINGS);
+        mrDivisionId = (Integer) session.get(WebConstants.SESSION_NOTICE_MR_DIVISION_KEY);
+        noticeReceivedDate = (Date) session.get(WebConstants.SESSION_NOTICE_RECEIVED_DATE);
+        serialNumber = (Long) session.get(WebConstants.SESSION_NOTICE_SERIAL);
+        session.remove(WebConstants.SESSION_NOTICE_WARNINGS);
+        session.remove(WebConstants.SESSION_NOTICE_MR_DIVISION_KEY);
+        session.remove(WebConstants.SESSION_NOTICE_RECEIVED_DATE);
+        session.remove(WebConstants.SESSION_NOTICE_SERIAL);
+    }
+
+    private void addNoticeToSession(MarriageRegister existingNotice) {
+        session.put(WebConstants.SESSION_NOTICE_WARNINGS, existingNotice);
+        session.put(WebConstants.SESSION_NOTICE_MR_DIVISION_KEY, mrDivisionId);
+        session.put(WebConstants.SESSION_NOTICE_RECEIVED_DATE, noticeReceivedDate);
+        session.put(WebConstants.SESSION_NOTICE_SERIAL, serialNumber);
     }
 
     /**
