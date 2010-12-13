@@ -606,7 +606,7 @@ public class Person implements Serializable {
                     sb.append(names[i].charAt(0)).append(". ");
                 }
             }
-            initialsInEnglish = sb.toString();
+            initialsInEnglish = WebUtils.filterBlanksAndToUpper(sb.toString());
         }
     }
 
@@ -621,7 +621,7 @@ public class Person implements Serializable {
                     sb.append(names[i].charAt(0)).append(". ");
                 }
             }
-            initialsInOfficialLanguage = sb.toString();
+            initialsInOfficialLanguage = WebUtils.filterBlanksAndToUpper(sb.toString());
         }
     }
 
