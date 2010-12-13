@@ -16,6 +16,11 @@ public class WebConstants {
     public static final String SESSION_USER_LANG = "WW_TRANS_I18N_LOCALE";
     public static final String SESSION_USER_BEAN = "user_bean";
     public static final String SESSION_USER_MENUE_LIST = "allowed_menue";
+    public static final String SESSION_NOTICE_WARNINGS = "notice_warnings";
+    public static final String SESSION_NOTICE_SERIAL = "notice_serial";
+    public static final String SESSION_NOTICE_MR_DIVISION_KEY = "notice_mr_idUKey";
+    public static final String SESSION_NOTICE_RECEIVED_DATE = "notice_receive_date";
+
 
     public static final String SESSION_PRINT_COUNT = "printCount";
 
@@ -59,6 +64,6 @@ public class WebConstants {
     public static final int MONTH = 2;
     public static final int YEAR = 3;
     public static final long DAY_IN_MILLISECONDS = 1000 * 60 * 60 * 24;
-   
+
 
 }

@@ -118,18 +118,19 @@ public interface MarriageRegistrationService {
     /**
      * adding second notice(actually updating the existing notice record)
      *
-     * @param notice notice(marriage register object)
-     * @param type   type of the second notice
-     * @param user   the user who performing the action
-     *               <p/>
-     *               warning is issued in special case
-     *               assume male is submitting first and he nominate female is to be capture the license ,
-     *               then before submitting female notice male notice is being approved,
-     *               now female is submitting and she declare male should get the license but the cannot happen because LP(license party)
-     *               must be approved second in that case warning is given for the user for asking should female keep the license
-     *               or should rollback the approval of male's approval
+     * @param notice         notice(marriage register object)
+     * @param type           type of the second notice
+     * @param ignoreWarnings ignore warnings
+     * @param user           the user who performing the action
+     *                       <p/>
+     *                       warning is issued in special case
+     *                       assume male is submitting first and he nominate female is to be capture the license ,
+     *                       then before submitting female notice male notice is being approved,
+     *                       now female is submitting and she declare male should get the license but the cannot happen because LP(license party)
+     *                       must be approved second in that case warning is given for the user for asking should female keep the license
+     *                       or should rollback the approval of male's approval
      */
-    public List<UserWarning> addSecondMarriageNotice(MarriageRegister notice, MarriageNotice.Type type, User user);
+    public List<UserWarning> addSecondMarriageNotice(MarriageRegister notice, MarriageNotice.Type type, boolean ignoreWarnings, User user);
 
 
     /**

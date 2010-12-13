@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -75,8 +76,9 @@ public class MarriageRegistrationValidator {
 
         if (checkFail) {
             warning.add(new UserWarning("warn.add.or.rollback.other.party.approval", UserWarning.Severity.WARN));
+            return warning;
         }
-        return warning;
+        return Collections.emptyList();
     }
 
     private void validateBasicNeeds(Long serial, Date recDate, String identificationNumber, Date dob) {
