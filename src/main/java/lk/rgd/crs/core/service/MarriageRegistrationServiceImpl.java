@@ -161,18 +161,22 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     //todo isMale is unused here remove later (amith)
     //todo issue user warnings
     @Transactional(propagation = Propagation.REQUIRED)
-    public List<UserWarning> addSecondMarriageNotice(MarriageRegister notice, MarriageNotice.Type type, User user) {
+    public List<UserWarning> addSecondMarriageNotice(MarriageRegister notice, MarriageNotice.Type type,
+        boolean ignoreWarnings, User user) {
         logger.debug("attempt to add a second notice for existing record : idUKey : {}", notice.getIdUKey());
         checkUserPermission(Permission.ADD_MARRIAGE, ErrorCodes.PERMISSION_DENIED,
             " add second notice to marriage register ", user);
         //get user warnings when adding  second notice   and return warnings
         List<UserWarning> warnings = marriageRegistrationValidator.validateAddingSecondNotice(notice, type);
-        if (warnings != null && warnings.size() > 0) {
+        //todo simplify the logic amith
+        if (warnings != null && warnings.size() > 0 && !ignoreWarnings) {
             logger.debug("warnings found while adding second notice to the existing marriage notice idUKey : {}",
                 notice.getIdUKey());
             return warnings;
         }
-        updateMarriageRegister(notice, user);
+        if (warnings.size() == 0 || ignoreWarnings) {
+            updateMarriageRegister(notice, user);
+        }
         return Collections.emptyList();
     }
 

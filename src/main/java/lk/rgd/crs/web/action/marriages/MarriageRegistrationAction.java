@@ -71,6 +71,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     private boolean secondNotice;
     private boolean editMode;
     private boolean licensedMarriage;
+    private boolean ignoreWarnings;
 
     private String language;
 
@@ -208,16 +209,30 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         if (existingNotice != null) {
             populatePartyObjectsForPersisting(existingNotice);
             //check who submit the second notice
-            if (!existingNotice.isSingleNotice() && existingNotice.getSerialOfMaleNotice() == null) {
-                noticeType = MarriageNotice.Type.MALE_NOTICE;
+            if (!ignoreWarnings) {
+                if (!existingNotice.isSingleNotice() && existingNotice.getSerialOfMaleNotice() == null) {
+                    noticeType = MarriageNotice.Type.MALE_NOTICE;
+                } else {
+                    noticeType = MarriageNotice.Type.FEMALE_NOTICE;
+                }
             } else {
-                noticeType = MarriageNotice.Type.FEMALE_NOTICE;
+                //getting previous notice related data from the session and remove from the session
+                getAndRemoveNoticeFromSession();
+                //check idUKey and sessions idUKey is same
+                if (marriage.getIdUKey() != idUKey) {
+                    //todo throw an error                check serila is not setting in OP
+                    //that mean session value ans idUKey is not sync
+                }
+                ///setting to license collection party tp prev
+                marriage.setLicenseCollectType(existingNotice.getLicenseCollectType());
+                session.remove(WebConstants.SESSION_NOTICE_WARNINGS);
             }
             populateNoticeForAddingSecondNotice(existingNotice, marriage);
-            userWarnings = marriageRegistrationService.addSecondMarriageNotice(existingNotice, noticeType, user);
+            userWarnings = marriageRegistrationService.addSecondMarriageNotice(existingNotice, noticeType, ignoreWarnings, user);
             if (userWarnings.size() > 0) {
                 //no need to null check we returning empty set if no warnings
                 logger.debug("user warnings found for adding second notice for existing notice idUKey : {}", idUKey);
+                addNoticeToSession(existingNotice);
                 return "warn";
             }
         } else {
@@ -227,6 +242,24 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         }
         logger.debug("added second notice to idUKey : {}", idUKey);
         return SUCCESS;
+    }
+
+    private void getAndRemoveNoticeFromSession() {
+        marriage = (MarriageRegister) session.get(WebConstants.SESSION_NOTICE_WARNINGS);
+        mrDivisionId = (Integer) session.get(WebConstants.SESSION_NOTICE_MR_DIVISION_KEY);
+        noticeReceivedDate = (Date) session.get(WebConstants.SESSION_NOTICE_RECEIVED_DATE);
+        serialNumber = (Long) session.get(WebConstants.SESSION_NOTICE_SERIAL);
+        session.remove(WebConstants.SESSION_NOTICE_WARNINGS);
+        session.remove(WebConstants.SESSION_NOTICE_MR_DIVISION_KEY);
+        session.remove(WebConstants.SESSION_NOTICE_RECEIVED_DATE);
+        session.remove(WebConstants.SESSION_NOTICE_SERIAL);
+    }
+
+    private void addNoticeToSession(MarriageRegister existingNotice) {
+        session.put(WebConstants.SESSION_NOTICE_WARNINGS, existingNotice);
+        session.put(WebConstants.SESSION_NOTICE_MR_DIVISION_KEY, mrDivisionId);
+        session.put(WebConstants.SESSION_NOTICE_RECEIVED_DATE, noticeReceivedDate);
+        session.put(WebConstants.SESSION_NOTICE_SERIAL, serialNumber);
     }
 
     //TODO : to be removed
@@ -665,6 +698,14 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     public void setUserWarnings(List<UserWarning> userWarnings) {
         this.userWarnings = userWarnings;
+    }
+
+    public boolean isIgnoreWarnings() {
+        return ignoreWarnings;
+    }
+
+    public void setIgnoreWarnings(boolean ignoreWarnings) {
+        this.ignoreWarnings = ignoreWarnings;
     }
 }
 
