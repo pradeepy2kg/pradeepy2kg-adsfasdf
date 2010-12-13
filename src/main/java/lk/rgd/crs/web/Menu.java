@@ -118,12 +118,12 @@ public class Menu {
         // PRS links for DEO
         deoPRSLink.put("eprExistingPersonRegInit.do", new Link("prs.personRegistration.label", "/ecivil/prs/", "eprExistingPersonRegInit.do", Permission.PRS_ADD_PERSON));
         deoPRSLink.put("eprExistingPersonRegistration.do", new Link(null, "/ecivil/prs/", "eprExistingPersonRegistration.do", Permission.PRS_ADD_PERSON));
-        deoPRSLink.put("eprEditPerson.do", new Link(null, "/ecivil/prs/", "eprEditPerson.do", Permission.PRS_EDIT_PERSON));
         // TODO chathuranga this should be moved to ADR later
-        deoPRSLink.put("eprPRSCertificate.do", new Link(null, "/ecivil/prs/", "eprPRSCertificate.do", Permission.PRS_ADD_PERSON));
+        deoPRSLink.put("eprPRSCertificate.do", new Link(null, "/ecivil/prs/", "eprPRSCertificate.do", Permission.PRS_PRINT_CERT));
 
         // PRS links for ADR
         adrPRSLink.putAll(deoPRSLink);
+        adrPRSLink.put("eprEditPerson.do", new Link(null, "/ecivil/prs/", "eprEditPerson.do", Permission.PRS_EDIT_PERSON));
         adrPRSLink.put("eprPRSAdvancedSearch.do", new Link("prs.advanceSearch.label", "/ecivil/prs/", "eprPRSAdvancedSearch.do", Permission.SEARCH_PRS));
         adrPRSLink.put("eprPersonApproval.do", new Link("prs.personApproval.label", "/ecivil/prs/", "eprPersonApproval.do", Permission.PRS_APPROVE_PERSON));
         adrPRSLink.put("eprApprovePerson.do", new Link(null, "/ecivil/prs/", "eprApprovePerson.do", Permission.PRS_APPROVE_PERSON));
