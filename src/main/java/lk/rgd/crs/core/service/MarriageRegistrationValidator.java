@@ -62,7 +62,18 @@ public class MarriageRegistrationValidator {
      */
     public List<UserWarning> validateAddingSecondNotice(MarriageRegister existing, MarriageNotice.Type type) {
         List<UserWarning> warning = new ArrayList<UserWarning>();
-        if (true) {
+        //if second notice is a MALE notice and if its records current state is FEMALE_NOTICE_APPROVED and
+        //second notice is nominating that female should get the notice and vise-versa
+        boolean checkFail = ((type == MarriageNotice.Type.MALE_NOTICE) &&
+            (existing.getState() == MarriageRegister.State.FEMALE_NOTICE_APPROVED) &&
+            ((existing.getLicenseCollectType() == MarriageRegister.LicenseCollectType.HAND_COLLECT_FEMALE)
+                || (existing.getLicenseCollectType() == MarriageRegister.LicenseCollectType.MAIL_TO_FEMALE))) ||
+            ((type == MarriageNotice.Type.FEMALE_NOTICE) &&
+                (existing.getState() == MarriageRegister.State.MALE_NOTICE_APPROVED) &&
+                ((existing.getLicenseCollectType() == MarriageRegister.LicenseCollectType.HAND_COLLECT_MALE)
+                    || (existing.getLicenseCollectType() == MarriageRegister.LicenseCollectType.MAIL_TO_MALE)));
+
+        if (checkFail) {
             warning.add(new UserWarning("warn.add.or.rollback.other.party.approval", UserWarning.Severity.WARN));
         }
         return warning;
