@@ -180,8 +180,8 @@
                     <table id="person-approve-list" width="100%" cellpadding="0" cellspacing="0" class="display">
                         <thead>
                         <tr>
-                            <th width="50px"><s:label value="%{getText('locationCode.label')}"/></th>
-                            <th width="80px">NIC</th>
+                            <th width="60px">PIN</th>
+                            <th width="60px">NIC</th>
                             <th><s:label value="%{getText('label.personName')}"/></th>
                             <th width="15px" style="padding:3px 3px;"></th>
                             <th width="15px" style="padding:3px 3px;"></th>
@@ -193,8 +193,14 @@
                         <tbody>
                         <s:iterator status="approvalStatus" value="approvalPendingList">
                             <tr>
-                                <td><s:property value="submittedLocation.locationCode"/></td>
-                                <td align="center"><s:property value="nic"/></td>
+                                <td align="center">
+                                    <s:if test="pin != null"><s:property value="pin"/></s:if>
+                                    <s:else>-</s:else>
+                                </td>
+                                <td align="center">
+                                    <s:if test="nic != null"><s:property value="nic"/></s:if>
+                                    <s:else>-</s:else>
+                                </td>
                                 <td>
                                     <s:if test="fullNameInOfficialLanguage != null">
                                         <%= NameFormatUtil.getDisplayName((String) request.getAttribute("fullNameInOfficialLanguage"), 70)%>
