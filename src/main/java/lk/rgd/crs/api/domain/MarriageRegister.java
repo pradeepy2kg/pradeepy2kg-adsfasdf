@@ -99,7 +99,7 @@ public class MarriageRegister implements Serializable, Cloneable {
      * The preferred language to print the Extract of Marriage Register
      */
     @Column(nullable = true, columnDefinition = "char(2) default 'si'")
-    private String preferredLanguage;
+    private String preferredLanguage = "si";
 
     @Column(name = "STATE", nullable = false)
     private State state;
@@ -149,6 +149,7 @@ public class MarriageRegister implements Serializable, Cloneable {
     @Column(name = "REG_PLACE_MARRIAGE_ENGLISH_LANG", nullable = true)
     private String regPlaceInEnglishLang;
 
+    //TODO: to be removed
     @ManyToOne
     @JoinColumn(name = "REGISTRAR_IDUKEY", nullable = true)
     private Registrar registrar;
@@ -295,6 +296,7 @@ public class MarriageRegister implements Serializable, Cloneable {
         this.dateOfFemaleNotice = dateOfFemaleNotice;
     }
 
+    //TODO: to be removed
     public MRDivision getMrDivisionId() {
         return mrDivision;
     }

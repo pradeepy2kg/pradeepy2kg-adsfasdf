@@ -152,12 +152,18 @@
                         </td>
                         <td align="center">
                         </td>
-                        <td>
+                        <td align="center">
+                            <s:url id="registerSelected" action="eprMarriageRegistrationInit.do">
+                                <s:param name="idUKey" value="idUKey"/>
+                                <s:param name="licensedMarriage" value="true"/>
+                            </s:url>
+                            <s:a href="%{registerSelected}" title="%{getText('tooltip.marriageregistersearch.register')}">
+                                <img src="<s:url value='/images/couple.jpg'/>" width="25" height="25" border="none"/>
+                            </s:a>
                         </td>
                         <td align="center">
                             <s:url id="editSelected" action="eprMarriageRegistrationInit.do">
                                 <s:param name="idUKey" value="idUKey"/>
-                                <s:param name="licensedMarriage" value="true"/>
                             </s:url>
                             <s:a href="%{editSelected}" title="%{getText('editToolTip.label')}">
                                 <img src="<s:url value='/images/edit.png'/>" width="25" height="25" border="none"/>
