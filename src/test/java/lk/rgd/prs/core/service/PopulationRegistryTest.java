@@ -260,6 +260,7 @@ public class PopulationRegistryTest extends TestCase {
         person.setRace(raceDAO.getRace(1));
         person.setPermanentAddress("Permanent Address of " + id);
         person.setCurrentAddress("Current Address of " + id);
+        person.setCivilStatus(Person.CivilStatus.NEVER_MARRIED);
         return person;
     }
 
