@@ -174,7 +174,7 @@ public class Person implements Serializable {
      * The Hash value computed from person details. This can be used to verify a given barcode of a person.
      * details include : official lang name, english name, pin, gender, DOB, and record created time.
      * Algorithm will be SHA-1 hence length is 160.
-     *  */
+     */
     @Column(nullable = true, length = 160)
     private String hash;
     /**
@@ -601,12 +601,12 @@ public class Person implements Serializable {
             lastNameInEnglish = names[names.length - 1];
 
             StringBuilder sb = new StringBuilder(16);
-            for (int i = 0; i < names.length - 1; i++) {
+            for (int i = 0, n = names.length - 1; i < n; i++) {
                 if (!isEmptyString(names[i])) {
                     sb.append(names[i].charAt(0)).append(". ");
                 }
             }
-            initialsInEnglish = WebUtils.filterBlanksAndToUpper(sb.toString());
+            initialsInEnglish = WebUtils.filterBlanks(sb.toString());
         }
     }
 
@@ -616,12 +616,12 @@ public class Person implements Serializable {
             lastNameInOfficialLanguage = names[names.length - 1];
 
             StringBuilder sb = new StringBuilder(16);
-            for (int i = 0; i < names.length - 1; i++) {
+            for (int i = 0, n = names.length - 1; i < n; i++) {
                 if (!isEmptyString(names[i])) {
                     sb.append(names[i].charAt(0)).append(". ");
                 }
             }
-            initialsInOfficialLanguage = WebUtils.filterBlanksAndToUpper(sb.toString());
+            initialsInOfficialLanguage = WebUtils.filterBlanks(sb.toString());
         }
     }
 
