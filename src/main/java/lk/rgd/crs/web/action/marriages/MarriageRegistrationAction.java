@@ -225,7 +225,8 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
                 marriage.setLicenseCollectType(existingNotice.getLicenseCollectType());
             }
             populateNoticeForAddingSecondNotice(existingNotice, marriage);
-            userWarnings = marriageRegistrationService.addSecondMarriageNotice(existingNotice, noticeType, ignoreWarnings, user);
+            userWarnings = marriageRegistrationService.addSecondMarriageNotice(existingNotice, noticeType, ignoreWarnings,
+                false, user);
             if (userWarnings.size() > 0) {
                 //no need to null check we returning empty set if no warnings
                 logger.debug("user warnings found for adding second notice for existing notice idUKey : {}", idUKey);
@@ -266,14 +267,10 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     public String rollBackApprovedToNonApproved() {
         logger.debug("attempt to roll back the approval of the marriage notice idUKey : {} :and the notice type : {}",
             idUKey, noticeType);
-        //roll back
-        marriageRegistrationService.rollBackNoticeToPreviousState(idUKey, user);
-        //now adding second notice
-        //getting previous notice related data from the session and remove from the session
         getAndRemoveNoticeFromSession();
         MarriageRegister existingNotice = marriageRegistrationService.getByIdUKey(idUKey, user);
         populateNoticeForAddingSecondNotice(existingNotice, marriage);
-        marriageRegistrationService.addSecondMarriageNotice(existingNotice, noticeType, ignoreWarnings, user);
+        marriageRegistrationService.addSecondMarriageNotice(existingNotice, noticeType, ignoreWarnings, true, user);
         addActionMessage(getText("massage.successfully.roll.back.to.prev.and.add.second.notice"));
         logger.debug("roll back success for marriage notice idUKey : {}", idUKey);
         return SUCCESS;
