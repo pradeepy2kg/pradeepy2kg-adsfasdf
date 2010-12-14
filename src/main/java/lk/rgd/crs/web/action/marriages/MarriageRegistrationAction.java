@@ -79,8 +79,9 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     private Date noticeReceivedDate;
 
-    MarriageType[] marriageType;
-    TypeOfMarriagePlace[] typeOfMarriagePlace;
+    private MarriageType[] marriageTypeList;
+    private TypeOfMarriagePlace[] typeOfMarriagePlaceList;
+    private Map<String, String> languageList;
 
     private MarriageNotice.Type noticeType;
 
@@ -401,18 +402,10 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
      * Marriage Registration -Marriage Details page load
      */
     public String marriageRegistrationInit() {
-
-        marriageType = MarriageType.values();
-        typeOfMarriagePlace = TypeOfMarriagePlace.values();
-        civilStatusMale = populateCivilStatus();
-        civilStatusFemale = populateCivilStatus();
-
-        commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
-            marriageDistrictId, dsDivisionId, mrDivisionId, AppConstants.MARRIAGE, user, language);
-
-        raceList = raceDAO.getRaces(language);
-
-        if (licensedMarriage) {
+        logger.debug("Marriage Details - idUKey : {}", idUKey);
+        logger.debug("Marriage Details - licensed : {}", licensedMarriage);
+        populateLists();
+        if (idUKey != 0) {
             marriage = marriageRegistrationService.getByIdUKey(idUKey, user);
         }
         return SUCCESS;
@@ -422,17 +415,40 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
      * Marriage Registration - persist new marriage entry through the page for muslim type marrige
      */
     public String registerNewMarriage() {
+        MRDivision mrDivision = mrDivisionDAO.getMRDivisionByPK(mrDivisionId);
+        marriage.setMrDivision(mrDivision);
+        marriage.setMrDivisionOfMaleNotice(mrDivision);
+        marriage.setMrDivisionOfFemaleNotice(mrDivision);
+        //TODO : change the status
+        marriage.setState(MarriageRegister.State.REG_DATA_ENTRY);
         marriageRegistrationService.addMarriageRegister(marriage, user);
         return SUCCESS;
     }
 
     /**
-     * Marriage Registration - Update existion licensed marriage entry with the registrar details, registration place and the date
+     * Marriage Registration - update Marriage Details
      */
-    public String registerExistingMarriage() {
+    public String updateMarriageDetails() {
         MarriageRegister marriageRegister = marriageRegistrationService.getByIdUKey(marriage.getIdUKey(), user);
         if (marriageRegister == null) {
-            addActionError(getText("error.marriage.register.not.found"));
+            populateLists();
+            addActionError(getText("error.marriage.registernotfound"));
+            return SUCCESS;
+        }
+        populateRegistrationDetails(marriageRegister);
+        populateMaleFemaleDetails(marriageRegister);
+        marriageRegistrationService.updateMarriageRegister(marriageRegister, user);
+        return SUCCESS;
+    }
+
+    /**
+     * Marriage Registration - Update existing licensed marriage entry with the registrar details, registration place and the date
+     */
+    public String registerNoticedMarriage() {
+        MarriageRegister marriageRegister = marriageRegistrationService.getByIdUKey(marriage.getIdUKey(), user);
+        if (marriageRegister == null) {
+            addActionError(getText("error.marriage.registernotfound"));
+            return ERROR;
         }
         populateRegistrationDetails(marriageRegister);
         marriageRegistrationService.updateMarriageRegister(marriageRegister, user);
@@ -440,18 +456,10 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     }
 
     /**
-     * Marriage Registration - Loading the extract of marriage register for print
+     * Marriage Registration - Loding the extract of marriage register for print
      */
     public String marriageExtractInit() {
-        marriageType = MarriageType.values();
-        typeOfMarriagePlace = TypeOfMarriagePlace.values();
-        civilStatusMale = populateCivilStatus();
-        civilStatusFemale = populateCivilStatus();
-
-        commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
-            marriageDistrictId, dsDivisionId, mrDivisionId, AppConstants.MARRIAGE, user, language);
-        raceList = raceDAO.getRaces(language);
-
+        populateLists();
         marriage = marriageRegistrationService.getByIdUKey(idUKey, user);
         return SUCCESS;
     }
@@ -488,7 +496,32 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         marriageRegister.setRegNameInOfficialLang(marriage.getRegNameInOfficialLang());
         marriageRegister.setRegistrationDate(marriage.getRegistrationDate());
         marriageRegister.setPreferredLanguage(marriage.getPreferredLanguage());
+        marriageRegister.setTypeOfMarriage(marriage.getTypeOfMarriage());
         marriageRegister.setState(MarriageRegister.State.REG_DATA_ENTRY);
+    }
+
+    /**
+     * Marriage Registration - populate MarriageRegister object with the details of Male party and the Female party
+     */
+    private void populateMaleFemaleDetails(MarriageRegister marriageRegister) {
+        //populate the details of Male party
+        marriageRegister.getMale().setIdentificationNumberMale(marriage.getMale().getIdentificationNumberMale());
+        marriageRegister.getMale().setDateOfBirthMale(marriage.getMale().getDateOfBirthMale());
+        marriageRegister.getMale().setAgeAtLastBirthDayMale(marriage.getMale().getAgeAtLastBirthDayMale());
+        marriageRegister.getMale().setMaleRace(marriage.getMale().getMaleRace());
+        marriageRegister.getMale().setCivilStatusMale(marriage.getMale().getCivilStatusMale());
+        marriageRegister.getMale().setNameInEnglishMale(marriage.getMale().getNameInEnglishMale());
+        marriageRegister.getMale().setNameInOfficialLanguageMale(marriage.getMale().getNameInOfficialLanguageMale());
+        marriageRegister.getMale().setResidentAddressMaleInOfficialLang(marriage.getMale().getResidentAddressMaleInOfficialLang());
+        //populate the details of Female party
+        marriageRegister.getFemale().setIdentificationNumberFemale(marriage.getFemale().getIdentificationNumberFemale());
+        marriageRegister.getFemale().setDateOfBirthFemale(marriage.getFemale().getDateOfBirthFemale());
+        marriageRegister.getFemale().setAgeAtLastBirthDayFemale(marriage.getFemale().getAgeAtLastBirthDayFemale());
+        marriageRegister.getFemale().setFemaleRace(marriage.getFemale().getFemaleRace());
+        marriageRegister.getFemale().setCivilStatusFemale(marriage.getFemale().getCivilStatusFemale());
+        marriageRegister.getFemale().setNameInEnglishFemale(marriage.getFemale().getNameInEnglishFemale());
+        marriageRegister.getFemale().setNameInOfficialLanguageFemale(marriage.getFemale().getNameInOfficialLanguageFemale());
+        marriageRegister.getFemale().setResidentAddressFemaleInOfficialLang(marriage.getFemale().getResidentAddressFemaleInOfficialLang());
     }
 
     /**
@@ -501,6 +534,20 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         civilStatus.put(Person.CivilStatus.WIDOWED, CivilStatusUtil.getCivilStatusInAllLanguages(Person.CivilStatus.WIDOWED));
         civilStatus.put(Person.CivilStatus.ANNULLED, CivilStatusUtil.getCivilStatusInAllLanguages(Person.CivilStatus.ANNULLED));
         return civilStatus;
+    }
+
+    /**
+     * Marriage Registration - Populate basic lists at page load
+     */
+    private void populateLists() {
+        marriageTypeList = MarriageType.values();
+        typeOfMarriagePlaceList = TypeOfMarriagePlace.values();
+        civilStatusMale = populateCivilStatus();
+        civilStatusFemale = populateCivilStatus();
+        languageList = commonUtil.findLanguageList();
+        commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
+            marriageDistrictId, dsDivisionId, mrDivisionId, AppConstants.MARRIAGE, user, language);
+        raceList = raceDAO.getRaces(language);
     }
 
     public Map getSession() {
@@ -700,20 +747,20 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         this.noticeType = noticeType;
     }
 
-    public MarriageType[] getMarriageType() {
-        return marriageType;
+    public MarriageType[] getMarriageTypeList() {
+        return marriageTypeList;
     }
 
-    public void setMarriageType(MarriageType[] marriageType) {
-        this.marriageType = marriageType;
+    public void setMarriageTypeList(MarriageType[] marriageTypeList) {
+        this.marriageTypeList = marriageTypeList;
     }
 
-    public TypeOfMarriagePlace[] getTypeOfMarriagePlace() {
-        return typeOfMarriagePlace;
+    public TypeOfMarriagePlace[] getTypeOfMarriagePlaceList() {
+        return typeOfMarriagePlaceList;
     }
 
-    public void setTypeOfMarriagePlace(TypeOfMarriagePlace[] typeOfMarriagePlace) {
-        this.typeOfMarriagePlace = typeOfMarriagePlace;
+    public void setTypeOfMarriagePlaceList(TypeOfMarriagePlace[] typeOfMarriagePlaceList) {
+        this.typeOfMarriagePlaceList = typeOfMarriagePlaceList;
     }
 
     public boolean isLicensedMarriage() {
@@ -738,6 +785,14 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     public void setIgnoreWarnings(boolean ignoreWarnings) {
         this.ignoreWarnings = ignoreWarnings;
+    }
+
+    public Map<String, String> getLanguageList() {
+        return languageList;
+    }
+
+    public void setLanguageList(Map<String, String> languageList) {
+        this.languageList = languageList;
     }
 }
 

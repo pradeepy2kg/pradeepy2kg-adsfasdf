@@ -7,10 +7,12 @@ import org.slf4j.LoggerFactory;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.dao.MRDivisionDAO;
+import lk.rgd.AppConstants;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 
 /**
  * @author Mahesha
@@ -21,7 +23,7 @@ public class CommonUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(CommonUtil.class);
 
-    private final DistrictDAO districtDAO;                                       
+    private final DistrictDAO districtDAO;
     private final DSDivisionDAO dsDivisionDAO;
     private final BDDivisionDAO bdDivisionDAO;
     private final MRDivisionDAO mrDivisionDAO;
@@ -41,7 +43,8 @@ public class CommonUtil {
     }
 
     /**
-     * populate district list/ds division list and division list(mr or bd)
+     * populate district list, ds division list of first district in the district list.
+     * and division list(mr division or bd division based on the parameter divisionType and the first ds division in the ds division list)
      *
      * @param districtList
      * @param dsDivisionList
@@ -63,15 +66,16 @@ public class CommonUtil {
         dsDivisionList.putAll(dsDivisionDAO.getDSDivisionNames(districtId, language, user));
         dsDivisionId = findDefaultListValue(dsDivisionList, dsDivisionId);
 
-        if (divisionType.equals("Birth")) {
+        if (divisionType.equals(AppConstants.BIRTH)) {
             divisionList.putAll(bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user));
             findDefaultListValue(divisionList, divisionId);
-        } else if (divisionType.equals("Marriage")) {
+        } else if (divisionType.equals(AppConstants.MARRIAGE)) {
             divisionList.putAll(mrDivisionDAO.getMRDivisionNames(dsDivisionId, language, user));
             findDefaultListValue(divisionList, divisionId);
         }
     }
 
+    //TODO: to be removed. Write two lines of code in ur action method to populate Country and Race. This is not a good coding practice.
     public void populateCountryAndRaceLists(Map<Integer, String> countryList, Map<Integer, String> raceList,
         String language) {
         logger.debug("generating country list and race lists");
@@ -79,7 +83,12 @@ public class CommonUtil {
         raceList.putAll(raceDAO.getRaces(language));
     }
 
-
+    /**
+     * Returns the key of the first item of the division list as default id
+     *
+     * @param divisionList
+     * @param divisionId
+     */
     public int findDefaultListValue(Map<Integer, String> divisionList, int divisionId) {
         if (divisionId == 0) {
             if (!divisionList.isEmpty()) {
@@ -90,16 +99,37 @@ public class CommonUtil {
         return divisionId;
     }
 
+    /**
+     * Find the division list (DS, Birth, Marriage) based on the parameter divisionType and return default id for the division list
+     *
+     * @param divisionList
+     * @param divisionId
+     * @param parentId
+     * @param divisionType
+     * @param user
+     * @param language
+     */
     public int findDivisionList(Map<Integer, String> divisionList, int divisionId, int parentId, String divisionType, User user, String language) {
-        if (divisionType.equals("DSDivision")) {
+        if (divisionType.equals(AppConstants.DS_DIVISION)) {
             divisionList.putAll(dsDivisionDAO.getDSDivisionNames(parentId, language, user));
-        } else if (divisionType.equals("BDDivision")) {
+        } else if (divisionType.equals(AppConstants.BIRTH)) {
             divisionList.putAll(bdDivisionDAO.getBDDivisionNames(parentId, language, user));
-        } else if (divisionType.equals("MRDivision")) {
+        } else if (divisionType.equals(AppConstants.MARRIAGE)) {
             divisionList.putAll(mrDivisionDAO.getMRDivisionNames(parentId, language, user));
         }
         return findDefaultListValue(divisionList, divisionId);
     }
+
+    /**
+     * Return the list of languages which can be preferred Languages
+     */
+    public Map<String, String> findLanguageList() {
+        Map<String, String> languages = new HashMap<String, String>();
+        languages.put(AppConstants.SINHALA, AppConstants.SINHALA_IN_SINHALA);
+        languages.put(AppConstants.TAMIL, AppConstants.TAMIL_IN_TAMIL);
+        return languages;
+    }
+
 
     /**
      * Returns list of available active user locations(concatenation of location code and location name) of a specific

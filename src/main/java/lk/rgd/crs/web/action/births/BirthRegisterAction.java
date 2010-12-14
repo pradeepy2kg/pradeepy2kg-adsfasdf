@@ -961,8 +961,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private void populateDynamicLists(String language) {
         //Polulate division lists and set the first item as default
         birthDistrictId = commonUtil.findDefaultListValue(districtList, birthDistrictId);
-        dsDivisionId = commonUtil.findDivisionList(dsDivisionList, dsDivisionId, birthDistrictId, "DSDivision", user, language);
-        birthDivisionId = commonUtil.findDivisionList(bdDivisionList, birthDivisionId, dsDivisionId, "BDDivision", user, language);
+        dsDivisionId = commonUtil.findDivisionList(dsDivisionList, dsDivisionId, birthDistrictId, AppConstants.DS_DIVISION, user, language);
+        birthDivisionId = commonUtil.findDivisionList(bdDivisionList, birthDivisionId, dsDivisionId, AppConstants.BIRTH, user, language);
     }
 
     private void populateBasicLists(String language) {

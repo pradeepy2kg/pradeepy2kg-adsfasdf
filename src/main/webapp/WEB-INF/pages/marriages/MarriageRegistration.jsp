@@ -5,27 +5,9 @@
 <script src="/ecivil/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<s:url value="/js/division.js"/>"></script>
+<script type="text/javascript" src="<s:url value="/js/datePicker.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 <script type="text/javascript">
-    $(function() {
-        $("#registrationDatePicker").datepicker({
-            changeYear: true,
-            yearRange: '1960:2020',
-            dateFormat:'yy-mm-dd',
-            startDate:'2000-01-01',
-            endDate:'2040-12-31'
-        });
-    });
-    $(function() {
-        $("#marriageDatePicker").datepicker({
-            changeYear: true,
-            yearRange: '1960:2020',
-            dateFormat:'yy-mm-dd',
-            startDate:'2000-01-01',
-            endDate:'2040-12-31'
-        });
-    });
-
     $(function() {
         $('img#registrar_lookup').bind('click', function(evt3) {
             var id1 = $("input#regPIN").attr("value");
@@ -41,7 +23,8 @@
 </script>
 <s:actionerror/>
 <div class="marriage-notice-outer">
-<s:form action="eprMarriageRegistration" method="post">
+<s:form method="post">
+<s:hidden name="marriage.idUKey" />
 <table border="1" style="margin-top:1px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
        cellpadding="5px">
     <caption></caption>
@@ -73,8 +56,8 @@
         </td>
         <td align="center" colspan="3">
             <s:textfield name="marriage.registrarOrMinisterPIN" id="regPIN" maxLength="10"/><img
-                    src="<s:url value="/images/search-father.png" />"
-                    style="vertical-align:middle; margin-left:20px;" id="registrar_lookup">
+                src="<s:url value="/images/search-father.png" />"
+                style="vertical-align:middle; margin-left:20px;" id="registrar_lookup">
         </td>
     </tr>
     <tr>
@@ -83,7 +66,8 @@
             Type of Marriage Place<br>
         </td>
         <td colspan="8">
-            <s:radio name="marriage.typeOfMarriagePlace" list="typeOfMarriagePlace" listValue="type" theme="horizontal"/>
+            <s:radio name="marriage.typeOfMarriagePlace" list="typeOfMarriagePlaceList" listValue="type"
+                     theme="horizontal"/>
         </td>
     </tr>
     <tr>
@@ -119,7 +103,8 @@
         </label>
         </td>
         <td colspan="8">
-            <s:select id="mrDivisionId" name="mrDivisionId" list="mrDivisionList" value="marriage.mrDivision.mrDivisionUKey" headerKey="1"
+            <s:select id="mrDivisionId" name="mrDivisionId" list="mrDivisionList"
+                      value="marriage.mrDivision.mrDivisionUKey" headerKey="1"
                       cssStyle="width:98.5%; width:240px;"/>
         </td>
     </tr>
@@ -215,7 +200,7 @@
                 <tbody>
                 <tr>
                     <td>
-                        <s:radio name="marriage.typeOfMarriage" list="marriageType" listValue="type"
+                        <s:radio name="marriage.typeOfMarriage" list="marriageTypeList" listValue="type"
                                  theme="horizontal"/>
                     </td>
                 </tr>
@@ -270,10 +255,10 @@
             Date of Birth
         </td>
         <td colspan="1">
-            <s:textfield name="marriage.male.dateOfBirthMale" id="date_of_birth_male" maxLength="10"/>
+            <s:textfield name="marriage.male.dateOfBirthMale" id="dateOfBirthMaleDatePicker" maxLength="10"/>
         </td>
         <td colspan="1">
-            <s:textfield name="marriage.female.dateOfBirthFemale" id="date_of_birth_female" maxLength="10"/>
+            <s:textfield name="marriage.female.dateOfBirthFemale" id="dateOfBirthFemaleDatePicker" maxLength="10"/>
         </td>
     </tr>
     <tr>
@@ -284,12 +269,10 @@
 
         </td>
         <td colspan="1">
-            <s:textfield name="marriage.male.ageAtLastBirthDayMale" id="age_at_last_bd_male" maxLength="10"
-                         value=""/>
+            <s:textfield name="marriage.male.ageAtLastBirthDayMale" id="age_at_last_bd_male" maxLength="10"/>
         </td>
         <td colspan="1">
-            <s:textfield name="marriage.female.ageAtLastBirthDayFemale" id="age_at_last_bd_female" maxLength="10"
-                         value=""/>
+            <s:textfield name="marriage.female.ageAtLastBirthDayFemale" id="age_at_last_bd_female" maxLength="10"/>
         </td>
     </tr>
     <tr>
@@ -381,10 +364,12 @@
             Resident Address
         </td>
         <td>
-            <s:textarea name="marriage.male.residentAddressMaleInOfficialLang" id="address_male" cssStyle="width:98.2%;"/>
+            <s:textarea name="marriage.male.residentAddressMaleInOfficialLang" id="address_male"
+                        cssStyle="width:98.2%;"/>
         </td>
         <td>
-            <s:textarea name="marriage.female.residentAddressFemaleInOfficialLang" id="address_female" cssStyle="width:98.2%;"/>
+            <s:textarea name="marriage.female.residentAddressFemaleInOfficialLang" id="address_female"
+                        cssStyle="width:98.2%;"/>
         </td>
     </tr>
     </tbody>
@@ -402,7 +387,7 @@
                 <br>தொடர் இலக்கம்<br>Serial Number</span></label>
         </td>
         <td align="center">
-            <s:textfield name="marriage.idUKey" id="idUKey" maxLength="10"/>
+            <s:textfield name="marriage.idUKey" id="idUKey" maxLength="10" disabled="true"/>
         </td>
         <td>
             <label>
@@ -416,22 +401,29 @@
             <s:textfield name="marriage.registrationDate" id="registrationDatePicker" maxLength="10"/>
         </td>
     </tr>
-   <tr>
+    <tr>
         <td class="font-8">
-        සහතිකය නිකුත් කල යුතු භාෂාව
+            සහතිකය නිකුත් කල යුතු භාෂාව
             <br>நபரின் பதிவிற்கான சான்றிதழினை வழங்கப்படவேண்டிய மொழி
             <br>Preferred Language for Marriage Certificate
         </td>
         <td colspan="3">
-            <s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'தமிழ்'}" name="marriage.preferredLanguage"
-                      cssStyle="width:190px; margin-left:5px;"/>
+            <s:radio name="marriage.preferredLanguage" list="languageList" theme="verticle"/>
         </td>
     </tr>
 </table>
-
-
 <div class="form-submit">
-    <s:submit/>
+<s:if test="idUKey==0">
+    <s:submit action="eprRegisterNewMarriage"/>
+</s:if>
+<s:else>
+    <s:if test="licensedMarriage">
+        <s:submit action="eprRegisterNoticedMarriage"/>
+    </s:if>
+    <s:else>
+        <s:submit action="eprUpdateMarriage"/>
+    </s:else>
+</s:else>
 </div>
 </s:form>
 </div>
