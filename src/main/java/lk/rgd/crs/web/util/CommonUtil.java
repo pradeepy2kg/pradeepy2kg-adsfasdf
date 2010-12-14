@@ -84,10 +84,9 @@ public class CommonUtil {
     }
 
     /**
-     * Returns the key of the first item of the division list as default id
-     *
      * @param divisionList
      * @param divisionId
+     * @return Returns the key of the first item of the division list as default id
      */
     public int findDefaultListValue(Map<Integer, String> divisionList, int divisionId) {
         if (divisionId == 0) {
@@ -100,28 +99,28 @@ public class CommonUtil {
     }
 
     /**
-     * Find the division list (DS, Birth, Marriage) based on the parameter divisionType and return default id for the division list
-     *
+     * Find the division list (DS, Birth, Marriage) based on the parameter divisionType
      * @param divisionList
      * @param divisionId
      * @param parentId
      * @param divisionType
      * @param user
      * @param language
+     * @return default id for the division list
      */
     public int findDivisionList(Map<Integer, String> divisionList, int divisionId, int parentId, String divisionType, User user, String language) {
-        if (divisionType.equals(AppConstants.DS_DIVISION)) {
+        if (AppConstants.DS_DIVISION.equals(divisionType)) {
             divisionList.putAll(dsDivisionDAO.getDSDivisionNames(parentId, language, user));
-        } else if (divisionType.equals(AppConstants.BIRTH)) {
+        } else if (AppConstants.BIRTH.equals(divisionType)) {
             divisionList.putAll(bdDivisionDAO.getBDDivisionNames(parentId, language, user));
-        } else if (divisionType.equals(AppConstants.MARRIAGE)) {
+        } else if (AppConstants.MARRIAGE.equals(divisionType)) {
             divisionList.putAll(mrDivisionDAO.getMRDivisionNames(parentId, language, user));
         }
         return findDefaultListValue(divisionList, divisionId);
     }
 
     /**
-     * Return the list of languages which can be preferred Languages
+     * @return the list of languages which can be preferred Languages
      */
     public Map<String, String> findLanguageList() {
         Map<String, String> languages = new HashMap<String, String>();
@@ -129,7 +128,6 @@ public class CommonUtil {
         languages.put(AppConstants.TAMIL, AppConstants.TAMIL_IN_TAMIL);
         return languages;
     }
-
 
     /**
      * Returns list of available active user locations(concatenation of location code and location name) of a specific

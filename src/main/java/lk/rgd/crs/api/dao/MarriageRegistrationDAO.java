@@ -13,12 +13,12 @@ import java.util.List;
  */
 public interface MarriageRegistrationDAO {
     /**
-     * add marriage notice
+     * add marriage notice/register
      *
-     * @param notice marriage notice
+     * @param marriageRegister marriage notice/register
      * @param user   user who perform action
      */
-    public void addMarriageNotice(MarriageRegister notice, User user);
+    public void addMarriageRegister(MarriageRegister marriageRegister, User user);
 
     /**
      * get marriage register object by it's idUKey

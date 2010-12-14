@@ -22,14 +22,14 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.MANDATORY)
-    public void addMarriageNotice(MarriageRegister notice, User user) {
+    public void addMarriageRegister(MarriageRegister marriageRegister, User user) {
         //TODO: State needs to be moved to the service
-        notice.setState(MarriageRegister.State.DATA_ENTRY);
-        notice.getLifeCycleInfo().setCreatedTimestamp(new Date());
-        notice.getLifeCycleInfo().setCreatedUser(user);
-        notice.getLifeCycleInfo().setLastUpdatedTimestamp(new Date());
-        notice.getLifeCycleInfo().setLastUpdatedUser(user);
-        em.persist(notice);
+        marriageRegister.setState(MarriageRegister.State.DATA_ENTRY);
+        marriageRegister.getLifeCycleInfo().setCreatedTimestamp(new Date());
+        marriageRegister.getLifeCycleInfo().setCreatedUser(user);
+        marriageRegister.getLifeCycleInfo().setLastUpdatedTimestamp(new Date());
+        marriageRegister.getLifeCycleInfo().setLastUpdatedUser(user);
+        em.persist(marriageRegister);
     }
 
     /**

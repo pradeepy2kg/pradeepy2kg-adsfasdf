@@ -48,7 +48,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         checkUserPermission(Permission.ADD_MARRIAGE, ErrorCodes.PERMISSION_DENIED, "add second notice to marriage register", user);
         marriageRegistrationValidator.validateMarriageNotice(notice, type);
         populateObjectForPersisting(notice, type);
-        marriageRegistrationDAO.addMarriageNotice(notice, user);
+        marriageRegistrationDAO.addMarriageRegister(notice, user);
     }
 
     /**
@@ -56,7 +56,9 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void addMarriageRegister(MarriageRegister marriageRegister, User user) {
-        marriageRegistrationDAO.addMarriageNotice(marriageRegister, user);
+        //TODO: Validate marriage details
+        checkUserPermission(Permission.ADD_MARRIAGE, ErrorCodes.PERMISSION_DENIED, " add Muslim Marriages", user);
+        marriageRegistrationDAO.addMarriageRegister(marriageRegister, user);
     }
 
     /**
