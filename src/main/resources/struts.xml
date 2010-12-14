@@ -1146,6 +1146,8 @@
 
     <!--actions related to marriages-->
     <package name="marriages" namespace="/marriages" extends="NG">
+        <default-interceptor-ref name="default"/>
+
         <action name="eprMarriageNoticeInit" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
                 method="marriageNoticeInit">
             <result type="tiles" name="pageLoad">epr.marriageNoticeInit</result>
