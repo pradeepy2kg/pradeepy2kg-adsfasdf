@@ -8,4 +8,8 @@ public interface PRSRecordsIndexer {
 
     public boolean indexAll();
 
+    public boolean deleteIndex();
+
+    public boolean optimizeIndex();
+
 }
