@@ -36,7 +36,8 @@ import java.util.Date;
 
     @NamedQuery(name = "filter.by.mrDivision.and.state", query = "SELECT mr FROM MarriageRegister mr " +
         "WHERE ((mr.mrDivisionOfMaleNotice IS NOT NULL AND mr.mrDivisionOfMaleNotice = :mrDivision) " +
-        "OR (mr.mrDivisionOfFemaleNotice IS NOT NULL AND mr.mrDivisionOfFemaleNotice = :mrDivision)) " +
+        "OR (mr.mrDivisionOfFemaleNotice IS NOT NULL AND mr.mrDivisionOfFemaleNotice = :mrDivision) " +
+        "OR (mr.mrDivision IS NOT NULL AND mr.mrDivision = :mrDivision)) " +
         "AND mr.state = :state AND mr.lifeCycleInfo.activeRecord = :active ORDER BY mr.idUKey DESC "),
 
     @NamedQuery(name = "filter.notice.by.pinOrNic", query = "SELECT mr FROM MarriageRegister mr " +

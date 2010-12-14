@@ -1,6 +1,4 @@
 /* @author Mahesha Kalpanie */
-//TODO: improve this script to populate lists according to the mode
-//TODO: load empty list if no mr divisions available for the selected ds division
 function populateDSDivisions(districtId, dsDivisionId, divisionId, divisionType){
     var mode = getModeForDSList(divisionType);
     var id = document.getElementById(districtId).value
