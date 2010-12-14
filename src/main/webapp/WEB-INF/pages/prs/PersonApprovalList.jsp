@@ -35,11 +35,26 @@
             "bPaginate": true,
             "bLengthChange": false,
             "bFilter": true,
-            "bSort": true,
+            "aaSorting": [
+                [0,'desc'],
+                [1,'asc']
+            ],
             "bInfo": false,
             "bAutoWidth": false,
             "bJQueryUI": true,
-            "sPaginationType": "full_numbers"
+            "sPaginationType": "full_numbers",
+            "aoColumns": [
+                /* Last Updated */ {"bVisible":false },
+                /* PersonUKey */ {"bVisible":false },
+                /* PIN */ null,
+                /* NIC */ null,
+                /* Person Name */ null,
+                null,
+                null,
+                null,
+                null,
+                null
+            ]
         });
     });
 
@@ -180,6 +195,8 @@
                     <table id="person-approve-list" width="100%" cellpadding="0" cellspacing="0" class="display">
                         <thead>
                         <tr>
+                            <th>LastUpdated</th>
+                            <th>personUKey</th>
                             <th width="60px">PIN</th>
                             <th width="60px">NIC</th>
                             <th><s:label value="%{getText('label.personName')}"/></th>
@@ -193,6 +210,8 @@
                         <tbody>
                         <s:iterator status="approvalStatus" value="approvalPendingList">
                             <tr>
+                                <td><s:property value="lifeCycleInfo.lastUpdatedTimestamp"/></td>
+                                <td><s:property value="personUKey"/></td>
                                 <td align="center">
                                     <s:if test="pin != null"><s:property value="pin"/></s:if>
                                     <s:else>-</s:else>
