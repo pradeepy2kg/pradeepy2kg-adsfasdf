@@ -20,12 +20,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author asankha
@@ -64,8 +63,11 @@ public class PRSRecordsIndexerImpl implements PRSRecordsIndexer {
     private final SolrIndexManager solrIndexManager;
     private final DataSource dataSource;
     private final PersonDAO personDAO;
-    private int retryCount = 1000;
-    private volatile boolean executing = false;
+    private CountDownLatch doneSignal = new CountDownLatch(0);
+
+    private long start;
+    private volatile long completed;
+    private static final int MILLION = 1000000;
 
     public PRSRecordsIndexerImpl(SolrIndexManager solrIndexManager, DataSource dataSource, PersonDAO personDAO) {
         this.solrIndexManager = solrIndexManager;
@@ -73,19 +75,7 @@ public class PRSRecordsIndexerImpl implements PRSRecordsIndexer {
         this.personDAO = personDAO;
     }
 
-    public void setRetryCount(int retryCount) {
-        this.retryCount = retryCount;
-    }
-
-    public boolean indexAll() {
-
-        if (executing) {
-            logger.warn("Already executing");
-            return false;
-        } else {
-            executing = true;
-        }
-
+    public boolean deleteIndex() {
         if (solrIndexManager.getPRSServer() == null) {
             logger.error("Cannot connect to Solr server to index all PRS records");
             return false;
@@ -95,78 +85,140 @@ public class PRSRecordsIndexerImpl implements PRSRecordsIndexer {
         try {
             logger.info("Deleting all PRS records off Solr index");
             solrIndexManager.getPRSServer().deleteByQuery("*:*");
+            logger.info("Deleted all PRS records off Solr index");
+            return true;
         } catch (Exception e) {
             logger.error("Error deleting existing PRS records off Solr index");
+            return false;
         }
+    }
 
-        logger.info("Begin re-indexing of all PRS records into Solr");
-        long start = System.currentTimeMillis();
-        long count = 0;
-        int retries = retryCount;
+    public boolean optimizeIndex() {
+        try {
+            long start = System.currentTimeMillis();
+            solrIndexManager.getPRSServer().optimize();
+            solrIndexManager.getPRSServer().commit();
+            logger.debug("Optimized PRS records in : {}s", (System.currentTimeMillis() - start) / 1000);
+            return true;
+        } catch (Exception e) {
+            logger.error("Error optimizing the PRS index", e);
+        }
+        return false;
+    }
 
-        while (retries-- > 0) {
+    public boolean indexAll() {
 
-            long openTime = System.currentTimeMillis(), lastUse = System.currentTimeMillis();
-            Connection conn = null;
+        if (doneSignal.getCount() > 0) {
+            logger.warn("An indexing process is already executing : {} worker threads", doneSignal.getCount());
+            return false;
+
+        } else {
+            logger.info("Starting new indexing process for all PRS records...");
+
+            start = System.currentTimeMillis();
+            completed = 0;
 
             try {
-                conn = dataSource.getConnection();
-                conn.setAutoCommit(false);
-                conn.setReadOnly(true);
+                Connection conn = dataSource.getConnection();
 
-                Statement s = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-                if (Boolean.getBoolean("ecivildb.mysql")) {
-                    s.setFetchSize(Integer.MIN_VALUE);
-                }
-                ResultSet rs = s.executeQuery("SELECT * FROM PRS.PERSON");
-                openTime = System.currentTimeMillis();
+                Statement s = conn.createStatement();
+                ResultSet rs = s.executeQuery("SELECT max(personUKey) FROM PRS.PERSON");
+                rs.next();
+                long numRows = rs.getLong(1);
+                conn.close();
 
-                if (count > 0) {
-                    logger.info("Restart re-indexing from database row : " + count);
-                    for (int i=0; i<count; i++) {
-                        rs.next();
-                    }
-                }
+                int threads = ((int) (numRows / MILLION)) + 1;
+                doneSignal = new CountDownLatch(threads);
+                logger.info("Using : {} threads to process : {} rows", threads, numRows);
 
-                while (rs.next()) {
-                    lastUse = System.currentTimeMillis();
-                    addRecord(rs);
-                    count++;
-                    if (count % 10000 == 0) {
-                        logger.info("Indexed : {} records in : {}s", count, (System.currentTimeMillis() - start)/1000);
-                    }
+                long startIDUkey = 1;
+                long endIDUkey = 0;
+
+                Worker w;
+                for (int i = 0; i < threads; i++) {
+                    endIDUkey += MILLION;
+                    w = new Worker(i, startIDUkey, endIDUkey, doneSignal);
+                    w.start();
+                    startIDUkey = endIDUkey + 1;
                 }
 
-                logger.debug("Indexed : " + count + " PRS records in " + (System.currentTimeMillis() - start) / 1000 + "s");
-                start = System.currentTimeMillis();
-                solrIndexManager.getPRSServer().optimize();
-                solrIndexManager.getPRSServer().commit();
-                logger.debug("Optimized indexed of : " + count + " PRS records in : " +
-                    (System.currentTimeMillis() - start) / 1000 + "s");
-                executing = false;
-                return true;
+                try {
+                    doneSignal.await();
+                    logger.info("Indexed PRS records in : {}s", (System.currentTimeMillis() - start) / 1000);
+                } catch (InterruptedException e) {
+                    logger.info("Interrupted while waiting for PRS indexer worker threads to complete");
+                }
 
-            } catch (SolrServerException e) {
-                logger.error("Error from Solr server during PRS record re-indexing", e);
+                optimizeIndex();
+
             } catch (SQLException e) {
-                logger.error("Database Exception encountered during PRS record re-indexing. " +
-                    "DB connection open at : " + new Date(openTime) + " last use : " + new Date(lastUse) +
-                    " failure detected at : " + new Date(), e);
-            } catch (IOException e) {
-                logger.error("IO Exception encountered during PRS record re-indexing", e);
-            } catch (Exception e) {
-                logger.error("Unexpected Exception encountered during PRS record re-indexing", e);
-            } finally {
-                if (conn != null) {
-                    try {
-                        conn.close();
-                    } catch (Exception e) {}
+                logger.error("Could not count the number of rows in the PERSON table", e);
+                return false;
+            }
+
+            logger.info("PRS Indexing process started at : " + new Date());
+            return true;
+        }
+    }
+
+    /**
+     * Index rows with a personIDUkey from startIDUKey (inclusive) to endIDUKey (inclusive)
+     */
+    private boolean indexRange(int worker, long startIDUkey, long endIDUkey) {
+
+        if (solrIndexManager.getPRSServer() == null) {
+            logger.error("Worker : {} cannot connect to Solr server to index PRS records", worker);
+            return false;
+        }
+
+        logger.info("Worker : " + worker +
+            " begin re-indexing PRS records from idUKey : {} to : {}", startIDUkey, endIDUkey);
+
+        long count = 0;
+        Connection conn = null;
+
+        try {
+            conn = dataSource.getConnection();
+
+            PreparedStatement ps = conn.prepareStatement(
+                "SELECT * from PRS.PERSON WHERE personUKey >= ? AND personUKey <= ?",
+                ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+            ps.setLong(1, startIDUkey);
+            ps.setLong(2, endIDUkey);
+
+            if (Boolean.getBoolean("ecivildb.mysql")) {
+                ps.setFetchSize(Integer.MIN_VALUE);
+            }
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                addRecord(rs);
+                count++;
+                if (count % 1000 == 0) {
+                    completed += 1000;
+                    logger.info("Indexed : {} records in : {}s", completed, (System.currentTimeMillis() - start) / 1000);
                 }
+            }
+            logger.debug("Worker : {} completed assigned batch", worker);
+            return true;
+
+        } catch (SolrServerException e) {
+            logger.error("Error from Solr server during PRS record re-indexing", e);
+        } catch (SQLException e) {
+            logger.error("Database Exception encountered during PRS record re-indexing", e);
+        } catch (IOException e) {
+            logger.error("IO Exception encountered during PRS record re-indexing", e);
+        } catch (Exception e) {
+            logger.error("Unexpected Exception encountered during PRS record re-indexing", e);
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (Exception e) {}
             }
         }
 
-        logger.error("Failed to re-index PRS. Giving up after : {} retries", retryCount);
-        executing = false;
+        logger.error("Failed to re-index PRS range from : {} to : {}", startIDUkey, endIDUkey);
         return false;
     }
 
@@ -188,31 +240,31 @@ public class PRSRecordsIndexerImpl implements PRSRecordsIndexer {
         d.addField(FIELD_DATE_OF_BIRTH, rs.getDate(FIELD_DATE_OF_BIRTH));
         d.addField(FIELD_DATE_OF_DEATH, rs.getDate(FIELD_DATE_OF_DEATH));
 
-        //List<PersonCitizenship> pcList = personDAO.getCitizenshipsByPersonUKey(personUKey);
-        //if (pcList.isEmpty()) {
+        List<PersonCitizenship> pcList = personDAO.getCitizenshipsByPersonUKey(personUKey);
+        if (pcList.isEmpty()) {
             d.addField(FIELD_CITIZENSHIP, SRI_LANKA);
-        //} else {
-        //    for (PersonCitizenship c : pcList) {
-        //        d.addField(FIELD_CITIZENSHIP, c.getCountry().getCountryCode());
-        //        d.addField(FIELD_PASSPORT, c.getPassportNo());
-        //    }
-        //}
+        } else {
+            for (PersonCitizenship c : pcList) {
+                d.addField(FIELD_CITIZENSHIP, c.getCountry().getCountryCode());
+                d.addField(FIELD_PASSPORT, c.getPassportNo());
+            }
+        }
 
         Long lastAddressUKey = rs.getLong("lastAddressUKey");
         if (lastAddressUKey != null && lastAddressUKey > 0) {
             d.addField(FIELD_LAST_ADDRESS, personDAO.getAddressByUKey(lastAddressUKey).toString());
 
             // process any other addressed
-            //for (Address a : personDAO.getAddressesByPersonUKey(personUKey)) {
-            //    d.addField(FIELD_ALL_ADDRESSES, a.toString());
-            //}
+            for (Address a : personDAO.getAddressesByPersonUKey(personUKey)) {
+                d.addField(FIELD_ALL_ADDRESSES, a.toString());
+            }
         }
 
         d.addField(FIELD_EMAIL, rs.getString("personEmail"));
         d.addField(FIELD_PHONE, rs.getString("personPhoneNo"));
 
-        d.addField(FIELD_LIFE_STATUS,   LifeStatusUtil.getStatusAsString(rs.getInt(FIELD_LIFE_STATUS)));
-        d.addField(FIELD_CIVIL_STATUS,  CivilStatusUtil.getStatusAsString(rs.getInt(FIELD_CIVIL_STATUS)));
+        d.addField(FIELD_LIFE_STATUS, LifeStatusUtil.getStatusAsString(rs.getInt(FIELD_LIFE_STATUS)));
+        d.addField(FIELD_CIVIL_STATUS, CivilStatusUtil.getStatusAsString(rs.getInt(FIELD_CIVIL_STATUS)));
         d.addField(FIELD_RECORD_STATUS, getRecordStatus(rs.getInt("status")));
 
         solrIndexManager.getPRSServer().add(d);
@@ -220,11 +272,51 @@ public class PRSRecordsIndexerImpl implements PRSRecordsIndexer {
 
     private static String getRecordStatus(int s) {
         switch (s) {
-            case 0: return "U";
-            case 1: return "S";
-            case 2: return "V";
-            case 3: return "C";
+            case 0:
+                return "U";
+            case 1:
+                return "S";
+            case 2:
+                return "V";
+            case 3:
+                return "C";
         }
         throw new IllegalArgumentException("Illegal record state : " + s);
+    }
+
+    private class Worker extends Thread {
+
+        private final int id;
+        private final long startIDUKey;
+        private final long endIDUKey;
+        private final CountDownLatch doneSignal;
+
+        private Worker(int id, long startIDUKey, long endIDUKey, CountDownLatch doneSignal) {
+            this.id = id;
+            this.startIDUKey = startIDUKey;
+            this.endIDUKey = endIDUKey;
+            this.doneSignal = doneSignal;
+        }
+
+        @Override
+        public void run() {
+            try {
+                long s = startIDUKey;
+                long e = startIDUKey-1;
+                while (s <= endIDUKey) {
+                    e += 1000;
+                    if (e > endIDUKey) {
+                        e = endIDUKey;
+                    }
+                    
+                    indexRange(id, s, e);
+                    s = e + 1;
+                }
+
+            } finally {
+                doneSignal.countDown();
+                logger.info("Worker : {} exiting. Remaining threads : {}", id, doneSignal.getCount());
+            }
+        }
     }
 }
