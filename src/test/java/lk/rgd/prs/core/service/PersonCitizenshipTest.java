@@ -70,6 +70,7 @@ public class PersonCitizenshipTest extends TestCase {
         person.setRace(raceDAO.getRace(1));
         person.setPermanentAddress("Permanent Address");
         person.setCurrentAddress("Current Address");
+        person.setCivilStatus(Person.CivilStatus.NEVER_MARRIED);
 
         return person;
     }
