@@ -322,12 +322,8 @@ public class Menu {
         argAlterationLink.put("eprRejectBirthAlteration.do", new Link(null, "/ecivil/births/", "eprRejectBirthAlteration", Permission.APPROVE_BIRTH_ALTERATION));
         argAlterationLink.put("eprBirthAlterationApplyChanges.do", new Link(null, "/ecivil/alteration/", "eprBirthAlterationApplyChanges.do", Permission.APPROVE_BIRTH_ALTERATION));
 
-        /*marriage related links
-        * include deo/adr/arg related links
-        *
-        */
-
-        //deo marriages links
+        
+        // DEO marriages links
         deoMarriageLink.put("eprMarriageNoticeInit.do", new Link(null, "/ecivil/marriages/", "eprMarriageNoticeInit.do", Permission.EDIT_MARRIAGE));
         deoMarriageLink.put("eprSelectNoticeType.do", new Link("menu.marriage.notice", "/ecivil/marriages/", "eprSelectNoticeType.do", Permission.ADD_MARRIAGE));
         deoMarriageLink.put("eprMarriageNoticeAdd.do", new Link(null, "/ecivil/marriages/", "eprMarriageNoticeAdd.do", Permission.ADD_MARRIAGE));
@@ -338,12 +334,13 @@ public class Menu {
         deoMarriageLink.put("eprMarriageNoticeDelete.do", new Link(null, "/ecivil/marriages/", "eprMarriageNoticeDelete.do", Permission.DELETE_MARRIAGE));
         deoMarriageLink.put("eprRollBackNoticeToPrevious.do", new Link(null, "/ecivil/marriages/", "eprMarriageNoticeDelete.do", Permission.EDIT_MARRIAGE));
 
-        //adr marriage links
+        // ADR marriage links
         adrMarriageLink.putAll(deoMarriageLink);
         adrMarriageLink.put("eprMarriageNoticeSearchInit.do", new Link("menu.marriage.notice.search", "/ecivil/marriages/", "eprMarriageNoticeSearchInit.do", Permission.SEARCH_MARRIAGE));
         adrMarriageLink.put("eprMarriageRegisterSearchInit.do", new Link("menu.marriage.register.search", "/ecivil/marriages/", "eprMarriageRegisterSearchInit.do", Permission.SEARCH_MARRIAGE));
         adrMarriageLink.put("eprApproveMarriageNotice.do", new Link(null, "/ecivil/marriages/", "eprApproveMarriageNotice.do", Permission.APPROVE_MARRIAGE));
-        //arg marriage links
+        
+        // ARG marriage links
         argMarriageLink.putAll(adrMarriageLink);
 
         //marriage related links ends
