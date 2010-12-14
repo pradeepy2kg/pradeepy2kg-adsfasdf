@@ -69,6 +69,7 @@ public class JSONDivisionLookupService extends HttpServlet {
                 // passing districtId, return only the DS list
                 optionLists.put("dsDivisionList", getDSDivisions(lang, divisionId, user));
             } else if ("2".equals(mode)) {
+                //TODO: to be removed safely
                 // passing dsDivisionId, return the BD list
                 optionLists.put("bdDivisionList", getBDDivisions(lang, divisionId, user));
             } else if ("3".equals(mode)) {
@@ -84,6 +85,7 @@ public class JSONDivisionLookupService extends HttpServlet {
                 optionLists.put("dsDivisionList", ds);
                 optionLists.put("bdDivisionList", bd);
             } else if ("6".equals(mode)) {
+                //TODO: to be removed after renaming bdDivisionList to divisionList
                 //passing district list and return ds division list and mr division list for 1st ds division.
                 List ds = getAllDSDivisions(lang, divisionId, user);
                 int dsDivisionId = Integer.parseInt(((SelectOption) ds.get(0)).getOptionValue());
@@ -92,15 +94,23 @@ public class JSONDivisionLookupService extends HttpServlet {
                 optionLists.put("bdDivisionList", bd);
 
             } else if ("7".equals(mode)) {
+                //TODO: to be removed safely
                 // passing dsDivisionId, return the MR list
                 optionLists.put("mrDivisionList", getMRDivision(lang, divisionId, user));
             } else if ("8".equals(mode)) {
+                //TODO: to be removed safely
                 // passing district id and , return the MR list and DS list
                 List ds = getDSDivisions(lang, divisionId, user);
                 int dsDivisionId = Integer.parseInt(((SelectOption) ds.get(0)).getOptionValue());
                 List mr = getMRDivision(lang, dsDivisionId, user);
                 optionLists.put("dsDivisionList", ds);
                 optionLists.put("mrDivisionList", mr);
+            } else if ("9".equals(mode)) {
+                // passing dsDivisionId, return the BD list
+                optionLists.put("divisionList", getBDDivisions(lang, divisionId, user));
+            } else if ("10".equals(mode)) {
+                // passing dsDivisionId, return the MR list
+                optionLists.put("divisionList", getMRDivision(lang, divisionId, user));
             } else {
                 // passing districtId, return DS List and the BD List for the 1st DS division
                 List ds = getDSDivisions(lang, divisionId, user);

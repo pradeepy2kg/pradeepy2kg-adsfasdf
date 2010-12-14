@@ -26,7 +26,7 @@
                         <s:select id="districtId" name="marriageDistrictId" list="districtList"
                                   value="marriageDistrictId"
                                   cssStyle="width:98.5%; width:240px;"
-                                  onclick="populateDSDivisions('districtId','dsDivisionId','mrDivisionId')"/>
+                                  onclick="populateDSDivisions('districtId', 'dsDivisionId', 'mrDivisionId', 'Marriage')"/>
                     </td>
                 </tr>
                 <tr>
@@ -39,7 +39,7 @@
                     <td align="center">
                         <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="dsDivisionId"
                                   cssStyle="width:98.5%; width:240px;"
-                                  onchange="populateDivisions('dsDivisionId', 'mrDivisionId')"/>
+                                  onchange="populateDivisions('dsDivisionId', 'mrDivisionId', 'Marriage')"/>
                     </td>
                 </tr>
                 <tr>

@@ -1,9 +1,10 @@
 /* @author Mahesha Kalpanie */
 //TODO: improve this script to populate lists according to the mode
 //TODO: load empty list if no mr divisions available for the selected ds division
-function populateDSDivisions(districtId, dsDivisionId, divisionId){
+function populateDSDivisions(districtId, dsDivisionId, divisionId, divisionType){
+    var mode = getModeForDSList(divisionType);
     var id = document.getElementById(districtId).value
-    $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:8},
+    $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:mode},
     function(data) {
         var ds = data.dsDivisionList;
         var dsDivisionList = document.getElementById(dsDivisionId);
@@ -11,7 +12,7 @@ function populateDSDivisions(districtId, dsDivisionId, divisionId){
         for (var i = 0; i < ds.length; i++) {
             dsDivisionList.options[i]= new Option(ds[i].optionDisplay, ds[i].optionValue);
         }
-        var divisions = data.mrDivisionList;
+        var divisions = data.bdDivisionList;
         var divisionList = document.getElementById(divisionId);
         clear_list(divisionList);
         for (var j = 0; j < divisions.length; j++) {
@@ -20,11 +21,12 @@ function populateDSDivisions(districtId, dsDivisionId, divisionId){
     });
 }
 
-function populateDivisions(dsDivisionId, divisionId){
+function populateDivisions(dsDivisionId, divisionId, divisionType){
+    var mode = getModeForDivisionList(divisionType);
     var id = document.getElementById(dsDivisionId).value
-    $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:7},
+    $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:mode},
         function(data) {
-            var divisions = data.mrDivisionList;
+            var divisions = data.divisionList;
             var divisionList = document.getElementById(divisionId);
             clear_list(divisionList);
             for (var i = 0; i < divisions.length; i++) {
@@ -38,3 +40,24 @@ function clear_list(list) {
         list.removeChild(list.lastChild);
     }
 }
+
+function getModeForDSList(type){
+    if (type == "Birth") {
+        return 5;
+    } else if (type == "Marriage") {
+        return 6;
+    }else {
+        return 0;
+    }
+}
+
+function getModeForDivisionList(type){
+    if (type == "Birth") {
+        return 9;
+    } else if (type == "Marriage") {
+        return 10;
+    }else {
+        return 0;
+    }
+}
+
