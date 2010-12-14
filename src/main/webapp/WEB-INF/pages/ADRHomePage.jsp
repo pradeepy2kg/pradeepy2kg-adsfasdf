@@ -2,13 +2,15 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <s:actionerror cssStyle="color:red;font-size:10pt"/>
 <s:actionmessage/>
+
 <script type="text/javascript" src="lib/jquery/jquery.jqplot.js"></script>
 <script type="text/javascript" src="lib/jquery/jqplot.categoryAxisRenderer.js"></script>
 <script type="text/javascript" src="lib/jquery/jqplot.barRenderer.js"></script>
 <script type="text/javascript" src="lib/jquery/jqplot.pieRenderer.min.js"></script>
-<%--<script language="javascript" type="text/javascript" src="lib/jquery/dateAxisRenderer.js"></script>--%>
+
 <link rel="stylesheet" type="text/css" href="css/jquery.jqplot.css"/>
 <s:hidden id="userName" value="%{userName}"/>
+
 <style type="text/css">
     .jqplot-target {
         color: #666666;
@@ -30,7 +32,6 @@
         text-align: center;
         margin-top: 10px;
         height: 30px;
-        clear: both;
     }
 
     #chart1 {
@@ -97,11 +98,11 @@
                 statType:mode
             },
                     function(data) {
-                        $("#totalDeclarations").attr("value", data.totalDeclarations);
+                        /*$("#totalDeclarations").attr("value", data.totalDeclarations);
                         $("#totalDecArrivals").attr("value", data.totalDecArrivals);
                         $("#approvalPendings").attr("value", data.approvalPendings);
                         $("#totalConfirmChagess").attr("value", data.totalConfirmChagess);
-                        $("#confirmApproved").attr("value", data.confirmApproved);
+                        $("#confirmApproved").attr("value", data.confirmApproved);*/
 
                         $.jqplot.config.enablePlugins = true;
 

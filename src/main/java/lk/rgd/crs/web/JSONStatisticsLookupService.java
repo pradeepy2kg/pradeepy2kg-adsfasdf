@@ -32,17 +32,66 @@ public class JSONStatisticsLookupService extends HttpServlet {
 
         try {
             optionLists = new HashMap<String, Object>();
-            if (userType.equals("adr")) {
-                optionLists.put("submitted_b", 3);
-                optionLists.put("approved_b", 5);
-                optionLists.put("rejected_b", 14);
-                optionLists.put("pending_b", 8);
+            if (userType.equals(WebConstants.USER_ADR)) {
+                if (statType.equals(WebConstants.STAT_ALL)) {
+                    optionLists.put("submitted_b", 3);
+                    optionLists.put("approved_b", 5);
+                    optionLists.put("rejected_b", 14);
+                    optionLists.put("pending_b", 8);
 
-                optionLists.put("submitted_d", 2);
-                optionLists.put("approved_d", 8);
-                optionLists.put("rejected_d", 6);
-                optionLists.put("pending_d", 18);
+                    optionLists.put("submitted_d", 2);
+                    optionLists.put("approved_d", 8);
+                    optionLists.put("rejected_d", 6);
+                    optionLists.put("pending_d", 18);
+                } else if(statType.equals(WebConstants.STAT_BIRTH)) {
+                    // TODO [shan]
+                } else if(statType.equals(WebConstants.STAT_DEATH)) {
+
+                } else if(statType.equals(WebConstants.STAT_MARRIAGE)) {
+
+                }
+            } else if (userType.equals(WebConstants.USER_DEO)) {
+                if (statType.equals(WebConstants.STAT_ALL)) {
+                    optionLists.put("submitted_b", 1);
+                    optionLists.put("approved_b", 5);
+                    optionLists.put("rejected_b", 1);
+                    optionLists.put("pending_b", 8);
+
+                    optionLists.put("submitted_d", 2);
+                    optionLists.put("approved_d", 8);
+                    optionLists.put("rejected_d", 4);
+                    optionLists.put("pending_d", 1);
+                } else if(statType.equals(WebConstants.STAT_BIRTH)) {
+
+                } else if(statType.equals(WebConstants.STAT_DEATH)) {
+
+                } else if(statType.equals(WebConstants.STAT_MARRIAGE)) {
+
+                }
+            } else if (userType.equals(WebConstants.USER_ARG)) {
+
+            } else if (userType.equals(WebConstants.USER_DR)) {
+
+            } else if (userType.equals(WebConstants.USER_RG)) {
+                if (statType.equals(WebConstants.STAT_ALL)) {
+                    optionLists.put("submitted_b", 4);
+                    optionLists.put("approved_b", 5);
+                    optionLists.put("rejected_b", 3);
+                    optionLists.put("pending_b", 6);
+
+                    optionLists.put("submitted_d", 1);
+                    optionLists.put("approved_d", 1);
+                    optionLists.put("rejected_d", 4);
+                    optionLists.put("pending_d", 1);
+                } else if(statType.equals(WebConstants.STAT_BIRTH)) {
+
+                } else if(statType.equals(WebConstants.STAT_DEATH)) {
+
+                } else if(statType.equals(WebConstants.STAT_MARRIAGE)) {
+
+                }
             }
+
         } catch (Exception e) {
             logger.error("[JSONStatisticsLookupService] Fatal Error : {}", e);
             return;

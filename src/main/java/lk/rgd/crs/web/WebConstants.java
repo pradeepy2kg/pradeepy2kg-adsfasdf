@@ -71,6 +71,7 @@ public class WebConstants {
     public static final String USER_ARG = "arg";
     public static final String USER_DEO = "deo";
     public static final String USER_DR = "dr";
+    public static final String USER_RG = "rg";
 
     //for statistics
     public static final String STAT_TYPE = "statType";    
