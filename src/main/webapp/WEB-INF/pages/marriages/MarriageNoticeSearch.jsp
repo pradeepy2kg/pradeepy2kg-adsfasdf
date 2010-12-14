@@ -324,7 +324,7 @@
                         </s:if>
                     </td>
                     <td align="center">
-                        <s:url id="rejectSelected">
+                        <s:url id="rejectSelected" action="eprMarriageNoticeReject.do">
                             <s:param name="idUKey" value="idUKey"/>
                         </s:url>
                         <s:a href="%{rejectSelected}" title="%{getText('rejectToolTip.label')}">

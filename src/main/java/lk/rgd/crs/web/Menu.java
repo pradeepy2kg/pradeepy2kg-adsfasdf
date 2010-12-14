@@ -322,7 +322,7 @@ public class Menu {
         argAlterationLink.put("eprRejectBirthAlteration.do", new Link(null, "/ecivil/births/", "eprRejectBirthAlteration", Permission.APPROVE_BIRTH_ALTERATION));
         argAlterationLink.put("eprBirthAlterationApplyChanges.do", new Link(null, "/ecivil/alteration/", "eprBirthAlterationApplyChanges.do", Permission.APPROVE_BIRTH_ALTERATION));
 
-        
+
         // DEO marriages links
         deoMarriageLink.put("eprMarriageNoticeInit.do", new Link(null, "/ecivil/marriages/", "eprMarriageNoticeInit.do", Permission.EDIT_MARRIAGE));
         deoMarriageLink.put("eprSelectNoticeType.do", new Link("menu.marriage.notice", "/ecivil/marriages/", "eprSelectNoticeType.do", Permission.ADD_MARRIAGE));
@@ -339,7 +339,8 @@ public class Menu {
         adrMarriageLink.put("eprMarriageNoticeSearchInit.do", new Link("menu.marriage.notice.search", "/ecivil/marriages/", "eprMarriageNoticeSearchInit.do", Permission.SEARCH_MARRIAGE));
         adrMarriageLink.put("eprMarriageRegisterSearchInit.do", new Link("menu.marriage.register.search", "/ecivil/marriages/", "eprMarriageRegisterSearchInit.do", Permission.SEARCH_MARRIAGE));
         adrMarriageLink.put("eprApproveMarriageNotice.do", new Link(null, "/ecivil/marriages/", "eprApproveMarriageNotice.do", Permission.APPROVE_MARRIAGE));
-        
+        adrMarriageLink.put("eprMarriageNoticeReject.do", new Link(null, "/ecivil/marriages/", "eprMarriageNoticeReject.do", Permission.APPROVE_MARRIAGE));
+
         // ARG marriage links
         argMarriageLink.putAll(adrMarriageLink);
 

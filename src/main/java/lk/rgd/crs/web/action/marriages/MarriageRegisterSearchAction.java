@@ -227,6 +227,12 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         return SUCCESS;
     }
 
+    public String rejectInit() {
+        logger.debug("loading commenting page for rejecting marriage notice");
+        //do nothing just load get comment page for rejecting marriage notice
+        return SUCCESS;
+    }
+
     /**
      * This method used to load approval pending Marriage Notices list
      */
