@@ -100,4 +100,7 @@ public class ErrorCodes {
     public static final int CAN_NOT_FIND_MARRIAGE_NOTICE = 6005;
     public static final int OTHER_PARTY_MUST_APPROVE_FIRST = 6006;
     public static final int INVALID_NOTICE_TYPE_FOR_ADD_SECOND = 6007;
+    public static final int INVALID_NOTICE_STATE_FOR_REJECT = 6008;
+    public static final int UNABLE_TO_REJECT_FEMALE_NOTICE = 6009;
+    public static final int UNABLE_TO_REJECT_MALE_NOTICE = 6010;
 }

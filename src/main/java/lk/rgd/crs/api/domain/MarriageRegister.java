@@ -68,12 +68,16 @@ import java.util.Date;
         " AND mr.lifeCycleInfo.activeRecord IS TRUE AND mr.state=0) ORDER BY mr.idUKey desc")
 })
 public class MarriageRegister implements Serializable, Cloneable {
+    //todo add divorce related col
 
     public enum State {
         DATA_ENTRY,    //0
         MALE_NOTICE_APPROVED,  //approve only male notice   still able to edit female notice  (only single notice false)
         FEMALE_NOTICE_APPROVED,    //approve female notice only still able to edit male notice (only single notice false)
         NOTICE_APPROVED,   //change to this state when single notice true or when approving second notice(1 st notice is already approved)
+        MALE_NOTICE_REJECTED,
+        FEMALE_NOTICE_REJECTED,
+        NOTICE_REJECTED,
         REG_DATA_ENTRY,
     }
 
@@ -159,6 +163,9 @@ public class MarriageRegister implements Serializable, Cloneable {
     @Column(name = "SINGLE_NOTICE", nullable = false)
     private boolean singleNotice;
 
+    @Column(name = "NOTICE_REJECT_COMMENT", nullable = true)
+    private String noticeRejectionComment;
+
     //male notice related columns
 
     @Column(name = "LI_REQ_PARTY", nullable = true)
@@ -177,7 +184,6 @@ public class MarriageRegister implements Serializable, Cloneable {
     @ManyToOne
     @JoinColumn(name = "NOTICE_MRDIVISIONUKEY_M", nullable = true, updatable = false)
     private MRDivision mrDivisionOfMaleNotice;
-
 
     //party information male
     @Embedded
@@ -297,6 +303,7 @@ public class MarriageRegister implements Serializable, Cloneable {
     }
 
     //TODO: to be removed
+
     public MRDivision getMrDivisionId() {
         return mrDivision;
     }
@@ -463,5 +470,13 @@ public class MarriageRegister implements Serializable, Cloneable {
 
     public void setPreferredLanguage(String preferredLanguage) {
         this.preferredLanguage = preferredLanguage;
+    }
+
+    public String getNoticeRejectionComment() {
+        return noticeRejectionComment;
+    }
+
+    public void setNoticeRejectionComment(String noticeRejectionComment) {
+        this.noticeRejectionComment = noticeRejectionComment;
     }
 }

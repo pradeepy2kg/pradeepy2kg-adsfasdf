@@ -343,17 +343,52 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         }
     }
 
-
-    private List<MarriageRegister> removingAccessDeniedNoticesFromList(List<MarriageRegister> registerList, User user) {
-        List<MarriageRegister> toBeRemoved = new ArrayList<MarriageRegister>();
-        for (MarriageRegister mr : registerList) {
-            if (!checkUserAccessPermissionToMarriageRecord(mr, user)) {
-                toBeRemoved.add(mr);
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void rejectMarriageNotice(long idUKey, MarriageNotice.Type type, String comment, User user) {
+        logger.debug("attempt to reject marriage notice : idUKey {} : notice type : {} ", idUKey, type);
+        MarriageRegister notice = marriageRegistrationDAO.getByIdUKey(idUKey);
+        if (notice.getState() == MarriageRegister.State.DATA_ENTRY) {
+            switch (type) {
+                case MALE_NOTICE:
+                case FEMALE_NOTICE:
+                case BOTH_NOTICE:
+                    notice.setState(MarriageRegister.State.NOTICE_REJECTED);
             }
+        } else if (notice.getState() == MarriageRegister.State.MALE_NOTICE_APPROVED) {
+            switch (type) {
+                case FEMALE_NOTICE:
+                    notice.setState(MarriageRegister.State.FEMALE_NOTICE_REJECTED);
+                    break;
+                case MALE_NOTICE:
+                case BOTH_NOTICE:
+                    handleException("unable to reject male or both type notice  : idUKey " + idUKey + "notice type :" +
+                        "it's been approved before" + type, ErrorCodes.UNABLE_TO_REJECT_MALE_NOTICE);
+            }
+        } else if (notice.getState() == MarriageRegister.State.FEMALE_NOTICE_APPROVED) {
+            switch (type) {
+                case MALE_NOTICE:
+                    notice.setState(MarriageRegister.State.MALE_NOTICE_REJECTED);
+                    break;
+                //unable to reject already approved
+                case FEMALE_NOTICE:
+                case BOTH_NOTICE:
+                    handleException("unable to reject female or both type notice  : idUKey " + idUKey + "notice type :"
+                        + "it's been approved before" + type, ErrorCodes.UNABLE_TO_REJECT_FEMALE_NOTICE);
+            }
+        } else {
+            //invalid state   for reject
+            handleException("unable to reject invalid state for a rejection : idUKey " + idUKey + "notice type :" +
+                type, ErrorCodes.INVALID_NOTICE_STATE_FOR_REJECT);
         }
-        //removing
-        registerList.removeAll(toBeRemoved);
-        return registerList;
+        //set comment
+        notice.setNoticeRejectionComment(comment);
+        //archiving the record
+        notice.getLifeCycleInfo().setActiveRecord(false);
+        //updating the record
+        marriageRegistrationDAO.updateMarriageRegister(notice, user);
     }
 
     /**
