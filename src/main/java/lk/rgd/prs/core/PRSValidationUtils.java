@@ -1,6 +1,7 @@
 package lk.rgd.prs.core;
 
 import lk.rgd.ErrorCodes;
+import lk.rgd.Permission;
 import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.domain.Role;
 import lk.rgd.common.api.domain.User;
@@ -19,14 +20,11 @@ public class PRSValidationUtils {
     private static final Logger logger = LoggerFactory.getLogger(PRSValidationUtils.class);
 
     public static void validateRequiredFields(Person person) {
-        if (person.getDateOfBirth() == null || person.getPermanentAddress() == null || person.getRace() == null ||
-            isEmptyString(person.getPlaceOfBirth()) || isEmptyString(person.getFullNameInOfficialLanguage()) ||
-            isEmptyString(person.getFullNameInEnglishLanguage()) || person.getDateOfRegistration() == null) {
+        if (person.getDateOfRegistration() == null || person.getRace() == null || person.getDateOfBirth() == null ||
+            isEmptyString(person.getPlaceOfBirth()) || person.getPermanentAddress() == null ||
+            isEmptyString(person.getFullNameInOfficialLanguage()) || person.getCivilStatus() == null ||
+            isEmptyString(person.getFullNameInEnglishLanguage())) {
             handleException("Adding person is incomplete, Check required field values", ErrorCodes.INVALID_DATA);
-        }
-        if (person.getPin() != null) {
-            handleException("PRS record being processed is invalid, processing record already exist PIN",
-                ErrorCodes.INVALID_DATA);
         }
     }
 
@@ -60,7 +58,8 @@ public class PRSValidationUtils {
 
     public static void validateAccessOfUserToEdit(User user) {
         if (user != null) {
-            if (!(User.State.ACTIVE == user.getStatus() && !Role.ROLE_ADMIN.equals(user.getRole().getRoleId()))) {
+            if (!(User.State.ACTIVE == user.getStatus() && !Role.ROLE_ADMIN.equals(user.getRole().getRoleId())
+                && user.isAuthorized(Permission.PRS_EDIT_PERSON))) {
                 handleException("User : " + user.getUserId() + " is not allowed edit entries on the PRS",
                     ErrorCodes.PERMISSION_DENIED);
             }
