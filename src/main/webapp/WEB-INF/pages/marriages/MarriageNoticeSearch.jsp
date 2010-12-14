@@ -79,15 +79,25 @@
             "bPaginate": true,
             "bLengthChange": false,
             "bFilter": true,
-            "bSort": true,
+            "aaSorting": [
+                [0,'desc']
+            ],
             "bInfo": false,
             "bAutoWidth": false,
             "bJQueryUI": true,
-            "sPaginationType": "full_numbers"   ,
-            "aaSorting": [
-                [ 3, "desc" ]
+            "sPaginationType": "full_numbers",
+            "aoColumns": [
+                /* idUKey */ {"bVisible":false },
+                /* Party Serial Number */ null,
+                /* Party Name */ null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
             ]
-
         });
     });
 
@@ -240,22 +250,31 @@
                style="font-size:10pt;">
             <thead>
             <tr>
-                <th width="70px"><s:label value="%{getText('serial.label')}"/></th>
+                <th>idUKey</th>
+                <th width="60px"><s:label value="%{getText('serial.label')}"/></th>
+                <th width="60px">PIN / NIC</th>
                 <th><s:label value="%{getText('partyName.label')}"/></th>
-                <th width="50px"></th>
-                <th width="15px"></th>
-                <th width="15px"></th>
-                <th width="15px"></th>
-                <th width="15px"></th>
-                <th width="15px"></th>
+                <th width="40px" style="padding:3px 3px;"></th>
+                <th width="15px" style="padding:3px 3px;"></th>
+                <th width="15px" style="padding:3px 3px;"></th>
+                <th width="15px" style="padding:3px 3px;"></th>
+                <th width="15px" style="padding:3px 3px;"></th>
+                <th width="15px" style="padding:3px 3px;"></th>
             </tr>
             </thead>
             <tbody>
             <s:iterator status="approvalStatus" value="searchList">
                 <tr>
+                    <td><s:property value="idUKey"/></td>
                     <td align="center">
                         <s:if test="serialOfNotice != null">
                             <s:property value="serialOfNotice"/>
+                        </s:if>
+                        <s:else>-</s:else>
+                    </td>
+                    <td>
+                        <s:if test="partyPIN != null">
+                            <s:property value="partyPIN"/>
                         </s:if>
                         <s:else>-</s:else>
                     </td>
