@@ -164,22 +164,29 @@ public interface MarriageRegistrationService {
      *                   <br> notes :
      *                   <u>delete operation works as follows </u>
      *                   there are three cases in removing a marriage notice
-     *                   case 1: isBothSubmitted is true that means only one notice is available for delete
-     *                   in that case we can simple remove the data base row
-     *                   case 2 : isBothSubmitted is false that means there can be more than one marriage notices(at most 2)
-     *                   case 2.1:
-     *                   having only one marriage notice is available(it could be male party submitted one or female party submitted one)
-     *                   in this case also we can just remove data base row
+     *                   case 1: isBothSubmitted is true that means only one notice is available for delete in that case
+     *                   we can simple remove the data base row case 2 : isBothSubmitted is false that means there can
+     *                   be more than one marriage notices(at most 2)
      *                   <p/>
-     *                   case 2.2 : there are two notices are remaining in the marriage register row so we cannot simple remove the data
-     *                   base row because it is removing the other notice as well.
-     *                   So we have to update the data base row for that removing
+     *                   case 2.1:
+     *                   having only one marriage notice is available(it could be male party submitted one or female
+     *                   party submitted one)in this case also we can just remove data base row
+     *                   <p/>
+     *                   case 2.2 : there are two notices are remaining in the marriage register row so we cannot simple
+     *                   remove the data base row because it is removing the other notice as well.So we have to update
+     *                   the data base row for that removing
+     *                   <p/>
      *                   <i>as an example :
-     *                   if both male and female party submitted notices are available and you just need to remove female party
-     *                   submitted notice in that case we have to update the data base row by removing female party notice related columns
+     *                   if both male and female party submitted notices are available and you just need to remove female
+     *                   party submitted notice in that case we have to update the data base row by removing female party
+     *                   notice related columns
+     *                   <p/>
      *                   note:states regarding to removal
+     *                   <br>
      *                   case 1:  record must be in DATA_ENTRY
+     *                   <br>
      *                   for removal of male notice record must be in either DATA_ENTRY or FEMALE_NOTICE_APPROVE state
+     *                   <br>
      *                   for removal of female notice record must in either DATA_ENTRY or MALE_NOTICE_APPROVE state
      */
     public void deleteMarriageNotice(long idUKey, MarriageNotice.Type noticeType, User user);
