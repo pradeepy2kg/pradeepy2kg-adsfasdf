@@ -207,20 +207,23 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void editExistingPersonBeforeApproval(Person person, List<PersonCitizenship> citizenshipList, User user) {
-
+        logger.debug("Attempt to edit PRS entry before approval with personUKey : {}", person.getPersonUKey());
         validateAccessOfUserToEdit(user);
         validateRequiredFields(person);
         Person existing = personDao.getByUKey(person.getPersonUKey());
 
-        // TODO if birth exist can not edit through this, throw exception (use alteration process)
+        // TODO if birth exist can not edit , throw exception (use alteration process)
+        // TODO is this applicable after approval not for before approval
 
         final Person.Status currentState = existing.getStatus();
         if (currentState == Person.Status.SEMI_VERIFIED || currentState == Person.Status.UNVERIFIED) {
-            person.setStatus(Person.Status.SEMI_VERIFIED);
-            person.setLifeStatus(Person.LifeStatus.ALIVE);
-            person.setSubmittedLocation(user.getPrimaryLocation());
+            existing.setStatus(Person.Status.SEMI_VERIFIED);
+            existing.setLifeStatus(Person.LifeStatus.ALIVE);
+            existing.setSubmittedLocation(user.getPrimaryLocation());
+            // setting updated fields to the existing person
+            setChangedFieldsBeforeUpdate(existing, person);
 
-            personDao.updatePerson(person, user);
+            personDao.updatePerson(existing, user);
 
             final String permanentAddress = person.getPermanentAddress();
             final String currentAddress = person.getCurrentAddress();
@@ -247,12 +250,12 @@ public class PopulationRegistryImpl implements PopulationRegistry {
                 }
             }
             if (permanentAddress != null || currentAddress != null) {
-                personDao.updatePerson(person, user);
+                personDao.updatePerson(existing, user);
             }
             // update citizenship list of the person to the PRS
             // TODO need to find a better solution
             if (citizenshipList != null && !citizenshipList.isEmpty()) {
-                final Set<PersonCitizenship> existingCitizens = person.getCountries();
+                final Set<PersonCitizenship> existingCitizens = existing.getCountries();
                 for (PersonCitizenship pc : existingCitizens) {
                     citizenshipDAO.deleteCitizenship(pc.getPersonUKey(), pc.getCountryId());
                 }
@@ -629,5 +632,21 @@ public class PopulationRegistryImpl implements PopulationRegistry {
         }
         validateAccessToLocation(location, user);
         return personDao.getApprovalPendingPersonsByLocation(location, pageNo, noOfRows);
+    }
+
+    private void setChangedFieldsBeforeUpdate(final Person existing, final Person passing) {
+        logger.debug("Setting edited fields to the existing PRS entry with personUKey : {}", existing.getPersonUKey());
+        existing.setDateOfRegistration(passing.getDateOfRegistration());
+        existing.setNic(passing.getNic());
+        existing.setTemporaryPin(passing.getTemporaryPin());
+        existing.setRace(passing.getRace());
+        existing.setDateOfBirth(passing.getDateOfBirth());
+        existing.setPlaceOfBirth(passing.getPlaceOfBirth());
+        existing.setFullNameInOfficialLanguage(passing.getFullNameInOfficialLanguage());
+        existing.setFullNameInEnglishLanguage(passing.getFullNameInEnglishLanguage());
+        existing.setGender(passing.getGender());
+        existing.setCivilStatus(passing.getCivilStatus());
+        existing.setFatherPINorNIC(passing.getFatherPINorNIC());
+        existing.setMotherPINorNIC(passing.getMotherPINorNIC());
     }
 }
