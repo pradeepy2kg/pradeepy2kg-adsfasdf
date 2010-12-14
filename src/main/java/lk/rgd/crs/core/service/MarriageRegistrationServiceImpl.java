@@ -161,32 +161,40 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     @Transactional(propagation = Propagation.REQUIRED)
     public List<UserWarning> addSecondMarriageNotice(MarriageRegister notice, MarriageNotice.Type type,
         boolean ignoreWarnings, boolean undo, User user) {
-        if (!undo) {
-            logger.debug("attempt to add a second notice for existing record : idUKey : {}", notice.getIdUKey());
-            checkUserPermission(Permission.ADD_MARRIAGE, ErrorCodes.PERMISSION_DENIED,
-                " add second notice to marriage register ", user);
-            //get user warnings when adding  second notice   and return warnings
-            List<UserWarning> warnings = marriageRegistrationValidator.validateAddingSecondNotice(notice, type);
-            //todo simplify the logic amith
-            if (warnings != null && warnings.size() > 0 && !ignoreWarnings) {
-                logger.debug("warnings found while adding second notice to the existing marriage notice idUKey : {}",
-                    notice.getIdUKey());
-                return warnings;
-            }
-            if (warnings.size() == 0 || ignoreWarnings) {
-                updateMarriageRegister(notice, user);
+        //only MALE and FEMALE notices are allowed to add second notice
+        if (type != MarriageNotice.Type.BOTH_NOTICE) {
+            if (!undo) {
+                logger.debug("attempt to add a second notice for existing record : idUKey : {}", notice.getIdUKey());
+                checkUserPermission(Permission.ADD_MARRIAGE, ErrorCodes.PERMISSION_DENIED,
+                    " add second notice to marriage register ", user);
+                //get user warnings when adding  second notice   and return warnings
+                List<UserWarning> warnings = marriageRegistrationValidator.validateAddingSecondNotice(notice, type);
+                //todo simplify the logic amith
+                if (warnings != null && warnings.size() > 0 && !ignoreWarnings) {
+                    logger.debug("warnings found while adding second notice to the existing marriage notice idUKey : {}",
+                        notice.getIdUKey());
+                    return warnings;
+                }
+                if (warnings.size() == 0 || ignoreWarnings) {
+                    updateMarriageRegister(notice, user);
+                }
+            } else {
+                //undo the first notice state to DATA_ENTRY
+                if (logger.isDebugEnabled()) {
+                    logger.debug("attempt to roll back notice : idUKey " + notice.getIdUKey() + "state to " +
+                        "previous state : current state : " + notice.getState());
+                }
+                //todo is it more use full if this hardcoded remove ?? amith
+                notice.setState(MarriageRegister.State.DATA_ENTRY);
+                //updating the marriage register object
+                marriageRegistrationDAO.updateMarriageRegister(notice, user);
             }
         } else {
-            //undo the first notice state to DATA_ENTRY
-            if (logger.isDebugEnabled()) {
-                logger.debug("attempt to roll back notice : idUKey " + notice.getIdUKey() + "state to " +
-                    "previous state : current state : " + notice.getState());
-            }
-            //todo is it more use full if this hardcoded remove ?? amith
-            notice.setState(MarriageRegister.State.DATA_ENTRY);
-            //updating the marriage register object
-            marriageRegistrationDAO.updateMarriageRegister(notice, user);
+            // not allow to add second notice
+            handleException("invalid notice type, can't add second notice for notice type : " + type,
+                ErrorCodes.INVALID_NOTICE_TYPE_FOR_ADD_SECOND);
         }
+
         return Collections.emptyList();
     }
 

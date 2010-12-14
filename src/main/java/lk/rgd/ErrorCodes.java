@@ -99,4 +99,5 @@ public class ErrorCodes {
     public static final int INVALID_STATE_FOR_REMOVAL = 6004;
     public static final int CAN_NOT_FIND_MARRIAGE_NOTICE = 6005;
     public static final int OTHER_PARTY_MUST_APPROVE_FIRST = 6006;
+    public static final int INVALID_NOTICE_TYPE_FOR_ADD_SECOND = 6007;
 }
