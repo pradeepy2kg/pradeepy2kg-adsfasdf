@@ -46,7 +46,8 @@ public class MRDivisionDAOImpl extends BaseDAO implements MRDivisionDAO, Preload
             handleException("Unsupported language : " + language, ErrorCodes.INVALID_LANGUAGE);
         }
         if (result == null) {
-            handleException("Invalid DS Division id : " + dsDivisionUKey, ErrorCodes.INVALID_DSDIVISION);
+            //handleException("Invalid DS Division id : " + dsDivisionUKey, ErrorCodes.INVALID_DSDIVISION);
+            result = new HashMap<Integer, String>();
         }
         return result;
     }
