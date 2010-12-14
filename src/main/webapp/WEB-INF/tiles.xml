@@ -539,4 +539,10 @@
         <put-attribute name="title" value="title.marriage.notice.warnings"/>
     </definition>
 
+    <definition name="epr.marriageNoticeReject" extends="epr.template">
+        <description>get comment page for rejecting marriage notice</description>
+        <put-attribute name="title" value="title.give.comment"/>
+        <put-attribute name="body" value="/WEB-INF/pages/marriages/MarriageNoticeRejectGetComment.jsp"/>
+    </definition>
+
 </tiles-definitions>
