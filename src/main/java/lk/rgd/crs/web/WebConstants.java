@@ -65,5 +65,20 @@ public class WebConstants {
     public static final int YEAR = 3;
     public static final long DAY_IN_MILLISECONDS = 1000 * 60 * 60 * 24;
 
+    //for statistics
+    public static final String USER_TYPE = "userType";
+    public static final String USER_ADR = "adr";
+    public static final String USER_ARG = "arg";
+    public static final String USER_DEO = "deo";
+    public static final String USER_DR = "dr";
+
+    //for statistics
+    public static final String STAT_TYPE = "statType";    
+    public static final String STAT_ALL = "all";
+    public static final String STAT_BIRTH = "birth";
+    public static final String STAT_DEATH = "death";
+    public static final String STAT_MARRIAGE = "marriage";
+
+
 
 }
