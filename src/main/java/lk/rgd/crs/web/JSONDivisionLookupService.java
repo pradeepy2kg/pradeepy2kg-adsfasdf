@@ -101,14 +101,6 @@ public class JSONDivisionLookupService extends HttpServlet {
                 List mr = getMRDivision(lang, dsDivisionId, user);
                 optionLists.put("dsDivisionList", ds);
                 optionLists.put("mrDivisionList", mr);
-            } else if("9".equals(mode)) {
-                // TODO Statistics Testing [shan]
-                optionLists.put("totalDeclarations", 30);
-                optionLists.put("totalDecArrivals", 30);
-                optionLists.put("approvalPendings", 30);
-                optionLists.put("totalConfirmChagess", 30);
-                optionLists.put("confirmApproved", 30);
-
             } else {
                 // passing districtId, return DS List and the BD List for the 1st DS division
                 List ds = getDSDivisions(lang, divisionId, user);
