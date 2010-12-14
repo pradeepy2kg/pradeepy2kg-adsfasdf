@@ -107,7 +107,8 @@ public class MarriageRegistrationServiceTest extends TestCase {
         existingMaleNotice.setFemale(female);
         existingMaleNotice.setDateOfFemaleNotice(new Date());
         existingMaleNotice.setSerialOfFemaleNotice(2010012347L);
-        marriageRegistrationService.addSecondMarriageNotice(existingMaleNotice, MarriageNotice.Type.FEMALE_NOTICE, false, rg);
+        marriageRegistrationService.addSecondMarriageNotice(existingMaleNotice, MarriageNotice.Type.FEMALE_NOTICE, false,
+            false, rg);
         //still male notice cannot be approved
         try {
             marriageRegistrationService.approveMarriageNotice(marriageRegistrationService.getMarriageNoticePendingApprovalByMRDivisionAndSerial
