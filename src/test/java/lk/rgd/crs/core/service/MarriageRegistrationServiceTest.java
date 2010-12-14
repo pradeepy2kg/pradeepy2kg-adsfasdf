@@ -211,6 +211,94 @@ public class MarriageRegistrationServiceTest extends TestCase {
         }
 
     }
+    //testing rejection of a marriage notice
+
+    public void testMarriageNoticeReject() {
+        //check process
+        //rejecting when record in DATA_ENTRY stage (no matter how many notices are available)
+        MarriageRegister noticeInDE = getMinimalMarriageNotice(2010012586L, colomboMRDivision, false, "78945632315",
+            "8523698521", MarriageNotice.Type.MALE_NOTICE, MarriageRegister.LicenseCollectType.MAIL_TO_FEMALE);
+        marriageRegistrationService.addMarriageRegister(noticeInDE, rg);
+        //now noticeInDE is in DE and it can be rejected
+        marriageRegistrationService.rejectMarriageNotice(marriageRegistrationService.
+            getMarriageNoticePendingApprovalByMRDivisionAndSerial(colomboMRDivision, 2010012586L, true, rg).get(0).
+            getIdUKey(), MarriageNotice.Type.MALE_NOTICE, "testing reject for DE mode", rg);
+        //check it is being rejected properly
+        MarriageRegister noticeInDERejected = marriageRegistrationService.getByIdUKey(noticeInDE.getIdUKey(), rg);
+        assertEquals("Active false", false, noticeInDERejected.getLifeCycleInfo().isActiveRecord());
+        assertEquals("State in REJECTED", MarriageRegister.State.NOTICE_REJECTED, noticeInDERejected.getState());
+        assertEquals("Rejection comment", "testing reject for DE mode", noticeInDERejected.getNoticeRejectionComment());
+
+        //rejecting a notice with state MALE_NOTICE_APPROVED
+        MarriageRegister noticeInMNA = getMinimalMarriageNotice(2010012587L, colomboMRDivision, false, "68945632315",
+            "6523698521", MarriageNotice.Type.MALE_NOTICE, MarriageRegister.LicenseCollectType.MAIL_TO_FEMALE);
+        noticeInMNA.setLicenseCollectType(MarriageRegister.LicenseCollectType.MAIL_TO_FEMALE);
+        marriageRegistrationService.addMarriageRegister(noticeInMNA, rg);
+        //approving male notice
+        marriageRegistrationService.approveMarriageNotice(marriageRegistrationService.
+            getMarriageNoticePendingApprovalByMRDivisionAndSerial(colomboMRDivision, 2010012587L, true, rg).get(0).
+            getIdUKey(), MarriageNotice.Type.MALE_NOTICE, rg);
+
+        MarriageRegister noticeInMNAApproved = marriageRegistrationService.
+            getMarriageNoticePendingApprovalByMRDivisionAndSerial(colomboMRDivision, 2010012587L, true, rg).get(0);
+        //adding second notice (female notice)
+        noticeInMNAApproved.setSerialOfFemaleNotice(2010078954L);
+        noticeInMNAApproved.setMrDivisionOfFemaleNotice(colomboMRDivision);
+        noticeInMNAApproved.setDateOfFemaleNotice(new Date());
+        marriageRegistrationService.addSecondMarriageNotice(noticeInMNAApproved, MarriageNotice.Type.FEMALE_NOTICE,
+            true, false, rg);
+        //now it's being approved and second being added
+        //now try to reject female notice
+        MarriageRegister noticeInMNSecondAdded = marriageRegistrationService.
+            getMarriageNoticePendingApprovalByMRDivisionAndSerial(colomboMRDivision, 2010012587L, true, rg).get(0);
+        marriageRegistrationService.rejectMarriageNotice(noticeInMNSecondAdded.getIdUKey(),
+            MarriageNotice.Type.FEMALE_NOTICE, "second add female notice is rejected", rg);
+        //now its being rejected
+        MarriageRegister noticeInMNSecondRejected = marriageRegistrationService.getByIdUKey(noticeInMNAApproved.getIdUKey(), rg);
+
+        assertEquals("Active false", false, noticeInMNSecondRejected.getLifeCycleInfo().isActiveRecord());
+        assertEquals("State in REJECTED", MarriageRegister.State.FEMALE_NOTICE_REJECTED, noticeInMNSecondRejected.getState());
+        assertEquals("Rejection comment", "second add female notice is rejected", noticeInMNSecondRejected.getNoticeRejectionComment());
+        //check exceptions
+        // exceptions can happen in two ways
+        //1>invalid state for rejection
+        //2>invalid notice type for reject
+        //case 1: we try to reject a notice which is in NOTICE_APPROVED state
+        MarriageRegister noticeInNoticeApproved = getMinimalMarriageNotice(2010012575L, colomboMRDivision, false, "1596324875",
+            "9865321475", MarriageNotice.Type.MALE_NOTICE, MarriageRegister.LicenseCollectType.MAIL_TO_FEMALE);
+        //adding
+        marriageRegistrationService.addMarriageNotice(noticeInNoticeApproved, MarriageNotice.Type.MALE_NOTICE, rg);
+        MarriageRegister noticeInNoticeApprovedAdded = marriageRegistrationService.
+            getMarriageNoticePendingApprovalByMRDivisionAndSerial(colomboMRDivision, 2010012575L, true, rg).get(0);
+        //use a short cut way to change state in to notice approved this is not a valid process use for test purposes
+        noticeInNoticeApprovedAdded.setState(MarriageRegister.State.NOTICE_APPROVED);
+        //now we are try to reject but we expecting a exception in valid state
+        try {
+            marriageRegistrationService.rejectMarriageNotice(marriageRegistrationService.
+                getMarriageNoticePendingApprovalByMRDivisionAndSerial(colomboMRDivision, 2010012575L, true, rg).get(0).
+                getIdUKey(), MarriageNotice.Type.MALE_NOTICE, "try to reject notice approved record", rg);
+        } catch (CRSRuntimeException expected) {
+            assertEquals("expecting exception while rejecting notice approved record",
+                ErrorCodes.INVALID_NOTICE_STATE_FOR_REJECT, expected.getErrorCode());
+        }
+        //check UNABLE_TO_REJECT_FEMALE
+        MarriageRegister noticeMaleToBeApprove = getMinimalMarriageNotice(2010012585L, colomboMRDivision, false, "1596324875",
+            "9865321475", MarriageNotice.Type.MALE_NOTICE, MarriageRegister.LicenseCollectType.MAIL_TO_FEMALE);
+        //adding
+        marriageRegistrationService.addMarriageNotice(noticeMaleToBeApprove, MarriageNotice.Type.MALE_NOTICE, rg);
+        MarriageRegister noticeMaleToBeApproveAdd = marriageRegistrationService.
+            getMarriageNoticePendingApprovalByMRDivisionAndSerial(colomboMRDivision, 2010012585L, true, rg).get(0);
+        marriageRegistrationService.approveMarriageNotice(noticeMaleToBeApproveAdd.getIdUKey(), MarriageNotice.Type.MALE_NOTICE, rg);
+        //now only female can be rejected
+        //we try to reject male again
+        try {
+            marriageRegistrationService.rejectMarriageNotice(noticeMaleToBeApproveAdd.getIdUKey(),
+                MarriageNotice.Type.MALE_NOTICE, "try to reject approved male notice", rg);
+        } catch (CRSRuntimeException expected) {
+            assertEquals("expecting exception while rejecting try to reject approved male notice",
+                ErrorCodes.UNABLE_TO_REJECT_MALE_NOTICE, expected.getErrorCode());
+        }
+    }
 
 
     private MarriageRegister getMinimalMarriageNotice(long serialMale, MRDivision mrDivision, boolean isSingleNotice,
