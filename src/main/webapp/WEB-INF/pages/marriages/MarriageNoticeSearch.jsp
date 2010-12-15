@@ -344,7 +344,7 @@
                             </s:if>
                         </td>
                         <td align="center">
-                            <s:url id="rejectSelected" action="eprMarriageNoticeReject.do">
+                            <s:url id="rejectSelected" action="eprMarriageNoticeRejectInit.do">
                                 <s:param name="idUKey" value="idUKey"/>
                                 <s:param name="noticeType" value="type"/>
                             </s:url>

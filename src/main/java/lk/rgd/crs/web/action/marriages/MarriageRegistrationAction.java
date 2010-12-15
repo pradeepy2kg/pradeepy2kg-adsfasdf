@@ -120,7 +120,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
             marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
         commonUtil.populateCountryAndRaceLists(countryList, raceList, language);
-        logger.debug("successfully loaded the page");
+        logger.debug("successfully loaded the page marriage notice");
         return "pageLoad";
     }
 
