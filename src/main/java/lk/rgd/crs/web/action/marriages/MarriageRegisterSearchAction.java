@@ -1,6 +1,7 @@
 package lk.rgd.crs.web.action.marriages;
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.ErrorCodes;
 import lk.rgd.common.api.dao.AppParametersDAO;
 import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.dao.DistrictDAO;
@@ -36,6 +37,8 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     private final AppParametersDAO appParametersDAO;
     private final CommonUtil commonUtil;
 
+    private MarriageRegister marriage;
+
     private User user;
 
     private Map session;
@@ -57,7 +60,10 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     private int mrDivisionId;
     private int pageNo;
     private int noOfRows;
+
     private long idUKey;
+
+    private String comment;
 
     private MarriageNotice.Type noticeType;
 
@@ -230,6 +236,36 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     public String rejectInit() {
         logger.debug("loading commenting page for rejecting marriage notice");
         //do nothing just load get comment page for rejecting marriage notice
+        marriage = service.getByIdUKey(idUKey, user);
+        return SUCCESS;
+    }
+
+    public String rejectMarriageNotice() {
+        logger.debug("attempt to reject marriage notice : idUKey : {} :notice type : {}", idUKey, noticeType);
+        try {
+            service.rejectMarriageNotice(idUKey, noticeType, comment, user);
+        }
+        catch (CRSRuntimeException e) {
+            switch (e.getErrorCode()) {
+                case ErrorCodes.UNABLE_TO_REJECT_FEMALE_NOTICE:
+                    addActionError(getText("error.unable.to.reject.notice", new String[]{"label.female", idUKey + ""}));
+                    break;
+                case ErrorCodes.UNABLE_TO_REJECT_MALE_NOTICE:
+                    addActionError(getText("error.unable.to.reject.notice", new String[]{"label.male", idUKey + ""}));
+                    break;
+                case ErrorCodes.INVALID_NOTICE_STATE_FOR_REJECT:
+                    addActionError(getText("error.unable.to.reject.notice.invalid.state", new String[]{idUKey + ""}));
+                    break;
+            }
+            commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId,
+                dsDivisionId, mrDivisionId, "Marriage", user, language);
+            getApprovalPendingNotices();
+            return ERROR;
+        }
+        //todo check table load after success or error  amith
+        commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId,
+            dsDivisionId, mrDivisionId, "Marriage", user, language);
+        getApprovalPendingNotices();
         return SUCCESS;
     }
 
@@ -433,5 +469,21 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
 
     public void setIdUKey(long idUKey) {
         this.idUKey = idUKey;
+    }
+
+    public MarriageRegister getMarriage() {
+        return marriage;
+    }
+
+    public void setMarriage(MarriageRegister marriage) {
+        this.marriage = marriage;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

@@ -1,5 +1,6 @@
 package lk.rgd.crs.api.domain;
 
+import lk.rgd.common.util.WebUtils;
 import lk.rgd.crs.web.util.MarriageType;
 import lk.rgd.crs.web.util.TypeOfMarriagePlace;
 
@@ -382,7 +383,7 @@ public class MarriageRegister implements Serializable, Cloneable {
     }
 
     public void setRegSerial(String regSerial) {
-        this.regSerial = regSerial;
+        this.regSerial = WebUtils.filterBlanks(regSerial);
     }
 
     public Date getRegistrationDate() {
@@ -398,7 +399,7 @@ public class MarriageRegister implements Serializable, Cloneable {
     }
 
     public void setRegPlaceInEnglishLang(String regPlaceInEnglishLang) {
-        this.regPlaceInEnglishLang = regPlaceInEnglishLang;
+        this.regPlaceInEnglishLang = WebUtils.filterBlanks(regPlaceInEnglishLang);
     }
 
     public String getRegPlaceInOfficialLang() {
@@ -406,7 +407,7 @@ public class MarriageRegister implements Serializable, Cloneable {
     }
 
     public void setRegPlaceInOfficialLang(String regPlaceInOfficialLang) {
-        this.regPlaceInOfficialLang = regPlaceInOfficialLang;
+        this.regPlaceInOfficialLang = WebUtils.filterBlanks(regPlaceInOfficialLang);
     }
 
     public Date getDateOfMarriage() {
@@ -446,7 +447,7 @@ public class MarriageRegister implements Serializable, Cloneable {
     }
 
     public void setRegNameInOfficialLang(String regNameInOfficialLang) {
-        this.regNameInOfficialLang = regNameInOfficialLang;
+        this.regNameInOfficialLang = WebUtils.filterBlanks(regNameInOfficialLang);
     }
 
     public String getRegNameInEnglishLang() {
@@ -454,7 +455,7 @@ public class MarriageRegister implements Serializable, Cloneable {
     }
 
     public void setRegNameInEnglishLang(String regNameInEnglishLang) {
-        this.regNameInEnglishLang = regNameInEnglishLang;
+        this.regNameInEnglishLang = WebUtils.filterBlanks(regNameInEnglishLang);
     }
 
     public LicenseCollectType getLicenseCollectType() {
@@ -478,6 +479,6 @@ public class MarriageRegister implements Serializable, Cloneable {
     }
 
     public void setNoticeRejectionComment(String noticeRejectionComment) {
-        this.noticeRejectionComment = noticeRejectionComment;
+        this.noticeRejectionComment = WebUtils.filterBlanks(noticeRejectionComment);
     }
 }
