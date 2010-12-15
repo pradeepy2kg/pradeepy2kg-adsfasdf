@@ -96,6 +96,7 @@
                 null,
                 null,
                 null,
+                null,
                 null
             ]
         });
@@ -248,6 +249,8 @@
 </s:form>
 
 <div id="marriage-notice-search" style="margin-top:58px;">
+    <s:actionmessage cssStyle="color:black;"/>
+    <s:actionerror cssStyle="color:red;"/>
     <s:if test="searchList.size > 0">
         <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;">
             <legend><b><s:label value="%{getText('searchResult.label')}"/> </b></legend>
@@ -261,6 +264,7 @@
                     <th width="60px">PIN / NIC</th>
                     <th><s:label value="%{getText('partyName.label')}"/></th>
                     <th width="40px" style="padding:3px 3px;"></th>
+                    <th width="15px" style="padding:3px 3px;"></th>
                     <th width="15px" style="padding:3px 3px;"></th>
                     <th width="15px" style="padding:3px 3px;"></th>
                     <th width="15px" style="padding:3px 3px;"></th>
@@ -367,6 +371,16 @@
                                 <img src="<s:url value='/images/delete.gif'/>" width="25" height="25" border="none"/>
                             </s:a>
                         </td>
+                        <td align="center">
+                            <s:url id="printSelected" action="eprLicenseToMarriage.do">
+                                <s:param name="idUKey" value="idUKey"/>
+                                <s:param name="noticeType" value="type"/>
+                            </s:url>
+                            <s:a href="%{printSelected}" title="%{getText('deleteToolTip.label')}">
+                                <img src="<s:url value='/images/print_icon.gif'/>" width="25" height="25"
+                                     border="none"/>
+                            </s:a>
+                        </td>
                     </tr>
                 </s:iterator>
                 </tbody>
@@ -379,4 +393,3 @@
 <s:hidden id="error3" value="%{getText('searchStartDate.label')}"/>
 <s:hidden id="error4" value="%{getText('searchEndDate.label')}"/>
 <s:hidden id="error5" value="%{getText('pin.label')}"/>
-<s:hidden id="error6" value="%{getText('enter.registrationDivision.label')}"/>

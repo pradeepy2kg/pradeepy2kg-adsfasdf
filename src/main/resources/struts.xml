@@ -1264,5 +1264,11 @@
             <result type="tiles" name="error">epr.marriageNoticeSearchHome</result>
         </action>
 
+        <action name="eprLicenseToMarriage" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
+                method="licenseToMarriagePrintInit">
+            <result type="tiles" name="success">epr.licenseToMarriage</result>
+            <result type="tiles" name="error">epr.marriageNoticeSearchHome</result>
+        </action>
+
     </package>
 </struts>

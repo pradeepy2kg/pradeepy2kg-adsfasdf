@@ -545,4 +545,12 @@
         <put-attribute name="body" value="/WEB-INF/pages/marriages/MarriageNoticeRejectGetComment.jsp"/>
     </definition>
 
+    <definition name="epr.licenseToMarriage" extends="epr.template">
+        <description>
+            print license for marriage
+        </description>
+        <put-attribute name="title" value="title.license.marriage"/>
+        <put-attribute name="body" value="/WEB-INF/pages/marriages/LicenseToMarriage.jsp"/>
+    </definition>
+
 </tiles-definitions>
