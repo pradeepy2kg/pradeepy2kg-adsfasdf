@@ -74,6 +74,15 @@ public class MarriageRegistrationServiceTest extends TestCase {
         //and male party is expecting the license
         //   notice.setLicenseRequestByMale(true);
         marriageRegistrationService.addMarriageNotice(notice, MarriageNotice.Type.MALE_NOTICE, rg);
+        //now try to add a another MALE_NOTICE with same serial number
+        MarriageRegister noticeWithSameSerial = getMinimalMarriageNotice(2010012345L, colomboMRDivision, false, "1234567812",
+            "1234567810", MarriageNotice.Type.MALE_NOTICE, MarriageRegister.LicenseCollectType.MAIL_TO_MALE);
+        try {
+            marriageRegistrationService.addMarriageNotice(noticeWithSameSerial, MarriageNotice.Type.MALE_NOTICE, rg);
+        } catch (CRSRuntimeException exceptionExpected) {
+            assertEquals("Exception expected when adding same serial in same MRDivision",
+                ErrorCodes.POSSIBLE_MARRIAGE_NOTICE_SERIAL_NUMBER_DUPLICATION, exceptionExpected.getErrorCode());
+        }
         //add with same pin numbers
         //todo amith
     }
@@ -93,12 +102,12 @@ public class MarriageRegistrationServiceTest extends TestCase {
         assertEquals("not expecting warnings while add simple process", notExpecting.size(), 0);
 
         //try to add a second notice for single notice type that mean no second notice expecting exception
-        MarriageRegister singleNotice = getMinimalMarriageNotice(2010012347L, colomboMRDivision, true, "1234567893",
+        MarriageRegister singleNotice = getMinimalMarriageNotice(2010012357L, colomboMRDivision, true, "1234567893",
             "1234567892", MarriageNotice.Type.BOTH_NOTICE, MarriageRegister.LicenseCollectType.MAIL_TO_MALE);
         marriageRegistrationService.addMarriageNotice(singleNotice, MarriageNotice.Type.BOTH_NOTICE, rg);
         try {
             marriageRegistrationService.addSecondMarriageNotice(marriageRegistrationService.
-                getMarriageNoticePendingApprovalByMRDivisionAndSerial(colomboMRDivision, 2010012347L, true, rg).get(0),
+                getMarriageNoticePendingApprovalByMRDivisionAndSerial(colomboMRDivision, 2010012357L, true, rg).get(0),
                 MarriageNotice.Type.BOTH_NOTICE, true, false, rg);
         } catch (CRSRuntimeException expected) {
             //expecting exception     6007

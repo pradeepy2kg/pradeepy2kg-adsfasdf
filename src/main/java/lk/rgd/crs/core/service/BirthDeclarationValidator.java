@@ -38,9 +38,11 @@ public class BirthDeclarationValidator {
     private static final String SERIAL_NUMBER_PATTERN = "20([1-9][0-9])[0|1]([0-9]{5})";
 
     private final PopulationRegistry ecivil;
+    private final BirthDeclarationDAO birthDeclarationDAO;
 
-    public BirthDeclarationValidator(PopulationRegistry ecivil) {
+    public BirthDeclarationValidator(PopulationRegistry ecivil, BirthDeclarationDAO birthDeclarationDAO) {
         this.ecivil = ecivil;
+        this.birthDeclarationDAO = birthDeclarationDAO;
     }
 
     /**
@@ -53,19 +55,19 @@ public class BirthDeclarationValidator {
     public void validateMinimalRequirements(BirthDeclaration bdf) {
 
         if (bdf.getRegister().getDateOfRegistration() == null ||
-                bdf.getRegister().getBirthDivision() == null ||
-                bdf.getChild().getDateOfBirth() == null ||
-                isEmptyString(bdf.getChild().getPlaceOfBirth()) ||
-                //bdf.getChild().getChildGender() - cannot validate
-                isEmptyString(bdf.getInformant().getInformantName()) ||
-                isEmptyString(bdf.getInformant().getInformantAddress()) ||
-                bdf.getInformant().getInformantSignDate() == null ||
-                //bdf.getInformant().getInformantType() - cannot validate
+            bdf.getRegister().getBirthDivision() == null ||
+            bdf.getChild().getDateOfBirth() == null ||
+            isEmptyString(bdf.getChild().getPlaceOfBirth()) ||
+            //bdf.getChild().getChildGender() - cannot validate
+            isEmptyString(bdf.getInformant().getInformantName()) ||
+            isEmptyString(bdf.getInformant().getInformantAddress()) ||
+            bdf.getInformant().getInformantSignDate() == null ||
+            //bdf.getInformant().getInformantType() - cannot validate
 
-                isEmptyString(bdf.getNotifyingAuthority().getNotifyingAuthorityAddress()) ||
-                bdf.getNotifyingAuthority().getNotifyingAuthoritySignDate() == null ||
-                isEmptyString(bdf.getNotifyingAuthority().getNotifyingAuthorityName()) ||
-                isEmptyString(bdf.getNotifyingAuthority().getNotifyingAuthorityPIN())) {
+            isEmptyString(bdf.getNotifyingAuthority().getNotifyingAuthorityAddress()) ||
+            bdf.getNotifyingAuthority().getNotifyingAuthoritySignDate() == null ||
+            isEmptyString(bdf.getNotifyingAuthority().getNotifyingAuthorityName()) ||
+            isEmptyString(bdf.getNotifyingAuthority().getNotifyingAuthorityPIN())) {
 
             if (bdf.getIdUKey() > 0) {
                 handleException("Birth declaration record ID : " + bdf.getIdUKey() + " is not complete. " +
@@ -79,7 +81,7 @@ public class BirthDeclarationValidator {
             }
         }
 
-        // validate registrtion serial number
+        // validate registration serial number
         final long serialNo = bdf.getRegister().getBdfSerialNo();
         if (serialNo >= 2010000001L && serialNo <= 2099199999L) {
 
@@ -92,6 +94,17 @@ public class BirthDeclarationValidator {
             handleException("Birth declaration record being processed is invalid " +
                 "Check serial number : " + serialNo, ErrorCodes.INVALID_DATA);
         }
+        /*todo uncomment and check test cases all birth related test are fails if this uncomment (urgent amith)    
+    //validate duplicate serial numbers
+        BirthDeclaration bdExisting = birthDeclarationDAO.getActiveRecordByBDDivisionAndSerialNo(bdf.getRegister().
+            getBirthDivision(), serialNo);
+        if (bdExisting != null) {
+            //that mean duplicate serial in same mr division
+            handleException("unable to add birth declaration possible serial number duplication serial number " +
+                serialNo + " bd division " + bdf.getRegister().getBdfSerialNo(),
+                ErrorCodes.POSSIBLE_DUPLICATION_OF_BDF_SERIAL_NUMBER);
+        }*/
+
     }
 
     /**

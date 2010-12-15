@@ -20,7 +20,7 @@ public class ErrorCodes {
      */
     public static final int INVALID_DATA = 1001;
     /**
-     * Data requested for a non existant country id
+     * Data requested for a non existing country id
      */
     public static final int COUNTRY_NOT_FOUND = 1002;
     /**
@@ -55,6 +55,8 @@ public class ErrorCodes {
      * in complete death alteration
      */
     public static final int INCOMPLETE_ALTERATION = 1010;
+    //duplicate BDF serial number
+    public static final int POSSIBLE_DUPLICATION_OF_BDF_SERIAL_NUMBER = 1011;
 
 
     // error codes 2001 - 3000 indicate permission denied errors
@@ -104,4 +106,6 @@ public class ErrorCodes {
     public static final int UNABLE_TO_REJECT_FEMALE_NOTICE = 6009;
     public static final int UNABLE_TO_REJECT_MALE_NOTICE = 6010;
     public static final int INVALID_STATE_FOR_PRINT_LICENSE = 6011;
+    public static final int POSSIBLE_MARRIAGE_NOTICE_SERIAL_NUMBER_DUPLICATION = 6012;
+    public static final int INVALID_SERIAL_NUMBER = 6013;
 }
