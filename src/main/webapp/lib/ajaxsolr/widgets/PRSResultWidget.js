@@ -35,8 +35,8 @@
             for (var i = 0, l = this.manager.response.response.docs.length; i < l; i++) {
                 var doc = this.manager.response.response.docs[i];
 
-                table += '<tr><td><a href="prs/eprPersonDetails.do?personId=' + doc.personUKey + '">' + doc.pin +
-                    '</a></td><td><a href="prs/eprPersonDetails.do?personId=' + doc.personUKey + '">' + doc.nic +
+                table += '<tr><td><a href="eprPersonDetails.do?personId=' + doc.personUKey + '">' + doc.pin +
+                    '</a></td><td><a href="eprPersonDetails.do?personId=' + doc.personUKey + '">' + doc.nic +
                     '</a></td><td>' + doc.fullNameInEnglishLanguage + '</td><td>' + doc.fullNameInOfficialLanguage  +
                     '</td><td>' + doc.gender + '</td><td>' + (doc.dateOfBirth == null ? "" : doc.dateOfBirth.substring(0,10)) +
                     '</td><td>' + (doc.citizenship == null ? "" : doc.citizenship) + '</td><td>' + doc.lifeStatus +
