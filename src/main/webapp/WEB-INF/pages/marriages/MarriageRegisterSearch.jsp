@@ -157,7 +157,7 @@
                                 <s:param name="idUKey" value="idUKey"/>
                                 <s:param name="licensedMarriage" value="true"/>
                             </s:url>
-                            <s:a href="%{registerSelected}" title="%{getText('tooltip.marriageregistersearch.register')}">
+                            <s:a href="%{registerSelected}" title="%{getText('tooltip.marriageregister.register')}">
                                 <img src="<s:url value='/images/couple.jpg'/>" width="25" height="25" border="none"/>
                             </s:a>
                         </td>
@@ -170,7 +170,7 @@
                             </s:a>
                         </td>
                         <td align="center">
-                            <s:url id="approveSelected">
+                            <s:url id="approveSelected" action="eprMarriageRegistrationApprove.do">
                                 <s:param name="idUKey" value="idUKey"/>
                             </s:url>
                             <s:a href="%{approveSelected}" title="%{getText('approveToolTip.label')}">
@@ -178,7 +178,7 @@
                             </s:a>
                         </td>
                         <td align="center">
-                            <s:url id="rejectSelected">
+                            <s:url id="rejectSelected" action="eprMarriageRegistrationReject.do">
                                 <s:param name="idUKey" value="idUKey"/>
                             </s:url>
                             <s:a href="%{rejectSelected}" title="%{getText('rejectToolTip.label')}">
@@ -186,7 +186,7 @@
                             </s:a>
                         </td>
                         <td align="center">
-                            <s:url id="deleteSelected" action="eprMarriageNoticeDelete.do">
+                            <s:url id="deleteSelected" >
                                 <s:param name="idUKey" value="idUKey"/>
                                 <s:param name="noticeType" value="type"/>
                             </s:url>

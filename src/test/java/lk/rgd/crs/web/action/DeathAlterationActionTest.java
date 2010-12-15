@@ -286,7 +286,7 @@ public class DeathAlterationActionTest extends CustomStrutsTestCase {
 
         initAndExecute("/alteration/eprCaptureDeathAlteration.do", session);
         assertEquals("Action errors", 0, deathAlterationAction.getActionErrors().size());
-        assertEquals("Action massage", 1, deathAlterationAction.getActionMessages().size());
+        assertEquals("Action message", 1, deathAlterationAction.getActionMessages().size());
         //check death alteration is populated
         assertNotNull("death person ", deathAlterationAction.getDeathAlteration().getDeathPerson());
         assertNotNull("death alteration info", deathAlterationAction.getDeathAlteration().getDeathInfo());
@@ -329,7 +329,7 @@ public class DeathAlterationActionTest extends CustomStrutsTestCase {
         request.setParameter("deathAlteration.declarant.declarantType", "RELATIVE");
         initAndExecute("/alteration/eprEditDeathAlteration.do", session);
         assertEquals("Action errors", 0, deathAlterationAction.getActionErrors().size());
-        assertEquals("Action massage", 1, deathAlterationAction.getActionMessages().size());
+        assertEquals("Action message", 1, deathAlterationAction.getActionMessages().size());
         //check death alteration is populated
         assertNotNull("death person ", deathAlterationAction.getDeathAlteration().getDeathPerson());
         assertNotNull("death alteration info", deathAlterationAction.getDeathAlteration().getDeathInfo());

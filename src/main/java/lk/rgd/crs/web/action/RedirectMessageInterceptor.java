@@ -77,7 +77,7 @@ public class RedirectMessageInterceptor extends MethodFilterInterceptor {
      * action.
      */
     protected void before(ActionInvocation invocation, ValidationAware validationAware) throws Exception {
-        logger.debug("copying action errors and action massages from session to action");
+        logger.debug("copying action errors and action messages from session to action");
         @SuppressWarnings("unchecked")
         Map<String, ?> session = invocation.getInvocationContext().getSession();
 
@@ -110,7 +110,7 @@ public class RedirectMessageInterceptor extends MethodFilterInterceptor {
      * If the result is a redirect then store error and messages in the session.
      */
     protected void after(ActionInvocation invocation, ValidationAware validationAware) throws Exception {
-        logger.debug("copying action errors and action massages to session");
+        logger.debug("copying action errors and action messages to session");
         Result result = invocation.getResult();
         if (result != null
             && (result instanceof ServletRedirectResult ||

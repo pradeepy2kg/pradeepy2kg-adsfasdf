@@ -14,6 +14,7 @@ import lk.rgd.crs.api.domain.MarriageRegister;
 import lk.rgd.crs.api.service.MarriageRegistrationService;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.web.util.CommonUtil;
+import lk.rgd.AppConstants;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +31,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     private static final String MR_APPROVAL_ROWS_PER_PAGE = "crs.mr_approval_rows_per_page";
 
     // services and DAOs
-    private final MarriageRegistrationService service;
+    private final MarriageRegistrationService marriageRegistrationService;
     private final DistrictDAO districtDAO;
     private final DSDivisionDAO dsDivisionDAO;
     private final MRDivisionDAO mrDivisionDAO;
@@ -60,17 +61,16 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     private int mrDivisionId;
     private int pageNo;
     private int noOfRows;
-
     private long idUKey;
 
     private String comment;
 
     private MarriageNotice.Type noticeType;
 
-    public MarriageRegisterSearchAction(MarriageRegistrationService service, DistrictDAO districtDAO,
+    public MarriageRegisterSearchAction(MarriageRegistrationService marriageRegistrationService, DistrictDAO districtDAO,
         DSDivisionDAO dsDivisionDAO, MRDivisionDAO mrDivisionDAO, AppParametersDAO appParametersDAO,
         CommonUtil commonUtil) {
-        this.service = service;
+        this.marriageRegistrationService = marriageRegistrationService;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.mrDivisionDAO = mrDivisionDAO;
@@ -123,17 +123,33 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         } else {
             if (mrDivisionId == 0) {
                 //default search option use when page is loaded(search all the marriage records in DS division)
-                marriageRegisterSearchList = service.getMarriageRegistersByDSDivision
+                marriageRegisterSearchList = marriageRegistrationService.getMarriageRegistersByDSDivision
                     (dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, true, user);
             } else {
-                marriageRegisterSearchList = service.getMarriageRegisterByMRDivision
+                marriageRegisterSearchList = marriageRegistrationService.getMarriageRegisterByMRDivision
                     (mrDivisionDAO.getMRDivisionByPK(mrDivisionId), pageNo, noOfRows, true, user);
             }
         }
         if (marriageRegisterSearchList.size() == 0) {
-            addActionMessage(getText("noItemMsg.label"));
+            addActionMessage(getText("error.marriageregister.norecords"));
         }
         return SUCCESS;
+    }
+
+    public String approveMarriageRegister() {
+        marriageRegistrationService.approveMarriageRegister(idUKey, user);
+        commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId, dsDivisionId,
+            mrDivisionId, AppConstants.MARRIAGE, user, language);
+        addActionMessage(getText("message.marriageregister.approved"));
+        return marriageRegisterSearchInit();
+    }
+
+    public String rejectMarriageRegister() {
+        marriageRegistrationService.rejectMarriageRegister(idUKey, "rejected", user);
+        commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId, dsDivisionId,
+            mrDivisionId, AppConstants.MARRIAGE, user, language);
+        addActionMessage(getText("message.marriageregister.rejected"));
+        return marriageRegisterSearchInit();
     }
 
     /**
@@ -142,8 +158,8 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     public String approveMarriageNotice() {
         logger.debug("approving marriage notice idUKey : {} and notice type : {}", idUKey, noticeType);
         try {
-            service.approveMarriageNotice(idUKey, noticeType, user);
-            addActionMessage(getText("massage.approve.success", new String[]{Long.toString(idUKey), noticeType.toString()}));
+            marriageRegistrationService.approveMarriageNotice(idUKey, noticeType, user);
+            addActionMessage(getText("message.approve.success", new String[]{Long.toString(idUKey), noticeType.toString()}));
             logger.debug("successfully approved marriage notice idUKey : {} and notice type :{ }", idUKey, noticeType);
         } catch (CRSRuntimeException e) {
             //error happens when approving marriage notice
@@ -156,7 +172,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId, dsDivisionId,
             mrDivisionId, "Marriage", user, language);
         getApprovalPendingNotices();
-        addActionMessage(getText("massage.approve.successfully"));
+        addActionMessage(getText("message.approve.successfully"));
         logger.debug("successfully approved :idUKey : {}", idUKey);
         return SUCCESS;
     }
@@ -171,7 +187,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     public String deleteMarriageNotice() {
         logger.debug("attempt to delete marriage notice : idUKey {} : notice type : {}", idUKey, noticeType);
         try {
-            service.deleteMarriageNotice(idUKey, noticeType, user);
+            marriageRegistrationService.deleteMarriageNotice(idUKey, noticeType, user);
         }
         catch (CRSRuntimeException e) {
             commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId,
@@ -190,14 +206,14 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     public String rejectInit() {
         logger.debug("loading commenting page for rejecting marriage notice");
         //do nothing just load get comment page for rejecting marriage notice
-        marriage = service.getByIdUKey(idUKey, user);
+        marriage = marriageRegistrationService.getByIdUKey(idUKey, user);
         return SUCCESS;
     }
 
     public String rejectMarriageNotice() {
         logger.debug("attempt to reject marriage notice : idUKey : {} :notice type : {}", idUKey, noticeType);
         try {
-            service.rejectMarriageNotice(idUKey, noticeType, comment, user);
+            marriageRegistrationService.rejectMarriageNotice(idUKey, noticeType, comment, user);
         }
         catch (CRSRuntimeException e) {
             switch (e.getErrorCode()) {
@@ -242,7 +258,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
 
         if (noticeSerialNo != null) {
             if (mrDivisionId != 0) {
-                searchList = WebUtils.populateNoticeList(service.getMarriageNoticePendingApprovalByMRDivisionAndSerial(
+                searchList = WebUtils.populateNoticeList(marriageRegistrationService.getMarriageNoticePendingApprovalByMRDivisionAndSerial(
                     mrDivisionDAO.getMRDivisionByPK(mrDivisionId), noticeSerialNo, true, user));
             } else {
                 searchList = Collections.emptyList();
@@ -250,15 +266,15 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         } else {
             if (isEmpty(pinOrNic) && noticeSerialNo == null) {
                 if (mrDivisionId == 0) {
-                    searchList = WebUtils.populateNoticeList(service.getMarriageNoticePendingApprovalByDSDivision(
+                    searchList = WebUtils.populateNoticeList(marriageRegistrationService.getMarriageNoticePendingApprovalByDSDivision(
                         dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, true, user));
                 } else {
-                    searchList = WebUtils.populateNoticeList(service.getMarriageNoticePendingApprovalByMRDivision(
+                    searchList = WebUtils.populateNoticeList(marriageRegistrationService.getMarriageNoticePendingApprovalByMRDivision(
                         mrDivisionDAO.getMRDivisionByPK(mrDivisionId), pageNo, noOfRows, true, user));
                 }
             } else {
                 searchList = WebUtils.populateNoticeList(
-                    service.getMarriageNoticePendingApprovalByPINorNIC(pinOrNic, true, user));
+                    marriageRegistrationService.getMarriageNoticePendingApprovalByPINorNIC(pinOrNic, true, user));
             }
         }
     }
