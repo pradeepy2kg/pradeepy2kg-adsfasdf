@@ -409,6 +409,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      */
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public MarriageRegister getMarriageNoticeForPrintLicense(long idUKey, User user) {
+        logger.debug("attempt to get marriage register (notice) idUKey : {} for print license ", idUKey);
         //no need to check user permission any one can print record
         MarriageRegister notice = marriageRegistrationDAO.getByIdUKey(idUKey);
         if (notice == null) {
@@ -452,7 +453,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
                 if (!register.isSingleNotice() &&
                     (register.getLicenseCollectType() == MarriageRegister.LicenseCollectType.MAIL_TO_FEMALE ||
                         register.getLicenseCollectType() == MarriageRegister.LicenseCollectType.HAND_COLLECT_FEMALE) &&
-                    (register.getState() == MarriageRegister.State.MALE_NOTICE_APPROVED)) {
+                    (register.getState() != MarriageRegister.State.MALE_NOTICE_APPROVED)) {
                     //that means state must be in MALE_NOTICE
                     check = true;
                 }

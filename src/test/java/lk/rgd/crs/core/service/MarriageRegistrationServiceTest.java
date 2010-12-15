@@ -288,7 +288,8 @@ public class MarriageRegistrationServiceTest extends TestCase {
         marriageRegistrationService.addMarriageNotice(noticeMaleToBeApprove, MarriageNotice.Type.MALE_NOTICE, rg);
         MarriageRegister noticeMaleToBeApproveAdd = marriageRegistrationService.
             getMarriageNoticePendingApprovalByMRDivisionAndSerial(colomboMRDivision, 2010012585L, true, rg).get(0);
-        marriageRegistrationService.approveMarriageNotice(noticeMaleToBeApproveAdd.getIdUKey(), MarriageNotice.Type.MALE_NOTICE, rg);
+        marriageRegistrationService.approveMarriageNotice(noticeMaleToBeApproveAdd.getIdUKey(),
+            MarriageNotice.Type.MALE_NOTICE, rg);
         //now only female can be rejected
         //we try to reject male again
         try {
@@ -297,6 +298,46 @@ public class MarriageRegistrationServiceTest extends TestCase {
         } catch (CRSRuntimeException expected) {
             assertEquals("expecting exception while rejecting try to reject approved male notice",
                 ErrorCodes.UNABLE_TO_REJECT_MALE_NOTICE, expected.getErrorCode());
+        }
+    }
+
+    public void testPrintLicense() {
+        //adding a marriage notice
+        //male notice
+        MarriageRegister maleNotice = getMinimalMarriageNotice(2010036985L, colomboMRDivision, false, "9856451221",
+            "9856541254", MarriageNotice.Type.MALE_NOTICE, MarriageRegister.LicenseCollectType.MAIL_TO_FEMALE);
+        //adding male notice
+        marriageRegistrationService.addMarriageNotice(maleNotice, MarriageNotice.Type.MALE_NOTICE, rg);
+        //get added male notice
+        MarriageRegister registerRecord = marriageRegistrationService.
+            getMarriageNoticePendingApprovalByMRDivisionAndSerial(colomboMRDivision, 2010036985L, true, rg).get(0);
+        //add second notice female
+        registerRecord.setSerialOfFemaleNotice(2010056458L);
+        registerRecord.setLicenseCollectType(MarriageRegister.LicenseCollectType.MAIL_TO_FEMALE);
+        registerRecord.setDateOfFemaleNotice(new Date());
+        registerRecord.setMrDivisionOfFemaleNotice(colomboMRDivision);
+        //now adding female
+        marriageRegistrationService.addSecondMarriageNotice(registerRecord, MarriageNotice.Type.FEMALE_NOTICE, true, false, rg);
+        //approving male and state become Male notice approved
+        marriageRegistrationService.approveMarriageNotice(registerRecord.getIdUKey(), MarriageNotice.Type.MALE_NOTICE, rg);
+        //check expected exception invalid state for print license
+        try {
+            marriageRegistrationService.getMarriageNoticeForPrintLicense(registerRecord.getIdUKey(), rg);
+        } catch (CRSRuntimeException expected) {
+            //exception code 6011 expected
+            assertEquals("Invalid state for print license expected",
+                ErrorCodes.INVALID_STATE_FOR_PRINT_LICENSE, expected.getErrorCode());
+        }
+        //now we are approving female notice as well then sate become notice approved
+        marriageRegistrationService.approveMarriageNotice(registerRecord.getIdUKey(), MarriageNotice.Type.FEMALE_NOTICE, rg);
+        //now all are OK so we are not expecting any exceptions
+        try {
+            MarriageRegister printLicense = marriageRegistrationService.
+                getMarriageNoticeForPrintLicense(registerRecord.getIdUKey(), rg);
+            //state must be in LICENSE_PRINT
+            assertEquals("State in LICENSE_PRINT", MarriageRegister.State.LICENSE_PRINTED, printLicense.getState());
+        } catch (CRSRuntimeException notExpecting) {
+            fail("not expecting exception at printing license at this stage");
         }
     }
 
