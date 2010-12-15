@@ -7,6 +7,7 @@
 <script type="text/javascript" src="lib/jquery/jqplot.categoryAxisRenderer.js"></script>
 <script type="text/javascript" src="lib/jquery/jqplot.barRenderer.js"></script>
 <script type="text/javascript" src="lib/jquery/jqplot.pieRenderer.min.js"></script>
+<script type="text/javascript" src="<s:url value="/js/chartCreator.js"/>"></script>
 
 <link rel="stylesheet" type="text/css" href="css/jquery.jqplot.css"/>
 <s:hidden id="userName" value="%{userName}"/>
@@ -19,7 +20,7 @@
     }
 
     #chart1, #chart2, #chart4, #chart5 {
-        width: 430px;
+        width: 460px;
         height: 120px;
         float: left;
         margin-right: 5px;
@@ -51,6 +52,23 @@
         margin-bottom: 10px;
     }
 
+    .noStyle {
+        border-style: none;
+    }
+
+    .noStyle_red {
+        border-style: none;
+        color: red;
+    }
+
+    .issue {
+        color: red;
+    }
+
+    input {
+        width: 40px;
+    }
+
 </style>
 
 <div id="ADR-home-page-outer">
@@ -66,178 +84,9 @@
             statType:mode
         },
                 function(data) {
-                    $.jqplot.config.enablePlugins = true;
-
-                    /* --- Births - All Pending Bar Chart --- */
-
-                    var first = data.this_month_b;
-                    var second = data.arrears_b;
-
-                    line1_1 = [
-                        [first, 1]
-                    ];
-                    line1_2 = [
-                        [second, 1]
-                    ];
-                    plot1 = $.jqplot('chart1', [line1_1, line1_2], {
-                        stackSeries: true,
-                        legend: {show: true},
-                        grid:{shadow:false, borderWidth:0.0, show:false},
-                        seriesDefaults: {
-                            renderer: $.jqplot.BarRenderer,
-                            rendererOptions: {barDirection: 'horizontal', barWidth:50},
-                            border:false
-                        },
-                        series: [
-                            {label: 'Arrears'},
-                            {label: 'This month'}
-                        ],
-                        seriesColors: [ "#C11B17", "#FAAFBE" ],
-                        axes: {
-                            yaxis: {
-                                renderer: $.jqplot.CategoryAxisRenderer,
-                                ticks: ['.']
-                            },
-                            xaxis: {min: 0, max: (first + second), numberTicks:2}
-                        }
-                    });
-
-                    /* --- Births - Total Submitted Bar Chart --- */
-
-                    first = data.normal_b;
-                    second = data.late_b;
-
-                    line2_1 = [
-                        [first, 1]
-                    ];
-                    line2_2 = [
-                        [second, 1]
-                    ];
-                    plot2 = $.jqplot('chart2', [line2_1, line2_2], {
-                        stackSeries: true,
-                        legend: {show: true},
-                        grid:{shadow:false, borderWidth:0.0, show:false},
-                        seriesDefaults: {
-                            renderer: $.jqplot.BarRenderer,
-                            rendererOptions: {barDirection: 'horizontal', barWidth:50},
-                            border:false
-                        },
-                        series: [
-                            {label: 'Late'},
-                            {label: 'Normal'}
-                        ],
-                        seriesColors: [ "#C11B17", "#FAAFBE" ],
-                        axes: {
-                            yaxis: {
-                                renderer: $.jqplot.CategoryAxisRenderer,
-                                ticks: ['.']
-                            },
-                            xaxis: {min: 0, max: (first + second), numberTicks:2}
-                        }
-                    });
-
-                    /* --- Births Pie Chart --- */
-
-                    line3 = [
-                        ['approved<br/>Items',data.approved_b],
-                        ['rejected<br/>Items',data.rejected_b],
-                        ['pending<br/>Items',data.pending_b]
-                    ];
-                    plot3 = $.jqplot('chart3', [line3], {
-                        title: '',
-                        seriesDefaults:{ renderer:$.jqplot.PieRenderer
-                            /* rendererOptions:{sliceMargin:8}*/},
-                        legend:{
-                            show:true,
-                            rendererOptions:{direction:'horizontal'},
-                            textColor: '#000'
-                        }
-                    });
-
-                    /* --- Deaths - All Pending Bar Chart --- */
-
-                    first = data.this_month_d;
-                    second = data.arrears_d;
-
-                    line4_1 = [
-                        [first, 1]
-                    ];
-                    line4_2 = [
-                        [second, 1]
-                    ];
-                    plot4 = $.jqplot('chart4', [line4_1, line4_2], {
-                        stackSeries: true,
-                        legend: {show: true},
-                        grid:{shadow:false, borderWidth:0.0, show:false},
-                        seriesDefaults: {
-                            renderer: $.jqplot.BarRenderer,
-                            rendererOptions: {barDirection: 'horizontal', barWidth:50},
-                            border:false
-                        },
-                        series: [
-                            {label: 'Arrears'},
-                            {label: 'This month'}
-                        ],
-                        seriesColors: [ "#C11B17", "#FAAFBE" ],
-                        axes: {
-                            yaxis: {
-                                renderer: $.jqplot.CategoryAxisRenderer,
-                                ticks: ['.']
-                            },
-                            xaxis: {min: 0, max: (first + second), numberTicks:2}
-                        }
-                    });
-                    ;
-
-                    /* --- Deaths - Total Submitted Bar Chart --- */
-
-                    first = data.normal_d;
-                    second = data.late_d;
-
-                    line5_1 = [
-                        [first, 1]
-                    ];
-                    line5_2 = [
-                        [second, 1]
-                    ];
-                    plot5 = $.jqplot('chart5', [line5_1, line5_2], {
-                        stackSeries: true,
-                        legend: {show: true},
-                        grid:{shadow:false, borderWidth:0.0, show:false},
-                        seriesDefaults: {
-                            renderer: $.jqplot.BarRenderer,
-                            rendererOptions: {barDirection: 'horizontal', barWidth:50},
-                            border:false
-                        },
-                        series: [
-                            {label: 'Late'},
-                            {label: 'Normal'}
-                        ],
-                        seriesColors: [ "#C11B17", "#FAAFBE" ],
-                        axes: {
-                            yaxis: {
-                                renderer: $.jqplot.CategoryAxisRenderer,
-                                ticks: ['.']
-                            },
-                            xaxis: {min: 0, max: (first + second), numberTicks:2}
-                        }
-                    });
-                    ;
-
-                    /* --- Deaths Pie Chart --- */
-
-                    line6 = [
-                        ['approved<br/>Items',data.approved_d],
-                        ['rejected<br/>Items',data.rejected_d],
-                        ['pending<br/>Items',data.pending_d]
-                    ];
-                    plot6 = $.jqplot('chart6', [line6], {
-                        title: '',
-                        seriesDefaults:{ renderer:$.jqplot.PieRenderer},
-                        legend:{ show:true }
-                    });
-
-                });
+                    drawChart(data);
+                }
+                );
 
     });
 
@@ -248,54 +97,68 @@
 
 <table border="0" width="100%">
     <tr>
-        <td colspan="2" align="center">
+        <td colspan="4" align="center">
             <div class="topic">Birth Statistics</div>
         </td>
     </tr>
     <tr>
-        <td class="info">All Pending : 20</td>
-        <td rowspan="4" class="pie">
+        <td class="info">All Pending : <input type="text" id="all_pending_b" class="noStyle" readonly="true"
+                                              maxlength="3"/></td>
+        <td class="info"><label class="issue">Arrears : <input type="text" id="arrears_b" class="noStyle_red"
+                                                               readonly="true" maxlength="3"/></label></td>
+        <td colspan="2" rowspan="4" class="pie">
             <div id="chart3"></div>
         </td>
     </tr>
     <tr>
-        <td>
+        <td colspan="2">
             <div id="chart1"></div>
         </td>
     </tr>
     <tr>
-        <td class="info">Total Submitted Items : 16</td>
+        <td class="info">Total Submitted Items : <input type="text" id="total_submitted_b" class="noStyle"
+                                                        readonly="true" maxlength="3"/></td>
+        <td class="info"><label class="issue">Late Items : <input type="text" id="late_b" class="noStyle_red"
+                                                                  readonly="true" maxlength="3"/></label></td>
     </tr>
     <tr>
-        <td>
+        <td colspan="2">
             <div id="chart2"></div>
         </td>
     </tr>
     <tr>
-        <td colspan="2" align="center">
+        <td colspan="4" align="center">
             <div class="topic">Death Statistics</div>
         </td>
     </tr>
     <tr>
-        <td class="info">All Pending : 23</td>
-        <td rowspan="4" class="pie">
+        <td class="info">All Pending : <input type="text" id="all_pending_d" class="noStyle" readonly="true"
+                                              maxlength="3"/></td>
+        <td class="info"><label class="issue">Arrears : <input type="text" id="arrears_d" class="noStyle_red"
+                                                               readonly="true" maxlength="3"/></label></td>
+        <td colspan="2" rowspan="4" class="pie">
             <div id="chart6"></div>
         </td>
     </tr>
     <tr>
-        <td>
+        <td colspan="2">
             <div id="chart4"></div>
         </td>
     </tr>
     <tr>
-        <td class="info">Total Submitted Items : 21</td>
+        <td class="info">Total Submitted Items : <input type="text" id="total_submitted_d" class="noStyle"
+                                                        readonly="true" maxlength="3"/></td>
+        <td class="info"><label class="issue">Late Items : <input type="text" id="late_d" class="noStyle_red"
+                                                                  readonly="true" maxlength="3"/></label></td>
     </tr>
     <tr>
-        <td>
+        <td colspan="2">
             <div id="chart5"></div>
         </td>
     </tr>
     <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
         <td>&nbsp;</td>
         <td>&nbsp;</td>
     </tr>

@@ -91,9 +91,63 @@ public class JSONStatisticsLookupService extends HttpServlet {
 
                 }
             } else if (userType.equals(WebConstants.USER_ARG)) {
+                if (statType.equals(WebConstants.STAT_ALL)) {
+                    optionLists.put("submitted_b", 1);
+                    optionLists.put("approved_b", 5);
+                    optionLists.put("rejected_b", 1);
+                    optionLists.put("pending_b", 8);
 
+                    optionLists.put("submitted_d", 2);
+                    optionLists.put("approved_d", 8);
+                    optionLists.put("rejected_d", 4);
+                    optionLists.put("pending_d", 1);
+
+                    optionLists.put("this_month_b", 8);
+                    optionLists.put("arrears_b", 6);
+                    optionLists.put("normal_b", 2);
+                    optionLists.put("late_b", 6);
+
+                    optionLists.put("this_month_d", 3);
+                    optionLists.put("arrears_d", 4);
+                    optionLists.put("normal_d", 6);
+                    optionLists.put("late_d", 9);
+
+                } else if(statType.equals(WebConstants.STAT_BIRTH)) {
+
+                } else if(statType.equals(WebConstants.STAT_DEATH)) {
+
+                } else if(statType.equals(WebConstants.STAT_MARRIAGE)) {
+
+                }
             } else if (userType.equals(WebConstants.USER_DR)) {
+                if (statType.equals(WebConstants.STAT_ALL)) {
+                    optionLists.put("submitted_b", 1);
+                    optionLists.put("approved_b", 5);
+                    optionLists.put("rejected_b", 1);
+                    optionLists.put("pending_b", 8);
 
+                    optionLists.put("submitted_d", 2);
+                    optionLists.put("approved_d", 8);
+                    optionLists.put("rejected_d", 4);
+                    optionLists.put("pending_d", 1);
+
+                    optionLists.put("this_month_b", 8);
+                    optionLists.put("arrears_b", 6);
+                    optionLists.put("normal_b", 2);
+                    optionLists.put("late_b", 6);
+
+                    optionLists.put("this_month_d", 3);
+                    optionLists.put("arrears_d", 4);
+                    optionLists.put("normal_d", 6);
+                    optionLists.put("late_d", 9);
+
+                } else if(statType.equals(WebConstants.STAT_BIRTH)) {
+
+                } else if(statType.equals(WebConstants.STAT_DEATH)) {
+
+                } else if(statType.equals(WebConstants.STAT_MARRIAGE)) {
+
+                }
             } else if (userType.equals(WebConstants.USER_RG)) {
                 if (statType.equals(WebConstants.STAT_ALL)) {
                     optionLists.put("submitted_b", 4);
