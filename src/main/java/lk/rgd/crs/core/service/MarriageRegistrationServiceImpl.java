@@ -253,6 +253,18 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     }
 
     /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public MarriageRegister getActiveRecordByMRDivisionAndSerialNo(MRDivision mrDivision, long serialNo, User user) {
+        logger.debug("Get active record by MRDivision : {} and Serial Number : {}", mrDivision.getMrDivisionUKey(),
+            serialNo);
+        ValidationUtils.validateAccessToMRDivision(mrDivision, user);
+        MarriageRegister mr = marriageRegistrationDAO.getActiveRecordByMRDivisionAndSerialNo(mrDivision, serialNo);
+        return mr;
+    }
+
+    /**
      * @inheritDoc only REGISTER_DATA_ENTRY state records are consider as pending marriage register records
      * only record captured division users are allowed to access the marriage record
      */

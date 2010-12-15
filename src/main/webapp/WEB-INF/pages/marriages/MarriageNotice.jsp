@@ -161,7 +161,10 @@
     <col/>
     <tbody>
     <tr>
-        <td colspan="3" height="30px"></td>
+        <td colspan="2" height="30px"></td>
+        <td>
+            <s:fielderror name="duplicateSerialNumberError" cssStyle="color:red;font-size:10pt;"/>
+        </td>
     </tr>
     <tr>
         <td>

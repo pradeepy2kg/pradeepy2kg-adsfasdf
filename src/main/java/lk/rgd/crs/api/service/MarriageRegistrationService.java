@@ -211,6 +211,17 @@ public interface MarriageRegistrationService {
     public void deleteMarriageNotice(long idUKey, MarriageNotice.Type noticeType, User user);
 
     /**
+     * Returns the active Marriage Register record for a given Serial Number of male or female party under a selected
+     * MRDivision
+     *
+     * @param mrDivision the Marriage Registration Division
+     * @param serialNo   the serial number to check
+     * @param user       the user initiating the action
+     * @return the active record with the given serial number with the MRDivision
+     */
+    public MarriageRegister getActiveRecordByMRDivisionAndSerialNo(MRDivision mrDivision, long serialNo, User user);
+
+    /**
      * get pending (REG_DATA_ENTRY state) marriage register objects by serial number of the marriage register record
      * and the idUKey of the MRDivision
      *

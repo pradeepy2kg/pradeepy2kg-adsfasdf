@@ -1156,6 +1156,7 @@
         <action name="eprMarriageNoticeAdd" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
                 method="addMarriageNotice">
             <result type="tiles" name="success">epr.marriageNoticeResults</result>
+            <result type="tiles" name="pageLoad">epr.marriageNoticeInit</result>
         </action>
 
         <action name="eprMarriageNoticeSearchInit" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
