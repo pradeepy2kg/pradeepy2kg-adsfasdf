@@ -32,9 +32,10 @@ public class MarriageRegistrationValidator {
         //if the notice is FEMALE notice identification number and date of birth* must be filled and vise-versa for
         // notice type MALE and BOTH
         //todo validate more
+        //license req party must be filled default is mail to male
         if (type == MarriageNotice.Type.BOTH_NOTICE || type == MarriageNotice.Type.MALE_NOTICE) {
             if (type == MarriageNotice.Type.BOTH_NOTICE && (notice.getFemale().getIdentificationNumberFemale() == null
-                || notice.getFemale().getDateOfBirthFemale() == null)) {
+                || notice.getFemale().getDateOfBirthFemale() == null || notice.getLicenseCollectType() == null)) {
                 //this means this record is a both notice and its female data is incomplete
                 handleException("marriage notice :serial" + notice.getSerialOfMaleNotice() +
                     ": is incomplete can not add", ErrorCodes.MR_INCOMPLETE_OBJECT);
