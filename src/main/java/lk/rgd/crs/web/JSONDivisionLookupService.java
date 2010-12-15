@@ -85,7 +85,6 @@ public class JSONDivisionLookupService extends HttpServlet {
                 optionLists.put("dsDivisionList", ds);
                 optionLists.put("bdDivisionList", bd);
             } else if ("6".equals(mode)) {
-                //TODO: to be removed after renaming bdDivisionList to divisionList
                 //passing district list and return ds division list and mr division list for 1st ds division.
                 List ds = getAllDSDivisions(lang, divisionId, user);
                 int dsDivisionId = Integer.parseInt(((SelectOption) ds.get(0)).getOptionValue());
@@ -98,7 +97,6 @@ public class JSONDivisionLookupService extends HttpServlet {
                 // passing dsDivisionId, return the MR list
                 optionLists.put("mrDivisionList", getMRDivision(lang, divisionId, user));
             } else if ("8".equals(mode)) {
-                //TODO: to be removed safely
                 // passing district id and , return the MR list and DS list
                 List ds = getDSDivisions(lang, divisionId, user);
                 int dsDivisionId = Integer.parseInt(((SelectOption) ds.get(0)).getOptionValue());

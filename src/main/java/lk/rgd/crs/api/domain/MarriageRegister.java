@@ -71,7 +71,6 @@ import java.util.Date;
 })
 public class MarriageRegister implements Serializable, Cloneable {
     //todo add divorce related col
-
     public enum State {
         DATA_ENTRY,    //0
         MALE_NOTICE_APPROVED,  //approve only male notice   still able to edit female notice  (only single notice false)
@@ -81,6 +80,8 @@ public class MarriageRegister implements Serializable, Cloneable {
         FEMALE_NOTICE_REJECTED,
         NOTICE_REJECTED,
         REG_DATA_ENTRY,
+        REGISTRATION_APPROVED,
+        REGISTRATION_REJECTED
     }
 
     public enum PlaceOfMarriage {
@@ -167,6 +168,9 @@ public class MarriageRegister implements Serializable, Cloneable {
 
     @Column(name = "NOTICE_REJECT_COMMENT", nullable = true)
     private String noticeRejectionComment;
+
+    @Column(name = "REG_REJECT_COMMENT", nullable = true)
+    private String registrationRejectComment;
 
     //male notice related columns
 
@@ -480,5 +484,13 @@ public class MarriageRegister implements Serializable, Cloneable {
 
     public void setNoticeRejectionComment(String noticeRejectionComment) {
         this.noticeRejectionComment = WebUtils.filterBlanks(noticeRejectionComment);
+    }
+
+    public String getRegistrationRejectComment() {
+        return registrationRejectComment;
+    }
+
+    public void setRegistrationRejectComment(String registrationRejectComment) {
+        this.registrationRejectComment = registrationRejectComment;
     }
 }

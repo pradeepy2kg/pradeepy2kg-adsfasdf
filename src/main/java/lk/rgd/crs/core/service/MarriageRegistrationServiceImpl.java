@@ -313,6 +313,19 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         logger.debug("successfully  approved marriage notice with idUKey : {} and notice type : {}", idUKey, type);
     }
 
+    public void approveMarriageRegister(long idUKey, User user){
+        MarriageRegister marriageRegister = marriageRegistrationDAO.getByIdUKey(idUKey);
+        marriageRegister.setState(MarriageRegister.State.REGISTRATION_APPROVED);
+        marriageRegistrationDAO.updateMarriageRegister(marriageRegister, user);
+    }
+
+    public void rejectMarriageRegister(long idUKey, String comment, User user){
+        MarriageRegister marriageRegister = marriageRegistrationDAO.getByIdUKey(idUKey);
+        marriageRegister.setState(MarriageRegister.State.REGISTRATION_REJECTED);
+        marriageRegister.setRegistrationRejectComment(comment);
+        marriageRegistrationDAO.updateMarriageRegister(marriageRegister, user);
+    }
+
     /**
      * @inheritDoc
      */

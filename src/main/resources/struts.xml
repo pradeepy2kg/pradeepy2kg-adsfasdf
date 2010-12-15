@@ -1270,5 +1270,17 @@
             <result type="tiles" name="error">epr.marriageNoticeSearchHome</result>
         </action>
 
+        <action name="eprMarriageRegistrationApprove"
+                class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
+                method="approveMarriageRegister">
+            <result type="tiles" name="success">epr.marriageRegisterSearchInit</result>
+        </action>
+
+        <action name="eprMarriageRegistrationReject"
+                class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
+                method="rejectMarriageRegister">
+            <result type="tiles" name="success">epr.marriageRegisterSearchInit</result>
+        </action>
+
     </package>
 </struts>

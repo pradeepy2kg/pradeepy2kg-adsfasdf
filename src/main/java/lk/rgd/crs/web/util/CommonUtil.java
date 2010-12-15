@@ -16,8 +16,8 @@ import java.util.HashMap;
 
 /**
  * @author Mahesha
- *         populate basic and dynamic lists related to divisions such as
- *         districts/ ds divisions/ birth divisions/ mr divisions.
+ *         populate basic and dynamic lists related to divisions
+ *         (districts/ ds divisions/ birth divisions/ mr divisions) and languages etc
  */
 public class CommonUtil {
 
@@ -75,6 +75,32 @@ public class CommonUtil {
         }
     }
 
+    /**
+     * populate All districts , All ds divisions of first district in the district list
+     * and bd division list of first ds Division in list
+     * @param districtList
+     * @param dsDivisionList
+     * @param divisionList
+     * @param districtId
+     * @param dsDivisionId
+     * @param divisionId
+     * @param user
+     * @param language
+     */
+    public void populateAllDivisions(Map<Integer, String> districtList, Map<Integer, String> dsDivisionList,
+        Map<Integer, String> divisionList, Integer districtId, Integer dsDivisionId,
+        Integer divisionId, User user, String language) {
+
+        districtList.putAll(districtDAO.getAllDistrictNames(language, user));
+        districtId = findDefaultListValue(districtList, districtId);
+
+        dsDivisionList.putAll(dsDivisionDAO.getAllDSDivisionNames(districtId, language, user));
+        dsDivisionId = findDefaultListValue(dsDivisionList, dsDivisionId);
+
+        divisionList.putAll(bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user));
+        findDefaultListValue(divisionList, divisionId);
+    }
+
     //TODO: to be removed. Write two lines of code in ur action method to populate Country and Race. This is not a good coding practice.
     public void populateCountryAndRaceLists(Map<Integer, String> countryList, Map<Integer, String> raceList,
         String language) {
@@ -100,6 +126,7 @@ public class CommonUtil {
 
     /**
      * Find the division list (DS, Birth, Marriage) based on the parameter divisionType
+     *
      * @param divisionList
      * @param divisionId
      * @param parentId

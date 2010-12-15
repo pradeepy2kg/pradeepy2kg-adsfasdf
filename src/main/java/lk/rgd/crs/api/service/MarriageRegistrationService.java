@@ -333,4 +333,8 @@ public interface MarriageRegistrationService {
      */
     public void rejectMarriageNotice(long idUKey, MarriageNotice.Type type, String comment, User user);
 
+    public void approveMarriageRegister(long idUKey, User user);
+
+    public void rejectMarriageRegister(long idUKey, String comment, User user);
+
 }
