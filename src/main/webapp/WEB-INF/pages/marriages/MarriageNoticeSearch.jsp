@@ -110,6 +110,10 @@
         domObject = document.getElementById('noticeSerialNo');
         if (!isFieldEmpty(domObject)) {
             validateSerialNo(domObject, 'error1', 'error2');
+            domObject = document.getElementById('mrDivisionId');
+            if (domObject.value == 0) {
+                errormsg = errormsg + "\n" + document.getElementById('error6').value;
+            }
         }
 
         // validate start and end date
@@ -234,86 +238,88 @@
             </table>
         </div>
     </div>
+    <div style="float:left;">
+        <s:actionmessage cssStyle="color:black;"/>
+        <s:actionerror cssStyle="color:red;"/>
+    </div>
     <div class="form-submit">
         <s:submit value="%{getText('bdfSearch.button')}"/>
     </div>
 </s:form>
 
 <div id="marriage-notice-search" style="margin-top:58px;">
-<s:actionmessage cssStyle="color:black;"/>
-<s:actionerror cssStyle="color:red;"/>
-<s:if test="searchList.size > 0">
-    <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;">
-        <legend><b><s:label value="%{getText('searchResult.label')}"/> </b></legend>
-            <%--table for displaying marriage notices--%>
-        <table id="search-result" width="100%" cellpadding="0" cellspacing="0" class="display"
-               style="font-size:10pt;">
-            <thead>
-            <tr>
-                <th>idUKey</th>
-                <th width="60px"><s:label value="%{getText('serial.label')}"/></th>
-                <th width="60px">PIN / NIC</th>
-                <th><s:label value="%{getText('partyName.label')}"/></th>
-                <th width="40px" style="padding:3px 3px;"></th>
-                <th width="15px" style="padding:3px 3px;"></th>
-                <th width="15px" style="padding:3px 3px;"></th>
-                <th width="15px" style="padding:3px 3px;"></th>
-                <th width="15px" style="padding:3px 3px;"></th>
-                <th width="15px" style="padding:3px 3px;"></th>
-            </tr>
-            </thead>
-            <tbody>
-            <s:iterator status="approvalStatus" value="searchList">
+    <s:if test="searchList.size > 0">
+        <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;">
+            <legend><b><s:label value="%{getText('searchResult.label')}"/> </b></legend>
+                <%--table for displaying marriage notices--%>
+            <table id="search-result" width="100%" cellpadding="0" cellspacing="0" class="display"
+                   style="font-size:10pt;">
+                <thead>
                 <tr>
-                    <td><s:property value="idUKey"/></td>
-                    <td align="center">
-                        <s:if test="serialOfNotice != null">
-                            <s:property value="serialOfNotice"/>
-                        </s:if>
-                        <s:else>-</s:else>
-                    </td>
-                    <td>
-                        <s:if test="partyPIN != null">
-                            <s:property value="partyPIN"/>
-                        </s:if>
-                        <s:else>-</s:else>
-                    </td>
-                    <td>
-                        <s:if test="partyNameInOfficialLang != null">
-                            <%= NameFormatUtil.getDisplayName((String) request.getAttribute("partyNameInOfficialLang"), 70)%>
-                        </s:if>
-                    </td>
-                    <td align="center">
-                        <s:if test="type.ordinal()==0">
-                            <img src="<s:url value='/images/couple.jpg'/>" width="20" height="25" border="none"/>
-                        </s:if>
-                        <s:elseif test="type.ordinal()==1">
-                            <img src="<s:url value='/images/groom.jpg'/>" width="20" height="25" border="none"/>
-                        </s:elseif>
-                        <s:elseif test="type.ordinal()==2">
-                            <img src="<s:url value='/images/bride.jpg'/>" width="20" height="25" border="none"/>
-                        </s:elseif>
-                    </td>
-                    <td>
-                        <s:if test="hasSecond==true">
-                            <s:url id="addNextNotice" action="eprMarriageNoticeEditInit.do">
-                                <s:param name="idUKey" value="idUKey"/>
-                                <s:param name="secondNotice" value="true"/>
-                                <s:param name="noticeType" value="type"/>
-                            </s:url>
-                            <s:a href="%{addNextNotice}" title="%{getText('nextNoticeToolTip.label')}">
-                                <img src="<s:url value='/images/add_page.png'/>" width="25" height="25"
-                                     border="none"/>
-                            </s:a>
-                        </s:if>
-                    </td>
-                    <td align="center">
-                            <%--only edit allowed
-                            both at DATA_ENTRY
-                            male at DATA_ENTRY or FEMALE_NOTICE_APPROVED
-                            female at DATA_ENTRY or MALE_NOTICE_APPROVED
-                            --%>
-                        <s:if test="(type.ordinal()==0 && state.ordinal()==0) || (type.ordinal()==1 && state.ordinal()==0 ||state.ordinal()==2 )
+                    <th>idUKey</th>
+                    <th width="60px"><s:label value="%{getText('serial.label')}"/></th>
+                    <th width="60px">PIN / NIC</th>
+                    <th><s:label value="%{getText('partyName.label')}"/></th>
+                    <th width="40px" style="padding:3px 3px;"></th>
+                    <th width="15px" style="padding:3px 3px;"></th>
+                    <th width="15px" style="padding:3px 3px;"></th>
+                    <th width="15px" style="padding:3px 3px;"></th>
+                    <th width="15px" style="padding:3px 3px;"></th>
+                    <th width="15px" style="padding:3px 3px;"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <s:iterator status="approvalStatus" value="searchList">
+                    <tr>
+                        <td><s:property value="idUKey"/></td>
+                        <td align="center">
+                            <s:if test="serialOfNotice != null">
+                                <s:property value="serialOfNotice"/>
+                            </s:if>
+                            <s:else>-</s:else>
+                        </td>
+                        <td>
+                            <s:if test="partyPIN != null">
+                                <s:property value="partyPIN"/>
+                            </s:if>
+                            <s:else>-</s:else>
+                        </td>
+                        <td>
+                            <s:if test="partyNameInOfficialLang != null">
+                                <%= NameFormatUtil.getDisplayName((String) request.getAttribute("partyNameInOfficialLang"), 70)%>
+                            </s:if>
+                        </td>
+                        <td align="center">
+                            <s:if test="type.ordinal()==0">
+                                <img src="<s:url value='/images/couple.jpg'/>" width="20" height="25" border="none"/>
+                            </s:if>
+                            <s:elseif test="type.ordinal()==1">
+                                <img src="<s:url value='/images/groom.jpg'/>" width="20" height="25" border="none"/>
+                            </s:elseif>
+                            <s:elseif test="type.ordinal()==2">
+                                <img src="<s:url value='/images/bride.jpg'/>" width="20" height="25" border="none"/>
+                            </s:elseif>
+                        </td>
+                        <td>
+                            <s:if test="hasSecond==true">
+                                <s:url id="addNextNotice" action="eprMarriageNoticeEditInit.do">
+                                    <s:param name="idUKey" value="idUKey"/>
+                                    <s:param name="secondNotice" value="true"/>
+                                    <s:param name="noticeType" value="type"/>
+                                </s:url>
+                                <s:a href="%{addNextNotice}" title="%{getText('nextNoticeToolTip.label')}">
+                                    <img src="<s:url value='/images/add_page.png'/>" width="25" height="25"
+                                         border="none"/>
+                                </s:a>
+                            </s:if>
+                        </td>
+                        <td align="center">
+                                <%--only edit allowed
+                                both at DATA_ENTRY
+                                male at DATA_ENTRY or FEMALE_NOTICE_APPROVED
+                                female at DATA_ENTRY or MALE_NOTICE_APPROVED
+                                --%>
+                            <s:if test="(type.ordinal()==0 && state.ordinal()==0) || (type.ordinal()==1 && state.ordinal()==0 ||state.ordinal()==2 )
                         || (type.ordinal()==2 && state.ordinal()==0 ||state.ordinal()==1)">
                                 <s:url id="editSelected" action="eprMarriageNoticeEditInit.do">
                                     <s:param name="idUKey" value="idUKey"/>
@@ -373,3 +379,4 @@
 <s:hidden id="error3" value="%{getText('searchStartDate.label')}"/>
 <s:hidden id="error4" value="%{getText('searchEndDate.label')}"/>
 <s:hidden id="error5" value="%{getText('pin.label')}"/>
+<s:hidden id="error6" value="%{getText('enter.registrationDivision.label')}"/>
