@@ -38,6 +38,15 @@ public interface MarriageRegistrationDAO {
     public void updateMarriageRegister(MarriageRegister marriageRegister, User user);
 
     /**
+     * Get active record by MRDivision and Serial Number of male or female party
+     *
+     * @param mrDivision the Marriage Registration Division
+     * @param serialNo   the serial number to check
+     * @return the active record with the given serial number and MRDivision, or null if none exist
+     */
+    public MarriageRegister getActiveRecordByMRDivisionAndSerialNo(MRDivision mrDivision, long serialNo);
+
+    /**
      * Get active or inactive Marriage Notice by MRDivision and Serial Number of male or female party
      *
      * @param mrDivision the Marriage Registration Division

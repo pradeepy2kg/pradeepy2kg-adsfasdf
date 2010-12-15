@@ -69,6 +69,11 @@ import java.util.Date;
         " WHERE (mr.male.identificationNumberMale = :male AND mr.female.identificationNumberFemale = :female " +
         " AND mr.lifeCycleInfo.activeRecord IS TRUE AND mr.state=0) ORDER BY mr.idUKey desc"),
 
+    @NamedQuery(name = "get.active.by.mrDivision.and.serialNo", query = "SELECT mr FROM MarriageRegister mr " +
+        "WHERE ((mr.mrDivisionOfMaleNotice IS NOT NULL AND mr.mrDivisionOfMaleNotice = :mrDivision AND mr.serialOfMaleNotice IS NOT NULL AND mr.serialOfMaleNotice = :serialNo) " +
+        "OR (mr.mrDivisionOfFemaleNotice IS NOT NULL AND mr.mrDivisionOfFemaleNotice = :mrDivision AND mr.serialOfFemaleNotice IS NOT NULL AND mr.serialOfFemaleNotice = :serialNo)) " +
+        "AND mr.lifeCycleInfo.activeRecord IS TRUE ORDER BY mr.idUKey DESC"),
+
     @NamedQuery(name = "get.notice.by.mrDivision.and.registerDate", query = "SELECT mr FROM MarriageRegister mr " +
         "WHERE ((mr.mrDivisionOfMaleNotice IS NOT NULL AND mr.mrDivisionOfMaleNotice = :mrDivision) " +
         "OR (mr.mrDivisionOfFemaleNotice IS NOT NULL AND mr.mrDivisionOfFemaleNotice = :mrDivision)) " +
@@ -78,6 +83,7 @@ import java.util.Date;
 })
 public class MarriageRegister implements Serializable, Cloneable {
     //todo add divorce related col
+
     public enum State {
         DATA_ENTRY,    //0
         MALE_NOTICE_APPROVED,  //approve only male notice   still able to edit female notice  (only single notice false)

@@ -1,6 +1,7 @@
 package lk.rgd.crs.web.action.marriages;
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.ErrorCodes;
 import lk.rgd.common.api.dao.CountryDAO;
 import lk.rgd.common.api.dao.RaceDAO;
 import lk.rgd.common.api.domain.User;
@@ -130,16 +131,6 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     public String addMarriageNotice() {
         logger.debug("attempt to add marriage notice serial number : {} ");
         try {
-            //check existing serial number
-            MarriageRegister existingMarriage = null; //todo complete
-            if (existingMarriage != null) {
-                //there is an existing marriage notice for this serial number for this mr division
-                logger.debug("existing marriage notice found for :  serialNumber : {} : mrDivision idUKey : {}",
-                    serialNumber, mrDivisionId);
-                //todo redirect to notice page with values like birth registration
-                addActionMessage(getText("massage.existing.notice.found"));
-                return ERROR;
-            }
             populateNoticeForPersists();
             //add race,country to  male party and female party
             populatePartyObjectsForPersisting(marriage);
@@ -149,10 +140,20 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             return SUCCESS;
         }
         catch (CRSRuntimeException e) {
-            logger.debug("incomplete marriage notice : male serial number : {} : female serial number : {}",
+            switch (e.getErrorCode()) {
+                case ErrorCodes.INVALID_SERIAL_NUMBER:
+                    addFieldError("duplicateSerialNumberError", getText("message.invalid.serialNumber.found"));
+                    break;
+                case ErrorCodes.POSSIBLE_MARRIAGE_NOTICE_SERIAL_NUMBER_DUPLICATION:
+                    addFieldError("duplicateSerialNumberError", getText("message.duplicate.serialNumber.found"));
+            }
+            logger.debug("invalid marriage notice : male serial number : {} : female serial number : {}",
                 marriage.getSerialOfMaleNotice(), marriage.getSerialOfFemaleNotice());
-            addActionError(getText("error.incomplete.notice"));
-            return ERROR;
+            //populating lists
+            commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
+                marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
+            commonUtil.populateCountryAndRaceLists(countryList, raceList, language);
+            return "pageLoad";
         }
     }
 

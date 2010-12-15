@@ -9,6 +9,7 @@ import lk.rgd.crs.api.domain.MarriageRegister;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.Date;
 import java.util.List;
@@ -50,6 +51,22 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
         marriageRegister.getLifeCycleInfo().setLastUpdatedTimestamp(new Date());
         marriageRegister.getLifeCycleInfo().setLastUpdatedUser(user);
         em.merge(marriageRegister);
+    }
+
+    /**
+     * @inheriteDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public MarriageRegister getActiveRecordByMRDivisionAndSerialNo(MRDivision mrDivision, long serialNo) {
+        Query q = em.createNamedQuery("get.active.by.mrDivision.and.serialNo");
+        q.setParameter("mrDivision", mrDivision);
+        q.setParameter("serialNo", serialNo);
+        try {
+            return (MarriageRegister) q.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+        // NonUniqueResultException cannot occur since serial number unique for given MRDivision
     }
 
     /**

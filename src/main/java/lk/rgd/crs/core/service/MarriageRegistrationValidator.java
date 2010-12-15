@@ -73,21 +73,12 @@ public class MarriageRegistrationValidator {
         if (check) {
             handleException("invalid serial number " + serialNumber + "unable to add marriage notice",
                 ErrorCodes.INVALID_SERIAL_NUMBER);
-        }/*
-        //checking serial number duplication for the division
-        MarriageRegister existingRecord = marriageRegistrationDAO.getNoticeByMRDivisionAndSerialNo(mrDivision,
-            serialNumber, true).get(0);
-        if (existingRecord != null) {
-            handleException("serial number duplication  " + serialNumber + " for marriage division " +
-                mrDivision.getEnDivisionName() + "unable to add marriage notice",
-                ErrorCodes.POSSIBLE_MARRIAGE_NOTICE_SERIAL_NUMBER_DUPLICATION);
-        }*/
+        }
 
         //checking serial number duplication for the division
-        //todo uncomment above after made changes to that dao method    amith
-        List<MarriageRegister> existingRecord = marriageRegistrationDAO.getNoticeByMRDivisionAndSerialNo(mrDivision,
-            serialNumber, true);
-        if (existingRecord != null && existingRecord.size() > 0) {
+        MarriageRegister existingRecord = marriageRegistrationDAO.getActiveRecordByMRDivisionAndSerialNo(
+            mrDivision, serialNumber);
+        if (existingRecord != null) {
             handleException("serial number duplication  " + serialNumber + " for marriage division " +
                 mrDivision.getEnDivisionName() + "unable to add marriage notice",
                 ErrorCodes.POSSIBLE_MARRIAGE_NOTICE_SERIAL_NUMBER_DUPLICATION);
