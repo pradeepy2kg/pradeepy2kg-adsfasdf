@@ -224,6 +224,16 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     }
 
     /**
+     * printing license to marriage
+     */
+    public String licenseToMarriagePrintInit() {
+        logger.debug("attempt to print license to marriage for marriage notice :idUKey : {} and notice type : {}",
+            idUKey, noticeType);
+        //todo load notice
+        return SUCCESS;
+    }
+
+    /**
      * This method used to load approval pending Marriage Notices list
      */
     private void getApprovalPendingNotices() {

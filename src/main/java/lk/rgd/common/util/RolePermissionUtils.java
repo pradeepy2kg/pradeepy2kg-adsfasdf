@@ -19,6 +19,7 @@ public class RolePermissionUtils {
 
     private static final BitSet deoBitSet;
     private static final BitSet adrBitSet;
+    
     private static final BitSet drBitSet;
     private static final BitSet argBitSet;
     private static final BitSet rgBitSet;
@@ -45,6 +46,7 @@ public class RolePermissionUtils {
         deoBitSet.set(Permission.EDIT_MARRIAGE);
         deoBitSet.set(Permission.ADD_MARRIAGE);
         deoBitSet.set(Permission.DELETE_MARRIAGE);
+        deoBitSet.set(Permission.PRINT_MARRIAGE_LICENSE);
 
         // ADR
 
