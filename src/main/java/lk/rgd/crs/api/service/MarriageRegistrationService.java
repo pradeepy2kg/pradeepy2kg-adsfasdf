@@ -296,37 +296,37 @@ public interface MarriageRegistrationService {
      * @param type    type of the notice
      * @param comment cause for the rejection
      * @param user    user who perform the action
-     *                <p>rejection process </p>
-     *                <p/>
-     *                <p>a notice <strong>can be rejected</strong> when it is on following states </p>
-     *                <ol>
-     *                <li>DATA_ENTRY</li>
-     *                <li>MALE_NOTICE_APPROVED</li>
-     *                <li>FEMALE_NOTICE_APPROVED</li>
-     *                </ol>
-     *                <p/>
-     *                <p>rejection of one notice is effecting on the other notice as well </p>
-     *                <p/>
-     *                <p>as an example even FEMALE_NOTICE is approved that mean it is in
-     *                FEMALE_NOTICE_APPROVED state if MALE_NOTICE is being </p>
-     *                <p/>
-     *                <p>rejected both notices are treated as REJECTED and data base row is being
-     *                archived with a comment </p>
-     *                <p/>
-     *                <p><em>state changes as follows </em></p>
-     *                <p/>
-     *                <p>if current state is <strong>DATA_ENTRY</strong> after a rejection(any
-     *                MALE/FEMALE/BOTH) change to <strong>REJECT</strong> </p>
-     *                <p/>
-     *                <p>if current state is <strong>MALE_NOTICE_APPROVED</strong> after rejecting
-     *                FEMALE_NOTICE it's become <strong>FEMALE_NOTICE_REJECTED</strong></p>
-     *                <p/>
-     *                <p>if current state is <strong>FEMALE_NOTICE_APPROVED</strong> after rejecting
-     *                MALE_NOTICE it's become <strong>MALE_NOTICE_REJECTED</strong></p>
-     *                <p/>
-     *                <p></p>
-     *                <p/>
-     *                <p>all three rejection states are <strong>final status </strong></p>
+     * @throws lk.rgd.crs.CRSRuntimeException <p>rejection process </p>
+     *                                        <p/>
+     *                                        <p>a notice <strong>can be rejected</strong> when it is on following states </p>
+     *                                        <ol>
+     *                                        <li>DATA_ENTRY</li>
+     *                                        <li>MALE_NOTICE_APPROVED</li>
+     *                                        <li>FEMALE_NOTICE_APPROVED</li>
+     *                                        </ol>
+     *                                        <p/>
+     *                                        <p>rejection of one notice is effecting on the other notice as well </p>
+     *                                        <p/>
+     *                                        <p>as an example even FEMALE_NOTICE is approved that mean it is in
+     *                                        FEMALE_NOTICE_APPROVED state if MALE_NOTICE is being </p>
+     *                                        <p/>
+     *                                        <p>rejected both notices are treated as REJECTED and data base row is being
+     *                                        archived with a comment </p>
+     *                                        <p/>
+     *                                        <p><em>state changes as follows </em></p>
+     *                                        <p/>
+     *                                        <p>if current state is <strong>DATA_ENTRY</strong> after a rejection(any
+     *                                        MALE/FEMALE/BOTH) change to <strong>REJECT</strong> </p>
+     *                                        <p/>
+     *                                        <p>if current state is <strong>MALE_NOTICE_APPROVED</strong> after rejecting
+     *                                        FEMALE_NOTICE it's become <strong>FEMALE_NOTICE_REJECTED</strong></p>
+     *                                        <p/>
+     *                                        <p>if current state is <strong>FEMALE_NOTICE_APPROVED</strong> after rejecting
+     *                                        MALE_NOTICE it's become <strong>MALE_NOTICE_REJECTED</strong></p>
+     *                                        <p/>
+     *                                        <p></p>
+     *                                        <p/>
+     *                                        <p>all three rejection states are <strong>final status </strong></p>
      */
     public void rejectMarriageNotice(long idUKey, MarriageNotice.Type type, String comment, User user);
 

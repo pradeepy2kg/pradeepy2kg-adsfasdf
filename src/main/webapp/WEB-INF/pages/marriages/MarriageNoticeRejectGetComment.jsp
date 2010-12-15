@@ -1,12 +1,71 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: amith23
-  Date: Dec 14, 2010
-  Time: 4:33:20 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head><title>Simple jsp page</title></head>
-<body>comment here</body>
-</html>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<script type="text/javascript">
+    function initPage() {
+    }
+</script>
+<div id="birth-declaration-reject-outer" class="birth-declaration-reject-outer">
+    <table>
+        <tr>
+            <td width="180px"><s:label name="serial" value="%{getText('serial.label')}"/></td>
+            <td width="800px">
+                <s:if test="%{noticeType.ordinal()==1}">
+                    <s:label value="%{marriage.serialOfMaleNotice}"/>
+                </s:if>
+                <s:else>
+                    <s:label value="%{marriage.serialOfFemaleNotice}"/>
+                </s:else>
+        <tr>
+            <td><s:label name="name" value="%{getText('name.label')}"/></td>
+            <td>
+                <s:if test="%{noticeType.ordinal()==1}">
+                    <s:label value="%{marriage.male.nameInOfficialLanguageMale}"/>
+                </s:if>
+                <s:else>
+                    <s:label value="%{marriage.female.nameInOfficialLanguageMale}"/>
+                </s:else>
+            </td>
+        </tr>
+        <tr>
+            <td><s:label name="received" value="%{getText('received.label')}"/></td>
+            <td>
+                <s:if test="%{noticeType.ordinal()==1}">
+                    <s:label value="%{marriage.dateOfMaleNotice}"/>
+                </s:if>
+                <s:else>
+                    <s:label value="%{marriage.dateOfFemaleNotice}"/>
+                </s:else>
+            </td>
+        </tr>
+    </table>
+    <br/>
+
+    <s:actionerror cssStyle="color:red;font-size:10pt"/>
+
+    <s:form action="eprMarriageNoticeReject.do" method="post">
+        <fieldset>
+            <legend><b><s:label value="%{getText('rejectLegend.label')}"/></b></legend>
+            <s:hidden name="idUKey" value="%{#request.idUKey}"/>
+            <s:hidden name="pageNo" value="%{#request.pageNo}"/>
+            <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
+            <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
+                <%--<s:hidden name="birthDistrictId" value="%{#request.birthDistrictId}"/>
+              <s:hidden name="dsDivisionId" value="%{#request.dsDivisionId}"/>
+              <s:hidden name="birthDivisionId" value="%{#request.birthDivisionId}"/>
+              <s:hidden name="recordCounter" value="%{#request.recordCounter}"/>
+              <s:hidden name="confirmationApprovalFlag" value="%{#request.confirmationApprovalFlag}"/>--%>
+            <table>
+                <tr>
+                    <td width="230px"><s:label name="comments" value="%{getText('comment.label')}"/></td>
+                    <td width="500px"><s:textarea id="comments" name="comment" rows="4" cols="35"/></td>
+                    <td>
+                        <div class="form-submit">
+                            <s:submit name="reject" value="%{getText('button.reject')}"/>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </s:form>
+    <s:property value="%{#request.idUKey}"/>
+</div>

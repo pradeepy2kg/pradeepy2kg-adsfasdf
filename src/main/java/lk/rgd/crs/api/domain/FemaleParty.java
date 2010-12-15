@@ -76,7 +76,7 @@ public class FemaleParty {
     }
 
     public void setIdentificationNumberFemale(String identificationNumberFemale) {
-        this.identificationNumberFemale = identificationNumberFemale;
+        this.identificationNumberFemale = WebUtils.filterBlanks(identificationNumberFemale);
     }
 
     public Date getDateOfBirthFemale() {
@@ -124,7 +124,7 @@ public class FemaleParty {
     }
 
     public void setPassport(String passport) {
-        this.passport = passport;
+        this.passport = WebUtils.filterBlanks(passport);
     }
 
     public String getNameInOfficialLanguageFemale() {
@@ -132,7 +132,7 @@ public class FemaleParty {
     }
 
     public void setNameInOfficialLanguageFemale(String nameInOfficialLanguageFemale) {
-        this.nameInOfficialLanguageFemale = nameInOfficialLanguageFemale;
+        this.nameInOfficialLanguageFemale = WebUtils.filterBlanks(nameInOfficialLanguageFemale);
     }
 
     public String getNameInEnglishFemale() {
@@ -140,7 +140,7 @@ public class FemaleParty {
     }
 
     public void setNameInEnglishFemale(String nameInEnglishFemale) {
-        this.nameInEnglishFemale = nameInEnglishFemale;
+        this.nameInEnglishFemale = WebUtils.filterBlanks(nameInEnglishFemale);
     }
 
     public String getResidentAddressFemaleInOfficialLang() {
@@ -148,7 +148,7 @@ public class FemaleParty {
     }
 
     public void setResidentAddressFemaleInOfficialLang(String residentAddressFemaleInOfficialLang) {
-        this.residentAddressFemaleInOfficialLang = residentAddressFemaleInOfficialLang;
+        this.residentAddressFemaleInOfficialLang = WebUtils.filterBlanks(residentAddressFemaleInOfficialLang);
     }
 
     public String getResidentAddressFemaleInEnglish() {
@@ -156,7 +156,7 @@ public class FemaleParty {
     }
 
     public void setResidentAddressFemaleInEnglish(String residentAddressFemaleInEnglish) {
-        this.residentAddressFemaleInEnglish = residentAddressFemaleInEnglish;
+        this.residentAddressFemaleInEnglish = WebUtils.filterBlanks(residentAddressFemaleInEnglish);
     }
 
     public String getRankOrProfessionFemaleInOfficialLang() {
@@ -164,7 +164,7 @@ public class FemaleParty {
     }
 
     public void setRankOrProfessionFemaleInOfficialLang(String rankOrProfessionFemaleInOfficialLang) {
-        this.rankOrProfessionFemaleInOfficialLang = rankOrProfessionFemaleInOfficialLang;
+        this.rankOrProfessionFemaleInOfficialLang = WebUtils.filterBlanks(rankOrProfessionFemaleInOfficialLang);
     }
 
     public String getRankOrProfessionFemaleInEnglish() {
@@ -172,7 +172,7 @@ public class FemaleParty {
     }
 
     public void setRankOrProfessionFemaleInEnglish(String rankOrProfessionFemaleInEnglish) {
-        this.rankOrProfessionFemaleInEnglish = rankOrProfessionFemaleInEnglish;
+        this.rankOrProfessionFemaleInEnglish = WebUtils.filterBlanks(rankOrProfessionFemaleInEnglish);
     }
 
     public Person.CivilStatus getCivilStatusFemale() {
@@ -188,7 +188,7 @@ public class FemaleParty {
     }
 
     public void setFatherIdentificationNumberFemale(String fatherIdentificationNumberFemale) {
-        this.fatherIdentificationNumberFemale = fatherIdentificationNumberFemale;
+        this.fatherIdentificationNumberFemale = WebUtils.filterBlanks(fatherIdentificationNumberFemale);
     }
 
     public String getFatherFullNameFemaleInOfficialLang() {
@@ -196,7 +196,7 @@ public class FemaleParty {
     }
 
     public void setFatherFullNameFemaleInOfficialLang(String fatherFullNameFemaleInOfficialLang) {
-        this.fatherFullNameFemaleInOfficialLang = fatherFullNameFemaleInOfficialLang;
+        this.fatherFullNameFemaleInOfficialLang = WebUtils.filterBlanks(fatherFullNameFemaleInOfficialLang);
     }
 
     public String getFatherFullNameFemaleInEnglish() {
@@ -204,6 +204,6 @@ public class FemaleParty {
     }
 
     public void setFatherFullNameFemaleInEnglish(String fatherFullNameFemaleInEnglish) {
-        this.fatherFullNameFemaleInEnglish = fatherFullNameFemaleInEnglish;
+        this.fatherFullNameFemaleInEnglish = WebUtils.filterBlanks(fatherFullNameFemaleInEnglish);
     }
 }
