@@ -7,6 +7,7 @@ import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.domain.MarriageNotice;
 import lk.rgd.crs.api.domain.MarriageRegister;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -94,6 +95,22 @@ public interface MarriageRegistrationService {
      */
     public List<MarriageRegister> getMarriageNoticePendingApprovalByMRDivisionAndSerial(MRDivision mrDivision,
         long serialNo, boolean active, User user);
+
+    /**
+     * Returns paginated list of active/inactive Marriage Notices for the given <b>MRDivision</b> and <b>submitting date
+     * of male or female notice</b>
+     *
+     * @param mrDivision the Marriage Registration Division
+     * @param startDate  the starting date of the search
+     * @param endDate    the ending date of the search
+     * @param pageNo     the page number of the results required
+     * @param noOfRows   the number of rows to return per page
+     * @param active     include currently active or inactive items
+     * @param user       the user initiating the action
+     * @return the matching list of marriage registrations (marriage notices)
+     */
+    public List<MarriageRegister> getMarriageNoticesByMRDivisionAndRegisterDateRange(MRDivision mrDivision,
+        Date startDate, Date endDate, int pageNo, int noOfRows, boolean active, User user);
 
     /**
      * get active marriage notice(marriage register objects) by male party and female party identification numbers

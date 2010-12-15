@@ -159,6 +159,20 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<MarriageRegister> getPaginatedNoticesByMRDivisionAndRegisterDateRange(MRDivision mrDivision,
+        Date startDate, Date endDate, int pageNo, int noOfRows, boolean active) {
+        Query q = em.createNamedQuery("get.notice.by.mrDivision.and.registerDate");
+        q.setParameter("mrDivision", mrDivision);
+        q.setParameter("active", active);
+        q.setParameter("startDate", startDate);
+        q.setParameter("endDate", endDate);
+        return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<MarriageRegister> getActiveMarriageNoticeByMaleFemaleIdentification(String maleIdentification,
         String femaleIdentification) {
