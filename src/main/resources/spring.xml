@@ -105,9 +105,11 @@
     <!--Utility singletons-->
     <bean id="birthDeclarationValidator" class="lk.rgd.crs.core.service.BirthDeclarationValidator">
         <constructor-arg ref="ecivilService"/>
+        <constructor-arg ref="birthDeclarationDAOImpl"/>
     </bean>
 
     <bean id="marriageRegistrationValidator" class="lk.rgd.crs.core.service.MarriageRegistrationValidator">
+        <constructor-arg ref="marriageRegistrationDAOImpl"/>
     </bean>
 
     <bean id="serviceAuditor" class="lk.rgd.crs.core.service.ServiceAuditor">

@@ -3,8 +3,11 @@ package lk.rgd.crs.core.service;
 import lk.rgd.ErrorCodes;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
+import lk.rgd.crs.api.dao.MarriageRegistrationDAO;
+import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.domain.MarriageNotice;
 import lk.rgd.crs.api.domain.MarriageRegister;
+import lk.rgd.crs.api.service.MarriageRegistrationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +22,12 @@ import java.util.List;
  */
 public class MarriageRegistrationValidator {
     private static final Logger logger = LoggerFactory.getLogger(MarriageRegistrationValidator.class);
+    private static final String SERIAL_NUMBER_PATTERN = "20([1-9][0-9])[0|1]([0-9]{5})";
+    private final MarriageRegistrationDAO marriageRegistrationDAO;
+
+    public MarriageRegistrationValidator(MarriageRegistrationDAO marriageRegistrationDAO) {
+        this.marriageRegistrationDAO = marriageRegistrationDAO;
+    }
 
     /**
      * validate marriage notice for adding marriage notice
@@ -32,21 +41,56 @@ public class MarriageRegistrationValidator {
         //if the notice is FEMALE notice identification number and date of birth* must be filled and vise-versa for
         // notice type MALE and BOTH
         //todo validate more
-        //license req party must be filled default is mail to male
-        if (type == MarriageNotice.Type.BOTH_NOTICE || type == MarriageNotice.Type.MALE_NOTICE) {
-            if (type == MarriageNotice.Type.BOTH_NOTICE && (notice.getFemale().getIdentificationNumberFemale() == null
-                || notice.getFemale().getDateOfBirthFemale() == null || notice.getLicenseCollectType() == null)) {
-                //this means this record is a both notice and its female data is incomplete
-                handleException("marriage notice :serial" + notice.getSerialOfMaleNotice() +
-                    ": is incomplete can not add", ErrorCodes.MR_INCOMPLETE_OBJECT);
+        switch (type) {
+            case BOTH_NOTICE:
+                validateBasicNeeds(notice.getSerialOfMaleNotice(), notice.getDateOfMaleNotice(),
+                    notice.getFemale().getIdentificationNumberFemale(), notice.getFemale().getDateOfBirthFemale());
+            case MALE_NOTICE:
+                validateBasicNeeds(notice.getSerialOfMaleNotice(), notice.getDateOfMaleNotice(),
+                    notice.getMale().getIdentificationNumberMale(), notice.getMale().getDateOfBirthMale());
+                validateSerialNumber(notice.getSerialOfMaleNotice(), notice.getMrDivisionOfMaleNotice());
+                break;
+            case FEMALE_NOTICE:
+                validateBasicNeeds(notice.getSerialOfFemaleNotice(), notice.getDateOfFemaleNotice(),
+                    notice.getFemale().getIdentificationNumberFemale(), notice.getFemale().getDateOfBirthFemale());
+                validateSerialNumber(notice.getSerialOfFemaleNotice(), notice.getMrDivisionOfFemaleNotice());
+        }
+        //check other must needed validations
+        // todo license req party must be filled default is mail to male
+    }
+
+    private void validateSerialNumber(long serialNumber, MRDivision mrDivision) {
+        // validate registration serial number
+        boolean check = false;
+        if (serialNumber >= 2010000001L && serialNumber <= 2099199999L) {
+            String s = Long.toString(serialNumber);
+            if (!s.matches(SERIAL_NUMBER_PATTERN)) {
+                check = true;
             }
-            //if female data is not incomplete now we can check male data are completed for both MALE and "BOTH" notice
-            //types
-            validateBasicNeeds(notice.getSerialOfMaleNotice(), notice.getDateOfMaleNotice(),
-                notice.getMale().getIdentificationNumberMale(), notice.getMale().getDateOfBirthMale());
         } else {
-            validateBasicNeeds(notice.getSerialOfFemaleNotice(), notice.getDateOfFemaleNotice(),
-                notice.getFemale().getIdentificationNumberFemale(), notice.getFemale().getDateOfBirthFemale());
+            check = true;
+        }
+        if (check) {
+            handleException("invalid serial number " + serialNumber + "unable to add marriage notice",
+                ErrorCodes.INVALID_SERIAL_NUMBER);
+        }/*
+        //checking serial number duplication for the division
+        MarriageRegister existingRecord = marriageRegistrationDAO.getNoticeByMRDivisionAndSerialNo(mrDivision,
+            serialNumber, true).get(0);
+        if (existingRecord != null) {
+            handleException("serial number duplication  " + serialNumber + " for marriage division " +
+                mrDivision.getEnDivisionName() + "unable to add marriage notice",
+                ErrorCodes.POSSIBLE_MARRIAGE_NOTICE_SERIAL_NUMBER_DUPLICATION);
+        }*/
+
+        //checking serial number duplication for the division
+        //todo uncomment above after made changes to that dao method    amith
+        List<MarriageRegister> existingRecord = marriageRegistrationDAO.getNoticeByMRDivisionAndSerialNo(mrDivision,
+            serialNumber, true);
+        if (existingRecord != null && existingRecord.size() > 0) {
+            handleException("serial number duplication  " + serialNumber + " for marriage division " +
+                mrDivision.getEnDivisionName() + "unable to add marriage notice",
+                ErrorCodes.POSSIBLE_MARRIAGE_NOTICE_SERIAL_NUMBER_DUPLICATION);
         }
     }
 
