@@ -18,7 +18,7 @@ import java.util.Date;
 @NamedQueries({
     // TODO review this query
     @NamedQuery(name = "filter.notice.by.dsDivision", query = "SELECT mr FROM MarriageRegister mr " +
-        "WHERE (mr.state = 0 OR mr.state = 1 OR mr.state = 2 OR mr.state = 3) AND mr.lifeCycleInfo.activeRecord = :active " +
+        "WHERE (mr.state <= 3) AND mr.lifeCycleInfo.activeRecord = :active " +
         "AND (mr.mrDivisionOfMaleNotice IN (SELECT m FROM MRDivision m WHERE (m.dsDivision = mr.mrDivisionOfMaleNotice.dsDivision AND mr.mrDivisionOfMaleNotice.dsDivision = :dsDivision)) " +
         "OR mr.mrDivisionOfFemaleNotice IN (SELECT m FROM MRDivision m WHERE (m.dsDivision = mr.mrDivisionOfFemaleNotice.dsDivision AND mr.mrDivisionOfFemaleNotice.dsDivision = :dsDivision)))" +
         "ORDER BY mr.idUKey DESC "),
@@ -67,7 +67,14 @@ import java.util.Date;
 
     @NamedQuery(name = "get.notice.by.male.and.female.identification", query = "SELECT mr FROM MarriageRegister mr" +
         " WHERE (mr.male.identificationNumberMale = :male AND mr.female.identificationNumberFemale = :female " +
-        " AND mr.lifeCycleInfo.activeRecord IS TRUE AND mr.state=0) ORDER BY mr.idUKey desc")
+        " AND mr.lifeCycleInfo.activeRecord IS TRUE AND mr.state=0) ORDER BY mr.idUKey desc"),
+
+    @NamedQuery(name = "get.notice.by.mrDivision.and.registerDate", query = "SELECT mr FROM MarriageRegister mr " +
+        "WHERE ((mr.mrDivisionOfMaleNotice IS NOT NULL AND mr.mrDivisionOfMaleNotice = :mrDivision) " +
+        "OR (mr.mrDivisionOfFemaleNotice IS NOT NULL AND mr.mrDivisionOfFemaleNotice = :mrDivision)) " +
+        "AND mr.state <= 3 AND mr.lifeCycleInfo.activeRecord = :active " +
+        "AND ((mr.dateOfMaleNotice IS NOT NULL AND mr.dateOfMaleNotice BETWEEN :startDate AND :endDate) " +
+        "OR (mr.dateOfFemaleNotice IS NOT NULL AND mr.dateOfFemaleNotice BETWEEN :startDate AND :endDate)) ORDER BY mr.idUKey DESC ")
 })
 public class MarriageRegister implements Serializable, Cloneable {
     //todo add divorce related col
