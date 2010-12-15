@@ -199,24 +199,26 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
                     (type.equals(Assignment.Type.MUSLIM_MARRIAGE))) {
                     assignment.setMarriageDivision(mrDivisionDAO.getMRDivisionByPK(divisionId));
                 }
-                if (mrgType.length > 0) {
-                    int i = 0;
-                    while (i < mrgType.length) {
-                        if (mrgType[i] == Assignment.Type.GENERAL_MARRIAGE.ordinal()) {
-                            assignment.setType(Assignment.Type.GENERAL_MARRIAGE);
-                            service.addAssignment(assignment, user);
-                        } else if (mrgType[i] == Assignment.Type.KANDYAN_MARRIAGE.ordinal()) {
-                            assignment.setType(Assignment.Type.KANDYAN_MARRIAGE);
-                            service.addAssignment(assignment, user);
-                        } else if (mrgType[i] == Assignment.Type.MUSLIM_MARRIAGE.ordinal()) {
-                            assignment.setType(Assignment.Type.MUSLIM_MARRIAGE);
-                            service.addAssignment(assignment, user);
+                if (mrgType != null) {
+                    if (mrgType.length > 0) {
+                        int i = 0;
+                        while (i < mrgType.length) {
+                            if (mrgType[i] == Assignment.Type.GENERAL_MARRIAGE.ordinal()) {
+                                assignment.setType(Assignment.Type.GENERAL_MARRIAGE);
+                                service.addAssignment(assignment, user);
+                            } else if (mrgType[i] == Assignment.Type.KANDYAN_MARRIAGE.ordinal()) {
+                                assignment.setType(Assignment.Type.KANDYAN_MARRIAGE);
+                                service.addAssignment(assignment, user);
+                            } else if (mrgType[i] == Assignment.Type.MUSLIM_MARRIAGE.ordinal()) {
+                                assignment.setType(Assignment.Type.MUSLIM_MARRIAGE);
+                                service.addAssignment(assignment, user);
+                            }
+                            assignment.setAssignmentUKey(0);
+                            i++;
                         }
-                        assignment.setAssignmentUKey(0);
-                        i++;
+                        assignment = null;
+                        addActionMessage("assignment.saved.successfully");
                     }
-                    assignment = null;
-                    addActionMessage("assignment.saved.successfully");
                 } else {
                     assignment.setType(type);
                     service.addAssignment(assignment, user);
