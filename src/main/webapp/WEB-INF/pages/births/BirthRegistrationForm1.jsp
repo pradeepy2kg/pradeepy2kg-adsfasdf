@@ -339,7 +339,7 @@ function initPage() {
         <td>
             <table class="table_reg_datePicker_page_01">
                 <tr>
-                    <s:fielderror name="duplicateCourtOrderNumberError" cssStyle="color:red;font-size:9pt;"/>
+                    <s:fielderror name="duplicateSerialNumberError" cssStyle="color:red;font-size:9pt;"/>
                 </tr>
                 <tr>
                     <td><label><span class="font-8">අනුක්‍රමික අංකය<s:label value="*" cssStyle="color:red;font-size:10pt;"/> <br>தொடர் இலக்கம்<br>Serial Number</span></label>
