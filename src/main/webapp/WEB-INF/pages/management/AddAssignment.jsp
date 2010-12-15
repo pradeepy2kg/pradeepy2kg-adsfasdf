@@ -110,7 +110,7 @@
             $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:mode},
                     function(data) {
                         var options = '';
-                        var bd = data.bdDivisionList;
+                        var bd = data.mrDivisionList;
                         for (var i = 0; i < bd.length; i++) {
                             options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
                         }
