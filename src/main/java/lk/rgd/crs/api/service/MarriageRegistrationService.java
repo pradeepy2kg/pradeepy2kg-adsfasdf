@@ -333,6 +333,18 @@ public interface MarriageRegistrationService {
      */
     public void rejectMarriageNotice(long idUKey, MarriageNotice.Type type, String comment, User user);
 
+    /**
+     * get marriage register object for printing license for marriage
+     * <br>
+     * <p>only allowed state is NOTICE_APPROVED </p>
+     *
+     * @param idUKey idUKey of the record need to be print license
+     * @param user   user who performs the action
+     * @return MarriageRegister object
+     * @throws lk.rgd.crs.CRSRuntimeException
+     */
+    public MarriageRegister getMarriageNoticeForPrintLicense(long idUKey, User user);
+
     public void approveMarriageRegister(long idUKey, User user);
 
     public void rejectMarriageRegister(long idUKey, String comment, User user);
