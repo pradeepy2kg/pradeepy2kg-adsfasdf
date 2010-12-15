@@ -455,6 +455,8 @@ public class PopulationRegistryImpl implements PopulationRegistry {
         for (Marriage m : p.getMarriages()) {
             m.getMarriageUKey();
         }
+        logger.debug("Person citizenship list loaded for personUKey: {} with size : {} loaded", personUKey,
+            p.getCountries().size());
         return p;
     }
 
