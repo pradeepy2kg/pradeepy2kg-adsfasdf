@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -99,8 +100,22 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     public List<MarriageRegister> getMarriageNoticePendingApprovalByMRDivisionAndSerial(MRDivision mrDivision, long serialNo
         , boolean active, User user) {
         logger.debug("Get active record by MRDivision : {} and Serial No : {}", mrDivision.getMrDivisionUKey(), serialNo);
-        List<MarriageRegister> results = marriageRegistrationDAO.getNoticeByMRDivisionAndSerialNo(mrDivision, serialNo, true);
+        List<MarriageRegister> results = marriageRegistrationDAO.getNoticeByMRDivisionAndSerialNo(mrDivision, serialNo, active);
         return removingAccessDeniedItemsFromList(results, user);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<MarriageRegister> getMarriageNoticesByMRDivisionAndRegisterDateRange(MRDivision mrDivision,
+        Date startDate, Date endDate, int pageNo, int noOfRows, boolean active, User user) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Get active record by MRDivision : " + mrDivision.getMrDivisionUKey() + " and date range : " +
+                startDate + " to " + endDate);
+        }
+        return marriageRegistrationDAO.getPaginatedNoticesByMRDivisionAndRegisterDateRange(mrDivision, startDate,
+            endDate, pageNo, noOfRows, active);
     }
 
     private List<MarriageRegister> removingAccessDeniedItemsFromList(List<MarriageRegister> registerList, User user) {

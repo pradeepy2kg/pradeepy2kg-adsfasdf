@@ -1,6 +1,7 @@
 package lk.rgd.crs.web.action.marriages;
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.AppConstants;
 import lk.rgd.ErrorCodes;
 import lk.rgd.common.api.dao.AppParametersDAO;
 import lk.rgd.common.api.dao.DSDivisionDAO;
@@ -14,7 +15,6 @@ import lk.rgd.crs.api.domain.MarriageRegister;
 import lk.rgd.crs.api.service.MarriageRegistrationService;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.web.util.CommonUtil;
-import lk.rgd.AppConstants;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -97,9 +97,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         logger.debug("Marriage notice search list loaded with size : {}", searchList.size());
 
         // by doing following previously user entered values will be removed in jsp page
-        noticeSerialNo = null;
-        pinOrNic = null;
-
+        clearSearchingOptionValues();
         return SUCCESS;
     }
 
@@ -269,14 +267,29 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
                     searchList = WebUtils.populateNoticeList(marriageRegistrationService.getMarriageNoticePendingApprovalByDSDivision(
                         dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, true, user));
                 } else {
-                    searchList = WebUtils.populateNoticeList(marriageRegistrationService.getMarriageNoticePendingApprovalByMRDivision(
-                        mrDivisionDAO.getMRDivisionByPK(mrDivisionId), pageNo, noOfRows, true, user));
+                    if (searchStartDate == null && searchEndDate == null) {
+                        searchList = WebUtils.populateNoticeList(marriageRegistrationService.getMarriageNoticePendingApprovalByMRDivision(
+                            mrDivisionDAO.getMRDivisionByPK(mrDivisionId), pageNo, noOfRows, true, user));
+                    } else {
+                        searchList = WebUtils.populateNoticeList(marriageRegistrationService.getMarriageNoticesByMRDivisionAndRegisterDateRange(
+                            mrDivisionDAO.getMRDivisionByPK(mrDivisionId), searchStartDate, searchEndDate, pageNo, noOfRows, true, user));
+                    }
                 }
             } else {
                 searchList = WebUtils.populateNoticeList(
                     marriageRegistrationService.getMarriageNoticePendingApprovalByPINorNIC(pinOrNic, true, user));
             }
         }
+    }
+
+    /**
+     * This method used to set searching fields values to empty
+     */
+    private void clearSearchingOptionValues() {
+        noticeSerialNo = null;
+        pinOrNic = null;
+        searchStartDate = null;
+        searchEndDate = null;
     }
 
     /**

@@ -5,6 +5,7 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.domain.MarriageRegister;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ public interface MarriageRegistrationDAO {
      * add marriage notice/register
      *
      * @param marriageRegister marriage notice/register
-     * @param user   user who perform action
+     * @param user             user who perform action
      */
     public void addMarriageRegister(MarriageRegister marriageRegister, User user);
 
@@ -127,6 +128,21 @@ public interface MarriageRegistrationDAO {
      * @return the matching list of marriage registrations
      */
     public List<MarriageRegister> getByStateAndPINorNIC(MarriageRegister.State state, String id, boolean active);
+
+    /**
+     * Returns paginated list of active/inactive Marriage Notices based on the <b>MRDivision</b> and <b>submitting date
+     * of male or female notice</b> ordered by MarriageRegister unique key
+     *
+     * @param mrDivision the Marriage Registration Division
+     * @param startDate  the starting date of the search
+     * @param endDate    the ending date of the search
+     * @param pageNo     the page number (start from 1)
+     * @param noOfRows   the number of rows to return per page
+     * @param active     include currently active or inactive items
+     * @return the matching list of marriage registrations (marriage notices)
+     */
+    public List<MarriageRegister> getPaginatedNoticesByMRDivisionAndRegisterDateRange(MRDivision mrDivision,
+        Date startDate, Date endDate, int pageNo, int noOfRows, boolean active);
 
     /**
      * get active marriage notice(marriage register object) where male and female pin or nic numbers are matched
