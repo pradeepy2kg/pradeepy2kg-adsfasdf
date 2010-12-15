@@ -313,13 +313,13 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         logger.debug("successfully  approved marriage notice with idUKey : {} and notice type : {}", idUKey, type);
     }
 
-    public void approveMarriageRegister(long idUKey, User user){
+    public void approveMarriageRegister(long idUKey, User user) {
         MarriageRegister marriageRegister = marriageRegistrationDAO.getByIdUKey(idUKey);
         marriageRegister.setState(MarriageRegister.State.REGISTRATION_APPROVED);
         marriageRegistrationDAO.updateMarriageRegister(marriageRegister, user);
     }
 
-    public void rejectMarriageRegister(long idUKey, String comment, User user){
+    public void rejectMarriageRegister(long idUKey, String comment, User user) {
         MarriageRegister marriageRegister = marriageRegistrationDAO.getByIdUKey(idUKey);
         marriageRegister.setState(MarriageRegister.State.REGISTRATION_REJECTED);
         marriageRegister.setRegistrationRejectComment(comment);
@@ -402,6 +402,31 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         notice.getLifeCycleInfo().setActiveRecord(false);
         //updating the record
         marriageRegistrationDAO.updateMarriageRegister(notice, user);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+    public MarriageRegister getMarriageNoticeForPrintLicense(long idUKey, User user) {
+        //no need to check user permission any one can print record
+        MarriageRegister notice = marriageRegistrationDAO.getByIdUKey(idUKey);
+        if (notice == null) {
+            //todo update service test for check printing process
+            handleException("can't find marriage register record for idUKey : " + idUKey + " for print",
+                ErrorCodes.CAN_NOT_FIND_MARRIAGE_NOTICE);
+        } else {
+            if (notice.getState() == MarriageRegister.State.NOTICE_APPROVED) {
+                notice.setState(MarriageRegister.State.LICENSE_PRINTED);
+                marriageRegistrationDAO.updateMarriageRegister(notice, user);
+                return notice;
+            } else {
+                //invalid state for printing license
+                handleException("invalid state for print license for idUKey :" + idUKey + " current state :" +
+                    notice.getState(), ErrorCodes.INVALID_STATE_FOR_PRINT_LICENSE);
+            }
+        }
+        return null;
     }
 
     /**

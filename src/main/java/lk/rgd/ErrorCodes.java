@@ -103,4 +103,5 @@ public class ErrorCodes {
     public static final int INVALID_NOTICE_STATE_FOR_REJECT = 6008;
     public static final int UNABLE_TO_REJECT_FEMALE_NOTICE = 6009;
     public static final int UNABLE_TO_REJECT_MALE_NOTICE = 6010;
+    public static final int INVALID_STATE_FOR_PRINT_LICENSE = 6011;
 }

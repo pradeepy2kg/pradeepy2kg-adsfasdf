@@ -79,6 +79,7 @@ public class MarriageRegister implements Serializable, Cloneable {
         MALE_NOTICE_REJECTED,
         FEMALE_NOTICE_REJECTED,
         NOTICE_REJECTED,
+        LICENSE_PRINTED,
         REG_DATA_ENTRY,
         REGISTRATION_APPROVED,
         REGISTRATION_REJECTED
