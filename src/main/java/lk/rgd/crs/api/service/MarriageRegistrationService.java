@@ -113,6 +113,22 @@ public interface MarriageRegistrationService {
         Date startDate, Date endDate, int pageNo, int noOfRows, boolean active, User user);
 
     /**
+     * Returns paginated list of active/inactive Marriage Notices for the given <b>DSDivision</b> and <b>submitting date
+     * of male or female notice</b>
+     *
+     * @param dsDivision the divisional secretariat
+     * @param startDate  the starting date of the search
+     * @param endDate    the ending date of the search
+     * @param pageNo     the page number of the results required
+     * @param noOfRows   the number of rows to return per page
+     * @param active     include currently active or inactive items
+     * @param user       the user initiating the action
+     * @return the matching list of marriage registrations (marriage notices)
+     */
+    public List<MarriageRegister> getMarriageNoticesByDSDivisionAndRegisterDateRange(DSDivision dsDivision,
+        Date startDate, Date endDate, int pageNo, int noOfRows, boolean active, User user);
+
+    /**
      * get active marriage notice(marriage register objects) by male party and female party identification numbers
      * note: record must be active and in data entry mode
      *

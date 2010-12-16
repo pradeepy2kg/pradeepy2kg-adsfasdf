@@ -140,7 +140,7 @@ public interface MarriageRegistrationDAO {
 
     /**
      * Returns paginated list of active/inactive Marriage Notices based on the <b>MRDivision</b> and <b>submitting date
-     * of male or female notice</b> ordered by MarriageRegister unique key
+     * of male or female notice</b> ordered by MarriageRegister unique key in descending order
      *
      * @param mrDivision the Marriage Registration Division
      * @param startDate  the starting date of the search
@@ -151,6 +151,21 @@ public interface MarriageRegistrationDAO {
      * @return the matching list of marriage registrations (marriage notices)
      */
     public List<MarriageRegister> getPaginatedNoticesByMRDivisionAndRegisterDateRange(MRDivision mrDivision,
+        Date startDate, Date endDate, int pageNo, int noOfRows, boolean active);
+
+    /**
+     * Returns paginated list of active/inactive Marriage Notices based on the <b>DSDivision</b> and <b>submitting date
+     * of male or female notice</b> ordered by MarriageRegister unique key in descending order
+     *
+     * @param dsDivision the divisional secretariat
+     * @param startDate  the starting date of the search
+     * @param endDate    the ending date of the search
+     * @param pageNo     the page number (start from 1)
+     * @param noOfRows   the number of rows to return per page
+     * @param active     include currently active or inactive items
+     * @return the matching list of marriage registrations (marriage notices)
+     */
+    public List<MarriageRegister> getPaginatedNoticesByDSDivisionAndRegisterDateRange(DSDivision dsDivision,
         Date startDate, Date endDate, int pageNo, int noOfRows, boolean active);
 
     /**
