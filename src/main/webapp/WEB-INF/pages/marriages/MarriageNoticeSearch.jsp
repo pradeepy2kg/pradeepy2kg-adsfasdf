@@ -374,7 +374,7 @@
                                 <s:param name="idUKey" value="idUKey"/>
                                 <s:param name="noticeType" value="type"/>
                             </s:url>
-                            <s:a href="%{printSelected}" title="%{getText('deleteToolTip.label')}">
+                            <s:a href="%{printSelected}" title="%{getText('printToolTip.label')}">
                                 <img src="<s:url value='/images/print_icon.gif'/>" width="25" height="25"
                                      border="none"/>
                             </s:a>
@@ -391,3 +391,4 @@
 <s:hidden id="error3" value="%{getText('searchStartDate.label')}"/>
 <s:hidden id="error4" value="%{getText('searchEndDate.label')}"/>
 <s:hidden id="error5" value="%{getText('pin.label')}"/>
+<s:hidden id="error6" value="%{getText('enter.registrationDivision.label')}"/>
