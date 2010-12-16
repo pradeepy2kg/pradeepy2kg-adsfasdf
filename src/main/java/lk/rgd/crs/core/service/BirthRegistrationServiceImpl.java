@@ -847,7 +847,7 @@ public class BirthRegistrationServiceImpl implements
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void markLiveBirthCertificateAsPrinted(BirthDeclaration bdf, User user) {
-
+        // TODO validate access to location
         validateBirthType(bdf, BirthDeclaration.BirthType.LIVE);
         logger.debug("Request to mark as Birth certificate printed for record : {}", bdf.getIdUKey());
 
