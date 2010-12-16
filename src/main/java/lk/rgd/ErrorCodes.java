@@ -76,6 +76,7 @@ public class ErrorCodes {
     //error code 3001-4000 indicate authorization errors
     public static final int AUTHORIZATION_FAILS_USER_MANAGEMENT = 3001;
     public static final int INVALID_LOGIN = 3002;
+    public static final int USER_IS_NOT_ALLOWED_FOR_LOCATION = 3003;
 
     //error code 4001-5000 indicate persistence exceptions
     public static int ENTITY_ALREADY_EXIST = 4001;
@@ -108,4 +109,5 @@ public class ErrorCodes {
     public static final int INVALID_STATE_FOR_PRINT_LICENSE = 6011;
     public static final int POSSIBLE_MARRIAGE_NOTICE_SERIAL_NUMBER_DUPLICATION = 6012;
     public static final int INVALID_SERIAL_NUMBER = 6013;
+    public static final int INVALID_LICENSE_ISSUE_USER_OR_LOCATION = 6014;
 }

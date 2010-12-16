@@ -1,5 +1,7 @@
 package lk.rgd.crs.api.domain;
 
+import lk.rgd.common.api.domain.Location;
+import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.WebUtils;
 import lk.rgd.crs.web.util.MarriageType;
 import lk.rgd.crs.web.util.TypeOfMarriagePlace;
@@ -194,6 +196,27 @@ public class MarriageRegister implements Serializable, Cloneable {
 
     @Column(name = "REG_REJECT_COMMENT", nullable = true)
     private String registrationRejectComment;
+
+    /**
+     * The user printing the confirmation
+     */
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "LICENSE_PRINT_USER", nullable = true)
+    private User licensePrintUser;
+
+    /**
+     * The timestamp when confirmation is printed for this record
+     */
+    @Column(nullable = true, name = "LICENSE_PRINT_DATE")
+    @Temporal(value = TemporalType.TIMESTAMP)
+    private Date licensePrintTimestamp;
+
+    /**
+     * The place of issue for the original birth certificate - free copy (Stores the Location ID)
+     */
+    @OneToOne
+    @JoinColumn(name = "LICENSE_ISSUE_LOCATION", nullable = true)
+    private Location licenseIssueLocation;
 
     //male notice related columns
 
@@ -516,4 +539,30 @@ public class MarriageRegister implements Serializable, Cloneable {
     public void setRegistrationRejectComment(String registrationRejectComment) {
         this.registrationRejectComment = registrationRejectComment;
     }
+
+    public Date getLicensePrintTimestamp() {
+        return licensePrintTimestamp;
+    }
+
+    public void setLicensePrintTimestamp(Date licensePrintTimestamp) {
+        this.licensePrintTimestamp = licensePrintTimestamp;
+    }
+
+    public User getLicensePrintUser() {
+        return licensePrintUser;
+    }
+
+    public void setLicensePrintUser(User licensePrintUser) {
+        this.licensePrintUser = licensePrintUser;
+    }
+
+    public Location getLicenseIssueLocation() {
+        return licenseIssueLocation;
+    }
+
+    public void setLicenseIssueLocation(Location licenseIssueLocation) {
+        this.licenseIssueLocation = licenseIssueLocation;
+    }
 }
+
+

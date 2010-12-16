@@ -3,6 +3,7 @@ package lk.rgd.crs.core.service;
 import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
 import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
@@ -17,10 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * implementation of the marriage registration service interface
@@ -391,6 +389,57 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         List<MarriageRegister> results =
             marriageRegistrationDAO.getByStateAndPINorNIC(MarriageRegister.State.REG_DATA_ENTRY, pinOrNic, active);
         return removingAccessDeniedItemsFromList(results, user);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    //todo solve dis urgent amith 
+    //license can be make marked as print by any one even deo  if deo selected authorized adr or higher and mark the document
+    // as printed  the selected record is persisted but what  if that selected ADR refused to sign :O
+    public void markLicenseToMarriageAsPrinted(long idUKey, Location licenseIssueLocation, User issuedUser, User user) {
+        logger.debug("attempt to mark marriage notice as idUKey :{} as license printed", idUKey);
+        MarriageRegister notice = marriageRegistrationDAO.getByIdUKey(idUKey);
+        if (notice == null) {
+            handleException("can't find marriage register record for idUKey : " + idUKey + " for mark as print",
+                ErrorCodes.CAN_NOT_FIND_MARRIAGE_NOTICE);
+        } else {
+            if (notice.getState() == MarriageRegister.State.NOTICE_APPROVED) {
+                populateNoticeForMarkAsPrint(notice, issuedUser, licenseIssueLocation);
+                //updating marriage notice
+                marriageRegistrationDAO.updateMarriageRegister(notice, user);
+            } else {
+                //invalid state for printing license
+                handleException("invalid state for mark as print license for idUKey :" + idUKey + " current state :" +
+                    notice.getState(), ErrorCodes.INVALID_STATE_FOR_PRINT_LICENSE);
+            }
+        }
+    }
+
+    private void populateNoticeForMarkAsPrint(MarriageRegister notice, User issuingUser, Location issuingLocation) {
+        if (issuingLocation != null && issuingUser != null) {
+            notice.setState(MarriageRegister.State.LICENSE_PRINTED);
+            checkUserPermissionForTheLocation(issuingUser, issuingLocation);
+            notice.setLicensePrintUser(issuingUser);
+            java.util.GregorianCalendar gCal = new GregorianCalendar();
+            //set issued time
+            notice.setLicensePrintTimestamp(gCal.getTime());
+            notice.setLicenseIssueLocation(issuingLocation);
+        } else {
+            handleException("invalid issuing location " + issuingLocation + " or issuing user " + issuingUser,
+                ErrorCodes.INVALID_LICENSE_ISSUE_USER_OR_LOCATION);
+        }
+    }
+
+    /**
+     * checking user is belongs to the location
+     */
+    private void checkUserPermissionForTheLocation(User user, Location licenseIssueLocation) {
+        if (!user.isAllowedAccessToLocation(licenseIssueLocation.getLocationUKey())) {
+            handleException("user : " + user.getUserId() + " doesn't allowed to user location " +
+                licenseIssueLocation.getLocationUKey(), ErrorCodes.USER_IS_NOT_ALLOWED_FOR_LOCATION);
+        }
     }
 
     private void checkUserPermission(int permissionBit, int errorCode, String msg, User user) {

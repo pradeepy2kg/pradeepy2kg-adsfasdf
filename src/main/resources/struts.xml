@@ -1283,5 +1283,10 @@
             <result type="tiles" name="success">epr.marriageRegisterSearchInit</result>
         </action>
 
+        <action name="eprMarkLicenseAsPrinted" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
+                method="markLicenseAsPrinted">
+            <result name="success" type="tiles">epr.licenseToMarriage</result>
+            <result name="error" type="tiles">epr.error</result>
+        </action>
     </package>
 </struts>

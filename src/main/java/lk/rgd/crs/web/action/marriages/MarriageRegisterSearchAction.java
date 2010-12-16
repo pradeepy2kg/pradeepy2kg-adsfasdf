@@ -3,9 +3,7 @@ package lk.rgd.crs.web.action.marriages;
 import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.AppConstants;
 import lk.rgd.ErrorCodes;
-import lk.rgd.common.api.dao.AppParametersDAO;
-import lk.rgd.common.api.dao.DSDivisionDAO;
-import lk.rgd.common.api.dao.DistrictDAO;
+import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.WebUtils;
 import lk.rgd.crs.CRSRuntimeException;
@@ -36,6 +34,8 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     private final DSDivisionDAO dsDivisionDAO;
     private final MRDivisionDAO mrDivisionDAO;
     private final AppParametersDAO appParametersDAO;
+    private final UserDAO userDAO;
+    private final LocationDAO locationDAO;
     private final CommonUtil commonUtil;
 
     private MarriageRegister marriage;
@@ -63,22 +63,26 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     private int mrDivisionId;
     private int pageNo;
     private int noOfRows;
+    private int licensePrintedLocationId;
 
     private long idUKey;
 
     private String comment;
+    private String licenseIssuedUserId;
 
     private MarriageNotice.Type noticeType;
 
     public MarriageRegisterSearchAction(MarriageRegistrationService marriageRegistrationService, DistrictDAO districtDAO,
         DSDivisionDAO dsDivisionDAO, MRDivisionDAO mrDivisionDAO, AppParametersDAO appParametersDAO,
-        CommonUtil commonUtil) {
+        CommonUtil commonUtil, UserDAO userDAO, LocationDAO locationDAO) {
         this.marriageRegistrationService = marriageRegistrationService;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.mrDivisionDAO = mrDivisionDAO;
         this.appParametersDAO = appParametersDAO;
         this.commonUtil = commonUtil;
+        this.userDAO = userDAO;
+        this.locationDAO = locationDAO;
 
         districtList = new HashMap<Integer, String>();
         dsDivisionList = new HashMap<Integer, String>();
@@ -244,8 +248,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
      * printing license to marriage
      */
     public String licenseToMarriagePrintInit() {
-        logger.debug("attempt to print license to marriage for marriage notice :idUKey : {} and notice type : {}",
-            idUKey, noticeType);
+        logger.debug("attempt to print license to marriage for marriage notice :idUKey : {}", idUKey);
         try {
             marriage = marriageRegistrationService.getMarriageNoticeForPrintLicense(idUKey, user);
             populateLicense(marriage);
@@ -258,6 +261,38 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
             getApprovalPendingNotices();
             return ERROR;
         }
+        return SUCCESS;
+    }
+
+    public String markLicenseAsPrinted() {
+        idUKey = 1;
+        logger.debug("attempt to mark license to marriage as license printed, marriage notice :idUKey : {} ", idUKey);
+        MarriageRegister notice = marriageRegistrationService.getByIdUKey(idUKey, user);
+        if (notice != null && notice.getState() == MarriageRegister.State.LICENSE_PRINTED) {
+            //do nothing if current state is LICENSE_PRINT
+            logger.debug("attempt to re mark license as license printed :idUKey : {} state : {}", idUKey, notice.getState());
+            addActionMessage(getText("massage.license.already.marked"));
+        } else {
+            try {
+                //todo remove HC
+                marriageRegistrationService.markLicenseToMarriageAsPrinted(idUKey, locationDAO.
+                    getLocation(1), userDAO.getUserByPK("rg"), user);
+                /*
+                marriageRegistrationService.markLicenseToMarriageAsPrinted(idUKey, locationDAO.
+                    getLocation(licensePrintedLocationId), userDAO.getUserByPK(licenseIssuedUserId), user);*/
+            }
+            catch (CRSRuntimeException e) {
+                switch (e.getErrorCode()) {
+                    case ErrorCodes.INVALID_STATE_FOR_PRINT_LICENSE:
+                        addActionError(getText("error.license.mark.as.print.failed.invalid.state"));
+                    default:
+                        addActionError(getText("error.license.mark.as.print"));
+                }
+                getApprovalPendingNotices();
+                return ERROR;
+            }
+        }
+        //if success redirect to license
         return SUCCESS;
     }
 
@@ -523,5 +558,21 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
 
     public void setDateOfCancelLicense(Date dateOfCancelLicense) {
         this.dateOfCancelLicense = dateOfCancelLicense;
+    }
+
+    public int getLicensePrintedLocationId() {
+        return licensePrintedLocationId;
+    }
+
+    public void setLicensePrintedLocationId(int licensePrintedLocationId) {
+        this.licensePrintedLocationId = licensePrintedLocationId;
+    }
+
+    public String getLicenseIssuedUserId() {
+        return licenseIssuedUserId;
+    }
+
+    public void setLicenseIssuedUserId(String licenseIssuedUserId) {
+        this.licenseIssuedUserId = licenseIssuedUserId;
     }
 }
