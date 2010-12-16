@@ -81,7 +81,14 @@ import java.util.Date;
         "AND mr.dateOfMaleNotice IS NOT NULL AND mr.dateOfMaleNotice BETWEEN :startDate AND :endDate) " +
         "OR (mr.mrDivisionOfFemaleNotice IS NOT NULL AND mr.mrDivisionOfFemaleNotice = :mrDivision " +
         "AND mr.dateOfFemaleNotice IS NOT NULL AND mr.dateOfFemaleNotice BETWEEN :startDate AND :endDate)) " +
-        "AND mr.state <= 3 AND mr.lifeCycleInfo.activeRecord = :active ORDER BY mr.idUKey DESC ")
+        "AND mr.state <= 3 AND mr.lifeCycleInfo.activeRecord = :active ORDER BY mr.idUKey DESC "),
+
+    @NamedQuery(name = "get.notice.by.dsDivision.and.registerDate", query = "SELECT mr FROM MarriageRegister mr " +
+        "WHERE (mr.state <= 3) AND mr.lifeCycleInfo.activeRecord = :active " +
+        "AND (mr.mrDivisionOfMaleNotice IN (SELECT m FROM MRDivision m WHERE (m.dsDivision = mr.mrDivisionOfMaleNotice.dsDivision AND mr.mrDivisionOfMaleNotice.dsDivision = :dsDivision)) " +
+        "OR mr.mrDivisionOfFemaleNotice IN (SELECT m FROM MRDivision m WHERE (m.dsDivision = mr.mrDivisionOfFemaleNotice.dsDivision AND mr.mrDivisionOfFemaleNotice.dsDivision = :dsDivision)))" +
+        "AND ((mr.dateOfMaleNotice IS NOT NULL AND mr.dateOfMaleNotice BETWEEN :startDate AND :endDate) " +
+        "OR (mr.dateOfFemaleNotice IS NOT NULL AND mr.dateOfFemaleNotice BETWEEN :startDate AND :endDate)) ORDER BY mr.idUKey DESC ")
 })
 public class MarriageRegister implements Serializable, Cloneable {
     //todo add divorce related col
