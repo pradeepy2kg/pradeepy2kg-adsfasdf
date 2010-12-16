@@ -258,16 +258,16 @@
                 <thead>
                 <tr>
                     <th>idUKey</th>
-                    <th width="60px"><s:label value="%{getText('serial.label')}"/></th>
-                    <th width="60px">PIN / NIC</th>
+                    <th width="120px"><s:label value="%{getText('serial.label')}"/></th>
+                    <th width="68px">PIN/NIC</th>
                     <th><s:label value="%{getText('partyName.label')}"/></th>
-                    <th width="40px" style="padding:3px 3px;"></th>
-                    <th width="15px" style="padding:3px 3px;"></th>
-                    <th width="15px" style="padding:3px 3px;"></th>
-                    <th width="15px" style="padding:3px 3px;"></th>
-                    <th width="15px" style="padding:3px 3px;"></th>
-                    <th width="15px" style="padding:3px 3px;"></th>
-                    <th width="15px" style="padding:3px 3px;"></th>
+                    <th width="40px" style="padding-left:3px;"></th>
+                    <th width="10px" style="padding-left:3px;"></th>
+                    <th width="10px" style="padding-left:3px;"></th>
+                    <th width="10px" style="padding-left:3px;"></th>
+                    <th width="10px" style="padding-left:3px;"></th>
+                    <th width="10px" style="padding-left:3px;"></th>
+                    <th width="10px" style="padding-left:3px;"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -288,7 +288,7 @@
                         </td>
                         <td>
                             <s:if test="partyNameInOfficialLang != null">
-                                <%= NameFormatUtil.getDisplayName((String) request.getAttribute("partyNameInOfficialLang"), 70)%>
+                                <%= NameFormatUtil.getDisplayName((String) request.getAttribute("partyNameInOfficialLang"), 65)%>
                             </s:if>
                         </td>
                         <td align="center">
