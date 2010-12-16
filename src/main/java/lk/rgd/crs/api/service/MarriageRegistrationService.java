@@ -1,6 +1,7 @@
 package lk.rgd.crs.api.service;
 
 import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.domain.MRDivision;
@@ -393,4 +394,14 @@ public interface MarriageRegistrationService {
 
     public void rejectMarriageRegister(long idUKey, String comment, User user);
 
+    /**
+     * marking marriage notice as license printed
+     * Only the NOTICE_APPROVED state records are able to mark as notice printed
+     *
+     * @param idUKey               idUKey of the notice
+     * @param licenseIssueLocation license printed location id
+     * @param issuedUserId         license issuing user
+     * @param user                 user who perform the action
+     */
+    public void markLicenseToMarriageAsPrinted(long idUKey, Location licenseIssueLocation, User issuedUserId, User user);
 }

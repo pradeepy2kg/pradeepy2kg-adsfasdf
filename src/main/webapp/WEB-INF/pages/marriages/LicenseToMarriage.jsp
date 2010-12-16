@@ -9,12 +9,29 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%--section logo and issue date and serial number--%>
 <div class="marriage-notice-outer">
+
 <table>
     <caption/>
     <col width="450px"/>
     <col width="230px"/>
     <col/>
     <tbody>
+    <tr>
+        <td colspan="3" align="right">
+            <div class="form-submit">
+                <s:form action="eprMarkLicenseAsPrinted.do" method="post">
+                    <s:submit value="%{getText('button.mark.as.print')}"/>
+                   
+                </s:form>
+            </div>
+            <div class="form-submit">
+                <s:submit value="%{getText('button..print')}"/>
+            </div>
+            <div class="form-submit">
+                <s:submit value="%{getText('button.back')}"/>
+            </div>
+        </td>
+    </tr>
     <tr>
         <td></td>
         <td><img src="<s:url value="/images/official-logo.png"/>"/></td>

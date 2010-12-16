@@ -117,6 +117,7 @@ public class MarriageRegistrationValidator {
         return Collections.emptyList();
     }
 
+
     private void validateBasicNeeds(Long serial, Date recDate, String identificationNumber, Date dob) {
         if (serial == null || recDate == null || identificationNumber == null || dob == null) {
             handleException("marriage notice :serial" + serial + ": is incomplete can not add", ErrorCodes.MR_INCOMPLETE_OBJECT);
