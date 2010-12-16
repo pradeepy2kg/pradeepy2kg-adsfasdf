@@ -288,7 +288,7 @@
                         </td>
                         <td>
                             <s:if test="partyNameInOfficialLang != null">
-                                <%= NameFormatUtil.getDisplayName((String) request.getAttribute("partyNameInOfficialLang"), 65)%>
+                                <%= NameFormatUtil.getDisplayName((String) request.getAttribute("partyNameInOfficialLang"), 60)%>
                             </s:if>
                         </td>
                         <td align="center">
