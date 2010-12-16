@@ -1,6 +1,7 @@
 package lk.rgd.prs.api.domain;
 
 import lk.rgd.common.util.WebUtils;
+import lk.rgd.crs.web.util.MarriageType;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -40,7 +41,7 @@ public class Marriage implements Serializable {
     /**
      * The preferred language of for the record
      */
-    @Column(nullable = false, columnDefinition="char(2) default 'si'")
+    @Column(nullable = false, columnDefinition = "char(2) default 'si'")
     private String preferredLanguage;
     /**
      * Date of marriage
@@ -64,6 +65,11 @@ public class Marriage implements Serializable {
      */
     @Column(nullable = false)
     private State state;
+    /**
+     * Type of the marriage
+     */
+    @Column(nullable = true)
+    private MarriageType typeOfMarriage;
     /**
      * The groom
      */
@@ -119,6 +125,14 @@ public class Marriage implements Serializable {
 
     public void setState(State state) {
         this.state = state;
+    }
+
+    public MarriageType getTypeOfMarriage() {
+        return typeOfMarriage;
+    }
+
+    public void setTypeOfMarriage(MarriageType typeOfMarriage) {
+        this.typeOfMarriage = typeOfMarriage;
     }
 
     public Person getGroom() {
