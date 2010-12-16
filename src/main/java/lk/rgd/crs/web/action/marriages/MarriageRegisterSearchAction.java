@@ -51,6 +51,8 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
 
     private Date searchStartDate;
     private Date searchEndDate;
+    private Date dateOfIssueLicense;
+    private Date dateOfCancelLicense;
 
     private String language;
     private String pinOrNic;
@@ -61,6 +63,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     private int mrDivisionId;
     private int pageNo;
     private int noOfRows;
+
     private long idUKey;
 
     private String comment;
@@ -243,8 +246,29 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     public String licenseToMarriagePrintInit() {
         logger.debug("attempt to print license to marriage for marriage notice :idUKey : {} and notice type : {}",
             idUKey, noticeType);
-        //todo load notice
+        try {
+            marriage = marriageRegistrationService.getMarriageNoticeForPrintLicense(idUKey, user);
+            populateLicense(marriage);
+        }
+        catch (CRSRuntimeException e) {
+            switch (e.getErrorCode()) {
+                case ErrorCodes.INVALID_STATE_FOR_PRINT_LICENSE:
+                    addActionError(getText("error.print.license.failed.invalid.state"));
+            }
+            getApprovalPendingNotices();
+            return ERROR;
+        }
         return SUCCESS;
+    }
+
+    private void populateLicense(MarriageRegister notice) {
+        //fill date of issue
+        dateOfIssueLicense = new GregorianCalendar().getTime();
+        //canceling date is (defined value in data base) days from printed date
+        // get Calendar with current date
+        java.util.GregorianCalendar gCal = new GregorianCalendar();
+        gCal.add(Calendar.DATE, +appParametersDAO.getIntParameter("crs.license_cancel_dates"));
+        dateOfCancelLicense = gCal.getTime();
     }
 
     /**
@@ -478,5 +502,21 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public Date getDateOfIssueLicense() {
+        return dateOfIssueLicense;
+    }
+
+    public void setDateOfIssueLicense(Date dateOfIssueLicense) {
+        this.dateOfIssueLicense = dateOfIssueLicense;
+    }
+
+    public Date getDateOfCancelLicense() {
+        return dateOfCancelLicense;
+    }
+
+    public void setDateOfCancelLicense(Date dateOfCancelLicense) {
+        this.dateOfCancelLicense = dateOfCancelLicense;
     }
 }
