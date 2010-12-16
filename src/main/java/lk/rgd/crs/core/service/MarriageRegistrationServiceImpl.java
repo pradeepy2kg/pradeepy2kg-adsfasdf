@@ -111,10 +111,26 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     public List<MarriageRegister> getMarriageNoticesByMRDivisionAndRegisterDateRange(MRDivision mrDivision,
         Date startDate, Date endDate, int pageNo, int noOfRows, boolean active, User user) {
         if (logger.isDebugEnabled()) {
-            logger.debug("Get active record by MRDivision : " + mrDivision.getMrDivisionUKey() + " and date range : " +
-                startDate + " to " + endDate);
+            logger.debug("Get active : " + active + " record by MRDivision : " + mrDivision.getMrDivisionUKey() +
+                " and date range : " + startDate + " to " + endDate);
         }
+        ValidationUtils.validateAccessToMRDivision(mrDivision, user);
         return marriageRegistrationDAO.getPaginatedNoticesByMRDivisionAndRegisterDateRange(mrDivision, startDate,
+            endDate, pageNo, noOfRows, active);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<MarriageRegister> getMarriageNoticesByDSDivisionAndRegisterDateRange(DSDivision dsDivision,
+        Date startDate, Date endDate, int pageNo, int noOfRows, boolean active, User user) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Get active : " + active + " records by DSDivision : " + dsDivision.getDsDivisionUKey() +
+                " and date range : " + startDate + " to " + endDate);
+        }
+        ValidationUtils.validateAccessToDSDivision(dsDivision, user);
+        return marriageRegistrationDAO.getPaginatedNoticesByDSDivisionAndRegisterDateRange(dsDivision, startDate,
             endDate, pageNo, noOfRows, active);
     }
 
