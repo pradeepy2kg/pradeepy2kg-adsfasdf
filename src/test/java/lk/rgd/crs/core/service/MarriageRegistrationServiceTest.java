@@ -94,7 +94,7 @@ public class MarriageRegistrationServiceTest extends TestCase {
             "1234569875", MarriageNotice.Type.FEMALE_NOTICE, MarriageRegister.LicenseCollectType.MAIL_TO_MALE);
         marriageRegistrationService.addMarriageNotice(simpleFirstNotice, MarriageNotice.Type.FEMALE_NOTICE, rg);
         MarriageRegister simpleSecondNotice = marriageRegistrationService.
-            getMarriageNoticePendingApprovalByMRDivisionAndSerial(colomboMRDivision, 2010045678L, true, rg).get(0);
+            getActiveRecordByMRDivisionAndSerialNo(colomboMRDivision, 2010045678L, rg);
         simpleSecondNotice.setSerialOfMaleNotice(2010045685L);
         //adding
         List<UserWarning> notExpecting = marriageRegistrationService.addSecondMarriageNotice(simpleSecondNotice,
