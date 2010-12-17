@@ -150,6 +150,21 @@ public interface MarriageRegistrationService {
     public void updateMarriageRegister(MarriageRegister marriageRegister, User user);
 
     /**
+     * update Muslim marriage details
+     * @param marriageRegister
+     * @param user
+     */
+    public void updateMuslimMarriageDetails(MarriageRegister marriageRegister, User user);
+
+    /**
+     * update marriage registration detail (registrar details, registration place, etc)
+     * @param marriageRegister
+     * @param user
+     */
+    public void updateMarriageRegistrationDetails(MarriageRegister marriageRegister, User user);
+
+
+    /**
      * adding second notice(actually updating the existing notice record)
      * <p/>
      * <p/>
@@ -390,8 +405,21 @@ public interface MarriageRegistrationService {
      */
     public MarriageRegister getMarriageNoticeForPrintLicense(long idUKey, User user);
 
+    /**
+     * Approve muslim or noticed marriage registration
+     *
+     * @param idUKey
+     * @param user
+     */
     public void approveMarriageRegister(long idUKey, User user);
 
+    /**
+     * reject muslim or noticed marriage registration
+     *
+     * @param idUKey
+     * @param comment
+     * @param user
+     */
     public void rejectMarriageRegister(long idUKey, String comment, User user);
 
     /**

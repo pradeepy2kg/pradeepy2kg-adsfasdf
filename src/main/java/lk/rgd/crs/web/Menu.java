@@ -335,6 +335,9 @@ public class Menu {
         deoMarriageLink.put("eprRollBackNoticeToPrevious.do", new Link(null, "/ecivil/marriages/", "eprMarriageNoticeDelete.do", Permission.EDIT_MARRIAGE));
         deoMarriageLink.put("eprLicenseToMarriage.do", new Link(null, "/ecivil/marriages/", "eprLicenseToMarriage.do", Permission.PRINT_MARRIAGE_LICENSE));
         deoMarriageLink.put("eprMarkLicenseAsPrinted.do", new Link(null, "/ecivil/marriages/", "eprMarkLicenseAsPrinted.do", Permission.PRINT_MARRIAGE_LICENSE));
+        deoMarriageLink.put("eprRegisterNewMarriage.do", new Link(null, "/ecivil/marriages/", "eprRegisterNewMarriage.do", Permission.ADD_MARRIAGE));
+        deoMarriageLink.put("eprUpdateMarriage.do", new Link(null, "/ecivil/marriages/", "eprUpdateMarriage.do", Permission.EDIT_MARRIAGE));
+        deoMarriageLink.put("eprRegisterNoticedMarriage.do", new Link(null, "/ecivil/marriages/", "eprRegisterNoticedMarriage.do", Permission.EDIT_MARRIAGE));
 
         // ADR marriage links
         adrMarriageLink.putAll(deoMarriageLink);
@@ -343,6 +346,9 @@ public class Menu {
         adrMarriageLink.put("eprApproveMarriageNotice.do", new Link(null, "/ecivil/marriages/", "eprApproveMarriageNotice.do", Permission.APPROVE_MARRIAGE));
         adrMarriageLink.put("eprMarriageNoticeRejectInit.do", new Link(null, "/ecivil/marriages/", "eprMarriageNoticeRejectInit.do", Permission.APPROVE_MARRIAGE));
         adrMarriageLink.put("eprMarriageNoticeReject.do", new Link(null, "/ecivil/marriages/", "eprMarriageNoticeReject.do", Permission.APPROVE_MARRIAGE));
+        adrMarriageLink.put("eprApproveMarriageRegistration.do", new Link(null, "/ecivil/marriages/", "eprApproveMarriageRegistration.do", Permission.APPROVE_MARRIAGE));
+        adrMarriageLink.put("eprRejectMarriageRegistration.do", new Link(null, "/ecivil/marriages/", "eprRejectMarriageRegistration.do", Permission.APPROVE_MARRIAGE));
+        adrMarriageLink.put("eprMarriageRegisterSearch.do", new Link(null, "/ecivil/marriages/", "eprMarriageRegisterSearch.do", Permission.SEARCH_MARRIAGE));
 
         // ARG marriage links
         argMarriageLink.putAll(adrMarriageLink);

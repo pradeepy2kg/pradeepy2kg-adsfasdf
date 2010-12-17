@@ -17,6 +17,10 @@
         <put-attribute name="title" value="home.title"/>
     </definition>
 
+    <definition name="epr.success" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/success.jsp"/>
+        <put-attribute name="title" value=""/>
+    </definition>
 
     <definition name="epr.adrhome" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/ADRHomePage.jsp"/>
