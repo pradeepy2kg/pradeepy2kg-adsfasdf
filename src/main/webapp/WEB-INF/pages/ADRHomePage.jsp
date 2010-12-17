@@ -73,96 +73,108 @@
 
 <div id="ADR-home-page-outer">
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
-    $(document).ready(function() {
-        var user = 'adr';
-        var mode = 'all';
-        $.getJSON('/ecivil/crs/StatisticsLookupService',
-        {
-            userType:user,
-            statType:mode
-        },
-                function(data) {
-                    drawChart(data);
-                }
-                );
+        $(document).ready(function() {
+            var user = 'adr';
+            var mode = 'all';
+            $.getJSON('/ecivil/crs/StatisticsLookupService',
+            {
+                userType:user,
+                statType:mode
+            },
+                    function(data) {
+                        drawChart(data);
+                    }
+                    );
 
-    });
+        });
 
-    function initPage() {
-    }
+        function initPage() {
+        }
 
-</script>
+    </script>
 
-<table border="0" width="100%">
-    <tr>
-        <td colspan="4" align="center">
-            <div class="topic">Birth Statistics</div>
-        </td>
-    </tr>
-    <tr>
-        <td class="info">All Pending : <input type="text" id="all_pending_b" class="noStyle" readonly="true"
-                                              maxlength="3"/></td>
-        <td class="info"><label class="issue">Arrears : <input type="text" id="arrears_b" class="noStyle_red"
-                                                               readonly="true" maxlength="3"/></label></td>
-        <td colspan="2" rowspan="4" class="pie">
-            <div id="chart3"></div>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="2">
-            <div id="chart1"></div>
-        </td>
-    </tr>
-    <tr>
-        <td class="info">Total Submitted Items : <input type="text" id="total_submitted_b" class="noStyle"
-                                                        readonly="true" maxlength="3"/></td>
-        <td class="info"><label class="issue">Late Items : <input type="text" id="late_b" class="noStyle_red"
-                                                                  readonly="true" maxlength="3"/></label></td>
-    </tr>
-    <tr>
-        <td colspan="2">
-            <div id="chart2"></div>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="4" align="center">
-            <div class="topic">Death Statistics</div>
-        </td>
-    </tr>
-    <tr>
-        <td class="info">All Pending : <input type="text" id="all_pending_d" class="noStyle" readonly="true"
-                                              maxlength="3"/></td>
-        <td class="info"><label class="issue">Arrears : <input type="text" id="arrears_d" class="noStyle_red"
-                                                               readonly="true" maxlength="3"/></label></td>
-        <td colspan="2" rowspan="4" class="pie">
-            <div id="chart6"></div>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="2">
-            <div id="chart4"></div>
-        </td>
-    </tr>
-    <tr>
-        <td class="info">Total Submitted Items : <input type="text" id="total_submitted_d" class="noStyle"
-                                                        readonly="true" maxlength="3"/></td>
-        <td class="info"><label class="issue">Late Items : <input type="text" id="late_d" class="noStyle_red"
-                                                                  readonly="true" maxlength="3"/></label></td>
-    </tr>
-    <tr>
-        <td colspan="2">
-            <div id="chart5"></div>
-        </td>
-    </tr>
-    <tr>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-    </tr>
-</table>
+    <table border="0" width="100%">
+        <tr>
+            <td colspan="4" align="center">
+                <div class="topic">Birth Statistics</div>
+            </td>
+        </tr>
+        <tr>
+            <td class="info">
+                All Pending :
+                <input type="text" id="all_pending_b" class="noStyle" readonly="true" maxlength="3"/>
+            </td>
+            <td class="info">
+                <label class="issue">
+                    Arrears :
+                    <input type="text" id="arrears_b" class="noStyle_red" readonly="true" maxlength="3"/>
+                </label>
+            </td>
+            <td colspan="2" rowspan="4" class="pie">
+                <div id="chart3"></div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div id="chart1"></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="info">
+                Total Submitted Items :
+                <input type="text" id="total_submitted_b" class="noStyle" readonly="true" maxlength="3"/>
+            </td>
+            <td class="info">
+                <label class="issue">
+                    Late Items :
+                    <input type="text" id="late_b" class="noStyle_red" readonly="true" maxlength="3"/>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div id="chart2"></div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4" align="center">
+                <div class="topic">Death Statistics</div>
+            </td>
+        </tr>
+        <tr>
+            <td class="info">All Pending : <input type="text" id="all_pending_d" class="noStyle" readonly="true"
+                                                  maxlength="3"/></td>
+            <td class="info"><label class="issue">Arrears : <input type="text" id="arrears_d" class="noStyle_red"
+                                                                   readonly="true" maxlength="3"/></label></td>
+            <td colspan="2" rowspan="4" class="pie">
+                <div id="chart6"></div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div id="chart4"></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="info">Total Submitted Items : <input type="text" id="total_submitted_d" class="noStyle"
+                                                            readonly="true" maxlength="3"/></td>
+            <td class="info"><label class="issue">Late Items : <input type="text" id="late_d" class="noStyle_red"
+                                                                      readonly="true" maxlength="3"/></label></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div id="chart5"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+    </table>
 
 </div>
    

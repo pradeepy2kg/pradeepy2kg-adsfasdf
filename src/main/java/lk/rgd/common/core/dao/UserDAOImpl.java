@@ -1,6 +1,7 @@
 package lk.rgd.common.core.dao;
 
 import lk.rgd.common.api.dao.UserDAO;
+import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.Role;
 import lk.rgd.common.api.domain.User;
@@ -99,6 +100,14 @@ public class UserDAOImpl extends BaseDAO implements UserDAO {
         user.getLifeCycleInfo().setLastUpdatedUser(admin);
         user.getLifeCycleInfo().setLastUpdatedTimestamp(new Date());
         em.merge(user);
+    }
+
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<String> getDEOsByDSDivision(String language, User user, DSDivision dsDivision, Role role){
+        Query q = em.createNamedQuery("filter.deo.by.dsdivision");
+        q.setParameter("assignedBDDSDivisions", dsDivision);
+        q.setParameter("role", role);
+        return q.getResultList();
     }
 }
 

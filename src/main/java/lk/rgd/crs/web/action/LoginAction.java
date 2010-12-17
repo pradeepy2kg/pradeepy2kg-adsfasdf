@@ -1,7 +1,7 @@
 package lk.rgd.crs.web.action;
 
 import com.opensymphony.xwork2.ActionSupport;
-import lk.rgd.common.api.dao.AppParametersDAO;
+import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.AppParameter;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
@@ -33,6 +33,11 @@ public class LoginAction extends ActionSupport implements SessionAware {
     private final UserManager userManager;
     private static final Logger logger = LoggerFactory.getLogger(LoginAction.class);
 
+    private final DistrictDAO districtDAO;
+    private final DSDivisionDAO dsDivisionDAO;
+    private final UserDAO userDAO;
+    private final RoleDAO roleDAO;
+
     //for home page charts
     private int totalDeclarations;
     private int totalDecArrivals;
@@ -47,9 +52,24 @@ public class LoginAction extends ActionSupport implements SessionAware {
     private int stillBirths;
     private int SBPendingApprovals;
 
-    public LoginAction(UserManager userManager, AppParametersDAO appParaDao) {
+    private Map<Integer, String> districtList;
+    private Map<Integer, String> divisionList;
+    private List<String> deoList;
+
+    private int dsDivisionId;
+    private int districtId;
+    private int deoUserId;
+
+    private String startDate;
+    private String endDate;
+
+    public LoginAction(UserManager userManager, AppParametersDAO appParaDao, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, UserDAO userDAO, RoleDAO roleDAO) {
         this.userManager = userManager;
         this.appParaDao = appParaDao;
+        this.districtDAO = districtDAO;
+        this.dsDivisionDAO = dsDivisionDAO;
+        this.userDAO = userDAO;
+        this.roleDAO = roleDAO;
     }
 
     public Locale getLocale() {
@@ -67,13 +87,12 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
     public String login() {
 
-        if(javaScript.equals("false")) {
+        if (javaScript.equals("false")) {
             addActionError("Please enable javaScript in your web browser");
-            return "error";
+            return ERROR;
         }
 
-        
-        logger.debug("detected userName : {} ", userName);
+        logger.debug("Detected userName : {} ", userName);
         User user;
         try {
             user = userManager.authenticateUser(userName, userManager.hashPassword(password));
@@ -83,11 +102,10 @@ public class LoginAction extends ActionSupport implements SessionAware {
             }
             //check if user have a preferred bd or mr ds division
             if (!user.getRole().getRoleId().equals("ADMIN") && !user.getRole().getRoleId().equals("RG")) {
-                if (user.getAssignedBDDSDivisions() != null && user.getAssignedBDDSDivisions().size() == 0
-                        ) {
+                if (user.getAssignedBDDSDivisions() != null && user.getAssignedBDDSDivisions().size() == 0) {
                     addActionError("You are not assign to any DS Division.Contact admin for resolve problem");
-                    logger.error("user : {} , doesn't allocate to any DS Division", user.getUserName());
-                    return "error";
+                    logger.error("User : {} , doesn't allocate to any DS Division", user.getUserName());
+                    return ERROR;
                 }
             }
         } catch (AuthorizationException e) {
@@ -109,7 +127,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
                 addActionError("Incorrect user name or password.");
             }
             logger.error("{} : {}", e.getMessage(), e);
-            return "error";
+            return ERROR;
         }
 
 
@@ -125,7 +143,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
             if (map != null) {
                 session.put(WebConstants.SESSION_USER_MENUE_LIST, map);
             } else {
-                return "error";
+                return ERROR;
             }
 
             session.put(WebConstants.SESSION_USER_LANG, new Locale(language, country));
@@ -149,13 +167,45 @@ public class LoginAction extends ActionSupport implements SessionAware {
             SBPendingApprovals = 21;
 
             String result = checkUserExpiry(user);
-            if (result.equals(SUCCESS))
+
+            if (result.equals(SUCCESS)) {
+                if ((result + userRole).equals("successDR")) {
+                    populateLists(user);
+                }
                 return result + userRole;
-            else
+            } else {
                 return result;
+            }
         } catch (Exception e) {
             logger.error("Exception is :P {} {} ", e, e.toString());
-            return "error";
+            return ERROR;
+        }
+    }
+
+    void populateLists(User user) {
+
+        if (districtList == null) {
+            districtList = districtDAO.getAllDistrictNames(user.getPrefLanguage(), user);
+            logger.debug("district List : {}", districtList.size());
+        }
+
+        if (divisionList == null && districtList != null) {
+            divisionList = dsDivisionDAO.getAllDSDivisionNames(
+                user.getAssignedBDDistricts().iterator().next().getDistrictUKey(),
+                user.getPrefLanguage(),
+                user);
+            logger.debug("division List : {}", divisionList.size());
+        } else {
+            if (districtList == null) {
+                logger.debug("DistrictList null for user : {}", user.getUserId());
+            }
+        }
+
+        if (deoList == null && divisionList != null) {
+            logger.debug("Role = {}", user.getRole());
+            deoList = userDAO.getDEOsByDSDivision(
+                user.getPrefLanguage(), user, dsDivisionDAO.getDSDivisionByPK(divisionList.keySet().iterator().next()), roleDAO.getRole("DEO"));
+            logger.debug("DEO List : {}", deoList.size());
         }
     }
 
@@ -166,15 +216,26 @@ public class LoginAction extends ActionSupport implements SessionAware {
      * @return
      */
     private String checkUserExpiry(User user) {
-        //todo change :::::user staus chcking goes here
-        // get Calendar with current date
+        int INACTIVE = 0;
+        int ACTIVE = 1;
+        int LOCKEDOUT = 2;
+        int DELETED = 3;
+
+        User checkUser = userManager.getUserByID(user.getUserId());
+        if (checkUser.getStatus().ordinal() == INACTIVE ||
+            checkUser.getStatus().ordinal() == DELETED ||
+            checkUser.getStatus().ordinal() == LOCKEDOUT) {
+            logger.warn("User Status is  INACTIVE for user :{}", user.getUserName());
+            return ERROR;
+        }
+
         java.util.GregorianCalendar gCal = new GregorianCalendar();
 
         if (gCal.getTime().after(user.getPasswordExpiry())) {
             logger.warn("password has been expired for user :{}", user.getUserName());
             return "expired";
         }
-        // if status are OK
+
         logger.debug("users status OK");
         return SUCCESS;
 
@@ -202,9 +263,9 @@ public class LoginAction extends ActionSupport implements SessionAware {
                 session = null;
             }
             userManager.logoutUser(userName);
-            return "success";
+            return SUCCESS;
         }
-        return "error";
+        return ERROR;
     }
 
     public void setPassword(String password) {
@@ -334,5 +395,69 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
     public void setSBPendingApprovals(int SBPendingApprovals) {
         this.SBPendingApprovals = SBPendingApprovals;
+    }
+
+    public Map<Integer, String> getDivisionList() {
+        return divisionList;
+    }
+
+    public void setDivisionList(Map<Integer, String> divisionList) {
+        this.divisionList = divisionList;
+    }
+
+    public Map<Integer, String> getDistrictList() {
+        return districtList;
+    }
+
+    public void setDistrictList(Map<Integer, String> districtList) {
+        this.districtList = districtList;
+    }
+
+    public int getDistrictId() {
+        return districtId;
+    }
+
+    public void setDistrictId(int districtId) {
+        this.districtId = districtId;
+    }
+
+    public int getDsDivisionId() {
+        return dsDivisionId;
+    }
+
+    public void setDsDivisionId(int dsDivisionId) {
+        this.dsDivisionId = dsDivisionId;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public int getDeoUserId() {
+        return deoUserId;
+    }
+
+    public void setDeoUserId(int deoUserId) {
+        this.deoUserId = deoUserId;
+    }
+
+    public List<String> getDeoList() {
+        return deoList;
+    }
+
+    public void setDeoList(List<String> deoList) {
+        this.deoList = deoList;
     }
 }

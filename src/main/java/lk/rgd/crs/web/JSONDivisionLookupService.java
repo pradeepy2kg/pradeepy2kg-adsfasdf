@@ -1,5 +1,7 @@
 package lk.rgd.crs.web;
 
+import lk.rgd.common.api.dao.RoleDAO;
+import lk.rgd.common.api.dao.UserDAO;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.dao.DistrictDAO;
@@ -34,6 +36,8 @@ public class JSONDivisionLookupService extends HttpServlet {
     private BDDivisionDAO bdDivisionDAO;
     private DistrictDAO districtDAO;
     private MRDivisionDAO mrDivisionDAO;
+    private UserDAO userDAO;
+    private RoleDAO roleDAO;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -43,6 +47,8 @@ public class JSONDivisionLookupService extends HttpServlet {
         bdDivisionDAO = (BDDivisionDAO) context.getBean("bdDivisionDAOImpl");
         districtDAO = (DistrictDAO) context.getBean("districtDAOImpl");
         mrDivisionDAO = (MRDivisionDAO) context.getBean("mrDivisionDAOImpl");
+        userDAO = (UserDAO) context.getBean("userDAOImpl");
+        roleDAO = (RoleDAO) context.getBean("roleDAOImpl");
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -124,6 +130,31 @@ public class JSONDivisionLookupService extends HttpServlet {
                 List mr = getMRDivisionList(lang, dsDivisionId, user);
                 optionLists.put("dsDivisionList", ds);
                 optionLists.put("divisionList", mr);
+            } else if ("13".equals(mode)) {
+                List ds = getAllDSDivisions(lang, divisionId, user);
+                logger.debug("DSDivision List size : {}", ds.size());
+                int dsDivisionId = Integer.parseInt(((SelectOption) ds.get(0)).getOptionValue());
+                List deoList = getList(
+                    userDAO.getDEOsByDSDivision(
+                        user.getPrefLanguage(),
+                        user,
+                        dsDivisionDAO.getDSDivisionByPK(dsDivisionId),
+                        roleDAO.getRole("DEO")
+                    )
+                );
+                optionLists.put("dsDivisionList", ds);
+                optionLists.put("deoList", deoList);
+            } else if ("14".equals(mode)) {
+                int dsDivisionId = Integer.parseInt(id);
+                List deoList = getList(
+                    userDAO.getDEOsByDSDivision(
+                        user.getPrefLanguage(),
+                        user,
+                        dsDivisionDAO.getDSDivisionByPK(dsDivisionId),
+                        roleDAO.getRole("DEO")
+                    )
+                );
+                optionLists.put("deoList", deoList);
             } else {
                 // passing districtId, return DS List and the BD List for the 1st DS division
                 List ds = getDSDivisions(lang, divisionId, user);
@@ -145,6 +176,7 @@ public class JSONDivisionLookupService extends HttpServlet {
     }
 
     //TODO : tobe removed
+
     private List getBDDivisions(String language, int dsDivisionId, User user) {
         Map<Integer, String> bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
         logger.debug("Loaded BD list : {}", bdDivisionList);
@@ -153,6 +185,7 @@ public class JSONDivisionLookupService extends HttpServlet {
     }
 
     //TODO : tobe removed
+
     private List getMRDivision(String language, int dsDivision, User user) {
         Map<Integer, String> bdDivisionList = mrDivisionDAO.getMRDivisionNames(dsDivision, language, user);
         logger.debug("Loaded MR list : {}", bdDivisionList);
@@ -173,6 +206,7 @@ public class JSONDivisionLookupService extends HttpServlet {
     }
 
     //TODO : tobe removed
+
     private List getDSDivisions(String language, int BDId, User user) {
         Map<Integer, String> dsDivisionList = dsDivisionDAO.getDSDivisionNames(BDId, language, user);
         logger.debug("Loaded DS list : {}", dsDivisionList);
@@ -202,6 +236,7 @@ public class JSONDivisionLookupService extends HttpServlet {
     }
 
     //TODO : tobe removed
+
     private List getList(Map<Integer, String> map) {
         List<SelectOption> ds = new ArrayList<SelectOption>();
 
@@ -226,6 +261,19 @@ public class JSONDivisionLookupService extends HttpServlet {
             SelectOption option = new SelectOption();
             option.setOptionValue(e.getKey().toString());
             option.setOptionDisplay(e.getValue());
+            ds.add(option);
+        }
+        return ds;
+    }
+
+    private List getList(List<String> l) {
+        List<SelectOption> ds = new ArrayList<SelectOption>();
+        Iterator<String> i = l.iterator();
+        while (i.hasNext()) {
+            String s = i.next();
+            SelectOption option = new SelectOption();
+            option.setOptionValue(s);
+            option.setOptionDisplay(s);
             ds.add(option);
         }
         return ds;

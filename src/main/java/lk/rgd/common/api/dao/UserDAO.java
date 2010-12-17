@@ -1,5 +1,6 @@
 package lk.rgd.common.api.dao;
 
+import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.Role;
 import lk.rgd.common.api.domain.User;
@@ -106,5 +107,12 @@ public interface UserDAO {
      * @param user
      */
     public void changePassword(User user);
+
+    /**
+     * 
+     * @param language
+     * @param user
+     */
+    public List<String> getDEOsByDSDivision(String language, User user, DSDivision dsDivision, Role role);
 
 }
