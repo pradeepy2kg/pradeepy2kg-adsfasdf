@@ -9,6 +9,29 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%--section logo and issue date and serial number--%>
 <div class="marriage-notice-outer">
+<div style="width:45%;float:left;margin-top:5px;" id="locationSignId">
+    <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;">
+        <legend><b><s:label value="%{getText('selectoption.label')}"/></b></legend>
+        <table>
+            <tr>
+                <td>
+                    <s:label value="%{getText('placeOfIssue.label')}"/>
+                </td>
+                <td>
+
+                    <s:select id="locationId" name="locationId" list="locationList" cssStyle="width:300px;"/>
+
+                </td>
+            </tr>
+            <tr>
+                <td><s:label value="%{getText('signOfficer.label')}"/></td>
+                <td>
+                    <s:select id="issueUserId" name="issueUserId" list="userList" cssStyle="width:300px;"/>
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+</div>
 
 <table>
     <caption/>
@@ -21,7 +44,7 @@
             <div class="form-submit">
                 <s:form action="eprMarkLicenseAsPrinted.do" method="post">
                     <s:submit value="%{getText('button.mark.as.print')}"/>
-                   
+
                 </s:form>
             </div>
             <div class="form-submit">
@@ -269,7 +292,6 @@
             <s:label value="%{marriage.female.fatherFullNameFemaleInEnglish}"/>
         </td>
     </tr>
-
 
 </table>
 

@@ -16,30 +16,28 @@ import java.util.*;
 @Entity
 @Table(name = "USERS", schema = "COMMON")
 @NamedQueries({
-        @NamedQuery(name = "filter.by.roleid", query = "SELECT u FROM User u " +
-                "WHERE u.status != 3 AND u.role.roleId = :roleId " +
-                "ORDER BY u.userId"),
-        @NamedQuery(name = "filter.by.bd_district", query = "SELECT u FROM User u " +
-                "WHERE u.status != 3 AND :assignedBDDistrict MEMBER OF u.assignedBDDistricts " +
-                "ORDER BY u.userId"),
-        @NamedQuery(name = "filter.by.mr_district", query = "SELECT u FROM User u " +
-                "WHERE u.status != 3 AND :assignedMRDistrict MEMBER OF u.assignedMRDistricts " +
-                "ORDER BY u.userId"),
-        @NamedQuery(name = "filter.by.role_and_bd_district", query = "SELECT u FROM User u " +
-                "WHERE u.status != 3 AND u.role = :role AND :assignedBDDistrict MEMBER OF u.assignedBDDistricts " +
-                "ORDER BY u.userId"),
-        @NamedQuery(name = "filter.by.role_and_mr_district", query = "SELECT u FROM User u " +
-                "WHERE u.status != 3 AND u.role = :role AND :assignedMRDistrict MEMBER OF u.assignedMRDistricts " +
-                "ORDER BY u.userId"),
-        @NamedQuery(name = "filter.by.wildcard_id", query = "SELECT u FROM User u " +
-                "WHERE u.status != 3 AND u.userId LIKE :userIdMatch " +
-                "ORDER BY u.userId"),
-        @NamedQuery(name = "filter.by.wildcard_name", query = "SELECT u FROM User u " +
-                "WHERE u.status != 3 AND u.userName LIKE :userNameMatch " +
-                "ORDER BY u.userName"),
-        @NamedQuery(name = "filter.non.deleted", query = "SELECT u FROM User u " +
-                "WHERE u.status != 3 " +
-                "ORDER BY u.userName")
+    @NamedQuery(name = "filter.by.roleid", query = "SELECT u FROM User u " +
+        "WHERE u.status != 3 AND u.role.roleId = :roleId " +
+        "ORDER BY u.userId"),
+    @NamedQuery(name = "filter.by.bd_district", query = "SELECT u FROM User u " +
+        "WHERE u.status != 3 AND :assignedBDDistrict MEMBER OF u.assignedBDDistricts " +
+        "ORDER BY u.userId"),
+    @NamedQuery(name = "filter.by.mr_district", query = "SELECT u FROM User u " +
+        "WHERE u.status != 3 AND :assignedMRDistrict MEMBER OF u.assignedMRDistricts " +
+        "ORDER BY u.userId"),
+    @NamedQuery(name = "filter.by.role_and_bd_district", query = "SELECT u FROM User u " +
+        "WHERE u.status != 3 AND u.role = :role AND :assignedBDDistrict MEMBER OF u.assignedBDDistricts " +
+        "ORDER BY u.userId"),
+    @NamedQuery(name = "filter.by.role_and_mr_district", query = "SELECT u FROM User u " +
+        "WHERE u.status != 3 AND u.role = :role AND :assignedMRDistrict MEMBER OF u.assignedMRDistricts " +
+        "ORDER BY u.userId"),
+    @NamedQuery(name = "filter.by.wildcard_id", query = "SELECT u FROM User u " +
+        "WHERE u.status != 3 AND u.userId LIKE :userIdMatch " +
+        "ORDER BY u.userId"),
+    @NamedQuery(name = "filter.by.wildcard_name", query = "SELECT u FROM User u " + "WHERE u.status != 3 AND" +
+        " u.userName LIKE :userNameMatch " + "ORDER BY u.userName"),
+    @NamedQuery(name = "filter.non.deleted", query = "SELECT u FROM User u " + "WHERE u.status != 3 " +
+        "ORDER BY u.userName")
 })
 public class User implements Serializable {
 
@@ -186,10 +184,16 @@ public class User implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         User user = (User) o;
-        if (userId != null ? !userId.equals(user.userId) : user.userId != null) return false;
+        if (userId != null ? !userId.equals(user.userId) : user.userId != null) {
+            return false;
+        }
         return true;
     }
 
