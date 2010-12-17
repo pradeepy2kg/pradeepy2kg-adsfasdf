@@ -392,6 +392,7 @@
         <constructor-arg ref="userDAOImpl"/>
         <constructor-arg ref="locationDAOImpl"/>
         <constructor-arg ref="commonUtil"/>
+        <constructor-arg ref="userLocationDAOImpl"/>
     </bean>
 
     <bean id="marriageRegistrationAction" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction">

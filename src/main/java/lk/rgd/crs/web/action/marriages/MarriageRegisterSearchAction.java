@@ -5,6 +5,8 @@ import lk.rgd.AppConstants;
 import lk.rgd.ErrorCodes;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.UserLocation;
+import lk.rgd.common.util.NameFormatUtil;
 import lk.rgd.common.util.WebUtils;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.dao.MRDivisionDAO;
@@ -37,6 +39,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     private final UserDAO userDAO;
     private final LocationDAO locationDAO;
     private final CommonUtil commonUtil;
+    private final UserLocationDAO userLocationDAO;
 
     private MarriageRegister marriage;
 
@@ -46,6 +49,9 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     private Map<Integer, String> districtList;
     private Map<Integer, String> dsDivisionList;
     private Map<Integer, String> mrDivisionList;
+    private Map<Integer, String> locationList;
+    private Map<String, String> userList;
+
     private List<MarriageNotice> searchList;
     private List<MarriageRegister> marriageRegisterSearchList;
 
@@ -64,6 +70,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     private int pageNo;
     private int noOfRows;
     private int licensePrintedLocationId;
+    private int locationId;
 
     private long idUKey;
 
@@ -74,7 +81,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
 
     public MarriageRegisterSearchAction(MarriageRegistrationService marriageRegistrationService, DistrictDAO districtDAO,
         DSDivisionDAO dsDivisionDAO, MRDivisionDAO mrDivisionDAO, AppParametersDAO appParametersDAO,
-        CommonUtil commonUtil, UserDAO userDAO, LocationDAO locationDAO) {
+        CommonUtil commonUtil, UserDAO userDAO, LocationDAO locationDAO, UserLocationDAO userLocationDAO) {
         this.marriageRegistrationService = marriageRegistrationService;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
@@ -83,6 +90,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         this.commonUtil = commonUtil;
         this.userDAO = userDAO;
         this.locationDAO = locationDAO;
+        this.userLocationDAO = userLocationDAO;
 
         districtList = new HashMap<Integer, String>();
         dsDivisionList = new HashMap<Integer, String>();
@@ -276,6 +284,8 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
             getApprovalPendingNotices();
             return ERROR;
         }
+        //displaying issuing locations and authorized users
+        populateLocationsAndIssuingUsers();
         return SUCCESS;
     }
 
@@ -309,6 +319,16 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         }
         //if success redirect to license
         return SUCCESS;
+    }
+
+    private void populateLocationsAndIssuingUsers() {
+        //get current users location
+        locationList = commonUtil.populateActiveUserLocations(user, language);
+        userList = new HashMap<String, String>();
+        for (User u : userLocationDAO.getMarriageCertificateSignUsersByLocationId(locationList.keySet().
+            iterator().next(), true)) {
+            userList.put(u.getUserId(), NameFormatUtil.getDisplayName(u.getUserName(), 50));
+        }
     }
 
     private void populateLicense(MarriageRegister notice) {
@@ -589,5 +609,29 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
 
     public void setLicenseIssuedUserId(String licenseIssuedUserId) {
         this.licenseIssuedUserId = licenseIssuedUserId;
+    }
+
+    public Map<Integer, String> getLocationList() {
+        return locationList;
+    }
+
+    public void setLocationList(Map<Integer, String> locationList) {
+        this.locationList = locationList;
+    }
+
+    public int getLocationId() {
+        return locationId;
+    }
+
+    public void setLocationId(int locationId) {
+        this.locationId = locationId;
+    }
+
+    public Map<String, String> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(Map<String, String> userList) {
+        this.userList = userList;
     }
 }

@@ -62,7 +62,7 @@ public interface UserLocationDAO {
     public List<User> getBirthCertSignUsersByLocationId(int locationId, boolean active);
 
     /**
-     * Return Active Locations list of given user 
+     * Return Active Locations list of given user
      *
      * @param userId
      * @param active
@@ -70,4 +70,13 @@ public interface UserLocationDAO {
      */
     public List<UserLocation> getActiveUserLocations(String userId, boolean active);
 
+    /**
+     * get uses who has permission to sign marriage certificate/license to marriage by location id and
+     * filter by users location  activeness
+     *
+     * @param locationId location id
+     * @param active     users activeness (active/inactive)
+     * @return list of users who are assign to given user location
+     */
+    public List<User> getMarriageCertificateSignUsersByLocationId(int locationId, boolean active);
 }

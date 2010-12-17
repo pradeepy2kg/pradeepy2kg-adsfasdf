@@ -92,6 +92,17 @@ public class UserLocationDAOImpl extends BaseDAO implements UserLocationDAO {
     }
 
     /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<User> getMarriageCertificateSignUsersByLocationId(int locationId, boolean active) {
+        Query q = em.createNamedQuery("get.marriage.certificateSign.user.by.locationId.and.active");
+        q.setParameter("locationId", locationId);
+        q.setParameter("active", active);
+        return q.getResultList();
+    }
+
+    /**
      * Returns currently active UserLocations list for given user id
      *
      * @param userId
