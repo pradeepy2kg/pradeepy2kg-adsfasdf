@@ -136,7 +136,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
             }
         }
         if (marriageRegisterSearchList.size() == 0) {
-            addActionMessage(getText("error.marriageregister.norecords"));
+            addActionError(getText("error.marriageregister.norecords"));
         }
         return SUCCESS;
     }

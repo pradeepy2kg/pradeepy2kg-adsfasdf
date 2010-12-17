@@ -1,6 +1,14 @@
 /* Styles to show all inputs in uppercase */
 input, textarea{text-transform:uppercase;}
 
+.actionerror{
+   color:red;
+}
+
+.actionmessage{
+   color:red;
+}
+
 .alreadyPrinted{
    color:red;
 }

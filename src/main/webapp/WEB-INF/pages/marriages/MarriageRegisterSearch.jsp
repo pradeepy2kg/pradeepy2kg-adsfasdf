@@ -19,8 +19,8 @@
         $("#tabs").tabs();
     });
 </script>
-<s:actionerror/>
-<s:actionmessage/>
+<s:actionerror cssClass="actionmessage"/>
+<s:actionmessage cssClass="actionerror"/>
 <s:form action="eprMarriageRegisterSearch.do" method="POST" onsubmit="javascript:return validate()">
     <div id="tabs" style="font-size:10pt;">
         <ul>
@@ -123,7 +123,6 @@
 </s:form>
 
 <div id="marriage-notice-search" style="margin-top:58px;">
-    <s:actionmessage cssClass="alreadyPrinted"/>
     <s:if test="marriageRegisterSearchList.size > 0">
         <%--table for displaying marriage registers--%>
         <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;">

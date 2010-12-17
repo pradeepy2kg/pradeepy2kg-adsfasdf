@@ -374,6 +374,10 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         logger.debug("successfully  approved marriage notice with idUKey : {} and notice type : {}", idUKey, type);
     }
 
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
     public void approveMarriageRegister(long idUKey, User user) {
         checkUserPermission(Permission.APPROVE_MARRIAGE, ErrorCodes.PERMISSION_DENIED, "approve marriage register", user);
         MarriageRegister marriageRegister = marriageRegistrationDAO.getByIdUKey(idUKey);
@@ -381,6 +385,10 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         marriageRegistrationDAO.updateMarriageRegister(marriageRegister, user);
     }
 
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
     public void rejectMarriageRegister(long idUKey, String comment, User user) {
         checkUserPermission(Permission.APPROVE_MARRIAGE, ErrorCodes.PERMISSION_DENIED, "approve marriage register", user);
         MarriageRegister marriageRegister = marriageRegistrationDAO.getByIdUKey(idUKey);
