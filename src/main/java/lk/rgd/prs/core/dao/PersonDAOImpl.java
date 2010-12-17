@@ -147,10 +147,11 @@ public class PersonDAOImpl extends BaseDAO implements PersonDAO {
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<Person> findAllSiblings(Person p) {
         Query q = em.createNamedQuery("findAllSiblings");
-        q.setParameter("person", p);
         q.setParameter("mother", p.getMother());
         q.setParameter("father", p.getFather());
-        return q.getResultList();
+        final List<Person> list = q.getResultList();
+        list.remove(p);
+        return list;
     }
 
     /**
