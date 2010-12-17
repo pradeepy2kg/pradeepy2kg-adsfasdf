@@ -119,7 +119,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         }
         //populating lists
         commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
-            marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
+            marriageDistrictId, dsDivisionId, mrDivisionId, AppConstants.MARRIAGE, user, language);
         commonUtil.populateCountryAndRaceLists(countryList, raceList, language);
         logger.debug("successfully loaded the page marriage notice");
         return "pageLoad";
@@ -165,12 +165,12 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             logger.debug("cannot find marriage register record to edit : idUKey {}", idUKey);
             addActionError(getText("error.cannot.find.record.for.edit"));
             commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
-                marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
+                marriageDistrictId, dsDivisionId, mrDivisionId, AppConstants.MARRIAGE, user, language);
             return ERROR;
         }
         populateNoticeForInitEdit(marriage, noticeType);
         commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
-            marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
+            marriageDistrictId, dsDivisionId, mrDivisionId, AppConstants.MARRIAGE, user, language);
         editMode = true;
         return "pageLoad";
     }
@@ -193,7 +193,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             addActionError(getText("marriage.notice.update.fails"));
             return ERROR;
         }
-        logger.debug("marriage notice : idUKey {} : edited success fully", marriage.getIdUKey());
+        logger.debug("marriage notice : idUKey {} : edited successfully", marriage.getIdUKey());
         return SUCCESS;
     }
 
@@ -409,7 +409,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         if (idUKey != 0) {
             marriage = marriageRegistrationService.getByIdUKey(idUKey, user);
         }
-        return SUCCESS;
+        return INPUT;
     }
 
     /**
@@ -420,9 +420,14 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         marriage.setMrDivision(mrDivision);
         marriage.setMrDivisionOfMaleNotice(mrDivision);
         marriage.setMrDivisionOfFemaleNotice(mrDivision);
-        //TODO : change the status
         marriage.setState(MarriageRegister.State.REG_DATA_ENTRY);
-        marriageRegistrationService.addMarriageRegister(marriage, user);
+        try {
+            marriageRegistrationService.addMarriageRegister(marriage, user);
+        } catch (CRSRuntimeException e) {
+            addActionError(getText("error.marriageregister.registrationfailed"));
+            return marriageRegistrationInit();
+        }
+        addActionMessage(getText("message.marriageregister.registered"));
         return SUCCESS;
     }
 
@@ -430,15 +435,20 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
      * Marriage Registration - update Marriage Details
      */
     public String updateMarriageDetails() {
-        MarriageRegister marriageRegister = marriageRegistrationService.getByIdUKey(marriage.getIdUKey(), user);
+        MarriageRegister marriageRegister = marriageRegistrationService.getByIdUKey(idUKey, user);
         if (marriageRegister == null) {
-            populateLists();
-            addActionError(getText("error.marriage.registernotfound"));
-            return SUCCESS;
+            addActionError(getText("error.marriageregister.notfound"));
+            return marriageRegistrationInit();
         }
         populateRegistrationDetails(marriageRegister);
         populateMaleFemaleDetails(marriageRegister);
-        marriageRegistrationService.updateMarriageRegister(marriageRegister, user);
+        try {
+            marriageRegistrationService.updateMarriageRegister(marriageRegister, user);
+        } catch (CRSRuntimeException e) {
+            addActionError(getText("error.marriageregister.failedtoupdate"));
+            return marriageRegistrationInit();
+        }
+        addActionMessage("message.marriageregister.updated");
         return SUCCESS;
     }
 
@@ -446,13 +456,19 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
      * Marriage Registration - Update existing licensed marriage entry with the registrar details, registration place and the date
      */
     public String registerNoticedMarriage() {
-        MarriageRegister marriageRegister = marriageRegistrationService.getByIdUKey(marriage.getIdUKey(), user);
+        MarriageRegister marriageRegister = marriageRegistrationService.getByIdUKey(idUKey, user);
         if (marriageRegister == null) {
-            addActionError(getText("error.marriage.registernotfound"));
-            return ERROR;
+            addActionError(getText("error.marriageregister.notfound"));
+            return marriageRegistrationInit();
         }
         populateRegistrationDetails(marriageRegister);
-        marriageRegistrationService.updateMarriageRegister(marriageRegister, user);
+        try {
+            marriageRegistrationService.updateMarriageRegister(marriageRegister, user);
+        } catch (CRSRuntimeException e) {
+            addActionError(getText("error.marriageregister.registrationfailed"));
+            return marriageRegistrationInit();
+        }
+        addActionMessage("message.marriageregister.registered");
         return SUCCESS;
     }
 

@@ -190,6 +190,26 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
+    public void updateMuslimMarriageDetails(MarriageRegister marriageRegister, User user) {
+        //TODO: Validate Marriage details
+        checkUserPermission(Permission.EDIT_MARRIAGE, ErrorCodes.PERMISSION_DENIED, " update  marriage register ", user);
+        marriageRegistrationDAO.updateMarriageRegister(marriageRegister, user);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void updateMarriageRegistrationDetails(MarriageRegister marriageRegister, User user) {
+        //TODO: Validate Marriage details
+        checkUserPermission(Permission.EDIT_MARRIAGE, ErrorCodes.PERMISSION_DENIED, " update  marriage register ", user);
+        marriageRegistrationDAO.updateMarriageRegister(marriageRegister, user);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
     public List<UserWarning> addSecondMarriageNotice(MarriageRegister notice, MarriageNotice.Type type,
         boolean ignoreWarnings, boolean undo, User user) {
         //only MALE and FEMALE notices are allowed to add second notice
@@ -355,14 +375,17 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     }
 
     public void approveMarriageRegister(long idUKey, User user) {
+        checkUserPermission(Permission.APPROVE_MARRIAGE, ErrorCodes.PERMISSION_DENIED, "approve marriage register", user);
         MarriageRegister marriageRegister = marriageRegistrationDAO.getByIdUKey(idUKey);
         marriageRegister.setState(MarriageRegister.State.REGISTRATION_APPROVED);
         marriageRegistrationDAO.updateMarriageRegister(marriageRegister, user);
     }
 
     public void rejectMarriageRegister(long idUKey, String comment, User user) {
+        checkUserPermission(Permission.APPROVE_MARRIAGE, ErrorCodes.PERMISSION_DENIED, "approve marriage register", user);
         MarriageRegister marriageRegister = marriageRegistrationDAO.getByIdUKey(idUKey);
         marriageRegister.setState(MarriageRegister.State.REGISTRATION_REJECTED);
+        //TODO validate comment if needed
         marriageRegister.setRegistrationRejectComment(comment);
         marriageRegistrationDAO.updateMarriageRegister(marriageRegister, user);
     }

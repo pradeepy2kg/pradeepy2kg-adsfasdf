@@ -22,9 +22,12 @@
     });
 </script>
 <s:actionerror/>
+<s:actionmessage/>
 <div class="marriage-notice-outer">
 <s:form method="post">
+<%-- TODO: tobe removed--%>
 <s:hidden name="marriage.idUKey" />
+<s:hidden name="idUKey" />
 <table border="1" style="margin-top:1px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
        cellpadding="5px">
     <caption></caption>
@@ -48,7 +51,7 @@
         </td>
         <td colspan="2">
             <s:label value="YYYY-MM-DD" cssStyle="margin-left:50px;font-size:10px"/><br>
-            <s:textfield name="marriage.dateOfMarriage" id="marriageDatePicker" maxLength="10"/>
+            <s:textfield name="marriage.dateOfMarriage" id="marriageDatePicker" maxLength="10" onmouseover="datepicker('marriageDatePicker')"/>
         </td>
         <td colspan="3"><label><span class="font-8">රෙජිස්ට්‍රාර්ගේ/දේවගැතිගේ අනන්‍යතා අංකය
                     <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
@@ -80,7 +83,7 @@
             <s:select id="districtId" name="marriageDistrictId" list="districtList"
                       value="marriageDistrictId"
                       cssStyle="width:98.5%; width:240px;"
-                      onclick="populateDSDivisions('districtId','dsDivisionId','mrDivisionId', 'Marriage')"/>
+                      onchange="populateDSDivisions('districtId','dsDivisionId','mrDivisionId', 'Marriage')"/>
         </td>
         <td colspan="2"><label><span class="font-8">
             ප්‍රාදේශීය ලේකම් කොට්ඨාශය
@@ -255,10 +258,10 @@
             Date of Birth
         </td>
         <td colspan="1">
-            <s:textfield name="marriage.male.dateOfBirthMale" id="dateOfBirthMaleDatePicker" maxLength="10"/>
+            <s:textfield name="marriage.male.dateOfBirthMale" id="dateOfBirthMaleDatePicker" maxLength="10" onclick="datepicker('dateOfBirthMaleDatePicker')" />
         </td>
         <td colspan="1">
-            <s:textfield name="marriage.female.dateOfBirthFemale" id="dateOfBirthFemaleDatePicker" maxLength="10"/>
+            <s:textfield name="marriage.female.dateOfBirthFemale" id="dateOfBirthFemaleDatePicker" maxLength="10" onclick="datepicker('dateOfBirthFemaleDatePicker')"/>
         </td>
     </tr>
     <tr>
@@ -398,7 +401,7 @@
         </td>
         <td>
             <s:label value="YYYY-MM-DD" cssStyle="margin-left:10px;font-size:10px"/><br>
-            <s:textfield name="marriage.registrationDate" id="registrationDatePicker" maxLength="10"/>
+            <s:textfield name="marriage.registrationDate" id="registrationDatePicker" maxLength="10" onclick="datepicker('registrationDatePicker')"/>
         </td>
     </tr>
     <tr>

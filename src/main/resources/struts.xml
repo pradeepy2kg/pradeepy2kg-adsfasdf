@@ -1166,22 +1166,23 @@
 
         <action name="eprMarriageRegistrationInit" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
                 method="marriageRegistrationInit">
-            <result type="tiles" name="success">epr.marriageRegistration</result>
+            <result type="tiles" name="input">epr.marriageRegistration</result>
         </action>
 
         <action name="eprRegisterNewMarriage" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
                 method="registerNewMarriage">
-            <result type="tiles" name="success">epr.home</result>
+            <result type="tiles" name="success">epr.success</result>
         </action>
 
         <action name="eprUpdateMarriage" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
                 method="updateMarriageDetails">
-            <result type="tiles" name="success">epr.home</result>
+            <result type="tiles" name="success">epr.success</result>
         </action>
 
         <action name="eprRegisterNoticedMarriage" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
                 method="registerNoticedMarriage">
-            <result type="tiles" name="success">epr.home</result>
+            <result type="tiles" name="success">epr.success</result>
+            <result type="tiles" name="input">epr.marriageRegistration</result>
         </action>
 
         <action name="eprMarriageNoticeEditInit" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
@@ -1271,16 +1272,18 @@
             <result type="tiles" name="error">epr.marriageNoticeSearchHome</result>
         </action>
 
-        <action name="eprMarriageRegistrationApprove"
+        <action name="eprApproveMarriageRegistration"
                 class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
                 method="approveMarriageRegister">
             <result type="tiles" name="success">epr.marriageRegisterSearchInit</result>
+            <result type="tiles" name="error">epr.marriageRegisterSearchInit</result>
         </action>
 
-        <action name="eprMarriageRegistrationReject"
+        <action name="eprRejectMarriageRegistration"
                 class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
                 method="rejectMarriageRegister">
             <result type="tiles" name="success">epr.marriageRegisterSearchInit</result>
+            <result type="tiles" name="error">epr.marriageRegisterSearchInit</result>
         </action>
 
         <action name="eprMarkLicenseAsPrinted" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"

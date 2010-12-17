@@ -19,6 +19,8 @@
         $("#tabs").tabs();
     });
 </script>
+<s:actionerror/>
+<s:actionmessage/>
 <s:form action="eprMarriageRegisterSearch.do" method="POST" onsubmit="javascript:return validate()">
     <div id="tabs" style="font-size:10pt;">
         <ul>
@@ -46,7 +48,7 @@
                     <td>
                         <s:select id="districtId" name="districtId" list="districtList" value="districtId"
                                   cssStyle="width:98.5%; width:240px;"
-                                  onclick="populateDSDivisions('districtId','dsDivisionId','mrDivisionId', 'Marriage')"/>
+                                  onchange="populateDSDivisions('districtId','dsDivisionId','mrDivisionId', 'Marriage')"/>
                     </td>
                     <td></td>
                     <td>
@@ -138,7 +140,6 @@
                     <th width="15px"></th>
                     <th width="15px"></th>
                     <th width="15px"></th>
-                    <th width="15px"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -170,7 +171,7 @@
                             </s:a>
                         </td>
                         <td align="center">
-                            <s:url id="approveSelected" action="eprMarriageRegistrationApprove.do">
+                            <s:url id="approveSelected" action="eprApproveMarriageRegistration.do">
                                 <s:param name="idUKey" value="idUKey"/>
                             </s:url>
                             <s:a href="%{approveSelected}" title="%{getText('approveToolTip.label')}">
@@ -178,20 +179,11 @@
                             </s:a>
                         </td>
                         <td align="center">
-                            <s:url id="rejectSelected" action="eprMarriageRegistrationReject.do">
+                            <s:url id="rejectSelected" action="eprRejectMarriageRegistration.do">
                                 <s:param name="idUKey" value="idUKey"/>
                             </s:url>
                             <s:a href="%{rejectSelected}" title="%{getText('rejectToolTip.label')}">
                                 <img src="<s:url value='/images/reject.gif'/>" width="25" height="25" border="none"/>
-                            </s:a>
-                        </td>
-                        <td align="center">
-                            <s:url id="deleteSelected" >
-                                <s:param name="idUKey" value="idUKey"/>
-                                <s:param name="noticeType" value="type"/>
-                            </s:url>
-                            <s:a href="%{deleteSelected}" title="%{getText('deleteToolTip.label')}">
-                                <img src="<s:url value='/images/delete.gif'/>" width="25" height="25" border="none"/>
                             </s:a>
                         </td>
                         <td>

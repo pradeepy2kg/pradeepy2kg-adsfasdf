@@ -112,7 +112,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
      * loading search page for marriage register
      */
     public String marriageRegisterSearchInit() {
-        commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId, dsDivisionId, mrDivisionId, "Marriage", user, language);
+        commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId, dsDivisionId, mrDivisionId, AppConstants.MARRIAGE, user, language);
         return SUCCESS;
     }
 
@@ -120,7 +120,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
      * loading search result page for marriage register
      */
     public String marriageRegisterSearchResult() {
-        commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId, dsDivisionId, mrDivisionId, "Marriage", user, language);
+        commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId, dsDivisionId, mrDivisionId, AppConstants.MARRIAGE, user, language);
         pageNo += 1;
         noOfRows = appParametersDAO.getIntParameter(MR_APPROVAL_ROWS_PER_PAGE);
         if (noticeSerialNo != null) {
@@ -141,18 +141,32 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         return SUCCESS;
     }
 
+    /**
+     * Approve noticed/muslim marriages
+     * @return
+     */
     public String approveMarriageRegister() {
-        marriageRegistrationService.approveMarriageRegister(idUKey, user);
-        commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId, dsDivisionId,
-            mrDivisionId, AppConstants.MARRIAGE, user, language);
+        try {
+            marriageRegistrationService.approveMarriageRegister(idUKey, user);
+        } catch (CRSRuntimeException e) {
+            addActionError(getText("error.marriageregister.notapproved"));
+            return marriageRegisterSearchInit();
+        }
         addActionMessage(getText("message.marriageregister.approved"));
         return marriageRegisterSearchInit();
     }
 
+    /**
+     * Reject noticed/muslim marriages
+     * @return
+     */
     public String rejectMarriageRegister() {
-        marriageRegistrationService.rejectMarriageRegister(idUKey, "rejected", user);
-        commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId, dsDivisionId,
-            mrDivisionId, AppConstants.MARRIAGE, user, language);
+        try {
+            marriageRegistrationService.rejectMarriageRegister(idUKey, "rejected", user);
+        } catch (CRSRuntimeException e) {
+            addActionError(getText("error.marriageregister.notrejected"));
+            return marriageRegisterSearchInit();
+        }
         addActionMessage(getText("message.marriageregister.rejected"));
         return marriageRegisterSearchInit();
     }
@@ -170,12 +184,12 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
             //error happens when approving marriage notice
             addActionError(getText("error.approval.failed", new String[]{Long.toString(idUKey), noticeType.toString()}));
             commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId,
-                dsDivisionId, mrDivisionId, "Marriage", user, language);
+                dsDivisionId, mrDivisionId, AppConstants.MARRIAGE, user, language);
             getApprovalPendingNotices();
             return ERROR;
         }
         commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId, dsDivisionId,
-            mrDivisionId, "Marriage", user, language);
+            mrDivisionId, AppConstants.MARRIAGE, user, language);
         getApprovalPendingNotices();
         addActionMessage(getText("message.approve.successfully"));
         logger.debug("successfully approved :idUKey : {}", idUKey);
@@ -196,14 +210,14 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         }
         catch (CRSRuntimeException e) {
             commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId,
-                dsDivisionId, mrDivisionId, "Marriage", user, language);
+                dsDivisionId, mrDivisionId, AppConstants.MARRIAGE, user, language);
             getApprovalPendingNotices();
             addActionError(getText("error.delete.notice"));
             return ERROR;
         }
         addActionMessage(getText("massage.delete.successfully"));
         commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId,
-            dsDivisionId, mrDivisionId, "Marriage", user, language);
+            dsDivisionId, mrDivisionId, AppConstants.MARRIAGE, user, language);
         getApprovalPendingNotices();
         return SUCCESS;
     }
@@ -233,13 +247,13 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
                     break;
             }
             commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId,
-                dsDivisionId, mrDivisionId, "Marriage", user, language);
+                dsDivisionId, mrDivisionId, AppConstants.MARRIAGE, user, language);
             getApprovalPendingNotices();
             return ERROR;
         }
         //todo check table load after success or error  amith
         commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId,
-            dsDivisionId, mrDivisionId, "Marriage", user, language);
+            dsDivisionId, mrDivisionId, AppConstants.MARRIAGE, user, language);
         getApprovalPendingNotices();
         return SUCCESS;
     }
@@ -248,7 +262,8 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
      * printing license to marriage
      */
     public String licenseToMarriagePrintInit() {
-        logger.debug("attempt to print license to marriage for marriage notice :idUKey : {}", idUKey);
+        logger.debug("attempt to print license to marriage for marriage notice :idUKey : {} and notice type : {}",
+            idUKey, noticeType);
         try {
             marriage = marriageRegistrationService.getMarriageNoticeForPrintLicense(idUKey, user);
             populateLicense(marriage);
