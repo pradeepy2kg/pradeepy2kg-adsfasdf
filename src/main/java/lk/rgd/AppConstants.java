@@ -58,13 +58,4 @@ public class AppConstants {
      * DS Division of Division Types
      */
     public static final String DS_DIVISION = "DS";
-    /**
-     * SINHALA in Sinhala
-     */
-    public static final String SINHALA_IN_SINHALA = "සිංහල";
-    /**
-     * TAMIL in Tamil
-     */
-    public static final String TAMIL_IN_TAMIL = "தமிழ்";
-
 }
