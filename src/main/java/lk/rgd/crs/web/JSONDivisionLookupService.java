@@ -3,6 +3,7 @@ package lk.rgd.crs.web;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.dao.DistrictDAO;
+import lk.rgd.common.util.LocaleUtil;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.dao.MRDivisionDAO;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -96,7 +97,7 @@ public class JSONDivisionLookupService extends HttpServlet {
                 //TODO: to be removed safely
                 // passing dsDivisionId, return the MR list
                 optionLists.put("mrDivisionList", getMRDivision(lang, divisionId, user));
-            } else if ("8".equals(mode)) {
+            } else if ("8".equals(mode)) { //TODO : tobe removed
                 // passing district id and , return the MR list and DS list
                 List ds = getDSDivisions(lang, divisionId, user);
                 int dsDivisionId = Integer.parseInt(((SelectOption) ds.get(0)).getOptionValue());
@@ -104,11 +105,25 @@ public class JSONDivisionLookupService extends HttpServlet {
                 optionLists.put("dsDivisionList", ds);
                 optionLists.put("mrDivisionList", mr);
             } else if ("9".equals(mode)) {
-                // passing dsDivisionId, return the BD list
-                optionLists.put("divisionList", getBDDivisions(lang, divisionId, user));
+                // passing dsDivisionId, return the BD list with All option
+                optionLists.put("divisionList", getBDDivisionList(lang, divisionId, user));
             } else if ("10".equals(mode)) {
-                // passing dsDivisionId, return the MR list
-                optionLists.put("divisionList", getMRDivision(lang, divisionId, user));
+                // passing dsDivisionId, return the MR list with All option
+                optionLists.put("divisionList", getMRDivisionList(lang, divisionId, user));
+            } else if ("11".equals(mode)) {
+                // passing districtId, return DS List and the BD List for the 1st DS division with All option
+                List ds = getDSDivisionList(lang, divisionId, user);
+                int dsDivisionId = Integer.parseInt(((SelectOption) ds.get(0)).getOptionValue());
+                List bd = getBDDivisionList(lang, dsDivisionId, user);
+                optionLists.put("dsDivisionList", ds);
+                optionLists.put("divisionList", bd);
+            } else if ("12".equals(mode)) {
+                // passing district id and , return the MR list and DS list with All option
+                List ds = getDSDivisionList(lang, divisionId, user);
+                int dsDivisionId = Integer.parseInt(((SelectOption) ds.get(0)).getOptionValue());
+                List mr = getMRDivisionList(lang, dsDivisionId, user);
+                optionLists.put("dsDivisionList", ds);
+                optionLists.put("divisionList", mr);
             } else {
                 // passing districtId, return DS List and the BD List for the 1st DS division
                 List ds = getDSDivisions(lang, divisionId, user);
@@ -117,8 +132,7 @@ public class JSONDivisionLookupService extends HttpServlet {
                 optionLists.put("dsDivisionList", ds);
                 optionLists.put("bdDivisionList", bd);
             }
-        } catch (Exception
-            e) {
+        } catch (Exception e) {
             logger.error("Fatal Error : {}", e);
             return;
         }
@@ -130,6 +144,7 @@ public class JSONDivisionLookupService extends HttpServlet {
         out.flush();
     }
 
+    //TODO : tobe removed
     private List getBDDivisions(String language, int dsDivisionId, User user) {
         Map<Integer, String> bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
         logger.debug("Loaded BD list : {}", bdDivisionList);
@@ -137,6 +152,7 @@ public class JSONDivisionLookupService extends HttpServlet {
         return getList(bdDivisionList);
     }
 
+    //TODO : tobe removed
     private List getMRDivision(String language, int dsDivision, User user) {
         Map<Integer, String> bdDivisionList = mrDivisionDAO.getMRDivisionNames(dsDivision, language, user);
         logger.debug("Loaded MR list : {}", bdDivisionList);
@@ -156,6 +172,7 @@ public class JSONDivisionLookupService extends HttpServlet {
         return getList(districtList);
     }
 
+    //TODO : tobe removed
     private List getDSDivisions(String language, int BDId, User user) {
         Map<Integer, String> dsDivisionList = dsDivisionDAO.getDSDivisionNames(BDId, language, user);
         logger.debug("Loaded DS list : {}", dsDivisionList);
@@ -163,7 +180,28 @@ public class JSONDivisionLookupService extends HttpServlet {
         return getList(dsDivisionList);
     }
 
+    private List getBDDivisionList(String language, int dsDivisionId, User user) {
+        Map<Integer, String> bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
+        logger.debug("Loaded BD list with All option : {}", bdDivisionList);
 
+        return getList(bdDivisionList, language);
+    }
+
+    private List getMRDivisionList(String language, int dsDivision, User user) {
+        Map<Integer, String> bdDivisionList = mrDivisionDAO.getMRDivisionNames(dsDivision, language, user);
+        logger.debug("Loaded MR list with All option : {}", bdDivisionList);
+
+        return getList(bdDivisionList, language);
+    }
+
+    private List getDSDivisionList(String language, int BDId, User user) {
+        Map<Integer, String> dsDivisionList = dsDivisionDAO.getDSDivisionNames(BDId, language, user);
+        logger.debug("Loaded DS list with All option : {}", dsDivisionList);
+
+        return getList(dsDivisionList, language);
+    }
+
+    //TODO : tobe removed
     private List getList(Map<Integer, String> map) {
         List<SelectOption> ds = new ArrayList<SelectOption>();
 
@@ -173,7 +211,23 @@ public class JSONDivisionLookupService extends HttpServlet {
             option.setOptionDisplay(e.getValue());
             ds.add(option);
         }
+        return ds;
+    }
 
+    private List getList(Map<Integer, String> map, String language) {
+
+        List<SelectOption> ds = new ArrayList<SelectOption>();
+        SelectOption headerOption = new SelectOption();
+        headerOption.setOptionValue("0");
+        headerOption.setOptionDisplay(LocaleUtil.getLocalizedString(language, "all"));
+        ds.add(headerOption);
+
+        for (Map.Entry<Integer, String> e : map.entrySet()) {
+            SelectOption option = new SelectOption();
+            option.setOptionValue(e.getKey().toString());
+            option.setOptionDisplay(e.getValue());
+            ds.add(option);
+        }
         return ds;
     }
 }
