@@ -83,7 +83,7 @@
             <s:select id="districtId" name="marriageDistrictId" list="districtList"
                       value="marriageDistrictId"
                       cssStyle="width:98.5%; width:240px;"
-                      onchange="populateDSDivisions('districtId','dsDivisionId','mrDivisionId', 'Marriage')"/>
+                      onchange="populateDSDivisions('districtId','dsDivisionId','mrDivisionId', 'Marriage', false)"/>
         </td>
         <td colspan="2"><label><span class="font-8">
             ප්‍රාදේශීය ලේකම් කොට්ඨාශය
@@ -94,7 +94,7 @@
         <td align="center" colspan="3">
             <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="dsDivisionId"
                       cssStyle="width:98.5%; width:240px;"
-                      onchange="populateDivisions('dsDivisionId', 'mrDivisionId', 'Marriage')"/>
+                      onchange="populateDivisions('dsDivisionId', 'mrDivisionId', 'Marriage', false)"/>
         </td>
     </tr>
 
