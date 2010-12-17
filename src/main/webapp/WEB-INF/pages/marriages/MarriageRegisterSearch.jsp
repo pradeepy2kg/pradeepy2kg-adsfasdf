@@ -46,7 +46,8 @@
                         <s:label value="%{getText('district.label')}"/>
                     </td>
                     <td>
-                        <s:select id="districtId" name="districtId" list="districtList" value="districtId"
+                        <s:select id="districtId" name="districtId" list="districtList"
+                                  value="districtId" headerKey="0" headerValue="%{getText('all')}"
                                   cssStyle="width:98.5%; width:240px;"
                                   onchange="populateDSDivisions('districtId','dsDivisionId','mrDivisionId', 'Marriage', true)"/>
                     </td>
@@ -55,7 +56,8 @@
                         <s:label value="%{getText('select_DS_division.label')}"/>
                     </td>
                     <td>
-                        <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="dsDivisionId"
+                        <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList"
+                                  value="dsDivisionId" headerKey="0" headerValue="%{getText('all')}"
                                   cssStyle="width:98.5%; width:240px;"
                                   onchange="populateDivisions('dsDivisionId', 'mrDivisionId', 'Marriage', true)"/>
                     </td>
@@ -66,7 +68,7 @@
                     </td>
                     <td>
                         <s:select id="mrDivisionId" name="mrDivisionId" list="mrDivisionList"
-                                  value="mrDivisionId" headerKey="0" headerValue="%{getText('all.divisions.label')}"
+                                  value="mrDivisionId" headerKey="0" headerValue="%{getText('all')}"
                                   cssStyle="width:98.5%; width:240px;"/>
                     </td>
                     <td></td>

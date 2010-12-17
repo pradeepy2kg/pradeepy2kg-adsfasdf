@@ -5,6 +5,7 @@ import lk.rgd.common.api.domain.Location;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.util.LocaleUtil;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.dao.MRDivisionDAO;
 import lk.rgd.AppConstants;
@@ -151,8 +152,8 @@ public class CommonUtil {
      */
     public Map<String, String> findLanguageList() {
         Map<String, String> languages = new HashMap<String, String>();
-        languages.put(AppConstants.SINHALA, AppConstants.SINHALA_IN_SINHALA);
-        languages.put(AppConstants.TAMIL, AppConstants.TAMIL_IN_TAMIL);
+        languages.put(AppConstants.SINHALA, LocaleUtil.getLocalizedString("si",AppConstants.SINHALA));
+        languages.put(AppConstants.TAMIL, LocaleUtil.getLocalizedString("ta",AppConstants.TAMIL));
         return languages;
     }
 
