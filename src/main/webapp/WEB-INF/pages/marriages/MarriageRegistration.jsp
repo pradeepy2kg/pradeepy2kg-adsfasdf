@@ -21,8 +21,8 @@
         });
     });
 </script>
-<s:actionerror/>
-<s:actionmessage/>
+<s:actionerror cssClass="actionmessage"/>
+<s:actionmessage cssClass="actionerror"/>
 <div class="marriage-notice-outer">
 <s:form method="post">
 <%-- TODO: tobe removed--%>
@@ -258,10 +258,10 @@
             Date of Birth
         </td>
         <td colspan="1">
-            <s:textfield name="marriage.male.dateOfBirthMale" id="dateOfBirthMaleDatePicker" maxLength="10" onclick="datepicker('dateOfBirthMaleDatePicker')" />
+            <s:textfield name="marriage.male.dateOfBirthMale" id="dateOfBirthMaleDatePicker" maxLength="10" onmouseover="datepicker('dateOfBirthMaleDatePicker')" />
         </td>
         <td colspan="1">
-            <s:textfield name="marriage.female.dateOfBirthFemale" id="dateOfBirthFemaleDatePicker" maxLength="10" onclick="datepicker('dateOfBirthFemaleDatePicker')"/>
+            <s:textfield name="marriage.female.dateOfBirthFemale" id="dateOfBirthFemaleDatePicker" maxLength="10" onmouseover="datepicker('dateOfBirthFemaleDatePicker')"/>
         </td>
     </tr>
     <tr>
@@ -401,7 +401,7 @@
         </td>
         <td>
             <s:label value="YYYY-MM-DD" cssStyle="margin-left:10px;font-size:10px"/><br>
-            <s:textfield name="marriage.registrationDate" id="registrationDatePicker" maxLength="10" onclick="datepicker('registrationDatePicker')"/>
+            <s:textfield name="marriage.registrationDate" id="registrationDatePicker" maxLength="10" onmouseover="datepicker('registrationDatePicker')"/>
         </td>
     </tr>
     <tr>
