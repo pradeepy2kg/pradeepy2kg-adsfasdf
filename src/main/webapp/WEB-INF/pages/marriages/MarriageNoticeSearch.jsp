@@ -308,6 +308,11 @@
                                     <s:param name="idUKey" value="idUKey"/>
                                     <s:param name="secondNotice" value="true"/>
                                     <s:param name="noticeType" value="type"/>
+                                    <s:param name="pageNo" value="%{#request.pageNo}"/>
+                                    <s:param name="districtId" value="#request.districtId"/>
+                                    <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
+                                    <s:param name="mrDivisionId" value="#request.mrDivisionId"/>
+                                    <s:param name="printStart" value="#request.printStart"/>
                                 </s:url>
                                 <s:a href="%{addNextNotice}" title="%{getText('nextNoticeToolTip.label')}">
                                     <img src="<s:url value='/images/add_page.png'/>" width="25" height="25"
@@ -326,6 +331,11 @@
                                 <s:url id="editSelected" action="eprMarriageNoticeEditInit.do">
                                     <s:param name="idUKey" value="idUKey"/>
                                     <s:param name="noticeType" value="type"/>
+                                    <s:param name="pageNo" value="%{#request.pageNo}"/>
+                                    <s:param name="districtId" value="#request.districtId"/>
+                                    <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
+                                    <s:param name="mrDivisionId" value="#request.mrDivisionId"/>
+                                    <s:param name="printStart" value="#request.printStart"/>
                                 </s:url>
                                 <s:a href="%{editSelected}" title="%{getText('editToolTip.label')}">
                                     <img src="<s:url value='/images/edit.png'/>" width="25" height="25" border="none"/>
@@ -344,6 +354,11 @@
                                 <s:url id="approveSelected" action="eprApproveMarriageNotice.do">
                                     <s:param name="idUKey" value="idUKey"/>
                                     <s:param name="noticeType" value="type"/>
+                                    <s:param name="pageNo" value="%{#request.pageNo}"/>
+                                    <s:param name="districtId" value="#request.districtId"/>
+                                    <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
+                                    <s:param name="mrDivisionId" value="#request.mrDivisionId"/>
+                                    <s:param name="printStart" value="#request.printStart"/>
                                 </s:url>
                                 <s:a href="%{approveSelected}" title="%{getText('approveToolTip.label')}">
                                     <img src="<s:url value='/images/approve.gif'/>" width="25" height="25"
@@ -355,6 +370,11 @@
                             <s:url id="rejectSelected" action="eprMarriageNoticeRejectInit.do">
                                 <s:param name="idUKey" value="idUKey"/>
                                 <s:param name="noticeType" value="type"/>
+                                <s:param name="pageNo" value="%{#request.pageNo}"/>
+                                <s:param name="districtId" value="#request.districtId"/>
+                                <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
+                                <s:param name="mrDivisionId" value="#request.mrDivisionId"/>
+                                <s:param name="printStart" value="#request.printStart"/>
                             </s:url>
                             <s:a href="%{rejectSelected}" title="%{getText('rejectToolTip.label')}">
                                 <img src="<s:url value='/images/reject.gif'/>" width="25" height="25" border="none"/>
@@ -364,6 +384,11 @@
                             <s:url id="deleteSelected" action="eprMarriageNoticeDelete.do">
                                 <s:param name="idUKey" value="idUKey"/>
                                 <s:param name="noticeType" value="type"/>
+                                <s:param name="pageNo" value="%{#request.pageNo}"/>
+                                <s:param name="districtId" value="#request.districtId"/>
+                                <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
+                                <s:param name="mrDivisionId" value="#request.mrDivisionId"/>
+                                <s:param name="printStart" value="#request.printStart"/>
                             </s:url>
                             <s:a href="%{deleteSelected}" title="%{getText('deleteToolTip.label')}">
                                 <img src="<s:url value='/images/delete.gif'/>" width="25" height="25" border="none"/>
@@ -373,6 +398,11 @@
                             <s:url id="printSelected" action="eprLicenseToMarriage.do">
                                 <s:param name="idUKey" value="idUKey"/>
                                 <s:param name="noticeType" value="type"/>
+                                <s:param name="pageNo" value="%{#request.pageNo}"/>
+                                <s:param name="districtId" value="#request.districtId"/>
+                                <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
+                                <s:param name="mrDivisionId" value="#request.mrDivisionId"/>
+                                <s:param name="printStart" value="#request.printStart"/>
                             </s:url>
                             <s:a href="%{printSelected}" title="%{getText('printToolTip.label')}">
                                 <img src="<s:url value='/images/print_icon.gif'/>" width="25" height="25"
@@ -385,6 +415,35 @@
             </table>
         </fieldset>
     </s:if>
+    <div class="next-previous" style="float:right;margin-right:10px;clear:both;">
+        <s:url id="previousUrl" action="eprMarriageNoticeSearchPrevious.do">
+            <s:param name="pageNo" value="%{#request.pageNo}"/>
+            <s:param name="districtId" value="#request.districtId"/>
+            <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
+            <s:param name="mrDivisionId" value="#request.mrDivisionId"/>
+            <s:param name="printStart" value="#request.printStart"/>
+        </s:url>
+        <s:url id="nextUrl" action="eprMarriageNoticeSearchNext.do">
+            <s:param name="pageNo" value="%{#request.pageNo}"/>
+            <s:param name="districtId" value="#request.districtId"/>
+            <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
+            <s:param name="mrDivisionId" value="#request.mrDivisionId"/>
+            <s:param name="printStart" value="#request.printStart"/>
+        </s:url>
+        <%--<s:if test="printStart!=0 & printStart>0">--%>
+        <s:if test="printStart!=0 & pageNo !=1">
+            <s:a href="%{previousUrl}">
+                <img src="<s:url value='/images/previous.gif'/>" border="none"/>
+            </s:a>
+            <s:label value="%{getText('previous.label')}"/>
+        </s:if>
+        <s:if test="searchList.size >=50">
+            <s:a href="%{nextUrl}">
+                <img src="<s:url value='/images/next.gif'/>" border="none"/>
+            </s:a>
+            <s:label value="%{getText('next.label')}"/>
+        </s:if>
+    </div>
 </div>
 <s:hidden id="error1" value="%{getText('p1.invalide.inputType')}"/>
 <s:hidden id="error2" value="%{getText('marriageNotice.serial.label')}"/>

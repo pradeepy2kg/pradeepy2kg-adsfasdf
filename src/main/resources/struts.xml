@@ -1164,6 +1164,16 @@
             <result type="tiles" name="success">epr.marriageNoticeSearchHome</result>
         </action>
 
+        <action name="eprMarriageNoticeSearchNext" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
+                method="nextNoticesPage">
+            <result type="tiles" name="success">epr.marriageNoticeSearchHome</result>
+        </action>
+
+        <action name="eprMarriageNoticeSearchPrevious"
+                class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction" method="previousNoticesPage">
+            <result type="tiles" name="success">epr.marriageNoticeSearchHome</result>
+        </action>
+
         <action name="eprMarriageRegistrationInit" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
                 method="marriageRegistrationInit">
             <result type="tiles" name="input">epr.marriageRegistration</result>
