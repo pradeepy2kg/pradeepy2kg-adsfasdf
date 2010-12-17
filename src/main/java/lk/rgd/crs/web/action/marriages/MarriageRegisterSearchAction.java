@@ -5,7 +5,6 @@ import lk.rgd.AppConstants;
 import lk.rgd.ErrorCodes;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.User;
-import lk.rgd.common.api.domain.UserLocation;
 import lk.rgd.common.util.NameFormatUtil;
 import lk.rgd.common.util.WebUtils;
 import lk.rgd.crs.CRSRuntimeException;
@@ -69,6 +68,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     private int mrDivisionId;
     private int pageNo;
     private int noOfRows;
+    private int printStart;
     private int licensePrintedLocationId;
     private int locationId;
 
@@ -95,22 +95,17 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         districtList = new HashMap<Integer, String>();
         dsDivisionList = new HashMap<Integer, String>();
         mrDivisionList = new HashMap<Integer, String>();
-
     }
 
     /**
-     * loading search page for marriage notice search
+     * loading init search page for marriage notice search
      */
     public String marriageNoticeSearchInit() {
         logger.debug("Marriage notice search page loaded");
         populateBasicLists();
+        pageNo += 1;
         getApprovalPendingNotices();
-
-        if (searchList.size() == 0) {
-            addActionMessage(getText("noItemMsg.label"));
-        }
-        logger.debug("Marriage notice search list loaded with size : {}", searchList.size());
-
+        showNoticeSearchResultSize();
         // by doing following previously user entered values will be removed in jsp page
         clearSearchingOptionValues();
         return SUCCESS;
@@ -151,7 +146,6 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
 
     /**
      * Approve noticed/muslim marriages
-     * @return
      */
     public String approveMarriageRegister() {
         try {
@@ -166,7 +160,6 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
 
     /**
      * Reject noticed/muslim marriages
-     * @return
      */
     public String rejectMarriageRegister() {
         try {
@@ -199,7 +192,6 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId, dsDivisionId,
             mrDivisionId, AppConstants.MARRIAGE, user, language);
         getApprovalPendingNotices();
-        addActionMessage(getText("message.approve.successfully"));
         logger.debug("successfully approved :idUKey : {}", idUKey);
         return SUCCESS;
     }
@@ -321,6 +313,38 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         return SUCCESS;
     }
 
+    /**
+     * This method is used for pagination(move backward) in marriage notice search list page
+     */
+    public String previousNoticesPage() {
+        logger.debug("Previous page of Marriage notices search list loaded");
+        noOfRows = appParametersDAO.getIntParameter(MR_APPROVAL_ROWS_PER_PAGE);
+        pageNo = printStart / noOfRows;
+
+        filterAndLoadMarriageNotices();
+
+        printStart -= noOfRows;
+        populateBasicLists();
+        showNoticeSearchResultSize();
+        return SUCCESS;
+    }
+
+    /**
+     * This method is used for pagination(move backward) in marriage notice search list page
+     */
+    public String nextNoticesPage() {
+        logger.debug("Next page of Marriage notices search list loaded");
+        noOfRows = appParametersDAO.getIntParameter(MR_APPROVAL_ROWS_PER_PAGE);
+        pageNo = ((printStart + noOfRows) / noOfRows) + 1;
+
+        filterAndLoadMarriageNotices();
+
+        printStart += noOfRows;
+        populateBasicLists();
+        showNoticeSearchResultSize();
+        return SUCCESS;
+    }
+
     private void populateLocationsAndIssuingUsers() {
         //get current users location
         locationList = commonUtil.populateActiveUserLocations(user, language);
@@ -345,11 +369,14 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
      * This method used to load approval pending Marriage Notices list
      */
     private void getApprovalPendingNotices() {
-        pageNo += 1;
         noOfRows = appParametersDAO.getIntParameter(MR_APPROVAL_ROWS_PER_PAGE);
+        filterAndLoadMarriageNotices();
+    }
 
+    private void filterAndLoadMarriageNotices() {
         if (noticeSerialNo != null) {
             if (mrDivisionId != 0) {
+                // Search by MRDivision and Serial Number of male or female notice
                 searchList = WebUtils.populateNoticeList(marriageRegistrationService.getMarriageNoticePendingApprovalByMRDivisionAndSerial(
                     mrDivisionDAO.getMRDivisionByPK(mrDivisionId), noticeSerialNo, true, user));
             } else {
@@ -358,27 +385,42 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         } else {
             if (isEmpty(pinOrNic) && noticeSerialNo == null) {
                 if (mrDivisionId == 0) {
+                    // Search by DSDivision 
                     if (searchStartDate == null && searchEndDate == null) {
                         searchList = WebUtils.populateNoticeList(marriageRegistrationService.getMarriageNoticePendingApprovalByDSDivision(
                             dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, true, user));
                     } else {
+                        // Search by DSDivision and register date range of male or female notice
                         searchList = WebUtils.populateNoticeList(marriageRegistrationService.getMarriageNoticesByDSDivisionAndRegisterDateRange(
                             dsDivisionDAO.getDSDivisionByPK(dsDivisionId), searchStartDate, searchEndDate, pageNo, noOfRows, true, user));
                     }
                 } else {
                     if (searchStartDate == null && searchEndDate == null) {
+                        // Search by MRDivision
                         searchList = WebUtils.populateNoticeList(marriageRegistrationService.getMarriageNoticePendingApprovalByMRDivision(
                             mrDivisionDAO.getMRDivisionByPK(mrDivisionId), pageNo, noOfRows, true, user));
                     } else {
+                        // Search by MRDivision and register date range of male or female notice
                         searchList = WebUtils.populateNoticeList(marriageRegistrationService.getMarriageNoticesByMRDivisionAndRegisterDateRange(
                             mrDivisionDAO.getMRDivisionByPK(mrDivisionId), searchStartDate, searchEndDate, pageNo, noOfRows, true, user));
                     }
                 }
             } else {
+                // Search by PIN or NIC of male or female party
                 searchList = WebUtils.populateNoticeList(
                     marriageRegistrationService.getMarriageNoticePendingApprovalByPINorNIC(pinOrNic, true, user));
             }
         }
+    }
+
+    /**
+     * This method is used to show action message if search result list is empty
+     */
+    private void showNoticeSearchResultSize() {
+        if (searchList.size() == 0) {
+            addActionMessage(getText("noItemMsg.label"));
+        }
+        logger.debug("Marriage notice search list loaded with size : {}", searchList.size());
     }
 
     /**
@@ -537,6 +579,14 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
 
     public void setNoOfRows(int noOfRows) {
         this.noOfRows = noOfRows;
+    }
+
+    public int getPrintStart() {
+        return printStart;
+    }
+
+    public void setPrintStart(int printStart) {
+        this.printStart = printStart;
     }
 
     public List<MarriageRegister> getMarriageRegisterSearchList() {
