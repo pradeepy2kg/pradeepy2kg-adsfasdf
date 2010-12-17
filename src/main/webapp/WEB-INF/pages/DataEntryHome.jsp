@@ -20,7 +20,7 @@
     }
 
     #chart1, #chart2, #chart4, #chart5 {
-        width: 430px;
+        width: 460px;
         height: 120px;
         float: left;
         margin-right: 5px;
@@ -76,7 +76,7 @@
     <script type="text/javascript">
 
         $(document).ready(function() {
-            var user = 'deo';
+            var user = 'adr';
             var mode = 'all';
             $.getJSON('/ecivil/crs/StatisticsLookupService',
             {
@@ -102,10 +102,16 @@
             </td>
         </tr>
         <tr>
-            <td class="info">All Pending : <input type="text" id="all_pending_b" class="noStyle" readonly="true"
-                                                  maxlength="3"/></td>
-            <td class="info"><label class="issue">Arrears : <input type="text" id="arrears_b" class="noStyle_red"
-                                                                   readonly="true" maxlength="3"/></label></td>
+            <td class="info">
+                All Pending :
+                <input type="text" id="all_pending_b" class="noStyle" readonly="true" maxlength="3"/>
+            </td>
+            <td class="info">
+                <label class="issue">
+                    Arrears :
+                    <input type="text" id="arrears_b" class="noStyle_red" readonly="true" maxlength="3"/>
+                </label>
+            </td>
             <td colspan="2" rowspan="4" class="pie">
                 <div id="chart3"></div>
             </td>
@@ -116,10 +122,16 @@
             </td>
         </tr>
         <tr>
-            <td class="info">Total Submitted Items : <input type="text" id="total_submitted_b" class="noStyle"
-                                                            readonly="true" maxlength="3"/></td>
-            <td class="info"><label class="issue">Late Items : <input type="text" id="late_b" class="noStyle_red"
-                                                                      readonly="true" maxlength="3"/></label></td>
+            <td class="info">
+                Total Submitted Items :
+                <input type="text" id="total_submitted_b" class="noStyle" readonly="true" maxlength="3"/>
+            </td>
+            <td class="info">
+                <label class="issue">
+                    Late Items :
+                    <input type="text" id="late_b" class="noStyle_red" readonly="true" maxlength="3"/>
+                </label>
+            </td>
         </tr>
         <tr>
             <td colspan="2">

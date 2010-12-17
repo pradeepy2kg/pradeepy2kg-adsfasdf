@@ -49,7 +49,7 @@
             <result type="tiles" name="successADMIN">epr.home</result>
             <result type="tiles" name="successRG">epr.rghome</result>
             <result type="tiles" name="successARG">epr.home</result>
-            <result type="tiles" name="successDR">epr.home</result>
+            <result type="tiles" name="successDR">epr.drhome</result>
             <result type="tiles" name="successADR">epr.adrhome</result>
             <result type="tiles" name="successDEO">epr.deohome</result>
 
@@ -644,7 +644,7 @@
             <result type="tiles" name="successADMIN">epr.home</result>
             <result type="tiles" name="successRG">epr.rghome</result>
             <result type="tiles" name="successARG">epr.home</result>
-            <result type="tiles" name="successDR">epr.home</result>
+            <result type="tiles" name="successDR">epr.drhome</result>
             <result type="tiles" name="successADR">epr.adrhome</result>
             <result type="tiles" name="successDEO">epr.deohome</result>
             <result type="tiles" name="error">epr.passwordChange</result>
