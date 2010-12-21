@@ -1923,6 +1923,18 @@ public class BirthRegistrationServiceImpl implements
         return null;
     }
 
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<BirthDeclaration> getByDSDivisionAndStatusAndBirthDateRange(DSDivision dsDivision,
+        Date startDate, Date endDate, BirthDeclaration.State status, User user) {
+        logger.debug("Get records belonging to DSDivision ID, Status : {}", dsDivision.getDsDivisionUKey(), status);
+        ValidationUtils.validateAccessToDSDivision(dsDivision, user);
+        return birthDeclarationDAO.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate,
+                endDate, status);
+    }
+
     private PersonCitizenship getPersonCitizenship(Country country, String passportNo, Person person) {
         PersonCitizenship pc = new PersonCitizenship();
         pc.setCountry(country);

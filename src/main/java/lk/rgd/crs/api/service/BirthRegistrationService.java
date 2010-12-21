@@ -601,5 +601,18 @@ public interface BirthRegistrationService {
      * @return list of historical birth declarations for given birth record.
      */
     public List<BirthDeclaration> getHistoricalBirthDeclarationRecordForBDDivisionAndSerialNo(BDDivision birthDivision, long serialNo, long idUKey, User user);
+
+    /**
+     * Returns all records of BirthDeclarations which are within the given range in birth date and belongs to the given DS division and
+     * Given status.
+     *
+     * @param dsDivision the divisional Secretariat
+     * @param startDate  starting date of the range (for birth date)
+     * @param endDate    ending date of the range (for birth date)
+     * @param user       user initiating the action
+     * @return the birth declaration results
+     */
+    public List<BirthDeclaration> getByDSDivisionAndStatusAndBirthDateRange(DSDivision dsDivision,
+        Date startDate, Date endDate, BirthDeclaration.State status, User user);
 }
 

@@ -280,5 +280,18 @@ public interface BirthDeclarationDAO {
      * @return BirthDeclaration or null if none exist
      */
     public BirthDeclaration getByPINorNIC(long PINorNIC);
+
+    /**
+     * Returns all records of BirthDeclarations which are within the given range in birth date and belongs to the given DS division and
+     * Given status.
+     *
+     * @param dsDivision the divisional Secretariat
+     * @param startDate  starting date of the range (for birth date)
+     * @param endDate    ending date of the range (for birth date)
+     * @return the birth declaration results
+     */
+    public List<BirthDeclaration> getByDSDivisionAndStatusAndBirthDateRange(DSDivision dsDivision,
+        Date startDate, Date endDate, BirthDeclaration.State status);
+
 }
 

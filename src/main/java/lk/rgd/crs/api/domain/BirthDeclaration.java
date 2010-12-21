@@ -57,6 +57,10 @@ import java.io.Serializable;
                 "WHERE bdf.register.birthDivision.dsDivision = :dsDivision AND bdf.register.status = :status " +
                 "ORDER BY bdf.register.dateOfRegistration desc"),
 
+        @NamedQuery(name = "get.by.dsdivision.and.status", query = "SELECT bdf FROM BirthDeclaration bdf " +
+                "WHERE bdf.register.birthDivision.dsDivision = :dsDivision AND bdf.register.status = :status " +
+                "AND bdf.child.dateOfBirth BETWEEN :start AND :end"),
+
         @NamedQuery(name = "filter.by.dsdivision.status.and.birthType", query = "SELECT bdf FROM BirthDeclaration bdf " +
                 "WHERE bdf.register.birthDivision.dsDivision = :dsDivision AND bdf.register.status = :status " +
                 "AND bdf.register.birthType = :birthType ORDER BY bdf.register.dateOfRegistration desc"),

@@ -1,6 +1,6 @@
 package lk.rgd.crs.api.bean;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Ashoka Ekanayaka
@@ -11,7 +11,7 @@ public abstract class BirthStatistics {
     private int total;
     private int maleTotal;
     private int femaleTotal;
-    private ArrayList<BirthStatistics> totals;
+    private List<BirthStatistics> totals;
 
     public int getTotal() {
         return total;
