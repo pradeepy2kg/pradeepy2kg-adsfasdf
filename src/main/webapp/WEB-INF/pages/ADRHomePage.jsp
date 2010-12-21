@@ -69,11 +69,76 @@
         width: 40px;
     }
 
+    table, tr, td, th {
+        border-collapse: collapse;
+        border: 1px solid #fff;
+    }
+
+    td {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    th {
+        height: 35px;
+        background-color: #A9D0F5;
+        padding: 10px;
+        color: #08088A;
+        font-size: 14px;
+        font-weight: lighter;
+    }
+
+    tr.e {
+        background-color: #E4ECFC;
+        height: 35px;
+    }
+    #space{
+        height:20px;
+    }
+
 </style>
 
 <div id="ADR-home-page-outer">
 
     <script type="text/javascript">
+
+        $(function() {
+            $('select#district').bind('change', function(evt1) {
+                var id = $("select#district").attr("value");
+
+                $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:13},
+                        function(data) {
+                            var options1 = '';
+                            var ds = data.dsDivisionList;
+                            for (var i = 0; i < ds.length; i++) {
+                                options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                            }
+                            $("select#dsDivision").html(options1);
+
+                            var options2 = '';
+                            var bd = data.deoList;
+                            for (var j = 0; j < bd.length; j++) {
+                                options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
+                            }
+                            $("select#deoUser").html(options2);
+                        });
+            });
+
+            $('select#dsDivision').bind('change', function(evt1) {
+                var id = $("select#dsDivision").attr("value");
+
+                $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:14},
+                        function(data) {
+                            var options1 = '';
+                            var ds = data.deoList;
+                            for (var i = 0; i < ds.length; i++) {
+                                options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                            }
+                            $("select#deoUser").html(options1);
+                        });
+            });
+
+        });
 
         $(document).ready(function() {
             var user = 'adr';
@@ -94,8 +159,53 @@
         }
 
     </script>
-
+    <div id="space"></div>
     <table border="0" width="100%">
+        <%-- start --%>
+        <tr class="e" bgcolor="#eeeeee">
+            <th colspan="4" align="left">Custom Search</th>
+        </tr>
+        <tr class="e">
+            <td width="20%">District</td>
+            <td width="30%">
+                <s:select
+                        id="district"
+                        name="districtId"
+                        list="districtList"
+                        />
+            </td>
+            <td width="20%">DSDivision</td>
+            <td width="30%">
+                <s:select
+                        id="dsDivision"
+                        name="dsDivisionId"
+                        list="divisionList"
+                        />
+            </td>
+        </tr>
+        <tr class="e">
+            <td>Start Date</td>
+            <td>
+                <s:textfield id="sdate" name="startDate" cssStyle="width:70%;"/>
+            </td>
+            <td>End Date</td>
+            <td>
+                <s:textfield id="edate" name="endDate" cssStyle="width:70%;"/>
+            </td>
+        </tr>
+        <tr class="e">
+            <td>DEO</td>
+            <td>
+                <s:select
+                        id="deoUser"
+                        name="deoUserId"
+                        list="deoList"
+                        />
+            </td>
+            <td><s:submit cssStyle="width:100px;"/></td>
+            <td>&nbsp;</td>
+        </tr>
+        <%-- end --%>
         <tr>
             <td colspan="4" align="center">
                 <div class="topic">Birth Statistics</div>

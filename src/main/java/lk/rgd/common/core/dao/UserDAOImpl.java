@@ -109,5 +109,13 @@ public class UserDAOImpl extends BaseDAO implements UserDAO {
         q.setParameter("role", role);
         return q.getResultList();
     }
+
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<String> getADRsByDistrictId(District district, Role role){
+        Query q = em.createNamedQuery("filter.adr.by.district");
+        q.setParameter("assignedBDDistricts", district);
+        q.setParameter("role", role);
+        return q.getResultList();
+    }
 }
 
