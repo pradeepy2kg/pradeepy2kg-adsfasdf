@@ -56,9 +56,16 @@ public class JSONDivisionLookupService extends HttpServlet {
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        boolean withAll = false;
         String id = request.getParameter(WebConstants.DIVISION_ID);
         String mode = request.getParameter(WebConstants.MODE);
-        logger.debug("Received Division Id and mode : {} {} ", id, mode);
+        String withAllOption = request.getParameter(WebConstants.WITHALL);
+        if (withAllOption != null && !withAllOption.isEmpty()) {
+            withAll = Boolean.parseBoolean(withAllOption);
+            logger.debug("Received with All Option : {}", withAllOption);
+        }
+        logger.debug("Received Division Id and mode : {} {}", id, mode);
         User user;
         String lang;
         HashMap<String, Object> optionLists;
@@ -111,23 +118,23 @@ public class JSONDivisionLookupService extends HttpServlet {
                 optionLists.put("dsDivisionList", ds);
                 optionLists.put("mrDivisionList", mr);
             } else if ("9".equals(mode)) {
-                // passing dsDivisionId, return the BD list with All option
-                optionLists.put("divisionList", getBDDivisionList(lang, divisionId, user));
+                //return the BD list with All option
+                optionLists.put("divisionList", getBDDivisionList(lang, divisionId, user, withAll));
             } else if ("10".equals(mode)) {
-                // passing dsDivisionId, return the MR list with All option
-                optionLists.put("divisionList", getMRDivisionList(lang, divisionId, user));
+                //return the MR list with All option
+                optionLists.put("divisionList", getMRDivisionList(lang, divisionId, user, withAll));
             } else if ("11".equals(mode)) {
-                // passing districtId, return DS List and the BD List for the 1st DS division with All option
-                List ds = getDSDivisionList(lang, divisionId, user);
+                //return DS List and the BD List for the 1st DS division with All option, set second element as default in DS list
+                List ds = getDSDivisionList(lang, divisionId, user, withAll);
                 int dsDivisionId = Integer.parseInt(((SelectOption) ds.get(0)).getOptionValue());
-                List bd = getBDDivisionList(lang, dsDivisionId, user);
+                List bd = getBDDivisionList(lang, dsDivisionId, user, withAll);
                 optionLists.put("dsDivisionList", ds);
                 optionLists.put("divisionList", bd);
             } else if ("12".equals(mode)) {
-                // passing district id and , return the MR list and DS list with All option
-                List ds = getDSDivisionList(lang, divisionId, user);
+                //return the MR list and DS list with All option, set second element as default in DS list
+                List ds = getDSDivisionList(lang, divisionId, user, withAll);
                 int dsDivisionId = Integer.parseInt(((SelectOption) ds.get(0)).getOptionValue());
-                List mr = getMRDivisionList(lang, dsDivisionId, user);
+                List mr = getMRDivisionList(lang, dsDivisionId, user, withAll);
                 optionLists.put("dsDivisionList", ds);
                 optionLists.put("divisionList", mr);
 
@@ -159,7 +166,7 @@ public class JSONDivisionLookupService extends HttpServlet {
                 optionLists.put("deoList", deoList);
             } else if ("15".equals(mode)) {
                 List ds = getAllDSDivisions(lang, divisionId, user);
-                List adrList =  getList(
+                List adrList = getList(
                     userDAO.getADRsByDistrictId(
                         districtDAO.getDistrict(divisionId), roleDAO.getRole("ADR")
                     )
@@ -225,25 +232,34 @@ public class JSONDivisionLookupService extends HttpServlet {
         return getList(dsDivisionList);
     }
 
-    private List getBDDivisionList(String language, int dsDivisionId, User user) {
+    private List getBDDivisionList(String language, int dsDivisionId, User user, boolean withAll) {
+        if (withAll & dsDivisionId == 0) {
+            return createListWithAllOption(language);
+        }
         Map<Integer, String> bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
         logger.debug("Loaded BD list with All option : {}", bdDivisionList);
 
-        return getList(bdDivisionList, language);
+        return getList(bdDivisionList, language, withAll);
     }
 
-    private List getMRDivisionList(String language, int dsDivision, User user) {
-        Map<Integer, String> bdDivisionList = mrDivisionDAO.getMRDivisionNames(dsDivision, language, user);
+    private List getMRDivisionList(String language, int dsDivisionId, User user, boolean withAll) {
+        if (withAll & dsDivisionId == 0) {
+            return createListWithAllOption(language);
+        }
+        Map<Integer, String> bdDivisionList = mrDivisionDAO.getMRDivisionNames(dsDivisionId, language, user);
         logger.debug("Loaded MR list with All option : {}", bdDivisionList);
 
-        return getList(bdDivisionList, language);
+        return getList(bdDivisionList, language, withAll);
     }
 
-    private List getDSDivisionList(String language, int BDId, User user) {
-        Map<Integer, String> dsDivisionList = dsDivisionDAO.getDSDivisionNames(BDId, language, user);
+    private List getDSDivisionList(String language, int districtId, User user, boolean withAll) {
+        if (withAll & districtId == 0) {
+            return createListWithAllOption(language);
+        }
+        Map<Integer, String> dsDivisionList = dsDivisionDAO.getDSDivisionNames(districtId, language, user);
         logger.debug("Loaded DS list with All option : {}", dsDivisionList);
 
-        return getList(dsDivisionList, language);
+        return getList(dsDivisionList, language, withAll);
     }
 
     //TODO : tobe removed
@@ -260,14 +276,24 @@ public class JSONDivisionLookupService extends HttpServlet {
         return ds;
     }
 
-    private List getList(Map<Integer, String> map, String language) {
-
+    private List<SelectOption> createListWithAllOption(String language) {
         List<SelectOption> ds = new ArrayList<SelectOption>();
         SelectOption headerOption = new SelectOption();
         headerOption.setOptionValue("0");
         headerOption.setOptionDisplay(LocaleUtil.getLocalizedString(language, "all"));
         ds.add(headerOption);
+        return ds;
+    }
 
+    private List getList(Map<Integer, String> map, String language, boolean withAll) {
+
+        List<SelectOption> ds;
+
+        if (withAll) {
+            ds = createListWithAllOption(language);
+        } else {
+            ds = new ArrayList<SelectOption>();
+        }
         for (Map.Entry<Integer, String> e : map.entrySet()) {
             SelectOption option = new SelectOption();
             option.setOptionValue(e.getKey().toString());
