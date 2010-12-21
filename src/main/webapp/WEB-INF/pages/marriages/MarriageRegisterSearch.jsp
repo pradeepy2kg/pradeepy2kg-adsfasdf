@@ -47,7 +47,7 @@
                     </td>
                     <td>
                         <s:select id="districtId" name="districtId" list="districtList"
-                                  value="districtId" headerKey="0" headerValue="%{getText('all')}"
+                                  value="districtId"
                                   cssStyle="width:98.5%; width:240px;"
                                   onchange="populateDSDivisions('districtId','dsDivisionId','mrDivisionId', 'Marriage', true)"/>
                     </td>
@@ -57,7 +57,7 @@
                     </td>
                     <td>
                         <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList"
-                                  value="dsDivisionId" headerKey="0" headerValue="%{getText('all')}"
+                                  value="dsDivisionId"
                                   cssStyle="width:98.5%; width:240px;"
                                   onchange="populateDivisions('dsDivisionId', 'mrDivisionId', 'Marriage', true)"/>
                     </td>
@@ -68,7 +68,7 @@
                     </td>
                     <td>
                         <s:select id="mrDivisionId" name="mrDivisionId" list="mrDivisionList"
-                                  value="mrDivisionId" headerKey="0" headerValue="%{getText('all')}"
+                                  value="mrDivisionId"
                                   cssStyle="width:98.5%; width:240px;"/>
                     </td>
                     <td></td>

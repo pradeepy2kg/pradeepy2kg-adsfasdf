@@ -73,12 +73,15 @@ public class CommonUtil {
         } else if (divisionType.equals(AppConstants.MARRIAGE)) {
             divisionList.putAll(mrDivisionDAO.getMRDivisionNames(dsDivisionId, language, user));
             findDefaultListValue(divisionList, divisionId);
+        } else {
+            logger.debug("Invalid Division Type");
         }
     }
 
     /**
      * populate All districts , All ds divisions of first district in the district list
      * and bd division list of first ds Division in list
+     *
      * @param districtList
      * @param dsDivisionList
      * @param divisionList
@@ -100,6 +103,16 @@ public class CommonUtil {
 
         divisionList.putAll(bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user));
         findDefaultListValue(divisionList, divisionId);
+    }
+
+    public void populateDynamicListsWithAllOption(Map<Integer, String> districtList, Map<Integer, String> dsDivisionList,
+        Map<Integer, String> divisionList, User user, String language) {
+
+        districtList.put(0, LocaleUtil.getLocalizedString(language, AppConstants.ALL));
+        districtList.putAll(districtDAO.getDistrictNames(language, user));
+        dsDivisionList.put(0, LocaleUtil.getLocalizedString(language, AppConstants.ALL));
+        divisionList.put(0, LocaleUtil.getLocalizedString(language, AppConstants.ALL));
+
     }
 
     //TODO: to be removed. Write two lines of code in ur action method to populate Country and Race. This is not a good coding practice.
@@ -143,6 +156,8 @@ public class CommonUtil {
             divisionList.putAll(bdDivisionDAO.getBDDivisionNames(parentId, language, user));
         } else if (AppConstants.MARRIAGE.equals(divisionType)) {
             divisionList.putAll(mrDivisionDAO.getMRDivisionNames(parentId, language, user));
+        } else {
+            logger.debug("Invalid Division Type");
         }
         return findDefaultListValue(divisionList, divisionId);
     }
@@ -152,8 +167,8 @@ public class CommonUtil {
      */
     public Map<String, String> findLanguageList() {
         Map<String, String> languages = new HashMap<String, String>();
-        languages.put(AppConstants.SINHALA, LocaleUtil.getLocalizedString("si",AppConstants.SINHALA));
-        languages.put(AppConstants.TAMIL, LocaleUtil.getLocalizedString("ta",AppConstants.TAMIL));
+        languages.put(AppConstants.SINHALA, LocaleUtil.getLocalizedString(AppConstants.SINHALA, AppConstants.SINHALA));
+        languages.put(AppConstants.TAMIL, LocaleUtil.getLocalizedString(AppConstants.TAMIL, AppConstants.TAMIL));
         return languages;
     }
 

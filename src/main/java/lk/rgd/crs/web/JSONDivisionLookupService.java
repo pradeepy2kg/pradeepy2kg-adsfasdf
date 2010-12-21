@@ -8,6 +8,7 @@ import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.util.LocaleUtil;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.dao.MRDivisionDAO;
+import lk.rgd.AppConstants;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,7 +84,7 @@ public class JSONDivisionLookupService extends HttpServlet {
                 // passing districtId, return only the DS list
                 optionLists.put("dsDivisionList", getDSDivisions(lang, divisionId, user));
             } else if ("2".equals(mode)) {
-                //TODO: to be removed safely
+                //TODO: to be removed safely. generalized 9
                 // passing dsDivisionId, return the BD list
                 optionLists.put("bdDivisionList", getBDDivisions(lang, divisionId, user));
             } else if ("3".equals(mode)) {
@@ -91,14 +92,14 @@ public class JSONDivisionLookupService extends HttpServlet {
                 optionLists.put("dsDivisionList", getAllDSDivisions(lang, divisionId, user));
             } else if ("4".equals(mode)) {
                 optionLists.put("districtList", getAllDisList(lang, user));
-            } else if ("5".equals(mode)) {
+            } else if ("5".equals(mode)) { //TODO: tobe removed - generalized 16
                 // passing districtId, return DS List and the BD List for the 1st DS division
                 List ds = getAllDSDivisions(lang, divisionId, user);
                 int dsDivisionId = Integer.parseInt(((SelectOption) ds.get(0)).getOptionValue());
                 List bd = getBDDivisions(lang, dsDivisionId, user);
                 optionLists.put("dsDivisionList", ds);
                 optionLists.put("bdDivisionList", bd);
-            } else if ("6".equals(mode)) {
+            } else if ("6".equals(mode)) { //TODO: tobe removed - generalized 17
                 //passing district list and return ds division list and mr division list for 1st ds division.
                 List ds = getAllDSDivisions(lang, divisionId, user);
                 int dsDivisionId = Integer.parseInt(((SelectOption) ds.get(0)).getOptionValue());
@@ -107,7 +108,7 @@ public class JSONDivisionLookupService extends HttpServlet {
                 optionLists.put("bdDivisionList", bd);
 
             } else if ("7".equals(mode)) {
-                //TODO: to be removed safely
+                //TODO: to be removed safely - generalized 10
                 // passing dsDivisionId, return the MR list
                 optionLists.put("mrDivisionList", getMRDivision(lang, divisionId, user));
             } else if ("8".equals(mode)) { //TODO : tobe removed
@@ -117,21 +118,21 @@ public class JSONDivisionLookupService extends HttpServlet {
                 List mr = getMRDivision(lang, dsDivisionId, user);
                 optionLists.put("dsDivisionList", ds);
                 optionLists.put("mrDivisionList", mr);
-            } else if ("9".equals(mode)) {
-                //return the BD list with All option
+            } else if ("9".equals(mode)) { // used for generalized dynamic list population in division.js
+                //return the BD list
                 optionLists.put("divisionList", getBDDivisionList(lang, divisionId, user, withAll));
-            } else if ("10".equals(mode)) {
-                //return the MR list with All option
+            } else if ("10".equals(mode)) {// used for generalized dynamic list population in division.js
+                //return the MR list
                 optionLists.put("divisionList", getMRDivisionList(lang, divisionId, user, withAll));
-            } else if ("11".equals(mode)) {
-                //return DS List and the BD List for the 1st DS division with All option, set second element as default in DS list
+            } else if ("11".equals(mode)) {// used for generalized dynamic list population in division.js
+                //return DS List and the BD List for the 1st DS division
                 List ds = getDSDivisionList(lang, divisionId, user, withAll);
                 int dsDivisionId = Integer.parseInt(((SelectOption) ds.get(0)).getOptionValue());
                 List bd = getBDDivisionList(lang, dsDivisionId, user, withAll);
                 optionLists.put("dsDivisionList", ds);
                 optionLists.put("divisionList", bd);
-            } else if ("12".equals(mode)) {
-                //return the MR list and DS list with All option, set second element as default in DS list
+            } else if ("12".equals(mode)) {// used for generalized dynamic list population in division.js
+                //return the MR list and DS list
                 List ds = getDSDivisionList(lang, divisionId, user, withAll);
                 int dsDivisionId = Integer.parseInt(((SelectOption) ds.get(0)).getOptionValue());
                 List mr = getMRDivisionList(lang, dsDivisionId, user, withAll);
@@ -173,6 +174,20 @@ public class JSONDivisionLookupService extends HttpServlet {
                 );
                 optionLists.put("dsDivisionList", ds);
                 optionLists.put("adrList", adrList);
+            } else if ("16".equals(mode)) { // used for generalized dynamic list population in division.js
+                //return DS List and the BD List
+                List ds = getAllDSDivisionList(lang, divisionId, user, withAll);
+                int dsDivisionId = Integer.parseInt(((SelectOption) ds.get(0)).getOptionValue());
+                List bd = getBDDivisionList(lang, dsDivisionId, user, withAll);
+                optionLists.put("dsDivisionList", ds);
+                optionLists.put("divisionList", bd);
+            } else if ("17".equals(mode)) { // used for generalized dynamic list population in division.js
+                //return ds division list and mr division list
+                List ds = getAllDSDivisionList(lang, divisionId, user, withAll);
+                int dsDivisionId = Integer.parseInt(((SelectOption) ds.get(0)).getOptionValue());
+                List bd = getMRDivisionList(lang, dsDivisionId, user, withAll);
+                optionLists.put("dsDivisionList", ds);
+                optionLists.put("divisionList", bd);
             } else {
                 // passing districtId, return DS List and the BD List for the 1st DS division
                 List ds = getDSDivisions(lang, divisionId, user);
@@ -194,7 +209,6 @@ public class JSONDivisionLookupService extends HttpServlet {
     }
 
     //TODO : tobe removed
-
     private List getBDDivisions(String language, int dsDivisionId, User user) {
         Map<Integer, String> bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
         logger.debug("Loaded BD list : {}", bdDivisionList);
@@ -203,7 +217,6 @@ public class JSONDivisionLookupService extends HttpServlet {
     }
 
     //TODO : tobe removed
-
     private List getMRDivision(String language, int dsDivision, User user) {
         Map<Integer, String> bdDivisionList = mrDivisionDAO.getMRDivisionNames(dsDivision, language, user);
         logger.debug("Loaded MR list : {}", bdDivisionList);
@@ -211,6 +224,7 @@ public class JSONDivisionLookupService extends HttpServlet {
         return getList(bdDivisionList);
     }
 
+    //todo:  to be removed
     private List getAllDSDivisions(String language, int BDId, User user) {
         Map<Integer, String> dsDivisionList = dsDivisionDAO.getAllDSDivisionNames(BDId, language, user);
         logger.debug("Loaded DS list : {}", dsDivisionList);
@@ -224,10 +238,19 @@ public class JSONDivisionLookupService extends HttpServlet {
     }
 
     //TODO : tobe removed
-
     private List getDSDivisions(String language, int BDId, User user) {
         Map<Integer, String> dsDivisionList = dsDivisionDAO.getDSDivisionNames(BDId, language, user);
         logger.debug("Loaded DS list : {}", dsDivisionList);
+
+        return getList(dsDivisionList);
+    }
+
+    private List getAllDSDivisionList(String language, int districtId, User user, boolean withAll) {
+        if (withAll & districtId == 0) {
+            return createListWithAllOption(language);
+        }
+        Map<Integer, String> dsDivisionList = dsDivisionDAO.getAllDSDivisionNames(districtId, language, user);
+        logger.debug("Loaded All DS list : {}", dsDivisionList);
 
         return getList(dsDivisionList);
     }
@@ -237,7 +260,7 @@ public class JSONDivisionLookupService extends HttpServlet {
             return createListWithAllOption(language);
         }
         Map<Integer, String> bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
-        logger.debug("Loaded BD list with All option : {}", bdDivisionList);
+        logger.debug("Loaded BD list : {}", bdDivisionList);
 
         return getList(bdDivisionList, language, withAll);
     }
@@ -247,7 +270,7 @@ public class JSONDivisionLookupService extends HttpServlet {
             return createListWithAllOption(language);
         }
         Map<Integer, String> bdDivisionList = mrDivisionDAO.getMRDivisionNames(dsDivisionId, language, user);
-        logger.debug("Loaded MR list with All option : {}", bdDivisionList);
+        logger.debug("Loaded MR list : {}", bdDivisionList);
 
         return getList(bdDivisionList, language, withAll);
     }
@@ -257,13 +280,12 @@ public class JSONDivisionLookupService extends HttpServlet {
             return createListWithAllOption(language);
         }
         Map<Integer, String> dsDivisionList = dsDivisionDAO.getDSDivisionNames(districtId, language, user);
-        logger.debug("Loaded DS list with All option : {}", dsDivisionList);
+        logger.debug("Loaded DS list : {}", dsDivisionList);
 
         return getList(dsDivisionList, language, withAll);
     }
 
     //TODO : tobe removed
-
     private List getList(Map<Integer, String> map) {
         List<SelectOption> ds = new ArrayList<SelectOption>();
 
@@ -280,7 +302,7 @@ public class JSONDivisionLookupService extends HttpServlet {
         List<SelectOption> ds = new ArrayList<SelectOption>();
         SelectOption headerOption = new SelectOption();
         headerOption.setOptionValue("0");
-        headerOption.setOptionDisplay(LocaleUtil.getLocalizedString(language, "all"));
+        headerOption.setOptionDisplay(LocaleUtil.getLocalizedString(language, AppConstants.ALL));
         ds.add(headerOption);
         return ds;
     }
