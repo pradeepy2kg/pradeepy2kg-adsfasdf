@@ -284,8 +284,31 @@ public interface MarriageRegistrationService {
     public List<MarriageRegister> getMarriageRegistersByDSDivision(DSDivision dsDivision, int pageNumber,
         int numOfRows, boolean active, User user);
 
+    /**
+     * Returns paginated marriage register list filtered by district
+     *
+     * @param district the district of Marriage Notice/Register performed
+     * @param pageNumber page number for pagination
+     * @param numOfRows number of rows to be retured
+     * @param isActive Active or Inactive status
+     * @param user user who performs the action
+     * @return
+     */
     public List<MarriageRegister> getMarriageRegistersByDistrict(District district, int pageNumber,
-        int numOfRows, boolean active, User user);
+        int numOfRows, boolean isActive, User user);
+
+    /**
+     * Returns paginated marriage register list filtered by State
+     *
+     * @param state the current state of the marriage register
+     * @param pageNo page number for pagination
+     * @param noOfRows number of rows to be retured
+     * @param isActive Active or Inactive status
+     * @param user user who performs the action
+     * @return
+     */
+    public List<MarriageRegister> getMarriageRegisterByState(MarriageRegister.State state, int pageNo,int noOfRows,
+        boolean isActive, User user);
 
     /**
      * get marriage registration list by given MRDivision
