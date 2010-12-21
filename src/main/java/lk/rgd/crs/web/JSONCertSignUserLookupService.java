@@ -155,7 +155,8 @@ public class JSONCertSignUserLookupService extends HttpServlet {
     }
 
     private List<SelectOption> getMarriageCertSignUsers(int locationId) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        List<User> users = userLocationDAO.getMarriageCertificateSignUsersByLocationId(locationId, true);
+        return getList(users);
     }
 
     private String getUserPrefLang(long certIdUKey, String type) {
