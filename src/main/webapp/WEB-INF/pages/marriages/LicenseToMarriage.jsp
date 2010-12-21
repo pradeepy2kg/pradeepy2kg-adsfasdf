@@ -9,29 +9,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%--section logo and issue date and serial number--%>
 <div class="marriage-notice-outer">
-<div style="width:45%;float:left;margin-top:5px;" id="locationSignId">
-    <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;">
-        <legend><b><s:label value="%{getText('selectoption.label')}"/></b></legend>
-        <table>
-            <tr>
-                <td>
-                    <s:label value="%{getText('placeOfIssue.label')}"/>
-                </td>
-                <td>
 
-                    <s:select id="locationId" name="locationId" list="locationList" cssStyle="width:300px;"/>
-
-                </td>
-            </tr>
-            <tr>
-                <td><s:label value="%{getText('signOfficer.label')}"/></td>
-                <td>
-                    <s:select id="issueUserId" name="issueUserId" list="userList" cssStyle="width:300px;"/>
-                </td>
-            </tr>
-        </table>
-    </fieldset>
-</div>
 
 <table>
     <caption/>
@@ -39,12 +17,41 @@
     <col width="230px"/>
     <col/>
     <tbody>
+    <s:form action="eprMarkLicenseAsPrinted.do" method="post">
+    <tr>
+        <td colspan="3">
+            <div style="width:45%;float:left;margin-top:5px;" id="locationSignId">
+                <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;">
+                    <legend><b><s:label value="%{getText('selectoption.label')}"/></b></legend>
+                    <table>
+                        <tr>
+                            <td>
+                                <s:label value="%{getText('placeOfIssue.label')}"/>
+                            </td>
+                            <td>
+
+                                <s:select id="locationId" name="licensePrintedLocationId" list="locationList"
+                                          cssStyle="width:300px;"/>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><s:label value="%{getText('signOfficer.label')}"/></td>
+                            <td>
+                                <s:select id="issueUserId" name="licenseIssuedUserId" list="userList"
+                                          cssStyle="width:300px;"/>
+                            </td>
+                        </tr>
+                    </table>
+                </fieldset>
+            </div>
+        </td>
+    </tr>
     <tr>
         <td colspan="3" align="right">
             <div class="form-submit">
-                <s:form action="eprMarkLicenseAsPrinted.do" method="post">
-                    <s:submit value="%{getText('button.mark.as.print')}"/>
-
+                <s:submit value="%{getText('button.mark.as.print')}"/>
+                <s:hidden name="idUKey" value="%{marriage.idUKey}"/>
                 </s:form>
             </div>
             <div class="form-submit">
@@ -310,7 +317,9 @@
             சான்றிதழ் அளிக்கும் அதிகாரியின் பெயர், பதவி, கையொப்பம் <br>
             Name, Signature and Designation of certifying officer
         </td>
-        <td colspan="4"></td>
+        <td colspan="4">
+            <s:label id="issueUserSignature" value="licenseIssueUserSignature"/>
+        </td>
     </tr>
     <tr>
         <td colspan="1">
@@ -318,7 +327,9 @@
             வழங்கிய இடம் <br>
             Place of Issue
         </td>
-        <td colspan="4"></td>
+        <td colspan="4"> .
+            <s:label id="placeOfIssue" value="licenseIssuePlace"/>
+        </td>
     </tr>
     <tr>
         <td colspan="1">
