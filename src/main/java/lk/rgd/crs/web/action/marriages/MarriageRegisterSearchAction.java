@@ -127,7 +127,8 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
      * loading search result page for marriage register
      */
     public String marriageRegisterSearchResult() {
-        commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId, dsDivisionId, mrDivisionId, AppConstants.MARRIAGE, user, language);
+        commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId, dsDivisionId, mrDivisionId,
+            AppConstants.MARRIAGE, user, language);
         pageNo += 1;
         noOfRows = appParametersDAO.getIntParameter(MR_APPROVAL_ROWS_PER_PAGE);
         if (noticeSerialNo != null) {
@@ -146,7 +147,9 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
                 marriageRegisterSearchList = marriageRegistrationService.getMarriageRegistersByDistrict
                     (districtDAO.getDistrict(districtId), pageNo, noOfRows, true, user);
             } else {  // nothing selected
-                //find all records without filtering by divisions.
+                //find all records marriage registration pending
+                marriageRegisterSearchList = marriageRegistrationService.getMarriageRegisterByState(MarriageRegister.State.REG_DATA_ENTRY,
+                    pageNo, noOfRows, true, user);
             }
         }
         if (marriageRegisterSearchList.size() == 0) {
