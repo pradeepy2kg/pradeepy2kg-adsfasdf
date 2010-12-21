@@ -17,6 +17,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "MARRIAGE_REGISTER", schema = "CRS")
+
 @NamedQueries({
     // TODO review this query
     @NamedQuery(name = "filter.notice.by.dsDivision", query = "SELECT mr FROM MarriageRegister mr " +
@@ -247,7 +248,7 @@ public class MarriageRegister implements Serializable, Cloneable {
     private long registrarPINOfMaleNotice;
 
     @ManyToOne
-    @JoinColumn(name = "NOTICE_MRDIVISIONUKEY_M", nullable = true, updatable = false)
+    @JoinColumn(name = "NOTICE_MRDIVISIONUKEY_M", nullable = true)
     private MRDivision mrDivisionOfMaleNotice;
 
     //party information male
@@ -267,7 +268,7 @@ public class MarriageRegister implements Serializable, Cloneable {
     private long registrarPINOfFemaleNotice;
 
     @ManyToOne
-    @JoinColumn(name = "NOTICE_MRDIVISIONUKEY_F", nullable = true, updatable = false)
+    @JoinColumn(name = "NOTICE_MRDIVISIONUKEY_F", nullable = true)
     private MRDivision mrDivisionOfFemaleNotice;
 
     //party female

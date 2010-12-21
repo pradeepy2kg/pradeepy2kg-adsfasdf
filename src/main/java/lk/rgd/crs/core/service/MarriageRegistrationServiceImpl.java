@@ -212,6 +212,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
+    //todo call serial validator
     public List<UserWarning> addSecondMarriageNotice(MarriageRegister notice, MarriageNotice.Type type,
         boolean ignoreWarnings, boolean undo, User user) {
         //only MALE and FEMALE notices are allowed to add second notice
@@ -229,7 +230,8 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
                     return warnings;
                 }
                 if (warnings.size() == 0 || ignoreWarnings) {
-                    updateMarriageRegister(notice, user);
+                    //   updateMarriageRegister(notice, user);
+                    marriageRegistrationDAO.updateMarriageRegister(notice, user);
                 }
             } else {
                 //undo the first notice state to DATA_ENTRY
@@ -363,8 +365,9 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
             if (existingNotice.getState() == MarriageRegister.State.DATA_ENTRY) {
                 existingNotice.setState(MarriageRegister.State.NOTICE_APPROVED);
             } else {
-                handleException("unable to approve single :" + existingNotice.isSingleNotice() + "notice type:" + type +
-                    ",idUKey" + idUKey, ErrorCodes.INVALID_STATE_FOR_APPROVAL);
+                handleException("unable to approve single : " + existingNotice.isSingleNotice() + " notice type: " + type +
+                    " idUKey: " + idUKey + "  current state: " + existingNotice.getState(),
+                    ErrorCodes.INVALID_STATE_FOR_APPROVAL);
             }
         } else {
             if (existingNotice.getState() == MarriageRegister.State.DATA_ENTRY) {

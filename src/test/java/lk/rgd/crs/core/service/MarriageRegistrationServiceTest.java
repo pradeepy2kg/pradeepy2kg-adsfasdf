@@ -107,7 +107,7 @@ public class MarriageRegistrationServiceTest extends TestCase {
         marriageRegistrationService.addMarriageNotice(singleNotice, MarriageNotice.Type.BOTH_NOTICE, rg);
         try {
             marriageRegistrationService.addSecondMarriageNotice(marriageRegistrationService.
-                getMarriageNoticePendingApprovalByMRDivisionAndSerial(colomboMRDivision, 2010012357L, true, rg).get(0),
+                getActiveRecordByMRDivisionAndSerialNo(colomboMRDivision, 2010012357L, rg),
                 MarriageNotice.Type.BOTH_NOTICE, true, false, rg);
         } catch (CRSRuntimeException expected) {
             //expecting exception     6007
@@ -123,13 +123,15 @@ public class MarriageRegistrationServiceTest extends TestCase {
         marriageRegistrationService.addMarriageNotice(maleNotice, MarriageNotice.Type.MALE_NOTICE, rg);
         //colombo adr approving male notice now
         marriageRegistrationService.approveMarriageNotice(marriageRegistrationService.
-            getMarriageNoticePendingApprovalByMRDivisionAndSerial(colomboMRDivision, 2010012347L, true, rg).get(0).
-            getIdUKey(), MarriageNotice.Type.MALE_NOTICE, rg);
+            getActiveRecordByMRDivisionAndSerialNo(colomboMRDivision, 2010012347L, rg).getIdUKey(),
+            MarriageNotice.Type.MALE_NOTICE, rg);
         //now female is try to add second notice for above notice but she try to allocate license to male in that
         // case warnings are issue
-        MarriageRegister femaleNotice = marriageRegistrationService.getMarriageNoticePendingApprovalByMRDivisionAndSerial
-            (colomboMRDivision, 2010012347L, true, rg).get(0);
+        MarriageRegister femaleNotice = marriageRegistrationService.
+            getActiveRecordByMRDivisionAndSerialNo(colomboMRDivision, 2010012347L, rg);
+
         femaleNotice.setLicenseCollectType(MarriageRegister.LicenseCollectType.MAIL_TO_MALE);
+
         List<UserWarning> warnings = marriageRegistrationService.addSecondMarriageNotice(femaleNotice,
             MarriageNotice.Type.FEMALE_NOTICE, false, false, rg);
         //expecting warnings
@@ -141,8 +143,9 @@ public class MarriageRegistrationServiceTest extends TestCase {
         //now we are undo the state of the first notice
         marriageRegistrationService.addSecondMarriageNotice(femaleNotice, MarriageNotice.Type.FEMALE_NOTICE, true, true, rg);
         //now state must be in DE and license collected party must be MAIL_TO_MALE
-        MarriageRegister testUndo = marriageRegistrationService.getMarriageNoticePendingApprovalByMRDivisionAndSerial
-            (colomboMRDivision, 2010012347L, true, rg).get(0);
+        MarriageRegister testUndo = marriageRegistrationService.
+            getActiveRecordByMRDivisionAndSerialNo(colomboMRDivision, 2010012347L, rg);
+
         if (testUndo.getState() != MarriageRegister.State.DATA_ENTRY) {
             fail("state must be in DATA_ENTRY after undo");
         }
@@ -161,9 +164,8 @@ public class MarriageRegistrationServiceTest extends TestCase {
         try {//now try to approve this record
             //this record is not a single record so it is expecting FEMALE notice and unless female party notice is approved
             // this record can't be approved }
-            List<MarriageRegister> noticeList = marriageRegistrationService.
-                getMarriageNoticePendingApprovalByMRDivisionAndSerial(colomboMRDivision, 2010012346L, true, rg);
-            marriageRegistrationService.approveMarriageNotice(noticeList.get(0).getIdUKey(),
+            marriageRegistrationService.approveMarriageNotice(marriageRegistrationService.
+                getActiveRecordByMRDivisionAndSerialNo(colomboMRDivision, 2010012346L, rg).getIdUKey(),
                 MarriageNotice.Type.MALE_NOTICE, rg);
         }
         catch (CRSRuntimeException expected) {
@@ -174,7 +176,7 @@ public class MarriageRegistrationServiceTest extends TestCase {
         //now we are adding second notice for existing male notice
         //getting existing
         MarriageRegister existingMaleNotice = marriageRegistrationService.
-            getMarriageNoticePendingApprovalByMRDivisionAndSerial(colomboMRDivision, 2010012346L, true, rg).get(0);
+            getActiveRecordByMRDivisionAndSerialNo(colomboMRDivision, 2010012346L, rg);
         //now setting mandatory female notice info
         FemaleParty female = new FemaleParty();
         female.setIdentificationNumberFemale("1234567897");
@@ -183,14 +185,16 @@ public class MarriageRegistrationServiceTest extends TestCase {
         //add female notice related data
         existingMaleNotice.setFemale(female);
         existingMaleNotice.setDateOfFemaleNotice(new Date());
-        existingMaleNotice.setSerialOfFemaleNotice(2010012347L);
+        existingMaleNotice.setSerialOfFemaleNotice(2010012348L);
+        existingMaleNotice.setMrDivisionOfFemaleNotice(colomboMRDivision);
         marriageRegistrationService.addSecondMarriageNotice(existingMaleNotice, MarriageNotice.Type.FEMALE_NOTICE, false,
             false, rg);
         //still male notice cannot be approved
         try {
             marriageRegistrationService.approveMarriageNotice(marriageRegistrationService.
-                getMarriageNoticePendingApprovalByMRDivisionAndSerial(colomboMRDivision, 2010012346L, true, rg).get(0).
-                getIdUKey(), MarriageNotice.Type.MALE_NOTICE, rg);
+                getActiveRecordByMRDivisionAndSerialNo(colomboMRDivision, 2010012346L, rg).getIdUKey(),
+                MarriageNotice.Type.MALE_NOTICE, rg);
+
         } catch (CRSRuntimeException expected) {
             //expected exception is approve female first 6006
             assertEquals("still other party must approve first", ErrorCodes.OTHER_PARTY_MUST_APPROVE_FIRST,
@@ -198,8 +202,7 @@ public class MarriageRegistrationServiceTest extends TestCase {
         }
 
         //now we are approving female notice and it does not have any restriction only need to be in DATA entry state
-        MarriageRegister existingFemaleNotice = marriageRegistrationService.
-            getMarriageNoticePendingApprovalByMRDivisionAndSerial(colomboMRDivision, 2010012347L, true, rg).get(0);
+        MarriageRegister existingFemaleNotice = marriageRegistrationService.getActiveRecordByMRDivisionAndSerialNo(colomboMRDivision, 2010012348L, rg);
         try {
             //approving female notice
             marriageRegistrationService.approveMarriageNotice(existingFemaleNotice.getIdUKey(),
@@ -210,7 +213,8 @@ public class MarriageRegistrationServiceTest extends TestCase {
         }
         //now there is no restriction for approving male notice
         MarriageRegister existingMaleNoticeCanApprove = marriageRegistrationService.
-            getMarriageNoticePendingApprovalByMRDivisionAndSerial(colomboMRDivision, 2010012346L, true, rg).get(0);
+            getActiveRecordByMRDivisionAndSerialNo(colomboMRDivision, 2010012346L, rg);
+
         try {
             marriageRegistrationService.approveMarriageNotice(existingMaleNoticeCanApprove.getIdUKey(),
                 MarriageNotice.Type.MALE_NOTICE, rg);
@@ -344,7 +348,7 @@ public class MarriageRegistrationServiceTest extends TestCase {
             MarriageRegister printLicense = marriageRegistrationService.
                 getMarriageNoticeForPrintLicense(registerRecord.getIdUKey(), rg);
             //state must be in LICENSE_PRINT
-            assertEquals("State in LICENSE_PRINT", MarriageRegister.State.LICENSE_PRINTED, printLicense.getState());
+            assertEquals("State in NOTICE_APPROVE", MarriageRegister.State.NOTICE_APPROVED, printLicense.getState());
         } catch (CRSRuntimeException notExpecting) {
             fail("not expecting exception at printing license at this stage");
         }
