@@ -3,6 +3,7 @@ package lk.rgd.crs.api.service;
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.District;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.domain.MarriageNotice;
@@ -151,6 +152,7 @@ public interface MarriageRegistrationService {
 
     /**
      * update Muslim marriage details
+     *
      * @param marriageRegister
      * @param user
      */
@@ -158,6 +160,7 @@ public interface MarriageRegistrationService {
 
     /**
      * update marriage registration detail (registrar details, registration place, etc)
+     *
      * @param marriageRegister
      * @param user
      */
@@ -279,6 +282,9 @@ public interface MarriageRegistrationService {
      * @return list of marriage register objects in a given DS Division
      */
     public List<MarriageRegister> getMarriageRegistersByDSDivision(DSDivision dsDivision, int pageNumber,
+        int numOfRows, boolean active, User user);
+
+    public List<MarriageRegister> getMarriageRegistersByDistrict(District district, int pageNumber,
         int numOfRows, boolean active, User user);
 
     /**
