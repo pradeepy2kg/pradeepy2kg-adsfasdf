@@ -58,4 +58,8 @@ public class AppConstants {
      * DS Division of Division Types
      */
     public static final String DS_DIVISION = "DS";
+    /**
+     * All
+     */
+    public static final String ALL = "all";
 }

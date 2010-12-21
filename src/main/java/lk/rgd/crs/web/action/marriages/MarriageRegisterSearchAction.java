@@ -119,7 +119,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
      * loading search page for marriage register
      */
     public String marriageRegisterSearchInit() {
-        commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId, dsDivisionId, mrDivisionId, AppConstants.MARRIAGE, user, language);
+        commonUtil.populateDynamicListsWithAllOption(districtList, dsDivisionList, mrDivisionList, user, language);
         return SUCCESS;
     }
 
@@ -133,21 +133,6 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         if (noticeSerialNo != null) {
             //TODO: search by serial number, clear tabs
         } else {
-            //TODO : to be removed
-            /*if (mrDivisionId == 0) {
-                //default search option use when page is loaded(search all the marriage records in DS division)
-                if (dsDivisionId == 0) {
-
-                } else {
-                    marriageRegisterSearchList = marriageRegistrationService.getMarriageRegistersByDSDivision
-                        (dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, true, user);
-                }
-
-            } else {
-                marriageRegisterSearchList = marriageRegistrationService.getMarriageRegisterByMRDivision
-                    (mrDivisionDAO.getMRDivisionByPK(mrDivisionId), pageNo, noOfRows, true, user);
-            } */
-
             if (districtId != 0 & dsDivisionId != 0 & mrDivisionId != 0) { // all selected
                 //filter by mr division
                 marriageRegisterSearchList = marriageRegistrationService.getMarriageRegisterByMRDivision
