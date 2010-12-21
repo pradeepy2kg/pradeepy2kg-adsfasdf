@@ -336,6 +336,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId,
             dsDivisionId, mrDivisionId, AppConstants.MARRIAGE, user, language);
         getApprovalPendingNotices();
+        showNoticeSearchResultSize();
         return SUCCESS;
     }
 
