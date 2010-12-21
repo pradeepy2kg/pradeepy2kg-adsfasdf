@@ -2,6 +2,7 @@
 <%@ page import="lk.rgd.prs.api.domain.Person" %>
 <%@ page import="lk.rgd.common.util.MarriageTypeUtil" %>
 <%@ page import="lk.rgd.crs.web.util.MarriageType" %>
+<%@ page import="lk.rgd.crs.api.domain.MarriageNotice" %>
 <%--
 @author amith jayasekara
 --%>
@@ -51,7 +52,21 @@
         <td colspan="3" align="right">
             <div class="form-submit">
                 <s:submit value="%{getText('button.mark.as.print')}"/>
+                    <%--DSDivision id to be load will be changed based on the notice type to be mark as printed
+                     if notice is male or both DS division would be male party ds division and if it is female notice
+                      DS division would be female party related 
+                     --%>
+                <s:if test="noticeType.ordinal()==2">
+                    <%--female--%>
+                    <s:hidden name="dsDivisionId"
+                              value="%{marriage.mrDivisionOfFemaleNotice.dsDivision.dsDivisionUKey}"/>
+                </s:if>
+                <s:else>
+                    <s:hidden name="dsDivisionId"
+                              value="%{marriage.mrDivisionOfMaleNotice.dsDivision.dsDivisionUKey}"/>
+                </s:else>
                 <s:hidden name="idUKey" value="%{marriage.idUKey}"/>
+                <s:hidden name="pageNo" value="%{#request.pageNo}"/>
                 </s:form>
             </div>
             <div class="form-submit">
@@ -347,3 +362,4 @@
     </tr>
 </table>
 </div>
+<s:property value="pageNo"/>
