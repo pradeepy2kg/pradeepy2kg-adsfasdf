@@ -467,7 +467,8 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
 
     private void populateNoticeForMarkAsPrint(MarriageRegister notice, User issuingUser, Location issuingLocation) {
         if (issuingLocation != null && issuingUser != null) {
-            notice.setState(MarriageRegister.State.LICENSE_PRINTED);
+            //    todo remove after modify queries for getting list pages
+            //    notice.setState(MarriageRegister.State.LICENSE_PRINTED);
             checkUserPermissionForTheLocation(issuingUser, issuingLocation);
             notice.setLicensePrintUser(issuingUser);
             java.util.GregorianCalendar gCal = new GregorianCalendar();

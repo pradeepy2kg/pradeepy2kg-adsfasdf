@@ -34,6 +34,7 @@ public class WebConstants {
     public static final String REQUEST_PIN_NIC = "pinOrNic";
     public static final String DIVISION_ID = "id";
     public static final String MODE = "mode";
+    public static final String TYPE = "type";
     public static final String WITHALL = "withAll";
     public static final String USER_LOCATION_ID = "userLocationId";
     public static final String SESSION_ADOPTION_ORDER = "adoption_order";
@@ -75,12 +76,11 @@ public class WebConstants {
     public static final String USER_RG = "rg";
 
     //for statistics
-    public static final String STAT_TYPE = "statType";    
+    public static final String STAT_TYPE = "statType";
     public static final String STAT_ALL = "all";
     public static final String STAT_BIRTH = "birth";
     public static final String STAT_DEATH = "death";
     public static final String STAT_MARRIAGE = "marriage";
-
 
 
 }

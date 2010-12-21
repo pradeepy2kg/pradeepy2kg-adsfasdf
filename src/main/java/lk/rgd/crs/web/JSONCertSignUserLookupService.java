@@ -1,5 +1,6 @@
 package lk.rgd.crs.web;
 
+import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 import lk.rgd.AppConstants;
 import lk.rgd.common.api.dao.UserDAO;
 import lk.rgd.common.api.dao.UserLocationDAO;
@@ -7,7 +8,9 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.UserLocation;
 import lk.rgd.common.util.NameFormatUtil;
 import lk.rgd.crs.api.dao.BirthDeclarationDAO;
+import lk.rgd.crs.api.dao.MarriageRegistrationDAO;
 import lk.rgd.crs.api.domain.BirthDeclaration;
+import lk.rgd.crs.api.domain.MarriageRegister;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,6 +40,10 @@ public class JSONCertSignUserLookupService extends HttpServlet {
     private UserLocationDAO userLocationDAO;
     private UserDAO userDAO;
     private BirthDeclarationDAO birthDeclarationDAO;
+    private MarriageRegistrationDAO marriageRegistrationDAO;
+    private static final String TYPE_MARRIAGE = "marriage";
+    private static final String TYPE_BIRTH = "birth";
+    private static final String TYPE_DEATH = "death";
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -46,6 +53,7 @@ public class JSONCertSignUserLookupService extends HttpServlet {
         userLocationDAO = (UserLocationDAO) context.getBean("userLocationDAOImpl");
         userDAO = (UserDAO) context.getBean("userDAOImpl");
         birthDeclarationDAO = (BirthDeclarationDAO) context.getBean("birthDeclarationDAOImpl");
+        marriageRegistrationDAO = (MarriageRegistrationDAO) context.getBean("marriageRegistrationDAOImpl");
     }
 
     @Override
@@ -59,6 +67,11 @@ public class JSONCertSignUserLookupService extends HttpServlet {
         String mode = request.getParameter(WebConstants.MODE);
         String userId = request.getParameter(WebConstants.USER_ID);
         String certId = request.getParameter(WebConstants.CERTIFICATE_ID);
+        String type = request.getParameter(WebConstants.TYPE);
+
+        int locationId = Integer.parseInt(userLocationId);
+        long certificateId = Long.parseLong(certId);
+
 
         if (logger.isDebugEnabled()) {
             logger.debug("Received UserLocationId : " + userLocationId + ", Mode : " + mode + ", UserId : " + userId +
@@ -83,10 +96,6 @@ public class JSONCertSignUserLookupService extends HttpServlet {
                     return;
                 }
             }
-
-            int locationId = Integer.parseInt(userLocationId);
-            long certificateId = Long.parseLong(certId);
-
             if ("1".equals(mode)) {
                 optionList.put("authorizedUsers", getBirthCertSignUsers(locationId));
             } else if ("2".equals(mode)) {
@@ -96,21 +105,22 @@ public class JSONCertSignUserLookupService extends HttpServlet {
             } else if ("4".equals(mode)) {
                 optionList.put("authorizedUsers", getMarriageCertSignUsers(locationId));
             } else {
+                String lang = getUserPrefLang(certificateId, type);
                 if (userId == null) {
                     User user = (User) session.getAttribute(WebConstants.SESSION_USER_BEAN);
                     userId = user.getUserId();
                 }
                 UserLocation userLocation = userLocationDAO.getUserLocation(userId, locationId);
-                String lang = getUserPrefLang(certificateId);
-
                 if (AppConstants.SINHALA.equals(lang) || AppConstants.TAMIL.equals(lang)) {
                     optionList.put("officerSignature", userLocation.getUser().getUserSignature(lang));
                     optionList.put("locationSignature", userLocation.getLocation().getLocationSignature(lang));
                     optionList.put("locationName", userLocation.getLocation().getLocationName(lang));
-                    if (AppConstants.SINHALA.equals(lang))
+                    if (AppConstants.SINHALA.equals(lang)) {
                         optionList.put("locationAddress", userLocation.getLocation().getSiLocationMailingAddress());
-                    if (AppConstants.TAMIL.equals(lang))
+                    }
+                    if (AppConstants.TAMIL.equals(lang)) {
                         optionList.put("locationAddress", userLocation.getLocation().getTaLocationMailingAddress());
+                    }
 
                 } else {
                     logger.warn("Unexpected language passed to the service");
@@ -148,9 +158,18 @@ public class JSONCertSignUserLookupService extends HttpServlet {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    private String getUserPrefLang(long certIdUKey) {
-        BirthDeclaration bd = birthDeclarationDAO.getById(certIdUKey);
-        return bd.getRegister().getPreferredLanguage();
+    private String getUserPrefLang(long certIdUKey, String type) {
+        if (TYPE_MARRIAGE.equals(type)) {
+            MarriageRegister mr = marriageRegistrationDAO.getByIdUKey(certIdUKey);
+            return mr.getPreferredLanguage();
+        } else if (TYPE_DEATH.equals(type)) {
+            //get preferred language for death certificate
+        } else {
+            BirthDeclaration bd = birthDeclarationDAO.getById(certIdUKey);
+            return bd.getRegister().getPreferredLanguage();
+        }
+        //default
+        return AppConstants.SINHALA;
     }
 
     private List getList(List<User> users) {
