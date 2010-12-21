@@ -3,10 +3,7 @@ package lk.rgd.crs.core.service;
 import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
 import lk.rgd.common.api.dao.UserLocationDAO;
-import lk.rgd.common.api.domain.DSDivision;
-import lk.rgd.common.api.domain.Location;
-import lk.rgd.common.api.domain.User;
-import lk.rgd.common.api.domain.UserLocation;
+import lk.rgd.common.api.domain.*;
 import lk.rgd.common.util.NameFormatUtil;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
@@ -334,6 +331,17 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<MarriageRegister> getMarriageRegistersByDistrict(District district, int pageNumber,
+        int numOfRows, boolean active, User user) {
+        //validate user access to the ds division
+        return marriageRegistrationDAO.getPaginatedListByDistrict(district,
+            MarriageRegister.State.REG_DATA_ENTRY, pageNumber, numOfRows, true);
+    }
+
+    /**
+     * @inheritDoc
+     */
     @Transactional(propagation = Propagation.REQUIRED)
     public void approveMarriageNotice(long idUKey, MarriageNotice.Type type, User user) {
         logger.debug("attempt to approve marriage notice with idUKey : {} and notice type : {}", idUKey, type);
@@ -555,7 +563,6 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         }
         return null;
     }
-
 
     /**
      * check notice can be approve(not checking state and user permission for DS or user permission for approving notice)

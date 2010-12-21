@@ -2,6 +2,7 @@ package lk.rgd.crs.core.dao;
 
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.District;
 import lk.rgd.common.core.dao.BaseDAO;
 import lk.rgd.crs.api.dao.MarriageRegistrationDAO;
 import lk.rgd.crs.api.domain.MRDivision;
@@ -120,6 +121,37 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
         q.setParameter("dsDivision", dsDivision);
         q.setParameter("state", state);
         q.setParameter("active", active);
+        return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<MarriageRegister> getPaginatedListByDistrict(District district,
+        MarriageRegister.State state, int pageNo, int noOfRows, boolean active) {
+        Query q = em.createNamedQuery("findMarriageRegisterByDistrict").
+            setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+        q.setParameter("district", district);
+        q.setParameter("state", state);
+        q.setParameter("active", active);
+        return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<MarriageRegister> getPaginatedListByDistrictAndDate(District district,
+        MarriageRegister.State state, int pageNo, int noOfRows, boolean active,
+        Date startDate, Date endDate) {
+        Query q = em.createNamedQuery("findMarriageRegisterByDistrictAndDate").
+            setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+        q.setParameter("district", district);
+        q.setParameter("state", state);
+        q.setParameter("active", active);
+        q.setParameter("startDate", startDate);
+        q.setParameter("endDate", endDate);
         return q.getResultList();
     }
 

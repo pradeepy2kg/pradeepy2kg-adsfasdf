@@ -2,6 +2,7 @@ package lk.rgd.crs.api.dao;
 
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.District;
 import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.domain.MarriageRegister;
 
@@ -91,6 +92,13 @@ public interface MarriageRegistrationDAO {
      */
     public List<MarriageRegister> getPaginatedListForStateByDSDivision(DSDivision dsDivision,
         MarriageRegister.State state, int pageNo, int noOfRows, boolean active);
+
+    public List<MarriageRegister> getPaginatedListByDistrict(District district,
+        MarriageRegister.State state, int pageNo, int noOfRows, boolean active);
+
+    public List<MarriageRegister> getPaginatedListByDistrictAndDate(District district,
+        MarriageRegister.State state, int pageNo, int noOfRows, boolean active,
+        Date startDate, Date endDate);
 
     /**
      * Returns paginated list of active/inactive Marriage Notices based on the MRDivision

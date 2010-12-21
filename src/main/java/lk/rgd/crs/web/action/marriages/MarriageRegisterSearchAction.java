@@ -133,13 +133,35 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         if (noticeSerialNo != null) {
             //TODO: search by serial number, clear tabs
         } else {
-            if (mrDivisionId == 0) {
+            //TODO : to be removed
+            /*if (mrDivisionId == 0) {
                 //default search option use when page is loaded(search all the marriage records in DS division)
-                marriageRegisterSearchList = marriageRegistrationService.getMarriageRegistersByDSDivision
-                    (dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, true, user);
+                if (dsDivisionId == 0) {
+
+                } else {
+                    marriageRegisterSearchList = marriageRegistrationService.getMarriageRegistersByDSDivision
+                        (dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, true, user);
+                }
+
             } else {
                 marriageRegisterSearchList = marriageRegistrationService.getMarriageRegisterByMRDivision
                     (mrDivisionDAO.getMRDivisionByPK(mrDivisionId), pageNo, noOfRows, true, user);
+            } */
+
+            if (districtId != 0 & dsDivisionId != 0 & mrDivisionId != 0) { // all selected
+                //filter by mr division
+                marriageRegisterSearchList = marriageRegistrationService.getMarriageRegisterByMRDivision
+                    (mrDivisionDAO.getMRDivisionByPK(mrDivisionId), pageNo, noOfRows, true, user);
+            } else if (districtId != 0 & dsDivisionId != 0) { // only mr division selected
+                //filter by ds division
+                marriageRegisterSearchList = marriageRegistrationService.getMarriageRegistersByDSDivision
+                    (dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, true, user);
+            } else if (districtId != 0) { // only district selected
+                //filter by district
+                marriageRegisterSearchList = marriageRegistrationService.getMarriageRegistersByDistrict
+                    (districtDAO.getDistrict(districtId), pageNo, noOfRows, true, user);
+            } else {  // nothing selected
+                //find all records without filtering by divisions.
             }
         }
         if (marriageRegisterSearchList.size() == 0) {
