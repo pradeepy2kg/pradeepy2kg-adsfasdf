@@ -103,7 +103,11 @@ import java.util.Date;
         "AND mr.mrDivision.dsDivision.district IS NOT NULL AND mr.mrDivision.dsDivision.district = :district " +
         "AND ((mr.dateOfMarriage IS NOT NULL AND mr.dateOfMarriage BETWEEN :startDate AND :endDate) " +
         "OR (mr.dateOfMaleNotice IS NOT NULL AND mr.dateOfMaleNotice BETWEEN :startDate AND :endDate)" +
-        "OR (mr.dateOfFemaleNotice IS NOT NULL AND mr.dateOfFemaleNotice BETWEEN :startDate AND :endDate)) ORDER BY mr.idUKey DESC ")
+        "OR (mr.dateOfFemaleNotice IS NOT NULL AND mr.dateOfFemaleNotice BETWEEN :startDate AND :endDate)) ORDER BY mr.idUKey DESC "),
+
+    @NamedQuery(name = "findMarriageRegisterByState", query = "SELECT mr FROM MarriageRegister mr " +
+        "WHERE mr.state = :state AND mr.lifeCycleInfo.activeRecord = :active " +
+        "ORDER BY mr.idUKey DESC ")
 
 })
 public class MarriageRegister implements Serializable, Cloneable {

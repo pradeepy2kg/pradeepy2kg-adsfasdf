@@ -336,9 +336,18 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<MarriageRegister> getMarriageRegistersByDistrict(District district, int pageNumber,
         int numOfRows, boolean active, User user) {
-        //validate user access to the ds division
+        //validate user access to the district
         return marriageRegistrationDAO.getPaginatedListByDistrict(district,
             MarriageRegister.State.REG_DATA_ENTRY, pageNumber, numOfRows, true);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<MarriageRegister> getMarriageRegisterByState(MarriageRegister.State state, int pageNumber, int numOfRows, boolean active, User user) {
+        //validate user access
+        return marriageRegistrationDAO.getPaginatedMarriageRegisterListByState(state, pageNumber, numOfRows, active);
     }
 
     /**
