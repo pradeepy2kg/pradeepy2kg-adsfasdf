@@ -4,7 +4,9 @@ import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.AppConstants;
 import lk.rgd.ErrorCodes;
 import lk.rgd.common.api.dao.*;
+import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.UserLocation;
 import lk.rgd.common.util.NameFormatUtil;
 import lk.rgd.common.util.WebUtils;
 import lk.rgd.crs.CRSRuntimeException;
@@ -76,6 +78,8 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
 
     private String comment;
     private String licenseIssuedUserId;
+    private String licenseIssueUserSignature;
+    private String licenseIssuePlace;
 
     private MarriageNotice.Type noticeType;
 
@@ -192,6 +196,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId, dsDivisionId,
             mrDivisionId, AppConstants.MARRIAGE, user, language);
         getApprovalPendingNotices();
+        addActionMessage(getText("message.approve.successfully"));
         logger.debug("successfully approved :idUKey : {}", idUKey);
         return SUCCESS;
     }
@@ -266,7 +271,6 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
             idUKey, noticeType);
         try {
             marriage = marriageRegistrationService.getMarriageNoticeForPrintLicense(idUKey, user);
-            populateLicense(marriage);
         }
         catch (CRSRuntimeException e) {
             switch (e.getErrorCode()) {
@@ -277,12 +281,13 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
             return ERROR;
         }
         //displaying issuing locations and authorized users
-        populateLocationsAndIssuingUsers();
+        populateLocationsAndIssuingUsersDropDowns();
+        populateIssuingUserAndLocation(marriage, user);
+        populateLicense(marriage);
         return SUCCESS;
     }
 
     public String markLicenseAsPrinted() {
-        idUKey = 1;
         logger.debug("attempt to mark license to marriage as license printed, marriage notice :idUKey : {} ", idUKey);
         MarriageRegister notice = marriageRegistrationService.getByIdUKey(idUKey, user);
         if (notice != null && notice.getState() == MarriageRegister.State.LICENSE_PRINTED) {
@@ -291,12 +296,8 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
             addActionMessage(getText("massage.license.already.marked"));
         } else {
             try {
-                //todo remove HC
                 marriageRegistrationService.markLicenseToMarriageAsPrinted(idUKey, locationDAO.
-                    getLocation(1), userDAO.getUserByPK("rg"), user);
-                /*
-                marriageRegistrationService.markLicenseToMarriageAsPrinted(idUKey, locationDAO.
-                    getLocation(licensePrintedLocationId), userDAO.getUserByPK(licenseIssuedUserId), user);*/
+                    getLocation(licensePrintedLocationId), userDAO.getUserByPK(licenseIssuedUserId), user);
             }
             catch (CRSRuntimeException e) {
                 switch (e.getErrorCode()) {
@@ -310,6 +311,9 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
             }
         }
         //if success redirect to license
+        commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId,
+            dsDivisionId, mrDivisionId, AppConstants.MARRIAGE, user, language);
+        getApprovalPendingNotices();
         return SUCCESS;
     }
 
@@ -345,16 +349,24 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         return SUCCESS;
     }
 
-    private void populateLocationsAndIssuingUsers() {
-        //get current users location
+    /**
+     * populating drop downs for user locations and printing users
+     * //todo check only display allowing users amith
+     */
+    private void populateLocationsAndIssuingUsersDropDowns() {
+        //get current users location   displaying lists,initial values are set by the service
         locationList = commonUtil.populateActiveUserLocations(user, language);
         userList = new HashMap<String, String>();
-        for (User u : userLocationDAO.getMarriageCertificateSignUsersByLocationId(locationList.keySet().
-            iterator().next(), true)) {
+        List<User> users = userLocationDAO.getMarriageCertificateSignUsersByLocationId(locationList.keySet().
+            iterator().next(), true);
+        for (User u : users) {
             userList.put(u.getUserId(), NameFormatUtil.getDisplayName(u.getUserName(), 50));
         }
     }
 
+    /**
+     * set additional displaying values
+     */
     private void populateLicense(MarriageRegister notice) {
         //fill date of issue
         dateOfIssueLicense = new GregorianCalendar().getTime();
@@ -363,6 +375,35 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         java.util.GregorianCalendar gCal = new GregorianCalendar();
         gCal.add(Calendar.DATE, +appParametersDAO.getIntParameter("crs.license_cancel_dates"));
         dateOfCancelLicense = gCal.getTime();
+        //setting issuing location and user
+        //display values
+        //todo add preferred language
+        if ("si".equals(AppConstants.SINHALA)) {
+            //Sinhala pref lang
+            licenseIssuePlace = notice.getLicenseIssueLocation().getSienLocationSignature();
+            licenseIssueUserSignature = notice.getLicensePrintUser().getUserSignature(AppConstants.SINHALA);
+        } else {
+            //tamil pref lang
+            licenseIssuePlace = notice.getLicenseIssueLocation().getTaenLocationSignature();
+            licenseIssueUserSignature = notice.getLicensePrintUser().getUserSignature(AppConstants.TAMIL);
+        }
+    }
+
+    /**
+     * set printing user location and issuing user(primary values)
+     */
+    private void populateIssuingUserAndLocation(MarriageRegister notice, User user) {
+        List<Location> userLocationList = user.getActiveLocations();
+        //set first (primary) location as issuing location
+        int locationId = userLocationList.get(0).getLocationUKey();
+        Location location = userLocationList.get(0);
+        /* issueLocation.getLocationName()*/
+        notice.setLicenseIssueLocation(location);
+        //get first user from above location
+        //no need to check first user's permission for issuing certificate  because any DS office can issue license
+        notice.setLicensePrintUser(userLocationDAO.getMarriageCertificateSignUsersByLocationId(locationId, true).get(0));
+
+
     }
 
     /**
@@ -385,7 +426,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         } else {
             if (isEmpty(pinOrNic) && noticeSerialNo == null) {
                 if (mrDivisionId == 0) {
-                    // Search by DSDivision 
+                    // Search by DSDivision
                     if (searchStartDate == null && searchEndDate == null) {
                         searchList = WebUtils.populateNoticeList(marriageRegistrationService.getMarriageNoticePendingApprovalByDSDivision(
                             dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, true, user));
@@ -683,5 +724,21 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
 
     public void setUserList(Map<String, String> userList) {
         this.userList = userList;
+    }
+
+    public String getLicenseIssueUserSignature() {
+        return licenseIssueUserSignature;
+    }
+
+    public void setLicenseIssueUserSignature(String licenseIssueUserSignature) {
+        this.licenseIssueUserSignature = licenseIssueUserSignature;
+    }
+
+    public String getLicenseIssuePlace() {
+        return licenseIssuePlace;
+    }
+
+    public void setLicenseIssuePlace(String licenseIssuePlace) {
+        this.licenseIssuePlace = licenseIssuePlace;
     }
 }

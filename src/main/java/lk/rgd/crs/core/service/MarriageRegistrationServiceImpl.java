@@ -2,9 +2,12 @@ package lk.rgd.crs.core.service;
 
 import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
+import lk.rgd.common.api.dao.UserLocationDAO;
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.UserLocation;
+import lk.rgd.common.util.NameFormatUtil;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.MarriageRegistrationDAO;
@@ -31,10 +34,12 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     private static final Logger logger = LoggerFactory.getLogger(MarriageRegistrationServiceImpl.class);
     private final MarriageRegistrationDAO marriageRegistrationDAO;
     private final MarriageRegistrationValidator marriageRegistrationValidator;
+    private final UserLocationDAO userLocationDAO;
 
-    public MarriageRegistrationServiceImpl(MarriageRegistrationDAO marriageRegistrationDAO, MarriageRegistrationValidator marriageRegistrationValidator) {
+    public MarriageRegistrationServiceImpl(MarriageRegistrationDAO marriageRegistrationDAO, MarriageRegistrationValidator marriageRegistrationValidator, UserLocationDAO userLocationDAO) {
         this.marriageRegistrationDAO = marriageRegistrationDAO;
         this.marriageRegistrationValidator = marriageRegistrationValidator;
+        this.userLocationDAO = userLocationDAO;
     }
 
     /**
@@ -436,6 +441,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
             handleException("can't find marriage register record for idUKey : " + idUKey + " for mark as print",
                 ErrorCodes.CAN_NOT_FIND_MARRIAGE_NOTICE);
         } else {
+            //todo check location id and user is not null
             if (notice.getState() == MarriageRegister.State.NOTICE_APPROVED) {
                 populateNoticeForMarkAsPrint(notice, issuedUser, licenseIssueLocation);
                 //updating marriage notice
@@ -549,6 +555,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         }
         return null;
     }
+
 
     /**
      * check notice can be approve(not checking state and user permission for DS or user permission for approving notice)
