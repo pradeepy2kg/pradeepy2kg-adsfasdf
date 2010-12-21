@@ -1,6 +1,3 @@
-<%--
-  Created by shan
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <s:actionerror cssStyle="color:red;font-size:10pt"/>
@@ -12,87 +9,66 @@
 <script type="text/javascript" src="lib/jquery/jqplot.pieRenderer.min.js"></script>
 <script type="text/javascript" src="<s:url value="/js/chartCreator.js"/>"></script>
 
-<style type="text/css" title="currentStyle">
-    @import "../lib/datatables/media/css/demo_page.css";
-    @import "../lib/datatables/media/css/demo_table.css";
-    @import "../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css";
-</style>
-<script type="text/javascript" language="javascript" src="../../lib/datatables/media/js/jquery.dataTables.js"></script>
-<script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
-<script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
-<link rel="stylesheet" href="../../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
-
 <link rel="stylesheet" type="text/css" href="css/jquery.jqplot.css"/>
 <s:hidden id="userName" value="%{userName}"/>
 
-<div id="outer-div">
-
-<script type="text/javascript">
-    $(function() {
-        $('select#district').bind('change', function(evt1) {
-            var id = $("select#district").attr("value");
-
-            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:13},
-                    function(data) {
-                        var options1 = '';
-                        var ds = data.dsDivisionList;
-                        for (var i = 0; i < ds.length; i++) {
-                            options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
-                        }
-                        $("select#dsDivision").html(options1);
-
-                        var options2 = '';
-                        var bd = data.deoList;
-                        for (var j = 0; j < bd.length; j++) {
-                            options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
-                        }
-                        $("select#deoUser").html(options2);
-                    });
-        });
-
-        $('select#dsDivision').bind('change', function(evt1) {
-            var id = $("select#dsDivision").attr("value");
-
-            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:14},
-                    function(data) {
-                        var options1 = '';
-                        var ds = data.deoList;
-                        for (var i = 0; i < ds.length; i++) {
-                            options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
-                        }
-                        $("select#deoUser").html(options1);
-                    });
-        });
-
-    });
-
-    $(document).ready(function() {
-        var user = 'adr';
-        var mode = 'all';
-
-        alert(user + mode);
-
-        $.getJSON('/ecivil/crs/StatisticsLookupService',
-        {
-            userType:user,
-            statType:mode
-        },
-                function(data) {
-                    drawHorizontalBarChart(data, 'nw', null, null, 1, 'birth');
-                    drawHorizontalBarChart(data, 'sw', null, null, 1, 'death');
-                    drawPieChart(data, 'ne', 'birth');
-                    drawPieChart(data, 'se', 'death');
-                }
-                );
-
-    });
-
-    function initPage() {
+<style type="text/css">
+    .jqplot-target {
+        color: #666666;
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        font-size: 1em;
     }
 
-</script>
+    #chart1, #chart2, #chart4, #chart5 {
+        width: 460px;
+        height: 120px;
+        float: left;
+        margin-right: 5px;
+    }
 
-<style type="text/css">
+    #chart3, #chart6 {
+        width: 400px;
+        height: 300px;
+        margin: 0;
+        padding: 0;
+    }
+
+    .pie {
+        padding-left: 0;
+        text-align: left;
+    }
+
+    .info {
+        padding-left: 10px;
+    }
+
+    .topic {
+        height: 30px;
+        border: #000 1px solid;
+        background-color: #E0FFFF;
+        text-align: center;
+        padding-top: 10px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .noStyle {
+        border-style: none;
+    }
+
+    .noStyle_red {
+        border-style: none;
+        color: red;
+    }
+
+    .issue {
+        color: red;
+    }
+
+    input {
+        width: 40px;
+    }
+
     table, tr, td, th {
         border-collapse: collapse;
         border: 1px solid #fff;
@@ -101,11 +77,6 @@
     td {
         padding-left: 10px;
         padding-right: 10px;
-    }
-
-    tr.e {
-        background-color: #E4ECFC;
-        height: 35px;
     }
 
     th {
@@ -117,68 +88,66 @@
         font-weight: lighter;
     }
 
-    ul {
-        margin-top: 0;
-        padding: 0;
+    tr.e {
+        background-color: #E4ECFC;
+        height: 35px;
     }
-
-    #custom {
-        margin-top: 15px;
-    }
-
-    #stat {
-        width: 90%;
-        height: 600px;
-        background-color: #f0f8ff;
-        margin: 0 auto;
-        margin-top: 20px;
-        margin-bottom: 20px;
-        display: block;
-        border: #87cefa 1px solid;
-    }
-
-    #n, #s {
-        width: 90%;
-        height: 240px;
-        padding: 0px;
-        margin: 0 auto;
-        margin-top: 10px;
-    }
-
-    #nw, #sw {
-        width: 48%;
-        height: 240px;
-        position: relative;
-        float: left;
-        margin: auto;
-        border: #87cefa 1px solid;
-    }
-
-    #ne, #se {
-        width: 48%;
-        height: 240px;
-        position: relative;
-        float: right;
-        margin: auto;
-        border: #87cefa 1px solid;
-    }
-
-    #births, #deaths {
-        width: 90%;
-        height: 30px;
-        margin: 0 auto;
-        text-align: center;
-        color: #333;
-        font-size: 16px;
-        padding-top: 10px;
+    #space{
+        height:20px;
     }
 
 </style>
 
-<div id="custom">
-    <%--    <form action="#">--%>
-    <table align="center" cellpadding="0" cellspacing="0" width="90%">
-        <tbody>
+<div id="ADR-home-page-outer">
+
+    <script type="text/javascript">
+
+        $(function() {
+            $('select#district').bind('change', function(evt1) {
+                var id = $("select#district").attr("value");
+
+                $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:15},
+                        function(data) {
+                            var options1 = '';
+                            var ds = data.dsDivisionList;
+                            for (var i = 0; i < ds.length; i++) {
+                                options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                            }
+                            $("select#dsDivision").html(options1);
+
+                            var options2 = '';
+                            var bd = data.adrList;
+                            for (var j = 0; j < bd.length; j++) {
+                                options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
+                            }
+                            $("select#adrUser").html(options2);
+                        });
+            });
+
+        });
+
+        $(document).ready(function() {
+            var user = 'dr';
+            var mode = 'all';
+            $.getJSON('/ecivil/crs/StatisticsLookupService',
+            {
+                userType:user,
+                statType:mode
+            },
+                    function(data) {
+                        drawChart(data);
+                    }
+                    );
+
+        });
+
+        function initPage() {
+        }
+
+    </script>
+    <div id="space"></div>
+    <table border="0" width="100%">
+        <%-- start --%>
         <tr class="e" bgcolor="#eeeeee">
             <th colspan="4" align="left">Custom Search</th>
         </tr>
@@ -203,41 +172,104 @@
         <tr class="e">
             <td>Start Date</td>
             <td>
-                <s:textfield id="sdate" name="startDate"/>
+                <s:textfield id="sdate" name="startDate" cssStyle="width:70%;"/>
             </td>
             <td>End Date</td>
             <td>
-                <s:textfield id="edate" name="endDate"/>
+                <s:textfield id="edate" name="endDate" cssStyle="width:70%;"/>
             </td>
         </tr>
         <tr class="e">
-            <td>DEO</td>
+            <td>ADR</td>
             <td>
                 <s:select
-                        id="deoUser"
-                        name="deoUserId"
-                        list="deoList"
+                        id="adrUser"
+                        name="adrUserId"
+                        list="adrList"
                         />
             </td>
-            <td><s:submit/></td>
+            <td><s:submit cssStyle="width:100px;"/></td>
             <td>&nbsp;</td>
         </tr>
-        </tbody>
+        <%-- end --%>
+        <tr>
+            <td colspan="4" align="center">
+                <div class="topic">Birth Statistics</div>
+            </td>
+        </tr>
+        <tr>
+            <td class="info">
+                All Pending :
+                <input type="text" id="all_pending_b" class="noStyle" readonly="true" maxlength="3"/>
+            </td>
+            <td class="info">
+                <label class="issue">
+                    Arrears :
+                    <input type="text" id="arrears_b" class="noStyle_red" readonly="true" maxlength="3"/>
+                </label>
+            </td>
+            <td colspan="2" rowspan="4" class="pie">
+                <div id="chart3"></div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div id="chart1"></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="info">
+                Total Submitted Items :
+                <input type="text" id="total_submitted_b" class="noStyle" readonly="true" maxlength="3"/>
+            </td>
+            <td class="info">
+                <label class="issue">
+                    Late Items :
+                    <input type="text" id="late_b" class="noStyle_red" readonly="true" maxlength="3"/>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div id="chart2"></div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4" align="center">
+                <div class="topic">Death Statistics</div>
+            </td>
+        </tr>
+        <tr>
+            <td class="info">All Pending : <input type="text" id="all_pending_d" class="noStyle" readonly="true"
+                                                  maxlength="3"/></td>
+            <td class="info"><label class="issue">Arrears : <input type="text" id="arrears_d" class="noStyle_red"
+                                                                   readonly="true" maxlength="3"/></label></td>
+            <td colspan="2" rowspan="4" class="pie">
+                <div id="chart6"></div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div id="chart4"></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="info">Total Submitted Items : <input type="text" id="total_submitted_d" class="noStyle"
+                                                            readonly="true" maxlength="3"/></td>
+            <td class="info"><label class="issue">Late Items : <input type="text" id="late_d" class="noStyle_red"
+                                                                      readonly="true" maxlength="3"/></label></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div id="chart5"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
     </table>
-    <%--    </form>--%>
-</div>
-<div id="stat">
-    <div id="births">Births Statistics</div>
-    <div id="n">
-        <div id="nw"></div>
-        <div id="ne"></div>
-    </div>
-
-    <div id="deaths">Deaths Statistics</div>
-    <div id="s">
-        <div id="sw"></div>
-        <div id="se"></div>
-    </div>
-</div>
 
 </div>

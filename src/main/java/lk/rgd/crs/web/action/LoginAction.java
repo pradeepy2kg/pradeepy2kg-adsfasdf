@@ -10,12 +10,10 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 
 import lk.rgd.crs.web.WebConstants;
-import lk.rgd.crs.web.Link;
 import lk.rgd.crs.web.Menu;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.core.AuthorizationException;
-import lk.rgd.Permission;
 
 /**
  * @author Indunil Moremada
@@ -55,10 +53,12 @@ public class LoginAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> districtList;
     private Map<Integer, String> divisionList;
     private List<String> deoList;
+    private List<String> adrList;
 
     private int dsDivisionId;
     private int districtId;
     private int deoUserId;
+    private int adrUserId;
 
     private String startDate;
     private String endDate;
@@ -169,9 +169,13 @@ public class LoginAction extends ActionSupport implements SessionAware {
             String result = checkUserExpiry(user);
 
             if (result.equals(SUCCESS)) {
-                if ((result + userRole).equals("successDR")) {
-                    populateLists(user);
+                if ((result + userRole).equals("successRG") || (result + userRole).equals("successARG")) {
+                    populateLists(user, WebConstants.USER_ARG);
                 }
+                if ((result + userRole).equals("successDR") || (result + userRole).equals("successADR")) {
+                    populateLists(user, userRole);
+                }
+
                 return result + userRole;
             } else {
                 return result;
@@ -182,30 +186,74 @@ public class LoginAction extends ActionSupport implements SessionAware {
         }
     }
 
-    void populateLists(User user) {
+    void populateLists(User user, String usertype) {
 
-        if (districtList == null) {
-            districtList = districtDAO.getAllDistrictNames(user.getPrefLanguage(), user);
-            logger.debug("district List : {}", districtList.size());
-        }
-
-        if (divisionList == null && districtList != null) {
-            divisionList = dsDivisionDAO.getAllDSDivisionNames(
-                user.getAssignedBDDistricts().iterator().next().getDistrictUKey(),
-                user.getPrefLanguage(),
-                user);
-            logger.debug("division List : {}", divisionList.size());
-        } else {
+        if (usertype.equals(WebConstants.USER_ARG) || usertype.equals(WebConstants.USER_RG)) {
             if (districtList == null) {
-                logger.debug("DistrictList null for user : {}", user.getUserId());
+                districtList = districtDAO.getAllDistrictNames(user.getPrefLanguage(), user);
+                logger.debug("district List : {}", districtList.size());
             }
-        }
 
-        if (deoList == null && divisionList != null) {
-            logger.debug("Role = {}", user.getRole());
-            deoList = userDAO.getDEOsByDSDivision(
-                user.getPrefLanguage(), user, dsDivisionDAO.getDSDivisionByPK(divisionList.keySet().iterator().next()), roleDAO.getRole("DEO"));
-            logger.debug("DEO List : {}", deoList.size());
+            if (divisionList == null && districtList != null) {
+                divisionList = dsDivisionDAO.getAllDSDivisionNames(
+                    districtList.keySet().iterator().next(),
+                    user.getPrefLanguage(),
+                    user);
+                logger.debug("division List : {}", divisionList.size());
+            } else {
+                if (districtList == null) {
+                    logger.debug("DistrictList null for user : {}", user.getUserId());
+                }
+            }
+
+        } else if (usertype.toLowerCase().equals(WebConstants.USER_ADR)) {
+            if (districtList == null) {
+                districtList = districtDAO.getAllDistrictNames(user.getPrefLanguage(), user);
+                logger.debug("district List : {}", districtList.size());
+            }
+
+            if (divisionList == null && districtList != null) {
+                divisionList = dsDivisionDAO.getAllDSDivisionNames(
+                    districtList.keySet().iterator().next(),
+                    user.getPrefLanguage(),
+                    user);
+                logger.debug("division List : {}", divisionList.size());
+            } else {
+                if (districtList == null) {
+                    logger.debug("DistrictList null for user : {}", user.getUserId());
+                }
+            }
+
+            if (deoList == null && divisionList != null) {
+                logger.debug("Role = {}", user.getRole());
+                deoList = userDAO.getDEOsByDSDivision(
+                    user.getPrefLanguage(), user, dsDivisionDAO.getDSDivisionByPK(divisionList.keySet().iterator().next()), roleDAO.getRole("DEO"));
+                logger.debug("DEO List : {}", deoList.size());
+            }
+        } else if(usertype.toLowerCase().equals(WebConstants.USER_DR)) {
+            if (districtList == null) {
+                districtList = districtDAO.getAllDistrictNames(user.getPrefLanguage(), user);
+                logger.debug("district List : {}", districtList.size());
+            }
+
+            if (divisionList == null && districtList != null) {
+                divisionList = dsDivisionDAO.getAllDSDivisionNames(
+                    districtList.keySet().iterator().next(),
+                    user.getPrefLanguage(),
+                    user);
+                logger.debug("division List : {}", divisionList.size());
+            } else {
+                if (districtList == null) {
+                    logger.debug("DistrictList null for user : {}", user.getUserId());
+                }
+            }
+            
+            if (adrList == null && divisionList != null) {
+                logger.debug("Role = {}", user.getRole());
+                adrList = userDAO.getADRsByDistrictId(
+                    districtDAO.getDistrict(districtList.keySet().iterator().next()), roleDAO.getRole("ADR"));
+                logger.debug("ADR List : {}", adrList.size());
+            }
         }
     }
 
@@ -459,5 +507,21 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
     public void setDeoList(List<String> deoList) {
         this.deoList = deoList;
+    }
+
+    public List<String> getAdrList() {
+        return adrList;
+    }
+
+    public void setAdrList(List<String> adrList) {
+        this.adrList = adrList;
+    }
+
+    public int getAdrUserId() {
+        return adrUserId;
+    }
+
+    public void setAdrUserId(int adrUserId) {
+        this.adrUserId = adrUserId;
     }
 }

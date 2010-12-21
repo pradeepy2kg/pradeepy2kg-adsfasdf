@@ -130,6 +130,7 @@ public class JSONDivisionLookupService extends HttpServlet {
                 List mr = getMRDivisionList(lang, dsDivisionId, user);
                 optionLists.put("dsDivisionList", ds);
                 optionLists.put("divisionList", mr);
+
             } else if ("13".equals(mode)) {
                 List ds = getAllDSDivisions(lang, divisionId, user);
                 logger.debug("DSDivision List size : {}", ds.size());
@@ -144,6 +145,7 @@ public class JSONDivisionLookupService extends HttpServlet {
                 );
                 optionLists.put("dsDivisionList", ds);
                 optionLists.put("deoList", deoList);
+
             } else if ("14".equals(mode)) {
                 int dsDivisionId = Integer.parseInt(id);
                 List deoList = getList(
@@ -155,6 +157,15 @@ public class JSONDivisionLookupService extends HttpServlet {
                     )
                 );
                 optionLists.put("deoList", deoList);
+            } else if ("15".equals(mode)) {
+                List ds = getAllDSDivisions(lang, divisionId, user);
+                List adrList =  getList(
+                    userDAO.getADRsByDistrictId(
+                        districtDAO.getDistrict(divisionId), roleDAO.getRole("ADR")
+                    )
+                );
+                optionLists.put("dsDivisionList", ds);
+                optionLists.put("adrList", adrList);
             } else {
                 // passing districtId, return DS List and the BD List for the 1st DS division
                 List ds = getDSDivisions(lang, divisionId, user);

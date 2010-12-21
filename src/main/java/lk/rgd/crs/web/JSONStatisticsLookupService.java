@@ -119,25 +119,30 @@ public class JSONStatisticsLookupService extends HttpServlet {
                 }
             } else if (userType.equals(WebConstants.USER_ARG)) {
                 if (statType.equals(WebConstants.STAT_ALL)) {
-                    optionLists.put("submitted_b", 1);
-                    optionLists.put("approved_b", 5);
-                    optionLists.put("rejected_b", 1);
-                    optionLists.put("pending_b", 8);
 
-                    optionLists.put("submitted_d", 2);
-                    optionLists.put("approved_d", 8);
-                    optionLists.put("rejected_d", 4);
-                    optionLists.put("pending_d", 1);
+                    cs = populateCommonStat(WebConstants.STAT_BIRTH, WebConstants.USER_ARG);
 
-                    optionLists.put("this_month_b", 8);
-                    optionLists.put("arrears_b", 6);
-                    optionLists.put("normal_b", 2);
-                    optionLists.put("late_b", 6);
+                    optionLists.put("approved_b", cs.getApprovedItems());
+                    optionLists.put("rejected_b", cs.getRejectedItems());
+                    optionLists.put("this_month_b", cs.getThisMonthPendingItems());
+                    optionLists.put("arrears_b", cs.getArrearsPendingItems());
+                    optionLists.put("normal_b", cs.getNormalSubmissions());
+                    optionLists.put("late_b", cs.getLateSubmissions());
 
-                    optionLists.put("this_month_d", 3);
-                    optionLists.put("arrears_d", 4);
-                    optionLists.put("normal_d", 6);
-                    optionLists.put("late_d", 9);
+                    cs = populateCommonStat(WebConstants.STAT_DEATH, WebConstants.USER_ARG);
+
+                    optionLists.put("approved_d", cs.getApprovedItems());
+                    optionLists.put("rejected_d", cs.getRejectedItems());
+                    optionLists.put("this_month_d", cs.getThisMonthPendingItems());
+                    optionLists.put("arrears_d", cs.getArrearsPendingItems());
+                    optionLists.put("normal_d", cs.getNormalSubmissions());
+                    optionLists.put("late_d", cs.getLateSubmissions());
+
+                    cs = populateCommonStat(WebConstants.STAT_MARRIAGE, WebConstants.USER_ARG);
+
+                    /*
+                    * TODO populate CommonStatistics object
+                    */
 
                 } else if (statType.equals(WebConstants.STAT_BIRTH)) {
 
@@ -177,25 +182,30 @@ public class JSONStatisticsLookupService extends HttpServlet {
                 }
             } else if (userType.equals(WebConstants.USER_RG)) {
                 if (statType.equals(WebConstants.STAT_ALL)) {
-                    optionLists.put("submitted_b", 4);
-                    optionLists.put("approved_b", 5);
-                    optionLists.put("rejected_b", 3);
-                    optionLists.put("pending_b", 6);
 
-                    optionLists.put("submitted_d", 1);
-                    optionLists.put("approved_d", 1);
-                    optionLists.put("rejected_d", 4);
-                    optionLists.put("pending_d", 1);
+                    cs = populateCommonStat(WebConstants.STAT_BIRTH, WebConstants.USER_RG);
 
-                    optionLists.put("this_month_b", 3);
-                    optionLists.put("arrears_b", 4);
-                    optionLists.put("normal_b", 1);
-                    optionLists.put("late_b", 4);
+                    optionLists.put("approved_b", cs.getApprovedItems());
+                    optionLists.put("rejected_b", cs.getRejectedItems());
+                    optionLists.put("this_month_b", cs.getThisMonthPendingItems());
+                    optionLists.put("arrears_b", cs.getArrearsPendingItems());
+                    optionLists.put("normal_b", cs.getNormalSubmissions());
+                    optionLists.put("late_b", cs.getLateSubmissions());
 
-                    optionLists.put("this_month_d", 3);
-                    optionLists.put("arrears_d", 9);
-                    optionLists.put("normal_d", 2);
-                    optionLists.put("late_d", 4);
+                    cs = populateCommonStat(WebConstants.STAT_DEATH, WebConstants.USER_RG);
+
+                    optionLists.put("approved_d", cs.getApprovedItems());
+                    optionLists.put("rejected_d", cs.getRejectedItems());
+                    optionLists.put("this_month_d", cs.getThisMonthPendingItems());
+                    optionLists.put("arrears_d", cs.getArrearsPendingItems());
+                    optionLists.put("normal_d", cs.getNormalSubmissions());
+                    optionLists.put("late_d", cs.getLateSubmissions());
+
+                    cs = populateCommonStat(WebConstants.STAT_MARRIAGE, WebConstants.USER_RG);
+
+                    /*
+                    * TODO populate CommonStatistics object
+                    */
 
                 } else if (statType.equals(WebConstants.STAT_BIRTH)) {
 
