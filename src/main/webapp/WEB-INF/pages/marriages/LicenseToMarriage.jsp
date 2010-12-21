@@ -14,7 +14,7 @@
             var id = $("select#locationId").attr('value');
             var options = '';
             if (id > 0) {
-                $.getJSON('/ecivil/crs/CertSignUserLookupService', {userLocationId:id,mode:1,certificateId:0},
+                $.getJSON('/ecivil/crs/CertSignUserLookupService', {userLocationId:id,mode:4,certificateId:0},
                         function(data) {
                             var users = data.authorizedUsers;
                             for (var i = 0; i < users.length; i++) {
@@ -24,10 +24,10 @@
 
                             var id = $('select#locationId').attr('value');
                             var user = $('select#issueUserId').attr('value');
-                            var certId = $('label#certificateId').text();
+                            var certId = $('label#serialNumber').text();
                             //set user signature for given user
                             $.getJSON('/ecivil/crs/CertSignUserLookupService', {userLocationId:id,mode:10,userId:user
-                                ,certificateId:2,type:'marriage'},
+                                ,certificateId:certId,type:'marriage'},
                                     function(data) {
                                         var officerSign = data.officerSignature;
                                         var locationSign = data.locationSignature;
@@ -46,7 +46,7 @@
         $('select#issueUserId').bind('change', function(evt2) {
             var id = $('select#locationId').attr('value');
             var user = $('select#issueUserId').attr('value');
-            var certId = $('label#certificateId').text();
+            var certId = $('label#serialNumber').text();
             $("text#user").html(user);
             $.getJSON('/ecivil/crs/CertSignUserLookupService', {userLocationId:id,mode:10,userId:user,certificateId:certId},
                     function(data) {
@@ -147,7 +147,7 @@
                         Serial Number
                     </td>
                     <td>
-                        <s:label value="%{marriage.idUKey}"/>
+                        <s:label id="serialNumber" value="%{marriage.idUKey}"/>
                     </td>
                 </tr>
                 <tr>
