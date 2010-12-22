@@ -9,6 +9,7 @@ import lk.rgd.common.util.NameFormatUtil;
 import lk.rgd.common.util.WebUtils;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.dao.MRDivisionDAO;
+import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.domain.MarriageNotice;
 import lk.rgd.crs.api.domain.MarriageRegister;
 import lk.rgd.crs.api.service.MarriageRegistrationService;
@@ -298,7 +299,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
             return ERROR;
         }
         //displaying issuing locations and authorized users
-        populateLocationsAndIssuingUsersDropDowns();
+        populateLocationsAndIssuingUsersDropDowns(marriage);
         populateIssuingUserAndLocation(marriage, user);
         populateLicense(marriage);
         return SUCCESS;
@@ -369,24 +370,30 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
 
     /**
      * populating drop downs for user locations and printing users
-     * //todo check only display allowing users amith
+     * note :only user locations that belong to male party or female party DS divisions are valid divisions
      */
-    private void populateLocationsAndIssuingUsersDropDowns() {
+    private void populateLocationsAndIssuingUsersDropDowns(MarriageRegister notice) {
         //get current users location   displaying lists,initial values are set by the service
         locationList = commonUtil.populateActiveUserLocations(user, language);
         userList = new HashMap<String, String>();
         List<User> users = userLocationDAO.getMarriageCertificateSignUsersByLocationId(locationList.keySet().
             iterator().next(), true);
         for (User u : users) {
-            userList.put(u.getUserId(), NameFormatUtil.getDisplayName(u.getUserName(), 50));
+            MRDivision mrDivisionMaleNotice = notice.getMrDivisionOfMaleNotice();
+            MRDivision mrDivisionFemaleNotice = notice.getMrDivisionOfFemaleNotice();
+            if ((mrDivisionMaleNotice != null && user.isAllowedAccessToMRDSDivision(mrDivisionMaleNotice.getMrDivisionUKey())) ||
+                (mrDivisionFemaleNotice != null && user.isAllowedAccessToMRDSDivision(mrDivisionFemaleNotice.getMrDivisionUKey()))) {
+                userList.put(u.getUserId(), NameFormatUtil.getDisplayName(u.getUserName(), 50));
+            }
         }
     }
 
-    /**
+    /**                                                                    
      * set additional displaying values
      */
     private void populateLicense(MarriageRegister notice) {
         //fill date of issue
+        //todo remove race from here and use if else inside JSP amith
         dateOfIssueLicense = new GregorianCalendar().getTime();
         //canceling date is (defined value in data base) days from printed date
         // get Calendar with current date
