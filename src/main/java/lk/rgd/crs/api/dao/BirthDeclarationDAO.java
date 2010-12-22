@@ -293,5 +293,13 @@ public interface BirthDeclarationDAO {
     public List<BirthDeclaration> getByDSDivisionAndStatusAndBirthDateRange(DSDivision dsDivision,
         Date startDate, Date endDate, BirthDeclaration.State status);
 
+    /**
+     * Returns count of all records which are in given state
+     *
+     * @param status    Birth Declaration form's state
+     * @return the count of records
+     */
+    public int getBirthCertificateCount(BirthDeclaration.State status);
+
 }
 

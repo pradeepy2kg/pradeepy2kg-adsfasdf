@@ -76,7 +76,7 @@
     <script type="text/javascript">
 
         $(document).ready(function() {
-            var user = 'adr';
+            var user = 'deo';
             var mode = 'all';
             $.getJSON('/ecivil/crs/StatisticsLookupService',
             {
