@@ -186,7 +186,7 @@
                         Date of Issue
                     </td>
                     <td align="center">
-                        <s:label value="%{dateOfIssueLicense}"/>
+                        <s:label value="%{dateOfIssueLicense}"/> <br>yyyy-mm-dd
                     </td>
                 </tr>
             </table>
@@ -203,10 +203,10 @@
 <table border="1" style="margin-top: 5px;width:100%;border:1px solid #000;border-collapse:collapse;"
        cellpadding="2px">
     <caption/>
-    <col width="375px"/>
-    <col width="140px"/>
-    <col width="375px"/>
-    <col width="140px"/>
+    <col width="500px"/>
+    <col width="165px"/>
+    <col width="200px"/>
+    <col width="165px"/>
     <tr>
         <td colspan="1">
             විවාහ වීමට වලංගු වන අවසාන දිනය <br>
@@ -214,11 +214,11 @@
             Last date for Marriage for which this license is valid
         </td>
         <td colspan="1" align="center">
-            <s:label value="%{dateOfCancelLicense}"/>
+            <s:label value="%{dateOfCancelLicense}"/>    <br>yyyy-mm-dd
         </td>
         <td colspan="1">
             විවාහයේ ස්වභාවය <br>
-            Type of Marriage in tamil<br>
+            in tamil <br>
             Type of Marriage
         </td>
         <td align="center"><%=MarriageTypeUtil.getMarriageTypeInOfficialLanguageAndEnglish((MarriageType) request.
@@ -234,11 +234,11 @@
 <table border="1" style="margin-top:15px;width:100%;border:1px solid #000;border-collapse:collapse;"
        cellpadding="2px">
     <caption/>
-    <col width="230px"/>
-    <col width="225px"/>
-    <col width="225px"/>
-    <col width="225px"/>
-    <col width="225px"/>
+    <col width="250px"/>
+    <col width="220px"/>
+    <col width="220px"/>
+    <col width="220px"/>
+    <col width="220px"/>
     <tr>
         <td></td>
         <td colspan="2" align="center">
@@ -268,13 +268,13 @@
             Date of Birth and Age
         </td>
         <td align="center">
-            <s:label value="%{marriage.male.dateOfBirthMale}"/>
+            <s:label value="%{marriage.male.dateOfBirthMale}"/>     <br>yyyy-mm-dd
         </td>
         <td align="center">
             <s:label value="%{marriage.male.ageAtLastBirthDayMale}"/>
         </td>
         <td align="center">
-            <s:label value="%{marriage.female.dateOfBirthFemale}"/>
+            <s:label value="%{marriage.female.dateOfBirthFemale}"/>      <br>yyyy-mm-dd
         </td>
         <td align="center">
             <s:label value="%{marriage.female.ageAtLastBirthDayFemale}"/>
@@ -309,6 +309,37 @@
             <s:label value="%{femaleRaceInOL}"/>
             <br>
             <s:label value="%{femaleRaceInEn}"/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            රට සහ ගමන් බලපත්‍ර අංකය<br>
+            in ta<br>
+            Country and passport
+        </td>
+        <td align="left">
+            <s:if test="marriage.preferredLanguage=='si'">
+                <s:label value="%{marriage.male.country.siCountryName}"/>
+            </s:if><s:else>
+            <s:label value="%{marriage.male.country.taCountryName}"/>
+        </s:else>
+            <br>
+            <s:label value="%{marriage.male.country.enCountryName}"/>
+        </td>
+        <td align="center">
+            <s:label value="%{marriage.male.passport}"/>
+        </td>
+        <td align="left">
+            <s:if test="marriage.preferredLanguage=='si'">
+                <s:label value="%{marriage.female.country.siCountryName}"/>
+            </s:if><s:else>
+            <s:label value="%{marriage.female.country.taCountryName}"/>
+        </s:else>
+            <br>
+            <s:label value="%{marriage.female.country.enCountryName}"/>
+        </td>
+        <td align="center">
+            <s:label value="%{marriage.female.passport}"/>
         </td>
     </tr>
     <tr style="height:100px">
@@ -366,8 +397,8 @@
     <tr>
         <td>
             පියාගේ අනන්‍යතා අංකය <br>
-            தந்தையின் அடையாள எண் <br>
-            Fathers Identification Number
+            in tamil<br>
+            Fathers I.D Number
         </td>
         <td colspan="2" align="center">
             <s:label value="%{marriage.male.fatherIdentificationNumberMale}"/>
