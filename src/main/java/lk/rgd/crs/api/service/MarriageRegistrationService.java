@@ -1,9 +1,6 @@
 package lk.rgd.crs.api.service;
 
-import lk.rgd.common.api.domain.DSDivision;
-import lk.rgd.common.api.domain.Location;
-import lk.rgd.common.api.domain.User;
-import lk.rgd.common.api.domain.District;
+import lk.rgd.common.api.domain.*;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.domain.MarriageNotice;
@@ -461,4 +458,11 @@ public interface MarriageRegistrationService {
      * @param user                 user who perform the action
      */
     public void markLicenseToMarriageAsPrinted(long idUKey, Location licenseIssueLocation, User issuedUserId, User user);
+
+    /**
+     * Returns all statistics information related to Deaths
+     * @param user
+     * @return CommonStatistics object which encapsulated all the death statistics information
+     */
+    public CommonStatistics getCommonMarriageCertificateCount(String user);
 }

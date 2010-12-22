@@ -728,4 +728,30 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         logger.error(msg);
         throw new CRSRuntimeException(msg, errorCode);
     }
+
+    public CommonStatistics getCommonMarriageCertificateCount(String user) {
+
+        // TODO Correct state not supplied
+        CommonStatistics commonStat = new CommonStatistics();
+
+//        int data_entry = marriageRegistrationDAO.getMarriageCertificateCount(MarriageRegister.State.DATA_ENTRY, new Date(), new Date());
+//        int approved = marriageRegistrationDAO.getMarriageCertificateCount(MarriageRegister.State.DATA_ENTRY, new Date(), new Date());
+//        int rejected = marriageRegistrationDAO.getMarriageCertificateCount(MarriageRegister.State.DATA_ENTRY, new Date(), new Date());
+
+        commonStat.setTotalSubmissions(/*data_entry + approved + rejected*/23);
+        commonStat.setApprovedItems(/*approved*/12);
+        commonStat.setRejectedItems(/*rejected*/8);
+        commonStat.setTotalPendingItems(/*data_entry*/9);
+
+        logger.debug("BirthRegistrationService Called!");
+
+        //todo call above methods using appropriate Date range
+
+        commonStat.setArrearsPendingItems(0);
+        commonStat.setLateSubmissions(0);
+        commonStat.setNormalSubmissions(8);
+        commonStat.setThisMonthPendingItems(3);
+
+        return commonStat;
+    }
 }

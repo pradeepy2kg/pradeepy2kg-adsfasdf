@@ -43,7 +43,10 @@ import java.io.Serializable;
                 "WHERE (dr.death.deathDivision = :deathDivision AND dr.death.deathSerialNo = :serialNo  AND dr.idUKey < :deathId AND dr.status= 4) " +
                 "AND dr.lifeCycleInfo.activeRecord IS FALSE ORDER BY dr.lifeCycleInfo.lastUpdatedTimestamp desc"),
 
-        @NamedQuery(name = "findAllDeaths", query = "SELECT ddf FROM DeathRegister ddf")
+        @NamedQuery(name = "findAllDeaths", query = "SELECT ddf FROM DeathRegister ddf"),
+
+        @NamedQuery(name = "get.dr.count", query = "SELECT COUNT(dr) FROM DeathRegister dr " +
+                "WHERE dr.status =:status AND (dr.lifeCycleInfo.createdTimestamp BETWEEN :startDate AND :endDate)")
 })
 public class DeathRegister implements Serializable, Cloneable {
 

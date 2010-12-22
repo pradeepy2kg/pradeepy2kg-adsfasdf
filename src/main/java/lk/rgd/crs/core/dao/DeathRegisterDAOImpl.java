@@ -167,4 +167,16 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
         return q.getResultList();
     }
 
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+    public int getDeathCertificateCount(DeathRegister.State status, Date startDate, Date endDate) {
+        Query q = em.createNamedQuery("get.dr.count");
+        q.setParameter("status", status);
+        q.setParameter("startDate", startDate);
+        q.setParameter("endDate", endDate);
+        return ((Long)q.getSingleResult()).intValue();
+    }
+
 }

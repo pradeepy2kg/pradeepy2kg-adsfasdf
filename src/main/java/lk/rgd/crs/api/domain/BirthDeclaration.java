@@ -92,8 +92,8 @@ import java.io.Serializable;
                 " WHERE( bdf.register.status= 10 AND bdf.register.birthDivision.bdDivisionUKey =:birthDivision " +
                 " AND bdf.register.bdfSerialNo =:bdfSerialNo AND bdf.idUKey < :idUKey AND bdf.lifeCycleInfo.activeRecord IS FALSE )" +
                 " ORDER BY bdf.register.dateOfRegistration desc"),
-        @NamedQuery(name = "get.entered.bc.count", query = "SELECT COUNT(bdf) FROM BirthDeclaration bdf" +
-                " WHERE bdf.register.status =:status")
+        @NamedQuery(name = "get.bc.count", query = "SELECT COUNT(bdf) FROM BirthDeclaration bdf" +
+                " WHERE bdf.register.status =:status AND (bdf.lifeCycleInfo.createdTimestamp BETWEEN :startDate AND :endDate)")
 })
 public class BirthDeclaration implements Serializable, Cloneable {
 

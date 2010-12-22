@@ -268,4 +268,14 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
     public void deleteMarriageRegister(long idUKey) {
         em.remove(getByIdUKey(idUKey));
     }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public int getMarriageCertificateCount(MarriageRegister.State status, Date startDate, Date endDate){
+        // TODO Correct Query not supplied
+        Query q = em.createNamedQuery("get.notice.by.male.and.female.identification");
+        return ((Long)q.getSingleResult()).intValue();
+    }
 }

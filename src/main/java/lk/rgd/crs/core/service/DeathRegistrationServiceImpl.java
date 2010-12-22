@@ -2,6 +2,7 @@ package lk.rgd.crs.core.service;
 
 import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
+import lk.rgd.common.api.domain.CommonStatistics;
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.CRSRuntimeException;
@@ -354,4 +355,33 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         deathRegister.setOriginalDCPlaceOfIssueSignPrint(user.getUserSignature(deathRegister.getDeath().getPreferredLanguage()));
         deathRegister.setOriginalDCPlaceOfIssuePrint(user.getPrimaryLocation().getLocationName(deathRegister.getDeath().getPreferredLanguage()));
     }
+
+    /**
+     * @inheritDoc
+     */
+    public CommonStatistics getCommonDeathCertificateCount(String user) {
+        CommonStatistics commonStat = new CommonStatistics();
+
+        int data_entry = deathRegisterDAO.getDeathCertificateCount(DeathRegister.State.DATA_ENTRY, new Date(), new Date());
+        int approved = deathRegisterDAO.getDeathCertificateCount(DeathRegister.State.APPROVED, new Date(), new Date());
+        int rejected = deathRegisterDAO.getDeathCertificateCount(DeathRegister.State.REJECTED, new Date(), new Date());
+
+        commonStat.setTotalSubmissions(34/*data_entry + approved + rejected*/);
+        commonStat.setApprovedItems(/*approved*/15);
+        commonStat.setRejectedItems(/*rejected*/12);
+        commonStat.setTotalPendingItems(/*data_entry*/2);
+
+        logger.debug("DeathRegistrationService Called!");
+
+        //todo call above methods using appropriate Date range
+
+        commonStat.setArrearsPendingItems(0);
+        commonStat.setLateSubmissions(0);
+        commonStat.setNormalSubmissions(8);
+        commonStat.setThisMonthPendingItems(3);
+
+        return commonStat;
+    }
+
+
 }
