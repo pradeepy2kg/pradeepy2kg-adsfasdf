@@ -543,7 +543,7 @@
             Extract of Marriage Register
         </description>
         <put-attribute name="body" value="/WEB-INF/pages/marriages/MarriageExtract.jsp"/>
-        <put-attribute name="title" value="title.marriage.extract"/>
+        <put-attribute name="title" value="title.marriageregister.extract"/>
     </definition>
 
     <definition name="epr.marriageNoticeWarn" extends="epr.template">

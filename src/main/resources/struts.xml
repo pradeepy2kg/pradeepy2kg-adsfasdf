@@ -1238,7 +1238,7 @@
         </action>
 
         <action name="eprMarriageRegisterSearch" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
-                method="marriageRegisterSearchResult">
+                method="marriageRegisterSearchInit">
             <result type="tiles" name="success">epr.marriageRegisterSearchInit</result>
         </action>
 
@@ -1290,7 +1290,7 @@
         </action>
 
         <action name="eprRejectMarriageRegistration"
-                class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
+                class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
                 method="rejectMarriageRegister">
             <result type="tiles" name="success">epr.marriageRegisterSearchInit</result>
             <result type="tiles" name="error">epr.marriageRegisterSearchInit</result>

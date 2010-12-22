@@ -128,6 +128,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
      */
     public String marriageRegisterSearchInit() {
         commonUtil.populateDynamicListsWithAllOption(districtList, dsDivisionList, mrDivisionList, user, language);
+        marriageRegisterSearchResult();
         return SUCCESS;
     }
 
@@ -135,8 +136,6 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
      * loading search result page for marriage register
      */
     public String marriageRegisterSearchResult() {
-        commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId, dsDivisionId, mrDivisionId,
-            AppConstants.MARRIAGE, user, language);
         pageNo += 1;
         noOfRows = appParametersDAO.getIntParameter(MR_APPROVAL_ROWS_PER_PAGE);
         if (noticeSerialNo != null) {
@@ -185,7 +184,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
      */
     public String rejectMarriageRegister() {
         try {
-            marriageRegistrationService.rejectMarriageRegister(idUKey, "rejected", user);
+            marriageRegistrationService.rejectMarriageRegister(idUKey, comment, user);
         } catch (CRSRuntimeException e) {
             addActionError(getText("error.marriageregister.notrejected"));
             return marriageRegisterSearchInit();
