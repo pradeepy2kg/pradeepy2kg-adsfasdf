@@ -223,7 +223,6 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
                     " add second notice to marriage register ", user);
                 //get user warnings when adding  second notice   and return warnings
                 List<UserWarning> warnings = marriageRegistrationValidator.validateAddingSecondNotice(notice, type);
-                //todo simplify the logic amith
                 if (warnings != null && warnings.size() > 0 && !ignoreWarnings) {
                     logger.debug("warnings found while adding second notice to the existing marriage notice idUKey : {}",
                         notice.getIdUKey());
@@ -249,9 +248,10 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
             handleException("invalid notice type, can't add second notice for notice type : " + type,
                 ErrorCodes.INVALID_NOTICE_TYPE_FOR_ADD_SECOND);
         }
-
         return Collections.emptyList();
     }
+
+    //todo 22 remove all hard coded languages in JSP and check UI is working fine and modify license    and must fill fields
 
     /**
      * @inheritDoc
@@ -461,7 +461,6 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
             handleException("can't find marriage register record for idUKey : " + idUKey + " for mark as print",
                 ErrorCodes.CAN_NOT_FIND_MARRIAGE_NOTICE);
         } else {
-            //todo check location id and user is not null
             if (notice.getState() == MarriageRegister.State.NOTICE_APPROVED) {
                 populateNoticeForMarkAsPrint(notice, issuedUser, licenseIssueLocation);
                 //updating marriage notice
