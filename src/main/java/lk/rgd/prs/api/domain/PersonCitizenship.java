@@ -28,11 +28,11 @@ public class PersonCitizenship implements Serializable {
     private int countryId;
 
     @ManyToOne
-    @JoinColumn(name = "personUKey")
+    @JoinColumn(name = "personUKey", insertable = false, updatable = false)
     private Person person;
 
     @ManyToOne
-    @JoinColumn(name = "countryId")
+    @JoinColumn(name = "countryId", insertable = false, updatable = false)
     private Country country;
 
     @Embedded

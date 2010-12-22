@@ -54,6 +54,7 @@ public class PersonCitizenshipTest extends TestCase {
         try {
             eCivil.addExistingPerson(p1, addSampleCitizenship(), false, deoColomboColombo);
         } catch (Exception e) {
+            e.printStackTrace();
             fail("Person failed to add PRS");
         }
     }
