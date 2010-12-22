@@ -8,6 +8,27 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
+<style type="text/css">
+    #marriage-notice-outer table tr td {
+        padding: 0 5px;
+    }
+
+    @media print {
+        .form-submit {
+            display: none;
+        }
+
+        #locationSignId {
+            display: none;
+        }
+    }
+
+    #birth-certificate-outer .form-submit {
+        margin: 5px 0 15px 0;
+    }
+</style>
+
 <script>
     $(function() {
         $('select#locationId').bind('change', function(evt1) {
@@ -133,7 +154,7 @@
                 </s:form>
             </div>
             <div class="form-submit">
-                <s:submit value="%{getText('button..print')}"/>
+                <s:submit value="%{getText('button..print')}" onclick="printPage()"/>
             </div>
             <div class="form-submit">
                 <s:submit value="%{getText('button.back')}"/>
@@ -147,8 +168,8 @@
             <table border="1" style="margin-top:1px;width:100%;border:1px solid #000;border-collapse:collapse;"
                    cellpadding="2px">
                 <caption/>
-                <col width="150px"/>
-                <col width="300px"/>
+                <col width="225px"/>
+                <col width="225px"/>
                 <tr>
                     <td>අනුක්‍රමික අංකය <br>
                         தொடர் இலக்கம் <br>
@@ -171,7 +192,7 @@
             </table>
         </td>
     </tr>
-    <tr style="height:80px">
+    <tr style="height:45px">
         <td colspan="3" align="center" style="font-size:15pt">
             විවාහ වීමට බලපත්‍රය / குடிமதிப்பீட்டு ஆவணத்தில் / License for Marriage
     </tr>
@@ -182,22 +203,20 @@
 <table border="1" style="margin-top: 5px;width:100%;border:1px solid #000;border-collapse:collapse;"
        cellpadding="2px">
     <caption/>
-    <col width="257px"/>
-    <col width="258px"/>
-    <col width="257px"/>
-    <col width="258px"/>
+    <col width="375px"/>
+    <col width="140px"/>
+    <col width="375px"/>
+    <col width="140px"/>
     <tr>
         <td colspan="1">
             විවාහ වීමට වලංගු වන අවසාන දිනය <br>
             in tamil <br>
             Last date for Marriage for which this license is valid
         </td>
-        <td colspan="3">
+        <td colspan="1" align="center">
             <s:label value="%{dateOfCancelLicense}"/>
         </td>
-    </tr>
-    <tr>
-        <td>
+        <td colspan="1">
             විවාහයේ ස්වභාවය <br>
             Type of Marriage in tamil<br>
             Type of Marriage
@@ -207,14 +226,6 @@
             <br>
             <%=MarriageTypeUtil.getMarriageTypeInOfficialLanguageAndEnglish((MarriageType)
                     request.getAttribute("marriage.typeOfMarriage"), "en")%>
-        </td>
-        <td>
-            විවාහය සිදුකරන ස්ථානය<br>
-            in tamil <br>
-            Place of Marriage
-        </td>
-        <td>
-
         </td>
     </tr>
 </table>
@@ -391,11 +402,11 @@
 <table border="1" style="margin-top:15px;width:100%;border:1px solid #000;border-collapse:collapse;"
        cellpadding="2px">
     <caption/>
-    <col width="230px"/>
+    <col width="450px"/>
     <col width="225px"/>
-    <col width="225px"/>
-    <col width="225px"/>
-    <col width="225px"/>
+    <col width="300px"/>
+    <col width="250px"/>
+    <col width="175px"/>
     <tr>
         <td colspan="1">
             සහතික කරනු ලබන නිලධාරියා ගේ නම, තනතුර සහ අත්සන <br>
@@ -423,9 +434,9 @@
             District
         </td>
         <td colspan="1">
-            <s:label id="districtInOl"/>
+            <s:label id="districtInOl" value="%{licenseIssueDistrictInOL}"/>
             <br>
-            <s:label id="districtInEn"/>
+            <s:label id="districtInEn" value="%{licenseIssueDistrictInEN}"/>
         </td>
         <td colspan="1">
             ප්‍රාදේශීය ලේකම් කොට්ඨාශය <br>
@@ -433,9 +444,9 @@
             Divisional Secretariat <br>
         </td>
         <td colspan="2">
-            <s:label id="dsDivisionInOL"/>
+            <s:label id="dsDivisionInOL" value="%{licenseIssueDivisionInOL}"/>
             <br>
-            <s:label id="dsDivisionInEn"/>
+            <s:label id="dsDivisionInEn" value="%{licenseIssueDivisionInEN}"/>
         </td>
     </tr>
 </table>
