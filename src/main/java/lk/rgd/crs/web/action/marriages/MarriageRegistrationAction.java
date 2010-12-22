@@ -71,8 +71,8 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     private boolean male;
     private boolean secondNotice;
     private boolean editMode;
-    private boolean licensedMarriage;
     private boolean ignoreWarnings;
+    private String mode;
 
     private String language;
 
@@ -404,7 +404,6 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
      */
     public String marriageRegistrationInit() {
         logger.debug("Marriage Details - idUKey : {}", idUKey);
-        logger.debug("Marriage Details - licensed : {}", licensedMarriage);
         populateLists();
         if (idUKey != 0) {
             marriage = marriageRegistrationService.getByIdUKey(idUKey, user);
@@ -780,14 +779,6 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         this.typeOfMarriagePlaceList = typeOfMarriagePlaceList;
     }
 
-    public boolean isLicensedMarriage() {
-        return licensedMarriage;
-    }
-
-    public void setLicensedMarriage(boolean licensedMarriage) {
-        this.licensedMarriage = licensedMarriage;
-    }
-
     public List<UserWarning> getUserWarnings() {
         return userWarnings;
     }
@@ -810,6 +801,14 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     public void setLanguageList(Map<String, String> languageList) {
         this.languageList = languageList;
+    }
+
+    public String getMode() {
+        return mode;
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
     }
 }
 

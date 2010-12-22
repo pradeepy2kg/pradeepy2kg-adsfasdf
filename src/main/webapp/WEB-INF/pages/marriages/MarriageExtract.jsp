@@ -1,3 +1,5 @@
+<%@ page import="lk.rgd.prs.api.domain.Person" %>
+<%@ page import="lk.rgd.common.util.CivilStatusUtil" %>
 <%-- @author Mahesha Kalpanie --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
@@ -10,15 +12,12 @@
     <col/>
     <tbody>
     <tr style="font-size:9pt">
-        <td colspan="1">
-        </td>
-        <td align="center" style="font-size:12pt;"><img src="<s:url value="/images/official-logo.png"/>"
-        </td>
-        <td>
-        </td>
+        <td colspan="1">&nbsp;</td>
+        <td align="center" style="font-size:12pt;"><img src="<s:url value="/images/official-logo.png"/>"</td>
+        <td> &nbsp;</td>
     </tr>
     <tr>
-        <td>&nbsp;</td>
+        <td colspan="3">&nbsp;</td>
     </tr>
     <tr style="font-size:14pt">
         <td colspan="3" align="center">
@@ -28,6 +27,80 @@
     <tr style="font-size:14pt">
         <td colspan="3" align="center">
             විවාහ ලේඛනයේ උපුටාගැනීම / குடிமதிப்பீட்டு ஆவணத்தில் / Extract of Marriage Register
+        </td>
+    </tr>
+    </tbody>
+</table>
+<table border="1" style="margin-top:1px;width:100%;border:1px solid #000;border-collapse:collapse;"
+       cellpadding="2px">
+    <caption/>
+    <col width="175px"/>
+    <col/>
+    <col/>
+    <col/>
+    <tr>
+        <td>
+            දිස්ත්‍රික්කය
+            <br>மாவட்டம்
+            <br>District
+        </td>
+        <td>
+            <s:if test="marriage.preferredLanguage=='si'">
+                <s:label name="marriage.mrDivision.dsDivision.district.siDistrictName" cssStyle="font-size:11pt;"/>
+            </s:if>
+            <s:elseif test="marriage.preferredLanguage=='ta'">
+                <s:label name="marriage.mrDivision.dsDivision.district.taDistrictName" cssStyle="font-size:11pt;"/>
+            </s:elseif>
+            <br/>
+            <s:label name="marriage.mrDivision.dsDivision.district.enDistrictName"/><br/>
+        </td>
+        <td><label><span class="font-8">
+            ප්‍රාදේශීය ලේකම් කොට්ඨාශය
+                <br>பிரதேச செயளாளர் பிரிவு <br>Divisional Secretariat</span>
+        </label>
+        </td>
+        <td align="center">
+            <s:if test="marriage.preferredLanguage=='si'">
+                <s:label name="marriage.mrDivision.dsDivision.siDivisionName" cssStyle="font-size:11pt;"/>
+            </s:if>
+            <s:elseif test="marriage.preferredLanguage=='ta'">
+                <s:label name="marriage.mrDivision.dsDivision.taDivisionName" cssStyle="font-size:11pt;"/>
+            </s:elseif>
+            <br/>
+            <s:label name="marriage.mrDivision.dsDivision.enDivisionName"/><br/>
+        </td>
+    </tr>
+    <tr>
+        <td><label><span class="font-8">
+            ලියාපදිංචි කිරීමේ කොට්ඨාශය
+                        <br>பதிவுப் பிரிவு  <br>Registration Division</span>
+        </label>
+        </td>
+        <td colspan="3">
+            <s:if test="marriage.preferredLanguage=='si'">
+                <s:label name="marriage.mrDivision.siDivisionName" cssStyle="font-size:11pt;"/>
+            </s:if>
+            <s:elseif test="marriage.preferredLanguage=='ta'">
+                <s:label name="marriage.mrDivision.taDivisionName" cssStyle="font-size:11pt;"/>
+            </s:elseif>
+            <br/>
+            <s:label name="marriage.mrDivision.enDivisionName"/><br/>
+        </td>
+    </tr>
+</table>
+
+<table class="table_reg_header_01">
+    <caption></caption>
+    <col width="420px"/>
+    <col width="200px"/>
+    <col/>
+    <tbody>
+    <tr>
+        <td colspan="3">&nbsp;</td>
+    </tr>
+    <tr style="font-size:14pt">
+        <td colspan="3" align="center">
+            විවාහ විස්තර / in tamil / Details of Marriage
         </td>
     </tr>
     </tbody>
@@ -47,46 +120,8 @@
     <tbody>
     <tr>
         <td>
-            දිස්ත්‍රික්කය
-            <br>மாவட்டம்
-            <br>District
-        </td>
-        <td colspan="3">
-
-        </td>
-        <td colspan="2"><label><span class="font-8">
-            ප්‍රාදේශීය ලේකම් කොට්ඨාශය
-                <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-                <br>பிரதேச செயளாளர் பிரிவு <br>Divisional Secretariat</span>
-        </label>
-        </td>
-        <td align="center" colspan="3">
-
-        </td>
-    </tr>
-    <tr>
-        <td><label><span class="font-8">
-        ලියාපදිංචි කිරීමේ කොට්ඨාශය
-               <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-                    <br>பதிவுப் பிரிவு  <br>Registration Division</span>
-        </label>
-        </td>
-        <td colspan="8">
-            <s:if test="preferredLanguage=='si'">
-                <s:label name="marriage.mrDivision.siDivisionName" cssStyle="font-size:11pt;"/>
-            </s:if>
-            <s:elseif test="preferredLanguage=='si'">
-                <s:label name="marriage.mrDivision.taDivisionName" cssStyle="font-size:11pt;"/>
-            </s:elseif>
-            <br/>
-            <s:label name="marriage.mrDivision.enDivisionName"/><br/>
-        </td>
-    </tr>
-    <tr>
-        <td>
             <label>
                 <span class="font-8">විවාහ දිනය
-                    <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
                     <br>in tamil<br>Date of Marriage</span>
             </label>
         </td>
@@ -94,7 +129,6 @@
             <s:label name="marriage.dateOfMarriage"/>
         </td>
         <td colspan="3"><label><span class="font-8">රෙජිස්ට්‍රාර්ගේ/දේවගැතිගේ අනන්‍යතා අංකය
-                    <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
                     <br>அடையாள எண் <br>Identification number of Registrar/Minister</span></label>
         </td>
         <td align="center" colspan="3">
@@ -107,8 +141,13 @@
             Type of Marriage Place<br>
         </td>
         <td colspan="8">
-            <s:radio name="marriage.typeOfMarriagePlace" list="typeOfMarriagePlaceList" listValue="type"
-                     theme="horizontal"/>
+            <s:if test="marriage.preferredLanguage=='si'">
+                <s:label name="marriage.typeOfMarriagePlace.siType"/>
+            </s:if>
+            <s:elseif test="marriage.preferredLanguage=='ta'">
+                <s:label name="marriage.typeOfMarriagePlace.taType"/>
+            </s:elseif>
+            <s:label name="marriage.typeOfMarriagePlace.enType"/>
         </td>
     </tr>
     <tr>
@@ -120,29 +159,16 @@
         <td colspan="8">
             <table width="100%">
                 <caption/>
-                <col width="150px"/>
                 <col/>
                 <tbody>
                 <tr>
                     <td>
-                        රාජ්‍ය භාෂාවෙන්<br>
-                        தமிழ் மொழியில் <br>
-                        Official Language
-                    </td>
-                    <td>
-                        <s:textarea name="marriage.regPlaceInOfficialLang" id="regPlaceInOfficialLang"
-                                    cssStyle="width:98.2%;"/>
+                        <s:label name="marriage.regPlaceInOfficialLang"/>
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                        ඉංග්‍රීසි භාෂාවෙන්<br>
-                        ஆங்கில மொழியில்<br>
-                        In English
-                    </td>
-                    <td>
-                        <s:textarea name="marriage.regPlaceInEnglishLang" id="regPlaceInEnglishLang"
-                                    cssStyle="width:98.2%;"/>
+                     <td>
+                        <s:label name="marriage.regPlaceInEnglishLang"/>
                     </td>
                 </tr>
                 </tbody>
@@ -159,29 +185,16 @@
         <td colspan="8">
             <table width="100%">
                 <caption/>
-                <col width="150px"/>
                 <col/>
                 <tbody>
                 <tr>
                     <td>
-                        රාජ්‍ය භාෂාවෙන්<br>
-                        தமிழ் மொழியில் <br>
-                        Official Language
-                    </td>
-                    <td>
-                        <s:textarea name="marriage.regNameInOfficialLang" id="regNameInOfficialLang"
-                                    cssStyle="width:98.2%;"/>
+                        <s:label name="marriage.regNameInOfficialLang"/>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        ඉංග්‍රීසි භාෂාවෙන්<br>
-                        ஆங்கில மொழியில்<br>
-                        In English
-                    </td>
-                    <td>
-                        <s:textarea name="marriage.regNameInEnglishLang" id="regNameInEnglishLang"
-                                    cssStyle="width:98.2%;"/>
+                        <s:label name="marriage.regNameInEnglishLang"/>
                     </td>
                 </tr>
                 </tbody>
@@ -203,8 +216,13 @@
                 <tbody>
                 <tr>
                     <td>
-                        <s:radio name="marriage.typeOfMarriage" list="marriageTypeList" listValue="type"
-                                 theme="horizontal"/>
+                        <s:if test="marriage.preferredLanguage=='si'">
+                            <s:label name="marriage.typeOfMarriage.siType"/>
+                        </s:if>
+                        <s:elseif test="marriage.preferredLanguage=='ta'">
+                            <s:label name="marriage.typeOfMarriage.taType"/>
+                        </s:elseif>
+                        <s:label name="marriage.typeOfMarriage.enType"/>
                     </td>
                 </tr>
                 </tbody>
@@ -285,14 +303,24 @@
 
         </td>
         <td>
-            <s:select list="raceList" name="marriage.male.maleRace.raceId" headerKey="0"
-                      headerValue="%{getText('select_race.label')}"
-                      cssStyle="width:200px;"/>
+            <s:if test="marriage.preferredLanguage=='si'">
+                <s:label name="marriage.male.maleRace.siRaceName" cssStyle="font-size:11pt;"/>
+            </s:if>
+            <s:elseif test="marriage.preferredLanguage=='ta'">
+                <s:label name="marriage.male.maleRace.taRaceName" cssStyle="font-size:11pt;"/>
+            </s:elseif>
+            <br/>
+            <s:label name="marriage.male.maleRace.enRaceName"/><br/>
         </td>
         <td>
-            <s:select list="raceList" name="marriage.female.femaleRace.raceId" headerKey="0"
-                      headerValue="%{getText('select_race.label')}"
-                      cssStyle="width:200px;"/>
+            <s:if test="marriage.preferredLanguage=='si'">
+                <s:label name="marriage.female.femaleRace.siRaceName" cssStyle="font-size:11pt;"/>
+            </s:if>
+            <s:elseif test="marriage.preferredLanguage=='ta'">
+                <s:label name="marriage.female.femaleRace.taRaceName" cssStyle="font-size:11pt;"/>
+            </s:elseif>
+            <br/>
+            <s:label name="marriage.female.femaleRace.enRaceName"/><br/>
         </td>
     </tr>
     <tr>
@@ -308,7 +336,14 @@
                 <tbody>
                 <tr>
                     <td>
-                        <s:radio name="marriage.male.civilStatusMale" list="civilStatusMale" theme="horizontal"/>
+                        <s:if test="marriage.preferredLanguage=='si'">
+                            <%=CivilStatusUtil.getCivilStatus((Person.CivilStatus) request.getAttribute("marriage.male.civilStatusMale"), "si")%>
+                        </s:if>
+                        <s:elseif test="marriage.preferredLanguage=='ta'">
+                            <%=CivilStatusUtil.getCivilStatus((Person.CivilStatus) request.getAttribute("marriage.male.civilStatusMale"), "ta")%>
+                        </s:elseif>
+                        <br/>
+                        <%=CivilStatusUtil.getCivilStatus((Person.CivilStatus) request.getAttribute("marriage.male.civilStatusMale"), "en")%>
                     </td>
                 </tr>
                 </tbody>
@@ -322,7 +357,14 @@
                 <tbody>
                 <tr>
                     <td>
-                        <s:radio name="marriage.female.civilStatusFemale" list="civilStatusFemale" theme="horizontal"/>
+                        <s:if test="marriage.preferredLanguage=='si'">
+                            <%=CivilStatusUtil.getCivilStatus((Person.CivilStatus) request.getAttribute("marriage.female.civilStatusFemale"), "si")%>
+                        </s:if>
+                        <s:elseif test="marriage.preferredLanguage=='ta'">
+                            <%=CivilStatusUtil.getCivilStatus((Person.CivilStatus) request.getAttribute("marriage.female.civilStatusFemale"), "ta")%>
+                        </s:elseif>
+                        <br/>
+                        <%=CivilStatusUtil.getCivilStatus((Person.CivilStatus) request.getAttribute("marriage.female.civilStatusFemale"), "en")%>
                     </td>
                 </tr>
                 </tbody>
@@ -337,12 +379,10 @@
             Name in any of the official languages (Sinhala / Tamil)
         </td>
         <td>
-            <s:textarea name="marriage.male.nameInOfficialLanguageMale" id="name_official_male"
-                        cssStyle="width:98.2%;"/>
+            <s:label name="marriage.male.nameInOfficialLanguageMale"/>
         </td>
         <td>
-            <s:textarea name="marriage.female.nameInOfficialLanguageFemale" id="name_official_female"
-                        cssStyle="width:98.2%;"/>
+            <s:label name="marriage.female.nameInOfficialLanguageFemale"/>
         </td>
     </tr>
 
@@ -353,10 +393,10 @@
             Name in English
         </td>
         <td>
-            <s:textarea name="marriage.male.nameInEnglishMale" id="name_english_male" cssStyle="width:98.2%;"/>
+            <s:label name="marriage.male.nameInEnglishMale"/>
         </td>
         <td>
-            <s:textarea name="marriage.female.nameInEnglishFemale" id="name_english_female" cssStyle="width:98.2%;"/>
+            <s:label name="marriage.female.nameInEnglishFemale"/>
         </td>
     </tr>
 
@@ -367,12 +407,10 @@
             Resident Address
         </td>
         <td>
-            <s:textarea name="marriage.male.residentAddressMaleInOfficialLang" id="address_male"
-                        cssStyle="width:98.2%;"/>
+            <s:label name="marriage.male.residentAddressMaleInOfficialLang"/>
         </td>
         <td>
-            <s:textarea name="marriage.female.residentAddressFemaleInOfficialLang" id="address_female"
-                        cssStyle="width:98.2%;"/>
+            <s:label name="marriage.female.residentAddressFemaleInOfficialLang"/>
         </td>
     </tr>
     </tbody>
@@ -386,7 +424,6 @@
     <col>
     <tr>
         <td><label><span class="font-8">අනුක්‍රමික අංකය
-                <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
                 <br>தொடர் இலக்கம்<br>Serial Number</span></label>
         </td>
         <td align="center">
@@ -395,7 +432,6 @@
         <td>
             <label>
                     <span class="font-8">ලියාපදිංචි දිනය
-                        <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
                         <br>பெறப்பட்ட திகதி  <br>Date of Registration</span>
             </label>
         </td>

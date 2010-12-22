@@ -26,8 +26,9 @@
 <div class="marriage-notice-outer">
 <s:form method="post">
 <%-- TODO: tobe removed--%>
-<s:hidden name="marriage.idUKey" />
-<s:hidden name="idUKey" />
+<s:hidden name="marriage.idUKey"/>
+<s:hidden name="idUKey"/>
+<s:hidden name="mode"/>
 <table border="1" style="margin-top:1px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
        cellpadding="5px">
     <caption></caption>
@@ -51,7 +52,8 @@
         </td>
         <td colspan="2">
             <s:label value="YYYY-MM-DD" cssStyle="margin-left:50px;font-size:10px"/><br>
-            <s:textfield name="marriage.dateOfMarriage" id="marriageDatePicker" maxLength="10" onmouseover="datepicker('marriageDatePicker')"/>
+            <s:textfield name="marriage.dateOfMarriage" id="marriageDatePicker" maxLength="10"
+                         onmouseover="datepicker('marriageDatePicker')"/>
         </td>
         <td colspan="3"><label><span class="font-8">රෙජිස්ට්‍රාර්ගේ/දේවගැතිගේ අනන්‍යතා අංකය
                     <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
@@ -258,10 +260,12 @@
             Date of Birth
         </td>
         <td colspan="1">
-            <s:textfield name="marriage.male.dateOfBirthMale" id="dateOfBirthMaleDatePicker" maxLength="10" onmouseover="datepicker('dateOfBirthMaleDatePicker')" />
+            <s:textfield name="marriage.male.dateOfBirthMale" id="dateOfBirthMaleDatePicker" maxLength="10"
+                         onmouseover="datepicker('dateOfBirthMaleDatePicker')"/>
         </td>
         <td colspan="1">
-            <s:textfield name="marriage.female.dateOfBirthFemale" id="dateOfBirthFemaleDatePicker" maxLength="10" onmouseover="datepicker('dateOfBirthFemaleDatePicker')"/>
+            <s:textfield name="marriage.female.dateOfBirthFemale" id="dateOfBirthFemaleDatePicker" maxLength="10"
+                         onmouseover="datepicker('dateOfBirthFemaleDatePicker')"/>
         </td>
     </tr>
     <tr>
@@ -401,7 +405,8 @@
         </td>
         <td>
             <s:label value="YYYY-MM-DD" cssStyle="margin-left:10px;font-size:10px"/><br>
-            <s:textfield name="marriage.registrationDate" id="registrationDatePicker" maxLength="10" onmouseover="datepicker('registrationDatePicker')"/>
+            <s:textfield name="marriage.registrationDate" id="registrationDatePicker" maxLength="10"
+                         onmouseover="datepicker('registrationDatePicker')"/>
         </td>
     </tr>
     <tr>
@@ -414,19 +419,38 @@
             <s:radio name="marriage.preferredLanguage" list="languageList" theme="verticle"/>
         </td>
     </tr>
+
+    <tr>
+        <td class="font-8">
+            Comment
+            <br>Comment
+            <br>Comment
+        </td>
+        <td colspan="3">
+            <s:textarea name="comment" id="registrationRejectComment"
+                        cssStyle="width:98.2%;"/>
+        </td>
+    </tr>
+
+
 </table>
 <div class="form-submit">
-<s:if test="idUKey==0">
-    <s:submit action="eprRegisterNewMarriage"/>
-</s:if>
-<s:else>
-    <s:if test="licensedMarriage">
-        <s:submit action="eprRegisterNoticedMarriage"/>
+    <s:if test="idUKey==0">
+        <s:submit action="eprRegisterNewMarriage" value="Add"/>
+        <s:submit action="eprApproveMarriageRegistration" value="Add and Approve"/>
     </s:if>
     <s:else>
-        <s:submit action="eprUpdateMarriage"/>
+        <s:if test="mode=='register'">
+            <s:submit action="eprRegisterNoticedMarriage" value="Register"/>
+        </s:if>
+        <s:elseif test="mode=='reject'">
+             <s:submit action="eprRejectMarriageRegistration" value="Reject"/>
+        </s:elseif>
+        <s:else>
+            <s:submit action="eprUpdateMarriage" value="Update"/>
+            <s:submit action="eprApproveMarriageRegistration" value="Update and Approve"/>
+        </s:else>
     </s:else>
-</s:else>
 </div>
 </s:form>
 </div>

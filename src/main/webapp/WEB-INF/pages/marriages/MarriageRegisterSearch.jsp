@@ -157,7 +157,7 @@
                         <td align="center">
                             <s:url id="registerSelected" action="eprMarriageRegistrationInit.do">
                                 <s:param name="idUKey" value="idUKey"/>
-                                <s:param name="licensedMarriage" value="true"/>
+                                <s:param name="mode" value="register"/>
                             </s:url>
                             <s:a href="%{registerSelected}" title="%{getText('tooltip.marriageregister.register')}">
                                 <img src="<s:url value='/images/couple.jpg'/>" width="25" height="25" border="none"/>
@@ -180,8 +180,9 @@
                             </s:a>
                         </td>
                         <td align="center">
-                            <s:url id="rejectSelected" action="eprRejectMarriageRegistration.do">
+                            <s:url id="rejectSelected" action="eprMarriageRegistrationInit.do">
                                 <s:param name="idUKey" value="idUKey"/>
+                                <s:param name="mode" value="reject"/>
                             </s:url>
                             <s:a href="%{rejectSelected}" title="%{getText('rejectToolTip.label')}">
                                 <img src="<s:url value='/images/reject.gif'/>" width="25" height="25" border="none"/>
