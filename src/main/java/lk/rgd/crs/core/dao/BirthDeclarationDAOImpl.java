@@ -341,9 +341,11 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public int getBirthCertificateCount(BirthDeclaration.State status) {
-        Query q = em.createNamedQuery("get.entered.bc.count");
+    public int getBirthCertificateCount(BirthDeclaration.State status, Date startDate, Date endDate) {
+        Query q = em.createNamedQuery("get.bc.count");
         q.setParameter("status", status);
+        q.setParameter("startDate", startDate);
+        q.setParameter("endDate", endDate);
         return ((Long)q.getSingleResult()).intValue();
     }
 

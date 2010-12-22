@@ -3,6 +3,7 @@ package lk.rgd.crs.api.dao;
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.domain.BDDivision;
+import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.domain.DeathRegister;
 
 import java.util.Date;
@@ -135,6 +136,16 @@ public interface DeathRegisterDAO {
      * @return list of DeathRegister entries witch include given pin
      */
     public List<DeathRegister> getDeathRegisterByDeathPersonPINorNIC(String pinOrNIC);
+
+    /**
+     * Returns count of all records which are in given state
+     * 
+     * @param status    Death Register form's state
+     * @param startDate start Date
+     * @param endDate   end Date
+     * @return  the count of records
+     */
+    public int getDeathCertificateCount(DeathRegister.State status, Date startDate, Date endDate);
 }
 
 

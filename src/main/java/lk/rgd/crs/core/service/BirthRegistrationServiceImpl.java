@@ -4,10 +4,7 @@ import lk.rgd.AppConstants;
 import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
 import lk.rgd.common.api.dao.*;
-import lk.rgd.common.api.domain.AppParameter;
-import lk.rgd.common.api.domain.Country;
-import lk.rgd.common.api.domain.DSDivision;
-import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.*;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.util.DateTimeUtils;
 import lk.rgd.common.util.GenderUtil;
@@ -1941,5 +1938,32 @@ public class BirthRegistrationServiceImpl implements
         pc.setPassportNo(passportNo);
         pc.setPerson(person);
         return pc;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public CommonStatistics getCommonBirthCertificateCount(String user) {
+        CommonStatistics commonStat = new CommonStatistics();
+
+        int data_entry = birthDeclarationDAO.getBirthCertificateCount(BirthDeclaration.State.DATA_ENTRY, new Date(), new Date());
+        int approved = birthDeclarationDAO.getBirthCertificateCount(BirthDeclaration.State.APPROVED, new Date(), new Date());
+        int rejected = birthDeclarationDAO.getBirthCertificateCount(BirthDeclaration.State.ARCHIVED_REJECTED, new Date(), new Date());
+
+        commonStat.setTotalSubmissions(/*data_entry + approved + rejected*/23);
+        commonStat.setApprovedItems(/*approved*/12);
+        commonStat.setRejectedItems(/*rejected*/8);
+        commonStat.setTotalPendingItems(/*data_entry*/9);
+
+        logger.debug("BirthRegistrationService Called!");
+
+        //todo call above methods using appropriate Date range
+
+        commonStat.setArrearsPendingItems(0);
+        commonStat.setLateSubmissions(0);
+        commonStat.setNormalSubmissions(8);
+        commonStat.setThisMonthPendingItems(3);
+
+        return commonStat;
     }
 }

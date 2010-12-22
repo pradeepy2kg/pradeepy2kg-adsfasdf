@@ -1,5 +1,6 @@
 package lk.rgd.crs.api.service;
 
+import lk.rgd.common.api.domain.CommonStatistics;
 import lk.rgd.crs.api.domain.DeathRegister;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.dao.DeathRegisterDAO;
@@ -217,4 +218,11 @@ public interface DeathRegistrationService {
      * @return death register object
      */
     public DeathRegister getWithTransientValuesById(long idUKey, User user);
+
+    /**
+     * Returns all statistics information related to Deaths
+     * @param user
+     * @return CommonStatistics object which encapsulated all the death statistics information
+     */
+    public CommonStatistics getCommonDeathCertificateCount(String user);
 }

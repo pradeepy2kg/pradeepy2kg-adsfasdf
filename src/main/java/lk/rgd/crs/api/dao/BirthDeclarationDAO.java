@@ -297,9 +297,11 @@ public interface BirthDeclarationDAO {
      * Returns count of all records which are in given state
      *
      * @param status    Birth Declaration form's state
+     * @param startDate start Date
+     * @param endDate   end Date
      * @return the count of records
      */
-    public int getBirthCertificateCount(BirthDeclaration.State status);
+    public int getBirthCertificateCount(BirthDeclaration.State status, Date startDate, Date endDate);
 
 }
 

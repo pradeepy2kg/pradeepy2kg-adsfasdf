@@ -1,5 +1,6 @@
 package lk.rgd.crs.api.service;
 
+import lk.rgd.common.api.domain.CommonStatistics;
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.bean.UserWarning;
@@ -614,5 +615,13 @@ public interface BirthRegistrationService {
      */
     public List<BirthDeclaration> getByDSDivisionAndStatusAndBirthDateRange(DSDivision dsDivision,
         Date startDate, Date endDate, BirthDeclaration.State status, User user);
+
+    /**
+     * Returns all statistics information related to Births
+     *
+     * @param user
+     * @return CommonStatistics object which encapsulated all the birth statistics information
+     */
+    public CommonStatistics getCommonBirthCertificateCount(String user);
 }
 

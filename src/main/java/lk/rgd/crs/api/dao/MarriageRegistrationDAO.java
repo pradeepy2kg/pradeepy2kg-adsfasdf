@@ -3,6 +3,7 @@ package lk.rgd.crs.api.dao;
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.District;
+import lk.rgd.crs.api.domain.DeathRegister;
 import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.domain.MarriageRegister;
 
@@ -227,4 +228,14 @@ public interface MarriageRegistrationDAO {
      * @param idUKey idUKey of the record
      */
     public void deleteMarriageRegister(long idUKey);
+
+    /**
+     * Returns count of all records which are in given state
+     *
+     * @param status    marriage Register form's state
+     * @param startDate start Date
+     * @param endDate   end Date
+     * @return  the count of records
+     */
+    public int getMarriageCertificateCount(MarriageRegister.State status, Date startDate, Date endDate);
 }
