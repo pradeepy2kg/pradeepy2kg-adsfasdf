@@ -17,13 +17,13 @@ public class MarriageTypeUtil {
 
             switch (marriageType) {
                 case GENERAL:
-                    return "general in si";
+                    return "සාමාන්‍ය";
                 case KANDYAN_DEEGA:
-                    return "kandyan deega in si";
+                    return "උඩරට දීග";
                 case KANDYAN_BINNA:
-                    return "kandyan binna in si";
+                    return "උඩරට බින්න";
                 case MUSLIM:
-                    return "muslim in si";
+                    return "මුස්ලිම්";
             }
         } else if (language.equals(AppConstants.TAMIL)) {
             switch (marriageType) {

@@ -356,6 +356,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     public void approveMarriageNotice(long idUKey, MarriageNotice.Type type, User user) {
         logger.debug("attempt to approve marriage notice with idUKey : {} and notice type : {}", idUKey, type);
         //todo check way to improve readability and maintainability :( :( (amith)
+        //todo can any ADR approve dis
         //check is user has permission to perform this task
         checkUserPermission(Permission.APPROVE_MARRIAGE, ErrorCodes.PERMISSION_DENIED, "approve marriage notice", user);
         MarriageRegister existingNotice = marriageRegistrationDAO.getByIdUKey(idUKey);
@@ -558,6 +559,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     public MarriageRegister getMarriageNoticeForPrintLicense(long idUKey, User user) {
         logger.debug("attempt to get marriage register (notice) idUKey : {} for print license ", idUKey);
         //no need to check user permission any one can print record
+        // todo who can print (can print doe even not in both MR division)
         MarriageRegister notice = marriageRegistrationDAO.getByIdUKey(idUKey);
         if (notice == null) {
             handleException("can't find marriage register record for idUKey : " + idUKey + " for print",

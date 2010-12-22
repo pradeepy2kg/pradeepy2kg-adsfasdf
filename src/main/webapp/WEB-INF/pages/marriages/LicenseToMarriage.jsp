@@ -32,8 +32,16 @@
                                         var officerSign = data.officerSignature;
                                         var locationSign = data.locationSignature;
                                         var location = data.locationName;
+                                        var locationDistrictInOl = data.locationDistrictInOl;
+                                        var locationDivisionInOl = data.locationDivisionInOl;
+                                        var locationDistrictInEn = data.locationDistrictInEn;
+                                        var locationDivisionInEn = data.locationDivisionInEn;
                                         $("label#signature").html(officerSign);
                                         $("label#placeSign").html(locationSign);
+                                        $("label#dsDivisionInOL").html(locationDivisionInOl);
+                                        $("label#dsDivisionInEn").html(locationDivisionInEn);
+                                        $("label#districtInOl").html(locationDistrictInOl);
+                                        $("label#districtInEn").html(locationDistrictInEn);
                                         $("label#placeOfIssue").html(location);
                                     });
                         });
@@ -146,7 +154,7 @@
                         தொடர் இலக்கம் <br>
                         Serial Number
                     </td>
-                    <td>
+                    <td align="center">
                         <s:label id="serialNumber" value="%{marriage.idUKey}"/>
                     </td>
                 </tr>
@@ -156,7 +164,7 @@
                         பெறப்பட்ட திகதி <br>
                         Date of Issue
                     </td>
-                    <td>
+                    <td align="center">
                         <s:label value="%{dateOfIssueLicense}"/>
                     </td>
                 </tr>
@@ -164,14 +172,14 @@
         </td>
     </tr>
     <tr style="height:80px">
-        <td colspan="3" align="center">
+        <td colspan="3" align="center" style="font-size:15pt">
             විවාහ වීමට බලපත්‍රය / குடிமதிப்பீட்டு ஆவணத்தில் / License for Marriage
     </tr>
     </tbody>
 </table>
 
 <%--section end date and type--%>
-<table border="1" style="margin-top:25px;width:100%;border:1px solid #000;border-collapse:collapse;"
+<table border="1" style="margin-top: 5px;width:100%;border:1px solid #000;border-collapse:collapse;"
        cellpadding="2px">
     <caption/>
     <col width="257px"/>
@@ -194,7 +202,7 @@
             Type of Marriage in tamil<br>
             Type of Marriage
         </td>
-        <td><%=MarriageTypeUtil.getMarriageTypeInOfficialLanguageAndEnglish((MarriageType) request.
+        <td align="center"><%=MarriageTypeUtil.getMarriageTypeInOfficialLanguageAndEnglish((MarriageType) request.
                 getAttribute("marriage.typeOfMarriage"), (String) request.getAttribute("marriage.preferredLanguage"))%>
             <br>
             <%=MarriageTypeUtil.getMarriageTypeInOfficialLanguageAndEnglish((MarriageType)
@@ -274,8 +282,10 @@
             <%=CivilStatusUtil.getCivilStatus((Person.CivilStatus)
                     request.getAttribute("marriage.male.civilStatusMale"), "en")%>
         </td>
-        <td align="left">
-            <s:label value="%{marriage.male.maleRace.raceId}"/>
+        <td align="center">
+            <s:label value="%{maleRaceInOL}"/>
+            <br>
+            <s:label value="%{maleRaceInEn}"/>
         </td>
         <td align="center">
             <%=CivilStatusUtil.getCivilStatus((Person.CivilStatus) request.
@@ -284,8 +294,10 @@
             <%=CivilStatusUtil.getCivilStatus((Person.CivilStatus)
                     request.getAttribute("marriage.male.civilStatusMale"), "en")%>
         </td>
-        <td align="left">
-            <s:label value="%{marriage.female.femaleRace.raceId}"/>
+        <td align="center">
+            <s:label value="%{femaleRaceInOL}"/>
+            <br>
+            <s:label value="%{femaleRaceInEn}"/>
         </td>
     </tr>
     <tr style="height:100px">
@@ -298,12 +310,10 @@
         <td colspan="2" align="left">
             <s:label value="%{marriage.male.nameInOfficialLanguageMale}"/>
             <br>
-            <br>
             <s:label value="%{marriage.male.nameInEnglishMale}"/>
         </td>
         <td colspan="2" align="left">
             <s:label value="%{marriage.female.nameInOfficialLanguageFemale}"/>
-            <br>
             <br>
             <s:label value="%{marriage.female.nameInEnglishFemale}"/>
         </td>
@@ -412,13 +422,21 @@
             மாவட்டம் <br>
             District
         </td>
-        <td colspan="1"></td>
+        <td colspan="1">
+            <s:label id="districtInOl"/>
+            <br>
+            <s:label id="districtInEn"/>
+        </td>
         <td colspan="1">
             ප්‍රාදේශීය ලේකම් කොට්ඨාශය <br>
             பிரதேச செயளாளர் பிரிவு <br>
             Divisional Secretariat <br>
         </td>
-        <td colspan="2"></td>
+        <td colspan="2">
+            <s:label id="dsDivisionInOL"/>
+            <br>
+            <s:label id="dsDivisionInEn"/>
+        </td>
     </tr>
 </table>
 </div>
