@@ -332,9 +332,19 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
         Query q = em.createNamedQuery("get.by.dsdivision.and.status");
         q.setParameter("dsDivision", dsDivision);
         q.setParameter("status", status.ordinal());
-        q.setParameter("startDate", startDate);
-        q.setParameter("endDate", endDate);
+        q.setParameter("start", startDate);
+        q.setParameter("end", endDate);
         return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public int getBirthCertificateCount(BirthDeclaration.State status) {
+        Query q = em.createNamedQuery("get.entered.bc.count");
+        q.setParameter("status", status);
+        return ((Long)q.getSingleResult()).intValue();
     }
 
 }

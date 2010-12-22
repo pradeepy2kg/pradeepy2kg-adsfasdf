@@ -5,6 +5,8 @@ package lk.rgd.common.api.domain;
  */
 public class CommonStatistics {
 
+    private String statType;
+    
     private int totalSubmissions;
     private int lateSubmissions;
     private int normalSubmissions;
@@ -24,8 +26,6 @@ public class CommonStatistics {
         arrearsPendingItems = 0;
         thisMonthPendingItems = 0;
     }
-
-    private String statType;
 
     public int getApprovedItems() {
         return approvedItems;

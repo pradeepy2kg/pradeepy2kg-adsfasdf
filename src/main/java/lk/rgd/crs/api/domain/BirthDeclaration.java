@@ -91,7 +91,9 @@ import java.io.Serializable;
         @NamedQuery(name = "get.historical.alteration.records.by.bdDivision.and.serialNo", query = "SELECT bdf FROM BirthDeclaration bdf" +
                 " WHERE( bdf.register.status= 10 AND bdf.register.birthDivision.bdDivisionUKey =:birthDivision " +
                 " AND bdf.register.bdfSerialNo =:bdfSerialNo AND bdf.idUKey < :idUKey AND bdf.lifeCycleInfo.activeRecord IS FALSE )" +
-                " ORDER BY bdf.register.dateOfRegistration desc")
+                " ORDER BY bdf.register.dateOfRegistration desc"),
+        @NamedQuery(name = "get.entered.bc.count", query = "SELECT COUNT(bdf) FROM BirthDeclaration bdf" +
+                " WHERE bdf.register.status =:status")
 })
 public class BirthDeclaration implements Serializable, Cloneable {
 
