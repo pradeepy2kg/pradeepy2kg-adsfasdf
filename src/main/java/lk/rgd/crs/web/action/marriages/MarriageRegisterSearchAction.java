@@ -4,10 +4,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.AppConstants;
 import lk.rgd.ErrorCodes;
 import lk.rgd.common.api.dao.*;
-import lk.rgd.common.api.domain.Location;
-import lk.rgd.common.api.domain.Race;
-import lk.rgd.common.api.domain.User;
-import lk.rgd.common.api.domain.UserLocation;
+import lk.rgd.common.api.domain.*;
 import lk.rgd.common.util.NameFormatUtil;
 import lk.rgd.common.util.WebUtils;
 import lk.rgd.crs.CRSRuntimeException;
@@ -86,6 +83,10 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     private String maleRaceInEn;
     private String femaleRaceInOL;
     private String femaleRaceInEn;
+    private String licenseIssueDistrictInOL;
+    private String licenseIssueDistrictInEN;
+    private String licenseIssueDivisionInOL;
+    private String licenseIssueDivisionInEN;
 
     private MarriageNotice.Type noticeType;
 
@@ -395,22 +396,30 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         dateOfCancelLicense = gCal.getTime();
         //setting issuing location and user
         //display values
+        DSDivision issuingDSDivision = dsDivisionDAO.getDSDivisionByPK(notice.getLicenseIssueLocation().getDsDivisionId());
+        District issuingDistrict = issuingDSDivision.getDistrict();
         if (AppConstants.SINHALA.equals(notice.getPreferredLanguage())) {
             //Sinhala pref lang
             licenseIssuePlace = notice.getLicenseIssueLocation().getSienLocationSignature();
             licenseIssueUserSignature = notice.getLicensePrintUser().getUserSignature(AppConstants.SINHALA);
-            maleRaceInOL = notice.getMale().getMaleRace().getSiRaceName();
-            femaleRaceInOL = notice.getFemale().getFemaleRace().getSiRaceName();
+            maleRaceInOL = notice.getMale().getMaleRace() != null ? notice.getMale().getMaleRace().getSiRaceName() : "";
+            femaleRaceInOL = notice.getFemale().getFemaleRace() != null ? notice.getFemale().getFemaleRace().getSiRaceName() : "";
+            licenseIssueDistrictInOL = issuingDistrict.getSiDistrictName();
+            licenseIssueDivisionInOL = issuingDSDivision.getSiDivisionName();
         } else {
             //tamil pref lang
             licenseIssuePlace = notice.getLicenseIssueLocation().getTaenLocationSignature();
             licenseIssueUserSignature = notice.getLicensePrintUser().getUserSignature(AppConstants.TAMIL);
-            maleRaceInOL = notice.getMale().getMaleRace().getTaRaceName();
-            femaleRaceInOL = notice.getFemale().getFemaleRace().getTaRaceName();
+            maleRaceInOL = notice.getMale().getMaleRace() != null ? notice.getMale().getMaleRace().getTaRaceName() : "";
+            femaleRaceInOL = notice.getFemale().getFemaleRace() != null ? notice.getFemale().getFemaleRace().getTaRaceName() : "";
+            licenseIssueDistrictInOL = issuingDistrict.getTaDistrictName();
+            licenseIssueDivisionInOL = issuingDSDivision.getTaDivisionName();
         }
         //populate race name in sin and race name in en for male and female parties
-        maleRaceInEn = notice.getMale().getMaleRace().getEnRaceName();
-        femaleRaceInEn = notice.getFemale().getFemaleRace().getEnRaceName();
+        maleRaceInEn = notice.getMale().getMaleRace() != null ? notice.getMale().getMaleRace().getEnRaceName() : "";
+        femaleRaceInEn = notice.getFemale().getFemaleRace() != null ? notice.getFemale().getFemaleRace().getEnRaceName() : "";
+        licenseIssueDistrictInEN = issuingDistrict.getEnDistrictName();
+        licenseIssueDivisionInEN = issuingDSDivision.getEnDivisionName();
     }
 
     /**
@@ -796,5 +805,37 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
 
     public void setFemaleRaceInEn(String femaleRaceInEn) {
         this.femaleRaceInEn = femaleRaceInEn;
+    }
+
+    public String getLicenseIssueDistrictInOL() {
+        return licenseIssueDistrictInOL;
+    }
+
+    public void setLicenseIssueDistrictInOL(String licenseIssueDistrictInOL) {
+        this.licenseIssueDistrictInOL = licenseIssueDistrictInOL;
+    }
+
+    public String getLicenseIssueDistrictInEN() {
+        return licenseIssueDistrictInEN;
+    }
+
+    public void setLicenseIssueDistrictInEN(String licenseIssueDistrictInEN) {
+        this.licenseIssueDistrictInEN = licenseIssueDistrictInEN;
+    }
+
+    public String getLicenseIssueDivisionInOL() {
+        return licenseIssueDivisionInOL;
+    }
+
+    public void setLicenseIssueDivisionInOL(String licenseIssueDivisionInOL) {
+        this.licenseIssueDivisionInOL = licenseIssueDivisionInOL;
+    }
+
+    public String getLicenseIssueDivisionInEN() {
+        return licenseIssueDivisionInEN;
+    }
+
+    public void setLicenseIssueDivisionInEN(String licenseIssueDivisionInEN) {
+        this.licenseIssueDivisionInEN = licenseIssueDivisionInEN;
     }
 }
