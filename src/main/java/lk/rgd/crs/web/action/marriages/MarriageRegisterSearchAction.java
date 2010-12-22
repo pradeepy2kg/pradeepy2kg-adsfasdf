@@ -5,6 +5,7 @@ import lk.rgd.AppConstants;
 import lk.rgd.ErrorCodes;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.Location;
+import lk.rgd.common.api.domain.Race;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.UserLocation;
 import lk.rgd.common.util.NameFormatUtil;
@@ -41,6 +42,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     private final LocationDAO locationDAO;
     private final CommonUtil commonUtil;
     private final UserLocationDAO userLocationDAO;
+    private final RaceDAO raceDAO;
 
     private MarriageRegister marriage;
 
@@ -80,12 +82,16 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     private String licenseIssuedUserId;
     private String licenseIssueUserSignature;
     private String licenseIssuePlace;
+    private String maleRaceInOL;
+    private String maleRaceInEn;
+    private String femaleRaceInOL;
+    private String femaleRaceInEn;
 
     private MarriageNotice.Type noticeType;
 
     public MarriageRegisterSearchAction(MarriageRegistrationService marriageRegistrationService, DistrictDAO districtDAO,
         DSDivisionDAO dsDivisionDAO, MRDivisionDAO mrDivisionDAO, AppParametersDAO appParametersDAO,
-        CommonUtil commonUtil, UserDAO userDAO, LocationDAO locationDAO, UserLocationDAO userLocationDAO) {
+        CommonUtil commonUtil, UserDAO userDAO, LocationDAO locationDAO, UserLocationDAO userLocationDAO, RaceDAO raceDAO) {
         this.marriageRegistrationService = marriageRegistrationService;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
@@ -95,6 +101,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         this.userDAO = userDAO;
         this.locationDAO = locationDAO;
         this.userLocationDAO = userLocationDAO;
+        this.raceDAO = raceDAO;
 
         districtList = new HashMap<Integer, String>();
         dsDivisionList = new HashMap<Integer, String>();
@@ -388,16 +395,22 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         dateOfCancelLicense = gCal.getTime();
         //setting issuing location and user
         //display values
-        //todo add preferred language
-        if ("si".equals(AppConstants.SINHALA)) {
+        if (AppConstants.SINHALA.equals(notice.getPreferredLanguage())) {
             //Sinhala pref lang
             licenseIssuePlace = notice.getLicenseIssueLocation().getSienLocationSignature();
             licenseIssueUserSignature = notice.getLicensePrintUser().getUserSignature(AppConstants.SINHALA);
+            maleRaceInOL = notice.getMale().getMaleRace().getSiRaceName();
+            femaleRaceInOL = notice.getFemale().getFemaleRace().getSiRaceName();
         } else {
             //tamil pref lang
             licenseIssuePlace = notice.getLicenseIssueLocation().getTaenLocationSignature();
             licenseIssueUserSignature = notice.getLicensePrintUser().getUserSignature(AppConstants.TAMIL);
+            maleRaceInOL = notice.getMale().getMaleRace().getTaRaceName();
+            femaleRaceInOL = notice.getFemale().getFemaleRace().getTaRaceName();
         }
+        //populate race name in sin and race name in en for male and female parties
+        maleRaceInEn = notice.getMale().getMaleRace().getEnRaceName();
+        femaleRaceInEn = notice.getFemale().getFemaleRace().getEnRaceName();
     }
 
     /**
@@ -751,5 +764,37 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
 
     public void setLicenseIssuePlace(String licenseIssuePlace) {
         this.licenseIssuePlace = licenseIssuePlace;
+    }
+
+    public String getMaleRaceInOL() {
+        return maleRaceInOL;
+    }
+
+    public void setMaleRaceInOL(String maleRaceInOL) {
+        this.maleRaceInOL = maleRaceInOL;
+    }
+
+    public String getMaleRaceInEn() {
+        return maleRaceInEn;
+    }
+
+    public void setMaleRaceInEn(String maleRaceInEn) {
+        this.maleRaceInEn = maleRaceInEn;
+    }
+
+    public String getFemaleRaceInOL() {
+        return femaleRaceInOL;
+    }
+
+    public void setFemaleRaceInOL(String femaleRaceInOL) {
+        this.femaleRaceInOL = femaleRaceInOL;
+    }
+
+    public String getFemaleRaceInEn() {
+        return femaleRaceInEn;
+    }
+
+    public void setFemaleRaceInEn(String femaleRaceInEn) {
+        this.femaleRaceInEn = femaleRaceInEn;
     }
 }

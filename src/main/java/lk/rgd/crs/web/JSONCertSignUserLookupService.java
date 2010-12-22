@@ -2,8 +2,12 @@ package lk.rgd.crs.web;
 
 import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 import lk.rgd.AppConstants;
+import lk.rgd.common.api.dao.DSDivisionDAO;
+import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.UserDAO;
 import lk.rgd.common.api.dao.UserLocationDAO;
+import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.UserLocation;
 import lk.rgd.common.util.NameFormatUtil;
@@ -39,6 +43,8 @@ public class JSONCertSignUserLookupService extends HttpServlet {
 
     private UserLocationDAO userLocationDAO;
     private UserDAO userDAO;
+    private DistrictDAO districtDAO;
+    private DSDivisionDAO dsDivisionDAO;
     private BirthDeclarationDAO birthDeclarationDAO;
     private MarriageRegistrationDAO marriageRegistrationDAO;
     private static final String TYPE_MARRIAGE = "marriage";
@@ -54,6 +60,8 @@ public class JSONCertSignUserLookupService extends HttpServlet {
         userDAO = (UserDAO) context.getBean("userDAOImpl");
         birthDeclarationDAO = (BirthDeclarationDAO) context.getBean("birthDeclarationDAOImpl");
         marriageRegistrationDAO = (MarriageRegistrationDAO) context.getBean("marriageRegistrationDAOImpl");
+        districtDAO = (DistrictDAO) context.getBean("districtDAOImpl");
+        dsDivisionDAO = (DSDivisionDAO) context.getBean("dsDivisionDAOImpl");
     }
 
     @Override
@@ -111,17 +119,28 @@ public class JSONCertSignUserLookupService extends HttpServlet {
                     userId = user.getUserId();
                 }
                 UserLocation userLocation = userLocationDAO.getUserLocation(userId, locationId);
+
+                DSDivision ds = dsDivisionDAO.getDSDivisionByPK(userLocation.getLocation().getDsDivisionId());
+                District district = ds.getDistrict();
+
                 if (AppConstants.SINHALA.equals(lang) || AppConstants.TAMIL.equals(lang)) {
                     optionList.put("officerSignature", userLocation.getUser().getUserSignature(lang));
                     optionList.put("locationSignature", userLocation.getLocation().getLocationSignature(lang));
                     optionList.put("locationName", userLocation.getLocation().getLocationName(lang));
                     if (AppConstants.SINHALA.equals(lang)) {
                         optionList.put("locationAddress", userLocation.getLocation().getSiLocationMailingAddress());
+                        //district and division
+                        optionList.put("locationDistrictInOl", district.getSiDistrictName());
+                        optionList.put("locationDivisionInOl", ds.getSiDivisionName());
                     }
                     if (AppConstants.TAMIL.equals(lang)) {
                         optionList.put("locationAddress", userLocation.getLocation().getTaLocationMailingAddress());
+                        //district and division
+                        optionList.put("locationDistrictInOl", district.getTaDistrictName());
+                        optionList.put("locationDivisionInOl", ds.getTaDivisionName());
                     }
-
+                    optionList.put("locationDivisionInEn", ds.getEnDivisionName());
+                    optionList.put("locationDistrictInEn", district.getEnDistrictName());
                 } else {
                     logger.warn("Unexpected language passed to the service");
                     return;
