@@ -194,9 +194,8 @@
             Type of Marriage in tamil<br>
             Type of Marriage
         </td>
-        <td>                                                                                          <%--todo remove HC language--%>
-            <%=MarriageTypeUtil.getMarriageTypeInOfficialLanguageAndEnglish((MarriageType)
-                    request.getAttribute("marriage.typeOfMarriage"), "si")%>
+        <td><%=MarriageTypeUtil.getMarriageTypeInOfficialLanguageAndEnglish((MarriageType) request.
+                getAttribute("marriage.typeOfMarriage"), (String) request.getAttribute("marriage.preferredLanguage"))%>
             <br>
             <%=MarriageTypeUtil.getMarriageTypeInOfficialLanguageAndEnglish((MarriageType)
                     request.getAttribute("marriage.typeOfMarriage"), "en")%>
@@ -270,14 +269,20 @@
         </td>
         <td align="center">
             <%=CivilStatusUtil.getCivilStatus((Person.CivilStatus)
-                    request.getAttribute("marriage.male.civilStatusMale"), "si")%>
+                    request.getAttribute("marriage.male.civilStatusMale"), (String) request.getAttribute("marriage.preferredLanguage"))%>
+            <br>
+            <%=CivilStatusUtil.getCivilStatus((Person.CivilStatus)
+                    request.getAttribute("marriage.male.civilStatusMale"), "en")%>
         </td>
         <td align="left">
             <s:label value="%{marriage.male.maleRace.raceId}"/>
         </td>
         <td align="center">
             <%=CivilStatusUtil.getCivilStatus((Person.CivilStatus) request.
-                    getAttribute("marriage.female.civilStatusFemale"), "si")%>
+                    getAttribute("marriage.female.civilStatusFemale"), (String) request.getAttribute("marriage.preferredLanguage"))%>
+            <br>
+            <%=CivilStatusUtil.getCivilStatus((Person.CivilStatus)
+                    request.getAttribute("marriage.male.civilStatusMale"), "en")%>
         </td>
         <td align="left">
             <s:label value="%{marriage.female.femaleRace.raceId}"/>

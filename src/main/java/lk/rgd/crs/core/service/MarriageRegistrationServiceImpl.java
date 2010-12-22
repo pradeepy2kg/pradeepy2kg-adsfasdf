@@ -251,7 +251,6 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         return Collections.emptyList();
     }
 
-    //todo 22 remove all hard coded languages in JSP and check UI is working fine and modify license    and must fill fields
 
     /**
      * @inheritDoc
@@ -475,8 +474,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
 
     private void populateNoticeForMarkAsPrint(MarriageRegister notice, User issuingUser, Location issuingLocation) {
         if (issuingLocation != null && issuingUser != null) {
-            //    todo remove after modify queries for getting list pages
-            //    notice.setState(MarriageRegister.State.LICENSE_PRINTED);
+            notice.setState(MarriageRegister.State.LICENSE_PRINTED);
             checkUserPermissionForTheLocation(issuingUser, issuingLocation);
             notice.setLicensePrintUser(issuingUser);
             java.util.GregorianCalendar gCal = new GregorianCalendar();
@@ -565,7 +563,8 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
             handleException("can't find marriage register record for idUKey : " + idUKey + " for print",
                 ErrorCodes.CAN_NOT_FIND_MARRIAGE_NOTICE);
         } else {
-            if (notice.getState() == MarriageRegister.State.NOTICE_APPROVED) {
+            if (notice.getState() == MarriageRegister.State.NOTICE_APPROVED ||
+                notice.getState() == MarriageRegister.State.LICENSE_PRINTED) {
                 return notice;
             } else {
                 //invalid state for printing license
