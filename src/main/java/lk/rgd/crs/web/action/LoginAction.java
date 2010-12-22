@@ -3,17 +3,19 @@ package lk.rgd.crs.web.action;
 import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.AppParameter;
+import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.service.UserManager;
+import lk.rgd.common.core.AuthorizationException;
+import lk.rgd.crs.web.Menu;
+import lk.rgd.crs.web.WebConstants;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
-
-import lk.rgd.crs.web.WebConstants;
-import lk.rgd.crs.web.Menu;
-import lk.rgd.common.api.service.UserManager;
-import lk.rgd.common.api.domain.User;
-import lk.rgd.common.core.AuthorizationException;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Indunil Moremada
@@ -63,7 +65,8 @@ public class LoginAction extends ActionSupport implements SessionAware {
     private String startDate;
     private String endDate;
 
-    public LoginAction(UserManager userManager, AppParametersDAO appParaDao, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, UserDAO userDAO, RoleDAO roleDAO) {
+    public LoginAction(UserManager userManager, AppParametersDAO appParaDao, DistrictDAO districtDAO,
+        DSDivisionDAO dsDivisionDAO, UserDAO userDAO, RoleDAO roleDAO) {
         this.userManager = userManager;
         this.appParaDao = appParaDao;
         this.districtDAO = districtDAO;
@@ -230,7 +233,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
                     user.getPrefLanguage(), user, dsDivisionDAO.getDSDivisionByPK(divisionList.keySet().iterator().next()), roleDAO.getRole("DEO"));
                 logger.debug("DEO List : {}", deoList.size());
             }
-        } else if(usertype.toLowerCase().equals(WebConstants.USER_DR)) {
+        } else if (usertype.toLowerCase().equals(WebConstants.USER_DR)) {
             if (districtList == null) {
                 districtList = districtDAO.getAllDistrictNames(user.getPrefLanguage(), user);
                 logger.debug("district List : {}", districtList.size());
@@ -247,7 +250,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
                     logger.debug("DistrictList null for user : {}", user.getUserId());
                 }
             }
-            
+
             if (adrList == null && divisionList != null) {
                 logger.debug("Role = {}", user.getRole());
                 adrList = userDAO.getADRsByDistrictId(
