@@ -59,7 +59,7 @@ public class PRSValidationUtils {
     public static void validateAccessOfUserToEdit(User user) {
         if (user != null) {
             if (!(User.State.ACTIVE == user.getStatus() && !Role.ROLE_ADMIN.equals(user.getRole().getRoleId()) &&
-                Role.ROLE_RG.equals(user.getUserId()))) {
+                user.isAuthorized(Permission.PRS_EDIT_PERSON))) {
                 handleException("User : " + user.getUserId() + " is not allowed edit entries on the PRS",
                     ErrorCodes.PERMISSION_DENIED);
             }

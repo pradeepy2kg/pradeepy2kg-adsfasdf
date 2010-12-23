@@ -177,10 +177,6 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             handleException("User : " + user.getUserId() + " is not allowed to lookup entries on the PRS by keys (uKey)",
                 ErrorCodes.PRS_LOOKUP_BY_KEYS_DENIED);
         }
-        if (!user.isAuthorized(Permission.PRS_EDIT_PERSON)) {
-            handleException("User : " + user.getUserId() + " is not allowed to update person to the PRS",
-                ErrorCodes.PRS_EDIT_RECORD_DENIED);
-        }
         final Person person = personDao.getByUKey(personUKey);
 
         // load permanent address to the transient field
