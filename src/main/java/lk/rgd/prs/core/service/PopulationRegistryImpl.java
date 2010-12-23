@@ -445,11 +445,15 @@ public class PopulationRegistryImpl implements PopulationRegistry {
                 ErrorCodes.PRS_LOOKUP_BY_KEYS_DENIED);
         }
         Person p = personDao.getByUKey(personUKey);
-        for (Address a : p.getAddresses()) {
-            a.isPermanent();
+        if (p.getAddresses() != null) {
+            for (Address a : p.getAddresses()) {
+                a.isPermanent();
+            }
         }
-        for (Marriage m : p.getMarriages()) {
-            m.getMarriageUKey();
+        if (p.getMarriages() != null) {
+            for (Marriage m : p.getMarriages()) {
+                m.getMarriageUKey();
+            }
         }
         logger.debug("Person citizenship list loaded for personUKey: {} with size : {} loaded", personUKey,
             p.getCountries().size());
