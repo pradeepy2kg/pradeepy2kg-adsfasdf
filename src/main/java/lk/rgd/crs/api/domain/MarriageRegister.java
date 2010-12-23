@@ -165,7 +165,6 @@ public class MarriageRegister implements Serializable, Cloneable {
     @Column(name = "TYPE_MARRIAGE", nullable = true)
     private MarriageType typeOfMarriage;
 
-    //TODO : to be removed
     @Column(name = "PLACE_MARRIAGE", nullable = true)
     private PlaceOfMarriage placeOfMarriage;
 
@@ -215,14 +214,14 @@ public class MarriageRegister implements Serializable, Cloneable {
     private String registrationRejectComment;
 
     /**
-     * The user printing the confirmation
+     * The user printing the license
      */
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "LICENSE_PRINT_USER", nullable = true)
     private User licensePrintUser;
 
     /**
-     * The timestamp when confirmation is printed for this record
+     * The timestamp when license is printed for this record
      */
     @Column(nullable = true, name = "LICENSE_PRINT_DATE")
     @Temporal(value = TemporalType.TIMESTAMP)
