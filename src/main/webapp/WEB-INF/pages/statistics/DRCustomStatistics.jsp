@@ -127,12 +127,14 @@
         });
 
         $(document).ready(function() {
-            var user = 'dr';
-            var mode = 'all';
+            var userType = 'dr';
+            var statType = 'all';
+            var mode = 'commonStatInfo';
             $.getJSON('/ecivil/crs/StatisticsLookupService',
             {
-                userType:user,
-                statType:mode
+                userType:userType,
+                statType:statType,
+                mode:mode
             },
                     function(data) {
                         drawChart(data);

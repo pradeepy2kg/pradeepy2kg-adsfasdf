@@ -76,12 +76,14 @@
     <script type="text/javascript">
 
         $(document).ready(function() {
-            var user = 'deo';
-            var mode = 'all';
+            var userType = 'deo';
+            var statType = 'all';
+            var mode = 'commonStatInfo';
             $.getJSON('/ecivil/crs/StatisticsLookupService',
             {
-                userType:user,
-                statType:mode
+                userType:userType,
+                statType:statType,
+                mode:mode
             },
                     function(data) {
                         drawChart(data);

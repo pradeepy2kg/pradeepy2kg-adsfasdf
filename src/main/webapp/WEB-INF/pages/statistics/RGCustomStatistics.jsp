@@ -67,13 +67,15 @@
     });
 
     $(document).ready(function() {
-        var user = 'rg';
-        var mode = 'all';
+        var userType = 'rg';
+        var statType = 'all';
+        var mode = 'commonStatInfo';
 
         $.getJSON('/ecivil/crs/StatisticsLookupService',
         {
-            userType:user,
-            statType:mode
+            userType:userType,
+            statType:statType,
+            mode:mode
         },
                 function(data) {
                     drawHorizontalBarChart(data, 'nw', null, null, 1, 'birth');

@@ -1058,10 +1058,11 @@ public class BirthRegistrationServiceImpl implements
             handleException("A comment is required to reject a birth declaration",
                 ErrorCodes.COMMENT_REQUIRED_BDF_REJECT);
         } else {
-            if (bdf.getRegister().getComments() == null)
+            if (bdf.getRegister().getComments() == null) {
                 bdf.getRegister().setComments("REJECTED\n" + comments);
-            else
+            } else {
                 bdf.getRegister().setComments(bdf.getRegister().getComments() + "\nREJECTED\n" + comments);
+            }
         }
 
         // does the user have access to the BDF being added (i.e. check district and DS division)
@@ -1233,7 +1234,7 @@ public class BirthRegistrationServiceImpl implements
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getDeclarationPendingByBDDivisionAndRegisterDateRange(BDDivision bdDivision,
-                                                                                        Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
+        Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
         if (logger.isDebugEnabled()) {
             logger.debug("Get records pending approval by BDDivision ID : " + bdDivision.getBdDivisionUKey() +
                 " and date range : " + startDate + " to " + endDate + " Page : " + pageNo +
@@ -1249,7 +1250,7 @@ public class BirthRegistrationServiceImpl implements
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getBelatedDeclarationPendingByBDDivisionAndRegisterDateRange(BDDivision bdDivision,
-                                                                                               Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
+        Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
         if (logger.isDebugEnabled()) {
             logger.debug("Get Belated records pending approval by BDDivision ID : " + bdDivision.getBdDivisionUKey() +
                 " and date range : " + startDate + " to " + endDate + " Page : " + pageNo +
@@ -1266,7 +1267,7 @@ public class BirthRegistrationServiceImpl implements
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getByBDDivisionStatusAndConfirmationReceiveDateRange(BDDivision bdDivision,
-                                                                                       Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
+        Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
 
         if (logger.isDebugEnabled()) {
             logger.debug("Get confirmation records pending approval by BDDivision ID : " +
@@ -1595,7 +1596,7 @@ public class BirthRegistrationServiceImpl implements
     }
 
     private Person processFatherToPRS(User user, Person person, ParentInfo parent, String prefLanguage,
-                                      Person mother, MarriageInfo marriage, InformantInfo informant) {
+        Person mother, MarriageInfo marriage, InformantInfo informant) {
 
         logger.debug("Processing details of father to the PRS");
         Person father = null;
@@ -1801,7 +1802,7 @@ public class BirthRegistrationServiceImpl implements
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getDeclarationPendingByDSDivisionAndRegisterDateRange(DSDivision dsDivision, Date startDate,
-                                                                                        Date endDate, int pageNo, int noOfRows, User user) {
+        Date endDate, int pageNo, int noOfRows, User user) {
         ValidationUtils.validateAccessToDSDivision(dsDivision, user);
         return birthDeclarationDAO.getByDSDivisionStatusAndRegisterDateRange(dsDivision, BirthDeclaration.State.DATA_ENTRY,
             startDate, endDate, pageNo, noOfRows);
@@ -1812,7 +1813,7 @@ public class BirthRegistrationServiceImpl implements
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getBelatedDeclarationPendingByDSDivisionAndRegisterDateRange(DSDivision dsDivision,
-                                                                                               Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
+        Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
         ValidationUtils.validateAccessToDSDivision(dsDivision, user);
         return birthDeclarationDAO.getByDSDivisionStatusBirthTypeAndRegisterDateRange(dsDivision,
             BirthDeclaration.State.DATA_ENTRY, BirthDeclaration.BirthType.BELATED, startDate, endDate, pageNo, noOfRows);
@@ -1902,8 +1903,9 @@ public class BirthRegistrationServiceImpl implements
         logger.debug("Get active record by NIC or Pin number : {}", PINorNIC);
         BirthDeclaration bdf = birthDeclarationDAO.getByPINorNIC(PINorNIC);
         //calling validate access iff bdf is not null otherwise it throws null pointer exception
-        if (bdf != null)
+        if (bdf != null) {
             validateAccessOfUser(user, bdf);
+        }
         return bdf;
     }
 
@@ -1929,7 +1931,7 @@ public class BirthRegistrationServiceImpl implements
         logger.debug("Get records belonging to DSDivision ID, Status : {}", dsDivision.getDsDivisionUKey(), status);
         ValidationUtils.validateAccessToDSDivision(dsDivision, user);
         return birthDeclarationDAO.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate,
-                endDate, status);
+            endDate, status);
     }
 
     private PersonCitizenship getPersonCitizenship(Country country, String passportNo, Person person) {
@@ -1956,6 +1958,41 @@ public class BirthRegistrationServiceImpl implements
         commonStat.setTotalPendingItems(/*data_entry*/9);
 
         logger.debug("BirthRegistrationService Called!");
+
+        //todo call above methods using appropriate Date range
+
+        commonStat.setArrearsPendingItems(0);
+        commonStat.setLateSubmissions(0);
+        commonStat.setNormalSubmissions(8);
+        commonStat.setThisMonthPendingItems(3);
+
+        return commonStat;
+    }
+
+    public CommonStatistics getBirthStatisticsForDEO(String user) {
+
+        int data_entry = 0;
+        int approved = 0;
+        int rejected = 0;
+
+        List<BirthDeclaration> bdfList = birthDeclarationDAO.getByCreatedUser(userManager.getUserByID(user));
+        Iterator<BirthDeclaration> i = bdfList.iterator();
+        while (i.hasNext()) {
+            BirthDeclaration bdf = i.next();
+            if (bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED) {
+                approved += 1;
+            } else if (bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_REJECTED) {
+                rejected += 1;
+            } else if(bdf.getRegister().getStatus() == BirthDeclaration.State.DATA_ENTRY) {
+                data_entry += 1;
+            }
+        }
+
+        CommonStatistics commonStat = new CommonStatistics();
+        commonStat.setTotalSubmissions(/*data_entry + approved + rejected*/23);
+        commonStat.setApprovedItems(/*approved*/12);
+        commonStat.setRejectedItems(/*rejected*/8);
+        commonStat.setTotalPendingItems(/*data_entry*/9);
 
         //todo call above methods using appropriate Date range
 

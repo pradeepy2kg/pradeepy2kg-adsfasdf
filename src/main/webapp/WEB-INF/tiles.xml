@@ -28,12 +28,12 @@
     </definition>
 
     <definition name="epr.arghome" extends="epr.template">
-        <put-attribute name="body" value="/WEB-INF/pages/statistics/RGCustomStatistics.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/pages/statistics/ARGCustomStatistics.jsp"/>
         <put-attribute name="title" value="home.title"/>
     </definition>
 
     <definition name="epr.rghome" extends="epr.template">
-        <put-attribute name="body" value="/WEB-INF/pages/statistics/ARGCustomStatistics.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/pages/statistics/RGCustomStatistics.jsp"/>
         <put-attribute name="title" value="home.title"/>
     </definition>
 
