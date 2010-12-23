@@ -3,13 +3,13 @@
 <s:actionerror cssStyle="color:red;font-size:10pt"/>
 <s:actionmessage/>
 
-<script type="text/javascript" src="lib/jquery/jquery.jqplot.js"></script>
-<script type="text/javascript" src="lib/jquery/jqplot.categoryAxisRenderer.js"></script>
-<script type="text/javascript" src="lib/jquery/jqplot.barRenderer.js"></script>
-<script type="text/javascript" src="lib/jquery/jqplot.pieRenderer.min.js"></script>
+<script type="text/javascript" src="/ecivil/lib/jquery/jquery.jqplot.js"></script>
+<script type="text/javascript" src="/ecivil/lib/jquery/jqplot.categoryAxisRenderer.js"></script>
+<script type="text/javascript" src="/ecivil/lib/jquery/jqplot.barRenderer.js"></script>
+<script type="text/javascript" src="/ecivil/lib/jquery/jqplot.pieRenderer.min.js"></script>
 <script type="text/javascript" src="<s:url value="/js/chartCreator.js"/>"></script>
 
-<link rel="stylesheet" type="text/css" href="css/jquery.jqplot.css"/>
+<link rel="stylesheet" type="text/css" href="/ecivil/css/jquery.jqplot.css"/>
 <s:hidden id="userName" value="%{userName}"/>
 
 <style type="text/css">

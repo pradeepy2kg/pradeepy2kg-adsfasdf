@@ -4,7 +4,7 @@
     function initPage(){}
 </script>
 
-<s:form action="eprChangePass.do" method="POST">
+<s:form action="/preferences/eprChangePass.do" method="POST">
     <%--name="eprChangePass">--%>
 
     <s:actionerror cssStyle="color:red;font-size:10pt"/>

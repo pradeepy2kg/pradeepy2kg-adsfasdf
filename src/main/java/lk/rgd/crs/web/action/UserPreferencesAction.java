@@ -5,6 +5,7 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Locale;
 import java.util.regex.Pattern;
@@ -28,12 +29,12 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
     private String prefLanguage;
     private String userType;
     private int birthDistrictId;
-    private int dsDivisionId;
+    //private int dsDivisionId;
 
     private User user;
     private Map session;
 
-    private Map<Integer, String> districtList;
+    //private Map<Integer, String> districtList;
     private Map<Integer, String> dsDivisionList;
 
     private final DistrictDAO districtDAO;
@@ -44,9 +45,25 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
     private boolean emptyFeild;
     private Pattern pattern;
 
+    private final UserDAO userDAO;
+    private final RoleDAO roleDAO;
+
+    private Map<Integer, String> districtList;
+    private Map<Integer, String> divisionList;
+    private List<String> deoList;
+    private List<String> adrList;
+
+    private int dsDivisionId;
+    private int districtId;
+    private int deoUserId;
+    private int adrUserId;
+
+    private String startDate;
+    private String endDate;
+
     /**
      * following properties are checked by  PASSWORD_PATTERN
-     * 
+     * <p/>
      * Passwords will contain at least (1) upper case letter
      * Passwords will contain at least (1) lower case letter
      * Passwords will contain at least (1) number or special character
@@ -54,12 +71,14 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
      * Password maximum length is not limited
      */
     private static final String PASSWORD_PATTERN =
-            "(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$";
+        "(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$";
 
-    public UserPreferencesAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, UserManager userManager) {
+    public UserPreferencesAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, UserManager userManager, RoleDAO roleDAO, UserDAO userDAO) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.userManager = userManager;
+        this.roleDAO = roleDAO;
+        this.userDAO = userDAO;
     }
 
     /**
@@ -127,11 +146,11 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
     public String changePassword() {
         logger.info("requesting a password change.......");
 
-        if(emptyFeild){
+        if (emptyFeild) {
             addActionError(getText("emptry.feild.lable"));
             return "error";
         }
-        if(!user.getPasswordHash().equals(HashUtil.hashString(existingPassword))){
+        if (!user.getPasswordHash().equals(HashUtil.hashString(existingPassword))) {
             addActionError(getText("existing.password.mismatch.lable"));
             return "error";
         }
@@ -142,12 +161,93 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
         if (newPassword.equals(retypeNewPassword)) {
             userManager.updatePassword(newPassword, user);
             String userRole = user.getRole().getRoleId();
-            logger.debug("return value of change password method is,", "success" + userRole);
+            logger.debug("return value of change password method is success{}", userRole);
             addActionMessage(getText("password.changed.success.label"));
+            //return "success" + userRole;
+
+            if (userRole.equals("RG") || userRole.equals("ARG")) {
+                populateLists(user, WebConstants.USER_ARG);
+            }
+            if (userRole.equals("DR") || (userRole).equals("ADR")) {
+                populateLists(user, userRole);
+            }
+
             return "success" + userRole;
+
         } else {
             addActionError(getText("password.mismatch.lable"));
             return "error";
+        }
+    }
+
+    void populateLists(User user, String usertype) {
+
+        if (usertype.equals(WebConstants.USER_ARG) || usertype.equals(WebConstants.USER_RG)) {
+            if (districtList == null) {
+                districtList = districtDAO.getAllDistrictNames(user.getPrefLanguage(), user);
+                logger.debug("district List : {}", districtList.size());
+            }
+
+            if (divisionList == null && districtList != null) {
+                divisionList = dsDivisionDAO.getAllDSDivisionNames(
+                    districtList.keySet().iterator().next(),
+                    user.getPrefLanguage(),
+                    user);
+                logger.debug("division List : {}", divisionList.size());
+            } else {
+                if (districtList == null) {
+                    logger.debug("DistrictList null for user : {}", user.getUserId());
+                }
+            }
+
+        } else if (usertype.toLowerCase().equals(WebConstants.USER_ADR)) {
+            if (districtList == null) {
+                districtList = districtDAO.getAllDistrictNames(user.getPrefLanguage(), user);
+                logger.debug("district List : {}", districtList.size());
+            }
+
+            if (divisionList == null && districtList != null) {
+                divisionList = dsDivisionDAO.getAllDSDivisionNames(
+                    districtList.keySet().iterator().next(),
+                    user.getPrefLanguage(),
+                    user);
+                logger.debug("division List : {}", divisionList.size());
+            } else {
+                if (districtList == null) {
+                    logger.debug("DistrictList null for user : {}", user.getUserId());
+                }
+            }
+
+            if (deoList == null && divisionList != null) {
+                logger.debug("Role = {}", user.getRole());
+                deoList = userDAO.getDEOsByDSDivision(
+                    user.getPrefLanguage(), user, dsDivisionDAO.getDSDivisionByPK(divisionList.keySet().iterator().next()), roleDAO.getRole("DEO"));
+                logger.debug("DEO List : {}", deoList.size());
+            }
+        } else if (usertype.toLowerCase().equals(WebConstants.USER_DR)) {
+            if (districtList == null) {
+                districtList = districtDAO.getAllDistrictNames(user.getPrefLanguage(), user);
+                logger.debug("district List : {}", districtList.size());
+            }
+
+            if (divisionList == null && districtList != null) {
+                divisionList = dsDivisionDAO.getAllDSDivisionNames(
+                    districtList.keySet().iterator().next(),
+                    user.getPrefLanguage(),
+                    user);
+                logger.debug("division List : {}", divisionList.size());
+            } else {
+                if (districtList == null) {
+                    logger.debug("DistrictList null for user : {}", user.getUserId());
+                }
+            }
+
+            if (adrList == null && divisionList != null) {
+                logger.debug("Role = {}", user.getRole());
+                adrList = userDAO.getADRsByDistrictId(
+                    districtDAO.getDistrict(districtList.keySet().iterator().next()), roleDAO.getRole("ADR"));
+                logger.debug("ADR List : {}", adrList.size());
+            }
         }
     }
 
@@ -263,5 +363,69 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
 
     public void setEmptyFeild(boolean emptyFeild) {
         this.emptyFeild = emptyFeild;
+    }
+
+    public List<String> getAdrList() {
+        return adrList;
+    }
+
+    public void setAdrList(List<String> adrList) {
+        this.adrList = adrList;
+    }
+
+    public int getAdrUserId() {
+        return adrUserId;
+    }
+
+    public void setAdrUserId(int adrUserId) {
+        this.adrUserId = adrUserId;
+    }
+
+    public List<String> getDeoList() {
+        return deoList;
+    }
+
+    public void setDeoList(List<String> deoList) {
+        this.deoList = deoList;
+    }
+
+    public int getDeoUserId() {
+        return deoUserId;
+    }
+
+    public void setDeoUserId(int deoUserId) {
+        this.deoUserId = deoUserId;
+    }
+
+    public int getDistrictId() {
+        return districtId;
+    }
+
+    public void setDistrictId(int districtId) {
+        this.districtId = districtId;
+    }
+
+    public Map<Integer, String> getDivisionList() {
+        return divisionList;
+    }
+
+    public void setDivisionList(Map<Integer, String> divisionList) {
+        this.divisionList = divisionList;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
     }
 }

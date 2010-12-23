@@ -55,12 +55,14 @@ public class JSONStatisticsLookupService extends HttpServlet {
         String mode = request.getParameter("mode");
 
         logger.debug("Received Division userType and statType : {} {} ", userType, statType);
-        logger.debug("Received Division mode : {} ", mode);
+        logger.debug("Received Division mode and user id : {} {}", mode, deoUserId);
         HashMap<String, Object> optionLists = new HashMap<String, Object>();
         CommonStatistics cs;
 
         try {
-            if (mode.equals("adrStatInfo")) {
+            if (mode.equals("drStatInfo")) {
+                //cs = birthRegistrationService.getBirthStatisticsForADR(deoUserId);
+            } else if (mode.equals("adrStatInfo")) {
 
                 cs = birthRegistrationService.getBirthStatisticsForDEO(deoUserId);
                 if (cs != null) {
@@ -74,12 +76,12 @@ public class JSONStatisticsLookupService extends HttpServlet {
 
                 cs = deathRegistrationService.getDeathStatisticsForDEO(deoUserId);
                 if (cs != null) {
-                    optionLists.put("approved_d", cs.getApprovedItems());
-                    optionLists.put("rejected_d", cs.getRejectedItems());
-                    optionLists.put("this_month_d", cs.getThisMonthPendingItems());
-                    optionLists.put("arrears_d", cs.getArrearsPendingItems());
-                    optionLists.put("normal_d", cs.getNormalSubmissions());
-                    optionLists.put("late_d", cs.getLateSubmissions());
+                    optionLists.put("approved_d", /*cs.getApprovedItems()*/12);
+                    optionLists.put("rejected_d", /*cs.getRejectedItems()*/4);
+                    optionLists.put("this_month_d",/* cs.getThisMonthPendingItems()*/5);
+                    optionLists.put("arrears_d", /*cs.getArrearsPendingItems()*/8);
+                    optionLists.put("normal_d", /*cs.getNormalSubmissions()*/1);
+                    optionLists.put("late_d", /*cs.getLateSubmissions()*/2);
                 }
 
                 cs = marriageRegistrationService.getMarriageStatisticsForDEO(deoUserId);
@@ -92,7 +94,7 @@ public class JSONStatisticsLookupService extends HttpServlet {
                     optionLists.put("late_b", cs.getLateSubmissions());*/
                 }
 
-            } else if (mode.equals("commonStatInfo")){
+            } else if (mode.equals("commonStatInfo")) {
                 if (userType.equals(WebConstants.USER_ADR)) {
                     if (statType.equals(WebConstants.STAT_ALL)) {
                         cs = populateBirthStatistics(WebConstants.USER_ADR);
@@ -267,7 +269,6 @@ public class JSONStatisticsLookupService extends HttpServlet {
             logger.error("[JSONStatisticsLookupService] Fatal Error : {}", e);
             return;
         }
-
 
         response.setContentType("application/json; charset=utf-8");
         PrintWriter out = response.getWriter();

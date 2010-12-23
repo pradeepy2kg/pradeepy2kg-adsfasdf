@@ -3,13 +3,13 @@
 <s:actionerror cssStyle="color:red;font-size:10pt"/>
 <s:actionmessage/>
 
-<script type="text/javascript" src="lib/jquery/jquery.jqplot.js"></script>
-<script type="text/javascript" src="lib/jquery/jqplot.categoryAxisRenderer.js"></script>
-<script type="text/javascript" src="lib/jquery/jqplot.barRenderer.js"></script>
-<script type="text/javascript" src="lib/jquery/jqplot.pieRenderer.min.js"></script>
+<script type="text/javascript" src="/ecivil/lib/jquery/jquery.jqplot.js"></script>
+<script type="text/javascript" src="/ecivil/lib/jquery/jqplot.categoryAxisRenderer.js"></script>
+<script type="text/javascript" src="/ecivil/lib/jquery/jqplot.barRenderer.js"></script>
+<script type="text/javascript" src="/ecivil/lib/jquery/jqplot.pieRenderer.min.js"></script>
 <script type="text/javascript" src="<s:url value="/js/chartCreator.js"/>"></script>
 
-<link rel="stylesheet" type="text/css" href="css/jquery.jqplot.css"/>
+<link rel="stylesheet" type="text/css" href="/ecivil/css/jquery.jqplot.css"/>
 <s:hidden id="userName" value="%{userName}"/>
 
 <style type="text/css">
@@ -92,215 +92,217 @@
         background-color: #E4ECFC;
         height: 35px;
     }
-    #space{
-        height:20px;
+
+    #space {
+        height: 20px;
     }
 
 </style>
 
 <div id="ADR-home-page-outer">
 
-    <script type="text/javascript">
+<script type="text/javascript">
 
-        $(function() {
-            $('select#district').bind('change', function(evt1) {
-                var id = $("select#district").attr("value");
+    $(function() {
+        $('select#district').bind('change', function(evt1) {
+            var id = $("select#district").attr("value");
 
-                $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:13},
-                        function(data) {
-                            var options1 = '';
-                            var ds = data.dsDivisionList;
-                            for (var i = 0; i < ds.length; i++) {
-                                options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
-                            }
-                            $("select#dsDivision").html(options1);
+            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:13},
+                    function(data) {
+                        var options1 = '';
+                        var ds = data.dsDivisionList;
+                        for (var i = 0; i < ds.length; i++) {
+                            options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                        }
+                        $("select#dsDivision").html(options1);
 
-                            var options2 = '';
-                            var bd = data.deoList;
-                            for (var j = 0; j < bd.length; j++) {
-                                options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
-                            }
-                            $("select#deoUser").html(options2);
-                        });
-            });
-
-            $('select#dsDivision').bind('change', function(evt1) {
-                var id = $("select#dsDivision").attr("value");
-
-                $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:14},
-                        function(data) {
-                            var options1 = '';
-                            var ds = data.deoList;
-                            for (var i = 0; i < ds.length; i++) {
-                                options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
-                            }
-                            $("select#deoUser").html(options1);
-                        });
-            });
-
-            $('#getDeo').bind('click', function(evt1) {
-                var deo = $("select#deoUser").attr("value");
-                var mode = 'adrStatInfo';
-                $.getJSON('/ecivil/crs/StatisticsLookupService', {deo:deo, mode:mode},
-                        function(data) {
-                            var options1 = '';
-                            var ds = data.deoList;
-                            for (var i = 0; i < ds.length; i++) {
-                                options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
-                            }
-                            $("select#deoUser").html(options1);
-                        });
-            });
-
+                        var options2 = '';
+                        var bd = data.deoList;
+                        for (var j = 0; j < bd.length; j++) {
+                            options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
+                        }
+                        $("select#deoUser").html(options2);
+                    });
         });
 
-        $(document).ready(function() {
-            var userType = 'adr';
-            var statType = 'all';
-            var mode = 'commonStatInfo';
+        $('select#dsDivision').bind('change', function(evt1) {
+            var id = $("select#dsDivision").attr("value");
+
+            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:14},
+                    function(data) {
+                        var options1 = '';
+                        var ds = data.deoList;
+                        for (var i = 0; i < ds.length; i++) {
+                            options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                        }
+                        $("select#deoUser").html(options1);
+                    });
+        });
+
+        $('#getDeo').bind('click', function(evt1) {
+            var deo = $("select#deoUser").attr("value");
+            var mode = 'adrStatInfo';
             $.getJSON('/ecivil/crs/StatisticsLookupService',
             {
-                userType:userType,
-                statType:statType,
+                deo:deo,
                 mode:mode
             },
                     function(data) {
                         drawChart(data);
-                    }
-                    );
-
+                    });
         });
 
-        function initPage() {
-        }
+    });
 
-    </script>
-    <div id="space"></div>
-    <table border="0" width="100%">
-        <%-- start --%>
-        <tr class="e" bgcolor="#eeeeee">
-            <th colspan="4" align="left">Custom Search</th>
-        </tr>
-        <tr class="e">
-            <td width="20%">District</td>
-            <td width="30%">
-                <s:select
-                        id="district"
-                        name="districtId"
-                        list="districtList"
-                        />
-            </td>
-            <td width="20%">DSDivision</td>
-            <td width="30%">
-                <s:select
-                        id="dsDivision"
-                        name="dsDivisionId"
-                        list="divisionList"
-                        />
-            </td>
-        </tr>
-        <tr class="e">
-            <td>Start Date</td>
-            <td>
-                <s:textfield id="sdate" name="startDate" cssStyle="width:70%;"/>
-            </td>
-            <td>End Date</td>
-            <td>
-                <s:textfield id="edate" name="endDate" cssStyle="width:70%;"/>
-            </td>
-        </tr>
-        <tr class="e">
-            <td>DEO</td>
-            <td>
-                <s:select
-                        id="deoUser"
-                        name="deoUserId"
-                        list="deoList"
-                        />
-            </td>
-            <td><s:submit id="getDeo" cssStyle="width:100px;"/></td>
-            <td>&nbsp;</td>
-        </tr>
-        <%-- end --%>
-        <tr>
-            <td colspan="4" align="center">
-                <div class="topic">Birth Statistics</div>
-            </td>
-        </tr>
-        <tr>
-            <td class="info">
-                All Pending :
-                <input type="text" id="all_pending_b" class="noStyle" readonly="true" maxlength="3"/>
-            </td>
-            <td class="info">
-                <label class="issue">
-                    Arrears :
-                    <input type="text" id="arrears_b" class="noStyle_red" readonly="true" maxlength="3"/>
-                </label>
-            </td>
-            <td colspan="2" rowspan="4" class="pie">
-                <div id="chart3"></div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <div id="chart1"></div>
-            </td>
-        </tr>
-        <tr>
-            <td class="info">
-                Total Submitted Items :
-                <input type="text" id="total_submitted_b" class="noStyle" readonly="true" maxlength="3"/>
-            </td>
-            <td class="info">
-                <label class="issue">
-                    Late Items :
-                    <input type="text" id="late_b" class="noStyle_red" readonly="true" maxlength="3"/>
-                </label>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <div id="chart2"></div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="4" align="center">
-                <div class="topic">Death Statistics</div>
-            </td>
-        </tr>
-        <tr>
-            <td class="info">All Pending : <input type="text" id="all_pending_d" class="noStyle" readonly="true"
-                                                  maxlength="3"/></td>
-            <td class="info"><label class="issue">Arrears : <input type="text" id="arrears_d" class="noStyle_red"
-                                                                   readonly="true" maxlength="3"/></label></td>
-            <td colspan="2" rowspan="4" class="pie">
-                <div id="chart6"></div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <div id="chart4"></div>
-            </td>
-        </tr>
-        <tr>
-            <td class="info">Total Submitted Items : <input type="text" id="total_submitted_d" class="noStyle"
-                                                            readonly="true" maxlength="3"/></td>
-            <td class="info"><label class="issue">Late Items : <input type="text" id="late_d" class="noStyle_red"
-                                                                      readonly="true" maxlength="3"/></label></td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <div id="chart5"></div>
-            </td>
-        </tr>
-        <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-        </tr>
-    </table>
+    $(document).ready(function() {
+        var deo = $("select#deoUser").attr("value");
+        var userType = 'adr';
+        var statType = 'all';
+        var mode = 'adrStatInfo';
+        $.getJSON('/ecivil/crs/StatisticsLookupService',
+        {
+            userType:userType,
+            statType:statType,
+            mode:mode,
+            deo:deo
+        },
+                function(data) {
+                    drawChart(data);
+                }
+                );
+
+    });
+
+    function initPage() {
+    }
+
+</script>
+<div id="space"></div>
+<table border="0" width="100%">
+    <%-- start --%>
+    <tr class="e" bgcolor="#eeeeee">
+        <th colspan="4" align="left">Custom Search</th>
+    </tr>
+    <tr class="e">
+        <td width="20%">District</td>
+        <td width="30%">
+            <s:select
+                    id="district"
+                    name="districtId"
+                    list="districtList"
+                    />
+        </td>
+        <td width="20%">DSDivision</td>
+        <td width="30%">
+            <s:select
+                    id="dsDivision"
+                    name="dsDivisionId"
+                    list="divisionList"
+                    />
+        </td>
+    </tr>
+    <tr class="e">
+        <td>Start Date</td>
+        <td>
+            <s:textfield id="sdate" name="startDate" cssStyle="width:70%;"/>
+        </td>
+        <td>End Date</td>
+        <td>
+            <s:textfield id="edate" name="endDate" cssStyle="width:70%;"/>
+        </td>
+    </tr>
+    <tr class="e">
+        <td>DEO</td>
+        <td>
+            <s:select
+                    id="deoUser"
+                    name="deoUserId"
+                    list="deoList"
+                    />
+        </td>
+        <td><s:submit id="getDeo" cssStyle="width:100px;"/></td>
+        <td>&nbsp;</td>
+    </tr>
+    <%-- end --%>
+    <tr>
+        <td colspan="4" align="center">
+            <div class="topic">Birth Statistics</div>
+        </td>
+    </tr>
+    <tr>
+        <td class="info">
+            All Pending :
+            <input type="text" id="all_pending_b" class="noStyle" readonly="true" maxlength="3"/>
+        </td>
+        <td class="info">
+            <label class="issue">
+                Arrears :
+                <input type="text" id="arrears_b" class="noStyle_red" readonly="true" maxlength="3"/>
+            </label>
+        </td>
+        <td colspan="2" rowspan="4" class="pie">
+            <div id="chart3"></div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <div id="chart1"></div>
+        </td>
+    </tr>
+    <tr>
+        <td class="info">
+            Total Submitted Items :
+            <input type="text" id="total_submitted_b" class="noStyle" readonly="true" maxlength="3"/>
+        </td>
+        <td class="info">
+            <label class="issue">
+                Late Items :
+                <input type="text" id="late_b" class="noStyle_red" readonly="true" maxlength="3"/>
+            </label>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <div id="chart2"></div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4" align="center">
+            <div class="topic">Death Statistics</div>
+        </td>
+    </tr>
+    <tr>
+        <td class="info">All Pending : <input type="text" id="all_pending_d" class="noStyle" readonly="true"
+                                              maxlength="3"/></td>
+        <td class="info"><label class="issue">Arrears : <input type="text" id="arrears_d" class="noStyle_red"
+                                                               readonly="true" maxlength="3"/></label></td>
+        <td colspan="2" rowspan="4" class="pie">
+            <div id="chart6"></div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <div id="chart4"></div>
+        </td>
+    </tr>
+    <tr>
+        <td class="info">Total Submitted Items : <input type="text" id="total_submitted_d" class="noStyle"
+                                                        readonly="true" maxlength="3"/></td>
+        <td class="info"><label class="issue">Late Items : <input type="text" id="late_d" class="noStyle_red"
+                                                                  readonly="true" maxlength="3"/></label></td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <div id="chart5"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+    </tr>
+</table>
 
 </div>
    
