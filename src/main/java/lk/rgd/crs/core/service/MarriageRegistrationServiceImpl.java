@@ -5,7 +5,6 @@ import lk.rgd.Permission;
 import lk.rgd.common.api.dao.UserLocationDAO;
 import lk.rgd.common.api.domain.*;
 import lk.rgd.common.api.service.UserManager;
-import lk.rgd.common.util.NameFormatUtil;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.MarriageRegistrationDAO;
@@ -72,6 +71,17 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     public MarriageRegister getByIdUKey(long idUKey, User user) {
         logger.debug("attempt to get marriage register by idUKey : {} ", idUKey);
         return marriageRegistrationDAO.getByIdUKey(idUKey);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<MarriageRegister> getMarriageNoticeByDistrict(District district, int pageNo, int noOfRows,
+        boolean active, User user) {
+        logger.debug("Get Active : {} MarriageNotices by District : {}", active, district.getDistrictUKey());
+        ValidationUtils.validateAccessToMRDistrict(user, district);
+        return marriageRegistrationDAO.getPaginatedListByDistrict(district, pageNo, noOfRows, active);
     }
 
     /**
@@ -758,7 +768,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         return commonStat;
     }
 
-    public CommonStatistics getMarriageStatisticsForDEO(String user){
+    public CommonStatistics getMarriageStatisticsForDEO(String user) {
         int data_entry = 0;
         int approved = 0;
         int rejected = 0;
@@ -771,7 +781,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
                 approved += 1;
             } else if (mr.getState() == MarriageRegister.State.NOTICE_REJECTED) {
                 rejected += 1;
-            } else if(mr.getState() == MarriageRegister.State.DATA_ENTRY) {
+            } else if (mr.getState() == MarriageRegister.State.DATA_ENTRY) {
                 data_entry += 1;
             }
         }

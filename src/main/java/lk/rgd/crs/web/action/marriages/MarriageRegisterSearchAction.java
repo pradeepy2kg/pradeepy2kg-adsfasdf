@@ -4,7 +4,10 @@ import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.AppConstants;
 import lk.rgd.ErrorCodes;
 import lk.rgd.common.api.dao.*;
-import lk.rgd.common.api.domain.*;
+import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.api.domain.District;
+import lk.rgd.common.api.domain.Location;
+import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.NameFormatUtil;
 import lk.rgd.common.util.WebUtils;
 import lk.rgd.crs.CRSRuntimeException;
@@ -115,6 +118,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
      */
     public String marriageNoticeSearchInit() {
         logger.debug("Marriage notice search page loaded");
+//        commonUtil.populateDynamicListsWithAllOption(districtList, dsDivisionList, mrDivisionList, user, language);
         populateBasicLists();
         pageNo += 1;
         getApprovalPendingNotices();
@@ -214,7 +218,6 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId, dsDivisionId,
             mrDivisionId, AppConstants.MARRIAGE, user, language);
         getApprovalPendingNotices();
-        addActionMessage(getText("message.approve.successfully"));
         logger.debug("successfully approved :idUKey : {}", idUKey);
         return SUCCESS;
     }
@@ -388,7 +391,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         }
     }
 
-    /**                                                                    
+    /**
      * set additional displaying values
      */
     private void populateLicense(MarriageRegister notice) {
@@ -465,14 +468,26 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         } else {
             if (isEmpty(pinOrNic) && noticeSerialNo == null) {
                 if (mrDivisionId == 0) {
-                    // Search by DSDivision
-                    if (searchStartDate == null && searchEndDate == null) {
-                        searchList = WebUtils.populateNoticeList(marriageRegistrationService.getMarriageNoticePendingApprovalByDSDivision(
-                            dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, true, user));
+                    if (dsDivisionId == 0) {
+                        if (districtId == 0) {
+                            // Search by All available Districts
+                            // TODO chathuranga not implemented yet
+                        } else {
+                            // Search by All DSDivisions
+                            searchList = WebUtils.populateNoticeList(marriageRegistrationService.
+                                getMarriageNoticeByDistrict(districtDAO.getDistrict(districtId), pageNo, noOfRows, true, user));
+                        }
                     } else {
-                        // Search by DSDivision and register date range of male or female notice
-                        searchList = WebUtils.populateNoticeList(marriageRegistrationService.getMarriageNoticesByDSDivisionAndRegisterDateRange(
-                            dsDivisionDAO.getDSDivisionByPK(dsDivisionId), searchStartDate, searchEndDate, pageNo, noOfRows, true, user));
+                        // Search by specific DSDivision
+                        if (searchStartDate == null && searchEndDate == null) {
+                            // Search by DSDivision
+                            searchList = WebUtils.populateNoticeList(marriageRegistrationService.getMarriageNoticePendingApprovalByDSDivision(
+                                dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, true, user));
+                        } else {
+                            // Search by DSDivision and register date range of male or female notice
+                            searchList = WebUtils.populateNoticeList(marriageRegistrationService.getMarriageNoticesByDSDivisionAndRegisterDateRange(
+                                dsDivisionDAO.getDSDivisionByPK(dsDivisionId), searchStartDate, searchEndDate, pageNo, noOfRows, true, user));
+                        }
                     }
                 } else {
                     if (searchStartDate == null && searchEndDate == null) {
@@ -519,6 +534,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     private void populateBasicLists() {
         // TODO chathuranga change following
         districtList = districtDAO.getDistrictNames(language, user);
+        // TODO chathuranga when search by all district option
         if (districtId == 0) {
             if (!districtList.isEmpty()) {
                 districtId = districtList.keySet().iterator().next();
@@ -527,19 +543,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         }
         dsDivisionList = dsDivisionDAO.getDSDivisionNames(districtId, language, user);
 
-        if (dsDivisionId == 0) {
-            if (!dsDivisionList.isEmpty()) {
-                dsDivisionId = dsDivisionList.keySet().iterator().next();
-                logger.debug("first allowed DS Div in the list {} was set", dsDivisionId);
-            }
-        }
-
         mrDivisionList = mrDivisionDAO.getMRDivisionNames(dsDivisionId, language, user);
-        // TODO
-        /*if (mrDivisionId == 0) {
-            mrDivisionId = mrDivisionList.keySet().iterator().next();
-            logger.debug("first allowed BD Div in the list {} was set", mrDivisionId);
-        }*/
     }
 
     private boolean isEmpty(String s) {

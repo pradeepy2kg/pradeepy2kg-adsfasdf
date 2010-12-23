@@ -19,6 +19,12 @@ import java.util.Date;
 @Table(name = "MARRIAGE_REGISTER", schema = "CRS")
 
 @NamedQueries({
+    @NamedQuery(name = "filter.notice.by.district", query = "SELECT mr FROM MarriageRegister mr " +
+        "WHERE (mr.state <= 3 OR mr.state = 7) AND mr.lifeCycleInfo.activeRecord = :active " +
+        "AND (mr.mrDivisionOfMaleNotice IN (SELECT m FROM MRDivision m WHERE (m.dsDivision.district = mr.mrDivisionOfMaleNotice.dsDivision.district AND mr.mrDivisionOfMaleNotice.dsDivision.district = :district ))" +
+        "OR mr.mrDivisionOfFemaleNotice IN (SELECT m FROM MRDivision m WHERE (m.dsDivision.district = mr.mrDivisionOfFemaleNotice.dsDivision.district AND mr.mrDivisionOfFemaleNotice.dsDivision.district = :district ))) " +
+        "ORDER BY mr.idUKey DESC "),
+
     // TODO review this query
     @NamedQuery(name = "filter.notice.by.dsDivision", query = "SELECT mr FROM MarriageRegister mr " +
         "WHERE ((mr.state <= 3) OR (mr.state =7)) AND mr.lifeCycleInfo.activeRecord = :active " +
@@ -52,10 +58,10 @@ import java.util.Date;
 
     @NamedQuery(name = "get.notice.by.dsDivision.and.registerDate", query = "SELECT mr FROM MarriageRegister mr " +
         "WHERE ((mr.state <= 3) OR (mr.state =7))  AND mr.lifeCycleInfo.activeRecord = :active " +
-        "AND (mr.mrDivisionOfMaleNotice IN (SELECT m FROM MRDivision m WHERE (m.dsDivision = mr.mrDivisionOfMaleNotice.dsDivision AND mr.mrDivisionOfMaleNotice.dsDivision = :dsDivision)) " +
-        "OR mr.mrDivisionOfFemaleNotice IN (SELECT m FROM MRDivision m WHERE (m.dsDivision = mr.mrDivisionOfFemaleNotice.dsDivision AND mr.mrDivisionOfFemaleNotice.dsDivision = :dsDivision)))" +
-        "AND ((mr.dateOfMaleNotice IS NOT NULL AND mr.dateOfMaleNotice BETWEEN :startDate AND :endDate) " +
-        "OR (mr.dateOfFemaleNotice IS NOT NULL AND mr.dateOfFemaleNotice BETWEEN :startDate AND :endDate)) ORDER BY mr.idUKey DESC "),
+        "AND (((mr.mrDivisionOfMaleNotice IN (SELECT m FROM MRDivision m WHERE (m.dsDivision = mr.mrDivisionOfMaleNotice.dsDivision AND mr.mrDivisionOfMaleNotice.dsDivision = :dsDivision))) " +
+        "AND (mr.dateOfMaleNotice IS NOT NULL AND mr.dateOfMaleNotice BETWEEN :startDate AND :endDate)) " +
+        "OR ((mr.mrDivisionOfFemaleNotice IN (SELECT m FROM MRDivision m WHERE (m.dsDivision = mr.mrDivisionOfFemaleNotice.dsDivision AND mr.mrDivisionOfFemaleNotice.dsDivision = :dsDivision))) " +
+        "AND (mr.dateOfFemaleNotice IS NOT NULL AND mr.dateOfFemaleNotice BETWEEN :startDate AND :endDate))) ORDER BY mr.idUKey DESC "),
 
     @NamedQuery(name = "get.notice.by.male.and.female.identification", query = "SELECT mr FROM MarriageRegister mr" +
         " WHERE (mr.male.identificationNumberMale = :male AND mr.female.identificationNumberFemale = :female " +

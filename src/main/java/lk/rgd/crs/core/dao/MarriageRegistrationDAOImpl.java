@@ -1,8 +1,8 @@
 package lk.rgd.crs.core.dao;
 
 import lk.rgd.common.api.domain.DSDivision;
-import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.District;
+import lk.rgd.common.api.domain.User;
 import lk.rgd.common.core.dao.BaseDAO;
 import lk.rgd.crs.api.dao.MarriageRegistrationDAO;
 import lk.rgd.crs.api.domain.MRDivision;
@@ -93,6 +93,18 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
         q.setParameter("mrDivision", mrDivision);
         q.setParameter("serialNo", serialNo);
         q.setParameter("state", state);
+        q.setParameter("active", active);
+        return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<MarriageRegister> getPaginatedListByDistrict(District district, int pageNo, int noOfRows,
+        boolean active) {
+        Query q = em.createNamedQuery("filter.notice.by.district");
+        q.setParameter("district", district);
         q.setParameter("active", active);
         return q.getResultList();
     }
@@ -273,10 +285,10 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public int getMarriageCertificateCount(MarriageRegister.State status, Date startDate, Date endDate){
+    public int getMarriageCertificateCount(MarriageRegister.State status, Date startDate, Date endDate) {
         // TODO Correct Query not supplied
         Query q = em.createNamedQuery("get.notice.by.male.and.female.identification");
-        return ((Long)q.getSingleResult()).intValue();
+        return ((Long) q.getSingleResult()).intValue();
     }
 
     /**
