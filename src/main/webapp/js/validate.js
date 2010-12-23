@@ -47,7 +47,12 @@ function validateEmail(domElement, errorText, errorCode) {
         }
     }
 }
-
+/**
+ *    validate serial number
+ * @param domElement    dom object
+ * @param errorText     error test (ex :invalid date)
+ * @param errorCode     field name(ex :serial number)
+ */
 function validateSerialNo(domElement, errorText, errorCode) {
     with (domElement) {
         var reg = /^20([1-9][0-9])[0|1]([0-9]{5})$/;
@@ -229,14 +234,16 @@ function DaysArray(n) {
     }
     return this
 }
-
+/**
+ * check date is valid date
+ * @param dtStr
+ * @param errorText
+ * @param errorCode
+ */
 function isDate(dtStr, errorText, errorCode) {
-
     if (isFutureDate(dtStr)) {
         printMessage(errorText, errorCode);
-
     } else {
-
         var isValideDate = true;
         var daysInMonth = DaysArray(12)
         var pos1 = dtStr.indexOf(dtCh)
@@ -282,6 +289,7 @@ function isDate(dtStr, errorText, errorCode) {
         if (dtStr.indexOf(dtCh, pos2 + 1) != -1 || isInteger(stripCharsInBag(dtStr, dtCh)) == false) {
             isValideDate = false;
         }
+
         if (!isValideDate) {
             //todo erro massage
             printMessage(errorText, errorCode);

@@ -9,121 +9,220 @@
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 
 <script type="text/javascript">
+function initPage() {
+}
 
+var errormsg = "";
+function validate() {
+    alert('begin validate')
+    //following fields are must filled before submit the form
+    // serial number(number) / date (length must be 10 ) / type of marriage / identification number male,female(String max 10) /DOB male, female
+    //age at last BD male,female (number)/race male ,female / name in official male ,female / address male,female /civil state male,female
 
-    function initPage() {
-        //  disableFemaleWitnesses('none');
-        //  disableMaleWitnesses('none');
+    //validate must fill fields
+    var domObject = document.getElementById('serial_number');
+    if (isFieldEmpty(domObject)) {
+        printMessage("text_serial_number", "text_must_fill")
+    } else {
+        validateSerialNo(domObject, 'text_invalid_data', 'text_serial_number')
     }
-    function disableFemaleWitnesses(mode) {
-
-        document.getElementById('f_witness_1_pin').style.display = mode;
-        document.getElementById('f_witness_1_full_name').style.display = mode;
-        document.getElementById('f_witness_1_rank').style.display = mode;
-        document.getElementById('f_witness_1_place_residence').style.display = mode;
-
-        document.getElementById('f_witness_2_pin').style.display = mode;
-        document.getElementById('f_witness_2_full_name').style.display = mode;
-        document.getElementById('f_witness_2_rank').style.display = mode;
-        document.getElementById('f_witness_2_place_residence').style.display = mode;
+    domObject = document.getElementById('submitDatePicker');
+    if (isFieldEmpty(domObject)) {
+        printMessage("text_submit_date", "text_must_fill")
     }
-
-    function disableMaleWitnesses(mode) {
-
-        document.getElementById('m_witness_1_pin').style.display = mode;
-        document.getElementById('m_witness_1_full_name').style.display = mode;
-        document.getElementById('m_witness_1_rank').style.display = mode;
-        document.getElementById('m_witness_1_place_residence').style.display = mode;
-
-        document.getElementById('m_witness_2_pin').style.display = mode;
-        document.getElementById('m_witness_2_full_name').style.display = mode;
-        document.getElementById('m_witness_2_rank').style.display = mode;
-        document.getElementById('m_witness_2_place_residence').style.display = mode;
+    else {
+        isDate(domObject.value, "text_invalid_data", "text_submit_date")
     }
 
-    function disableWitnessBaseOnParty() {
-
-        var male = document.getElementById('maleIdtrue').checked;
-        var female = document.getElementById('maleIdfalse').checked;
-        var both = document.getElementById('bothtrue').checked;
-
-
-        if (male) {
-            disableMaleWitnesses('')
-            disableFemaleWitnesses('none')
-        } else if (female) {
-            disableMaleWitnesses('none')
-            disableFemaleWitnesses('')
-        }
-        else if (both) {
-            /*todo remoe this*/
-            disableMaleWitnesses('')
-            disableFemaleWitnesses('none')
-        }
+    //   marriage.typeOfMarriage
+    //   domObject = document.getElementById('serial_number');
+    domObject = document.getElementById('identification_male');
+    if (isFieldEmpty(domObject)) {
+        printMessage("text_id_male", "text_must_fill")
+    }
+    else {
+        validatePINorNIC(domObject, "text_invalid_data", "text_id_male")
     }
 
-    $(function() {
-        $("#submitDatePicker").datepicker({
-            changeYear: true,
-            yearRange: '1960:2020',
-            dateFormat:'yy-mm-dd',
-            startDate:'2000-01-01',
-            endDate:'2040-12-31'
-        });
-    });
+    domObject = document.getElementById('identification_female');
+    if (isFieldEmpty(domObject)) {
+        printMessage("text_id_female", "text_must_fill")
+    }
+    else {
+        validatePINorNIC(domObject, "text_invalid_data", "text_id_female")
+    }
 
-    $(function() {
-        $("#date_of_birth_male").datepicker({
-            changeYear: true,
-            yearRange: '1960:2020',
-            dateFormat:'yy-mm-dd',
-            startDate:'2000-01-01',
-            endDate:'2040-12-31'
-        });
-    });
+    domObject = document.getElementById('date_of_birth_male');
+    if (isFieldEmpty(domObject)) {
+        printMessage("text_dob_male", "text_must_fill")
+    }
+    else {
+        isDate(domObject.value, "text_invalid_data", "text_dob_male")
+    }
+    domObject = document.getElementById('date_of_birth_female');
+    if (isFieldEmpty(domObject)) {
+        printMessage("text_dob_female", "text_must_fill")
+    }
+    else {
+        isDate(domObject.value, "text_invalid_data", "text_dob_female")
+    }
 
-    $(function() {
-        $("#date_of_birth_female").datepicker({
-            changeYear: true,
-            yearRange: '1960:2020',
-            dateFormat:'yy-mm-dd',
-            startDate:'2000-01-01',
-            endDate:'2040-12-31'
-        });
-    });
+    domObject = document.getElementById('age_at_last_bd_male');
+    if (isFieldEmpty(domObject)) {
+        printMessage("text_age_at_last_bd_male", "text_must_fill")
+    }
+    else {
+        isNumeric(domObject.value, "text_invalid_data", "text_age_at_last_bd_male")
+    }
 
-    $('select#districtId').bind('change', function(evt1) {
-        var id = $("select#districtId").attr("value");
-        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:8},
-                function(data) {
-                    var options1 = '';
-                    var ds = data.dsDivisionList;
-                    for (var i = 0; i < ds.length; i++) {
-                        options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
-                    }
-                    $("select#dsDivisionId").html(options1);
+    domObject = document.getElementById('age_at_last_bd_female');
+    if (isFieldEmpty(domObject)) {
+        printMessage("text_age_at_last_bd_female", "text_must_fill")
+    }
+    else {
+        isNumeric(domObject.value, "text_invalid_data", "text_age_at_last_bd_female")
+    }
 
-                    var options2 = '';
-                    var bd = data.mrDivisionList;
-                    for (var j = 0; j < bd.length; j++) {
-                        options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
-                    }
-                    $("select#mrDivisionId").html(options2);
-                });
-    });
+    domObject = document.getElementById('raceMaleId');
+    if (domObject.value == 0) {
+        printMessage("text_race_male", "text_must_select")
+    }
 
-    $('select#dsDivisionId').bind('change', function(evt2) {
-        var id = $("select#dsDivisionId").attr("value");
-        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:7},
-                function(data) {
-                    var options = '';
-                    var bd = data.mrDivisionList;
-                    for (var i = 0; i < bd.length; i++) {
-                        options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
-                    }
-                    $("select#mrDivisionId").html(options);
-                });
+    domObject = document.getElementById('raceFemaleId');
+    if (domObject.value == 0) {
+        printMessage("text_race_female", "text_must_select")
+    }
+
+    domObject = document.getElementById('name_official_male');
+    if (isFieldEmpty(domObject)) {
+        printMessage("text_name_official_male", "text_must_fill")
+    }
+
+    domObject = document.getElementById('name_official_female');
+    if (isFieldEmpty(domObject)) {
+        printMessage("text_name_official_female", "text_must_fill")
+    }
+
+    domObject = document.getElementById('address_male_official');
+    if (isFieldEmpty(domObject)) {
+        printMessage("text_address_official_male", "text_must_fill")
+    }
+
+    domObject = document.getElementById('address_female_official');
+    if (isFieldEmpty(domObject)) {
+        printMessage("text_address_official_female", "text_must_fill")
+    }
+
+    //marriage.female.civilStatusFemale
+    //domObject = document.getElementById('serial_number');
+
+    //marriage.male.civilStatusMale
+    //domObject = document.getElementById('serial_number');
+    //following fields must be checked for the type if available
+    //date of arrival male,female (date)  / passport male.female /identification number father male,female
+    //validate types
+
+    domObject = document.getElementById('date_arrival_male');
+    if (!isFieldEmpty(domObject)) {
+        isDate(domObject.value, "text_invalid_data", "text_date_arrival_male")
+    }
+
+    domObject = document.getElementById('date_arrival_female');
+    if (!isFieldEmpty(domObject)) {
+        isDate(domObject.value, "text_invalid_data", "text_date_arrival_female")
+    }
+
+    domObject = document.getElementById('father_pin_or_nic_male');
+    if (!isFieldEmpty(domObject)) {
+        validatePINorNIC(domObject, "text_invalid_data", "text_fa_id_female")
+    }
+
+    domObject = document.getElementById('father_pin_or_nic_female');
+    if (!isFieldEmpty(domObject)) {
+        validatePINorNIC(domObject, "text_invalid_data", "text_fa_id_female")
+    }
+
+    domObject = document.getElementById('passport_male');
+    if (!isFieldEmpty(domObject)) {
+        validatePassportNo(domObject, "text_invalid_data", "text_passport_male")
+    }
+
+    domObject = document.getElementById('passport_female');
+    if (!isFieldEmpty(domObject)) {
+        validatePassportNo(domObject, "text_invalid_data", "text_passport_female")
+    }
+
+    if (errormsg != "") {
+        alert(errormsg);
+        errormsg = "";
+        return false;
+    }
+    errormsg = "";
+    return false;
+}
+
+$(function() {
+    $("#submitDatePicker").datepicker({
+        changeYear: true,
+        yearRange: '1960:2020',
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2040-12-31'
     });
+});
+
+$(function() {
+    $("#date_of_birth_male").datepicker({
+        changeYear: true,
+        yearRange: '1960:2020',
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2040-12-31'
+    });
+});
+
+$(function() {
+    $("#date_of_birth_female").datepicker({
+        changeYear: true,
+        yearRange: '1960:2020',
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2040-12-31'
+    });
+});
+
+$('select#districtId').bind('change', function(evt1) {
+    var id = $("select#districtId").attr("value");
+    $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:8},
+            function(data) {
+                var options1 = '';
+                var ds = data.dsDivisionList;
+                for (var i = 0; i < ds.length; i++) {
+                    options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                }
+                $("select#dsDivisionId").html(options1);
+
+                var options2 = '';
+                var bd = data.mrDivisionList;
+                for (var j = 0; j < bd.length; j++) {
+                    options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
+                }
+                $("select#mrDivisionId").html(options2);
+            });
+});
+
+$('select#dsDivisionId').bind('change', function(evt2) {
+    var id = $("select#dsDivisionId").attr("value");
+    $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:7},
+            function(data) {
+                var options = '';
+                var bd = data.mrDivisionList;
+                for (var i = 0; i < bd.length; i++) {
+                    options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
+                }
+                $("select#mrDivisionId").html(options);
+            });
+});
 </script>
 
 <s:if test="editMode">
@@ -146,7 +245,7 @@
 </s:else>
 
 <div class="marriage-notice-outer">
-<s:form action="%{addAction}" method="post">
+<s:form action="%{addAction}" method="post" onsubmit="javascript:return validate()">
 <%--section official usage--%>
 <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
     <legend align="right"><b><s:label value="%{getText('label.how.collect.license')}"/></b></legend>
@@ -239,7 +338,7 @@
                         Serial Number <br>
                     </td>
                     <td align="center">
-                        <s:textfield name="serialNumber" id="mnSerial" maxLength="10"/>
+                        <s:textfield name="serialNumber" id="serial_number" maxLength="10"/>
                     </td>
                 </tr>
                 <tr>
@@ -361,7 +460,7 @@
         </td>
         <td colspan="2">
             <s:select list="raceList" name="raceIdMale" headerKey="0" headerValue="%{getText('select_race.label')}"
-                      cssStyle="width:200px;"/>
+                      cssStyle="width:200px;" id="raceMaleId"/>
         </td>
         <td colspan="1">
             පසුවූ උපන් දිනයට වයස <br>
@@ -609,7 +708,8 @@
             Race
         </td>
         <td colspan="2">
-            <s:select list="raceList" name="raceIdFemale" headerKey="0" headerValue="%{getText('select_race.label')}"
+            <s:select list="raceList" id="raceFemaleId" name="raceIdFemale" headerKey="0"
+                      headerValue="%{getText('select_race.label')}"
                       cssStyle="width:200px;"/>
         </td>
         <td colspan="1">
@@ -811,6 +911,29 @@
 <s:hidden name="noticeType" value="%{noticeType}"/>
 <s:hidden name="licenseReqByMale" value="%{licenseReqByMale}"/>
 </s:form>
+<s:hidden id="text_invalid_data" value="%{getText('error.invalid.data')}"/>
+<s:hidden id="text_must_fill" value="%{getText('error.must.fill..data')}"/>
+<s:hidden id="text_must_select" value="%{getText('error.must.select..data')}"/>
+<s:hidden id="text_serial_number" value="%{getText('field.serial.number')}"/>
+<s:hidden id="text_submit_date" value="%{getText('field.notice.submit.date')}"/>
+<s:hidden id="text_dob_male" value="%{getText('field.date.of.birth.male')}"/>
+<s:hidden id="text_dob_female" value="%{getText('field.date.of.birth.female')}"/>
+<s:hidden id="text_id_male" value="%{getText('field.id.number.male')}"/>
+<s:hidden id="text_id_female" value="%{getText('field.id.number.female')}"/>
+<s:hidden id="text_fa_id_male" value="%{getText('field.fa.id.number.male')}"/>
+<s:hidden id="text_fa_id_female" value="%{getText('field.fa.id.number.male')}"/>
+<s:hidden id="text_date_arrival_male" value="%{getText('field.dat.of.arrival.male')}"/>
+<s:hidden id="text_date_arrival_female" value="%{getText('field.dat.of.arrival.female')}"/>
+<s:hidden id="text_passport_male" value="%{getText('field.passport.number.male')}"/>
+<s:hidden id="text_passport_female" value="%{getText('field.passport.number.female')}"/>
+<s:hidden id="text_age_at_last_bd_male" value="%{getText('field.age.at.last.bd.male')}"/>
+<s:hidden id="text_age_at_last_bd_female" value="%{getText('field.age.at.last.bd.female')}"/>
+<s:hidden id="text_race_male" value="%{getText('field.race.male')}"/>
+<s:hidden id="text_race_female" value="%{getText('field.race.female')}"/>
+<s:hidden id="text_name_official_male" value="%{getText('field.name.official.male')}"/>
+<s:hidden id="text_name_official_female" value="%{getText('field.name.official.female')}"/>
+<s:hidden id="text_address_official_male" value="%{getText('field.address.official.male')}"/>
+<s:hidden id="text_address_official_female" value="%{getText('field.address.official.female')}"/>
 </div>
 
 
