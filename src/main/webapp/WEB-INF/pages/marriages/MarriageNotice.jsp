@@ -1,7 +1,6 @@
 <%--@author amith jayasekara--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-
 <script src="/ecivil/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
 <script src="/ecivil/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
@@ -14,12 +13,16 @@ function initPage() {
 
 var errormsg = "";
 function validate() {
-    alert('begin validate')
     //following fields are must filled before submit the form
     // serial number(number) / date (length must be 10 ) / type of marriage / identification number male,female(String max 10) /DOB male, female
     //age at last BD male,female (number)/race male ,female / name in official male ,female / address male,female /civil state male,female
 
+    //following fields must be checked for the type if available
+    //date of arrival male,female (date)  / passport male.female /identification number father male,female
+    //validate types
     //validate must fill fields
+    var noticeType = document.getElementById('notice_type').value;
+
     var domObject = document.getElementById('serial_number');
     if (isFieldEmpty(domObject)) {
         printMessage("text_serial_number", "text_must_fill")
@@ -34,131 +37,154 @@ function validate() {
         isDate(domObject.value, "text_invalid_data", "text_submit_date")
     }
 
-    //   marriage.typeOfMarriage
-    //   domObject = document.getElementById('serial_number');
-    domObject = document.getElementById('identification_male');
-    if (isFieldEmpty(domObject)) {
-        printMessage("text_id_male", "text_must_fill")
-    }
-    else {
-        validatePINorNIC(domObject, "text_invalid_data", "text_id_male")
-    }
+    validateRadioButtons(new Array(document.getElementsByName('marriage.typeOfMarriage')[0].checked,
+            document.getElementsByName('marriage.typeOfMarriage')[1].checked,
+            document.getElementsByName('marriage.typeOfMarriage')[2].checked), "text_marriage_type");
 
-    domObject = document.getElementById('identification_female');
-    if (isFieldEmpty(domObject)) {
-        printMessage("text_id_female", "text_must_fill")
-    }
-    else {
-        validatePINorNIC(domObject, "text_invalid_data", "text_id_female")
-    }
+    //male related fields
+    if (noticeType == "BOTH_NOTICE" || noticeType == "MALE_NOTICE") {
 
-    domObject = document.getElementById('date_of_birth_male');
-    if (isFieldEmpty(domObject)) {
-        printMessage("text_dob_male", "text_must_fill")
-    }
-    else {
-        isDate(domObject.value, "text_invalid_data", "text_dob_male")
-    }
-    domObject = document.getElementById('date_of_birth_female');
-    if (isFieldEmpty(domObject)) {
-        printMessage("text_dob_female", "text_must_fill")
-    }
-    else {
-        isDate(domObject.value, "text_invalid_data", "text_dob_female")
-    }
+        domObject = document.getElementById('identification_male');
+        if (isFieldEmpty(domObject)) {
+            printMessage("text_id_male", "text_must_fill")
+        }
+        else {
+            validatePINorNIC(domObject, "text_invalid_data", "text_id_male")
+        }
 
-    domObject = document.getElementById('age_at_last_bd_male');
-    if (isFieldEmpty(domObject)) {
-        printMessage("text_age_at_last_bd_male", "text_must_fill")
-    }
-    else {
-        isNumeric(domObject.value, "text_invalid_data", "text_age_at_last_bd_male")
-    }
+        domObject = document.getElementById('date_of_birth_male');
+        if (isFieldEmpty(domObject)) {
+            printMessage("text_dob_male", "text_must_fill")
+        }
+        else {
+            isDate(domObject.value, "text_invalid_data", "text_dob_male")
+        }
 
-    domObject = document.getElementById('age_at_last_bd_female');
-    if (isFieldEmpty(domObject)) {
-        printMessage("text_age_at_last_bd_female", "text_must_fill")
+        domObject = document.getElementById('age_at_last_bd_male');
+        if (isFieldEmpty(domObject)) {
+            printMessage("text_age_at_last_bd_male", "text_must_fill")
+        }
+        else {
+            isNumeric(domObject.value, "text_invalid_data", "text_age_at_last_bd_male")
+        }
+
+        domObject = document.getElementById('raceMaleId');
+        if (domObject.value == 0) {
+            printMessage("text_race_male", "text_must_select")
+        }
+
+        domObject = document.getElementById('name_official_male');
+        if (isFieldEmpty(domObject)) {
+            printMessage("text_name_official_male", "text_must_fill")
+        }
+
+        domObject = document.getElementById('address_male_official');
+        if (isFieldEmpty(domObject)) {
+            printMessage("text_address_official_male", "text_must_fill")
+        }
+
+        validateRadioButtons(new Array(document.getElementsByName('marriage.male.civilStatusMale')[0].checked,
+                document.getElementsByName('marriage.male.civilStatusMale')[1].checked,
+                document.getElementsByName('marriage.male.civilStatusMale')[2].checked,
+                document.getElementsByName('marriage.male.civilStatusMale')[3].checked), "text_civil_state_male");
+
+        domObject = document.getElementById('date_arrival_male');
+        if (!isFieldEmpty(domObject)) {
+            isDate(domObject.value, "text_invalid_data", "text_date_arrival_male")
+        }
+
+        domObject = document.getElementById('father_pin_or_nic_male');
+        if (!isFieldEmpty(domObject)) {
+            validatePINorNIC(domObject, "text_invalid_data", "text_fa_id_female")
+        }
+
+        domObject = document.getElementById('passport_male');
+        if (!isFieldEmpty(domObject)) {
+            validatePassportNo(domObject, "text_invalid_data", "text_passport_male")
+        }
     }
-    else {
-        isNumeric(domObject.value, "text_invalid_data", "text_age_at_last_bd_female")
-    }
+    //female related fields
+    if (noticeType == "BOTH_NOTICE" || noticeType == "FEMALE_NOTICE") {
+        domObject = document.getElementById('identification_female');
+        if (isFieldEmpty(domObject)) {
+            printMessage("text_id_female", "text_must_fill")
+        }
+        else {
+            validatePINorNIC(domObject, "text_invalid_data", "text_id_female")
+        }
 
-    domObject = document.getElementById('raceMaleId');
-    if (domObject.value == 0) {
-        printMessage("text_race_male", "text_must_select")
-    }
+        domObject = document.getElementById('date_of_birth_female');
+        if (isFieldEmpty(domObject)) {
+            printMessage("text_dob_female", "text_must_fill")
+        }
+        else {
+            isDate(domObject.value, "text_invalid_data", "text_dob_female")
+        }
 
-    domObject = document.getElementById('raceFemaleId');
-    if (domObject.value == 0) {
-        printMessage("text_race_female", "text_must_select")
-    }
+        domObject = document.getElementById('age_at_last_bd_female');
+        if (isFieldEmpty(domObject)) {
+            printMessage("text_age_at_last_bd_female", "text_must_fill")
+        }
+        else {
+            isNumeric(domObject.value, "text_invalid_data", "text_age_at_last_bd_female")
+        }
 
-    domObject = document.getElementById('name_official_male');
-    if (isFieldEmpty(domObject)) {
-        printMessage("text_name_official_male", "text_must_fill")
-    }
+        domObject = document.getElementById('raceFemaleId');
+        if (domObject.value == 0) {
+            printMessage("text_race_female", "text_must_select")
+        }
 
-    domObject = document.getElementById('name_official_female');
-    if (isFieldEmpty(domObject)) {
-        printMessage("text_name_official_female", "text_must_fill")
-    }
+        domObject = document.getElementById('name_official_female');
+        if (isFieldEmpty(domObject)) {
+            printMessage("text_name_official_female", "text_must_fill")
+        }
 
-    domObject = document.getElementById('address_male_official');
-    if (isFieldEmpty(domObject)) {
-        printMessage("text_address_official_male", "text_must_fill")
-    }
+        domObject = document.getElementById('address_female_official');
+        if (isFieldEmpty(domObject)) {
+            printMessage("text_address_official_female", "text_must_fill")
+        }
 
-    domObject = document.getElementById('address_female_official');
-    if (isFieldEmpty(domObject)) {
-        printMessage("text_address_official_female", "text_must_fill")
-    }
+        validateRadioButtons(new Array(document.getElementsByName('marriage.female.civilStatusFemale')[0].checked,
+                document.getElementsByName('marriage.female.civilStatusFemale')[1].checked,
+                document.getElementsByName('marriage.female.civilStatusFemale')[2].checked,
+                document.getElementsByName('marriage.female.civilStatusFemale')[3].checked), "text_civil_state_female");
 
-    //marriage.female.civilStatusFemale
-    //domObject = document.getElementById('serial_number');
+        domObject = document.getElementById('date_arrival_female');
+        if (!isFieldEmpty(domObject)) {
+            isDate(domObject.value, "text_invalid_data", "text_date_arrival_female")
+        }
 
-    //marriage.male.civilStatusMale
-    //domObject = document.getElementById('serial_number');
-    //following fields must be checked for the type if available
-    //date of arrival male,female (date)  / passport male.female /identification number father male,female
-    //validate types
+        domObject = document.getElementById('father_pin_or_nic_female');
+        if (!isFieldEmpty(domObject)) {
+            validatePINorNIC(domObject, "text_invalid_data", "text_fa_id_female")
+        }
 
-    domObject = document.getElementById('date_arrival_male');
-    if (!isFieldEmpty(domObject)) {
-        isDate(domObject.value, "text_invalid_data", "text_date_arrival_male")
-    }
-
-    domObject = document.getElementById('date_arrival_female');
-    if (!isFieldEmpty(domObject)) {
-        isDate(domObject.value, "text_invalid_data", "text_date_arrival_female")
-    }
-
-    domObject = document.getElementById('father_pin_or_nic_male');
-    if (!isFieldEmpty(domObject)) {
-        validatePINorNIC(domObject, "text_invalid_data", "text_fa_id_female")
-    }
-
-    domObject = document.getElementById('father_pin_or_nic_female');
-    if (!isFieldEmpty(domObject)) {
-        validatePINorNIC(domObject, "text_invalid_data", "text_fa_id_female")
-    }
-
-    domObject = document.getElementById('passport_male');
-    if (!isFieldEmpty(domObject)) {
-        validatePassportNo(domObject, "text_invalid_data", "text_passport_male")
-    }
-
-    domObject = document.getElementById('passport_female');
-    if (!isFieldEmpty(domObject)) {
-        validatePassportNo(domObject, "text_invalid_data", "text_passport_female")
+        domObject = document.getElementById('passport_female');
+        if (!isFieldEmpty(domObject)) {
+            validatePassportNo(domObject, "text_invalid_data", "text_passport_female")
+        }
     }
 
     if (errormsg != "") {
+        // customAlert(errormsg);
         alert(errormsg);
         errormsg = "";
         return false;
     }
     errormsg = "";
     return false;
+}
+
+function validateRadioButtons(array, errorText) {
+    var atleastOneSelect = false;
+    for (var i = 0; i < array.length; i++) {
+        if (array[i] == 'true') {
+            atleastOneSelect = true;
+        }
+    }
+    if (!atleastOneSelect) {
+        printMessage(errorText, "text_must_select")
+    }
 }
 
 $(function() {
@@ -908,7 +934,8 @@ $('select#dsDivisionId').bind('change', function(evt2) {
 <div class="form-submit">
     <s:submit value="add.notice"/>
 </div>
-<s:hidden name="noticeType" value="%{noticeType}"/>
+
+<s:hidden id="notice_type" name="noticeType" value="%{noticeType}"/>
 <s:hidden name="licenseReqByMale" value="%{licenseReqByMale}"/>
 </s:form>
 <s:hidden id="text_invalid_data" value="%{getText('error.invalid.data')}"/>
@@ -934,7 +961,15 @@ $('select#dsDivisionId').bind('change', function(evt2) {
 <s:hidden id="text_name_official_female" value="%{getText('field.name.official.female')}"/>
 <s:hidden id="text_address_official_male" value="%{getText('field.address.official.male')}"/>
 <s:hidden id="text_address_official_female" value="%{getText('field.address.official.female')}"/>
+<s:hidden id="text_marriage_type" value="%{getText('field.marriage.type')}"/>
+<s:hidden id="text_civil_state_male" value="%{getText('field.civil.state.male')}"/>
+<s:hidden id="text_civil_state_female" value="%{getText('field.civil.state.female')}"/>
+
+<%--additional validations--%>
+<s:hidden id="text_select_how_collect_license" value="%{getText('field.how.collect.license')}"/>
+<s:hidden id="text_select_proffered_language" value="%{getText('field.what.is.the.pref.language')}"/>
 </div>
+
 
 
 

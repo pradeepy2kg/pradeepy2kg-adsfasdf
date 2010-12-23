@@ -41,12 +41,11 @@
 * Styles for the Birth Registration Form apply according to the 4 pages in 4 seperate sections.
 */
 
-.birth-registration-form-outer, #birth-confirmation-form-outer,.marriage-certificate-outer ,.birth-confirmation-print-form-outer, .still-birth-registration-form-outer, #bdaw-outer, .birth-certificate-search-form-outer, .prs-existing-person-register-outer , .prs-person-report-outer, .alteration-print-letter-outer ,.prs-certificate-outer,.marriage-notice-outer{
+.birth-registration-form-outer, #birth-confirmation-form-outer, .marriage-certificate-outer, .birth-confirmation-print-form-outer, .still-birth-registration-form-outer, #bdaw-outer, .birth-certificate-search-form-outer, .prs-existing-person-register-outer, .prs-person-report-outer, .alteration-print-letter-outer, .prs-certificate-outer, .marriage-notice-outer {
     width: 1030px;
     background: #ffffff;
     padding: 10px;
 }
-
 
 #birth-declaration-approval-warning-outer {
     width: 1030;
@@ -1157,8 +1156,8 @@
 .table_reg_page_05 td {
     border-right: 1px solid #000000;
     border-bottom: 1px solid #000000;
-    padding:3px;
-    padding-left:5px;
+    padding: 3px;
+    padding-left: 5px;
 }
 
 .table_reg_page_01 td {
@@ -1206,8 +1205,8 @@
 .table_alt_letter td {
     border-right: 1px solid #000000;
     border-bottom: 1px solid #000000;
-    padding:3px;
-    padding-left:5px;
+    padding: 3px;
+    padding-left: 5px;
 }
 
 #no-bottom-border {
@@ -1694,6 +1693,7 @@
     margin: .5em;
     margin-left: 1.5em;
 }
+
 .user-create-table textarea {
     width: 22.5em;
     margin: .5em;
@@ -2010,7 +2010,7 @@
     width: 1030px;
     background-color: #fff;
     padding: 10px;
-   font-size: 8pt;
+    font-size: 8pt;
 }
 
 .birth-alteration-table-style01 {
@@ -2194,6 +2194,43 @@ death-alteration-table-style01 td {
     width: 230px;
 }
 
+/*css for alert box
+todo amith
+*/
+.custome_alert {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 500px;
+    margin-left: -200px;
+    margin-top: -75px;
+    text-align: left;
+    background-color: #addef5;
+    color: #000000;
+    padding: 10px 30px;
+
+    opacity: 0.9;
+
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+}
+
+.custome_alert h6 {
+    font-weight: normal;
+    font-size: 28px;
+    line-height: 28px;
+    margin: 1em;
+}
+
+.custome_alert p {
+    font-size: 14px;
+    line-height: 20px;
+}
 
 
 
