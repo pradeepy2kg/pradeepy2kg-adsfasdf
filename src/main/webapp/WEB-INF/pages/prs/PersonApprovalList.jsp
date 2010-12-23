@@ -200,11 +200,11 @@
                             <th width="60px">PIN</th>
                             <th width="60px">NIC</th>
                             <th><s:label value="%{getText('label.personName')}"/></th>
-                            <th width="15px" style="padding:3px 3px;"></th>
-                            <th width="15px" style="padding:3px 3px;"></th>
-                            <th width="15px" style="padding:3px 3px;"></th>
-                            <th width="15px" style="padding:3px 3px;"></th>
-                            <th width="15px" style="padding:3px 3px;"></th>
+                            <th width="10px" style="padding-left:3px;"></th>
+                            <th width="10px" style="padding-left:3px;"></th>
+                            <th width="10px" style="padding-left:3px;"></th>
+                            <th width="10px" style="padding-left:3px;"></th>
+                            <th width="10px" style="padding-left:3px;"></th>
                         </tr>
                         </thead>
                         <tbody>

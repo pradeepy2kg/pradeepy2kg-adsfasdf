@@ -10,8 +10,8 @@ import org.slf4j.LoggerFactory;
 public class PersonStatusUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(PersonStatusUtil.class);
-    private static final String PERSON_UNVERIFIED = "@Unverified@ / #Unverified# / Unverified";
-    private static final String PERSON_SEMI_VERIFIED = "@Semi Verified@ / #Semi Verified# / Semi Verified";
+    private static final String PERSON_UNVERIFIED = "අනුමත නොකළ / #Unverified# / Unverified";
+    private static final String PERSON_SEMI_VERIFIED = "අර්ධව අනුමතයි / #Semi Verified# / Semi Verified";
     private static final String PERSON_VERIFIED = "අනුමතයි / #Verified# / Verified";
     private static final String PERSON_CERT_PRINTED = "සහතිකය මුද්‍රිතයි / #Certificate Printed# / Certificate Printed";
     private static final String PERSON_CANCELLED = "අවලංගුයි / #Cancelled# / Cancelled";
