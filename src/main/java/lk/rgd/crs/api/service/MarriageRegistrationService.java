@@ -321,6 +321,17 @@ public interface MarriageRegistrationService {
         boolean isActive, User user);
 
     /**
+     * Returns paginated marriage register list
+     *
+     * @param pageNumber page number for pagination
+     * @param numOfRows  number of rows to be retured
+     * @param isActive   Active or Inactive status
+     * @param user       user who performs the action
+     * @return
+     */
+    public List<MarriageRegister> getMarriageRegisterList(int pageNumber, int numOfRows, boolean isActive, User user);
+
+    /**
      * get marriage registration list by given MRDivision
      *
      * @param mrDivision MRDivision

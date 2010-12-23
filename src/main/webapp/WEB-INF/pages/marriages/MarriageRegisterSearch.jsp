@@ -43,6 +43,40 @@
                 <tbody>
                 <tr>
                     <td>
+                        <s:label value="%{getText('date.from.label')}" cssStyle=" margin-right:5px;"/>
+                    </td>
+                    <td>
+                        <s:textfield id="searchStartDatePicker" name="searchStartDate" cssStyle="width:150px"
+                                     maxLength="10"/>
+                    </td>
+                    <td></td>
+                    <td>
+                        <s:label value="%{getText('date.to.label')}" cssStyle=" margin-right:5px;"/>
+                    </td>
+                    <td>
+                        <s:textfield id="searchEndDatePicker" name="searchEndDate" cssStyle="width:150px"
+                                     maxLength="10"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <s:label value="%{getText('serial.label')}"/>
+                    </td>
+                    <td>
+                        <s:textfield id="noticeSerialNo" name="noticeSerialNo" cssStyle="width:232px;" maxLength="10"/>
+                    </td>
+                    <td></td>
+                    <td>
+                        <s:label value="%{getText('label.state')}"/>
+                    </td>
+                    <td>
+                        <s:select id="state" name="state" list="stateList" headerKey="-1"
+                                  cssStyle="width:98.5%; width:240px;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
                         <s:label value="%{getText('district.label')}"/>
                     </td>
                     <td>
@@ -73,27 +107,10 @@
                     </td>
                     <td></td>
                     <td>
-                        <s:label value="%{getText('serial.label')}"/>
+
                     </td>
                     <td>
-                        <s:textfield id="noticeSerialNo" name="noticeSerialNo" cssStyle="width:232px;" maxLength="10"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <s:label value="%{getText('date.from.label')}" cssStyle=" margin-right:5px;"/>
-                    </td>
-                    <td>
-                        <s:textfield id="searchStartDatePicker" name="searchStartDate" cssStyle="width:150px"
-                                     maxLength="10"/>
-                    </td>
-                    <td></td>
-                    <td>
-                        <s:label value="%{getText('date.to.label')}" cssStyle=" margin-right:5px;"/>
-                    </td>
-                    <td>
-                        <s:textfield id="searchEndDatePicker" name="searchEndDate" cssStyle="width:150px"
-                                     maxLength="10"/>
+
                     </td>
                 </tr>
                 </tbody>
@@ -157,7 +174,7 @@
                         <td align="center">
                             <s:url id="registerSelected" action="eprMarriageRegistrationInit.do">
                                 <s:param name="idUKey" value="idUKey"/>
-                                <s:param name="mode" value="register"/>
+                                <s:param name="mode">register</s:param>
                             </s:url>
                             <s:a href="%{registerSelected}" title="%{getText('tooltip.marriageregister.register')}">
                                 <img src="<s:url value='/images/couple.jpg'/>" width="25" height="25" border="none"/>
@@ -182,7 +199,7 @@
                         <td align="center">
                             <s:url id="rejectSelected" action="eprMarriageRegistrationInit.do">
                                 <s:param name="idUKey" value="idUKey"/>
-                                <s:param name="mode" value="reject"/>
+                                <s:param name="mode">reject</s:param>
                             </s:url>
                             <s:a href="%{rejectSelected}" title="%{getText('rejectToolTip.label')}">
                                 <img src="<s:url value='/images/reject.gif'/>" width="25" height="25" border="none"/>

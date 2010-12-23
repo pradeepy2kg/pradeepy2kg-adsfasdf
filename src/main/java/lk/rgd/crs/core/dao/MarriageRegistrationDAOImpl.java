@@ -180,6 +180,18 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
         return q.getResultList();
     }
 
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<MarriageRegister> getPaginatedMarriageRegisterList(int pageNo,
+        int noOfRows, boolean isActive) {
+        Query q = em.createNamedQuery("findMarriageRegister").
+            setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+        q.setParameter("active", isActive);
+        return q.getResultList();
+    }
+
 
     /**
      * @inheritDoc

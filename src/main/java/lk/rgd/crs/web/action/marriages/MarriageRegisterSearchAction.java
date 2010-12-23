@@ -10,6 +10,7 @@ import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.NameFormatUtil;
 import lk.rgd.common.util.WebUtils;
+import lk.rgd.common.util.StateUtil;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.dao.MRDivisionDAO;
 import lk.rgd.crs.api.domain.MRDivision;
@@ -92,6 +93,9 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     private String licenseIssueDivisionInOL;
     private String licenseIssueDivisionInEN;
 
+    private Map<Integer, String> stateList;
+    private int state = -1;
+
     private MarriageNotice.Type noticeType;
 
     public MarriageRegisterSearchAction(MarriageRegistrationService marriageRegistrationService, DistrictDAO districtDAO,
@@ -133,6 +137,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
      */
     public String marriageRegisterSearchInit() {
         commonUtil.populateDynamicListsWithAllOption(districtList, dsDivisionList, mrDivisionList, user, language);
+        stateList = StateUtil.getStateByLanguage(language);
         marriageRegisterSearchResult();
         return SUCCESS;
     }
@@ -160,8 +165,12 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
                     (districtDAO.getDistrict(districtId), pageNo, noOfRows, true, user);
             } else {  // nothing selected
                 //find all records marriage registration pending
-                marriageRegisterSearchList = marriageRegistrationService.getMarriageRegisterByState(MarriageRegister.State.REG_DATA_ENTRY,
-                    pageNo, noOfRows, true, user);
+                if (state == -1) {
+                    marriageRegisterSearchList = marriageRegistrationService.getMarriageRegisterList(pageNo, noOfRows, true, user);
+                } else {
+                    marriageRegisterSearchList = marriageRegistrationService.getMarriageRegisterByState(
+                        StateUtil.getStateById(state), pageNo, noOfRows, true, user);
+                }
             }
         }
         if (marriageRegisterSearchList.size() == 0) {
@@ -847,5 +856,21 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
 
     public void setLicenseIssueDivisionInEN(String licenseIssueDivisionInEN) {
         this.licenseIssueDivisionInEN = licenseIssueDivisionInEN;
+    }
+
+    public Map<Integer, String> getStateList() {
+        return stateList;
+    }
+
+    public void setStateList(Map<Integer, String> stateList) {
+        this.stateList = stateList;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
     }
 }

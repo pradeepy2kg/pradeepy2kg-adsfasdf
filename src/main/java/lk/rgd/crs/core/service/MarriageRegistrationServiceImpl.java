@@ -365,6 +365,15 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<MarriageRegister> getMarriageRegisterList(int pageNumber, int numOfRows, boolean isActive, User user) {
+        //validate user access
+        return marriageRegistrationDAO.getPaginatedMarriageRegisterList(pageNumber, numOfRows, isActive);
+    }
+
+    /**
+     * @inheritDoc
+     */
     @Transactional(propagation = Propagation.REQUIRED)
     public void approveMarriageNotice(long idUKey, MarriageNotice.Type type, User user) {
         logger.debug("attempt to approve marriage notice with idUKey : {} and notice type : {}", idUKey, type);

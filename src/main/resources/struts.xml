@@ -1290,7 +1290,7 @@
         </action>
 
         <action name="eprRejectMarriageRegistration"
-                class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
+                class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
                 method="rejectMarriageRegister">
             <result type="tiles" name="success">epr.marriageRegisterSearchInit</result>
             <result type="tiles" name="error">epr.marriageRegisterSearchInit</result>

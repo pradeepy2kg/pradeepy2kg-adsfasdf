@@ -5,9 +5,9 @@ package lk.rgd.crs.web.util;
  */
 public enum TypeOfMarriagePlace {
 
-    REGISTRAR_OFFICE(1, "රෙජිස්ට්‍රාර් කන්තෝරුව ", "Registrars Office", "Registrars Office"),
+    REGISTRAR_OFFICE(1, "රෙජිස්ට්‍රාර් කන්තෝරුව ", "Registrars Office in tamil", "Registrars Office"),
     DS_OFFICE(2, "ප්‍රා. ලේ. කන්තෝරුව", "DS Office in tamil", "DS Office"),
-    CHURCH(3, "දේවස්ථානය", "Church", "Church"),
+    CHURCH(3, "දේවස්ථානය", "Church in tamil", "Church"),
     OTHER(4, "වෙනත්","Other in tamil", "Other");
 
     private int id;
