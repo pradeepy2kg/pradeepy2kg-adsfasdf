@@ -225,7 +225,6 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    //todo call serial validator
     public List<UserWarning> addSecondMarriageNotice(MarriageRegister notice, MarriageNotice.Type type,
         boolean ignoreWarnings, boolean undo, User user) {
         //only MALE and FEMALE notices are allowed to add second notice
@@ -236,6 +235,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
                     " add second notice to marriage register ", user);
                 //get user warnings when adding  second notice   and return warnings
                 List<UserWarning> warnings = marriageRegistrationValidator.validateAddingSecondNotice(notice, type);
+                marriageRegistrationValidator.validateMarriageNotice(notice, type);
                 if (warnings != null && warnings.size() > 0 && !ignoreWarnings) {
                     logger.debug("warnings found while adding second notice to the existing marriage notice idUKey : {}",
                         notice.getIdUKey());
@@ -377,7 +377,6 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     @Transactional(propagation = Propagation.REQUIRED)
     public void approveMarriageNotice(long idUKey, MarriageNotice.Type type, User user) {
         logger.debug("attempt to approve marriage notice with idUKey : {} and notice type : {}", idUKey, type);
-        //todo check way to improve readability and maintainability :( :( (amith)
         //todo can any ADR approve dis
         //check is user has permission to perform this task
         checkUserPermission(Permission.APPROVE_MARRIAGE, ErrorCodes.PERMISSION_DENIED, "approve marriage notice", user);
@@ -473,7 +472,6 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    //todo solve dis urgent amith 
     //license can be make marked as print by any one even deo  if deo selected authorized adr or higher and mark the document
     // as printed  the selected record is persisted but what  if that selected ADR refused to sign :O
     public void markLicenseToMarriageAsPrinted(long idUKey, Location licenseIssueLocation, User issuedUser, User user) {
@@ -484,6 +482,8 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
                 ErrorCodes.CAN_NOT_FIND_MARRIAGE_NOTICE);
         } else {
             if (notice.getState() == MarriageRegister.State.NOTICE_APPROVED) {
+                //only allowed user can mark as print
+                ValidationUtils.validateAccessToMarriageNotice(notice, user);
                 populateNoticeForMarkAsPrint(notice, issuedUser, licenseIssueLocation);
                 //updating marriage notice
                 marriageRegistrationDAO.updateMarriageRegister(notice, user);
@@ -580,13 +580,13 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public MarriageRegister getMarriageNoticeForPrintLicense(long idUKey, User user) {
         logger.debug("attempt to get marriage register (notice) idUKey : {} for print license ", idUKey);
-        //no need to check user permission any one can print record
-        // todo who can print (can print doe even not in both MR division)
         MarriageRegister notice = marriageRegistrationDAO.getByIdUKey(idUKey);
         if (notice == null) {
             handleException("can't find marriage register record for idUKey : " + idUKey + " for print",
                 ErrorCodes.CAN_NOT_FIND_MARRIAGE_NOTICE);
         } else {
+            ValidationUtils.validateAccessToMarriageNotice(notice, user);
+            //only the user from both MRDivision can print license
             if (notice.getState() == MarriageRegister.State.NOTICE_APPROVED ||
                 notice.getState() == MarriageRegister.State.LICENSE_PRINTED) {
                 return notice;

@@ -181,6 +181,7 @@ function validateBirthYearWithNIC(yearNIC, yearDatePicker, errorText) {
 // print error message
 function printMessage(errorText, errorCode) {
     errormsg = errormsg + "\n" + document.getElementById(errorText).value + " " + document.getElementById(errorCode).value;
+    // errormsg = errormsg + "<br>" + document.getElementById(errorText).value + " " + document.getElementById(errorCode).value;
 }
 
 //todo amith
@@ -302,4 +303,14 @@ function isFutureDate(selectDate) {
     var selected = new Date(selectDate);
     var today = new Date();
     return (selected.getTime() > today.getTime()) ? true : false;
+}
+
+function customAlert(text) {
+    //todo amith
+    //find and replace
+    var nInfo = document.createElement("div");
+    nInfo.className = "custome_alert";
+    //    nInfo.innerHTML = text + " <br><input type='submit' value='OK' onclick=exit;/>";
+    nInfo.innerHTML = "<h6>Warnings</h6>" + text;
+    window.document.body.appendChild(nInfo);
 }

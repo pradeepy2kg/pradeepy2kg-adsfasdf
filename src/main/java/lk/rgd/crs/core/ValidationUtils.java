@@ -8,6 +8,7 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.MRDivision;
+import lk.rgd.crs.api.domain.MarriageRegister;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -73,10 +74,25 @@ public class ValidationUtils {
         }
     }
 
+    /**
+     * only the following users are able to access the marriage notice /license
+     *
+     * @param register license or notice
+     * @param user     user who performs the action
+     */
+    public static void validateAccessToMarriageNotice(MarriageRegister register, User user) {
+        if (!(User.State.ACTIVE == user.getStatus() && (Role.ROLE_RG.equals(user.getRole().getRoleId())) ||
+            (register.getMrDivisionOfMaleNotice() != null &&
+                user.isAllowedAccessToMRDSDivision(register.getMrDivisionOfMaleNotice().getMrDivisionUKey())) ||
+            (register.getMrDivisionOfFemaleNotice() != null &&
+                user.isAllowedAccessToMRDSDivision(register.getMrDivisionOfFemaleNotice().getMrDivisionUKey())))) {
+            handleException("User : " + user.getUserId() + " is not allowed to access marriage notice/license idUKey :" +
+                register.getIdUKey(), ErrorCodes.PERMISSION_DENIED);
+        }
+    }
+
     private static void handleException(String message, int code) {
         logger.error(message);
         throw new CRSRuntimeException(message, code);
     }
-
-    //todo checkUserAccessPermissionToMarriageRecord
 }
