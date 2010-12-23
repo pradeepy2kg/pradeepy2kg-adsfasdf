@@ -138,15 +138,31 @@
                         });
             });
 
+            $('#getDeo').bind('click', function(evt1) {
+                var deo = $("select#deoUser").attr("value");
+                var mode = 'adrStatInfo';
+                $.getJSON('/ecivil/crs/StatisticsLookupService', {deo:deo, mode:mode},
+                        function(data) {
+                            var options1 = '';
+                            var ds = data.deoList;
+                            for (var i = 0; i < ds.length; i++) {
+                                options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                            }
+                            $("select#deoUser").html(options1);
+                        });
+            });
+
         });
 
         $(document).ready(function() {
-            var user = 'adr';
-            var mode = 'all';
+            var userType = 'adr';
+            var statType = 'all';
+            var mode = 'commonStatInfo';
             $.getJSON('/ecivil/crs/StatisticsLookupService',
             {
-                userType:user,
-                statType:mode
+                userType:userType,
+                statType:statType,
+                mode:mode
             },
                     function(data) {
                         drawChart(data);
@@ -202,7 +218,7 @@
                         list="deoList"
                         />
             </td>
-            <td><s:submit cssStyle="width:100px;"/></td>
+            <td><s:submit id="getDeo" cssStyle="width:100px;"/></td>
             <td>&nbsp;</td>
         </tr>
         <%-- end --%>

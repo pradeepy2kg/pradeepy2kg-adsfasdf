@@ -51,163 +51,195 @@ public class JSONStatisticsLookupService extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userType = request.getParameter(WebConstants.USER_TYPE);
         String statType = request.getParameter(WebConstants.STAT_TYPE);
+        String deoUserId = request.getParameter(WebConstants.USER_DEO);
+        String mode = request.getParameter("mode");
 
         logger.debug("Received Division userType and statType : {} {} ", userType, statType);
+        logger.debug("Received Division mode : {} ", mode);
         HashMap<String, Object> optionLists = new HashMap<String, Object>();
         CommonStatistics cs;
 
         try {
-            if (userType.equals(WebConstants.USER_ADR)) {
-                if (statType.equals(WebConstants.STAT_ALL)) {
-                    cs = populateBirthStatistics(WebConstants.USER_ADR);
+            if (mode.equals("adrStatInfo")) {
 
+                cs = birthRegistrationService.getBirthStatisticsForDEO(deoUserId);
+                if (cs != null) {
                     optionLists.put("approved_b", cs.getApprovedItems());
                     optionLists.put("rejected_b", cs.getRejectedItems());
                     optionLists.put("this_month_b", cs.getThisMonthPendingItems());
                     optionLists.put("arrears_b", cs.getArrearsPendingItems());
                     optionLists.put("normal_b", cs.getNormalSubmissions());
                     optionLists.put("late_b", cs.getLateSubmissions());
-
-                    cs = populateDeathStatistics(WebConstants.USER_ADR);
-
-                    optionLists.put("approved_d", cs.getApprovedItems());
-                    optionLists.put("rejected_d", cs.getRejectedItems());
-                    optionLists.put("this_month_d", cs.getThisMonthPendingItems());
-                    optionLists.put("arrears_d", cs.getArrearsPendingItems());
-                    optionLists.put("normal_d", cs.getNormalSubmissions());
-                    optionLists.put("late_d", cs.getLateSubmissions());
-
-                    cs = populateMarriageStatistics( WebConstants.USER_ADR);
-
-                    optionLists.put("approved_d", cs.getApprovedItems());
-                    optionLists.put("rejected_d", cs.getRejectedItems());
-                    optionLists.put("this_month_d", cs.getThisMonthPendingItems());
-                    optionLists.put("arrears_d", cs.getArrearsPendingItems());
-                    optionLists.put("normal_d", cs.getNormalSubmissions());
-                    optionLists.put("late_d", cs.getLateSubmissions());
-                    
                 }
 
-            } else if (userType.equals(WebConstants.USER_DEO)) {
-                if (statType.equals(WebConstants.STAT_ALL)) {
-                    cs = populateBirthStatistics(WebConstants.USER_DEO);
+            } else if (mode.equals("commonStatInfo")){
+                if (userType.equals(WebConstants.USER_ADR)) {
+                    if (statType.equals(WebConstants.STAT_ALL)) {
+                        cs = populateBirthStatistics(WebConstants.USER_ADR);
+                        if (cs != null) {
+                            optionLists.put("approved_b", cs.getApprovedItems());
+                            optionLists.put("rejected_b", cs.getRejectedItems());
+                            optionLists.put("this_month_b", cs.getThisMonthPendingItems());
+                            optionLists.put("arrears_b", cs.getArrearsPendingItems());
+                            optionLists.put("normal_b", cs.getNormalSubmissions());
+                            optionLists.put("late_b", cs.getLateSubmissions());
+                        }
 
-                    optionLists.put("approved_b", /*cs.getApprovedItems()*/10);
-                    optionLists.put("rejected_b", /*cs.getRejectedItems()*/8);
-                    optionLists.put("this_month_b", /*cs.getThisMonthPendingItems()*/12);
-                    optionLists.put("arrears_b", 25);
-                    optionLists.put("normal_b", /*cs.getNormalSubmissions()*/2);
-                    optionLists.put("late_b", 32);
+                        cs = populateDeathStatistics(WebConstants.USER_ADR);
+                        if (cs != null) {
+                            optionLists.put("approved_d", cs.getApprovedItems());
+                            optionLists.put("rejected_d", cs.getRejectedItems());
+                            optionLists.put("this_month_d", cs.getThisMonthPendingItems());
+                            optionLists.put("arrears_d", cs.getArrearsPendingItems());
+                            optionLists.put("normal_d", cs.getNormalSubmissions());
+                            optionLists.put("late_d", cs.getLateSubmissions());
+                        }
 
-                    logger.debug("Births Total Submissions for DEO {}", cs.getTotalSubmissions());
+                        cs = populateMarriageStatistics(WebConstants.USER_ADR);
+                        if (cs != null) {
+                            optionLists.put("approved_d", cs.getApprovedItems());
+                            optionLists.put("rejected_d", cs.getRejectedItems());
+                            optionLists.put("this_month_d", cs.getThisMonthPendingItems());
+                            optionLists.put("arrears_d", cs.getArrearsPendingItems());
+                            optionLists.put("normal_d", cs.getNormalSubmissions());
+                            optionLists.put("late_d", cs.getLateSubmissions());
+                        }
 
-                    cs = populateDeathStatistics(WebConstants.USER_DEO);
+                    }
 
-                    optionLists.put("approved_d", 2/*cs.getApprovedItems()*/);
-                    optionLists.put("rejected_d", /*cs.getRejectedItems()*/4);
-                    optionLists.put("this_month_d", 7/*cs.getThisMonthPendingItems()*/);
-                    optionLists.put("arrears_d", /*cs.getArrearsPendingItems()*/8);
-                    optionLists.put("normal_d", 6/*cs.getNormalSubmissions()*/);
-                    optionLists.put("late_d", /*cs.getLateSubmissions()*/1);
+                } else if (userType.equals(WebConstants.USER_DEO)) {
+                    if (statType.equals(WebConstants.STAT_ALL)) {
+                        cs = populateBirthStatistics(WebConstants.USER_DEO);
+                        if (cs != null) {
+                            optionLists.put("approved_b", /*cs.getApprovedItems()*/10);
+                            optionLists.put("rejected_b", /*cs.getRejectedItems()*/8);
+                            optionLists.put("this_month_b", /*cs.getThisMonthPendingItems()*/12);
+                            optionLists.put("arrears_b", 25);
+                            optionLists.put("normal_b", /*cs.getNormalSubmissions()*/2);
+                            optionLists.put("late_b", 32);
+                        }
 
-                    cs = populateMarriageStatistics(WebConstants.USER_DEO);
+                        logger.debug("Births Total Submissions for DEO {}", cs.getTotalSubmissions());
 
-                    optionLists.put("approved_d", /*cs.getApprovedItems()*/6);
-                    optionLists.put("rejected_d", 6/*cs.getRejectedItems()*/);
-                    optionLists.put("this_month_d", /*cs.getThisMonthPendingItems()*/2);
-                    optionLists.put("arrears_d", 8/*cs.getArrearsPendingItems()*/);
-                    optionLists.put("normal_d", /*cs.getNormalSubmissions()*/1);
-                    optionLists.put("late_d", 10/*cs.getLateSubmissions()*/);
+                        cs = populateDeathStatistics(WebConstants.USER_DEO);
+                        if (cs != null) {
+                            optionLists.put("approved_d", 2/*cs.getApprovedItems()*/);
+                            optionLists.put("rejected_d", /*cs.getRejectedItems()*/4);
+                            optionLists.put("this_month_d", 7/*cs.getThisMonthPendingItems()*/);
+                            optionLists.put("arrears_d", /*cs.getArrearsPendingItems()*/8);
+                            optionLists.put("normal_d", 6/*cs.getNormalSubmissions()*/);
+                            optionLists.put("late_d", /*cs.getLateSubmissions()*/1);
+                        }
 
-                }
-            } else if (userType.equals(WebConstants.USER_ARG)) {
-                if (statType.equals(WebConstants.STAT_ALL)) {
-                    cs = populateBirthStatistics(WebConstants.USER_ARG);
+                        cs = populateMarriageStatistics(WebConstants.USER_DEO);
+                        if (cs != null) {
+                            optionLists.put("approved_d", /*cs.getApprovedItems()*/6);
+                            optionLists.put("rejected_d", 6/*cs.getRejectedItems()*/);
+                            optionLists.put("this_month_d", /*cs.getThisMonthPendingItems()*/2);
+                            optionLists.put("arrears_d", 8/*cs.getArrearsPendingItems()*/);
+                            optionLists.put("normal_d", /*cs.getNormalSubmissions()*/1);
+                            optionLists.put("late_d", 10/*cs.getLateSubmissions()*/);
+                        }
 
-                    optionLists.put("approved_b", cs.getApprovedItems());
-                    optionLists.put("rejected_b", cs.getRejectedItems());
-                    optionLists.put("this_month_b", cs.getThisMonthPendingItems());
-                    optionLists.put("arrears_b", cs.getArrearsPendingItems());
-                    optionLists.put("normal_b", cs.getNormalSubmissions());
-                    optionLists.put("late_b", cs.getLateSubmissions());
+                    }
+                } else if (userType.equals(WebConstants.USER_ARG)) {
+                    if (statType.equals(WebConstants.STAT_ALL)) {
+                        cs = populateBirthStatistics(WebConstants.USER_ARG);
+                        if (cs != null) {
+                            optionLists.put("approved_b", cs.getApprovedItems());
+                            optionLists.put("rejected_b", cs.getRejectedItems());
+                            optionLists.put("this_month_b", cs.getThisMonthPendingItems());
+                            optionLists.put("arrears_b", cs.getArrearsPendingItems());
+                            optionLists.put("normal_b", cs.getNormalSubmissions());
+                            optionLists.put("late_b", cs.getLateSubmissions());
+                        }
 
-                    cs = populateDeathStatistics(WebConstants.USER_ARG);
+                        cs = populateDeathStatistics(WebConstants.USER_ARG);
+                        if (cs != null) {
+                            optionLists.put("approved_d", cs.getApprovedItems());
+                            optionLists.put("rejected_d", cs.getRejectedItems());
+                            optionLists.put("this_month_d", cs.getThisMonthPendingItems());
+                            optionLists.put("arrears_d", cs.getArrearsPendingItems());
+                            optionLists.put("normal_d", cs.getNormalSubmissions());
+                            optionLists.put("late_d", cs.getLateSubmissions());
+                        }
 
-                    optionLists.put("approved_d", cs.getApprovedItems());
-                    optionLists.put("rejected_d", cs.getRejectedItems());
-                    optionLists.put("this_month_d", cs.getThisMonthPendingItems());
-                    optionLists.put("arrears_d", cs.getArrearsPendingItems());
-                    optionLists.put("normal_d", cs.getNormalSubmissions());
-                    optionLists.put("late_d", cs.getLateSubmissions());
+                        cs = populateMarriageStatistics(WebConstants.USER_ARG);
+                        if (cs != null) {
+                            optionLists.put("approved_d", cs.getApprovedItems());
+                            optionLists.put("rejected_d", cs.getRejectedItems());
+                            optionLists.put("this_month_d", cs.getThisMonthPendingItems());
+                            optionLists.put("arrears_d", cs.getArrearsPendingItems());
+                            optionLists.put("normal_d", cs.getNormalSubmissions());
+                            optionLists.put("late_d", cs.getLateSubmissions());
+                        }
 
-                    cs = populateMarriageStatistics(WebConstants.USER_ARG);
+                    }
+                } else if (userType.equals(WebConstants.USER_DR)) {
+                    if (statType.equals(WebConstants.STAT_ALL)) {
+                        cs = populateBirthStatistics(WebConstants.USER_ARG);
+                        if (cs != null) {
+                            optionLists.put("approved_b", cs.getApprovedItems());
+                            optionLists.put("rejected_b", cs.getRejectedItems());
+                            optionLists.put("this_month_b", cs.getThisMonthPendingItems());
+                            optionLists.put("arrears_b", cs.getArrearsPendingItems());
+                            optionLists.put("normal_b", cs.getNormalSubmissions());
+                            optionLists.put("late_b", cs.getLateSubmissions());
+                        }
 
-                    optionLists.put("approved_d", cs.getApprovedItems());
-                    optionLists.put("rejected_d", cs.getRejectedItems());
-                    optionLists.put("this_month_d", cs.getThisMonthPendingItems());
-                    optionLists.put("arrears_d", cs.getArrearsPendingItems());
-                    optionLists.put("normal_d", cs.getNormalSubmissions());
-                    optionLists.put("late_d", cs.getLateSubmissions());
+                        cs = populateDeathStatistics(WebConstants.USER_ARG);
+                        if (cs != null) {
+                            optionLists.put("approved_d", cs.getApprovedItems());
+                            optionLists.put("rejected_d", cs.getRejectedItems());
+                            optionLists.put("this_month_d", cs.getThisMonthPendingItems());
+                            optionLists.put("arrears_d", cs.getArrearsPendingItems());
+                            optionLists.put("normal_d", cs.getNormalSubmissions());
+                            optionLists.put("late_d", cs.getLateSubmissions());
+                        }
 
-                }
-            } else if (userType.equals(WebConstants.USER_DR)) {
-                if (statType.equals(WebConstants.STAT_ALL)) {
-                    cs = populateBirthStatistics(WebConstants.USER_ARG);
+                        cs = populateMarriageStatistics(WebConstants.USER_ARG);
+                        if (cs != null) {
+                            optionLists.put("approved_d", cs.getApprovedItems());
+                            optionLists.put("rejected_d", cs.getRejectedItems());
+                            optionLists.put("this_month_d", cs.getThisMonthPendingItems());
+                            optionLists.put("arrears_d", cs.getArrearsPendingItems());
+                            optionLists.put("normal_d", cs.getNormalSubmissions());
+                            optionLists.put("late_d", cs.getLateSubmissions());
+                        }
 
-                    optionLists.put("approved_b", cs.getApprovedItems());
-                    optionLists.put("rejected_b", cs.getRejectedItems());
-                    optionLists.put("this_month_b", cs.getThisMonthPendingItems());
-                    optionLists.put("arrears_b", cs.getArrearsPendingItems());
-                    optionLists.put("normal_b", cs.getNormalSubmissions());
-                    optionLists.put("late_b", cs.getLateSubmissions());
+                    }
+                } else if (userType.equals(WebConstants.USER_RG)) {
+                    if (statType.equals(WebConstants.STAT_ALL)) {
+                        cs = populateBirthStatistics(WebConstants.USER_ARG);
+                        if (cs != null) {
+                            optionLists.put("approved_b", cs.getApprovedItems());
+                            optionLists.put("rejected_b", cs.getRejectedItems());
+                            optionLists.put("this_month_b", cs.getThisMonthPendingItems());
+                            optionLists.put("arrears_b", cs.getArrearsPendingItems());
+                            optionLists.put("normal_b", cs.getNormalSubmissions());
+                            optionLists.put("late_b", cs.getLateSubmissions());
+                        }
 
-                    cs = populateDeathStatistics(WebConstants.USER_ARG);
+                        cs = populateDeathStatistics(WebConstants.USER_ARG);
+                        if (cs != null) {
+                            optionLists.put("approved_d", cs.getApprovedItems());
+                            optionLists.put("rejected_d", cs.getRejectedItems());
+                            optionLists.put("this_month_d", cs.getThisMonthPendingItems());
+                            optionLists.put("arrears_d", cs.getArrearsPendingItems());
+                            optionLists.put("normal_d", cs.getNormalSubmissions());
+                            optionLists.put("late_d", cs.getLateSubmissions());
+                        }
 
-                    optionLists.put("approved_d", cs.getApprovedItems());
-                    optionLists.put("rejected_d", cs.getRejectedItems());
-                    optionLists.put("this_month_d", cs.getThisMonthPendingItems());
-                    optionLists.put("arrears_d", cs.getArrearsPendingItems());
-                    optionLists.put("normal_d", cs.getNormalSubmissions());
-                    optionLists.put("late_d", cs.getLateSubmissions());
-
-                    cs = populateMarriageStatistics( WebConstants.USER_ARG);
-
-                    optionLists.put("approved_d", cs.getApprovedItems());
-                    optionLists.put("rejected_d", cs.getRejectedItems());
-                    optionLists.put("this_month_d", cs.getThisMonthPendingItems());
-                    optionLists.put("arrears_d", cs.getArrearsPendingItems());
-                    optionLists.put("normal_d", cs.getNormalSubmissions());
-                    optionLists.put("late_d", cs.getLateSubmissions());
-
-                }
-            } else if (userType.equals(WebConstants.USER_RG)) {
-                if (statType.equals(WebConstants.STAT_ALL)) {
-                    cs = populateBirthStatistics( WebConstants.USER_ARG);
-
-                    optionLists.put("approved_b", cs.getApprovedItems());
-                    optionLists.put("rejected_b", cs.getRejectedItems());
-                    optionLists.put("this_month_b", cs.getThisMonthPendingItems());
-                    optionLists.put("arrears_b", cs.getArrearsPendingItems());
-                    optionLists.put("normal_b", cs.getNormalSubmissions());
-                    optionLists.put("late_b", cs.getLateSubmissions());
-
-                    cs = populateDeathStatistics(WebConstants.USER_ARG);
-
-                    optionLists.put("approved_d", cs.getApprovedItems());
-                    optionLists.put("rejected_d", cs.getRejectedItems());
-                    optionLists.put("this_month_d", cs.getThisMonthPendingItems());
-                    optionLists.put("arrears_d", cs.getArrearsPendingItems());
-                    optionLists.put("normal_d", cs.getNormalSubmissions());
-                    optionLists.put("late_d", cs.getLateSubmissions());
-
-                    cs = populateMarriageStatistics(WebConstants.USER_ARG);
-
-                    optionLists.put("approved_d", cs.getApprovedItems());
-                    optionLists.put("rejected_d", cs.getRejectedItems());
-                    optionLists.put("this_month_d", cs.getThisMonthPendingItems());
-                    optionLists.put("arrears_d", cs.getArrearsPendingItems());
-                    optionLists.put("normal_d", cs.getNormalSubmissions());
-                    optionLists.put("late_d", cs.getLateSubmissions());
+                        cs = populateMarriageStatistics(WebConstants.USER_ARG);
+                        if (cs != null) {
+                            optionLists.put("approved_d", cs.getApprovedItems());
+                            optionLists.put("rejected_d", cs.getRejectedItems());
+                            optionLists.put("this_month_d", cs.getThisMonthPendingItems());
+                            optionLists.put("arrears_d", cs.getArrearsPendingItems());
+                            optionLists.put("normal_d", cs.getNormalSubmissions());
+                            optionLists.put("late_d", cs.getLateSubmissions());
+                        }
+                    }
                 }
             }
 
@@ -228,7 +260,7 @@ public class JSONStatisticsLookupService extends HttpServlet {
     public CommonStatistics populateBirthStatistics(String user) {
         // TODO User Specific Functions
         CommonStatistics commonStat;
-        
+
         if (user.equals(WebConstants.USER_ADR)) {
             commonStat = birthRegistrationService.getCommonBirthCertificateCount(user);
         } else if (user.equals(WebConstants.USER_DEO)) {
@@ -239,8 +271,9 @@ public class JSONStatisticsLookupService extends HttpServlet {
             commonStat = birthRegistrationService.getCommonBirthCertificateCount(user);
         } else if (user.equals(WebConstants.USER_RG)) {
             commonStat = birthRegistrationService.getCommonBirthCertificateCount(user);
-        } else
+        } else {
             commonStat = new CommonStatistics();
+        }
 
         return commonStat;
     }
@@ -259,15 +292,16 @@ public class JSONStatisticsLookupService extends HttpServlet {
             commonStat = deathRegistrationService.getCommonDeathCertificateCount(user);
         } else if (user.equals(WebConstants.USER_RG)) {
             commonStat = deathRegistrationService.getCommonDeathCertificateCount(user);
-        } else
+        } else {
             commonStat = new CommonStatistics();
+        }
         return commonStat;
     }
 
     public CommonStatistics populateMarriageStatistics(String user) {
         // TODO User Specific Functions
         CommonStatistics commonStat;
-        
+
         if (user.equals(WebConstants.USER_ADR)) {
             commonStat = marriageRegistrationService.getCommonMarriageCertificateCount(user);
         } else if (user.equals(WebConstants.USER_DEO)) {
@@ -278,8 +312,9 @@ public class JSONStatisticsLookupService extends HttpServlet {
             commonStat = marriageRegistrationService.getCommonMarriageCertificateCount(user);
         } else if (user.equals(WebConstants.USER_RG)) {
             commonStat = marriageRegistrationService.getCommonMarriageCertificateCount(user);
-        } else
+        } else {
             commonStat = new CommonStatistics();
+        }
         return commonStat;
     }
 }

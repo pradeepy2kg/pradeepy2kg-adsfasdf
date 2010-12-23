@@ -349,4 +349,14 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
         return ((Long)q.getSingleResult()).intValue();
     }
 
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<BirthDeclaration> getByCreatedUser(User user) {
+        Query q = em.createNamedQuery("get.bc.by.deo");
+        q.setParameter("user", user);
+        return q.getResultList();
+    }
+
 }
