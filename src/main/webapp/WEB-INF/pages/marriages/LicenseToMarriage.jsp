@@ -214,18 +214,22 @@
             Last date for Marriage for which this license is valid
         </td>
         <td colspan="1" align="center">
-            <s:label value="%{dateOfCancelLicense}"/>    <br>yyyy-mm-dd
+            <s:label value="%{dateOfCancelLicense}"/> <br>yyyy-mm-dd
         </td>
         <td colspan="1">
             විවාහයේ ස්වභාවය <br>
             in tamil <br>
             Type of Marriage
         </td>
-        <td align="center"><%=MarriageTypeUtil.getMarriageTypeInOfficialLanguageAndEnglish((MarriageType) request.
-                getAttribute("marriage.typeOfMarriage"), (String) request.getAttribute("marriage.preferredLanguage"))%>
+        <td align="center">
+            <s:if test="marriage.preferredLanguage =='si'">
+                <s:label value="%{marriage.typeOfMarriage.siType}"/>
+            </s:if>
+            <s:else>
+                <s:label value="%{marriage.typeOfMarriage.taType}"/>
+            </s:else>
             <br>
-            <%=MarriageTypeUtil.getMarriageTypeInOfficialLanguageAndEnglish((MarriageType)
-                    request.getAttribute("marriage.typeOfMarriage"), "en")%>
+            <s:label value="%{marriage.typeOfMarriage.enType}"/>
         </td>
     </tr>
 </table>
@@ -268,13 +272,13 @@
             Date of Birth and Age
         </td>
         <td align="center">
-            <s:label value="%{marriage.male.dateOfBirthMale}"/>     <br>yyyy-mm-dd
+            <s:label value="%{marriage.male.dateOfBirthMale}"/> <br>yyyy-mm-dd
         </td>
         <td align="center">
             <s:label value="%{marriage.male.ageAtLastBirthDayMale}"/>
         </td>
         <td align="center">
-            <s:label value="%{marriage.female.dateOfBirthFemale}"/>      <br>yyyy-mm-dd
+            <s:label value="%{marriage.female.dateOfBirthFemale}"/> <br>yyyy-mm-dd
         </td>
         <td align="center">
             <s:label value="%{marriage.female.ageAtLastBirthDayFemale}"/>
