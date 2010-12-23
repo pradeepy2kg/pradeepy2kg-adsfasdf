@@ -1,9 +1,8 @@
 package lk.rgd.crs.api.dao;
 
 import lk.rgd.common.api.domain.DSDivision;
-import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.District;
-import lk.rgd.crs.api.domain.DeathRegister;
+import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.domain.MarriageRegister;
 
@@ -69,6 +68,17 @@ public interface MarriageRegistrationDAO {
      */
     public List<MarriageRegister> getByMRDivisionAndSerialNo(MRDivision mrDivision, MarriageRegister.State state,
         long serialNo, boolean active);
+
+    /**
+     * Returns a paginated list of active/inactive Marriage Notices based on the District
+     *
+     * @param district the district
+     * @param pageNo   the page number (start from 1)
+     * @param noOfRows the number of rows to return per page
+     * @param active   include currently active or inactive items
+     * @return the matching list of marriage registrations (marriage notices)
+     */
+    public List<MarriageRegister> getPaginatedListByDistrict(District district, int pageNo, int noOfRows, boolean active);
 
     /**
      * Returns paginated list of active/inactive Marriage Notices based on the DSDivision
@@ -235,14 +245,14 @@ public interface MarriageRegistrationDAO {
      * @param status    marriage Register form's state
      * @param startDate start Date
      * @param endDate   end Date
-     * @return  the count of records
+     * @return the count of records
      */
     public int getMarriageCertificateCount(MarriageRegister.State status, Date startDate, Date endDate);
 
     /**
      * Returns all Marriage Registration records which are created by given User
      *
-     * @param user  created user
+     * @param user created user
      * @return list of Marriage Registrations
      */
     public List<MarriageRegister> getMarriageCertificateByCreatedUser(User user);

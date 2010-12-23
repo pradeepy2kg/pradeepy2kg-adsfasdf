@@ -44,6 +44,19 @@ public interface MarriageRegistrationService {
     public MarriageRegister getByIdUKey(long idUKey, User user);
 
     /**
+     * Returns a paginated list of Marriage Notices based on the specified District
+     *
+     * @param district the district
+     * @param pageNo   the page number of the results required
+     * @param noOfRows the number of rows to return per page
+     * @param active   include currently active or inactive items
+     * @param user     the user initiating the action
+     * @return the list of marriage notices filtered by District
+     */
+    public List<MarriageRegister> getMarriageNoticeByDistrict(District district, int pageNo, int noOfRows,
+        boolean active, User user);
+
+    /**
      * Returns a paginated list of Marriage Registers for which marriage notices are awaiting approval by ADR or higher
      * authority based on the specified DSDivision
      *
@@ -284,11 +297,11 @@ public interface MarriageRegistrationService {
     /**
      * Returns paginated marriage register list filtered by district
      *
-     * @param district the district of Marriage Notice/Register performed
+     * @param district   the district of Marriage Notice/Register performed
      * @param pageNumber page number for pagination
-     * @param numOfRows number of rows to be retured
-     * @param isActive Active or Inactive status
-     * @param user user who performs the action
+     * @param numOfRows  number of rows to be retured
+     * @param isActive   Active or Inactive status
+     * @param user       user who performs the action
      * @return
      */
     public List<MarriageRegister> getMarriageRegistersByDistrict(District district, int pageNumber,
@@ -297,14 +310,14 @@ public interface MarriageRegistrationService {
     /**
      * Returns paginated marriage register list filtered by State
      *
-     * @param state the current state of the marriage register
-     * @param pageNo page number for pagination
+     * @param state    the current state of the marriage register
+     * @param pageNo   page number for pagination
      * @param noOfRows number of rows to be retured
      * @param isActive Active or Inactive status
-     * @param user user who performs the action
+     * @param user     user who performs the action
      * @return
      */
-    public List<MarriageRegister> getMarriageRegisterByState(MarriageRegister.State state, int pageNo,int noOfRows,
+    public List<MarriageRegister> getMarriageRegisterByState(MarriageRegister.State state, int pageNo, int noOfRows,
         boolean isActive, User user);
 
     /**
@@ -461,6 +474,7 @@ public interface MarriageRegistrationService {
 
     /**
      * Returns all statistics information related to Deaths
+     *
      * @param user
      * @return CommonStatistics object which encapsulated all the death statistics information
      */
