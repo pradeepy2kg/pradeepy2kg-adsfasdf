@@ -1975,7 +1975,7 @@ public class BirthRegistrationServiceImpl implements
         int approved = 0;
         int rejected = 0;
 
-        List<BirthDeclaration> bdfList = birthDeclarationDAO.getByCreatedUser(userManager.getUserByID(user));
+        List<BirthDeclaration> bdfList = birthDeclarationDAO.getBirthCertificateByCreatedUser(userManager.getUserByID(user));
         Iterator<BirthDeclaration> i = bdfList.iterator();
         while (i.hasNext()) {
             BirthDeclaration bdf = i.next();

@@ -278,4 +278,14 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
         Query q = em.createNamedQuery("get.notice.by.male.and.female.identification");
         return ((Long)q.getSingleResult()).intValue();
     }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<MarriageRegister> getMarriageCertificateByCreatedUser(User user) {
+        Query q = em.createNamedQuery("get.mr.by.deo");
+        q.setParameter("user", user);
+        return q.getResultList();
+    }
 }

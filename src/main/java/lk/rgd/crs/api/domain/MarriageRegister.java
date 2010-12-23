@@ -107,7 +107,9 @@ import java.util.Date;
 
     @NamedQuery(name = "findMarriageRegisterByState", query = "SELECT mr FROM MarriageRegister mr " +
         "WHERE mr.state = :state AND mr.lifeCycleInfo.activeRecord = :active " +
-        "ORDER BY mr.idUKey DESC ")
+        "ORDER BY mr.idUKey DESC "),
+    @NamedQuery(name = "get.mr.by.deo", query = "SELECT mr FROM MarriageRegister mr "+
+        " WHERE mr.lifeCycleInfo.createdUser =:user")
 })
 public class MarriageRegister implements Serializable, Cloneable {
     //todo add divorce related col

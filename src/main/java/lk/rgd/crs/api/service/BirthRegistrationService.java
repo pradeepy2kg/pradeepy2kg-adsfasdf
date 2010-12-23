@@ -625,8 +625,10 @@ public interface BirthRegistrationService {
     public CommonStatistics getCommonBirthCertificateCount(String user);
 
     /**
-     * 
-     * @return
+     * Returns all statistics information belongs to given user
+     *
+     * @param user user DEO
+     * @return CommonStatistics object which encapsulated all the birth statistics information
      */
     public CommonStatistics getBirthStatisticsForDEO(String user);
 }
