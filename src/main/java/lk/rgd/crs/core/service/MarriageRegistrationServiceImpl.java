@@ -4,6 +4,7 @@ import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
 import lk.rgd.common.api.dao.UserLocationDAO;
 import lk.rgd.common.api.domain.*;
+import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.util.NameFormatUtil;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
@@ -32,11 +33,13 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     private final MarriageRegistrationDAO marriageRegistrationDAO;
     private final MarriageRegistrationValidator marriageRegistrationValidator;
     private final UserLocationDAO userLocationDAO;
+    private final UserManager userManager;
 
-    public MarriageRegistrationServiceImpl(MarriageRegistrationDAO marriageRegistrationDAO, MarriageRegistrationValidator marriageRegistrationValidator, UserLocationDAO userLocationDAO) {
+    public MarriageRegistrationServiceImpl(MarriageRegistrationDAO marriageRegistrationDAO, UserManager userManager, MarriageRegistrationValidator marriageRegistrationValidator, UserLocationDAO userLocationDAO) {
         this.marriageRegistrationDAO = marriageRegistrationDAO;
         this.marriageRegistrationValidator = marriageRegistrationValidator;
         this.userLocationDAO = userLocationDAO;
+        this.userManager = userManager;
     }
 
     /**
@@ -744,6 +747,40 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         commonStat.setTotalPendingItems(/*data_entry*/9);
 
         logger.debug("BirthRegistrationService Called!");
+
+        //todo call above methods using appropriate Date range
+
+        commonStat.setArrearsPendingItems(0);
+        commonStat.setLateSubmissions(0);
+        commonStat.setNormalSubmissions(8);
+        commonStat.setThisMonthPendingItems(3);
+
+        return commonStat;
+    }
+
+    public CommonStatistics getMarriageStatisticsForDEO(String user){
+        int data_entry = 0;
+        int approved = 0;
+        int rejected = 0;
+
+        List<MarriageRegister> bdfList = marriageRegistrationDAO.getMarriageCertificateByCreatedUser(userManager.getUserByID(user));
+        Iterator<MarriageRegister> i = bdfList.iterator();
+        while (i.hasNext()) {
+            MarriageRegister mr = i.next();
+            if (mr.getState() == MarriageRegister.State.NOTICE_APPROVED) {
+                approved += 1;
+            } else if (mr.getState() == MarriageRegister.State.NOTICE_REJECTED) {
+                rejected += 1;
+            } else if(mr.getState() == MarriageRegister.State.DATA_ENTRY) {
+                data_entry += 1;
+            }
+        }
+
+        CommonStatistics commonStat = new CommonStatistics();
+        commonStat.setTotalSubmissions(/*data_entry + approved + rejected*/23);
+        commonStat.setApprovedItems(/*approved*/12);
+        commonStat.setRejectedItems(/*rejected*/8);
+        commonStat.setTotalPendingItems(/*data_entry*/9);
 
         //todo call above methods using appropriate Date range
 

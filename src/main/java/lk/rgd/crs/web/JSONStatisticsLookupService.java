@@ -72,6 +72,26 @@ public class JSONStatisticsLookupService extends HttpServlet {
                     optionLists.put("late_b", cs.getLateSubmissions());
                 }
 
+                cs = deathRegistrationService.getDeathStatisticsForDEO(deoUserId);
+                if (cs != null) {
+                    optionLists.put("approved_d", cs.getApprovedItems());
+                    optionLists.put("rejected_d", cs.getRejectedItems());
+                    optionLists.put("this_month_d", cs.getThisMonthPendingItems());
+                    optionLists.put("arrears_d", cs.getArrearsPendingItems());
+                    optionLists.put("normal_d", cs.getNormalSubmissions());
+                    optionLists.put("late_d", cs.getLateSubmissions());
+                }
+
+                cs = marriageRegistrationService.getMarriageStatisticsForDEO(deoUserId);
+                if (cs != null) {
+                    /*optionLists.put("approved_b", cs.getApprovedItems());
+                    optionLists.put("rejected_b", cs.getRejectedItems());
+                    optionLists.put("this_month_b", cs.getThisMonthPendingItems());
+                    optionLists.put("arrears_b", cs.getArrearsPendingItems());
+                    optionLists.put("normal_b", cs.getNormalSubmissions());
+                    optionLists.put("late_b", cs.getLateSubmissions());*/
+                }
+
             } else if (mode.equals("commonStatInfo")){
                 if (userType.equals(WebConstants.USER_ADR)) {
                     if (statType.equals(WebConstants.STAT_ALL)) {

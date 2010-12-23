@@ -238,4 +238,12 @@ public interface MarriageRegistrationDAO {
      * @return  the count of records
      */
     public int getMarriageCertificateCount(MarriageRegister.State status, Date startDate, Date endDate);
+
+    /**
+     * Returns all Marriage Registration records which are created by given User
+     *
+     * @param user  created user
+     * @return list of Marriage Registrations
+     */
+    public List<MarriageRegister> getMarriageCertificateByCreatedUser(User user);
 }

@@ -304,11 +304,11 @@ public interface BirthDeclarationDAO {
     public int getBirthCertificateCount(BirthDeclaration.State status, Date startDate, Date endDate);
 
     /**
-     * Returns all records which are created by given User
+     * Returns all Birth Declaration records which are created by given User
      *
      * @param user  created user
      * @return list of birth declarations
      */
-    public List<BirthDeclaration> getByCreatedUser(User user);
+    public List<BirthDeclaration> getBirthCertificateByCreatedUser(User user);
 }
 

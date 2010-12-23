@@ -465,4 +465,12 @@ public interface MarriageRegistrationService {
      * @return CommonStatistics object which encapsulated all the death statistics information
      */
     public CommonStatistics getCommonMarriageCertificateCount(String user);
+
+    /**
+     * Returns all statistics information belongs to given user
+     *
+     * @param user user DEO
+     * @return CommonStatistics object which encapsulated all the birth statistics information
+     */
+    public CommonStatistics getMarriageStatisticsForDEO(String user);
 }

@@ -179,4 +179,14 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
         return ((Long)q.getSingleResult()).intValue();
     }
 
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<DeathRegister> getDeathCertificateByCreatedUser(User user) {
+        Query q = em.createNamedQuery("get.dr.by.deo");
+        q.setParameter("user", user);
+        return q.getResultList();
+    }
+
 }

@@ -146,6 +146,14 @@ public interface DeathRegisterDAO {
      * @return  the count of records
      */
     public int getDeathCertificateCount(DeathRegister.State status, Date startDate, Date endDate);
+
+    /**
+     * Returns all Death Certificate records which are created by given User
+     *
+     * @param user  created user
+     * @return list of death Registrations
+     */
+    public List<DeathRegister> getDeathCertificateByCreatedUser(User user);
 }
 
 
