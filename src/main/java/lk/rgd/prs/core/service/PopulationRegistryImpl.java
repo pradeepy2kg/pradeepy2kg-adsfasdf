@@ -623,7 +623,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      */
     // TODO change method name
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<Person> getPRSPendingApprovalByLocation(Location location, int pageNo, int noOfRows, User user) {
+    public List<Person> getPRSRecordsByLocation(Location location, int pageNo, int noOfRows, User user) {
         if (logger.isDebugEnabled()) {
             logger.debug("Get PRS records pending approval by LocationId : " + location.getLocationUKey() + " Page : "
                 + pageNo + " and with number of rows per page : " + noOfRows);
