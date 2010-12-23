@@ -646,5 +646,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
         existing.setCivilStatus(passing.getCivilStatus());
         existing.setFatherPINorNIC(passing.getFatherPINorNIC());
         existing.setMotherPINorNIC(passing.getMotherPINorNIC());
+        existing.setPersonPhoneNo(passing.getPersonPhoneNo());
+        existing.setPersonEmail(passing.getPersonEmail());
     }
 }
