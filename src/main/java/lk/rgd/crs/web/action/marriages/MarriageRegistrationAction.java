@@ -135,7 +135,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             //add race,country to  male party and female party
             populatePartyObjectsForPersisting(marriage);
             marriageRegistrationService.addMarriageNotice(marriage, noticeType, user);
-            addActionMessage("massage.notice.successfully.add");
+            addActionMessage("message.notice.successfully.add");
             logger.debug("successfully added marriage notice serial number: {}");
             return SUCCESS;
         }
@@ -273,7 +273,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         MarriageRegister existingNotice = marriageRegistrationService.getByIdUKey(idUKey, user);
         populateNoticeForAddingSecondNotice(existingNotice, marriage);
         marriageRegistrationService.addSecondMarriageNotice(existingNotice, noticeType, ignoreWarnings, true, user);
-        addActionMessage(getText("massage.successfully.roll.back.to.prev.and.add.second.notice"));
+        addActionMessage(getText("message.successfully.roll.back.to.prev.and.add.second.notice"));
         logger.debug("roll back success for marriage notice idUKey : {}", idUKey);
         return SUCCESS;
     }

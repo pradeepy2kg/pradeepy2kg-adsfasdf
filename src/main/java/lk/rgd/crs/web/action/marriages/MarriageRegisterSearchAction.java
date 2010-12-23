@@ -250,7 +250,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
             addActionError(getText("error.delete.notice"));
             return ERROR;
         }
-        addActionMessage(getText("massage.delete.successfully"));
+        addActionMessage(getText("message.delete.successfully"));
         commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId,
             dsDivisionId, mrDivisionId, AppConstants.MARRIAGE, user, language);
         getApprovalPendingNotices();
@@ -323,7 +323,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         if (notice != null && notice.getState() == MarriageRegister.State.LICENSE_PRINTED) {
             //do nothing if current state is LICENSE_PRINT
             logger.debug("attempt to re mark license as license printed :idUKey : {} state : {}", idUKey, notice.getState());
-            addActionMessage(getText("massage.license.already.marked"));
+            addActionMessage(getText("message.license.already.marked"));
         } else {
             try {
                 marriageRegistrationService.markLicenseToMarriageAsPrinted(idUKey, locationDAO.

@@ -292,7 +292,7 @@ function isDate(dtStr, errorText, errorCode) {
         }
 
         if (!isValideDate) {
-            //todo erro massage
+            //todo error message
             printMessage(errorText, errorCode);
         }
     }

@@ -225,14 +225,14 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             }
             deathAlterationService.addDeathAlteration(deathAlteration, user);
             populatePrimaryLists(districtUKey, dsDivisionId, language, user);
-            addActionMessage(getText("alt.massage.success"));
+            addActionMessage(getText("alt.message.success"));
             logger.debug("capturing alteration success ");
             return SUCCESS;
 
         } catch (CRSRuntimeException e) {
-            //todo both cases(both object null and declerant info is null gives same error massage if need two add here)
+            //todo both cases(both object null and declerant info is null gives same error message if need two add here)
             logger.error("CRS exception while adding death alteration ");
-            addActionMessage(getText("alt.massage.cannot.add.alteration.validation.failed"));
+            addActionMessage(getText("alt.message.cannot.add.alteration.validation.failed"));
             populatePrimaryLists(districtUKey, dsDivisionId, language, user);
             return ERROR;
         }
@@ -252,7 +252,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             existing.setDeclarant(deathAlteration.getDeclarant());
             deathAlterationService.updateDeathAlteration(existing, user);
 
-            addActionMessage(getText("alt.edit.massage.success"));
+            addActionMessage(getText("alt.edit.message.success"));
             logger.debug("editing death alteration : idUKey : {} success", deathAlterationId);
             populatePrimaryLists(deathRegister.getDeath().getDeathDistrict().getDistrictUKey(),
                 deathRegister.getDeath().getDeathDivision().getBdDivisionUKey(), language, user);
