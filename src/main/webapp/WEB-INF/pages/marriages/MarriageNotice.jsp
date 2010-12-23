@@ -912,8 +912,8 @@ $('select#dsDivisionId').bind('change', function(evt2) {
 <s:hidden name="licenseReqByMale" value="%{licenseReqByMale}"/>
 </s:form>
 <s:hidden id="text_invalid_data" value="%{getText('error.invalid.data')}"/>
-<s:hidden id="text_must_fill" value="%{getText('error.must.fill..data')}"/>
-<s:hidden id="text_must_select" value="%{getText('error.must.select..data')}"/>
+<s:hidden id="text_must_fill" value="%{getText('error.must.fill.data')}"/>
+<s:hidden id="text_must_select" value="%{getText('error.must.select.data')}"/>
 <s:hidden id="text_serial_number" value="%{getText('field.serial.number')}"/>
 <s:hidden id="text_submit_date" value="%{getText('field.notice.submit.date')}"/>
 <s:hidden id="text_dob_male" value="%{getText('field.date.of.birth.male')}"/>
@@ -921,9 +921,9 @@ $('select#dsDivisionId').bind('change', function(evt2) {
 <s:hidden id="text_id_male" value="%{getText('field.id.number.male')}"/>
 <s:hidden id="text_id_female" value="%{getText('field.id.number.female')}"/>
 <s:hidden id="text_fa_id_male" value="%{getText('field.fa.id.number.male')}"/>
-<s:hidden id="text_fa_id_female" value="%{getText('field.fa.id.number.male')}"/>
-<s:hidden id="text_date_arrival_male" value="%{getText('field.dat.of.arrival.male')}"/>
-<s:hidden id="text_date_arrival_female" value="%{getText('field.dat.of.arrival.female')}"/>
+<s:hidden id="text_fa_id_female" value="%{getText('field.fa.id.number.female')}"/>
+<s:hidden id="text_date_arrival_male" value="%{getText('field.date.of.arrival.male')}"/>
+<s:hidden id="text_date_arrival_female" value="%{getText('field.date.of.arrival.female')}"/>
 <s:hidden id="text_passport_male" value="%{getText('field.passport.number.male')}"/>
 <s:hidden id="text_passport_female" value="%{getText('field.passport.number.female')}"/>
 <s:hidden id="text_age_at_last_bd_male" value="%{getText('field.age.at.last.bd.male')}"/>
