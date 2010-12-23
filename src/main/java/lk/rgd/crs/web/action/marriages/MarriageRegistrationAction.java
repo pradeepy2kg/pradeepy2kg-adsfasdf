@@ -541,25 +541,13 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     }
 
     /**
-     * Marriage Registration - populate CivilStatus (Except MARRIED status) for radio list of jsp
-     */
-    private Map<Person.CivilStatus, String> populateCivilStatus() {
-        Map<Person.CivilStatus, String> civilStatus = new HashMap<Person.CivilStatus, String>();
-        civilStatus.put(Person.CivilStatus.NEVER_MARRIED, CivilStatusUtil.getCivilStatusInAllLanguages(Person.CivilStatus.NEVER_MARRIED));
-        civilStatus.put(Person.CivilStatus.DIVORCED, CivilStatusUtil.getCivilStatusInAllLanguages(Person.CivilStatus.DIVORCED));
-        civilStatus.put(Person.CivilStatus.WIDOWED, CivilStatusUtil.getCivilStatusInAllLanguages(Person.CivilStatus.WIDOWED));
-        civilStatus.put(Person.CivilStatus.ANNULLED, CivilStatusUtil.getCivilStatusInAllLanguages(Person.CivilStatus.ANNULLED));
-        return civilStatus;
-    }
-
-    /**
      * Marriage Registration - Populate basic lists at page load
      */
     private void populateLists() {
         marriageTypeList = MarriageType.values();
         typeOfMarriagePlaceList = TypeOfMarriagePlace.values();
-        civilStatusMale = populateCivilStatus();
-        civilStatusFemale = populateCivilStatus();
+        civilStatusMale = CivilStatusUtil.populateCivilStatus();
+        civilStatusFemale = CivilStatusUtil.populateCivilStatus();
         languageList = commonUtil.findLanguageList();
         commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
             marriageDistrictId, dsDivisionId, mrDivisionId, AppConstants.MARRIAGE, user, language);

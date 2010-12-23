@@ -145,6 +145,15 @@ public interface MarriageRegistrationDAO {
     public List<MarriageRegister> getPaginatedMarriageRegisterListByState(MarriageRegister.State state, int pageNo,
         int noOfRows, boolean active);
 
+    /**
+     * Returns paginated marriage register list
+     *
+     * @param pageNo   the page number (starting from 1)
+     * @param noOfRows no of rows to be to be retured
+     * @param isActive Active or inactive status
+     * @return
+     */
+    public List<MarriageRegister> getPaginatedMarriageRegisterList(int pageNo, int noOfRows, boolean isActive);
 
     /**
      * Returns paginated list of active/inactive Marriage Notices based on the MRDivision
