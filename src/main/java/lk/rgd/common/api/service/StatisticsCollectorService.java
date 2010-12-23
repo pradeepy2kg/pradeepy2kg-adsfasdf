@@ -14,13 +14,20 @@ public interface StatisticsCollectorService {
      * @param user
      * @return
      */
-    public CommonStatistics getCommonBirthCertificateCount(User user);
+    public CommonStatistics getCommonBirthCertificateCount(String user);
 
     /**
      * 
      * @param user
      * @return
      */
-    public CommonStatistics getCommonDeathCertificateCount(User user);
+    public CommonStatistics getCommonDeathCertificateCount(String user);
+
+    /**
+     * 
+     * @param user
+     * @return
+     */
+    public CommonStatistics getCommonMarriageCertificateCount(String user);
 
 }
