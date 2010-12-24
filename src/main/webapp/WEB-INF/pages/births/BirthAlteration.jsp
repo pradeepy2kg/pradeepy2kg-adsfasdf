@@ -604,7 +604,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
 </s:if>
 <s:if test="pageType==1">
 <div id="birth-alteration-outer">
-<s:form action="eprBirthAlteration.do" onsubmit="javascript:return validate()">
+<s:form action="eprEditBirthAlteration.do" onsubmit="javascript:return validate()">
 <table class="birth-alteration-table-style01" style="width:1030px;">
     <tr>
         <td width="30%"></td>
@@ -762,7 +762,8 @@ function validateBirthYear(domElement, errorText, errorCode) {
                     <br>பெயர் அரச கரும மொழியில் (சிங்களம் / தமிழ்)
                     <br>Name in any of the official languages (Sinhala / Tamil)
                 </td>
-                <td><s:textarea name="birthAlteration.alt27.childFullNameOfficialLang" id="nameInOfficialLanguages"/></td>
+                <td><s:textarea name="birthAlteration.alt27.childFullNameOfficialLang"
+                                id="nameInOfficialLanguages"/></td>
             </tr>
             <tr>
                 <td>
@@ -862,7 +863,8 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 <s:label value="சிங்களம் தமிழ்"/> <br>
                 <s:label value="In Sinhala or Tamil"/>
             </td>
-            <td colspan="4"><s:textfield cssStyle="width:95%" id="placeOfBirth" name="birthAlteration.alt52_1.placeOfBirth"/></td>
+            <td colspan="4"><s:textfield cssStyle="width:95%" id="placeOfBirth"
+                                         name="birthAlteration.alt52_1.placeOfBirth"/></td>
         </tr>
         <tr>
             <td><s:label value="ඉංග්‍රීසි භාෂාවෙන්"/><br>
@@ -926,7 +928,8 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 <s:label value="PIN / NIC Number"/>
             </td>
             <td colspan="2" rowspan="2" class="find-person">
-                <s:textfield id="mother_pinOrNic" name="birthAlteration.alt52_1.mother.motherNICorPIN" cssStyle="width:80%;"/>
+                <s:textfield id="mother_pinOrNic" name="birthAlteration.alt52_1.mother.motherNICorPIN"
+                             cssStyle="width:80%;"/>
             </td>
             <td colspan="2" rowspan="2"><s:label value="විදේශිකය‍කු නම්"/><br><s:label value="வெளிநாட்டவர் எனின் "/><br><s:label
                     value="If foreigner"/>
@@ -946,14 +949,16 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 <s:label value="முழுப் பெயர் "/><br>
                 <s:label value="Full Name    "/>
             </td>
-            <td colspan="8"><s:textarea name="birthAlteration.alt52_1.mother.motherFullName" id="motherFullNameId"/></td>
+            <td colspan="8"><s:textarea name="birthAlteration.alt52_1.mother.motherFullName"
+                                        id="motherFullNameId"/></td>
         </tr>
         <tr>
             <td><s:label value="උපන් දිනය"/><br>
                 <s:label value="பிறந்த திகதி"/><br>
                 <s:label value="Date of Birth"/>
             </td>
-            <td><s:textfield cssStyle="width:125px;" id="motherDateOfBirth" name="birthAlteration.alt52_1.mother.motherDOB"/></td>
+            <td><s:textfield cssStyle="width:125px;" id="motherDateOfBirth"
+                             name="birthAlteration.alt52_1.mother.motherDOB"/></td>
             <td><s:label value="ළමයාගේ උපන් දිනට වයස"/> <br>
                 <s:label value="பிள்ளை பிறந்த திகதியில் மாதாவின் வயது"/><br>
                 <s:label value="Age as at the date of birth of child "/>
@@ -973,7 +978,8 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 <s:label value="பிறந்த இடம் "/><br>
                 <s:label value="Place of Birth "/>
             </td>
-            <td colspan="8"><s:textarea name="birthAlteration.alt52_1.mother.motherPlaceOfBirth" id="motherPlaceOfBirthId"/></td>
+            <td colspan="8"><s:textarea name="birthAlteration.alt52_1.mother.motherPlaceOfBirth"
+                                        id="motherPlaceOfBirthId"/></td>
         </tr>
         <tr>
             <td>ස්ථිර ලිපිනය<br>
@@ -1065,7 +1071,8 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 தகவல் கொடுப்பவரின் தனிநபர் அடையாள எண் / அடையாள அட்டை இல. <br>
                 PIN / NIC of the Informant
             </td>
-            <td colspan="2"><s:textfield id="informent_pinOrNic" name="birthAlteration.alt52_1.informant. informantNICorPIN"/></td>
+            <td colspan="2"><s:textfield id="informent_pinOrNic"
+                                         name="birthAlteration.alt52_1.informant. informantNICorPIN"/></td>
         </tr>
         <tr>
             <td>නම<br>
@@ -1079,7 +1086,8 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 தபால் முகவரி<br>
                 Postal Address
             </td>
-            <td colspan="3"><s:textarea id="informentAddress" name="birthAlteration.alt52_1.informant.informantAddress"/></td>
+            <td colspan="3"><s:textarea id="informentAddress"
+                                        name="birthAlteration.alt52_1.informant.informantAddress"/></td>
         </tr>
         </tbody>
     </table>
@@ -1174,7 +1182,8 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 பிறந்த இடம்<br>
                 Place of Birth
             </td>
-            <td colspan="4"><s:textfield name="birthAlteration.alt27A.father.fatherPlaceOfBirth" id="fatherPlaceOfBirth"/></td>
+            <td colspan="4"><s:textfield name="birthAlteration.alt27A.father.fatherPlaceOfBirth"
+                                         id="fatherPlaceOfBirth"/></td>
         </tr>
         </tbody>
     </table>
@@ -1216,7 +1225,8 @@ function validateBirthYear(domElement, errorText, errorCode) {
                             <br>ஆம்
                             <br>Yes
                         </label></td>
-                        <td style="border:none"><s:radio name="birthAlteration.alt27A.marriage.parentsMarried" id="parentsMarried"
+                        <td style="border:none"><s:radio name="birthAlteration.alt27A.marriage.parentsMarried"
+                                                         id="parentsMarried"
                                                          list="#@java.util.HashMap@{'MARRIED':''}"/>
                         </td>
                     </tr>
@@ -1226,7 +1236,8 @@ function validateBirthYear(domElement, errorText, errorCode) {
                             <br>இல்லை
                             <br>No
                         </label></td>
-                        <td style="border:none"><s:radio name="birthAlteration.alt27A.marriage.parentsMarried" id="parentsMarried"
+                        <td style="border:none"><s:radio name="birthAlteration.alt27A.marriage.parentsMarried"
+                                                         id="parentsMarried"
                                                          list="#@java.util.HashMap@{'UNMARRIED':''}"/>
                         </td>
                     </tr>
@@ -1236,13 +1247,15 @@ function validateBirthYear(domElement, errorText, errorCode) {
                             <br>இல்லை, பின் விவாகமானவர்கள்
                             <br>No, but since married
                         </label></td>
-                        <td style="border:none"><s:radio name="birthAlteration.alt27A.marriage.parentsMarried" id="parentsMarried"
+                        <td style="border:none"><s:radio name="birthAlteration.alt27A.marriage.parentsMarried"
+                                                         id="parentsMarried"
                                                          list="#@java.util.HashMap@{'NO_SINCE_MARRIED':''}"/>
                         </td>
                     </tr>
                     <tr>
                         <td style="border:none"><label>නොදනී<br>தெரியாது<br>Unknown</label></td>
-                        <td style="border:none"><s:radio name="birthAlteration.alt27A.marriage.parentsMarried" id="parentsMarried"
+                        <td style="border:none"><s:radio name="birthAlteration.alt27A.marriage.parentsMarried"
+                                                         id="parentsMarried"
                                                          list="#@java.util.HashMap@{'UNKNOWN':''}"/>
                         </td>
                     </tr>
@@ -1348,7 +1361,8 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 அவரின் முழுப் பேயர்<br>
                 His Full Name
             </td>
-            <td colspan="6"><s:textarea name="birthAlteration.alt27A.grandFather.grandFatherFullName" id="grandFatherFullName"/></td>
+            <td colspan="6"><s:textarea name="birthAlteration.alt27A.grandFather.grandFatherFullName"
+                                        id="grandFatherFullName"/></td>
         </tr>
         <tr>
             <td colspan="2">
@@ -1362,13 +1376,15 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 அவர் பிறந்த வருடம்<br>
                 His Year of Birth
             </td>
-            <td><s:textfield id="grandFatherBirthYear" name="birthAlteration.alt27A.grandFather.grandFatherBirthYear" maxLength="4"
+            <td><s:textfield id="grandFatherBirthYear" name="birthAlteration.alt27A.grandFather.grandFatherBirthYear"
+                             maxLength="4"
                              onkeypress="return isNumberKey(event)"/></td>
             <td>උපන් ස්ථානය<br>
                 அவர் பிறந்த இடம்<br>
                 Place Of Birth
             </td>
-            <td><s:textfield name="birthAlteration.alt27A.grandFather.grandFatherBirthPlace" id="grandFatherBirthPlaceId"/></td>
+            <td><s:textfield name="birthAlteration.alt27A.grandFather.grandFatherBirthPlace"
+                             id="grandFatherBirthPlaceId"/></td>
         </tr>
         <tr>
             <td colspan="8">ළමයාගේ පියා ශ්‍රී ලංකාවේ නොඉපිද මීමුත්තා ලංකාවේ උපන්නේ නම් මී මුත්තාගේ<br>
@@ -1392,13 +1408,15 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 <br>அடையாள எண்(இருந்தால்)
                 <br>Identification Number (if available)
             </td>
-            <td><s:textfield id="grandGrandFather_pinOrNic" name="birthAlteration.alt27A.grandFather.greatGrandFatherNICorPIN"
+            <td><s:textfield id="grandGrandFather_pinOrNic"
+                             name="birthAlteration.alt27A.grandFather.greatGrandFatherNICorPIN"
                              maxLength="10"/></td>
             <td>ඔහුගේ උපන් වර්ෂය<br>
                 அவர் பிறந்த வருடம்<br>
                 His Year of Birth
             </td>
-            <td><s:textfield id="grandGrandFatherBirthYear" name="birthAlteration.alt27A.grandFather.greatGrandFatherBirthYear"
+            <td><s:textfield id="grandGrandFatherBirthYear"
+                             name="birthAlteration.alt27A.grandFather.greatGrandFatherBirthYear"
                              maxLength="4"
                              onkeypress="return isNumberKey(event)"/></td>
             <td>උපන් ස්ථානය<br>
@@ -1542,7 +1560,8 @@ function validateBirthYear(domElement, errorText, errorCode) {
             <br>அடையாள எண்
             <br>Identification Number
         </td>
-        <td colspan="2"><s:textfield id="Declarant_pinOrNic" name="birthAlteration.declarant.declarantNICorPIN" maxLength="10"/>
+        <td colspan="2"><s:textfield id="Declarant_pinOrNic" name="birthAlteration.declarant.declarantNICorPIN"
+                                     maxLength="10"/>
         </td>
     </tr>
     <tr>
