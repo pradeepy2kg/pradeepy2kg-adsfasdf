@@ -91,8 +91,10 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
     private int motherRaceId;
     private int dsDivisionId;
     private int sectionOfAct;
-    private int locationUKey;
-    private Long idUKey;
+    private int locationUKey;  //because of following wrapper we have to check null when we get from idUKey because in
+    // service idUKey is treat as primitive if we unable to check null there is a high chance to pass null to service
+    //  primitive long in that case it will throw a exception because primitive cannot box a null
+    private Long idUKey;     //todo using a wrapper here useless if have time change this to primitive
     private long serialNo; //to be used in the case where search is performed from confirmation 1 page.
     private boolean allowApproveAlteration;
     private boolean nextFlag;
@@ -382,12 +384,19 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         return SUCCESS;
     }
 
+    /**
+     * editing birth alteration
+     * //todo remove BDID which is passing through the URL it is no need to this
+     */
     public String editBirthAlteration() {
-        birthAlteration = alterationService.getByIDUKey(idUKey, user);
+        logger.debug("attempt to edit birth alteration idUKey : {}", idUKey);
+        if (idUKey != null) {
+            birthAlteration = alterationService.getByIDUKey(idUKey, user);
+        }
         if (birthAlteration != null) {
             bdId = birthAlteration.getBdfIDUKey();
             BirthDeclaration bdf = service.getById(bdId);
-            pageType = 1;
+            pageType = 1;  // what is this variable
             //information for search option
             if (bdf != null) {
                 getBirthCertificateInfo(bdf);
@@ -404,13 +413,11 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
                 sectionOfAct = 2;
                 populateAlt52_1(bdf);
             }
-
         }
-
-
         populateBasicLists();
         populateCountryRacesAndAllDSDivisions();
         return SUCCESS;
+        //todo what happen if no record found to edit
     }
 
     private void getBirthCertificateInfo(BirthDeclaration bdf) {

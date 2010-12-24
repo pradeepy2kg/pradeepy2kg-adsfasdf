@@ -12,6 +12,7 @@ INSERT INTO COMMON.APP_PARAMETERS(NAME, VALUE) VALUES('common.event_rows_per_pag
 INSERT INTO COMMON.APP_PARAMETERS(NAME, VALUE) VALUES('rgd.max.number.of.login.attempts', '2');
 INSERT INTO COMMON.APP_PARAMETERS(NAME, VALUE) VALUES('prs.prs_approval_rows_per_page', '50');
 INSERT INTO COMMON.APP_PARAMETERS(NAME, VALUE) VALUES('crs.license_cancel_dates', '90');
+INSERT INTO COMMON.APP_PARAMETERS(NAME, VALUE) VALUES('crs.age_at_last_bd_for_valid_marriage', '18');
 
 -- Countries
 INSERT INTO COMMON.COUNTRIES (COUNTRYID, COUNTRYCODE, SICOUNTRYNAME, ENCOUNTRYNAME, TACOUNTRYNAME) VALUES(1, 'LK', 'ශ්‍රී ලංකාව', 'Sri Lanka', 'ஸ்ரீ லங்கா');
