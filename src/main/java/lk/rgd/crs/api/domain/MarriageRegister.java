@@ -119,7 +119,7 @@ import java.util.Date;
         "WHERE mr.lifeCycleInfo.activeRecord = :active " +
         "ORDER BY mr.idUKey DESC "),
 
-    @NamedQuery(name = "get.mr.by.deo", query = "SELECT mr FROM MarriageRegister mr " +
+    @NamedQuery(name = "get.mr.by.createdUser", query = "SELECT mr FROM MarriageRegister mr " +
         " WHERE mr.lifeCycleInfo.createdUser =:user")
 })
 public class MarriageRegister implements Serializable, Cloneable {

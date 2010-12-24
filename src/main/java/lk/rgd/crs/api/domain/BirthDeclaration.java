@@ -94,7 +94,7 @@ import java.io.Serializable;
                 " ORDER BY bdf.register.dateOfRegistration desc"),
         @NamedQuery(name = "get.bc.count", query = "SELECT COUNT(bdf) FROM BirthDeclaration bdf" +
                 " WHERE bdf.register.status =:status AND (bdf.lifeCycleInfo.createdTimestamp BETWEEN :startDate AND :endDate)"),
-        @NamedQuery(name = "get.bc.by.deo", query = "SELECT bdf FROM BirthDeclaration bdf "+
+        @NamedQuery(name = "get.bc.by.createdUser", query = "SELECT bdf FROM BirthDeclaration bdf "+
                 " WHERE bdf.lifeCycleInfo.createdUser =:user")
 })
 public class BirthDeclaration implements Serializable, Cloneable {

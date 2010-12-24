@@ -307,8 +307,8 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<MarriageRegister> getMarriageCertificateByCreatedUser(User user) {
-        Query q = em.createNamedQuery("get.mr.by.deo");
+    public List<MarriageRegister> getByCreatedUser(User user) {
+        Query q = em.createNamedQuery("get.mr.by.createdUser");
         q.setParameter("user", user);
         return q.getResultList();
     }

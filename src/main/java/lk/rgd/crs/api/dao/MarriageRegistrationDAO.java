@@ -264,5 +264,5 @@ public interface MarriageRegistrationDAO {
      * @param user created user
      * @return list of Marriage Registrations
      */
-    public List<MarriageRegister> getMarriageCertificateByCreatedUser(User user);
+    public List<MarriageRegister> getByCreatedUser(User user);
 }

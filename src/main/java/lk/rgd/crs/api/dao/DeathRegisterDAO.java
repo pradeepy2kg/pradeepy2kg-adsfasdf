@@ -153,7 +153,7 @@ public interface DeathRegisterDAO {
      * @param user  created user
      * @return list of death Registrations
      */
-    public List<DeathRegister> getDeathCertificateByCreatedUser(User user);
+    public List<DeathRegister> getByCreatedUser(User user);
 }
 
 
