@@ -394,11 +394,12 @@ public interface MarriageRegistrationService {
      * to approve male notice and complete approval female party must be approved
      * and vise-versa
      *
-     * @param idUKey idUKey of the marriage notice
-     * @param type   type of the notice
-     * @param user   user who performing the action
+     * @param idUKey         idUKey of the marriage notice
+     * @param type           type of the notice
+     * @param ignoreWarnings ignore warnings and approve
+     * @param user           user who performing the action
      */
-    public void approveMarriageNotice(long idUKey, MarriageNotice.Type type, User user);
+    public List<UserWarning> approveMarriageNotice(long idUKey, MarriageNotice.Type type, boolean ignoreWarnings, User user);
 
     /**
      * reject a marriage notice

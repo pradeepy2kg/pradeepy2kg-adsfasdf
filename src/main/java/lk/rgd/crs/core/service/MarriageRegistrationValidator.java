@@ -1,6 +1,9 @@
 package lk.rgd.crs.core.service;
 
+import lk.rgd.AppConstants;
 import lk.rgd.ErrorCodes;
+import lk.rgd.common.api.dao.AppParametersDAO;
+import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.MarriageRegistrationDAO;
@@ -11,22 +14,29 @@ import lk.rgd.crs.api.service.MarriageRegistrationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author amith jayasekara
  *         validator class for marriage notice and marriage registration processes
  */
 public class MarriageRegistrationValidator {
+    private static final String AGE_AT_LAST_BD_FOR_VALID_MARRIAGE = "crs.age_at_last_bd_for_valid_marriage";
+    private static final ResourceBundle rb_si =
+        ResourceBundle.getBundle("messages/marriage_validation_messages_si", AppConstants.LK_SI);
+    private static final ResourceBundle rb_ta =
+        ResourceBundle.getBundle("messages/marriage_validation_messages_ta", AppConstants.LK_TA);
+    private static final ResourceBundle rb_en =
+        ResourceBundle.getBundle("messages/marriage_validation_messages_en", AppConstants.LK_EN);
+
     private static final Logger logger = LoggerFactory.getLogger(MarriageRegistrationValidator.class);
     private static final String SERIAL_NUMBER_PATTERN = "20([1-9][0-9])[0|1]([0-9]{5})";
     private final MarriageRegistrationDAO marriageRegistrationDAO;
+    private final AppParametersDAO appParametersDAO;
 
-    public MarriageRegistrationValidator(MarriageRegistrationDAO marriageRegistrationDAO) {
+    public MarriageRegistrationValidator(MarriageRegistrationDAO marriageRegistrationDAO, AppParametersDAO appParametersDAO) {
         this.marriageRegistrationDAO = marriageRegistrationDAO;
+        this.appParametersDAO = appParametersDAO;
     }
 
     /**
@@ -86,6 +96,63 @@ public class MarriageRegistrationValidator {
     }
 
     /**
+     * issue user warnings when approving (fully approving) marriage notice
+     * <p> this method issue several user warnings follow are list that this method check
+     * <br><b>note : some warnings are only issue when it is about to change state to NOTICE_APPROVED  and some are issue
+     * when notice is about to change state in to MALE_APPROVED or FEMALE_APPROVED
+     * <br>
+     * <ul>
+     * <li>age at last birth day must be greater than the data base specified value ex:18 for both male <b>and</b>
+     * female </li>
+     * <li>check there any previouse marriages to male <b>or</b> female in PRS </li>
+     * <li>todo issue more</li>
+     * </ul>
+     *
+     * @param existing existing notice
+     * @param type     type of the notice to be approved
+     * @return list of warnings
+     */
+    public List<UserWarning> checkUserWarningsForApproveMarriageNotice(MarriageRegister existing,
+        MarriageNotice.Type type, User user) {
+        List<UserWarning> warning = new ArrayList<UserWarning>();
+        ResourceBundle rb = rb_en;
+        if (AppConstants.SINHALA.equals(user.getPrefLanguage())) {
+            rb = rb_si;
+        } else if (AppConstants.TAMIL.equals(user.getPrefLanguage())) {
+            rb = rb_ta;
+        }
+        validateAgeAtLastBirthDay(existing, type, warning, rb);
+        return warning;
+    }
+
+    /**
+     * if it is a BOTH_NOTICE to be approved we check both male and female age at last bd and if it is a MALE_NOTICE
+     * it would be male party age ata last bd and vise versa
+     */
+    private void validateAgeAtLastBirthDay(MarriageRegister register, MarriageNotice.Type type,
+        List<UserWarning> userWarnings, ResourceBundle rb) {
+        int minAgeForValidMarriage = appParametersDAO.getIntParameter(AGE_AT_LAST_BD_FOR_VALID_MARRIAGE);
+        switch (type) {
+            case BOTH_NOTICE:
+                if (register.getMale().getAgeAtLastBirthDayMale() < minAgeForValidMarriage) {
+                    userWarnings.add(new UserWarning(rb.getString("warn.male.age.last.bd.is.less.than.expected"),
+                        UserWarning.Severity.WARN));
+                }
+            case FEMALE_NOTICE:
+                if (register.getFemale().getAgeAtLastBirthDayFemale() < minAgeForValidMarriage) {
+                    userWarnings.add(new UserWarning(rb.getString("warn.male.age.last.bd.is.less.than.expected"),
+                        UserWarning.Severity.WARN));
+                }
+                break;
+            case MALE_NOTICE:
+                if (register.getMale().getAgeAtLastBirthDayMale() < minAgeForValidMarriage) {
+                    userWarnings.add(new UserWarning(rb.getString("warn.male.age.last.bd.is.less.than.expected"),
+                        UserWarning.Severity.WARN));
+                }
+        }
+    }
+
+    /**
      * this warning is issued in special case
      * assume male is submitting first and he nominate female is to be capture the license ,
      * then before submitting female notice male notice is being approved,
@@ -123,6 +190,8 @@ public class MarriageRegistrationValidator {
             handleException("marriage notice :serial" + serial + ": is incomplete can not add", ErrorCodes.MR_INCOMPLETE_OBJECT);
         }
     }
+
+    // todo 24 validate age and previous marriages 
 
     private static void handleException(String msg, int errorCode) {
         logger.error(msg);

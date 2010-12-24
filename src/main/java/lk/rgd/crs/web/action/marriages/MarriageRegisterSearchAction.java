@@ -12,6 +12,7 @@ import lk.rgd.common.util.NameFormatUtil;
 import lk.rgd.common.util.WebUtils;
 import lk.rgd.common.util.StateUtil;
 import lk.rgd.crs.CRSRuntimeException;
+import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.MRDivisionDAO;
 import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.domain.MarriageNotice;
@@ -59,6 +60,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
 
     private List<MarriageNotice> searchList;
     private List<MarriageRegister> marriageRegisterSearchList;
+    private List<UserWarning> warnings;
 
     private Date searchStartDate;
     private Date searchEndDate;
@@ -92,6 +94,8 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     private String licenseIssueDistrictInEN;
     private String licenseIssueDivisionInOL;
     private String licenseIssueDivisionInEN;
+
+    private boolean ignoreWarnings;
 
     private Map<Integer, String> stateList;
     private int state = -1;
@@ -211,10 +215,19 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
      * action method use to approve a notice this could be male notice or female notice or a single notice type(BOTH)
      */
     public String approveMarriageNotice() {
-        logger.debug("approving marriage notice idUKey : {} and notice type : {}", idUKey, noticeType);
+        if (logger.isDebugEnabled()) {
+            logger.debug("approving marriage notice idUKey : " + idUKey + " and notice type : " + noticeType +
+                " and with ignore warnings : " + ignoreWarnings);
+        }
         try {
-            marriageRegistrationService.approveMarriageNotice(idUKey, noticeType, user);
-            addActionMessage(getText("message.approve.success", new String[]{Long.toString(idUKey), noticeType.toString()}));
+            warnings = marriageRegistrationService.
+                approveMarriageNotice(idUKey, noticeType, ignoreWarnings, user);
+            if (warnings.size() > 0) {
+                //if warning size is more than 0 we forward in to approval warning page
+                return "warning";
+            }
+            addActionMessage(getText("message.approve.success",
+                new String[]{Long.toString(idUKey), noticeType.toString()}));
             logger.debug("successfully approved marriage notice idUKey : {} and notice type :{ }", idUKey, noticeType);
         } catch (CRSRuntimeException e) {
             //error happens when approving marriage notice
@@ -227,7 +240,6 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId, dsDivisionId,
             mrDivisionId, AppConstants.MARRIAGE, user, language);
         getApprovalPendingNotices();
-        logger.debug("successfully approved :idUKey : {}", idUKey);
         return SUCCESS;
     }
 
@@ -872,5 +884,21 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
 
     public void setState(int state) {
         this.state = state;
+    }
+
+    public boolean isIgnoreWarnings() {
+        return ignoreWarnings;
+    }
+
+    public void setIgnoreWarnings(boolean ignoreWarnings) {
+        this.ignoreWarnings = ignoreWarnings;
+    }
+
+    public List<UserWarning> getWarnings() {
+        return warnings;
+    }
+
+    public void setWarnings(List<UserWarning> warnings) {
+        this.warnings = warnings;
     }
 }

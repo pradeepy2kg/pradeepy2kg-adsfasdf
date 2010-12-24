@@ -1,7 +1,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <s:if test="userWarnings.size()>0">
-
+    <%--warnings from adding--%>
     <table>
         <caption/>
         <col/>
@@ -34,3 +34,4 @@
         </s:form>
     </div>
 </s:if>
+<%--warnings from approval--%>

@@ -1251,6 +1251,7 @@
                 method="approveMarriageNotice">
             <result type="tiles" name="success">epr.marriageNoticeSearchHome</result>
             <result type="tiles" name="error">epr.marriageNoticeSearchHome</result>
+            <result type="tiles" name="warning">epr.marriageNoticeWarn</result>
         </action>
 
         <action name="eprMarriageExtractInit" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"

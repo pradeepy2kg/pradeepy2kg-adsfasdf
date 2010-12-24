@@ -374,8 +374,9 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     /**
      * @inheritDoc
      */
+    //todo made idUKey to Long otherwise if null pass to the method it gives exception (null are cannot box to primitive long  amith urgent)
     @Transactional(propagation = Propagation.REQUIRED)
-    public void approveMarriageNotice(long idUKey, MarriageNotice.Type type, User user) {
+    public List<UserWarning> approveMarriageNotice(long idUKey, MarriageNotice.Type type, boolean ignoreWarnings, User user) {
         logger.debug("attempt to approve marriage notice with idUKey : {} and notice type : {}", idUKey, type);
         //todo can any ADR approve dis
         //check is user has permission to perform this task
@@ -416,8 +417,20 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         //now we change state in to approving but if we changed state in to notice approve state there can't be another
         //record that have same state for same male party and female party pin numbers
         checkExistingActiveApprovedNotices(existingNotice, user);
-        marriageRegistrationDAO.updateMarriageRegister(existingNotice, user);
+        List<UserWarning> warnings = marriageRegistrationValidator.
+            checkUserWarningsForApproveMarriageNotice(existingNotice, type, user);
+        if (warnings != null && warnings.size() > 0 && !ignoreWarnings) {
+            if (logger.isDebugEnabled()) {
+                logger.debug("warnings found while approving marriage notice idUKey :" + existingNotice.getIdUKey() +
+                    " notice type :" + type + " current notice state :" + existingNotice.getState());
+            }
+            return warnings;
+        }
+        if (warnings.size() == 0 || ignoreWarnings) {
+            marriageRegistrationDAO.updateMarriageRegister(existingNotice, user);
+        }
         logger.debug("successfully  approved marriage notice with idUKey : {} and notice type : {}", idUKey, type);
+        return Collections.emptyList();
     }
 
     /**
