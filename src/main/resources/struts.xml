@@ -1027,8 +1027,15 @@
             <result type="tiles" name="success">epr.birthAlterationResult</result>
             <result type="tiles" name="error">epr.birthAlteration</result>
         </action>
+        <action name="eprEditBirthAlterationInit" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
+                method="editBirthAlterationInit">
+            <result type="tiles" name="success">epr.birthAlteration</result>
+            <result type="tiles" name="error">epr.birthAlteration</result>
+        </action>
+
         <action name="eprEditBirthAlteration" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
                 method="editBirthAlteration">
+            <result type="tiles" name="success">epr.birthAlterationResult</result>
             <result type="tiles" name="error">epr.birthAlteration</result>
         </action>
 

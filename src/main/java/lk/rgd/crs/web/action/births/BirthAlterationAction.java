@@ -7,6 +7,7 @@ import lk.rgd.common.api.domain.Country;
 import lk.rgd.common.api.domain.Race;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.GenderUtil;
+import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.BirthAlterationService;
@@ -91,10 +92,11 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
     private int motherRaceId;
     private int dsDivisionId;
     private int sectionOfAct;
-    private int locationUKey;  //because of following wrapper we have to check null when we get from idUKey because in
-    // service idUKey is treat as primitive if we unable to check null there is a high chance to pass null to service
-    //  primitive long in that case it will throw a exception because primitive cannot box a null
-    private Long idUKey;     //todo using a wrapper here useless if have time change this to primitive
+    private int locationUKey;
+    /*because of following wrapper we have to check null when we get from idUKey because in
+     service idUKey is treat as primitive if we unable to check null there is a high chance to pass null to service
+      primitive long in that case it will throw a exception because primitive cannot box a null */
+    private Long idUKey;     //todo using a wrapper here useless if have time change this to primitive(amith)
     private long serialNo; //to be used in the case where search is performed from confirmation 1 page.
     private boolean allowApproveAlteration;
     private boolean nextFlag;
@@ -320,6 +322,12 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         birthAlteration.setAlt27A(alt27A);
     }
 
+    /**
+     * review's by amith
+     * this name is not appropriate change it
+     * what happen of editing and adding process fails
+     * use separate action methods for adding and editing birth alterations
+     */
     public String birthAlteration() {
         if (idUKey != null) {
             birthAlteration = alterationService.getByIDUKey(idUKey, user);
@@ -385,11 +393,72 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
     }
 
     /**
-     * editing birth alteration
-     * //todo remove BDID which is passing through the URL it is no need to this
+     * this is the method that up dates the birth alteration at data entry mode
      */
     public String editBirthAlteration() {
-        logger.debug("attempt to edit birth alteration idUKey : {}", idUKey);
+        logger.debug("attempt to edit birth alteration for idUKey : {} ", idUKey);
+        //loading existing alteration object
+        BirthAlteration existingBirthAlteration = null;
+        if (idUKey != null) {
+            existingBirthAlteration = alterationService.getByIDUKey(idUKey, user);
+        }
+        if (existingBirthAlteration != null) {
+            try {
+                //now we found existing alteration now we populate existing alteration with updated values
+                populateBirthAlterationForUpdate(existingBirthAlteration, birthAlteration);
+                //todo call to a edit service method amith following is temporary solution
+                alterationService.updateBirthAlteration(existingBirthAlteration, user);
+                logger.debug("birth alteration update success fully : {}", idUKey);
+            }
+            catch (CRSRuntimeException exception) {
+                logger.debug("unable to update birth alteration idUKey : {}", idUKey);
+                addActionError(getText("error.unable.to.edit", new String[]{"" + idUKey}));
+                return ERROR;
+            }
+        } else {
+            logger.debug("unable to find birth alteration record for the alteration idUKey : {}", idUKey);
+            addActionError(getText("error.unable.to.edit", new String[]{"" + idUKey}));
+            return ERROR;
+        }
+        return SUCCESS;
+    }
+
+    private void populateBirthAlterationForUpdate(BirthAlteration existing, BirthAlteration updated) {
+        //there are 3 acts in birth alteration and one and only one get populated for on alteration
+        switch (existing.getType()) {
+            case TYPE_27: {
+                //only populate ALT 27 A object
+                existing.setAlt27(updated.getAlt27());
+            }
+            break;
+            case TYPE_27A: {
+                existing.setAlt27A(updated.getAlt27A());
+            }
+            break;
+            //all following cases are treat as same only different is how the approve
+            case TYPE_52_1_A:
+            case TYPE_52_1_B:
+            case TYPE_52_1_D:
+            case TYPE_52_1_E:
+            case TYPE_52_1_H:
+            case TYPE_52_1_I: {
+                existing.setAlt52_1(updated.getAlt52_1());
+            }
+        }
+        //populate other fields that can be edit
+        existing.setDateReceived(updated.getDateReceived());
+        existing.setDeclarant(updated.getDeclarant());
+    }
+
+    /**
+     * editing birth alteration
+     * review by amith
+     * this method name should be editBithAlterationInit
+     * this is just load the page do nothing else
+     * //todo remove BDID which is passing through the URL it is no need to this
+     */
+    public String editBirthAlterationInit() {
+        logger.debug("attempt to load edit page for  birth alteration idUKey : {}", idUKey);
         if (idUKey != null) {
             birthAlteration = alterationService.getByIDUKey(idUKey, user);
         }
@@ -417,7 +486,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         populateBasicLists();
         populateCountryRacesAndAllDSDivisions();
         return SUCCESS;
-        //todo what happen if no record found to edit
+        //todo what happen if no record found to edit       no error massage
     }
 
     private void getBirthCertificateInfo(BirthDeclaration bdf) {

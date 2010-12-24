@@ -153,7 +153,8 @@
         }
     }
 
-    function initPage(){}
+    function initPage() {
+    }
 </script>
 
 
@@ -294,7 +295,7 @@
 
                 <td align="center">
                     <s:if test="(status.ordinal() ==0)">
-                        <s:url id="editSelected" action="eprEditBirthAlteration.do">
+                        <s:url id="editSelected" action="eprEditBirthAlterationInit.do">
                             <s:param name="idUKey" value="idUKey"/>
                             <s:param name="bdId" value="bdfIDUKey"/>
                             <s:param name="nextFlag" value="%{#request.nextFlag}"/>
@@ -322,7 +323,8 @@
                             <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
                         </s:url>
                         <s:a href="%{applySelected}">
-                            <img src="<s:url value='/images/print_icon.gif'/>" width="25" height="25" border="none"/></s:a>
+                            <img src="<s:url value='/images/print_icon.gif'/>" width="25" height="25"
+                                 border="none"/></s:a>
                     </s:if>
                 </td>
             </tr>
