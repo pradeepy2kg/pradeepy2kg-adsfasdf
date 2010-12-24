@@ -5,239 +5,209 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <s:actionerror cssStyle="color:red;font-size:10pt"/>
 <s:actionmessage/>
-
 <script type="text/javascript" src="/ecivil/lib/jquery/jquery.jqplot.js"></script>
 <script type="text/javascript" src="/ecivil/lib/jquery/jqplot.categoryAxisRenderer.js"></script>
 <script type="text/javascript" src="/ecivil/lib/jquery/jqplot.barRenderer.js"></script>
 <script type="text/javascript" src="/ecivil/lib/jquery/jqplot.pieRenderer.min.js"></script>
 <script type="text/javascript" src="<s:url value="/js/chartCreator.js"/>"></script>
 
-<style type="text/css" title="currentStyle">
-    @import "../lib/datatables/media/css/demo_page.css";
-    @import "../lib/datatables/media/css/demo_table.css";
-    @import "../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css";
-</style>
-<script type="text/javascript" language="javascript" src="../../lib/datatables/media/js/jquery.dataTables.js"></script>
-<script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
-<script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
-<link rel="stylesheet" href="../../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
-
 <link rel="stylesheet" type="text/css" href="/ecivil/css/jquery.jqplot.css"/>
+
 <s:hidden id="userName" value="%{userName}"/>
 
 <div id="outer-div">
 
-<script type="text/javascript">
-    $(function() {
-        $('select#district').bind('change', function(evt1) {
-            var id = $("select#district").attr("value");
+    <script type="text/javascript">
+        $(function() {
+            $('select#district').bind('change', function(evt1) {
+                var id = $("select#district").attr("value");
 
-            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:13},
-                    function(data) {
-                        var options1 = '';
-                        var ds = data.dsDivisionList;
-                        for (var i = 0; i < ds.length; i++) {
-                            options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
-                        }
-                        $("select#dsDivision").html(options1);
+                $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:13},
+                        function(data) {
+                            var options1 = '';
+                            var ds = data.dsDivisionList;
+                            for (var i = 0; i < ds.length; i++) {
+                                options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                            }
+                            $("select#dsDivision").html(options1);
 
-                        /*var options2 = '';
-                         var bd = data.deoList;
-                         for (var j = 0; j < bd.length; j++) {
-                         options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
-                         }
-                         $("select#deoUser").html(options2);*/
-                    });
+                        });
+            });
+
         });
 
-        /*$('select#dsDivision').bind('change', function(evt1) {
-         var id = $("select#dsDivision").attr("value");
+        $(document).ready(function() {
+            var userType = 'rg';
+            var statType = 'all';
+            var mode = 'commonStatInfo';
 
-         $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:14},
-         function(data) {
-         var options1 = '';
-         var ds = data.deoList;
-         for (var i = 0; i < ds.length; i++) {
-         options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
-         }
-         $("select#deoUser").html(options1);
-         });
-         });
-         */
-    });
+            $.getJSON('/ecivil/crs/StatisticsLookupService',
+            {
+                userType:userType,
+                statType:statType,
+                mode:mode
+            },
+                    function(data) {
+                        drawHorizontalBarChart(data.late_b, data.normal_b, 'Late', 'Normal', 'nw');
+                        drawHorizontalBarChart(data.late_d, data.normal_d, 'Late', 'Normal', 'sw');
+                        drawPieChart(data, 'ne', 'birth');
+                        drawPieChart(data, 'se', 'death');
+                    }
+                    );
 
-    $(document).ready(function() {
-        var userType = 'rg';
-        var statType = 'all';
-        var mode = 'commonStatInfo';
+        });
 
-        $.getJSON('/ecivil/crs/StatisticsLookupService',
-        {
-            userType:userType,
-            statType:statType,
-            mode:mode
-        },
-                function(data) {
-                    drawHorizontalBarChart(data.late_b, data.normal_b, 'Late', 'Normal', 'nw');
-                    drawHorizontalBarChart(data.late_d, data.normal_d, 'Late', 'Normal', 'sw');
-                    drawPieChart(data, 'ne', 'birth');
-                    drawPieChart(data, 'se', 'death');
-                }
-                );
+        function initPage() {
+        }
 
-    });
+    </script>
 
-    function initPage() {
-    }
+    <style type="text/css">
+        table, tr, td, th {
+            border-collapse: collapse;
+            border: 1px solid #fff;
+        }
 
-</script>
+        td {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
 
-<style type="text/css">
-    table, tr, td, th {
-        border-collapse: collapse;
-        border: 1px solid #fff;
-    }
+        tr.e {
+            background-color: #E4ECFC;
+            height: 35px;
+        }
 
-    td {
-        padding-left: 10px;
-        padding-right: 10px;
-    }
+        th {
+            height: 35px;
+            background-color: #A9D0F5;
+            padding: 10px;
+            color: #08088A;
+            font-size: 14px;
+            font-weight: lighter;
+        }
 
-    tr.e {
-        background-color: #E4ECFC;
-        height: 35px;
-    }
+        ul {
+            margin-top: 0;
+            padding: 0;
+        }
 
-    th {
-        height: 35px;
-        background-color: #A9D0F5;
-        padding: 10px;
-        color: #08088A;
-        font-size: 14px;
-        font-weight: lighter;
-    }
+        #custom {
+            margin-top: 15px;
+        }
 
-    ul {
-        margin-top: 0;
-        padding: 0;
-    }
+        #stat {
+            width: 90%;
+            height: 600px;
+            background-color: #f0f8ff;
+            margin: 0 auto;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            display: block;
+            border: #87cefa 1px solid;
+        }
 
-    #custom {
-        margin-top: 15px;
-    }
+        #n, #s {
+            width: 90%;
+            height: 240px;
+            padding: 0px;
+            margin: 0 auto;
+            margin-top: 10px;
+        }
 
-    #stat {
-        width: 90%;
-        height: 600px;
-        background-color: #f0f8ff;
-        margin: 0 auto;
-        margin-top: 20px;
-        margin-bottom: 20px;
-        display: block;
-        border: #87cefa 1px solid;
-    }
+        #nw, #sw {
+            width: 48%;
+            height: 240px;
+            position: relative;
+            float: left;
+            margin: auto;
+            border: #87cefa 1px solid;
+        }
 
-    #n, #s {
-        width: 90%;
-        height: 240px;
-        padding: 0px;
-        margin: 0 auto;
-        margin-top: 10px;
-    }
+        #ne, #se {
+            width: 48%;
+            height: 240px;
+            position: relative;
+            float: right;
+            margin: auto;
+            border: #87cefa 1px solid;
+        }
 
-    #nw, #sw {
-        width: 48%;
-        height: 240px;
-        position: relative;
-        float: left;
-        margin: auto;
-        border: #87cefa 1px solid;
-    }
+        #births, #deaths {
+            width: 90%;
+            height: 30px;
+            margin: 0 auto;
+            text-align: center;
+            color: #333;
+            font-size: 16px;
+            padding-top: 10px;
+        }
 
-    #ne, #se {
-        width: 48%;
-        height: 240px;
-        position: relative;
-        float: right;
-        margin: auto;
-        border: #87cefa 1px solid;
-    }
+    </style>
 
-    #births, #deaths {
-        width: 90%;
-        height: 30px;
-        margin: 0 auto;
-        text-align: center;
-        color: #333;
-        font-size: 16px;
-        padding-top: 10px;
-    }
-
-</style>
-
-<div id="custom">
-    <%--    <form action="#">--%>
-    <table align="center" cellpadding="0" cellspacing="0" width="90%">
-        <tbody>
-        <tr class="e" bgcolor="#eeeeee">
-            <th colspan="4" align="left">Custom Search</th>
-        </tr>
-        <tr class="e">
-            <td width="20%">District</td>
-            <td width="30%">
-                <s:select
-                        id="district"
-                        name="districtId"
-                        list="districtList"
-                        />
-            </td>
-            <td width="20%">DSDivision</td>
-            <td width="30%">
-                <s:select
-                        id="dsDivision"
-                        name="dsDivisionId"
-                        list="divisionList"
-                        />
-            </td>
-        </tr>
-        <tr class="e">
-            <td>Start Date</td>
-            <td>
-                <s:textfield id="sdate" name="startDate"/>
-            </td>
-            <td>End Date</td>
-            <td>
-                <s:textfield id="edate" name="endDate"/>
-            </td>
-        </tr>
-        <tr class="e">
-            <%--<td>DEO</td>
-            <td>
-                <s:select
-                        id="deoUser"
-                        name="deoUserId"
-                        list="deoList"
-                        />
-            </td>--%>
-            <td colspan="4"><s:submit/></td>
-            <%--<td>&nbsp;</td>--%>
-        </tr>
-        </tbody>
-    </table>
-    <%--    </form>--%>
-</div>
-<div id="stat">
-    <div id="births">Births Statistics</div>
-    <div id="n">
-        <div id="nw"></div>
-        <div id="ne"></div>
+    <div id="custom">
+        <%--    <form action="#">--%>
+        <table align="center" cellpadding="0" cellspacing="0" width="90%">
+            <tbody>
+            <tr class="e" bgcolor="#eeeeee">
+                <th colspan="4" align="left">Custom Search</th>
+            </tr>
+            <tr class="e">
+                <td width="20%">District</td>
+                <td width="30%">
+                    <s:select
+                            id="district"
+                            name="districtId"
+                            list="districtList"
+                            />
+                </td>
+                <td width="20%">DSDivision</td>
+                <td width="30%">
+                    <s:select
+                            id="dsDivision"
+                            name="dsDivisionId"
+                            list="divisionList"
+                            />
+                </td>
+            </tr>
+            <tr class="e">
+                <td>Start Date</td>
+                <td>
+                    <s:textfield id="sdate" name="startDate"/>
+                </td>
+                <td>End Date</td>
+                <td>
+                    <s:textfield id="edate" name="endDate"/>
+                </td>
+            </tr>
+            <tr class="e">
+                <%--<td>DEO</td>
+                <td>
+                    <s:select
+                            id="deoUser"
+                            name="deoUserId"
+                            list="deoList"
+                            />
+                </td>--%>
+                <td colspan="4"><s:submit/></td>
+                <%--<td>&nbsp;</td>--%>
+            </tr>
+            </tbody>
+        </table>
+        <%--    </form>--%>
     </div>
+    <div id="stat">
+        <div id="births">Births Statistics</div>
+        <div id="n">
+            <div id="nw"></div>
+            <div id="ne"></div>
+        </div>
 
-    <div id="deaths">Deaths Statistics</div>
-    <div id="s">
-        <div id="sw"></div>
-        <div id="se"></div>
+        <div id="deaths">Deaths Statistics</div>
+        <div id="s">
+            <div id="sw"></div>
+            <div id="se"></div>
+        </div>
     </div>
-</div>
 
 </div>
