@@ -44,7 +44,6 @@
             අනන්‍යතා අංකය
             <br>அடையாள எண்
             <br>Identification Number
-            <br>
             <br>(PIN)
         </td>
         <td rowspan="2">
@@ -66,7 +65,7 @@
     </tr>
     <tr>
         <td colspan="2">
-            <br>තාවකාලික අනන්‍යතා අංකය
+            තාවකාලික අනන්‍යතා අංකය
             <br>இலக்கம் அல்லது தற்காலிக அடையாள
             <br>Temporary Identification number
         </td>
@@ -129,7 +128,7 @@
             <s:label name="" value="%{gender}"/>
         </td>
         <td>
-            සිවිල් තත්වය
+            සිවිල් තත්ත්වය
             <br>சிவில் நிலைமை
             <br>Civil Status
         </td>
@@ -355,7 +354,7 @@
     <tr>
         <td>
             පියා
-            <br>தந்தையின்முழுப்
+            <br>தந்தை
             <br>Father
         </td>
         <td><s:label value="%{person.father.pin}"/></td>
@@ -514,12 +513,12 @@
                 <td height="60px"><s:property value="dateOfMarriage"/></td>
                 <td><s:property value="Law"/></td>
                 <td><s:property value="placeOfMarriage"/></td>
-                <s:if test="person.gender == 0">
+                <s:if test="person.gender == 1">
                     <td><s:property value="groom.pin"/></td>
                     <td><s:property value="groom.dateOfBirth"/></td>
                     <td><s:property value="groom.fullNameInOfficialLanguage"/></td>
                 </s:if>
-                <s:elseif test="person.gender == 1">
+                <s:elseif test="person.gender == 0">
                     <td><s:property value="bride.pin"/></td>
                     <td><s:property value="bride.dateOfBirth"/></td>
                     <td><s:property value="bride.fullNameInOfficialLanguage"/></td>
