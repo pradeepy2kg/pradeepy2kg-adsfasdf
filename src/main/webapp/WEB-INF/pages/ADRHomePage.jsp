@@ -287,11 +287,13 @@
         <td colspan="2">
             <table width="100%">
                 <tr>
-                    <td class="info" width="60%">All Pending : <input type="text" id="all_pending_d" class="noStyle" readonly="true"
-                                                          maxlength="3"/></td>
+                    <td class="info" width="60%">All Pending : <input type="text" id="all_pending_d" class="noStyle"
+                                                                      readonly="true"
+                                                                      maxlength="3"/></td>
                     <td class="info" width="40%"><label class="issue">Arrears : <input type="text" id="arrears_d"
-                                                                           class="noStyle_red"
-                                                                           readonly="true" maxlength="3"/></label></td>
+                                                                                       class="noStyle_red"
+                                                                                       readonly="true"
+                                                                                       maxlength="3"/></label></td>
 
                 </tr>
             </table>
@@ -309,11 +311,13 @@
         <td colspan="2">
             <table width="100%">
                 <tr>
-                    <td class="info" width="60%">Total Submitted Items : <input type="text" id="total_submitted_d" class="noStyle"
-                                                                    readonly="true" maxlength="3"/></td>
+                    <td class="info" width="60%">Total Submitted Items : <input type="text" id="total_submitted_d"
+                                                                                class="noStyle"
+                                                                                readonly="true" maxlength="3"/></td>
                     <td class="info" width="40%"><label class="issue">Late Items : <input type="text" id="late_d"
-                                                                              class="noStyle_red"
-                                                                              readonly="true" maxlength="3"/></label>
+                                                                                          class="noStyle_red"
+                                                                                          readonly="true"
+                                                                                          maxlength="3"/></label>
                     </td>
                 </tr>
             </table>
