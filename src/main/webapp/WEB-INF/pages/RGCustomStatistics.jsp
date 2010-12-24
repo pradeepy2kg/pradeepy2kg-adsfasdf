@@ -6,10 +6,10 @@
 <s:actionerror cssStyle="color:red;font-size:10pt"/>
 <s:actionmessage/>
 
-<script type="text/javascript" src="lib/jquery/jquery.jqplot.js"></script>
-<script type="text/javascript" src="lib/jquery/jqplot.categoryAxisRenderer.js"></script>
-<script type="text/javascript" src="lib/jquery/jqplot.barRenderer.js"></script>
-<script type="text/javascript" src="lib/jquery/jqplot.pieRenderer.min.js"></script>
+<script type="text/javascript" src="/ecivil/lib/jquery/jquery.jqplot.js"></script>
+<script type="text/javascript" src="/ecivil/lib/jquery/jqplot.categoryAxisRenderer.js"></script>
+<script type="text/javascript" src="/ecivil/lib/jquery/jqplot.barRenderer.js"></script>
+<script type="text/javascript" src="/ecivil/lib/jquery/jqplot.pieRenderer.min.js"></script>
 <script type="text/javascript" src="<s:url value="/js/chartCreator.js"/>"></script>
 
 <style type="text/css" title="currentStyle">
@@ -22,7 +22,7 @@
 <script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
 <link rel="stylesheet" href="../../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 
-<link rel="stylesheet" type="text/css" href="css/jquery.jqplot.css"/>
+<link rel="stylesheet" type="text/css" href="/ecivil/css/jquery.jqplot.css"/>
 <s:hidden id="userName" value="%{userName}"/>
 
 <div id="outer-div">
@@ -42,28 +42,28 @@
                         $("select#dsDivision").html(options1);
 
                         /*var options2 = '';
-                        var bd = data.deoList;
-                        for (var j = 0; j < bd.length; j++) {
-                            options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
-                        }
-                        $("select#deoUser").html(options2);*/
+                         var bd = data.deoList;
+                         for (var j = 0; j < bd.length; j++) {
+                         options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
+                         }
+                         $("select#deoUser").html(options2);*/
                     });
         });
 
         /*$('select#dsDivision').bind('change', function(evt1) {
-            var id = $("select#dsDivision").attr("value");
+         var id = $("select#dsDivision").attr("value");
 
-            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:14},
-                    function(data) {
-                        var options1 = '';
-                        var ds = data.deoList;
-                        for (var i = 0; i < ds.length; i++) {
-                            options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
-                        }
-                        $("select#deoUser").html(options1);
-                    });
-        });
-*/
+         $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:14},
+         function(data) {
+         var options1 = '';
+         var ds = data.deoList;
+         for (var i = 0; i < ds.length; i++) {
+         options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+         }
+         $("select#deoUser").html(options1);
+         });
+         });
+         */
     });
 
     $(document).ready(function() {
@@ -78,8 +78,8 @@
             mode:mode
         },
                 function(data) {
-                    drawHorizontalBarChart(data, 'nw', null, null, 1, 'birth');
-                    drawHorizontalBarChart(data, 'sw', null, null, 1, 'death');
+                    drawHorizontalBarChart(data.late_b, data.normal_b, 'Late', 'Normal', 'nw');
+                    drawHorizontalBarChart(data.late_d, data.normal_d, 'Late', 'Normal', 'sw');
                     drawPieChart(data, 'ne', 'birth');
                     drawPieChart(data, 'se', 'death');
                 }

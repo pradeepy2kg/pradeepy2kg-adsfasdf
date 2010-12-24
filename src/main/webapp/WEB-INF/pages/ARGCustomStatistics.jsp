@@ -6,10 +6,10 @@
 <s:actionerror cssStyle="color:red;font-size:10pt"/>
 <s:actionmessage/>
 
-<script type="text/javascript" src="lib/jquery/jquery.jqplot.js"></script>
-<script type="text/javascript" src="lib/jquery/jqplot.categoryAxisRenderer.js"></script>
-<script type="text/javascript" src="lib/jquery/jqplot.barRenderer.js"></script>
-<script type="text/javascript" src="lib/jquery/jqplot.pieRenderer.min.js"></script>
+<script type="text/javascript" src="/ecivil/lib/jquery/jquery.jqplot.js"></script>
+<script type="text/javascript" src="/ecivil/lib/jquery/jqplot.categoryAxisRenderer.js"></script>
+<script type="text/javascript" src="/ecivil/lib/jquery/jqplot.barRenderer.js"></script>
+<script type="text/javascript" src="/ecivil/lib/jquery/jqplot.pieRenderer.min.js"></script>
 <script type="text/javascript" src="<s:url value="/js/chartCreator.js"/>"></script>
 
 <style type="text/css" title="currentStyle">
@@ -22,7 +22,7 @@
 <script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
 <link rel="stylesheet" href="../../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 
-<link rel="stylesheet" type="text/css" href="css/jquery.jqplot.css"/>
+<link rel="stylesheet" type="text/css" href="/ecivil/css/jquery.jqplot.css"/>
 <s:hidden id="userName" value="%{userName}"/>
 
 <div id="outer-div">
@@ -77,9 +77,9 @@
             statType:statType,
             mode:mode
         },
-                function(data) {
-                    drawHorizontalBarChart(data, 'nw', null, null, 1, 'birth');
-                    drawHorizontalBarChart(data, 'sw', null, null, 1, 'death');
+                function(data) {               
+                    drawHorizontalBarChart(data.late_b, data.normal_b, 'Late', 'Normal', 'nw');
+                    drawHorizontalBarChart(data.late_d, data.normal_d, 'Late', 'Normal', 'sw');
                     drawPieChart(data, 'ne', 'birth');
                     drawPieChart(data, 'se', 'death');
                 }
