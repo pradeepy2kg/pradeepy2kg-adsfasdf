@@ -1975,15 +1975,13 @@ public class BirthRegistrationServiceImpl implements
         int approved = 0;
         int rejected = 0;
 
-        List<BirthDeclaration> bdfList = birthDeclarationDAO.getBirthCertificateByCreatedUser(userManager.getUserByID(user));
-        Iterator<BirthDeclaration> i = bdfList.iterator();
-        while (i.hasNext()) {
-            BirthDeclaration bdf = i.next();
+        List<BirthDeclaration> bdfList = birthDeclarationDAO.getByCreatedUser(userManager.getUserByID(user));
+        for (BirthDeclaration bdf : bdfList) {
             if (bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED) {
                 approved += 1;
             } else if (bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_REJECTED) {
                 rejected += 1;
-            } else if(bdf.getRegister().getStatus() == BirthDeclaration.State.DATA_ENTRY) {
+            } else if (bdf.getRegister().getStatus() == BirthDeclaration.State.DATA_ENTRY) {
                 data_entry += 1;
             }
         }

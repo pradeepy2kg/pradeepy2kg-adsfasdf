@@ -393,10 +393,8 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         int approved = 0;
         int rejected = 0;
 
-        List<DeathRegister> bdfList = deathRegisterDAO.getDeathCertificateByCreatedUser(userManager.getUserByID(user));
-        Iterator<DeathRegister> i = bdfList.iterator();
-        while (i.hasNext()) {
-            DeathRegister dr = i.next();
+        List<DeathRegister> deathList = deathRegisterDAO.getByCreatedUser(userManager.getUserByID(user));
+        for (DeathRegister dr : deathList) {
             if (dr.getStatus() == DeathRegister.State.APPROVED) {
                 approved += 1;
             } else if (dr.getStatus() == DeathRegister.State.REJECTED) {

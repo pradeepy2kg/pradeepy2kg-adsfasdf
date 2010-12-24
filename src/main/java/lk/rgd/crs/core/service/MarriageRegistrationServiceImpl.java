@@ -782,10 +782,8 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         int approved = 0;
         int rejected = 0;
 
-        List<MarriageRegister> bdfList = marriageRegistrationDAO.getMarriageCertificateByCreatedUser(userManager.getUserByID(user));
-        Iterator<MarriageRegister> i = bdfList.iterator();
-        while (i.hasNext()) {
-            MarriageRegister mr = i.next();
+        List<MarriageRegister> mrList = marriageRegistrationDAO.getByCreatedUser(userManager.getUserByID(user));
+        for (MarriageRegister mr : mrList) {
             if (mr.getState() == MarriageRegister.State.NOTICE_APPROVED) {
                 approved += 1;
             } else if (mr.getState() == MarriageRegister.State.NOTICE_REJECTED) {

@@ -309,6 +309,6 @@ public interface BirthDeclarationDAO {
      * @param user  created user
      * @return list of birth declarations
      */
-    public List<BirthDeclaration> getBirthCertificateByCreatedUser(User user);
+    public List<BirthDeclaration> getByCreatedUser(User user);
 }
 
