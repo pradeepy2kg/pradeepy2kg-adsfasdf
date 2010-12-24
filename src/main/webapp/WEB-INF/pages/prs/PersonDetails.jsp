@@ -81,8 +81,8 @@
             <br>Date of birth
         </td>
         <td>
-            <s:label value="YYYY-MM-DD" cssStyle="margin-left:5px;font-size:10px"/><br>
-            <s:label value="%{person.dateOfBirth}"/>
+            <s:label value="%{person.dateOfBirth}"/><br>
+            <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
         </td>
         <td>
             උපන් ස්ථානය
@@ -95,7 +95,7 @@
     </tr>
     <tr>
         <td>
-            ජීවමාන තත්වය
+            ජීවමාන තත්ත්වය
             <br>பிறந்த திகதி
             <br>Life status
         </td>
