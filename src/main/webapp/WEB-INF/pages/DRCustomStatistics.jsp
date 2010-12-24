@@ -39,7 +39,7 @@
     }
 
     .info {
-        padding-left: 10px;
+        padding-left: 20px;
     }
 
     .topic {
@@ -59,6 +59,7 @@
     .noStyle_red {
         border-style: none;
         color: red;
+        text-align:right;
     }
 
     .issue {
@@ -148,7 +149,7 @@
 
     </script>
     <div id="space"></div>
-    <table border="0" width="100%">
+    <table width="100%" cellpadding="0" cellspacing="0">
         <%-- start --%>
         <tr class="e" bgcolor="#eeeeee">
             <th colspan="4" align="left">Custom Search</th>
@@ -200,15 +201,21 @@
             </td>
         </tr>
         <tr>
-            <td class="info">
-                All Pending :
-                <input type="text" id="all_pending_b" class="noStyle" readonly="true" maxlength="3"/>
-            </td>
-            <td class="info">
-                <label class="issue">
-                    Arrears :
-                    <input type="text" id="arrears_b" class="noStyle_red" readonly="true" maxlength="3"/>
-                </label>
+            <td colspan="2">
+            <table width="100%">
+                <tr>
+                    <td class="info" width="60%">
+                        All Pending :
+                        <input type="text" id="all_pending_b" class="noStyle" readonly="true" maxlength="3"/>
+                    </td>
+                    <td class="info"  width="40%">
+                        <label class="issue">
+                            Arrears :
+                            <input type="text" id="arrears_b" class="noStyle_red" readonly="true" maxlength="3"/>
+                        </label>
+                    </td>
+                    </tr>
+            </table>
             </td>
             <td colspan="2" rowspan="4" class="pie">
                 <div id="chart3"></div>
@@ -220,15 +227,21 @@
             </td>
         </tr>
         <tr>
-            <td class="info">
-                Total Submitted Items :
-                <input type="text" id="total_submitted_b" class="noStyle" readonly="true" maxlength="3"/>
-            </td>
-            <td class="info">
-                <label class="issue">
-                    Late Items :
-                    <input type="text" id="late_b" class="noStyle_red" readonly="true" maxlength="3"/>
-                </label>
+            <td colspan="2">
+            <table width="100%">
+                <tr>
+                    <td class="info"  width="60%">
+                        Total Submitted Items :
+                        <input type="text" id="total_submitted_b" class="noStyle" readonly="true" maxlength="3"/>
+                    </td>
+                    <td class="info"  width="40%">
+                        <label class="issue">
+                            Late Items :
+                            <input type="text" id="late_b" class="noStyle_red" readonly="true" maxlength="3"/>
+                        </label>
+                    </td>
+                </tr>
+            </table>
             </td>
         </tr>
         <tr>
@@ -242,10 +255,16 @@
             </td>
         </tr>
         <tr>
-            <td class="info">All Pending : <input type="text" id="all_pending_d" class="noStyle" readonly="true"
-                                                  maxlength="3"/></td>
-            <td class="info"><label class="issue">Arrears : <input type="text" id="arrears_d" class="noStyle_red"
+            <td colspan="2">
+            <table width="100%">
+                <tr>
+                    <td class="info"  width="60%">All Pending : <input type="text" id="all_pending_d" class="noStyle" readonly="true"
+                                                          maxlength="3"/></td>
+                    <td class="info"  width="40%"><label class="issue">Arrears : <input type="text" id="arrears_d" class="noStyle_red"
                                                                    readonly="true" maxlength="3"/></label></td>
+                </tr>
+            </table>
+            </td>
             <td colspan="2" rowspan="4" class="pie">
                 <div id="chart6"></div>
             </td>
@@ -256,10 +275,16 @@
             </td>
         </tr>
         <tr>
-            <td class="info">Total Submitted Items : <input type="text" id="total_submitted_d" class="noStyle"
-                                                            readonly="true" maxlength="3"/></td>
-            <td class="info"><label class="issue">Late Items : <input type="text" id="late_d" class="noStyle_red"
+            <td colspan="2">
+            <table width="100%">
+                <tr>
+                    <td class="info"  width="60%">Total Submitted Items : <input type="text" id="total_submitted_d" class="noStyle"
+                                                                    readonly="true" maxlength="3"/></td>
+                    <td class="info"  width="40%"><label class="issue">Late Items : <input type="text" id="late_d" class="noStyle_red"
                                                                       readonly="true" maxlength="3"/></label></td>
+                </tr>
+            </table>
+            </td>
         </tr>
         <tr>
             <td colspan="2">
