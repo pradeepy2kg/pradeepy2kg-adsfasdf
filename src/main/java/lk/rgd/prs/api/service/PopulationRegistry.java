@@ -235,35 +235,44 @@ public interface PopulationRegistry {
      * specified Location (given location should be a assigned active location of the specified User). Results are
      * ordered on the descending order of lastUpdatedTimestamp
      *
-     * @param location the assigned location
+     * @param location the specified location
      * @param pageNo   the page number of the results required
      * @param noOfRows the number of rows to return per page
      * @param user     the user initiating the action
-     * @return the person pending approval results
+     * @return the matching list of persons
      */
     public List<Person> getPersonsByLocation(Location location, int pageNo, int noOfRows, User user);
 
     /**
-     * @param location
-     * @param pin
-     * @param user
-     * @return
+     * Returns a list of Persons based on the specified Location and PIN. Since PIN is unique there cannot be more than
+     * one results.
+     *
+     * @param location the specified location
+     * @param pin      the Personal Identification Number(PIN)
+     * @param user     the user initiating the action
+     * @return the matching list of persons(max size is one, since PIN is unique)
      */
     public List<Person> getPersonByLocationAndPIN(Location location, long pin, User user);
 
     /**
-     * @param location
-     * @param nic
-     * @param user
-     * @return
+     * Returns a list of Persons based on the specified Location and NIC ordered by the descending order of
+     * lastUpdatedTimestamp. There can be more than single result since NIC is not unique.
+     *
+     * @param location the specified location
+     * @param nic      the specified National Identity Card Number
+     * @param user     the user initiating the action
+     * @return the matching list of persons
      */
     public List<Person> getPersonsByLocationAndNIC(Location location, String nic, User user);
 
     /**
-     * @param location
-     * @param tempPin
-     * @param user
-     * @return
+     * Returns a list of Persons based on the specified Location and temporary PIN. Since temporary PIN is unique there
+     * cannot be more than one results.
+     *
+     * @param location the specified location
+     * @param tempPin  the Temporary Personal Identification Number(PIN)
+     * @param user     the user initiating the action
+     * @return the matching list of persons(max size is one, since temporary PIN is unique)
      */
     public List<Person> getPersonByLocationAndTemporaryPIN(Location location, long tempPin, User user);
 }
