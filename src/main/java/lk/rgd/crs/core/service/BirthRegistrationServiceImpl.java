@@ -1371,14 +1371,10 @@ public class BirthRegistrationServiceImpl implements
 
         if (!isEmptyString(childInfo.getChildFullNameEnglish())) {
             child.setFullNameInEnglishLanguage(childInfo.getChildFullNameEnglish());
-            logger.debug("Derived child English language initials as : {} and last name as : {}",
-                child.getInitialsInEnglish(), child.getLastNameInEnglish());
         }
 
         if (!isEmptyString(childInfo.getChildFullNameOfficialLang())) {
             child.setFullNameInOfficialLanguage(childInfo.getChildFullNameOfficialLang());
-            logger.debug("Derived child Official language initials as : {} and last name as : {}",
-                child.getInitialsInOfficialLanguage(), child.getLastNameInOfficialLanguage());
         }
 
         child.setDateOfBirth(childInfo.getDateOfBirth());

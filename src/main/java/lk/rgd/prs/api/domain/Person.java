@@ -45,7 +45,8 @@ public class Person implements Serializable {
         VERIFIED,        /** 2 - Record is confirmed to be accurate - PIN is available */
         CERT_PRINTED,    /** 3 - PRS certificate is printed */
         CANCELLED,       /** 4 - Record is cancelled as a duplicate or error */
-        DELETED          /** 5 - Record is deleted before approval by ADR or higher */
+        DELETED,         /** 5 - Record is deleted before approval by ADR or higher */
+        ARCHIVED_ALTERED /** 6 - Record has been altered after approval */
     }
 
     /**
@@ -88,9 +89,9 @@ public class Person implements Serializable {
     private PRSLifeCycleInfo lifeCycleInfo = new PRSLifeCycleInfo();
 
     /**
-     * The unique Personal Identification Number
+     * The unique Personal Identification Number  (Made non unique to support history)
      */
-    @Column(unique = true, nullable = true)
+    @Column(unique = false, nullable = true)
     private Long pin;
     /**
      * The National ID card number - could be possibly duplicated in rare instances
@@ -98,9 +99,9 @@ public class Person implements Serializable {
     @Column(nullable = true, length = 10)
     private String nic;
     /**
-     * The temporary PIN assigned to an unverified or semi-verified record
+     * The temporary PIN assigned to an unverified or semi-verified record. (Made non unique to support history)
      */
-    @Column(unique = true, nullable = true)
+    @Column(unique = false, nullable = true)
     private Long temporaryPin;
     /**
      * Date of registration - submitted date of the person registration info
@@ -120,30 +121,10 @@ public class Person implements Serializable {
     @Column(nullable = true, length = 600)
     private String fullNameInOfficialLanguage;
     /**
-     * The initials in the official language
-     */
-    @Column(nullable = true, length = 90)
-    private String initialsInOfficialLanguage;
-    /**
-     * The last name in English
-     */
-    @Column(nullable = true, length = 60)
-    private String lastNameInOfficialLanguage;
-    /**
      * The full name in English
      */
     @Column(nullable = true, length = 600)
     private String fullNameInEnglishLanguage;
-    /**
-     * The initials in English
-     */
-    @Column(nullable = true, length = 90)
-    private String initialsInEnglish;
-    /**
-     * The last name in English
-     */
-    @Column(nullable = true, length = 60)
-    private String lastNameInEnglish;
     /**
      * The phone number of person
      */
@@ -325,7 +306,6 @@ public class Person implements Serializable {
 
     public void setFullNameInOfficialLanguage(String fullNameInOfficialLanguage) {
         this.fullNameInOfficialLanguage = WebUtils.filterBlanksAndToUpper(fullNameInOfficialLanguage);
-        setInitialsAndLastnameOfficial(WebUtils.filterBlanksAndToUpper(fullNameInOfficialLanguage));
     }
 
     public String getFullNameInEnglishLanguage() {
@@ -334,15 +314,6 @@ public class Person implements Serializable {
 
     public void setFullNameInEnglishLanguage(String fullNameInEnglishLanguage) {
         this.fullNameInEnglishLanguage = WebUtils.filterBlanksAndToUpper(fullNameInEnglishLanguage);
-        setInitialsAndLastnameEnglish(WebUtils.filterBlanksAndToUpper(fullNameInEnglishLanguage));
-    }
-
-    public String getLastNameInEnglish() {
-        return lastNameInEnglish;
-    }
-
-    public void setLastNameInEnglish(String lastNameInEnglish) {
-        this.lastNameInEnglish = WebUtils.filterBlanksAndToUpper(lastNameInEnglish);
     }
 
     public String getPersonPhoneNo() {
@@ -423,30 +394,6 @@ public class Person implements Serializable {
 
     public void setPreferredLanguage(String preferredLanguage) {
         this.preferredLanguage = preferredLanguage;
-    }
-
-    public String getInitialsInOfficialLanguage() {
-        return initialsInOfficialLanguage;
-    }
-
-    public void setInitialsInOfficialLanguage(String initialsInOfficialLanguage) {
-        this.initialsInOfficialLanguage = WebUtils.filterBlanksAndToUpper(initialsInOfficialLanguage);
-    }
-
-    public String getLastNameInOfficialLanguage() {
-        return lastNameInOfficialLanguage;
-    }
-
-    public void setLastNameInOfficialLanguage(String lastNameInOfficialLanguage) {
-        this.lastNameInOfficialLanguage = WebUtils.filterBlanksAndToUpper(lastNameInOfficialLanguage);
-    }
-
-    public String getInitialsInEnglish() {
-        return initialsInEnglish;
-    }
-
-    public void setInitialsInEnglish(String initialsInEnglish) {
-        this.initialsInEnglish = WebUtils.filterBlanksAndToUpper(initialsInEnglish);
     }
 
     public long getPersonUKey() {
@@ -599,36 +546,6 @@ public class Person implements Serializable {
 
     public void setCurrentAddress(String currentAddress) {
         this.currentAddress = WebUtils.filterBlanksAndToUpper(currentAddress);
-    }
-
-    private void setInitialsAndLastnameEnglish(String fullname) {
-        if (fullname != null && !isEmptyString(fullname)) {
-            String[] names = fullname.split(" ");
-            lastNameInEnglish = names[names.length - 1];
-
-            StringBuilder sb = new StringBuilder(16);
-            for (int i = 0, n = names.length - 1; i < n; i++) {
-                if (!isEmptyString(names[i])) {
-                    sb.append(names[i].charAt(0)).append(". ");
-                }
-            }
-            initialsInEnglish = WebUtils.filterBlanks(sb.toString());
-        }
-    }
-
-    private void setInitialsAndLastnameOfficial(String fullname) {
-        if (fullname != null && !isEmptyString(fullname)) {
-            String[] names = fullname.split(" ");
-            lastNameInOfficialLanguage = names[names.length - 1];
-
-            StringBuilder sb = new StringBuilder(16);
-            for (int i = 0, n = names.length - 1; i < n; i++) {
-                if (!isEmptyString(names[i])) {
-                    sb.append(names[i].charAt(0)).append(". ");
-                }
-            }
-            initialsInOfficialLanguage = WebUtils.filterBlanks(sb.toString());
-        }
     }
 
     private static final boolean isEmptyString(String s) {
