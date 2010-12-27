@@ -143,14 +143,15 @@ public interface PersonDAO {
     public List<Person> findAll();
 
     /**
-     * Returns a list of approval pending persons or PRS registration certificate printing pending persons.
-     * i.e. Persons whose status is UNVERIFIED , SEMI_VERIFIED or VERIFIED
+     * Returns a paginated list of Persons based on the submitted location.
+     * <p>Returns a paginated list of Persons whose status is <i>UNVERIFIED, SEMI_VERIFIED, VERIFIED or CERT_PRINTED</i>
+     * , based on the submitted location of the PRS entry.</p>
      *
-     * @param location the location
+     * @param location the location (submitted location)
      * @param pageNo   the page number for the results required (start from 1)
      * @param noOfRows the number of rows to return per page
-     * @return the approval pending list
+     * @return the matching list of persons
      */
-    public List<Person> getApprovalPendingPersonsByLocation(Location location, int pageNo, int noOfRows);
+    public List<Person> getPaginatedListByLocation(Location location, int pageNo, int noOfRows);
 
 }
