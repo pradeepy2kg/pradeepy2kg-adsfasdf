@@ -24,7 +24,13 @@ import java.util.Set;
     @NamedQuery(name = "findAllChildren", query = "SELECT p FROM Person p WHERE p.mother = :person OR p.father = :person"),
     @NamedQuery(name = "findAllSiblings", query = "SELECT p FROM Person p WHERE (p.mother = :mother OR p.father = :father)"),
     @NamedQuery(name = "get.by.location", query = "SELECT p FROM Person p WHERE p.submittedLocation = :location AND p.status <= 3 " +
-        "ORDER BY p.lifeCycleInfo.lastUpdatedTimestamp DESC")
+        "ORDER BY p.lifeCycleInfo.lastUpdatedTimestamp DESC"),
+    @NamedQuery(name = "get.by.location.and.pin", query = "SELECT p FROM Person p WHERE p.submittedLocation = :location " +
+        "AND p.pin = :pin AND p.status <= 3 ORDER BY p.lifeCycleInfo.lastUpdatedTimestamp DESC "),
+    @NamedQuery(name = "get.by.location.and.nic", query = "SELECT p FROM Person p WHERE p.submittedLocation = :location " +
+        "AND p.nic = :nic AND p.status <= 3 ORDER BY p.lifeCycleInfo.lastUpdatedTimestamp DESC "),
+    @NamedQuery(name = "get.by.location.and.tempPin", query = "SELECT p FROM Person p WHERE p.submittedLocation = :location " +
+        "AND p.temporaryPin = :tempPin AND p.status <= 3 ORDER BY p.lifeCycleInfo.lastUpdatedTimestamp DESC ")
 })
 public class Person implements Serializable {
 
