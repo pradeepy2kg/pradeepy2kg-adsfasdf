@@ -23,7 +23,7 @@ import java.util.Set;
     @NamedQuery(name = "filter.by.nic", query = "SELECT p FROM Person p WHERE p.nic = :nic"),
     @NamedQuery(name = "findAllChildren", query = "SELECT p FROM Person p WHERE p.mother = :person OR p.father = :person"),
     @NamedQuery(name = "findAllSiblings", query = "SELECT p FROM Person p WHERE (p.mother = :mother OR p.father = :father)"),
-    @NamedQuery(name = "get.pendingApproval", query = "SELECT p FROM Person p WHERE (p.status = 0 OR p.status = 1 OR p.status = 2) AND p.submittedLocation = :location " +
+    @NamedQuery(name = "get.by.location", query = "SELECT p FROM Person p WHERE p.submittedLocation = :location AND p.status <= 3 " +
         "ORDER BY p.lifeCycleInfo.lastUpdatedTimestamp DESC")
 })
 public class Person implements Serializable {
@@ -55,7 +55,7 @@ public class Person implements Serializable {
         MISSING         /** 3 - Reported as missing */
         ,
         NON_RESIDENT    /** 4 - Reported as not living within Sri Lanka anymore */
-        }
+    }
 
     /**
      * The civil status
@@ -72,7 +72,7 @@ public class Person implements Serializable {
         DIVORCED        /** 4 - Legally divorced from the spouse. Can re-marry */
         ,
         WIDOWED         /** 5 - Spouse has died */
-        }
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

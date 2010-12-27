@@ -633,7 +633,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
                 + pageNo + " and with number of rows per page : " + noOfRows);
         }
         validateAccessToLocation(location, user);
-        return personDao.getApprovalPendingPersonsByLocation(location, pageNo, noOfRows);
+        return personDao.getPaginatedListByLocation(location, pageNo, noOfRows);
     }
 
     private void setChangedFieldsBeforeUpdate(final Person existing, final Person passing) {

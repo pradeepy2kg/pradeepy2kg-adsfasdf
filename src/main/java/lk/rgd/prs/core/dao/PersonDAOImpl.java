@@ -167,8 +167,8 @@ public class PersonDAOImpl extends BaseDAO implements PersonDAO {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<Person> getApprovalPendingPersonsByLocation(Location location, int pageNo, int noOfRows) {
-        Query q = em.createNamedQuery("get.pendingApproval").
+    public List<Person> getPaginatedListByLocation(Location location, int pageNo, int noOfRows) {
+        Query q = em.createNamedQuery("get.by.location").
             setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("location", location);
         return q.getResultList();
