@@ -173,4 +173,31 @@ public class PersonDAOImpl extends BaseDAO implements PersonDAO {
         q.setParameter("location", location);
         return q.getResultList();
     }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<Person> getByLocationAndPIN(Location location, long pin) {
+        Query q = em.createNamedQuery("get.by.location.and.pin");
+        return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<Person> getByLocationAndNIC(Location location, String nic) {
+        Query q = em.createNamedQuery("get.by.location.and.nic");
+        return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<Person> getByLocationAndTempPIN(Location location, long tempPin) {
+        Query q = em.createNamedQuery("get.by.location.and.tempPin");
+        return q.getResultList();
+    }
 }

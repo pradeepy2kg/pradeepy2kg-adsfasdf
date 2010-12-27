@@ -626,13 +626,43 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<Person> getPRSRecordsByLocation(Location location, int pageNo, int noOfRows, User user) {
+    public List<Person> getPersonsByLocation(Location location, int pageNo, int noOfRows, User user) {
         if (logger.isDebugEnabled()) {
-            logger.debug("Get PRS records pending approval by LocationId : " + location.getLocationUKey() + " Page : "
-                + pageNo + " and with number of rows per page : " + noOfRows);
+            logger.debug("Get PRS records by LocationId : " + location.getLocationUKey() + " Page : " + pageNo +
+                " and with number of rows per page : " + noOfRows);
         }
         validateAccessToLocation(location, user);
         return personDao.getPaginatedListByLocation(location, pageNo, noOfRows);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<Person> getPersonByLocationAndPIN(Location location, long pin, User user) {
+        logger.debug("Get PRS record by LocationId : {} and PIN :{}", location.getLocationUKey(), pin);
+        validateAccessToLocation(location, user);
+        return personDao.getByLocationAndPIN(location, pin);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<Person> getPersonsByLocationAndNIC(Location location, String nic, User user) {
+        logger.debug("Get PRS records by LocationId : {} and NIC : {}", location.getLocationUKey(), nic);
+        validateAccessToLocation(location, user);
+        return personDao.getByLocationAndNIC(location, nic);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<Person> getPersonByLocationAndTemporaryPIN(Location location, long tempPin, User user) {
+        logger.debug("Get PRS record by LocationId : {} and TemporaryPIN : {}", location.getLocationUKey(), tempPin);
+        validateAccessToLocation(location, user);
+        return personDao.getByLocationAndTempPIN(location, tempPin);
     }
 
     private void setChangedFieldsBeforeUpdate(final Person existing, final Person passing) {

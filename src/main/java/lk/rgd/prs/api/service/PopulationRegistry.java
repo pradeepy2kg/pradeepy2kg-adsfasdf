@@ -231,9 +231,9 @@ public interface PopulationRegistry {
     public List<Person> findPersonsByDOBGenderAndName(Date dob, int gender, String name);
 
     /**
-     * Returns a list of Persons (e.g. awaiting approval, certificate print, edit etc. ) based on the specified Location
-     * (given location should be a assigned active location of the specified User). Results are ordered in on the
-     * descending order of lastUpdatedTimestamp
+     * Returns a list of Persons awaiting approval, certificate print, edit etc. by ADR or higher authority based on the
+     * specified Location (given location should be a assigned active location of the specified User). Results are
+     * ordered on the descending order of lastUpdatedTimestamp
      *
      * @param location the assigned location
      * @param pageNo   the page number of the results required
@@ -241,5 +241,29 @@ public interface PopulationRegistry {
      * @param user     the user initiating the action
      * @return the person pending approval results
      */
-    public List<Person> getPRSRecordsByLocation(Location location, int pageNo, int noOfRows, User user);
+    public List<Person> getPersonsByLocation(Location location, int pageNo, int noOfRows, User user);
+
+    /**
+     * @param location
+     * @param pin
+     * @param user
+     * @return
+     */
+    public List<Person> getPersonByLocationAndPIN(Location location, long pin, User user);
+
+    /**
+     * @param location
+     * @param nic
+     * @param user
+     * @return
+     */
+    public List<Person> getPersonsByLocationAndNIC(Location location, String nic, User user);
+
+    /**
+     * @param location
+     * @param tempPin
+     * @param user
+     * @return
+     */
+    public List<Person> getPersonByLocationAndTemporaryPIN(Location location, long tempPin, User user);
 }
