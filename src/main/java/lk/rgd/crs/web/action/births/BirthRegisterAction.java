@@ -311,6 +311,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 bdf.getRegister().setBirthDivision(register.getBirthDivision());
                 bdf.getChild().setDateOfBirth(child.getDateOfBirth());
                 bdf.getChild().setChildGender(child.getChildGender());
+                bdf.getRegister().setPreferredLanguage(register.getPreferredLanguage());
                 bdf.getChild().setPlaceOfBirth(child.getPlaceOfBirth());
                 bdf.getChild().setPlaceOfBirthEnglish(child.getPlaceOfBirthEnglish());
 
@@ -656,8 +657,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     bcf = new BirthDeclaration();
                     bdId = 0;
                 }
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 handleErrors(e);
                 addActionError(getText("cp1.error.entryNotAvailable"));
                 bdf = new BirthDeclaration();
