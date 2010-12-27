@@ -305,7 +305,7 @@ public class PopulationGenerator {
 
             Person person = new Person();
             person.setFullNameInEnglishLanguage(sbEnglishName.toString().trim());
-            person.setInitialsInEnglish(firstname);
+            //TODO removed person.setInitialsInEnglish(firstname);
             person.setFullNameInOfficialLanguage(sbOfficialName.toString().trim());
             person.setDateOfBirth(cal.getTime());
             person.setRace(race);
@@ -435,7 +435,7 @@ public class PopulationGenerator {
             gender == 0 ? Transliterate.MALE : Transliterate.FEMALE));
 
         person.setFullNameInEnglishLanguage(sbEnglishName.toString().trim());
-        person.setInitialsInEnglish(initialsInEnglish.toString().toUpperCase().trim());
+        // TODO removed person.setInitialsInEnglish(initialsInEnglish.toString().toUpperCase().trim());
         person.setFullNameInOfficialLanguage(sbOfficialName.toString().trim());
 
         person.setGender(gender);

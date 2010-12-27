@@ -144,6 +144,10 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
                     newBDF.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CERT_GENERATED);
                     applyChanges(existing, newBDF, user);
                     birthDeclarationDAO.addBirthDeclaration(newBDF, user);
+
+                    // update the PRS on - Sec 27 name change, 52 1 (h) or (i) - corrections or omissions on
+                    // change of name, dob, gender and place of birth (official/english)
+                    updatePRSOnAlteration(existing, bdf, user);
                     break;
                 }
                 case TYPE_52_1_A:
@@ -157,8 +161,10 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
 
                     // cancel any person on the PRS related to this same PIN
                     Person person = personDAO.findPersonByPIN(bdf.getChild().getPin());
-                    person.setStatus(Person.Status.CANCELLED);
-                    ecivil.updatePerson(person, user);
+                    if (person != null) {
+                        person.setStatus(Person.Status.CANCELLED);
+                        ecivil.updatePerson(person, user);
+                    }
                     break;
                 }
             }
@@ -169,6 +175,70 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
         birthAlterationDAO.updateBirthAlteration(existing, user);
 
         logger.debug("Updated birth alteration : {}", existing.getIdUKey());
+    }
+
+    private void updatePRSOnAlteration(BirthAlteration ba, BirthDeclaration bdf, User user) {
+
+        final Long pin = bdf.getChild().getPin();
+        logger.debug("Updating PRS entries for the birth alteration : {} and PIN : {}", ba.getIdUKey(), pin);
+
+        Person person = personDAO.findPersonByPIN(bdf.getChild().getPin());
+        if (person == null) {
+            handleException("Cannot locate PRS entry for PIN : " + pin, ErrorCodes.INVALID_PIN);
+        }
+
+        switch (ba.getType()) {
+            case TYPE_27:
+                // name change
+                if (ba.getApprovalStatuses().get(Alteration27.CHILD_FULL_NAME_OFFICIAL_LANG)) {
+                    person.setFullNameInOfficialLanguage(ba.getAlt27().getChildFullNameOfficialLang());
+                }
+                if (ba.getApprovalStatuses().get(Alteration27.CHILD_FULL_NAME_ENGLISH)) {
+                    person.setFullNameInEnglishLanguage(ba.getAlt27().getChildFullNameEnglish());
+                }
+                ecivil.updatePerson(person, user);
+                logger.debug("Updated the name on the PRS for PIN : {}", pin);
+                break;
+
+            case TYPE_27A:
+                // including father details if not specified. We do not update mothers name change after marriage
+                // as it should be done by the mother with a name change into the PRS before submitting the alteration
+                if (ba.getApprovalStatuses().get(Alteration27A.FATHER_NIC_OR_PIN)) {
+                    final String fatherPinOrNic = ba.getAlt27A().getFather().getFatherNICorPIN();
+                    person.setFatherPINorNIC(fatherPinOrNic);
+                    Person father = ecivil.findPersonByPINorNIC(fatherPinOrNic, user);
+                    if (father != null) {
+                        person.setFather(father);
+                        logger.debug("Updated the father of child with PIN : {} to : {}", pin, father.getPin());
+                    }
+                }
+                ecivil.updatePerson(person, user);
+                break;
+
+            case TYPE_52_1_H:
+            case TYPE_52_1_I:
+                if (ba.getApprovalStatuses().get(Alteration52_1.DATE_OF_BIRTH)) {
+                    person.setDateOfBirth(ba.getAlt52_1().getDateOfBirth());
+                }
+                if (ba.getApprovalStatuses().get(Alteration52_1.PLACE_OF_BIRTH)) {
+                    person.setPlaceOfBirth(ba.getAlt52_1().getPlaceOfBirth());
+                }
+                if (ba.getApprovalStatuses().get(Alteration52_1.GENDER)) {
+                    person.setGender(ba.getAlt52_1().getChildGender());
+                }
+
+                if (ba.getApprovalStatuses().get(Alteration52_1.MOTHER_NIC_OR_PIN)) {
+                    final String motherPinOrNic = ba.getAlt52_1().getMother().getMotherNICorPIN();
+                    person.setMotherPINorNIC(motherPinOrNic);
+                    Person mother = ecivil.findPersonByPINorNIC(motherPinOrNic, user);
+                    if (mother != null) {
+                        person.setMother(mother);
+                        logger.debug("Updated the mother of child with PIN : {} to : {}", pin, mother.getPin());
+                    }
+                }
+                ecivil.updatePerson(person, user);
+                break;                
+        }
     }
 
 
