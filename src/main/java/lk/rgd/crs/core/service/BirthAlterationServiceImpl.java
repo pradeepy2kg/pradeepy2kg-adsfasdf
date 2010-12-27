@@ -39,7 +39,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
     private final PopulationRegistry ecivil;
 
     public BirthAlterationServiceImpl(BirthAlterationDAO birthAlterationDAO, BirthDeclarationDAO birthDeclarationDAO,
-                                      PopulationRegistry ecivil, PersonDAO personDAO) {
+        PopulationRegistry ecivil, PersonDAO personDAO) {
         this.birthAlterationDAO = birthAlterationDAO;
         this.birthDeclarationDAO = birthDeclarationDAO;
         this.ecivil = ecivil;
@@ -220,6 +220,34 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
     public List<BirthAlteration> getBirthAlterationByBirthCertificateNumber(long idUKey, User user) {
         logger.debug("attempt to get already done birth alterations for birth register idUKey : {}", idUKey);
         return birthAlterationDAO.getBirthAlterationByBirthCertificateNumber(idUKey);
+    }
+
+    /**
+     * @inheriteDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void rejectBirthAlteration(long idUKey, String comment, User user) {
+        logger.debug("attempt to reject birth alteration idUKey : {}", idUKey);
+        BirthAlteration birthAlteration = birthAlterationDAO.getById(idUKey);
+        if (birthAlteration != null) {
+            //found a record
+            if (birthAlteration.getStatus() == BirthAlteration.State.DATA_ENTRY) {
+                //in correct state now we can update the record
+                birthAlteration.setStatus(BirthAlteration.State.REJECT);
+                birthAlteration.setComments(comment);
+                birthAlteration.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
+                birthAlteration.getLifeCycleInfo().setApprovalOrRejectUser(user);
+
+                birthAlterationDAO.updateBirthAlteration(birthAlteration, user);
+            } else {
+                handleException("unable to reject birth alteration not in correct state for rejection idUKey :" + idUKey
+                    + " current state :" + birthAlteration.getStatus(),
+                    ErrorCodes.INVALID_STATE_FOR_REJECT_BIRTH_ALTERATION);
+            }
+        } else {
+            handleException("unable to found a birth alteration record for rejecting idUKey : " + idUKey,
+                ErrorCodes.CAN_NOT_FIND_BIRTH_ALTERATION);
+        }
     }
 
     /**

@@ -122,4 +122,16 @@ public interface BirthAlterationService {
      * @return List of birth alterations done to given birth record.
      */
     public List<BirthAlteration> getBirthAlterationByBirthCertificateNumber(long idUKey, User user);
+
+    /**
+     * rejecting birth alteration
+     * <br>
+     * only DATA_ENTRY mode alteration records are being rejected and that record is being archived  with a comment for
+     * rejection and  the state of the record would be REJECTED
+     *
+     * @param idUKey idUKey of the birth alteration record
+     * @param comment reason for reject
+     * @param user   user who performs the action
+     */
+    public void rejectBirthAlteration(long idUKey,String comment, User user);
 }

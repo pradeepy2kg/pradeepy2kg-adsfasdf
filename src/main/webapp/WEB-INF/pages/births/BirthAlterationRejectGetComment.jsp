@@ -39,7 +39,7 @@
 
     <s:actionerror cssStyle="color:red;font-size:10pt"/>
 
-    <s:form action="eprMarriageNoticeReject.do" method="post" onsubmit="javascript: return validate()">
+    <s:form action="eprRejectBirthAlteration.do" method="post" onsubmit="javascript: return validate()">
         <fieldset>
             <legend><b><s:label value="%{getText('rejectLegend.label')}"/></b></legend>
             <s:hidden name="idUKey" value="%{#request.idUKey}"/>
