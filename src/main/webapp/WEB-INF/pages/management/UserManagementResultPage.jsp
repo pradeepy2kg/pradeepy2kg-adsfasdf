@@ -22,7 +22,7 @@
         <tr>
             <td style="color:red;">
                 <s:actionmessage/><br>
-                Please Enter another user name
+                <s:label value="%{getText('assign.another.user')}" />
             </td>
         </tr>
         </s:if>

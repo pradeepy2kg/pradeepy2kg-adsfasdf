@@ -164,8 +164,9 @@ public interface UserManager {
      *
      * @param userLocation user location object to be saved
      * @param adminUser    user performing the action
+     * @param isPrimary
      */
-    public void addUserLocation(UserLocation userLocation, User adminUser);
+    public void addUserLocation(UserLocation userLocation, User adminUser, boolean isPrimary);
 
     /**
      * Update a user location assignment - but not its existing relationships to user and location tables

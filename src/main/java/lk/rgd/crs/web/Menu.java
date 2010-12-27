@@ -85,6 +85,7 @@ public class Menu {
         adminLink.put("eprEditAssignedUserLocation.do", new Link(null, "/ecivil/management/", "eprEditAssignedUserLocation.do", Permission.USER_MANAGEMENT));
         adminLink.put("eprIndexRecords.do", new Link("indexRecords.label", "/ecivil/management/", "eprIndexRecords.do", Permission.INDEX_RECORDS));
         adminLink.put("eprFindRegistrar.do", new Link("search.registrar", "/ecivil/management/", "eprFindRegistrar.do", Permission.REGISTRAR_MANAGEMENT));
+        adminLink.put("eprEditPrimaryLocation.do", new Link(null, "/ecivil/management/", "eprEditPrimaryLocation.do", Permission.REGISTRAR_MANAGEMENT));
 
 
         adrAdminLink.put("eprRegistrarsManagment.do", new Link("registrars.managment", "/ecivil/management/", "eprRegistrarsManagment.do", Permission.REGISTRAR_MANAGEMENT));
