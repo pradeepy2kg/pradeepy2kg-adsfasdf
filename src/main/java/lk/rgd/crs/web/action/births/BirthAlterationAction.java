@@ -19,6 +19,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
+//todo
+//remove un useful  !=0 check for idUKey
 
 /**
  * @author tharanga
@@ -75,7 +77,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
 
 
     private int pageNo;
-    private int pageType;
+    private int pageType;     //todo no need any more remove
     private int noOfRows;
     private long bdId;   // If present, it should be used to fetch a new BD instead of creating a new one (we are in edit mode)
     private Long nicOrPin;
@@ -98,7 +100,8 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
     /*because of following wrapper we have to check null when we get from idUKey because in
      service idUKey is treat as primitive if we unable to check null there is a high chance to pass null to service
       primitive long in that case it will throw a exception because primitive cannot box a null */
-    private Long idUKey;     //todo using a wrapper here useless if have time change this to primitive(amith)
+    //  private Long idUKey;
+    private long idUKey;     //todo using a wrapper here useless if have time change this to primitive(amith)
     private long serialNo; //to be used in the case where search is performed from confirmation 1 page.
     private boolean allowApproveAlteration;
     private boolean nextFlag;
@@ -107,13 +110,12 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
     private int divisionAltaration;
     private Date alterationRecivedDate;
     private BirthAlteration.AlterationType alterationType;
+    private long birthCertificateNumber;
 
 
     private String language;
     private boolean applyChanges;
     private boolean approveRightsToUser;
-
-
     private boolean editChildInfo;
     private boolean editMotherInfo;
     private boolean editInformantInfo;
@@ -121,6 +123,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
     private boolean editMarriageInfo;
     private boolean editMothersNameAfterMarriageInfo;
     private boolean editGrandFatherInfo;
+    private boolean editMode;
 
 
     public BirthAlterationAction(BirthRegistrationService service, DistrictDAO districtDAO, CountryDAO countryDAO,
@@ -151,13 +154,16 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         return SUCCESS;
     }
 
+    /**
+     * notes by amith
+     */
     public String birthAlterationSearch() {
         BirthDeclaration bdf = null;
         birthAlteration = new BirthAlteration();
         populateBasicLists();
         pageType = 1;
 
-        if (idUKey != null) {
+        if (idUKey != 0) {
             bdf = service.getById(idUKey);
         } else if (nicOrPin != null) {
             bdf = service.getByPINorNIC(nicOrPin, user);
@@ -198,7 +204,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             populateCountryRacesAndAllDSDivisions();
         }
 
-        idUKey = null;
+        idUKey = 0;
         return SUCCESS;
     }
 
@@ -324,76 +330,65 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         birthAlteration.setAlt27A(alt27A);
     }
 
+
     /**
      * review's by amith
      * this name is not appropriate change it
      * what happen of editing and adding process fails
      * use separate action methods for adding and editing birth alterations
      */
-    public String birthAlteration() {
-        if (idUKey != null) {
-            birthAlteration = alterationService.getByIDUKey(idUKey, user);
-        }
-        switch (sectionOfAct) {
-            //case 2 is used to set alteration52_1
-            case 1:
-                birthAlteration.setType(BirthAlteration.AlterationType.TYPE_27);
-                birthAlteration.setApprovalStatuses(new BitSet(WebConstants.BIRTH_ALTERATION_APPROVE_ALT27));
-                break;
-            //case 2 is used to set alteration27A
-            case 2:
-                birthAlteration.setType(alterationType);
-                Alteration52_1 alt52_1 = birthAlteration.getAlt52_1();
-                if (divisionAltaration > 0) {
-                    alt52_1.setBirthDivision(bdDivisionDAO.getBDDivisionByPK(divisionAltaration));
-                }
-                if (motherCountryId > 0) {
-                    alt52_1.getMother().setMotherCountry(countryDAO.getCountry(motherCountryId));
-                }
-                if (motherRaceId > 0) {
-                    alt52_1.getMother().setMotherRace(raceDAO.getRace(motherRaceId));
-                }
-                birthAlteration.setAlt52_1(alt52_1);
-                birthAlteration.setApprovalStatuses(new BitSet(WebConstants.BIRTH_ALTERATION_APPROVE_ALT52_1));
-                break;
-            case 3:
-                Alteration27A alt27A = birthAlteration.getAlt27A();
-                birthAlteration.setType(BirthAlteration.AlterationType.TYPE_27A);
-                logger.debug("father country id is :{}", fatherCountryId);
+    public String addBirthAlteration() {
+        logger.debug("attempt to add birth alteration ");
+        //todo check existing serial number
+        switch (alterationType) {
+            case TYPE_27: {
+            }
+            break;
+            case TYPE_27A: {
+                //TYPE 27A alteration
                 if (fatherCountryId > 0) {
-                    alt27A.getFather().setFatherCountry(countryDAO.getCountry(fatherCountryId));
+                    birthAlteration.getAlt27A().getFather().setFatherCountry(countryDAO.getCountry(fatherCountryId));
                 }
                 if (fatherRaceId > 0) {
-                    alt27A.getFather().setFatherRace(raceDAO.getRace(fatherRaceId));
+                    birthAlteration.getAlt27A().getFather().setFatherRace(raceDAO.getRace(fatherRaceId));
                 }
-                birthAlteration.setAlt27A(alt27A);
-                birthAlteration.setAlt52_1(null);
-                birthAlteration.setApprovalStatuses(new BitSet(WebConstants.BIRTH_ALTERATION_APPROVE_ALT27A));
-                break;
-
+            }
+            break;
+            case TYPE_52_1_A:
+            case TYPE_52_1_B:
+            case TYPE_52_1_E:
+            case TYPE_52_1_H:
+            case TYPE_52_1_I:
+            case TYPE_52_1_D: {
+                //populate 52_1 object
+                if (divisionAltaration > 0) {
+                    birthAlteration.getAlt52_1().setBirthDivision(bdDivisionDAO.getBDDivisionByPK(divisionAltaration));
+                }
+                if (motherCountryId > 0) {
+                    birthAlteration.getAlt52_1().getMother().setMotherCountry(countryDAO.getCountry(motherCountryId));
+                }
+                if (motherRaceId > 0) {
+                    birthAlteration.getAlt52_1().getMother().setMotherRace(raceDAO.getRace(motherRaceId));
+                }
+            }
         }
+        birthAlteration.setType(alterationType);
         if (birthDivisionId > 0) {
             birthAlteration.setBirthRecordDivision(bdDivisionDAO.getBDDivisionByPK(birthDivisionId));
         }
-        birthAlteration.setStatus(BirthAlteration.State.DATA_ENTRY);
         birthAlteration.setBdfIDUKey(bdId);
-        if (idUKey != null) {
-            alterationService.updateBirthAlteration(birthAlteration, user);
-            logger.debug("Updated a  Birth Alteration with Alteration idUKey  :{}", birthAlteration.getIdUKey());
-        } else {
-            alterationService.addBirthAlteration(birthAlteration, user);
-            logger.debug("Add a new Birth Alteration with Alteration idUKey  :{}", birthAlteration.getIdUKey());
-        }
-        /*check permission to approval birth alteration  */
+        //todo remove           from here
+        alterationService.addBirthAlteration(birthAlteration, user);
         approveRightsToUser = user.isAllowedAccessToBDDSDivision(birthAlteration.getBirthRecordDivision().
             getDsDivision().getDsDivisionUKey());
         idUKey = birthAlteration.getIdUKey();
         bdId = birthAlteration.getBdfIDUKey();
         pageType = 1;
         initPermission();
+        //todo remove           to here        
+        logger.debug("successfully add birth alteration ");
         return SUCCESS;
     }
-
     /**
      * this is the method that up dates the birth alteration at data entry mode
      */
@@ -401,7 +396,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         logger.debug("attempt to edit birth alteration for idUKey : {} ", idUKey);
         //loading existing alteration object
         BirthAlteration existingBirthAlteration = null;
-        if (idUKey != null) {
+        if (idUKey != 0) {
             existingBirthAlteration = alterationService.getByIDUKey(idUKey, user);
         }
         if (existingBirthAlteration != null) {
@@ -459,7 +454,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
      */
     public String editBirthAlterationInit() {
         logger.debug("attempt to load edit page for  birth alteration idUKey : {}", idUKey);
-        if (idUKey != null) {
+        if (idUKey != 0) {
             birthAlteration = alterationService.getByIDUKey(idUKey, user);
         }
         if (birthAlteration != null) {
@@ -485,6 +480,8 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         }
         populateBasicLists();
         populateCountryRacesAndAllDSDivisions();
+        alterationType = birthAlteration.getType();
+        editMode = true;
         return SUCCESS;
         //todo what happen if no record found to edit       no error massage
     }
@@ -514,26 +511,22 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
      * @return
      */
     public String initBirthAlterationPendingApprovalList() {
+        logger.debug("attempt to load pending list for birth alterations");
         populateDistrictAndDSDivision();
         noOfRows = appParametersDAO.getIntParameter(BA_APPROVAL_ROWS_PER_PAGE);
         pageNo = 1;
         populateBasicLists();
-        initPermission();
+        //   initPermission();   todo remove no usage those check are has to be done at service level
+        filterBirthAlteration();
+        logger.debug("successfully load the pending list for birth alterations");
         return SUCCESS;
     }
 
-    /**
-     * responsible for filtering requested birth alteration by its
-     * birth division or DS division
-     *
-     * @return
-     */
-    public String filter() {
+    private void filterBirthAlteration() {
         setPageNo(1);
         noOfRows = appParametersDAO.getIntParameter(BA_APPROVAL_ROWS_PER_PAGE);
-
         try {
-            if (idUKey != null) {
+            if (birthCertificateNumber != 0) {
                 BirthAlteration baApprovalPending = alterationService.getApprovalPendingByIdUKey
                     (idUKey, pageNo, noOfRows, user);
                 if (birthAlterationPendingApprovalList == null) {
@@ -563,8 +556,28 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         } else {
             logger.info("The Birth Alteration List is empty");
         }
-        checkPermissionToApproval();
-        initPermission();
+    }
+
+    /**
+     * responsible for filtering requested birth alteration by its
+     * birth division or DS division
+     *
+     * @return
+     */
+    public String filter() {
+        logger.debug("attempt to filter birth alteration pending list ");
+        setPageNo(1);
+        noOfRows = appParametersDAO.getIntParameter(BA_APPROVAL_ROWS_PER_PAGE);
+        filterBirthAlteration();
+        if (birthAlterationPendingApprovalList != null) {
+            paginationHandler(birthAlterationPendingApprovalList.size());
+            logger.debug("number of rows in Birth Alteration Approval List is :{}",
+                birthAlterationPendingApprovalList.size());
+        } else {
+            logger.info("The Birth Alteration List is empty");
+        }
+        //   checkPermissionToApproval();      todo remove
+        // initPermission();
         populateBasicLists();
         return SUCCESS;
     }
@@ -919,7 +932,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
     public String rejectBirthAlterationInit() {
         logger.debug("attempt load birth alteration get comment page for rejecting birth alteration idUKey : {}", idUKey);
         //do nothing just load the page
-        if (idUKey != null) {
+        if (idUKey != 0) {
             birthAlteration = alterationService.getByIDUKey(idUKey, user);
             if (birthAlteration != null) {
                 originalName = service.getById(birthAlteration.getBdfIDUKey(), user).
@@ -953,7 +966,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
     public String birthAlterationApplyChanges() {
         BirthAlteration ba = new BirthAlteration();
         Hashtable approvalsBitSet = new Hashtable();
-        if (idUKey != null) {
+        if (idUKey != 0) {
             ba = alterationService.getByIDUKey(idUKey, user);
         }
         int lengthOfBitSet = 0;
@@ -991,7 +1004,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
          * variable nextFlag is used to handle the pagination link
          * in the jsp page
          */
-        if (idUKey != null) {
+        if (idUKey != 0) {
             BirthAlteration baApprovalPending = alterationService.getApprovalPendingByIdUKey
                 (idUKey, pageNo, noOfRows, user);
             if (birthAlterationPendingApprovalList == null) {
@@ -1053,7 +1066,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         }
         noOfRows = appParametersDAO.getIntParameter(BA_APPROVAL_ROWS_PER_PAGE);
 
-        if (idUKey != null) {
+        if (idUKey != 0) {
             BirthAlteration baApprovalPending = alterationService.getApprovalPendingByIdUKey
                 (idUKey, pageNo, noOfRows, user);
             if (birthAlterationPendingApprovalList == null) {
@@ -2059,5 +2072,21 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public long getBirthCertificateNumber() {
+        return birthCertificateNumber;
+    }
+
+    public void setBirthCertificateNumber(long birthCertificateNumber) {
+        this.birthCertificateNumber = birthCertificateNumber;
+    }
+
+    public boolean isEditMode() {
+        return editMode;
+    }
+
+    public void setEditMode(boolean editMode) {
+        this.editMode = editMode;
     }
 }

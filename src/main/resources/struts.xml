@@ -1014,7 +1014,7 @@
 
         <action name="eprBirthAlterationInit" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
                 method="initBirthAlteration">
-            <result type="tiles" name="success">epr.birthAlteration</result>
+            <result type="tiles" name="success">epr.selectBirthCertificateForAlteration</result>
         </action>
 
         <action name="eprBirthAlterationSearch" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
@@ -1023,7 +1023,7 @@
         </action>
 
         <action name="eprBirthAlteration" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
-                method="birthAlteration">
+                method="addBirthAlteration">
             <result type="tiles" name="success">epr.birthAlterationResult</result>
             <result type="tiles" name="error">epr.birthAlteration</result>
         </action>

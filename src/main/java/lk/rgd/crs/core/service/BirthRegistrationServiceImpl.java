@@ -1934,6 +1934,16 @@ public class BirthRegistrationServiceImpl implements
             endDate, status);
     }
 
+    /**
+     * @inheritDoc
+     */
+    public List<BirthAlteration> getActiveBirthAlterationByBirthCertificateNumber(long certificateNumber, User user) {
+        logger.debug("attempt to get active birth alterations by birth certificate number : {} ", certificateNumber);
+        //todo check user permission to get
+        //to do filter results set
+        throw new UnsupportedOperationException("unsupported contact amith");
+    }
+
     private PersonCitizenship getPersonCitizenship(Country country, String passportNo, Person person) {
         PersonCitizenship pc = new PersonCitizenship();
         pc.setCountry(country);

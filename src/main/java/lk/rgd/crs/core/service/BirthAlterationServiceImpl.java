@@ -53,6 +53,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
     public void addBirthAlteration(BirthAlteration ba, User user) {
         logger.debug("Adding new birth alteration record on request of : {}", ba.getDeclarant().getDeclarantFullName());
         ba.setSubmittedLocation(user.getPrimaryLocation());
+        ba.setStatus(BirthAlteration.State.DATA_ENTRY);
         // any user (DEO, ADR of any DS office or BD division etc) can add a birth alteration request
         birthAlterationDAO.addBirthAlteration(ba, user);
     }
@@ -188,6 +189,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthAlteration> getApprovalPendingByBDDivision
         (BDDivision bdDivision, int pageNo, int noOfRows) {
+        //todo need a check for user's accessibility to the alteration record
         if (logger.isDebugEnabled()) {
             logger.debug("Get birth alteration pending approval by BDDivision ID : " + bdDivision.getBdDivisionUKey()
                 + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
