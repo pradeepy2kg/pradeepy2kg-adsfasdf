@@ -210,6 +210,8 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
                     if (father != null) {
                         person.setFather(father);
                         logger.debug("Updated the father of child with PIN : {} to : {}", pin, father.getPin());
+                    } else {
+                        handleException("Unable to locate father using PIN or NIC : " + fatherPinOrNic, ErrorCodes.INVALID_DATA);
                     }
                 }
                 ecivil.updatePerson(person, user);
@@ -234,6 +236,8 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
                     if (mother != null) {
                         person.setMother(mother);
                         logger.debug("Updated the mother of child with PIN : {} to : {}", pin, mother.getPin());
+                    } else {
+                        handleException("Unable to locate mother using PIN or NIC : " + motherPinOrNic, ErrorCodes.INVALID_DATA);
                     }
                 }
                 ecivil.updatePerson(person, user);
