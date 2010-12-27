@@ -515,96 +515,15 @@ function validateBirthYear(domElement, errorText, errorCode) {
         }
     }
 </script>
-<s:if test="pageType==0">
-    <div id="birth-confirmation-search">
-    <s:actionerror cssStyle="color:red;font-size:10pt"/>
-    <s:form action="eprBirthAlterationSearch.do" onsubmit="javascript:return validate2()">
-        <div id="tabs" style="font-size:10pt;">
-            <ul>
-                <li><a href="#fragment-1"><span> <s:label
-                        value="%{getText('registrationSerchTab3.label')}"/></span></a></li>
-                <li><a href="#fragment-2"><span><s:label
-                        value="%{getText('registrationSerchTab2.label')}"/></span></a></li>
-                <li><a href="#fragment-3"><span><s:label
-                        value="%{getText('registrationSerchTab1.label')}"/></span></a></li>
-            </ul>
-            <table class="search-alteration-option-table">
-                <tr>
-                    <td width="135px"><s:label value="%{getText('sectionOfTheAct.lable')}"
-                                               cssStyle="margin-left:20px;"/></td>
-                    <td width="500px"><s:select
-                            list="#@java.util.HashMap@{'1':'27','2':'52(1)','3':'27 (A)'}"
-                            name="sectionOfAct" cssStyle="width:230px;margin-left:175px;"/></td>
-                </tr>
-            </table>
-            <div id="fragment-1">
-                <table class="search-alteration-option-table">
-                    <tr>
-                        <td width="135px"><s:label name="confirmationSearch"
-                                                   value="%{getText('certificateNumber.lable')}"/></td>
-                        <td width="500px"><s:textfield name="idUKey" id="bdfSerialNoIdSearch" maxLength="10"
-                                                       onkeypress="return isNumberKey(event)"
-                                                       cssStyle="margin-left:154px;"/></td>
-                    </tr>
-                </table>
-            </div>
-            <div id="fragment-2">
-                <table class="search-alteration-option-table">
-                    <tr>
-                        <td width="135px"><s:label name="confirmationSearch"
-                                                   value="%{getText('idNumber.lable')}"/></td>
-                        <td width="200px"><s:textfield name="nicOrPin" id="idNumberSearch" maxLength="10"/></td>
-
-                    </tr>
-                </table>
-            </div>
-            <div id="fragment-3">
-                <table class="search-option-table">
-                    <caption></caption>
-                    <col/>
-                    <col/>
-                    <col/>
-                    <col/>
-                    <col/>
-                    <tbody>
-                    <tr>
-                        <td><s:label value="%{getText('searchDeclarationSearial.label')}"/></td>
-                        <td><s:textfield name="serialNo" id="bdfSearchSerialNoId" value="" maxLength="10"
-                                         onkeypress="return isNumberKey(event)"/></td>
-                        <td><s:label value="%{getText('district.label')}"/></td>
-                        <td>
-                            <s:select id="birthDistrictId" name="birthDistrictId" list="districtList"
-                                      value="birthDistrictId" cssStyle="width:240px;float:left;"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><s:label name="division" value="%{getText('select_DS_division.label')}"/></td>
-                        <td>
-                            <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList"
-                                      value="%{dsDivisionId}"
-                                      cssStyle="float:left;  width:240px;"/>
-                        </td>
-                        <td><s:label value="%{getText('select_BD_division.label')}"/></td>
-                        <td>
-                            <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}"
-                                      list="bdDivisionList" cssStyle=" width:240px;float:left;"
-                                      headerValue="%{getText('all.divisions.label')}" headerKey="0"/>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <br/>
-
-        <div class="form-submit"><s:submit value="%{getText('bdfSearch.button')}"
-                                           name="search"/></div>
-        </div>
-    </s:form>
-</s:if>
 <s:if test="pageType==1">
 <div id="birth-alteration-outer">
-<s:form action="eprEditBirthAlteration.do" onsubmit="javascript:return validate()">
+<s:if test="%{!editMode}">
+    <s:url value="eprBirthAlteration.do" id="alteration"/>
+</s:if>
+<s:else>
+    <s:url value="eprEditBirthAlteration.do" id="alteration"/>
+</s:else>
+<s:form action="%{alteration}" onsubmit="javascript:return validate()">
 <table class="birth-alteration-table-style01" style="width:1030px;">
     <tr>
         <td width="30%"></td>
@@ -625,24 +544,28 @@ function validateBirthYear(domElement, errorText, errorCode) {
                         <s:label value="Date of Acceptance"/>
                     </td>
                     <td><s:textfield id="acceptanceDate" name="birthAlteration.dateReceived"/></td>
+                    32123
                 <tr>
                     <td><s:label value="පනතේ වගන්තිය "/><br>
                         <s:label value="பிறப்பைப்"/> <br>
                         <s:label value="Section of the Act"/>
                     </td>
-                    <td><s:if test="sectionOfAct !=2">
-                        <s:select
-                                list="#@java.util.HashMap@{'1':'27','2':'52(1)','3':'27 (A)'}"
-                                name="sectionOfAct" cssStyle="width:190px; margin-left:5px;" disabled="true"/>
-                    </s:if>
-                        <s:if test="sectionOfAct ==2">
+                    <td align="center">
+                        <s:if test="alterationType.ordinal()==2">
                             <s:select
                                     list="#@java.util.HashMap@{'TYPE_52_1_A':'52(1)A','TYPE_52_1_B':'52(1)B','TYPE_52_1_D':'52(1)D',
                                     'TYPE_52_1_E':'52(1)E','TYPE_52_1_H':'52(1)H','TYPE_52_1_I':'52(1)I'}"
-                                    name="AlterationType" cssStyle="width:190px; margin-left:5px"
+                                    name="alterationType" cssStyle="width:190px; margin-left:5px"
                                     />
-
                         </s:if>
+                        <s:elseif test="alterationType.ordinal()==0">
+                            <s:hidden value="%{alterationType}" name="alterationType"/>
+                            <s:label value="27"/>
+                        </s:elseif>
+                        <s:elseif test="alterationType.ordinal()==1">
+                            <s:hidden value="%{alterationType}" name="alterationType"/>
+                            <s:label value="27A"/>
+                        </s:elseif>
                     </td>
 
                 </tr>
@@ -656,20 +579,19 @@ function validateBirthYear(domElement, errorText, errorCode) {
     <table class="birth-alteration-table-style01" style="width:1030px;">
         <tr>
             <td colspan="3" style="font-size:12pt;text-align:center;">
-                <s:if test="sectionOfAct==1">
+                <s:if test="alterationType.ordinal()==0">
                     <s:hidden id="sectionOfAct" value="1"/>
                     <s:label value="නම ඇතුලත් කිරීම හෝ වෙනස් කිරීම (27 වගන්තිය)"/> <br>
                     <s:label value="தந்தை பற்றிய தகவல்"/>் <br>
                     <s:label value="Insertion or Alteration of the Name (Section 27)"/>
                 </s:if>
-                <s:if test="sectionOfAct==2">
+                <s:if test="alterationType.ordinal()==2">
                     <s:hidden id="sectionOfAct" value="2"/>
                     <s:label value="උප්පැන සහතිකයක දෝෂ නිවැරදි කිරීම (52 (1) වගන්තිය)"/> <br>
                     <s:label value="தந்தை பற்றிய தகவல்"/> <br>
                     <s:label value="Correction of Errors of a Birth Certificate (Section  52 (1))"/>
                 </s:if>
-                <s:if test="sectionOfAct==3">
-                    <s:hidden id="sectionOfAct" value="3"/>
+                <s:if test="alterationType.ordinal()==1">
                     <s:label value="උප්පැන්න සහතිකයක තොරතුරු සංශෝදනය කිරීම (27 A වගන්තිය)"/> <br>
                     <s:label value="தந்தை பற்றிய தகவல்"/> <br>
                     <s:label value="Amendment of Birth Registration Entry (Section 27 A)"/>
@@ -747,7 +669,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
     <s:hidden name="serialNo"/>
     <s:hidden name="bdId"/>
 </div>
-<s:if test="sectionOfAct==1">
+<s:if test="alterationType.ordinal()==0">
     <s:hidden name=" birthDivisionId"/>
     <div id="actNumber1" style="margin-top:10px">
         <table class="birth-alteration-table-style02" style="width:100%" cellpadding="0" cellspacing="0">
@@ -777,7 +699,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
         </table>
     </div>
 </s:if>
-<s:if test="sectionOfAct==2">
+<s:if test="alterationType.ordinal()==2">
 <div id="actNumber2">
 <s:hidden name="birthAlteration.alt27.childFullNameOfficialLang"/>
 <s:hidden name="birthAlteration.alt27.childFullNameEnglish"/>
@@ -1094,7 +1016,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
 </div>
 </div>
 </s:if>
-<s:if test="sectionOfAct==3">
+<s:if test="alterationType.ordinal()==1">
 <div id="actNumber3">
 <s:textarea name="birthAlteration.alt27.childFullNameOfficialLang" cssStyle="visibility:hidden;"/>
 <s:textarea name="birthAlteration.alt27.childFullNameEnglish" cssStyle="visibility:hidden;"/>
@@ -1431,7 +1353,10 @@ function validateBirthYear(domElement, errorText, errorCode) {
 </div>
 </div>
 </s:if>
-<s:if test="(sectionOfAct != 1)">
+<s:if test="alterationType.ordinal()!=0">
+    <%--
+    <s:if test="(sectionOfAct != 1)">
+    --%>
     <div id="actNumber4">
         <table class="birth-alteration-table-style02" style=" margin-top:20px;width:100%;" cellpadding="0"
                cellspacing="0">

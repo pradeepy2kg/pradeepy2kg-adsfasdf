@@ -5,6 +5,7 @@ import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.domain.BDDivision;
+import lk.rgd.crs.api.domain.BirthAlteration;
 import lk.rgd.crs.api.domain.BirthDeclaration;
 
 import java.util.Date;
@@ -631,5 +632,20 @@ public interface BirthRegistrationService {
      * @return CommonStatistics object which encapsulated all the birth statistics information
      */
     public CommonStatistics getBirthStatisticsForDEO(String user);
+
+    /**
+     * get birth alteration by birth certificate number
+     * <br>notes
+     * <br>only following users can access the birth alteration record
+     * <ul>
+     * <li> User's from the submitted location(users who belongs to the birth alteration record submitted location)</li>
+     * <li>User's who are belongs to the DS Division witch the original BC issued
+     * </ul>
+     *
+     * @param certificateNumber birth certificate number
+     * @param user              user who perform the action
+     * @return list of active birth alterations
+     */
+    public List<BirthAlteration> getActiveBirthAlterationByBirthCertificateNumber(long certificateNumber, User user);
 }
 

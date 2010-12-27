@@ -211,7 +211,7 @@
                 <tr>
                     <td width="350px"><s:label value="%{getText('certificateNumber.lable')}"/></td>
                     <td>
-                        <s:textfield name="idUKey"/>
+                        <s:textfield name="birthCertificateNumber"/>
                     </td>
                 </tr>
             </table>

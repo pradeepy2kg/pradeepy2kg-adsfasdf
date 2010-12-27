@@ -25,7 +25,9 @@ import java.util.BitSet;
     @NamedQuery(name = "filter.alteration.by.user.location", query = "SELECT ba FROM BirthAlteration ba " +
         "WHERE ba.submittedLocation.locationUKey= :locationUKey AND (ba.status =:statusDataEntry OR ba.status =:statusFullyApproved) " +
         "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
-    @NamedQuery(name = "get.alterations.by.birth.idUKey", query = "SELECT ba FROM BirthAlteration ba WHERE ba.bdfIDUKey =:idUKey")
+    @NamedQuery(name = "get.alterations.by.birth.idUKey", query = "SELECT ba FROM BirthAlteration ba WHERE ba.bdfIDUKey =:idUKey"),
+    @NamedQuery(name = "filter.birth.alteration.by.birth.certificate.number", query = "SELECT ba FROM BirthAlteration ba" +
+        " WHERE( ba.bdfIDUKey=:certificateNumber AND ba.lifeCycleInfo.activeRecord IS TRUE )")
 })
 
 public class BirthAlteration {
@@ -102,9 +104,10 @@ public class BirthAlteration {
     @Id
     // This is an auto generated unique row identifier
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "IDUKEY")
     private long idUKey;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "BD_IDUKEY")
     // the ID points to Birth Declarations idUKey
     private long bdfIDUKey;
 
