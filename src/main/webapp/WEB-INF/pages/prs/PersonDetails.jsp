@@ -80,8 +80,10 @@
             <br>Date of birth
         </td>
         <td>
-            <s:label value="%{person.dateOfBirth}"/><br>
-            <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
+            <s:if test="person.dateOfBirth != null">
+                <s:label value="%{person.dateOfBirth}"/><br>
+                <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
+            </s:if>
         </td>
         <td>
             උපන් ස්ථානය
@@ -107,7 +109,10 @@
             <br>Date of Death
         </td>
         <td colspan="3">
-            <s:label value="%{person.dateOfDeath}"/>
+            <s:if test="person.dateOfDeath != null">
+                <s:label value="%{person.dateOfDeath}"/><br>
+                <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
+            </s:if>
         </td>
     </tr>
     <tr>
@@ -251,7 +256,10 @@
             <br>Start
         </td>
         <td colspan="3">
-            <s:label value="%{person.lastAddress.startDate}"/>
+            <s:if test="person.lastAddress.startDate != null">
+                <s:label value="%{person.lastAddress.startDate}"/><br>
+                <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
+            </s:if>
         </td>
     </tr>
     <tr>
@@ -286,7 +294,7 @@
                 <td>
                     ස්ථිර
                     <br>மின்னஞ்சல்
-                    <br>Permenent
+                    <br>Permanent
                 </td>
                 <td>
                     ආරම්භය
@@ -294,8 +302,10 @@
                     <br>Start
                 </td>
                 <td>
-                    <s:property value="%{startDate}"/>
-
+                    <s:if test="startDate != null">
+                        <s:property value="%{startDate}"/><br>
+                        <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
+                    </s:if>
                 </td>
                 <td>
                     අවසානය
@@ -303,7 +313,10 @@
                     <br>End
                 </td>
                 <td>
-                    <s:property value="%{endDate}"/>
+                    <s:if test="endDate != null">
+                        <s:property value="%{endDate}"/><br>
+                        <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
+                    </s:if>
                 </td>
 
             </tr>
@@ -358,7 +371,12 @@
             <br>Father
         </td>
         <td><s:label value="%{person.father.pin}"/></td>
-        <td><s:label value="%{person.father.dateOfBirth}"/></td>
+        <td>
+            <s:if test="person.father.dateOfBirth != null">
+                <s:label value="%{person.father.dateOfBirth}"/><br>
+                <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
+            </s:if>
+        </td>
         <td>
             <s:url id="personDetails" action="eprPersonDetails">
                 <s:param name="personId" value="%{person.father.personUKey}"/>
@@ -375,7 +393,12 @@
             <br>Mother
         </td>
         <td><s:label value="%{person.mother.pin}"/></td>
-        <td><s:label value="%{person.mother.dateOfBirth}"/></td>
+        <td>
+            <s:if test="person.mother.dateOfBirth != null">
+                <s:label value="%{person.mother.dateOfBirth}"/><br>
+                <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
+            </s:if>
+        </td>
         <td>
             <s:url id="personDetails" action="eprPersonDetails">
                 <s:param name="personId" value="%{person.mother.personUKey}"/>
@@ -406,7 +429,12 @@
                 </s:else>
             </td>
             <td><s:property value="pin"/></td>
-            <td><s:property value="dateOfBirth"/></td>
+            <td>
+                <s:if test="dateOfBirth != null">
+                    <s:property value="dateOfBirth"/><br>
+                    <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
+                </s:if>
+            </td>
             <td>
                 <s:url id="personDetails" action="eprPersonDetails">
                     <s:param name="personId">
@@ -440,7 +468,12 @@
                 </s:else>
             </td>
             <td><s:property value="pin"/></td>
-            <td><s:property value="dateOfBirth"/></td>
+            <td>
+                <s:if test="dateOfBirth != null">
+                    <s:property value="dateOfBirth"/><br>
+                    <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
+                </s:if>
+            </td>
             <td>
                 <s:url id="personDetails" action="eprPersonDetails">
                     <s:param name="personId">
@@ -472,8 +505,8 @@
         <col width="130px">
         <col width="100px">
         <col width="150px">
-        <col width="200px">
         <col width="150px">
+        <col width="130px">
         <col>
         <tbody>
         <tr>
@@ -510,18 +543,61 @@
         </tr>
         <tr>
             <s:iterator value="person.marriages">
-                <td height="60px"><s:property value="dateOfMarriage"/></td>
-                <td><s:property value="Law"/></td>
+                <td height="60px">
+                    <s:if test="dateOfMarriage != null">
+                        <s:property value="dateOfMarriage"/><br>
+                        <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
+                    </s:if>
+                </td>
+                <td>
+                    <s:if test="preferredLanguage == 'si'">
+                        <s:property value="typeOfMarriage.siType"/>
+                    </s:if>
+                    <s:elseif test="preferredLanguage == 'en'">
+                        <s:property value="typeOfMarriage.enType"/>
+                    </s:elseif>
+                    <s:elseif test="preferredLanguage == 'ta'">
+                        <s:property value="typeOfMarriage.taType"/>
+                    </s:elseif>
+                </td>
                 <td><s:property value="placeOfMarriage"/></td>
                 <s:if test="person.gender == 1">
                     <td><s:property value="groom.pin"/></td>
-                    <td><s:property value="groom.dateOfBirth"/></td>
-                    <td><s:property value="groom.fullNameInOfficialLanguage"/></td>
+                    <td>
+                        <s:if test="groom.dateOfBirth != null">
+                            <s:property value="groom.dateOfBirth"/><br>
+                            <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
+                        </s:if>
+                    </td>
+                    <td>
+                        <s:url id="groomDetails" action="eprPersonDetails">
+                            <s:param name="personId">
+                                <s:property value="groom.personUKey"/>
+                            </s:param>
+                        </s:url>
+                        <s:a href="%{groomDetails}">
+                            <s:property value="groom.fullNameInOfficialLanguage"/>
+                        </s:a>
+                    </td>
                 </s:if>
                 <s:elseif test="person.gender == 0">
                     <td><s:property value="bride.pin"/></td>
-                    <td><s:property value="bride.dateOfBirth"/></td>
-                    <td><s:property value="bride.fullNameInOfficialLanguage"/></td>
+                    <td>
+                        <s:if test="bride.dateOfBirth != null">
+                            <s:property value="bride.dateOfBirth"/><br>
+                            <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
+                        </s:if>
+                    </td>
+                    <td>
+                        <s:url id="brideDetails" action="eprPersonDetails">
+                            <s:param name="personId">
+                                <s:property value="bride.personUKey"/>
+                            </s:param>
+                        </s:url>
+                        <s:a href="%{brideDetails}">
+                            <s:property value="bride.fullNameInOfficialLanguage"/>
+                        </s:a>
+                    </td>
                 </s:elseif>
             </s:iterator>
         </tr>
@@ -565,7 +641,10 @@
             <br>Date Added
         </td>
         <td>
-            <s:label value="%{person.dateOfRegistration}"/>
+            <s:if test="person.dateOfRegistration != null">
+                <s:label value="%{person.dateOfRegistration}"/><br>
+                <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
+            </s:if>
         </td>
         <td>
             ඇතුල් කල පුද්ගලයා
@@ -581,7 +660,10 @@
             <br>Last Updated
         </td>
         <td>
-            <s:label value="%{person.lifeCycleInfo.lastUpdatedTimestamp}"/>
+            <s:if test="person.lifeCycleInfo.lastUpdatedTimestamp != null">
+                <s:label value="%{person.lifeCycleInfo.lastUpdatedTimestamp}"/><br>
+                <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
+            </s:if>
         </td>
         <td>
             අවසන් වෙනස් කිරීම කල පුද්ගලයා
@@ -596,7 +678,12 @@
             <br>தேசிய
             <br>Date Generated
         </td>
-        <td><s:label value="%{person.lifeCycleInfo.approvalOrRejectTimestamp}"/></td>
+        <td>
+            <s:if test="person.lifeCycleInfo.approvalOrRejectTimestamp != null">
+                <s:label value="%{person.lifeCycleInfo.approvalOrRejectTimestamp}"/><br>
+                <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
+            </s:if>
+        </td>
         <td>
             නිකුත් කල පුද්ගලයා
             <br>தேசிய
