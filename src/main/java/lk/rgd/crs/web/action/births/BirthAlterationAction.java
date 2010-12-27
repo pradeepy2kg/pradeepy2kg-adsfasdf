@@ -83,6 +83,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
     private String dsDivisionName;
     private String bdDivisionName;
     private String originalName;
+    private String comment;
 
     /* helper fields to capture input from pages, they will then be processed before populating the bean */
     private int birthDistrictId;
@@ -927,20 +928,25 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             }
         }
         logger.debug("unable to find birth alteration for reject idUKey : {}", idUKey);
-        //forward to list page todo amith
+        //todo forward to list page  amith
         return ERROR;
     }
 
+    /**
+     * rejecting birth alteration
+     */
     public String rejectAlteration() {
-        /**
-         * review by amith todo change
-         * no log massage
-         * what happen if fails
-         * do not set state here use separate service method
-         */
-        BirthAlteration ba = alterationService.getByIDUKey(idUKey, user);
-        ba.setStatus(BirthAlteration.State.REJECT);
-        alterationService.updateBirthAlteration(ba, user);
+        logger.debug("attempt to reject birth alteration idUKey : {}", idUKey);
+        try {
+            alterationService.rejectBirthAlteration(idUKey, comment, user);
+            logger.debug("successfully rejected birth alteration idUKey : {}", idUKey);
+        }
+        catch (CRSRuntimeException e) {
+            logger.debug("unable to reject birth alteration idUKey : {}", idUKey);
+            addActionError(getText("error.unable.to.reject", new String[]{"" + idUKey}));
+            //todo forward to list page  amith
+            return ERROR;
+        }
         return SUCCESS;
     }
 
@@ -2045,5 +2051,13 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
 
     public void setOriginalName(String originalName) {
         this.originalName = originalName;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }
