@@ -278,7 +278,7 @@
                 <td align="center">
                     <s:if test="#request.allowApproveAlteration &&
                     alterationApprovalPermission.get(#approvalStatus.index) && (status.ordinal() ==0)">
-                        <s:url id="rejectSelected" action="eprRejectBirthAlteration.do">
+                        <s:url id="rejectSelected" action="eprRejectBirthAlterationInit.do">
                             <s:param name="idUKey" value="idUKey"/>
                             <s:param name="bdId" value="bdfIDUKey"/>
                             <s:param name="nextFlag" value="%{#request.nextFlag}"/>

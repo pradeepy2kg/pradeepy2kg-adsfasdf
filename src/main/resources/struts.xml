@@ -1072,6 +1072,10 @@
             <result type="tiles" name="success">epr.birthAlterationApproval</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
+        <action name="eprRejectBirthAlterationInit" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
+                method="rejectBirthAlterationInit">
+            <result name="pageLoad" type="tiles">epr.rejectBirthAlterationComment</result>
+        </action>
         <action name="eprRejectBirthAlteration" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
                 method="rejectAlteration">
             <result type="tiles" name="success">epr.birthAlterationResult</result>

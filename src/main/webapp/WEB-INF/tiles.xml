@@ -227,6 +227,11 @@
         <put-attribute name="title" value="birth_alteration_result.title"/>
     </definition>
 
+    <definition name="epr.rejectBirthAlterationComment" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthAlterationRejectGetComment.jsp"/>
+        <put-attribute name="title" value="birth_alteration_reject_comment.title"/>
+    </definition>
+
     <definition name="epr.birthAlterationPendingApproval" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/births/BirthAlterationApprovalList.jsp"/>
         <put-attribute name="title" value="birth_alteration_pending_approval.label"/>
