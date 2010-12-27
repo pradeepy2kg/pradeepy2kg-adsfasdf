@@ -177,6 +177,9 @@
                                     <s:param name="userId" value="userId"/>
                                     <s:param name="locationId" value="locationId"/>
                                 </s:url>
+                                <%--<td align="center">
+                                    <s:radio name="primaryLocation" list="primaryLocationSelectionList"/>
+                                </td>--%>
                                 <td align="center">
                                     <s:if test="lifeCycleInfo.active">
                                         <s:a href="%{inactiveSelected}"><img

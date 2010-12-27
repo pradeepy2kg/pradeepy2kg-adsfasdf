@@ -18,6 +18,15 @@
 </style>
 <div id="user-managment-outer">
     <table align="center">
+        <s:if test="pageNo==2">
+        <tr>
+            <td style="color:red;">
+                <s:actionmessage/><br>
+                Please Enter another user name
+            </td>
+        </tr>
+        </s:if>
+        <s:else>
         <tr>
             <td style="text-align:center;">
                 <s:actionmessage/>
@@ -46,6 +55,7 @@
                 <s:a href="%{addLocations}"><s:label value="Click Here To Assign Locations"/></s:a>
             </td>
         </tr>
+        </s:else>
         <tr>
             <td style="text-align:center;">
                 <s:form action="eprInitUserCreation">
@@ -58,6 +68,6 @@
         <tr>
             <td>&nbsp;</td>
         </tr>
-        
+
     </table>
 </div>
