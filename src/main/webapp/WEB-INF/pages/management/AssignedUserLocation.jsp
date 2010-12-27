@@ -154,6 +154,7 @@
                             <th></th>
                             <th></th>
                             <th></th>
+                            <th></th>
                             <s:set name="allowEdit" value="true"/>
                         </tr>
                         </thead>
@@ -162,6 +163,15 @@
                             <tr>
                                 <td><s:property value="%{#userListStatus.count}"/></td>
                                 <td><s:property value="location.enLocationName"/></td>
+
+                                <s:url id="editPLocation" action="eprEditPrimaryLocation.do">
+                                    <s:param name="userId" value="userId"/>
+                                    <s:param name="locationId" value="locationId"/>
+                                </s:url>
+                                <%--<s:url id="setPLocation" action="eprSetPrimaryLocation.do">
+                                    <s:param name="userId" value="userId"/>
+                                    <s:param name="locationId" value="locationId"/>
+                                </s:url>--%>
                                 <s:url id="editSelected" action="eprInitUserCreation.do">
                                     <s:param name="userId" value="userId"/>
                                 </s:url>
@@ -177,9 +187,18 @@
                                     <s:param name="userId" value="userId"/>
                                     <s:param name="locationId" value="locationId"/>
                                 </s:url>
-                                <%--<td align="center">
-                                    <s:radio name="primaryLocation" list="primaryLocationSelectionList"/>
-                                </td>--%>
+                                <td align="center">
+                                    <s:if test="primaryLocation==location.locationUKey">
+                                        <s:a href="%{editPLocation}"><img
+                                                src="<s:url value='/images/red_key.png'/>" width="25" height="25"
+                                                border="none"/></s:a>
+                                    </s:if>
+                                    <s:else>
+                                        <s:a href="%{editPLocation}"><img
+                                                src="<s:url value='/images/yellow_key.png'/>" width="25" height="25"
+                                                border="none"/></s:a>
+                                    </s:else>
+                                </td>
                                 <td align="center">
                                     <s:if test="lifeCycleInfo.active">
                                         <s:a href="%{inactiveSelected}"><img

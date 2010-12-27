@@ -101,26 +101,22 @@ public class UserManagerImpl implements UserManager {
                 ErrorCodes.AUTHORIZATION_FAILS_USER_MANAGEMENT);
 
         } else {
-            //try {
-                // get Calendar with current date
-                java.util.GregorianCalendar gCal = new GregorianCalendar();
-                // get yesterday's date
-                gCal.add(Calendar.DATE, -1);
-                userToCreate.setPasswordExpiry(gCal.getTime());
+            // get Calendar with current date
+            java.util.GregorianCalendar gCal = new GregorianCalendar();
+            // get yesterday's date
+            gCal.add(Calendar.DATE, -1);
+            userToCreate.setPasswordExpiry(gCal.getTime());
 
-                // adding new default password
-                User u = userDao.getUserByPK(userToCreate.getUserId());
-                if(u != null) {
-                    handleException("User Name is already assigned", ErrorCodes.ENTITY_ALREADY_EXIST);
-                    logger.debug("User already assigned");
-                }else
-                    userDao.addUser(userToCreate, adminUser);
-                logger.debug("New user {} created by : {}", userToCreate.getUserName(), adminUser.getUserName());
+            // adding new default password
+            User user = userDao.getUserByPK(userToCreate.getUserId());
+            if (user != null) {
+                handleException("User Name is already assigned", ErrorCodes.ENTITY_ALREADY_EXIST);
+                logger.debug("User already assigned");
+            } else {
+                userDao.addUser(userToCreate, adminUser);
+            }
+            logger.debug("New user {} created by : {}", userToCreate.getUserName(), adminUser.getUserName());
 
-            /*} catch (Exception e) {
-                handleException("Error creating a new user : " + userToCreate.getUserId() +
-                    " by : " + adminUser.getUserId(), ErrorCodes.PERSISTING_EXCEPTION_COMMON, e);
-            }*/
         }
     }
 
@@ -128,23 +124,30 @@ public class UserManagerImpl implements UserManager {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void addUserLocation(UserLocation userLocation, User adminUser) {
+    public void addUserLocation(UserLocation userLocation, User adminUser, boolean isPrimary) {
         if (!adminUser.isAuthorized(Permission.USER_MANAGEMENT)) {
             handleException(adminUser.getUserName() + " doesn't have permission to add user locations",
                 ErrorCodes.AUTHORIZATION_FAILS_USER_MANAGEMENT);
         } else {
-            if (userDao.getUserByPK(userLocation.getUserId()) == null ||
-                locationDao.getLocation(userLocation.getLocationId()) == null) {
-                handleException("Non-existing User : " + userLocation.getUserId() +
-                    " or location : " + userLocation.getLocationId(), ErrorCodes.INVALID_DATA);
+            if (!isPrimary) {
+                if (userDao.getUserByPK(userLocation.getUserId()) == null ||
+                    locationDao.getLocation(userLocation.getLocationId()) == null) {
+                    handleException("Non-existing User : " + userLocation.getUserId() +
+                        " or location : " + userLocation.getLocationId(), ErrorCodes.INVALID_DATA);
+                } else {
+                    User existing = userDao.getUserByPK(userLocation.getUserId());
+                    if (existing.getPrimaryLocation() == null) {
+                        existing.setPrimaryLocation(userLocation.getLocation());
+                        userDao.updateUser(existing, adminUser);
+                    }
+                    userLocationDao.save(userLocation, adminUser);
+
+                }
             } else {
                 User existing = userDao.getUserByPK(userLocation.getUserId());
-                if (existing.getPrimaryLocation() == null) {
-                    existing.setPrimaryLocation(userLocation.getLocation());
-                    userDao.updateUser(existing, adminUser);
-                }
-                userLocationDao.save(userLocation, adminUser);
 
+                existing.setPrimaryLocation(userLocation.getLocation());
+                userDao.updateUser(existing, adminUser);
             }
 
         }

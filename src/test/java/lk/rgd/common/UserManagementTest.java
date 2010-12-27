@@ -4,7 +4,6 @@ import junit.framework.TestCase;
 import lk.rgd.Permission;
 import lk.rgd.UnitTestManager;
 import lk.rgd.common.api.dao.*;
-import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.UserLocation;
 import lk.rgd.common.api.service.UserManager;
@@ -152,7 +151,7 @@ public class UserManagementTest extends TestCase {
         ul.setUser(newUser4);
         ul.setLocation(locationDAO.getLocation(1));
         ul.setSignBirthCert(true);
-        userManager.addUserLocation(ul, admin);
+        userManager.addUserLocation(ul, admin, false);
 
         newUser4 = userManager.getUserByID("newUser4");
         Assert.assertEquals(1, newUser4.getLocations().size());

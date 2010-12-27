@@ -919,6 +919,11 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
+        <action name="eprEditPrimaryLocation" class="lk.rgd.crs.web.action.UserManagementAction"
+                method="editPrimaryLocation">
+            <result type="tiles" name="success">epr.assignedUserLocation</result>
+        </action>
+
         <action name="eprUserCreation" class="lk.rgd.crs.web.action.UserManagementAction"
                 method="createUser">
             <result type="tiles" name="pageLoad">epr.creatUser</result>

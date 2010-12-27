@@ -86,7 +86,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     private boolean newUser;
 
     private Location location;
-    private Location primaryLocation;
+    private int primaryLocation;
     private List<Location> primaryLocationSelectionList;
 
     private String roleId;
@@ -173,8 +173,8 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 service.createUser(user, currentUser);
             } catch (RGDRuntimeException e) {
                 if (e.getErrorCode() == ErrorCodes.ENTITY_ALREADY_EXIST) {
-                    addActionMessage("user already assigned");
-                    pageNo=2;
+                    addActionMessage(getText("user.already.assigned"));
+                    pageNo = 2;
                     return SUCCESS;
                 }
             }
@@ -264,12 +264,26 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         if (userLocationNameList != null) {
             logger.debug("size of the user location list is :{}", userLocationNameList.size());
         }
+        primaryLocation = userDAO.getUserByPK(userId).getPrimaryLocation().getLocationUKey();
         populateLocationListOnly();
         //populate();
         return SUCCESS;
     }
 
+    public String editPrimaryLocation() {
+        User user = userDAO.getUserByPK(userId);
+        UserLocation userLocation = userLocationDAO.getUserLocation(user.getUserId(), locationId);
+        service.addUserLocation(userLocation, currentUser, true);
+        primaryLocation = locationId;
+        logger.debug("Active location of {} user is :{}", userId, locationDAO.getLocation(locationId).getEnLocationName());
+        userLocationNameList = userLocationDAO.getUserLocationsListByUserId(userId);
+        //populate();
+        populateLocationListOnly();
+        return SUCCESS;
+    }
+
     public String assignedUserLocation() {
+        primaryLocation = userDAO.getUserByPK(userId).getPrimaryLocation().getLocationUKey();
         if (pageType == 0) {
             UserLocation checkUserLocation = userLocationDAO.getUserLocation(userId, locationId);
             if (checkUserLocation != null) {
@@ -280,7 +294,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 userLocation.setLocation(locationDAO.getLocation(locationId));
                 userLocation.setUserId(userId);
                 userLocation.setUser(userDAO.getUserByPK(userId));
-                service.addUserLocation(userLocation, currentUser);
+                service.addUserLocation(userLocation, currentUser, false);
 
                 //userDAO.addPrimaryLocation(User user, Location primaryLocation);
                 logger.debug("Add New UserLocation : {} for user :{}", locationDAO.getLocation(locationId).getEnLocationName(), userId);
@@ -1133,11 +1147,11 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         this.language = language;
     }
 
-    public Location getPrimaryLocation() {
+    public int getPrimaryLocation() {
         return primaryLocation;
     }
 
-    public void setPrimaryLocation(Location primaryLocation) {
+    public void setPrimaryLocation(int primaryLocation) {
         this.primaryLocation = primaryLocation;
     }
 
