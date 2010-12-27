@@ -82,6 +82,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
     private String districtName;
     private String dsDivisionName;
     private String bdDivisionName;
+    private String originalName;
 
     /* helper fields to capture input from pages, they will then be processed before populating the bean */
     private int birthDistrictId;
@@ -452,8 +453,6 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
 
     /**
      * editing birth alteration
-     * review by amith
-     * this method name should be editBithAlterationInit
      * this is just load the page do nothing else
      * //todo remove BDID which is passing through the URL it is no need to this
      */
@@ -913,7 +912,32 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         setAllowApproveAlteration(user.isAuthorized(Permission.APPROVE_BIRTH_ALTERATION));
     }
 
+    /**
+     * init birth alteration reject page
+     */
+    public String rejectBirthAlterationInit() {
+        logger.debug("attempt load birth alteration get comment page for rejecting birth alteration idUKey : {}", idUKey);
+        //do nothing just load the page
+        if (idUKey != null) {
+            birthAlteration = alterationService.getByIDUKey(idUKey, user);
+            if (birthAlteration != null) {
+                originalName = service.getById(birthAlteration.getBdfIDUKey(), user).
+                    getChild().getChildFullNameOfficialLang();
+                return "pageLoad";
+            }
+        }
+        logger.debug("unable to find birth alteration for reject idUKey : {}", idUKey);
+        //forward to list page todo amith
+        return ERROR;
+    }
+
     public String rejectAlteration() {
+        /**
+         * review by amith todo change
+         * no log massage
+         * what happen if fails
+         * do not set state here use separate service method
+         */
         BirthAlteration ba = alterationService.getByIDUKey(idUKey, user);
         ba.setStatus(BirthAlteration.State.REJECT);
         alterationService.updateBirthAlteration(ba, user);
@@ -2013,5 +2037,13 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
 
     public void setBirthAlteration(BirthAlteration birthAlteration) {
         this.birthAlteration = birthAlteration;
+    }
+
+    public String getOriginalName() {
+        return originalName;
+    }
+
+    public void setOriginalName(String originalName) {
+        this.originalName = originalName;
     }
 }
