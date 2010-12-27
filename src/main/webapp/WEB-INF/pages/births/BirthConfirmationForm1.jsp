@@ -267,7 +267,7 @@
             விபரம<br>Information included in Civil Registration System </label></td>
         <td class="cell_02" colspan="6"><label>
              ඇතුලත් කරඇති තොරතුරු හෝ යම් අක්ෂර දෝෂයක් නිවැරදි කල යුතුනම් , වෙනස් විය යුතු ආකාරය ඇතුලත් කරන්න
-            <br>உட்புகுத்தப்பட்ட விபரங்கள் அல்லது ஏதாவது தவறு திருத்தப்பட வேண்டுமாயின், திருத்தப்படவெண்டிய விதத்தினை குறிப்பிடவும்  
+            <br>உட்புகுத்தப்பட்ட விபரங்கள் அல்லது ஏதாவது தவறு திருத்தப்பட வேண்டுமாயின், திருத்தப்படவெண்டிய விதத்தினை குறிப்பிடவும்
             <br>If there are spelling mistakes or changes in existing details.</label></td>
     </tr>
     <tr>
@@ -312,6 +312,14 @@
     </tr>
     <tr>
         <td>4</td>
+        <td colspan="7"><label> උප්පැන්න සහතිකය නිකුත් කල යුතු භාෂාව / பிறப்பு அத்தாட்சி ….. /<br>Preferred Language for Birth Certificate </label></td>
+        <td colspan="6">
+             <s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'தமிழ்'}" name="register.preferredLanguage"
+                  cssStyle="width:190px; margin-left:5px;"/>
+        </td>
+    </tr>
+    <tr>
+        <td>5</td>
         <td colspan="14"><label>උපන් ස්ථානය / பிறந்தபிறந்த இடம் / Place of birth<s:label value="*" cssStyle="color:red;font-size:14pt"/></label></td>
     </tr>
     <tr>
@@ -359,14 +367,14 @@
         </td>
     </tr>
     <tr>
-        <td>5</td>
+        <td>6</td>
         <td><label>පියාගේ අනන්‍යතා අංකය <br>தந்நையின் தனிநபர் அடையாள எண்<br>Father's PIN</label></td>
         <td colspan="6"><s:textfield name="#session.birthConfirmation_db.parent.fatherNICorPIN" cssClass="disable"
                                      disabled="true"/></td>
         <td colspan="6"><s:textfield name="parent.fatherNICorPIN" size="35" id="fatherNICorPIN"/></td>
     </tr>
     <tr>
-        <td>6</td>
+        <td>7</td>
         <td><label>පියාගේ ජාතිය <br>தந்நையின் இனம்<br>Father's Race</label></td>
         <td colspan="6">
             <s:textfield value="%{getRaceList().get(fatherRace)}" cssClass="disable" disabled="true"/>
@@ -378,14 +386,14 @@
     <tr>
 
     <tr>
-        <td>7</td>
+        <td>8</td>
         <td><label>ම‌වගේ අනන්‍යතා අංකය <br>தாயின் தனிநபர் அடையாள எண<br>Mother's PIN</label></td>
         <td colspan="6"><s:textfield name="#session.birthConfirmation_db.parent.motherNICorPIN" cssClass="disable"
                                      disabled="true"/></td>
         <td colspan="6"><s:textfield name="parent.motherNICorPIN" size="35" id="motherNICorPIN"/></td>
     </tr>
     <tr>
-        <td>8</td>
+        <td>9</td>
         <td><label>මවගේ ජාතිය <br>தாயின் இனம்<br>Mother's Race</label></td>
         <td colspan="6"><s:textfield value="%{getRaceList().get(motherRace)}" cssClass="disable"
                                      disabled="true"/></td>
@@ -394,7 +402,7 @@
         </td>
     </tr>
     <tr>
-        <td>9</td>
+        <td>10</td>
         <td><label>මව්පියන් විවාහකද? <br>பெற்றார் விவாகஞ் செய்தவர்களா? <br>Were Parents Married?</label></td>
         <td colspan="6">
             <s:if test="bdId != 0">
@@ -413,7 +421,7 @@
                     <td>
                         <s:radio name="marriage.parentsMarried" id="parentsMarried" list="#@java.util.HashMap@{'MARRIED':''}"
                                  value="marriage.parentsMarried"/>
-                        
+
                     </td>
                     <td><label class="label">නැත<br>இல்லை<br>No</label></td>
                     <td>

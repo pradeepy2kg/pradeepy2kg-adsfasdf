@@ -71,3 +71,5 @@ You can apply for a new death certificate with altered value in ta
 * සාමාන්‍ය විවාහ(General Marriage)
 * උඩරට විවාහ (Kandyan Marriage)
 * මුස්ලිම් විවාහ(Muslim Marriage)
+
+* උප්පැන්න සහතිකය නිකුත් කල යුතු භාෂාව (Preferred Language for Birth Certificate)
