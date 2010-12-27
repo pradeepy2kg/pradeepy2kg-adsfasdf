@@ -1,10 +1,7 @@
 package lk.rgd.common.core.dao;
 
 import lk.rgd.common.api.dao.UserDAO;
-import lk.rgd.common.api.domain.DSDivision;
-import lk.rgd.common.api.domain.District;
-import lk.rgd.common.api.domain.Role;
-import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.*;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -1,6 +1,9 @@
 package lk.rgd.crs.web.action;
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.ErrorCodes;
+import lk.rgd.common.RGDException;
+import lk.rgd.common.RGDRuntimeException;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.*;
 import lk.rgd.common.api.service.UserManager;
@@ -82,9 +85,9 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     private UserLocation userLocation;
     private boolean newUser;
 
-
     private Location location;
-
+    private Location primaryLocation;
+    private List<Location> primaryLocationSelectionList;
 
     private String roleId;
     private final DistrictDAO districtDAO;
@@ -166,7 +169,15 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
             user.setAssignedBDDistricts(assDistrict);
             user.setAssignedMRDistricts(assDistrict);
             user.setAssignedBDDSDivisions(assDSDivision);
-            service.createUser(user, currentUser);
+            try {
+                service.createUser(user, currentUser);
+            } catch (RGDRuntimeException e) {
+                if (e.getErrorCode() == ErrorCodes.ENTITY_ALREADY_EXIST) {
+                    addActionMessage("user already assigned");
+                    pageNo=2;
+                    return SUCCESS;
+                }
+            }
             userId = user.getUserId();
             addActionMessage(getText("data.Save.Success.label"));
             pageNo = 1;
@@ -265,10 +276,13 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 addFieldError("duplicateIdNumberError", "This Location  Already Assigned For User   :" + userId);
                 logger.debug("{} location is already assigned for user  :{}", locationDAO.getLocation(locationId).getEnLocationName(), userId);
             } else {
+                //userLocation.setLocation();
                 userLocation.setLocation(locationDAO.getLocation(locationId));
                 userLocation.setUserId(userId);
                 userLocation.setUser(userDAO.getUserByPK(userId));
                 service.addUserLocation(userLocation, currentUser);
+
+                //userDAO.addPrimaryLocation(User user, Location primaryLocation);
                 logger.debug("Add New UserLocation : {} for user :{}", locationDAO.getLocation(locationId).getEnLocationName(), userId);
                 userLocation = null;
             }
@@ -1109,5 +1123,29 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
 
     public void setNewUser(boolean newUser) {
         this.newUser = newUser;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public Location getPrimaryLocation() {
+        return primaryLocation;
+    }
+
+    public void setPrimaryLocation(Location primaryLocation) {
+        this.primaryLocation = primaryLocation;
+    }
+
+    public List<Location> getPrimaryLocationSelectionList() {
+        return primaryLocationSelectionList;
+    }
+
+    public void setPrimaryLocationSelectionList(List<Location> primaryLocationSelectionList) {
+        this.primaryLocationSelectionList = primaryLocationSelectionList;
     }
 }
