@@ -145,7 +145,7 @@ public interface PersonDAO {
     /**
      * Returns a paginated list of Persons based on the submitted location.
      * <p>Returns a paginated list of Persons whose status is <i>UNVERIFIED, SEMI_VERIFIED, VERIFIED or CERT_PRINTED</i>
-     * , based on the submitted location of the PRS entry.</p>
+     * , based on the submitted location of the PRS entry and ordered by lastUpdatedTimestamp in descending order.</p>
      *
      * @param location the location (submitted location)
      * @param pageNo   the page number for the results required (start from 1)
@@ -153,5 +153,33 @@ public interface PersonDAO {
      * @return the matching list of persons
      */
     public List<Person> getPaginatedListByLocation(Location location, int pageNo, int noOfRows);
+
+    /**
+     * Returns a Person(since PIN is unique) based on the submitted location and Personal Identification Number(PIN).
+     *
+     * @param location the location (submitted location)
+     * @param pin      the Personal Identification Number
+     * @return the matching person
+     */
+    public List<Person> getByLocationAndPIN(Location location, long pin);
+
+    /**
+     * Returns a list of Persons based on the submitted location and National Identity Card(NIC) Number.
+     * <p>Since NIC number is not unique there can be duplicate entries for the same NIC.
+     *
+     * @param location the location (submitted location)
+     * @param nic      the National Identity Card Number
+     * @return the matching list of persons
+     */
+    public List<Person> getByLocationAndNIC(Location location, String nic);
+
+    /**
+     * Returns a Person(since temporary PIN is unique) based on the submitted location and Temporary PIN
+     *
+     * @param location the location (submitted location)
+     * @param tempPin  the Temporary Personal Identification Number
+     * @return the matching person
+     */
+    public List<Person> getByLocationAndTempPIN(Location location, long tempPin);
 
 }
