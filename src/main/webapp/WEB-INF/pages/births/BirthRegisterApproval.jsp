@@ -278,8 +278,8 @@
             <tr>
                     <%--<td><s:property value="%{#approvalStatus.count + recordCounter}"/></td>--%>
                 <td>
-                    <s:if test="register.birthType.ordinal() != 3">
-                        <s:checkbox name="index"
+                    <s:if test="(register.birthType.ordinal() != 3) && (approvalPendingList.size>1)">
+                            <s:checkbox name="index"
                                     onclick="javascript:selectall(document.birth_register_approval_body,document.birth_register_approval_body.allCheck)"
                                     title="%{getText('select.label')}" value="%{#index}"
                                     fieldValue="%{#approvalList.idUKey}"/>
