@@ -532,7 +532,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
         <td width="35%">
             <s:fielderror name="duplicateSerialNumberError" cssStyle="color:red;font-size:10pt"/>
             <table class="birth-alteration-table-style02" cellspacing="0" style="float:right;width:100%">
-                <tr>
+                <tr> 32123
                     <td colspan="2" style="text-align:center;">කාර්යාල ප්‍රයෝජනය සඳහා පමණි / <br>
                         அலுவலக பாவனைக்காக மட்டும் / <br>
                         For office use only
@@ -544,7 +544,6 @@ function validateBirthYear(domElement, errorText, errorCode) {
                         <s:label value="Date of Acceptance"/>
                     </td>
                     <td><s:textfield id="acceptanceDate" name="birthAlteration.dateReceived"/></td>
-                    32123
                 <tr>
                     <td><s:label value="පනතේ වගන්තිය "/><br>
                         <s:label value="பிறப்பைப்"/> <br>
