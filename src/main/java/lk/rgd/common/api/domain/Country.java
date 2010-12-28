@@ -18,15 +18,16 @@ import java.util.Set;
 public class Country implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)
     private int countryId;
     @Column(nullable = false, length = 2, unique = true, updatable = false)
     private String countryCode;
-    @Column(nullable = false, length = 30, unique = true, updatable = false)
+    @Column(nullable = false, length = 60, unique = true, updatable = false)
     private String siCountryName;
-    @Column(nullable = false, length = 30, unique = true, updatable = false)
+    @Column(nullable = false, length = 60, unique = true, updatable = false)
     private String enCountryName;
-    @Column(nullable = false, length = 30, unique = true, updatable = false)
+    @Column(nullable = false, length = 60, unique = true, updatable = false)
     private String taCountryName;
     @Column(name = "active", columnDefinition = "smallint not null default 1")
     private boolean active;
