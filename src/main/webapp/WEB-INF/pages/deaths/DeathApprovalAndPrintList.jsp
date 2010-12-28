@@ -16,7 +16,7 @@
 
     /*date pickers for start and end dates*/
     $(function() {
-        $("#fromDateId").datepicker({
+        $("#fromDate").datepicker({
             changeYear: true,
             dateFormat:'yy-mm-dd',
             startDate:'2000-01-01',
@@ -24,7 +24,7 @@
         });
     });
     $(function() {
-        $("#endDateId").datepicker({
+        $("#endDate").datepicker({
             changeYear: true,
             dateFormat:'yy-mm-dd',
             startDate:'2000-01-01',
@@ -112,7 +112,7 @@
         <tr>
             <td><s:label name="bdDivision" value="%{getText('select_BD_division.label')}"/></td>
             <td>
-                <s:select id="birthDivisionId" name="birthDivisionId" value="{birthDivisionId}" list="bdDivisionList"
+                <s:select id="deathDivisionId" name="deathDivisionId" value="{deathDivisionId}" list="bdDivisionList"
                           headerValue="%{getText('all.divisions.label')}" headerKey="0"
                           cssStyle=" width:240px;float:left;"/>
             </td>
@@ -131,11 +131,11 @@
         <tr>
             <td align="left">
                 <s:label value="%{getText('date.from.label')}" cssStyle=" margin-right:5px;"/>
-                <s:textfield id="searchStartDatePicker" name="searchStartDate" cssStyle="width:150px" maxLength="10"/>
+                <s:textfield id="fromDate" name="fromDate" cssStyle="width:150px" maxLength="10"/>
             </td>
             <td align="right">
                 <s:label value="%{getText('date.to.label')}" cssStyle=" margin-right:5px;"/>
-                <s:textfield id="searchEndDatePicker" name="searchEndDate" cssStyle="width:150px" maxLength="10"/>
+                <s:textfield id="endDate" name="endDate" cssStyle="width:150px" maxLength="10"/>
             </td>
             <td></td>
             <td></td>

@@ -27,11 +27,11 @@ public class DeathDeclarationValidator {
 
 
     private static final ResourceBundle rb_si =
-            ResourceBundle.getBundle("messages/death_validation_messages", AppConstants.LK_SI);
+        ResourceBundle.getBundle("messages/death_validation_messages", AppConstants.LK_SI);
     private static final ResourceBundle rb_ta =
-            ResourceBundle.getBundle("messages/death_validation_messages", AppConstants.LK_TA);
+        ResourceBundle.getBundle("messages/death_validation_messages", AppConstants.LK_TA);
     private static final ResourceBundle rb_en =
-            ResourceBundle.getBundle("messages/death_validation_messages", AppConstants.LK_EN);
+        ResourceBundle.getBundle("messages/death_validation_messages", AppConstants.LK_EN);
 
     /**
      * validate minimul requirment against the filled date in the death declaration form
@@ -40,24 +40,25 @@ public class DeathDeclarationValidator {
      */
     public static void validateMinimalRequirments(DeathRegister deathRegister) {
 
-        boolean primaryCondition = deathRegister.getDeath().getDateOfRegistration() == null || deathRegister.getDeath().getDeathDivision() == null ||
-                deathRegister.getDeath().getDateOfDeath() == null || isEmptyString(deathRegister.getDeath().getPlaceOfDeath())  || isEmptyString(deathRegister.getDeclarant().getDeclarantAddress()) ||
-                deathRegister.getNotifyingAuthority().getNotifyingAuthoritySignDate() == null ||
-                isEmptyString(deathRegister.getNotifyingAuthority().getNotifyingAuthorityName()) ||
-                isEmptyString(deathRegister.getNotifyingAuthority().getNotifyingAuthorityAddress()) ||
-                isEmptyString(deathRegister.getNotifyingAuthority().getNotifyingAuthorityPIN());
+        boolean primaryCondition = deathRegister.getDeath().getDateOfRegistration() == null ||
+            deathRegister.getDeath().getDeathDivision() == null || deathRegister.getDeath().getDateOfDeath() == null ||
+            isEmptyString(deathRegister.getDeath().getPlaceOfDeath()) || isEmptyString(deathRegister.getDeclarant().getDeclarantAddress()) ||
+            deathRegister.getNotifyingAuthority().getNotifyingAuthoritySignDate() == null ||
+            isEmptyString(deathRegister.getNotifyingAuthority().getNotifyingAuthorityName()) ||
+            isEmptyString(deathRegister.getNotifyingAuthority().getNotifyingAuthorityAddress()) ||
+            isEmptyString(deathRegister.getNotifyingAuthority().getNotifyingAuthorityPIN());
 
         if (primaryCondition) {
             if (deathRegister.getIdUKey() > 0) {
                 handleException("Death declaration record ID : " + deathRegister.getIdUKey() + " is not complete. " +
-                        "Check required field values", ErrorCodes.INVALID_DATA);
+                    "Check required field values", ErrorCodes.INVALID_DATA);
             } else if (deathRegister.getDeath().getDeathSerialNo() > 0) {
                 //todo needd of this  ????
                 handleException("Death declaration record with serial number : " + deathRegister.getDeath().getDeathSerialNo() +
-                        " is not complete. Check required field values", ErrorCodes.INVALID_DATA);
+                    " is not complete. Check required field values", ErrorCodes.INVALID_DATA);
             } else {
                 handleException("Death declaration record being processed is incomplete " +
-                        "Check required field values", ErrorCodes.INVALID_DATA);
+                    "Check required field values", ErrorCodes.INVALID_DATA);
             }
         }
 
@@ -73,7 +74,7 @@ public class DeathDeclarationValidator {
      * @return a list of warnings issued against the death declaration
      */
     public static List<UserWarning> validateStandardRequirements(
-            DeathRegisterDAO deathRegisterDAO, DeathRegister deathRegister, User user) {
+        DeathRegisterDAO deathRegisterDAO, DeathRegister deathRegister, User user) {
         // create a holder to capture any warnings
         List<UserWarning> warnings = new ArrayList<UserWarning>();
 

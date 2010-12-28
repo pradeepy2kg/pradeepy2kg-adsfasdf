@@ -300,15 +300,19 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         logger.debug("requested to filter by : {}", currentStatus);
         setPageNo(1);
         noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
-        populate();
         initPermissionForApprovalAndPrint();
 
         searchByDate = ((fromDate != null) && (endDate != null));
 
         if (searchByDate) {
-            //search by date in given divission deathDivisions and all the status
-            deathApprovalAndPrintList = service.getByBDDivisionAndRegistrationDateRange(
-                bdDivisionDAO.getBDDivisionByPK(deathDivisionId), fromDate, endDate, pageNo, noOfRows, user);
+            //search by date in given division deathDivisions and all the status
+            if (deathDivisionId != 0) {
+                deathApprovalAndPrintList = service.getByBDDivisionAndRegistrationDateRange(
+                    bdDivisionDAO.getBDDivisionByPK(deathDivisionId), fromDate, endDate, pageNo, noOfRows, user);
+            } else {
+                // TODO temporary fix
+                deathApprovalAndPrintList = Collections.emptyList();
+            }
         } else {
             if (currentStatus == 0) {
                 if (deathDivisionId != 0) {
@@ -330,6 +334,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                 }
             }
         }
+        populate();
         paginationHandler(deathApprovalAndPrintList.size());
         return SUCCESS;
     }
@@ -493,8 +498,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                         logger.warn("For the first time Death certificate print issued location and user not valid");
                         return ERROR;
                     }
-                }
-                catch (CRSRuntimeException e) {
+                } catch (CRSRuntimeException e) {
                     addActionError("death.error.no.permission.print");
                 }
             }
