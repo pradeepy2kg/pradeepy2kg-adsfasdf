@@ -151,7 +151,7 @@ public class UserManagementTest extends TestCase {
         ul.setUser(newUser4);
         ul.setLocation(locationDAO.getLocation(1));
         ul.setSignBirthCert(true);
-        userManager.addUserLocation(ul, admin, false);
+        userManager.addUserLocation(ul, admin);
 
         newUser4 = userManager.getUserByID("newUser4");
         Assert.assertEquals(1, newUser4.getLocations().size());
