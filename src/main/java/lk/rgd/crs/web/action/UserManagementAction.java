@@ -2,7 +2,6 @@ package lk.rgd.crs.web.action;
 
 import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.ErrorCodes;
-import lk.rgd.common.RGDException;
 import lk.rgd.common.RGDRuntimeException;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.*;
@@ -265,8 +264,9 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
             logger.debug("size of the user location list is :{}", userLocationNameList.size());
         }
         Location prmLocation = userDAO.getUserByPK(userId).getPrimaryLocation();
-        if(prmLocation != null)
+        if (prmLocation != null) {
             primaryLocation = prmLocation.getLocationUKey();
+        }
         populateLocationListOnly();
         //populate();
         return SUCCESS;
@@ -275,7 +275,8 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     public String editPrimaryLocation() {
         User user = userDAO.getUserByPK(userId);
         UserLocation userLocation = userLocationDAO.getUserLocation(user.getUserId(), locationId);
-        service.addUserLocation(userLocation, currentUser, true);
+        //service.addUserLocation(userLocation, currentUser, true);
+        addPrimaryLocation(userLocation, currentUser);
         primaryLocation = locationId;
         logger.debug("Active location of {} user is :{}", userId, locationDAO.getLocation(locationId).getEnLocationName());
         userLocationNameList = userLocationDAO.getUserLocationsListByUserId(userId);
@@ -287,7 +288,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     public String assignedUserLocation() {
         //primaryLocation = userDAO.getUserByPK(userId).getPrimaryLocation().getLocationUKey();
         Location prmLocation = userDAO.getUserByPK(userId).getPrimaryLocation();
-        if(prmLocation != null){
+        if (prmLocation != null) {
             primaryLocation = prmLocation.getLocationUKey();
         }
         if (pageType == 0) {
@@ -300,7 +301,10 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 userLocation.setLocation(locationDAO.getLocation(locationId));
                 userLocation.setUserId(userId);
                 userLocation.setUser(userDAO.getUserByPK(userId));
-                service.addUserLocation(userLocation, currentUser, false);
+                service.addUserLocation(userLocation, currentUser);
+                if(userDAO.getUserByPK(userId).getPrimaryLocation() == null){
+                    addPrimaryLocation(userLocation, currentUser);
+                }
 
                 //userDAO.addPrimaryLocation(User user, Location primaryLocation);
                 logger.debug("Add New UserLocation : {} for user :{}", locationDAO.getLocation(locationId).getEnLocationName(), userId);
@@ -324,6 +328,14 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         populateLocationListOnly();
         userLocationNameList = userLocationDAO.getUserLocationsListByUserId(userId);
         return SUCCESS;
+    }
+
+    private void addPrimaryLocation(UserLocation userLocation, User currentUser) {
+        Location location = userLocation.getLocation();
+        User user = userLocation.getUser();
+        user.setPrimaryLocation(location);
+        service.updateUser(user, currentUser);
+        primaryLocation = location.getLocationUKey();
     }
 
     public String activeUserLocation() {

@@ -124,30 +124,18 @@ public class UserManagerImpl implements UserManager {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void addUserLocation(UserLocation userLocation, User adminUser, boolean isPrimary) {
+    public void addUserLocation(UserLocation userLocation, User adminUser) {
         if (!adminUser.isAuthorized(Permission.USER_MANAGEMENT)) {
             handleException(adminUser.getUserName() + " doesn't have permission to add user locations",
                 ErrorCodes.AUTHORIZATION_FAILS_USER_MANAGEMENT);
         } else {
-            if (!isPrimary) {
-                if (userDao.getUserByPK(userLocation.getUserId()) == null ||
-                    locationDao.getLocation(userLocation.getLocationId()) == null) {
-                    handleException("Non-existing User : " + userLocation.getUserId() +
-                        " or location : " + userLocation.getLocationId(), ErrorCodes.INVALID_DATA);
-                } else {
-                    User existing = userDao.getUserByPK(userLocation.getUserId());
-                    if (existing.getPrimaryLocation() == null) {
-                        existing.setPrimaryLocation(userLocation.getLocation());
-                        userDao.updateUser(existing, adminUser);
-                    }
-                    userLocationDao.save(userLocation, adminUser);
 
-                }
+            if (userDao.getUserByPK(userLocation.getUserId()) == null ||
+                locationDao.getLocation(userLocation.getLocationId()) == null) {
+                handleException("Non-existing User : " + userLocation.getUserId() +
+                    " or location : " + userLocation.getLocationId(), ErrorCodes.INVALID_DATA);
             } else {
-                User existing = userDao.getUserByPK(userLocation.getUserId());
-
-                existing.setPrimaryLocation(userLocation.getLocation());
-                userDao.updateUser(existing, adminUser);
+                userLocationDao.save(userLocation, adminUser);
             }
 
         }
