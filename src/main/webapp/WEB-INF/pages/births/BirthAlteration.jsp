@@ -532,7 +532,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
         <td width="35%">
             <s:fielderror name="duplicateSerialNumberError" cssStyle="color:red;font-size:10pt"/>
             <table class="birth-alteration-table-style02" cellspacing="0" style="float:right;width:100%">
-                <tr> 32123
+                <tr>
                     <td colspan="2" style="text-align:center;">කාර්යාල ප්‍රයෝජනය සඳහා පමණි / <br>
                         அலுவலக பாவனைக்காக மட்டும் / <br>
                         For office use only
@@ -550,7 +550,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                         <s:label value="Section of the Act"/>
                     </td>
                     <td align="center">
-                        <s:if test="alterationType.ordinal()==2">
+                        <s:if test="alterationType.ordinal()!=1 && alterationType.ordinal()!=0">
                             <s:select
                                     list="#@java.util.HashMap@{'TYPE_52_1_A':'52(1)A','TYPE_52_1_B':'52(1)B','TYPE_52_1_D':'52(1)D',
                                     'TYPE_52_1_E':'52(1)E','TYPE_52_1_H':'52(1)H','TYPE_52_1_I':'52(1)I'}"
@@ -584,7 +584,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                     <s:label value="தந்தை பற்றிய தகவல்"/>் <br>
                     <s:label value="Insertion or Alteration of the Name (Section 27)"/>
                 </s:if>
-                <s:if test="alterationType.ordinal()==2">
+                <s:if test="alterationType.ordinal()!=1 && alterationType.ordinal()!=0 ">
                     <s:hidden id="sectionOfAct" value="2"/>
                     <s:label value="උප්පැන සහතිකයක දෝෂ නිවැරදි කිරීම (52 (1) වගන්තිය)"/> <br>
                     <s:label value="தந்தை பற்றிய தகவல்"/> <br>
@@ -698,7 +698,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
         </table>
     </div>
 </s:if>
-<s:if test="alterationType.ordinal()==2">
+<s:if test="alterationType.ordinal()!=1 && alterationType.ordinal()!=0 ">
 <div id="actNumber2">
 <s:hidden name="birthAlteration.alt27.childFullNameOfficialLang"/>
 <s:hidden name="birthAlteration.alt27.childFullNameEnglish"/>
