@@ -12,6 +12,7 @@ import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.BirthAlterationService;
 import lk.rgd.crs.api.service.BirthRegistrationService;
+import lk.rgd.crs.core.service.BirthAlterationValidator;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.web.util.CommonUtil;
 import org.apache.struts2.interceptor.SessionAware;
@@ -36,6 +37,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
     private DSDivisionDAO dsDivisionDAO;
     private BirthAlterationService alterationService;
     private AppParametersDAO appParametersDAO;
+    private BirthAlterationValidator birthAlterationValidator;
     private final CommonUtil commonUtil;
     private static final String BA_APPROVAL_ROWS_PER_PAGE = "crs.br_approval_rows_per_page";
 
@@ -128,7 +130,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
 
     public BirthAlterationAction(BirthRegistrationService service, DistrictDAO districtDAO, CountryDAO countryDAO,
         RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO, BirthAlterationService alterationService,
-        AppParametersDAO appParametersDAO, CommonUtil commonUtil) {
+        AppParametersDAO appParametersDAO, CommonUtil commonUtil, BirthAlterationValidator birthAlterationValidator) {
         this.service = service;
         this.districtDAO = districtDAO;
         this.countryDAO = countryDAO;
@@ -138,13 +140,13 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         this.alterationService = alterationService;
         this.appParametersDAO = appParametersDAO;
         this.commonUtil = commonUtil;
+        this.birthAlterationValidator = birthAlterationValidator;
     }
 
 
     public String initBirthAlteration() {
         pageNo = 0;
         populateBasicLists();
-
         return SUCCESS;
     }
 
@@ -176,7 +178,14 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             addActionError(getText("cp1.error.entryNotAvailable"));
             pageType = 0;
         } else {
-
+            try {
+                birthAlterationValidator.checkOnGoingAlterationOnThisSection(bdf.getIdUKey(), alterationType, user);
+            }
+            catch (CRSRuntimeException e) {
+                addActionError(getText("error.ongoing.alteration.on.this.section", new String[]{"" + idUKey}));
+                populateBasicLists();
+                return ERROR;
+            }
             if (bdf.getRegister() != null) {
                 if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_PRINTED)) {
                     addActionError(getText("cp1.error.entryNotPrinted"));
@@ -389,6 +398,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         logger.debug("successfully add birth alteration ");
         return SUCCESS;
     }
+
     /**
      * this is the method that up dates the birth alteration at data entry mode
      */

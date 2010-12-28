@@ -108,7 +108,7 @@
                                                value="%{getText('certificateNumber.lable')}"/></td>
                     <td width="500px"><s:textfield name="idUKey" id="bdfSerialNoIdSearch" maxLength="10"
                                                    onkeypress="return isNumberKey(event)"
-                                                   cssStyle="margin-left:154px;"/></td>
+                                                   cssStyle="margin-left:154px;" value=""/></td>
                 </tr>
             </table>
         </div>
