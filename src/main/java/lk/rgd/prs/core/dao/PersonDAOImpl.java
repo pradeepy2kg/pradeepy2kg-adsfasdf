@@ -59,14 +59,14 @@ public class PersonDAOImpl extends BaseDAO implements PersonDAO {
         return em.find(Address.class, addressUKey);
     }
 
-    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<Address> getAddressesByPersonUKey(long idUKey) {
         Query q = em.createNamedQuery("addresses.by.idukey");
         q.setParameter("idUKey", idUKey);
         return q.getResultList();
     }
 
-    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<PersonCitizenship> getCitizenshipsByPersonUKey(long idUKey) {
         Query q = em.createNamedQuery("citizenship.by.idukey");
         q.setParameter("idUKey", idUKey);

@@ -1,5 +1,6 @@
 package lk.rgd.crs.core.service;
 
+import lk.rgd.AppConstants;
 import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
 import lk.rgd.common.api.domain.CommonStatistics;
@@ -13,6 +14,10 @@ import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.DeathRegister;
 import lk.rgd.crs.api.service.DeathRegistrationService;
 import lk.rgd.crs.core.ValidationUtils;
+import lk.rgd.prs.api.domain.Address;
+import lk.rgd.prs.api.domain.Marriage;
+import lk.rgd.prs.api.domain.Person;
+import lk.rgd.prs.api.service.PopulationRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
@@ -30,11 +35,13 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
 
     private static final Logger logger = LoggerFactory.getLogger(DeathRegistrationService.class);
     private final DeathRegisterDAO deathRegisterDAO;
+    private final PopulationRegistry ecivil;
     private final UserManager userManager;
 
-    DeathRegistrationServiceImpl(DeathRegisterDAO deathRegisterDAO, UserManager userManager) {
+    DeathRegistrationServiceImpl(DeathRegisterDAO deathRegisterDAO, UserManager userManager, PopulationRegistry ecivil) {
         this.deathRegisterDAO = deathRegisterDAO;
         this.userManager = userManager;
+        this.ecivil = ecivil;
     }
 
     /**
@@ -198,6 +205,8 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
             if (state == DeathRegister.State.APPROVED) {
                 dr.getLifeCycleInfo().setCertificateGeneratedTimestamp(new Date());
                 dr.getLifeCycleInfo().setCertificateGeneratedUser(user);
+
+                registerDeathOnPRS(dr, user);
             }
         } else {
             handleException("Cannot approve/reject death registration " + dr.getIdUKey() +
@@ -207,6 +216,92 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         dr.setCommnet(comment);
         //updating
         deathRegisterDAO.updateDeathRegistration(dr, user);
+    }
+
+    /**
+     * Executed when a death registration is APPROVED
+     * Adds the person to the PRS if he did not exist, and if he did existed, marks the life status as DEAD
+     */
+    private void registerDeathOnPRS(DeathRegister dr, User user) {
+
+        final String pinOrNic = dr.getDeathPerson().getDeathPersonPINorNIC();
+        if (pinOrNic == null) {
+            logger.warn("Cannot update PRS on registration of death due to unspecified PIN / NIC");
+            return;
+        }
+
+        Person person = null;
+        try {
+            long pin = Long.parseLong(pinOrNic);
+            person = ecivil.findPersonByPIN(pin, user);
+        } catch (NumberFormatException ignore) {
+            for (Person p : ecivil.findPersonsByNIC(pinOrNic, user)) {
+                if (person == null && Person.LifeStatus.ALIVE.equals(p.getLifeStatus())) {
+                    person = p;
+                } else {
+                    handleException("Cannot identify dead person on PRS with duplicate NIC : " + pinOrNic,
+                        ErrorCodes.PRS_DUPLICATE_NIC);
+                }
+            }
+        }
+
+        if (person != null) {
+
+            // load lazy collections (such as marriage)
+            logger.debug("Marking person with IDUKey : {} as dead on the PRS", person.getPersonUKey());
+            person = ecivil.getLoadedObjectByUKey(person.getPersonUKey(), user);
+            person.setLifeStatus(Person.LifeStatus.DEAD);
+            person.setDateOfDeath(dr.getDeath().getDateOfDeath());
+            ecivil.updatePerson(person, user);
+
+            // mark currently married spouses as widowed
+            for (Marriage m : person.getMarriages()) {
+                if (m.getState() == Marriage.State.MARRIED) {
+
+                    if (AppConstants.Gender.MALE.equals(person.getGender())) {
+                        logger.debug("Marking person with PIN : {} as widowed", m.getBride().getPin());
+                        m.getBride().setCivilStatus(Person.CivilStatus.WIDOWED);
+                        ecivil.updatePerson(m.getBride(), user);
+                    } else {
+                        logger.debug("Marking person with PIN : {} as widowed", m.getGroom().getPin());
+                        m.getGroom().setCivilStatus(Person.CivilStatus.WIDOWED);
+                        ecivil.updatePerson(m.getGroom(), user);
+                    }
+                }
+            }
+
+        } else {
+
+            person = new Person();
+            person.setFullNameInEnglishLanguage(dr.getDeathPerson().getDeathPersonNameInEnglish());
+            person.setFullNameInOfficialLanguage(dr.getDeathPerson().getDeathPersonNameOfficialLang());
+            person.setDateOfDeath(dr.getDeath().getDateOfDeath());
+            person.setLifeStatus(Person.LifeStatus.DEAD);
+            person.setGender(dr.getDeathPerson().getDeathPersonGender());
+            person.setRace(dr.getDeathPerson().getDeathPersonRace());
+
+            // if a unique father/mother is found, link .. else ignore
+            person.setFatherPINorNIC(dr.getDeathPerson().getDeathPersonFatherPINorNIC());
+            Person father = ecivil.findUniquePersonByPINorNIC(dr.getDeathPerson().getDeathPersonFatherPINorNIC(), user);
+            if (father != null) {
+                person.setFather(father);
+            }
+
+            // if a unique father/mother is found, link .. else ignore
+            person.setMotherPINorNIC(dr.getDeathPerson().getDeathPersonMotherPINorNIC());
+            Person mother = ecivil.findUniquePersonByPINorNIC(dr.getDeathPerson().getDeathPersonMotherPINorNIC(), user);
+            if (mother != null) {
+                person.setMother(mother);
+            }
+
+            if (dr.getDeathPerson().getDeathPersonPermanentAddress() != null) {
+                Address address = new Address(dr.getDeathPerson().getDeathPersonPermanentAddress());
+                person.specifyAddress(address);
+                ecivil.addAddress(address, user);
+            }
+            ecivil.addPerson(person, user);
+            logger.debug("Added person with IDUKey : {} - as dead on the PRS", person.getPersonUKey());
+        }
     }
 
     /**

@@ -221,6 +221,16 @@ public interface PopulationRegistry {
     public Person findPersonByPINorNIC(String pinOrNic, User user);
 
     /**
+     * Return the unique Person object for the given PIN or National ID card number. If the NIC number matches
+     * multiple Persons, null is returned
+     *
+     * @param pinOrNic the PIN or national ID card number
+     * @param user     the user performing this action
+     * @return the unique matching person
+     */
+    public Person findUniquePersonByPINorNIC(String pinOrNic, User user);
+
+    /**
      * Find possible person matches
      *
      * @param dob    date of birth

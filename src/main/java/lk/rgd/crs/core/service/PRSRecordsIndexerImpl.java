@@ -1,5 +1,6 @@
 package lk.rgd.crs.core.service;
 
+import lk.rgd.ErrorCodes;
 import lk.rgd.common.api.dao.AppParametersDAO;
 import lk.rgd.common.core.index.SolrIndexManager;
 import lk.rgd.common.util.CivilStatusUtil;
@@ -7,6 +8,7 @@ import lk.rgd.common.util.GenderUtil;
 import lk.rgd.common.util.LifeStatusUtil;
 import lk.rgd.crs.api.service.PRSRecordsIndexer;
 import lk.rgd.crs.core.DatabaseInitializer;
+import lk.rgd.prs.PRSRuntimeException;
 import lk.rgd.prs.api.dao.PersonDAO;
 import lk.rgd.prs.api.domain.Address;
 import lk.rgd.prs.api.domain.Person;
@@ -222,6 +224,62 @@ public class PRSRecordsIndexerImpl implements PRSRecordsIndexer {
         return false;
     }
 
+    public void updateIndex(Person person) {
+
+        SolrInputDocument d = new SolrInputDocument();
+
+        final long personUKey = person.getPersonUKey();
+        d.addField(FIELD_PERSON_UKEY, personUKey);
+        d.addField(FIELD_FULL_NAME_ENGLISH, person.getFullNameInEnglishLanguage());
+        d.addField(FIELD_FULL_NAME_OFFICIAL_LANG, person.getFullNameInOfficialLanguage());
+        d.addField(FIELD_ALL_NAMES, person.getFullNameInEnglishLanguage());
+        d.addField(FIELD_ALL_NAMES, person.getFullNameInOfficialLanguage());
+        d.addField(FIELD_GENDER, GenderUtil.getGenderCharacter(person.getGender()));
+        d.addField(FIELD_NIC, person.getNic());
+        d.addField(FIELD_PIN, person.getPin());
+
+        d.addField(FIELD_PLACE_OF_BIRTH, person.getPlaceOfBirth());
+        d.addField(FIELD_DATE_OF_BIRTH, person.getDateOfBirth());
+        d.addField(FIELD_DATE_OF_DEATH, person.getDateOfDeath());
+
+        List<PersonCitizenship> pcList = personDAO.getCitizenshipsByPersonUKey(personUKey);
+        if (pcList.isEmpty()) {
+            d.addField(FIELD_CITIZENSHIP, SRI_LANKA);
+        } else {
+            for (PersonCitizenship c : pcList) {
+                d.addField(FIELD_CITIZENSHIP, c.getCountry().getCountryCode());
+                d.addField(FIELD_PASSPORT, c.getPassportNo());
+            }
+        }
+
+        Address lastAddress = person.getLastAddress();
+        if (lastAddress != null) {
+            d.addField(FIELD_LAST_ADDRESS, lastAddress.toString());
+
+            // process any other addressed
+            for (Address a : personDAO.getAddressesByPersonUKey(personUKey)) {
+                d.addField(FIELD_ALL_ADDRESSES, a.toString());
+            }
+        }
+
+        d.addField(FIELD_EMAIL, person.getPersonEmail());
+        d.addField(FIELD_PHONE, person.getPersonPhoneNo());
+
+        d.addField(FIELD_LIFE_STATUS, LifeStatusUtil.getStatusAsString(person.getLifeStatus()));
+        d.addField(FIELD_CIVIL_STATUS, CivilStatusUtil.getStatusAsString(person.getCivilStatus()));
+        d.addField(FIELD_RECORD_STATUS, getRecordStatus(person.getStatus()));
+
+        try {
+            solrIndexManager.getPRSServer().add(d);
+        } catch (Exception e) {
+            logger.error("Error updating Solr index for Person with UKey : " + person.getPersonUKey(), e);
+            if (Boolean.getBoolean("ecivildb.mysql")) {
+                // throw an error causing a rollback, only when using MySQL (i.e. production) and not on unit tests
+                throw new PRSRuntimeException("", ErrorCodes.PRS_INDEX_UPDATE_FAILED, e);
+            }
+        }
+    }
+    
     public void addRecord(ResultSet rs) throws SQLException, IOException, SolrServerException {
 
         SolrInputDocument d = new SolrInputDocument();
@@ -279,7 +337,33 @@ public class PRSRecordsIndexerImpl implements PRSRecordsIndexer {
             case 2:
                 return "V";
             case 3:
+                return "P";
+            case 4:
                 return "C";
+            case 5:
+                return "D";
+            case 6:
+                return "A";
+        }
+        throw new IllegalArgumentException("Illegal record state : " + s);
+    }
+
+    private static String getRecordStatus(Person.Status s) {
+        switch (s) {
+            case UNVERIFIED:
+                return "U";
+            case SEMI_VERIFIED:
+                return "S";
+            case VERIFIED:
+                return "V";
+            case CERT_PRINTED:
+                return "P";
+            case CANCELLED:
+                return "C";
+            case DELETED:
+                return "D";
+            case ARCHIVED_ALTERED:
+                return "A";
         }
         throw new IllegalArgumentException("Illegal record state : " + s);
     }

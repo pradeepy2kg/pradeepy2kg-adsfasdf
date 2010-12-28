@@ -5,8 +5,8 @@ import lk.rgd.Permission;
 import lk.rgd.common.api.Auditable;
 import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.domain.User;
-import lk.rgd.common.core.index.SolrIndexManager;
 import lk.rgd.crs.api.bean.UserWarning;
+import lk.rgd.crs.api.service.PRSRecordsIndexer;
 import lk.rgd.prs.api.dao.PersonCitizenshipDAO;
 import lk.rgd.prs.api.dao.PersonDAO;
 import lk.rgd.prs.api.domain.Address;
@@ -38,15 +38,15 @@ public class PopulationRegistryImpl implements PopulationRegistry {
 
     private final PersonDAO personDao;
     private final PINGenerator pinGenerator;
-    private final SolrIndexManager solrIndexManager;
+    private final PRSRecordsIndexer prsIndexer;
     private final PersonCitizenshipDAO citizenshipDAO;
     private final Random rand = new Random(System.currentTimeMillis());
 
-    public PopulationRegistryImpl(PersonDAO personDao, PINGenerator pinGenerator, SolrIndexManager solrIndexManager,
+    public PopulationRegistryImpl(PersonDAO personDao, PINGenerator pinGenerator, PRSRecordsIndexer prsIndexer,
         PersonCitizenshipDAO citizenshipDAO) {
         this.personDao = personDao;
         this.pinGenerator = pinGenerator;
-        this.solrIndexManager = solrIndexManager;
+        this.prsIndexer = prsIndexer;
         this.citizenshipDAO = citizenshipDAO;
     }
 
@@ -84,6 +84,9 @@ public class PopulationRegistryImpl implements PopulationRegistry {
         }
         person.setSubmittedLocation(user.getPrimaryLocation());
         personDao.addPerson(person, user);
+
+        // add to the Solr index
+        prsIndexer.updateIndex(person);
         return pin;
     }
 
@@ -418,7 +421,35 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             handleException("User : " + user.getUserId() + " is not allowed to update entries on the PRS",
                 ErrorCodes.PRS_ADD_RECORD_DENIED);
         }
-        personDao.updatePerson(person, user);
+
+        // if the name in english/official, gender, race or date of birth has changed on a verified record,
+        // we need to archive current record and keep it!
+        final Person existing = personDao.getByUKey(person.getPersonUKey());
+        if (existing != null && existing.getStatus() == Person.Status.VERIFIED &&
+            ((existing.getFullNameInEnglishLanguage() != null &&
+                !existing.getFullNameInEnglishLanguage().equals(person.getFullNameInEnglishLanguage())) ||
+             (existing.getFullNameInOfficialLanguage() != null &&
+                 !existing.getFullNameInOfficialLanguage().equals(person.getFullNameInOfficialLanguage())) ||
+             (existing.getDateOfBirth() != null &&
+                 !existing.getDateOfBirth().equals(person.getDateOfBirth())) ||
+             (existing.getRace() != null &&
+                 !existing.getRace().equals(person.getRace())) ||
+             existing.getGender() != person.getGender()) ) {
+
+            existing.setStatus(Person.Status.ARCHIVED_ALTERED);
+            personDao.updatePerson(existing, user);
+
+            // now add the update as a new record
+            personDao.addPerson(person, user);
+            // add to the Solr index - both archived record and new record
+            prsIndexer.updateIndex(existing);
+            prsIndexer.updateIndex(person);
+
+        } else {
+            personDao.updatePerson(person, user);
+            // update the Solr index
+            prsIndexer.updateIndex(person);
+        }
     }
 
     /**
@@ -606,6 +637,30 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             // this is a nic, if multiple rows match, just return the first
             List<Person> results = findPersonsByNIC(pinOrNic, user);
             if (results != null && !results.isEmpty()) {
+                return results.get(0);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Auditable
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public Person findUniquePersonByPINorNIC(String pinOrNic, User user) {
+        try {
+            if (!isBlankString(pinOrNic)) {
+                long pin = Long.parseLong(pinOrNic);
+                // this is a pin
+                return findPersonByPIN(pin, user);
+            } else {
+                throw new IllegalArgumentException();
+            }
+        } catch (NumberFormatException ignore) {
+            // this is a nic, if multiple rows match, just return the first
+            List<Person> results = findPersonsByNIC(pinOrNic, user);
+            if (results != null && results.size() == 1) {
                 return results.get(0);
             }
         }

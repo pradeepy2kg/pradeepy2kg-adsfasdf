@@ -94,6 +94,8 @@ public class ErrorCodes {
     public static final int PRS_REJECT_RECORD_DENIED = 5006;
     public static final int COMMENT_REQUIRED_PRS_DELETE = 5007;
     public static final int COMMENT_REQUIRED_PRS_REJECT = 5008;
+    public static final int PRS_INDEX_UPDATE_FAILED = 5009;
+    public static final int PRS_DUPLICATE_NIC = 5010;
 
     //marriage registration related error codes 6001-6999
     public static final int MR_INCOMPLETE_OBJECT = 6001;

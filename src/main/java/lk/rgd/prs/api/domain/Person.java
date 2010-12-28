@@ -18,18 +18,18 @@ import java.util.Set;
 @Table(name = "PERSON", schema = "PRS")
 @NamedQueries({
     @NamedQuery(name = "findAllPersons", query = "SELECT p FROM Person p"),
-    @NamedQuery(name = "filter.by.pin", query = "SELECT p FROM Person p WHERE p.pin = :pin"),
-    @NamedQuery(name = "filter.by.temporaryPIN", query = "SELECT p FROM Person p WHERE p.temporaryPin = :temporaryPin"),
-    @NamedQuery(name = "filter.by.nic", query = "SELECT p FROM Person p WHERE p.nic = :nic"),
-    @NamedQuery(name = "findAllChildren", query = "SELECT p FROM Person p WHERE p.mother = :person OR p.father = :person"),
-    @NamedQuery(name = "findAllSiblings", query = "SELECT p FROM Person p WHERE (p.mother = :mother OR p.father = :father)"),
-    @NamedQuery(name = "get.by.location", query = "SELECT p FROM Person p WHERE p.submittedLocation = :location AND p.status <= 3 " +
+    @NamedQuery(name = "filter.by.pin", query = "SELECT p FROM Person p WHERE p.pin = :pin AND p.lifeCycleInfo.activeRecord IS TRUE"),
+    @NamedQuery(name = "filter.by.temporaryPIN", query = "SELECT p FROM Person p WHERE p.temporaryPin = :temporaryPin AND p.lifeCycleInfo.activeRecord IS TRUE"),
+    @NamedQuery(name = "filter.by.nic", query = "SELECT p FROM Person p WHERE p.nic = :nic AND p.lifeCycleInfo.activeRecord IS TRUE"),
+    @NamedQuery(name = "findAllChildren", query = "SELECT p FROM Person p WHERE p.lifeCycleInfo.activeRecord IS TRUE AND p.mother = :person OR p.father = :person"),
+    @NamedQuery(name = "findAllSiblings", query = "SELECT p FROM Person p WHERE p.lifeCycleInfo.activeRecord IS TRUE AND (p.mother = :mother OR p.father = :father)"),
+    @NamedQuery(name = "get.by.location", query = "SELECT p FROM Person p WHERE p.lifeCycleInfo.activeRecord IS TRUE AND p.submittedLocation = :location AND p.status <= 3 " +
         "ORDER BY p.lifeCycleInfo.lastUpdatedTimestamp DESC"),
-    @NamedQuery(name = "get.by.location.and.pin", query = "SELECT p FROM Person p WHERE p.submittedLocation = :location " +
+    @NamedQuery(name = "get.by.location.and.pin", query = "SELECT p FROM Person p WHERE p.lifeCycleInfo.activeRecord IS TRUE AND p.submittedLocation = :location " +
         "AND p.pin = :pin AND p.status <= 3 ORDER BY p.lifeCycleInfo.lastUpdatedTimestamp DESC "),
-    @NamedQuery(name = "get.by.location.and.nic", query = "SELECT p FROM Person p WHERE p.submittedLocation = :location " +
+    @NamedQuery(name = "get.by.location.and.nic", query = "SELECT p FROM Person p WHERE p.lifeCycleInfo.activeRecord IS TRUE AND p.submittedLocation = :location " +
         "AND p.nic = :nic AND p.status <= 3 ORDER BY p.lifeCycleInfo.lastUpdatedTimestamp DESC "),
-    @NamedQuery(name = "get.by.location.and.tempPin", query = "SELECT p FROM Person p WHERE p.submittedLocation = :location " +
+    @NamedQuery(name = "get.by.location.and.tempPin", query = "SELECT p FROM Person p WHERE p.lifeCycleInfo.activeRecord IS TRUE AND p.submittedLocation = :location " +
         "AND p.temporaryPin = :tempPin AND p.status <= 3 ORDER BY p.lifeCycleInfo.lastUpdatedTimestamp DESC ")
 })
 public class Person implements Serializable {
@@ -108,7 +108,7 @@ public class Person implements Serializable {
      */
     @Column(nullable = true)
     @Temporal(value = TemporalType.DATE)
-    private Date dateOfRegistration;
+    private Date dateOfRegistration = new Date();
 
     /**
      * The preferred language of for the record

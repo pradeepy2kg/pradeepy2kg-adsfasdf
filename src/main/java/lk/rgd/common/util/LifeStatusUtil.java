@@ -35,6 +35,26 @@ public class LifeStatusUtil {
         throw new IllegalArgumentException("Illegal civil status : " + s);
     }
 
+    public static String getStatusAsString(Person.LifeStatus s) {
+        if (s == null) {
+            return "U";
+        }
+
+        switch (s) {
+            case UNKNOWN:
+                return "U";
+            case ALIVE:
+                return "A";
+            case DEAD:
+                return "D";
+            case MISSING:
+                return "M";
+            case NON_RESIDENT:
+                return "N";
+        }
+        throw new IllegalArgumentException("Illegal civil status : " + s);
+    }
+
     /**
      * Return life status string in selected language
      *

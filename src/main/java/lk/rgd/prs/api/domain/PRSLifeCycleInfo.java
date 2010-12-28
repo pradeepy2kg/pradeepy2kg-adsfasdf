@@ -44,6 +44,9 @@ public class PRSLifeCycleInfo implements Serializable, Cloneable {
     @JoinColumn(name = "lastUpdatedUserId")
     private User lastUpdatedUser;
 
+    @Column(nullable = false, columnDefinition = "integer default 1")
+    private boolean activeRecord = true;
+
     @Override
     protected PRSLifeCycleInfo clone() throws CloneNotSupportedException {
         return (PRSLifeCycleInfo) super.clone();
@@ -95,5 +98,13 @@ public class PRSLifeCycleInfo implements Serializable, Cloneable {
 
     public void setApprovalOrRejectUser(User approvalOrRejectUser) {
         this.approvalOrRejectUser = approvalOrRejectUser;
+    }
+
+    public boolean isActiveRecord() {
+        return activeRecord;
+    }
+
+    public void setActiveRecord(boolean activeRecord) {
+        this.activeRecord = activeRecord;
     }
 }

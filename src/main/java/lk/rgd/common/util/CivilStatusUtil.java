@@ -37,6 +37,28 @@ public class CivilStatusUtil {
         throw new IllegalArgumentException("Illegal civil status : " + s);
     }
 
+    public static String getStatusAsString(Person.CivilStatus s) {
+        if (s == null) {
+            return "U"; // unknown
+        }
+
+        switch (s) {
+            case NEVER_MARRIED:
+                return "N";
+            case MARRIED:
+                return "M";
+            case ANNULLED:
+                return "A";
+            case SEPARATED:
+                return "S";
+            case DIVORCED:
+                return "D";
+            case WIDOWED:
+                return "W";
+        }
+        throw new IllegalArgumentException("Illegal civil status : " + s);
+    }
+
     /**
      * Return civil status string in selected language
      *
