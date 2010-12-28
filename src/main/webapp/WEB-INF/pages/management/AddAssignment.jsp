@@ -14,6 +14,7 @@
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
+<script type="text/javascript" src="<s:url value="/js/division.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 
 
@@ -64,6 +65,7 @@
     //mode 6 = passing district list and return ds division list and mr division list for 1st ds division.
     //mode 7 = passing dsDivisionId, return the MR list
 
+    /*
     $(function() {
         $('select#districtId').bind('change', function(evt1) {
             var id = $("select#districtId").attr("value");
@@ -118,6 +120,8 @@
                     });
         });
     });
+
+    */
 
     var appoinmentDate = document.getElementById('dateOfAppoinmentDatePicker');
     var permanentDate = document.getElementById('dateOfPermenentDatePicker');
@@ -182,17 +186,35 @@
                         <s:property value="%{getText('label.district')}"/>
                     </td>
                     <td>
-                        <s:select id="districtId" name="districtId" list="districtList" value="%{districtId}"
-                                  cssStyle="width:240px;"/>
+                        <s:if test="%{assignmentType == 1}">
+                            <s:select id="districtId" name="districtId" list="districtList" value="%{districtId}"
+                                      cssStyle="width:240px;"
+                                      onchange="populateDSDivisions('districtId','dsDivisionId','divisionId', 'BirthWithAllDS', false)"/>
+
+                        </s:if>
+                        <s:else>
+                            <s:select id="districtId" name="districtId" list="districtList" value="%{districtId}"
+                                      cssStyle="width:240px;"
+                                      onchange="populateDSDivisions('districtId','dsDivisionId','divisionId', 'MarriageWithAllDS', false)"/>
+
+                        </s:else>
                     </td>
                     <td width="200px">
                         <s:property value="%{getText('label.dsDivision')}"/>
                     </td>
                     <td>
-                        <s:select id="dsDivisionId" name="dsDivisionId"
-                                  list="dsDivisionList"
-                                  value="%{dsDivisionId}"
-                                  cssStyle="float:left;  width:240px;"/></td>
+                        <s:if test="%{assignmentType == 1}">
+                            <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList"
+                                      value="%{dsDivisionId}" cssStyle="float:left;  width:240px;"
+                                      onchange="populateDivisions('dsDivisionId', 'divisionId', 'Birth', false)"/>
+                        </s:if>
+                        <s:else>
+                            <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList"
+                                      value="%{dsDivisionId}" cssStyle="float:left;  width:240px;"
+                                      onchange="populateDivisions('dsDivisionId', 'divisionId', 'Marriage', false)"/>
+                        </s:else>
+
+                    </td>
                 </tr>
                 <tr>
                     <td width="200px">
