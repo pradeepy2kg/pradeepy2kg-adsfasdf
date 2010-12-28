@@ -285,7 +285,7 @@
                                     fieldValue="%{#approvalList.idUKey}"/>
                     </s:if>
                 </td>
-                <td><s:property value="register.birthDivision.bdDivisionUKey"/></td>
+                <td><s:property value="register.birthDivision.divisionId"/></td>
                 <td><s:property value="register.bdfSerialNo"/></td>
                 <td>
                     <s:if test="child.childFullNameOfficialLang != null">
