@@ -32,7 +32,7 @@ public class BirthAlterationValidator {
             getBirthAlterationByBirthCertificateNumber(birthCertificateId, user);
         outer:
         for (BirthAlteration ba : birthAlterationList) {
-            if (ba.getLifeCycleInfo().isActiveRecord()) {
+            if (ba.getLifeCycleInfo().isActiveRecord() && (ba.getStatus()==BirthAlteration.State.DATA_ENTRY)) {
                 switch (alterationType) {
                     case TYPE_27:
                         if (ba.getAlt27() != null) {

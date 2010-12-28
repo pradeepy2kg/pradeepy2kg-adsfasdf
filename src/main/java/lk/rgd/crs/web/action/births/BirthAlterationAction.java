@@ -157,26 +157,30 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
     }
 
     /**
-     * notes by amith
+     * searching birth certificate for adding a birth alteration
      */
+    //todo change method name to searchBirthCertificateForAlteration
     public String birthAlterationSearch() {
         BirthDeclaration bdf = null;
         birthAlteration = new BirthAlteration();
         populateBasicLists();
-        pageType = 1;
-
-        if (idUKey != 0) {
+        if (birthCertificateNumber != 0) {
+            logger.debug("attempt to search birth certificate by birth certificate number : {}", birthCertificateNumber);
             bdf = service.getById(idUKey);
         } else if (nicOrPin != null) {
+            logger.debug("attempt to search birth certificate by identification number : {}", nicOrPin);
             bdf = service.getByPINorNIC(nicOrPin, user);
         } else if (birthDivisionId != 0 && serialNo != 0) {
-            bdf = service.getActiveRecordByBDDivisionAndSerialNo(
-                bdDivisionDAO.getBDDivisionByPK(birthDivisionId), serialNo, user);
+            logger.debug("attempt to search birth certificate by BD division : {} and Serial number : {} ",
+                birthDivisionId, serialNo);
+            bdf = service.getActiveRecordByBDDivisionAndSerialNo(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
+                serialNo, user);
         }
-
         if (bdf == null) {
+            logger.debug("unable to found birth record for alteration ");
             addActionError(getText("cp1.error.entryNotAvailable"));
-            pageType = 0;
+            populateBasicLists();
+            return ERROR;
         } else {
             try {
                 birthAlterationValidator.checkOnGoingAlterationOnThisSection(bdf.getIdUKey(), alterationType, user);
@@ -189,7 +193,8 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             if (bdf.getRegister() != null) {
                 if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_PRINTED)) {
                     addActionError(getText("cp1.error.entryNotPrinted"));
-                    pageType = 0;
+                    populateBasicLists();
+                    return ERROR;
                 } else {
                     getBirthCertificateInfo(bdf);
                 }
@@ -212,7 +217,6 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             populateBasicLists();
             populateCountryRacesAndAllDSDivisions();
         }
-
         idUKey = 0;
         return SUCCESS;
     }

@@ -106,7 +106,7 @@
                 <tr>
                     <td width="135px"><s:label name="confirmationSearch"
                                                value="%{getText('certificateNumber.lable')}"/></td>
-                    <td width="500px"><s:textfield name="idUKey" id="bdfSerialNoIdSearch" maxLength="10"
+                    <td width="500px"><s:textfield name="birthCertificateNumber" id="bdfSerialNoIdSearch" maxLength="10"
                                                    onkeypress="return isNumberKey(event)"
                                                    cssStyle="margin-left:154px;" value=""/></td>
                 </tr>
