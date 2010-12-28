@@ -264,7 +264,9 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         if (userLocationNameList != null) {
             logger.debug("size of the user location list is :{}", userLocationNameList.size());
         }
-        primaryLocation = userDAO.getUserByPK(userId).getPrimaryLocation().getLocationUKey();
+        Location prmLocation = userDAO.getUserByPK(userId).getPrimaryLocation();
+        if(prmLocation != null)
+            primaryLocation = prmLocation.getLocationUKey();
         populateLocationListOnly();
         //populate();
         return SUCCESS;
@@ -283,7 +285,11 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     }
 
     public String assignedUserLocation() {
-        primaryLocation = userDAO.getUserByPK(userId).getPrimaryLocation().getLocationUKey();
+        //primaryLocation = userDAO.getUserByPK(userId).getPrimaryLocation().getLocationUKey();
+        Location prmLocation = userDAO.getUserByPK(userId).getPrimaryLocation();
+        if(prmLocation != null){
+            primaryLocation = prmLocation.getLocationUKey();
+        }
         if (pageType == 0) {
             UserLocation checkUserLocation = userLocationDAO.getUserLocation(userId, locationId);
             if (checkUserLocation != null) {
