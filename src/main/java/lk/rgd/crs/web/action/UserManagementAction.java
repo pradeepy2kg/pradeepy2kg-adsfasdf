@@ -277,7 +277,13 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         UserLocation userLocation = userLocationDAO.getUserLocation(user.getUserId(), locationId);
         //service.addUserLocation(userLocation, currentUser, true);
         addPrimaryLocation(userLocation, currentUser);
-        primaryLocation = locationId;
+        Location prmLocation = userDAO.getUserByPK(userId).getPrimaryLocation();
+        if (prmLocation != null) {
+            primaryLocation = prmLocation.getLocationUKey();
+        } else {
+            primaryLocation = locationId;
+        }
+        //primaryLocation = locationId;
         logger.debug("Active location of {} user is :{}", userId, locationDAO.getLocation(locationId).getEnLocationName());
         userLocationNameList = userLocationDAO.getUserLocationsListByUserId(userId);
         //populate();
@@ -302,7 +308,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 userLocation.setUserId(userId);
                 userLocation.setUser(userDAO.getUserByPK(userId));
                 service.addUserLocation(userLocation, currentUser);
-                if(userDAO.getUserByPK(userId).getPrimaryLocation() == null){
+                if (userDAO.getUserByPK(userId).getPrimaryLocation() == null) {
                     addPrimaryLocation(userLocation, currentUser);
                 }
 
@@ -331,14 +337,22 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     }
 
     private void addPrimaryLocation(UserLocation userLocation, User currentUser) {
-        Location location = userLocation.getLocation();
-        User user = userLocation.getUser();
-        user.setPrimaryLocation(location);
-        service.updateUser(user, currentUser);
-        primaryLocation = location.getLocationUKey();
+        if (userLocation.getLifeCycleInfo().isActive()) {
+            Location location = userLocation.getLocation();
+            User user = userLocation.getUser();
+            user.setPrimaryLocation(location);
+            service.updateUser(user, currentUser);
+            primaryLocation = location.getLocationUKey();
+        } else {
+            addActionError(getText("inactive.primary.warning"));
+        }
     }
 
     public String activeUserLocation() {
+        Location prmLocation = userDAO.getUserByPK(userId).getPrimaryLocation();
+        if (prmLocation != null) {
+            primaryLocation = prmLocation.getLocationUKey();
+        }
         service.activeUserLocation(userId, locationId, currentUser);
         logger.debug("Active location of {} user is :{}", userId, locationDAO.getLocation(locationId).getEnLocationName());
         userLocationNameList = userLocationDAO.getUserLocationsListByUserId(userId);
@@ -348,7 +362,15 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     }
 
     public String inactiveUserLocation() {
-        service.inactiveUserLocation(userId, locationId, currentUser);
+        Location prmLocation = userDAO.getUserByPK(userId).getPrimaryLocation();
+        if (prmLocation != null) {
+            primaryLocation = prmLocation.getLocationUKey();
+        }
+        if (primaryLocation != locationId) {
+            service.inactiveUserLocation(userId, locationId, currentUser);
+        } else {
+            addActionError(getText("primary.inactive.warning"));
+        }
         logger.debug("Inactive location of {} user is :{}", userId, locationDAO.getLocation(locationId).getEnLocationName());
         userLocationNameList = userLocationDAO.getUserLocationsListByUserId(userId);
         populateLocationListOnly();
