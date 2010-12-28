@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 /**
- * basic back end validation class for death alterations
+ * basic back end validation class for birth alterations
  *
  * @author amith jayasekara
  */
