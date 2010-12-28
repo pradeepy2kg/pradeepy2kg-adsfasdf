@@ -272,10 +272,12 @@ public class PRSRecordsIndexerImpl implements PRSRecordsIndexer {
         try {
             solrIndexManager.getPRSServer().add(d);
         } catch (Exception e) {
-            logger.error("Error updating Solr index for Person with UKey : " + person.getPersonUKey(), e);
             if (Boolean.getBoolean("ecivildb.mysql")) {
+                logger.error("Error updating Solr index for Person with UKey : " + person.getPersonUKey(), e);
                 // throw an error causing a rollback, only when using MySQL (i.e. production) and not on unit tests
                 throw new PRSRuntimeException("", ErrorCodes.PRS_INDEX_UPDATE_FAILED, e);
+            } else {
+                logger.error("Error updating Solr index for Person with UKey : {}", person.getPersonUKey());
             }
         }
     }
