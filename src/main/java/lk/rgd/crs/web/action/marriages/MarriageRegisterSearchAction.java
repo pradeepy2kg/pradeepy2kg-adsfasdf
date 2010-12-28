@@ -377,7 +377,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     }
 
     /**
-     * This method is used for pagination(move backward) in marriage notice search list page
+     * This method is used for pagination(move forward) in marriage notice search list page
      */
     public String nextNoticesPage() {
         logger.debug("Next page of Marriage notices search list loaded");
