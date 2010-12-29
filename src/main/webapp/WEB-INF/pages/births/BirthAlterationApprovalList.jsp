@@ -161,6 +161,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <s:actionerror cssStyle="color:red;font-size:9pt;"/>
+<s:actionmessage cssStyle="color:black;font-size:9pt;"/>
 <s:form action="eprFilterBirthAlteration" method="post" onsubmit="javascript:return validate()">
     <%--<s:actionerror  cssStyle="color:red;font-size:9pt;"/>--%>
     <div id="tabs" style="font-size:10pt;">
