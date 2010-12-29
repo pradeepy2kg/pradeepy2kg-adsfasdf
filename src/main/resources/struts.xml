@@ -1029,7 +1029,7 @@
         </action>
 
         <action name="eprBirthAlterationSearch" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
-                method="birthAlterationSearch">
+                method="searchBirthCertificateForAlteration">
             <result type="tiles" name="success">epr.birthAlteration</result>
             <result type="tiles" name="error">epr.selectBirthCertificateForAlteration</result>
         </action>
@@ -1037,7 +1037,7 @@
         <action name="eprBirthAlteration" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
                 method="addBirthAlteration">
             <result type="tiles" name="success">epr.birthAlterationResult</result>
-            <result type="tiles" name="error">epr.birthAlteration</result>
+            <result type="tiles" name="error">epr.selectBirthCertificateForAlteration</result>
         </action>
         <action name="eprEditBirthAlterationInit" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
                 method="editBirthAlterationInit">
@@ -1080,7 +1080,7 @@
         </action>
 
         <action name="eprApproveBirthAlterationInit" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
-                method="approveInit">
+                method="approveBirthAlterationInit">
             <result type="tiles" name="success">epr.birthAlterationApproval</result>
             <result type="tiles" name="error">epr.birthAlterationPendingApproval</result>
         </action>
@@ -1090,7 +1090,8 @@
         </action>
         <action name="eprRejectBirthAlteration" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
                 method="rejectAlteration">
-            <result type="tiles" name="success">epr.birthAlterationResult</result>
+            <result type="tiles" name="success">epr.birthAlterationPendingApproval</result>
+            <result type="tiles" name="error">epr.birthAlterationPendingApproval</result>
         </action>
         <action name="eprBirthAlterationHome" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
                 method="birthAlterationHome">

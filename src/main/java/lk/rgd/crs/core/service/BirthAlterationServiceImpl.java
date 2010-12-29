@@ -52,6 +52,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void addBirthAlteration(BirthAlteration ba, User user) {
+        //todo amith call to adding validator (check must fill fields)
         logger.debug("Adding new birth alteration record on request of : {}", ba.getDeclarant().getDeclarantFullName());
         ba.setSubmittedLocation(user.getPrimaryLocation());
         ba.setStatus(BirthAlteration.State.DATA_ENTRY);
@@ -101,6 +102,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void approveBirthAlteration(BirthAlteration ba, Map<Integer, Boolean> fieldsToBeApproved, User user) {
+        //todo amith no check for state of the existing alteration
         validateAccessOfUserForApproval(ba, user);
         BirthAlteration existing = birthAlterationDAO.getById(ba.getIdUKey());
         validateAccessOfUserForApproval(existing, user);
@@ -242,7 +244,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
                     }
                 }
                 ecivil.updatePerson(person, user);
-                break;                
+                break;
         }
     }
 
@@ -307,6 +309,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
         logger.debug("attempt to reject birth alteration idUKey : {}", idUKey);
         BirthAlteration birthAlteration = birthAlterationDAO.getById(idUKey);
         if (birthAlteration != null) {
+            validateAccessOfUserForApproval(birthAlteration, user);
             //found a record
             if (birthAlteration.getStatus() == BirthAlteration.State.DATA_ENTRY) {
                 //in correct state now we can update the record
@@ -314,7 +317,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
                 birthAlteration.setComments(comment);
                 birthAlteration.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
                 birthAlteration.getLifeCycleInfo().setApprovalOrRejectUser(user);
-
+                birthAlteration.getLifeCycleInfo().setActiveRecord(false);
                 birthAlterationDAO.updateBirthAlteration(birthAlteration, user);
             } else {
                 handleException("unable to reject birth alteration not in correct state for rejection idUKey :" + idUKey
@@ -364,6 +367,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
     private void validateAccessOfUserForApproval(BirthAlteration ba, User user) {
         if (Role.ROLE_RG.equals(user.getRole().getRoleId())) {
             // RG can approve any record
+            //todo if ba==null then this throw NPE and it is not throws here amith ???
         } else if (Role.ROLE_ARG.equals(user.getRole().getRoleId())) {
             ValidationUtils.validateAccessToBDDivision(user,
                 birthDeclarationDAO.getById(ba.getBdfIDUKey()).getRegister().getBirthDivision());
