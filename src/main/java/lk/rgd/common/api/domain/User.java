@@ -329,6 +329,7 @@ public class User implements Serializable {
     }
 
     public boolean isAuthorized(int permission) {
+        logger.debug("User Role : {}  ", role.getRoleId());
         return role == null ? false : role.getPermBitSet().get(permission);
     }
 

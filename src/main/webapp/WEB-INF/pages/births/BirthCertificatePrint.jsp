@@ -15,7 +15,9 @@
             "bPaginate": true,
             "bLengthChange": false,
             "bFilter": true,
-            "aaSorting": [[3,'desc']],
+            "aaSorting": [
+                [3,'desc']
+            ],
             "bInfo": false,
             "bAutoWidth": false,
             "bJQueryUI": true,
@@ -172,10 +174,12 @@
                                     <s:param name="printStart" value="#request.printStart"/>
                                 </s:url>
                                 <s:if test="#request.allowPrintCertificate">
-                                    <s:a href="%{cetificatePrintUrl}" title="%{getText('print.label')}">
-                                        <img src="<s:url value='/images/print_icon.gif'/>" border="none" width="25"
-                                             height="25"/>
-                                    </s:a>
+                                    <s:if test="((register.status.ordinal() == 9) | (register.status.ordinal() == 8 & #session.user_bean.role.roleId.equals('ADR')))">
+                                        <s:a href="%{cetificatePrintUrl}" title="%{getText('print.label')}">
+                                            <img src="<s:url value='/images/print_icon.gif'/>" border="none" width="25"
+                                                 height="25"/>
+                                        </s:a>
+                                    </s:if>
                                 </s:if>
                             </td>
                         </tr>
