@@ -160,7 +160,7 @@
                     <img src="<s:url value="/images/alphabet-X.gif" />"
                          id="confirmant_NIC_X" onclick="javascript:addXorV('confirmantNICorPIN','X','error5')">
                     <br>
-                    <s:textfield name="confirmant.confirmantNICorPIN" id="confirmantNICorPIN"/>
+                    <s:textfield name="confirmant.confirmantNICorPIN" id="confirmantNICorPIN" maxLength="10"/>
                     <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
                          id="confirmant_lookup"/>
                 </td>
