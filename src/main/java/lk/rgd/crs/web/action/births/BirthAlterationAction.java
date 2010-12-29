@@ -24,10 +24,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
-//todo remove unused variables
 
 /**
- * @author tharanga
+ * @author amith jayasekara
  */
 public class BirthAlterationAction extends ActionSupport implements SessionAware {
 
@@ -36,12 +35,14 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
 
     private BirthRegistrationService service;
     private BirthAlterationService alterationService;
+
     private DistrictDAO districtDAO;
     private CountryDAO countryDAO;
     private RaceDAO raceDAO;
     private BDDivisionDAO bdDivisionDAO;
     private DSDivisionDAO dsDivisionDAO;
     private AppParametersDAO appParametersDAO;
+
     private BirthAlterationValidator birthAlterationValidator;
     private final CommonUtil commonUtil;
 
@@ -55,48 +56,19 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
     private Map<Integer, String> allDsDivisionList;
     private Map<Integer, String> allBdDivisionList;
     private Map<Integer, String> userLocations;
-    private Map<Integer, Boolean> alterationApprovalPermission;    //no usage remove amith
 
-    private List<String[]> birthAlterationApprovalList;           //no usage remove amith
     private List<FieldValue> changesList = new LinkedList<FieldValue>();
-    private List birthAlterationApprovedList;    //no usage remove amith
+    private List<BirthAlteration> birthAlterationPendingApprovalList;
 
     private User user;
-    private Alteration27 alt27;
-    private Alteration27A alt27A;
-    private Alteration52_1 alt52_1;
-    private DeclarantInfo declarant;
-    private ParentInfo parent;
-    private int[] index;   //no usage remove amith
-    private BitSet indexCheck; //no usage remove amith
-    private HashMap approveStatus = new HashMap();  //no usage remove amith
-    private int numberOfAppPending; //no usage remove amith
-
-    private ChildInfo child;
-    private FatherInfo father;
-    private GrandFatherInfo grandFather;
-    private MarriageInfo marriage;
-    private AlterationInformatInfo informant;
-    private NotifyingAuthorityInfo notifyingAuthority;
-    private ConfirmantInfo confirmant;
     private BirthRegisterInfo register;
     private BirthAlteration birthAlteration;
     private BirthDeclaration birthDeclaration;
-
+    private Date alterationRecivedDate;
+    private BirthAlteration.AlterationType alterationType;
 
     private int pageNo;
-    private int pageType;     //todo no need any more remove
     private int noOfRows;
-    private int[] approvedIndex;
-    private long bdId;   // If present, it should be used to fetch a new BD instead of creating a new one (we are in edit mode)
-    private Long nicOrPin;
-    private String districtName;
-    private String dsDivisionName;
-    private String bdDivisionName;
-    private String originalName;
-    private String comment;
-
-    /* helper fields to capture input from pages, they will then be processed before populating the bean */
     private int birthDistrictId;
     private int birthDivisionId;
     private int fatherCountryId;
@@ -104,22 +76,26 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
     private int fatherRaceId;
     private int motherRaceId;
     private int dsDivisionId;
-    private int sectionOfAct;   //no usage remove amith
     private int locationUKey;
-
-    private long idUKey;
-    private long serialNo; //to be used in the case where search is performed from confirmation 1 page.
-    private boolean allowApproveAlteration;
-    private boolean nextFlag;
-    private boolean previousFlag;
-    private List<BirthAlteration> birthAlterationPendingApprovalList;
     private int divisionAltaration;
-    private Date alterationRecivedDate;
-    private BirthAlteration.AlterationType alterationType;
+    private int[] approvedIndex;
+
+    private long bdId;
+    private long idUKey;
+    private long serialNo;
     private long birthCertificateNumber;
 
+    private Long nicOrPin;
 
+    private String districtName;
+    private String dsDivisionName;
+    private String bdDivisionName;
+    private String originalName;
+    private String comment;
     private String language;
+
+    private boolean nextFlag;
+    private boolean previousFlag;
     private boolean applyChanges;
     private boolean approveRightsToUser;
     private boolean editChildInfo;
@@ -130,7 +106,6 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
     private boolean editMothersNameAfterMarriageInfo;
     private boolean editGrandFatherInfo;
     private boolean editMode;
-
 
     public BirthAlterationAction(BirthRegistrationService service, DistrictDAO districtDAO, CountryDAO countryDAO,
         RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO, BirthAlterationService alterationService,
@@ -147,14 +122,11 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         this.birthAlterationValidator = birthAlterationValidator;
     }
 
-
     public String initBirthAlteration() {
         pageNo = 0;
         populateBasicLists();
         return SUCCESS;
     }
-
-    //load birth alteration home page
 
     public String birthAlterationHome() {
         return SUCCESS;
@@ -204,7 +176,6 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             }
             switch (alterationType) {
                 case TYPE_27: {
-                    parent = bdf.getParent();
                     Alteration27 alt27 = new Alteration27();
                     alt27.setChildFullNameOfficialLang(bdf.getChild().getChildFullNameOfficialLang());
                     alt27.setChildFullNameEnglish(bdf.getChild().getChildFullNameEnglish());
@@ -215,14 +186,13 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
                     populateAlt27A(bdf);
                     break;
                 default: {
-                    alt52_1 = new Alteration52_1();
                     populateAlt52_1(bdf);
                 }
             }
             populateBasicLists();
             populateCountryRacesAndAllDSDivisions();
         }
-        idUKey = 0;
+        birthCertificateNumber = 0;
         return SUCCESS;
     }
 
@@ -237,7 +207,6 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             }
             break;
             case TYPE_27A: {
-                //TYPE 27A alteration
                 if (fatherCountryId > 0) {
                     birthAlteration.getAlt27A().getFather().setFatherCountry(countryDAO.getCountry(fatherCountryId));
                 }
@@ -289,7 +258,6 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
     /**
      * init editing birth alteration
      */
-    //todo remove BDID which is passing through the URL it is no need to this
     public String editBirthAlterationInit() {
         logger.debug("attempt to load edit page for  birth alteration idUKey : {}", idUKey);
         birthAlteration = alterationService.getByIDUKey(idUKey, user);
@@ -297,14 +265,17 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             BirthDeclaration bdf = service.getById(birthAlteration.getBdfIDUKey());
             getBirthCertificateInfo(bdf);
         } else {
-            //todo return to error
+            logger.debug("unable to find birth alteration for edit idUKey : {}", idUKey);
+            addActionError(getText("error.unable.find.birth.alteration.for.edit", new String[]{"" + idUKey}));
+            populateBasicLists();
+            filterBirthAlteration();
+            return ERROR;
         }
         populateBasicLists();
         populateCountryRacesAndAllDSDivisions();
         alterationType = birthAlteration.getType();
         editMode = true;
         return SUCCESS;
-        //todo what happen if no record found to edit       no error massage
     }
 
     /**
@@ -332,7 +303,6 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             try {
                 //now we found existing alteration now we populate existing alteration with updated values
                 populateBirthAlterationForUpdate(existingBirthAlteration, birthAlteration);
-                //todo call to a edit service method amith following is temporary solution
                 alterationService.updateBirthAlteration(existingBirthAlteration, user);
                 logger.debug("birth alteration update success fully : alteration idUKey {}", idUKey);
             }
@@ -349,7 +319,6 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         addActionMessage(getText("message.successfully.edited.alteration"));
         return SUCCESS;
     }
-
 
     /**
      * this is responsible for loading the birth alteration
@@ -408,11 +377,9 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         }
     }
 
-
     /**
      * init approval of a birth alteration
      */
-    //todo remove bdid parameter is unused here
     public String approveBirthAlterationInit() {
         logger.debug("attempt to init approve  birth alteration : idUKey {} ", idUKey);
         BirthDeclaration bdf;
@@ -424,7 +391,6 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             String language = bdf.getRegister().getPreferredLanguage();
             switch (birthAlteration.getType()) {
                 case TYPE_27:
-                    alt27 = birthAlteration.getAlt27();
                     //only compare child name in 27
                     changesOfAlt27(birthAlteration, bdf, language);
                     break;
@@ -486,7 +452,6 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         return SUCCESS;
     }
 
-
     /**
      * approving birth alteration
      */
@@ -523,7 +488,6 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         return SUCCESS;
     }
 
-
     /**
      * init birth alteration reject page
      */
@@ -539,7 +503,9 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             }
         }
         logger.debug("unable to find birth alteration for reject idUKey : {}", idUKey);
-        //todo forward to list page  amith
+        addActionError(getText("error.unable.to.find.birth.alteration.for.edit", new String[]{"" + idUKey}));
+        populateBasicLists();
+        filterBirthAlteration();
         return ERROR;
     }
 
@@ -575,7 +541,6 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         }
     }
 
-
     private void populateBirthAlterationNotice(BirthAlteration birthAlteration) {
         birthDeclaration = service.getById(birthAlteration.getBdfIDUKey(), user);
         BDDivision bdDivision = birthDeclaration.getRegister().getBirthDivision();
@@ -593,9 +558,9 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
 
     private void changesOfAlt27A(BirthAlteration birthAlteration, BirthDeclaration bdf, String language) {
         Alteration27A alt27A = birthAlteration.getAlt27A();
-        father = alt27A.getFather();
+        FatherInfo father = alt27A.getFather();
         ParentInfo parent = bdf.getParent();
-        grandFather = alt27A.getGrandFather();
+        GrandFatherInfo grandFather = alt27A.getGrandFather();
         GrandFatherInfo grandFatherOriginal = bdf.getGrandFather();
         if (grandFather != null && grandFatherOriginal != null) {
             compareStringValues(grandFatherOriginal.getGrandFatherFullName(), grandFather.getGrandFatherFullName(),
@@ -650,7 +615,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
                 changesList.add(fv);
             }
         }
-        marriage = alt27A.getMarriage();
+        MarriageInfo marriage = alt27A.getMarriage();
         MarriageInfo marriageOriginal = bdf.getMarriage();
         if (marriage != null && marriageOriginal != null) {
 
@@ -678,8 +643,8 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
 
     private void changesOfAlt52_1(BirthAlteration birthAlteration, BirthDeclaration bdf, String language) {
         Alteration52_1 alt52_1 = birthAlteration.getAlt52_1();
-        child = bdf.getChild();
-        register = bdf.getRegister();
+        ChildInfo child = bdf.getChild();
+        BirthRegisterInfo register = bdf.getRegister();
         if (child != null) {
 
             compareDate(child.getDateOfBirth(), alt52_1.getDateOfBirth(), language,
@@ -744,7 +709,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             }
         }
         //compare the informant information
-        informant = alt52_1.getInformant();
+        AlterationInformatInfo informant = alt52_1.getInformant();
         InformantInfo informantOriginal = bdf.getInformant();
         if (informant != null && informantOriginal != null) {
 
@@ -818,8 +783,6 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         }
         return fv;
     }
-
-
     //todo use one method for follow 3 amith
 
     private FieldValue compareCountry(Country registerValue, Country alterationValue, String preferedLan, int constant) {
@@ -1001,7 +964,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             alt52_1 = new Alteration52_1();
         }
         ParentInfo parent = bdf.getParent();
-        child = bdf.getChild();
+        ChildInfo child = bdf.getChild();
         InformantInfo bdfInformant = bdf.getInformant();
         /*if informant is null then populate informant from bdf
         *in the edit mode populate informant information if  informant information were not changed in first time
@@ -1145,7 +1108,6 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         existing.setDeclarant(updated.getDeclarant());
     }
 
-
     public int getPageNo() {
         return pageNo;
     }
@@ -1262,46 +1224,6 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         return this.bdDivisionDAO;
     }
 
-    public int getSectionOfAct() {
-        return sectionOfAct;
-    }
-
-    public void setSectionOfAct(int sectionOfAct) {
-        this.sectionOfAct = sectionOfAct;
-    }
-
-    public Alteration27 getAlt27() {
-        return alt27;
-    }
-
-    public void setAlt27(Alteration27 alt27) {
-        this.alt27 = alt27;
-    }
-
-    public Alteration27A getAlt27A() {
-        return alt27A;
-    }
-
-    public void setAlt27A(Alteration27A alt27A) {
-        this.alt27A = alt27A;
-    }
-
-    public Alteration52_1 getAlt52_1() {
-        return alt52_1;
-    }
-
-    public void setAlt52_1(Alteration52_1 alt52_1) {
-        this.alt52_1 = alt52_1;
-    }
-
-    public DeclarantInfo getDeclarant() {
-        return declarant;
-    }
-
-    public void setDeclarant(DeclarantInfo declarant) {
-        this.declarant = declarant;
-    }
-
     public Long getIdUKey() {
         return idUKey;
     }
@@ -1337,14 +1259,6 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         }
         getRegister().setBirthDivision(bdDivisionDAO.getBDDivisionByPK(birthDivisionId));
         logger.debug("setting BirthDivision: {}", getRegister().getBirthDivision().getEnDivisionName());
-    }
-
-    public boolean isAllowApproveAlteration() {
-        return allowApproveAlteration;
-    }
-
-    public void setAllowApproveAlteration(boolean allowApproveAlteration) {
-        this.allowApproveAlteration = allowApproveAlteration;
     }
 
     public String getLanguage() {
@@ -1411,125 +1325,12 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         this.bdDivisionName = bdDivisionName;
     }
 
-    public ChildInfo getChild() {
-        return child;
-    }
-
-    public void setChild(ChildInfo child) {
-        this.child = child;
-    }
-
-    public GrandFatherInfo getGrandFather() {
-        return grandFather;
-    }
-
-    public void setGrandFather(GrandFatherInfo grandFather) {
-        this.grandFather = grandFather;
-    }
-
-    public MarriageInfo getMarriage() {
-        return marriage;
-    }
-
-    public void setMarriage(MarriageInfo marriage) {
-        this.marriage = marriage;
-    }
-
-    public AlterationInformatInfo getInformant() {
-        return informant;
-    }
-
-    public void setInformant(AlterationInformatInfo informant) {
-        this.informant = informant;
-    }
-
-    public NotifyingAuthorityInfo getNotifyingAuthority() {
-        return notifyingAuthority;
-    }
-
-    public void setNotifyingAuthority(NotifyingAuthorityInfo notifyingAuthority) {
-        this.notifyingAuthority = notifyingAuthority;
-    }
-
-    public ConfirmantInfo getConfirmant() {
-        return confirmant;
-    }
-
-    public void setConfirmant(ConfirmantInfo confirmant) {
-        this.confirmant = confirmant;
-    }
-
     public BirthRegisterInfo getRegister() {
         return register;
     }
 
     public void setRegister(BirthRegisterInfo register) {
         this.register = register;
-    }
-
-    public List<String[]> getBirthAlterationApprovalList() {
-        return birthAlterationApprovalList;
-    }
-
-    public void setBirthAlterationApprovalList(List<String[]> birthAlterationApprovalList) {
-        this.birthAlterationApprovalList = birthAlterationApprovalList;
-    }
-
-    public FatherInfo getFather() {
-        return father;
-    }
-
-    public void setFather(FatherInfo father) {
-        this.father = father;
-    }
-
-    public int[] getIndex() {
-        return index;
-    }
-
-    public void setIndex(int[] index) {
-        this.index = index;
-    }
-
-    public BitSet getIndexCheck() {
-        return indexCheck;
-    }
-
-    public void setIndexCheck(BitSet indexCheck) {
-        this.indexCheck = indexCheck;
-    }
-
-    public HashMap getApproveStatus() {
-        return approveStatus;
-    }
-
-    public void setApproveStatus(HashMap approveStatus) {
-        this.approveStatus = approveStatus;
-    }
-
-    public int getNumberOfAppPending() {
-        return numberOfAppPending;
-    }
-
-    public void setNumberOfAppPending(int numberOfAppPending) {
-        this.numberOfAppPending = numberOfAppPending;
-    }
-
-    public ParentInfo getParent() {
-        return parent;
-    }
-
-    public void setParent(ParentInfo parent) {
-        this.parent = parent;
-    }
-
-
-    public int getPageType() {
-        return pageType;
-    }
-
-    public void setPageType(int pageType) {
-        this.pageType = pageType;
     }
 
     public Date getAlterationRecivedDate() {
@@ -1620,28 +1421,12 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         this.locationUKey = locationUKey;
     }
 
-    public Map<Integer, Boolean> getAlterationApprovalPermission() {
-        return alterationApprovalPermission;
-    }
-
-    public void setAlterationApprovalPermission(Map<Integer, Boolean> alterationApprovalPermission) {
-        this.alterationApprovalPermission = alterationApprovalPermission;
-    }
-
     public boolean isApplyChanges() {
         return applyChanges;
     }
 
     public void setApplyChanges(boolean applyChanges) {
         this.applyChanges = applyChanges;
-    }
-
-    public List getBirthAlterationApprovedList() {
-        return birthAlterationApprovedList;
-    }
-
-    public void setBirthAlterationApprovedList(List birthAlterationApprovedList) {
-        this.birthAlterationApprovedList = birthAlterationApprovedList;
     }
 
     public int getDivisionAltaration() {

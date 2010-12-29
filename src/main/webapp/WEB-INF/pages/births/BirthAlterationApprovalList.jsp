@@ -1,3 +1,5 @@
+<%@ page import="lk.rgd.crs.api.domain.BDDivision" %>
+<%@ page import="lk.rgd.common.api.domain.User" %>
 <style type="text/css" title="currentStyle">
     @import "../lib/datatables/media/css/demo_page.css";
     @import "../lib/datatables/media/css/demo_table.css";
@@ -162,6 +164,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <s:actionerror cssStyle="color:red;font-size:9pt;"/>
 <s:actionmessage cssStyle="color:black;font-size:9pt;"/>
+<%
+    User user = (User) session.getAttribute("user_bean");
+%>
 <s:form action="eprFilterBirthAlteration" method="post" onsubmit="javascript:return validate()">
     <%--<s:actionerror  cssStyle="color:red;font-size:9pt;"/>--%>
     <div id="tabs" style="font-size:10pt;">
@@ -260,48 +265,46 @@
                 <td><s:property value="#approvalStatus.index +1"/></td>
                 <td><s:property value="alt27.childFullNameOfficialLang"/></td>
                 <td align="center">
-                    <s:if test="(status.ordinal()==0)">
-                        <s:url id="approveSelected" action="eprApproveBirthAlterationInit.do">
-                            <s:param name="idUKey" value="idUKey"/>
-                            <s:param name="bdId" value="bdfIDUKey"/>
-                            <s:param name="nextFlag" value="%{#request.nextFlag}"/>
-                            <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-                            <s:param name="pageType" value="%{#request.pageType}"/>
-                            <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
-                            <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
-                            <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
-                        </s:url>
+                    <s:url id="approveSelected" action="eprApproveBirthAlterationInit.do">
+                        <s:param name="idUKey" value="idUKey"/>
+                    </s:url>
+                    <s:set name="birthDivision" value="birthRecordDivision"/>
+                    <s:if test="status.ordinal()==0 & (#session.user_bean.role.roleId.equals('ARG') | #session.user_bean.role.roleId.equals('RG'))">
+                        <%
+                            BDDivision deathDivision = (BDDivision) pageContext.getAttribute("birthDivision");
+                            int deathDSDivsion = deathDivision.getDsDivision().getDsDivisionUKey();
+                            boolean approveRights = user.isAllowedAccessToBDDSDivision(deathDSDivsion);
+                            if (approveRights) {
+                        %>
                         <s:a href="%{approveSelected}" title="%{getText('approveTooltip.label')}">
-                            <img src="<s:url value='/images/approve.gif'/>" width="25" height="25" border="none"/></s:a>
+                            <img src="<s:url value='/images/approve.gif'/>" width="25" height="25"
+                                 border="none"/></s:a>
+                        <%}%>
                     </s:if>
                 </td>
                 <td align="center">
-                    <s:if test="(status.ordinal()==0)">
-                        <s:url id="rejectSelected" action="eprRejectBirthAlterationInit.do">
-                            <s:param name="idUKey" value="idUKey"/>
-                            <s:param name="bdId" value="bdfIDUKey"/>
-                            <s:param name="nextFlag" value="%{#request.nextFlag}"/>
-                            <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-                            <s:param name="pageType" value="%{#request.pageType}"/>
-                            <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
-                            <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
-                            <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
-                        </s:url>
+
+                    <s:url id="rejectSelected" action="eprRejectBirthAlterationInit.do">
+                        <s:param name="idUKey" value="idUKey"/>
+                    </s:url>
+                    <s:set name="birthDivision" value="birthRecordDivision"/>
+                    <s:if test="status.ordinal()==0 & (#session.user_bean.role.roleId.equals('ARG') | #session.user_bean.role.roleId.equals('RG'))">
+                        <%
+                            BDDivision deathDivision = (BDDivision) pageContext.getAttribute("birthDivision");
+                            int deathDSDivsion = deathDivision.getDsDivision().getDsDivisionUKey();
+                            boolean approveRights = user.isAllowedAccessToBDDSDivision(deathDSDivsion);
+                            if (approveRights) {
+                        %>
                         <s:a href="%{rejectSelected}" title="%{getText('rejectTooltip.label')}">
-                            <img src="<s:url value='/images/reject.gif'/>" width="25" height="25" border="none"/></s:a>
-                    </s:if>
-                </td>
+                            <img src="<s:url value='/images/reject.gif'/>" width="25" height="25"
+                                 border="none"/>
+                        </s:a>
+                        <%}%>
+                    </s:if></td>
                 <td align="center">
                     <s:if test="(status.ordinal()==0)">
                         <s:url id="editSelected" action="eprEditBirthAlterationInit.do">
                             <s:param name="idUKey" value="idUKey"/>
-                            <s:param name="bdId" value="bdfIDUKey"/>
-                            <s:param name="nextFlag" value="%{#request.nextFlag}"/>
-                            <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-                            <s:param name="pageType" value="%{#request.pageType}"/>
-                            <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
-                            <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
-                            <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
                         </s:url>
                         <s:a href="%{editSelected}" title="%{getText('editTooltip.label')}">
                             <img src="<s:url value='/images/edit.png'/>" width="25" height="25" border="none"/></s:a>
@@ -311,13 +314,6 @@
                     <s:if test="(status.ordinal()==1)">
                         <s:url id="applySelected" action="eprPrintBirthAlterarionNotice.do">
                             <s:param name="idUKey" value="idUKey"/>
-                            <s:param name="bdId" value="bdfIDUKey"/>
-                            <s:param name="nextFlag" value="%{#request.nextFlag}"/>
-                            <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-                            <s:param name="pageType" value="2"/>
-                            <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
-                            <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
-                            <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
                         </s:url>
                         <s:a href="%{applySelected}">
                             <img src="<s:url value='/images/print_icon.gif'/>" width="25" height="25"
