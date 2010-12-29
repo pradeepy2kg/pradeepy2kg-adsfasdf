@@ -61,7 +61,7 @@
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="cacheControl"/>
             <result name="success">/WEB-INF/pages/login/login.jsp</result>
-            <result type="tiles" name="error">epr.home</result>
+            <result type="tiles" name="error">/WEB-INF/pages/login/login.jsp</result>
         </action>
 
         <!--check here -->
