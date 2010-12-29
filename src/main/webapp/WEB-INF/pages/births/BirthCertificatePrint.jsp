@@ -147,7 +147,7 @@
                <td><s:checkbox name="index"
                                onclick="javascript:selectall(document.birth_confirm_print,document.birth_confirm_print.allCheck)"
                                fieldValue="%{#printListId.idUKey}" value="%{#index}"/></td>--%>
-                            <td><s:property value="register.birthDivision.bdDivisionUKey"/></td>
+                            <td><s:property value="register.birthDivision.divisionId"/></td>
                             <td align="center"><s:property value="register.bdfSerialNo"/></td>
                             <td>
                                 <s:if test="child.childFullNameOfficialLang != null">
