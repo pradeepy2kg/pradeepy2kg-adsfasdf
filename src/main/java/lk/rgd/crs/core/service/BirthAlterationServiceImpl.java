@@ -67,7 +67,6 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
     public void updateBirthAlteration(BirthAlteration ba, User user) {
         logger.debug("Attempt to edit birth alteration record : {}", ba.getIdUKey());
         validateAccessOfUserToEditOrDelete(ba, user);
-
         BirthAlteration existing = birthAlterationDAO.getById(ba.getIdUKey());
         validateAccessOfUserToEditOrDelete(existing, user);
         birthAlterationDAO.updateBirthAlteration(ba, user);
