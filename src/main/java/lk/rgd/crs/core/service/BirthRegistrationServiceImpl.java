@@ -1975,7 +1975,7 @@ public class BirthRegistrationServiceImpl implements
         return commonStat;
     }
 
-    public CommonStatistics getBirthStatisticsForDEO(String user) {
+    public CommonStatistics getBirthStatisticsForUser(String user) {
 
         int data_entry = 0;
         int approved = 0;
