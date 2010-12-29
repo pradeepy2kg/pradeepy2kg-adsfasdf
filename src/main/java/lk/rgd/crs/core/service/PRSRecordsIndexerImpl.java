@@ -124,21 +124,36 @@ public class PRSRecordsIndexerImpl implements PRSRecordsIndexer {
                 Connection conn = dataSource.getConnection();
 
                 Statement s = conn.createStatement();
-                ResultSet rs = s.executeQuery("SELECT max(personUKey) FROM PRS.PERSON");
+                ResultSet rs = s.executeQuery("SELECT min(personUKey) FROM PRS.PERSON");
                 rs.next();
-                long numRows = rs.getLong(1);
+                long minUKey = rs.getLong(1);
+                rs = s.executeQuery("SELECT max(personUKey) FROM PRS.PERSON");
+                rs.next();
+                long maxUKey = rs.getLong(1);
+                rs = s.executeQuery("SELECT count(*) FROM PRS.PERSON");
+                rs.next();
+                long count = rs.getLong(1);
                 conn.close();
 
-                int threads = ((int) (numRows / MILLION)) + 1;
-                doneSignal = new CountDownLatch(threads);
-                logger.info("Using : {} threads to process : {} rows", threads, numRows);
+                long block = (maxUKey - minUKey) / 50;
+                if (block > MILLION) {
+                    block = MILLION;
+                }
 
-                long startIDUkey = 1;
-                long endIDUkey = 0;
+                int threads = 51;
+                doneSignal = new CountDownLatch(threads);
+                logger.info("Using : 51 threads with a block size of : " + block +
+                    " to process : " + count + " rows from : " + minUKey + " to: " + maxUKey);
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException ignore) {}
+
+                long startIDUkey = minUKey;
+                long endIDUkey = minUKey;
 
                 Worker w;
                 for (int i = 0; i < threads; i++) {
-                    endIDUkey += MILLION;
+                    endIDUkey += block;
                     w = new Worker(i, startIDUkey, endIDUkey, doneSignal);
                     w.start();
                     startIDUkey = endIDUkey + 1;
@@ -174,7 +189,7 @@ public class PRSRecordsIndexerImpl implements PRSRecordsIndexer {
         }
 
         logger.info("Worker : " + worker +
-            " begin re-indexing PRS records from idUKey : {} to : {}", startIDUkey, endIDUkey);
+            " re-indexing 1000 records from idUKey : {} to : {}", startIDUkey, endIDUkey);
 
         long count = 0;
         Connection conn = null;
@@ -386,6 +401,8 @@ public class PRSRecordsIndexerImpl implements PRSRecordsIndexer {
 
         @Override
         public void run() {
+            logger.info("Worker : " + id + " will re-index records from idUKey: " + startIDUKey + " to: " + endIDUKey);
+
             try {
                 long s = startIDUKey;
                 long e = startIDUKey-1;
