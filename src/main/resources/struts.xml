@@ -106,7 +106,16 @@
         </action>
 
         <action name="eprPersonApproval" class="lk.rgd.prs.web.action.PersonApprovalAction"
-                method="loadPersonApprovalPendingList">
+                method="initResultsPage">
+            <result type="tiles" name="success">epr.PersonApproval</result>
+        </action>
+
+        <action name="eprPersonSearchNext" class="lk.rgd.prs.web.action.PersonApprovalAction" method="nextResultsPage">
+            <result type="tiles" name="success">epr.PersonApproval</result>
+        </action>
+
+        <action name="eprPersonSearchPrevious" class="lk.rgd.prs.web.action.PersonApprovalAction"
+                method="previousResultsPage">
             <result type="tiles" name="success">epr.PersonApproval</result>
         </action>
 

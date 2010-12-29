@@ -113,7 +113,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
         final List<Person> exactRecord = new ArrayList<Person>();
         if (person.getTemporaryPin() != null) {
             Person p = personDao.findPersonByTemporaryPIN(person.getTemporaryPin());
-            if (p.getStatus() == Person.Status.SEMI_VERIFIED || p.getStatus() == Person.Status.UNVERIFIED) {
+            if (p != null && (p.getStatus() == Person.Status.SEMI_VERIFIED || p.getStatus() == Person.Status.UNVERIFIED)) {
                 exactRecord.add(personDao.findPersonByTemporaryPIN(person.getTemporaryPin()));
             }
         } else if (person.getNic() != null) {
