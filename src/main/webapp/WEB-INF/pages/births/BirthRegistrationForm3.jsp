@@ -179,7 +179,7 @@ function commonTags() {
     // validate grandfather birth year
     domObject = document.getElementById('grandFatherBirthYear');
     if (!isFieldEmpty(domObject))
-        validateBirthYear(domObject, 'error11', 'p3error9');
+        validateBirthYear(domObject, 'error11', 'p3error11');
 
     // validate great grandfather PIN or NIC
     domObject = document.getElementById('greatGrandFatherNICorPIN');
@@ -742,7 +742,7 @@ function initPage() {
 
 <s:hidden id="fatherName" value="%{parent.fatherFullName}"/>
 <s:hidden id="submitDatePicker" value="%{register.dateOfRegistration}"/>
-<s:hidden id="p3error9" value="%{getText('p1.YearofBirthOfGrandFather')}"/>
+<s:hidden id="p3error11" value="%{getText('p1.YearofBirthOfGrandFather')}"/>
 <s:hidden id="p3error10" value="%{getText('p1.YearofBirthOfGreatGrandFather')}"/>
 <s:hidden id="error10" value="%{getText('p1.invalid.emailInformant.text')}"/>
 <s:hidden id="error11" value="%{getText('p1.invalide.inputType')}"/>
