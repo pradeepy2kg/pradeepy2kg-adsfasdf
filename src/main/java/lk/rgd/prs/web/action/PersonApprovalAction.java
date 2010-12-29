@@ -3,7 +3,9 @@ package lk.rgd.prs.web.action;
 import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.common.api.dao.AppParametersDAO;
 import lk.rgd.common.api.dao.LocationDAO;
+import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.util.WebUtils;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.web.util.CommonUtil;
@@ -13,6 +15,7 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -36,15 +39,18 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
     private User user;
 
     private Map<Integer, String> locationList;
-    private List<Person> approvalPendingList;
+    private List<Person> searchResultList;
     private List<UserWarning> warnings;
 
     private int locationId;
     private int pageNo;
     private int noOfRows;
+    private int printStart;
+
     private long personUKey;
     private Long searchPin;
     private Long searchTempPin;
+
     private String language;
     private String searchNic;
 
@@ -59,14 +65,14 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
     /**
      * This method used to load person pending approval list by specified location id (only for page number 1)
      */
-    public String loadPersonApprovalPendingList() {
+    public String initResultsPage() {
         logger.debug("Loading approval pending person list");
         populateLocations();
-        getApprovalPendingPersons();
+        pageNo += 1;
+        getSearchResultsPage();
+        displayResultSize();
 
-        logger.debug("Loaded approval pending person list with size : {} for LocationId : {} ",
-            approvalPendingList.size(), locationId);
-        setSearchFieldsToEmpty();
+        clearSearchFieldValues();
         return SUCCESS;
     }
 
@@ -79,7 +85,7 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
 
         if (warnings.isEmpty()) {
             populateLocations();
-            getApprovalPendingPersons();
+            getSearchResultsPage();
             addActionMessage(getText("message.approval.success"));
             return SUCCESS;
         } else {
@@ -91,7 +97,91 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
      * This method used to approve persons pending approval by ignoring warnings
      */
     public String approveIgnoreWarnings() {
+        // TODO
         return SUCCESS;
+    }
+
+    /**
+     * This method is used for pagination, to move backward in PRS search results list page
+     */
+    public String previousResultsPage() {
+        logger.debug("Previous page of PRS search result list page loaded");
+        noOfRows = appParametersDAO.getIntParameter(PRS_APPROVAL_ROWS_PER_PAGE);
+        pageNo = printStart / noOfRows;
+
+        filterAndLoadResults();
+
+        printStart -= noOfRows;
+        populateLocations();
+        clearSearchFieldValues();
+        displayResultSize();
+        return SUCCESS;
+    }
+
+    /**
+     * This method is used for pagination, to move forward in PRS search results list page
+     */
+    public String nextResultsPage() {
+        logger.debug("Next page of PRS search result list page loaded");
+        noOfRows = appParametersDAO.getIntParameter(PRS_APPROVAL_ROWS_PER_PAGE);
+        pageNo = ((printStart + noOfRows) / noOfRows) + 1;
+
+        filterAndLoadResults();
+
+        printStart += noOfRows;
+        populateLocations();
+        clearSearchFieldValues();
+        displayResultSize();
+        return SUCCESS;
+    }
+
+    /**
+     * This method used to load approval pending person list for specified locationId, pageNo and noOfRows
+     */
+    private void getSearchResultsPage() {
+        noOfRows = appParametersDAO.getIntParameter(PRS_APPROVAL_ROWS_PER_PAGE);
+        filterAndLoadResults();
+    }
+
+    /**
+     * This method is used to load PRS result list according to the specified searching criteria
+     */
+    private void filterAndLoadResults() {
+        if (locationId != 0) {
+            Location selectedLocation = locationDAO.getLocation(locationId);
+            if (searchPin == null && searchNic == null && searchTempPin == null) {
+                // Search by Location
+                searchResultList = service.getPersonsByLocation(selectedLocation, pageNo, noOfRows, user);
+            } else {
+                if (searchPin != null) {
+                    // Search by Location and PIN
+                    searchResultList = service.getPersonByLocationAndPIN(selectedLocation, searchPin, user);
+                } else if (!isEmpty(searchNic)) {
+                    // Search by Location and NIC
+                    searchResultList = service.getPersonsByLocationAndNIC(selectedLocation, searchNic, user);
+                } else if (searchTempPin != null) {
+                    // Search by Location and Temporary PIN
+                    searchResultList = service.getPersonByLocationAndTemporaryPIN(selectedLocation, searchTempPin, user);
+                } else {
+                    Collections.emptyList();
+                    logger.warn("PRS searching cannot occur this search scenario");
+                }
+            }
+        } else {
+            searchResultList = Collections.emptyList();
+            logger.warn("Searching location cannot be 0, LocationId mandatory for PRS searching");
+        }
+    }
+
+    /**
+     * This method is used to show action message if the search result list is empty
+     */
+    private void displayResultSize() {
+        if (searchResultList.size() == 0) {
+            addActionMessage(getText("noItemMsg.label"));
+        }
+        logger.debug("Loaded approval pending person list with size : {} for LocationId : {} ",
+            searchResultList.size(), locationId);
     }
 
     /**
@@ -106,46 +196,16 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
     }
 
     /**
-     * This method is used for pagination, to move backward in PRS search results list page
-     */
-    public String previousResultsPage() {
-        logger.debug("Previous page of PRS search result list page loaded");
-        return SUCCESS;
-    }
-
-    /**
-     * This method is used for pagination, to move forward in PRS search results list page
-     */
-    public String nextResultsPage() {
-        logger.debug("Next page of PRS search result list page loaded");
-        return SUCCESS;
-    }
-
-    /**
-     * This method used to load approval pending person list for specified locationId, pageNo and noOfRows
-     */
-    private void getApprovalPendingPersons() {
-        pageNo += 1;
-        noOfRows = appParametersDAO.getIntParameter(PRS_APPROVAL_ROWS_PER_PAGE);
-        approvalPendingList = service.getPersonsByLocation(locationDAO.getLocation(locationId), pageNo, noOfRows, user);
-        if (approvalPendingList.size() == 0) {
-            addActionMessage(getText("noItemMsg.label"));
-        }
-    }
-
-    /**
-     * This method is used to load PRS result list according to the specified searching criteria
-     */
-    private void filterAndLoadResults() {
-
-    }
-
-    /**
      * This method used to set searching fields back to initial state
      */
-    private void setSearchFieldsToEmpty() {
+    private void clearSearchFieldValues() {
+        searchPin = null;
         searchNic = null;
         searchTempPin = null;
+    }
+
+    private boolean isEmpty(String s) {
+        return s == null || s.trim().length() != 10;
     }
 
     public Map getSession() {
@@ -167,12 +227,12 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
         this.locationList = locationList;
     }
 
-    public List<Person> getApprovalPendingList() {
-        return approvalPendingList;
+    public List<Person> getSearchResultList() {
+        return searchResultList;
     }
 
-    public void setApprovalPendingList(List<Person> approvalPendingList) {
-        this.approvalPendingList = approvalPendingList;
+    public void setSearchResultList(List<Person> searchResultList) {
+        this.searchResultList = searchResultList;
     }
 
     public List<UserWarning> getWarnings() {
@@ -207,6 +267,14 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
         this.noOfRows = noOfRows;
     }
 
+    public int getPrintStart() {
+        return printStart;
+    }
+
+    public void setPrintStart(int printStart) {
+        this.printStart = printStart;
+    }
+
     public long getPersonUKey() {
         return personUKey;
     }
@@ -236,6 +304,6 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
     }
 
     public void setSearchNic(String searchNic) {
-        this.searchNic = searchNic;
+        this.searchNic = WebUtils.filterBlanks(searchNic);
     }
 }

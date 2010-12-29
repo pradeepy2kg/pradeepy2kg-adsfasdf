@@ -180,6 +180,8 @@ public class PersonDAOImpl extends BaseDAO implements PersonDAO {
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<Person> getByLocationAndPIN(Location location, long pin) {
         Query q = em.createNamedQuery("get.by.location.and.pin");
+        q.setParameter("location", location);
+        q.setParameter("pin", pin);
         return q.getResultList();
     }
 
@@ -189,6 +191,8 @@ public class PersonDAOImpl extends BaseDAO implements PersonDAO {
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<Person> getByLocationAndNIC(Location location, String nic) {
         Query q = em.createNamedQuery("get.by.location.and.nic");
+        q.setParameter("location", location);
+        q.setParameter("nic", nic);
         return q.getResultList();
     }
 
@@ -198,6 +202,8 @@ public class PersonDAOImpl extends BaseDAO implements PersonDAO {
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<Person> getByLocationAndTempPIN(Location location, long tempPin) {
         Query q = em.createNamedQuery("get.by.location.and.tempPin");
+        q.setParameter("location", location);
+        q.setParameter("tempPin", tempPin);
         return q.getResultList();
     }
 }
