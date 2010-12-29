@@ -790,7 +790,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         return commonStat;
     }
 
-    public CommonStatistics getMarriageStatisticsForDEO(String user) {
+    public CommonStatistics getMarriageStatisticsForUser(String user) {
         int data_entry = 0;
         int approved = 0;
         int rejected = 0;

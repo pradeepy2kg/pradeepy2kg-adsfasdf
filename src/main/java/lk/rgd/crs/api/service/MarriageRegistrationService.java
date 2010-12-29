@@ -493,10 +493,10 @@ public interface MarriageRegistrationService {
     public CommonStatistics getCommonMarriageCertificateCount(String user);
 
     /**
-     * Returns all statistics information belongs to given user
+     * Returns all statistics information belongs to given user. Return object cannot be null
      *
-     * @param user user DEO
+     * @param user user DEO / ADR
      * @return CommonStatistics object which encapsulated all the birth statistics information
      */
-    public CommonStatistics getMarriageStatisticsForDEO(String user);
+    public CommonStatistics getMarriageStatisticsForUser(String user);
 }
