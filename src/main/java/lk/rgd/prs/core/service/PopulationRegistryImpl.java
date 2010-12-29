@@ -355,6 +355,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
         final Person.Status currentState = existing.getStatus();
         if (currentState == Person.Status.SEMI_VERIFIED || currentState == Person.Status.UNVERIFIED) {
             existing.setStatus(Person.Status.DELETED);
+            existing.getLifeCycleInfo().setActiveRecord(false);
             existing.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
             existing.getLifeCycleInfo().setApprovalOrRejectUser(user);
             existing.setSubmittedLocation(user.getPrimaryLocation());
@@ -401,6 +402,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
         final Person.Status currentState = existing.getStatus();
         if (currentState == Person.Status.SEMI_VERIFIED || currentState == Person.Status.UNVERIFIED) {
             existing.setStatus(Person.Status.CANCELLED);
+            existing.getLifeCycleInfo().setActiveRecord(false);
             existing.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
             existing.getLifeCycleInfo().setApprovalOrRejectUser(user);
             existing.setSubmittedLocation(user.getPrimaryLocation());
@@ -428,13 +430,13 @@ public class PopulationRegistryImpl implements PopulationRegistry {
         if (existing != null && existing.getStatus() == Person.Status.VERIFIED &&
             ((existing.getFullNameInEnglishLanguage() != null &&
                 !existing.getFullNameInEnglishLanguage().equals(person.getFullNameInEnglishLanguage())) ||
-             (existing.getFullNameInOfficialLanguage() != null &&
-                 !existing.getFullNameInOfficialLanguage().equals(person.getFullNameInOfficialLanguage())) ||
-             (existing.getDateOfBirth() != null &&
-                 !existing.getDateOfBirth().equals(person.getDateOfBirth())) ||
-             (existing.getRace() != null &&
-                 !existing.getRace().equals(person.getRace())) ||
-             existing.getGender() != person.getGender()) ) {
+                (existing.getFullNameInOfficialLanguage() != null &&
+                    !existing.getFullNameInOfficialLanguage().equals(person.getFullNameInOfficialLanguage())) ||
+                (existing.getDateOfBirth() != null &&
+                    !existing.getDateOfBirth().equals(person.getDateOfBirth())) ||
+                (existing.getRace() != null &&
+                    !existing.getRace().equals(person.getRace())) ||
+                existing.getGender() != person.getGender())) {
 
             existing.setStatus(Person.Status.ARCHIVED_ALTERED);
             personDao.updatePerson(existing, user);
