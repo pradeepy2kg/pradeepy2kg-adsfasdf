@@ -24,7 +24,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -482,7 +481,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         return commonStat;
     }
 
-    public CommonStatistics getDeathStatisticsForDEO(String user) {
+    public CommonStatistics getDeathStatisticsForUser(String user) {
 
         int data_entry = 0;
         int approved = 0;

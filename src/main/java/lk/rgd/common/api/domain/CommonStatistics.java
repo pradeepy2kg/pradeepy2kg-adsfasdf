@@ -99,4 +99,15 @@ public class CommonStatistics {
         this.totalSubmissions = totalSubmissions;
     }
 
+    public void add(CommonStatistics cs){
+        this.totalSubmissions += cs.totalSubmissions;
+        this.lateSubmissions += cs.lateSubmissions;
+        this.normalSubmissions += cs.normalSubmissions;
+        this.approvedItems += cs.approvedItems;
+        this.rejectedItems += cs.rejectedItems;
+        this.totalPendingItems += cs.totalPendingItems;
+        this.arrearsPendingItems += cs.arrearsPendingItems;
+        this.thisMonthPendingItems += cs.thisMonthPendingItems;
+    }
+
 }
