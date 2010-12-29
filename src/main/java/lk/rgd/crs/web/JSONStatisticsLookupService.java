@@ -7,12 +7,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
 
+import lk.rgd.common.api.dao.UserDAO;
 import lk.rgd.common.api.domain.CommonStatistics;
-import lk.rgd.common.api.service.StatisticsCollectorService;
+import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.service.BirthRegistrationService;
-import lk.rgd.crs.api.service.DeathAlterationService;
 import lk.rgd.crs.api.service.DeathRegistrationService;
 import lk.rgd.crs.api.service.MarriageRegistrationService;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -28,10 +32,10 @@ public class JSONStatisticsLookupService extends HttpServlet {
 
     private static final Logger logger = LoggerFactory.getLogger(JSONStatisticsLookupService.class);
     private final ObjectMapper mapper = new ObjectMapper();
-    //private StatisticsCollectorService statisticsCollectorService;
     private DeathRegistrationService deathRegistrationService;
     private BirthRegistrationService birthRegistrationService;
     private MarriageRegistrationService marriageRegistrationService;
+    private UserDAO userDAO;
     HashMap<String, Object> optionLists;
 
     @Override
@@ -42,6 +46,7 @@ public class JSONStatisticsLookupService extends HttpServlet {
         deathRegistrationService = (DeathRegistrationService) context.getBean("deathRegisterService");
         birthRegistrationService = (BirthRegistrationService) context.getBean("manageBirthService");
         marriageRegistrationService = (MarriageRegistrationService) context.getBean("marriageRegistrationService");
+        userDAO = (UserDAO) context.getBean("userDAOImpl");
     }
 
 
@@ -53,6 +58,7 @@ public class JSONStatisticsLookupService extends HttpServlet {
         String userType = request.getParameter(WebConstants.USER_TYPE);
         String statType = request.getParameter(WebConstants.STAT_TYPE);
         String deoUserId = request.getParameter(WebConstants.USER_DEO);
+        String userName = request.getParameter("userName");
         String mode = request.getParameter("mode");
 
         logger.debug("Received Division userType and statType : {} {} ", userType, statType);
@@ -62,26 +68,68 @@ public class JSONStatisticsLookupService extends HttpServlet {
         optionLists = new HashMap<String, Object>();
 
         try {
-            if (mode.equals("drStatInfo")) {
-                //cs = birthRegistrationService.getBirthStatisticsForADR(deoUserId);
-            } else if (mode.equals("adrStatInfo")) {
+            if (mode.equals("drStatInfo")) {  // DR selects ADR
+                cs = new CommonStatistics();
+                List<User> temp = new ArrayList<User>();
+                User user = userDAO.getUserByPK(userName);
 
-                cs = birthRegistrationService.getBirthStatisticsForDEO(deoUserId);
-                if (cs != null) {
+                if (user != null) {
+                    List<User> allUsers = userDAO.getUsersByRole("DEO");
+                    Set<DSDivision> set = user.getAssignedBDDSDivisions();
+
+                    for (User selected : allUsers) {
+                        for (DSDivision dsd : set) {
+                            if (selected.getAssignedBDDSDivisions().contains(dsd)) {
+                                temp.add(selected);
+                                logger.debug("User {} works in {}", selected.getUserId(), dsd.getEnDivisionName());
+                            }
+                        }
+                    }
+                    if (temp.size() > 0) {
+                        /* adding together all the birth statistics objects which belongs to 'temp' list members */
+                        for (User one : temp) {
+                            cs.add(birthRegistrationService.getBirthStatisticsForUser(one.getUserId()));
+                        }
+                        /* adding combined statistics object to response object */
+                        populateBirthStatistics(cs);
+
+                        /* same as above ... */
+                        for (User one : temp) {
+                            cs.add(deathRegistrationService.getDeathStatisticsForUser(one.getUserId()));
+                        }
+                        populateDeathStatistics(cs);
+
+                        /* same as above ... */
+                        for (User one : temp) {
+                            cs.add(marriageRegistrationService.getMarriageStatisticsForUser(one.getUserId()));
+                        }
+                        populateMarriageStatistics(cs);
+                    }
+                } else {
+                    /* if user is null, populate default(0) values */
                     populateBirthStatistics(cs);
                 }
 
-                cs = deathRegistrationService.getDeathStatisticsForDEO(deoUserId);
-                if (cs != null) {
-                    populateDeathStatistics(cs);
-                }
+            } else if (mode.equals("adrStatInfo") || mode.equals("deoStatInfo")) {  // ADR selects DEO
+                cs = new CommonStatistics();
+                
+                if (userDAO.getUserByPK(deoUserId) != null) {
+                    cs = birthRegistrationService.getBirthStatisticsForUser(deoUserId);
+                    populateBirthStatistics(cs);
 
-                cs = marriageRegistrationService.getMarriageStatisticsForDEO(deoUserId);
-                if (cs != null) {
+                    cs = deathRegistrationService.getDeathStatisticsForUser(deoUserId);
+                    populateDeathStatistics(cs);
+
+                    cs = marriageRegistrationService.getMarriageStatisticsForUser(deoUserId);
                     populateMarriageStatistics(cs);
+                } else {
+                    /* if user is null, populate default(0) values */
+                    populateBirthStatistics(cs);
                 }
 
             } else if (mode.equals("commonStatInfo")) {
+                /*cs = new CommonStatistics();
+                
                 if (userType.equals(WebConstants.USER_ADR)) {
                     if (statType.equals(WebConstants.STAT_ALL)) {
                         cs = populateBirthStatistics(WebConstants.USER_ADR);
@@ -174,7 +222,7 @@ public class JSONStatisticsLookupService extends HttpServlet {
                             populateMarriageStatistics(cs);
                         }
                     }
-                }
+                }*/
             }
 
         } catch (Exception e) {
@@ -191,7 +239,6 @@ public class JSONStatisticsLookupService extends HttpServlet {
     }
 
     public CommonStatistics populateBirthStatistics(String user) {
-        // TODO User Specific Functions
         CommonStatistics commonStat;
 
         if (user.equals(WebConstants.USER_ADR)) {
@@ -212,7 +259,6 @@ public class JSONStatisticsLookupService extends HttpServlet {
     }
 
     public CommonStatistics populateDeathStatistics(String user) {
-        // TODO User Specific Functions
         CommonStatistics commonStat;
 
         if (user.equals(WebConstants.USER_ADR)) {
@@ -232,7 +278,6 @@ public class JSONStatisticsLookupService extends HttpServlet {
     }
 
     public CommonStatistics populateMarriageStatistics(String user) {
-        // TODO User Specific Functions
         CommonStatistics commonStat;
 
         if (user.equals(WebConstants.USER_ADR)) {
@@ -252,29 +297,29 @@ public class JSONStatisticsLookupService extends HttpServlet {
     }
 
     public void populateBirthStatistics(CommonStatistics cs) {
-        optionLists.put("approved_b", /*cs.getApprovedItems()*/34);
-        optionLists.put("rejected_b", /*cs.getRejectedItems()*/9);
-        optionLists.put("this_month_b", /*cs.getThisMonthPendingItems()*/2);
-        optionLists.put("arrears_b", /*cs.getArrearsPendingItems()*/21);
-        optionLists.put("normal_b", /*cs.getNormalSubmissions()*/4);
-        optionLists.put("late_b", /*cs.getLateSubmissions()*/12);
+        optionLists.put("approved_b", cs.getApprovedItems());
+        optionLists.put("rejected_b", cs.getRejectedItems());
+        optionLists.put("this_month_b", cs.getThisMonthPendingItems());
+        optionLists.put("arrears_b", cs.getArrearsPendingItems());
+        optionLists.put("normal_b", cs.getNormalSubmissions());
+        optionLists.put("late_b", cs.getLateSubmissions());
     }
 
     public void populateDeathStatistics(CommonStatistics cs) {
-        optionLists.put("approved_d", /*cs.getApprovedItems()*/12);
-        optionLists.put("rejected_d", /*cs.getRejectedItems()*/4);
-        optionLists.put("this_month_d",/* cs.getThisMonthPendingItems()*/5);
-        optionLists.put("arrears_d", /*cs.getArrearsPendingItems()*/8);
-        optionLists.put("normal_d", /*cs.getNormalSubmissions()*/1);
-        optionLists.put("late_d", /*cs.getLateSubmissions()*/2);
+        optionLists.put("approved_d", cs.getApprovedItems());
+        optionLists.put("rejected_d", cs.getRejectedItems());
+        optionLists.put("this_month_d", cs.getThisMonthPendingItems());
+        optionLists.put("arrears_d", cs.getArrearsPendingItems());
+        optionLists.put("normal_d", cs.getNormalSubmissions());
+        optionLists.put("late_d", cs.getLateSubmissions());
     }
 
     public void populateMarriageStatistics(CommonStatistics cs) {
-        optionLists.put("approved_m", /*cs.getApprovedItems()*/21);
-        optionLists.put("rejected_m", /*cs.getRejectedItems()*/9);
-        optionLists.put("this_month_m", /*cs.getThisMonthPendingItems()*/8);
-        optionLists.put("arrears_m", /*cs.getArrearsPendingItems()*/5);
-        optionLists.put("normal_m", /*cs.getNormalSubmissions()*/4);
-        optionLists.put("late_m", /*cs.getLateSubmissions()*/2);
+        optionLists.put("approved_m", cs.getApprovedItems());
+        optionLists.put("rejected_m", cs.getRejectedItems());
+        optionLists.put("this_month_m", cs.getThisMonthPendingItems());
+        optionLists.put("arrears_m", cs.getArrearsPendingItems());
+        optionLists.put("normal_m", cs.getNormalSubmissions());
+        optionLists.put("late_m", cs.getLateSubmissions());
     }
 }

@@ -139,17 +139,19 @@
                     });
         });
 
-        $('#getDeo').bind('click', function(evt1) {
+        $('select#deoUser').bind('change', function(evt1) {
             var deo = $("select#deoUser").attr("value");
             var mode = 'adrStatInfo';
+
             $.getJSON('/ecivil/crs/StatisticsLookupService',
             {
-                deo:deo,
-                mode:mode
+                mode:mode,
+                deo:deo
             },
                     function(data) {
                         drawChart(data);
-                    });
+                    }
+                    );
         });
 
     });
@@ -213,15 +215,13 @@
     </tr>
     <tr class="e">
         <td>DEO</td>
-        <td>
+        <td colspan="3">
             <s:select
                     id="deoUser"
                     name="deoUserId"
                     list="deoList"
                     />
         </td>
-        <td><s:submit id="getDeo" cssStyle="width:100px;"/></td>
-        <td>&nbsp;</td>
     </tr>
     <%-- end --%>
     <tr>

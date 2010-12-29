@@ -102,209 +102,209 @@
 
 <div id="ADR-home-page-outer">
 
-    <script type="text/javascript">
+<script type="text/javascript">
 
-        $(function() {
-            $('select#district').bind('change', function(evt1) {
-                var id = $("select#district").attr("value");
+    $(function() {
+        $('select#district').bind('change', function(evt1) {
+            var id = $("select#district").attr("value");
 
-                $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:15},
-                        function(data) {
-                            var options1 = '';
-                            var ds = data.dsDivisionList;
-                            for (var i = 0; i < ds.length; i++) {
-                                options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
-                            }
-                            $("select#dsDivision").html(options1);
-
-                            var options2 = '';
-                            var bd = data.adrList;
-                            for (var j = 0; j < bd.length; j++) {
-                                options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
-                            }
-                            $("select#adrUser").html(options2);
-                        });
-            });
-
+            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:15},
+                    function(data) {
+                        var options2 = '';
+                        var bd = data.adrList;
+                        for (var j = 0; j < bd.length; j++) {
+                            options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
+                        }
+                        $("select#adrUser").html(options2);
+                    });
         });
 
-        $(document).ready(function() {
+        $('select#adrUser').bind('change', function(evt1) {
+            var userName = $("select#adrUser").attr("value");
             var userType = 'dr';
             var statType = 'all';
-            var mode = 'commonStatInfo';
+            var mode = 'drStatInfo';
             $.getJSON('/ecivil/crs/StatisticsLookupService',
             {
                 userType:userType,
                 statType:statType,
+                userName:userName,
                 mode:mode
             },
                     function(data) {
                         drawChart(data);
                     }
                     );
-
         });
+    });
 
-        function initPage() {
-        }
+    $(document).ready(function() {
+        var userName = $("select#adrUser").attr("value");
+        var userType = 'dr';
+        var statType = 'all';
+        var mode = 'drStatInfo';
+        $.getJSON('/ecivil/crs/StatisticsLookupService',
+        {
+            userType:userType,
+            statType:statType,
+            userName:userName,
+            mode:mode
+        },
+                function(data) {
+                    drawChart(data);
+                }
+                );
 
-    </script>
-    <div id="space"></div>
-    <table width="100%" cellpadding="0" cellspacing="0">
-        <%-- start --%>
-        <tr class="e" bgcolor="#eeeeee">
-            <th colspan="4" align="left">Custom Search</th>
-        </tr>
-        <tr class="e">
-            <td width="20%">District</td>
-            <td width="30%">
-                <s:select
-                        id="district"
-                        name="districtId"
-                        list="districtList"
-                        />
-            </td>
-            <td width="20%">DSDivision</td>
-            <td width="30%">
-                <s:select
-                        id="dsDivision"
-                        name="dsDivisionId"
-                        list="divisionList"
-                        />
-            </td>
-        </tr>
-        <tr class="e">
-            <td>Start Date</td>
-            <td>
-                <s:textfield id="sdate" name="startDate" cssStyle="width:70%;"/>
-            </td>
-            <td>End Date</td>
-            <td>
-                <s:textfield id="edate" name="endDate" cssStyle="width:70%;"/>
-            </td>
-        </tr>
-        <tr class="e">
-            <td>ADR</td>
-            <td>
-                <s:select
-                        id="adrUser"
-                        name="adrUserId"
-                        list="adrList"
-                        />
-            </td>
-            <td><s:submit cssStyle="width:100px;"/></td>
-            <td>&nbsp;</td>
-        </tr>
-        <%-- end --%>
-        <tr>
-            <td colspan="4" align="center">
-                <div class="topic">Birth Statistics</div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <table width="100%">
-                    <tr>
-                        <td class="info" width="60%">
-                            All Pending :
-                            <input type="text" id="all_pending_b" class="noStyle" readonly="true" maxlength="3"/>
-                        </td>
-                        <td class="info" width="40%">
-                            <label class="issue">
-                                Arrears :
-                                <input type="text" id="arrears_b" class="noStyle_red" readonly="true" maxlength="3"/>
-                            </label>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-            <td colspan="2" rowspan="4" class="pie">
-                <div id="chart3"></div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <div id="chart1"></div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <table width="100%">
-                    <tr>
-                        <td class="info" width="60%">
-                            Total Submitted Items :
-                            <input type="text" id="total_submitted_b" class="noStyle" readonly="true" maxlength="3"/>
-                        </td>
-                        <td class="info" width="40%">
-                            <label class="issue">
-                                Late Items :
-                                <input type="text" id="late_b" class="noStyle_red" readonly="true" maxlength="3"/>
-                            </label>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <div id="chart2"></div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="4" align="center">
-                <div class="topic">Death Statistics</div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <table width="100%">
-                    <tr>
-                        <td class="info" width="60%">All Pending : <input type="text" id="all_pending_d" class="noStyle"
-                                                                          readonly="true"
-                                                                          maxlength="3"/></td>
-                        <td class="info" width="40%"><label class="issue">Arrears : <input type="text" id="arrears_d"
-                                                                                           class="noStyle_red"
-                                                                                           readonly="true"
-                                                                                           maxlength="3"/></label></td>
-                    </tr>
-                </table>
-            </td>
-            <td colspan="2" rowspan="4" class="pie">
-                <div id="chart6"></div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <div id="chart4"></div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <table width="100%">
-                    <tr>
-                        <td class="info" width="60%">Total Submitted Items : <input type="text" id="total_submitted_d"
-                                                                                    class="noStyle"
-                                                                                    readonly="true" maxlength="3"/></td>
-                        <td class="info" width="40%"><label class="issue">Late Items : <input type="text" id="late_d"
-                                                                                              class="noStyle_red"
-                                                                                              readonly="true"
-                                                                                              maxlength="3"/></label>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <div id="chart5"></div>
-            </td>
-        </tr>
-        <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-        </tr>
-    </table>
+    });
+
+    function initPage() {
+    }
+
+</script>
+<div id="space"></div>
+<table width="100%" cellpadding="0" cellspacing="0">
+    <%-- start --%>
+    <tr class="e" bgcolor="#eeeeee">
+        <th colspan="4" align="left">Custom Search</th>
+    </tr>
+    <tr class="e">
+        <td width="20%">District</td>
+        <td width="30%">
+            <s:select
+                    id="district"
+                    name="districtId"
+                    list="districtList"
+                    />
+        </td>
+        <td>ADR</td>
+        <td>
+            <s:select
+                    id="adrUser"
+                    name="adrUserId"
+                    list="adrList"
+                    />
+        </td>
+    </tr>
+    <tr class="e">
+        <td>Start Date</td>
+        <td>
+            <s:textfield id="sdate" name="startDate" cssStyle="width:70%;"/>
+        </td>
+        <td>End Date</td>
+        <td>
+            <s:textfield id="edate" name="endDate" cssStyle="width:70%;"/>
+        </td>
+    </tr>
+    <%-- end --%>
+    <tr>
+        <td colspan="4" align="center">
+            <div class="topic">Birth Statistics</div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <table width="100%">
+                <tr>
+                    <td class="info" width="60%">
+                        All Pending :
+                        <input type="text" id="all_pending_b" class="noStyle" readonly="true" maxlength="3"/>
+                    </td>
+                    <td class="info" width="40%">
+                        <label class="issue">
+                            Arrears :
+                            <input type="text" id="arrears_b" class="noStyle_red" readonly="true" maxlength="3"/>
+                        </label>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td colspan="2" rowspan="4" class="pie">
+            <div id="chart3"></div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <div id="chart1"></div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <table width="100%">
+                <tr>
+                    <td class="info" width="60%">
+                        Total Submitted Items :
+                        <input type="text" id="total_submitted_b" class="noStyle" readonly="true" maxlength="3"/>
+                    </td>
+                    <td class="info" width="40%">
+                        <label class="issue">
+                            Late Items :
+                            <input type="text" id="late_b" class="noStyle_red" readonly="true" maxlength="3"/>
+                        </label>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <div id="chart2"></div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4" align="center">
+            <div class="topic">Death Statistics</div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <table width="100%">
+                <tr>
+                    <td class="info" width="60%">All Pending : <input type="text" id="all_pending_d" class="noStyle"
+                                                                      readonly="true"
+                                                                      maxlength="3"/></td>
+                    <td class="info" width="40%"><label class="issue">Arrears : <input type="text" id="arrears_d"
+                                                                                       class="noStyle_red"
+                                                                                       readonly="true"
+                                                                                       maxlength="3"/></label></td>
+                </tr>
+            </table>
+        </td>
+        <td colspan="2" rowspan="4" class="pie">
+            <div id="chart6"></div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <div id="chart4"></div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <table width="100%">
+                <tr>
+                    <td class="info" width="60%">Total Submitted Items : <input type="text" id="total_submitted_d"
+                                                                                class="noStyle"
+                                                                                readonly="true" maxlength="3"/></td>
+                    <td class="info" width="40%"><label class="issue">Late Items : <input type="text" id="late_d"
+                                                                                          class="noStyle_red"
+                                                                                          readonly="true"
+                                                                                          maxlength="3"/></label>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <div id="chart5"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+    </tr>
+</table>
 
 </div>

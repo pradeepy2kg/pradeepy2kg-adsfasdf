@@ -76,12 +76,12 @@
     <script type="text/javascript">
 
         $(document).ready(function() {
-            var userType = 'deo';
+            var deo = $("#deoUserId").attr("value");
             var statType = 'all';
-            var mode = 'commonStatInfo';
+            var mode = 'deoStatInfo';
             $.getJSON('/ecivil/crs/StatisticsLookupService',
             {
-                userType:userType,
+                deo:deo,
                 statType:statType,
                 mode:mode
             },
@@ -96,7 +96,7 @@
         }
 
     </script>
-
+    <s:hidden id="deoUserId" name="userName"/>
     <table border="0" width="100%">
         <tr>
             <td colspan="4" align="center">
