@@ -59,21 +59,21 @@ public class SolrIndexManager {
         }
     }
 
-    public SolrServer getBirthServer() {
+    public synchronized SolrServer getBirthServer() {
         if (birthServer == null) {
             connect();
         }
         return birthServer;
     }
 
-    public SolrServer getDeathServer() {
+    public synchronized SolrServer getDeathServer() {
         if (deathServer == null) {
             connect();
         }
         return deathServer;
     }
 
-    public SolrServer getPRSServer() {
+    public synchronized SolrServer getPRSServer() {
         if (prsServer == null) {
             connect();
         }

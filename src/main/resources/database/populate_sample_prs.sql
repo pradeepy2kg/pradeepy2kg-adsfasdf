@@ -1,19 +1,17 @@
-INSERT INTO PRS.PERSON(civilStatus, dateOfBirth, dateOfDeath, fullNameInEnglishLanguage, fullNameInOfficialLanguage, gender, lifeStatus, nic, pin, placeOfBirth, preferredLanguage, lastAddressUKey, lastMarriageUKey)
-  VALUES(NULL, '1981-07-28', NULL, 'JAYARATHNA BANDARALAGE SAMAN KUMARA JAYASINGHE', 'ජයරත්න බණ්ඩාරලාගේ සමන් කුමාර ජයසිංහ', 0, NULL, '812114132V', NULL, 'රාගම රෝහල', 'si', NULL, NULL);
-INSERT INTO PRS.PERSON(civilStatus, dateOfBirth, dateOfDeath, fullNameInEnglishLanguage, fullNameInOfficialLanguage, gender, lifeStatus, nic, pin, placeOfBirth, preferredLanguage, lastAddressUKey, lastMarriageUKey)
-  VALUES(NULL, '1985-01-01', NULL, 'KUSUMAWATHIE RAMYA JAYASINGHE', 'කුසුමාවතී රාම්‍යා ජයසිංහ', 1, NULL, '855012132V', NULL, 'මාතර', 'si', NULL, NULL);
-INSERT INTO PRS.PERSON(civilStatus, dateOfBirth, dateOfDeath, fullNameInEnglishLanguage, fullNameInOfficialLanguage, gender, lifeStatus, nic, pin, placeOfBirth, preferredLanguage, lastAddressUKey, lastMarriageUKey)
-  VALUES(NULL, '1981-03-21', NULL, 'KRISHANTHA SUBASINGHE', 'ක්‍රිෂාන්ත සුබසිංහ', 0, NULL, '813112362V', 813112362, 'මාතර', 'si', NULL, NULL);
+USE PRS;
+SET foreign_key_checks = 0;
 
-INSERT INTO PRS.ADDRESS (LINE1, CITY, PERSONUKEY) VALUES('65 C මල්වත්ත පාර','කොට්ටාව', 2)
-;
-UPDATE PRS.PERSON SET lastAddressUKey = 1 WHERE personUKey = 2
-;
-INSERT INTO PRS.ADDRESS (LINE1, CITY, PERSONUKEY) VALUES('32 වේවා පාර','කොට්ටාව', 3)
-;
-UPDATE PRS.PERSON SET lastAddressUKey = 2 WHERE personUKey = 3
-;
+INSERT INTO PRS.ADDRESS (LINE1, CITY, PERSONUKEY) VALUES('65 C මල්වත්ත පාර','කොට්ටාව', 2);
+INSERT INTO PRS.ADDRESS (LINE1, CITY, PERSONUKEY) VALUES('32 වේවා පාර','කොට්ටාව', 3);
 
+INSERT INTO MARRIAGE (dateOfMarriage, placeOfMarriage, preferredLanguage, state, typeOfMarriage, brideUKey, groomUKey) VALUES ('2009-04-18', 'කොට්ටාව', 'si', 0, 0, 2, 1);
+
+INSERT INTO PRS.PERSON(civilStatus, dateOfBirth, dateOfDeath, fullNameInEnglishLanguage, fullNameInOfficialLanguage, gender, lifeStatus, nic, pin, placeOfBirth, preferredLanguage, lastAddressUKey, lastMarriageUKey)
+  VALUES(1, '1981-07-28', NULL, 'JAYARATHNA BANDARALAGE SAMAN KUMARA JAYASINGHE', 'ජයරත්න බණ්ඩාරලාගේ සමන් කුමාර ජයසිංහ', 0, 1, '812114132V', NULL, 'රාගම රෝහල', 'si', 1, 1);
+INSERT INTO PRS.PERSON(civilStatus, dateOfBirth, dateOfDeath, fullNameInEnglishLanguage, fullNameInOfficialLanguage, gender, lifeStatus, nic, pin, placeOfBirth, preferredLanguage, lastAddressUKey, lastMarriageUKey)
+  VALUES(1, '1985-01-01', NULL, 'KUSUMAWATHIE RAMYA JAYASINGHE', 'කුසුමාවතී රාම්‍යා ජයසිංහ', 1, 1, '855012132V', NULL, 'මාතර', 'si', 1, 1);
+INSERT INTO PRS.PERSON(civilStatus, dateOfBirth, dateOfDeath, fullNameInEnglishLanguage, fullNameInOfficialLanguage, gender, lifeStatus, nic, pin, placeOfBirth, preferredLanguage, lastAddressUKey, lastMarriageUKey)
+  VALUES(NULL, '1981-03-21', NULL, 'KRISHANTHA SUBASINGHE', 'ක්‍රිෂාන්ත සුබසිංහ', 0, NULL, '813112362V', 813112362, 'මාතර', 'si', 2, NULL);
 INSERT INTO PRS.PERSON(civilStatus, dateOfBirth, dateOfDeath, fullNameInEnglishLanguage, fullNameInOfficialLanguage, gender, lifeStatus, nic, pin, placeOfBirth, preferredLanguage, lastAddressUKey, lastMarriageUKey)
   VALUES(NULL, '1970-09-30', NULL, 'SUDERE NADARAJAH', 'සුෙඩිර් නඩරාජා', 0, NULL, '702742846V', NULL, NULL, 'si', NULL, NULL);
 INSERT INTO PRS.PERSON(civilStatus, dateOfBirth, dateOfDeath, fullNameInEnglishLanguage, fullNameInOfficialLanguage, gender, lifeStatus, nic, pin, placeOfBirth, preferredLanguage, lastAddressUKey, lastMarriageUKey)
@@ -1014,3 +1012,5 @@ INSERT INTO PRS.PERSON(civilStatus, dateOfBirth, dateOfDeath, fullNameInEnglishL
   VALUES(NULL, '1980-04-22', NULL, 'MOHAMED   MUZAMIL', 'ෙමාහමඩි  මුසමිල්', 1, NULL, '806131377V', NULL, NULL, 'si', NULL, NULL);
 INSERT INTO PRS.PERSON(civilStatus, dateOfBirth, dateOfDeath, fullNameInEnglishLanguage, fullNameInOfficialLanguage, gender, lifeStatus, nic, pin, placeOfBirth, preferredLanguage, lastAddressUKey, lastMarriageUKey)
   VALUES(NULL, '1996-05-18', NULL, 'MOHAMED MUNZEER MUNZEER', 'ෙමාහමඩි මුන්සිර් මුන්සිර්', 0, NULL, '', NULL, NULL, 'si', NULL, NULL);
+
+SET foreign_key_checks = 1;
