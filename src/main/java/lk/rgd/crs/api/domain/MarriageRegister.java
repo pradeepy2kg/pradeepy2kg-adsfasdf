@@ -120,7 +120,7 @@ import java.util.Date;
         "ORDER BY mr.idUKey DESC "),
 
     @NamedQuery(name = "get.mr.by.createdUser", query = "SELECT mr FROM MarriageRegister mr " +
-        " WHERE mr.lifeCycleInfo.createdUser =:user")
+        " WHERE mr.lifeCycleInfo.createdUser =:user AND (mr.lifeCycleInfo.createdTimestamp BETWEEN :startDate AND :endDate)")
 })
 public class MarriageRegister implements Serializable, Cloneable {
     //todo add divorce related col

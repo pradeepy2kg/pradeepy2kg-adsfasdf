@@ -353,9 +353,11 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<BirthDeclaration> getByCreatedUser(User user) {
+    public List<BirthDeclaration> getByCreatedUser(User user, Date start, Date end) {
         Query q = em.createNamedQuery("get.bc.by.createdUser");
         q.setParameter("user", user);
+        q.setParameter("startDate", start);
+        q.setParameter("endDate", end);
         return q.getResultList();
     }
 

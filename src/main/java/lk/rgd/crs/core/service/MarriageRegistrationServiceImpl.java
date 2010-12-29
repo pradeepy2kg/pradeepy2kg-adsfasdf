@@ -8,6 +8,7 @@ import lk.rgd.common.api.service.UserManager;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.MarriageRegistrationDAO;
+import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.domain.MarriageNotice;
 import lk.rgd.crs.api.domain.MarriageRegister;
@@ -795,15 +796,14 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         int approved = 0;
         int rejected = 0;
 
-        List<MarriageRegister> mrList = marriageRegistrationDAO.getByCreatedUser(userManager.getUserByID(user));
-        for (MarriageRegister mr : mrList) {
-            if (mr.getState() == MarriageRegister.State.NOTICE_APPROVED) {
-                approved += 1;
-            } else if (mr.getState() == MarriageRegister.State.NOTICE_REJECTED) {
-                rejected += 1;
-            } else if (mr.getState() == MarriageRegister.State.DATA_ENTRY) {
-                data_entry += 1;
-            }
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH, -1);
+
+        int data[] = getMarriageDeclarationList(userManager.getUserByID(user), cal.getTime(), new Date());
+        if (data.length == 3) {
+            data_entry = data[0];
+            approved = data[1];
+            rejected = data[2];
         }
 
         CommonStatistics commonStat = new CommonStatistics();
@@ -812,7 +812,15 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         commonStat.setRejectedItems(/*rejected*/8);
         commonStat.setTotalPendingItems(/*data_entry*/9);
 
-        //todo call above methods using appropriate Date range
+        cal = Calendar.getInstance();
+        cal.add(Calendar.YEAR, -1);
+
+        data = getMarriageDeclarationList(userManager.getUserByID(user), cal.getTime(), new Date());
+        if (data.length == 3) {
+            data_entry = data[0];
+            approved = data[1];
+            rejected = data[2];
+        }
 
         commonStat.setArrearsPendingItems(0);
         commonStat.setLateSubmissions(0);
@@ -820,5 +828,22 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         commonStat.setThisMonthPendingItems(3);
 
         return commonStat;
+    }
+
+    private int[] getMarriageDeclarationList(User user, Date start, Date end) {
+
+        int data[] = {0, 0, 0};
+        List<MarriageRegister> mrList = marriageRegistrationDAO.getByCreatedUser(user, start, end);
+
+        for (MarriageRegister mr : mrList) {
+            if (mr.getState() == MarriageRegister.State.NOTICE_APPROVED) {
+                data[0] += 1;
+            } else if (mr.getState() == MarriageRegister.State.NOTICE_REJECTED) {
+                data[1] += 1;
+            } else if (mr.getState() == MarriageRegister.State.DATA_ENTRY) {
+                data[2] += 1;
+            }
+        }
+        return data;
     }
 }

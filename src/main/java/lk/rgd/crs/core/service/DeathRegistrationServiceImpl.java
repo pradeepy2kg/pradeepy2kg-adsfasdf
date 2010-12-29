@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -487,15 +488,14 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         int approved = 0;
         int rejected = 0;
 
-        List<DeathRegister> deathList = deathRegisterDAO.getByCreatedUser(userManager.getUserByID(user));
-        for (DeathRegister dr : deathList) {
-            if (dr.getStatus() == DeathRegister.State.APPROVED) {
-                approved += 1;
-            } else if (dr.getStatus() == DeathRegister.State.REJECTED) {
-                rejected += 1;
-            } else if (dr.getStatus() == DeathRegister.State.DATA_ENTRY) {
-                data_entry += 1;
-            }
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH, -1);
+
+        int data[] = getDeathDeclarationList(userManager.getUserByID(user), cal.getTime(), new Date());
+        if (data.length == 3) {
+            data_entry = data[0];
+            approved = data[1];
+            rejected = data[2];
         }
 
         CommonStatistics commonStat = new CommonStatistics();
@@ -504,7 +504,15 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         commonStat.setRejectedItems(/*rejected*/8);
         commonStat.setTotalPendingItems(/*data_entry*/9);
 
-        //todo call above methods using appropriate Date range
+        cal = Calendar.getInstance();
+        cal.add(Calendar.YEAR, -5);
+        
+        data = getDeathDeclarationList(userManager.getUserByID(user), cal.getTime(), new Date());
+        if (data.length == 3) {
+            data_entry = data[0];
+            approved = data[1];
+            rejected = data[2];
+        }
 
         commonStat.setArrearsPendingItems(0);
         commonStat.setLateSubmissions(0);
@@ -512,5 +520,22 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         commonStat.setThisMonthPendingItems(3);
 
         return commonStat;
+    }
+
+    private int[] getDeathDeclarationList(User user, Date start, Date end) {
+
+        int data[] = {0, 0, 0};
+        List<DeathRegister> deathList = deathRegisterDAO.getByCreatedUser(user, start, end);
+        
+        for (DeathRegister dr : deathList) {
+            if (dr.getStatus() == DeathRegister.State.APPROVED) {
+                data[0] += 1;
+            } else if (dr.getStatus() == DeathRegister.State.REJECTED) {
+                data[1] += 1;
+            } else if (dr.getStatus() == DeathRegister.State.DATA_ENTRY) {
+                data[2] += 1;
+            }
+        }
+        return data;
     }
 }

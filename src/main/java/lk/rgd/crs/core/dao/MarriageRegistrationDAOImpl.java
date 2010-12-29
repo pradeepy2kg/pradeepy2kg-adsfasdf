@@ -307,9 +307,11 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<MarriageRegister> getByCreatedUser(User user) {
+    public List<MarriageRegister> getByCreatedUser(User user, Date start, Date end) {
         Query q = em.createNamedQuery("get.mr.by.createdUser");
         q.setParameter("user", user);
+        q.setParameter("startDate", start);
+        q.setParameter("endDate", end);
         return q.getResultList();
     }
 }

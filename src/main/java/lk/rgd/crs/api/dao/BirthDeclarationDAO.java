@@ -307,8 +307,9 @@ public interface BirthDeclarationDAO {
      * Returns all Birth Declaration records which are created by given User
      *
      * @param user  created user
-     * @return list of birth declarations
+     * @param start
+     *@param end @return list of birth declarations
      */
-    public List<BirthDeclaration> getByCreatedUser(User user);
+    public List<BirthDeclaration> getByCreatedUser(User user, Date start, Date end);
 }
 

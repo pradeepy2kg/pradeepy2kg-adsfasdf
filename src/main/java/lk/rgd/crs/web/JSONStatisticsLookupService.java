@@ -12,9 +12,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
+import lk.rgd.common.api.dao.DSDivisionDAO;
+import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.UserDAO;
 import lk.rgd.common.api.domain.CommonStatistics;
 import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.api.service.DeathRegistrationService;
@@ -36,6 +39,8 @@ public class JSONStatisticsLookupService extends HttpServlet {
     private BirthRegistrationService birthRegistrationService;
     private MarriageRegistrationService marriageRegistrationService;
     private UserDAO userDAO;
+    private DistrictDAO districtDAO;
+    private DSDivisionDAO dsDivisionDAO;
     HashMap<String, Object> optionLists;
 
     @Override
@@ -47,8 +52,9 @@ public class JSONStatisticsLookupService extends HttpServlet {
         birthRegistrationService = (BirthRegistrationService) context.getBean("manageBirthService");
         marriageRegistrationService = (MarriageRegistrationService) context.getBean("marriageRegistrationService");
         userDAO = (UserDAO) context.getBean("userDAOImpl");
+        dsDivisionDAO = (DSDivisionDAO) context.getBean("dsDivisionDAOImpl");
+        districtDAO = (DistrictDAO) context.getBean("districtDAOImpl");
     }
-
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
@@ -60,16 +66,20 @@ public class JSONStatisticsLookupService extends HttpServlet {
         String deoUserId = request.getParameter(WebConstants.USER_DEO);
         String userName = request.getParameter("userName");
         String mode = request.getParameter("mode");
+        String districtId = request.getParameter("districtId");
+        String dsDivisionId = request.getParameter("dsDivisionId");
 
         logger.debug("Received Division userType and statType : {} {} ", userType, statType);
         logger.debug("Received Division mode and user id : {} {}", mode, deoUserId);
 
-        CommonStatistics cs;
         optionLists = new HashMap<String, Object>();
 
         try {
             if (mode.equals("drStatInfo")) {  // DR selects ADR
-                cs = new CommonStatistics();
+                CommonStatistics cs_b = new CommonStatistics();
+                CommonStatistics cs_d = new CommonStatistics();
+                CommonStatistics cs_m = new CommonStatistics();
+                CommonStatistics cs = new CommonStatistics();    // default
                 List<User> temp = new ArrayList<User>();
                 User user = userDAO.getUserByPK(userName);
 
@@ -81,29 +91,20 @@ public class JSONStatisticsLookupService extends HttpServlet {
                         for (DSDivision dsd : set) {
                             if (selected.getAssignedBDDSDivisions().contains(dsd)) {
                                 temp.add(selected);
-                                logger.debug("User {} works in {}", selected.getUserId(), dsd.getEnDivisionName());
                             }
                         }
                     }
                     if (temp.size() > 0) {
                         /* adding together all the birth statistics objects which belongs to 'temp' list members */
                         for (User one : temp) {
-                            cs.add(birthRegistrationService.getBirthStatisticsForUser(one.getUserId()));
+                            cs_b.add(birthRegistrationService.getBirthStatisticsForUser(one.getUserId()));
+                            cs_d.add(deathRegistrationService.getDeathStatisticsForUser(one.getUserId()));
+                            cs_m.add(marriageRegistrationService.getMarriageStatisticsForUser(one.getUserId()));
                         }
                         /* adding combined statistics object to response object */
-                        populateBirthStatistics(cs);
-
-                        /* same as above ... */
-                        for (User one : temp) {
-                            cs.add(deathRegistrationService.getDeathStatisticsForUser(one.getUserId()));
-                        }
-                        populateDeathStatistics(cs);
-
-                        /* same as above ... */
-                        for (User one : temp) {
-                            cs.add(marriageRegistrationService.getMarriageStatisticsForUser(one.getUserId()));
-                        }
-                        populateMarriageStatistics(cs);
+                        populateBirthStatistics(cs_b);
+                        populateDeathStatistics(cs_d);
+                        populateMarriageStatistics(cs_m);
                     }
                 } else {
                     /* if user is null, populate default(0) values */
@@ -111,8 +112,8 @@ public class JSONStatisticsLookupService extends HttpServlet {
                 }
 
             } else if (mode.equals("adrStatInfo") || mode.equals("deoStatInfo")) {  // ADR selects DEO
-                cs = new CommonStatistics();
-                
+                CommonStatistics cs = new CommonStatistics();
+
                 if (userDAO.getUserByPK(deoUserId) != null) {
                     cs = birthRegistrationService.getBirthStatisticsForUser(deoUserId);
                     populateBirthStatistics(cs);
@@ -127,9 +128,65 @@ public class JSONStatisticsLookupService extends HttpServlet {
                     populateBirthStatistics(cs);
                 }
 
+            } else if (mode.equals("rgStatInfo") || mode.equals("argStatInfo")) { // RG selects District or DsDivision
+
+                logger.debug("District = {} DSDivision = {}", districtId, dsDivisionId);
+                CommonStatistics cs_b = new CommonStatistics();
+                CommonStatistics cs_d = new CommonStatistics();
+                CommonStatistics cs_m = new CommonStatistics();
+                CommonStatistics cs = new CommonStatistics();
+                List<User> allUsers = userDAO.getUsersByRole("DEO");
+                List<User> temp = new ArrayList<User>();
+
+                if (districtId != null) {
+                    District district = districtDAO.getDistrict(Integer.parseInt(districtId));
+                    for (User user : allUsers) {
+                        if (user.getAssignedBDDistricts().contains(district)) {
+                            temp.add(user);
+                        }
+                    }
+                    if (temp.size() > 0) {
+                        /* adding together all the birth statistics objects which belongs to 'temp' list members */
+                        for (User user : temp) {
+                            cs_b.add(birthRegistrationService.getBirthStatisticsForUser(user.getUserId()));
+                            cs_d.add(deathRegistrationService.getDeathStatisticsForUser(user.getUserId()));
+                            cs_m.add(marriageRegistrationService.getMarriageStatisticsForUser(user.getUserId()));
+                        }
+                        /* adding combined statistics object to response object */
+                        populateBirthStatistics(cs_b);
+                        populateDeathStatistics(cs_d);
+                        populateMarriageStatistics(cs_m);
+                    }
+                } else if (dsDivisionId != null) {
+                    DSDivision dsDivision = dsDivisionDAO.getDSDivisionByPK(Integer.parseInt(dsDivisionId));
+                    for (User user : allUsers) {
+                        if (user.getAssignedBDDSDivisions().contains(dsDivision)) {
+                            temp.add(user);
+                        }
+                    }
+                    if (temp.size() > 0) {
+                        /* adding together all the birth statistics objects which belongs to 'temp' list members */
+                        for (User user : temp) {
+                            cs_b.add(birthRegistrationService.getBirthStatisticsForUser(user.getUserId()));
+                            cs_d.add(deathRegistrationService.getDeathStatisticsForUser(user.getUserId()));
+                            cs_m.add(marriageRegistrationService.getMarriageStatisticsForUser(user.getUserId()));
+                        }
+                        /* adding combined statistics object to response object */
+                        populateBirthStatistics(cs_b);
+                        populateDeathStatistics(cs_d);
+                        populateMarriageStatistics(cs_m);
+                    }
+
+                } else {
+                    /* if user is null, populate default(0) values */
+                    populateBirthStatistics(cs);
+                }
+
+                logger.debug("temp.size = {}", temp.size());
+
             } else if (mode.equals("commonStatInfo")) {
-                /*cs = new CommonStatistics();
-                
+                /*CommonStatistics cs = new CommonStatistics();
+
                 if (userType.equals(WebConstants.USER_ADR)) {
                     if (statType.equals(WebConstants.STAT_ALL)) {
                         cs = populateBirthStatistics(WebConstants.USER_ADR);
@@ -238,7 +295,7 @@ public class JSONStatisticsLookupService extends HttpServlet {
 
     }
 
-    public CommonStatistics populateBirthStatistics(String user) {
+    /*public CommonStatistics populateBirthStatistics(String user) {
         CommonStatistics commonStat;
 
         if (user.equals(WebConstants.USER_ADR)) {
@@ -294,7 +351,7 @@ public class JSONStatisticsLookupService extends HttpServlet {
             commonStat = new CommonStatistics();
         }
         return commonStat;
-    }
+    }*/
 
     public void populateBirthStatistics(CommonStatistics cs) {
         optionLists.put("approved_b", cs.getApprovedItems());
