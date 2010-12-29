@@ -2,6 +2,7 @@ package lk.rgd.crs.api.domain;
 
 import lk.rgd.common.api.domain.Country;
 import lk.rgd.common.api.domain.Race;
+import lk.rgd.common.util.WebUtils;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -74,7 +75,7 @@ public class FatherInfo {
     }
 
     public void setFatherNICorPIN(String fatherNICorPIN) {
-        this.fatherNICorPIN = fatherNICorPIN;
+        this.fatherNICorPIN = WebUtils.filterBlanks(fatherNICorPIN);
     }
 
     public String getFatherPassportNo() {
@@ -82,7 +83,7 @@ public class FatherInfo {
     }
 
     public void setFatherPassportNo(String fatherPassportNo) {
-        this.fatherPassportNo = fatherPassportNo;
+        this.fatherPassportNo = WebUtils.filterBlanks(fatherPassportNo);
     }
 
     public Country getFatherCountry() {
@@ -98,7 +99,7 @@ public class FatherInfo {
     }
 
     public void setFatherCountryPrint(String fatherCountryPrint) {
-        this.fatherCountryPrint = fatherCountryPrint;
+        this.fatherCountryPrint = WebUtils.filterBlanks(fatherCountryPrint);
     }
 
     public String getFatherFullName() {
@@ -106,7 +107,7 @@ public class FatherInfo {
     }
 
     public void setFatherFullName(String fatherFullName) {
-        this.fatherFullName = fatherFullName;
+        this.fatherFullName = WebUtils.filterBlanks(fatherFullName);
     }
 
     public Date getFatherDOB() {
@@ -122,7 +123,7 @@ public class FatherInfo {
     }
 
     public void setFatherPlaceOfBirth(String fatherPlaceOfBirth) {
-        this.fatherPlaceOfBirth = fatherPlaceOfBirth;
+        this.fatherPlaceOfBirth = WebUtils.filterBlanks(fatherPlaceOfBirth);
     }
 
     public Race getFatherRace() {
@@ -138,6 +139,6 @@ public class FatherInfo {
     }
 
     public void setFatherRacePrint(String fatherRacePrint) {
-        this.fatherRacePrint = fatherRacePrint;
+        this.fatherRacePrint = WebUtils.filterBlanks(fatherRacePrint);
     }
 }

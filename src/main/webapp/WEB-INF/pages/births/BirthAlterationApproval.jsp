@@ -1,20 +1,7 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="lk.rgd.common.util.GenderUtil" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <script type="text/javascript">
-    /*$(function() {
-     $('#selectAll').click(function() {
-     var element = document.getElementById("selectAll").checked;
-     if (element) {
-     var birthAlterationApprovalList = document.getElementsByName("birthAlterationApprovalList");
-     *//* for(var i=0 ;i<birthAlterationApprovalList.length;i++){
-
-     }*//*
-     var ind= document.getElementsByName("index");
-     13.checked=true;
-     }
-     })
-     })*/
     function checkAll(field) {
         if (document.getElementById("selectAll").checked) {
             for (i = 0; i < field.length; i++) {
@@ -27,103 +14,95 @@
         }
     }
     function initPage() {
-        /* var index = document.getElementsByName("indexCheck");
-         index= index[0].value ;
-         var counter = 0;
-         for (var i = 0; i < index.length; i++) {
-         if (index.charAt(i) == ",")
-         counter++;
-         }
-         for (var i = 0; i < counter; i++) {
-         var check=index.substring(0,index.indexOf(','));
-         if (check!=0) {
-         alert(check);
-         document.getElementById(check).checked = true;
-         }
-         alert(index.length)
-         index=index.substring(index.indexOf(',')+1,index.length);
-         alert(index);
-         }
-         */
     }
+</script>--%>
+<%@ page import="lk.rgd.common.util.DateTimeUtils" %>
+<%@ page import="java.util.Date" %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<style type="text/css">
+    #alteration-print-letter-outer table tr td {
+        padding: 0 5px;
+    }
+
+    @media print {
+        .form-submit {
+            display: none;
+        }
+    }
+
+    #alteration-print-letter-outer .form-submit {
+        margin: 5px 0 15px 0;
+    }
+</style>
+<script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
+
+<script type="text/javascript">
+    function initPage() {
+    }
+
+    function warning() {
+        var ret = true;
+        ret = confirm(document.getElementById('confirmation').value)
+        return ret;
+    }
+
 </script>
-<s:if test="(birthAlterationApprovalList.size() !=0)">
-    <div id="alteration-approval-list-outer">
-    <fieldset style="border:none">
-    <s:form action="eprApproveBirthAlteration.do" method="post" name="alterationApproval">
-        <table class="alteration-approval-list-table" width="100%" cellpadding="0" cellspacing="0">
-            <tr>
-                <td style="width:15%;font-size:10pt;text-align:center;" >
-                    Heading <br>
-                    தலைப்பு <br>
-                    ශීර්ෂය
-                </td>
-                <td style="width:35%;font-size:10pt; text-align:center;">
-                    Existing Entry <br>
-                    உள்ள பதிவுக் குறிப்பு <br>
-                    තිබෙන සටහන
-                </td>
-                <td style="width:35%;font-size:10pt; text-align:center;">
-                    Requested Entry <br>
-                    வேண்டப்பட்ட பதிவுக் குறிப்பு <br>
-                    ඉල්ලුම් කර ඇති සටහන
-                </td>
-                <td style="width:15%;font-size:10pt; text-align:center;">
-                    Approval Status <br>
-                    அனுமதி வழங்கல் <br>
-                    අනුමත කිරීම
-                </td>
-            </tr>
-            <s:iterator status="approvalStatus" value="birthAlterationApprovalList" id="approvalList">
-                <tr>
 
-                    <td style="padding-left:5px;font-size:8pt">
-                        <s:property
-                                value="%{getText(sectionOfAct+'.'+birthAlterationApprovalList[#approvalStatus.index][0]+'.label')}"/></td>
-                    <td style="padding-left:25px;"><s:property
-                            value="birthAlterationApprovalList[#approvalStatus.index][1]"/></td>
-                    <td style="padding-left:25px;"><s:property
-                            value="birthAlterationApprovalList[#approvalStatus.index][2]"/></td>
-                    <td style="text-align:center;">
-                        <s:checkbox name="index"
-                                    value="%{#index}"
-                                    fieldValue="%{birthAlterationApprovalList[#approvalStatus.index][0]}"
-                                    id="%{birthAlterationApprovalList[#approvalStatus.index][0]}"/>
+<div id="alteration-print-letter-outer">
+    <table border="1"
+           style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:10px 0;font-size:10pt">
 
-                    </td>
-                </tr>
-            </s:iterator>
-        </table>
-        </fieldset>
-        </div>
-        <s:hidden name="sectionOfAct"/>
-        <s:hidden name="numberOfAppPending"/>
-        <s:hidden name="idUKey"/>
-        <div style="width:20%;float:left;margin-left:25px;margin-top:20px;">
-            <s:label value="%{getText('select_all.label')}"/>
-            <s:checkbox id="selectAll" name="selectAll" onClick="checkAll(document.alterationApproval.index)"/>
-        </div>
-        <div class="form-submit">
-            <s:submit value="%{getText('save.label')}" cssStyle="margin-top:10px;margin-right:25px"/>
-        </div>
-    </s:form>
-</s:if>
-<s:else>
-    <table align="center" style="width:50%">
+        <col width="200px"/>
+        <col width="390px"/>
+        <col width="390px"/>
+        <col width="50px"/>
+        <tbody>
         <tr>
-            <td style="width:60%">
-                <s:label value="%{getText('no.changes.found')}"/>
+            <td>
+            </td>
+            <td>සහතිකයේ පැවති දත්තය<br>in tamilு <br> Before change</td>
+            <td>සිදුකල වෙනස්කම<br>செய்யப்பட்ட திருத்தம் <br>Alteration</td>
+            <td>අනුමැතිය<br> அனுமதி <br> Approve</td>
+        </tr>
+
+        <s:form action="eprApproveAndApplyBirthAlteration" method="post" onsubmit="javascript:return warning()">
+        <s:iterator value="changesList">
+        <tr>
+            <td>
+                <s:label value="%{getText('label.'+fieldConstant)}"/>
             </td>
             <td>
-                <s:form action="eprBirthAlterationPendingApproval.do" method="post">
-                    <div class="form-submit">
-                        <s:submit value="%{getText('previous.label')}" cssStyle="margin-top:10px;margin-right:25px"/>
-                    </div>
-                </s:form>
+                    <s:label value="%{existingValue}"/>
+            <td>
+                <s:label value="%{alterationValue}"/>
             </td>
+            <td align="center">
+                <s:checkbox name="approvedIndex" fieldValue="%{fieldConstant}"/>
+            </td>
+
         </tr>
+        </s:iterator>
     </table>
-</s:else>
-<s:hidden name="indexCheck"/>
-<s:hidden name="birthAlterationApprovalList"/>
+
+    <table>
+        <caption/>
+        <col>
+        <col>
+        <tbody>
+        <tr>
+            <td width="1000px" align="right"><s:label value="%{getText('label.apply.changes')}"/></td>
+            <td align="right"><s:checkbox id="applyChanges" name="applyChanges"/></td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="form-submit">
+        <s:submit name="submit" value="%{getText('lable.update')}"/>
+        <s:hidden name="idUKey" value="%{birthAlteration.idUKey}"/>
+    </div>
+    </s:form>
+</div>
+<s:hidden id="confirmation" value="%{getText('confirm.apply.changes')}"/>
+
+
 

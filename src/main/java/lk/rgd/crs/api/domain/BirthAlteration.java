@@ -1,6 +1,8 @@
 package lk.rgd.crs.api.domain;
 
 import lk.rgd.common.api.domain.Location;
+import lk.rgd.common.util.WebUtils;
+import lk.rgd.crs.web.WebConstants;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -271,7 +273,7 @@ public class BirthAlteration {
     }
 
     public void setComments(String comments) {
-        this.comments = comments;
+        this.comments = WebUtils.filterBlanks(comments);
     }
 
     public String getOtherDocuments() {
