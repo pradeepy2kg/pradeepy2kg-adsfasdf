@@ -425,7 +425,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
      * printing confirmation letter to declarent who requested changes
      */
     public String printAlterationLetter() {
-        //todo check the state before load page to print
+        //todo check the state before load page to print       todo what is BA is null ? handle that error
         logger.debug("generating printing letter for death alteration id : {}", deathAlterationId);
         //loading requested alterations
         deathAlteration = deathAlterationService.getByIDUKey(deathAlterationId, user);

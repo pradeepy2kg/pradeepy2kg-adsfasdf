@@ -515,7 +515,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
         }
     }
 </script>
-<s:if test="pageType==1">
+
 <div id="birth-alteration-outer">
 <s:if test="%{!editMode}">
     <s:url value="eprBirthAlteration.do" id="alteration"/>
@@ -670,33 +670,33 @@ function validateBirthYear(domElement, errorText, errorCode) {
 </div>
 <s:if test="alterationType.ordinal()==0">
     <s:hidden name=" birthDivisionId"/>
-    <div id="actNumber1" style="margin-top:10px">
-        <table class="birth-alteration-table-style02" style="width:100%" cellpadding="0" cellspacing="0">
-            <caption></caption>
-            <col width="250px"/>
-            <col width="760px"/>
-            <tbody>
-            <tr>
-                <td>
-                    නම රාජ්‍ය භාෂාවෙන්
-                    (සිංහල / දෙමළ)
-                    <br>பெயர் அரச கரும மொழியில் (சிங்களம் / தமிழ்)
-                    <br>Name in any of the official languages (Sinhala / Tamil)
-                </td>
-                <td><s:textarea name="birthAlteration.alt27.childFullNameOfficialLang"
-                                id="nameInOfficialLanguages"/></td>
-            </tr>
-            <tr>
-                <td>
-                    නම ඉංග්‍රීසි භාෂාවෙන්
-                    <br>பெயர் ஆங்கில மொழியில்
-                    <br>Name in English
-                </td>
-                <td><s:textarea name="birthAlteration.alt27.childFullNameEnglish" id="nameInEnglish"/></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+<div id="actNumber1" style="margin-top:10px">
+    <table class="birth-alteration-table-style02" style="width:100%" cellpadding="0" cellspacing="0">
+        <caption></caption>
+        <col width="250px"/>
+        <col width="760px"/>
+        <tbody>
+        <tr>
+            <td>
+                නම රාජ්‍ය භාෂාවෙන්
+                (සිංහල / දෙමළ)
+                <br>பெயர் அரச கரும மொழியில் (சிங்களம் / தமிழ்)
+                <br>Name in any of the official languages (Sinhala / Tamil)
+            </td>
+            <td><s:textarea name="birthAlteration.alt27.childFullNameOfficialLang"
+                            id="nameInOfficialLanguages"/></td>
+        </tr>
+        <tr>
+            <td>
+                නම ඉංග්‍රීසි භාෂාවෙන්
+                <br>பெயர் ஆங்கில மொழியில்
+                <br>Name in English
+            </td>
+            <td><s:textarea name="birthAlteration.alt27.childFullNameEnglish" id="nameInEnglish"/></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </s:if>
 <s:if test="alterationType.ordinal()!=1 && alterationType.ordinal()!=0 ">
 <div id="actNumber2">
@@ -1356,62 +1356,62 @@ function validateBirthYear(domElement, errorText, errorCode) {
     <%--
     <s:if test="(sectionOfAct != 1)">
     --%>
-    <div id="actNumber4">
-        <table class="birth-alteration-table-style02" style=" margin-top:20px;width:100%;" cellpadding="0"
-               cellspacing="0">
-            <tr>
-                <td colspan="8" style="text-align:center;font-size:12pt;width:90%;border-right:none">
-                    දෝෂය හා එය සිදුවූ අන්දම පිලිබඳ ලුහුඬු විස්තර
-                    <br>தவறு மற்றும் அவை நிகழ்ந்த விதம் பற்றிய விரிவான விபரங்கள்
-                    <br>Nature of the error and a brief explanation of how the error occurred
-                </td>
-                <td style="border-right:none"></td>
-                <td></td>
-            </tr>
-        </table>
-        <div id="error-explanation-info">
-            <table class="birth-alteration-table-style02" style=" margin-top:0px;width:100%;border-top:none;"
-                   cellpadding="0"
-                   cellspacing="0">
-                <tr>
-                    <td>
-                        <s:textarea name="birthAlteration.comments" cssStyle="height:100px;"/>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
+<div id="actNumber4">
     <table class="birth-alteration-table-style02" style=" margin-top:20px;width:100%;" cellpadding="0"
            cellspacing="0">
         <tr>
-            <td colspan="2" style="text-align:center;font-size:12pt">
-                ප්‍රකාශය සනාත කිරීමට ඇති ලේඛනගත හෝ වෙනත් සාක්ෂිවල ස්වභාවය
-                <br>பிரதிக்கினையினை உறுதிப்படுத்துவதற்கு போதுமான ஆவணங்கள் அல்லது வேறு சாட்சிகளின் தன்மைகள்
-                <br>Nature of documentary or other evidence in support of the declaration
+            <td colspan="8" style="text-align:center;font-size:12pt;width:90%;border-right:none">
+                දෝෂය හා එය සිදුවූ අන්දම පිලිබඳ ලුහුඬු විස්තර
+                <br>தவறு மற்றும் அவை நிகழ்ந்த விதம் பற்றிய விரிவான விபரங்கள்
+                <br>Nature of the error and a brief explanation of how the error occurred
             </td>
-        </tr>
-        <tr>
-            <td style="width:5%"><s:checkbox name="birthAlteration.bcOfFather"/></td>
-            <td style="width:90%"><s:label
-                    value=" පියාගේ උප්පැන්න සහතිකය  / தகப்பனின் பிறப்புச் சான்றிதழ் / Fathers Birth Certificate"
-                    cssStyle="margin-left:5px;"/></td>
-        </tr>
-        <tr>
-            <td style="width:5%"><s:checkbox name="birthAlteration.bcOfMother"/></td>
-            <td style="width:90%"><s:label
-                    value="මවගේ උප්පැන්න සහතිකය / தாயின் பிறப்புச் சான்றிதழ் / Mothers Birth Certificate"
-                    cssStyle="margin-left:5px;"/></td>
-        </tr>
-        <tr>
-            <td style="width:5%"><s:checkbox name="birthAlteration.mcOfParents"/></td>
-            <td style="width:90%"><s:label
-                    value=" මව්පියන්ගේ විවාහ සහතිකය / பொற்றோரின் திருமணச் சான்றிதழ் / Parents Marriage Certificate"
-                    cssStyle="margin-left:5px;"/></td>
-        </tr>
-        <tr>
-            <td colspan="2"><s:textarea name="birthAlteration.otherDocuments"/></td>
+            <td style="border-right:none"></td>
+            <td></td>
         </tr>
     </table>
+    <div id="error-explanation-info">
+        <table class="birth-alteration-table-style02" style=" margin-top:0px;width:100%;border-top:none;"
+               cellpadding="0"
+               cellspacing="0">
+            <tr>
+                <td>
+                    <s:textarea name="birthAlteration.comments" cssStyle="height:100px;"/>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<table class="birth-alteration-table-style02" style=" margin-top:20px;width:100%;" cellpadding="0"
+       cellspacing="0">
+    <tr>
+        <td colspan="2" style="text-align:center;font-size:12pt">
+            ප්‍රකාශය සනාත කිරීමට ඇති ලේඛනගත හෝ වෙනත් සාක්ෂිවල ස්වභාවය
+            <br>பிரதிக்கினையினை உறுதிப்படுத்துவதற்கு போதுமான ஆவணங்கள் அல்லது வேறு சாட்சிகளின் தன்மைகள்
+            <br>Nature of documentary or other evidence in support of the declaration
+        </td>
+    </tr>
+    <tr>
+        <td style="width:5%"><s:checkbox name="birthAlteration.bcOfFather"/></td>
+        <td style="width:90%"><s:label
+                value=" පියාගේ උප්පැන්න සහතිකය  / தகப்பனின் பிறப்புச் சான்றிதழ் / Fathers Birth Certificate"
+                cssStyle="margin-left:5px;"/></td>
+    </tr>
+    <tr>
+        <td style="width:5%"><s:checkbox name="birthAlteration.bcOfMother"/></td>
+        <td style="width:90%"><s:label
+                value="මවගේ උප්පැන්න සහතිකය / தாயின் பிறப்புச் சான்றிதழ் / Mothers Birth Certificate"
+                cssStyle="margin-left:5px;"/></td>
+    </tr>
+    <tr>
+        <td style="width:5%"><s:checkbox name="birthAlteration.mcOfParents"/></td>
+        <td style="width:90%"><s:label
+                value=" මව්පියන්ගේ විවාහ සහතිකය / பொற்றோரின் திருமணச் சான்றிதழ் / Parents Marriage Certificate"
+                cssStyle="margin-left:5px;"/></td>
+    </tr>
+    <tr>
+        <td colspan="2"><s:textarea name="birthAlteration.otherDocuments"/></td>
+    </tr>
+</table>
 </s:if>
 <table class="birth-alteration-table-style02" style=" margin-top:20px;width:100%;" cellpadding="0" cellspacing="0">
     <caption></caption>
@@ -1505,13 +1505,12 @@ function validateBirthYear(domElement, errorText, errorCode) {
 </table>
 
 
-<s:hidden name="idUKey"/>
-<s:hidden name="sectionOfAct"/>
+    <s:hidden name="idUKey"/>
+    <s:hidden name="sectionOfAct"/>
 <div class="form-submit">
-<s:submit value="%{getText('save.label')}"/>
-</s:form>
+    <s:submit value="%{getText('save.label')}"/>
+    </s:form>
 </div>
-</s:if>
 <%--common errors--%>
 <s:hidden id="comError1" value="%{getText('p1.invalide.inputType')}"/>
 <s:hidden id="comError2" value="%{getText('p1.serial.text')}"/>

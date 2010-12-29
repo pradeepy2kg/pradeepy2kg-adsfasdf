@@ -1,5 +1,7 @@
 package lk.rgd.crs.api.domain;
 
+import lk.rgd.common.util.WebUtils;
+
 import javax.persistence.*;
 import java.util.BitSet;
 
@@ -24,7 +26,7 @@ public class Alteration27 {
     }
 
     public void setChildFullNameOfficialLang(String childFullNameOfficialLang) {
-        this.childFullNameOfficialLang = childFullNameOfficialLang;
+        this.childFullNameOfficialLang = WebUtils.filterBlanks(childFullNameOfficialLang);
     }
 
     public String getChildFullNameEnglish() {
@@ -32,6 +34,6 @@ public class Alteration27 {
     }
 
     public void setChildFullNameEnglish(String childFullNameEnglish) {
-        this.childFullNameEnglish = childFullNameEnglish;
+        this.childFullNameEnglish = WebUtils.filterBlanks(childFullNameEnglish);
     }
 }

@@ -1,5 +1,7 @@
 package lk.rgd.crs.api.domain;
 
+import lk.rgd.common.util.WebUtils;
+
 import javax.persistence.Column;
 
 /**
@@ -27,7 +29,7 @@ public class AlterationInformatInfo {
     }
 
     public void setInformantName(String informantName) {
-        this.informantName = informantName;
+        this.informantName = WebUtils.filterBlanks(informantName);
     }
 
     public String getInformantNICorPIN() {
@@ -35,7 +37,7 @@ public class AlterationInformatInfo {
     }
 
     public void setInformantNICorPIN(String informantNICorPIN) {
-        this.informantNICorPIN = informantNICorPIN;
+        this.informantNICorPIN = WebUtils.filterBlanks(informantNICorPIN);
     }
 
     public String getInformantAddress() {
@@ -43,7 +45,7 @@ public class AlterationInformatInfo {
     }
 
     public void setInformantAddress(String informantAddress) {
-        this.informantAddress = informantAddress;
+        this.informantAddress = WebUtils.filterBlanks(informantAddress);
     }
 
     @Column(nullable = true)

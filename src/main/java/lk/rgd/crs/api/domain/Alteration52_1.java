@@ -1,5 +1,7 @@
 package lk.rgd.crs.api.domain;
 
+import lk.rgd.common.util.WebUtils;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.BitSet;
@@ -12,28 +14,26 @@ import java.util.BitSet;
 @Embeddable
 public class Alteration52_1 {
 
-    public static final int DATE_OF_BIRTH = 0;
-    public static final int PLACE_OF_BIRTH = 1;
-    public static final int PLACE_OF_BIRTH_ENGLISH = 2;
-    public static final int BIRTH_DIVISION = 3;
-    public static final int GENDER = 4;
+    public static final int DATE_OF_BIRTH = 21;
+    public static final int PLACE_OF_BIRTH = 22;
+    public static final int PLACE_OF_BIRTH_ENGLISH = 23;
+    public static final int BIRTH_DIVISION = 24;
+    public static final int GENDER = 25;
 
-    public static final int MOTHER_FULLNAME = 5;
-    public static final int MOTHER_NIC_OR_PIN = 6;
-    public static final int MOTHER_BIRTH_DATE = 7;
-    public static final int MOTHER_BIRTH_PLACE = 8;
-    public static final int MOTHER_COUNTRY = 9;
-    public static final int MOTHER_PASSPORT = 10;
-    public static final int MOTHER_RACE = 11;
-    public static final int MOTHER_AGE_AT_BIRTH = 12;
-    public static final int MOTHER_ADDRESS = 13;
+    public static final int MOTHER_FULLNAME = 26;
+    public static final int MOTHER_NIC_OR_PIN = 27;
+    public static final int MOTHER_BIRTH_DATE = 27;
+    public static final int MOTHER_BIRTH_PLACE = 29;
+    public static final int MOTHER_COUNTRY = 30;
+    public static final int MOTHER_PASSPORT = 31;
+    public static final int MOTHER_RACE = 32;
+    public static final int MOTHER_AGE_AT_BIRTH = 33;
+    public static final int MOTHER_ADDRESS = 34;
 
-    public static final int INFORMANT_TYPE = 14;
-    public static final int INFORMANT_NIC_OR_PIN = 15;
-    public static final int INFORMANT_NAME = 16;
-    public static final int INFORMANT_ADDRESS = 17;
-
-
+    public static final int INFORMANT_TYPE = 35;
+    public static final int INFORMANT_NIC_OR_PIN = 36;
+    public static final int INFORMANT_NAME = 37;
+    public static final int INFORMANT_ADDRESS = 38;
 
 
     /**
@@ -98,7 +98,7 @@ public class Alteration52_1 {
     }
 
     public void setNatureOfError(String natureOfError) {
-        this.natureOfError = natureOfError;
+        this.natureOfError = WebUtils.filterBlanks(natureOfError);
     }
 
     public Date getDateOfBirth() {
@@ -114,7 +114,7 @@ public class Alteration52_1 {
     }
 
     public void setPlaceOfBirth(String placeOfBirth) {
-        this.placeOfBirth = placeOfBirth;
+        this.placeOfBirth =WebUtils.filterBlanks(placeOfBirth);
     }
 
     public String getPlaceOfBirthEnglish() {
@@ -122,7 +122,7 @@ public class Alteration52_1 {
     }
 
     public void setPlaceOfBirthEnglish(String placeOfBirthEnglish) {
-        this.placeOfBirthEnglish = placeOfBirthEnglish;
+        this.placeOfBirthEnglish = WebUtils.filterBlanks(placeOfBirthEnglish);
     }
 
     public BDDivision getBirthDivision() {

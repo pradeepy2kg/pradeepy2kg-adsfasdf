@@ -1022,6 +1022,12 @@
             <result type="tiles" name="success">epr.selectBirthCertificateForAlteration</result>
         </action>
 
+        <action name="eprApproveAndApplyBirthAlteration" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
+                method="approveBirthAlteration">
+            <result type="tiles" name="success">epr.birthAlterationPendingApproval</result>
+            <result type="tiles" name="error">epr.birthAlterationPendingApproval</result>
+        </action>
+
         <action name="eprBirthAlterationSearch" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
                 method="birthAlterationSearch">
             <result type="tiles" name="success">epr.birthAlteration</result>
@@ -1076,7 +1082,7 @@
         <action name="eprApproveBirthAlterationInit" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
                 method="approveInit">
             <result type="tiles" name="success">epr.birthAlterationApproval</result>
-            <result type="tiles" name="error">epr.error</result>
+            <result type="tiles" name="error">epr.birthAlterationPendingApproval</result>
         </action>
         <action name="eprRejectBirthAlterationInit" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
                 method="rejectBirthAlterationInit">
@@ -1093,6 +1099,7 @@
         <action name="eprPrintBirthAlterarionNotice" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
                 method="printBirthAlterationNotice">
             <result type="tiles" name="success">epr.printBirthAlterarionNotice</result>
+            <result type="tiles" name="error">epr.birthAlterationPendingApproval</result>
         </action>
         <!--death alteration related actions-->
         <action name="eprDeathAlterationSearchHome" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"

@@ -259,8 +259,7 @@
                 <td><s:property value="#approvalStatus.index +1"/></td>
                 <td><s:property value="alt27.childFullNameOfficialLang"/></td>
                 <td align="center">
-                    <s:if test="#request.allowApproveAlteration &&
-                    alterationApprovalPermission.get(#approvalStatus.index) && (status.ordinal() ==0)">
+                    <s:if test="(status.ordinal()==0)">
                         <s:url id="approveSelected" action="eprApproveBirthAlterationInit.do">
                             <s:param name="idUKey" value="idUKey"/>
                             <s:param name="bdId" value="bdfIDUKey"/>
@@ -276,8 +275,7 @@
                     </s:if>
                 </td>
                 <td align="center">
-                    <s:if test="#request.allowApproveAlteration &&
-                    alterationApprovalPermission.get(#approvalStatus.index) && (status.ordinal() ==0)">
+                    <s:if test="(status.ordinal()==0)">
                         <s:url id="rejectSelected" action="eprRejectBirthAlterationInit.do">
                             <s:param name="idUKey" value="idUKey"/>
                             <s:param name="bdId" value="bdfIDUKey"/>
@@ -292,9 +290,8 @@
                             <img src="<s:url value='/images/reject.gif'/>" width="25" height="25" border="none"/></s:a>
                     </s:if>
                 </td>
-
                 <td align="center">
-                    <s:if test="(status.ordinal() ==0)">
+                    <s:if test="(status.ordinal()==0)">
                         <s:url id="editSelected" action="eprEditBirthAlterationInit.do">
                             <s:param name="idUKey" value="idUKey"/>
                             <s:param name="bdId" value="bdfIDUKey"/>
@@ -310,8 +307,7 @@
                     </s:if>
                 </td>
                 <td align="center">
-                    <s:if test="#request.allowApproveAlteration &&
-                    alterationApprovalPermission.get(#approvalStatus.index) && (status.ordinal() == 1)">
+                    <s:if test="(status.ordinal()==1)">
                         <s:url id="applySelected" action="eprPrintBirthAlterarionNotice.do">
                             <s:param name="idUKey" value="idUKey"/>
                             <s:param name="bdId" value="bdfIDUKey"/>
