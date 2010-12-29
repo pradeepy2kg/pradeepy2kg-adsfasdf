@@ -1067,7 +1067,7 @@
         </action>
 
         <action name="eprFilterBirthAlteration" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
-                method="filter">
+                method="searchBirthAlteration">
             <result type="tiles" name="success">epr.birthAlterationPendingApproval</result>
         </action>
         <action name="eprApproveBirthAlteration" class="lk.rgd.crs.web.action.births.BirthAlterationAction"

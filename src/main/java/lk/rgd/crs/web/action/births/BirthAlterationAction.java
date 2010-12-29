@@ -308,6 +308,17 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
     }
 
     /**
+     * searching birth alteration
+     */
+    public String searchBirthAlteration() {
+        logger.debug("attempt to search berth alteration ");
+        filterBirthAlteration();
+        populateBasicLists();
+        logger.debug("successfully search birth alteration");
+        return SUCCESS;
+    }
+
+    /**
      * edit birth alteration
      */
     public String editBirthAlteration() {
@@ -393,7 +404,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             logger.debug("number of rows in Birth Alteration Approval List is :{}",
                 birthAlterationPendingApprovalList.size());
         } else {
-            logger.info("The Birth Alteration List is empty");
+            logger.debug("The Birth Alteration List is empty");
         }
     }
 
