@@ -399,6 +399,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
 
     private void initPermissionForBirthCertificatePrint() {
         allowPrintCertificate = user.isAuthorized(Permission.PRINT_BIRTH_CERTIFICATE);
+        logger.debug("check user permissions - {}  ", allowPrintCertificate);
     }
 
     public List<BirthDeclaration> getPrintList() {

@@ -32,6 +32,7 @@ public class RolePermissionUtils {
         deoBitSet.set(Permission.EDIT_BDF_CONFIRMATION);
         deoBitSet.set(Permission.EDIT_BDF);
         deoBitSet.set(Permission.PRINT_BDF);
+        deoBitSet.set(Permission.PRINT_BIRTH_CERTIFICATE);
         deoBitSet.set(Permission.PRINT_DDF);
         deoBitSet.set(Permission.SEARCH_BDF);
         deoBitSet.set(Permission.SEARCH_DDF);
@@ -54,7 +55,6 @@ public class RolePermissionUtils {
         adrBitSet = new BitSet();
         adrBitSet.or(deoBitSet);
         adrBitSet.set(Permission.APPROVE_BDF);
-        adrBitSet.set(Permission.PRINT_BIRTH_CERTIFICATE);
         adrBitSet.set(Permission.APPROVE_BDF_CONFIRMATION);
         adrBitSet.set(Permission.APPROVE_DEATH);
         adrBitSet.set(Permission.PRINT_DEATH_CERTIFICATE);
