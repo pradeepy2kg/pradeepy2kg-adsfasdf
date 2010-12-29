@@ -106,6 +106,22 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
     }
 
     /**
+     * This method is used for pagination, to move backward in PRS search results list page
+     */
+    public String previousResultsPage() {
+        logger.debug("Previous page of PRS search result list page loaded");
+        return SUCCESS;
+    }
+
+    /**
+     * This method is used for pagination, to move forward in PRS search results list page
+     */
+    public String nextResultsPage() {
+        logger.debug("Next page of PRS search result list page loaded");
+        return SUCCESS;
+    }
+
+    /**
      * This method used to load approval pending person list for specified locationId, pageNo and noOfRows
      */
     private void getApprovalPendingPersons() {
@@ -115,6 +131,13 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
         if (approvalPendingList.size() == 0) {
             addActionMessage(getText("noItemMsg.label"));
         }
+    }
+
+    /**
+     * This method is used to load PRS result list according to the specified searching criteria
+     */
+    private void filterAndLoadResults() {
+
     }
 
     /**
