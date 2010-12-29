@@ -105,7 +105,7 @@
 
         <s:form action="eprDeathAlterationSetBits" method="post" onsubmit="javascript:return warning()">
         <s:iterator value="changesList">
-        <tr style="height:150px">
+        <tr>
             <td><s:label value="%{getText('death.alteration.field.'+fieldConstant)}"/></td>
             <td>
                     <s:label value="%{existingValue}"/>

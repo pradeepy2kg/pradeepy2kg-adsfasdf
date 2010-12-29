@@ -258,8 +258,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 deathRegister.getDeath().getDeathDivision().getBdDivisionUKey(), language, user);
             userLocations = commonUtil.populateActiveUserLocations(user, language);
             return SUCCESS;
-        }
-        catch (CRSRuntimeException e) {
+        } catch (CRSRuntimeException e) {
             logger.debug("cannot edit death alteration idUKey {}", existing.getIdUKey());
             addActionMessage(getText("alt.message.cannot.edit.alteration.validation.failed"));
             populatePrimaryLists(districtUKey, dsDivisionId, language, user);
@@ -391,8 +390,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             deathAlterationService.approveDeathAlteration(deathAlteration, approveBitset, user);
             populatePrimaryLists(districtUKey, dsDivisionId, language, user);
             logger.debug("apply changes to death alteration : alteration id  {}", deathAlterationId);
-        }
-        catch (CRSRuntimeException e) {
+        } catch (CRSRuntimeException e) {
             logger.error("cannot set bit set for death alteration : {}", deathAlterationId);
             return ERROR;
         }
@@ -587,6 +585,9 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 }
             }
         }
+        if (fv.getExistingValue() == null && fv.getAlterationValue() == null) {
+            return null;
+        }
         logger.debug("compare country for generating changes list completed");
         return fv;
     }
@@ -631,6 +632,9 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                     fv.setAlterationValue(alterationValue.getTaRaceName());
                 }
             }
+        }
+        if (fv.getExistingValue() == null && fv.getAlterationValue() == null) {
+            return null;
         }
         logger.debug("complete comparing race");
         return fv;

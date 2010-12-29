@@ -106,7 +106,7 @@
 <s:actionmessage/>
 <s:form method="post" action="eprDeathAlterationPageLoad.do" onsubmit="javascript:return validateForm()">
     <%--section search by death certificate number--%>
-    <div id="tabs">
+    <div id="tabs" style="font-size:10pt;">
             <ul>
                     <li><a href="#fragment-1"><span> <s:label 
                                     value="%{getText('label.tab.search.by.certificate.number')}"/></span></a></li>
