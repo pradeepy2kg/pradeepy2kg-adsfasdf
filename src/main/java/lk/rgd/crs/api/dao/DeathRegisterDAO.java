@@ -151,9 +151,10 @@ public interface DeathRegisterDAO {
      * Returns all Death Certificate records which are created by given User
      *
      * @param user  created user
-     * @return list of death Registrations
+     * @param start
+     *@param end @return list of death Registrations
      */
-    public List<DeathRegister> getByCreatedUser(User user);
+    public List<DeathRegister> getByCreatedUser(User user, Date start, Date end);
 }
 
 

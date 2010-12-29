@@ -183,9 +183,11 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<DeathRegister> getByCreatedUser(User user) {
+    public List<DeathRegister> getByCreatedUser(User user, Date start, Date end) {
         Query q = em.createNamedQuery("get.dr.by.createdUser");
         q.setParameter("user", user);
+        q.setParameter("startDate", start);
+        q.setParameter("endDate", end);
         return q.getResultList();
     }
 

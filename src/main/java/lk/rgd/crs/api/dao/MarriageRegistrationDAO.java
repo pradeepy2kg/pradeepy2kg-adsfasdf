@@ -263,7 +263,8 @@ public interface MarriageRegistrationDAO {
      * Returns all Marriage Registration records which are created by given User
      *
      * @param user created user
-     * @return list of Marriage Registrations
+     * @param start
+     *@param end @return list of Marriage Registrations
      */
-    public List<MarriageRegister> getByCreatedUser(User user);
+    public List<MarriageRegister> getByCreatedUser(User user, Date start, Date end);
 }

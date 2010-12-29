@@ -21,6 +21,7 @@
     $(function() {
         $('select#district').bind('change', function(evt1) {
             var id = $("select#district").attr("value");
+            var mode = 'argStatInfo';
 
             $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:13},
                     function(data) {
@@ -31,40 +32,51 @@
                         }
                         $("select#dsDivision").html(options1);
 
-                        /*var options2 = '';
-                         var bd = data.deoList;
-                         for (var j = 0; j < bd.length; j++) {
-                         options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
-                         }
-                         $("select#deoUser").html(options2);*/
                     });
+            $.getJSON('/ecivil/crs/StatisticsLookupService',
+            {
+                districtId:id,
+                mode:mode
+            },
+                    function(data) {
+                        drawHorizontalBarChart(data.late_b, data.normal_b, 'Late', 'Normal', 'nw');
+                        drawHorizontalBarChart(data.late_d, data.normal_d, 'Late', 'Normal', 'sw');
+                        drawPieChart(data, 'ne', 'birth');
+                        drawPieChart(data, 'se', 'death');
+                    }
+                    );
+        });
+        $('select#dsDivision').bind('change', function(evt1) {
+            var dsDivision = $("select#dsDivision").attr("value");
+            var mode = 'argStatInfo';
+
+            $.getJSON('/ecivil/crs/StatisticsLookupService',
+            {
+                dsDivisionId:dsDivision,
+                mode:mode
+            },
+                    function(data) {
+                        drawHorizontalBarChart(data.late_b, data.normal_b, 'Late', 'Normal', 'nw');
+                        drawHorizontalBarChart(data.late_d, data.normal_d, 'Late', 'Normal', 'sw');
+                        drawPieChart(data, 'ne', 'birth');
+                        drawPieChart(data, 'se', 'death');
+                    }
+                    );
         });
 
-        /* $('select#dsDivision').bind('change', function(evt1) {
-         var id = $("select#dsDivision").attr("value");
-
-         $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:14},
-         function(data) {
-         var options1 = '';
-         var ds = data.deoList;
-         for (var i = 0; i < ds.length; i++) {
-         options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
-         }
-         $("select#deoUser").html(options1);
-         });
-         });
-         */
     });
 
     $(document).ready(function() {
+        var dsDivision = $("select#dsDivision").attr("value");
         var userType = 'arg';
         var statType = 'all';
-        var mode = 'commonStatInfo';
+        var mode = 'argStatInfo';
 
         $.getJSON('/ecivil/crs/StatisticsLookupService',
         {
             userType:userType,
             statType:statType,
+            dsDivisionId:dsDivision,
             mode:mode
         },
                 function(data) {

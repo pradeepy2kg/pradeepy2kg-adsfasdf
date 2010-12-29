@@ -230,7 +230,6 @@ public interface DeathRegistrationService {
      * Returns all statistics information belongs to given user. Return object cannot be null
      *
      * @param user user DEO / ADR
-     * @return CommonStatistics object which encapsulated all the birth statistics information
      */
     public CommonStatistics getDeathStatisticsForUser(String user);
 }
