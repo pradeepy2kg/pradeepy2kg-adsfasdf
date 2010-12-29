@@ -246,7 +246,7 @@ function validateParentSigns(domObject) {
                 errormsg = errormsg + "\n" + document.getElementById('p3error7').value;
             }
 
-            /*
+            /* TODO : to be removed
             // validate mother signed
             var element4 = document.getElementById('motherSigned');
             if (!element4.checked && element.value.length > 0) {
