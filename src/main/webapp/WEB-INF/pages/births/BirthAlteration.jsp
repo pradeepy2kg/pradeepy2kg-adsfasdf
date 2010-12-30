@@ -591,6 +591,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                     <s:label value="Correction of Errors of a Birth Certificate (Section  52 (1))"/>
                 </s:if>
                 <s:if test="alterationType.ordinal()==1">
+                    <s:hidden id="sectionOfAct" value="3"/>
                     <s:label value="උප්පැන්න සහතිකයක තොරතුරු සංශෝදනය කිරීම (27 A වගන්තිය)"/> <br>
                     <s:label value="தந்தை பற்றிய தகவல்"/> <br>
                     <s:label value="Amendment of Birth Registration Entry (Section 27 A)"/>

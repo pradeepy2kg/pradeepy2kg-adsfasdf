@@ -53,6 +53,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
     @Transactional(propagation = Propagation.REQUIRED)
     public void addBirthAlteration(BirthAlteration ba, User user) {
         //todo amith call to adding validator (check must fill fields)
+        //validate can be added a BA for this BC by state
         logger.debug("Adding new birth alteration record on request of : {}", ba.getDeclarant().getDeclarantFullName());
         ba.setSubmittedLocation(user.getPrimaryLocation());
         ba.setStatus(BirthAlteration.State.DATA_ENTRY);
@@ -149,6 +150,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
 
                     // update the PRS on - Sec 27 name change, 52 1 (h) or (i) - corrections or omissions on
                     // change of name, dob, gender and place of birth (official/english)
+                    syncFKOfOtherActiveAlterationsAfterApproval(newBDF.getIdUKey(), bdf.getIdUKey(), user);
                     updatePRSOnAlteration(existing, bdf, user);
                     break;
                 }
@@ -177,6 +179,19 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
         birthAlterationDAO.updateBirthAlteration(existing, user);
 
         logger.debug("Updated birth alteration : {}", existing.getIdUKey());
+    }
+
+    private void syncFKOfOtherActiveAlterationsAfterApproval(long newFK, long oldFK, User user) {
+        //find existing alterations
+        List<BirthAlteration> birthAlterations = birthAlterationDAO.getBirthAlterationByBirthCertificateNumber(oldFK);
+        for (BirthAlteration ba : birthAlterations) {
+            if (ba.getStatus() == BirthAlteration.State.DATA_ENTRY && ba.getLifeCycleInfo().isActiveRecord()) {
+                //updating BA with new FK
+                ba.setBdfIDUKey(newFK);
+                birthAlterationDAO.updateBirthAlteration(ba, user);
+                logger.debug("successfully sync FK of birth alteration idUKey : {} ", ba.getIdUKey());
+            }
+        }
     }
 
     private void updatePRSOnAlteration(BirthAlteration ba, BirthDeclaration bdf, User user) {
@@ -259,7 +274,8 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
                 + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
         ValidationUtils.validateAccessToBDDivision(user, bdDivision);
-        return birthAlterationDAO.getBulkOfAlterationByBDDivision(bdDivision, pageNo, noOfRows);
+        return populateTransientNameOfficialLanguage(birthAlterationDAO.
+            getBulkOfAlterationByBDDivision(bdDivision, pageNo, noOfRows));
     }
 
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
@@ -270,7 +286,8 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
             logger.debug("Get birth alteration pending approval by BDDivision ID : " + bdDivision.getBdDivisionUKey()
                 + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
-        return birthAlterationDAO.getBulkOfAlterationByBDDivision(bdDivision, pageNo, noOfRows);
+        return populateTransientNameOfficialLanguage(birthAlterationDAO.
+            getBulkOfAlterationByBDDivision(bdDivision, pageNo, noOfRows));
     }
 
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
@@ -279,7 +296,8 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
             logger.debug("Get birth alterations pending approval - by User location id : " + locationUKey +
                 " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
-        return birthAlterationDAO.getBulkOfAlterationByUserLocationIdUKey(locationUKey, pageNo, noOfRows);
+        return populateTransientNameOfficialLanguage(birthAlterationDAO.
+            getBulkOfAlterationByUserLocationIdUKey(locationUKey, pageNo, noOfRows));
     }
 
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
@@ -298,6 +316,14 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
     public List<BirthAlteration> getBirthAlterationByBirthCertificateNumber(long idUKey, User user) {
         logger.debug("attempt to get already done birth alterations for birth register idUKey : {}", idUKey);
         return birthAlterationDAO.getBirthAlterationByBirthCertificateNumber(idUKey);
+    }
+
+    private List<BirthAlteration> populateTransientNameOfficialLanguage(List<BirthAlteration> birthAlterations) {
+        for (BirthAlteration birthAlteration : birthAlterations) {
+            birthAlteration.setChildNameInOfficialLanguage(birthDeclarationDAO.getById(birthAlteration.getBdfIDUKey()).
+                getChild().getChildFullNameOfficialLang());
+        }
+        return birthAlterations;
     }
 
     /**

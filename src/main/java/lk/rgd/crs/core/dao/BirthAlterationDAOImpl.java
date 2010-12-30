@@ -95,7 +95,7 @@ public class BirthAlterationDAOImpl extends BaseDAO implements BirthAlterationDA
         return q.getResultList();
     }
 
-    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<BirthAlteration> getBirthAlterationByBirthCertificateNumber(long idUKey) {
         Query q = em.createNamedQuery("get.alterations.by.birth.idUKey");
         q.setParameter("idUKey", idUKey);

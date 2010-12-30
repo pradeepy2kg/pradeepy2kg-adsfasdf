@@ -249,12 +249,13 @@
         <s:if test="birthAlterationPendingApprovalList.size>0">
             <thead>
             <tr>
-                <th width="20px"></th>
-                <th width="650px"><s:label value="%{getText('child.name.lable')}"/></th>
-                <th width="100px"></th>
-                <th width="100px"></th>
-                <th width="100px"></th>
-                <th width="100px"></th>
+                <th align="center" width="125px"><s:label value="%{getText('cer.number.label')}"/></th>
+                <th align="center" width="75px"><s:label value="%{getText('act.label')}"/></th>
+                <th align="center" width="650px"><s:label value="%{getText('child.name.lable')}"/></th>
+                <th width="50px"></th>
+                <th width="50px"></th>
+                <th width="50px"></th>
+                <th width="50px"></th>
             </tr>
             </thead>
         </s:if>
@@ -262,8 +263,9 @@
         <s:iterator status="approvalStatus" value="birthAlterationPendingApprovalList" id="approvalList">
             <%--todo has to be completed--%>
             <tr>
-                <td><s:property value="#approvalStatus.index +1"/></td>
-                <td><s:property value="alt27.childFullNameOfficialLang"/></td>
+                <td align="center"><s:property value="bdfIDUKey"/></td>
+                <td align="center"><s:property value="type"/></td>
+                <td><s:property value="childNameInOfficialLanguage"/></td>
                 <td align="center">
                     <s:url id="approveSelected" action="eprApproveBirthAlterationInit.do">
                         <s:param name="idUKey" value="idUKey"/>
