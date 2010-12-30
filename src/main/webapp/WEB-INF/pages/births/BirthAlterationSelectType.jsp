@@ -79,10 +79,47 @@
         $("#tabs").tabs();
     });
 
+    var errormsg = "";
+    var counter = 0;
+
+    function validateForm() {
+
+        var pin = document.getElementById('idNumberSearch').value;
+        var serial = document.getElementById('bdfSerialNoIdSearch').value;
+        var certifcateNumber = document.getElementById('bdfSearchSerialNoId').value;
+        var valueArray = new Array(pin, serial, certifcateNumber);
+
+        for (var i = 0; i < valueArray.length; i++) {
+            var c = valueArray[i];
+            if (c != "") {
+                counter++
+            }
+        }
+        if (counter != 1) {
+            errormsg = errormsg + document.getElementById('oneMethodErr').value;
+        }
+
+        //validate   number fields
+        isNumeric(certifcateNumber, 'invalideDateErr', 'certificateNumberFi')
+        isNumeric(serial, 'invalideDateErr', 'serialNumnerFi')
+        isNumeric(pin, 'invalideDateErr', 'pinNumberFi')
+
+        if (errormsg != "") {
+            alert(errormsg)
+            errormsg = "";
+            counter = 0;
+            return false;
+        }
+        else {
+            return true;
+        }
+        return false;
+    }
+
 </script>
 <div id="birth-confirmation-search">
 <s:actionerror cssStyle="color:red;font-size:10pt"/>
-<s:form action="eprBirthAlterationSearch.do" onsubmit="javascript:return validate2()">
+<s:form action="eprBirthAlterationSearch.do" onsubmit="javascript:return validateForm()">
     <div id="tabs" style="font-size:10pt;">
         <ul>
             <li><a href="#fragment-1"><span> <s:label
@@ -165,3 +202,8 @@
                                        name="search"/></div>
     </div>
 </s:form>
+<s:hidden id="oneMethodErr" value="%{getText('err.use.one,method.to.search')}"/>
+<s:hidden id="invalideDateErr" value="%{getText('err.invalide.data')}"/>
+<s:hidden id="serialNumnerFi" value="%{getText('field.serial.number')}"/>
+<s:hidden id="pinNumberFi" value="%{getText('field.pin.number')}"/>
+<s:hidden id="certificateNumberFi" value="%{getText('field.certificate.number')}"/>
