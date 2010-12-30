@@ -7,7 +7,7 @@ import lk.rgd.crs.web.util.MarriageType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
+//TODO: TO be removed
 public class MarriageTypeUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(MarriageTypeUtil.class);
