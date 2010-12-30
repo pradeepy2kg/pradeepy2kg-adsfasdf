@@ -206,10 +206,11 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void editExistingPersonBeforeApproval(Person person, List<PersonCitizenship> citizenshipList, User user) {
-        logger.debug("Attempt to edit PRS entry before approval with personUKey : {}", person.getPersonUKey());
+        final long personUKey = person.getPersonUKey();
+        logger.debug("Attempt to edit PRS entry before approval with personUKey : {}", personUKey);
         validateAccessOfUserToEdit(user);
         validateRequiredFields(person);
-        Person existing = personDao.getByUKey(person.getPersonUKey());
+        Person existing = personDao.getByUKey(personUKey);
 
         // TODO if birth exist can not edit , throw exception (use alteration process)
         // TODO is this applicable after approval not for before approval
@@ -256,16 +257,16 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             if (citizenshipList != null && !citizenshipList.isEmpty()) {
                 final Set<PersonCitizenship> existingCitizens = existing.getCountries();
                 for (PersonCitizenship pc : existingCitizens) {
-                    citizenshipDAO.deleteCitizenship(pc.getPersonUKey(), pc.getCountryId());
+                    citizenshipDAO.deleteCitizenship(personUKey, pc.getCountryId());
                 }
                 for (PersonCitizenship pc : citizenshipList) {
-                    pc.setPerson(person);
+                    pc.setPerson(existing);
                     citizenshipDAO.addCitizenship(pc, user);
                 }
             }
         } else {
-            handleException("Cannot modify PRS record with personUKey : " + existing.getPersonUKey() +
-                " Illegal state : " + currentState, ErrorCodes.ILLEGAL_STATE);
+            handleException("Cannot modify PRS record with personUKey : " + personUKey + " Illegal state : " +
+                currentState, ErrorCodes.ILLEGAL_STATE);
         }
     }
 
