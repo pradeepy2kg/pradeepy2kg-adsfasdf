@@ -37,7 +37,7 @@
             "bFilter": true,
             "aaSorting": [
                 [0,'desc'],
-                [1,'asc']
+                [1,'desc']
             ],
             "bInfo": false,
             "bAutoWidth": false,
