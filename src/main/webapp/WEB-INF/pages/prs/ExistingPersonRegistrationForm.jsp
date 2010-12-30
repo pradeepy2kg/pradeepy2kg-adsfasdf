@@ -411,7 +411,7 @@
 <s:if test="personList.size > 0">
     <fieldset style="margin-bottom:10px;margin-top:10px;border:2px solid #c3dcee;">
         <legend><b><s:label value="%{getText('label.possibleDuplicates')}"/> </b></legend>
-        <table id="persons-table" width="100%" cellpadding="0" cellspacing="0" class="display">
+        <table id="persons-table" width="100%" cellpadding="0" cellspacing="0" class="display" style="font-size:10pt;">
             <thead>
             <tr>
                 <th width="60px;">NIC</th>

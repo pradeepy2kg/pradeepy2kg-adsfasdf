@@ -192,7 +192,8 @@
     <s:if test="searchResultList.size > 0">
         <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;">
             <legend><b><s:label value="%{getText('searchResult.label')}"/></b></legend>
-            <table id="person-approve-list" width="100%" cellpadding="0" cellspacing="0" class="display">
+            <table id="person-approve-list" width="100%" cellpadding="0" cellspacing="0" class="display"
+                   style="font-size:10pt;">
                 <thead>
                 <tr>
                     <th>LastUpdated</th>
