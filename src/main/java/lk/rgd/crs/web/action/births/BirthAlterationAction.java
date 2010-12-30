@@ -2,6 +2,7 @@ package lk.rgd.crs.web.action.births;
 
 import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.AppConstants;
+import lk.rgd.ErrorCodes;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.Country;
 import lk.rgd.common.api.domain.DSDivision;
@@ -523,6 +524,36 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             return ERROR;
         }
         addActionMessage(getText("message.successfully.reject.alteration", new String[]{"" + idUKey}));
+        populateBasicLists();
+        filterBirthAlteration();
+        return SUCCESS;
+    }
+
+    /**
+     * deleting birth alteration
+     */
+    public String deleteBirthAlteration() {
+        logger.debug("attempt delete birth alteration idUKey : {}", idUKey);
+        try {
+            alterationService.deleteBirthAlteration(idUKey, user);
+        }
+        catch (CRSRuntimeException e) {
+            switch (e.getErrorCode()) {
+                case ErrorCodes.CAN_NOT_FIND_BIRTH_ALTERATION: {
+                    addActionError(getText("error.unable.to.find.birth.alteration.for.delete", new String[]{Long.toString(idUKey)}));
+                }
+                break;
+                case ErrorCodes.INVALID_STATE_FOR_DELETE_BIRTH_ALTERATION:
+                    addActionError(getText("error.unable.to.delete.birth.alteration.invalid.state",
+                        new String[]{Long.toString(idUKey)}));
+                    break;
+            }
+            logger.debug("unable to delete birth alteration idUKey : {}", idUKey);
+            populateBasicLists();
+            filterBirthAlteration();
+            return ERROR;
+        }
+        logger.debug("successfully deleted birth alteration idUKey : {}", idUKey);
         populateBasicLists();
         filterBirthAlteration();
         return SUCCESS;

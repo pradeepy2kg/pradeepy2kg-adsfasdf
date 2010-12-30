@@ -80,10 +80,22 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
     @Transactional(propagation = Propagation.REQUIRED)
     public void deleteBirthAlteration(long idUKey, User user) {
         logger.debug("Attempt to delete birth alteration record : {}", idUKey);
+        checkUserPermission(Permission.EDIT_BIRTH_ALTERATION, ErrorCodes.PERMISSION_DENIED,
+            " delete birth alteration ", user);
         BirthAlteration existing = birthAlterationDAO.getById(idUKey);
-        validateAccessOfUserToEditOrDelete(existing, user);
-        birthAlterationDAO.deleteBirthAlteration(idUKey);
-        logger.debug("Deleted birth alteration record : {}  in data entry state", idUKey);
+        if (existing != null) {
+            //check is correct state for deleting
+            if (existing.getStatus() == BirthAlteration.State.DATA_ENTRY) {
+                validateAccessOfUserToEditOrDelete(existing, user);
+                birthAlterationDAO.deleteBirthAlteration(idUKey);
+            } else {
+                handleException("unable to delete requested birth alteration :" + idUKey + " invalid state for delete :"
+                    + existing.getStatus(), ErrorCodes.INVALID_STATE_FOR_DELETE_BIRTH_ALTERATION);
+            }
+        } else {
+            handleException("unable to find birth alteration :" + idUKey + " for deleting ",
+                ErrorCodes.CAN_NOT_FIND_BIRTH_ALTERATION);
+        }
     }
 
     /**
@@ -586,5 +598,11 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
     private void handleException(String message, int code) {
         logger.error(message);
         throw new CRSRuntimeException(message, code);
+    }
+
+    private void checkUserPermission(int permissionBit, int errorCode, String msg, User user) {
+        if (!user.isAuthorized(permissionBit)) {
+            handleException("User : " + user.getUserId() + " is not allowed to " + msg, errorCode);
+        }
     }
 }
