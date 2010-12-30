@@ -1,6 +1,5 @@
 <%@ page import="lk.rgd.common.util.CivilStatusUtil" %>
 <%@ page import="lk.rgd.prs.api.domain.Person" %>
-<%@ page import="lk.rgd.common.util.MarriageTypeUtil" %>
 <%@ page import="lk.rgd.crs.web.util.MarriageType" %>
 <%@ page import="lk.rgd.crs.api.domain.MarriageNotice" %>
 <%--
