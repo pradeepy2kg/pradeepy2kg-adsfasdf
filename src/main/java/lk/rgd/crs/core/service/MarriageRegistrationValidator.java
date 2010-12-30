@@ -54,15 +54,18 @@ public class MarriageRegistrationValidator {
         switch (type) {
             case BOTH_NOTICE:
                 validateBasicNeeds(notice.getSerialOfMaleNotice(), notice.getDateOfMaleNotice(),
-                    notice.getFemale().getIdentificationNumberFemale(), notice.getFemale().getDateOfBirthFemale());
+                    notice.getFemale().getIdentificationNumberFemale(), notice.getFemale().getDateOfBirthFemale(),
+                    notice.isSingleNotice());
             case MALE_NOTICE:
                 validateBasicNeeds(notice.getSerialOfMaleNotice(), notice.getDateOfMaleNotice(),
-                    notice.getMale().getIdentificationNumberMale(), notice.getMale().getDateOfBirthMale());
+                    notice.getMale().getIdentificationNumberMale(), notice.getMale().getDateOfBirthMale(),
+                    notice.isSingleNotice());
                 validateSerialNumber(notice.getSerialOfMaleNotice(), notice.getMrDivisionOfMaleNotice());
                 break;
             case FEMALE_NOTICE:
                 validateBasicNeeds(notice.getSerialOfFemaleNotice(), notice.getDateOfFemaleNotice(),
-                    notice.getFemale().getIdentificationNumberFemale(), notice.getFemale().getDateOfBirthFemale());
+                    notice.getFemale().getIdentificationNumberFemale(), notice.getFemale().getDateOfBirthFemale(),
+                    notice.isSingleNotice());
                 validateSerialNumber(notice.getSerialOfFemaleNotice(), notice.getMrDivisionOfFemaleNotice());
         }
         //check other must needed validations
@@ -185,9 +188,10 @@ public class MarriageRegistrationValidator {
     }
 
 
-    private void validateBasicNeeds(Long serial, Date recDate, String identificationNumber, Date dob) {
-        if (serial == null || recDate == null || identificationNumber == null || dob == null) {
-            handleException("marriage notice :serial" + serial + ": is incomplete can not add", ErrorCodes.MR_INCOMPLETE_OBJECT);
+    private void validateBasicNeeds(Long serial, Date recDate, String identificationNumber, Date dob, Boolean isSingle) {
+        if (serial == null || recDate == null || identificationNumber == null || dob == null || isSingle == null) {
+            handleException("marriage notice :serial" + serial + ": is incomplete can not add",
+                ErrorCodes.MR_INCOMPLETE_OBJECT);
         }
     }
 
