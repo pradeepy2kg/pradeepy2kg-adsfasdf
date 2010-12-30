@@ -36,8 +36,6 @@ public class PersonCitizenshipDAOImpl extends BaseDAO implements PersonCitizensh
         citizenship.getLifeCycleInfo().setLastUpdatedUser(user);
         citizenship.getLifeCycleInfo().setLastUpdatedTimestamp(new Date());
         em.persist(citizenship);
-        em.merge(citizenship.getPerson());
-        em.merge(citizenship.getCountry());
     }
 
     /**
