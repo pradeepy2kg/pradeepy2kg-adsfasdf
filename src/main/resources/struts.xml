@@ -199,6 +199,7 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
+
         <action name="eprBirthCertificate" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
                 method="birthCetificatePrint">
             <result type="tiles" name="pageLoad">epr.birthCertificate_form</result>
@@ -1058,6 +1059,12 @@
                 method="editBirthAlteration">
             <result type="tiles" name="success">epr.birthAlterationResult</result>
             <result type="tiles" name="error">epr.birthAlteration</result>
+        </action>
+
+        <action name="eprDeleteBirthAlteration" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
+                method="deleteBirthAlteration">
+            <result name="success" type="tiles">epr.birthAlterationPendingApproval</result>
+            <result name="error" type="tiles">epr.birthAlterationPendingApproval</result>
         </action>
 
         <action name="eprBirthAlterationPendingApproval" class="lk.rgd.crs.web.action.births.BirthAlterationAction"

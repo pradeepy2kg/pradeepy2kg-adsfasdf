@@ -251,7 +251,8 @@
             <tr>
                 <th align="center" width="125px"><s:label value="%{getText('cer.number.label')}"/></th>
                 <th align="center" width="75px"><s:label value="%{getText('act.label')}"/></th>
-                <th align="center" width="650px"><s:label value="%{getText('child.name.lable')}"/></th>
+                <th align="center" width="600px"><s:label value="%{getText('child.name.lable')}"/></th>
+                <th width="50px"></th>
                 <th width="50px"></th>
                 <th width="50px"></th>
                 <th width="50px"></th>
@@ -310,6 +311,15 @@
                         </s:url>
                         <s:a href="%{editSelected}" title="%{getText('editTooltip.label')}">
                             <img src="<s:url value='/images/edit.png'/>" width="25" height="25" border="none"/></s:a>
+                    </s:if>
+                </td>
+                <td align="center">
+                    <s:if test="(status.ordinal()==0)">
+                        <s:url id="deleteSelected" action="eprDeleteBirthAlteration.do">
+                            <s:param name="idUKey" value="idUKey"/>
+                        </s:url>
+                        <s:a href="%{deleteSelected}" title="%{getText('toolTip.delete')}">
+                            <img src="<s:url value='/images/delete.gif'/>" width="25" height="25" border="none"/></s:a>
                     </s:if>
                 </td>
                 <td align="center">
