@@ -70,6 +70,8 @@ public class PRSRecordsIndexerImpl implements PRSRecordsIndexer {
     private long start;
     private volatile long completed;
     private static final int MILLION = 1000000;
+    /** Ensure that the maximum DB connections defined in the connection pool exceeds this - else may deadlock */
+    private static final int THREADS = 30;
 
     public PRSRecordsIndexerImpl(SolrIndexManager solrIndexManager, DataSource dataSource, PersonDAO personDAO) {
         this.solrIndexManager = solrIndexManager;
@@ -117,6 +119,7 @@ public class PRSRecordsIndexerImpl implements PRSRecordsIndexer {
         } else {
             logger.info("Starting new indexing process for all PRS records...");
 
+            deleteIndex();
             start = System.currentTimeMillis();
             completed = 0;
 
@@ -135,18 +138,15 @@ public class PRSRecordsIndexerImpl implements PRSRecordsIndexer {
                 long count = rs.getLong(1);
                 conn.close();
 
-                long block = (maxUKey - minUKey) / 50;
+                long block = (maxUKey - minUKey) / THREADS;
                 if (block > MILLION) {
                     block = MILLION;
                 }
 
-                int threads = 51;
+                int threads = THREADS + 1;
                 doneSignal = new CountDownLatch(threads);
                 logger.info("Using : 51 threads with a block size of : " + block +
                     " to process : " + count + " rows from : " + minUKey + " to: " + maxUKey);
-                try {
-                    Thread.sleep(3000);
-                } catch (InterruptedException ignore) {}
 
                 long startIDUkey = minUKey;
                 long endIDUkey = minUKey;
@@ -166,14 +166,16 @@ public class PRSRecordsIndexerImpl implements PRSRecordsIndexer {
                     logger.info("Interrupted while waiting for PRS indexer worker threads to complete");
                 }
 
+                logger.info("PRS Indexing process started at : " + new Date() + " successfully completed indexing : " +
+                    count + " records. Indexing took: " + (System.currentTimeMillis() - start)/1000 + " S");
+
                 optimizeIndex();
 
             } catch (SQLException e) {
-                logger.error("Could not count the number of rows in the PERSON table", e);
+                logger.error("Could not count the number of rows in the PERSON table. PRS indexing failed", e);
                 return false;
             }
 
-            logger.info("PRS Indexing process started at : " + new Date());
             return true;
         }
     }
