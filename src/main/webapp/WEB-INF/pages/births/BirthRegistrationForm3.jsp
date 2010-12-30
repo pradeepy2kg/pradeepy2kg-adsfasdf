@@ -97,7 +97,7 @@ function setInformPerson(id) {
             nICorPIN = document.getElementById("fatherNICorPINLable").value;
             address = "";
             if (document.getElementsByName("marriage.parentsMarried")[0].checked ||
-                    document.getElementsByName("marriage.parentsMarried")[2].checked) {
+                document.getElementsByName("marriage.parentsMarried")[2].checked) {
                 address = document.getElementById("motherAddressLable").value;
             }
             phonoNo = "";
@@ -132,11 +132,11 @@ function validate() {
     //validation for live birth
     if (declarationType.value == 1) {
         commonTags();
-        validateMarriage();
+        validateParentsMaritalStatus();
     }
     if (declarationType.value == 2) {
         commonTags();
-        validateMarriage();
+        validateParentsMaritalStatus();
     }
 
     validateInformant();
@@ -204,13 +204,56 @@ function generateGrandFatherBirthYear(grandFatherNIC, grandFatherBirthYear) {
 
 
 // validation marriage related fields
-function validateMarriage() {
+function validateParentsMaritalStatus() {
     var domObject;
 
     // for parrents married - Yes
     domObject = document.getElementsByName("marriage.parentsMarried")[0];
+    validateMarriageDetails(domObject);
+
+    // for parrents married - No
+    domObject = document.getElementsByName("marriage.parentsMarried")[1];
+    validateParentSigns(domObject);
+
+    // for parents married - No, but since married
+    domObject = document.getElementsByName("marriage.parentsMarried")[2];
+    validateMarriageDetails(domObject);
+
+    // for parents married - unknown
+    domObject = document.getElementsByName("marriage.parentsMarried")[3];
+    validateUnknownStatus(domObject);
+}
+
+function validateUnknownStatus(domObject) {
     if (domObject.checked) {
-        // validate place of marriage
+        var element = document.getElementById('fatherName');
+
+        if (!isFieldEmpty(element)) {
+            errormsg = errormsg + "\n" + document.getElementById('p3error9').value;
+        }
+    }
+}
+
+function validateParentSigns(domObject) {
+    if (domObject.checked) {
+        var element = document.getElementById('fatherName');
+
+        var element3 = document.getElementById('fatherSigned');
+        if (!element3.checked && element.value.length > 0) {
+            errormsg = errormsg + "\n" + document.getElementById('p3error7').value;
+        }
+        // validate mother signed
+        var element4 = document.getElementById('motherSigned');
+        if (!element4.checked && element.value.length > 0) {
+            errormsg = errormsg + "\n" + document.getElementById('p3error8').value;
+        }
+    }
+}
+
+// validate place of marriage
+function validateMarriageDetails(domObject) {
+    if (domObject.checked) {
+
         domObject = document.getElementById('placeOfMarriage');
         if (isFieldEmpty(domObject)) {
             errormsg = errormsg + "\n" + document.getElementById('p3error6').value;
@@ -220,47 +263,6 @@ function validateMarriage() {
         if (isFieldEmpty(domObject)) {
             errormsg = errormsg + "\n" + document.getElementById('p3error5').value;
         }
-    }
-
-    // for parrents married - No
-    domObject = document.getElementsByName("marriage.parentsMarried")[1];
-    validateParentSigns(domObject);
-
-    // for parents married - No, but since married
-    domObject = document.getElementsByName("marriage.parentsMarried")[2];
-    validateParentSigns(domObject);
-
-    // for parents married - No, but since married
-    domObject = document.getElementsByName("marriage.parentsMarried")[3];
-    validateParentSigns(domObject);
-}
-
-function validateParentSigns(domObject) {
-    if (domObject.checked) {
-        var element = document.getElementById('fatherName');
-        var element3 = document.getElementById('fatherSigned');
-
-        if (!document.getElementsByName("marriage.parentsMarried")[3].checked) {
-            // validate father signed
-            if (!element3.checked && element.value.length > 0) {
-                errormsg = errormsg + "\n" + document.getElementById('p3error7').value;
-            }
-
-            /* TODO : to be removed
-            // validate mother signed
-            var element4 = document.getElementById('motherSigned');
-            if (!element4.checked && element.value.length > 0) {
-                errormsg = errormsg + "\n" + document.getElementById('p3error8').value;
-            } */
-        }
-        else {
-            //logic for state 4
-            var faName = document.getElementById('fatherName');
-            if (!isFieldEmpty(faName)) {
-                errormsg = errormsg + "\n" + document.getElementById('p3error9').value;
-            }
-        }
-
     }
 }
 
@@ -389,6 +391,7 @@ function initPage() {
             disableMarriage(true);
             disableSignature();
         } else if (document.getElementsByName("marriage.parentsMarried")[2].checked) {
+            //disableSigns(true);
             disableSignature();
         } else if (document.getElementsByName("marriage.parentsMarried")[3].checked) {
             disableMarriage(true);
@@ -445,7 +448,7 @@ function initPage() {
                         </td>
                         <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'NO_SINCE_MARRIED':''}"
                                      id="marriedId3"
-                                     onclick="disableMarriage(false);disableSigns(false)"/>
+                                     onclick="disableMarriage(false);disableSigns(true)"/>
                         </td>
                     </tr>
                     <tr>
