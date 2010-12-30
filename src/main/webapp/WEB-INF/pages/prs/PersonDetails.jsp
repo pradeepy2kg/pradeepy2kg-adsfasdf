@@ -697,12 +697,22 @@
     </tr>
     <tr>
         <td>
-            වාර්තාවේ තත්වය
+            වාර්තාවේ තත්ත්වය
             <br>தேசிய
             <br>Record status
         </td>
         <td colspan="3">
             <%= PersonStatusUtil.getPersonStatusString((Person.Status) request.getAttribute("person.status"))%>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            වාර්තාව පිළිබඳ අදහස්
+            <br>Record Comments in Tamil
+            <br>Record Comments
+        </td>
+        <td colspan="3">
+            <s:label value="%{person.comments}"/>
         </td>
     </tr>
     </tbody>
