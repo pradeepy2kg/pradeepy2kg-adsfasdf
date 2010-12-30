@@ -57,6 +57,25 @@ public interface BirthAlterationService {
     /**
      * Approve requested fields of birth alteration statement 27A
      * or alteration statement 52_1 by an ARG or higher authority
+     * <br>
+     * notes:
+     * <br>
+     * in following scenario we have to sync all the active(DE state) alterations which use FK of current approving
+     * alteration as it's FK
+     * <br>
+     * example
+     * <p>assume we have BC and PK(certificate number) is 1</p>
+     * <ul>
+     * <li>add a alteration on 27 section and idUKey is 1</li>
+     * <li>add a alteration on 27A or 52_1_H or 52_1_I section and idUKey is 2</li>
+     * <li>now we are approving and print alteration 27 </li>
+     * <li>because of the approval of 27 now FK 1 become in active and new clone BC 2 generated with new altered values</li>
+     * <li>but alt 27 A still reference to the FK 1 but FK 1 doesn't have altered values so 27 A should refer to FK 2 </li>
+     * </ul>
+     * <br>
+     * so we have to sync other active DE state alterations when approve
+     * <br>
+     * <U><B>if act is 52_1_A or 52_1_B or 52_1_D or 52_1_E we don't have to care on this situation </B></U>
      *
      * @param ba                 the birth alteration to be approved
      * @param fieldsToBeApproved the list of field indexes to be approved
@@ -129,9 +148,9 @@ public interface BirthAlterationService {
      * only DATA_ENTRY mode alteration records are being rejected and that record is being archived  with a comment for
      * rejection and  the state of the record would be REJECTED
      *
-     * @param idUKey idUKey of the birth alteration record
+     * @param idUKey  idUKey of the birth alteration record
      * @param comment reason for reject
-     * @param user   user who performs the action
+     * @param user    user who performs the action
      */
-    public void rejectBirthAlteration(long idUKey,String comment, User user);
+    public void rejectBirthAlteration(long idUKey, String comment, User user);
 }

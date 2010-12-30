@@ -18,18 +18,22 @@ import java.util.BitSet;
 @Table(name = "ALT_BIRTH", schema = "CRS")
 @NamedQueries({
     @NamedQuery(name = "filter.alteration.by.idUKey", query = "SELECT ba FROM BirthAlteration ba " +
-        "WHERE ba.idUKey =:idUKey AND (ba.status =:statusDataEntry OR ba.status =:statusFullyApproved) " +
+        "WHERE ba.idUKey =:idUKey AND (ba.lifeCycleInfo.activeRecord IS TRUE) " +
+        "AND (ba.status =:statusDataEntry OR ba.status =:statusFullyApproved) " +
         "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
-    @NamedQuery(name = "filter.alteration.by.bddivision", query = "SELECT ba FROM BirthAlteration ba,BirthDeclaration bdf " +
-        "WHERE ba.bdfIDUKey =bdf.idUKey AND bdf.register.birthDivision = :bdDivision  AND " +
+    @NamedQuery(name = "filter.alteration.by.bddivision", query = "SELECT ba " +
+        "FROM BirthAlteration ba,BirthDeclaration bdf WHERE ba.bdfIDUKey =bdf.idUKey " +
+        "AND (ba.lifeCycleInfo.activeRecord IS TRUE) AND bdf.register.birthDivision = :bdDivision  AND " +
         "(ba.status =:statusDataEntry OR ba.status =:statusFullyApproved) " +
         "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
     @NamedQuery(name = "filter.alteration.by.user.location", query = "SELECT ba FROM BirthAlteration ba " +
-        "WHERE ba.submittedLocation.locationUKey= :locationUKey AND (ba.status =:statusDataEntry OR ba.status =:statusFullyApproved) " +
+        "WHERE ba.submittedLocation.locationUKey= :locationUKey AND (ba.lifeCycleInfo.activeRecord IS TRUE)" +
+        " AND (ba.status =:statusDataEntry OR ba.status =:statusFullyApproved) " +
         "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
-    @NamedQuery(name = "get.alterations.by.birth.idUKey", query = "SELECT ba FROM BirthAlteration ba WHERE ba.bdfIDUKey =:idUKey"),
-    @NamedQuery(name = "filter.birth.alteration.by.birth.certificate.number", query = "SELECT ba FROM BirthAlteration ba" +
-        " WHERE( ba.bdfIDUKey=:certificateNumber AND ba.lifeCycleInfo.activeRecord IS TRUE )")
+    @NamedQuery(name = "get.alterations.by.birth.idUKey", query = "SELECT ba FROM BirthAlteration ba " +
+        "WHERE ba.bdfIDUKey =:idUKey"),
+    @NamedQuery(name = "filter.birth.alteration.by.birth.certificate.number", query = "SELECT ba " +
+        "FROM BirthAlteration ba WHERE( ba.bdfIDUKey=:certificateNumber AND ba.lifeCycleInfo.activeRecord IS TRUE )")
 })
 
 public class BirthAlteration {
@@ -155,6 +159,8 @@ public class BirthAlteration {
     private String comments;
     @Column
     private float stampFee;
+    @Transient
+    private String childNameInOfficialLanguage;
 
     public long getIdUKey() {
         return idUKey;
@@ -314,5 +320,13 @@ public class BirthAlteration {
 
     public void setChangedfields(BitSet changedfields) {
         this.changedfields = changedfields;
+    }
+
+    public String getChildNameInOfficialLanguage() {
+        return childNameInOfficialLanguage;
+    }
+
+    public void setChildNameInOfficialLanguage(String childNameInOfficialLanguage) {
+        this.childNameInOfficialLanguage = childNameInOfficialLanguage;
     }
 }

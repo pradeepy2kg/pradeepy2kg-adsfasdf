@@ -2,14 +2,12 @@ package lk.rgd.crs.web.action.births;
 
 import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.AppConstants;
-import lk.rgd.Permission;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.Country;
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.Race;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.DateTimeUtils;
-import lk.rgd.common.util.GenderUtil;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.*;
@@ -201,7 +199,6 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
      */
     public String addBirthAlteration() {
         logger.debug("attempt to add birth alteration ");
-        //todo check existing serial number
         switch (alterationType) {
             case TYPE_27: {
             }

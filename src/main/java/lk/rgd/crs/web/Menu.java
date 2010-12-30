@@ -149,7 +149,6 @@ public class Menu {
         deoBirthLink.put("eprDirectPrintBirthConfirmation.do", new Link(null, "/ecivil/births/", "eprDirectPrintBirthConfirmation.do", Permission.EDIT_BDF));
         deoBirthLink.put("eprMarkCertificateAsPrinted.do", new Link(null, "/ecivil/births/", "eprMarkCertificateAsPrinted.do", Permission.PRINT_BDF));
         adrBirthLink.put("eprViewBDFInNonEditableMode.do", new Link(null, "/ecivil/births/", "eprViewBDFInNonEditableMode.do", Permission.EDIT_BDF));
-        adrBirthLink.put("eprBirthAlteration.do", new Link(null, "/ecivil/births/", "eprBirthAlteration.do", Permission.EDIT_BDF));
 
         deoBirthLink.put("eprBirthConfirmation.do", new Link(null, "/ecivil/births/", "eprBirthConfirmation.do", Permission.EDIT_BDF_CONFIRMATION));
         deoBirthLink.put("eprDirectPrintBirthCertificate.do", new Link(null, "/ecivil/births/", "eprDirectPrintBirthCertificate.do", Permission.PRINT_BDF));
@@ -293,6 +292,7 @@ public class Menu {
         deoAlterationLink.put("eprEditBirthAlteration.do", new Link(null, "/ecivil/alteration/", "eprEditBirthAlteration.do", Permission.EDIT_BIRTH_ALTERATION));
         deoAlterationLink.put("eprEditBirthAlterationInit.do", new Link(null, "/ecivil/alteration/", "eprEditBirthAlterationInit.do", Permission.EDIT_BIRTH_ALTERATION));
         deoAlterationLink.put("eprPrintBirthAlterarionNotice.do", new Link(null, "/ecivil/alteration/", "eprPrintBirthAlterarionNotice.do", Permission.EDIT_BIRTH_ALTERATION));
+        deoAlterationLink.put("eprBirthAlteration.do", new Link(null, "/ecivil/alteration/", "eprBirthAlteration.do", Permission.EDIT_BIRTH_ALTERATION));
 
         //todo complete
         //links related to deo or above for death alteration
