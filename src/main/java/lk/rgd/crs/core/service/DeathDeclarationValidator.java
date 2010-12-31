@@ -139,7 +139,7 @@ public class DeathDeclarationValidator {
             check = true;
         }
         if (check) {
-            handleException("invalid serial number " + serialNumber + "unable to add marriage notice",
+            handleException("invalid serial number " + serialNumber + "unable to add death register ",
                 ErrorCodes.INVALID_SERIAL_NUMBER);
         }
 
@@ -147,7 +147,7 @@ public class DeathDeclarationValidator {
         DeathRegister existingRecord = deathRegisterDAO.getActiveRecordByBDDivisionAndDeathSerialNo(bdDivision,
             serialNumber);
         if (existingRecord != null) {
-            handleException("serial number duplication  " + serialNumber + " for marriage division " +
+            handleException("serial number duplication  " + serialNumber + " for death division " +
                 bdDivision.getEnDivisionName() + "unable to add marriage notice",
                 ErrorCodes.POSSIBLE_DEATH_REGISTER_SERIAL_NUMBER_DUPLICATION);
         }
