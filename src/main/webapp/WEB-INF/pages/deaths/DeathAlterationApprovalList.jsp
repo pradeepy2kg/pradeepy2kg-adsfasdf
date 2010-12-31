@@ -233,7 +233,7 @@
                 <s:iterator value="approvalList">
                     <%--todo remove--%>
                     <s:if test="status.ordinal()>-1">
-                        <s:url id="editSelected" action="eprDeathAlterationEdit">
+                        <s:url id="editSelected" action="eprDeathAlterationEditInit">
                             <s:param name="deathAlterationId" value="idUKey"/>
                         </s:url>
                         <s:url id="deleteSelected" action="eprDeathAlterationDelete">

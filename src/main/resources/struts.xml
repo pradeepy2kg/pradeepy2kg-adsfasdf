@@ -1168,7 +1168,7 @@
             </result>
         </action>
 
-        <action name="eprDeathAlterationEdit" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"
+        <action name="eprDeathAlterationEditInit" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"
                 method="editDeathAlterationInit">
             <result type="tiles" name="success">epr.deathAlterationCapture</result>
         </action>
