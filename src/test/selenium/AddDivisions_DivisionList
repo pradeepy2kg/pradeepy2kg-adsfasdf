@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>AddDivisions_DivisionList</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">AddDivisions_DivisionList</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/ecivil/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_userName</td>
+	<td>admin</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_password</td>
+	<td>password</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprLogin_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=ADMIN TASK</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>addDivision.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>adddivisionDistrictId</td>
+	<td>label=12 : Gampaha</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>adddivisionDsDivisionId</td>
+	<td>label=9 : Divulapitiya</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprInitDivisionList_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id</td>
+	<td>1004</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>enName</td>
+	<td>fortest</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>siName</td>
+	<td>fortest</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>taName</td>
+	<td>fortest</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprAddDivisionsAndDsDivisions_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//tr[4]/td[3]/a/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//td[4]/a/img</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
