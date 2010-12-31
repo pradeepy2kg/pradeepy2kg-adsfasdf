@@ -3,6 +3,7 @@ package lk.rgd.crs.web.action.deaths;
 import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.AppConstants;
 import lk.rgd.Permission;
+import lk.rgd.common.RGDRuntimeException;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.GenderUtil;
@@ -296,6 +297,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         return SUCCESS;
     }
 
+
     public String filterByStatus() {
         logger.debug("requested to filter by : {}", currentStatus);
         setPageNo(1);
@@ -359,9 +361,14 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public String approveDeath() {
-        logger.debug("requested to approve Death Declaration with idUKey : {}", idUKey);
-        logger.debug("Current status : {}", currentStatus);
-        warnings = service.approveDeathRegistration(idUKey, user, ignoreWarning);
+        logger.debug("requested to approve Death Declaration with idUKey : {} and current state : {} ", idUKey,
+            currentStatus);
+        try {
+            warnings = service.approveDeathRegistration(idUKey, user, ignoreWarning);
+        }
+        catch (RGDRuntimeException e) {
+            logger.debug("exception when invoking with prs for approving ");
+        }
         if (warnings.size() > 0) {
             return "warning";
         }

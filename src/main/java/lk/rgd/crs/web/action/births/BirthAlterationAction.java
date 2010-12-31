@@ -337,6 +337,29 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
     }
 
     /**
+     * marking birth alteration as printed
+     */
+    public String markAlterationNoticeAsPrinted() {
+        //todo add menu item
+        logger.debug("attempt to mark birth alteration idUKey : {} as printed", idUKey);
+        try {
+            alterationService.markBirthAlterationNoticeAsPrinted(idUKey, user);
+        }
+        catch (CRSRuntimeException e) {
+            logger.debug("attempt to mark birth alteration as printed failed for idUKey : {} ", idUKey);
+            addActionError(getText("error.unable.to.mark.as.print"));
+            populateBasicLists();
+            filterBirthAlteration();
+            return ERROR;
+        }
+        populateBasicLists();
+        filterBirthAlteration();
+        addActionMessage(getText("message.mark.as.printed.success", new String[]{Long.toString(idUKey)}));
+        logger.debug("successfully mark birth alteration as printed : {}", idUKey);
+        return SUCCESS;
+    }
+
+    /**
      * searching birth alterations
      */
     private void filterBirthAlteration() {
@@ -1256,7 +1279,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         return idUKey;
     }
 
-    public void setIdUKey(Long idUKey) {                                                                
+    public void setIdUKey(Long idUKey) {
         this.idUKey = idUKey;
     }
 

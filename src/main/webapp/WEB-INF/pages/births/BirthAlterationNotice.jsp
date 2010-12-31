@@ -1,4 +1,3 @@
-<%--@author Tharanga Punchihewa--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
@@ -337,3 +336,9 @@
     <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
     <s:hidden id="printMessage" value="%{getText('print.message')}"/>
 </div>
+<s:form action="eprMarkBirthAlterationAsPrint.do" method="post">
+    <div class="form-submit" style="margin-bottom:20px;margin-right:10px;">
+        <s:submit type="button" value="%{getText('mark.as.print.button')}"/>
+    </div>
+    <s:hidden name="idUKey" value="%{#request.idUKey}"/>
+</s:form>

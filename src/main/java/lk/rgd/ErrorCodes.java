@@ -118,5 +118,6 @@ public class ErrorCodes {
     public static final int CAN_NOT_FIND_BIRTH_ALTERATION = 7002;
     public static final int CAN_NOT_ADD_A_NEW_ALTERATION_ON_THIS_SECTION = 7003;
     public static final int INVALID_STATE_FOR_DELETE_BIRTH_ALTERATION = 7004;
+    public static final int INVALID_STATE_FOR_MARK_AS_PRINT_BIRTH_ALTERATION = 7005;
 
 }

@@ -212,7 +212,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
             handleException("Cannot approve/reject death registration " + dr.getIdUKey() +
                 " Illegal state : " + dr.getStatus(), ErrorCodes.ILLEGAL_STATE);
         }
-        //setting comment, this is relative only to death rejaction
+        //setting comment, this is relative only to death rejection
         dr.setCommnet(comment);
         //updating
         deathRegisterDAO.updateDeathRegistration(dr, user);
