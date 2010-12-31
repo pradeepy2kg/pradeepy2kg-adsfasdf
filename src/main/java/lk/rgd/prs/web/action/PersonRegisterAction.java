@@ -45,6 +45,7 @@ public class PersonRegisterAction extends ActionSupport implements SessionAware 
 
     private boolean ignoreDuplicate;
     private boolean allowEdit;
+    private boolean allowApprove;
 
     private long personUKey;
     private int personCountryId;
@@ -92,6 +93,7 @@ public class PersonRegisterAction extends ActionSupport implements SessionAware 
                     + " and dateOfBirth : " + DateTimeUtils.getISO8601FormattedString(person.getDateOfBirth())
                     + " added to the PRS with PersonUKey : " + person.getPersonUKey());
             }
+            initPermissions();
             return SUCCESS;
         } else {
             populate();
@@ -150,7 +152,12 @@ public class PersonRegisterAction extends ActionSupport implements SessionAware 
      */
     private void initPermissions() {
         allowEdit = user.isAuthorized(Permission.PRS_EDIT_PERSON);
-        logger.debug("User : {} is allowed to edit PRS entries : {}", user.getUserId(), allowEdit);
+        allowApprove = user.isAuthorized(Permission.PRS_APPROVE_PERSON);
+
+        if (logger.isDebugEnabled()) {
+            logger.debug("User : " + user.getUserId() + " is allowed to edit PRS entries : " + allowEdit +
+                " ,allowed to approve PRS entries : " + allowApprove);
+        }
     }
 
     /**
@@ -241,6 +248,14 @@ public class PersonRegisterAction extends ActionSupport implements SessionAware 
 
     public void setAllowEdit(boolean allowEdit) {
         this.allowEdit = allowEdit;
+    }
+
+    public boolean isAllowApprove() {
+        return allowApprove;
+    }
+
+    public void setAllowApprove(boolean allowApprove) {
+        this.allowApprove = allowApprove;
     }
 
     public long getPersonUKey() {

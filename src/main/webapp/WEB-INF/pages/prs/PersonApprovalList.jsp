@@ -295,6 +295,19 @@
                                          border="none"/>
                                 </s:a>
                             </s:if>
+                            <s:elseif test="status.ordinal() == 3">
+                                <s:url id="printSelected" action="eprPRSCertificate.do">
+                                    <s:param name="personId" value="personUKey"/>
+                                    <s:param name="pageNo" value="%{#request.pageNo}"/>
+                                    <s:param name="locationId" value="#request.locationId"/>
+                                    <s:param name="printStart" value="#request.printStart"/>
+                                </s:url>
+                                <s:a href="%{printSelected}" title="%{getText('reprint.label')}">
+                                    <img src="<s:url value='/images/print_icon.gif'/>" width="25" height="25"
+                                         border="none"/>
+                                </s:a>
+                            </s:elseif>
+                            <s:else></s:else>
                         </td>
                     </tr>
                 </s:iterator>
@@ -314,7 +327,6 @@
             <s:param name="locationId" value="#request.locationId"/>
             <s:param name="printStart" value="#request.printStart"/>
         </s:url>
-        <%--<s:if test="printStart!=0 & printStart>0">--%>
         <s:if test="printStart!=0 & pageNo !=1">
             <s:a href="%{previousUrl}">
                 <img src="<s:url value='/images/previous.gif'/>" border="none"/>

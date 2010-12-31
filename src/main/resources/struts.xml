@@ -101,8 +101,28 @@
             <result type="tiles" name="success">epr.existingPersonRegistration</result>
         </action>
 
+        <action name="eprDirectEditPerson" class="lk.rgd.prs.web.action.PersonRegisterAction" method="personEditInit">
+            <result type="tiles" name="success">epr.personRegisterDetails</result>
+        </action>
+
         <action name="eprPRSCertificate" class="lk.rgd.prs.web.action.PersonDetailsAction" method="initPRSCertificate">
             <result type="tiles" name="success">epr.PRSCertificate</result>
+        </action>
+
+        <action name="eprDirectPRSCertificate" class="lk.rgd.prs.web.action.PersonDetailsAction"
+                method="initPRSCertificate">
+            <param name="direct">true</param>
+            <result type="tiles" name="success">epr.PRSCertificate</result>
+        </action>
+
+        <action name="eprMarkPRSCertificate" class="lk.rgd.prs.web.action.PersonApprovalAction"
+                method="markPRSCertificateAsPrinted">
+            <result type="tiles" name="success">epr.PersonApproval</result>
+        </action>
+
+        <action name="eprDirectMarkPRSCertificate" class="lk.rgd.prs.web.action.PersonApprovalAction"
+                method="markPRSCertificateAsPrinted">
+            <result type="tiles" name="success">epr.personRegisterDetails</result>
         </action>
 
         <action name="eprPersonApproval" class="lk.rgd.prs.web.action.PersonApprovalAction"
@@ -122,6 +142,13 @@
         <action name="eprApprovePerson" class="lk.rgd.prs.web.action.PersonApprovalAction"
                 method="approveSelectedPerson">
             <result type="tiles" name="success">epr.PersonApproval</result>
+            <result type="tiles" name="warning">epr.personApproveWarning</result>
+        </action>
+
+        <action name="eprDirectApprovePerson" class="lk.rgd.prs.web.action.PersonApprovalAction"
+                method="approveSelectedPerson">
+            <param name="direct">true</param>
+            <result type="tiles" name="success">epr.personRegisterDetails</result>
             <result type="tiles" name="warning">epr.personApproveWarning</result>
         </action>
 
