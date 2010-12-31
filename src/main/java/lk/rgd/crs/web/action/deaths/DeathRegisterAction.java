@@ -378,12 +378,13 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
             currentStatus);
         try {
             warnings = service.approveDeathRegistration(idUKey, user, ignoreWarning);
+            addActionMessage(getText("message.approve.success", new String[]{Long.toString(idUKey)}));
         }
         catch (RGDRuntimeException e) {
-            addActionError(getText("error.death.registration.approval.fail"));
+            addActionError(getText("error.death.registration.approval.fail", new String[]{Long.toString(idUKey)}));
             logger.debug("death register approval fails idUKey : {} ", idUKey);
         }
-        if (warnings.size() > 0) {
+        if (warnings != null && warnings.size() > 0) {
             return "warning";
         }
 

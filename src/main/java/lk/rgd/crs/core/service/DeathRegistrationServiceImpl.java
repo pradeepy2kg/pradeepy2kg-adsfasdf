@@ -154,7 +154,8 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     //todo do validation warnings
     public List<UserWarning> approveDeathRegistration(long deathRegisterIdUKey, User user, boolean ignoreWarnings) {
         //  logger.debug("attempt to approve death registration record : {} ", deathRegisterIdUKey);
-        deathDeclarationValidator.validateMinimalRequirements(getById(deathRegisterIdUKey, user));
+        //    no need to validate object gain :O  ??? todo check amith 
+        //    deathDeclarationValidator.validateMinimalRequirements(getById(deathRegisterIdUKey, user));
         List<UserWarning> warnings = DeathDeclarationValidator.validateStandardRequirements(
             deathRegisterDAO, getById(deathRegisterIdUKey, user), user);
         if (warnings.isEmpty() || ignoreWarnings) {
