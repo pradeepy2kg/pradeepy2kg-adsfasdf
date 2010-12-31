@@ -145,7 +145,8 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     }
 
     public String createUser() {
-        User updated = (User) session.get(WebConstants.SESSION_UPDATED_USER);
+        //todo : to be removed
+        //User updated = (User) session.get(WebConstants.SESSION_UPDATED_USER);
         // todo...
         User currentUser = (User) session.get(WebConstants.SESSION_USER_BEAN);
         user.setRole(roleDAO.getRole(roleId));
@@ -180,27 +181,35 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
             userId = user.getUserId();
             addActionMessage(getText("data.Save.Success.label"));
             pageNo = 1;
-        } else if (updated != null) {
-            logger.debug("Edit user {}", updated.getUserName());
+        } else {
             logger.debug("Edited user name {}", user.getUserName());
 
-            user.setAssignedBDDistricts(assDistrict);
-            user.setAssignedMRDistricts(assDistrict);
-            user.setAssignedBDDSDivisions(assDSDivision);
-            user.setRole(roleDAO.getRole(roleId));
+            User updatedUser = service.getUserByID(userId);
 
-            if (isAssignedLocations(updated)) {
-                user.setStatus(User.State.ACTIVE);
+            updatedUser.setUserName(user.getUserName());
+            updatedUser.setPin(user.getPin());
+            updatedUser.setSienSignatureText(user.getSienSignatureText());
+            updatedUser.setTaenSignatureText(user.getTaenSignatureText());
+            updatedUser.setPrefLanguage(user.getPrefLanguage());
+
+            updatedUser.setAssignedBDDistricts(assDistrict);
+            updatedUser.setAssignedMRDistricts(assDistrict);
+            updatedUser.setAssignedBDDSDivisions(assDSDivision);
+            updatedUser.setRole(roleDAO.getRole(roleId));
+
+            if (isAssignedLocations(updatedUser)) {
+                updatedUser.setStatus(User.State.ACTIVE);
             } else {
                 // TODO Forward to Location assignment page [ shan ]
             }
             if (changePassword) {
                 logger.debug("Change password {}", userDAO.getUserByPK(userId).getUserName());
                 randomPassword = getRandomPassword(randomPasswordLength);
-                updated.setPasswordHash(hashPassword(randomPassword));
+                updatedUser.setPasswordHash(hashPassword(randomPassword));
             }
-            service.updateUser(user, currentUser);
-            session.remove(WebConstants.SESSION_UPDATED_USER);
+            service.updateUser(updatedUser, currentUser);
+            //todo : to be removed
+            //session.remove(WebConstants.SESSION_UPDATED_USER);
             session.put("viewUsers", null);
             addActionMessage(getText("edit.Data.Save.Success.label"));
         }
@@ -247,7 +256,8 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
             roleId = user.getRole().getRoleId();
             logger.info("current district list size  : {} for user : {}", currentDistrictList.size(), user.getUserName());
             logger.info("current division list size  : {} for user : {}", currentbdDivisionList.size(), user.getUserName());
-            session.put(WebConstants.SESSION_UPDATED_USER, user);
+            //TODO : to be removed
+            //session.put(WebConstants.SESSION_UPDATED_USER, user);
         }
         return "pageLoad";
     }
