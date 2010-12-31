@@ -346,11 +346,19 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             alterationService.markBirthAlterationNoticeAsPrinted(idUKey, user);
         }
         catch (CRSRuntimeException e) {
-            logger.debug("attempt to mark birth alteration as printed failed for idUKey : {} ", idUKey);
-            addActionError(getText("error.unable.to.mark.as.print"));
-            populateBasicLists();
-            filterBirthAlteration();
-            return ERROR;
+            switch (e.getErrorCode()) {
+                case ErrorCodes.INVALID_STATE_FOR_MARK_AS_PRINT_BIRTH_ALTERATION: {
+                    logger.debug("birth alteration idUKey : {} is already marked as printed", idUKey);
+                    return "pageLoad";
+                }
+                default: {
+                    logger.debug("attempt to mark birth alteration as printed failed for idUKey : {} ", idUKey);
+                    addActionError(getText("error.unable.to.mark.as.print"));
+                    populateBasicLists();
+                    filterBirthAlteration();
+                    return ERROR;
+                }
+            }
         }
         populateBasicLists();
         filterBirthAlteration();
@@ -363,6 +371,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
      * searching birth alterations
      */
     private void filterBirthAlteration() {
+//todo remove following set amith
         setPageNo(1);
         noOfRows = appParametersDAO.getIntParameter(BA_APPROVAL_ROWS_PER_PAGE);
         try {

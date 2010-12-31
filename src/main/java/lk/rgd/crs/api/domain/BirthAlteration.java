@@ -19,17 +19,14 @@ import java.util.BitSet;
 @NamedQueries({
     @NamedQuery(name = "filter.alteration.by.idUKey", query = "SELECT ba FROM BirthAlteration ba " +
         "WHERE ba.idUKey =:idUKey AND (ba.lifeCycleInfo.activeRecord IS TRUE) " +
-        "AND (ba.status =:statusDataEntry OR ba.status =:statusFullyApproved) " +
-        "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
+        "AND ba.status <=:state ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
     @NamedQuery(name = "filter.alteration.by.bddivision", query = "SELECT ba " +
         "FROM BirthAlteration ba,BirthDeclaration bdf WHERE ba.bdfIDUKey =bdf.idUKey " +
         "AND (ba.lifeCycleInfo.activeRecord IS TRUE) AND bdf.register.birthDivision = :bdDivision  AND " +
-        "(ba.status =:statusDataEntry OR ba.status =:statusFullyApproved) " +
-        "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
+        "ba.status <=:state ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
     @NamedQuery(name = "filter.alteration.by.user.location", query = "SELECT ba FROM BirthAlteration ba " +
         "WHERE ba.submittedLocation.locationUKey= :locationUKey AND (ba.lifeCycleInfo.activeRecord IS TRUE)" +
-        " AND (ba.status =:statusDataEntry OR ba.status =:statusFullyApproved) " +
-        "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
+        " AND ba.status <=:state ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
     @NamedQuery(name = "get.alterations.by.birth.idUKey", query = "SELECT ba FROM BirthAlteration ba " +
         "WHERE ba.bdfIDUKey =:idUKey"),
     @NamedQuery(name = "filter.birth.alteration.by.birth.certificate.number", query = "SELECT ba " +

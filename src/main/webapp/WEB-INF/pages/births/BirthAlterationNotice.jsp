@@ -26,9 +26,17 @@
     }
 </script>
 
-<s:form action="" method="post">
-
 <div id="alteration-approval-list-outer">
+<div class="form-submit" style="margin-bottom:20px;margin-right:10px;">
+    <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
+    <s:hidden id="printMessage" value="%{getText('print.message')}"/>
+</div>
+<s:form action="eprMarkBirthAlterationAsPrint.do" method="post">
+    <div class="form-submit" style="margin-bottom:20px;margin-right:10px;">
+        <s:submit type="button" value="%{getText('mark.as.print.button')}"/>
+    </div>
+    <s:hidden name="idUKey" value="%{#request.idUKey}"/>
+</s:form>
 
 <table style="border:none;width:98.6%">
     <tr>
@@ -161,7 +169,7 @@
 <hr style="border-style:dashed ; float:left;width:100% ;margin-bottom:30px;margin-top:60px;">
 <div style="page-break-after:always;margin-bottom:350px;"></div>
 
-    <%--Latter for declarant   --%>
+<%--Latter for declarant   --%>
 <table border="0" cellspacing="0" width="100%" style="margin-top:0;">
     <caption></caption>
     <col/>
@@ -178,11 +186,11 @@
         <td rowspan="8" width="200px"></td>
     </tr>
     <tr>
-        <td><s:label cssStyle="width:600px;font-size:10pt;" name="declarant.declarantFullName"
+        <td><s:label cssStyle="width:600px;font-size:10pt;" name="birthAlteration.declarant.declarantFullName"
                      disabled="true"/></td>
     </tr>
     <tr>
-        <td><s:label cssStyle="width:600px;font-size:10pt;" name="declarant.declarantAddress"
+        <td><s:label cssStyle="width:600px;font-size:10pt;" name="birthAlteration.declarant.declarantAddress"
                      cssClass="disable"
                      disabled="true"/></td>
     </tr>
@@ -331,7 +339,6 @@
 
 </table>
 </div>
-</s:form>
 <div class="form-submit" style="margin-bottom:20px;margin-right:10px;">
     <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
     <s:hidden id="printMessage" value="%{getText('print.message')}"/>

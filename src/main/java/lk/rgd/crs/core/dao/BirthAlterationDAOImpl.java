@@ -68,8 +68,7 @@ public class BirthAlterationDAOImpl extends BaseDAO implements BirthAlterationDA
             setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         logger.debug("get Approval pending list from bdDivision Number is :{}", BDDivision.getDivisionId());
         q.setParameter("bdDivision", BDDivision);
-        q.setParameter("statusDataEntry", BirthAlteration.State.DATA_ENTRY);
-        q.setParameter("statusFullyApproved", BirthAlteration.State.FULLY_APPROVED);
+        q.setParameter("state", BirthAlteration.State.REJECT);
         return q.getResultList();
     }
 
@@ -78,8 +77,7 @@ public class BirthAlterationDAOImpl extends BaseDAO implements BirthAlterationDA
         Query q = em.createNamedQuery("filter.alteration.by.idUKey").
             setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         logger.debug("get Approval pending list from idUKey number is :{}", idUKey);
-        q.setParameter("statusDataEntry", BirthAlteration.State.DATA_ENTRY);
-        q.setParameter("statusFullyApproved", BirthAlteration.State.FULLY_APPROVED);
+        q.setParameter("state", BirthAlteration.State.REJECT);
         q.setParameter("idUKey", idUKey);
         return (BirthAlteration) q.getSingleResult();
     }
@@ -90,8 +88,7 @@ public class BirthAlterationDAOImpl extends BaseDAO implements BirthAlterationDA
         Query q = em.createNamedQuery("filter.alteration.by.user.location").
             setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("locationUKey", locationUKey);
-        q.setParameter("statusDataEntry", BirthAlteration.State.DATA_ENTRY);
-        q.setParameter("statusFullyApproved", BirthAlteration.State.FULLY_APPROVED);
+        q.setParameter("state", BirthAlteration.State.REJECT);
         return q.getResultList();
     }
 
