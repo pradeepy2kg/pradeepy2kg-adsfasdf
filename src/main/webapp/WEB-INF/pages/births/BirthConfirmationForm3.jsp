@@ -82,7 +82,8 @@
             errormsg = errormsg + "\n" + document.getElementById('error1').value;
     }
 
-    function initPage(){}
+    function initPage() {
+    }
 </script>
 
 <div id="birth-confirmation-form-outer">
@@ -115,7 +116,8 @@
                         <tr>
                             <td><label>මව <br>மாதா <br>Mother</label></td>
                             <td align="center" width="150px">
-                                <s:radio name="confirmantRadio" list="#@java.util.HashMap@{'MOTHER':''}"
+                                <s:radio name="confirmant.confirmantType" value="confirmant.confirmantType"
+                                         list="#@java.util.HashMap@{'MOTHER':''}"
                                          onchange="javascript:setConfirmPerson('MOTHER',
             '%{parent.motherNICorPIN}', '%{parent.motherFullName}')"/>
                             </td>
@@ -127,7 +129,8 @@
                         <tr>
                             <td><label>පියා<br> பிதா <br>Father</label></td>
                             <td align="center" width="150px">
-                                <s:radio name="confirmantRadio" list="#@java.util.HashMap@{'FATHER':''}"
+                                <s:radio name="confirmant.confirmantType" value="confirmant.confirmantType"
+                                         list="#@java.util.HashMap@{'FATHER':''}"
                                          onchange="javascript:setConfirmPerson('FATHER', '%{parent.fatherNICorPIN}',
                                  '%{parent.fatherFullName}')"/>
                             </td>
@@ -139,7 +142,8 @@
                         <tr>
                             <td><label>භාරකරු<br> பாதுகாவலர் <br>Guardian</label></td>
                             <td align="center" width="150px">
-                                <s:radio name="confirmantRadio" list="#@java.util.HashMap@{'GUARDIAN':''}"
+                                <s:radio name="confirmant.confirmantType" value="confirmant.confirmantType"
+                                         list="#@java.util.HashMap@{'GUARDIAN':''}"
                                          onchange="javascript:setConfirmPerson('GUARDIAN','','')"/>
                             </td>
                         </tr>
