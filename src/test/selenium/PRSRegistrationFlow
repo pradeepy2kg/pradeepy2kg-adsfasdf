@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>PRSRegistrationFlow</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PRSRegistrationFlow</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/ecivil/eprHome.do</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>logout-button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_userName</td>
+	<td>ashoka</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_password</td>
+	<td>ashoka</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprLogin_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='xmain-menu']/ul/li[6]/a/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>prs.personRegistration.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>submitDatePicker</td>
+	<td>2010-10-30</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>person_NIC</td>
+	<td>853303399v</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>birthDatePicker</td>
+	<td>1966-10-15</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>person_NIC</td>
+	<td>851303399v</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>personFullNameOfficialLang</td>
+	<td>fhfhgfhh</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>placeOfBirth</td>
+	<td>Welimada</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>personFullNameEnglish</td>
+	<td>Rasika bandara</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>eprExistingPersonRegistration_person_gender</td>
+	<td>label=පිරිමි</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>eprExistingPersonRegistration_person_preferredLanguage</td>
+	<td>label=සිංහල</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>eprExistingPersonRegistration_person_civilStatusNEVER_MARRIED</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>permanentAddress</td>
+	<td>Waththegama,kandy.</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprExistingPersonRegistration_currentAddress</td>
+	<td>dghdghdfhdfgh</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>submitButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Print certificate</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
