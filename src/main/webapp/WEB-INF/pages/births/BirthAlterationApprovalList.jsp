@@ -125,35 +125,41 @@
     });
 
     var errormsg = "";
-    function validate() {
-        var domObject;
-        var count = 0;
-        var checkDate = 0;
-        domObject = document.getElementById("serialAltNumberId");
-        if (! isFieldEmpty(domObject)) {
-            count ++;
+    var counter = 0;
+
+    function validateForm() {
+
+        var locationID = document.getElementById('locationId').value;
+        if (locationID == 0) {
+            locationID = "";
         }
-        domObject = document.getElementById("alterationRecivedFromDateId");
-        var domObject1 = document.getElementById("alterationRecivedToDateId");
-        if (! isFieldEmpty(domObject) || !isFieldEmpty(domObject1)) {
-            count ++;
-            if (isFieldEmpty(domObject) || isFieldEmpty(domObject1)) {
-                checkDate ++;
+        var certifcateNumber = document.getElementById('certificateNumber').value;
+        var valueArray = new Array(locationID, certifcateNumber);
+        for (var i = 0; i < valueArray.length; i++) {
+            var c = valueArray[i];
+            if (c != "") {
+                counter++
             }
         }
-        domObject = document.getElementById("serialNumberId");
-        if (! isFieldEmpty(domObject)) {
-            count ++;
+        if (counter > 1) {
+            errormsg = errormsg + document.getElementById('oneMethodErr').value;
         }
-        if (count > 1) {
-            alert(document.getElementById("comError").value);
+
+        //validate   number fields
+        isNumeric(certifcateNumber, 'invalideDateErr', 'certificateNumberFi')
+
+        if (errormsg != "") {
+            alert(errormsg)
+            errormsg = "";
+            counter = 0;
             return false;
         }
-        if (checkDate > 0) {
-            alert(document.getElementById("comError1").value);
-            return false;
+        else {
+            return true;
         }
+        return false;
     }
+
 
     function initPage() {
     }
@@ -167,7 +173,7 @@
 <%
     User user = (User) session.getAttribute("user_bean");
 %>
-<s:form action="eprFilterBirthAlteration" method="post" onsubmit="javascript:return validate()">
+<s:form action="eprFilterBirthAlteration" method="post" onsubmit="javascript:return validateForm()">
     <%--<s:actionerror  cssStyle="color:red;font-size:9pt;"/>--%>
     <div id="tabs" style="font-size:10pt;">
         <ul>
@@ -217,7 +223,7 @@
                 <tr>
                     <td width="350px"><s:label value="%{getText('certificateNumber.lable')}"/></td>
                     <td>
-                        <s:textfield name="birthCertificateNumber"/>
+                        <s:textfield name="birthCertificateNumber" id="certificateNumber" value=""/>
                     </td>
                 </tr>
             </table>
@@ -230,7 +236,7 @@
                     <td>
                             <s:label value="%{getText('from.lable')}" cssStyle="margin-right:10px;"/>
                             <s:select list="userLocations" name="locationUKey" value="%{locationUKey}" headerKey="0"
-                                      headerValue="%{getText('select.location')}"/>
+                                      headerValue="%{getText('select.location')}" id="locationId"/>
                 </tr>
             </table>
         </div>
@@ -378,3 +384,9 @@
 </div>
 <s:hidden id="comError" value="%{getText('alteration.search.error.lable')}"/>
 <s:hidden id="comError1" value="%{getText('date.range.error.lable')}"/>
+
+<s:hidden id="oneMethodErr" value="%{getText('err.use.one,method.to.search')}"/>
+<s:hidden id="invalideDateErr" value="%{getText('err.invalide.data')}"/>
+<s:hidden id="serialNumnerFi" value="%{getText('field.serial.number')}"/>
+<s:hidden id="pinNumberFi" value="%{getText('field.pin.number')}"/>
+<s:hidden id="certificateNumberFi" value="%{getText('field.certificate.number')}"/>
