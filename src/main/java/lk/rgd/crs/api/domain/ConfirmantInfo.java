@@ -9,6 +9,13 @@ import java.util.Date;
 
 @Embeddable
 public class ConfirmantInfo implements Serializable, Cloneable {
+    //TODO: to be generalized
+    public enum ConfirmantType {
+        FATHER,
+        MOTHER,
+        GUARDIAN,
+        RELATIVE
+    }
 
     /**
      * The last date for confirmation - set as 14 days from confirmation print date
@@ -16,6 +23,12 @@ public class ConfirmantInfo implements Serializable, Cloneable {
     @Column(nullable = true)
     @Temporal(value = TemporalType.DATE)
     private Date lastDateForConfirmation;
+
+    /**
+     * Confirmant Type
+     */
+    @Column(nullable = true)
+    private ConfirmantType confirmantType;
 
     /**
      * PIN or NIC of person confirming BDF details
@@ -43,7 +56,7 @@ public class ConfirmantInfo implements Serializable, Cloneable {
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date confirmationProcessedTimestamp;
 
-    @OneToOne (fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "confirmationProcessedUserId", nullable = true)
     private User confirmationProcessedUser;
 
@@ -93,6 +106,14 @@ public class ConfirmantInfo implements Serializable, Cloneable {
 
     public void setConfirmationProcessedUser(User confirmationProcessedUser) {
         this.confirmationProcessedUser = confirmationProcessedUser;
+    }
+
+    public ConfirmantType getConfirmantType() {
+        return confirmantType;
+    }
+
+    public void setConfirmantType(ConfirmantType confirmantType) {
+        this.confirmantType = confirmantType;
     }
 
     @Override
