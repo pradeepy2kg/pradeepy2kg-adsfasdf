@@ -8,6 +8,7 @@
 </script>
 <div id="prs-details-message" style="width:1030px;padding:10px;">
     <s:actionmessage cssStyle="text-align:left;"/>
+    <s:actionerror cssStyle="text-align:left;color:red;"/>
 </div>
 <s:url id="print" action="eprDirectPRSCertificate.do">
     <s:param name="personUKey" value="#request.personUKey"/>

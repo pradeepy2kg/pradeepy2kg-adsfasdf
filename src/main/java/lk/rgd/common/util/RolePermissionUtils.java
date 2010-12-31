@@ -63,6 +63,7 @@ public class RolePermissionUtils {
         adrBitSet.set(Permission.PRS_DELETE_PERSON);
         adrBitSet.set(Permission.PRS_REJECT_PERSON);
         adrBitSet.set(Permission.PRS_PRINT_CERT);
+        adrBitSet.set(Permission.PRS_MARK_CERT_PRINTED);
         adrBitSet.set(Permission.SEARCH_MARRIAGE);
         adrBitSet.set(Permission.PRINT_MARRIAGE_CERTIFICATE);
         adrBitSet.set(Permission.APPROVE_MARRIAGE);

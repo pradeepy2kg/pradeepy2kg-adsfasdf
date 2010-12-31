@@ -26,11 +26,21 @@
 </script>
 
 <s:if test="direct">
-    <s:url id="markPrint" action="eprDirectMarkPRSCertificate.do" namespace="../prs"/>
+    <s:if test="%{person.status.ordinal() == 2}">
+        <s:url id="markPrint" action="eprDirectMarkPRSCertificate.do" namespace="../prs"/>
+    </s:if>
+    <s:else>
+        <s:url id="markPrint" action="eprBackRegisterDetails.do" namespace="../prs"/>
+    </s:else>
     <s:url id="previous" action="eprBackRegisterDetails.do" namespace="../prs"/>
 </s:if>
 <s:else>
-    <s:url id="markPrint" action="eprMarkPRSCertificate.do" namespace="../prs"/>
+    <s:if test="%{person.status.ordinal() == 2}">
+        <s:url id="markPrint" action="eprMarkPRSCertificate.do" namespace="../prs"/>
+    </s:if>
+    <s:else>
+        <s:url id="markPrint" action="eprBackPRSSearchList.do" namespace="../prs"/>
+    </s:else>
     <s:url id="previous" action="eprBackPRSSearchList.do" namespace="../prs">
         <s:param name="personUKey" value="%{personUKey}"/>
         <s:param name="pageNo" value="%{#request.pageNo}"/>
