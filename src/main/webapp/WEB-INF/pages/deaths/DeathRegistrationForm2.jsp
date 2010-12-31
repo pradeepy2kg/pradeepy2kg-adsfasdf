@@ -131,10 +131,24 @@
             validateEmail(domObject, 'error1', 'error2')
 
         //validate declarent NIC/PIN
-        domObject = document.getElementById('declarant_pinOrNic');
-        if (!isFieldEmpty(domObject))
-            validatePINorNIC(domObject, 'error1', 'error4');
 
+        domObject = document.getElementById('declarant_pinOrNic');
+        if (!isFieldEmpty(domObject)) {
+            validatePINorNIC(domObject, 'error1', 'error4');
+        }
+        else {
+            errormsg = errormsg + "\n" + document.getElementById('error14').value;
+        }
+
+        domObject = document.getElementById('declarantFullName');
+        if (isFieldEmpty(domObject)) {
+            errormsg = errormsg + "\n" + document.getElementById('error13').value;
+        }
+
+        domObject = document.getElementById('declarantAddress');
+        if (isFieldEmpty(domObject)) {
+            errormsg = errormsg + "\n" + document.getElementById('error15').value;
+        }
         //validate declarent sign date
         var declarant = document.getElementById("declarantDatePicker").value;
         var notify = document.getElementById("submitDatePicker").value;
@@ -155,7 +169,8 @@
         return returnval;
     }
 
-    function initPage(){}
+    function initPage() {
+    }
 
 </script>
 
@@ -181,7 +196,7 @@
     </tr>
     <tr>
         <td rowspan="2" colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-            (20)දැනුම් දෙන්නේ කවරකු වශයෙන්ද <s:label value="*" cssStyle="color:red;font-size:10pt"/>
+            දැනුම් දෙන්නේ කවරකු වශයෙන්ද <s:label value="*" cssStyle="color:red;font-size:10pt"/>
             <br>தகவல் வழங்குபவா்
             <br>Capacity for giving information
         </td>
@@ -317,7 +332,7 @@
     </tr>
     <tr>
         <td colspan="2">
-            අනන්‍යතා අංකය  <s:label value="*" cssStyle="color:red;font-size:10pt"/>
+            අනන්‍යතා අංකය <s:label value="*" cssStyle="color:red;font-size:10pt"/>
             <br>அடையாள எண்
             <br>PIN
         </td>
@@ -329,7 +344,8 @@
                  id="notifying_authority_NIC_X"
                  onclick="javascript:addXorV('notifying_authority_NICorPIN','X','error12')">
             <br>
-            <s:textfield id="notifying_authority_NICorPIN" name="notifyingAuthority.notifyingAuthorityPIN" maxLength="10"> </s:textfield>
+            <s:textfield id="notifying_authority_NICorPIN" name="notifyingAuthority.notifyingAuthorityPIN"
+                         maxLength="10"> </s:textfield>
             <img src="<s:url value="/images/search-father.png" />"
                  style="vertical-align:middle; margin-left:20px;" id="notifying_authority_lookup"></td>
         </td>
@@ -346,7 +362,7 @@
     </tr>
     <tr>
         <td colspan="1">
-            තැපැල් ලිපිනය  <s:label value="*" cssStyle="color:red;font-size:10pt"/>
+            තැපැල් ලිපිනය <s:label value="*" cssStyle="color:red;font-size:10pt"/>
             <br>தபால் முகவரி
             <br>Postal Address
         </td>
@@ -389,6 +405,9 @@
 <s:hidden id="p2error7" value="%{getText('declarentDate.text')}"/>
 <s:hidden id="p2error8" value="%{getText('declarentType.text')}"/>
 <s:hidden id="error12" value="%{getText('NIC.error.add.VX')}"/>
+<s:hidden id="error13" value="%{getText('error.declerent.name.empty')}"/>
+<s:hidden id="error14" value="%{getText('error.declerent.pin.empty')}"/>
+<s:hidden id="error15" value="%{getText('error.declerent.address.empty')}"/>
 
 
 <div class="form-submit">
