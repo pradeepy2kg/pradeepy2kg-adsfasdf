@@ -27,11 +27,11 @@
 
 <s:if test="direct">
     <s:url id="markPrint" action="eprDirectMarkPRSCertificate.do" namespace="../prs"/>
-    <s:url id="previous" action="eprBackRegisterDetails.do" namespace="/prs"/>
+    <s:url id="previous" action="eprBackRegisterDetails.do" namespace="../prs"/>
 </s:if>
 <s:else>
     <s:url id="markPrint" action="eprMarkPRSCertificate.do" namespace="../prs"/>
-    <s:url id="previous" action="eprBackPRSSearchList.do" namespace="prs">
+    <s:url id="previous" action="eprBackPRSSearchList.do" namespace="../prs">
         <s:param name="personUKey" value="%{personUKey}"/>
         <s:param name="pageNo" value="%{#request.pageNo}"/>
         <s:param name="locationId" value="%{#request.locationId}"/>
@@ -65,7 +65,7 @@
     <tbody>
     <tr>
         <td>
-            <img src="${pageContext.request.contextPath}/prs/ImageServlet?personId=${person.personUKey}" width="100"
+            <img src="${pageContext.request.contextPath}/prs/ImageServlet?personUKey=${person.personUKey}" width="100"
                  height="100"/>
         </td>
         <td rowspan="2" align="center">
@@ -80,7 +80,7 @@
                         <br>தொடர் இலக்கம்
                         <br>Serial Number
                     </td>
-                    <td width="150px" style="font-size:11pt"><s:label name="personId"/></td>
+                    <td width="150px" style="font-size:11pt"><s:label name="personUKey"/></td>
                 </tr>
             </table>
         </td>

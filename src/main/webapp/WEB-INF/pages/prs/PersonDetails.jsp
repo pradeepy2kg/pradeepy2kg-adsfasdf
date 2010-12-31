@@ -379,7 +379,7 @@
         </td>
         <td>
             <s:url id="personDetails" action="eprPersonDetails">
-                <s:param name="personId" value="%{person.father.personUKey}"/>
+                <s:param name="personUKey" value="%{person.father.personUKey}"/>
             </s:url>
             <s:a href="%{personDetails}">
                 <s:label value="%{person.father.fullNameInOfficialLanguage}"/>
@@ -401,7 +401,7 @@
         </td>
         <td>
             <s:url id="personDetails" action="eprPersonDetails">
-                <s:param name="personId" value="%{person.mother.personUKey}"/>
+                <s:param name="personUKey" value="%{person.mother.personUKey}"/>
             </s:url>
             <s:a href="%{personDetails}">
                 <s:label value="%{person.mother.fullNameInOfficialLanguage}"/>
@@ -437,7 +437,7 @@
             </td>
             <td>
                 <s:url id="personDetails" action="eprPersonDetails">
-                    <s:param name="personId">
+                    <s:param name="personUKey">
                         <s:property value="personUKey"/>
                     </s:param>
                 </s:url>
@@ -476,7 +476,7 @@
             </td>
             <td>
                 <s:url id="personDetails" action="eprPersonDetails">
-                    <s:param name="personId">
+                    <s:param name="personUKey">
                         <s:property value="personUKey"/>
                     </s:param>
                 </s:url>
@@ -571,7 +571,7 @@
                     </td>
                     <td>
                         <s:url id="groomDetails" action="eprPersonDetails">
-                            <s:param name="personId">
+                            <s:param name="personUKey">
                                 <s:property value="groom.personUKey"/>
                             </s:param>
                         </s:url>
@@ -590,7 +590,7 @@
                     </td>
                     <td>
                         <s:url id="brideDetails" action="eprPersonDetails">
-                            <s:param name="personId">
+                            <s:param name="personUKey">
                                 <s:property value="bride.personUKey"/>
                             </s:param>
                         </s:url>
@@ -719,7 +719,7 @@
 </table>
 
 <s:url id="print" action="eprPRSCertificate.do">
-    <s:param name="personId" value="%{person.personUKey}"/>
+    <s:param name="personUKey" value="%{person.personUKey}"/>
 </s:url>
 
 <div id="prsCertificate-page" class="form-submit" style="margin:5px 0 0 10px;margin-right:0px;">

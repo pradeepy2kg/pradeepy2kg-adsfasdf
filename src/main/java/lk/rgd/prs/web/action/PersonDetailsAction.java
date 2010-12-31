@@ -47,7 +47,7 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
     private Set<Address> address;
 
     private Person person;
-    private long personId;
+    private long personUKey;
     private List<Person> children;
     private List<Person> siblings;
 
@@ -59,7 +59,7 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
 
     public String personDetails() {
         logger.debug("getting extended details of an existing person in PRS");
-        person = service.getLoadedObjectByUKey(personId, user);
+        person = service.getLoadedObjectByUKey(personUKey, user);
         gender = GenderUtil.getGender(person.getGender(), user.getPrefLanguage());
         if (person.getRace() != null) {
             race = raceDAO.getNameByPK(person.getRace().getRaceId(), user.getPrefLanguage());
@@ -84,7 +84,7 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
         /*if(!direct){
 
         }*/
-        person = service.getLoadedObjectByUKey(personId, user);
+        person = service.getLoadedObjectByUKey(personUKey, user);
         gender = GenderUtil.getGender(person.getGender(), person.getPreferredLanguage());
         genderEn = GenderUtil.getGender(person.getGender(), AppConstants.ENGLISH);
         if (person.getRace() != null) {
@@ -120,12 +120,12 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
         this.person = person;
     }
 
-    public long getPersonId() {
-        return personId;
+    public long getPersonUKey() {
+        return personUKey;
     }
 
-    public void setPersonId(long personId) {
-        this.personId = personId;
+    public void setPersonUKey(long personUKey) {
+        this.personUKey = personUKey;
     }
 
     public List<Person> getChildren() {
