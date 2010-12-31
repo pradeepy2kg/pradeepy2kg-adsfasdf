@@ -331,7 +331,7 @@
 
     <definition name="epr.deathApproveAndPrint" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/deaths/DeathApprovalAndPrintList.jsp"/>
-        <put-attribute name="title" value="death_approve_print_list.label"/>
+        <put-attribute name="title" value="title.death_approve_print_list.label"/>
     </definition>
 
     <definition name="epr.deathRejectGetComment" extends="epr.template">
