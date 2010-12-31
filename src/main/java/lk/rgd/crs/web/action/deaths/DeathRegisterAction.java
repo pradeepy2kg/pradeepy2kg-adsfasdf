@@ -368,7 +368,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         }
         catch (RGDRuntimeException e) {
             addActionError(getText("error.death.registration.approval.fail"));
-            logger.debug("exception when invoking with prs for approving ");
+            logger.debug("death register approval fails idUKey : {} ", idUKey);
         }
         if (warnings.size() > 0) {
             return "warning";
