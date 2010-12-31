@@ -185,7 +185,6 @@ public class UserManagerImpl implements UserManager {
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void updateUser(User userToUpdate, User adminUser) {
-
         // if one user tries to update another user, does the former have authorization to update a user
         if (!((adminUser.equals(userToUpdate) || adminUser.isAuthorized(Permission.USER_MANAGEMENT)))) {
             handleException(adminUser.getUserName() + " doesn't have permission to update a user",
