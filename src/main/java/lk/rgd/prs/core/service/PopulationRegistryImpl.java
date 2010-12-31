@@ -485,9 +485,13 @@ public class PopulationRegistryImpl implements PopulationRegistry {
                 ErrorCodes.PRS_LOOKUP_BY_KEYS_DENIED);
         }
         Person p = personDao.getByUKey(personUKey);
-        p.getLifeCycleInfo().getCreatedUser().getUserName();
-        p.getLifeCycleInfo().getLastUpdatedUser().getUserName();
-        p.getLifeCycleInfo().getApprovalOrRejectUser(); // this maybe null
+        // TODO this check added after removing nullable false for created user and updated user
+        if (p.getLifeCycleInfo().getCreatedUser() != null && p.getLifeCycleInfo().getLastUpdatedUser() != null
+            && p.getLifeCycleInfo().getApprovalOrRejectUser() != null) {
+            p.getLifeCycleInfo().getCreatedUser().getUserName();
+            p.getLifeCycleInfo().getLastUpdatedUser().getUserName();
+            p.getLifeCycleInfo().getApprovalOrRejectUser(); // this maybe null
+        }
 
         p.getMarriages().size();
         p.getAddresses().size();

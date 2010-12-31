@@ -88,7 +88,7 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
      * This method used to approve person pending approval
      */
     public String approveSelectedPerson() {
-        logger.debug("Approving Person with PersonUKey : {}", personUKey);
+        logger.debug("Approving Person with personUKey : {}", personUKey);
         warnings = service.approvePerson(personUKey, false, user);
 
         if (warnings.isEmpty()) {
@@ -99,8 +99,11 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
                 getSearchResultsPage();
             }
             addActionMessage(getText("message.approval.success"));
+            logger.debug("Approving person with personUKey : {} approved successfully", personUKey);
             return SUCCESS;
         } else {
+            logger.debug("Approving person with personUKey : {} gives warning list with : {} items", personUKey,
+                warnings.size());
             return WARNING;
         }
     }
@@ -114,10 +117,10 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
     }
 
     /**
-     * This method is used to mark PRS certificate as printed for the first time
+     * This method is used to mark PRS certificate as printed for the first time from direct and search list page
      */
     public String markPRSCertificateAsPrinted() {
-        logger.debug("Mark PRS certificate as printed, in direct mode : {}", direct);
+        logger.debug("Mark PRS certificate as printed for personUKey : {} , in direct mode : {}", personUKey, direct);
         if (direct) {
             initPermissions();
         } else {
@@ -130,6 +133,21 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
         // TODO service method for mark certificate as printed
 //        service.markPRSCertificateAsPrinted(personUKey, user);
         addActionMessage(getText("message.certPrint.success"));
+        logger.debug("PRS certificate with personUKey : {} marked as printed successfully", personUKey);
+        return SUCCESS;
+    }
+
+    /**
+     * This method is used to return back from PRS certificate to search list or details page
+     */
+    public String backFromPRSCertificate() {
+        logger.debug("Return back from PRS certificate page in direct mode : {}", direct);
+        if (direct) {
+            // nothing to do
+        } else {
+            populateLocations();
+            getSearchResultsPage();
+        }
         return SUCCESS;
     }
 
