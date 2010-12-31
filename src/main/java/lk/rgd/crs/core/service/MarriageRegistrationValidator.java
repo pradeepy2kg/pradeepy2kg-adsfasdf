@@ -143,7 +143,7 @@ public class MarriageRegistrationValidator {
                 }
             case FEMALE_NOTICE:
                 if (register.getFemale().getAgeAtLastBirthDayFemale() < minAgeForValidMarriage) {
-                    userWarnings.add(new UserWarning(rb.getString("warn.male.age.last.bd.is.less.than.expected"),
+                    userWarnings.add(new UserWarning(rb.getString("warn.female.age.last.bd.is.less.than.expected"),
                         UserWarning.Severity.WARN));
                 }
                 break;

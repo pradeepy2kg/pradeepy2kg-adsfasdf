@@ -96,6 +96,10 @@ public class MarriageRegistrationServiceTest extends TestCase {
         MarriageRegister simpleSecondNotice = marriageRegistrationService.
             getActiveRecordByMRDivisionAndSerialNo(colomboMRDivision, 2010045678L, rg);
         simpleSecondNotice.setSerialOfMaleNotice(2010045685L);
+        simpleSecondNotice.setDateOfMaleNotice(new Date());
+        simpleSecondNotice.getMale().setIdentificationNumberMale("4567891220");
+        simpleSecondNotice.getMale().setDateOfBirthMale(new Date());
+        simpleSecondNotice.setMrDivisionOfMaleNotice(colomboMRDivision);
         //adding
         List<UserWarning> notExpecting = marriageRegistrationService.addSecondMarriageNotice(simpleSecondNotice,
             MarriageNotice.Type.MALE_NOTICE, false, false, rg);
@@ -131,6 +135,12 @@ public class MarriageRegistrationServiceTest extends TestCase {
             getActiveRecordByMRDivisionAndSerialNo(colomboMRDivision, 2010012347L, rg);
 
         femaleNotice.setLicenseCollectType(MarriageRegister.LicenseCollectType.MAIL_TO_MALE);
+
+        femaleNotice.setSerialOfFemaleNotice(2010045687L);
+        femaleNotice.setDateOfFemaleNotice(new Date());
+        femaleNotice.getFemale().setIdentificationNumberFemale("4567891210");
+        femaleNotice.getFemale().setDateOfBirthFemale(new Date());
+        femaleNotice.setMrDivisionOfFemaleNotice(colomboMRDivision);
 
         List<UserWarning> warnings = marriageRegistrationService.addSecondMarriageNotice(femaleNotice,
             MarriageNotice.Type.FEMALE_NOTICE, false, false, rg);
@@ -257,6 +267,9 @@ public class MarriageRegistrationServiceTest extends TestCase {
         noticeInMNAApproved.setSerialOfFemaleNotice(2010078954L);
         noticeInMNAApproved.setMrDivisionOfFemaleNotice(colomboMRDivision);
         noticeInMNAApproved.setDateOfFemaleNotice(new Date());
+        noticeInMNAApproved.getFemale().setIdentificationNumberFemale("4567898210");
+        noticeInMNAApproved.getFemale().setDateOfBirthFemale(new Date());
+
         marriageRegistrationService.addSecondMarriageNotice(noticeInMNAApproved, MarriageNotice.Type.FEMALE_NOTICE,
             true, false, rg);
         //now it's being approved and second being added
@@ -327,6 +340,9 @@ public class MarriageRegistrationServiceTest extends TestCase {
         registerRecord.setSerialOfFemaleNotice(2010056458L);
         registerRecord.setLicenseCollectType(MarriageRegister.LicenseCollectType.MAIL_TO_FEMALE);
         registerRecord.setDateOfFemaleNotice(new Date());
+        registerRecord.getFemale().setIdentificationNumberFemale("4567898270");
+        registerRecord.getFemale().setDateOfBirthFemale(new Date());
+
         registerRecord.setMrDivisionOfFemaleNotice(colomboMRDivision);
         //now adding female
         marriageRegistrationService.addSecondMarriageNotice(registerRecord, MarriageNotice.Type.FEMALE_NOTICE, true, false, rg);
