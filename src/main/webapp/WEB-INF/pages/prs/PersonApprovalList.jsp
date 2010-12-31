@@ -285,7 +285,7 @@
                         <td>
                             <s:if test="status.ordinal() == 2">
                                 <s:url id="printSelected" action="eprPRSCertificate.do">
-                                    <s:param name="personId" value="personUKey"/>
+                                    <s:param name="personUKey" value="personUKey"/>
                                     <s:param name="pageNo" value="%{#request.pageNo}"/>
                                     <s:param name="locationId" value="#request.locationId"/>
                                     <s:param name="printStart" value="#request.printStart"/>
@@ -297,7 +297,7 @@
                             </s:if>
                             <s:elseif test="status.ordinal() == 3">
                                 <s:url id="printSelected" action="eprPRSCertificate.do">
-                                    <s:param name="personId" value="personUKey"/>
+                                    <s:param name="personUKey" value="personUKey"/>
                                     <s:param name="pageNo" value="%{#request.pageNo}"/>
                                     <s:param name="locationId" value="#request.locationId"/>
                                     <s:param name="printStart" value="#request.printStart"/>
@@ -307,7 +307,6 @@
                                          border="none"/>
                                 </s:a>
                             </s:elseif>
-                            <s:else></s:else>
                         </td>
                     </tr>
                 </s:iterator>

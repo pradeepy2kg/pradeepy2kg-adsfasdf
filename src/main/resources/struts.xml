@@ -152,6 +152,17 @@
             <result type="tiles" name="warning">epr.personApproveWarning</result>
         </action>
 
+        <action name="eprBackRegisterDetails" class="lk.rgd.prs.web.action.PersonApprovalAction"
+                method="backFromPRSCertificate">
+            <param name="direct">true</param>
+            <result type="tiles" name="success">epr.personRegisterDetails</result>
+        </action>
+
+        <action name="eprBackPRSSearchList" class="lk.rgd.prs.web.action.PersonApprovalAction"
+                method="backFromPRSCertificate">
+            <result type="tiles" name="success">epr.PersonApproval</result>
+        </action>
+
     </package>
 
     <package name="births" namespace="/births" extends="NG">
