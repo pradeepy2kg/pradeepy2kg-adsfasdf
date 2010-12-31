@@ -655,7 +655,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         locationList = new HashMap<Integer, String>();
         Set<DSDivision> st = userDAO.getUserByPK(userId).getAssignedBDDSDivisions();
         for (DSDivision ds : st) {
-            locationList.putAll(locationDAO.getLocationByDSDivisionID(ds.getDivisionId(), userDAO.getUserByPK(userId).getPrefLanguage()));
+            locationList.putAll(locationDAO.getLocationByDSDivisionID(ds.getDsDivisionUKey(), userDAO.getUserByPK(userId).getPrefLanguage()));
         }
         if (userLocationDAO.getActiveUserLocations(userId, true).size() > 0) {
             User u = userDAO.getUserByPK(userId);
