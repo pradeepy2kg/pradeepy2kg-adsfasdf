@@ -101,7 +101,7 @@ public interface PopulationRegistry {
     public void rejectPersonBeforeApproval(long personUKey, String comment, User user);
 
     /**
-     * Mark specified Population Registry certificate as printed
+     * Mark specified Population Registry's certificate as printed by ADR or higher authority
      *
      * @param personUKey the Person whose certificate to be marked as printed
      * @param user       the user initiating the action

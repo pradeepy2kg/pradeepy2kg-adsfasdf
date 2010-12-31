@@ -182,6 +182,7 @@
     </div>
     <div style="float:left;">
         <s:actionmessage/>
+        <s:actionerror cssStyle="color:red;"/>
     </div>
     <div class="form-submit" style="float:right;">
         <s:submit value="%{getText('bdfSearch.button')}"/>
@@ -227,7 +228,7 @@
                             </s:if>
                         </td>
                         <td align="center">
-                            <s:if test="status.ordinal() != 2">
+                            <s:if test="status.ordinal() == 0 || status.ordinal() == 1">
                                 <s:url id="editSelected" action="eprEditPerson.do">
                                     <s:param name="personUKey" value="personUKey"/>
                                     <s:param name="pageNo" value="%{#request.pageNo}"/>
@@ -241,7 +242,7 @@
                             </s:if>
                         </td>
                         <td align="center">
-                            <s:if test="status.ordinal() != 2">
+                            <s:if test="status.ordinal() == 0 || status.ordinal() == 1">
                                 <s:url id="approveSelected" action="eprApprovePerson.do">
                                     <s:param name="personUKey" value="personUKey"/>
                                     <s:param name="pageNo" value="%{#request.pageNo}"/>
@@ -255,7 +256,7 @@
                             </s:if>
                         </td>
                         <td align="center">
-                            <s:if test="status.ordinal() != 2">
+                            <s:if test="status.ordinal() == 0 || status.ordinal() == 1">
                                 <s:url id="rejectSelected">
                                     <s:param name="personUKey" value="personUKey"/>
                                     <s:param name="pageNo" value="%{#request.pageNo}"/>
@@ -269,7 +270,7 @@
                             </s:if>
                         </td>
                         <td align="center">
-                            <s:if test="status.ordinal() != 2">
+                            <s:if test="status.ordinal() == 0 || status.ordinal() == 1">
                                 <s:url id="deleteSelected">
                                     <s:param name="personUKey" value="personUKey"/>
                                     <s:param name="pageNo" value="%{#request.pageNo}"/>

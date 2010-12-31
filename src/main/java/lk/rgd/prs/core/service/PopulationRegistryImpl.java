@@ -417,8 +417,27 @@ public class PopulationRegistryImpl implements PopulationRegistry {
 
     @Transactional(propagation = Propagation.REQUIRED)
     public void markPRSCertificateAsPrinted(long personUKey, User user) {
-        // TODO still implemeting
-        throw new UnsupportedOperationException();
+        logger.debug("Attempt to mark PRS certificate as marked for PRS entry with personUKey : {}", personUKey);
+        if (!user.isAuthorized(Permission.PRS_MARK_CERT_PRINTED)) {
+            handleException("User : " + user.getUserId() + " is not allowed mark PRS certificate as printed ",
+                ErrorCodes.PRS_CERT_MARK_AS_PRINTED_DENIED);
+        }
+
+        final Person existing = personDao.getByUKey(personUKey);
+        // does th user have access to existing records submitted location
+        validateAccessToLocation(existing.getSubmittedLocation(), user);
+
+        final Person.Status currentState = existing.getStatus();
+        if (currentState == Person.Status.VERIFIED) {
+            existing.setStatus(Person.Status.CERT_PRINTED);
+            // TODO if needed certificate printed location add them here
+            personDao.updatePerson(existing, user);
+            logger.debug("Marked PRS certificate as printed for PRS entry with personUKey : {} by user : {}",
+                personUKey, user.getUserId());
+        } else {
+            handleException("Cannot mark PRS certificate as printed for PRS entry with personUKey : " + personUKey +
+                " Illegal State : " + currentState, ErrorCodes.ILLEGAL_STATE);
+        }
     }
 
     /**

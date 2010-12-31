@@ -2,7 +2,9 @@ package lk.rgd.prs.web.action;
 
 import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.AppConstants;
+import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
+import lk.rgd.common.RGDRuntimeException;
 import lk.rgd.common.api.dao.AppParametersDAO;
 import lk.rgd.common.api.dao.LocationDAO;
 import lk.rgd.common.api.domain.Location;
@@ -12,6 +14,7 @@ import lk.rgd.common.util.WebUtils;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.web.util.CommonUtil;
+import lk.rgd.prs.PRSRuntimeException;
 import lk.rgd.prs.api.domain.Address;
 import lk.rgd.prs.api.domain.Person;
 import lk.rgd.prs.api.service.PopulationRegistry;
@@ -124,16 +127,23 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
         if (direct) {
             initPermissions();
         } else {
-            if (pageNo == 0) {
-                pageNo = 1;
-            }
+            pageNo = (pageNo == 0) ? 1 : pageNo;
             populateLocations();
             getSearchResultsPage();
         }
-        // TODO service method for mark certificate as printed
-//        service.markPRSCertificateAsPrinted(personUKey, user);
-        addActionMessage(getText("message.certPrint.success"));
-        logger.debug("PRS certificate with personUKey : {} marked as printed successfully", personUKey);
+        try {
+            service.markPRSCertificateAsPrinted(personUKey, user);
+            logger.debug("PRS certificate with personUKey : {} marked as printed successfully", personUKey);
+            addActionMessage(getText("message.certPrint.success"));
+        } catch (RGDRuntimeException e) {
+            switch (e.getErrorCode()) {
+                case ErrorCodes.PERMISSION_DENIED:
+                case ErrorCodes.PRS_CERT_MARK_AS_PRINTED_DENIED:
+                case ErrorCodes.ILLEGAL_STATE:
+                    addActionError(getText("message.noPermission"));
+                    break;
+            }
+        }
         return SUCCESS;
     }
 
