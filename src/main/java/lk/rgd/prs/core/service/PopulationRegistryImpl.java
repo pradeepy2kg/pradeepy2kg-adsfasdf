@@ -415,6 +415,12 @@ public class PopulationRegistryImpl implements PopulationRegistry {
         }
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void markPRSCertificateAsPrinted(long personUKey, User user) {
+        // TODO still implemeting
+        throw new UnsupportedOperationException();
+    }
+
     /**
      * @inheritDoc
      */

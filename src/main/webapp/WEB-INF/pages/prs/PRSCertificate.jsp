@@ -31,22 +31,12 @@
 </s:if>
 <s:else>
     <s:url id="markPrint" action="eprMarkPRSCertificate.do" namespace="../prs"/>
-    <%--<s:if test="%{pageNo > 0}">--%>
     <s:url id="previous" action="eprBackPRSSearchList.do" namespace="prs">
         <s:param name="personUKey" value="%{personUKey}"/>
         <s:param name="pageNo" value="%{#request.pageNo}"/>
         <s:param name="locationId" value="%{#request.locationId}"/>
         <s:param name="printStart" value="%{#request.printStart}"/>
     </s:url>
-    <%--</s:if>--%>
-    <%--<s:else>--%>
-    <%--<s:url id="previous" action="eprBackPRSSearchList.do" namespace="prs">--%>
-    <%--<s:param name="personUKey" value="personUKey"/>--%>
-    <%--<s:param name="pageNo" value="1"/>--%>
-    <%--<s:param name="locationId" value="%{#request.locationId}"/>--%>
-    <%--<s:param name="printStart" value="%{#request.printStart}"/>--%>
-    <%--</s:url>--%>
-    <%--</s:else>--%>
 </s:else>
 
 <div id="birth-certificate-outer">
@@ -57,9 +47,6 @@
 <s:hidden name="pageNo" value="%{#request.pageNo}"/>
 <s:hidden name="locationId" value="%{#request.locationId}"/>
 <s:hidden name="printStart" value="%{#request.printStart}"/>
-<s:property value="%{printStart}"/> -
-<s:property value="%{#request.pageNo}"/>      -
-<s:property value="#request.locationId"/>
 
 <div class="form-submit" style="margin:5px 0 0 0;">
     <s:submit value="%{getText('mark_as_print.button')}" type="submit"/>
@@ -71,7 +58,7 @@
     <s:a href="%{previous}"><s:label value="%{getText('previous.label')}"/></s:a>
 </div>
 
-<table style="width:100%; border:none; border-collapse:collapse;">
+<table style="width:100%; border:none;border-collapse:collapse;margin-top:40px;">
     <col width="300px">
     <col width="430px">
     <col width="300px">
