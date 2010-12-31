@@ -53,33 +53,68 @@
     function validate() {
         var errormsg = "";
         var domObject;
-        domObject = document.getElementById("checkUserId");
-        if (isFieldEmpty(domObject)) {
-            errormsg = errormsg + document.getElementById("error1").value + "\n";
-        }
-        domObject = document.getElementById("userName");
-        if (isFieldEmpty(domObject)) {
-            errormsg = errormsg + document.getElementById("error2").value + "\n";
-        }
-        domObject = document.getElementById("userPin");
-        if (isFieldEmpty(domObject)) {
-            errormsg = errormsg + document.getElementById("error3").value + "\n";
-        }
-        else {
-            var reg = /^([0-9]*)$/;
-            if (reg.test(domObject.value.trim()) == false) {
-                errormsg = errormsg + document.getElementById("error4").value + "\n";
+
+        if (document.getElementById("checkUserId") != null) {
+            domObject = document.getElementById("checkUserId");
+            if (isFieldEmpty(domObject)) {
+                errormsg = errormsg + document.getElementById("error1").value + "\n";
             }
         }
-        domObject = document.getElementById("districtId");
-        if (isFieldEmpty(domObject)) {
-            errormsg = errormsg + document.getElementById("error5").value + "\n";
+        if (document.getElementById("userName") != null) {
+            domObject = document.getElementById("userName");
+            if (isFieldEmpty(domObject)) {
+                errormsg = errormsg + document.getElementById("error2").value + "\n";
+            }
         }
-        domObject = document.getElementById("divisionId");
-        if (isFieldEmpty(domObject)) {
-            errormsg = errormsg + document.getElementById("error6").value + "\n";
+        if (document.getElementById("userPin") != null) {
+            domObject = document.getElementById("userPin");
+            if (isFieldEmpty(domObject)) {
+                errormsg = errormsg + document.getElementById("error3").value + "\n";
+            }
+            else {
+                var reg = /^([0-9]*)$/;
+                if (reg.test(domObject.value.trim()) == false) {
+                    errormsg = errormsg + document.getElementById("error4").value + "\n";
+                }
+            }
+        }
+        if (document.getElementById("districtId") != null) {
+            domObject = document.getElementById("districtId");
+            if (isFieldEmpty(domObject)) {
+                errormsg = errormsg + document.getElementById("error5").value + "\n";
+            }
+        }
+        if (document.getElementById("divisionId") != null) {
+            domObject = document.getElementById("divisionId");
+            if (isFieldEmpty(domObject)) {
+                errormsg = errormsg + document.getElementById("error6").value + "\n";
+            }
+        }
+        if (document.getElementById("districtIdCurrent") != null) {
+            domObject = document.getElementById("districtIdCurrent");
+            if (isFieldEmpty(domObject)) {
+                errormsg = errormsg + document.getElementById("error5").value + "\n";
+            }
+        }
+        if (document.getElementById("divisionIdCurrent") != null) {
+            domObject = document.getElementById("divisionIdCurrent");
+            if (isFieldEmpty(domObject)) {
+                errormsg = errormsg + document.getElementById("error6").value + "\n";
+            }
         }
 
+        for (var i = 0; i < document.getElementById("role").options.length; i++) {
+            if (document.getElementById("role").options[i].selected) {
+                if (i == 0 || i == 5) {
+                    if (isMultiSelected(document.getElementById("districtId")) > 1 ||
+                            isMultiSelected(document.getElementById("districtIdCurrent")) > 1 ||
+                            isMultiSelected(document.getElementById("divisionId")) > 1 ||
+                            isMultiSelected(document.getElementById("divisionIdCurrent")) > 1) {
+                        errormsg = "Multiselect not allowed for DEO/ADR";
+                    }
+                }
+            }
+        }
         if (errormsg != "") {
             alert(errormsg);
             return false;
@@ -87,24 +122,37 @@
         return true;
     }
 
+    function isMultiSelected(element) {
+        var count = 0;
+        if (element != null) {
+            for (var i = 0; i < element.options.length; i++) {
+                if (element.options[i].selected) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
     function initPage() {
     }
 </script>
 <div id="user-create-outer">
-    <fieldset style="border:2px solid #c3dcee;margin-left:12em;margin-right:20.5em;margin-top:2.5em;margin-bottom:15px;">
+    <fieldset
+            style="border:2px solid #c3dcee;margin-left:12em;margin-right:20.5em;margin-top:2.5em;margin-bottom:15px;">
         <table class="user-create-table" cellspacing="0" cellpadding="0">
             <s:form name="userCreationForm" action="eprUserCreation" method="POST"
                     onsubmit="javascript:return validate()">
             <s:if test="userId == null">
-            <tr>
-                <td width="50%">
-                    <s:label value="%{getText('user_id.label')}"/>
-                    <s:label value="*" cssStyle="color:red;font-size:12pt;"/>
-                </td>
-                <td width="50%">
-                    <s:textfield name="user.userId" id="checkUserId" cssStyle="text-transform:none;width:90%;margin-left:0;"/>
-                </td>
-            </tr>
+                <tr>
+                    <td width="50%">
+                        <s:label value="%{getText('user_id.label')}"/>
+                        <s:label value="*" cssStyle="color:red;font-size:12pt;"/>
+                    </td>
+                    <td width="50%">
+                        <s:textfield name="user.userId" id="checkUserId"
+                                     cssStyle="text-transform:none;width:90%;margin-left:0;"/>
+                    </td>
+                </tr>
             </s:if>
             <s:else>
                 <s:hidden name="user.userId" id="checkUserId"/>
@@ -115,7 +163,8 @@
                     <s:label value="*" cssStyle="color:red;font-size:12pt;"/>
                 </td>
                 <td>
-                    <s:textfield name="user.userName" id="userName" cssStyle="text-transform:none;width:90%;margin-left:0;"/>
+                    <s:textfield name="user.userName" id="userName"
+                                 cssStyle="text-transform:none;width:90%;margin-left:0;"/>
                 </td>
             </tr>
             <tr>
@@ -124,27 +173,30 @@
                     <s:label value="*" cssStyle="color:red;font-size:12pt;"/>
                 </td>
                 <td>
-                    <s:textfield name="user.pin" id="userPin" cssStyle="text-transform:none;width:90%;margin-left:0;" maxLength="10"/>
+                    <s:textfield name="user.pin" id="userPin" cssStyle="text-transform:none;width:90%;margin-left:0;"
+                                 maxLength="10"/>
                 </td>
 
             </tr>
             <tr>
                 <td><s:label value="Signature in Sinhala And English"/></td>
                 <td>
-                    <s:textarea name="user.sienSignatureText" id="userName" cssStyle="text-transform:none;width:90%;margin-left:0;"/>
+                    <s:textarea name="user.sienSignatureText" id="userName"
+                                cssStyle="text-transform:none;width:90%;margin-left:0;"/>
                 </td>
             </tr>
             <tr>
                 <td><s:label value="Signature in Tamil And English"/></td>
                 <td>
-                    <s:textarea name="user.taenSignatureText" id="userPin" cssStyle="text-transform:none;width:90%;margin-left:0;"/>
+                    <s:textarea name="user.taenSignatureText" id="userPin"
+                                cssStyle="text-transform:none;width:90%;margin-left:0;"/>
                 </td>
             </tr>
             <tr>
                 <td><s:label value="%{getText('preffered_language.label')}"/></td>
                 <td>
                     <s:select list="#@java.util.HashMap@{'en':'English','si':'සිංහල','ta':'Tamil'}"
-                                  name="user.prefLanguage" id="prefferedLanguage" cssStyle="width:90%;margin-left:0;"/>
+                              name="user.prefLanguage" id="prefferedLanguage" cssStyle="width:90%;margin-left:0;"/>
                 </td>
             </tr>
 
@@ -168,19 +220,20 @@
             </div>
             <tr>
                 <s:label>
-                <td>
-                    <s:if test="user != null">
-                        <s:label value="%{getText('assigned_ds_divisions.label')}"/>
-                        <s:label value="*" cssStyle="color:red;font-size:12pt;"/>
-                    </s:if>
-                </td>
-                <td>
-                    <s:if test="user != null">
-                        <s:select list="currentbdDivisionList" name="assignedDivisions" multiple="true"
-                                  size="10"
-                                  id="divisionIdCurrent" value="currentbdDivisionList" cssStyle="margin-left:0;width:90%"/>
-                    </s:if>
-                </td>
+                    <td>
+                        <s:if test="user != null">
+                            <s:label value="%{getText('assigned_ds_divisions.label')}"/>
+                            <s:label value="*" cssStyle="color:red;font-size:12pt;"/>
+                        </s:if>
+                    </td>
+                    <td>
+                        <s:if test="user != null">
+                            <s:select list="currentbdDivisionList" name="assignedDivisions" multiple="true"
+                                      size="10"
+                                      id="divisionIdCurrent" value="currentbdDivisionList"
+                                      cssStyle="margin-left:0;width:90%"/>
+                        </s:if>
+                    </td>
                 </s:label>
             </tr>
                 <%--todo--%>
@@ -221,7 +274,7 @@
             <tr>
                 <td>
                     <s:label>
-                        <s:label value="%{getText('user_role.label')}"/></td>
+                    <s:label value="%{getText('user_role.label')}"/></td>
                 <td><s:select list="roleList" name="roleId" id="role" cssStyle="width:90%;margin-left:0;"/>
                     </s:label>
                 </td>
@@ -242,7 +295,8 @@
                                 </td>
                                 <td>
                                     <div class="form-submit">
-                                        <s:submit value="%{getText('edit_user.label')}" cssStyle="margin-top:10px;margin-right:20px;"/>
+                                        <s:submit value="%{getText('edit_user.label')}"
+                                                  cssStyle="margin-top:10px;margin-right:20px;"/>
                                     </div>
                                 </td>
                             </tr>
@@ -251,7 +305,8 @@
                     </s:if>
                     <s:if test="userId == null">
                         <div class="form-submit">
-                            <s:submit value="%{getText('create_user.label')}" cssStyle="margin-top:10px;margin-right:20px;"/>
+                            <s:submit value="%{getText('create_user.label')}"
+                                      cssStyle="margin-top:10px;margin-right:20px;"/>
                         </div>
                     </s:if>
                 </td>
