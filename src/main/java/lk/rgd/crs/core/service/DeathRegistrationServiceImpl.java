@@ -293,13 +293,16 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
             if (mother != null) {
                 person.setMother(mother);
             }
+            // TODO chathuranga review this state, is it correct?
+            person.setStatus(Person.Status.SEMI_VERIFIED);
+            ecivil.addPerson(person, user);
 
             if (dr.getDeathPerson().getDeathPersonPermanentAddress() != null) {
                 Address address = new Address(dr.getDeathPerson().getDeathPersonPermanentAddress());
                 person.specifyAddress(address);
                 ecivil.addAddress(address, user);
+                ecivil.updatePerson(person, user);
             }
-            ecivil.addPerson(person, user);
             logger.debug("Added person with IDUKey : {} - as dead on the PRS", person.getPersonUKey());
         }
     }
@@ -506,7 +509,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
 
         cal = Calendar.getInstance();
         cal.add(Calendar.YEAR, -5);
-        
+
         data = getDeathDeclarationList(userManager.getUserByID(user), cal.getTime(), new Date());
         if (data.length == 3) {
             data_entry = data[0];
@@ -526,7 +529,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
 
         int data[] = {0, 0, 0};
         List<DeathRegister> deathList = deathRegisterDAO.getByCreatedUser(user, start, end);
-        
+
         for (DeathRegister dr : deathList) {
             if (dr.getStatus() == DeathRegister.State.APPROVED) {
                 data[0] += 1;
