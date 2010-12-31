@@ -291,7 +291,7 @@ function initPage() {
 <div id="death-declaration-form-1-outer">
 <s:form name="deathRegistrationForm1" id="death-registration-form-1" action="eprDeathDeclaration.do" method="POST"
         onsubmit="javascript:return validate()">
-
+ <s:actionerror cssStyle="color:red;"/>
 <table class="table_reg_header_01" style="font-size:9pt">
     <caption></caption>
     <col/>

@@ -37,11 +37,13 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     private final DeathRegisterDAO deathRegisterDAO;
     private final PopulationRegistry ecivil;
     private final UserManager userManager;
+    private final DeathDeclarationValidator deathDeclarationValidator;
 
-    DeathRegistrationServiceImpl(DeathRegisterDAO deathRegisterDAO, UserManager userManager, PopulationRegistry ecivil) {
+    DeathRegistrationServiceImpl(DeathRegisterDAO deathRegisterDAO, UserManager userManager, PopulationRegistry ecivil, DeathDeclarationValidator deathDeclarationValidator) {
         this.deathRegisterDAO = deathRegisterDAO;
         this.userManager = userManager;
         this.ecivil = ecivil;
+        this.deathDeclarationValidator = deathDeclarationValidator;
     }
 
     /**
@@ -50,7 +52,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     @Transactional(propagation = Propagation.REQUIRED)
     public void addLateDeathRegistration(DeathRegister deathRegistration, User user) {
         logger.debug("adding late/missing death registration");
-        DeathDeclarationValidator.validateMinimalRequirments(deathRegistration);
+        deathDeclarationValidator.validateMinimalRequirements(deathRegistration);
         if (deathRegistration.getDeathType() != DeathRegister.Type.LATE_NORMAL && deathRegistration.getDeathType() != DeathRegister.Type.MISSING) {
             handleException("Invalid death type : " + deathRegistration.getDeathType(), ErrorCodes.ILLEGAL_STATE);
         }
@@ -64,7 +66,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     @Transactional(propagation = Propagation.REQUIRED)
     public void addNormalDeathRegistration(DeathRegister deathRegistration, User user) {
         logger.debug("adding normal/sudden death registration");
-        DeathDeclarationValidator.validateMinimalRequirments(deathRegistration);
+        deathDeclarationValidator.validateMinimalRequirements(deathRegistration);
         if (deathRegistration.getDeathType() != DeathRegister.Type.NORMAL && deathRegistration.getDeathType() != DeathRegister.Type.SUDDEN) {
             handleException("Invalid death type : " + deathRegistration.getDeathType(), ErrorCodes.ILLEGAL_STATE);
         }
@@ -75,7 +77,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     private void addDeathRegistration(DeathRegister deathRegistration, User user) {
         validateAccessOfUser(user, deathRegistration);
         //validate minimul requirments
-        DeathDeclarationValidator.validateMinimalRequirments(deathRegistration);
+        deathDeclarationValidator.validateMinimalRequirements(deathRegistration);
         // has this serial number been used already?
         DeathRegister existing = deathRegisterDAO.getActiveRecordByBDDivisionAndDeathSerialNo(deathRegistration.getDeath().getDeathDivision(),
             deathRegistration.getDeath().getDeathSerialNo());
@@ -152,7 +154,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     //todo do validation warnings
     public List<UserWarning> approveDeathRegistration(long deathRegisterIdUKey, User user, boolean ignoreWarnings) {
         //  logger.debug("attempt to approve death registration record : {} ", deathRegisterIdUKey);
-        DeathDeclarationValidator.validateMinimalRequirments(getById(deathRegisterIdUKey, user));
+        deathDeclarationValidator.validateMinimalRequirements(getById(deathRegisterIdUKey, user));
         List<UserWarning> warnings = DeathDeclarationValidator.validateStandardRequirements(
             deathRegisterDAO, getById(deathRegisterIdUKey, user), user);
         if (warnings.isEmpty() || ignoreWarnings) {

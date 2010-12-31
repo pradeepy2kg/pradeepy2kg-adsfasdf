@@ -120,4 +120,8 @@ public class ErrorCodes {
     public static final int INVALID_STATE_FOR_DELETE_BIRTH_ALTERATION = 7004;
     public static final int INVALID_STATE_FOR_MARK_AS_PRINT_BIRTH_ALTERATION = 7005;
 
+    //death registration error code 8001-8999
+    public static final int POSSIBLE_DEATH_REGISTER_SERIAL_NUMBER_DUPLICATION = 8001;
+    public static final int INCOMPLETE_DECLERENT = 8002;
+
 }

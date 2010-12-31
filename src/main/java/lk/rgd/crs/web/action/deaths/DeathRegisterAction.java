@@ -2,6 +2,7 @@ package lk.rgd.crs.web.action.deaths;
 
 import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.AppConstants;
+import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
 import lk.rgd.common.RGDRuntimeException;
 import lk.rgd.common.api.dao.*;
@@ -190,13 +191,25 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                 ddf.setNotifyingAuthority(notifyingAuthority);
                 idUKey = ddf.getIdUKey();
                 if (idUKey == 0) {
-                    if (DeathRegister.Type.NORMAL == deathType || DeathRegister.Type.SUDDEN == deathType) {
-                        service.addNormalDeathRegistration(ddf, user);
-                    } else if (DeathRegister.Type.LATE_NORMAL == deathType || DeathRegister.Type.MISSING == deathType) {
-                        service.addLateDeathRegistration(ddf, user);
+                    try {
+                        if (DeathRegister.Type.NORMAL == deathType || DeathRegister.Type.SUDDEN == deathType) {
+                            service.addNormalDeathRegistration(ddf, user);
+                        } else if (DeathRegister.Type.LATE_NORMAL == deathType || DeathRegister.Type.MISSING == deathType) {
+                            service.addLateDeathRegistration(ddf, user);
+                        }
+                        idUKey = ddf.getIdUKey();
+                        addActionMessage(getText("saveSuccess.label"));
+                    } catch (CRSRuntimeException e) {
+                        logger.debug("adding death registration fails for death register serial number ");
+                        switch (e.getErrorCode()) {
+                            case ErrorCodes.INCOMPLETE_DECLERENT:
+                                addActionError(getText("error.add.fails.check.declerent.info"));
+                                break;
+                            default:
+                                addActionError(getText("error.add.death.registration"));
+                        }
+                        pageNo = 0;
                     }
-                    idUKey = ddf.getIdUKey();
-                    addActionMessage(getText("saveSuccess.label"));
                 } else {
                     if (DeathRegister.Type.NORMAL == deathType || DeathRegister.Type.SUDDEN == deathType
                         || DeathRegister.Type.LATE_NORMAL == deathType || DeathRegister.Type.MISSING == deathType) {
@@ -204,7 +217,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                         addActionMessage(getText("editDataSaveSuccess.label"));
                     }
                 }
-                session.remove(WebConstants.SESSION_DEATH_DECLARATION_BEAN);
+
         }
         populate(ddf);
         return "form" + pageNo;
@@ -387,7 +400,6 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public String directApproveDeath() {
-        //todo include validator
         logger.debug("requested to direct approve Death Declaration with idUKey : {}", idUKey);
         warnings = service.approveDeathRegistration(idUKey, user, ignoreWarning);
         initPermissionForApprovalAndPrint();
@@ -437,16 +449,18 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public String deleteDeath() {
-        logger.debug("requested to delete Death Decalaration with idUKey : {}", idUKey);
+        logger.debug("requested to delete Death Declaration with idUKey : {}", idUKey);
         DeathRegister death = service.getById(idUKey, user);
         if (death.getStatus().equals(DeathRegister.State.DATA_ENTRY)) {
             service.deleteDeathRegistration(idUKey, user);
         }
         noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
         if (deathDivisionId != 0) {
-            deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId), pageNo, noOfRows, user);
+            deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.
+                getBDDivisionByPK(deathDivisionId), pageNo, noOfRows, user);
         } else {
-            deathApprovalAndPrintList = service.getPaginatedListForAllByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);
+            deathApprovalAndPrintList = service.
+                getPaginatedListForAllByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);
         }
         initPermissionForApprovalAndPrint();
         populate();
@@ -502,9 +516,12 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                         deathRegister.setOriginalDCIssueUser(userDAO.getUserByPK(issueUserId));
                         deathRegister.setOriginalDCPlaceOfIssue(locationDAO.getLocation(locationId));
                         service.markDeathCertificateAsPrinted(deathRegister, user);
+                        addActionMessage(getText("message.mark.as.print.success",
+                            new String[]{Long.toString(deathRegister.getDeath().getDeathSerialNo())}));
                     } else {
-                        logger.warn("For the first time Death certificate print issued location and user not valid");
-                        return ERROR;
+                        addActionError(getText("error.mark.as.print",
+                            new String[]{Long.toString(deathRegister.getDeath().getDeathSerialNo())}));
+                        logger.debug("For the first time Death certificate print issued location and user must be filled");
                     }
                 } catch (CRSRuntimeException e) {
                     addActionError("death.error.no.permission.print");

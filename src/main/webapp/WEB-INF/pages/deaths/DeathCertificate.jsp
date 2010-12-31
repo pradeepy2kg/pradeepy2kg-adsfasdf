@@ -43,8 +43,9 @@
     function initPage() {
     }
 </script>
-<s:form action="eprPrintDeathCertificate.do" method="post">
+
 <div id="death-certificate-outer">
+<s:form action="eprPrintDeathCertificate.do" method="post">
 <s:if test="#request.archivedEntryList.size>0">
     <div id="alterations">
         <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;width:400px">
@@ -64,7 +65,8 @@
                             <s:param name="idUKey" value="idUKey"/>
                         </s:url>
                         <td><s:a href="%{viewSelected}" title="%{getText('view.label')}">
-                            <img src="<s:url value='/images/view_1.gif'/>" width="25" height="25" border="none"/></s:a>
+                            <img src="<s:url value='/images/view_1.gif'/>" width="25" height="25"
+                                 border="none"/></s:a>
                         </td>
                     </tr>
                 </s:iterator>
@@ -128,50 +130,13 @@
     </s:url>
 </s:else>
 
-    <%--<s:if test="directPrint">
-        <s:url id="print" action="eprDierctPrintDeathCertificate.do">
-            <s:param name="idUKey" value="#request.idUKey"/>
-        </s:url>
-        <s:url id="cancel" action="eprInitDeathHome.do"/>
-    </s:if>
-
-    <s:else>
-        <s:if test="#request.certificateSearch">
-            <s:url id="print" action="eprMarkDeathCertificateSearch.do">
-                <s:param name="idUKey" value="#request.idUKey"/>
-            </s:url>
-            <s:url id="cancel" action="eprDeathCertificateSearch.do">
-            </s:url>
-        </s:if>
-        <s:else>
-            <s:url id="print" action="eprPrintDeathCertificate.do">
-                <s:param name="idUKey" value="#request.idUKey"/>
-                <s:param name="currentStatus" value="%{#request.currentStatus}"/>
-                <s:param name="pageNo" value="%{#request.pageNo}"/>
-                <s:param name="nextFlag" value="%{#request.nextFlag}"/>
-                <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-                <s:param name="dsDivisionId" value="%{#request.dsDivisionId}"/>
-                <s:param name="deathDivisionId" value="%{#request.deathDivisionId}"/>
-            </s:url>
-            <s:url id="cancel" action="eprDeathBackToPreviousState.do">
-                <s:param name="nextFlag" value="%{#request.nextFlag}"/>
-                <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-                <s:param name="pageNo" value="%{#request.pageNo}"/>
-                <s:param name="currentStatus" value="%{#request.currentStatus}"/>
-                <s:param name="dsDivisionId" value="%{deathRegister.death.deathDivision.dsDivision.dsDivisionUKey}"/>
-                <s:param name="deathDivisionId" value="%{deathRegister.death.deathDivision.bdDivisionUKey}"/>
-            </s:url>
-        </s:else>
-    </s:else>--%>
-
 <s:if test="#request.allowPrintCertificate">
+
     <div id="birthRegistration-page" class="form-submit">
         <s:submit type="button" value="%{getText('mark_as_print.button')}"/>
     </div>
-
-    <div class="form-submit">
-        <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
-        <s:hidden id="printMessage" value="%{getText('print.message')}"/>
+    <div class="next-previous" style="margin:15px 0 0 5px;float:right;">
+        <s:a href="#"><s:label value="%{getText('print.button')}" onclick="printPage()"/></s:a>
     </div>
 </s:if>
 <div class="next-previous" style="margin-top:15px;float:right;">
@@ -552,18 +517,15 @@
     <br>பிறப்பு இறப்பு பதிவு செய்யும் சட்டத்தின்(110 ஆம் அத்தியாயத்தின்) கீழ் பதிவாளர் நாயகம் திணைக்களத்தினால்
     வழங்கப்பட்டது
     <br>Issued under Cap. 110 of the Births and Deaths Registration Act
-    </s:label>
-    <s:if test="#request.allowPrintCertificate">
-    <s:if test="deathRegister.status.ordinal()==1">
+</s:label>
+<s:if test="#request.allowPrintCertificate">
+    <div id="birthRegistration-page" class="form-submit">
+        <s:submit type="button" value="%{getText('mark_as_print.button')}"/>
+    </div>
 
-<div id="birthRegistration-page" class="form-submit">
-    <s:submit type="button" value="%{getText('mark_as_print.button')}"/>
-</div>
-</s:if>
-<div class="form-submit">
-    <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
-    <s:hidden id="printMessage" value="%{getText('print.message')}"/>
-</div>
+    <div class="next-previous" style="margin:15px 0 0 5px;float:right;">
+        <s:a href="#"><s:label value="%{getText('print.button')}" onclick="printPage()"/></s:a>
+    </div>
 </s:if>
 <div class="next-previous" style="margin-top:15px;float:right">
     <s:a href="%{cancel}"><s:label value="%{getText('previous.label')}"/></s:a>
@@ -577,4 +539,6 @@
 <s:hidden name="dsDivisionId" value="%{deathRegister.death.deathDivision.dsDivision.dsDivisionUKey}"/>
 <s:hidden name="deathDivisionId" value="%{deathRegister.death.deathDivision.bdDivisionUKey}"/>
 </s:form>
+
+
 
