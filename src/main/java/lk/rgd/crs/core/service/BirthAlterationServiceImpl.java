@@ -105,7 +105,6 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
     public BirthAlteration getByIDUKey(long idUKey, User user) {
         logger.debug("Loading birth alteration record : {}", idUKey);
         BirthAlteration ba = birthAlterationDAO.getById(idUKey);
-        validateAccessOfUserToEditOrDelete(ba, user);
         return ba;
     }
 
