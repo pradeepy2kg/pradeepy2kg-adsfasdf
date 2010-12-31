@@ -365,10 +365,9 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
             currentStatus);
         try {
             warnings = service.approveDeathRegistration(idUKey, user, ignoreWarning);
-            throw new RGDRuntimeException("", 10);
         }
         catch (RGDRuntimeException e) {
-            addActionError(getText("error.approval.fail"));
+            addActionError(getText("error.death.registration.approval.fail"));
             logger.debug("exception when invoking with prs for approving ");
         }
         if (warnings.size() > 0) {
