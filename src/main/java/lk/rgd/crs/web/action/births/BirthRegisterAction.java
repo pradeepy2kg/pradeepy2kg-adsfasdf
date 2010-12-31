@@ -649,8 +649,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 bcf = service.getById(bdId, user);
                 logger.debug("bdId is {} ", bdId);
                 logger.debug("value of the status of bdf is :{}", bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED);
-                if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED) ||
-                    bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED) {
+                if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
+                    bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
                     addActionError(getText("cp1.error.editNotAllowed"));
                     //otherwise it will populate details while giving error message cannot edit
                     bdf = new BirthDeclaration();
