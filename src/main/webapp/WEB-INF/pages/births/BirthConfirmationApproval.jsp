@@ -210,7 +210,7 @@
                 <tr class="<s:if test="#approvalStatus.odd == true">odd</s:if><s:else>even</s:else>">
                         <%--<td class="table-row-index"><s:property value="%{#approvalStatus.count + recordCounter}"/></td>--%>
                     <td>
-                        <s:if test="register.getStatus().toString() == 'CONFIRMATION_CHANGES_CAPTURED'">
+                        <s:if test="register.getStatus().toString() == 'CONFIRMATION_CHANGES_CAPTURED' & (approvalPendingList.size>1)">
                             <s:checkbox name="index"
                                         onclick="javascript:selectall(document.birth_register_approval_body,document.birth_register_approval_body.allCheck)"
                                         title="%{getText('select.label')}" value="%{#index}"

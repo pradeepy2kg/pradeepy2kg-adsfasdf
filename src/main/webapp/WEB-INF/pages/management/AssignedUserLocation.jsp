@@ -156,7 +156,6 @@
                             <th></th>
                             <th></th>
                             <th></th>
-                            <th></th>
                             <s:set name="allowEdit" value="true"/>
                         </tr>
                         </thead>
@@ -170,10 +169,10 @@
                                     <s:param name="userId" value="userId"/>
                                     <s:param name="locationId" value="locationId"/>
                                 </s:url>
-                                <%--<s:url id="setPLocation" action="eprSetPrimaryLocation.do">
-                                    <s:param name="userId" value="userId"/>
-                                    <s:param name="locationId" value="locationId"/>
-                                </s:url>--%>
+                                    <%--<s:url id="setPLocation" action="eprSetPrimaryLocation.do">
+                                        <s:param name="userId" value="userId"/>
+                                        <s:param name="locationId" value="locationId"/>
+                                    </s:url>--%>
                                 <s:url id="editSelected" action="eprInitUserCreation.do">
                                     <s:param name="userId" value="userId"/>
                                 </s:url>
@@ -207,13 +206,11 @@
                                                 src="<s:url value='/images/reject.gif'/>" width="25" height="25"
                                                 border="none"/></s:a>
                                     </s:if>
-                                </td>
-                                <td align="center">
-                                    <s:if test="!(lifeCycleInfo.active)">
+                                    <s:else>
                                         <s:a href="%{activeSelected}"><img
                                                 src="<s:url value='/images/approve.gif'/>" width="25" height="25"
                                                 border="none"/></s:a>
-                                    </s:if>
+                                    </s:else>
                                 </td>
                                 <td align="center">
                                     <s:if test="lifeCycleInfo.active">
