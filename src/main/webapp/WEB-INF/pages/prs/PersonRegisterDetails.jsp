@@ -6,12 +6,11 @@
     function initPage() {
     }
 </script>
-<%--TODO uncomment following --%>
-
-<s:actionmessage cssStyle="text-align:left;"/>
-
+<div id="prs-details-message" style="width:1030px;padding:10px;">
+    <s:actionmessage cssStyle="text-align:left;"/>
+</div>
 <s:url id="print" action="eprDirectPRSCertificate.do">
-    <s:param name="personId" value="#request.personUKey"/>
+    <s:param name="personUKey" value="#request.personUKey"/>
 </s:url>
 <s:url id="newEntry" action="eprExistingPersonRegInit.do"/>
 <s:url id="edit" action="eprEditPerson.do">
