@@ -1123,7 +1123,12 @@
         <action name="eprMarkBirthAlterationAsPrint" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
                 method="markAlterationNoticeAsPrinted">
             <result name="success" type="tiles">epr.birthAlterationPendingApproval</result>
-            <result name="success" type="tiles">epr.birthAlterationPendingApproval</result>
+            <result name="error" type="tiles">epr.birthAlterationPendingApproval</result>
+            <result name="pageLoad" type="redirectAction">
+                <param name="actionName">eprPrintBirthAlterarionNotice</param>
+                <param name="idUKey">${idUKey}</param>
+
+            </result>
         </action>
         <!--death alteration related actions-->
         <action name="eprDeathAlterationSearchHome" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"

@@ -323,13 +323,20 @@
                     </s:if>
                 </td>
                 <td align="center">
-                    <s:if test="(status.ordinal()==1)">
+                    <s:if test="(status.ordinal()==1 || status.ordinal()==2)">
                         <s:url id="applySelected" action="eprPrintBirthAlterarionNotice.do">
                             <s:param name="idUKey" value="idUKey"/>
                         </s:url>
-                        <s:a href="%{applySelected}">
-                            <img src="<s:url value='/images/print_icon.gif'/>" width="25" height="25"
-                                 border="none"/></s:a>
+                        <s:if test="status.ordinal()==1 ">
+                            <s:a href="%{applySelected}" title="%{getText('toolTip.print')}">
+                                <img src="<s:url value='/images/print_icon.gif'/>" width="25" height="25"
+                                     border="none"/></s:a>
+                        </s:if>
+                        <s:else>
+                            <s:a href="%{applySelected}" title="%{getText('toolTip.rePrint')}">
+                                <img src="<s:url value='/images/print_icon.gif'/>" width="25" height="25"
+                                     border="none"/></s:a>
+                        </s:else>
                     </s:if>
                 </td>
             </tr>
