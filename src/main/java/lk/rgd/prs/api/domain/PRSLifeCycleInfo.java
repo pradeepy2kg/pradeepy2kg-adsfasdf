@@ -31,7 +31,7 @@ public class PRSLifeCycleInfo implements Serializable, Cloneable {
 
     // The database row level created user (i.e. user entering the record to the system)
     @OneToOne (fetch = FetchType.LAZY)
-    @JoinColumn(name = "createdUserId", nullable = false)
+    @JoinColumn(name = "createdUserId", nullable = true)
     private User createdUser;
 
     // The database row level last updated time
@@ -41,7 +41,7 @@ public class PRSLifeCycleInfo implements Serializable, Cloneable {
 
     // The database row level last updated user
     @OneToOne (fetch = FetchType.LAZY)
-    @JoinColumn(name = "lastUpdatedUserId", nullable = false)
+    @JoinColumn(name = "lastUpdatedUserId", nullable = true)
     private User lastUpdatedUser;
 
     @Column(nullable = false, columnDefinition = "integer default 1")
