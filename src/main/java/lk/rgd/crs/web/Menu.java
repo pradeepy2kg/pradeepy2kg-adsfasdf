@@ -119,8 +119,6 @@ public class Menu {
         // PRS links for DEO
         deoPRSLink.put("eprExistingPersonRegInit.do", new Link("prs.personRegistration.label", "/ecivil/prs/", "eprExistingPersonRegInit.do", Permission.PRS_ADD_PERSON));
         deoPRSLink.put("eprExistingPersonRegistration.do", new Link(null, "/ecivil/prs/", "eprExistingPersonRegistration.do", Permission.PRS_ADD_PERSON));
-        // TODO chathuranga this should be moved to ADR later
-        deoPRSLink.put("eprPRSCertificate.do", new Link(null, "/ecivil/prs/", "eprPRSCertificate.do", Permission.PRS_PRINT_CERT));
 
         // PRS links for ADR
         adrPRSLink.putAll(deoPRSLink);
@@ -135,6 +133,8 @@ public class Menu {
         adrPRSLink.put("eprDirectApprovePerson.do", new Link(null, "/ecivil/prs/", "eprDirectApprovePerson.do", Permission.PRS_APPROVE_PERSON));
         adrPRSLink.put("eprMarkPRSCertificate.do", new Link(null, "/ecivil/prs/", "eprMarkPRSCertificate.do", Permission.PRS_PRINT_CERT));
         adrPRSLink.put("eprDirectMarkPRSCertificate.do", new Link(null, "/ecivil/prs/", "eprDirectMarkPRSCertificate.do", Permission.PRS_PRINT_CERT));
+        adrPRSLink.put("eprPRSCertificate.do", new Link(null, "/ecivil/prs/", "eprPRSCertificate.do", Permission.PRS_PRINT_CERT));
+        adrPRSLink.put("eprDirectPRSCertificate.do", new Link(null, "/ecivil/prs/", "eprDirectPRSCertificate.do", Permission.PRS_PRINT_CERT));
 
         // PRS links for ARG
         argPRSLink.putAll(adrPRSLink);

@@ -101,6 +101,14 @@ public interface PopulationRegistry {
     public void rejectPersonBeforeApproval(long personUKey, String comment, User user);
 
     /**
+     * Mark specified Population Registry certificate as printed
+     *
+     * @param personUKey the Person whose certificate to be marked as printed
+     * @param user       the user initiating the action
+     */
+    public void markPRSCertificateAsPrinted(long personUKey, User user);
+
+    /**
      * Update a Person on the PRS
      *
      * @param person the Person to be updated. Note, the PRS does not allow deletion of rows

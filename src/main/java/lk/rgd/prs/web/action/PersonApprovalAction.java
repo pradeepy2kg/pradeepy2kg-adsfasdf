@@ -114,27 +114,8 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
     }
 
     /**
-     * This method is used to load PRS certificate
+     * This method is used to mark PRS certificate as printed for the first time
      */
-    /*public String initPRSCertificate() {
-        person = service.getLoadedObjectByUKey(personId, user);
-        gender = GenderUtil.getGender(person.getGender(), person.getPreferredLanguage());
-        genderEn = GenderUtil.getGender(person.getGender(), AppConstants.ENGLISH);
-        if (person.getRace() != null) {
-            race = raceDAO.getNameByPK(person.getRace().getRaceId(), person.getPreferredLanguage());
-            raceEn = raceDAO.getNameByPK(person.getRace().getRaceId(), AppConstants.ENGLISH);
-        }
-        if (person.getAddresses() != null) {
-            for (Address address : person.getAddresses()) {
-                if (address.isPermanent()) {
-                    permanentAddress = address;
-                    break;
-                }
-            }
-        }
-        return SUCCESS;
-    }*/
-
     public String markPRSCertificateAsPrinted() {
         logger.debug("Mark PRS certificate as printed, in direct mode : {}", direct);
         if (direct) {
@@ -146,6 +127,9 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
             populateLocations();
             getSearchResultsPage();
         }
+        // TODO service method for mark certificate as printed
+//        service.markPRSCertificateAsPrinted(personUKey, user);
+        addActionMessage(getText("message.certPrint.success"));
         return SUCCESS;
     }
 
