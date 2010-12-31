@@ -32,6 +32,11 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
     private Map session;
     private User user;
 
+    private boolean direct;
+    private int locationId;
+    private int pageNo;
+    private int printStart;
+
     private String gender;
     private String genderEn;
     private String lifeStatus;
@@ -76,6 +81,9 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
      * This method is used to load PRS certificate
      */
     public String initPRSCertificate() {
+        /*if(!direct){
+
+        }*/
         person = service.getLoadedObjectByUKey(personId, user);
         gender = GenderUtil.getGender(person.getGender(), person.getPreferredLanguage());
         genderEn = GenderUtil.getGender(person.getGender(), AppConstants.ENGLISH);
@@ -91,14 +99,6 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
                 }
             }
         }
-        return SUCCESS;
-    }
-
-    /**
-     * This method is used to load existing person registration form
-     */
-    public String personRegistrationInit() {
-        logger.debug("getting extended details of an existing person in PRS");
         return SUCCESS;
     }
 
@@ -174,6 +174,38 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
 
     public void setCivilStatus(String civilStatus) {
         this.civilStatus = civilStatus;
+    }
+
+    public boolean isDirect() {
+        return direct;
+    }
+
+    public void setDirect(boolean direct) {
+        this.direct = direct;
+    }
+
+    public int getLocationId() {
+        return locationId;
+    }
+
+    public void setLocationId(int locationId) {
+        this.locationId = locationId;
+    }
+
+    public int getPageNo() {
+        return pageNo;
+    }
+
+    public void setPageNo(int pageNo) {
+        this.pageNo = pageNo;
+    }
+
+    public int getPrintStart() {
+        return printStart;
+    }
+
+    public void setPrintStart(int printStart) {
+        this.printStart = printStart;
     }
 
     public String getGenderEn() {

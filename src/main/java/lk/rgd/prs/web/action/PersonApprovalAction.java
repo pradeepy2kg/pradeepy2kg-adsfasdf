@@ -1,14 +1,18 @@
 package lk.rgd.prs.web.action;
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.AppConstants;
+import lk.rgd.Permission;
 import lk.rgd.common.api.dao.AppParametersDAO;
 import lk.rgd.common.api.dao.LocationDAO;
 import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.util.GenderUtil;
 import lk.rgd.common.util.WebUtils;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.web.util.CommonUtil;
+import lk.rgd.prs.api.domain.Address;
 import lk.rgd.prs.api.domain.Person;
 import lk.rgd.prs.api.service.PopulationRegistry;
 import org.apache.struts2.interceptor.SessionAware;
@@ -41,6 +45,10 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
     private Map<Integer, String> locationList;
     private List<Person> searchResultList;
     private List<UserWarning> warnings;
+
+    private boolean direct;
+    private boolean allowApprove;
+    private boolean allowPrint;
 
     private int locationId;
     private int pageNo;
@@ -84,8 +92,12 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
         warnings = service.approvePerson(personUKey, false, user);
 
         if (warnings.isEmpty()) {
-            populateLocations();
-            getSearchResultsPage();
+            if (direct) {
+                initPermissions();
+            } else {
+                populateLocations();
+                getSearchResultsPage();
+            }
             addActionMessage(getText("message.approval.success"));
             return SUCCESS;
         } else {
@@ -98,6 +110,42 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
      */
     public String approveIgnoreWarnings() {
         // TODO
+        return SUCCESS;
+    }
+
+    /**
+     * This method is used to load PRS certificate
+     */
+    /*public String initPRSCertificate() {
+        person = service.getLoadedObjectByUKey(personId, user);
+        gender = GenderUtil.getGender(person.getGender(), person.getPreferredLanguage());
+        genderEn = GenderUtil.getGender(person.getGender(), AppConstants.ENGLISH);
+        if (person.getRace() != null) {
+            race = raceDAO.getNameByPK(person.getRace().getRaceId(), person.getPreferredLanguage());
+            raceEn = raceDAO.getNameByPK(person.getRace().getRaceId(), AppConstants.ENGLISH);
+        }
+        if (person.getAddresses() != null) {
+            for (Address address : person.getAddresses()) {
+                if (address.isPermanent()) {
+                    permanentAddress = address;
+                    break;
+                }
+            }
+        }
+        return SUCCESS;
+    }*/
+
+    public String markPRSCertificateAsPrinted() {
+        logger.debug("Mark PRS certificate as printed, in direct mode : {}", direct);
+        if (direct) {
+            initPermissions();
+        } else {
+            if (pageNo == 0) {
+                pageNo = 1;
+            }
+            populateLocations();
+            getSearchResultsPage();
+        }
         return SUCCESS;
     }
 
@@ -196,6 +244,16 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
     }
 
     /**
+     * This method used to show/hide specific links in JSPs according to user permissions
+     */
+    private void initPermissions() {
+        allowPrint = user.isAuthorized(Permission.PRS_PRINT_CERT);
+        if (logger.isDebugEnabled()) {
+            logger.debug("User : " + user.getUserId() + " is allowed to print PRS certificate : " + allowPrint);
+        }
+    }
+
+    /**
      * This method used to set searching fields back to initial state
      */
     private void clearSearchFieldValues() {
@@ -241,6 +299,30 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
 
     public void setWarnings(List<UserWarning> warnings) {
         this.warnings = warnings;
+    }
+
+    public boolean isDirect() {
+        return direct;
+    }
+
+    public void setDirect(boolean direct) {
+        this.direct = direct;
+    }
+
+    public boolean isAllowApprove() {
+        return allowApprove;
+    }
+
+    public void setAllowApprove(boolean allowApprove) {
+        this.allowApprove = allowApprove;
+    }
+
+    public boolean isAllowPrint() {
+        return allowPrint;
+    }
+
+    public void setAllowPrint(boolean allowPrint) {
+        this.allowPrint = allowPrint;
     }
 
     public int getLocationId() {
