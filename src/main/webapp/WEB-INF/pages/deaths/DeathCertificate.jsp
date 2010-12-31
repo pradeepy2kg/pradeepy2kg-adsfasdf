@@ -22,6 +22,10 @@
             display: none;
         }
 
+        #locations {
+            display: none;
+        }
+
         td {
             font-size: 9pt;
         }
@@ -130,18 +134,6 @@
     </s:url>
 </s:else>
 
-<s:if test="#request.allowPrintCertificate">
-
-    <div id="birthRegistration-page" class="form-submit">
-        <s:submit type="button" value="%{getText('mark_as_print.button')}"/>
-    </div>
-    <div class="next-previous" style="margin:15px 0 0 5px;float:right;">
-        <s:a href="#"><s:label value="%{getText('print.button')}" onclick="printPage()"/></s:a>
-    </div>
-</s:if>
-<div class="next-previous" style="margin-top:15px;float:right;">
-    <s:a href="%{cancel}"><s:label value="%{getText('previous.label')}"/></s:a>
-</div>
 
 <table style="width: 100%; border:none; border-collapse:collapse; ">
     <col width="250px"/>
@@ -149,6 +141,22 @@
     <col width="250px"/>
 
     <tbody>
+    <tr>
+        <td colspan="3" align="left">
+            <s:if test="#request.allowPrintCertificate">
+                <div id="birthRegistration-page" class="form-submit">
+                    <s:submit type="button" value="%{getText('mark_as_print.button')}"/>
+                </div>
+                <div class="next-previous" style="margin:15px 0 0 5px;float:right;">
+                    <s:a href="%{printPage}" onclick="printPage()"><s:label value="%{getText('print.button')}"/></s:a>
+                    <s:hidden id="printMessage" value="%{getText('print.message')}"/>
+                </div>
+            </s:if>
+            <div class="next-previous" style="margin-top:15px;float:right;">
+                <s:a href="%{cancel}"><s:label value="%{getText('previous.label')}"/></s:a>
+            </div>
+        </td>
+    </tr>
     <tr>
         <td rowspan="3"></td>
         <td rowspan="2" align="center">
@@ -522,9 +530,9 @@
     <div id="birthRegistration-page" class="form-submit">
         <s:submit type="button" value="%{getText('mark_as_print.button')}"/>
     </div>
-
     <div class="next-previous" style="margin:15px 0 0 5px;float:right;">
-        <s:a href="#"><s:label value="%{getText('print.button')}" onclick="printPage()"/></s:a>
+        <s:a href="%{printPage}" onclick="printPage()"><s:label value="%{getText('print.button')}"/></s:a>
+        <s:hidden id="printMessage" value="%{getText('print.message')}"/>
     </div>
 </s:if>
 <div class="next-previous" style="margin-top:15px;float:right">
