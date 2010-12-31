@@ -368,6 +368,30 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
     }
 
     /**
+     * @inheriteDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void markBirthAlterationNoticeAsPrinted(long idUKey, User user) {
+        logger.debug("attempt to mark birth alteration notice as printed for idUKey : {}", idUKey);
+        //any one can mark as printed so  no need to check the permissions only checks the state
+        BirthAlteration existing = birthAlterationDAO.getById(idUKey);
+        if (existing != null) {
+            if (existing.getStatus() == BirthAlteration.State.FULLY_APPROVED) {
+                existing.getLifeCycleInfo().setCertificateGeneratedTimestamp(new Date());
+                existing.getLifeCycleInfo().setCertificateGeneratedUser(user);
+                existing.setStatus(BirthAlteration.State.PRINTED);
+                birthAlterationDAO.updateBirthAlteration(existing, user);
+            } else {
+                handleException("invalid state for mark birth alteration as printed idUKey: " + idUKey + " state :" +
+                    existing.getStatus(), ErrorCodes.INVALID_STATE_FOR_MARK_AS_PRINT_BIRTH_ALTERATION);
+            }
+        } else {
+            handleException("unable find birth alteration for  mark  as printed idUKey :" + idUKey,
+                ErrorCodes.CAN_NOT_FIND_BIRTH_ALTERATION);
+        }
+    }
+
+    /**
      * Checks if the user can edit or delete a birth alteration entry before approval by an ARG
      * <p/>
      * A DEO or ADR at the same "SubmissionLocation" can edit or delete an entry at data entry stage. Any other who has

@@ -153,4 +153,12 @@ public interface BirthAlterationService {
      * @param user    user who performs the action
      */
     public void rejectBirthAlteration(long idUKey, String comment, User user);
+
+    /**
+     * marking birth alteration notice as printed
+     *
+     * @param idUKey idUKey of the birth alteration notice
+     * @param user   user who performs the action
+     */
+    public void markBirthAlterationNoticeAsPrinted(long idUKey, User user);
 }

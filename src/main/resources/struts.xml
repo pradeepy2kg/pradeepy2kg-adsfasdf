@@ -1119,6 +1119,12 @@
             <result type="tiles" name="success">epr.printBirthAlterarionNotice</result>
             <result type="tiles" name="error">epr.birthAlterationPendingApproval</result>
         </action>
+
+        <action name="eprMarkBirthAlterationAsPrint" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
+                method="markAlterationNoticeAsPrinted">
+            <result name="success" type="tiles">epr.birthAlterationPendingApproval</result>
+            <result name="success" type="tiles">epr.birthAlterationPendingApproval</result>
+        </action>
         <!--death alteration related actions-->
         <action name="eprDeathAlterationSearchHome" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"
                 method="deathAlterationSearch">
