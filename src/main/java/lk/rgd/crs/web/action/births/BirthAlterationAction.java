@@ -455,8 +455,9 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
     public String printBirthAlterationNotice() {
         logger.debug("attempt to print birth alteration notice ,alteration idUKey : {}", idUKey);
         birthAlteration = alterationService.getByIDUKey(idUKey, user);
+        BirthDeclaration birthRegister;
         if (birthAlteration != null) {
-            BirthDeclaration birthRegister = service.getById(birthAlteration.getBdfIDUKey());
+            birthRegister = service.getById(birthAlteration.getBdfIDUKey());
             String preferedLan = birthRegister.getRegister().getPreferredLanguage();
             switch (birthAlteration.getType()) {
                 case TYPE_27:
@@ -479,6 +480,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         populateBirthAlterationNotice(birthAlteration);
         addActionMessage(getText("message.success.print.birth.alteration.notice"));
         logger.debug("successfully printed alteration notice for alteration idUKey : {} ", idUKey);
+        language = birthRegister.getRegister().getPreferredLanguage();
         return SUCCESS;
     }
 

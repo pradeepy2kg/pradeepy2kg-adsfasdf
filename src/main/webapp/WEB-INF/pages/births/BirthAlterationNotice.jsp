@@ -150,6 +150,13 @@
     <s:iterator value="changesList">
         <tr>
             <td>
+                <s:if test="language=='si'">
+                    <s:label value="%{getText('label.'+fieldConstant+'.1')}"/>
+                </s:if>
+                <s:else>
+                    <s:label value="%{getText('label.'+fieldConstant+'.2')}"/>
+                </s:else>
+                <br>
                 <s:label value="%{getText('label.'+fieldConstant)}"/>
             </td>
             <td>
@@ -306,6 +313,13 @@
     <s:iterator value="changesList">
         <tr>
             <td>
+                <s:if test="language=='si'">
+                    <s:label value="%{getText('label.'+fieldConstant+'.1')}"/>
+                </s:if>
+                <s:else>
+                    <s:label value="%{getText('label.'+fieldConstant+'.2')}"/>
+                </s:else>
+                <br>
                 <s:label value="%{getText('label.'+fieldConstant)}"/>
             </td>
             <td>
