@@ -499,4 +499,16 @@ public interface MarriageRegistrationService {
      * @return CommonStatistics object which encapsulated all the birth statistics information
      */
     public CommonStatistics getMarriageStatisticsForUser(String user);
+
+    /**
+     * Return the root path to the scanned copies of marriage certificates
+     * @return the root file system path to the scanned copies
+     */
+    public String getContentRoot();
+
+    /**
+     * Return the content type of scanned marriage certificates
+     * @return the content type of scanned certificate images
+     */
+    public String getContentType();
 }
