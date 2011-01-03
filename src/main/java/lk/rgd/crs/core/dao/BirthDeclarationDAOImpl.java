@@ -141,6 +141,20 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public BirthDeclaration getActiveRecordBySerialNo(long bdfSerialNo) {
+        Query q = em.createNamedQuery("findBirthDeclarationBySerialNo");
+        q.setParameter("bdfSerialNo", bdfSerialNo);
+        try {
+            return (BirthDeclaration) q.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getByBDDivisionStatusAndRegisterDateRange(BDDivision birthDivision,
         BirthDeclaration.State status, Date startDate, Date endDate, int pageNo, int noOfRows) {
@@ -346,7 +360,7 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
         q.setParameter("status", status);
         q.setParameter("startDate", startDate);
         q.setParameter("endDate", endDate);
-        return ((Long)q.getSingleResult()).intValue();
+        return ((Long) q.getSingleResult()).intValue();
     }
 
     /**
