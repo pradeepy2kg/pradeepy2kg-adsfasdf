@@ -175,6 +175,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      * @return String
      */
     public String filter() {
+        //TODO: this method has to be refactored
         logger.debug("confirmation flag : {}", confirmationApprovalFlag);
         //todo
         setPageNo(1);
@@ -185,8 +186,10 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         }
 
         noOfRows = appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE);
+        logger.debug("Rows per page {}", noOfRows);
         approvalPendingList = new ArrayList<BirthDeclaration>();
         if (confirmationApprovalFlag) {
+            //TODO: search birth confirmation by serial number
             if (bdId > 0) {
                 try {
                     bdf = service.getById(bdId, user);
@@ -215,9 +218,15 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         } else {
             if (bdfSerialNo > 0) {
                 if (birthDivisionId == 0) {
-                   bdf = service.getActiveRecordBySerialNo(bdfSerialNo, user);
+                    try {
+                        bdf = service.getActiveRecordBySerialNo(bdfSerialNo, user, BirthDeclaration.State.DATA_ENTRY);
+                    } catch (Exception e) {
+                        logger.error("Error in finding Birth Decleration by Serial Number");
+                        logger.error(e.getMessage());
+                    }
                 } else {
                     try {
+                        //TODO: filter by status - DATA_ENTRY
                         bdf = service.getActiveRecordByBDDivisionAndSerialNo(
                             bdDivisionDAO.getBDDivisionByPK(birthDivisionId), bdfSerialNo, user);
                     }
