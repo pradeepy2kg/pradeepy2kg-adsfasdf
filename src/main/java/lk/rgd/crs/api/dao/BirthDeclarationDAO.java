@@ -110,6 +110,14 @@ public interface BirthDeclarationDAO {
     public BirthDeclaration getActiveRecordByBDDivisionAndSerialNo(BDDivision bdDivision, long serialNo);
 
     /**
+     * Get the active record by Serial number
+     *
+     * @param serialNo Serial Number of the Birth Decleration
+     * @return the BDF marked as active, or null if it doesn't exist
+     */
+    public BirthDeclaration getActiveRecordBySerialNo(long serialNo);
+
+    /**
      * Returns a limited set of BirthDeclarations for a selected BD Division, selected range of registration dates in
      * particular status.
      * Results are ordered on the descending dateOfRegistration. pageNo  and noOfRows used for pagination
@@ -308,7 +316,7 @@ public interface BirthDeclarationDAO {
      *
      * @param user  created user
      * @param start
-     *@param end @return list of birth declarations
+     * @param end   @return list of birth declarations
      */
     public List<BirthDeclaration> getByCreatedUser(User user, Date start, Date end);
 }

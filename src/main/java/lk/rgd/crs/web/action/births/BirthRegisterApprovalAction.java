@@ -214,12 +214,16 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             }
         } else {
             if (bdfSerialNo > 0) {
-                try {
-                    bdf = service.getActiveRecordByBDDivisionAndSerialNo(
-                        bdDivisionDAO.getBDDivisionByPK(birthDivisionId), bdfSerialNo, user);
-                }
-                catch (Exception e) {
-                    logger.error("inside filter() : {} ", e);
+                if (birthDivisionId == 0) {
+                   bdf = service.getActiveRecordBySerialNo(bdfSerialNo, user);
+                } else {
+                    try {
+                        bdf = service.getActiveRecordByBDDivisionAndSerialNo(
+                            bdDivisionDAO.getBDDivisionByPK(birthDivisionId), bdfSerialNo, user);
+                    }
+                    catch (Exception e) {
+                        logger.error("inside filter() : {} ", e);
+                    }
                 }
                 if (bdf != null) {
                     approvalPendingList.add(bdf);
