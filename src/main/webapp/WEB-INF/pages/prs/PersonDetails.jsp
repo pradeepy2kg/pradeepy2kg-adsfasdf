@@ -163,6 +163,7 @@
     </tr>
     </tbody>
 </table>
+
 <s:if test="person.countries.size() != 0">
     <table style="width:100%; border:none; border-collapse:collapse;">
         <tr>
@@ -207,7 +208,7 @@
         </s:iterator>
         </tbody>
     </table>
-
+    <br/>
 </s:if>
 <s:else>
     <table style="width:100%; border:none; border-collapse:collapse;">
@@ -216,114 +217,129 @@
                 වෙනත් රටවල පුරවැසි භාවයන් පිළිබදව විස්තර නොමැත.
                 <br>வேறு நாட்டினது பிரஜாவுரிமை சம்பந்தமான விபரங்கள் இல்லை
                 <br>Citizenships and Passport Details not available.
+                <hr/>
             </td>
         </tr>
     </table>
 </s:else>
-<br>
-<table style="width:100%; border:none; border-collapse:collapse;">
-    <tr>
-        <td align="center" style="font-size:12pt;">
-            පදිංචිය සහ සම්බන්ධ කිරීමේ තොරතුරු
-            <br>வேறு நாடுகளில் பிரஜாவுரிமை
-            <br>Residence and Contact details
-        </td>
-    </tr>
-</table>
 
-<table class="table_reg_page_05" cellspacing="0" cellpadding="0"
-       style="margin-bottom:20px;margin-top:10px;font-size:10pt;">
-    <col width="200px">
-    <col width="300px">
-    <col width="100px">
-    <col width="100px">
-    <col width="100px">
-    <col width="100px">
-    <col width="130px">
-    <tbody>
-    <tr>
-        <td>
-            වර්තමාන ලිපිනය
-            <br>தற்போதைய வதிவிட
-            <br>Current Address
-        </td>
-        <td colspan="2">
-            <s:label value="%{person.lastAddress}"/>
-        </td>
-        <td>
-            ආරම්භය
-            <br> மின்னஞ்சல்
-            <br>Start
-        </td>
-        <td colspan="3">
-            <s:if test="person.lastAddress.startDate != null">
-                <s:label value="%{person.lastAddress.startDate}"/><br>
-                <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
+<s:if test="person.lastAddress != null">
+    <table style="width:100%; border:none; border-collapse:collapse;">
+        <tr>
+            <td align="center" style="font-size:12pt;">
+                පදිංචිය සහ සම්බන්ධ කිරීමේ තොරතුරු
+                <br>வேறு நாடுகளில் பிரஜாவுரிமை
+                <br>Residence and Contact details
+            </td>
+        </tr>
+    </table>
+
+    <table class="table_reg_page_05" cellspacing="0" cellpadding="0"
+           style="margin-bottom:20px;margin-top:10px;font-size:10pt;">
+        <col width="200px">
+        <col width="300px">
+        <col width="100px">
+        <col width="100px">
+        <col width="100px">
+        <col width="100px">
+        <col width="130px">
+        <tbody>
+        <tr>
+            <td>
+                වර්තමාන ලිපිනය
+                <br>தற்போதைய வதிவிட
+                <br>Current Address
+            </td>
+            <td colspan="2">
+                <s:label value="%{person.lastAddress}"/>
+            </td>
+            <td>
+                ආරම්භය
+                <br> மின்னஞ்சல்
+                <br>Start
+            </td>
+            <td colspan="3">
+                <s:if test="person.lastAddress.startDate != null">
+                    <s:label value="%{person.lastAddress.startDate}"/><br>
+                    <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
+                </s:if>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                දුරකථන අංක
+                <br>தொலைபேசி இலக்கம்
+                <br>Telephone Numbers
+            </td>
+            <td colspan="2">
+                <s:label value="%{person.personPhoneNo}"/>
+            </td>
+            <td>
+                ඉ – තැපැල්
+                <br>மின்னஞ்சல்
+                <br>Email
+            </td>
+            <td colspan="3">
+                <s:label value="%{person.personEmail}"/>
+            </td>
+        </tr>
+        <s:iterator value="person.addresses">
+            <s:if test="addressUKey != person.lastAddress.addressUKey ">
+                <tr>
+                    <td>
+                        පෙර පදිංචි ලිපිනය
+                        <br>தற்போதைய வதிவிட
+                        <br>Previous Address
+                    </td>
+                    <td>
+                        <s:property value="%{Line1}"/>
+                    </td>
+                    <td>
+                        ස්ථිර
+                        <br>மின்னஞ்சல்
+                        <br>Permanent
+                    </td>
+                    <td>
+                        ආරම්භය
+                        <br> மின்னஞ்சல்
+                        <br>Start
+                    </td>
+                    <td>
+                        <s:if test="startDate != null">
+                            <s:property value="%{startDate}"/><br>
+                            <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
+                        </s:if>
+                    </td>
+                    <td>
+                        අවසානය
+                        <br>மின்னஞ்சல்
+                        <br>End
+                    </td>
+                    <td>
+                        <s:if test="endDate != null">
+                            <s:property value="%{endDate}"/><br>
+                            <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
+                        </s:if>
+                    </td>
+                </tr>
             </s:if>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            දුරකථන අංක
-            <br>தொலைபேசி இலக்கம்
-            <br>Telephone Numbers
-        </td>
-        <td colspan="2">
-            <s:label value="%{person.personPhoneNo}"/>
-        </td>
-        <td>
-            ඉ – තැපැල්
-            <br>மின்னஞ்சல்
-            <br>Email
-        </td>
-        <td colspan="3">
-            <s:label value="%{person.personEmail}"/>
-        </td>
-    </tr>
-    <s:iterator value="person.addresses">
-        <s:if test="addressUKey != person.lastAddress.addressUKey ">
-            <tr>
-                <td>
-                    පෙර පදිංචි ලිපිනය
-                    <br>தற்போதைய வதிவிட
-                    <br>Previous Address
-                </td>
-                <td>
-                    <s:property value="%{Line1}"/>
-                </td>
-                <td>
-                    ස්ථිර
-                    <br>மின்னஞ்சல்
-                    <br>Permanent
-                </td>
-                <td>
-                    ආරම්භය
-                    <br> மின்னஞ்சல்
-                    <br>Start
-                </td>
-                <td>
-                    <s:if test="startDate != null">
-                        <s:property value="%{startDate}"/><br>
-                        <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
-                    </s:if>
-                </td>
-                <td>
-                    අවසානය
-                    <br>மின்னஞ்சல்
-                    <br>End
-                </td>
-                <td>
-                    <s:if test="endDate != null">
-                        <s:property value="%{endDate}"/><br>
-                        <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
-                    </s:if>
-                </td>
-
-            </tr>
-        </s:if>
-    </s:iterator>
-    </tbody>
-</table>
+        </s:iterator>
+        </tbody>
+    </table>
+    <br/>
+</s:if>
+<s:else>
+    <table style="width:100%; border:none; border-collapse:collapse;">
+        <tr>
+            <td align="center">
+                වර්තමාන හෝ පෙර පදිංචි ලිපිනයන් ගැන විස්තර නොමැත
+                <br>வேறு நாட்டினது பிரஜாவுரிமை சம்பந்தமான விபரங்கள் இல்லை
+                <br>Current or previous Address details not available.
+                <hr/>
+            </td>
+        </tr>
+    </table>
+</s:else>
 
 <table style="width:100%; border:none; border-collapse:collapse;">
     <tr>
@@ -488,6 +504,7 @@
     </s:iterator>
     </tbody>
 </table>
+<br/>
 
 <s:if test="person.marriages.size() != 0">
     <table style="width:100%; border:none; border-collapse:collapse;">
@@ -603,8 +620,8 @@
         </tr>
         </tbody>
     </table>
+    <br/>
 </s:if>
-
 <s:else>
     <table style="width:100%; border:none; border-collapse:collapse;">
         <tr>
@@ -612,11 +629,13 @@
                 විවාහයන් පිළිබදව තොරතුරු වාර්තා වී නොමැත.
                 <br>திருமணம் சம்மந்தமான விபரங்கள் அறிக்கையிடப்படவில்லை
                 <br>Marriages Details not available.
+                <hr/>
             </td>
         </tr>
     </table>
 </s:else>
 <br>
+
 <table style="width:100%; border:none; border-collapse:collapse;">
     <tr>
         <td align="center" style="font-size:12pt;">
