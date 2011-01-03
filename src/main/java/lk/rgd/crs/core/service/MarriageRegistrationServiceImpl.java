@@ -45,11 +45,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         this.marriageRegistrationValidator = marriageRegistrationValidator;
         this.userLocationDAO = userLocationDAO;
         this.userManager = userManager;
-        if (new File(contentRoot).exists()) {
-            this.contentRoot = contentRoot;
-        } else {
-            throw new IllegalArgumentException("Invalid content root path : " + contentRoot);
-        }
+        this.contentRoot = contentRoot;
         this.contentType = contentType;
     }
 
