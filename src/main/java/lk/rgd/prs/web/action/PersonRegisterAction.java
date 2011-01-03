@@ -47,9 +47,9 @@ public class PersonRegisterAction extends ActionSupport implements SessionAware 
     private boolean allowEdit;
     private boolean allowApprove;
 
-    private long personUKey;
     private int personCountryId;
     private int personRaceId;
+    private long personUKey;
     private String personPassportNo;
     private String citizenship;
     private String language;

@@ -1,7 +1,6 @@
 package lk.rgd.prs.web.action;
 
 import com.opensymphony.xwork2.ActionSupport;
-import lk.rgd.AppConstants;
 import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
 import lk.rgd.common.RGDRuntimeException;
@@ -9,13 +8,11 @@ import lk.rgd.common.api.dao.AppParametersDAO;
 import lk.rgd.common.api.dao.LocationDAO;
 import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.domain.User;
-import lk.rgd.common.util.GenderUtil;
 import lk.rgd.common.util.WebUtils;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.web.util.CommonUtil;
 import lk.rgd.prs.PRSRuntimeException;
-import lk.rgd.prs.api.domain.Address;
 import lk.rgd.prs.api.domain.Person;
 import lk.rgd.prs.api.service.PopulationRegistry;
 import org.apache.struts2.interceptor.SessionAware;
@@ -35,6 +32,7 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
     private static final Logger logger = LoggerFactory.getLogger(PersonApprovalAction.class);
     private static final String PRS_APPROVAL_ROWS_PER_PAGE = "prs.prs_approval_rows_per_page";
     private static final String WARNING = "warning";
+    private static final String PAGE_LOAD = "pageLoad";
 
     // services and DAOs
     private final PopulationRegistry service;
@@ -44,14 +42,17 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
 
     private Map session;
     private User user;
+    private Person person;
 
     private Map<Integer, String> locationList;
     private List<Person> searchResultList;
     private List<UserWarning> warnings;
 
-    private boolean direct;
+    private boolean direct;         // used to identify actions performed directly, without using the list
     private boolean allowApprove;
     private boolean allowPrint;
+    private boolean pageLoad;
+    private boolean delete;
 
     private int locationId;
     private int pageNo;
@@ -64,6 +65,7 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
 
     private String language;
     private String searchNic;
+    private String comments;
 
     public PersonApprovalAction(PopulationRegistry service, LocationDAO locationDAO, AppParametersDAO appParametersDAO,
         CommonUtil commonUtil) {
@@ -120,21 +122,89 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
     }
 
     /**
+     * This method is used to reject person registrations
+     */
+    public String rejectSelectedPerson() {
+        if (pageLoad) {
+            logger.debug("Loading Person with personUKey : {} for rejection", personUKey);
+            person = service.getByUKey(personUKey, user);
+            return PAGE_LOAD;
+        } else {
+            logger.debug("Rejecting Person with personUKey : {}", personUKey);
+            try {
+                service.rejectPersonBeforeApproval(personUKey, comments, user);
+                addActionMessage(getText("message.reject.success"));
+
+            } catch (PRSRuntimeException e) {
+                switch (e.getErrorCode()) {
+                    case ErrorCodes.COMMENT_REQUIRED_PRS_REJECT:
+                        addActionError(getText("enter.comment.label"));
+                        break;
+                    case ErrorCodes.PRS_REJECT_RECORD_DENIED:
+                    case ErrorCodes.PERMISSION_DENIED:
+                        addActionError(getText("message.noPermission"));
+                        break;
+                }
+            }
+
+            pageNo = (pageNo == 0) ? 1 : pageNo;
+            populateLocations();
+            getSearchResultsPage();
+            return SUCCESS;
+        }
+    }
+
+    /**
+     * This method is used to delete person registrations
+     */
+    public String deleteSelectedPerson() {
+        if (pageLoad) {
+            logger.debug("Loading Person with personUKey : {} for deletion", personUKey);
+            person = service.getByUKey(personUKey, user);
+            return PAGE_LOAD;
+        } else {
+            logger.debug("Deleting Person with personUKey : {}", personUKey);
+            try {
+                service.deletePersonBeforeApproval(personUKey, comments, user);
+                addActionMessage(getText("message.delete.success"));
+
+            } catch (PRSRuntimeException e) {
+                switch (e.getErrorCode()) {
+                    case ErrorCodes.COMMENT_REQUIRED_PRS_DELETE:
+                        addActionError(getText("enter.comment.label"));
+                        break;
+                    case ErrorCodes.PRS_DELETE_RECORD_DENIED:
+                    case ErrorCodes.PERMISSION_DENIED:
+                        addActionError(getText("message.noPermission"));
+                        break;
+                }
+            }
+
+            pageNo = (pageNo == 0) ? 1 : pageNo;
+            populateLocations();
+            getSearchResultsPage();
+            return SUCCESS;
+        }
+    }
+
+    /**
      * This method is used to mark PRS certificate as printed for the first time from direct and search list page
      */
     public String markPRSCertificateAsPrinted() {
         logger.debug("Mark PRS certificate as printed for personUKey : {} , in direct mode : {}", personUKey, direct);
-        if (direct) {
-            initPermissions();
-        } else {
-            pageNo = (pageNo == 0) ? 1 : pageNo;
-            populateLocations();
-            getSearchResultsPage();
-        }
         try {
             service.markPRSCertificateAsPrinted(personUKey, user);
             logger.debug("PRS certificate with personUKey : {} marked as printed successfully", personUKey);
             addActionMessage(getText("message.certPrint.success"));
+
+            if (direct) {
+                initPermissions();
+            } else {
+                pageNo = (pageNo == 0) ? 1 : pageNo;
+                populateLocations();
+                getSearchResultsPage();
+            }
+
         } catch (RGDRuntimeException e) {
             switch (e.getErrorCode()) {
                 case ErrorCodes.PERMISSION_DENIED:
@@ -313,6 +383,14 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
         this.warnings = warnings;
     }
 
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
     public boolean isDirect() {
         return direct;
     }
@@ -335,6 +413,22 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
 
     public void setAllowPrint(boolean allowPrint) {
         this.allowPrint = allowPrint;
+    }
+
+    public boolean isPageLoad() {
+        return pageLoad;
+    }
+
+    public void setPageLoad(boolean pageLoad) {
+        this.pageLoad = pageLoad;
+    }
+
+    public boolean isDelete() {
+        return delete;
+    }
+
+    public void setDelete(boolean delete) {
+        this.delete = delete;
     }
 
     public int getLocationId() {
@@ -399,5 +493,13 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
 
     public void setSearchNic(String searchNic) {
         this.searchNic = WebUtils.filterBlanks(searchNic);
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 }
