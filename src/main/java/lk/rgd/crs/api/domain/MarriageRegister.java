@@ -170,6 +170,9 @@ public class MarriageRegister implements Serializable, Cloneable {
     @JoinColumn(name = "REG_MRDIVISIONUKEY", nullable = true)
     private MRDivision mrDivision;
 
+    @Column(name = "SCANNED_IMAGE", nullable = true)
+    private String scannedImagePath;
+
     //received date for marriage registry
     @Column(name = "RECEIVED_DATE", nullable = true)
     @Temporal(value = TemporalType.DATE)
@@ -591,6 +594,14 @@ public class MarriageRegister implements Serializable, Cloneable {
 
     public void setLicenseIssueLocation(Location licenseIssueLocation) {
         this.licenseIssueLocation = licenseIssueLocation;
+    }
+
+    public String getScannedImagePath() {
+        return scannedImagePath;
+    }
+
+    public void setScannedImagePath(String scannedImagePath) {
+        this.scannedImagePath = scannedImagePath;
     }
 }
 
