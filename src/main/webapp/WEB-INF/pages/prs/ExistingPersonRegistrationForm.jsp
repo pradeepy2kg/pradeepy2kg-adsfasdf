@@ -571,7 +571,7 @@
 
     <tr>
         <td class="font-9">
-            (9) ස්ත්‍රී පුරුෂ භාවය<br>பால் <br>Gender of the child
+            (9) ස්ත්‍රී පුරුෂ භාවය<br>பால் <br>Gender
         </td>
         <td colspan="2">
             <s:select name="person.gender"
