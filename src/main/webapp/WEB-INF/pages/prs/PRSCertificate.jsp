@@ -42,7 +42,6 @@
         <s:url id="markPrint" action="eprBackPRSSearchList.do" namespace="../prs"/>
     </s:else>
     <s:url id="previous" action="eprBackPRSSearchList.do" namespace="../prs">
-        <s:param name="personUKey" value="%{personUKey}"/>
         <s:param name="pageNo" value="%{#request.pageNo}"/>
         <s:param name="locationId" value="%{#request.locationId}"/>
         <s:param name="printStart" value="%{#request.printStart}"/>

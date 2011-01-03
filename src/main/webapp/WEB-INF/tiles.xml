@@ -486,6 +486,16 @@
         <put-attribute name="title" value="person_approval.title"/>
     </definition>
 
+    <definition name="epr.personRejection" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/prs/PersonRejectDelete.jsp"/>
+        <put-attribute name="title" value="person_rejection.title"/>
+    </definition>
+
+    <definition name="epr.personDeletion" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/prs/PersonRejectDelete.jsp"/>
+        <put-attribute name="title" value="person_deletion.title"/>
+    </definition>
+
     <definition name="epr.personApproveWarning" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/prs/PersonApprovalWarnings.jsp"/>
         <put-attribute name="title" value="person_approval_warning.title"/>
