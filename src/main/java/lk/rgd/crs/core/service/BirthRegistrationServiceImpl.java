@@ -1160,8 +1160,8 @@ public class BirthRegistrationServiceImpl implements
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public BirthDeclaration getActiveRecordBySerialNo(long serialNo, User user) {
-        BirthDeclaration bdf = birthDeclarationDAO.getActiveRecordBySerialNo(serialNo);
+    public BirthDeclaration getActiveRecordBySerialNo(long serialNo, User user, BirthDeclaration.State state) {
+        BirthDeclaration bdf = birthDeclarationDAO.getActiveRecordBySerialNo(serialNo, state);
         // Verify user permissions to the BDF
         validateAccessOfUser(user, bdf);
         return bdf;

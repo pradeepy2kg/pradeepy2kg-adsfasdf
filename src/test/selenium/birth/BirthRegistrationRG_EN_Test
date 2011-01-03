@@ -44,22 +44,12 @@
 <tr>
 	<td>type</td>
 	<td>bdfSerialNo</td>
-	<td>2011000005</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>submitDatePicker</td>
-	<td></td>
+	<td>2011000078</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>submitDatePicker</td>
 	<td>2011-01-03</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>birthDatePicker</td>
-	<td></td>
 </tr>
 <tr>
 	<td>type</td>
@@ -114,12 +104,12 @@
 <tr>
 	<td>type</td>
 	<td>childFullNameOfficialLang</td>
-	<td>නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ) </td>
+	<td>නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ) ddddfdf sddd dddas dadasdsad dssadasd sdsdsaddsddADAD ZZZZZ</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>childFullNameEnglish</td>
-	<td>නම ඉංග්‍රීසි භාෂාවෙන් </td>
+	<td>නම ඉංග්‍රීසි භාෂාවෙන් ADADASDA SDASDADASD DASDADasdasD SDSADASDASD  DSDSADASDZZZZZZ ZZZ</td>
 </tr>
 <tr>
 	<td>select</td>

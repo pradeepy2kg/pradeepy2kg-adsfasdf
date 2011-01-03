@@ -48,6 +48,7 @@ import java.io.Serializable;
 
     @NamedQuery(name = "findBirthDeclarationBySerialNo", query = "SELECT bdf FROM BirthDeclaration bdf " +
         "WHERE bdf.register.bdfSerialNo = :bdfSerialNo " +
+        "AND bdf.register.status = :status " +
         "AND bdf.lifeCycleInfo.activeRecord IS TRUE"),
 
     @NamedQuery(name = "get.by.dateOfBirth_range.and.motherNICorPIN", query = "SELECT bdf FROM BirthDeclaration bdf " +
