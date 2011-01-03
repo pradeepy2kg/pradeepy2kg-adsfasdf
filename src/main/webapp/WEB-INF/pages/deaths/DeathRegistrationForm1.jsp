@@ -219,7 +219,7 @@ $(function() {
 
         //added by shan [ NOT Tested ] -> start
         var genderVal = $("select#deathPersonGender").attr("value");
-        soapBody.appendChild(new SOAPObject('Gender')).value(genderVal);
+        soapBody.appendChild(new SOAPObject('Gender')).val(genderVal);
         //-> end
 
         //Create a new SOAP Request
@@ -252,7 +252,7 @@ $(function() {
 
         //added by shan [ NOT Tested ] -> start
         var genderVal = $("select#deathPersonGender").attr("value");
-        soapBody.appendChild(new SOAPObject('Gender')).value(genderVal);
+        soapBody.appendChild(new SOAPObject('Gender')).val(genderVal);
         //-> end
 
         //Create a new SOAP Request
