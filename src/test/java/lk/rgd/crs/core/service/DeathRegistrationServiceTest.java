@@ -85,12 +85,12 @@ public class DeathRegistrationServiceTest extends TestCase {
         dob.add(Calendar.DATE, -3);
 
         // test colombo deo adding for colombo
-        DeathRegister ddf1 = getMinimalDDF(20101010, dob.getTime(), colomboBDDivision);
+        DeathRegister ddf1 = getMinimalDDF(2010101001, dob.getTime(), colomboBDDivision);
         ddf1.setDeathType(deathType);
         deathRegService.addNormalDeathRegistration(ddf1, deoColomboColombo);
 
         // try adding a duplicate
-        DeathRegister ddf2 = getMinimalDDF(20101010, dob.getTime(), colomboBDDivision);
+        DeathRegister ddf2 = getMinimalDDF(2010101001, dob.getTime(), colomboBDDivision);
         ddf2.setDeathType(deathType);
         try {
             deathRegService.addNormalDeathRegistration(ddf2, deoColomboColombo);
@@ -109,7 +109,7 @@ public class DeathRegistrationServiceTest extends TestCase {
 
         // reload again to fill all fields as we still only have IDUkey of new record
         ddf1 = deathRegService.getById(ddf1.getIdUKey(), deoColomboColombo);
-        assertEquals(20101010, ddf1.getDeath().getDeathSerialNo());
+        assertEquals(2010101001, ddf1.getDeath().getDeathSerialNo());
 
         // colombo deo cannot approve
         try {
