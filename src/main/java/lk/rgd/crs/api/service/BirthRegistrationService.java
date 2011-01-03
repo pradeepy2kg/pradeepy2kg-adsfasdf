@@ -319,6 +319,15 @@ public interface BirthRegistrationService {
     public BirthDeclaration getActiveRecordByBDDivisionAndSerialNo(BDDivision bdDivision, long serialNo, User user);
 
     /**
+     * Returns the active Birth Declaration record by serial Number
+     *
+     * @param serialNo serial number of the Birth Declaration
+     * @param user     the user who makes the request
+     * @return the active Birth Declaration record by serial Number
+     */
+    public BirthDeclaration getActiveRecordBySerialNo(long serialNo, User user);
+
+    /**
      * Returns a limited set of BirthDeclarations for which confirmation changes captured are awaiting approval
      * by an ADR. Results are ordered on the descending confirmationProcessedTimestamp
      *

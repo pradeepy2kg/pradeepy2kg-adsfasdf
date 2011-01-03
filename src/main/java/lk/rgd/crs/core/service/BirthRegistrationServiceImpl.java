@@ -1160,6 +1160,17 @@ public class BirthRegistrationServiceImpl implements
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public BirthDeclaration getActiveRecordBySerialNo(long serialNo, User user) {
+        BirthDeclaration bdf = birthDeclarationDAO.getActiveRecordBySerialNo(serialNo);
+        // Verify user permissions to the BDF
+        validateAccessOfUser(user, bdf);
+        return bdf;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getConfirmationApprovalPending(BDDivision bdDivision, int pageNo, int noOfRows, User user) {
         if (logger.isDebugEnabled()) {
             logger.debug("Get confirmations pending approval by BDDivision ID : " + bdDivision.getBdDivisionUKey()
@@ -1982,7 +1993,7 @@ public class BirthRegistrationServiceImpl implements
 
         int data_entry = 0;
         int approved = 0;
-        int rejected = 0;        
+        int rejected = 0;
 
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.MONTH, -1);
