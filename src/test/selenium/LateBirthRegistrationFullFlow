@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>LateBirthRegistrationFullFlow</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">LateBirthRegistrationFullFlow</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/ecivil/eprLogout.do</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_userName</td>
+	<td>ashoka</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_password</td>
+	<td>ashoka</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprLogin_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=උපත් ලියාපදිංචිය</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth_registration.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>bdfSerialNo</td>
+	<td>2010000003</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>submitDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>submitDatePicker</td>
+	<td>2010-09-07</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>birthDatePicker</td>
+	<td>2010-05-03</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>placeOfBirth</td>
+	<td>රෝහලේදී</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>placeOfBirthEnglish</td>
+	<td>In hospital</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>childFullNameOfficialLang</td>
+	<td>late baby name in sinhala</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>childFullNameEnglish</td>
+	<td>late baby namein english</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>childBirthWeight</td>
+	<td>3</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>childRank</td>
+	<td>2</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-registration-form-1_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>father_pinOrNic</td>
+	<td>781245852v</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>fatherFullName</td>
+	<td>father name</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>father_lookup</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>mother_pinOrNic</td>
+	<td>805741245v</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>mother_lookup</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherFullName</td>
+	<td>mother name</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherAddress</td>
+	<td>mother address</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-registration-form-2_0</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>type</td>
+	<td>placeOfMarriage</td>
+	<td>place of marriage</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>marriageDatePicker</td>
+	<td>2008-05-12</td>
+</tr>
+
+<tr>
+	<td>click</td>
+	<td>informantTypeMOTHER</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>click</td>
+	<td>informDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>informDatePicker</td>
+	<td>2010-09-05</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-registration-form-3_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>notifyingAuthorityPIN</td>
+	<td>656582541v</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>notifyingAuthorityName</td>
+	<td>na name</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>notifyingAuthorityAddress</td>
+	<td>na address</td>
+</tr>
+
+<tr>
+	<td>type</td>
+	<td>caseFileNumber</td>
+	<td>123</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>comments</td>
+	<td>comments</td>
+</tr>
+
+<tr>
+	<td>type</td>
+	<td>modifiedDatePicker</td>
+	<td>2010-09-09</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-registration-form-4_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='birth-register-approval-footer']/a[2]/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='birth-register-approval-footer']/a[2]/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='birth-confirmation-print-form-outer-page']/div[2]/a/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='birth-register-approval-footer']/a[2]/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth_confirmation.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>SerialNo</td>
+	<td>3</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>search</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>skipChangesCBox</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>searchOk</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>birth-confirmation-form3_confirmantRadioMOTHER</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>datePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>datePicker</td>
+	<td>2010-09-08</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-confirmation-form3_0</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
