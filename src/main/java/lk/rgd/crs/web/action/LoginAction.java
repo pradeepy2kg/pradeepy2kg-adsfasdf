@@ -90,6 +90,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
     public String login() {
 
+        /* check if java script enabled browser */
         if (javaScript.equals("false")) {
             addActionError("Please enable javaScript in your web browser");
             return ERROR;
@@ -98,22 +99,24 @@ public class LoginAction extends ActionSupport implements SessionAware {
         logger.debug("Detected userName : {} ", userName);
         User user;
         try {
+            /* try to authenticate user */
             user = userManager.authenticateUser(userName, userManager.hashPassword(password));
             if (user != null) {
-                user.setLoginAttempts(1);
+                /* if login succeeded update database record */
+                user.setLoginAttempts(1);   /* 1 = authorization ok */
                 userManager.updateUser(user);
             }
-            //check if user have a preferred bd or mr ds division
-            if (!user.getRole().getRoleId().equals("ADMIN") && !user.getRole().getRoleId().equals("RG")) {
-                if (user.getAssignedBDDSDivisions() != null && user.getAssignedBDDSDivisions().size() == 0) {
-                    addActionError("You are not assign to any DS Division.Contact admin for resolve problem");
+            /* check if user have a preferred bd or mr ds division */
+            if (!user.getRole().getRoleId().equals("ADMIN") && !user.getRole().getRoleId().equals("RG")) {      /* no division */
+                if (user.getAssignedBDDSDivisions() != null && user.getAssignedBDDSDivisions().size() == 0) {   /*     for     */
+                    addActionError("You are not assign to any DS Division.Contact admin for resolve problem");  /* admin or rg */
                     logger.error("User : {} , doesn't allocate to any DS Division", user.getUserName());
                     return ERROR;
                 }
             }
-        } catch (AuthorizationException e) {
+        } catch (AuthorizationException e) {        /* if login fails. increment login attempts by 1 */
             user = userManager.getUserByID(userName);
-            if (user != null) {
+            if (user != null) {  /* there is a user for given user name. but password is incorrect */
                 int loginAttempts = user.getLoginAttempts();
                 logger.debug("value of loging attempts :{}", loginAttempts);
                 int maxLoginAttempts = appParaDao.getIntParameter(AppParameter.MAX_NUMBER_OF_LOGIN_ATTEMPTS);
@@ -132,15 +135,14 @@ public class LoginAction extends ActionSupport implements SessionAware {
             logger.error("{} : {}", e.getMessage(), e);
             return ERROR;
         }
-
-
+        /* user authorization is ok. then ... */
         try {
             String language = user.getPrefLanguage();
             String country = "LK";
             if (language.equals("en")) {
                 country = "US";
             }
-            Map map = Menu.getAllowedLinks(user.getRole());
+            Map map = Menu.getAllowedLinks(user.getRole());     /* get allowed operations for user */
             logger.debug("size of allowed links map : {}", map.size());
 
             if (map != null) {
@@ -150,6 +152,8 @@ public class LoginAction extends ActionSupport implements SessionAware {
             }
 
             session.put(WebConstants.SESSION_USER_LANG, new Locale(language, country));
+
+            /* stores current user in session */
             session.put(WebConstants.SESSION_USER_BEAN, user);
             logger.debug(" user {} logged in. language {}", userName, language);
             String userRole = user.getRole().getRoleId();
@@ -169,19 +173,20 @@ public class LoginAction extends ActionSupport implements SessionAware {
             stillBirths = 20;
             SBPendingApprovals = 21;
 
+            /* check if password is expired */
             String result = checkUserExpiry(user);
 
             if (result.equals(SUCCESS)) {
                 if ((result + userRole).equals("successRG") || (result + userRole).equals("successARG")) {
-                    populateLists(user, WebConstants.USER_ARG);
+                    populateLists(user, WebConstants.USER_ARG);     /* WC.USER_ARG = userRole */
                 }
                 if ((result + userRole).equals("successDR") || (result + userRole).equals("successADR")) {
                     populateLists(user, userRole);
                 }
 
-                return result + userRole;
+                return result + userRole;   /* Login succeeded */
             } else {
-                return result;
+                return result;      /* some wrong with password */
             }
         } catch (Exception e) {
             logger.error("Exception is :P {} {} ", e, e.toString());
@@ -299,9 +304,11 @@ public class LoginAction extends ActionSupport implements SessionAware {
      * @return String
      */
     public String logout() {
+        /* if there is a logged user */
         if (session.containsKey(WebConstants.SESSION_USER_BEAN)) {
             logger.debug("Inside logout : {} is going to logout.", ((User) session.get(WebConstants.SESSION_USER_BEAN)).getUserName());
 
+            /* remove user from session */
             session.put(WebConstants.SESSION_USER_BEAN, null);
             if (session instanceof org.apache.struts2.dispatcher.SessionMap) {
                 try {
@@ -311,12 +318,12 @@ public class LoginAction extends ActionSupport implements SessionAware {
                     logger.error("Incorrect Session", e);
                 }
             } else {
-                session = null;
+                session = null;     /* destroy session */
             }
             userManager.logoutUser(userName);
-            return SUCCESS;
+            return SUCCESS;  /* logout succeeded */
         }
-        return ERROR;
+        return ERROR;   /* there is no logged user */
     }
 
     public void setPassword(String password) {

@@ -199,8 +199,6 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
 
             if (isAssignedLocations(updatedUser)) {
                 updatedUser.setStatus(User.State.ACTIVE);
-            } else {
-                // TODO Forward to Location assignment page [ shan ]
             }
             if (changePassword) {
                 logger.debug("Change password {}", userDAO.getUserByPK(userId).getUserName());
