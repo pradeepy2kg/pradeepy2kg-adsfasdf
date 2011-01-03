@@ -163,6 +163,28 @@
             <result type="tiles" name="success">epr.PersonApproval</result>
         </action>
 
+        <action name="eprLoadRejectPerson" class="lk.rgd.prs.web.action.PersonApprovalAction"
+                method="rejectSelectedPerson">
+            <param name="pageLoad">true</param>
+            <param name="delete">false</param>
+            <result type="tiles" name="pageLoad">epr.personRejection</result>
+        </action>
+
+        <action name="eprRejectPerson" class="lk.rgd.prs.web.action.PersonApprovalAction" method="rejectSelectedPerson">
+            <result type="tiles" name="success">epr.PersonApproval</result>
+        </action>
+
+        <action name="eprLoadDeletePerson" class="lk.rgd.prs.web.action.PersonApprovalAction"
+                method="deleteSelectedPerson">
+            <param name="pageLoad">true</param>
+            <param name="delete">true</param>
+            <result type="tiles" name="pageLoad">epr.personDeletion</result>
+        </action>
+
+        <action name="eprDeletePerson" class="lk.rgd.prs.web.action.PersonApprovalAction" method="deleteSelectedPerson">
+            <result type="tiles" name="success">epr.PersonApproval</result>
+        </action>
+
     </package>
 
     <package name="births" namespace="/births" extends="NG">
