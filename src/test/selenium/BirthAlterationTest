@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>BirthAlterationTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">BirthAlterationTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/ecivil/eprHome.do</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>logout-button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_userName</td>
+	<td>rg</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_password</td>
+	<td>password</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprLogin_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=ALTERATION</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth_alteration.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>bdfSerialNoIdSearch</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprBirthAlterationSearch_search</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>acceptanceDate</td>
+	<td>2010-10-31</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>father-info-max</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>father-info-check</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>fatherName</td>
+	<td>FATHER NAME edited</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>fatherRaceId</td>
+	<td>label=1 : Sinhalese</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>fatherPlaceOfBirth</td>
+	<td>Kandy</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>marriage-info-max</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>marriage-info-check</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>placeOfMarriageId</td>
+	<td>Kandy</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>eprBirthAlteration_bcOfFather</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>eprBirthAlteration_bcOfMother</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>eprBirthAlteration_mcOfParents</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>declarantTypeMOTHER</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprBirthAlteration_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=ALTERATION</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth_alteration_pending_approval.title</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprFilterAlteration_refresh</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//table[@id='approval-list-table']/tbody/tr/td[5]/a/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>father-info-check</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>marriage-info-check</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>mother-after-marriage-info-max</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>mother-after-marriage-info-check</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>mothersNameAfterMarriageId</td>
+	<td>MOTHER NAME Edited</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprBirthAlteration_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprApproveSelectedAlteration_approve</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>selectAll</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprApproveAlteration_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprPrintBirthAlterarionNotice_approve</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=BIRTH REGISTRATION</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>print_birthcertificate.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//tr[2]/td[6]/a/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprMarkCertificateAsPrinted_2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=ALTERATION</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth_alteration.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>eprBirthAlterationSearch_sectionOfAct</td>
+	<td>label=52(1)</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>bdfSerialNoIdSearch</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprBirthAlterationSearch_search</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>bdfSerialNoIdSearch</td>
+	<td>2</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>eprBirthAlterationSearch_search</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/ecivil/alteration/eprBirthAlterationInit.do</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth_alteration.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>eprBirthAlterationSearch_sectionOfAct</td>
+	<td>label=52(1)</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>bdfSerialNoIdSearch</td>
+	<td>2</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprBirthAlterationSearch_search</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>acceptanceDate</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>errors-info-max</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>errors-info-check</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>childBirthDatePicker</td>
+	<td>2010-09-05</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>childBirthDistrictId</td>
+	<td>label=12 : Gampaha</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>childGender</td>
+	<td>label=Female</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>mother-info-max</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>mother-info-check</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>motherRaceId</td>
+	<td>label=1 : Sinhalese</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherAddressId</td>
+	<td>MOTHER ADDRESS changed</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>eprBirthAlteration_bcOfFather</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>eprBirthAlteration_bcOfMother</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>eprBirthAlteration_mcOfParents</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>declarantTypeMOTHER</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprBirthAlteration_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprApproveSelectedAlteration_approve</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>selectAll</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprApproveAlteration_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth_alteration_pending_approval.title</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprFilterAlteration_refresh</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//label[@id='']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>print_birthcertificate.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//a[@id='eprBirthCertificateBulkPrint_']/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprMarkCertificateAsPrinted_2</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
