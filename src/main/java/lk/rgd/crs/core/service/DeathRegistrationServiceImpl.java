@@ -457,8 +457,12 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         logger.debug("loading transient values for death record : {}", deathRegister.getIdUKey());
         deathRegister.setOriginalDCIssueUser(user);
         deathRegister.setOriginalDCPlaceOfIssue(user.getPrimaryLocation());
-        deathRegister.setOriginalDCPlaceOfIssueSignPrint(user.getUserSignature(deathRegister.getDeath().getPreferredLanguage()));
-        deathRegister.setOriginalDCPlaceOfIssuePrint(user.getPrimaryLocation().getLocationName(deathRegister.getDeath().getPreferredLanguage()));
+        deathRegister.setOriginalDCPlaceOfIssueSignPrint(user.getPrimaryLocation().
+            getLocationSignature(deathRegister.getDeath().getPreferredLanguage()));
+        deathRegister.setOriginalDCPlaceOfIssuePrint(user.getPrimaryLocation().
+            getLocationName(deathRegister.getDeath().getPreferredLanguage()));
+        deathRegister.setOriginalDCIssueUserSignPrint(deathRegister.getOriginalDCIssueUser().
+            getUserSignature(deathRegister.getDeath().getPreferredLanguage()));
     }
 
     /**

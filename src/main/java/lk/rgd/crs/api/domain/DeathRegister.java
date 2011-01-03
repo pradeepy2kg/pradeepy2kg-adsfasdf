@@ -14,41 +14,41 @@ import java.io.Serializable;
 @Table(name = "DEATH_REGISTER", schema = "CRS")
 
 @NamedQueries({
-        @NamedQuery(name = "death.register.filter.by.and.deathDivision.status.paginated", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
-                "WHERE deathRegister.status = :status AND deathRegister.death.deathDivision = :deathDivision " + "ORDER BY deathRegister.death.dateOfRegistration desc"),
+    @NamedQuery(name = "death.register.filter.by.and.deathDivision.status.paginated", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
+        "WHERE deathRegister.status = :status AND deathRegister.death.deathDivision = :deathDivision " + "ORDER BY deathRegister.death.dateOfRegistration desc"),
 
-        @NamedQuery(name = "get.all.deaths.by.deathDivision", query = "SELECT deathRegister FROM DeathRegister deathRegister WHERE " +
-                "deathRegister.death.deathDivision = :deathDivision"),
+    @NamedQuery(name = "get.all.deaths.by.deathDivision", query = "SELECT deathRegister FROM DeathRegister deathRegister WHERE " +
+        "deathRegister.death.deathDivision = :deathDivision"),
 
-        @NamedQuery(name = "get.active.by.bddivision.and.deathSerialNo", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
-                "WHERE deathRegister.death.deathSerialNo = :deathSerialNo AND deathRegister.death.deathDivision = :deathDivision " +
-                "AND deathRegister.lifeCycleInfo.activeRecord IS TRUE"),
+    @NamedQuery(name = "get.active.by.bddivision.and.deathSerialNo", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
+        "WHERE deathRegister.death.deathSerialNo = :deathSerialNo AND deathRegister.death.deathDivision = :deathDivision " +
+        "AND deathRegister.lifeCycleInfo.activeRecord IS TRUE"),
 
-        @NamedQuery(name = "get.by.division.register.date", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
-                "WHERE deathRegister.death.deathDivision = :deathDivision AND (deathRegister.death.dateOfRegistration BETWEEN :startDate AND :endDate) " +
-                "ORDER BY deathRegister.death.dateOfRegistration desc"),
+    @NamedQuery(name = "get.by.division.register.date", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
+        "WHERE deathRegister.death.deathDivision = :deathDivision AND (deathRegister.death.dateOfRegistration BETWEEN :startDate AND :endDate) " +
+        "ORDER BY deathRegister.death.dateOfRegistration desc"),
 
-        @NamedQuery(name = "death.register.filter.by.and.dsDivision.status.paginated", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
-                "WHERE deathRegister.status = :status AND deathRegister.death.deathDivision.dsDivision = :dsDivision " +
-                "AND deathRegister.lifeCycleInfo.activeRecord IS TRUE ORDER BY deathRegister.death.dateOfRegistration desc"),
+    @NamedQuery(name = "death.register.filter.by.and.dsDivision.status.paginated", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
+        "WHERE deathRegister.status = :status AND deathRegister.death.deathDivision.dsDivision = :dsDivision " +
+        "AND deathRegister.lifeCycleInfo.activeRecord IS TRUE ORDER BY deathRegister.death.dateOfRegistration desc"),
 
-        @NamedQuery(name = "get.all.deaths.by.dsDivision", query = "SELECT deathRegister FROM DeathRegister deathRegister WHERE " +
-                "deathRegister.death.deathDivision.dsDivision = :dsDivision AND deathRegister.lifeCycleInfo.activeRecord IS TRUE " +
-                " ORDER BY deathRegister.death.dateOfRegistration desc"),
+    @NamedQuery(name = "get.all.deaths.by.dsDivision", query = "SELECT deathRegister FROM DeathRegister deathRegister WHERE " +
+        "deathRegister.death.deathDivision.dsDivision = :dsDivision AND deathRegister.lifeCycleInfo.activeRecord IS TRUE " +
+        " ORDER BY deathRegister.death.dateOfRegistration desc"),
 
-        @NamedQuery(name = "get.all.deaths.by.deathPersonPIN", query = "SELECT deathRegister FROM DeathRegister deathRegister WHERE " +
-                "deathRegister.deathPerson.deathPersonPINorNIC = :pinOrNIC"),
+    @NamedQuery(name = "get.all.deaths.by.deathPersonPIN", query = "SELECT deathRegister FROM DeathRegister deathRegister WHERE " +
+        "deathRegister.deathPerson.deathPersonPINorNIC = :pinOrNIC"),
 
-        @NamedQuery(name = "get.historical.death.records.by.bddivision.and.serialNo.deathID", query = "SELECT dr FROM DeathRegister dr " +
-                "WHERE (dr.death.deathDivision = :deathDivision AND dr.death.deathSerialNo = :serialNo  AND dr.idUKey < :deathId AND dr.status= 4) " +
-                "AND dr.lifeCycleInfo.activeRecord IS FALSE ORDER BY dr.lifeCycleInfo.lastUpdatedTimestamp desc"),
+    @NamedQuery(name = "get.historical.death.records.by.bddivision.and.serialNo.deathID", query = "SELECT dr FROM DeathRegister dr " +
+        "WHERE (dr.death.deathDivision = :deathDivision AND dr.death.deathSerialNo = :serialNo  AND dr.idUKey < :deathId AND dr.status= 4) " +
+        "AND dr.lifeCycleInfo.activeRecord IS FALSE ORDER BY dr.lifeCycleInfo.lastUpdatedTimestamp desc"),
 
-        @NamedQuery(name = "findAllDeaths", query = "SELECT ddf FROM DeathRegister ddf"),
+    @NamedQuery(name = "findAllDeaths", query = "SELECT ddf FROM DeathRegister ddf"),
 
-        @NamedQuery(name = "get.dr.count", query = "SELECT COUNT(dr) FROM DeathRegister dr " +
-                "WHERE dr.status =:status AND (dr.lifeCycleInfo.createdTimestamp BETWEEN :startDate AND :endDate)"),
-        @NamedQuery(name = "get.dr.by.createdUser", query = "SELECT dr FROM DeathRegister dr "+
-                " WHERE dr.lifeCycleInfo.createdUser =:user AND (dr.lifeCycleInfo.createdTimestamp BETWEEN :startDate AND :endDate)")
+    @NamedQuery(name = "get.dr.count", query = "SELECT COUNT(dr) FROM DeathRegister dr " +
+        "WHERE dr.status =:status AND (dr.lifeCycleInfo.createdTimestamp BETWEEN :startDate AND :endDate)"),
+    @NamedQuery(name = "get.dr.by.createdUser", query = "SELECT dr FROM DeathRegister dr " +
+        " WHERE dr.lifeCycleInfo.createdUser =:user AND (dr.lifeCycleInfo.createdTimestamp BETWEEN :startDate AND :endDate)")
 })
 public class DeathRegister implements Serializable, Cloneable {
 
@@ -138,6 +138,12 @@ public class DeathRegister implements Serializable, Cloneable {
      */
     @Transient
     private String originalDCPlaceOfIssueSignPrint;
+
+    /**
+     * The original BC issued user signature as a String in preferred language and english
+     */
+    @Transient
+    private String originalDCIssueUserSignPrint;
 
 
     public DeathRegister clone() throws CloneNotSupportedException {
@@ -269,5 +275,13 @@ public class DeathRegister implements Serializable, Cloneable {
 
     public void setOriginalDCPlaceOfIssueSignPrint(String originalDCPlaceOfIssueSignPrint) {
         this.originalDCPlaceOfIssueSignPrint = originalDCPlaceOfIssueSignPrint;
+    }
+
+    public String getOriginalDCIssueUserSignPrint() {
+        return originalDCIssueUserSignPrint;
+    }
+
+    public void setOriginalDCIssueUserSignPrint(String originalDCIssueUserSignPrint) {
+        this.originalDCIssueUserSignPrint = originalDCIssueUserSignPrint;
     }
 }
