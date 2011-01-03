@@ -81,9 +81,6 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
      * This method is used to load PRS certificate
      */
     public String initPRSCertificate() {
-        /*if(!direct){
-
-        }*/
         person = service.getLoadedObjectByUKey(personUKey, user);
         gender = GenderUtil.getGender(person.getGender(), person.getPreferredLanguage());
         genderEn = GenderUtil.getGender(person.getGender(), AppConstants.ENGLISH);
