@@ -86,8 +86,7 @@
 </script>
 <script type="text/javascript" src="<s:url value="/js/selectAll.js"/>"></script>
 
-<s:actionerror cssStyle="color:red;font-size:10pt"/>
-<s:actionmessage cssStyle="color:black;font-size:10pt"/>
+
 <s:form action="eprDeathFilterByStatus" method="post">
     <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
         <legend><b><s:label value="%{getText('searchOption.label')}"/></b></legend>
@@ -153,6 +152,9 @@
 </s:form>
 
 <div id="birth-register-approval-body">
+
+<s:actionerror cssStyle="color:red;font-size:10pt"/>
+<s:actionmessage cssStyle="color:black;font-size:10pt"/>
 
 <fieldset style="margin-bottom:10px;margin-top:20px;border:none">
 <table id="approval-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">

@@ -47,6 +47,60 @@
     function initPage() {
     }
 </script>
+<script>
+    $(function() {
+        $('select#locationId').bind('change', function(evt1) {
+            var id = $("select#locationId").attr('value');
+            var options = '';
+            if (id > 0) {
+                $.getJSON('/ecivil/crs/CertSignUserLookupService', {userLocationId:id,mode:1,certificateId:0,type:'death'},
+                        function(data) {
+                            var users = data.authorizedUsers;
+                            for (var i = 0; i < users.length; i++) {
+                                options += '<option value="' + users[i].optionValue + '">' + users[i].optionDisplay + '</option>';
+                            }
+                            $("select#issueUserId").html(options);
+
+                            var id = $('select#locationId').attr('value');
+                            var user = $('select#issueUserId').attr('value');
+                            var certId = $('label#certificateId').text();
+                            $("text#user").html(user);
+                            $.getJSON('/ecivil/crs/CertSignUserLookupService', {userLocationId:id,mode:10,userId:user,certificateId:certId,type:'death'},
+                                    function(data) {
+                                        var officerSign = data.officerSignature;
+                                        var locationSign = data.locationSignature;
+                                        var location = data.locationName;
+                                        $("label#signature").html(officerSign);
+                                        $("label#placeSign").html(locationSign);
+                                        $("label#placeName").html(location);
+                                    });
+                        });
+
+            } else {
+                $("select#issueUserId").html(options);
+            }
+        });
+
+        $('select#issueUserId').bind('change', function(evt2) {
+            var id = $('select#locationId').attr('value');
+            var user = $('select#issueUserId').attr('value');
+            var certId = $('label#certificateId').text();
+            $("text#user").html(user);
+            $.getJSON('/ecivil/crs/CertSignUserLookupService', {userLocationId:id,mode:10,userId:user,certificateId:certId},
+                    function(data) {
+                        var officerSign = data.officerSignature;
+                        var locationSign = data.locationSignature;
+                        var location = data.locationName;
+                        $("label#signature").html(officerSign);
+                        $("label#placeSign").html(locationSign);
+                        $("label#placeName").html(location);
+                    });
+        });
+    });
+
+    function initPage() {
+    }
+</script>
 
 <div id="death-certificate-outer">
 <s:form action="eprPrintDeathCertificate.do" method="post">
@@ -172,7 +226,7 @@
                 <tr height="40px">
                     <td align="center"><s:label value="%{deathRegister.death.deathSerialNo}"
                                                 cssStyle="font-size:11pt;"/></td>
-                    <td align="center"><s:label name="idUKey" cssStyle="font-size:11pt;"/></td>
+                    <td align="center"><s:label name="idUKey" cssStyle="font-size:11pt;" id="certificateId"/></td>
                 </tr>
             </table>
         </td>
@@ -506,16 +560,18 @@
             <br>சான்றிதழ் அளிக்கும் அதிகாரியின் பெயர், பதவி, கையொப்பம்
             <br>Name, Signature and Designation of certifying officer
         </td>
-        <td colspan="2"><s:label name="nameOfOfficer" value="%{deathRegister.originalDCPlaceOfIssueSignPrint}"/>,
-            <br>
-            <s:label name="designationOfCertifyingOfficer " value="%{}"/>
+        <td colspan="2">
+            <s:label id="signature" value="%{deathRegister.originalDCIssueUserSignPrint}"/>
         </td>
     </tr>
     <tr>
         <td colspan="2" height="30px">
             නිකුත් කළ ස්ථානය / வழங்கிய இடம் / Place of Issue
         </td>
-        <td colspan="2"><s:label name="" value="%{deathRegister.originalDCPlaceOfIssuePrint}"/></td>
+        <td colspan="2">
+            <s:label id="placeSign" value="%{deathRegister.originalDCPlaceOfIssueSignPrint}"/><br>
+            <s:label id="placeName" value="%{deathRegister.originalDCPlaceOfIssuePrint}"/>
+        </td>
     </tr>
     </tbody>
 </table>

@@ -324,10 +324,13 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
             if (deathDivisionId != 0) {
                 deathApprovalAndPrintList = service.getByBDDivisionAndRegistrationDateRange(
                     bdDivisionDAO.getBDDivisionByPK(deathDivisionId), fromDate, endDate, pageNo, noOfRows, user);
+                addActionMessage(getText("message.search.results.form.to", new String[]{fromDate.toString(),
+                    endDate.toString()}));
             } else {
-                // TODO temporary fix
+                // TODO temporary fix  only for date 
                 deathApprovalAndPrintList = Collections.emptyList();
             }
+
         } else {
             if (currentStatus == 0) {
                 if (deathDivisionId != 0) {
