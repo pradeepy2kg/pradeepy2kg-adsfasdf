@@ -334,6 +334,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 bdf.getConfirmant().setConfirmantNICorPIN(confirmant.getConfirmantNICorPIN());
                 bdf.getConfirmant().setConfirmantFullName(confirmant.getConfirmantFullName());
                 bdf.getConfirmant().setConfirmantSignDate(confirmant.getConfirmantSignDate());
+                bdf.getConfirmant().setConfirmantType(confirmant.getConfirmantType());
 
                 logger.debug("skipConfirmationChanges {}", skipConfirmationChages);
                 //todo exception handling, validations and error reporting
