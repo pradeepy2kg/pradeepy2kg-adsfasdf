@@ -235,7 +235,9 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                     }
                 }
                 if (bdf != null) {
-                    approvalPendingList.add(bdf);
+                    if (bdf.getRegister().getStatus() == BirthDeclaration.State.DATA_ENTRY) {
+                        approvalPendingList.add(bdf);
+                    }
                 }
             } else if (searchStartDate != null && searchEndDate != null && bdfSerialNo == 0) {
                 // searching according to selected date range in BDF approval page
