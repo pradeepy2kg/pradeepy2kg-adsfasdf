@@ -80,7 +80,6 @@ public class RolePermissionUtils {
         argBitSet.set(Permission.APPROVE_BDF_BELATED);
         argBitSet.set(Permission.APPROVE_BIRTH_ALTERATION);
 
-
         // RG
         rgBitSet = new BitSet();
         rgBitSet.or(argBitSet);
