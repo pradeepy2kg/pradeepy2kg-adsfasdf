@@ -127,16 +127,16 @@ public class MarriageRegister implements Serializable, Cloneable {
 
     public enum State {
         DATA_ENTRY,    //0
-        MALE_NOTICE_APPROVED,  //approve only male notice   still able to edit female notice  (only single notice false)
-        FEMALE_NOTICE_APPROVED,    //approve female notice only still able to edit male notice (only single notice false)
-        NOTICE_APPROVED,   //change to this state when single notice true or when approving second notice(1 st notice is already approved)
-        MALE_NOTICE_REJECTED,
-        FEMALE_NOTICE_REJECTED,
-        NOTICE_REJECTED,
-        LICENSE_PRINTED,
-        REG_DATA_ENTRY,
-        REGISTRATION_APPROVED,
-        REGISTRATION_REJECTED
+        MALE_NOTICE_APPROVED,  // 1 approve only male notice   still able to edit female notice  (only single notice false)
+        FEMALE_NOTICE_APPROVED,    // 2 approve female notice only still able to edit male notice (only single notice false)
+        NOTICE_APPROVED,   //3 change to this state when single notice true or when approving second notice(1 st notice is already approved)
+        MALE_NOTICE_REJECTED, //4
+        FEMALE_NOTICE_REJECTED,//5
+        NOTICE_REJECTED,//6
+        LICENSE_PRINTED,//7
+        REG_DATA_ENTRY,//8
+        REGISTRATION_APPROVED,//9
+        REGISTRATION_REJECTED //10
     }
 
     public enum PlaceOfMarriage {

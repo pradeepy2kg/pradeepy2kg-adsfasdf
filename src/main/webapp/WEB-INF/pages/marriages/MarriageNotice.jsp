@@ -172,13 +172,13 @@ function validate() {
         return false;
     }
     errormsg = "";
-    return false;
+    return true;
 }
 
 function validateRadioButtons(array, errorText) {
     var atleastOneSelect = false;
     for (var i = 0; i < array.length; i++) {
-        if (array[i] == 'true') {
+        if (array[i] == true) {
             atleastOneSelect = true;
         }
     }
@@ -413,7 +413,8 @@ $('select#dsDivisionId').bind('change', function(evt2) {
             General
         </td>
         <td align="center">
-            <s:radio name="marriage.typeOfMarriage" list="#@java.util.HashMap@{'GENERAL':''}" value="true"/>
+            <s:radio name="marriage.typeOfMarriage" list="#@java.util.HashMap@{'GENERAL':''}"
+                     value="%{marriage.typeOfMarriage}"/>
         </td>
         <td>
             උඩරට බින්න <br>
@@ -421,7 +422,8 @@ $('select#dsDivisionId').bind('change', function(evt2) {
             Kandyan Binna
         </td>
         <td align="center">
-            <s:radio name="marriage.typeOfMarriage" list="#@java.util.HashMap@{'KANDYAN_BINNA':''}" value="true"/>
+            <s:radio name="marriage.typeOfMarriage" list="#@java.util.HashMap@{'KANDYAN_BINNA':''}"
+                     value="%{marriage.typeOfMarriage}"/>
         </td>
         <td>
             උඩරට දීග <br>
@@ -429,7 +431,8 @@ $('select#dsDivisionId').bind('change', function(evt2) {
             Kandyan Deega
         </td>
         <td align="center">
-            <s:radio name="marriage.typeOfMarriage" list="#@java.util.HashMap@{'KANDYAN_DEEGA':''}" value="true"/>
+            <s:radio name="marriage.typeOfMarriage" list="#@java.util.HashMap@{'KANDYAN_DEEGA':''}"
+                     value="%{marriage.typeOfMarriage}"/>
         </td>
     </tr>
 </table>
@@ -495,7 +498,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
         </td>
         <td colspan="3">
             <s:textfield name="marriage.male.ageAtLastBirthDayMale" id="age_at_last_bd_male" maxLength="3"
-                         value=""/>
+                         value="%{marriage.male.ageAtLastBirthDayMale}"/>
         </td>
     </tr>
     <tr>
@@ -520,7 +523,8 @@ $('select#dsDivisionId').bind('change', function(evt2) {
             Passport No.
         </td>
         <td>
-            <s:textfield name="marriage.male.passport" id="passport_male" maxLength="15" cssStyle="width:120px"/>
+            <s:textfield name="marriage.male.passport" id="passport_male" maxLength="15"
+                         cssStyle="width:120px" value="%{marriage.male.passport}"/>
         </td>
         <td>ලංකාවට පැමිණි දිනය <br>
             in tamil <br>
@@ -528,7 +532,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
         </td>
         <td>
             <s:textfield name="marriage.male.dateOfArrival" id="date_arrival_male" maxLength="10"
-                         cssStyle="width:80px"/>
+                         cssStyle="width:80px" value="%{marriage.male.dateOfArrival}"/>
         </td>
     </tr>
     <tr>
@@ -620,7 +624,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
         </td>
         <td>
             <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'NEVER_MARRIED':''}"
-                     value="true"/>
+                     value="%{marriage.male.civilStatusMale}"/>
         </td>
         <td>
             දික්කසාද <br>
@@ -629,7 +633,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
         </td>
         <td>
             <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'DIVORCED':''}"
-                     value="true"/>
+                     value="%{marriage.male.civilStatusMale}"/>
         </td>
         <td>
             වැන්දබු <br>
@@ -637,7 +641,8 @@ $('select#dsDivisionId').bind('change', function(evt2) {
             Widowed
         </td>
         <td>
-            <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'WIDOWED':''}" value="true"/>
+            <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'WIDOWED':''}"
+                     value="%{marriage.male.civilStatusMale}"/>
         </td>
         <td>
             නිෂ්ප්‍රභාකර ඇත <br>
@@ -645,7 +650,8 @@ $('select#dsDivisionId').bind('change', function(evt2) {
             Anulled
         </td>
         <td>
-            <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'ANULLED':''}" value="true"/>
+            <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'ANULLED':''}"
+                     value="%{marriage.male.civilStatusMale}"/>
         </td>
     </tr>
     <tr>
@@ -661,8 +667,8 @@ $('select#dsDivisionId').bind('change', function(evt2) {
     </tr>
     <tr>
         <td rowspan="2">
-            පියාගේ සම්පුර්ණ නම
-            தந்தையின் அடையாள
+            පියාගේ සම්පුර්ණ නම <br>
+            தந்தையின் அடையாள <br>
             Fathers full name
         </td>
         <td colspan="4" height="20px">රාජ්‍ය භාෂාවෙන් / in tamil / in Official Language</td>
@@ -745,7 +751,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
         </td>
         <td colspan="3">
             <s:textfield name="marriage.female.ageAtLastBirthDayFemale" id="age_at_last_bd_female" maxLength="3"
-                         value=""/>
+                         value="%{marriage.male.ageAtLastBirthDayMale}"/>
         </td>
     </tr>
     <tr>
@@ -770,7 +776,8 @@ $('select#dsDivisionId').bind('change', function(evt2) {
             Passport No.
         </td>
         <td>
-            <s:textfield name="marriage.female.passport" id="passport_female" maxLength="15" cssStyle="width:120px"/>
+            <s:textfield name="marriage.female.passport" id="passport_female" maxLength="15"
+                         cssStyle="width:120px" value="%{marriage.female.passport}"/>
         </td>
         <td>ලංකාවට පැමිණි දිනය <br>
             in tamil <br>
@@ -778,7 +785,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
         </td>
         <td>
             <s:textfield name="marriage.female.dateOfArrival" id="date_arrival_female" maxLength="10"
-                         cssStyle="width:80px"/>
+                         cssStyle="width:80px" value="%{marriage.female.dateOfArrival}"/>
         </td>
     </tr>
     <tr>
@@ -870,7 +877,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
         </td>
         <td>
             <s:radio name="marriage.female.civilStatusFemale" list="#@java.util.HashMap@{'NEVER_MARRIED':''}"
-                     value="true"/>
+                     value="%{marriage.female.civilStatusFemale}"/>
         </td>
         <td>
             දික්කසාද <br>
@@ -879,7 +886,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
         </td>
         <td>
             <s:radio name="marriage.female.civilStatusFemale" list="#@java.util.HashMap@{'DIVORCED':''}"
-                     value="true"/>
+                     value="%{marriage.female.civilStatusFemale}"/>
         </td>
         <td>
             වැන්දබු <br>
@@ -887,7 +894,8 @@ $('select#dsDivisionId').bind('change', function(evt2) {
             Widowed
         </td>
         <td>
-            <s:radio name="marriage.female.civilStatusFemale" list="#@java.util.HashMap@{'WIDOWED':''}" value="true"/>
+            <s:radio name="marriage.female.civilStatusFemale" list="#@java.util.HashMap@{'WIDOWED':''}"
+                     value="%{marriage.female.civilStatusFemale}"/>
         </td>
         <td>
             නිෂ්ප්‍රභාකර ඇත <br>
@@ -895,7 +903,8 @@ $('select#dsDivisionId').bind('change', function(evt2) {
             Anulled
         </td>
         <td>
-            <s:radio name="marriage.female.civilStatusFemale" list="#@java.util.HashMap@{'ANULLED':''}" value="true"/>
+            <s:radio name="marriage.female.civilStatusFemale" list="#@java.util.HashMap@{'ANULLED':''}"
+                     value="%{marriage.female.civilStatusFemale}"/>
         </td>
     </tr>
     <tr>
@@ -911,8 +920,8 @@ $('select#dsDivisionId').bind('change', function(evt2) {
     </tr>
     <tr>
         <td rowspan="2">
-            පියාගේ සම්පුර්ණ නම
-            தந்தையின் அடையாள
+            පියාගේ සම්පුර්ණ නම <br>
+            தந்தையின் அடையாள <br>
             Fathers full name
         </td>
         <td colspan="4" height="20px">රාජ්‍ය භාෂාවෙන් / in tamil / in Official Language</td>
@@ -932,7 +941,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
 </table>
 </s:if>
 <div class="form-submit">
-    <s:submit value="add.notice"/>
+    <s:submit value="%{getText('button.add.notice')}"/>
 </div>
 
 <s:hidden id="notice_type" name="noticeType" value="%{noticeType}"/>

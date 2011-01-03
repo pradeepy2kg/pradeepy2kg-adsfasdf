@@ -4,6 +4,8 @@ import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.ErrorCodes;
 import lk.rgd.common.api.dao.CountryDAO;
 import lk.rgd.common.api.dao.RaceDAO;
+import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.CivilStatusUtil;
 import lk.rgd.crs.CRSRuntimeException;
@@ -171,6 +173,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         populateNoticeForInitEdit(marriage, noticeType);
         commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
             marriageDistrictId, dsDivisionId, mrDivisionId, AppConstants.MARRIAGE, user, language);
+        commonUtil.populateCountryAndRaceLists(countryList, raceList, language);
         editMode = true;
         return "pageLoad";
     }
@@ -186,6 +189,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         if (existingNotice != null) {
             populatePartyObjectsForPersisting(marriage);
             populateNoticeForEdit(marriage, existingNotice, noticeType);
+            //todo use edit method instead of this update
             marriageRegistrationService.updateMarriageRegister(existingNotice, user);
             addActionMessage(getText("marriage.notice.updated.success"));
         } else {
@@ -317,6 +321,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
      * male notice related data as well
      */
     private void populateNoticeForEdit(MarriageRegister marriageRegister, MarriageRegister existing, MarriageNotice.Type type) {
+        MRDivision mrDivision = mrDivisionDAO.getMRDivisionByPK(mrDivisionId);
         switch (type) {
             case BOTH_NOTICE: {
                 existing.setFemale(marriageRegister.getFemale());
@@ -325,14 +330,14 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
                 existing.setMale(marriageRegister.getMale());//BOTH also executing this block
                 existing.setSerialOfMaleNotice(serialNumber);
                 existing.setDateOfMaleNotice(noticeReceivedDate);
-                existing.setMrDivisionOfMaleNotice(marriageRegister.getMrDivisionOfMaleNotice());
+                existing.setMrDivisionOfMaleNotice(mrDivision);
             }
             break;
             case FEMALE_NOTICE: {
                 existing.setFemale(marriageRegister.getFemale());
                 existing.setSerialOfFemaleNotice(serialNumber);
                 existing.setDateOfFemaleNotice(noticeReceivedDate);
-                existing.setMrDivisionOfFemaleNotice(marriageRegister.getMrDivisionOfFemaleNotice());
+                existing.setMrDivisionOfFemaleNotice(mrDivision);
             }
         }
     }
@@ -349,15 +354,37 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             }
         } else {
             logger.debug("init edit page for notice idUKey : {}", idUKey);
-            if (type == MarriageNotice.Type.BOTH_NOTICE || type == MarriageNotice.Type.MALE_NOTICE) {
-                //populate male notice
-                serialNumber = marriage.getSerialOfMaleNotice();
-                noticeReceivedDate = marriage.getDateOfMaleNotice();
-            } else {
-                //populate female notice
-                serialNumber = marriage.getSerialOfFemaleNotice();
-                noticeReceivedDate = marriage.getDateOfFemaleNotice();
+            MRDivision mrDivision = null;
+            DSDivision dsDivision = null;
+            District district = null;
+            switch (type) {
+                case BOTH_NOTICE:
+                    countryIdFemale = (marriage.getFemale().getCountry() != null) ?
+                        marriage.getFemale().getCountry().getCountryId() : 0;
+                    //race cannot be null
+                    raceIdFemale = marriage.getFemale().getFemaleRace().getRaceId();
+                    //only both related populations
+                case MALE_NOTICE:
+                    countryIdMale = (marriage.getMale().getCountry() != null) ?
+                        marriage.getMale().getCountry().getCountryId() : 0;
+                    raceIdMale = marriage.getMale().getMaleRace().getRaceId();
+                    serialNumber = marriage.getSerialOfMaleNotice();
+                    noticeReceivedDate = marriage.getDateOfMaleNotice();
+                    mrDivision = marriage.getMrDivisionOfMaleNotice();
+                    break;
+                case FEMALE_NOTICE:
+                    countryIdFemale = (marriage.getFemale().getCountry() != null) ?
+                        marriage.getFemale().getCountry().getCountryId() : 0;
+                    raceIdFemale = marriage.getFemale().getFemaleRace().getRaceId();
+                    serialNumber = marriage.getSerialOfFemaleNotice();
+                    noticeReceivedDate = marriage.getDateOfFemaleNotice();
+                    mrDivision = marriage.getMrDivisionOfFemaleNotice();
             }
+            mrDivisionId = mrDivision.getMrDivisionUKey();
+            dsDivision = mrDivision.getDsDivision();
+            dsDivisionId = dsDivision.getDsDivisionUKey();
+            district = mrDivision.getDistrict();
+            marriageDistrictId = district.getDistrictUKey();
         }
     }
 
