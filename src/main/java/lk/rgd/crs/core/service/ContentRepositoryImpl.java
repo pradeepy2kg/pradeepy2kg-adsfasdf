@@ -40,14 +40,11 @@ public class ContentRepositoryImpl implements ContentRepository {
 
     public ContentRepositoryImpl(String contentRoot) {
         this.contentRoot = contentRoot;
+
         if (!new File(contentRoot).exists()) {
-            try {
-                if (!new File(contentRoot).createNewFile()) {
-                    logger.error("Cannot create non-existent content root : {}", contentRoot);
-                    throw new IllegalArgumentException("Cannot create content repository root : " + contentRoot);
-                }
-            } catch (IOException e) {
-                handleException("Error using content repository root : " + contentRoot, e, ErrorCodes.UNKNOWN_ERROR);
+            if (!new File(contentRoot).mkdirs()) {
+                logger.error("Cannot create non-existent content root : {}", contentRoot);
+                throw new IllegalArgumentException("Cannot create content repository root : " + contentRoot);
             }
         }
         this.startPos = contentRoot.length();
@@ -84,32 +81,28 @@ public class ContentRepositoryImpl implements ContentRepository {
 
         if (nodeDir.exists()) {
             int count = nodeDir.listFiles().length;
-            if (count >= 255) {
+            if (count < 255) {
+                return nodeDir;
+            } else {
                 directory++;
                 nodeDir = toHexStringDirectoryPath(directory, division);
-                try {
-                    if (nodeDir.createNewFile()) {
-                        return nodeDir;
-                    }
-                } catch (IOException e) {
-                    handleException("Cannot create directory : " + nodeDir.getAbsolutePath(), e, ErrorCodes.UNKNOWN_ERROR);
-                }
-            } else {
-                return nodeDir;
-            }
-        } else {
-            try {
-                if (nodeDir.createNewFile()) {
+                divisionMap.put(division, directory);
+
+                if (nodeDir.mkdirs()) {
                     return nodeDir;
                 }
-            } catch (IOException e) {
-                handleException("Cannot create directory : " + nodeDir.getAbsolutePath(), e, ErrorCodes.UNKNOWN_ERROR);
+            }
+        } else {
+            if (nodeDir.mkdirs()) {
+                return nodeDir;
             }
         }
 
         handleException("Unexpected error creating node directory : " + nodeDir.getAbsolutePath(), null, ErrorCodes.UNKNOWN_ERROR);
         return null;
     }
+
+
 
     private File toHexStringDirectoryPath(long directory, long division) {
 
@@ -126,7 +119,8 @@ public class ContentRepositoryImpl implements ContentRepository {
             }
         }
 
-        return new File(contentRoot + File.separator + dir.substring(0,2) + File.separator + dir.substring(2));
+        return new File(contentRoot + File.separator + division + File.separator +
+            dir.substring(0,2) + File.separator + dir.substring(2));
     }
 
     private void handleException(String msg, Exception e, int errorCode) {
