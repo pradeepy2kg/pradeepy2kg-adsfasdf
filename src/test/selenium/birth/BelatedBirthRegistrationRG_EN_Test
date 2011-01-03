@@ -44,7 +44,7 @@
 <tr>
 	<td>type</td>
 	<td>bdfSerialNo</td>
-	<td>2011000101</td>
+	<td>2011000102</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -54,7 +54,7 @@
 <tr>
 	<td>type</td>
 	<td>birthDatePicker</td>
-	<td>2011-01-03</td>
+	<td>2009-01-03</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -289,7 +289,7 @@
 <tr>
 	<td>type</td>
 	<td>admitDatePicker</td>
-	<td>2011-01-03</td>
+	<td>2009-01-01</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -360,11 +360,6 @@
 	<td>type</td>
 	<td>greatGrandFatherNICorPIN</td>
 	<td>3254352353</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>greatGrandFatherFullName</td>
-	<td>- great grandfather</td>
 </tr>
 <tr>
 	<td>type</td>
