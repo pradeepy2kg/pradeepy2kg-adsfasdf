@@ -8,6 +8,7 @@ package lk.rgd;
 public class ErrorCodes {
 
     public static final int UNKNOWN_ERROR = 9999;
+    public static final int CONTENT_REPOSITORY_TOO_LARGE = 9998;
 
     // error codes from 1000 - 2000 indicate invalid data for a request
 

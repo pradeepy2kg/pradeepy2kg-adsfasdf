@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
 import java.util.*;
 
 /**
@@ -34,12 +35,22 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     private final MarriageRegistrationValidator marriageRegistrationValidator;
     private final UserLocationDAO userLocationDAO;
     private final UserManager userManager;
+    private final String contentRoot;
+    private final String contentType;
 
-    public MarriageRegistrationServiceImpl(MarriageRegistrationDAO marriageRegistrationDAO, UserManager userManager, MarriageRegistrationValidator marriageRegistrationValidator, UserLocationDAO userLocationDAO) {
+    public MarriageRegistrationServiceImpl(MarriageRegistrationDAO marriageRegistrationDAO, UserManager userManager,
+        MarriageRegistrationValidator marriageRegistrationValidator, UserLocationDAO userLocationDAO,
+        String contentRoot, String contentType) {
         this.marriageRegistrationDAO = marriageRegistrationDAO;
         this.marriageRegistrationValidator = marriageRegistrationValidator;
         this.userLocationDAO = userLocationDAO;
         this.userManager = userManager;
+        if (new File(contentRoot).exists()) {
+            this.contentRoot = contentRoot;
+        } else {
+            throw new IllegalArgumentException("Invalid content root path : " + contentRoot);
+        }
+        this.contentType = contentType;
     }
 
     /**
@@ -845,5 +856,19 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
             }
         }
         return data;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public String getContentRoot() {
+        return contentRoot;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public String getContentType() {
+        return contentType;
     }
 }

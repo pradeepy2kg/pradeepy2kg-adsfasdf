@@ -15,15 +15,6 @@ import java.util.Date;
 public class Marriage implements Serializable {
 
     /**
-     * The possible MarriageLaw's
-     */
-    public enum Law {
-        GENERAL         /** 0 - Obeys general marriage law */,
-        KANDYAN         /** 1 - Obeys Kandyan marriage law */,
-        MUSLIM          /** 2 - Obeys Muslim marriage law */,
-    }
-
-    /**
      * Legal state of the marriage
      */
     public enum State {
