@@ -516,7 +516,8 @@ public class PopulationRegistryImpl implements PopulationRegistry {
         p.getAddresses().size();
         p.getCountries().size();
 
-        logger.debug("Person loaded for personUKey: {}", personUKey);
+        logger.debug("Person loaded for personUKey: " + personUKey + " Addresses : " + p.getAddresses().size() +
+            " Marriages : " + p.getMarriages().size() + " Citizenships : " + p.getCountries().size());
         return p;
     }
 
