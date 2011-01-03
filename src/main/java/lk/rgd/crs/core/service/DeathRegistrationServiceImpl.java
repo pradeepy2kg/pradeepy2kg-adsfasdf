@@ -52,8 +52,12 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     @Transactional(propagation = Propagation.REQUIRED)
     public void addLateDeathRegistration(DeathRegister deathRegistration, User user) {
         logger.debug("adding late/missing death registration");
+        //validate access of the user  to Death division
+        ValidationUtils.validateAccessToBDDivision(user, deathRegistration.getDeath().getDeathDivision());
         deathDeclarationValidator.validateMinimalRequirements(deathRegistration);
-        if (deathRegistration.getDeathType() != DeathRegister.Type.LATE_NORMAL && deathRegistration.getDeathType() != DeathRegister.Type.MISSING) {
+        if (deathRegistration.getDeathType() != DeathRegister.Type.LATE_NORMAL &&
+            deathRegistration.getDeathType() != DeathRegister.Type.MISSING &&
+            deathRegistration.getDeathType() != DeathRegister.Type.LATE_SUDDEN) {
             handleException("Invalid death type : " + deathRegistration.getDeathType(), ErrorCodes.ILLEGAL_STATE);
         }
         addDeathRegistration(deathRegistration, user);
@@ -66,6 +70,8 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     @Transactional(propagation = Propagation.REQUIRED)
     public void addNormalDeathRegistration(DeathRegister deathRegistration, User user) {
         logger.debug("adding normal/sudden death registration");
+        //validate access of the user  to Death division
+        ValidationUtils.validateAccessToBDDivision(user, deathRegistration.getDeath().getDeathDivision());
         deathDeclarationValidator.validateMinimalRequirements(deathRegistration);
         if (deathRegistration.getDeathType() != DeathRegister.Type.NORMAL && deathRegistration.getDeathType() != DeathRegister.Type.SUDDEN) {
             handleException("Invalid death type : " + deathRegistration.getDeathType(), ErrorCodes.ILLEGAL_STATE);
@@ -208,9 +214,9 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
             if (state == DeathRegister.State.APPROVED) {
                 dr.getLifeCycleInfo().setCertificateGeneratedTimestamp(new Date());
                 dr.getLifeCycleInfo().setCertificateGeneratedUser(user);
-
                 registerDeathOnPRS(dr, user);
             }
+
         } else {
             handleException("Cannot approve/reject death registration " + dr.getIdUKey() +
                 " Illegal state : " + dr.getStatus(), ErrorCodes.ILLEGAL_STATE);
@@ -455,14 +461,26 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
 
     private void loadValues(DeathRegister deathRegister, User user) {
         logger.debug("loading transient values for death record : {}", deathRegister.getIdUKey());
-        deathRegister.setOriginalDCIssueUser(user);
-        deathRegister.setOriginalDCPlaceOfIssue(user.getPrimaryLocation());
-        deathRegister.setOriginalDCPlaceOfIssueSignPrint(user.getPrimaryLocation().
-            getLocationSignature(deathRegister.getDeath().getPreferredLanguage()));
-        deathRegister.setOriginalDCPlaceOfIssuePrint(user.getPrimaryLocation().
-            getLocationName(deathRegister.getDeath().getPreferredLanguage()));
-        deathRegister.setOriginalDCIssueUserSignPrint(deathRegister.getOriginalDCIssueUser().
-            getUserSignature(deathRegister.getDeath().getPreferredLanguage()));
+        if (deathRegister.getOriginalDCIssueUser() == null && deathRegister.getOriginalDCPlaceOfIssue() == null) {
+            //first time marking as print
+            deathRegister.setOriginalDCIssueUser(user);
+            deathRegister.setOriginalDCPlaceOfIssue(user.getPrimaryLocation());
+            deathRegister.setOriginalDCPlaceOfIssueSignPrint(deathRegister.getOriginalDCIssueUser().getPrimaryLocation().
+                getLocationSignature(deathRegister.getDeath().getPreferredLanguage()));
+            deathRegister.setOriginalDCPlaceOfIssuePrint(deathRegister.getOriginalDCIssueUser().getPrimaryLocation().
+                getLocationName(deathRegister.getDeath().getPreferredLanguage()));
+            deathRegister.setOriginalDCIssueUserSignPrint(deathRegister.getOriginalDCIssueUser().
+                getUserSignature(deathRegister.getDeath().getPreferredLanguage()));
+        } else {
+            //existing values (reprint)
+            deathRegister.setOriginalDCPlaceOfIssueSignPrint(deathRegister.getOriginalDCPlaceOfIssue().
+                getLocationSignature(deathRegister.getDeath().getPreferredLanguage()));
+            deathRegister.setOriginalDCPlaceOfIssuePrint(deathRegister.getOriginalDCPlaceOfIssue().
+                getLocationName(deathRegister.getDeath().getPreferredLanguage()));
+            deathRegister.setOriginalDCIssueUserSignPrint(deathRegister.getOriginalDCIssueUser().
+                getUserSignature(deathRegister.getDeath().getPreferredLanguage()));
+        }
+
     }
 
     /**
