@@ -224,7 +224,7 @@ public class UserManagerImpl implements UserManager {
 
         } else {
             userToDelete.setStatus(User.State.DELETED);
-            updateUser(userToDelete, adminUser);
+            userDao.updateUser(userToDelete,adminUser);
         }
     }
 
