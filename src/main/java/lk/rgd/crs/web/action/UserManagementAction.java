@@ -148,6 +148,9 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         //todo : to be removed
         //User updated = (User) session.get(WebConstants.SESSION_UPDATED_USER);
         // todo...
+
+        /* get the current user who are logged in */
+        /* user = new User */
         User currentUser = (User) session.get(WebConstants.SESSION_USER_BEAN);
         user.setRole(roleDAO.getRole(roleId));
         user.setStatus(User.State.INACTIVE);
@@ -199,6 +202,8 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
 
             if (isAssignedLocations(updatedUser)) {
                 updatedUser.setStatus(User.State.ACTIVE);
+            } else {
+                updatedUser.setStatus(User.State.INACTIVE);
             }
             if (changePassword) {
                 logger.debug("Change password {}", userDAO.getUserByPK(userId).getUserName());
@@ -223,12 +228,12 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         }
     }
 
-    public String inactiveUser() {
+    public String inactiveUser() {      /* delete icon clicked */
         populate();
         user = service.getUserByID(userId);
         service.deleteUser(user, (User) session.get(WebConstants.SESSION_USER_BEAN));
         logger.debug("Deleting  user {} is successoption body.full", user.getUserId());
-        usersList = service.getAllUsers();
+        usersList = service.getAllUsers();      /* because of this user loses his search result */
         session.put("viewUsers", usersList);
         return "success";
     }
