@@ -26,13 +26,25 @@ public class ContentRepositoryImplTest extends TestCase {
 
         int division = 1;
         for (int i=1; i<=260; i++) {
-            String path = cr.storeFile(division, i, f);
             if (i <= 255) {
+                String path = cr.storeFile(division, i, f);
                 Assert.assertEquals("/1/00/00/" + i ,path);
             } else {
+                String path = cr.storeFile(division, i, f);
                 Assert.assertEquals("/1/00/01/" + i, path);
             }
         }
+
+        // create a new instance
+        cr = new ContentRepositoryImpl("/tmp/cr");
+
+        // test use of last directory for existing directory structure after re-initialization
+        division = 1;
+        String path = cr.storeFile(division, 261, f);
+        Assert.assertEquals("/1/00/01/" + 261 ,path);
+
+        path = cr.storeFile(division, 262, f);
+        Assert.assertEquals("/1/00/01/" + 262 ,path);
 
     }
 }
