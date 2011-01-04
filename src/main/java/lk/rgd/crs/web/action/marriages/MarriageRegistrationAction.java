@@ -190,7 +190,16 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             populatePartyObjectsForPersisting(marriage);
             populateNoticeForEdit(marriage, existingNotice, noticeType);
             //todo use edit method instead of this update
+/*
             marriageRegistrationService.updateMarriageRegister(existingNotice, user);
+*/
+            userWarnings = marriageRegistrationService.editMarriageNotice(existingNotice, noticeType, ignoreWarnings, user);
+            if (userWarnings.size() > 0) {
+                logger.debug("warnings found while editing notice");
+                editMode = true;
+                addNoticeToSession(existingNotice);
+                return "warn";
+            }
             addActionMessage(getText("marriage.notice.updated.success", new String[]{(noticeType ==
                 MarriageNotice.Type.FEMALE_NOTICE) ? Long.toString(existingNotice.getSerialOfFemaleNotice()) :
                 Long.toString(existingNotice.getSerialOfMaleNotice())}));
@@ -287,6 +296,22 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         return SUCCESS;
     }
 
+    public String rollBackAndEditOrProceed() {
+        logger.debug("attempt to roll back to previouse state and edit or proceed to edit");
+        getAndRemoveNoticeFromSession();
+        if (editMode) {
+            //this means user select to proceed  and dropping values
+            MarriageRegister originalNotice = marriageRegistrationService.getByIdUKey(marriage.getIdUKey(), user);
+            marriage.setLicenseCollectType(originalNotice.getLicenseCollectType());
+        } else {
+            //user select to roll back
+            marriage.setState(MarriageRegister.State.DATA_ENTRY);
+        }
+        marriageRegistrationService.editMarriageNotice(marriage, noticeType, ignoreWarnings, user);
+        addActionMessage("message.edit.success");
+        return SUCCESS;
+    }
+
     //TODO : to be removed
 
     public String marriageCertificateInit() {
@@ -313,7 +338,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             noticeExisting.setSerialOfFemaleNotice(serialNumber);
             noticeExisting.setDateOfFemaleNotice(noticeReceivedDate);
             noticeExisting.setFemale(noticeEdited.getFemale());
-            noticeExisting.setMrDivisionOfMaleNotice(mr);
+            noticeExisting.setMrDivisionOfFemaleNotice(mr);
         }
         noticeExisting.setLicenseCollectType(noticeEdited.getLicenseCollectType());
         noticeExisting.setTypeOfMarriage(noticeEdited.getTypeOfMarriage());
@@ -345,6 +370,8 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
                 existing.setMrDivisionOfFemaleNotice(mrDivision);
             }
         }
+        existing.setLicenseCollectType(marriageRegister.getLicenseCollectType());
+        existing.setPreferredLanguage(marriageRegister.getPreferredLanguage());
     }
 
     private void populateNoticeForInitEdit(MarriageRegister marriage, MarriageNotice.Type type) {
@@ -372,7 +399,8 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
                 case MALE_NOTICE:
                     countryIdMale = (marriage.getMale().getCountry() != null) ?
                         marriage.getMale().getCountry().getCountryId() : 0;
-                    raceIdMale = marriage.getMale().getMaleRace().getRaceId();
+                    raceIdMale = (marriage.getMale().getMaleRace() != null) ?
+                        marriage.getMale().getMaleRace().getRaceId() : 0;
                     serialNumber = marriage.getSerialOfMaleNotice();
                     noticeReceivedDate = marriage.getDateOfMaleNotice();
                     mrDivision = marriage.getMrDivisionOfMaleNotice();
@@ -380,7 +408,8 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
                 case FEMALE_NOTICE:
                     countryIdFemale = (marriage.getFemale().getCountry() != null) ?
                         marriage.getFemale().getCountry().getCountryId() : 0;
-                    raceIdFemale = marriage.getFemale().getFemaleRace().getRaceId();
+                    raceIdFemale = (marriage.getFemale().getFemaleRace() != null) ?
+                        marriage.getFemale().getFemaleRace().getRaceId() : 0;
                     serialNumber = marriage.getSerialOfFemaleNotice();
                     noticeReceivedDate = marriage.getDateOfFemaleNotice();
                     mrDivision = marriage.getMrDivisionOfFemaleNotice();

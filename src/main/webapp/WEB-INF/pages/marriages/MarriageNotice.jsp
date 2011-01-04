@@ -277,12 +277,12 @@ $('select#dsDivisionId').bind('change', function(evt2) {
     <legend align="right"><b><s:label value="%{getText('label.how.collect.license')}"/></b></legend>
     <s:radio list="#@java.util.HashMap@{'HAND_COLLECT_MALE':getText('label.collect.by.male'),
                         'MAIL_TO_MALE':getText('label.mail.male'),'HAND_COLLECT_FEMALE':getText('label.collect.by.female'),'MAIL_TO_FEMALE':getText('label.mail.female')}"
-             name="marriage.licenseCollectType"/>
+             name="marriage.licenseCollectType" value="%{marriage.licenseCollectType}"/>
 </fieldset>
 <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
     <legend align="right"><b><s:label value="%{getText('label.pref.lang.for.certificates')}"/></b></legend>
     <s:radio list="#@java.util.HashMap@{'si':getText('label.sinhala'),'ta':getText('label.tamil')}"
-             name="marriage.preferredLanguage"/>
+             name="marriage.preferredLanguage" value="%{marriage.preferredLanguage}"/>
 </fieldset>
 <table>
     <caption/>

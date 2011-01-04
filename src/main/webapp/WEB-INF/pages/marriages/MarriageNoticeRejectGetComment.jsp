@@ -61,11 +61,14 @@
             <s:hidden name="pageNo" value="%{#request.pageNo}"/>
             <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
             <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
-                <%--<s:hidden name="birthDistrictId" value="%{#request.birthDistrictId}"/>
-              <s:hidden name="dsDivisionId" value="%{#request.dsDivisionId}"/>
-              <s:hidden name="birthDivisionId" value="%{#request.birthDivisionId}"/>
-              <s:hidden name="recordCounter" value="%{#request.recordCounter}"/>
-              <s:hidden name="confirmationApprovalFlag" value="%{#request.confirmationApprovalFlag}"/>--%>
+            <s:hidden name="noticeType" value="%{#request.noticeType}"/>
+            <s:hidden name="mrDivisionId" value="%{#request.mrDivisionId}"/>
+            <s:hidden name="noticeSerialNo" value="%{#request.noticeSerialNo}"/>
+            <s:hidden name="dsDivisionId" value="%{#request.mrDivisionId}"/>
+            <s:hidden name="districtId" value="%{#request.districtId}"/>
+            <s:hidden name="searchStartDate" value="%{#request.searchStartDate}"/>
+            <s:hidden name="searchEndDate" value="%{#request.searchEndDate}"/>
+            <s:hidden name="pinOrNic" value="%{#request.pinOrNic}"/>
             <table>
                 <tr>
                     <td width="230px"><s:label name="comments" value="%{getText('comment.label')}"/></td>
