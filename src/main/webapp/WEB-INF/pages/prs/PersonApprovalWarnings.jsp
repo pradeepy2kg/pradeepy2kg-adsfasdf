@@ -1,45 +1,35 @@
-<%--
-  @author Chathuranga Withana
---%>
+<%-- @author Chathuranga Withana --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <script type="text/javascript">
     function initPage() {
     }
 </script>
-<%--
-<fieldset>
-<legend><b><s:label value="%{getText('approvalIgnorWarning.label')}"/></b></legend>
-<table class="birth-declaration-approval-warning-table">
-    <s:iterator value="#request.warnings">
-        <tr>
-            <td><s:property value="message"/></td>
-        </tr>
-    </s:iterator>
-</table>
-<s:form action="eprIgnoreWarning" name="birthDeclarationApprovalWarningForm">
+
+<fieldset style="margin-bottom:10px;border:2px solid #c3dcee;">
+    <legend><b><s:label value="%{getText('message.personWarning.label')}"/></b></legend>
+    <table class="birth-declaration-approval-warning-table" style="margin-left:10px;">
+        <s:iterator value="#request.warnings">
+            <tr>
+                <td><s:property value="message"/></td>
+            </tr>
+        </s:iterator>
+    </table>
+    <s:form action="eprApproveIgnoreWarning" method="post">
     <table align="center" border="0">
         <tr>
+            <s:hidden name="personUKey" value="%{#request.personUKey}"/>
             <s:hidden name="pageNo" value="%{#request.pageNo}"/>
-            <s:hidden name="birthDistrictId" value="%{#request.birthDistrictId}"/>
-            <s:hidden name="birthDivisionId" value="%{#request.birthDivisionId}"/>
-            <s:hidden name="recordCounter" value="%{#request.recordCounter}"/>
-            <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
-            <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
-            <s:hidden name="dsDivisionId" value="%{#request.dsDivisionId}"/>
-            <s:hidden value="%{#request.bdId}" name="bdId"/>
+            <s:hidden name="locationId" value="%{#request.locationId}"/>
+            <s:hidden name="printStart" value="%{#request.printStart}"/>
         </tr>
         <tr>
-            <td><s:label value="%{getText('ignoreWorning.label')}" name="ignoreWarning"/></td>
+            <td><s:label value="%{getText('ignoreWarning.label')}" name="ignoreWarning"/></td>
             <td><s:checkbox name="ignoreWarning"/></td>
             <td>
-                <div class="form-submit"><s:submit name="approve" value="%{getText('approve.label')}"/></div>
+                <div class="form-submit"><s:submit name="approve" value="%{getText('approve_link.label')}"/></div>
             </td>
         </tr>
-            &lt;%&ndash;<tr>
-                <td><s:label value="%{getText('comment.label')}" name="comment"/></td>
-                <td><s:textarea name="comments"/> </td>
-            </tr>&ndash;%&gt;
+        </s:form>
     </table>
-    </fieldset>
-</s:form>--%>
+</fieldset>
