@@ -1,0 +1,265 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title></title>
+
+    <!--
+        This Code is not RUNNABLE. This Code should include in the runnable JSP file.
+    -->
+
+    <style type="text/css">
+        table, tr, td, th {
+            border-collapse: collapse;
+            border: 1px solid #fff;
+        }
+
+        td {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        tr.e {
+            background-color: #E4ECFC;
+            height: 40px;
+        }
+
+        tr.a {
+            height: 40px;
+        }
+
+        th {
+            height: 40px;
+            background-color: #A9D0F5;
+            padding: 10px;
+            color: #08088A;
+            font-size: 14px;
+            font-weight: lighter;
+        }
+
+        td.b {
+            font-size: 14px;
+            text-align: center;
+            color: #402574;
+        }
+
+        .typ, .sub, .apr {
+            background-color: #E4ECFC;
+            color: #402574;
+        }
+
+        .rej, .pen {
+            background-color: #f66;
+        }
+
+        td.c {
+            color: #fff;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        th.c {
+            background-color: #c33;
+            color: #fff;
+        }
+
+        ul {
+            margin-top: 0;
+            padding: 0;
+        }
+
+        .form-submit {
+            display: block;
+            background-color: #39f;
+        }
+
+        body {
+        /*background-image: url('body-bg1.png');*/
+        }
+
+        #page-title {
+            width: 100%;
+            height: 30px; /*background: url('title-bg-1.png') repeat-x;*/
+        }
+
+        #custom {
+            margin-top: 15px;
+        }
+
+        #custom-mrg {
+            margin-top: 30px;
+        }
+
+        #mstat {
+            margin-bottom: 30px;
+        }
+
+    </style>
+
+    <script type="text/javascript">
+        function initFields() {
+            var today = new Date();
+            document.getElementById('edate').value = today.getFullYear() + "-" + today.getMonth() + "-" + today.getDate();
+            document.getElementById('medate').value = today.getFullYear() + "-" + today.getMonth() + "-" + today.getDate();
+            today.setDate(today.getDate() - 31);
+            document.getElementById('sdate').value = today.getFullYear() + "-" + today.getMonth() + "-" + today.getDate();
+            document.getElementById('msdate').value = today.getFullYear() + "-" + today.getMonth() + "-" + today.getDate();
+
+        }
+    </script>
+
+</head>
+<body>
+
+<!--
+    This Code is not RUNNABLE. This "body-content-data" div tag should include in the runnable JSP file.
+-->
+
+<div id="body-content-data">
+    <div id="custom">
+        <form action="#" method="get">
+            <table align="center" cellpadding="0" cellspacing="0" width="90%">
+                <tbody>
+                <tr class="e" bgcolor="#eeeeee">
+                    <th colspan="4" align="left">Custom Search - Birth and Deaths</th>
+                </tr>
+                <tr class="e">
+                    <td width="20%">District</td>
+                    <td width="30%">
+                        <select name="district">
+                            <option selected="selected">All</option>
+                            <option>Colombo</option>
+                            <option>Kolonnawa</option>
+                            <option>Kaduwela</option>
+                        </select>
+                    </td>
+                    <td width="20%">DSDivision</td>
+                    <td width="30%">
+                        <select name="dsd">
+                            <option selected="selected">All</option>
+                            <option>Colombo</option>
+                            <option>Kolonnawa</option>
+                            <option>Kaduwela</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr class="e">
+                    <td>Start Date</td>
+                    <td><input id="sdate" type="text"></td>
+                    <td>End Date</td>
+                    <td><input id="edate" type="text"></td>
+                </tr>
+                <tr class="e">
+                    <td colspan="4" align="right"><input value="Search" type="submit"></td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+    <div id="stat">
+        <table align="center" cellpadding="0" cellspacing="0" width="90%">
+            <caption><h3>Statistics</h3></caption>
+            <colgroup>
+                <col class="typ">
+                <col class="sub">
+                <col class="apr">
+                <col class="rej">
+                <col class="pen">
+            </colgroup>
+            <tbody>
+            <tr class="a" bgcolor="#eeeeee">
+                <th class="d" width="20%">Type</th>
+                <th width="20%">Submitted Items</th>
+                <th width="20%">Approved Items</th>
+                <th class="c" width="20%">Rejected Items</th>
+                <th class="c" width="20%">Pending Items</th>
+            </tr>
+            <tr class="a">
+                <td>Births</td>
+                <td class="b">4</td>
+                <td class="b">5</td>
+                <td class="c">5</td>
+                <td class="c">5</td>
+            </tr>
+            <tr class="a">
+                <td>Deaths</td>
+                <td class="b">3</td>
+                <td class="b">15</td>
+                <td class="c">8</td>
+                <td class="c">8</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="custom-mrg">
+        <form action="#" method="get">
+            <table align="center" cellpadding="0" cellspacing="0" width="90%">
+                <tbody>
+                <tr class="e" bgcolor="#eeeeee">
+                    <th colspan="4" align="left">Custom Search - Marriages</th>
+                </tr>
+                <tr class="e">
+                    <td width="20%">District</td>
+                    <td width="30%">
+                        <select name="district">
+                            <option selected="selected">All</option>
+                            <option>Colombo</option>
+                            <option>Kolonnawa</option>
+                            <option>Kaduwela</option>
+                        </select>
+                    </td>
+                    <td width="20%">MRDivision</td>
+                    <td width="30%">
+                        <select name="dsd">
+                            <option selected="selected">All</option>
+                            <option>Colombo</option>
+                            <option>Kolonnawa</option>
+                            <option>Kaduwela</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr class="e">
+                    <td>Start Date</td>
+                    <td><input id="msdate" type="text"></td>
+                    <td>End Date</td>
+                    <td><input id="medate" type="text"></td>
+                </tr>
+                <tr class="e">
+                    <td colspan="4" align="right"><input value="Search" type="submit"></td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+    <div id="mstat">
+        <table align="center" cellpadding="0" cellspacing="0" width="90%">
+            <caption><h3>Statistics</h3></caption>
+            <colgroup>
+                <col class="typ">
+                <col class="sub">
+                <col class="apr">
+                <col class="rej">
+                <col class="pen">
+            </colgroup>
+            <tbody>
+            <tr class="a" bgcolor="#eeeeee">
+                <th class="d" width="20%">Type</th>
+                <th width="20%">Submitted Items</th>
+                <th width="20%">Approved Items</th>
+                <th class="c" width="20%">Rejected Items</th>
+                <th class="c" width="20%">Pending Items</th>
+            </tr>
+            <tr class="a">
+                <td>Marriages</td>
+                <td class="b">13</td>
+                <td class="b">13</td>
+                <td class="c">5</td>
+                <td class="c">11</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+</body>
+</html>
