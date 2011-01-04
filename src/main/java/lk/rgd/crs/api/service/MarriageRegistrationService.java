@@ -512,13 +512,35 @@ public interface MarriageRegistrationService {
 
     /**
      * Return the root path to the scanned copies of marriage certificates
+     *
      * @return the root file system path to the scanned copies
      */
     public String getContentRoot();
 
     /**
      * Return the content type of scanned marriage certificates
+     *
      * @return the content type of scanned certificate images
      */
     public String getContentType();
+
+    /**
+     * updating marriage notice record details
+     * <br>
+     * in follow case this method issues nn empty list of UserWarnings
+     * <ul>
+     * <li>assume there are two notice and male notice is declare female as the license owner and ADR approve male notice</li>
+     * <li>but female notice is still allowed to edit and now female declare male as the license owner but by definition
+     * that cannot be happen in this case </li>
+     * <li>only in this case this method issue non empty user warning list</li>
+     * </ul>
+     *
+     * @param notice notice to be updated
+     * @param user   user who performs the action
+     * @param type   type of the notice to be edited
+     * @return list of warnings while updating marriage notice
+     * @throws lk.rgd.crs.CRSRuntimeException
+     */
+    public List<UserWarning> editMarriageNotice(MarriageRegister notice, MarriageNotice.Type type, boolean ignoreWarnings,
+        User user);
 }

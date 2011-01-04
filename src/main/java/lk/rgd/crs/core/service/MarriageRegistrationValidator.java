@@ -167,7 +167,7 @@ public class MarriageRegistrationValidator {
      * @param type     type of the second notice
      * @return
      */
-    public List<UserWarning> validateAddingSecondNotice(MarriageRegister existing, MarriageNotice.Type type) {
+    public List<UserWarning> validateAddingSecondNoticeAndEdit(MarriageRegister existing, MarriageNotice.Type type) {
         List<UserWarning> warning = new ArrayList<UserWarning>();
         //if second notice is a MALE notice and if its records current state is FEMALE_NOTICE_APPROVED and
         //second notice is nominating that female should get the notice and vise-versa
@@ -195,7 +195,7 @@ public class MarriageRegistrationValidator {
         }
     }
 
-    // todo 24 validate age and previous marriages 
+    // todo validate age and previous marriages 
 
     private static void handleException(String msg, int errorCode) {
         logger.error(msg);

@@ -96,6 +96,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     private String licenseIssueDivisionInEN;
 
     private boolean ignoreWarnings;
+    private boolean warningsAtApproval;//use to divide warning JSP page
 
     private Map<Integer, String> stateList;
     private int state = -1;
@@ -271,19 +272,29 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
             logger.debug("approving marriage notice idUKey : " + idUKey + " and notice type : " + noticeType +
                 " and with ignore warnings : " + ignoreWarnings);
         }
+        //follow use to display serial number in action message ans action errors
+        marriage = marriageRegistrationService.getByIdUKey(idUKey, user);
+        String[] actionMassageArray = new String[]{(noticeType == MarriageNotice.Type.FEMALE_NOTICE) ?
+            Long.toString(marriage.getSerialOfFemaleNotice()) : Long.toString(marriage.getSerialOfMaleNotice())};
         try {
             warnings = marriageRegistrationService.
                 approveMarriageNotice(idUKey, noticeType, ignoreWarnings, user);
             if (warnings.size() > 0) {
                 //if warning size is more than 0 we forward in to approval warning page
+                warningsAtApproval = true;
                 return "warning";
             }
-            addActionMessage(getText("message.approve.success",
-                new String[]{Long.toString(idUKey), noticeType.toString()}));
+            addActionMessage(getText("message.approve.success", actionMassageArray));
             logger.debug("successfully approved marriage notice idUKey : {} and notice type :{ }", idUKey, noticeType);
         } catch (CRSRuntimeException e) {
             //error happens when approving marriage notice
-            addActionError(getText("error.approval.failed", new String[]{Long.toString(idUKey), noticeType.toString()}));
+            switch (e.getErrorCode()) {
+                case ErrorCodes.OTHER_PARTY_MUST_APPROVE_FIRST:
+                    addActionError(getText("error.other.party.approve.first", actionMassageArray));
+                    break;
+                default:
+                    addActionError(getText("error.approval.failed", actionMassageArray));
+            }
             commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId,
                 dsDivisionId, mrDivisionId, AppConstants.MARRIAGE, user, language);
             getApprovalPendingNotices();
@@ -332,25 +343,21 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         logger.debug("attempt to reject marriage notice : idUKey : {} :notice type : {}", idUKey, noticeType);
         try {
             marriageRegistrationService.rejectMarriageNotice(idUKey, noticeType, comment, user);
+            marriage = marriageRegistrationService.getByIdUKey(idUKey, user);
         }
         catch (CRSRuntimeException e) {
-            switch (e.getErrorCode()) {
-                case ErrorCodes.UNABLE_TO_REJECT_FEMALE_NOTICE:
-                    addActionError(getText("error.unable.to.reject.notice", new String[]{"label.female", idUKey + ""}));
-                    break;
-                case ErrorCodes.UNABLE_TO_REJECT_MALE_NOTICE:
-                    addActionError(getText("error.unable.to.reject.notice", new String[]{"label.male", idUKey + ""}));
-                    break;
-                case ErrorCodes.INVALID_NOTICE_STATE_FOR_REJECT:
-                    addActionError(getText("error.unable.to.reject.notice.invalid.state", new String[]{idUKey + ""}));
-                    break;
-            }
+            logger.debug("failed to reject marriage notice idUKey : {} : notice type : {}  ", idUKey, noticeType);
+            addActionError(getText("error.rejection.fail", new String[]{Long.
+                toString((noticeType == MarriageNotice.Type.FEMALE_NOTICE) ?
+                marriage.getSerialOfFemaleNotice() : marriage.getSerialOfMaleNotice())}));
             commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId,
                 dsDivisionId, mrDivisionId, AppConstants.MARRIAGE, user, language);
             getApprovalPendingNotices();
             return ERROR;
         }
-        //todo check table load after success or error  amith
+        addActionMessage(getText("message.rejection.success", new String[]{Long.
+            toString((noticeType == MarriageNotice.Type.FEMALE_NOTICE) ?
+            marriage.getSerialOfFemaleNotice() : marriage.getSerialOfMaleNotice())}));
         commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId,
             dsDivisionId, mrDivisionId, AppConstants.MARRIAGE, user, language);
         getApprovalPendingNotices();
@@ -952,5 +959,13 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
 
     public void setWarnings(List<UserWarning> warnings) {
         this.warnings = warnings;
+    }
+
+    public boolean isWarningsAtApproval() {
+        return warningsAtApproval;
+    }
+
+    public void setWarningsAtApproval(boolean warningsAtApproval) {
+        this.warningsAtApproval = warningsAtApproval;
     }
 }
