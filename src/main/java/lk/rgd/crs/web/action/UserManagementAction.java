@@ -215,6 +215,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
             //session.remove(WebConstants.SESSION_UPDATED_USER);
             session.put("viewUsers", null);
             addActionMessage(getText("edit.Data.Save.Success.label"));
+            pageNo = 3;
         }
         populate();
         return SUCCESS;
