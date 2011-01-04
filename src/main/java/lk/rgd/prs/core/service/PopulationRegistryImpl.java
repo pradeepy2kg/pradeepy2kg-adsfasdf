@@ -275,6 +275,21 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void editExistingPersonAfterApproval(Person person, User user) {
+        final long personUKey = person.getPersonUKey();
+        logger.debug("Attempt to edit PRS entry after approval with personUKey : {}", personUKey);
+        // TODO validate permission to edit approved data
+
+        Person existing = personDao.getByUKey(personUKey);
+
+        final Person.Status currentState = existing.getStatus();
+        if (currentState == Person.Status.VERIFIED) {
+
+        } else {
+            handleException("Cannot modify PRS record with personUKey : " + personUKey + " Illegal state : " +
+                currentState, ErrorCodes.ILLEGAL_STATE);
+        }
+
+
         // TODO chathuranga
         throw new UnsupportedOperationException("Edit person after approval operation not implemented yet...");
     }
@@ -286,21 +301,24 @@ public class PopulationRegistryImpl implements PopulationRegistry {
     public List<UserWarning> approvePerson(long personUKey, boolean ignoreWarnings, User user) {
         // TODO still implementing don't review
         // TODO validate access(location??) and (required fields) minimum requirements
-        // check approve permission
-        if (!user.isAuthorized(Permission.PRS_APPROVE_PERSON)) {
-            handleException("User : " + user.getUserId() + " is not allowed to approve entries on the PRS by keys (uKey)",
-                ErrorCodes.PRS_APPROVE_RECORD_DENIED);
-        }
 
+        // check user permission for approve
+        validateAccessOfUserToApprove(user);
         Person existing = personDao.getByUKey(personUKey);
+        // does the user have access to existing records submitted location
+        validateAccessToLocation(existing.getSubmittedLocation(), user);
+//        validateRequiredFields(existing);
+
         // is the person record currently existing in a state for approval
         final Person.Status currentState = existing.getStatus();
-        if (Person.Status.SEMI_VERIFIED != currentState) {
+        if (Person.Status.SEMI_VERIFIED != currentState && !existing.getLifeCycleInfo().isActiveRecord()) {
             handleException("Cannot approve PRS entry : " + personUKey + " Illegal state : " + currentState,
                 ErrorCodes.INVALID_STATE_FOR_PRS_APPROVAL);
         }
         // TODO validate and output warning list
-        List<UserWarning> warnings = Collections.emptyList();
+//        List<UserWarning> warnings = Collections.emptyList();
+        List<UserWarning> warnings = new ArrayList<UserWarning>();
+        warnings.add(new UserWarning("Sample Warning", UserWarning.Severity.WARN));
 
         if (!warnings.isEmpty() && ignoreWarnings) {
             logger.debug("inside warning list");
@@ -308,11 +326,12 @@ public class PopulationRegistryImpl implements PopulationRegistry {
         }
 
         if (warnings.isEmpty() || ignoreWarnings) {
+            // TODO remove this
+            warnings = Collections.emptyList();
             existing.setStatus(Person.Status.VERIFIED);
             existing.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
             existing.getLifeCycleInfo().setApprovalOrRejectUser(user);
             // TODO change this
-//            addPerson(existing, user);
             updatePerson(existing, user);
             logger.debug("Approved of PRS entry : {} Ignore warnings : {}", personUKey, ignoreWarnings);
         } else {
@@ -419,7 +438,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
     public void markPRSCertificateAsPrinted(long personUKey, User user) {
         logger.debug("Attempt to mark PRS certificate as marked for PRS entry with personUKey : {}", personUKey);
         if (!user.isAuthorized(Permission.PRS_MARK_CERT_PRINTED)) {
-            handleException("User : " + user.getUserId() + " is not allowed mark PRS certificate as printed ",
+            handleException("User : " + user.getUserId() + " is not allowed mark to PRS certificate as printed ",
                 ErrorCodes.PRS_CERT_MARK_AS_PRINTED_DENIED);
         }
 

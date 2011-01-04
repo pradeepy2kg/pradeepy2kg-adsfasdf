@@ -68,6 +68,18 @@ public class PRSValidationUtils {
         }
     }
 
+    public static void validateAccessOfUserToApprove(User user) {
+        if (user != null) {
+            if (!(User.State.ACTIVE == user.getStatus() && !Role.ROLE_ADMIN.equals(user.getRole().getRoleId()) &&
+                user.isAuthorized(Permission.PRS_APPROVE_PERSON))) {
+                handleException("User : " + user.getUserId() + " is not allowed edit entries on the PRS",
+                    ErrorCodes.PERMISSION_DENIED);
+            }
+        } else {
+            handleException("Person or User performing the action not complete", ErrorCodes.INVALID_DATA);
+        }
+    }
+
     public static final boolean isEmptyString(String s) {
         return s == null || s.trim().length() == 0;
     }
