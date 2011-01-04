@@ -141,6 +141,7 @@ public class Menu {
         adrPRSLink.put("eprRejectPerson.do", new Link(null, "/ecivil/prs/", "eprRejectPerson.do", Permission.PRS_REJECT_PERSON));
         adrPRSLink.put("eprLoadDeletePerson.do", new Link(null, "/ecivil/prs/", "eprLoadDeletePerson.do", Permission.PRS_DELETE_PERSON));
         adrPRSLink.put("eprDeletePerson.do", new Link(null, "/ecivil/prs/", "eprDeletePerson.do", Permission.PRS_DELETE_PERSON));
+        adrPRSLink.put("eprApproveIgnoreWarning.do", new Link(null, "/ecivil/prs/", "eprApproveIgnoreWarning.do", Permission.PRS_APPROVE_PERSON));
 
         // PRS links for ARG
         argPRSLink.putAll(adrPRSLink);
