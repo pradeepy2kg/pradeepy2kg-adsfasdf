@@ -503,15 +503,6 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         return SUCCESS;
     }
 
-    /**
-     * Marriage Registration - Loding the extract of marriage register for print
-     */
-    public String marriageExtractInit() {
-        populateLists();
-        marriage = marriageRegistrationService.getByIdUKey(idUKey, user);
-        return SUCCESS;
-    }
-
     private void getAndRemoveNoticeFromSession() {
         marriage = (MarriageRegister) session.get(WebConstants.SESSION_NOTICE_WARNINGS);
         mrDivisionId = (Integer) session.get(WebConstants.SESSION_NOTICE_MR_DIVISION_KEY);

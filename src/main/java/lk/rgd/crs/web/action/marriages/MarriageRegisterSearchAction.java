@@ -147,6 +147,58 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     }
 
     /**
+     * Marriage Registration - Loding the extract of marriage register for print
+     */
+    public String marriageExtractInit() {
+        marriage = marriageRegistrationService.getByIdUKey(idUKey, user);
+        populateLocationList(marriage);
+        return SUCCESS;
+    }
+
+    /**
+     * populating locations and users for Marriage Extract Print
+     */
+    private void populateLocationList(MarriageRegister register) {
+        userList = new HashMap<String, String>();
+
+        locationList = commonUtil.populateActiveUserLocations(user, language);
+        int firstLocation = locationList.keySet().iterator().next();
+        List<User> users = userLocationDAO.getMarriageCertificateSignUsersByLocationId(firstLocation, true);
+        register.setIssueLocation(locationDAO.getLocation(firstLocation));
+
+        MRDivision mrDivision = register.getMrDivision();
+
+        if (mrDivision != null) {
+            for (User u : users) {
+                if (user.isAllowedAccessToMRDSDivision(mrDivision.getMrDivisionUKey())) {
+                    userList.put(u.getUserId(), NameFormatUtil.getDisplayName(u.getUserName(), 50));
+                }
+            }
+        }
+        if (userList != null) {
+            register.setPrintUser(userDAO.getUserByPK(userList.get(0)));
+        }
+    }
+
+    public String markMarriageExtractAsPrinted() {
+        MarriageRegister register = marriageRegistrationService.getByIdUKey(idUKey, user);
+        if (register != null && register.getState() == MarriageRegister.State.EXTRACT_PRINTED) {
+            //TODO: to be localized
+            addActionMessage("Extract of Marriage has alredy been marked as printed");
+        } else {
+            try {
+                //TODO : refactor rename licensePrintedLocationId and licenseIssuedUserId in order to user this attribute for both notice and Extract print
+                marriageRegistrationService.markMarriageExtractAsPrinted(idUKey, locationDAO.
+                    getLocation(licensePrintedLocationId), userDAO.getUserByPK(licenseIssuedUserId), user);
+            }
+            catch (CRSRuntimeException e) {
+              //TODO : forward to error page
+            }
+        }
+        return SUCCESS;
+    }
+
+    /**
      * loading search result page for marriage register
      */
     public String marriageRegisterSearchResult() {

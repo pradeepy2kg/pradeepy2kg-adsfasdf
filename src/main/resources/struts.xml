@@ -1372,7 +1372,7 @@
             <result type="tiles" name="warning">epr.marriageNoticeWarn</result>
         </action>
 
-        <action name="eprMarriageExtractInit" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
+        <action name="eprMarriageExtractInit" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
                 method="marriageExtractInit">
             <result type="tiles" name="success">epr.marriageExtract</result>
             <result type="tiles" name="error">epr.error</result>
@@ -1413,6 +1413,13 @@
                 method="rejectMarriageRegister">
             <result type="tiles" name="success">epr.marriageRegisterSearchInit</result>
             <result type="tiles" name="error">epr.marriageRegisterSearchInit</result>
+        </action>
+
+        <action name="eprMarkMarriageExtractAsPrinted"
+                class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
+                method="markMarriageExtractAsPrinted">
+            <result name="success" type="tiles">epr.success</result>
+            <result name="error" type="tiles">epr.error</result>
         </action>
 
         <action name="eprMarkLicenseAsPrinted" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"

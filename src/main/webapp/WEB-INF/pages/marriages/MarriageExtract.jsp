@@ -3,6 +3,7 @@
 <%-- @author Mahesha Kalpanie --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
 <div class="marriage-notice-outer">
 <s:form action="eprMarriageRegistration" method="post">
 <table class="table_reg_header_01">
@@ -11,6 +12,52 @@
     <col width="200px"/>
     <col/>
     <tbody>
+    <s:form action="eprMarkMarriageExtractAsPrinted.do" method="post">
+    <tr>
+        <td colspan="3">
+            <div style="width:45%;float:left;margin-top:5px;" id="locationSignId">
+                <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;">
+                    <legend><b><s:label value="%{getText('selectoption.label')}"/></b></legend>
+                    <table>
+                        <tr>
+                            <td>
+                                <s:label value="%{getText('placeOfIssue.label')}"/>
+                            </td>
+                            <td>
+
+                                <s:select id="locationId" name="licensePrintedLocationId" list="locationList"
+                                          cssStyle="width:300px;"/>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><s:label value="%{getText('signOfficer.label')}"/></td>
+                            <td>
+                                <s:select id="issueUserId" name="licenseIssuedUserId" list="userList"
+                                          cssStyle="width:300px;"/>
+                            </td>
+                        </tr>
+                    </table>
+                </fieldset>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3" align="right">
+            <div class="form-submit">
+                <s:submit value="%{getText('button.mark.as.print')}"/>
+                <s:hidden name="idUKey" value="%{marriage.idUKey}"/>
+                </s:form>
+            </div>
+            <div class="form-submit">
+                <s:submit value="%{getText('button.print')}" onclick="printPage()"/>
+            </div>
+            <div class="form-submit">
+                <s:submit value="%{getText('button.back')}"/>
+            </div>
+        </td>
+    </tr>
+
     <tr style="font-size:9pt">
         <td colspan="1">&nbsp;</td>
         <td align="center" style="font-size:12pt;"><img src="<s:url value="/images/official-logo.png"/>"</td>
@@ -167,7 +214,7 @@
                     </td>
                 </tr>
                 <tr>
-                     <td>
+                    <td>
                         <s:label name="marriage.regPlaceInEnglishLang"/>
                     </td>
                 </tr>

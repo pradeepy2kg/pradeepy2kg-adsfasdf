@@ -485,6 +485,16 @@ public interface MarriageRegistrationService {
     public void markLicenseToMarriageAsPrinted(long idUKey, Location licenseIssueLocation, User issuedUserId, User user);
 
     /**
+     * Marking the Extract of Marriage as Printed
+     *
+     * @param idUKey         idUKey of the marriage register
+     * @param issuedLocation location where the Extract of Marriage is issued
+     * @param issuedUserId   the user who issued the Extract of Marriage
+     * @param user           user who perform the action
+     */
+    public void markMarriageExtractAsPrinted(long idUKey, Location issuedLocation, User issuedUserId, User user);
+
+    /**
      * Returns all statistics information related to Deaths
      *
      * @param user
