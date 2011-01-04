@@ -53,6 +53,7 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
     private boolean allowPrint;
     private boolean pageLoad;
     private boolean delete;
+    private boolean ignoreWarning;
 
     private int locationId;
     private int pageNo;
@@ -90,16 +91,30 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
     }
 
     /**
-     * This method used to approve person pending approval
+     * This method used to approve person pending approval from direct mode or list and ignore warnings
      */
     public String approveSelectedPerson() {
-        logger.debug("Approving Person with personUKey : {}", personUKey);
-        warnings = service.approvePerson(personUKey, false, user);
+        logger.debug("Approving Person with personUKey : {} by ignoring warnings : {}", personUKey, ignoreWarning);
+
+        try {
+            warnings = service.approvePerson(personUKey, ignoreWarning, user);
+        } catch (PRSRuntimeException e) {
+            switch (e.getErrorCode()) {
+                case ErrorCodes.INVALID_DATA:
+                    addActionError(getText("message.approveData.invalid"));
+                    break;
+                case ErrorCodes.INVALID_STATE_FOR_PRS_APPROVAL:
+                case ErrorCodes.PERMISSION_DENIED:
+                    addActionError(getText("message.noPermission"));
+                    break;
+            }
+        }
 
         if (warnings.isEmpty()) {
             if (direct) {
                 initPermissions();
             } else {
+                pageNo = (pageNo == 0) ? 1 : pageNo;
                 populateLocations();
                 getSearchResultsPage();
             }
@@ -111,14 +126,6 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
                 warnings.size());
             return WARNING;
         }
-    }
-
-    /**
-     * This method used to approve persons pending approval by ignoring warnings
-     */
-    public String approveIgnoreWarnings() {
-        // TODO
-        return SUCCESS;
     }
 
     /**
@@ -225,6 +232,7 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
         if (direct) {
             // nothing to do
         } else {
+            pageNo = (pageNo == 0) ? 1 : pageNo;
             populateLocations();
             getSearchResultsPage();
         }
@@ -429,6 +437,14 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
 
     public void setDelete(boolean delete) {
         this.delete = delete;
+    }
+
+    public boolean isIgnoreWarning() {
+        return ignoreWarning;
+    }
+
+    public void setIgnoreWarning(boolean ignoreWarning) {
+        this.ignoreWarning = ignoreWarning;
     }
 
     public int getLocationId() {

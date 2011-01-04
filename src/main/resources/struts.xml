@@ -185,11 +185,6 @@
             <result type="tiles" name="success">epr.PersonApproval</result>
         </action>
 
-        <action name="eprApproveIgnoreWarning" class="lk.rgd.prs.web.action.PersonApprovalAction"
-                method="approveIgnoreWarnings">
-            <result type="tiles" name="success">epr.personApproveWarning</result>
-        </action>
-
     </package>
 
     <package name="births" namespace="/births" extends="NG">
