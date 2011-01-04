@@ -140,14 +140,6 @@ public class MarriageRegister implements Serializable, Cloneable {
         EXTRACT_PRINTED //11
     }
 
-    //TODO : to be removed
-    public enum PlaceOfMarriage {
-        REGISTRAR_OFFICE,
-        DS_OFFICE,
-        CHURCH,
-        OTHER
-    }
-
     public enum LicenseCollectType {
         HAND_COLLECT_MALE,  //male hand collect the license
         MAIL_TO_MALE,       //mail to mail party mailing address
@@ -182,10 +174,6 @@ public class MarriageRegister implements Serializable, Cloneable {
 
     @Column(name = "TYPE_MARRIAGE", nullable = true)
     private MarriageType typeOfMarriage;
-
-    //TODO: to be removed
-    @Column(name = "PLACE_MARRIAGE", nullable = true)
-    private PlaceOfMarriage placeOfMarriage;
 
     @Column(name = "TYPE_MARRIAGE_PLACE", nullable = true)
     private TypeOfMarriagePlace typeOfMarriagePlace;
@@ -358,16 +346,6 @@ public class MarriageRegister implements Serializable, Cloneable {
 
     public void setTypeOfMarriage(MarriageType typeOfMarriage) {
         this.typeOfMarriage = typeOfMarriage;
-    }
-
-    //todo: to be removed
-
-    public PlaceOfMarriage getPlaceOfMarriage() {
-        return placeOfMarriage;
-    }
-
-    public void setPlaceOfMarriage(PlaceOfMarriage placeOfMarriage) {
-        this.placeOfMarriage = placeOfMarriage;
     }
 
     public long getRegistrarOrMinisterPIN() {
