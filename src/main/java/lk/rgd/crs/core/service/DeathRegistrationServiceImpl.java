@@ -245,7 +245,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
             person = ecivil.findPersonByPIN(pin, user);
         } catch (NumberFormatException ignore) {
             for (Person p : ecivil.findPersonsByNIC(pinOrNic, user)) {
-                if (person == null && Person.LifeStatus.ALIVE.equals(p.getLifeStatus())) {
+                if (person == null && Person.LifeStatus.ALIVE == p.getLifeStatus()) {
                     person = p;
                 } else {
                     handleException("Cannot identify dead person on PRS with duplicate NIC : " + pinOrNic,
