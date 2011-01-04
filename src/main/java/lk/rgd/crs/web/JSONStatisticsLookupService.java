@@ -35,9 +35,9 @@ public class JSONStatisticsLookupService extends HttpServlet {
 
     private static final Logger logger = LoggerFactory.getLogger(JSONStatisticsLookupService.class);
     private final ObjectMapper mapper = new ObjectMapper();
-    private DeathRegistrationService deathRegistrationService;
-    private BirthRegistrationService birthRegistrationService;
-    private MarriageRegistrationService marriageRegistrationService;
+    private DeathRegistrationService deathRegistrationService;          //todo to be removed
+    private BirthRegistrationService birthRegistrationService;          //todo to be removed
+    private MarriageRegistrationService marriageRegistrationService;    //todo to be removed
     private UserDAO userDAO;
     private DistrictDAO districtDAO;
     private DSDivisionDAO dsDivisionDAO;
@@ -184,102 +184,6 @@ public class JSONStatisticsLookupService extends HttpServlet {
 
                 logger.debug("temp.size = {}", temp.size());
 
-            } else if (mode.equals("commonStatInfo")) {
-                /*CommonStatistics cs = new CommonStatistics();
-
-                if (userType.equals(WebConstants.USER_ADR)) {
-                    if (statType.equals(WebConstants.STAT_ALL)) {
-                        cs = populateBirthStatistics(WebConstants.USER_ADR);
-                        if (cs != null) {
-                            populateBirthStatistics(cs);
-                        }
-
-                        cs = populateDeathStatistics(WebConstants.USER_ADR);
-                        if (cs != null) {
-                            populateDeathStatistics(cs);
-                        }
-
-                        cs = populateMarriageStatistics(WebConstants.USER_ADR);
-                        if (cs != null) {
-                            populateMarriageStatistics(cs);
-                        }
-
-                    }
-
-                } else if (userType.equals(WebConstants.USER_DEO)) {
-                    if (statType.equals(WebConstants.STAT_ALL)) {
-                        cs = populateBirthStatistics(WebConstants.USER_DEO);
-                        if (cs != null) {
-                            populateBirthStatistics(cs);
-                        }
-
-                        logger.debug("Births Total Submissions for DEO {}", cs.getTotalSubmissions());
-
-                        cs = populateDeathStatistics(WebConstants.USER_DEO);
-                        if (cs != null) {
-                            populateDeathStatistics(cs);
-                        }
-
-                        cs = populateMarriageStatistics(WebConstants.USER_DEO);
-                        if (cs != null) {
-                            populateMarriageStatistics(cs);
-                        }
-
-                    }
-                } else if (userType.equals(WebConstants.USER_ARG)) {
-                    if (statType.equals(WebConstants.STAT_ALL)) {
-                        cs = populateBirthStatistics(WebConstants.USER_ARG);
-                        if (cs != null) {
-                            populateBirthStatistics(cs);
-                        }
-
-                        cs = populateDeathStatistics(WebConstants.USER_ARG);
-                        if (cs != null) {
-                            populateDeathStatistics(cs);
-                        }
-
-                        cs = populateMarriageStatistics(WebConstants.USER_ARG);
-                        if (cs != null) {
-                            populateMarriageStatistics(cs);
-                        }
-
-                    }
-                } else if (userType.equals(WebConstants.USER_DR)) {
-                    if (statType.equals(WebConstants.STAT_ALL)) {
-                        cs = populateBirthStatistics(WebConstants.USER_ARG);
-                        if (cs != null) {
-                            populateBirthStatistics(cs);
-                        }
-
-                        cs = populateDeathStatistics(WebConstants.USER_ARG);
-                        if (cs != null) {
-                            populateDeathStatistics(cs);
-                        }
-
-                        cs = populateMarriageStatistics(WebConstants.USER_ARG);
-                        if (cs != null) {
-                            populateMarriageStatistics(cs);
-                        }
-
-                    }
-                } else if (userType.equals(WebConstants.USER_RG)) {
-                    if (statType.equals(WebConstants.STAT_ALL)) {
-                        cs = populateBirthStatistics(WebConstants.USER_ARG);
-                        if (cs != null) {
-                            populateBirthStatistics(cs);
-                        }
-
-                        cs = populateDeathStatistics(WebConstants.USER_ARG);
-                        if (cs != null) {
-                            populateDeathStatistics(cs);
-                        }
-
-                        cs = populateMarriageStatistics(WebConstants.USER_ARG);
-                        if (cs != null) {
-                            populateMarriageStatistics(cs);
-                        }
-                    }
-                }*/
             }
 
         } catch (Exception e) {
@@ -294,64 +198,6 @@ public class JSONStatisticsLookupService extends HttpServlet {
         out.flush();
 
     }
-
-    /*public CommonStatistics populateBirthStatistics(String user) {
-        CommonStatistics commonStat;
-
-        if (user.equals(WebConstants.USER_ADR)) {
-            commonStat = birthRegistrationService.getCommonBirthCertificateCount(user);
-        } else if (user.equals(WebConstants.USER_DEO)) {
-            commonStat = birthRegistrationService.getCommonBirthCertificateCount(user);
-        } else if (user.equals(WebConstants.USER_ARG)) {
-            commonStat = birthRegistrationService.getCommonBirthCertificateCount(user);
-        } else if (user.equals(WebConstants.USER_DR)) {
-            commonStat = birthRegistrationService.getCommonBirthCertificateCount(user);
-        } else if (user.equals(WebConstants.USER_RG)) {
-            commonStat = birthRegistrationService.getCommonBirthCertificateCount(user);
-        } else {
-            commonStat = new CommonStatistics();
-        }
-
-        return commonStat;
-    }
-
-    public CommonStatistics populateDeathStatistics(String user) {
-        CommonStatistics commonStat;
-
-        if (user.equals(WebConstants.USER_ADR)) {
-            commonStat = deathRegistrationService.getCommonDeathCertificateCount(user);
-        } else if (user.equals(WebConstants.USER_DEO)) {
-            commonStat = deathRegistrationService.getCommonDeathCertificateCount(user);
-        } else if (user.equals(WebConstants.USER_ARG)) {
-            commonStat = deathRegistrationService.getCommonDeathCertificateCount(user);
-        } else if (user.equals(WebConstants.USER_DR)) {
-            commonStat = deathRegistrationService.getCommonDeathCertificateCount(user);
-        } else if (user.equals(WebConstants.USER_RG)) {
-            commonStat = deathRegistrationService.getCommonDeathCertificateCount(user);
-        } else {
-            commonStat = new CommonStatistics();
-        }
-        return commonStat;
-    }
-
-    public CommonStatistics populateMarriageStatistics(String user) {
-        CommonStatistics commonStat;
-
-        if (user.equals(WebConstants.USER_ADR)) {
-            commonStat = marriageRegistrationService.getCommonMarriageCertificateCount(user);
-        } else if (user.equals(WebConstants.USER_DEO)) {
-            commonStat = marriageRegistrationService.getCommonMarriageCertificateCount(user);
-        } else if (user.equals(WebConstants.USER_ARG)) {
-            commonStat = marriageRegistrationService.getCommonMarriageCertificateCount(user);
-        } else if (user.equals(WebConstants.USER_DR)) {
-            commonStat = marriageRegistrationService.getCommonMarriageCertificateCount(user);
-        } else if (user.equals(WebConstants.USER_RG)) {
-            commonStat = marriageRegistrationService.getCommonMarriageCertificateCount(user);
-        } else {
-            commonStat = new CommonStatistics();
-        }
-        return commonStat;
-    }*/
 
     public void populateBirthStatistics(CommonStatistics cs) {
         optionLists.put("approved_b", cs.getApprovedItems());
