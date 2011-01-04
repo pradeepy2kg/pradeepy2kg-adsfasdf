@@ -2,6 +2,7 @@ package lk.rgd.crs.core.service;
 
 import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
+import lk.rgd.common.api.Auditable;
 import lk.rgd.common.api.dao.UserLocationDAO;
 import lk.rgd.common.api.domain.*;
 import lk.rgd.common.api.service.UserManager;
@@ -928,5 +929,17 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      */
     public String getContentType() {
         return contentType;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Auditable
+    public String getImagePathByIdUKey(long idUKey, User user) {
+        MarriageRegister mr = getByIdUKey(idUKey, user);
+        if (mr != null) {
+            return mr.getScannedImagePath();
+        }
+        return null;
     }
 }

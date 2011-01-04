@@ -80,24 +80,19 @@ public class MCImageServlet extends HttpServlet {
                 resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, INVALID_ID);
             }
 
-            MarriageRegister mr = mrService.getByIdUKey(idUKey, user);
-            if (mr != null) {
+            final String path = mrService.getImagePathByIdUKey(idUKey, user);
+            if (path != null) {
 
-                if (mr.getScannedImagePath() == null) {
-                    resp.sendError(HttpServletResponse.SC_NOT_FOUND, NOT_EXIST);
-
+                File file = new File(contentRoot, path);
+                if (file.exists()) {
+                    serveFile(req, resp, file);
                 } else {
-                    File file = new File(contentRoot, mr.getScannedImagePath());
-                    if (file.exists()) {
-                        serveFile(req, resp, file);
-                    } else {
-                        logger.error("Cannot locate file : " + file.getAbsolutePath());
-                        resp.sendError(HttpServletResponse.SC_NOT_FOUND, CANNOT_FIND);
-                    }
+                    logger.error("Cannot locate file : " + file.getAbsolutePath());
+                    resp.sendError(HttpServletResponse.SC_NOT_FOUND, CANNOT_FIND);
                 }
             } else {
-                logger.error("Invalid Marriage idUKey : {} used for scanned image fetch", idUKey);
-                resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, INVALID_ID);
+                logger.error("Invalid Marriage idUKey : {} or scanned image not found", idUKey);
+                resp.sendError(HttpServletResponse.SC_NOT_FOUND, NOT_EXIST);
             }
 
         } else {
