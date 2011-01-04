@@ -136,7 +136,8 @@ public class MarriageRegister implements Serializable, Cloneable {
         LICENSE_PRINTED,//7
         REG_DATA_ENTRY,//8
         REGISTRATION_APPROVED,//9
-        REGISTRATION_REJECTED //10
+        REGISTRATION_REJECTED, //10
+        EXTRACT_PRINTED //11
     }
 
     public enum PlaceOfMarriage {
@@ -237,6 +238,12 @@ public class MarriageRegister implements Serializable, Cloneable {
     private User licensePrintUser;
 
     /**
+     * The user printing the Marriage Register
+     */
+    @JoinColumn(name = "REG_PRINT_USER", nullable = true)
+    private User printUser;
+
+    /**
      * The timestamp when license is printed for this record
      */
     @Column(nullable = true, name = "LICENSE_PRINT_DATE")
@@ -249,6 +256,13 @@ public class MarriageRegister implements Serializable, Cloneable {
     @OneToOne
     @JoinColumn(name = "LICENSE_ISSUE_LOCATION", nullable = true)
     private Location licenseIssueLocation;
+
+    /**
+     * The Locations where the extract of marriage certificate can be issued
+     */
+    @OneToOne
+    @JoinColumn(name = "REG_ISSUE_LOCATION", nullable = true)
+    private Location issueLocation;
 
     //male notice related columns
 
@@ -602,6 +616,22 @@ public class MarriageRegister implements Serializable, Cloneable {
 
     public void setScannedImagePath(String scannedImagePath) {
         this.scannedImagePath = scannedImagePath;
+    }
+
+    public User getPrintUser() {
+        return printUser;
+    }
+
+    public void setPrintUser(User printUser) {
+        this.printUser = printUser;
+    }
+
+    public Location getIssueLocation() {
+        return issueLocation;
+    }
+
+    public void setIssueLocation(Location issueLocation) {
+        this.issueLocation = issueLocation;
     }
 }
 

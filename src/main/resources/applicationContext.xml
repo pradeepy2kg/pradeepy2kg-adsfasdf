@@ -16,7 +16,7 @@
         <property name="password" value="epop"/>
         <property name="initialSize" value="10"/>
         <property name="maxActive" value="50"/>
-        <!--property name="validationQuery" value="select count(*) from COMMON.COUNTRIES"/-- >
+        <\!\-\-property name="validationQuery" value="select count(*) from COMMON.COUNTRIES"/\-\- >
     </bean>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">

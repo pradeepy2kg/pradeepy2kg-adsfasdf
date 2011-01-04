@@ -516,6 +516,14 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         }
     }
 
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void markMarriageExtractAsPrinted(long idUKey, Location issuedLocation, User issuedUserId, User user) {
+
+    }
+
     private void populateNoticeForMarkAsPrint(MarriageRegister notice, User issuingUser, Location issuingLocation) {
         if (issuingLocation != null && issuingUser != null) {
             notice.setState(MarriageRegister.State.LICENSE_PRINTED);
