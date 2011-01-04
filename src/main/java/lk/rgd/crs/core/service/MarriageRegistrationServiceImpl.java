@@ -8,7 +8,6 @@ import lk.rgd.common.api.service.UserManager;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.MarriageRegistrationDAO;
-import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.domain.MarriageNotice;
 import lk.rgd.crs.api.domain.MarriageRegister;
@@ -19,7 +18,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.File;
 import java.util.*;
 
 /**
@@ -569,9 +567,9 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         } else {
             register.setState(MarriageRegister.State.EXTRACT_PRINTED);
             checkUserPermissionForTheLocation(issuingUser, issuingLocation);
-            register.setPrintUser(issuingUser);
-            register.setIssueLocation(issuingLocation);
-            register.setLicensePrintTimestamp(new GregorianCalendar().getTime());
+            register.setExtractCertifiedUser(issuingUser);
+            register.setExtractIssuedLocation(issuingLocation);
+            register.setExtractPrintedTimestamp(new GregorianCalendar().getTime());
         }
     }
 
