@@ -137,7 +137,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             //add race,country to  male party and female party
             populatePartyObjectsForPersisting(marriage);
             marriageRegistrationService.addMarriageNotice(marriage, noticeType, user);
-            addActionMessage("message.notice.successfully.add");
+            addActionMessage(getText("message.notice.successfully.add"));
             logger.debug("successfully added marriage notice serial number: {}");
             return SUCCESS;
         }
@@ -191,7 +191,9 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             populateNoticeForEdit(marriage, existingNotice, noticeType);
             //todo use edit method instead of this update
             marriageRegistrationService.updateMarriageRegister(existingNotice, user);
-            addActionMessage(getText("marriage.notice.updated.success"));
+            addActionMessage(getText("marriage.notice.updated.success", new String[]{(noticeType ==
+                MarriageNotice.Type.FEMALE_NOTICE) ? Long.toString(existingNotice.getSerialOfFemaleNotice()) :
+                Long.toString(existingNotice.getSerialOfMaleNotice())}));
         } else {
             logger.debug("marriage notice : idUKey {} : update fails");
             addActionError(getText("marriage.notice.update.fails"));
@@ -245,6 +247,9 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             return ERROR;
         }
         logger.debug("added second notice to idUKey : {}", idUKey);
+        addActionMessage(getText("message.add.successfully.notice", new String[]{Long.toString(
+            (noticeType == MarriageNotice.Type.FEMALE_NOTICE) ?
+                existingNotice.getSerialOfFemaleNotice() : existingNotice.getSerialOfMaleNotice())}));
         return SUCCESS;
     }
 

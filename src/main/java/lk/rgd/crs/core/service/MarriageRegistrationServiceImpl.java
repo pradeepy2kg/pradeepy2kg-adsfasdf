@@ -399,6 +399,17 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         //check is pre request are full filled before approve
         isNoticeAllowedToApprove(existingNotice, type);
 
+        checkExistingActiveApprovedNotices(existingNotice, user);
+        List<UserWarning> warnings = marriageRegistrationValidator.
+            checkUserWarningsForApproveMarriageNotice(existingNotice, type, user);
+        if (warnings != null && warnings.size() > 0 && !ignoreWarnings) {
+            if (logger.isDebugEnabled()) {
+                logger.debug("warnings found while approving marriage notice idUKey :" + existingNotice.getIdUKey() +
+                    " notice type :" + type + " current notice state :" + existingNotice.getState());
+            }
+            return warnings;
+        }
+
         if (existingNotice.isSingleNotice()) {
             //directly change state in to NOTICE_APPROVED
             if (existingNotice.getState() == MarriageRegister.State.DATA_ENTRY) {
@@ -422,18 +433,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
                 existingNotice.setState(MarriageRegister.State.NOTICE_APPROVED);
             }
         }
-        //now we change state in to approving but if we changed state in to notice approve state there can't be another
-        //record that have same state for same male party and female party pin numbers
-        checkExistingActiveApprovedNotices(existingNotice, user);
-        List<UserWarning> warnings = marriageRegistrationValidator.
-            checkUserWarningsForApproveMarriageNotice(existingNotice, type, user);
-        if (warnings != null && warnings.size() > 0 && !ignoreWarnings) {
-            if (logger.isDebugEnabled()) {
-                logger.debug("warnings found while approving marriage notice idUKey :" + existingNotice.getIdUKey() +
-                    " notice type :" + type + " current notice state :" + existingNotice.getState());
-            }
-            return warnings;
-        }
+
         if (warnings.size() == 0 || ignoreWarnings) {
             marriageRegistrationDAO.updateMarriageRegister(existingNotice, user);
         }

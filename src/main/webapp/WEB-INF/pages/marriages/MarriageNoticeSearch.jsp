@@ -292,8 +292,8 @@
                             male at DATA_ENTRY or FEMALE_NOTICE_APPROVED
                             female at DATA_ENTRY or MALE_NOTICE_APPROVED
                             --%>
-                        <s:if test="(type.ordinal()==0 && state.ordinal()==0) || (type.ordinal()==1 && state.ordinal()==0 ||state.ordinal()==2 )
-                        || (type.ordinal()==2 && state.ordinal()==0 ||state.ordinal()==1)">
+                        <s:if test="(type.ordinal()==0 && state.ordinal()==0) || (type.ordinal()==1 && (state.ordinal()==0 ||state.ordinal()==2) )
+                        || (type.ordinal()==2 && (state.ordinal()==0 ||state.ordinal()==1))">
                             <s:url id="editSelected" action="eprMarriageNoticeEditInit.do">
                                 <s:param name="idUKey" value="idUKey"/>
                                 <s:param name="noticeType" value="type"/>
@@ -356,21 +356,24 @@
                         </s:if>
                     </td>
                     <td align="center">
-                        <s:url id="deleteSelected" action="eprMarriageNoticeDelete.do">
-                            <s:param name="idUKey" value="idUKey"/>
-                            <s:param name="noticeType" value="type"/>
-                            <s:param name="pageNo" value="%{#request.pageNo}"/>
-                            <s:param name="districtId" value="#request.districtId"/>
-                            <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
-                            <s:param name="mrDivisionId" value="#request.mrDivisionId"/>
-                            <s:param name="printStart" value="#request.printStart"/>
-                        </s:url>
-                        <s:a href="%{deleteSelected}" title="%{getText('deleteToolTip.label')}">
-                            <img src="<s:url value='/images/delete.gif'/>" width="25" height="25" border="none"/>
-                        </s:a>
+                        <s:if test="(type.ordinal()==0 && state.ordinal()==0) || (type.ordinal()==1 && (state.ordinal()==0 ||state.ordinal()==2) )
+                        || (type.ordinal()==2 && (state.ordinal()==0 ||state.ordinal()==1))">
+                            <s:url id="deleteSelected" action="eprMarriageNoticeDelete.do">
+                                <s:param name="idUKey" value="idUKey"/>
+                                <s:param name="noticeType" value="type"/>
+                                <s:param name="pageNo" value="%{#request.pageNo}"/>
+                                <s:param name="districtId" value="#request.districtId"/>
+                                <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
+                                <s:param name="mrDivisionId" value="#request.mrDivisionId"/>
+                                <s:param name="printStart" value="#request.printStart"/>
+                            </s:url>
+                            <s:a href="%{deleteSelected}" title="%{getText('deleteToolTip.label')}">
+                                <img src="<s:url value='/images/delete.gif'/>" width="25" height="25" border="none"/>
+                            </s:a>
+                        </s:if>
                     </td>
                     <td align="center">
-                        <s:if test="(type.ordinal()==7 || type.ordinal()==3)">
+                        <s:if test="state.ordinal()==7 || state.ordinal()==3">
                             <s:url id="printSelected" action="eprLicenseToMarriage.do">
                                 <s:param name="idUKey" value="idUKey"/>
                                 <s:param name="noticeType" value="type"/>
@@ -407,7 +410,7 @@
         <s:param name="mrDivisionId" value="#request.mrDivisionId"/>
         <s:param name="printStart" value="#request.printStart"/>
     </s:url>
-<%--    &lt;%&ndash;<s:if test="printStart!=0 & printStart>0">&ndash;%&gt;
+    <%--    &lt;%&ndash;<s:if test="printStart!=0 & printStart>0">&ndash;%&gt;
     <s:if test="printStart!=0 & pageNo !=1">
         <s:a href="%{previousUrl}">
             <img src="<s:url value='/images/previous.gif'/>" border="none"/>
