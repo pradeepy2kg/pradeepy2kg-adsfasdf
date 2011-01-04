@@ -114,6 +114,10 @@ public class ErrorCodes {
     public static final int POSSIBLE_MARRIAGE_NOTICE_SERIAL_NUMBER_DUPLICATION = 6012;
     public static final int INVALID_SERIAL_NUMBER = 6013;
     public static final int INVALID_LICENSE_ISSUE_USER_OR_LOCATION = 6014;
+    public static final int MARRIAGE_REGISTER_NOT_FOUND = 6015;
+    public static final int INVALID_STATE_OF_MARRIAGE_REGISTER = 6016;
+    public static final int INVALID_USER_ON_CERTIFYING_MARRIAGE_EXTRACT = 6017;
+    public static final int INVALID_LOCATION_ON_ISSUING_MARRIAGE_EXTRACT = 6018;
 
     //birth alteration related error code 7001-7999
     public static final int INVALID_STATE_FOR_REJECT_BIRTH_ALTERATION = 7001;
