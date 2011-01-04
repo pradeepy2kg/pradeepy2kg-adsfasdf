@@ -520,8 +520,21 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void markMarriageExtractAsPrinted(long idUKey, Location issuedLocation, User issuedUserId, User user) {
-
+    public void markMarriageExtractAsPrinted(long idUKey, Location issuedLocation, User issuedUser, User user) {
+        MarriageRegister register = marriageRegistrationDAO.getByIdUKey(idUKey);
+        if (register == null) {
+            handleException("Marriage Register could not be found - idUKey : "
+                + idUKey, ErrorCodes.MARRIAGE_REGISTER_NOT_FOUND);
+        } else {
+            if (register.getState() == MarriageRegister.State.REGISTRATION_APPROVED) {
+                ValidationUtils.validateAccessToMarriageRegister(register, user);
+                setMarriageExtractPrintingDetails(register, issuedUser, issuedLocation);
+                marriageRegistrationDAO.updateMarriageRegister(register, user);
+            } else {
+                handleException("Invalid state of marriage register - idUKey :" + idUKey + " Current State is " +
+                    register.getState(), ErrorCodes.INVALID_STATE_FOR_PRINT_LICENSE);
+            }
+        }
     }
 
     private void populateNoticeForMarkAsPrint(MarriageRegister notice, User issuingUser, Location issuingLocation) {
@@ -536,6 +549,29 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         } else {
             handleException("invalid issuing location " + issuingLocation + " or issuing user " + issuingUser,
                 ErrorCodes.INVALID_LICENSE_ISSUE_USER_OR_LOCATION);
+        }
+    }
+
+    /**
+     * Adding certifying user and location to the extract of marriage
+     *
+     * @param register
+     * @param issuingUser
+     * @param issuingLocation
+     */
+    private void setMarriageExtractPrintingDetails(MarriageRegister register, User issuingUser, Location issuingLocation) {
+        if (issuingLocation == null) {
+            handleException("Invalid issuing location " + issuingLocation,
+                ErrorCodes.INVALID_USER_ON_CERTIFYING_MARRIAGE_EXTRACT);
+        } else if (issuingUser == null) {
+            handleException("Invalid certifying user " + issuingUser,
+                ErrorCodes.INVALID_USER_ON_CERTIFYING_MARRIAGE_EXTRACT);
+        } else {
+            register.setState(MarriageRegister.State.EXTRACT_PRINTED);
+            checkUserPermissionForTheLocation(issuingUser, issuingLocation);
+            register.setPrintUser(issuingUser);
+            register.setIssueLocation(issuingLocation);
+            register.setLicensePrintTimestamp(new GregorianCalendar().getTime());
         }
     }
 

@@ -140,6 +140,7 @@ public class MarriageRegister implements Serializable, Cloneable {
         EXTRACT_PRINTED //11
     }
 
+    //TODO : to be removed
     public enum PlaceOfMarriage {
         REGISTRAR_OFFICE,
         DS_OFFICE,
@@ -182,6 +183,7 @@ public class MarriageRegister implements Serializable, Cloneable {
     @Column(name = "TYPE_MARRIAGE", nullable = true)
     private MarriageType typeOfMarriage;
 
+    //TODO: to be removed
     @Column(name = "PLACE_MARRIAGE", nullable = true)
     private PlaceOfMarriage placeOfMarriage;
 
@@ -398,16 +400,6 @@ public class MarriageRegister implements Serializable, Cloneable {
 
     public void setDateOfFemaleNotice(Date dateOfFemaleNotice) {
         this.dateOfFemaleNotice = dateOfFemaleNotice;
-    }
-
-    //TODO: to be removed
-
-    public MRDivision getMrDivisionId() {
-        return mrDivision;
-    }
-
-    public void setMrDivisionId(MRDivision mrDivision) {
-        this.mrDivision = mrDivision;
     }
 
     public long getRegistrarPINOfFirstNotice() {

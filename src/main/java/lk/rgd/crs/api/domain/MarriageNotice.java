@@ -13,6 +13,7 @@ public final class MarriageNotice {
 
     private final long idUKey;
     private final MarriageType typeOfMarriage;
+    //TODO: to be removed
     private final MarriageRegister.PlaceOfMarriage placeOfMarriage;
     private final Long serialOfNotice;
     private final Date dateOfNotice;
@@ -35,6 +36,7 @@ public final class MarriageNotice {
     public MarriageNotice(MarriageRegister mr, Type type) {
         this.idUKey = mr.getIdUKey();
         this.typeOfMarriage = mr.getTypeOfMarriage();
+        //TODO: to be removed
         this.placeOfMarriage = mr.getPlaceOfMarriage();
         this.type = type;
         this.state = mr.getState();

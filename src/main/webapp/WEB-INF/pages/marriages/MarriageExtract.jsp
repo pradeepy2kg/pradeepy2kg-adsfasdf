@@ -5,7 +5,6 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
 <div class="marriage-notice-outer">
-<s:form action="eprMarriageRegistration" method="post">
 <table class="table_reg_header_01">
     <caption></caption>
     <col width="420px"/>

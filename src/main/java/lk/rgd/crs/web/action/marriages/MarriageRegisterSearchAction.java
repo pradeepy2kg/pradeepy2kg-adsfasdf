@@ -177,7 +177,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
             }
         }
         if (userList != null) {
-            register.setPrintUser(userDAO.getUserByPK(userList.get(0)));
+            register.setPrintUser(userDAO.getUserByPK(userList.keySet().iterator().next()));
         }
     }
 
