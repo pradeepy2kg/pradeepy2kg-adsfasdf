@@ -4,7 +4,22 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
-<div class="marriage-notice-outer">
+<style type="text/css">
+    #marriage-extract-outer table tr td {
+        padding: 0 5px;
+    }
+
+    @media print {
+        .form-submit {
+            display: none;
+        }
+
+        #locationSignId {
+            display: none;
+        }
+    }
+</style>
+<div class="marriage-extract-outer">
 <table class="table_reg_header_01">
     <caption></caption>
     <col width="420px"/>
@@ -489,5 +504,4 @@
 </table>
 <div class="form-submit">
 </div>
-</s:form>
 </div>
