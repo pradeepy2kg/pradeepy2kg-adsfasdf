@@ -224,8 +224,8 @@ public class MarriageRegister implements Serializable, Cloneable {
     /**
      * The user printing the Marriage Register
      */
-    @JoinColumn(name = "REG_PRINT_USER", nullable = true)
-    private User printUser;
+    @JoinColumn(name = "EXTRACT_CERTIFIED_USER", nullable = true)
+    private User extractCertifiedUser;
 
     /**
      * The timestamp when license is printed for this record
@@ -245,8 +245,15 @@ public class MarriageRegister implements Serializable, Cloneable {
      * The Locations where the extract of marriage certificate can be issued
      */
     @OneToOne
-    @JoinColumn(name = "REG_ISSUE_LOCATION", nullable = true)
-    private Location issueLocation;
+    @JoinColumn(name = "EXTRACT_ISSUED_LOCATION", nullable = true)
+    private Location extractIssuedLocation;
+
+    /**
+     * The timestamp when the Extract of Marriage printed
+     */
+    @Column(nullable = true, name = "EXTRACT_PRINTED_DATE")
+    @Temporal(value = TemporalType.TIMESTAMP)
+    private Date extractPrintedTimestamp;
 
     //male notice related columns
 
@@ -574,20 +581,28 @@ public class MarriageRegister implements Serializable, Cloneable {
         this.scannedImagePath = scannedImagePath;
     }
 
-    public User getPrintUser() {
-        return printUser;
+    public User getExtractCertifiedUser() {
+        return extractCertifiedUser;
     }
 
-    public void setPrintUser(User printUser) {
-        this.printUser = printUser;
+    public void setExtractCertifiedUser(User extractCertifiedUser) {
+        this.extractCertifiedUser = extractCertifiedUser;
     }
 
-    public Location getIssueLocation() {
-        return issueLocation;
+    public Location getExtractIssuedLocation() {
+        return extractIssuedLocation;
     }
 
-    public void setIssueLocation(Location issueLocation) {
-        this.issueLocation = issueLocation;
+    public void setExtractIssuedLocation(Location extractIssuedLocation) {
+        this.extractIssuedLocation = extractIssuedLocation;
+    }
+
+    public Date getExtractPrintedTimestamp() {
+        return extractPrintedTimestamp;
+    }
+
+    public void setExtractPrintedTimestamp(Date extractPrintedTimestamp) {
+        this.extractPrintedTimestamp = extractPrintedTimestamp;
     }
 }
 
