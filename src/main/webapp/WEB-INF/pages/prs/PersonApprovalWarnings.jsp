@@ -6,6 +6,12 @@
     }
 </script>
 
+<s:if test="direct">
+    <s:url id="approve" action="eprDirectApprovePerson" namespace="../prs"/>
+</s:if>
+<s:else>
+    <s:url id="approve" action="eprApprovePerson" namespace="../prs"/>
+</s:else>
 <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;">
     <legend><b><s:label value="%{getText('message.personWarning.label')}"/></b></legend>
     <table class="birth-declaration-approval-warning-table" style="margin-left:10px;">
@@ -15,7 +21,7 @@
             </tr>
         </s:iterator>
     </table>
-    <s:form action="eprApproveIgnoreWarning" method="post">
+    <s:form action="%{approve}" method="post">
     <table align="center" border="0">
         <tr>
             <s:hidden name="personUKey" value="%{#request.personUKey}"/>
