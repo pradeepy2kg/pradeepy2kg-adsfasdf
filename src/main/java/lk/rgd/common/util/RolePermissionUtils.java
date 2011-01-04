@@ -19,7 +19,7 @@ public class RolePermissionUtils {
 
     private static final BitSet deoBitSet;
     private static final BitSet adrBitSet;
-    
+
     private static final BitSet drBitSet;
     private static final BitSet argBitSet;
     private static final BitSet rgBitSet;
@@ -63,6 +63,7 @@ public class RolePermissionUtils {
         adrBitSet.set(Permission.PRS_APPROVE_PERSON);
         adrBitSet.set(Permission.PRS_DELETE_PERSON);
         adrBitSet.set(Permission.PRS_REJECT_PERSON);
+        adrBitSet.set(Permission.PRS_MARK_CERT_PRINTED);
         adrBitSet.set(Permission.SEARCH_MARRIAGE);
         adrBitSet.set(Permission.PRINT_MARRIAGE_CERTIFICATE);
         adrBitSet.set(Permission.APPROVE_MARRIAGE);
