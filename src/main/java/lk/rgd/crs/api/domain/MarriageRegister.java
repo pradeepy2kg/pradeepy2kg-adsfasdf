@@ -204,13 +204,7 @@ public class MarriageRegister implements Serializable, Cloneable {
     @Column(name = "REG_PLACE_MARRIAGE_ENGLISH_LANG", nullable = true)
     private String regPlaceInEnglishLang;
 
-    //TODO: to be removed
-    @ManyToOne
-    @JoinColumn(name = "REGISTRAR_IDUKEY", nullable = true)
-    private Registrar registrar;
-
     //marriage notice related columns
-
     @Column(name = "SINGLE_NOTICE", nullable = false)
     private boolean singleNotice;
 
@@ -490,14 +484,6 @@ public class MarriageRegister implements Serializable, Cloneable {
 
     public void setTypeOfMarriagePlace(TypeOfMarriagePlace typeOfMarriagePlace) {
         this.typeOfMarriagePlace = typeOfMarriagePlace;
-    }
-
-    public Registrar getRegistrar() {
-        return registrar;
-    }
-
-    public void setRegistrar(Registrar registrar) {
-        this.registrar = registrar;
     }
 
     public boolean isSingleNotice() {
