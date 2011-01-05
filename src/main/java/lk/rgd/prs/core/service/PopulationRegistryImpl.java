@@ -302,6 +302,8 @@ public class PopulationRegistryImpl implements PopulationRegistry {
         // TODO still implementing don't review
         // TODO validate access(location??) and (required fields) minimum requirements
 
+        // TODO generate pin if pin == null
+
         // check user permission for approve
         validateAccessOfUserToApprove(user);
         Person existing = personDao.getByUKey(personUKey);
@@ -331,6 +333,12 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             existing.setStatus(Person.Status.VERIFIED);
             existing.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
             existing.getLifeCycleInfo().setApprovalOrRejectUser(user);
+
+            if (existing.getPin() == null && existing.getTemporaryPin() == null) {
+                // TODO add required field validation and remove transient check
+                final long pin = pinGenerator.generateTemporaryPINNumber(existing.getDateOfBirth(), existing.getGender() == 0);
+                existing.setPin(pin);
+            }
             // TODO change this
             updatePerson(existing, user);
             logger.debug("Approved of PRS entry : {} Ignore warnings : {}", personUKey, ignoreWarnings);
