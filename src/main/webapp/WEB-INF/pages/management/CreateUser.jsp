@@ -155,7 +155,10 @@
                 </tr>
             </s:if>
             <s:else>
-                <s:hidden name="user.userId" id="checkUserId"/>
+                <tr>
+                    <td height="30px"><s:label value="%{getText('user_id.label')}"/></td>
+                    <td height="30px"><s:label name="user.userId" disabled="true"/></td>
+                </tr>
             </s:else>
             <tr>
                 <td>
