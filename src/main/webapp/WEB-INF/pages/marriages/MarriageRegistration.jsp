@@ -24,7 +24,7 @@
 <s:actionerror cssClass="actionmessage"/>
 <s:actionmessage cssClass="actionerror"/>
 <div class="marriage-notice-outer">
-<s:form method="post">
+<s:form method="post" enctype="multipart/form-data">
 <%-- TODO: tobe removed--%>
 <s:hidden name="marriage.idUKey"/>
 <s:hidden name="idUKey"/>
@@ -422,8 +422,21 @@
 
     <tr>
         <td class="font-8">
-            Comment
-            <br>Comment
+          Scanned Image in si
+            <br>Scanned Image in ta
+            <br>Scanned Image
+        </td>
+        <td colspan="3">
+           <s:file name="scannedImage"/>
+        </td>
+    </tr>
+    
+
+
+    <tr>
+        <td class="font-8">
+            Comment in si
+            <br>Comment in ta
             <br>Comment
         </td>
         <td colspan="3">

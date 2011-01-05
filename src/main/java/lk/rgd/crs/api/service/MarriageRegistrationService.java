@@ -8,6 +8,7 @@ import lk.rgd.crs.api.domain.MarriageRegister;
 
 import java.util.Date;
 import java.util.List;
+import java.io.File;
 
 /**
  * @authar amith jayasekara
@@ -31,8 +32,9 @@ public interface MarriageRegistrationService {
      *
      * @param marriageRegister marriage register Entry for muslim marriages
      * @param user             user who perform the action
+     * @param user             Scanned Image of the Marriage Certificate
      */
-    public void addMarriageRegister(MarriageRegister marriageRegister, User user);
+    public void addMarriageRegister(MarriageRegister marriageRegister, User user, File scannedImage);
 
     /**
      * get marriage register object by its idUKey value
@@ -548,7 +550,7 @@ public interface MarriageRegistrationService {
      * Get the scanned image path for the marriage registration record. This method is audited
      *
      * @param idUKey the idUKey of the marriage record
-     * @param user the user for auditing
+     * @param user   the user for auditing
      * @return the path within the content repository, or null if not stored
      */
     public String getImagePathByIdUKey(long idUKey, User user);

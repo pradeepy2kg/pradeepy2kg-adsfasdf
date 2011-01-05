@@ -62,4 +62,9 @@ public class AppConstants {
      * All
      */
     public static final String ALL = "all";
+
+    /**
+     * Content root to store scanned images of marriage certificates
+     */
+    public static final String CONTENT_ROOT = "/tmp/cr";
 }
