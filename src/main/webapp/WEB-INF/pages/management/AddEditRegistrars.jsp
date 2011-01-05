@@ -209,9 +209,26 @@
 
 <style type="text/css">
 
-    #assignments, #assignments2 {
+    #assignments {
+        margin-top:30px;
+        margin-bottom:10px;
         font-size: 15px;
         cursor: default;
+        height: 40px;
+        width: 45%;
+        float:left;
+        text-align:center;
+    }
+
+    #assignments2 {
+        margin-top:25px;
+        font-size: 15px;
+        cursor: default;
+        height: 40px;
+        width: 45%;
+        float:right;
+        text-align:center;
+        margin-bottom:10px;
     }
 
     #addText {
