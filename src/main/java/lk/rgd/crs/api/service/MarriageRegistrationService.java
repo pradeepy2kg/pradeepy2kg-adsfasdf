@@ -543,4 +543,13 @@ public interface MarriageRegistrationService {
      */
     public List<UserWarning> editMarriageNotice(MarriageRegister notice, MarriageNotice.Type type, boolean ignoreWarnings,
         User user);
+
+    /**
+     * Get the scanned image path for the marriage registration record. This method is audited
+     *
+     * @param idUKey the idUKey of the marriage record
+     * @param user the user for auditing
+     * @return the path within the content repository, or null if not stored
+     */
+    public String getImagePathByIdUKey(long idUKey, User user);
 }

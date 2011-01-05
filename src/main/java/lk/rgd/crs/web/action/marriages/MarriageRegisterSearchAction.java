@@ -165,7 +165,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         locationList = commonUtil.populateActiveUserLocations(user, language);
         int firstLocation = locationList.keySet().iterator().next();
         List<User> users = userLocationDAO.getMarriageCertificateSignUsersByLocationId(firstLocation, true);
-        register.setIssueLocation(locationDAO.getLocation(firstLocation));
+        register.setExtractIssuedLocation(locationDAO.getLocation(firstLocation));
 
         MRDivision mrDivision = register.getMrDivision();
 
@@ -177,7 +177,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
             }
         }
         if (userList != null) {
-            register.setPrintUser(userDAO.getUserByPK(userList.get(0)));
+            register.setExtractCertifiedUser(userDAO.getUserByPK(userList.keySet().iterator().next()));
         }
     }
 

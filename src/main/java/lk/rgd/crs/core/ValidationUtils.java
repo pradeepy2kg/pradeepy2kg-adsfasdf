@@ -91,6 +91,21 @@ public class ValidationUtils {
         }
     }
 
+    /**
+     * Validate access to the Extract of Marriage
+     *
+     * @param register Marriage Register
+     * @param user     user who performs the action
+     */
+    public static void validateAccessToMarriageRegister(MarriageRegister register, User user) {
+        if (!(User.State.ACTIVE == user.getStatus() && (Role.ROLE_RG.equals(user.getRole().getRoleId())) ||
+            (register.getMrDivision() != null &&
+                user.isAllowedAccessToMRDSDivision(register.getMrDivision().getMrDivisionUKey())))) {
+            handleException("User : " + user.getUserId() + " is not allowed to access marriage register - idUKey :" +
+                register.getIdUKey(), ErrorCodes.PERMISSION_DENIED);
+        }
+    }
+
     private static void handleException(String message, int code) {
         logger.error(message);
         throw new CRSRuntimeException(message, code);

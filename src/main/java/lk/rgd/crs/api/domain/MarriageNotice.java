@@ -13,7 +13,6 @@ public final class MarriageNotice {
 
     private final long idUKey;
     private final MarriageType typeOfMarriage;
-    private final MarriageRegister.PlaceOfMarriage placeOfMarriage;
     private final Long serialOfNotice;
     private final Date dateOfNotice;
     private final String partyNameInOfficialLang;
@@ -35,7 +34,6 @@ public final class MarriageNotice {
     public MarriageNotice(MarriageRegister mr, Type type) {
         this.idUKey = mr.getIdUKey();
         this.typeOfMarriage = mr.getTypeOfMarriage();
-        this.placeOfMarriage = mr.getPlaceOfMarriage();
         this.type = type;
         this.state = mr.getState();
 
@@ -61,10 +59,6 @@ public final class MarriageNotice {
 
     public MarriageType getTypeOfMarriage() {
         return typeOfMarriage;
-    }
-
-    public MarriageRegister.PlaceOfMarriage getPlaceOfMarriage() {
-        return placeOfMarriage;
     }
 
     public Long getSerialOfNotice() {
