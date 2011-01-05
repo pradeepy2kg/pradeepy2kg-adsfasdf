@@ -485,8 +485,7 @@
 
 <%--       in follow case we have to display address of the receiver
 --%>
-<s:if test="marriage.licenseCollectType.ordinal()==0"></s:if>
-
+<s:if test="marriage.licenseCollectType.ordinal()==0">
 <hr style="border-style:dashed ; float:left;width:100% ;margin-bottom:30px;margin-top:60px;">
 <div style="page-break-after:always;margin-bottom:350px;"></div>
 
