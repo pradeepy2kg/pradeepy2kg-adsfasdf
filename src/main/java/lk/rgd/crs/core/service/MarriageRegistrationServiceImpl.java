@@ -76,7 +76,8 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         if (marriageRegister != null && scannedImage != null) {
             logger.debug("Marriage Register IDUKEY : {}", marriageRegister.getIdUKey());
             //TODO: Create a unique id (file name) for the image (dont use marriageRegister.getIdUKey())
-            contentRepository.storeFile(marriageRegister.getMrDivision().getMrDivisionUKey(), marriageRegister.getIdUKey(), scannedImage);
+            marriageRegister.setScannedImagePath(contentRepository.storeFile(marriageRegister.getMrDivision().getMrDivisionUKey(), marriageRegister.getIdUKey(), scannedImage));
+            marriageRegistrationDAO.updateMarriageRegister(marriageRegister, user);
         }
     }
 

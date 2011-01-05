@@ -43,7 +43,7 @@ public class ContentRepositoryImpl implements ContentRepository {
     private final Map<Long, Holder> divisionMap = new HashMap<Long, Holder>();
 
     public ContentRepositoryImpl(String contentRoot) {
-        //contentRoot = "/home/indunil/dev/epopulation/upload";
+
         this.contentRoot = contentRoot;
 
         if (!new File(contentRoot).exists()) {
