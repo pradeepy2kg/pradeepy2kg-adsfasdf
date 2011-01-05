@@ -80,38 +80,38 @@
         }
         if (document.getElementById("districtId") != null) {
             domObject = document.getElementById("districtId");
-            if (isFieldEmpty(domObject)) {
-                errormsg = errormsg + document.getElementById("error5").value + "\n";
+            var user = document.getElementById("role").options[document.getElementById("role").selectedIndex].value;
+            if (user != "RG") {
+                if (isFieldEmpty(domObject)) {
+                    errormsg = errormsg + document.getElementById("error5").value + "\n";
+                }
             }
         }
         if (document.getElementById("divisionId") != null) {
             domObject = document.getElementById("divisionId");
-            if (isFieldEmpty(domObject)) {
-                errormsg = errormsg + document.getElementById("error6").value + "\n";
+            var user = document.getElementById("role").options[document.getElementById("role").selectedIndex].value;
+            if (user != "RG") {
+                if (isFieldEmpty(domObject)) {
+                    errormsg = errormsg + document.getElementById("error6").value + "\n";
+                }
             }
         }
         if (document.getElementById("districtIdCurrent") != null) {
             domObject = document.getElementById("districtIdCurrent");
-            if (isFieldEmpty(domObject)) {
-                errormsg = errormsg + document.getElementById("error5").value + "\n";
+            var user = document.getElementById("role").options[document.getElementById("role").selectedIndex].value;
+            alert(user);
+            if (user != "RG") {
+                if (isFieldEmpty(domObject)) {
+                    errormsg = errormsg + document.getElementById("error5").value + "\n";
+                }
             }
         }
         if (document.getElementById("divisionIdCurrent") != null) {
             domObject = document.getElementById("divisionIdCurrent");
-            if (isFieldEmpty(domObject)) {
-                errormsg = errormsg + document.getElementById("error6").value + "\n";
-            }
-        }
-
-        for (var i = 0; i < document.getElementById("role").options.length; i++) {
-            if (document.getElementById("role").options[i].selected) {
-                if (i == 0 || i == 5) {
-                    if (isMultiSelected(document.getElementById("districtId")) > 1 ||
-                            isMultiSelected(document.getElementById("districtIdCurrent")) > 1 ||
-                            isMultiSelected(document.getElementById("divisionId")) > 1 ||
-                            isMultiSelected(document.getElementById("divisionIdCurrent")) > 1) {
-                        errormsg = "Multiselect not allowed for DEO/ADR";
-                    }
+            var user = document.getElementById("role").options[document.getElementById("role").selectedIndex].value;
+            if (user != "RG") {
+                if (isFieldEmpty(domObject)) {
+                    errormsg = errormsg + document.getElementById("error6").value + "\n";
                 }
             }
         }
@@ -122,16 +122,65 @@
         return true;
     }
 
-    function isMultiSelected(element) {
-        var count = 0;
+    window.onload = function() {
+        var selected = document.getElementById("role").options[document.getElementById("role").selectedIndex].value;
+        if (selected == "DEO" || selected == "ADR") {
+            changeSelectionMode("districtIdCurrent", false);
+            changeSelectionMode("districtId", false);
+            changeSelectionMode("divisionId", false);
+            changeSelectionMode("divisionIdCurrent", false);
+        } else {
+            changeSelectionMode("districtIdCurrent", true);
+            changeSelectionMode("districtId", true);
+            changeSelectionMode("divisionId", true);
+            changeSelectionMode("divisionIdCurrent", true);
+        }
+    }
+
+    function changeMultiSelect() {
+        var selected = document.getElementById("role").options[document.getElementById("role").selectedIndex].value;
+        if (selected == "RG") {
+            changeElement("districtIdCurrent", true);
+            changeElement("districtId", true);
+            changeElement("divisionId", true);
+            changeElement("divisionIdCurrent", true);
+        } else {
+            changeElement("districtIdCurrent", false);
+            changeElement("districtId", false);
+            changeElement("divisionId", false);
+            changeElement("divisionIdCurrent", false);
+        }
+        if (selected == "DEO" || selected == "ADR") {
+            changeSelectionMode("districtIdCurrent", false);
+            changeSelectionMode("districtId", false);
+            changeSelectionMode("divisionId", false);
+            changeSelectionMode("divisionIdCurrent", false);
+        } else {
+            changeSelectionMode("districtIdCurrent", true);
+            changeSelectionMode("districtId", true);
+            changeSelectionMode("divisionId", true);
+            changeSelectionMode("divisionIdCurrent", true);
+        }
+    }
+    function changeSelectionMode(elemName, selection) {
+        var element = document.getElementById(elemName);
         if (element != null) {
-            for (var i = 0; i < element.options.length; i++) {
-                if (element.options[i].selected) {
-                    count++;
-                }
+            element.multiple = selection;
+        }
+    }
+    function changeElement(elemName, selection) {
+        var element = document.getElementById(elemName);
+        if (element != null) {
+            element.disabled = selection;
+            if (selection) {
+                deselectAll(element);
             }
         }
-        return count;
+    }
+    function deselectAll(element) {
+        for (var count = 0; count < element.options.length; count++) {
+            element.options[count].selected = false;
+        }
     }
     function initPage() {
     }
@@ -201,6 +250,17 @@
                     <s:select list="#@java.util.HashMap@{'en':'English','si':'සිංහල','ta':'Tamil'}"
                               name="user.prefLanguage" id="prefferedLanguage" cssStyle="width:90%;margin-left:0;"/>
                 </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <s:label value="%{getText('user_role.label')}"/>
+                </td>
+                <td>
+                    <s:select list="roleList" name="roleId" id="role" cssStyle="width:90%;margin-left:0;"
+                              onchange="changeMultiSelect();"/>
+                </td>
+
             </tr>
 
             <div id="abc">
@@ -274,15 +334,7 @@
                 </tr>
             </div>
                 <%--todo end--%>
-            <tr>
-                <td>
-                    <s:label>
-                    <s:label value="%{getText('user_role.label')}"/></td>
-                <td><s:select list="roleList" name="roleId" id="role" cssStyle="width:90%;margin-left:0;"/>
-                    </s:label>
-                </td>
 
-            </tr>
             <tr>
 
                 <td colspan="2">
