@@ -272,6 +272,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
             logger.debug("approving marriage notice idUKey : " + idUKey + " and notice type : " + noticeType +
                 " and with ignore warnings : " + ignoreWarnings);
         }
+        //todo remove
         //follow use to display serial number in action message ans action errors
         marriage = marriageRegistrationService.getByIdUKey(idUKey, user);
         String[] actionMassageArray = new String[]{(noticeType == MarriageNotice.Type.FEMALE_NOTICE) ?
@@ -291,8 +292,11 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
             switch (e.getErrorCode()) {
                 case ErrorCodes.OTHER_PARTY_MUST_APPROVE_FIRST:
                     addActionError(getText("error.other.party.approve.first",
-                        new String[]{Long.toString((noticeType == MarriageNotice.Type.FEMALE_NOTICE) ?
-                            marriage.getSerialOfMaleNotice() : marriage.getSerialOfFemaleNotice())}));
+                        new String[]{(noticeType == MarriageNotice.Type.FEMALE_NOTICE) ?
+                            (marriage.getSerialOfMaleNotice() != null) ?
+                                Long.toString(marriage.getSerialOfMaleNotice()) : getText("message.not.yet.add") :
+                            (marriage.getSerialOfFemaleNotice() != null) ?
+                                Long.toString(marriage.getSerialOfFemaleNotice()) : getText("message.not.yet.add")}));
                     break;
                 default:
                     addActionError(getText("error.approval.failed", actionMassageArray));
@@ -300,6 +304,10 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
             commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId,
                 dsDivisionId, mrDivisionId, AppConstants.MARRIAGE, user, language);
             getApprovalPendingNotices();
+            return "failed";
+        }
+        catch (Exception e) {
+            logger.debug("exception while approving marriage notice :idUKey ");
             return ERROR;
         }
         commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId, dsDivisionId,
@@ -404,6 +412,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
                 logger.debug("success fully marked as printed marriage notice idUKey : {}", idUKey);
             }
             catch (CRSRuntimeException e) {
+                logger.debug("failed to mark as print :idUKey : {} ", idUKey);
                 switch (e.getErrorCode()) {
                     case ErrorCodes.INVALID_STATE_FOR_PRINT_LICENSE:
                         addActionError(getText("error.license.mark.as.print.failed.invalid.state"));
