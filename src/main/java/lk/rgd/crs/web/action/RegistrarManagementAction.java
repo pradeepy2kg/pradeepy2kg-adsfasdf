@@ -310,7 +310,9 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
                 //search by registrar pin number
                 Registrar existingRegistrar = service.getRegistrarByPin(registrarPin, user);
                 registrarList = new ArrayList<Registrar>();
-                registrarList.add(existingRegistrar);
+                if (existingRegistrar != null) {
+                    registrarList.add(existingRegistrar);
+                }
             } else if (registrarName != null) {
                 //search by name or part of the name
                 registrarList = service.getRegistrarByNameOrPartOfTheName(registrarName, user);
