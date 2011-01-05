@@ -312,15 +312,21 @@
                 </td>
             </tr>
         </table>
-    </fieldset>
-    <s:hidden id="buttonName" value="%{getText('assigned_ds_divisions.label')}"/>
-    <s:hidden id="error1" value="%{getText('user.id.label')}"/>
-    <s:hidden id="error2" value="%{getText('user.name.label')}"/>
-    <s:hidden id="error3" value="%{getText('user.PIN.label')}"/>
-    <s:hidden id="error4" value="%{getText('user.PIN.invalid')}"/>
-    <s:hidden id="error5" value="%{getText('user.district')}"/>
-    <s:hidden id="error6" value="%{getText('user.divisions')}"/>
 
-    </s:form>
+        <s:hidden id="buttonName" value="%{getText('assigned_ds_divisions.label')}"/>
+        <s:hidden id="error1" value="%{getText('user.id.label')}"/>
+        <s:hidden id="error2" value="%{getText('user.name.label')}"/>
+        <s:hidden id="error3" value="%{getText('user.PIN.label')}"/>
+        <s:hidden id="error4" value="%{getText('user.PIN.invalid')}"/>
+        <s:hidden id="error5" value="%{getText('user.district')}"/>
+        <s:hidden id="error6" value="%{getText('user.divisions')}"/>
+
+        </s:form>
+        <s:form action="eprViewUsers.do">
+            <div class="form-submit" style="margin-right:50px;">
+                <s:submit value="BACK" cssStyle="margin-top:10px;" name="button"/>
+            </div>
+        </s:form>
+    </fieldset>
 </div>
 
