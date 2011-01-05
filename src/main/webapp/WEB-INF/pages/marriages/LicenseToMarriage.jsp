@@ -419,12 +419,10 @@
         <td colspan="2" align="left">
             <s:label value="%{marriage.male.fatherFullNameMaleInOfficialLang}"/>
             <br>
-            <br>
             <s:label value="%{marriage.male.fatherFullNameMaleInEnglish}"/>
         </td>
         <td colspan="2" align="left">
             <s:label value="%{marriage.female.fatherFullNameFemaleInOfficialLang}"/>
-            <br>
             <br>
             <s:label value="%{marriage.female.fatherFullNameFemaleInEnglish}"/>
         </td>
@@ -484,4 +482,45 @@
         </td>
     </tr>
 </table>
+
+<%--       in follow case we have to display address of the receiver
+--%>
+<s:if test="marriage.licenseCollectType.ordinal()==0"></s:if>
+
+<hr style="border-style:dashed ; float:left;width:100% ;margin-bottom:30px;margin-top:60px;">
+<div style="page-break-after:always;margin-bottom:350px;"></div>
+
+<%--Latter for declarant   --%>
+<table border="0" cellspacing="0" width="100%" style="margin-top:0;">
+    <caption></caption>
+    <col/>
+    <col/>
+    <col/>
+    <col/>
+    <tbody>
+    <tr>
+        <td rowspan="8" width="200px" height="350px"></td>
+        <td colspan="2" width="600px" height="100px"
+            style="text-align:center;margin-left:auto;margin-right:auto;font-size:16pt">
+            <label>රාජ්‍ය සේවය පිණිසයි / அரச பணி
+                On State Service</label></td>
+        <td rowspan="8" width="200px"></td>
+    </tr>
+    <s:if test="marriage.licenseCollectType.ordinal()==0"></s:if>
+    <tr>
+        <td><s:label cssStyle="width:600px;font-size:10pt;" name="birthAlteration.declarant.declarantFullName"
+                     disabled="true"/></td>
+    </tr>
+    <tr>
+        <td><s:label cssStyle="width:600px;font-size:10pt;" name="birthAlteration.declarant.declarantAddress"
+                     cssClass="disable"
+                     disabled="true"/></td>
+    </tr>
+
+    </tbody>
+</table>
+
+<hr style="border-style:dashed ; float:left;width:100% ;margin-bottom:30px;margin-top:30px;">
+</s:if>
+
 </div>
