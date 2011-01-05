@@ -11,9 +11,12 @@ import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.domain.MarriageNotice;
 import lk.rgd.crs.api.domain.MarriageRegister;
 import lk.rgd.crs.api.service.MarriageRegistrationService;
+import lk.rgd.prs.api.domain.Person;
+import lk.rgd.prs.api.service.PopulationRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.text.MessageFormat;
 import java.util.*;
 
 /**
@@ -33,10 +36,12 @@ public class MarriageRegistrationValidator {
     private static final String SERIAL_NUMBER_PATTERN = "20([1-9][0-9])[0|1]([0-9]{5})";
     private final MarriageRegistrationDAO marriageRegistrationDAO;
     private final AppParametersDAO appParametersDAO;
+    private final PopulationRegistry populationRegistry;
 
-    public MarriageRegistrationValidator(MarriageRegistrationDAO marriageRegistrationDAO, AppParametersDAO appParametersDAO) {
+    public MarriageRegistrationValidator(MarriageRegistrationDAO marriageRegistrationDAO, AppParametersDAO appParametersDAO, PopulationRegistry populationRegistry) {
         this.marriageRegistrationDAO = marriageRegistrationDAO;
         this.appParametersDAO = appParametersDAO;
+        this.populationRegistry = populationRegistry;
     }
 
     /**
@@ -126,6 +131,64 @@ public class MarriageRegistrationValidator {
         }
         validateAgeAtLastBirthDay(existing, type, warning, rb);
         return warning;
+    }
+
+    /**
+     * validate advance features  validate at approving license party or approving both notice
+     */
+    public List<UserWarning> advanceWarningsForMarriageNoticeApproval(MarriageRegister existing,
+        MarriageNotice.Type type, List<UserWarning> userWarnings, User user) {
+        ResourceBundle rb = rb_en;
+        if (AppConstants.SINHALA.equals(user.getPrefLanguage())) {
+            rb = rb_si;
+        } else if (AppConstants.TAMIL.equals(user.getPrefLanguage())) {
+            rb = rb_ta;
+        }
+        //validating previouse active marriages
+        checkPreviouseActiveMarriages(existing, userWarnings, rb, user);
+        return userWarnings;
+    }
+
+    /**
+     * check is any one has previouse marriage
+     */
+    private void checkPreviouseActiveMarriages(MarriageRegister notice, List<UserWarning> userWarnings,
+        ResourceBundle rb, User user) {
+        //check male party is married before
+        Person person = populationRegistry.findPersonByPINorNIC(notice.getMale().getIdentificationNumberMale(), user);
+        if (!checkCivilState(person)) {
+            userWarnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.male.is.not.legal.for.marry"),
+                notice.getMale().getIdentificationNumberMale()), UserWarning.Severity.WARN));
+        }
+        //check female party is married before
+        person = populationRegistry.findPersonByPINorNIC(notice.getFemale().getIdentificationNumberFemale(), user);
+        if (!checkCivilState(person)) {
+            userWarnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.female.is.not.legal.for.marry"),
+                notice.getFemale().getIdentificationNumberFemale()), UserWarning.Severity.WARN));
+        }
+    }
+
+    private boolean checkCivilState(Person person) {
+        boolean canReMarry = false;
+        if (person != null) {
+            switch (person.getCivilStatus()) {
+                case NEVER_MARRIED:
+                case WIDOWED:
+                case DIVORCED:
+                case ANNULLED:
+                    canReMarry = true;
+                    break;
+                case MARRIED:
+                case SEPARATED:
+            }
+        }
+        return canReMarry;
+    }
+
+    /**
+     * there are some relationships that by legally baned form marry
+     */
+    private void banedMarriages() {
     }
 
     /**

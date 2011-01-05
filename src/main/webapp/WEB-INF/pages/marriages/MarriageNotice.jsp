@@ -217,6 +217,28 @@ $(function() {
     });
 });
 
+$(function() {
+    $("#date_arrival_female").datepicker({
+        changeYear: true,
+        yearRange: '1960:2020',
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2040-12-31'
+    });
+});
+
+
+$(function() {
+    $("#date_arrival_male").datepicker({
+        changeYear: true,
+        yearRange: '1960:2020',
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2040-12-31'
+    });
+});
+
+
 $('select#districtId').bind('change', function(evt1) {
     var id = $("select#districtId").attr("value");
     $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:8},

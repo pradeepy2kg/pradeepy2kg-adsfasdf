@@ -391,7 +391,6 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     /**
      * @inheritDoc
      */
-    //todo made idUKey to Long otherwise if null pass to the method it gives exception (null are cannot box to primitive long  amith urgent)
     @Transactional(propagation = Propagation.REQUIRED)
     public List<UserWarning> approveMarriageNotice(long idUKey, MarriageNotice.Type type, boolean ignoreWarnings, User user) {
         logger.debug("attempt to approve marriage notice with idUKey : {} and notice type : {}", idUKey, type);
@@ -409,7 +408,9 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         isNoticeAllowedToApprove(existingNotice, type);
 
         checkExistingActiveApprovedNotices(existingNotice, user);
-        List<UserWarning> warnings = marriageRegistrationValidator.
+        //check basic warnings
+        List<UserWarning> warnings = Collections.emptyList();
+        warnings = marriageRegistrationValidator.
             checkUserWarningsForApproveMarriageNotice(existingNotice, type, user);
         if (warnings != null && warnings.size() > 0 && !ignoreWarnings) {
             if (logger.isDebugEnabled()) {
@@ -442,8 +443,15 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
                 existingNotice.setState(MarriageRegister.State.NOTICE_APPROVED);
             }
         }
-
+        //warnings issue if we going to approve second notice
+        //if current state is NOTICE_APPROVED that mean we approved single notice or we are approving second notice(license
+        // collect party) when notice become NOTICE_APPROVE it eligible for printing License so we have to validate
+        // that marriage in this evens as well
+        if (existingNotice.getState() == MarriageRegister.State.NOTICE_APPROVED) {
+            //todo
+        }
         if (warnings.size() == 0 || ignoreWarnings) {
+            //if we change notice state to NOTICE_APPROVED  we have to validate more
             marriageRegistrationDAO.updateMarriageRegister(existingNotice, user);
         }
         logger.debug("successfully  approved marriage notice with idUKey : {} and notice type : {}", idUKey, type);

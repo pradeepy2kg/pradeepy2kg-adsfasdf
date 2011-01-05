@@ -62,7 +62,7 @@ public class Person implements Serializable {
         MISSING         /** 3 - Reported as missing */
         ,
         NON_RESIDENT    /** 4 - Reported as not living within Sri Lanka anymore */
-    }
+        }
 
     /**
      * The civil status
@@ -72,7 +72,7 @@ public class Person implements Serializable {
         ,
         MARRIED         /** 1 - Currently married */
         ,
-        ANNULLED        /** 2 - Currently married */
+        ANNULLED        /** 2 - event never happened */
         ,
         SEPARATED       /** 3 - Living separately from spouse. Cannot re-marry - TODO is this necessary? */
         ,
@@ -260,6 +260,7 @@ public class Person implements Serializable {
 
     /**
      * Add a record of a marriage. Marks this marriage as the 'last' marriage
+     *
      * @param m marriage details
      */
     public void specifyMarriage(Marriage m) {
@@ -273,6 +274,7 @@ public class Person implements Serializable {
 
     /**
      * Add a record of an address. Marks this address as the 'last' address
+     *
      * @param a address details
      */
     public void specifyAddress(Address a) {
@@ -284,6 +286,7 @@ public class Person implements Serializable {
         a.setPerson(this);
     }
     //----------------------------------- getters and setters -----------------------------------
+
     public Long getPin() {
         return pin;
     }
