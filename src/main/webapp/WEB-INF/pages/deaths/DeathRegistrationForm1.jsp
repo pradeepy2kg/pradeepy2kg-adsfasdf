@@ -230,7 +230,7 @@ $(function() {
         SOAPClient.SendRequest(sr, processResponse1); //Send request to server and assign a callback
     });
 
-    function processResponse2(respObj) {
+    function processResponse1(respObj) {
         //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
         $("input#placeOfDeathInEnglish").val(respObj.Body[0].transliterateResponse[0].
         return[0].Text

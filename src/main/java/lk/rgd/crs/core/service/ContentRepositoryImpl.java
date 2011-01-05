@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,7 +37,10 @@ public class ContentRepositoryImpl implements ContentRepository {
 
     private final String contentRoot;
     private final int startPos;
-    private final Map<Long, Long> divisionMap = new HashMap<Long, Long>();
+    /**
+     * An in-memory cache of the last used File pointing to the directory for the given division
+     */
+    private final Map<Long, Holder> divisionMap = new HashMap<Long, Holder>();
 
     public ContentRepositoryImpl(String contentRoot) {
         this.contentRoot = contentRoot;
@@ -52,17 +56,53 @@ public class ContentRepositoryImpl implements ContentRepository {
 
     public synchronized String storeFile(long division, long idUKey, File image) {
 
-        Long directory = divisionMap.get(division);
-        if (directory == null) {
-            directory = 0L;
-            divisionMap.put(division, directory);
+        Holder holder = divisionMap.get(division);
+        File nodeDir = holder != null ? holder.getDir() : null;
+
+        // if we do not have a cached nodeDir or if the nodeDir is known to be full, locate nodeDir to use
+        if (nodeDir == null || holder.getCount() >= 255) {
+
+            Long directory;
+            final File divisionLevel = new File(contentRoot + File.separator + division);
+
+            if (divisionLevel.exists()) {
+
+                final String[] firstLevelFileNames = divisionLevel.list();
+                if (firstLevelFileNames.length == 0) {
+                    directory = 0L;
+
+                } else {
+                    // sort, and select last if any exists
+                    Arrays.sort(firstLevelFileNames);
+                    String first = firstLevelFileNames[firstLevelFileNames.length-1];
+                    final String[] secondLevelFileNames = new File(divisionLevel, first).list();
+
+                    if (secondLevelFileNames.length == 0) {
+                        directory = Long.parseLong(first,16) * 256L;
+
+                    } else {
+                        // sort, and select last if any exists
+                        Arrays.sort(secondLevelFileNames);
+                        String second = secondLevelFileNames[secondLevelFileNames.length-1];
+
+                        long f = Long.parseLong(first,16);
+                        directory =  (f == 0 ? 1 : f) * Long.parseLong(second,16);
+                    }
+                }
+            } else {
+                directory = 0L;
+            }
+
+            holder = new Holder();
+            nodeDir = getNodeDir(directory, division, holder);
+            divisionMap.put(division, holder);
         }
 
-        File nodeDir = getNodeDir(directory, division);
         File leafFile = new File(nodeDir, Long.toString(idUKey));
 
         try {
             if (leafFile.createNewFile()) {
+                holder.incrementCount();
                 CommonUtil.copyStreams(new FileInputStream(image), new FileOutputStream(leafFile));
                 return leafFile.getAbsolutePath().substring(startPos);
             } else {
@@ -75,25 +115,28 @@ public class ContentRepositoryImpl implements ContentRepository {
         return null;
     }
 
-    private File getNodeDir(long directory, long division) {
+    private File getNodeDir(long directory, long division, Holder holder) {
 
         File nodeDir = toHexStringDirectoryPath(directory, division);
 
         if (nodeDir.exists()) {
             int count = nodeDir.listFiles().length;
             if (count < 255) {
+                holder.setDir(nodeDir);
+                holder.setCount(count);
                 return nodeDir;
             } else {
                 directory++;
                 nodeDir = toHexStringDirectoryPath(directory, division);
-                divisionMap.put(division, directory);
 
                 if (nodeDir.mkdirs()) {
+                    holder.setDir(nodeDir);
                     return nodeDir;
                 }
             }
         } else {
             if (nodeDir.mkdirs()) {
+                holder.setDir(nodeDir);
                 return nodeDir;
             }
         }
@@ -130,6 +173,38 @@ public class ContentRepositoryImpl implements ContentRepository {
         } else {
             logger.error(msg, e);
             throw new CRSRuntimeException(msg, errorCode, e);
+        }
+    }
+
+    private class Holder {
+        private File dir;
+        private int count;
+
+        private Holder() {}
+
+        private Holder(File dir, int count) {
+            this.dir = dir;
+            this.count = count;
+        }
+
+        public File getDir() {
+            return dir;
+        }
+
+        public int getCount() {
+            return count;
+        }
+
+        public void setDir(File dir) {
+            this.dir = dir;
+        }
+
+        public void setCount(int count) {
+            this.count = count;
+        }
+
+        public void incrementCount() {
+            count++;
         }
     }
 }
