@@ -2,6 +2,7 @@ package lk.rgd.crs.core.service;
 
 import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
+import lk.rgd.AppConstants;
 import lk.rgd.common.api.Auditable;
 import lk.rgd.common.api.dao.UserLocationDAO;
 import lk.rgd.common.api.domain.*;
@@ -20,6 +21,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.io.File;
 
 /**
  * implementation of the marriage registration service interface
@@ -36,6 +38,8 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     private final UserManager userManager;
     private final String contentRoot;
     private final String contentType;
+    //TODO: this is to be changed
+    private final ContentRepository contentRepository = new ContentRepositoryImpl(AppConstants.CONTENT_ROOT);
 
     public MarriageRegistrationServiceImpl(MarriageRegistrationDAO marriageRegistrationDAO, UserManager userManager,
         MarriageRegistrationValidator marriageRegistrationValidator, UserLocationDAO userLocationDAO,
@@ -65,10 +69,15 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void addMarriageRegister(MarriageRegister marriageRegister, User user) {
+    public void addMarriageRegister(MarriageRegister marriageRegister, User user, File scannedImage) {
         //TODO: Validate marriage details
         checkUserPermission(Permission.ADD_MARRIAGE, ErrorCodes.PERMISSION_DENIED, " add Muslim Marriages", user);
         marriageRegistrationDAO.addMarriageRegister(marriageRegister, user);
+        if (marriageRegister != null && scannedImage != null) {
+            logger.debug("Marriage Register IDUKEY : {}", marriageRegister.getIdUKey());
+            //TODO: Create a unique id (file name) for the image (dont use marriageRegister.getIdUKey())
+            contentRepository.storeFile(marriageRegister.getMrDivision().getMrDivisionUKey(), marriageRegister.getIdUKey(), scannedImage);
+        }
     }
 
     /**

@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.List;
+import java.io.File;
 
 /**
  * @author amith
@@ -88,8 +89,11 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     private MarriageNotice.Type noticeType;
 
+    private File scannedImage;
+
     public MarriageRegistrationAction(MarriageRegistrationService marriageRegistrationService,
-        MRDivisionDAO mrDivisionDAO, RaceDAO raceDAO, CountryDAO countryDAO, CommonUtil commonUtil) {
+        MRDivisionDAO mrDivisionDAO, RaceDAO raceDAO, CountryDAO countryDAO,
+        CommonUtil commonUtil) {
         this.marriageRegistrationService = marriageRegistrationService;
         this.mrDivisionDAO = mrDivisionDAO;
         this.raceDAO = raceDAO;
@@ -503,7 +507,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         marriage.setMrDivisionOfFemaleNotice(mrDivision);
         marriage.setState(MarriageRegister.State.REG_DATA_ENTRY);
         try {
-            marriageRegistrationService.addMarriageRegister(marriage, user);
+            marriageRegistrationService.addMarriageRegister(marriage, user, scannedImage);
         } catch (CRSRuntimeException e) {
             addActionError(getText("error.marriageregister.registrationfailed"));
             return marriageRegistrationInit();
@@ -870,6 +874,14 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     public void setMode(String mode) {
         this.mode = mode;
+    }
+
+    public File getScannedImage() {
+        return scannedImage;
+    }
+
+    public void setScannedImage(File scannedImage) {
+        this.scannedImage = scannedImage;
     }
 }
 
