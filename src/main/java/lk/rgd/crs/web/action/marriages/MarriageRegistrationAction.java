@@ -245,7 +245,6 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             try {
                 userWarnings = marriageRegistrationService.addSecondMarriageNotice(existingNotice, noticeType, ignoreWarnings,
                     false, user);
-                throw new CRSRuntimeException("", 1008);
             }
             catch (CRSRuntimeException e) {
                 switch (e.getErrorCode()) {

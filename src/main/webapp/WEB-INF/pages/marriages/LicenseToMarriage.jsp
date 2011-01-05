@@ -153,7 +153,7 @@
                 </s:form>
             </div>
             <div class="form-submit">
-                <s:submit value="%{getText('button..print')}" onclick="printPage()"/>
+                <s:submit value="%{getText('button.print')}" onclick="printPage()"/>
             </div>
             <div class="form-submit">
                 <s:submit value="%{getText('button.back')}"/>
@@ -485,41 +485,54 @@
 
 <%--       in follow case we have to display address of the receiver
 --%>
-<s:if test="marriage.licenseCollectType.ordinal()==0">
-<hr style="border-style:dashed ; float:left;width:100% ;margin-bottom:30px;margin-top:60px;">
-<div style="page-break-after:always;margin-bottom:350px;"></div>
+<div style="page-break-after:always;margin-bottom:150px;"></div>
 
-<%--Latter for declarant   --%>
-<table border="0" cellspacing="0" width="100%" style="margin-top:0;">
-    <caption></caption>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <tbody>
-    <tr>
-        <td rowspan="8" width="200px" height="350px"></td>
-        <td colspan="2" width="600px" height="100px"
-            style="text-align:center;margin-left:auto;margin-right:auto;font-size:16pt">
-            <label>රාජ්‍ය සේවය පිණිසයි / அரச பணி
-                On State Service</label></td>
-        <td rowspan="8" width="200px"></td>
-    </tr>
-    <s:if test="marriage.licenseCollectType.ordinal()==0"></s:if>
-    <tr>
-        <td><s:label cssStyle="width:600px;font-size:10pt;" name="birthAlteration.declarant.declarantFullName"
-                     disabled="true"/></td>
-    </tr>
-    <tr>
-        <td><s:label cssStyle="width:600px;font-size:10pt;" name="birthAlteration.declarant.declarantAddress"
-                     cssClass="disable"
-                     disabled="true"/></td>
-    </tr>
+<s:if test="marriage.licenseCollectType.ordinal()==1 || marriage.licenseCollectType.ordinal()==3 ">
+    <hr style="border-style:dashed ; float:left;width:100% ;margin-bottom:30px;margin-top:60px;">
+    <%--Latter for declarant   --%>
+    <table border="0" cellspacing="0" width="100%" style="margin-top:0;">
+        <caption></caption>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <tbody>
+        <tr>
+            <td rowspan="8" width="200px" height="350px"></td>
+            <td colspan="2" width="600px" height="100px"
+                style="text-align:center;margin-left:auto;margin-right:auto;font-size:16pt">
+                <label>රාජ්‍ය සේවය පිණිසයි / அரச பணி
+                    On State Service</label></td>
+            <td rowspan="8" width="200px"></td>
+        </tr>
+        <s:if test="marriage.licenseCollectType.ordinal()==1">
+            <tr>
+                <td><s:label cssStyle="width:600px;font-size:10pt;" name="marriage.male.nameInOfficialLanguageMale"
+                             disabled="true"/></td>
+            </tr>
+            <tr>
+                <td><s:label cssStyle="width:600px;font-size:10pt;"
+                             name="marriage.male.residentAddressMaleInOfficialLang"
+                             cssClass="disable"
+                             disabled="true"/></td>
+            </tr>
+        </s:if>
+        <s:else>
+            <tr>
+                <td><s:label cssStyle="width:600px;font-size:10pt;" name="marriage.female.nameInOfficialLanguageFemale"
+                             disabled="true"/></td>
+            </tr>
+            <tr>
+                <td><s:label cssStyle="width:600px;font-size:10pt;"
+                             name="marriage.female.residentAddressFemaleInOfficialLang"
+                             cssClass="disable"
+                             disabled="true"/></td>
+            </tr>
+        </s:else>
+        </tbody>
+    </table>
 
-    </tbody>
-</table>
-
-<hr style="border-style:dashed ; float:left;width:100% ;margin-bottom:30px;margin-top:30px;">
+    <hr style="border-style:dashed ; float:left;width:100% ;margin-bottom:0px;margin-top:0px;">
 </s:if>
 
 </div>

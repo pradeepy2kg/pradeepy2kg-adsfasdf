@@ -1364,7 +1364,8 @@
         <action name="eprApproveMarriageNotice" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
                 method="approveMarriageNotice">
             <result type="tiles" name="success">epr.marriageNoticeSearchHome</result>
-            <result type="tiles" name="error">epr.marriageNoticeSearchHome</result>
+            <result type="tiles" name="error">epr.error</result>
+            <result type="tiles" name="failed">epr.marriageNoticeSearchHome</result>
             <result type="tiles" name="warning">epr.marriageNoticeWarn</result>
         </action>
 
