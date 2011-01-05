@@ -137,6 +137,8 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             person.setPin(pin);
 
             personDao.addPerson(person, user);
+            // add to the Solr index
+            prsIndexer.updateIndex(person);
 
             final String permanentAddress = person.getPermanentAddress();
             final String currentAddress = person.getCurrentAddress();
@@ -155,6 +157,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             }
             if (permanentAddress != null || currentAddress != null) {
                 personDao.updatePerson(person, user);
+                prsIndexer.updateIndex(person);
             }
             // add citizenship list of the person to the PRS
             if (citizenshipList != null) {
@@ -224,6 +227,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             setChangedFieldsBeforeUpdate(existing, person);
 
             personDao.updatePerson(existing, user);
+            prsIndexer.updateIndex(existing);
 
             final String permanentAddress = person.getPermanentAddress();
             final String currentAddress = person.getCurrentAddress();
@@ -251,6 +255,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             }
             if (permanentAddress != null || currentAddress != null) {
                 personDao.updatePerson(existing, user);
+                prsIndexer.updateIndex(existing);
             }
             // update citizenship list of the person to the PRS
             // TODO need to find a better solution
@@ -276,16 +281,29 @@ public class PopulationRegistryImpl implements PopulationRegistry {
     @Transactional(propagation = Propagation.REQUIRED)
     public void editExistingPersonAfterApproval(Person person, User user) {
         final long personUKey = person.getPersonUKey();
-        logger.debug("Attempt to edit PRS entry after approval with personUKey : {}", personUKey);
+        logger.debug("Attempt to edit approved PRS entry with personUKey : {}", personUKey);
+
         // TODO validate permission to edit approved data
+        if (!user.isAuthorized(Permission.PRS_EDIT_PERSON_AFTER_APPROVE)) {
+            handleException("User : " + user.getUserId() + " is not allowed to edit approved entries on the PRS by keys (uKey)",
+                ErrorCodes.PRS_EDIT_RECORD_DENIED_AFTER_APPROVE);
+        }
+        // validate incoming person
+        validatePersonState(person, Person.Status.VERIFIED);
+        validateAccessToLocation(person.getSubmittedLocation(), user);
 
         Person existing = personDao.getByUKey(personUKey);
+
+        // validate existing person
+        validatePersonState(existing, Person.Status.VERIFIED);
+        validateAccessToLocation(existing.getSubmittedLocation(), user);
 
         final Person.Status currentState = existing.getStatus();
         if (currentState == Person.Status.VERIFIED) {
 
+
         } else {
-            handleException("Cannot modify PRS record with personUKey : " + personUKey + " Illegal state : " +
+            handleException("Cannot edit approved PRS record with personUKey : " + personUKey + " Illegal state : " +
                 currentState, ErrorCodes.ILLEGAL_STATE);
         }
 
@@ -388,6 +406,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             existing.getLifeCycleInfo().setApprovalOrRejectUser(user);
             existing.setSubmittedLocation(user.getPrimaryLocation());
             personDao.updatePerson(existing, user);
+            prsIndexer.updateIndex(existing);
             logger.debug("Deleted PRS entry with peronUKey : {} by user : {}", personUKey, user.getUserId());
         } else {
             handleException("Cannot delete PRS entry with personUKey : " + personUKey +
@@ -435,6 +454,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             existing.getLifeCycleInfo().setApprovalOrRejectUser(user);
             existing.setSubmittedLocation(user.getPrimaryLocation());
             personDao.updatePerson(existing, user);
+            prsIndexer.updateIndex(existing);
             logger.debug("Rejected PRS entry with personUKey : {} by user : {}", personUKey, user.getUserId());
         } else {
             handleException("Cannot reject PRS entry with personUKey : " + personUKey +
@@ -459,6 +479,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             existing.setStatus(Person.Status.CERT_PRINTED);
             // TODO if needed certificate printed location add them here
             personDao.updatePerson(existing, user);
+            prsIndexer.updateIndex(existing);
             logger.debug("Marked PRS certificate as printed for PRS entry with personUKey : {} by user : {}",
                 personUKey, user.getUserId());
         } else {

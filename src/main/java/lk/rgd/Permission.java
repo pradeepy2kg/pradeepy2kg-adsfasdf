@@ -49,4 +49,5 @@ public final class Permission {
     public static final int PRS_REJECT_PERSON = 56;
     public static final int PRS_PRINT_CERT = 57;
     public static final int PRS_MARK_CERT_PRINTED = 58;
+    public static final int PRS_EDIT_PERSON_AFTER_APPROVE = 59;
 }
