@@ -193,7 +193,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
                     getLocation(licensePrintedLocationId), userDAO.getUserByPK(licenseIssuedUserId), user);
             }
             catch (CRSRuntimeException e) {
-              //TODO : forward to error page
+                //TODO : forward to error page
             }
         }
         return SUCCESS;
@@ -290,7 +290,9 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
             //error happens when approving marriage notice
             switch (e.getErrorCode()) {
                 case ErrorCodes.OTHER_PARTY_MUST_APPROVE_FIRST:
-                    addActionError(getText("error.other.party.approve.first", actionMassageArray));
+                    addActionError(getText("error.other.party.approve.first",
+                        new String[]{Long.toString((noticeType == MarriageNotice.Type.FEMALE_NOTICE) ?
+                            marriage.getSerialOfMaleNotice() : marriage.getSerialOfFemaleNotice())}));
                     break;
                 default:
                     addActionError(getText("error.approval.failed", actionMassageArray));
@@ -399,6 +401,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
             try {
                 marriageRegistrationService.markLicenseToMarriageAsPrinted(idUKey, locationDAO.
                     getLocation(licensePrintedLocationId), userDAO.getUserByPK(licenseIssuedUserId), user);
+                logger.debug("success fully marked as printed marriage notice idUKey : {}", idUKey);
             }
             catch (CRSRuntimeException e) {
                 switch (e.getErrorCode()) {

@@ -242,8 +242,30 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
                 marriage.setLicenseCollectType(existingNotice.getLicenseCollectType());
             }
             populateNoticeForAddingSecondNotice(existingNotice, marriage);
-            userWarnings = marriageRegistrationService.addSecondMarriageNotice(existingNotice, noticeType, ignoreWarnings,
-                false, user);
+            try {
+                userWarnings = marriageRegistrationService.addSecondMarriageNotice(existingNotice, noticeType, ignoreWarnings,
+                    false, user);
+                throw new CRSRuntimeException("", 1008);
+            }
+            catch (CRSRuntimeException e) {
+                switch (e.getErrorCode()) {
+                    case ErrorCodes.POSSIBLE_MARRIAGE_NOTICE_SERIAL_NUMBER_DUPLICATION: {
+                        addFieldError("duplicateSerialNumber", getText("error.duplicate.serial.number"));
+                        //populating lists
+                        commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
+                            marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
+                        commonUtil.populateCountryAndRaceLists(countryList, raceList, language);
+                    }
+                    return "pageLoad";
+                    default:
+                        addActionError(getText("error.unable.to.add.marriage.notice",
+                            new String[]{(noticeType == MarriageNotice.Type.FEMALE_NOTICE) ?
+                                Long.toString(existingNotice.getSerialOfMaleNotice()) :
+                                Long.toString(existingNotice.getSerialOfFemaleNotice())}));
+                }
+                logger.debug("unable to add second notice : idUKey {}", idUKey);
+
+            }
             if (userWarnings.size() > 0) {
                 //no need to null check we returning empty set if no warnings
                 logger.debug("user warnings found for adding second notice for existing notice idUKey : {}", idUKey);
@@ -251,7 +273,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
                 return "warn";
             }
         } else {
-            logger.debug("cannot add second notice to idUKey : {}", idUKey);
+            logger.debug("cannot add second notice to idUKey : {} first does not exist", idUKey);
             addActionError(getText("cannot.add.second,notice.first.does.not.exist"));
             return ERROR;
         }

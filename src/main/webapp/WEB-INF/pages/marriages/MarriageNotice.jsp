@@ -292,9 +292,6 @@ $('select#dsDivisionId').bind('change', function(evt2) {
     <tbody>
     <tr>
         <td colspan="2" height="30px"></td>
-        <td>
-            <s:fielderror name="duplicateSerialNumberError" cssStyle="color:red;font-size:10pt;"/>
-        </td>
     </tr>
     <tr>
         <td>
@@ -365,6 +362,8 @@ $('select#dsDivisionId').bind('change', function(evt2) {
                     </td>
                     <td align="center">
                         <s:textfield name="serialNumber" id="serial_number" maxLength="10"/>
+                        <br>
+                        <s:fielderror name="duplicateSerialNumber" cssStyle="color:red;font-size:10pt;"/>
                     </td>
                 </tr>
                 <tr>
@@ -941,7 +940,13 @@ $('select#dsDivisionId').bind('change', function(evt2) {
 </table>
 </s:if>
 <div class="form-submit">
-    <s:submit value="%{getText('button.add.notice')}"/>
+
+    <s:if test="editMode">
+        <s:submit value="%{getText('button.edit.notice')}"/>
+    </s:if>
+    <s:else>
+        <s:submit value="%{getText('button.add.notice')}"/>
+    </s:else>
 </div>
 
 <s:hidden id="notice_type" name="noticeType" value="%{noticeType}"/>

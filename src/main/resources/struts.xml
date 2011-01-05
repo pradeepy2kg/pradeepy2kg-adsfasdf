@@ -1325,10 +1325,10 @@
 
         <action name="eprMarriageSecondNoticeAdd" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
                 method="addSecondNotice">
-            <!--todo do not forward to default error page-->
             <result type="tiles" name="success">epr.marriageNoticeResults</result>
             <result type="tiles" name="error">epr.error</result>
             <result type="tiles" name="warn">epr.marriageNoticeWarn</result>
+            <result type="tiles" name="pageLoad">epr.marriageNoticeInit</result>
         </action>
 
         <action name="eprMarriageNoticeDelete" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
