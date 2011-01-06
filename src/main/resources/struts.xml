@@ -1411,6 +1411,13 @@
             <result type="tiles" name="error">epr.marriageRegisterSearchInit</result>
         </action>
 
+        <action name="eprRegisterAndApproveNewMarriage"
+                class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
+                method="registerAndApproveNewMarriage">
+            <result type="tiles" name="success">epr.success</result>
+            <result type="tiles" name="input">epr.marriageRegistration</result>
+        </action>
+
         <action name="eprRejectMarriageRegistration"
                 class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
                 method="rejectMarriageRegister">

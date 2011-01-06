@@ -11,9 +11,7 @@ import lk.rgd.common.util.CivilStatusUtil;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.MRDivisionDAO;
-import lk.rgd.crs.api.domain.MRDivision;
-import lk.rgd.crs.api.domain.MarriageNotice;
-import lk.rgd.crs.api.domain.MarriageRegister;
+import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.MarriageRegistrationService;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.web.util.CommonUtil;
@@ -493,6 +491,14 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         populateLists();
         if (idUKey != 0) {
             marriage = marriageRegistrationService.getByIdUKey(idUKey, user);
+        } else {
+            marriage = new MarriageRegister();
+            marriage.setTypeOfMarriagePlace(TypeOfMarriagePlace.REGISTRAR_OFFICE);
+            marriage.setTypeOfMarriage(MarriageType.GENERAL);
+            marriage.setMale(new MaleParty());
+            marriage.getMale().setCivilStatusMale(Person.CivilStatus.NEVER_MARRIED);
+            marriage.setFemale(new FemaleParty());
+            marriage.getFemale().setCivilStatusFemale(Person.CivilStatus.NEVER_MARRIED);
         }
         return INPUT;
     }
@@ -501,11 +507,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
      * Marriage Registration - persist new marriage entry through the page for muslim type marrige
      */
     public String registerNewMarriage() {
-        MRDivision mrDivision = mrDivisionDAO.getMRDivisionByPK(mrDivisionId);
-        marriage.setMrDivision(mrDivision);
-        marriage.setMrDivisionOfMaleNotice(mrDivision);
-        marriage.setMrDivisionOfFemaleNotice(mrDivision);
-        marriage.setState(MarriageRegister.State.REG_DATA_ENTRY);
+        populateMuslimMarriageDetails();
         try {
             marriageRegistrationService.addMarriageRegister(marriage, user, scannedImage);
         } catch (CRSRuntimeException e) {
@@ -514,6 +516,42 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         }
         addActionMessage(getText("message.marriageregister.registered"));
         return SUCCESS;
+    }
+
+    /**
+     * Register and approve muslim marriages
+     */
+    public String registerAndApproveNewMarriage() {
+        //TODO: implement a single mothod allowing access only for adr and higher
+        populateMuslimMarriageDetails();
+        try {
+            marriageRegistrationService.addMarriageRegister(marriage, user, scannedImage);
+        } catch (CRSRuntimeException e) {
+            addActionError(getText("error.marriageregister.registrationfailed"));
+            return marriageRegistrationInit();
+        }
+        try {
+            marriageRegistrationService.approveMarriageRegister(marriage.getIdUKey(), user);
+        } catch (CRSRuntimeException e) {
+            addActionError(getText("error.marriageregister.approvalfailed"));
+            return marriageRegistrationInit();
+        }
+        addActionMessage(getText("message.marriageregister.registeredandapproved"));
+        return SUCCESS;
+    }
+
+    private void populateMuslimMarriageDetails() {
+        MRDivision mrDivision = mrDivisionDAO.getMRDivisionByPK(mrDivisionId);
+        marriage.setMrDivision(mrDivision);
+        marriage.setMrDivisionOfMaleNotice(mrDivision);
+        marriage.setMrDivisionOfFemaleNotice(mrDivision);
+        marriage.setState(MarriageRegister.State.REG_DATA_ENTRY);
+        if (marriage.getMale().getMaleRace().getRaceId() == 0) {
+            marriage.getMale().setMaleRace(null);
+        }
+        if (marriage.getFemale().getFemaleRace().getRaceId() == 0) {
+            marriage.getFemale().setFemaleRace(null);
+        }
     }
 
     /**

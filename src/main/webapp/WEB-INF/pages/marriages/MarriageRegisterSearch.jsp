@@ -189,12 +189,15 @@
                             </s:a>
                         </td>
                         <td align="center">
-                            <s:url id="approveSelected" action="eprApproveMarriageRegistration.do">
-                                <s:param name="idUKey" value="idUKey"/>
-                            </s:url>
-                            <s:a href="%{approveSelected}" title="%{getText('approveToolTip.label')}">
-                                <img src="<s:url value='/images/approve.gif'/>" width="25" height="25" border="none"/>
-                            </s:a>
+                            <s:if test="(state.ordinal()!=9)">
+                                <s:url id="approveSelected" action="eprApproveMarriageRegistration.do">
+                                    <s:param name="idUKey" value="idUKey"/>
+                                </s:url>
+                                <s:a href="%{approveSelected}" title="%{getText('approveToolTip.label')}">
+                                    <img src="<s:url value='/images/approve.gif'/>" width="25" height="25"
+                                         border="none"/>
+                                </s:a>
+                            </s:if>
                         </td>
                         <td align="center">
                             <s:url id="rejectSelected" action="eprMarriageRegistrationInit.do">
