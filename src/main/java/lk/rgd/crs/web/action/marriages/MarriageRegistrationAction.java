@@ -540,6 +540,34 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         return SUCCESS;
     }
 
+    /**
+     * Update and approve muslim marriages
+     */
+    public String updateAndApproveMuslimMarriage() {
+        //TODO: implement a single mothod allowing access only for adr and higher
+        MarriageRegister marriageRegister = marriageRegistrationService.getByIdUKey(idUKey, user);
+        if (marriageRegister == null) {
+            addActionError(getText("error.marriageregister.notfound"));
+            return marriageRegistrationInit();
+        }
+        populateRegistrationDetails(marriageRegister);
+        populateMaleFemaleDetails(marriageRegister);
+        try {
+            marriageRegistrationService.updateMarriageRegister(marriageRegister, user);
+        } catch (CRSRuntimeException e) {
+            addActionError(getText("error.marriageregister.failedtoupdate"));
+            return marriageRegistrationInit();
+        }
+        try {
+            marriageRegistrationService.approveMarriageRegister(marriageRegister.getIdUKey(), user);
+        } catch (CRSRuntimeException e) {
+            addActionError(getText("error.marriageregister.approvalfailed"));
+            return marriageRegistrationInit();
+        }
+        addActionMessage(getText("message.marriageregister.updatedandapproved"));
+        return SUCCESS;
+    }
+
     private void populateMuslimMarriageDetails() {
         MRDivision mrDivision = mrDivisionDAO.getMRDivisionByPK(mrDivisionId);
         marriage.setMrDivision(mrDivision);
@@ -556,7 +584,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     }
 
     /**
-     * Marriage Registration - update Marriage Details
+     * Marriage Registration - update Muslim Marriage Details
      */
     public String updateMarriageDetails() {
         MarriageRegister marriageRegister = marriageRegistrationService.getByIdUKey(idUKey, user);

@@ -494,7 +494,7 @@
             <s:file name="scannedImage"/>
         </td>
     </tr>
-    <s:if test="idUKey!=0">
+    <s:if test="mode=='reject'">
         <tr>
             <td class="font-8">
                 Comment in si
@@ -524,28 +524,38 @@
         </s:elseif>
         <s:else>
             <s:submit action="eprUpdateMarriage" value="%{getText('button.marriageregister.update')}"/>
-            <s:submit action="eprApproveMarriageRegistration"
+            <s:submit action="eprUpdateAndApproveMuslimMarriage"
                       value="%{getText('button.marriageregister.updateandapprove')}"/>
         </s:else>
     </s:else>
 </div>
 </s:form>
-<s:hidden id="errorMarriageDate" value="%{getText('error.invalid') + getText('error_js_marriageregister_marriagedate')}"/>
-<s:hidden id="errorRegistrationDate" value="%{getText('error.invalid') + getText('error_js_marriageregister_registrationdate')}"/>
-<s:hidden id="errorRegistrarPIN" value="%{getText('error.invalid') + getText('error_js_marriageregister_registrarPIN')}"/>
-<s:hidden id="errorRegistrarName" value="%{getText('error.invalid') + getText('error_js_marriageregister_registrarName')}"/>
-<s:hidden id="errorRegistrationPlace" value="%{getText('error.invalid') + getText('error_js_marriageregister_registrationPlace')}"/>
+<s:hidden id="errorMarriageDate"
+          value="%{getText('error.invalid') + getText('error_js_marriageregister_marriagedate')}"/>
+<s:hidden id="errorRegistrationDate"
+          value="%{getText('error.invalid') + getText('error_js_marriageregister_registrationdate')}"/>
+<s:hidden id="errorRegistrarPIN"
+          value="%{getText('error.invalid') + getText('error_js_marriageregister_registrarPIN')}"/>
+<s:hidden id="errorRegistrarName"
+          value="%{getText('error.invalid') + getText('error_js_marriageregister_registrarName')}"/>
+<s:hidden id="errorRegistrationPlace"
+          value="%{getText('error.invalid') + getText('error_js_marriageregister_registrationPlace')}"/>
 
 <s:hidden id="errorMalePIN" value="%{getText('error.invalid') + getText('error_js_marriageregister_malePIN')}"/>
 <s:hidden id="errorFemalePIN" value="%{getText('error.invalid') + getText('error_js_marriageregister_femalePIN')}"/>
-<s:hidden id="errorDateOfBirthMale" value="%{getText('error.invalid') + getText('error_js_marriageregister_DateOfBirthMale')}"/>
-<s:hidden id="errorDateOfBirthFemale" value="%{getText('error.invalid') + getText('error_js_marriageregister_dateOfBirthFemale')}"/>
+<s:hidden id="errorDateOfBirthMale"
+          value="%{getText('error.invalid') + getText('error_js_marriageregister_DateOfBirthMale')}"/>
+<s:hidden id="errorDateOfBirthFemale"
+          value="%{getText('error.invalid') + getText('error_js_marriageregister_dateOfBirthFemale')}"/>
 <s:hidden id="errorAgeMale" value="%{getText('error.invalid') + getText('error_js_marriageregister_ageMale')}"/>
 <s:hidden id="errorAgeFemale" value="%{getText('error.invalid') + getText('error_js_marriageregister_ageFemale')}"/>
-<s:hidden id="errorNameOfficialMale" value="%{getText('error.invalid') + getText('error_js_marriageregister_nameOfficialMale')}"/>
-<s:hidden id="errorNameOfficialFemale" value="%{getText('error.invalid') + getText('error_js_marriageregister_nameOfficialFemale')}"/>
+<s:hidden id="errorNameOfficialMale"
+          value="%{getText('error.invalid') + getText('error_js_marriageregister_nameOfficialMale')}"/>
+<s:hidden id="errorNameOfficialFemale"
+          value="%{getText('error.invalid') + getText('error_js_marriageregister_nameOfficialFemale')}"/>
 <s:hidden id="errorAddressMale" value="%{getText('error.invalid') + getText('error_js_marriageregister_addressMale')}"/>
-<s:hidden id="errorAddressFemale" value="%{getText('error.invalid') + getText('error_js_marriageregister_addressFemale')}"/>
+<s:hidden id="errorAddressFemale"
+          value="%{getText('error.invalid') + getText('error_js_marriageregister_addressFemale')}"/>
 
 <s:hidden id="errorMaleRace" value="%{getText('error.invalid') + getText('error_js_marriageregister_maleRace')}"/>
 <s:hidden id="errorFemaleRace" value="%{getText('error.invalid') + getText('error_js_marriageregister_femaleRace')}"/>
