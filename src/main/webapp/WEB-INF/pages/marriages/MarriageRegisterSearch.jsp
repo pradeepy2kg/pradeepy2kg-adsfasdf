@@ -17,6 +17,19 @@
     $(document).ready(function() {
         $("#tabs").tabs();
     });
+
+    $(document).ready(function() {
+        $('#search-result').dataTable({
+            "bPaginate": true,
+            "bLengthChange": false,
+            "bFilter": true,
+            "bSort": true,
+            "bInfo": false,
+            "bAutoWidth": false,
+            "bJQueryUI": true,
+            "sPaginationType": "full_numbers"
+        });
+    });
 </script>
 <s:actionerror cssClass="actionmessage"/>
 <s:actionmessage cssClass="actionerror"/>
@@ -149,8 +162,8 @@
                 <thead>
                 <tr>
                     <th width="70px"><s:label value="%{getText('serial.label')}"/></th>
-                    <th width="500px"><s:label value="%{getText('partyName.label')}"/></th>
-                    <th width="50px"></th>
+                    <th><s:label value="%{getText('partyName.label')}"/></th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -184,7 +197,7 @@
                                         <img src="<s:url value='/images/print_icon.gif'/>" border="none" height="25"/>
                                     </s:a>
                                 </s:if>
-                                <s:else>
+                            <s:else>
                                     <s:url id="editSelected" action="eprMarriageRegistrationInit.do">
                                         <s:param name="idUKey" value="idUKey"/>
                                     </s:url>
@@ -210,8 +223,8 @@
                                              border="none"/>
                                     </s:a>
                                 </s:else>
-                            </td>
-                        </s:else>
+                                </td>
+                            </s:else>
                     </tr>
                 </s:iterator>
                 </tbody>
