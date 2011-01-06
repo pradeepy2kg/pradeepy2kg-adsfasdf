@@ -199,12 +199,14 @@
                                          border="none"/>
                                 </s:a>
                             </s:if>
-                            <s:url id="cetificatePrintUrl" action="eprMarriageExtractInit.do">
-                                <s:param name="idUKey" value="idUKey"/>
-                            </s:url>
-                            <s:a href="%{cetificatePrintUrl}">
-                                <img src="<s:url value='/images/print_icon.gif'/>" border="none" height="25"/>
-                            </s:a>
+                            <s:else>
+                                <s:url id="cetificatePrintUrl" action="eprMarriageExtractInit.do">
+                                    <s:param name="idUKey" value="idUKey"/>
+                                </s:url>
+                                <s:a href="%{cetificatePrintUrl}">
+                                    <img src="<s:url value='/images/print_icon.gif'/>" border="none" height="25"/>
+                                </s:a>
+                            </s:else>
                         </td>
                     </tr>
                 </s:iterator>
