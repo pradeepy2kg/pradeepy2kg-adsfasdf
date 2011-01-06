@@ -1,3 +1,5 @@
+<%@ page import="lk.rgd.common.util.DeathRegisterStateUtil" %>
+<%@ page import="lk.rgd.crs.api.domain.DeathRegister" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -161,7 +163,7 @@
 <thead>
 <tr>
     <th width="70px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
-    <th><s:label name="name" value="%{getText('name.label')}"/></th>
+    <th width="650px"><s:label name="name" value="%{getText('name.label')}"/></th>
     <th><s:label name="state" value="%{getText('state.label')}"/></th>
     <th width="20px"></th>
     <th width="20px"></th>
@@ -182,7 +184,8 @@
     <s:property value="deathPerson.deathPersonNameOfficialLang"/>
 </td>
 <td>
-    <s:property value="status"/>
+    <%=DeathRegisterStateUtil.getDeathRegisterState((DeathRegister.State) request.getAttribute("status"))
+    %>
 </td>
 
 <s:if test="status.ordinal()==0">
