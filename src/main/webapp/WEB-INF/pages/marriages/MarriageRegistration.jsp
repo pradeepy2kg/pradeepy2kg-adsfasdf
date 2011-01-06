@@ -40,8 +40,8 @@
         errormsg = validateEmptyField("dateOfBirthFemaleDatePicker", "errorDateOfBirthFemale", errormsg);
         errormsg = validateEmptyField("ageMale", "errorAgeMale", errormsg);
         errormsg = validateEmptyField("ageFemale", "errorAgeFemale", errormsg);
-        errormsg = validateEmptyField("ageMale", "errorNameOfficialMale", errormsg);
-        errormsg = validateEmptyField("ageFemale", "errorNameOfficialFemale", errormsg);
+        errormsg = validateEmptyField("nameOfficialMale", "errorNameOfficialMale", errormsg);
+        errormsg = validateEmptyField("nameOfficialFemale", "errorNameOfficialFemale", errormsg);
         errormsg = validateEmptyField("addressMale", "errorAddressMale", errormsg);
         errormsg = validateEmptyField("addressFemale", "errorAddressFemale", errormsg);
 
@@ -321,20 +321,20 @@
         </td>
         <td colspan="1">
             <s:if test="marriage.male.ageAtLastBirthDayMale==0">
-                <s:textfield name="marriage.male.ageAtLastBirthDayMale" id="ageMale" maxLength="10"
+                <s:textfield name="marriage.male.ageAtLastBirthDayMale" id="ageMale" maxLength="3"
                              value=""/>
             </s:if>
             <s:else>
-                <s:textfield name="marriage.male.ageAtLastBirthDayMale" id="ageMale" maxLength="10"/>
+                <s:textfield name="marriage.male.ageAtLastBirthDayMale" id="ageMale" maxLength="3"/>
             </s:else>
         </td>
         <td colspan="1">
             <s:if test="marriage.female.ageAtLastBirthDayFemale==0">
-                <s:textfield name="marriage.female.ageAtLastBirthDayFemale" id="ageFemale" maxLength="10"
+                <s:textfield name="marriage.female.ageAtLastBirthDayFemale" id="ageFemale" maxLength="3"
                              value=""/>
             </s:if>
             <s:else>
-                <s:textfield name="marriage.female.ageAtLastBirthDayFemale" id="ageFemale" maxLength="10"/>
+                <s:textfield name="marriage.female.ageAtLastBirthDayFemale" id="ageFemale" maxLength="3"/>
             </s:else>
         </td>
     </tr>
