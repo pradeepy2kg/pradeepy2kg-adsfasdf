@@ -546,12 +546,13 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         marriage.setMrDivisionOfMaleNotice(mrDivision);
         marriage.setMrDivisionOfFemaleNotice(mrDivision);
         marriage.setState(MarriageRegister.State.REG_DATA_ENTRY);
-        if (marriage.getMale().getMaleRace().getRaceId() == 0) {
+        //TODO to be removed if Race is mandatory.
+        /*if (marriage.getMale().getMaleRace().getRaceId() == 0) {
             marriage.getMale().setMaleRace(null);
         }
         if (marriage.getFemale().getFemaleRace().getRaceId() == 0) {
             marriage.getFemale().setFemaleRace(null);
-        }
+        }*/
     }
 
     /**

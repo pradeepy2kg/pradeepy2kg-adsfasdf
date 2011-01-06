@@ -24,9 +24,17 @@
 
     function validateMarriageDetails() {
         var errormsg = "";
-        errormsg = validateEmptyField("marriageDatePicker", "marriagedate", errormsg);
-        errormsg = validatePin("regPIN", "registrarPIN", errormsg);
-        errormsg = validateEmptyField("registrationDatePicker", "registrationdate", errormsg);
+        errormsg = validateEmptyField("marriageDatePicker", "errorMarriageDate", errormsg);
+        //validate registrar details
+        errormsg = validatePin("regPIN", "errorRegistrarPIN", errormsg);
+        errormsg = validateEmptyField("regPlaceInOfficialLang", "errorRegistrationPlace", errormsg);
+        errormsg = validateEmptyField("regNameInOfficialLang", "errorRegistrarName", errormsg);
+
+        //validate Male/Female
+        errormsg = validateSelectOption("maleRace", "errorMaleRace", errormsg);
+        errormsg = validateSelectOption("femaleRace", "errorFemaleRace", errormsg);
+
+        errormsg = validateEmptyField("registrationDatePicker", "errorRegistrationDate", errormsg);
         return printErrorMessages(errormsg);
     }
 </script>
@@ -81,7 +89,7 @@
     <tr>
         <td>
             විවාහ ස්ථානයේ ස්වභාවය
-             <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
+            <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
             <br>in tamil
             <br>Type of Marriage Place
         </td>
@@ -94,7 +102,7 @@
     <tr>
         <td>
             දිස්ත්‍රික්කය
-                            <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
+            <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
             <br>மாவட்டம்
             <br>District
         </td>
@@ -144,7 +152,8 @@
                 <tbody>
                 <tr>
                     <td>
-                        රාජ්‍ය භාෂාවෙන්<br>
+                        රාජ්‍ය භාෂාවෙන්
+                        <s:label value="*" cssStyle="color:red;font-size:10pt;"/><br>
                         தமிழ் மொழியில் <br>
                         Official Language
                     </td>
@@ -183,7 +192,8 @@
                 <tbody>
                 <tr>
                     <td>
-                        රාජ්‍ය භාෂාවෙන්<br>
+                        රාජ්‍ය භාෂාවෙන්
+                        <s:label value="*" cssStyle="color:red;font-size:10pt;"/><br>
                         தமிழ் மொழியில் <br>
                         Official Language
                     </td>
@@ -211,7 +221,7 @@
     <tr>
         <td>
             විවාහයේ ස්වභාවය
-                <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
+            <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
             <br>type of marriage in tamil
             <br>Type of Marriage
         </td>
@@ -260,7 +270,8 @@
     <tbody>
     <tr>
         <td colspan="1">
-            අනන්‍යතා අංකය <br>
+            අනන්‍යතා අංකය
+            <s:label value="*" cssStyle="color:red;font-size:10pt;"/><br>
             அடையாள எண் <br>
             Identification Number.
         </td>
@@ -273,7 +284,8 @@
     </tr>
     <tr>
         <td colspan="1">
-            උපන් දිනය <br>
+            උපන් දිනය
+            <s:label value="*" cssStyle="color:red;font-size:10pt;"/><br>
             பிறந்த திகதி <br>
             Date of Birth
         </td>
@@ -288,7 +300,8 @@
     </tr>
     <tr>
         <td colspan="1">
-            පසුවූ උපන් දිනයට වයස <br>
+            පසුවූ උපන් දිනයට වයස
+            <s:label value="*" cssStyle="color:red;font-size:10pt;"/><br>
             in tamil <br>
             Age at last Birthday
 
@@ -314,17 +327,18 @@
     </tr>
     <tr>
         <td>
-            ජාතිය <br>
+            ජාතිය
+            <s:label value="*" cssStyle="color:red;font-size:10pt;"/><br>
             Race <br>
 
         </td>
         <td>
-            <s:select list="raceList" name="marriage.male.maleRace.raceId" headerKey="0"
+            <s:select id="maleRace" list="raceList" name="marriage.male.maleRace.raceId" headerKey="0"
                       headerValue="%{getText('select_race.label')}"
                       cssStyle="width:200px;"/>
         </td>
         <td>
-            <s:select list="raceList" name="marriage.female.femaleRace.raceId" headerKey="0"
+            <s:select id="femaleRace" list="raceList" name="marriage.female.femaleRace.raceId" headerKey="0"
                       headerValue="%{getText('select_race.label')}"
                       cssStyle="width:200px;"/>
         </td>
@@ -332,8 +346,8 @@
     <tr>
         <td>
             සිවිල් තත්වය
-             <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-            <br>  சிவில் நிலைமை
+            <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
+            <br> சிவில் நிலைமை
             <br> Civil Status
         </td>
         <td>
@@ -367,7 +381,8 @@
     <tr>
         <td>
             නම රාජ්‍ය භාෂාවෙන්
-            (සිංහල / දෙමළ) <br>
+            (සිංහල / දෙමළ)
+            <s:label value="*" cssStyle="color:red;font-size:10pt;"/><br>
             பெயர் அரச கரும மொழியில் (சிங்களம் / தமிழ்) <br>
             Name in any of the official languages (Sinhala / Tamil)
         </td>
@@ -397,7 +412,8 @@
 
     <tr>
         <td>
-            පදිංචි ලිපිනය <br>
+            පදිංචි ලිපිනය
+            <s:label value="*" cssStyle="color:red;font-size:10pt;"/> <br>
             தற்போதைய வதிவிட முகவரி <br>
             Resident Address
         </td>
@@ -483,7 +499,8 @@
 <div class="form-submit">
     <s:if test="idUKey==0">
         <s:submit action="eprRegisterNewMarriage" value="%{getText('button.marriageregister.register')}"/>
-        <s:submit action="eprRegisterAndApproveNewMarriage" value="%{getText('button.marriageregister.registerandapprove')}"/>
+        <s:submit action="eprRegisterAndApproveNewMarriage"
+                  value="%{getText('button.marriageregister.registerandapprove')}"/>
     </s:if>
     <s:else>
         <s:if test="mode=='register'">
@@ -494,12 +511,18 @@
         </s:elseif>
         <s:else>
             <s:submit action="eprUpdateMarriage" value="%{getText('button.marriageregister.update')}"/>
-            <s:submit action="eprApproveMarriageRegistration" value="%{getText('button.marriageregister.updateandapprove')}"/>
+            <s:submit action="eprApproveMarriageRegistration"
+                      value="%{getText('button.marriageregister.updateandapprove')}"/>
         </s:else>
     </s:else>
 </div>
 </s:form>
-<s:hidden id="marriagedate" value="%{getText('error.invalid') + getText('error_js_marriageregister_marriagedate')}"/>
-<s:hidden id="registrationdate" value="%{getText('error.invalid') + getText('error_js_marriageregister_registrationdate')}"/>
-<s:hidden id="registrarPIN" value="%{getText('error.invalid') + getText('error_js_marriageregister_registrarPIN')}"/>
+<s:hidden id="errorMarriageDate" value="%{getText('error.invalid') + getText('error_js_marriageregister_marriagedate')}"/>
+<s:hidden id="errorRegistrationDate" value="%{getText('error.invalid') + getText('error_js_marriageregister_registrationdate')}"/>
+<s:hidden id="errorRegistrarPIN" value="%{getText('error.invalid') + getText('error_js_marriageregister_registrarPIN')}"/>
+<s:hidden id="errorRegistrarName" value="%{getText('error.invalid') + getText('error_js_marriageregister_registrarName')}"/>
+<s:hidden id="errorRegistrationPlace" value="%{getText('error.invalid') + getText('error_js_marriageregister_registrationPlace')}"/>
+
+<s:hidden id="errorMaleRace" value="%{getText('error.invalid') + getText('error_js_marriageregister_maleRace')}"/>
+<s:hidden id="errorFemaleRace" value="%{getText('error.invalid') + getText('error_js_marriageregister_femaleRace')}"/>
 </div>
