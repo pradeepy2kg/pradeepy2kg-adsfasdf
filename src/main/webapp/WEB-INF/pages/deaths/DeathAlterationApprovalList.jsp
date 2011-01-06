@@ -62,34 +62,34 @@
         $('select#districtId').bind('change', function(evt1) {
             var id = $("select#districtId").attr("value");
             $.getJSON('/ecivil/crs/DivisionLookupService', {id:id},
-                     function(data) {
-                         var options1 = '';
-                         var ds = data.dsDivisionList;
-                         for (var i = 0; i < ds.length; i++) {
-                             options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
-                         }
-                         $("select#dsDivisionId").html(options1);
+                    function(data) {
+                        var options1 = '';
+                        var ds = data.dsDivisionList;
+                        for (var i = 0; i < ds.length; i++) {
+                            options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                        }
+                        $("select#dsDivisionId").html(options1);
 
-                         var options2 = '';
-                         var bd = data.bdDivisionList;
-                         for (var j = 0; j < bd.length; j++) {
-                             options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
-                         }
-                         $("select#divisionId").html(options2);
-                     });
+                        var options2 = '';
+                        var bd = data.bdDivisionList;
+                        for (var j = 0; j < bd.length; j++) {
+                            options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
+                        }
+                        $("select#divisionId").html(options2);
+                    });
         });
 
         $('select#dsDivisionId').bind('change', function(evt2) {
             var id = $("select#dsDivisionId").attr("value");
             $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:2},
-                     function(data) {
-                         var options = '';
-                         var bd = data.bdDivisionList;
-                         for (var i = 0; i < bd.length; i++) {
-                             options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
-                         }
-                         $("select#divisionId").html(options);
-                     });
+                    function(data) {
+                        var options = '';
+                        var bd = data.bdDivisionList;
+                        for (var i = 0; i < bd.length; i++) {
+                            options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
+                        }
+                        $("select#divisionId").html(options);
+                    });
         });
     });
 
@@ -270,11 +270,19 @@
                                 </s:if>
                             </td>
                             <td align="center">
-                                <s:if test="status.ordinal()==0">
+                                <s:if test="status.ordinal()<2 & (#session.user_bean.role.roleId.equals('ARG') | #session.user_bean.role.roleId.equals('RG'))">
+                                    <%
+                                        BDDivision deathDivision = (BDDivision) pageContext.getAttribute("deathDivision");
+                                        int deathDSDivsion = deathDivision.getDsDivision().getDsDivisionUKey();
+                                        boolean approveRights = user.isAllowedAccessToBDDSDivision(deathDSDivsion);
+                                        if (approveRights) {
+                                    %>
                                     <s:a href="%{rejectSelected}" title="%{getText('rejectTooltip.label')}">
                                         <img src="<s:url value='/images/reject.gif'/>" width="25" height="25"
                                              border="none"/>
                                     </s:a>
+                                    <%}%>
+
                                 </s:if>
                             </td>
                             <td align="center">

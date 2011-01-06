@@ -247,10 +247,10 @@
 </table>
 
 <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; " class="font-9">
-    <col width="135px"/>
-    <col width="390px"/>
-    <col width="145px"/>
-    <col/>
+    <col width="215px"/>
+    <col width="300px"/>
+    <col width="215px"/>
+    <col width="300px"/>
     <tbody>
     <tr>
         <td>
@@ -303,7 +303,7 @@
 </table>
 
 <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; " class="font-9">
-<col width="150px"/>
+<col width="215px"/>
 <col width="160px"/>
 <col width="100px"/>
 <col width="100px"/>
@@ -313,7 +313,7 @@
 <col/>
 <tbody>
 <tr>
-    <td height="60px">
+    <td>
         අනන්‍යතා අංකය
         <br>அடையாள எண்
         <br>Identification Number
@@ -365,7 +365,7 @@
     </td>
 </tr>
 <tr>
-    <td colspan="1" height="60px">
+    <td colspan="1">
         මරණයේ ස්වභාවය
         <br>மரணத்தின் வகை
         <br>Type of Death

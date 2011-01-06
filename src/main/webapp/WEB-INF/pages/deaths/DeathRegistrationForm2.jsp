@@ -123,7 +123,7 @@
         // validate declarant phone number
         domObject = document.getElementById('declarantPhone');
         if (!isFieldEmpty(domObject))
-            isNumeric(domObject.value, 'error1', 'error3');
+            validatePhoneNo(domObject.value, 'error1', 'error3');
 
         // validate declarant email address
         domObject = document.getElementById('declarantEMail');

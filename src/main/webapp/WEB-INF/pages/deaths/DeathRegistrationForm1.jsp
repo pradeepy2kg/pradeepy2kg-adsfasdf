@@ -309,7 +309,7 @@ function personAgeDeath() {
     }
     var person_bd = new Date(document.getElementById('deathPersonDOB').value);
     var date_of_death = new Date(document.getElementById('deathDatePicker').value);
-    var death_person_age = person_bd.getYear() - date_of_death.getYear();
+    var death_person_age = date_of_death.getYear() - person_bd.getYear();
     if (!(dateOdBirthSubmitted && dateOfDeathSubmitted)) {
         document.getElementById("deathPersonAge").value = 0;
     }
@@ -696,7 +696,8 @@ function personAgeDeath() {
             <br>பிறந்த திகதி
             <br>Date of Birth
         </td>
-        <td><s:textfield maxLength="10" name="deathPerson.deathPerson.deathPersonDOB" id="deathPersonDOB"/></td>
+        <td><s:textfield maxLength="10" name="deathPerson.deathPersonDOB" id="deathPersonDOB"
+                         value="%{deathPerson.deathPersonDOB}"/></td>
         <td>
             (<s:property value="#row"/><s:set name="row" value="#row+1"/>)
             වයස හෝ අනුමාන වයස
