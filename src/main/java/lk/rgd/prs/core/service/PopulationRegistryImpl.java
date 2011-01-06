@@ -551,22 +551,31 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             handleException("User : " + user.getUserId() + " is not allowed to lookup entries on the PRS by keys (uKey)",
                 ErrorCodes.PRS_LOOKUP_BY_KEYS_DENIED);
         }
+
         Person p = personDao.getByUKey(personUKey);
-        // TODO this check added after removing nullable false for created user and updated user
-        if (p.getLifeCycleInfo().getCreatedUser() != null && p.getLifeCycleInfo().getLastUpdatedUser() != null
-            && p.getLifeCycleInfo().getApprovalOrRejectUser() != null) {
-            p.getLifeCycleInfo().getCreatedUser().getUserName();
-            p.getLifeCycleInfo().getLastUpdatedUser().getUserName();
-            p.getLifeCycleInfo().getApprovalOrRejectUser(); // this maybe null
+        if (p != null) {
+
+            if (p.getLifeCycleInfo().getCreatedUser() != null) {
+                p.getLifeCycleInfo().getCreatedUser().getUserName();
+            }
+            if (p.getLifeCycleInfo().getLastUpdatedUser() != null) {
+                p.getLifeCycleInfo().getLastUpdatedUser().getUserName();
+            }
+            if (p.getLifeCycleInfo().getApprovalOrRejectUser() != null) { // this maybe null
+                p.getLifeCycleInfo().getApprovalOrRejectUser().getUserName();
+            }
+
+            p.getMarriages().size();
+            p.getAddresses().size();
+            p.getCountries().size();
+
+            logger.debug("Person loaded for personUKey: " + personUKey + " Addresses : " + p.getAddresses().size() +
+                " Marriages : " + p.getMarriages().size() + " Citizenships : " + p.getCountries().size());
+            return p;
+        } else {
+            logger.debug("Person with personUKey: {} is not found on the database", personUKey);
+            return null;
         }
-
-        p.getMarriages().size();
-        p.getAddresses().size();
-        p.getCountries().size();
-
-        logger.debug("Person loaded for personUKey: " + personUKey + " Addresses : " + p.getAddresses().size() +
-            " Marriages : " + p.getMarriages().size() + " Citizenships : " + p.getCountries().size());
-        return p;
     }
 
     /**
