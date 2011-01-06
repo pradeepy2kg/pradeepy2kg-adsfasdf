@@ -14,9 +14,9 @@ import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.Court;
 import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.service.MasterDataManagementService;
+import lk.rgd.crs.api.service.PRSRecordsIndexer;
 import lk.rgd.crs.core.service.BirthRecordsIndexer;
 import lk.rgd.crs.core.service.DeathRecordsIndexer;
-import lk.rgd.crs.api.service.PRSRecordsIndexer;
 import lk.rgd.crs.web.WebConstants;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
@@ -339,8 +339,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 logger.debug("Updated user location of {} is : {}", userLocation.getUserId(), userLocation.getLocation().getEnLocationName());
                 userLocation = null;
                 pageType = 0;
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 addFieldError("duplicateIdNumberError", "This Location Can Not Be Edit");
             }
         }
@@ -647,7 +646,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
             default:
                 birthRecordsIndexer.indexAll();
                 deathRecordsIndexer.indexAll();
-                // TODO imlement method to index PRS data
+                prsRecordsIndexer.indexAll();
                 addActionMessage("All Records Re-Index Completed");
                 logger.debug("All REcords Re-indexed Successfully");
         }
