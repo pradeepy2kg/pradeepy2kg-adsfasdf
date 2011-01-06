@@ -25,6 +25,7 @@
     function validateMarriageDetails() {
         var errormsg = "";
         errormsg = validateEmptyField("marriageDatePicker", "errorMarriageDate", errormsg);
+        errormsg = isDate("marriageDatePicker", "errorMarriageDate", errormsg);
         //validate registrar details
         errormsg = validatePin("regPIN", "errorRegistrarPIN", errormsg);
         errormsg = validateEmptyField("regPlaceInOfficialLang", "errorRegistrationPlace", errormsg);
@@ -37,7 +38,9 @@
         errormsg = validateEmptyField("malePIN", "errorMalePIN", errormsg);
         errormsg = validateEmptyField("femalePIN", "errorFemalePIN", errormsg);
         errormsg = validateEmptyField("dateOfBirthMaleDatePicker", "errorDateOfBirthMale", errormsg);
+        errormsg = isDate("dateOfBirthMaleDatePicker", "errorDateOfBirthMale", errormsg);
         errormsg = validateEmptyField("dateOfBirthFemaleDatePicker", "errorDateOfBirthFemale", errormsg);
+        errormsg = isDate("dateOfBirthFemaleDatePicker", "errorDateOfBirthFemale", errormsg);      
         errormsg = validateEmptyField("ageMale", "errorAgeMale", errormsg);
         errormsg = validateEmptyField("ageFemale", "errorAgeFemale", errormsg);
         errormsg = validateEmptyField("nameOfficialMale", "errorNameOfficialMale", errormsg);
