@@ -163,6 +163,7 @@
                 <tr>
                     <th width="70px"><s:label value="%{getText('serial.label')}"/></th>
                     <th><s:label value="%{getText('partyName.label')}"/></th>
+                    <th><s:label value="%{getText('pin.label')}"/></th>
                     <th width="100px"></th>
                 </tr>
                 </thead>
@@ -170,10 +171,13 @@
                 <s:iterator status="approvalStatus" value="marriageRegisterSearchList">
                     <tr>
                         <td align="center">
-                            <s:property value="idUKey"/>
+                            <s:property value="regSerial"/>
                         </td>
                         <td>
                             <s:property value="male.nameInOfficialLanguageMale"/>
+                        </td>
+                         <td>
+                            <s:property value="male.identificationNumberMale"/>
                         </td>
                             <%-- <td align="center">
                                <s:url id="registerSelected" action="eprMarriageRegistrationInit.do">
