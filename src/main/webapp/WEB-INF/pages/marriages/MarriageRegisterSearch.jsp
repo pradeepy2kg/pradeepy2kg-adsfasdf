@@ -6,7 +6,6 @@
     @import "../lib/datatables/media/css/demo_table.css";
     @import "../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css";
 </style>
-
 <script src="/ecivil/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
 <script src="/ecivil/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
@@ -151,8 +150,8 @@
                 <thead>
                 <tr>
                     <th width="70px"><s:label value="%{getText('serial.label')}"/></th>
-                    <th><s:label value="%{getText('partyName.label')}"/></th>
-                    <th width="200px"></th>
+                    <th width="500px"><s:label value="%{getText('partyName.label')}"/></th>
+                    <th width="50px"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -173,41 +172,47 @@
                                    <img src="<s:url value='/images/couple.jpg'/>" width="25" height="25" border="none"/>
                                </s:a>
                            </td> --%>
-                        <td>
-                            <s:if test="(state.ordinal()!=9)">
-                                <s:url id="editSelected" action="eprMarriageRegistrationInit.do">
-                                    <s:param name="idUKey" value="idUKey"/>
-                                </s:url>
-                                <s:a href="%{editSelected}" title="%{getText('editToolTip.label')}">
-                                    <img src="<s:url value='/images/edit.png'/>" width="25" height="25" border="none"/>
-                                </s:a>
+                        <s:if test="(state.ordinal()==10)">
 
-                                <s:url id="approveSelected" action="eprApproveMarriageRegistration.do">
-                                    <s:param name="idUKey" value="idUKey"/>
-                                </s:url>
-                                <s:a href="%{approveSelected}" title="%{getText('approveToolTip.label')}">
-                                    <img src="<s:url value='/images/approve.gif'/>" width="25" height="25"
-                                         border="none"/>
-                                </s:a>
+                        </s:if>
+                        <s:else>
+                            <td>
+                                <s:if test="(state.ordinal()==9)">
+                                    <s:url id="cetificatePrintUrl" action="eprMarriageExtractInit.do">
+                                        <s:param name="idUKey" value="idUKey"/>
+                                    </s:url>
+                                    <s:a href="%{cetificatePrintUrl}">
+                                        <img src="<s:url value='/images/print_icon.gif'/>" border="none" height="25"/>
+                                    </s:a>
+                                </s:if>
+                                <s:else>
+                                    <s:url id="editSelected" action="eprMarriageRegistrationInit.do">
+                                        <s:param name="idUKey" value="idUKey"/>
+                                    </s:url>
+                                    <s:a href="%{editSelected}" title="%{getText('editToolTip.label')}">
+                                        <img src="<s:url value='/images/edit.png'/>" width="25" height="25"
+                                             border="none"/>
+                                    </s:a>
 
-                                <s:url id="rejectSelected" action="eprMarriageRegistrationInit.do">
-                                    <s:param name="idUKey" value="idUKey"/>
-                                    <s:param name="mode">reject</s:param>
-                                </s:url>
-                                <s:a href="%{rejectSelected}" title="%{getText('rejectToolTip.label')}">
-                                    <img src="<s:url value='/images/reject.gif'/>" width="25" height="25"
-                                         border="none"/>
-                                </s:a>
-                            </s:if>
-                            <s:else>
-                                <s:url id="cetificatePrintUrl" action="eprMarriageExtractInit.do">
-                                    <s:param name="idUKey" value="idUKey"/>
-                                </s:url>
-                                <s:a href="%{cetificatePrintUrl}">
-                                    <img src="<s:url value='/images/print_icon.gif'/>" border="none" height="25"/>
-                                </s:a>
-                            </s:else>
-                        </td>
+                                    <s:url id="approveSelected" action="eprApproveMarriageRegistration.do">
+                                        <s:param name="idUKey" value="idUKey"/>
+                                    </s:url>
+                                    <s:a href="%{approveSelected}" title="%{getText('approveToolTip.label')}">
+                                        <img src="<s:url value='/images/approve.gif'/>" width="25" height="25"
+                                             border="none"/>
+                                    </s:a>
+
+                                    <s:url id="rejectSelected" action="eprMarriageRegistrationInit.do">
+                                        <s:param name="idUKey" value="idUKey"/>
+                                        <s:param name="mode">reject</s:param>
+                                    </s:url>
+                                    <s:a href="%{rejectSelected}" title="%{getText('rejectToolTip.label')}">
+                                        <img src="<s:url value='/images/reject.gif'/>" width="25" height="25"
+                                             border="none"/>
+                                    </s:a>
+                                </s:else>
+                            </td>
+                        </s:else>
                     </tr>
                 </s:iterator>
                 </tbody>

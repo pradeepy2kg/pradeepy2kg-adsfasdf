@@ -1302,6 +1302,13 @@
             <result type="tiles" name="success">epr.success</result>
         </action>
 
+        <action name="eprUpdateAndApproveMuslimMarriage"
+                class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
+                method="updateAndApproveMuslimMarriage">
+            <result type="tiles" name="success">epr.success</result>
+            <result type="tiles" name="error">epr.marriageRegistration</result>
+        </action>
+
         <action name="eprRegisterNoticedMarriage" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
                 method="registerNoticedMarriage">
             <result type="tiles" name="success">epr.success</result>
