@@ -6,6 +6,7 @@
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<s:url value="/js/division.js"/>"></script>
 <script type="text/javascript" src="<s:url value="/js/datePicker.js"/>"></script>
+<script type="text/javascript" src="<s:url value="/js/marriageregistervalidation.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 <script type="text/javascript">
     $(function() {
@@ -20,13 +21,20 @@
                     });
         });
     });
+
+    function validateMarriageDetails() {
+        var errormsg = "";
+        errormsg = validateEmptyField("marriageDatePicker", "marriagedate", errormsg);
+        errormsg = validatePin("regPIN", "registrarPIN", errormsg);
+        errormsg = validateEmptyField("registrationDatePicker", "registrationdate", errormsg);
+        return printErrorMessages(errormsg);
+    }
 </script>
+
 <s:actionerror cssClass="actionmessage"/>
 <s:actionmessage cssClass="actionerror"/>
 <div class="marriage-notice-outer">
-<s:form method="post" enctype="multipart/form-data">
-<%-- TODO: tobe removed--%>
-<s:hidden name="marriage.idUKey"/>
+<s:form method="post" enctype="multipart/form-data" onsubmit="javascript:return validateMarriageDetails()">
 <s:hidden name="idUKey"/>
 <s:hidden name="mode"/>
 <table border="1" style="margin-top:1px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
@@ -60,24 +68,33 @@
                     <br>அடையாள எண் <br>Identification number of Registrar/Minister</span></label>
         </td>
         <td align="center" colspan="3">
-            <s:textfield name="marriage.registrarOrMinisterPIN" id="regPIN" maxLength="10"/><img
-                src="<s:url value="/images/search-father.png" />"
-                style="vertical-align:middle; margin-left:20px;" id="registrar_lookup">
+            <s:if test="marriage.registrarOrMinisterPIN==0">
+                <s:textfield name="marriage.registrarOrMinisterPIN" id="regPIN" maxLength="10" value=""/>
+            </s:if>
+            <s:else>
+                <s:textfield name="marriage.registrarOrMinisterPIN" id="regPIN" maxLength="10"/>
+            </s:else>
+            <img src="<s:url value='/images/search-father.png' />"
+                 style="vertical-align:middle; margin-left:20px;" id="registrar_lookup">
         </td>
     </tr>
     <tr>
         <td>
-            විවාහ ස්ථානයේ ස්වභාවය<br>
-            Type of Marriage Place<br>
+            විවාහ ස්ථානයේ ස්වභාවය
+             <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
+            <br>in tamil
+            <br>Type of Marriage Place
         </td>
         <td colspan="8">
-            <s:radio name="marriage.typeOfMarriagePlace" list="typeOfMarriagePlaceList" listValue="type"
+            <s:radio id="typeOfMarriagePlace" name="marriage.typeOfMarriagePlace" list="typeOfMarriagePlaceList"
+                     listValue="type"
                      theme="horizontal"/>
         </td>
     </tr>
     <tr>
         <td>
             දිස්ත්‍රික්කය
+                            <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
             <br>மாவட்டம்
             <br>District
         </td>
@@ -193,9 +210,10 @@
 
     <tr>
         <td>
-            විවාහයේ ස්වභාවය <br>
-            type of marriage in tamil <br>
-            Type of Marriage
+            විවාහයේ ස්වභාවය
+                <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
+            <br>type of marriage in tamil
+            <br>Type of Marriage
         </td>
         <td colspan="8">
             <table width="100%">
@@ -276,10 +294,22 @@
 
         </td>
         <td colspan="1">
-            <s:textfield name="marriage.male.ageAtLastBirthDayMale" id="age_at_last_bd_male" maxLength="10"/>
+            <s:if test="marriage.male.ageAtLastBirthDayMale==0">
+                <s:textfield name="marriage.male.ageAtLastBirthDayMale" id="age_at_last_bd_male" maxLength="10"
+                             value=""/>
+            </s:if>
+            <s:else>
+                <s:textfield name="marriage.male.ageAtLastBirthDayMale" id="age_at_last_bd_male" maxLength="10"/>
+            </s:else>
         </td>
         <td colspan="1">
-            <s:textfield name="marriage.female.ageAtLastBirthDayFemale" id="age_at_last_bd_female" maxLength="10"/>
+            <s:if test="marriage.female.ageAtLastBirthDayFemale==0">
+                <s:textfield name="marriage.female.ageAtLastBirthDayFemale" id="age_at_last_bd_female" maxLength="10"
+                             value=""/>
+            </s:if>
+            <s:else>
+                <s:textfield name="marriage.female.ageAtLastBirthDayFemale" id="age_at_last_bd_female" maxLength="10"/>
+            </s:else>
         </td>
     </tr>
     <tr>
@@ -301,9 +331,10 @@
     </tr>
     <tr>
         <td>
-            සිවිල් තත්වය<br>
-            சிவில் நிலைமை <br>
-            Civil Status
+            සිවිල් තත්වය
+             <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
+            <br>  சிவில் நிலைமை
+            <br> Civil Status
         </td>
         <td>
             <table>
@@ -390,11 +421,15 @@
     <col>
     <tr>
         <td><label><span class="font-8">අනුක්‍රමික අංකය
-                <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-                <br>தொடர் இலக்கம்<br>Serial Number</span></label>
+                       <br>தொடர் இலக்கம்<br>Serial Number</span></label>
         </td>
         <td align="center">
-            <s:textfield name="marriage.idUKey" id="idUKey" maxLength="10" disabled="true"/>
+            <s:if test="idUKey==0">
+                <s:textfield name="idUKey" id="idUKey" maxLength="10" disabled="true" value=""/>
+            </s:if>
+            <s:else>
+                <s:textfield name="idUKey" id="idUKey" maxLength="10" disabled="true"/>
+            </s:else>
         </td>
         <td>
             <label>
@@ -422,48 +457,49 @@
 
     <tr>
         <td class="font-8">
-          Scanned Image in si
+            Scanned Image in si
             <br>Scanned Image in ta
             <br>Scanned Image
         </td>
         <td colspan="3">
-           <s:file name="scannedImage"/>
+            <s:file name="scannedImage"/>
         </td>
     </tr>
-    
+    <s:if test="idUKey!=0">
+        <tr>
+            <td class="font-8">
+                Comment in si
+                <br>Comment in ta
+                <br>Comment
+            </td>
+            <td colspan="3">
+                <s:textarea name="comment" id="registrationRejectComment"
+                            cssStyle="width:98.2%;"/>
+            </td>
+        </tr>
 
-
-    <tr>
-        <td class="font-8">
-            Comment in si
-            <br>Comment in ta
-            <br>Comment
-        </td>
-        <td colspan="3">
-            <s:textarea name="comment" id="registrationRejectComment"
-                        cssStyle="width:98.2%;"/>
-        </td>
-    </tr>
-
-
+    </s:if>
 </table>
 <div class="form-submit">
     <s:if test="idUKey==0">
-        <s:submit action="eprRegisterNewMarriage" value="Add"/>
-        <s:submit action="eprApproveMarriageRegistration" value="Add and Approve"/>
+        <s:submit action="eprRegisterNewMarriage" value="%{getText('button.marriageregister.register')}"/>
+        <s:submit action="eprRegisterAndApproveNewMarriage" value="%{getText('button.marriageregister.registerandapprove')}"/>
     </s:if>
     <s:else>
         <s:if test="mode=='register'">
-            <s:submit action="eprRegisterNoticedMarriage" value="Register"/>
+            <s:submit action="eprRegisterNoticedMarriage" value="%{getText('button.marriageregister.register')}"/>
         </s:if>
         <s:elseif test="mode=='reject'">
-             <s:submit action="eprRejectMarriageRegistration" value="Reject"/>
+            <s:submit action="eprRejectMarriageRegistration" value="%{getText('button.marriageregister.reject')}"/>
         </s:elseif>
         <s:else>
-            <s:submit action="eprUpdateMarriage" value="Update"/>
-            <s:submit action="eprApproveMarriageRegistration" value="Update and Approve"/>
+            <s:submit action="eprUpdateMarriage" value="%{getText('button.marriageregister.update')}"/>
+            <s:submit action="eprApproveMarriageRegistration" value="%{getText('button.marriageregister.updateandapprove')}"/>
         </s:else>
     </s:else>
 </div>
 </s:form>
+<s:hidden id="marriagedate" value="%{getText('error.invalid') + getText('error_js_marriageregister_marriagedate')}"/>
+<s:hidden id="registrationdate" value="%{getText('error.invalid') + getText('error_js_marriageregister_registrationdate')}"/>
+<s:hidden id="registrarPIN" value="%{getText('error.invalid') + getText('error_js_marriageregister_registrarPIN')}"/>
 </div>

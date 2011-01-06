@@ -374,6 +374,7 @@ public class Menu {
         adrMarriageLink.put("eprApproveMarriageRegistration.do", new Link(null, "/ecivil/marriages/", "eprApproveMarriageRegistration.do", Permission.APPROVE_MARRIAGE));
         adrMarriageLink.put("eprRejectMarriageRegistration.do", new Link(null, "/ecivil/marriages/", "eprRejectMarriageRegistration.do", Permission.APPROVE_MARRIAGE));
         adrMarriageLink.put("eprMarriageRegisterSearch.do", new Link(null, "/ecivil/marriages/", "eprMarriageRegisterSearch.do", Permission.SEARCH_MARRIAGE));
+        adrMarriageLink.put("eprRegisterAndApproveNewMarriage.do", new Link(null, "/ecivil/marriages/", "eprRegisterAndApproveNewMarriage.do", Permission.APPROVE_MARRIAGE));
 
         // ARG marriage links
         argMarriageLink.putAll(adrMarriageLink);
