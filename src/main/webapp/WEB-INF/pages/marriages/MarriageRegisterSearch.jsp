@@ -152,12 +152,7 @@
                 <tr>
                     <th width="70px"><s:label value="%{getText('serial.label')}"/></th>
                     <th><s:label value="%{getText('partyName.label')}"/></th>
-                    <th width="50px"></th>
-                    <th width="15px"></th>
-                    <th width="15px"></th>
-                    <th width="15px"></th>
-                    <th width="15px"></th>
-                    <th width="15px"></th>
+                    <th width="200px"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -169,27 +164,24 @@
                         <td>
                             <s:property value="male.nameInOfficialLanguageMale"/>
                         </td>
-                        <td align="center">
-                        </td>
-                        <td align="center">
-                            <s:url id="registerSelected" action="eprMarriageRegistrationInit.do">
-                                <s:param name="idUKey" value="idUKey"/>
-                                <s:param name="mode">register</s:param>
-                            </s:url>
-                            <s:a href="%{registerSelected}" title="%{getText('tooltip.marriageregister.register')}">
-                                <img src="<s:url value='/images/couple.jpg'/>" width="25" height="25" border="none"/>
-                            </s:a>
-                        </td>
-                        <td align="center">
-                            <s:url id="editSelected" action="eprMarriageRegistrationInit.do">
-                                <s:param name="idUKey" value="idUKey"/>
-                            </s:url>
-                            <s:a href="%{editSelected}" title="%{getText('editToolTip.label')}">
-                                <img src="<s:url value='/images/edit.png'/>" width="25" height="25" border="none"/>
-                            </s:a>
-                        </td>
-                        <td align="center">
+                            <%-- <td align="center">
+                               <s:url id="registerSelected" action="eprMarriageRegistrationInit.do">
+                                   <s:param name="idUKey" value="idUKey"/>
+                                   <s:param name="mode">register</s:param>
+                               </s:url>
+                               <s:a href="%{registerSelected}" title="%{getText('tooltip.marriageregister.register')}">
+                                   <img src="<s:url value='/images/couple.jpg'/>" width="25" height="25" border="none"/>
+                               </s:a>
+                           </td> --%>
+                        <td>
                             <s:if test="(state.ordinal()!=9)">
+                                <s:url id="editSelected" action="eprMarriageRegistrationInit.do">
+                                    <s:param name="idUKey" value="idUKey"/>
+                                </s:url>
+                                <s:a href="%{editSelected}" title="%{getText('editToolTip.label')}">
+                                    <img src="<s:url value='/images/edit.png'/>" width="25" height="25" border="none"/>
+                                </s:a>
+
                                 <s:url id="approveSelected" action="eprApproveMarriageRegistration.do">
                                     <s:param name="idUKey" value="idUKey"/>
                                 </s:url>
@@ -197,18 +189,16 @@
                                     <img src="<s:url value='/images/approve.gif'/>" width="25" height="25"
                                          border="none"/>
                                 </s:a>
+
+                                <s:url id="rejectSelected" action="eprMarriageRegistrationInit.do">
+                                    <s:param name="idUKey" value="idUKey"/>
+                                    <s:param name="mode">reject</s:param>
+                                </s:url>
+                                <s:a href="%{rejectSelected}" title="%{getText('rejectToolTip.label')}">
+                                    <img src="<s:url value='/images/reject.gif'/>" width="25" height="25"
+                                         border="none"/>
+                                </s:a>
                             </s:if>
-                        </td>
-                        <td align="center">
-                            <s:url id="rejectSelected" action="eprMarriageRegistrationInit.do">
-                                <s:param name="idUKey" value="idUKey"/>
-                                <s:param name="mode">reject</s:param>
-                            </s:url>
-                            <s:a href="%{rejectSelected}" title="%{getText('rejectToolTip.label')}">
-                                <img src="<s:url value='/images/reject.gif'/>" width="25" height="25" border="none"/>
-                            </s:a>
-                        </td>
-                        <td>
                             <s:url id="cetificatePrintUrl" action="eprMarriageExtractInit.do">
                                 <s:param name="idUKey" value="idUKey"/>
                             </s:url>
