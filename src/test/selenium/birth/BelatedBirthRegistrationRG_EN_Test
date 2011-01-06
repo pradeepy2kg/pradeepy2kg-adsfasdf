@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>BirthRegistrationRG_EN_Test</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">BirthRegistrationRG_EN_Test</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/ecivil/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_userName</td>
+	<td>rg</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_password</td>
+	<td>password</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprLogin_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='xmain-menu']/ul/li[1]/a/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth_registration.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>bdfSerialNo</td>
+	<td>2011000102</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>submitDatePicker</td>
+	<td>2011-01-03</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>birthDatePicker</td>
+	<td>2009-01-03</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>districtId</td>
+	<td>label=12 : Gampaha</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//option[@value='2']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>dsDivisionId</td>
+	<td>label=6 : Katana</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//select[@id='dsDivisionId']/option[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>birthDivisionId</td>
+	<td>label=6 : Andiambalama</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>placeOfBirth</td>
+	<td>උපන් ස්ථානය - </td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>placeOfBirth</td>
+	<td>උපන් ස්ථානය - සිංහල හෝ දෙමළ භාෂාවෙන්</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>placeOfBirthEnglish</td>
+	<td>උපන් ස්ථානය -&nbsp;&nbsp;</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>placeOfBirthEnglish</td>
+	<td>උපන් ස්ථානය -&nbsp;&nbsp;ඉංග්‍රීසි භාෂාවෙන් </td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>childFullNameOfficialLang</td>
+	<td>නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ) ddddfdf sddd dddas dadasdsad dssadasd sdsdsaddsddADAD ZZZZZ</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>childFullNameEnglish</td>
+	<td>නම ඉංග්‍රීසි භාෂාවෙන් ADADASDA SDASDADASD DASDADasdasD SDSADASDASD  DSDSADASDZZZZZZ ZZZ</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>birth-registration-form-1_register_preferredLanguage</td>
+	<td>label=தமிழ்</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>birth-registration-form-1_register_preferredLanguage</td>
+	<td>label=සිංහල</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>genderList</td>
+	<td>label=Female</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>placeOfBirthEnglish</td>
+	<td>Place of Birth -&nbsp;&nbsp;ඉංග්‍රීසි භාෂාවෙන් </td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>placeOfBirthEnglish</td>
+	<td>Place of Birth -&nbsp;&nbsp;In English</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>childFullNameEnglish</td>
+	<td>Name in English </td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>childRank</td>
+	<td>2</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>numberOfChildrenBorn</td>
+	<td>2</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>childBirthWeight</td>
+	<td>2</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>skipjs</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>skipjs</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-registration-form-1_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>father_pinOrNic</td>
+	<td>3423413423</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>fatherFullName</td>
+	<td>Full Name</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>fatherCountryId</td>
+	<td>label=LK : Sri Lanka</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>fatherPassportNo</td>
+	<td>234323423432432</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>fatherDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>fatherDatePicker</td>
+	<td>1976-01-03</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>fatherPlaceOfBirth</td>
+	<td>Place of Birth</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>birth-registration-form-2_fatherRace</td>
+	<td>label=5 : Burgher</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>mother_pinOrNic</td>
+	<td>4365465465</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>motherCountryId</td>
+	<td>label=AQ : Antarctica</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherPassportNo</td>
+	<td>345435435435435</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherFullName</td>
+	<td>Full Name - mother</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>fatherFullName</td>
+	<td>Full Name -father</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherDatePicker</td>
+	<td>1981-08-03</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherAgeAtBirth</td>
+	<td>30</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherAddress</td>
+	<td>Permanent Address </td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherAddress</td>
+	<td>Permanent Address -&nbsp;&nbsp;mother</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>motherDistrictId</td>
+	<td>label=31 : Galle</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//select[@id='motherDistrictId']/option[8]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>motherDSDivisionId</td>
+	<td>label=3 : Benthota</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>birth-registration-form-2_motherRace</td>
+	<td>label=2 : Sri Lankan Tamil</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>birth-registration-form-2_parent_motherAdmissionNo</td>
+	<td>324324234234234</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherPlaceOfBirth</td>
+	<td>Place of Birth -mother</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>admitDatePicker</td>
+	<td>2009-01-01</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherPhoneNo</td>
+	<td>011234343432432</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherEmail</td>
+	<td>sdasdasd@SDSADASD.SAD</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-registration-form-2_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>placeOfMarriage</td>
+	<td>Place of Marriage</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>marriageDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>marriageDatePicker</td>
+	<td>2000-09-09</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>grandFatherNICorPIN</td>
+	<td>4353453532</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>grandFatherFullName</td>
+	<td>grandfather</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>grandFatherFullName</td>
+	<td>Full Name - grandfather</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>grandFatherBirthYear</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>grandFatherBirthYear</td>
+	<td>1948</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>grandFatherBirthPlace</td>
+	<td> Place Of Birth</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>grandFatherBirthPlace</td>
+	<td> Place Of Birth - - grandfather</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>greatGrandFatherNICorPIN</td>
+	<td>3254352353</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>greatGrandFatherFullName</td>
+	<td>Full Name - great grandfather</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>greatGrandFatherBirthYear</td>
+	<td>1930</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>greatGrandFatherBirthPlace</td>
+	<td>Place Of Birth</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>informantTypeGUARDIAN</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>informantNICorPIN</td>
+	<td>3464365465</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>informantName</td>
+	<td>Informant - </td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>informantName</td>
+	<td>Informant - Name</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>informantAddress</td>
+	<td>Postal Address</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>informantAddress</td>
+	<td>Informant - Postal Address</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>informantPhoneNo</td>
+	<td>325345453532453</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>informantEmail</td>
+	<td>SDSADS@SADAS.SDS</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>informDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>informDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-registration-form-3_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>notifyingAuthorityPIN</td>
+	<td>5345435234</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>notifyingAuthorityName</td>
+	<td>Notifying Authority </td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>notifyingAuthorityName</td>
+	<td>Name - Notifying Authority </td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>notifyingAuthorityAddress</td>
+	<td><br />Postal Address - </td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>notifyingAuthorityAddress</td>
+	<td><br />Postal Address -&nbsp;&nbsp;Notifying Authority </td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>modifiedDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>modifiedDatePicker</td>
+	<td>2011-01-03</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-registration-form-4_0</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

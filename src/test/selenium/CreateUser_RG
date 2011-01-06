@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>CreateUser_RG</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CreateUser_RG</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/ecivil/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_userName</td>
+	<td>admin</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_password</td>
+	<td>password</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprLogin_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=ADMIN TASK</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>creat_user.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>checkUserId</td>
+	<td>rg</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>userName</td>
+	<td>rg</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>userPin</td>
+	<td>3845739485</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>user.sienSignatureText</td>
+	<td>ksdfgk</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>user.taenSignatureText</td>
+	<td>lkjk</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>prefferedLanguage</td>
+	<td>label=English</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>role</td>
+	<td>label=Registrar General</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprUserCreation_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>creat_user.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>checkUserId</td>
+	<td>rg 2</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>userName</td>
+	<td>rg 2</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>userPin</td>
+	<td>4533835739</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>user.sienSignatureText</td>
+	<td>sig si</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>user.taenSignatureText</td>
+	<td>sig ta</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>prefferedLanguage</td>
+	<td>label=English</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>role</td>
+	<td>label=Registrar General</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprUserCreation_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>logout-button</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
