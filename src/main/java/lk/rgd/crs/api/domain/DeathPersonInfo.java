@@ -63,7 +63,7 @@ public class DeathPersonInfo implements Serializable, Cloneable {
     @Column(nullable = true)
     private String deathPersonMotherFullName;
 
-    @Column(nullable = true, name = "D_PERSON_DOB")
+    @Column(nullable = true)
     @Temporal(value = TemporalType.DATE)
     private Date deathPersonDOB;
 
