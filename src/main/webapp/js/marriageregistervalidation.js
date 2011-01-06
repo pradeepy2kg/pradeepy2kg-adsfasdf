@@ -45,10 +45,10 @@ function validatePin(fieldId, messageId, errormsg) {
     var domObject = document.getElementById(fieldId);
     if (!isFieldEmpty(domObject)) {
         //validatePINNumber(domObject, messageId, errormsg);
-        if (isValidPIN(domObject)){
-          return errormsg;
+        if (isValidPIN(domObject)) {
+            return errormsg;
         }
-    } 
+    }
     return printValidationMessage(messageId, errormsg);
 
 }
@@ -74,5 +74,14 @@ function isValidPIN(domElement) {
 function isFieldEmpty(domElement) {
     with (domElement) {
         return (value == null || value.trim() == "") ? true : false;
+    }
+}
+
+function validateSelectOption(fieldId, messageId, errormsg) {
+    var domObject = document.getElementById(fieldId);
+    if (domObject.value == 0) {
+        return printValidationMessage(messageId, errormsg);
+    } else {
+        return errormsg;
     }
 }
