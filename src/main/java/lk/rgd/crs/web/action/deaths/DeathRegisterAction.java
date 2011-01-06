@@ -35,7 +35,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private User user;
     private DeathRegister deathRegister;
     private DeathInfo death;
-    private DeathPersonInfo deathPerson;                           
+    private DeathPersonInfo deathPerson;
     private DeclarantInfo declarant;
     private NotifyingAuthorityInfo notifyingAuthority;
     private CRSLifeCycleInfo lifeCycleInfo;
@@ -530,6 +530,10 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                 } catch (CRSRuntimeException e) {
                     addActionError("death.error.no.permission.print");
                 }
+            } else if (deathRegister != null && deathRegister.getStatus() == DeathRegister.State.ARCHIVED_CERT_GENERATED) {
+                logger.debug("already marked as printed death register record : idUKey {}", idUKey);
+                addActionMessage(getText("message.already.marked.as.print",
+                    new String[]{Long.toString(deathRegister.getDeath().getDeathSerialNo())}));
             }
             if (pageNo == 0) {
                 pageNo = 1;
