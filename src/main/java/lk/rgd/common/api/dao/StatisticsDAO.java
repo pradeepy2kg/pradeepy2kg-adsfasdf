@@ -1,5 +1,6 @@
 package lk.rgd.common.api.dao;
 
+import lk.rgd.common.api.domain.Role;
 import lk.rgd.common.api.domain.Statistics;
 
 /**
@@ -21,5 +22,12 @@ public interface StatisticsDAO {
      * @param statistics    the object to add
      */
     public void addStatistics(Statistics statistics);
+
+    /**
+     * Updates given Statistics Record
+     *
+     * @param statistics
+     */
+    public void updateStatistics(Statistics statistics);
 
 }
