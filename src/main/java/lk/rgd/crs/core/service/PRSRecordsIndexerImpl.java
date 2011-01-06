@@ -286,6 +286,7 @@ public class PRSRecordsIndexerImpl implements PRSRecordsIndexer {
         d.addField(FIELD_CIVIL_STATUS, CivilStatusUtil.getStatusAsString(person.getCivilStatus()));
         d.addField(FIELD_RECORD_STATUS, getRecordStatus(person.getStatus()));
 
+        /*asankha
         try {
             solrIndexManager.getPRSServer().add(d);
         } catch (Exception e) {
@@ -296,7 +297,7 @@ public class PRSRecordsIndexerImpl implements PRSRecordsIndexer {
             } else {
                 logger.error("Error updating Solr index for Person with UKey : {}", person.getPersonUKey());
             }
-        }
+        }*/
     }
     
     public void addRecord(ResultSet rs) throws SQLException, IOException, SolrServerException {
