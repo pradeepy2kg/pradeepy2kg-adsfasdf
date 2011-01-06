@@ -230,14 +230,14 @@
 
             </tr>
             <tr>
-                <td><s:label value="Signature in Sinhala And English"/></td>
+                <td><s:label value="%{getText('si.en.signature')}"/></td>
                 <td>
                     <s:textarea name="user.sienSignatureText" id="userName"
                                 cssStyle="text-transform:none;width:90%;margin-left:0;"/>
                 </td>
             </tr>
             <tr>
-                <td><s:label value="Signature in Tamil And English"/></td>
+                <td><s:label value="%{getText('ta.en.signature')}"/></td>
                 <td>
                     <s:textarea name="user.taenSignatureText" id="userPin"
                                 cssStyle="text-transform:none;width:90%;margin-left:0;"/>
