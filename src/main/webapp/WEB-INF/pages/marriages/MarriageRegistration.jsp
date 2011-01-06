@@ -79,10 +79,10 @@
                     <br>in tamil<br>Date of Marriage</span>
             </label>
         </td>
-        <td colspan="2">
-            <s:label value="YYYY-MM-DD" cssStyle="margin-left:50px;font-size:10px"/><br>
+        <td colspan="2" align="left">
+            <s:label value="YYYY-MM-DD" cssStyle="margin-left:20px;font-size:10px"/><br>
             <s:textfield name="marriage.dateOfMarriage" id="marriageDatePicker" maxLength="10"
-                         onmouseover="datepicker('marriageDatePicker')"/>
+                         onmouseover="datepicker('marriageDatePicker')" cssStyle="margin-right:80px"/>
         </td>
         <td colspan="3"><label><span class="font-8">රෙජිස්ට්‍රාර්ගේ/දේවගැතිගේ අනන්‍යතා අංකය
                     <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
@@ -486,7 +486,7 @@
 
     <tr>
         <td class="font-8">
-            Scanned Image in si
+            පරිලෝකනය කරන ලද පිටපත
             <br>Scanned Image in ta
             <br>Scanned Image
         </td>
@@ -497,7 +497,7 @@
     <s:if test="mode=='reject'">
         <tr>
             <td class="font-8">
-                Comment in si
+                අදහස් දක්වන්න
                 <br>Comment in ta
                 <br>Comment
             </td>
