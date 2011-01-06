@@ -71,9 +71,9 @@
 
     // check confirmant type selected
     function checkConfirmantType() {
-        var mother = document.getElementById('birth-confirmation-form3_confirmantRadioMOTHER').checked;
-        var father = document.getElementById('birth-confirmation-form3_confirmantRadioFATHER').checked;
-        var guardian = document.getElementById('birth-confirmation-form3_confirmantRadioGUARDIAN').checked;
+        var mother = document.getElementById('birth-confirmation-form3_confirmant_confirmantTypeMOTHER').checked;
+        var father = document.getElementById('birth-confirmation-form3_confirmant_confirmantTypeFATHER').checked;
+        var guardian = document.getElementById('birth-confirmation-form3_confirmant_confirmantTypeGUARDIAN').checked;
         confirmantAvailable(mother, father, guardian);
     }
 
