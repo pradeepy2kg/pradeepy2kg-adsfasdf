@@ -5,6 +5,7 @@ import lk.rgd.common.api.domain.CommonStatistics;
 import lk.rgd.common.api.domain.Statistics;
 import lk.rgd.common.api.domain.User;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.Date;
 import java.util.List;
@@ -21,7 +22,11 @@ public class StatisticsDAOImpl extends BaseDAO implements StatisticsDAO {
     public Statistics getByUser(String userId) {
         Query query = em.createNamedQuery("get.by.user");
         query.setParameter("userId", userId);
-        return (Statistics) query.getSingleResult();
+        try {
+            return (Statistics) query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     /**
@@ -31,5 +36,10 @@ public class StatisticsDAOImpl extends BaseDAO implements StatisticsDAO {
     public void addStatistics(Statistics statistics) {
         statistics.setCreatedTimestamp(new Date());
         em.persist(statistics);
+    }
+
+    @Override
+    public void updateStatistics(Statistics statistics) {
+        em.merge(statistics);
     }
 }

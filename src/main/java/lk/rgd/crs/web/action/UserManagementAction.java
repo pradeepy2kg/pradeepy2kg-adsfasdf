@@ -252,7 +252,9 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
 
     public String initUser() {
         populate();
-        populateDynamicLists("en");
+        User currentUser = (User) session.get(WebConstants.SESSION_USER_BEAN);
+        logger.debug("user language {}", currentUser.getPrefLanguage());
+        populateDynamicLists(currentUser.getPrefLanguage());
         if (userId != null) {
             user = service.getUserByID(getUserId());
             currentDistrictList = convertDistricSetToMap(user.getAssignedBDDistricts());
