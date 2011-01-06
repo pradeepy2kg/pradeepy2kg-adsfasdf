@@ -34,9 +34,22 @@
         errormsg = validateSelectOption("maleRace", "errorMaleRace", errormsg);
         errormsg = validateSelectOption("femaleRace", "errorFemaleRace", errormsg);
 
+        errormsg = validateEmptyField("malePIN", "errorMalePIN", errormsg);
+        errormsg = validateEmptyField("femalePIN", "errorFemalePIN", errormsg);
+        errormsg = validateEmptyField("dateOfBirthMaleDatePicker", "errorDateOfBirthMale", errormsg);
+        errormsg = validateEmptyField("dateOfBirthFemaleDatePicker", "errorDateOfBirthFemale", errormsg);
+        errormsg = validateEmptyField("ageMale", "errorAgeMale", errormsg);
+        errormsg = validateEmptyField("ageFemale", "errorAgeFemale", errormsg);
+        errormsg = validateEmptyField("ageMale", "errorNameOfficialMale", errormsg);
+        errormsg = validateEmptyField("ageFemale", "errorNameOfficialFemale", errormsg);
+        errormsg = validateEmptyField("addressMale", "errorAddressMale", errormsg);
+        errormsg = validateEmptyField("addressFemale", "errorAddressFemale", errormsg);
+
+
         errormsg = validateEmptyField("registrationDatePicker", "errorRegistrationDate", errormsg);
         return printErrorMessages(errormsg);
     }
+
 </script>
 
 <s:actionerror cssClass="actionmessage"/>
@@ -276,10 +289,10 @@
             Identification Number.
         </td>
         <td colspan="1" align="left">
-            <s:textfield name="marriage.male.identificationNumberMale" id="identification_male" maxLength="10"/>
+            <s:textfield name="marriage.male.identificationNumberMale" id="malePIN" maxLength="10"/>
         </td>
         <td colspan="1" align="left">
-            <s:textfield name="marriage.female.identificationNumberFemale" id="identification_female" maxLength="10"/>
+            <s:textfield name="marriage.female.identificationNumberFemale" id="femalePIN" maxLength="10"/>
         </td>
     </tr>
     <tr>
@@ -308,20 +321,20 @@
         </td>
         <td colspan="1">
             <s:if test="marriage.male.ageAtLastBirthDayMale==0">
-                <s:textfield name="marriage.male.ageAtLastBirthDayMale" id="age_at_last_bd_male" maxLength="10"
+                <s:textfield name="marriage.male.ageAtLastBirthDayMale" id="ageMale" maxLength="10"
                              value=""/>
             </s:if>
             <s:else>
-                <s:textfield name="marriage.male.ageAtLastBirthDayMale" id="age_at_last_bd_male" maxLength="10"/>
+                <s:textfield name="marriage.male.ageAtLastBirthDayMale" id="ageMale" maxLength="10"/>
             </s:else>
         </td>
         <td colspan="1">
             <s:if test="marriage.female.ageAtLastBirthDayFemale==0">
-                <s:textfield name="marriage.female.ageAtLastBirthDayFemale" id="age_at_last_bd_female" maxLength="10"
+                <s:textfield name="marriage.female.ageAtLastBirthDayFemale" id="ageFemale" maxLength="10"
                              value=""/>
             </s:if>
             <s:else>
-                <s:textfield name="marriage.female.ageAtLastBirthDayFemale" id="age_at_last_bd_female" maxLength="10"/>
+                <s:textfield name="marriage.female.ageAtLastBirthDayFemale" id="ageFemale" maxLength="10"/>
             </s:else>
         </td>
     </tr>
@@ -387,11 +400,11 @@
             Name in any of the official languages (Sinhala / Tamil)
         </td>
         <td>
-            <s:textarea name="marriage.male.nameInOfficialLanguageMale" id="name_official_male"
+            <s:textarea name="marriage.male.nameInOfficialLanguageMale" id="nameOfficialMale"
                         cssStyle="width:98.2%;"/>
         </td>
         <td>
-            <s:textarea name="marriage.female.nameInOfficialLanguageFemale" id="name_official_female"
+            <s:textarea name="marriage.female.nameInOfficialLanguageFemale" id="nameOfficialFemale"
                         cssStyle="width:98.2%;"/>
         </td>
     </tr>
@@ -418,11 +431,11 @@
             Resident Address
         </td>
         <td>
-            <s:textarea name="marriage.male.residentAddressMaleInOfficialLang" id="address_male"
+            <s:textarea name="marriage.male.residentAddressMaleInOfficialLang" id="addressMale"
                         cssStyle="width:98.2%;"/>
         </td>
         <td>
-            <s:textarea name="marriage.female.residentAddressFemaleInOfficialLang" id="address_female"
+            <s:textarea name="marriage.female.residentAddressFemaleInOfficialLang" id="addressFemale"
                         cssStyle="width:98.2%;"/>
         </td>
     </tr>
@@ -522,6 +535,17 @@
 <s:hidden id="errorRegistrarPIN" value="%{getText('error.invalid') + getText('error_js_marriageregister_registrarPIN')}"/>
 <s:hidden id="errorRegistrarName" value="%{getText('error.invalid') + getText('error_js_marriageregister_registrarName')}"/>
 <s:hidden id="errorRegistrationPlace" value="%{getText('error.invalid') + getText('error_js_marriageregister_registrationPlace')}"/>
+
+<s:hidden id="errorMalePIN" value="%{getText('error.invalid') + getText('error_js_marriageregister_malePIN')}"/>
+<s:hidden id="errorFemalePIN" value="%{getText('error.invalid') + getText('error_js_marriageregister_femalePIN')}"/>
+<s:hidden id="errorDateOfBirthMale" value="%{getText('error.invalid') + getText('error_js_marriageregister_DateOfBirthMale')}"/>
+<s:hidden id="errorDateOfBirthFemale" value="%{getText('error.invalid') + getText('error_js_marriageregister_dateOfBirthFemale')}"/>
+<s:hidden id="errorAgeMale" value="%{getText('error.invalid') + getText('error_js_marriageregister_ageMale')}"/>
+<s:hidden id="errorAgeFemale" value="%{getText('error.invalid') + getText('error_js_marriageregister_ageFemale')}"/>
+<s:hidden id="errorNameOfficialMale" value="%{getText('error.invalid') + getText('error_js_marriageregister_nameOfficialMale')}"/>
+<s:hidden id="errorNameOfficialFemale" value="%{getText('error.invalid') + getText('error_js_marriageregister_nameOfficialFemale')}"/>
+<s:hidden id="errorAddressMale" value="%{getText('error.invalid') + getText('error_js_marriageregister_addressMale')}"/>
+<s:hidden id="errorAddressFemale" value="%{getText('error.invalid') + getText('error_js_marriageregister_addressFemale')}"/>
 
 <s:hidden id="errorMaleRace" value="%{getText('error.invalid') + getText('error_js_marriageregister_maleRace')}"/>
 <s:hidden id="errorFemaleRace" value="%{getText('error.invalid') + getText('error_js_marriageregister_femaleRace')}"/>
