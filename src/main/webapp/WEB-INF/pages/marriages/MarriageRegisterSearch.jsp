@@ -163,7 +163,7 @@
                 <tr>
                     <th width="70px"><s:label value="%{getText('serial.label')}"/></th>
                     <th><s:label value="%{getText('partyName.label')}"/></th>
-                    <th></th>
+                    <th width="100px"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -185,7 +185,7 @@
                                </s:a>
                            </td> --%>
                         <s:if test="(state.ordinal()==10)">
-
+                            <td>&nbsp;</td>
                         </s:if>
                         <s:else>
                             <td>
