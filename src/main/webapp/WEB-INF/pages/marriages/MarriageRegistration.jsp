@@ -35,8 +35,8 @@
         errormsg = validateSelectOption("maleRace", "errorMaleRace", errormsg);
         errormsg = validateSelectOption("femaleRace", "errorFemaleRace", errormsg);
 
-        errormsg = validateEmptyField("malePIN", "errorMalePIN", errormsg);
-        errormsg = validateEmptyField("femalePIN", "errorFemalePIN", errormsg);
+        //errormsg = validateEmptyField("malePIN", "errorMalePIN", errormsg);
+        //errormsg = validateEmptyField("femalePIN", "errorFemalePIN", errormsg);
         errormsg = validateEmptyField("dateOfBirthMaleDatePicker", "errorDateOfBirthMale", errormsg);
         errormsg = isDate("dateOfBirthMaleDatePicker", "errorDateOfBirthMale", errormsg);
         errormsg = validateEmptyField("dateOfBirthFemaleDatePicker", "errorDateOfBirthFemale", errormsg);
@@ -287,7 +287,7 @@
     <tr>
         <td colspan="1">
             අනන්‍යතා අංකය
-            <s:label value="*" cssStyle="color:red;font-size:10pt;"/><br>
+            <br>
             அடையாள எண் <br>
             Identification Number.
         </td>
@@ -456,11 +456,18 @@
                        <br>தொடர் இலக்கம்<br>Serial Number</span></label>
         </td>
         <td align="center">
-            <s:if test="idUKey==0">
+            <%-- <s:if test="idUKey==0">
                 <s:textfield name="idUKey" id="idUKey" maxLength="10" disabled="true" value=""/>
             </s:if>
             <s:else>
                 <s:textfield name="idUKey" id="idUKey" maxLength="10" disabled="true"/>
+            </s:else> --%>
+
+            <s:if test="marriage.regSerial==0">
+                <s:textfield name="marriage.regSerial" id="serialNumber" maxLength="10" value=""/>
+            </s:if>
+            <s:else>
+                <s:textfield name="marriage.regSerial" id="serialNumber" maxLength="10"/>
             </s:else>
         </td>
         <td>
@@ -515,8 +522,10 @@
 <div class="form-submit">
     <s:if test="idUKey==0">
         <s:submit action="eprRegisterNewMarriage" value="%{getText('button.marriageregister.register')}"/>
-        <s:submit action="eprRegisterAndApproveNewMarriage"
-                  value="%{getText('button.marriageregister.registerandapprove')}"/>
+        <s:if test="!#session.user_bean.role.roleId.equals('DEO')">
+            <s:submit action="eprRegisterAndApproveNewMarriage"
+                      value="%{getText('button.marriageregister.registerandapprove')}"/>
+        </s:if>
     </s:if>
     <s:else>
         <s:if test="mode=='register'">
@@ -527,8 +536,10 @@
         </s:elseif>
         <s:else>
             <s:submit action="eprUpdateMarriage" value="%{getText('button.marriageregister.update')}"/>
-            <s:submit action="eprUpdateAndApproveMuslimMarriage"
-                      value="%{getText('button.marriageregister.updateandapprove')}"/>
+            <s:if test="(marriage.state.ordinal() == 8 & (!#session.user_bean.role.roleId.equals('DEO')))">
+                <s:submit action="eprUpdateAndApproveMuslimMarriage"
+                          value="%{getText('button.marriageregister.updateandapprove')}"/>
+            </s:if>
         </s:else>
     </s:else>
 </div>
