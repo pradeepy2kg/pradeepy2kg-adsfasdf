@@ -288,6 +288,9 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
             person.setLifeStatus(Person.LifeStatus.DEAD);
             person.setGender(dr.getDeathPerson().getDeathPersonGender());
             person.setRace(dr.getDeathPerson().getDeathPersonRace());
+            if (pinOrNic != null) {
+                person.setNic(pinOrNic);
+            }
 
             // if a unique father/mother is found, link .. else ignore
             person.setFatherPINorNIC(dr.getDeathPerson().getDeathPersonFatherPINorNIC());
@@ -302,12 +305,12 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
             if (mother != null) {
                 person.setMother(mother);
             }
-            // TODO chathuranga review this state, is it correct?
             person.setStatus(Person.Status.SEMI_VERIFIED);
             ecivil.addPerson(person, user);
 
             if (dr.getDeathPerson().getDeathPersonPermanentAddress() != null) {
                 Address address = new Address(dr.getDeathPerson().getDeathPersonPermanentAddress());
+                address.setPermanent(true);
                 person.specifyAddress(address);
                 ecivil.addAddress(address, user);
                 ecivil.updatePerson(person, user);
