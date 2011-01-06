@@ -240,7 +240,7 @@ public class MarriageRegistrationServiceTest extends TestCase {
         //rejecting when record in DATA_ENTRY stage (no matter how many notices are available)
         MarriageRegister noticeInDE = getMinimalMarriageNotice(2010012586L, colomboMRDivision, false, "78945632315",
             "8523698521", MarriageNotice.Type.MALE_NOTICE, MarriageRegister.LicenseCollectType.MAIL_TO_FEMALE);
-        marriageRegistrationService.addMarriageRegister(noticeInDE, rg);
+        marriageRegistrationService.addMarriageNotice(noticeInDE, MarriageNotice.Type.MALE_NOTICE, rg);
         //now noticeInDE is in DE and it can be rejected
         marriageRegistrationService.rejectMarriageNotice(marriageRegistrationService.
             getMarriageNoticePendingApprovalByMRDivisionAndSerial(colomboMRDivision, 2010012586L, true, rg).get(0).
@@ -255,7 +255,7 @@ public class MarriageRegistrationServiceTest extends TestCase {
         MarriageRegister noticeInMNA = getMinimalMarriageNotice(2010012587L, colomboMRDivision, false, "68945632315",
             "6523698521", MarriageNotice.Type.MALE_NOTICE, MarriageRegister.LicenseCollectType.MAIL_TO_FEMALE);
         noticeInMNA.setLicenseCollectType(MarriageRegister.LicenseCollectType.MAIL_TO_FEMALE);
-        marriageRegistrationService.addMarriageRegister(noticeInMNA, rg);
+        marriageRegistrationService.addMarriageNotice(noticeInMNA, MarriageNotice.Type.MALE_NOTICE, rg);
         //approving male notice
         marriageRegistrationService.approveMarriageNotice(marriageRegistrationService.
             getMarriageNoticePendingApprovalByMRDivisionAndSerial(colomboMRDivision, 2010012587L, true, rg).get(0).

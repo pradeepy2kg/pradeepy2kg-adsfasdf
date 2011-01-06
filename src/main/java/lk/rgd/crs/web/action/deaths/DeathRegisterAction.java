@@ -35,7 +35,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private User user;
     private DeathRegister deathRegister;
     private DeathInfo death;
-    private DeathPersonInfo deathPerson;
+    private DeathPersonInfo deathPerson;                           
     private DeclarantInfo declarant;
     private NotifyingAuthorityInfo notifyingAuthority;
     private CRSLifeCycleInfo lifeCycleInfo;

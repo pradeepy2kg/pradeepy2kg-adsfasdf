@@ -222,6 +222,12 @@ public class BirthDeclaration implements Serializable, Cloneable {
 
     public BirthDeclaration clone() throws CloneNotSupportedException {
         BirthDeclaration newBDF = (BirthDeclaration) super.clone();
+
+        lifeCycleInfo.getApprovalOrRejectUser().getUserName();
+        lifeCycleInfo.getCertificateGeneratedUser().getUserName();
+        lifeCycleInfo.getCreatedUser().getUserName();
+        lifeCycleInfo.getLastUpdatedUser().getUserName();
+        
         newBDF.setIdUKey(0);
         newBDF.setLifeCycleInfo(lifeCycleInfo.clone());
         newBDF.setRegister(register.clone());
