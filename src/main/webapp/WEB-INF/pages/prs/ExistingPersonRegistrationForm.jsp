@@ -259,7 +259,7 @@
 
     // Citizen list dataTable
     $(document).ready(function() {
-        $('#citizenship-table').dataTable({
+        var oTable = $('#citizenship-table').dataTable({
             "bPaginate": false,
             "bLengthChange": false,
             "bFilter": false,
@@ -273,8 +273,27 @@
             "aoColumns": [
                 /* Country Id */   {"bVisible":false },
                 /* Country */  null,
-                /* Passport No. */ null
+                /* Passport No. */ null,
+                /* Delete Button */ null
             ]
+        });
+
+        // delete selected row from citizenship table
+        $('#citizenship-table tbody tr a.delete img').live('click', function () {
+            var row = $(this).closest("tr").get(0);
+            oTable.fnDeleteRow(oTable.fnGetPosition(row));
+        });
+
+        // Set citizen list string to "citizenship" hidden field
+        $('#submitButton').click(function() {
+            var nNodes = oTable.fnGetNodes();
+            var arr = new Array();
+            for (var i = 0; i < nNodes.length; i++) {
+                arr[i] = oTable.fnGetData(i)[0] + ':' + oTable.fnGetData(i)[2];
+            }
+
+            var citizenHidden = document.getElementById('citizenship');
+            citizenHidden.value = arr;
         });
 
         $('#persons-table').dataTable({
@@ -290,51 +309,19 @@
         });
     });
 
-    // Add new citizen to the citizen list 
+    // Add new citizen to the citizen list
     function fnClickAddRow() {
         if (validateAddCitizenship()) {
             $('#citizenship-table').dataTable().fnAddData([
                 $('select#citizenCountryId').attr('value'),
                 $('select#citizenCountryId option:selected').text(),
-                $('input#citizenPassportNo').val().toUpperCase()
+                $('input#citizenPassportNo').val().toUpperCase(),
+                "<a href='javascript:void(0)' class='delete'><img src='<s:url value='/images/reject.gif'/>' width='25' height='25' border='none' style='float:right;margin-right:15px;'></a>"
             ]);
             $('input#citizenPassportNo').val('');
             $('select#citizenCountryId').val('');
         }
     }
-
-    var oTable;
-    // Delete selected citizen row
-    $(document).ready(function() {
-        /* Add a click handler to the rows - this could be used as a callback */
-        $("#citizenship-table tbody").click(function(event) {
-            var i = 1;
-            $(oTable.fnSettings().aoData).each(function () {
-                // TODO fix color changing defect
-                /*var y = i % 2;
-                 if (y == 1) {
-                 $(this.nTr).addClass("odd");
-                 }
-                 else {
-                 $(this.nTr).addClass("even");
-                 }
-                 i++;*/
-                $(this.nTr).removeClass('row_selected');
-            });
-            $(event.target.parentNode).addClass('row_selected');
-            $(event.target.parentNode).removeClass('odd');
-            $(event.target.parentNode).removeClass('even');
-        });
-
-        /* Add a click handler for the delete row */
-        $('#delete').click(function() {
-            var anSelected = fnGetSelected(oTable);
-            oTable.fnDeleteRow(anSelected[0]);
-        });
-
-        /* Init the table */
-        oTable = $('#citizenship-table').dataTable();
-    });
 
     /* Get the rows which are currently selected */
     function fnGetSelected(oTableLocal) {
@@ -348,21 +335,6 @@
         }
         return aReturn;
     }
-
-    // Set citizen list string to "citizenship" hidden field
-    $(document).ready(function() {
-        $('#submitButton').click(function() {
-
-            var nNodes = oTable.fnGetNodes();
-            var arr = new Array();
-            for (var i = 0; i < nNodes.length; i++) {
-                arr[i] = oTable.fnGetData(i)[0] + ':' + oTable.fnGetData(i)[2];
-            }
-
-            var citizenHidden = document.getElementById('citizenship');
-            citizenHidden.value = arr;
-        });
-    });
 </script>
 
 <div class="prs-existing-person-register-outer">
@@ -425,7 +397,7 @@
             </thead>
             <tbody>
             <s:iterator status="searchStatus" value="personList">
-                <tr class="<s:if test="#searchStatus.odd == true">odd</s:if><s:else>even</s:else>">
+                <tr id="100" class="<s:if test="#searchStatus.odd == true">odd</s:if><s:else>even</s:else>">
                     <td align="center"><s:property value="nic"/></td>
                     <td align="center"><s:property value="dateOfBirth"/></td>
                     <td>
@@ -693,20 +665,25 @@
                 <th>Country Id</th>
                 <th>රට/நாடு /Country</th>
                 <th>ගමන් බලපත්‍ර අංකය/கடவுச் சீட்டு இல./Passport No.</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
             <s:iterator value="citizenshipList">
                 <tr>
                     <td><s:property value="countryId"/></td>
-                    <td><s:property value="country.siCountryName"/></td>
+                    <td><s:property value="country.countryCode"/> : <s:property value="country.siCountryName"/></td>
                     <td><s:property value="passportNo"/></td>
+                    <td>
+                        <a href='javascript:void(0)' class='delete'>
+                            <img src="<s:url value='/images/reject.gif'/>" width="25" height="25" border="none"
+                                 style="float:right;margin-right:15px;">
+                        </a>
+                    </td>
                 </tr>
             </s:iterator>
             </tbody>
         </table>
-            <%--TODO remove this chathuranga--%>
-        <center><a href="javascript:void(0)" id="delete"><s:label value="%{getText('label.delete')}"/></a></center>
 
         <table id="citizen" class="table_reg_page_05" cellspacing="0" cellpadding="0"
                style="margin-top:10px;width:100%;">

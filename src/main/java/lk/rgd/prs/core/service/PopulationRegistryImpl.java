@@ -262,7 +262,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             if (citizenshipList != null && !citizenshipList.isEmpty()) {
                 final Set<PersonCitizenship> existingCitizens = existing.getCountries();
                 for (PersonCitizenship pc : existingCitizens) {
-                    citizenshipDAO.deleteCitizenship(personUKey, pc.getCountryId());
+                    citizenshipDAO.deleteCitizenship(personUKey, pc.getCountryId(), pc.getPassportNo());
                 }
                 for (PersonCitizenship pc : citizenshipList) {
                     pc.setPerson(existing);

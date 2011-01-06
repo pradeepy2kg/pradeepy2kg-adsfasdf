@@ -26,6 +26,9 @@ public class PersonCitizenship implements Serializable {
     private long personUKey;
     @Id
     private int countryId;
+    @Id
+    @Column(length = 15)
+    private String passportNo;
 
     @ManyToOne
     @JoinColumn(name = "personUKey", insertable = false, updatable = false)
@@ -37,9 +40,6 @@ public class PersonCitizenship implements Serializable {
 
     @Embedded
     private BaseLifeCycleInfo lifeCycleInfo = new BaseLifeCycleInfo();
-
-    @Column(nullable = false, length = 15)
-    private String passportNo;
 
     public long getPersonUKey() {
         if (person != null) {

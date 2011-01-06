@@ -21,8 +21,8 @@ public class PersonCitizenshipDAOImpl extends BaseDAO implements PersonCitizensh
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public PersonCitizenship getPersonCitizenship(long personUKey, int countryId) {
-        return em.find(PersonCitizenship.class, new PersonCitizenshipID(personUKey, countryId));
+    public PersonCitizenship getPersonCitizenship(long personUKey, int countryId, String passportNo) {
+        return em.find(PersonCitizenship.class, new PersonCitizenshipID(personUKey, countryId, passportNo));
     }
 
     /**
@@ -43,8 +43,8 @@ public class PersonCitizenshipDAOImpl extends BaseDAO implements PersonCitizensh
      */
     @Transactional(propagation = Propagation.MANDATORY)
     public void updateCitizenship(PersonCitizenship citizenship, User user) {
-        PersonCitizenship existing = em.find(
-            PersonCitizenship.class, new PersonCitizenshipID(citizenship.getPersonUKey(), citizenship.getCountryId()));
+        PersonCitizenship existing = em.find(PersonCitizenship.class,
+            new PersonCitizenshipID(citizenship.getPersonUKey(), citizenship.getCountryId(), citizenship.getPassportNo()));
         if (existing != null) {
             existing.setPassportNo(citizenship.getPassportNo());
             existing.getLifeCycleInfo().setLastUpdatedUser(user);
@@ -57,8 +57,8 @@ public class PersonCitizenshipDAOImpl extends BaseDAO implements PersonCitizensh
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.MANDATORY)
-    public void deleteCitizenship(long personUKey, int countryId) {
-        em.remove(em.find(PersonCitizenship.class, new PersonCitizenshipID(personUKey, countryId)));
+    public void deleteCitizenship(long personUKey, int countryId, String passportNo) {
+        em.remove(em.find(PersonCitizenship.class, new PersonCitizenshipID(personUKey, countryId, passportNo)));
     }
 
     /**

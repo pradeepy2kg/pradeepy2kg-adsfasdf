@@ -10,13 +10,15 @@ import java.io.Serializable;
 public class PersonCitizenshipID implements Serializable {
     private long personUKey;
     private int countryId;
+    private String passportNo;
 
     public PersonCitizenshipID() {
     }
 
-    public PersonCitizenshipID(long personUKey, int countryId) {
+    public PersonCitizenshipID(long personUKey, int countryId, String passportNo) {
         this.personUKey = personUKey;
         this.countryId = countryId;
+        this.passportNo = passportNo;
     }
 
     public long getPersonUKey() {
@@ -33,5 +35,13 @@ public class PersonCitizenshipID implements Serializable {
 
     public void setCountryId(int countryId) {
         this.countryId = countryId;
+    }
+
+    public String getPassportNo() {
+        return passportNo;
+    }
+
+    public void setPassportNo(String passportNo) {
+        this.passportNo = passportNo;
     }
 }

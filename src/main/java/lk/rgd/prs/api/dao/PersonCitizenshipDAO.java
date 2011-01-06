@@ -1,7 +1,7 @@
 package lk.rgd.prs.api.dao;
 
-import lk.rgd.prs.api.domain.PersonCitizenship;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.prs.api.domain.PersonCitizenship;
 
 import java.util.List;
 
@@ -15,9 +15,10 @@ public interface PersonCitizenshipDAO {
      *
      * @param personUKey the person unique id
      * @param countryId  the country unique id
+     * @param passportNo the passport number of the country
      * @return the specific PersonCitizenship or null
      */
-    public PersonCitizenship getPersonCitizenship(long personUKey, int countryId);
+    public PersonCitizenship getPersonCitizenship(long personUKey, int countryId, String passportNo);
 
     /**
      * Add a PersonCitizenship and create relationship to an already existing Person and Country
@@ -40,8 +41,9 @@ public interface PersonCitizenshipDAO {
      *
      * @param personUKey the person unique id
      * @param countryId  the country unique id
+     * @param passportNo the passport number for the country
      */
-    public void deleteCitizenship(long personUKey, int countryId);
+    public void deleteCitizenship(long personUKey, int countryId, String passportNo);
 
     /**
      * Return all citizenship list of specific person
