@@ -222,8 +222,9 @@ public class MarriageRegister implements Serializable, Cloneable {
     private User licensePrintUser;
 
     /**
-     * The user printing the Marriage Register
+     * The user who cetified the extract of marriage
      */
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "EXTRACT_CERTIFIED_USER", nullable = true)
     private User extractCertifiedUser;
 
@@ -242,7 +243,7 @@ public class MarriageRegister implements Serializable, Cloneable {
     private Location licenseIssueLocation;
 
     /**
-     * The Locations where the extract of marriage certificate can be issued
+     * The Locations where the extract of marriage can be issued
      */
     @OneToOne
     @JoinColumn(name = "EXTRACT_ISSUED_LOCATION", nullable = true)
