@@ -99,7 +99,6 @@
         if (document.getElementById("districtIdCurrent") != null) {
             domObject = document.getElementById("districtIdCurrent");
             var user = document.getElementById("role").options[document.getElementById("role").selectedIndex].value;
-            alert(user);
             if (user != "RG") {
                 if (isFieldEmpty(domObject)) {
                     errormsg = errormsg + document.getElementById("error5").value + "\n";
@@ -377,11 +376,13 @@
         <s:hidden id="error6" value="%{getText('user.divisions')}"/>
 
         </s:form>
-        <s:form action="eprViewUsers.do">
-            <div class="form-submit" style="margin-right:50px;">
-                <s:submit value="BACK" cssStyle="margin-top:10px;" name="button"/>
-            </div>
-        </s:form>
+        <s:if test="userId != null">
+            <s:form action="eprViewUsers.do">
+                <div class="form-submit" style="margin-right:50px;">
+                    <s:submit value="BACK" cssStyle="margin-top:10px;" name="button"/>
+                </div>
+            </s:form>
+        </s:if>
     </fieldset>
 </div>
 
