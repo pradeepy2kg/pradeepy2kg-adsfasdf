@@ -225,8 +225,12 @@ public class ServiceAuditor implements MethodInterceptor {
                 if (debugData == null) {
                     debugData = new StringBuilder(1024 * 10);
                 }
-                debugData.append(xstream.toXML(arg));
-                debugData.append("\n");
+                try {
+                    debugData.append(xstream.toXML(arg));
+                    debugData.append("\n");
+                } catch (Exception ignore) {
+                    debugData.append("Could not capture\n");
+                }
 
                 // capture event data
                 captureEventData(arg, event);

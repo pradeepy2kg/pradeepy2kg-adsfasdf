@@ -95,7 +95,6 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
 
     private boolean nextFlag;
     private boolean previousFlag;
-    private boolean applyChanges;
     private boolean approveRightsToUser;
     private boolean editChildInfo;
     private boolean editMotherInfo;
@@ -1481,14 +1480,6 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
 
     public void setLocationUKey(int locationUKey) {
         this.locationUKey = locationUKey;
-    }
-
-    public boolean isApplyChanges() {
-        return applyChanges;
-    }
-
-    public void setApplyChanges(boolean applyChanges) {
-        this.applyChanges = applyChanges;
     }
 
     public int getDivisionAltaration() {

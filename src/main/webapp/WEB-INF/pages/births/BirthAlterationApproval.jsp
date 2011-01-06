@@ -84,7 +84,7 @@
         </tr>
         </s:iterator>
     </table>
-
+<%--
     <table>
         <caption/>
         <col>
@@ -95,7 +95,7 @@
             <td align="right"><s:checkbox id="applyChanges" name="applyChanges"/></td>
         </tr>
         </tbody>
-    </table>
+    </table>--%>
     <div class="form-submit">
         <s:submit name="submit" value="%{getText('lable.update')}"/>
         <s:hidden name="idUKey" value="%{birthAlteration.idUKey}"/>

@@ -63,7 +63,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
     private BirthDeclaration.BirthType birthType;
 
     public PrintAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
-                       BirthRegistrationService service, AppParametersDAO appParametersDAO, LocationDAO locationDAO, UserDAO userDAO) {
+        BirthRegistrationService service, AppParametersDAO appParametersDAO, LocationDAO locationDAO, UserDAO userDAO) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
@@ -194,7 +194,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
         } else {
             birthType = bdf.getRegister().getBirthType();
             if (currentState != BirthDeclaration.State.ARCHIVED_CERT_GENERATED &&
-                currentState != BirthDeclaration.State.ARCHIVED_ALTERED  &&
+                currentState != BirthDeclaration.State.ARCHIVED_ALTERED &&
                 currentState != BirthDeclaration.State.ARCHIVED_CERT_PRINTED) {
                 addActionError(getText("birth.certificate.invalid.state.to.mark.as.print"));
 
@@ -373,20 +373,22 @@ public class PrintAction extends ActionSupport implements SessionAware {
         language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         setDistrictList(districtDAO.getDistrictNames(language, user));
         if (!getDistrictList().isEmpty()) {
-            if (birthDistrictId > 0)
+            if (birthDistrictId > 0) {
                 setBirthDistrictId(birthDistrictId);
-            else
+            } else {
                 setBirthDistrictId(getDistrictList().keySet().iterator().next());
+            }
         }
         //dsDivisions
 
         this.dsDivisionList = dsDivisionDAO.getDSDivisionNames(birthDistrictId, language, user);
         //setting bdDivisions
         if (!dsDivisionList.isEmpty()) {
-            if (dsDivisionId > 0)
+            if (dsDivisionId > 0) {
                 setDsDivisionId(dsDivisionId);
-            else
+            } else {
                 dsDivisionId = dsDivisionList.keySet().iterator().next();
+            }
             bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
         }
         /*if (!bdDivisionList.isEmpty())

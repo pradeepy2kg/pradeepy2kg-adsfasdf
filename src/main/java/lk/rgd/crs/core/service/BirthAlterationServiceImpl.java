@@ -170,6 +170,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
                 case TYPE_52_1_D:
                 case TYPE_52_1_E: {
                     bdf.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CANCELLED);
+                    //todo in this case we have to cancel other alterations as well 
                     birthDeclarationDAO.updateBirthDeclaration(bdf, user);
                     logger.debug("Alteration of type : {} is a cancellation of the existing record : {}",
                         existing.getType().ordinal(), bdf.getIdUKey());

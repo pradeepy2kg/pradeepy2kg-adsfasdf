@@ -4,11 +4,9 @@ import lk.rgd.common.api.domain.Country;
 import lk.rgd.common.api.domain.Race;
 import lk.rgd.common.util.WebUtils;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author Indunil Moremada
@@ -64,6 +62,10 @@ public class DeathPersonInfo implements Serializable, Cloneable {
 
     @Column(nullable = true)
     private String deathPersonMotherFullName;
+
+    @Column(nullable = true, name = "D_PERSON_DOB")
+    @Temporal(value = TemporalType.DATE)
+    private Date deathPersonDOB;
 
     public String getDeathPersonPINorNIC() {
         return deathPersonPINorNIC;
@@ -167,6 +169,14 @@ public class DeathPersonInfo implements Serializable, Cloneable {
 
     public void setDeathPersonMotherFullName(String deathPersonMotherFullName) {
         this.deathPersonMotherFullName = WebUtils.filterBlanksAndToUpper(deathPersonMotherFullName);
+    }
+
+    public Date getDeathPersonDOB() {
+        return deathPersonDOB;
+    }
+
+    public void setDeathPersonDOB(Date deathPersonDOB) {
+        this.deathPersonDOB = deathPersonDOB;
     }
 
     /**

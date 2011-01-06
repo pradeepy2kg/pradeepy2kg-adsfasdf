@@ -43,6 +43,15 @@ $(function() {
 });
 
 
+$(function() {
+    $("#deathPersonDOB").datepicker({
+        changeYear: true,
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2020-12-31'
+    });
+});
+
 // mode 1 = passing District, will return DS list
 // mode 2 = passing DsDivision, will return BD list
 // any other = passing district, will return DS list and the BD list for the first DS
@@ -285,13 +294,36 @@ function initSerialNumber() {
 function initPage() {
     initSerialNumber();
 }
+
+function personAgeDeath() {
+    var dateOdBirthSubmitted = true;
+    var dateOfDeathSubmitted = true;
+
+    var dom = document.getElementById('deathPersonDOB');
+    if (isFieldEmpty(dom)) {
+        dateOdBirthSubmitted = false;
+    }
+    dom = document.getElementById('deathDatePicker');
+    if (isFieldEmpty(dom)) {
+        dateOfDeathSubmitted = false;
+    }
+    var person_bd = new Date(document.getElementById('deathPersonDOB').value);
+    var date_of_death = new Date(document.getElementById('deathDatePicker').value);
+    var death_person_age = person_bd.getYear() - date_of_death.getYear();
+    if (!(dateOdBirthSubmitted && dateOfDeathSubmitted)) {
+        document.getElementById("deathPersonAge").value = 0;
+    }
+    else {
+        document.getElementById("deathPersonAge").value = death_person_age;
+    }
+}
 </script>
 
 
 <div id="death-declaration-form-1-outer">
 <s:form name="deathRegistrationForm1" id="death-registration-form-1" action="eprDeathDeclaration.do" method="POST"
         onsubmit="javascript:return validate()">
- <s:actionerror cssStyle="color:red;"/>
+<s:actionerror cssStyle="color:red;"/>
 <table class="table_reg_header_01" style="font-size:9pt">
     <caption></caption>
     <col/>
@@ -589,7 +621,9 @@ function initPage() {
 </tbody>
 </table>
 
-<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin-bottom:0;" class="font-9">
+<table border="1"
+       style="width:100%;border-bottom:none; border:1px solid #000; border-collapse:collapse; margin-bottom:0;"
+       class="font-9">
     <col width="220px"/>
     <col width="100px"/>
     <col width="100px"/>
@@ -644,32 +678,69 @@ function initPage() {
         </td>
         <td><s:textfield name="deathPerson.deathPersonPassportNo" cssStyle="width:180px;"/></td>
     </tr>
+
+    </tbody>
+</table>
+<table border="1" style="width: 100%;border-top:none;border-bottom:none; border-collapse:collapse; margin-bottom:0;"
+       class="font-9">
+    <caption/>
+    <col width="257px"/>
+    <col width="258px"/>
+    <col width="257px"/>
+    <col/>
+    <tbody>
     <tr>
-        <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+        <td>
+            (<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+            උපන් දිනය
+            <br>பிறந்த திகதி
+            <br>Date of Birth
+        </td>
+        <td><s:textfield maxLength="10" name="deathPerson.deathPerson.deathPersonDOB" id="deathPersonDOB"/></td>
+        <td>
+            (<s:property value="#row"/><s:set name="row" value="#row+1"/>)
             වයස හෝ අනුමාන වයස
             <br>வயது அல்லது அனுமான வயது
             <br>Age or probable Age
         </td>
-        <td colspan="1"><s:textfield name="deathPerson.deathPersonAge" id="deathPersonAge"/></td>
-        <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+        <td><s:textfield name="deathPerson.deathPersonAge" id="deathPersonAge" onfocus="personAgeDeath();"/></td>
+    </tr>
+    <tr>
+        <td>
+            (<s:property value="#row"/><s:set name="row" value="#row+1"/>)
             ස්ත්‍රී පුරුෂ භාවය
             <br>பால்
             <br>Gender
         </td>
-        <td colspan="1"><s:select
-                list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
-                name="deathPerson.deathPersonGender" headerKey="0" headerValue="%{getText('select_gender.label')}"
-                id="deathPersonGender" cssStyle="width:190px; margin-left:5px;"/></td>
-        <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+        <td>
+            <s:select
+                    list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
+                    name="deathPerson.deathPersonGender" headerKey="0" headerValue="%{getText('select_gender.label')}"
+                    id="deathPersonGender" cssStyle="width:190px;"/>
+        </td>
+        <td>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
             ජාතිය
             <br>இனம்
             <br>Race
         </td>
-        <td colspan="2">
+        <td>
             <s:select list="raceList" name="deathPersonRace" headerKey="0" headerValue="%{getText('select_race.label')}"
-                      cssStyle="width:300px;"/>
+                      cssStyle="width:190px;"/>
         </td>
     </tr>
+    </tbody>
+</table>
+
+<table border="1" style="width: 100%;border-top:none; border:1px solid #000; border-collapse:collapse; margin-bottom:0;"
+       class="font-9">
+    <col width="220px"/>
+    <col width="100px"/>
+    <col width="100px"/>
+    <col width="100px"/>
+    <col width="150px"/>
+    <col width="130px"/>
+    <col/>
+
     <tr>
         <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
             නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)
