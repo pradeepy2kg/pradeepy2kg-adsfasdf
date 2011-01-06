@@ -674,7 +674,7 @@
         </s:elseif>
         <s:else>
             <s:submit action="eprUpdateMarriage" value="%{getText('button.marriageregister.update')}"/>
-            <s:if test="(marriage.state.ordinal() == 8 & (!#session.user_bean.role.roleId.equals('DEO')))">
+            <s:if test="!#session.user_bean.role.roleId.equals('DEO')">
                 <s:submit action="eprUpdateAndApproveMuslimMarriage"
                           value="%{getText('button.marriageregister.updateandapprove')}"/>
             </s:if>
