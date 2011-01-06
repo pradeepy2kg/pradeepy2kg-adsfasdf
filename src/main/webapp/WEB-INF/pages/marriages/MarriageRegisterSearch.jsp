@@ -139,7 +139,6 @@
         <s:submit value="%{getText('bdfSearch.button')}"/>
     </div>
 </s:form>
-
 <div id="marriage-notice-search" style="margin-top:58px;">
     <s:if test="marriageRegisterSearchList.size > 0">
         <%--table for displaying marriage registers--%>
