@@ -79,6 +79,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private int noOfRows;
     private int currentStatus;
     private int rowNumber;
+    private int pageType;
 
     private long idUKey;
     private long oldIdUKey;
@@ -156,7 +157,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
             session.remove(WebConstants.SESSION_DEATH_DECLARATION_BEAN);
         }
         ddf = new DeathRegister();
-        ddf.setDeathType(deathType);
+        // ddf.setDeathType(deathType);   bug 2139
         session.put(WebConstants.SESSION_DEATH_DECLARATION_BEAN, ddf);
         populate(ddf);
         return SUCCESS;
@@ -167,6 +168,17 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         DeathRegister ddf;
         if (back) {
             populate((DeathRegister) session.get(WebConstants.SESSION_DEATH_DECLARATION_BEAN));
+            switch (deathType) {
+                case NORMAL:
+                case SUDDEN:
+                    pageType = 0;
+                    break;
+                case LATE_SUDDEN:
+                case LATE_NORMAL:
+                case MISSING:
+                    pageType = 1;
+                    break;
+            }
             return "form" + pageNo;
         }
         ddf = (DeathRegister) session.get(WebConstants.SESSION_DEATH_DECLARATION_BEAN);
@@ -179,7 +191,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                         pageNo = 0;
                     }
                 }
-                deathType = ddf.getDeathType();
+                //  deathType = ddf.getDeathType();  this is the bug 2139
                 ddf.setDeath(death);
                 ddf.setDeathPerson(deathPerson);
                 ddf.setDeathType(deathType);
@@ -225,7 +237,6 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
 
     public String deathCertificate() {
-        //    deathRegister = service.getById(idUKey, user);
         deathRegister = service.getWithTransientValuesById(idUKey, user);
         if ((deathRegister.getStatus() != DeathRegister.State.ARCHIVED_CERT_GENERATED) && (deathRegister.getStatus()
             != DeathRegister.State.ARCHIVED_ALTERED) && (deathRegister.getStatus() != DeathRegister.State.APPROVED)) {
@@ -1296,5 +1307,13 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public void setIssueUserId(String issueUserId) {
         this.issueUserId = issueUserId;
+    }
+
+    public int getPageType() {
+        return pageType;
+    }
+
+    public void setPageType(int pageType) {
+        this.pageType = pageType;
     }
 }
