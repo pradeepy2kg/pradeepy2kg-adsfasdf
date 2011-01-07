@@ -201,7 +201,14 @@ function validate() {
         if (isFieldEmpty(domObject)) {
             errormsg = errormsg + "\n" + document.getElementById('error11').value;
         }
+        domObject = document.getElementById('deathPersonAge');
+        if (!isFieldEmpty(domObject)) {
+            //validate age
+            validateNumber(domObject.value, 'p1error1', 'invalidAgeAtDeath')
+        }
 
+        /* var lessThan30Yes = document.getElementsByName('death.infantLessThan30Days')[0];
+         alert(lessThan30Yes.value)*/
     }
 
     if (errormsg != "") {
@@ -210,7 +217,7 @@ function validate() {
     }
 
     errormsg = "";
-    return returnval;
+    return false;
 }
 
 $(function() {
@@ -863,6 +870,7 @@ function personAgeDeath() {
 <s:hidden id="p1errordate1" value="%{getText('p1.dateOfRegistrationDate')}"/>
 <s:hidden id="p1errordate2" value="%{getText('p1.deathDate')}"/>
 <s:hidden id="p1errorSerial" value="%{getText('p1.serialNumber.format')}"/>
+<s:hidden id="invalidAgeAtDeath" value="%{getText('error.invalid.age.at.death')}"/>
 
 
 <div class="skip-validation">
