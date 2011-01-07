@@ -50,6 +50,11 @@
         <servlet-class>lk.rgd.crs.web.JSONStatisticsLookupService</servlet-class>
     </servlet>
 
+       <servlet>
+     <servlet-name>ScannedImage</servlet-name>
+     <servlet-class>lk.rgd.crs.web.MCImageServlet</servlet-class>
+    </servlet> 
+
     <servlet-mapping>
         <servlet-name>PersonLookupService</servlet-name>
         <url-pattern>/prs/PersonLookupService</url-pattern>
@@ -78,7 +83,12 @@
     <servlet-mapping>
         <servlet-name>StatisticsLookupService</servlet-name>
         <url-pattern>/crs/StatisticsLookupService</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping>    
+
+     <servlet-mapping>
+      <servlet-name>ScannedImage</servlet-name>
+      <url-pattern>/crs/Image</url-pattern>
+     </servlet-mapping>
 
     <filter-mapping>
         <filter-name>struts2</filter-name>
