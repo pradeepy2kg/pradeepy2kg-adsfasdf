@@ -9,7 +9,42 @@
 <script type="text/javascript" src="<s:url value="/js/marriageregistervalidation.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 <script type="text/javascript">
+
+
     $(function() {
+        $('img#male_lookup').bind('click', function(evt1) {
+            var id1 = $("input#malePIN").attr("value");
+            //var datePicker = $('#fatherDatePicker');
+            //var error = document.getElementById('error10').value;
+            //calculateBirthDay(id1, datePicker, error);
+            $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
+                    function(data1) {
+                        $("textarea#nameOfficialMale").val(data1.fullNameInOfficialLanguage);
+                        $("textarea#addressMale").val(data1.lastAddress);
+                        var maleDOB = data1.dateOfBirth;
+                        if (maleDOB != null) {
+                            $("input#dateOfBirthMaleDatePicker").val(maleDOB);
+                        }
+                    });
+        });
+
+        $('img#female_lookup').bind('click', function(evt2) {
+            var id2 = $("input#femalePIN").attr("value");
+            //var datePicker = $('#motherDatePicker');
+            //var error = document.getElementById('error11').value;
+            //calculateBirthDay(id2, datePicker, error);
+            $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id2},
+                    function(data2) {
+                        $("textarea#nameOfficialFemale").val(data2.fullNameInOfficialLanguage);
+                        $("textarea#addressFemale").val(data2.lastAddress);
+                        var femaleDOB = data2.dateOfBirth;
+                        if (femaleDOB != null) {
+                            $("input#dateOfBirthFemaleDatePicker").val(femaleDOB);
+                        }
+                    });
+        });
+
+
         $('img#registrar_lookup').bind('click', function(evt3) {
             var id1 = $("input#regPIN").attr("value");
             $.getJSON('/ecivil/crs/RegistrarLookupService', {pinOrNic:id1},
@@ -17,7 +52,6 @@
                         $("textarea#regNameInOfficialLang").val(data1.fullNameInOfficialLanguage);
                         $("textarea#regNameInEnglishLang").val(data1.fullNameInEnglishLanguage);
                         $("textarea#regPlaceInOfficialLang").val(data1.address);
-                        $("textarea#regPlaceInEnglishLang").val(data1.address);
                     });
         });
 
@@ -420,9 +454,11 @@
         </td>
         <td colspan="1" align="left">
             <s:textfield name="marriage.male.identificationNumberMale" id="malePIN" maxLength="10"/>
+            <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="male_lookup">
         </td>
         <td colspan="1" align="left">
             <s:textfield name="marriage.female.identificationNumberFemale" id="femalePIN" maxLength="10"/>
+             <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="female_lookup">
         </td>
     </tr>
     <tr>
@@ -594,12 +630,12 @@
                        <br>தொடர் இலக்கம்<br>Serial Number</span></label>
         </td>
         <td align="center">
-            <%-- <s:if test="idUKey==0">
-                <s:textfield name="idUKey" id="idUKey" maxLength="10" disabled="true" value=""/>
-            </s:if>
-            <s:else>
-                <s:textfield name="idUKey" id="idUKey" maxLength="10" disabled="true"/>
-            </s:else> --%>
+                <%-- <s:if test="idUKey==0">
+                   <s:textfield name="idUKey" id="idUKey" maxLength="10" disabled="true" value=""/>
+               </s:if>
+               <s:else>
+                   <s:textfield name="idUKey" id="idUKey" maxLength="10" disabled="true"/>
+               </s:else> --%>
 
             <s:if test="marriage.regSerial==0">
                 <s:textfield name="marriage.regSerial" id="serialNumber" maxLength="10" value=""/>
