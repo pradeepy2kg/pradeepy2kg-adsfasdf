@@ -1229,9 +1229,8 @@
 
         <action name="eprDeathAlterationSetBits" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"
                 method="approveAlteration">
-            <result type="redirectAction" name="success">
-                <param name="actionName">eprApproveDeathAlterations</param>
-            </result>
+            <result type="tiles" name="success">epr.deathAlterationApprovalHome</result>
+            <result type="tiles" name="error">epr.deathAlterationApprovalHome</result>
         </action>
 
         <action name="eprDeathAlterationEditInit" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"

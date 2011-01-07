@@ -255,7 +255,8 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             existing.setDeclarant(deathAlteration.getDeclarant());
             deathAlterationService.updateDeathAlteration(existing, user);
 
-            addActionMessage(getText("alt.edit.message.success"));
+            addActionMessage(getText("alt.edit.message.success",
+                new String[]{Long.toString(deathAlteration.getIdUKey())}));
             logger.debug("editing death alteration : idUKey : {} success", deathAlterationId);
             populatePrimaryLists(deathRegister.getDeath().getDeathDistrict().getDistrictUKey(),
                 deathRegister.getDeath().getDeathDivision().getBdDivisionUKey(), language, user);
@@ -263,7 +264,8 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             return SUCCESS;
         } catch (CRSRuntimeException e) {
             logger.debug("cannot edit death alteration idUKey {}", existing.getIdUKey());
-            addActionMessage(getText("alt.message.cannot.edit.alteration.validation.failed"));
+            addActionError(getText("alt.message.cannot.edit.alteration.validation.failed",
+                new String[]{Long.toString(deathAlteration.getIdUKey())}));
             populatePrimaryLists(districtUKey, dsDivisionId, language, user);
             userLocations = commonUtil.populateActiveUserLocations(user, language);
             return ERROR;
@@ -415,10 +417,15 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 }
             }
             deathAlterationService.approveDeathAlteration(deathAlteration, approveBitset, user);
-            populatePrimaryLists(districtUKey, dsDivisionId, language, user);
+            addActionMessage(getText("message.approve.death.alteration.success",
+                new String[]{Long.toString(deathAlterationId)}));
+            populateListAfterSuccessOrFail();
+            findDeathAlterationForApproval();
             logger.debug("apply changes to death alteration : alteration id  {}", deathAlterationId);
         } catch (CRSRuntimeException e) {
             logger.error("cannot set bit set for death alteration : {}", deathAlterationId);
+            addActionError(getText("error.approve.death.alteration", new String[]{Long.toString(deathAlterationId)}));
+            populateListAfterSuccessOrFail();
             return ERROR;
         }
         return SUCCESS;
