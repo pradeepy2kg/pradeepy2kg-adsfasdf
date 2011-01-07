@@ -195,7 +195,7 @@ function validateMarriageDetails() {
     errormsg = validateEmptyField("addressMale", "errorAddressMale", errormsg);
     errormsg = validateEmptyField("addressFemale", "errorAddressFemale", errormsg);
 
-
+    errormsg = validateEmptyField("serialNumber", "errorSerialNumber", errormsg);
     errormsg = validateEmptyField("registrationDatePicker", "errorRegistrationDate", errormsg);
     return printErrorMessages(errormsg);
 }
@@ -626,7 +626,7 @@ function validateMarriageDetails() {
     <col>
     <tr>
         <td><label><span class="font-8">අනුක්‍රමික අංකය
-                       <br>தொடர் இலக்கம்<br>Serial Number</span></label>
+                        <s:label value="*" cssStyle="color:red;font-size:10pt;"/> <br>தொடர் இலக்கம்<br>Serial Number</span></label>
         </td>
         <td align="center">
                 <%-- <s:if test="idUKey==0">
@@ -746,4 +746,8 @@ function validateMarriageDetails() {
 
 <s:hidden id="errorMaleRace" value="%{getText('error.invalid') + getText('error_js_marriageregister_maleRace')}"/>
 <s:hidden id="errorFemaleRace" value="%{getText('error.invalid') + getText('error_js_marriageregister_femaleRace')}"/>
+
+<s:hidden id="errorSerialNumber"
+          value="%{getText('error.invalid') + getText('error_js_marriageregister_serialNumber')}"/>
+
 </div>
