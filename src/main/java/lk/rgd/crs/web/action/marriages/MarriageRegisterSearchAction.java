@@ -185,6 +185,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         MarriageRegister register = marriageRegistrationService.getByIdUKey(idUKey, user);
         if (register != null && register.getState() == MarriageRegister.State.EXTRACT_PRINTED) {
             addActionMessage(getText("message.marriagerextract.alreadymarkedasprinted"));
+            return SUCCESS;
         } else {
             try {
                 //TODO : refactor rename licensePrintedLocationId and licenseIssuedUserId in order to user this attribute for both notice and Extract print
