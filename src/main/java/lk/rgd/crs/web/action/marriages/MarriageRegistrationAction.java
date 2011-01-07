@@ -583,6 +583,10 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         }*/
     }
 
+    public String displayScannedImage(){
+       return SUCCESS;
+    }
+
     /**
      * Marriage Registration - update Muslim Marriage Details
      */

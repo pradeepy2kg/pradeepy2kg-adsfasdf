@@ -39,7 +39,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     private final String contentRoot;
     private final String contentType;
     //TODO: this is to be changed
-    private final ContentRepository contentRepository = new ContentRepositoryImpl(AppConstants.CONTENT_ROOT);
+    private ContentRepository contentRepository = new ContentRepositoryImpl(AppConstants.CONTENT_ROOT);
 
     public MarriageRegistrationServiceImpl(MarriageRegistrationDAO marriageRegistrationDAO, UserManager userManager,
         MarriageRegistrationValidator marriageRegistrationValidator, UserLocationDAO userLocationDAO,
@@ -48,7 +48,8 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         this.marriageRegistrationValidator = marriageRegistrationValidator;
         this.userLocationDAO = userLocationDAO;
         this.userManager = userManager;
-        this.contentRoot = contentRoot;
+        //TODO: to be changed
+        this.contentRoot = AppConstants.CONTENT_ROOT;
         this.contentType = contentType;
     }
 

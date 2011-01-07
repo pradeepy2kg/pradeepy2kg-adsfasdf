@@ -176,7 +176,7 @@
                         <td>
                             <s:property value="male.nameInOfficialLanguageMale"/>
                         </td>
-                         <td align="center">
+                        <td align="center">
                             <s:property value="male.identificationNumberMale"/>
                         </td>
                             <%-- <td align="center">
@@ -201,7 +201,7 @@
                                         <img src="<s:url value='/images/print_icon.gif'/>" border="none" height="25"/>
                                     </s:a>
                                 </s:if>
-                            <s:else>
+                                <s:else>
                                     <s:url id="editSelected" action="eprMarriageRegistrationInit.do">
                                         <s:param name="idUKey" value="idUKey"/>
                                     </s:url>
@@ -227,8 +227,15 @@
                                              border="none"/>
                                     </s:a>
                                 </s:else>
-                                </td>
-                            </s:else>
+                            </td>
+                        </s:else>
+
+                        <td>
+                            <s:url id="image" action="eprDisplayScannedImage.do">
+                                <s:param name="idUKey" value="idUKey"/>
+                            </s:url>
+                            <s:a href="%{image}">Scanned Image</s:a>
+                        </td>
                     </tr>
                 </s:iterator>
                 </tbody>
