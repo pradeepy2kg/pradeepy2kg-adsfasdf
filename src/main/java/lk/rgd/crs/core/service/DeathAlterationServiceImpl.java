@@ -131,6 +131,7 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void approveDeathAlteration(DeathAlteration da, Map<Integer, Boolean> fieldsToBeApproved, User user) {
+        //todo check permissions
         logger.debug("Attempt to approve death alteration record : {} and apply changes to DC", da.getIdUKey());
         validateAccessOfUserForApproval(da, user);
         DeathAlteration existing = deathAlterationDAO.getById(da.getIdUKey());
