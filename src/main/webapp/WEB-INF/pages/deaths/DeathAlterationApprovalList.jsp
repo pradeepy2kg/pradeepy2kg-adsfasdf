@@ -213,6 +213,7 @@
     <s:hidden name="pageNumber" value="1"/>
 </s:form>
 <s:actionerror cssStyle="color:red;font-size:10pt"/>
+<s:actionmessage cssStyle="color:black;font-size:10pt"/>
 <div id="cc">
     <s:if test="approvalList.size()>0">
         <fieldset>
@@ -241,6 +242,7 @@
                         </s:url>
                         <s:url id="rejectSelected" action="eprDeathAlterationReject">
                             <s:param name="deathAlterationId" value="idUKey"/>
+                            <s:param name="pageNo" value="%{#request.pageNo}"/>
                         </s:url>
                         <s:url id="approveSelected" action="eprApproveDeathAlterationsDirect">
                             <s:param name="deathAlterationId" value="idUKey"/>

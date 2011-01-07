@@ -11,7 +11,7 @@
 
         if (erroMassage != "") {
             alert(erroMassage)
-            erroMassage=""
+            erroMassage = ""
             return false;
         }
         else {
@@ -20,7 +20,8 @@
         erroMassage = "";
     }
 
-    function initPage(){}
+    function initPage() {
+    }
 </script>
 <s:form method="post" action="eprDeathAlterationReject.do" onsubmit="javascript:return validate()">
     <table>
@@ -31,13 +32,13 @@
         <tr>
             <td align="left"><s:label value="%{getText('label.alteration.serial.number')}"/></td>
             <td align="left">
-                <s:property value="%{deathAlteration.alterationSerialNo}"/>
+                <s:property value="%{deathAlteration.idUKey}"/>
             </td>
         </tr>
         <tr>
             <td align="left"><s:label value="%{getText('label.death.certificate.number')}"/></td>
             <td align="left">
-                <s:property value="%{deathAlteration.deathId}"/>
+                <s:property value="%{deathAlteration.deathRegisterIDUkey}"/>
             </td>
         </tr>
         </tbody>
