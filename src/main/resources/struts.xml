@@ -602,13 +602,13 @@
         </action>
         <action name="eprInitDeathDeclaration" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
                 method="initDeathDeclaration">
-            <param name="deathType">NORMAL</param>
+            <param name="pageType">0</param>
             <result type="tiles" name="success">epr.deathDeclaration_form1</result>
         </action>
 
         <action name="eprInitLateDeathDeclaration" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
                 method="initDeathDeclaration">
-            <param name="deathType">LATE_NORMAL</param>
+            <param name="pageType">1</param>
             <result type="tiles" name="success">epr.deathDeclaration_form1</result>
         </action>
 
