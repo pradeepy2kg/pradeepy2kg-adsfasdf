@@ -312,7 +312,8 @@ public class Menu {
         //every one has permission to add birth alteration has permiassion to add death alteration
         deoAlterationLink.put("eprDeathAlterationSearchHome.do", new Link("death.registration.alteration", "/ecivil/alteration/", "eprDeathAlterationSearchHome.do", Permission.EDIT_BIRTH_ALTERATION));
         deoAlterationLink.put("eprCaptureDeathAlteration.do", new Link(null, "/ecivil/alteration/", "eprCaptureDeathAlteration.do", Permission.EDIT_BIRTH_ALTERATION));
-        deoAlterationLink.put("eprApproveDeathAlterations.do", new Link("label.manage.alterations", "/ecivil/alteration/", "eprApproveDeathAlterations.do", Permission.EDIT_BIRTH_ALTERATION));
+        deoAlterationLink.put("eprApproveDeathAlterations.do", new Link(null, "/ecivil/alteration/", "eprApproveDeathAlterations.do", Permission.EDIT_BIRTH_ALTERATION));
+        deoAlterationLink.put("eprApproveDeathAlterationsInit.do", new Link("label.manage.alterations", "/ecivil/alteration/", "eprApproveDeathAlterationsInit.do", Permission.EDIT_BIRTH_ALTERATION));
         deoAlterationLink.put("eprBirthAlterationApprovalNext.do", new Link(null, "/ecivil/alteration/", "eprBirthAlterationApprovalNext.do", Permission.EDIT_BIRTH_ALTERATION));
         deoAlterationLink.put("eprBirthAlterationApprovalPrevious.do", new Link(null, "/ecivil/alteration/", "eprBirthAlterationApprovalPrevious.do", Permission.EDIT_BIRTH_ALTERATION));
         deoAlterationLink.put("eprFilterBirthAlteration.do", new Link(null, "/ecivil/alteration/", "eprFilterBirthAlteration.do", Permission.EDIT_BIRTH_ALTERATION));
