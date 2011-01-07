@@ -88,18 +88,24 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
         this.mrDivisionDAO = mrDivisionDAO;
     }
 
-    public String registrarsManagmentHome() {
-        //home is set to dsDivision colombo,type active ,state birth
+    public String registrarsManagementHome() {
+
+        /* lists are generated according to the user */
         session.remove(WebConstants.SESSION_EXSISTING_REGISTRAR);
+        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
+        districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
+        this.districtId = districtList.keySet().iterator().next();
+        dsDivisionList = dsDivisionDAO.getAllDSDivisionNames(districtId, user.getPrefLanguage(), user);
+        this.dsDivisionId = -1;//dsDivisionList.keySet().iterator().next();
+
         this.state = true;
         this.type = Assignment.Type.BIRTH;
-        this.districtId = 1;
-        this.dsDivisionId = 1;
-        filter();
+        //filter(); /* populating search results */
+
         return SUCCESS;
     }
 
-    public String registrarsVeiwInit() {
+    public String registrarsViewInit() {
 
         logger.debug("registrar view init called - UserId : {}", user.getUserId());
 
@@ -147,8 +153,10 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
                 }
             }
         }
-        //todo check if need
-        populateLists(districtId, dsDivisionId, 1);
+        districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
+        dsDivisionList = dsDivisionDAO.getAllDSDivisionNames(districtId, user.getPrefLanguage(), user);
+        dsDivisionId = -1;
+
         return SUCCESS;
     }
 

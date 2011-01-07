@@ -324,7 +324,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 if (tempLocation != null) {
                     userLocation.setLocation(tempLocation);
                 } else {
-                    addActionMessage(getText("please.select.valid.location"));
+                    addActionError(getText("please.select.valid.location"));
                     populateLocationListOnly();
                     userLocationNameList = userLocationDAO.getUserLocationsListByUserId(userId);
                     return SUCCESS;
