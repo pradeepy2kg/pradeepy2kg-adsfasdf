@@ -121,12 +121,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         return SUCCESS;
     }
 
-    /**
-     * load death alteration capture page for searched death certificate
-     */
-    public String deathAlterationCaptureInit() {
-        logger.debug("attempting to load death alteration capture page");
-        deathAlteration = new DeathAlteration();
+    private void findDeathCertificateForDeathAlteration() {
         //search by certificate number
         if (idUKey != 0) {
             logger.debug("attempt to load death register by certificate number : {}", idUKey);
@@ -149,6 +144,14 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             BDDivision deathDivision = bdDivisionDAO.getBDDivisionByPK(divisionUKey);
             deathRegister = deathRegistrationService.getByBDDivisionAndDeathSerialNo(deathDivision, serialNumber, user);
         }
+    }
+
+    /**
+     * load death alteration capture page for searched death certificate
+     */
+    public String deathAlterationCaptureInit() {
+        logger.debug("attempting to load death alteration capture page");
+        findDeathCertificateForDeathAlteration();
         if (deathRegister == null) {
             logger.debug("can not find a death registrations for alterations :serial {} or :idUKey : {}", serialNumber, idUKey);
             addActionError(getText("error.cannot.find.death.registration"));
@@ -279,12 +282,14 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 DSDivision division = deathRegister.getDeath().getDeathDivision().getDsDivision();
                 dsDivision = dsDivisionDAO.getNameByPK(division.getDsDivisionUKey(), language);
                 deathDivision = bdDivisionDAO.getNameByPK(deathRegister.getDeath().getDeathDivision().getBdDivisionUKey(), language);
-                Country country = deathAlteration.getDeathPerson().getDeathPersonCountry();
+                Country country = (deathAlteration.getDeathPerson() != null) ?
+                    deathAlteration.getDeathPerson().getDeathPersonCountry() : null;
                 serialNumber = deathRegister.getDeath().getDeathSerialNo();
                 if (country != null) {
                     deathCountryId = country.getCountryId();
                 }
-                Race race = deathAlteration.getDeathPerson().getDeathPersonRace();
+                Race race = (deathAlteration.getDeathPerson() != null) ?
+                    deathAlteration.getDeathPerson().getDeathPersonRace() : null;
                 if (race != null) {
                     deathRaceId = race.getRaceId();
                 }
@@ -293,6 +298,8 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 alterationSerialNo = deathAlteration.getIdUKey();
             } else {
                 logger.debug("cannot edit death alteration idUKey : {} : not in DATA_ENTRY mode", deathAlterationId);
+                addActionError(getText("error.cannot.edit.death.alteration",
+                    new String[]{Long.toString(deathAlteration.getIdUKey())}));
                 populatePrimaryLists(districtUKey, dsDivisionId, language, user);
                 return ERROR;
             }
@@ -308,31 +315,50 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     /**
      * searching death alterations for approvals/rejection/delete and edit
      */
+    private void findDeathAlterationForApproval() {
+        //search by pin
+        if (pin != null) {
+            approvalList = deathAlterationService.getAlterationByDeathPersonPin(pin, user);
+        } else if (locationUKey > 0) {
+            //search by user location
+            approvalList = deathAlterationService.getDeathAlterationByUserLocation(locationUKey, user);
+        } else {
+            //search by division
+            if (divisionUKey > 0) {
+                approvalList = deathAlterationService.getAlterationApprovalListByDeathDivision(pageNo, rowNo, divisionUKey, user);
+            }
+        }
+    }
+
+    public String deathAlterationApprovalListInit() {
+        logger.debug("loading death alteration approval list page ");
+        populatePrimaryLists(districtUKey, dsDivisionId, language, user);
+        divisionUKey = user.getPrefBDDSDivision().getDsDivisionUKey();
+        pageNo = 1;
+        rowNo = appParametersDAO.getIntParameter(DA_APPROVAL_ROWS_PER_PAGE);
+        findDeathAlterationForApproval();
+        userLocations = commonUtil.populateActiveUserLocations(user, language);
+        locationUKey = 0;
+        logger.debug("success fully loaded death alteration approval page");
+        return SUCCESS;
+    }
+
     public String deathAlterationApprovalList() {
         pageNo = 1;
         rowNo = appParametersDAO.getIntParameter(DA_APPROVAL_ROWS_PER_PAGE);
         logger.debug("attempt to get death alteration pending list");
         if (pageNumber > 0) {
-            //search by pin
-            if (pin != null) {
-                try {
-                    approvalList = deathAlterationService.getAlterationByDeathPersonPin(pin, user);
-                } catch (CRSRuntimeException e) {
-                    logger.error("cannot find a death alteration for pin : {}", pin);
-                    addActionError(getText("no.pending.alterations"));
-                    populatePrimaryLists(districtUKey, dsDivisionId, language, user);
-                    userLocations = commonUtil.populateActiveUserLocations(user, language);
-                    locationUKey = 0;
-                    return ERROR;
-                }
-            } else if (locationUKey > 0) {
-                //search by user location
-                approvalList = deathAlterationService.getDeathAlterationByUserLocation(locationUKey, user);
-            } else {
-                //search by division
-                if (divisionUKey > 0) {
-                    approvalList = deathAlterationService.getAlterationApprovalListByDeathDivision(pageNo, rowNo, divisionUKey, user);
-                }
+            try {
+                findDeathAlterationForApproval();
+            }
+            catch (CRSRuntimeException e) {
+                logger.debug("unable to death alteration pending list");
+                populatePrimaryLists(districtUKey, dsDivisionId, language, user);
+                userLocations = commonUtil.populateActiveUserLocations(user, language);
+                locationUKey = 0;
+                findDeathAlterationForApproval();
+                addActionError(getText("error.while.searching"));
+                return ERROR;
             }
             if (approvalList.size() < 1) {
                 logger.debug("no pending list found ");
@@ -340,6 +366,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 populatePrimaryLists(districtUKey, dsDivisionId, language, user);
                 userLocations = commonUtil.populateActiveUserLocations(user, language);
                 locationUKey = 0;
+                findDeathAlterationForApproval();
                 return ERROR;
             }
         }

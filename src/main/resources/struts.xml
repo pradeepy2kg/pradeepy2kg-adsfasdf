@@ -1193,7 +1193,6 @@
         <!--death alteration related actions-->
         <action name="eprDeathAlterationSearchHome" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"
                 method="deathAlterationSearch">
-            <!--     <interceptor-ref name="redirectMassage"/>-->
             <result type="tiles" name="success">epr.deathAlterationSearchHome</result>
         </action>
 
@@ -1215,6 +1214,13 @@
             <result type="tiles" name="success">epr.deathAlterationApprovalHome</result>
             <result type="tiles" name="error">epr.deathAlterationApprovalHome</result>
         </action>
+
+        <action name="eprApproveDeathAlterationsInit" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"
+                method="deathAlterationApprovalListInit">
+            <result type="tiles" name="success">epr.deathAlterationApprovalHome</result>
+            <result type="tiles" name="error">epr.deathAlterationApprovalHome</result>
+        </action>
+
         <action name="eprApproveDeathAlterationsDirect" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"
                 method="displayChangesForApproval">
             <result type="tiles" name="success">epr.deathAlterationPrintLetter</result>
@@ -1231,6 +1237,7 @@
         <action name="eprDeathAlterationEditInit" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"
                 method="editDeathAlterationInit">
             <result type="tiles" name="success">epr.deathAlterationCapture</result>
+            <result type="tiles" name="error">epr.deathAlterationCapture</result>
         </action>
 
         <action name="eprDeathAlterationDelete" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"
@@ -1251,9 +1258,8 @@
 
         <action name="eprDeathAlterationPageLoad" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"
                 method="deathAlterationCaptureInit">
-            <!--    <interceptor-ref name="redirectMassage"/>-->
             <result type="tiles" name="pageLoad">epr.deathAlterationCapture</result>
-            <result type="redirectAction" name="error">eprDeathAlterationSearchHome</result>
+            <result type="tiles" name="error">epr.deathAlterationSearchHome</result>
         </action>
     </package>
 

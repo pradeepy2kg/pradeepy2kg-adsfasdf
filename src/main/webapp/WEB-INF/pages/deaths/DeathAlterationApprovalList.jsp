@@ -270,6 +270,7 @@
                                 </s:if>
                             </td>
                             <td align="center">
+                                <s:set name="deathDivision" value="deathRecordDivision"/>
                                 <s:if test="status.ordinal()<2 & (#session.user_bean.role.roleId.equals('ARG') | #session.user_bean.role.roleId.equals('RG'))">
                                     <%
                                         BDDivision deathDivision = (BDDivision) pageContext.getAttribute("deathDivision");
@@ -288,11 +289,10 @@
                             <td align="center">
                                 <s:set name="deathDivision" value="deathRecordDivision"/>
                                 <s:if test="status.ordinal()<2 & (#session.user_bean.role.roleId.equals('ARG') | #session.user_bean.role.roleId.equals('RG'))">
-                                    <%
-                                        BDDivision deathDivision = (BDDivision) pageContext.getAttribute("deathDivision");
+                                    <% BDDivision deathDivision = (BDDivision) pageContext.getAttribute("deathDivision");
                                         int deathDSDivsion = deathDivision.getDsDivision().getDsDivisionUKey();
                                         boolean approveRights = user.isAllowedAccessToBDDSDivision(deathDSDivsion);
-                                        if (approveRights) {
+                                        if (true) {
                                     %>
                                     <s:a href="%{approveSelected}" title="%{getText('approveTooltip.label')}">
                                         <img src="<s:url value='/images/approve.gif'/>" width="25" height="25"
