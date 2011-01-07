@@ -360,6 +360,7 @@ public class Menu {
         deoMarriageLink.put("eprUpdateMarriage.do", new Link(null, "/ecivil/marriages/", "eprUpdateMarriage.do", Permission.EDIT_MARRIAGE));
         deoMarriageLink.put("eprRegisterNoticedMarriage.do", new Link(null, "/ecivil/marriages/", "eprRegisterNoticedMarriage.do", Permission.EDIT_MARRIAGE));
         deoMarriageLink.put("eprMarriageExtractInit.do", new Link(null, "/ecivil/marriages/", "eprMarriageExtractInit.do", Permission.PRINT_MARRIAGE_EXTRACT));
+        deoMarriageLink.put("eprMarkMarriageExtractAsPrinted.do", new Link(null, "/ecivil/marriages/", "eprMarkMarriageExtractAsPrinted.do", Permission.PRINT_MARRIAGE_EXTRACT));
 
 
         // ADR marriage links

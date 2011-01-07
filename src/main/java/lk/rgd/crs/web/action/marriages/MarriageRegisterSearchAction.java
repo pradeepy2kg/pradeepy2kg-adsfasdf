@@ -184,8 +184,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     public String markMarriageExtractAsPrinted() {
         MarriageRegister register = marriageRegistrationService.getByIdUKey(idUKey, user);
         if (register != null && register.getState() == MarriageRegister.State.EXTRACT_PRINTED) {
-            //TODO: to be localized
-            addActionMessage("Extract of Marriage has alredy been marked as printed");
+            addActionMessage(getText("message.marriagerextract.alreadymarkedasprinted"));
         } else {
             try {
                 //TODO : refactor rename licensePrintedLocationId and licenseIssuedUserId in order to user this attribute for both notice and Extract print
@@ -193,9 +192,11 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
                     getLocation(licensePrintedLocationId), userDAO.getUserByPK(licenseIssuedUserId), user);
             }
             catch (CRSRuntimeException e) {
-                //TODO : forward to error page
+                addActionError(getText("message.marriagerextract.markasprintedfailed"));
+                return ERROR;
             }
         }
+        addActionMessage(getText("message.marriagerextract.markasprinted"));
         return SUCCESS;
     }
 
