@@ -320,7 +320,15 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 logger.debug("{} location is already assigned for user  :{}", locationDAO.getLocation(locationId).getEnLocationName(), userId);
             } else {
                 //userLocation.setLocation();
-                userLocation.setLocation(locationDAO.getLocation(locationId));
+                Location tempLocation = locationDAO.getLocation(locationId);
+                if (tempLocation != null) {
+                    userLocation.setLocation(tempLocation);
+                } else {
+                    addActionMessage(getText("please.select.valid.location"));
+                    populateLocationListOnly();
+                    userLocationNameList = userLocationDAO.getUserLocationsListByUserId(userId);
+                    return SUCCESS;
+                }
                 userLocation.setUserId(userId);
                 userLocation.setUser(userDAO.getUserByPK(userId));
                 service.addUserLocation(userLocation, currentUser);
