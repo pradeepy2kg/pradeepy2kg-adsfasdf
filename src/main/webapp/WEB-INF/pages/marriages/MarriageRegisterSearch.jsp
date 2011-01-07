@@ -163,7 +163,7 @@
                 <tr>
                     <th width="70px"><s:label value="%{getText('serial.label')}"/></th>
                     <th><s:label value="%{getText('partyName.label')}"/></th>
-                    <th><s:label value="%{getText('pin.label')}"/></th>
+                    <th width="150px" align="center"><s:label value="%{getText('pin.label')}"/></th>
                     <th width="100px"></th>
                 </tr>
                 </thead>
@@ -176,7 +176,7 @@
                         <td>
                             <s:property value="male.nameInOfficialLanguageMale"/>
                         </td>
-                         <td>
+                         <td align="center">
                             <s:property value="male.identificationNumberMale"/>
                         </td>
                             <%-- <td align="center">
@@ -193,7 +193,7 @@
                         </s:if>
                         <s:else>
                             <td>
-                                <s:if test="(state.ordinal()==9)">
+                                <s:if test="(state.ordinal()==9 || state.ordinal()==11)">
                                     <s:url id="cetificatePrintUrl" action="eprMarriageExtractInit.do">
                                         <s:param name="idUKey" value="idUKey"/>
                                     </s:url>
