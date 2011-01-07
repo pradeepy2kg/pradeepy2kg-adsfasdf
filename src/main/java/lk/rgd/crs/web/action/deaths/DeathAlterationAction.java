@@ -317,16 +317,17 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
      */
     private void findDeathAlterationForApproval() {
         //search by pin
+        rowNo = appParametersDAO.getIntParameter(DA_APPROVAL_ROWS_PER_PAGE);
         if (pin != null) {
             approvalList = deathAlterationService.getAlterationByDeathPersonPin(pin, user);
         } else if (locationUKey > 0) {
             //search by user location
             approvalList = deathAlterationService.getDeathAlterationByUserLocation(locationUKey, user);
+        } else if (divisionUKey > 0) {
+            approvalList = deathAlterationService.getAlterationApprovalListByDeathDivision(pageNo, rowNo, divisionUKey, user);
         } else {
-            //search by division
-            if (divisionUKey > 0) {
-                approvalList = deathAlterationService.getAlterationApprovalListByDeathDivision(pageNo, rowNo, divisionUKey, user);
-            }
+            approvalList = deathAlterationService.getAlterationApprovalListByDeathDivision(1, rowNo,
+                user.getPrefBDDSDivision().getDsDivisionUKey(), user);
         }
     }
 
@@ -335,7 +336,6 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         populatePrimaryLists(districtUKey, dsDivisionId, language, user);
         divisionUKey = user.getPrefBDDSDivision().getDsDivisionUKey();
         pageNo = 1;
-        rowNo = appParametersDAO.getIntParameter(DA_APPROVAL_ROWS_PER_PAGE);
         findDeathAlterationForApproval();
         userLocations = commonUtil.populateActiveUserLocations(user, language);
         locationUKey = 0;
@@ -437,13 +437,30 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         logger.debug("attempt to load death alteration  rejection page for get comment : for death alteration id  {} ", deathAlterationId);
         if (pageNumber > 0) {
             logger.debug("attempt to reject death alteration : idUKey : {} by User : {}", deathAlterationId, user.getUserName());
-            deathAlterationService.rejectDeathAlteration(deathAlterationId, user, rejectComment);
-            populatePrimaryLists(districtUKey, dsDivisionId, language, user);
+            try {
+                deathAlterationService.rejectDeathAlteration(deathAlterationId, user, rejectComment);
+            }
+            catch (CRSRuntimeException e) {
+                logger.debug("error while reject death alteration : idUKey {} ", deathAlterationId);
+                addActionMessage(getText("error.failed.reject.death.alteration",
+                    new String[]{Long.toString(deathAlterationId)}));
+                populateListAfterSuccessOrFail();
+            }
+            populateListAfterSuccessOrFail();
+            addActionMessage(getText("message.successfully.reject.death.alteration",
+                new String[]{Long.toString(deathAlterationId)}));
             logger.debug("death alteration rejected success : alteration id :{}", deathAlterationId);
             return SUCCESS;
         }
         deathAlteration = deathAlterationService.getByIDUKey(deathAlterationId, user);
         return "pageLoad";
+    }
+
+    private void populateListAfterSuccessOrFail() {
+        populatePrimaryLists(districtUKey, dsDivisionId, language, user);
+        userLocations = commonUtil.populateActiveUserLocations(user, language);
+        locationUKey = 0;
+        findDeathAlterationForApproval();
     }
 
     /**

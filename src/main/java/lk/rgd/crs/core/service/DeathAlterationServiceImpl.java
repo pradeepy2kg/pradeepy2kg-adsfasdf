@@ -77,10 +77,12 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
      * @inheritDoc
      */
     public void rejectDeathAlteration(long idUKey, User user, String comment) {
+        //todo check permissions
         DeathAlteration existing = getByIDUKey(idUKey, user);
         validateAccessOfUserForApproval(existing, user);
         existing.setStatus(DeathAlteration.State.REJECT);
         existing.setComments(comment);
+        existing.getLifeCycleInfo().setActiveRecord(false);
         deathAlterationDAO.updateDeathAlteration(existing, user);
         logger.debug("Rejected death alteration record : {}", idUKey);
     }
@@ -154,7 +156,7 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
             case TYPE_52_1_H:
             case TYPE_52_1_I: {
                 logger.debug("Alteration is an amendment, inclusion of omission or correction. Type : {}",
-                        existing.getType().ordinal());
+                    existing.getType().ordinal());
                 deathRegister.setStatus(DeathRegister.State.ARCHIVED_ALTERED);
                 deathRegister.getLifeCycleInfo().setActiveRecord(false);      // mark old record as a non-active record
                 deathRegisterDAO.updateDeathRegistration(deathRegister, user);
@@ -179,7 +181,7 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
                 deathRegister.setStatus(DeathRegister.State.ARCHIVED_CANCELLED);
                 deathRegisterDAO.updateDeathRegistration(deathRegister, user);
                 logger.debug("Alteration of type : {} is a cancellation of the existing record : {}",
-                        existing.getType().ordinal(), deathRegister.getIdUKey());
+                    existing.getType().ordinal(), deathRegister.getIdUKey());
                 break;
             }
         }
@@ -210,7 +212,7 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<DeathAlteration> getAlterationByDeathPersonPin(String pin, User user) {
         List<DeathAlteration> result = deathAlterationDAO.getDeathAlterationByDeathPersonPin(pin);
-        for (DeathAlteration da : result){
+        for (DeathAlteration da : result) {
             loadValuesToDeathAlterationObject(da);
             validateAccessOfUserForApproval(da, user);
         }
@@ -328,7 +330,7 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
     private void validateAccessOfUserToEditOrDelete(DeathAlteration da, User user) {
         if (!DeathAlteration.State.DATA_ENTRY.equals(da.getStatus())) {
             handleException("Death alteration ID : " + da.getIdUKey() + " cannot be edited as its not in the " +
-                    "Data entry state", ErrorCodes.ILLEGAL_STATE);
+                "Data entry state", ErrorCodes.ILLEGAL_STATE);
         }
 
         if (Role.ROLE_DEO.equals(user.getRole().getRoleId()) || Role.ROLE_ADR.equals(user.getRole().getRoleId())) {
@@ -375,11 +377,11 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
             ValidationUtils.validateAccessToBDDivision(user, da.getDeathRecordDivision());
             if (!user.isAuthorized(Permission.APPROVE_BIRTH_ALTERATION)) {
                 handleException("User : " + user.getUserId() + " is not allowed to approve/reject death alteration",
-                        ErrorCodes.PERMISSION_DENIED);
+                    ErrorCodes.PERMISSION_DENIED);
             }
         } else {
             handleException("User : " + user.getUserId() + " is not an ARG for alteration approval",
-                    ErrorCodes.PERMISSION_DENIED);
+                ErrorCodes.PERMISSION_DENIED);
         }
     }
 
