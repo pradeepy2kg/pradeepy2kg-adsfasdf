@@ -158,6 +158,14 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     }
 
     /**
+     * Marriage Registration - Loading marriage register reject page
+     */
+    public String marriageRegisterRejectInit() {
+        marriage = marriageRegistrationService.getByIdUKey(idUKey, user);
+        return SUCCESS;
+    }
+
+    /**
      * Marriage Registration - View Marriage Register
      */
     public String marriageRegisterViewInit() {

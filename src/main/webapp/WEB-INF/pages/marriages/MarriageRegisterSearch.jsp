@@ -242,7 +242,7 @@
                                              border="none"/>
                                     </s:a>
 
-                                    <s:url id="rejectSelected" action="eprMarriageRegistrationInit.do">
+                                    <s:url id="rejectSelected" action="eprMarriageRegisterRejectInit.do">
                                         <s:param name="idUKey" value="idUKey"/>
                                         <s:param name="mode">reject</s:param>
                                     </s:url>

@@ -8,6 +8,7 @@
 <script type="text/javascript" src="<s:url value="/js/datePicker.js"/>"></script>
 <script type="text/javascript" src="<s:url value="/js/marriageregistervalidation.js"/>"></script>
 <script type="text/javascript" src="<s:url value="/js/personlookup.js"/>"></script>
+<script type="text/javascript" src="<s:url value="/js/transliteration.js"/>"></script>
 <script type="text/javascript" src="<s:url value="/js/registrarlookup.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 <script type="text/javascript">

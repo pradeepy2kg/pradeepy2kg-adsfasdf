@@ -21,78 +21,78 @@
 </style>
 <div class="marriage-extract-outer">
 <s:if test="mode=='print'">
-<table class="table_reg_header_01">
-    <caption></caption>
-    <col width="420px"/>
-    <col width="200px"/>
-    <col/>
-    <tbody>
-    <s:form action="eprMarkMarriageExtractAsPrinted.do" method="post">
-    <tr>
-        <td colspan="3">
-            <div style="width:45%;float:left;margin-top:5px;" id="locationSignId">
-                <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;">
-                    <legend><b><s:label value="%{getText('selectoption.label')}"/></b></legend>
-                    <table>
-                        <tr>
-                            <td>
-                                <s:label value="%{getText('placeOfIssue.label')}"/>
-                            </td>
-                            <td>
+    <table class="table_reg_header_01">
+        <caption></caption>
+        <col width="420px"/>
+        <col width="200px"/>
+        <col/>
+        <tbody>
+        <s:form action="eprMarkMarriageExtractAsPrinted.do" method="post">
+        <tr>
+            <td colspan="3">
+                <div style="width:45%;float:left;margin-top:5px;" id="locationSignId">
+                    <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;">
+                        <legend><b><s:label value="%{getText('selectoption.label')}"/></b></legend>
+                        <table>
+                            <tr>
+                                <td>
+                                    <s:label value="%{getText('placeOfIssue.label')}"/>
+                                </td>
+                                <td>
 
-                                <s:select id="locationId" name="licensePrintedLocationId" list="locationList"
-                                          cssStyle="width:300px;"/>
+                                    <s:select id="locationId" name="licensePrintedLocationId" list="locationList"
+                                              cssStyle="width:300px;"/>
 
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><s:label value="%{getText('signOfficer.label')}"/></td>
-                            <td>
-                                <s:select id="issueUserId" name="licenseIssuedUserId" list="userList"
-                                          cssStyle="width:300px;"/>
-                            </td>
-                        </tr>
-                    </table>
-                </fieldset>
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="3" align="right">
-            <div class="form-submit">
-                <s:submit value="%{getText('button.mark.as.print')}"/>
-                <s:hidden name="idUKey" value="%{marriage.idUKey}"/>
-                </s:form>
-            </div>
-            <div class="form-submit">
-                <s:submit value="%{getText('button.print')}" onclick="printPage()"/>
-            </div>
-            <div class="form-submit">
-                <s:submit value="%{getText('button.back')}"/>
-            </div>
-        </td>
-    </tr>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><s:label value="%{getText('signOfficer.label')}"/></td>
+                                <td>
+                                    <s:select id="issueUserId" name="licenseIssuedUserId" list="userList"
+                                              cssStyle="width:300px;"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </fieldset>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" align="right">
+                <div class="form-submit">
+                    <s:submit value="%{getText('button.mark.as.print')}"/>
+                    <s:hidden name="idUKey" value="%{marriage.idUKey}"/>
+                    </s:form>
+                </div>
+                <div class="form-submit">
+                    <s:submit value="%{getText('button.print')}" onclick="printPage()"/>
+                </div>
+                <div class="form-submit">
+                    <s:submit value="%{getText('button.back')}"/>
+                </div>
+            </td>
+        </tr>
 
-    <tr style="font-size:9pt">
-        <td colspan="1">&nbsp;</td>
-        <td align="center" style="font-size:12pt;"><img src="<s:url value="/images/official-logo.png"/>"</td>
-        <td> &nbsp;</td>
-    </tr>
-    <tr>
-        <td colspan="3">&nbsp;</td>
-    </tr>
-    <tr style="font-size:14pt">
-        <td colspan="3" align="center">
-            ශ්‍රී ලංකා / ﻿இலங்கை / SRI LANKA
-        </td>
-    </tr>
-    <tr style="font-size:14pt">
-        <td colspan="3" align="center">
-            විවාහ ලේඛනයේ උපුටාගැනීම / குடிமதிப்பீட்டு ஆவணத்தில் / Extract of Marriage Register
-        </td>
-    </tr>
-    </tbody>
-</table>
+        <tr style="font-size:9pt">
+            <td colspan="1">&nbsp;</td>
+            <td align="center" style="font-size:12pt;"><img src="<s:url value="/images/official-logo.png"/>"</td>
+            <td> &nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="3">&nbsp;</td>
+        </tr>
+        <tr style="font-size:14pt">
+            <td colspan="3" align="center">
+                ශ්‍රී ලංකා / ﻿இலங்கை / SRI LANKA
+            </td>
+        </tr>
+        <tr style="font-size:14pt">
+            <td colspan="3" align="center">
+                විවාහ ලේඛනයේ උපුටාගැනීම / குடிமதிப்பீட்டு ஆவணத்தில் / Extract of Marriage Register
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </s:if>
 <table border="1" style="margin-top:1px;width:100%;border:1px solid #000;border-collapse:collapse;"
        cellpadding="2px">
@@ -504,6 +504,29 @@
         </td>
     </tr>
 </table>
-<div class="form-submit">
-</div>
+<s:if test="mode=='reject'">
+    <s:form method="post">
+        <s:hidden name="idUKey"/>
+        <table border="1" style="margin-top:20px;width:100%;border:1px solid #000;border-collapse:collapse;"
+               cellpadding="2px">
+            <caption/>
+            <col width="200px">
+            <col>
+            <tr>
+                <td class="font-8">
+                    අදහස් දක්වන්න
+                    <br>Comment in ta
+                    <br>Comment
+                </td>
+                <td colspan="3">
+                    <s:textarea name="comment" id="registrationRejectComment"
+                                cssStyle="width:98.2%;" rows="5"/>
+                </td>
+            </tr>
+        </table>
+        <div class="form-submit">
+            <s:submit action="eprRejectMarriageRegistration" value="%{getText('button.marriageregister.reject')}"/>
+        </div>
+    </s:form>
+</s:if>
 </div>
