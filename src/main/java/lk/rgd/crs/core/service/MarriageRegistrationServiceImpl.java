@@ -63,6 +63,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         checkUserPermission(Permission.ADD_MARRIAGE, ErrorCodes.PERMISSION_DENIED, "add second notice to marriage register", user);
         marriageRegistrationValidator.validateMarriageNotice(notice, type);
         populateObjectForPersisting(notice, type);
+        notice.setState(MarriageRegister.State.DATA_ENTRY);
         marriageRegistrationDAO.addMarriageRegister(notice, user);
     }
 

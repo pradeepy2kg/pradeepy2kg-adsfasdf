@@ -392,7 +392,6 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
             currentStatus);
         try {
             warnings = service.approveDeathRegistration(idUKey, user, ignoreWarning);
-            addActionMessage(getText("message.approve.success", new String[]{Long.toString(idUKey)}));
         }
         catch (RGDRuntimeException e) {
             addActionError(getText("error.death.registration.approval.fail", new String[]{Long.toString(idUKey)}));
@@ -408,7 +407,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         } else {
             deathApprovalAndPrintList = service.getPaginatedListForAllByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);
         }
-
+        addActionMessage(getText("message.approve.success", new String[]{Long.toString(idUKey)}));
         initPermissionForApprovalAndPrint();
         populate();
         return SUCCESS;
@@ -432,6 +431,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
             populate();
         }
         pageNo = 4;
+        addActionMessage(getText("message.approve.success", new String[]{Long.toString(idUKey)}));
         return SUCCESS;
     }
 

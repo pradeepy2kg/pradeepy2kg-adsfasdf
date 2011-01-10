@@ -308,6 +308,11 @@
                                         <img src="<s:url value='/images/print_icon.gif'/>" width="25" height="25"
                                              border="none"/></s:a>
                                 </s:if>
+                                <s:elseif test="status.ordinal()==3">
+                                    <s:a href="%{printSelected}" title="%{getText('printConfirmation.reprint.label')}">
+                                        <img src="<s:url value='/images/print_icon.gif'/>" width="25" height="25"
+                                             border="none"/></s:a>
+                                </s:elseif>
                             </td>
                         </tr>
                     </s:if>
