@@ -149,6 +149,14 @@ function validate() {
                 document.getElementsByName('marriage.female.civilStatusFemale')[2].checked,
                 document.getElementsByName('marriage.female.civilStatusFemale')[3].checked), "text_civil_state_female");
 
+        validateRadioButtons(new Array(document.getElementsByName('marriage.licenseCollectType')[0].checked,
+                document.getElementsByName('marriage.licenseCollectType')[1].checked,
+                document.getElementsByName('marriage.licenseCollectType')[2].checked,
+                document.getElementsByName('marriage.licenseCollectType')[3].checked), "text_select_how_collect_license");
+
+        validateRadioButtons(new Array(document.getElementsByName('marriage.preferredLanguage')[0].checked,
+                document.getElementsByName('marriage.preferredLanguage')[1].checked), "text_select_proffered_language");
+
         domObject = document.getElementById('date_arrival_female');
         if (!isFieldEmpty(domObject)) {
             isDate(domObject.value, "text_invalid_data", "text_date_arrival_female")
@@ -165,6 +173,8 @@ function validate() {
         }
     }
 
+    validateOptionals();
+
     if (errormsg != "") {
         // customAlert(errormsg);
         alert(errormsg);
@@ -172,7 +182,95 @@ function validate() {
         return false;
     }
     errormsg = "";
-    return true;
+    return false;
+}
+
+function validateOptionals() {
+    //validate male party age
+    var domObject = null;
+    var noticeType = document.getElementById('notice_type').value;
+    var dateOfRecived = document.getElementById('submitDatePicker');
+
+    if (noticeType == "BOTH_NOTICE" || noticeType == "FEMALE_NOTICE") {
+        domObject = document.getElementById('age_at_last_bd_female');
+        if (!isFieldEmpty(domObject)) {
+            if (domObject.value == '0') {
+                printMessage("text_age_at_last_bd_female", "text_gt_zero")
+            }
+            else {
+                if (domObject.value < 18) {
+                    printMessage("text_age_at_last_bd_female", "text_gt_18")
+                }
+            }
+        }
+
+        var femaleBD = document.getElementById('date_of_birth_female').value;
+        if (new Date(femaleBD).getTime() > new Date(dateOfRecived.value).getTime()) {
+            printMessage("text_dob_female", "text_future_date")
+        }
+    }
+
+    if (noticeType == "BOTH_NOTICE" || noticeType == "MALE_NOTICE") {
+        domObject = document.getElementById('age_at_last_bd_male');
+        if (!isFieldEmpty(domObject)) {
+            if (domObject.value == '0') {
+                printMessage("text_age_at_last_bd_male", "text_gt_zero")
+            }
+            else {
+                if (domObject.value < 18) {
+                    printMessage("text_age_at_last_bd_male", "text_gt_18")
+                }
+            }
+        }
+        //date of birth male or female cannot be grt that date if submit
+        var maleBD = document.getElementById('date_of_birth_male').value;
+
+        if (new Date(maleBD).getTime() > new Date(dateOfRecived.value).getTime()) {
+            printMessage("text_dob_male", "text_future_date")
+        }
+    }
+
+    if (isFutureDate(dateOfRecived.value)) {
+        printMessage("text_submit_date", "text_future_date")
+    }
+
+}
+
+function partyAge(mode) {
+    var dateOdBirthSubmitted = true;
+    var person_bd = new Date();
+    var dom = null;
+    if (mode == '0') {
+        //male party age
+        dom = document.getElementById('date_of_birth_male');
+        person_bd = new Date(document.getElementById('date_of_birth_male').value);
+    } else {
+        //female party age
+        dom = document.getElementById('date_of_birth_female');
+        person_bd = new Date(document.getElementById('date_of_birth_female').value);
+    }
+    if (isFieldEmpty(dom)) {
+        dateOdBirthSubmitted = false;
+    }
+
+    var today = new Date();
+    var person_age = today.getYear() - person_bd.getYear();
+    if (!(dateOdBirthSubmitted)) {
+        if (mode == '0') {
+            document.getElementById("age_at_last_bd_male").value = 0;
+        }
+        else {
+            document.getElementById("age_at_last_bd_female").value = 0;
+        }
+    }
+    else {
+        if (mode == '0') {
+            document.getElementById("age_at_last_bd_male").value = person_age;
+        }
+        else {
+            document.getElementById("age_at_last_bd_female").value = person_age;
+        }
+    }
 }
 
 function validateRadioButtons(array, errorText) {
@@ -296,13 +394,15 @@ $('select#dsDivisionId').bind('change', function(evt2) {
 <s:form action="%{addAction}" method="post" onsubmit="javascript:return validate()">
 <%--section official usage--%>
 <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
-    <legend align="right"><b><s:label value="%{getText('label.how.collect.license')}"/></b></legend>
+    <legend align="right"><b><s:label value="%{getText('label.how.collect.license')}"/>
+        <s:label value="*" cssStyle="color:red;font-size:10pt"/></b></legend>
     <s:radio list="#@java.util.HashMap@{'HAND_COLLECT_MALE':getText('label.collect.by.male'),
                         'MAIL_TO_MALE':getText('label.mail.male'),'HAND_COLLECT_FEMALE':getText('label.collect.by.female'),'MAIL_TO_FEMALE':getText('label.mail.female')}"
              name="marriage.licenseCollectType" value="%{marriage.licenseCollectType}"/>
 </fieldset>
 <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
-    <legend align="right"><b><s:label value="%{getText('label.pref.lang.for.certificates')}"/></b></legend>
+    <legend align="right"><b><s:label value="%{getText('label.pref.lang.for.certificates')}"/></b>
+        <s:label value="*" cssStyle="color:red;font-size:10pt"/></legend>
     <s:radio list="#@java.util.HashMap@{'si':getText('label.sinhala'),'ta':getText('label.tamil')}"
              name="marriage.preferredLanguage" value="%{marriage.preferredLanguage}"/>
 </fieldset>
@@ -348,7 +448,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
                 </tr>
                 <tr>
                     <td>
-                        ලියාපදිංචි කිරීමේ කොට්ඨාශය <br>
+                        ලියාපදිංචි කිරීමේ කොට්ඨාශය <s:label value="*" cssStyle="color:red;font-size:10pt"/><br>
                         பதிவுப் பிரிவு <br>
                         Registration Division <br>
                     </td>
@@ -378,7 +478,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
                 </tr>
                 <tr>
                     <td>
-                        අනුක්‍රමික අංකය <br>
+                        අනුක්‍රමික අංකය<s:label value="*" cssStyle="color:red;font-size:10pt"/> <br>
                         தொடர் இலக்கம் <br>
                         Serial Number <br>
                     </td>
@@ -390,7 +490,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
                 </tr>
                 <tr>
                     <td>
-                        භාරගත් දිනය <br>
+                        භාරගත් දිනය <s:label value="*" cssStyle="color:red;font-size:10pt"/><br>
                         பெறப்பட்ட திகதி <br>
                         Date of Acceptance <br>
                     </td>
@@ -425,7 +525,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
     <col width="50px"/>
     <tr>
         <td>
-            විවාහයේ ස්වභාවය <br>
+            විවාහයේ ස්වභාවය <s:label value="*" cssStyle="color:red;font-size:10pt"/><br>
             Type of Marriage <br>
         </td>
         <td>
@@ -485,7 +585,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
     <col/>
     <tr>
         <td colspan="1">
-            අනන්‍යතා අංකය <br>
+            අනන්‍යතා අංකය <s:label value="*" cssStyle="color:red;font-size:10pt"/><br>
             அடையாள எண் <br>
             Identification number
         </td>
@@ -494,7 +594,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
         </td>
         </td>
         <td colspan="1">
-            උපන් දිනය <br>
+            උපන් දිනය <s:label value="*" cssStyle="color:red;font-size:10pt"/><br>
             பிறந்த திகதி <br>
             Date of Birth
         </td>
@@ -504,7 +604,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
     </tr>
     <tr>
         <td colspan="1">
-            ජාතිය <br>
+            ජාතිය <s:label value="*" cssStyle="color:red;font-size:10pt"/><br>
             in tamil <br>
             Race
         </td>
@@ -513,13 +613,13 @@ $('select#dsDivisionId').bind('change', function(evt2) {
                       cssStyle="width:200px;" id="raceMaleId"/>
         </td>
         <td colspan="1">
-            පසුවූ උපන් දිනයට වයස <br>
+            පසුවූ උපන් දිනයට වයස <s:label value="*" cssStyle="color:red;font-size:10pt"/><br>
             in tamil <br>
             Age at last Birthday
         </td>
         <td colspan="3">
             <s:textfield name="marriage.male.ageAtLastBirthDayMale" id="age_at_last_bd_male" maxLength="3"
-                         value="%{marriage.male.ageAtLastBirthDayMale}"/>
+                         value="%{marriage.male.ageAtLastBirthDayMale}" onfocus="partyAge(0);"/>
         </td>
     </tr>
     <tr>
@@ -559,7 +659,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
     <tr>
         <td colspan="1" height="100x">
             නම රාජ්‍ය භාෂාවෙන්
-            (සිංහල / දෙමළ) <br>
+            (සිංහල / දෙමළ) <s:label value="*" cssStyle="color:red;font-size:10pt"/><br>
             பெயர் அரச கரும மொழியில் (சிங்களம் / தமிழ்) <br>
             Name in any of the official languages (Sinhala / Tamil)
         </td>
@@ -598,7 +698,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
             தற்போதைய வதிவிட முகவரி <br>
             Resident Address
         </td>
-        <td colspan="4" height="20px">රාජ්‍ය භාෂාවෙන් / in tamil / in Official Language</td>
+        <td colspan="4" height="20px">රාජ්‍ය භාෂාවෙන් / in tamil / in Official Language<s:label value="*" cssStyle="color:red;font-size:10pt"/></td>
         <td colspan="4" height="20px">ඉංග්‍රීසි භාෂාවෙන් / in tamil / In English</td>
     </tr>
     <tr>
@@ -634,7 +734,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
     </tr>
     <tr>
         <td>
-            සිවිල් තත්වය <br>
+            සිවිල් තත්වය<s:label value="*" cssStyle="color:red;font-size:10pt"/> <br>
             சிவில் நிலைமை <br>
             Civil Status
         </td>
@@ -737,7 +837,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
     <col/>
     <tr>
         <td colspan="1">
-            අනන්‍යතා අංකය <br>
+            අනන්‍යතා අංකය <s:label value="*" cssStyle="color:red;font-size:10pt"/><br>
             அடையாள எண் <br>
             Identification number
         </td>
@@ -746,7 +846,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
         </td>
         </td>
         <td colspan="1">
-            උපන් දිනය <br>
+            උපන් දිනය <s:label value="*" cssStyle="color:red;font-size:10pt"/><br>
             பிறந்த திகதி <br>
             Date of Birth
         </td>
@@ -756,7 +856,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
     </tr>
     <tr>
         <td colspan="1">
-            ජාතිය <br>
+            ජාතිය <s:label value="*" cssStyle="color:red;font-size:10pt"/><br>
             in tamil <br>
             Race
         </td>
@@ -766,13 +866,13 @@ $('select#dsDivisionId').bind('change', function(evt2) {
                       cssStyle="width:200px;"/>
         </td>
         <td colspan="1">
-            පසුවූ උපන් දිනයට වයස <br>
+            පසුවූ උපන් දිනයට වයස <s:label value="*" cssStyle="color:red;font-size:10pt"/><br>
             in tamil <br>
             Age at last Birthday
         </td>
         <td colspan="3">
             <s:textfield name="marriage.female.ageAtLastBirthDayFemale" id="age_at_last_bd_female" maxLength="3"
-                         value="%{marriage.male.ageAtLastBirthDayMale}"/>
+                         value="%{marriage.male.ageAtLastBirthDayMale}" onfocus="partyAge(1);"/>
         </td>
     </tr>
     <tr>
@@ -812,7 +912,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
     <tr>
         <td colspan="1" height="100x">
             නම රාජ්‍ය භාෂාවෙන්
-            (සිංහල / දෙමළ) <br>
+            (සිංහල / දෙමළ) <s:label value="*" cssStyle="color:red;font-size:10pt"/><br>
             பெயர் அரச கரும மொழியில் (சிங்களம் / தமிழ்) <br>
             Name in any of the official languages (Sinhala / Tamil)
         </td>
@@ -851,7 +951,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
             தற்போதைய வதிவிட முகவரி <br>
             Resident Address
         </td>
-        <td colspan="4" height="20px">රාජ්‍ය භාෂාවෙන් / in tamil / in Official Language</td>
+        <td colspan="4" height="20px">රාජ්‍ය භාෂාවෙන් / in tamil / in Official Language<s:label value="*" cssStyle="color:red;font-size:10pt"/></td>
         <td colspan="4" height="20px">ඉංග්‍රීසි භාෂාවෙන් / in tamil / In English</td>
     </tr>
     <tr>
@@ -887,7 +987,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
     </tr>
     <tr>
         <td>
-            සිවිල් තත්වය <br>
+            සිවිල් තත්වය <s:label value="*" cssStyle="color:red;font-size:10pt"/><br>
             சிவில் நிலைமை <br>
             Civil Status
         </td>
@@ -1000,6 +1100,9 @@ $('select#dsDivisionId').bind('change', function(evt2) {
 <s:hidden id="text_marriage_type" value="%{getText('field.marriage.type')}"/>
 <s:hidden id="text_civil_state_male" value="%{getText('field.civil.state.male')}"/>
 <s:hidden id="text_civil_state_female" value="%{getText('field.civil.state.female')}"/>
+<s:hidden id="text_gt_zero" value="%{getText('error.must.gt.zero')}"/>
+<s:hidden id="text_gt_18" value="%{getText('error.must.lt.18')}"/>
+<s:hidden id="text_future_date" value="%{getText('error.future.date')}"/>
 
 <%--additional validations--%>
 <s:hidden id="text_select_how_collect_license" value="%{getText('field.how.collect.license')}"/>

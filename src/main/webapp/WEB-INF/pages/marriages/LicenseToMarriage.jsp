@@ -102,35 +102,37 @@
     <col/>
     <tbody>
     <s:form action="eprMarkLicenseAsPrinted.do" method="post">
-    <tr>
-        <td colspan="3">
-            <div style="width:45%;float:left;margin-top:5px;" id="locationSignId">
-                <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;">
-                    <legend><b><s:label value="%{getText('selectoption.label')}"/></b></legend>
-                    <table>
-                        <tr>
-                            <td>
-                                <s:label value="%{getText('placeOfIssue.label')}"/>
-                            </td>
-                            <td>
+    <s:if test="marriage.state.ordinal() != 7 ">
+        <tr>
+            <td colspan="3">
+                <div style="width:45%;float:left;margin-top:5px;" id="locationSignId">
+                    <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;">
+                        <legend><b><s:label value="%{getText('selectoption.label')}"/></b></legend>
+                        <table>
+                            <tr>
+                                <td>
+                                    <s:label value="%{getText('placeOfIssue.label')}"/>
+                                </td>
+                                <td>
 
-                                <s:select id="locationId" name="licensePrintedLocationId" list="locationList"
-                                          cssStyle="width:300px;"/>
+                                    <s:select id="locationId" name="licensePrintedLocationId" list="locationList"
+                                              cssStyle="width:300px;"/>
 
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><s:label value="%{getText('signOfficer.label')}"/></td>
-                            <td>
-                                <s:select id="issueUserId" name="licenseIssuedUserId" list="userList"
-                                          cssStyle="width:300px;"/>
-                            </td>
-                        </tr>
-                    </table>
-                </fieldset>
-            </div>
-        </td>
-    </tr>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><s:label value="%{getText('signOfficer.label')}"/></td>
+                                <td>
+                                    <s:select id="issueUserId" name="licenseIssuedUserId" list="userList"
+                                              cssStyle="width:300px;"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </fieldset>
+                </div>
+            </td>
+        </tr>
+    </s:if>
     <tr>
         <td colspan="3" align="right">
             <div class="form-submit">

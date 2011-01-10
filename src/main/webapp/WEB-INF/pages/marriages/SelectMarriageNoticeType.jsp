@@ -25,6 +25,6 @@
         </tbody>
     </table>
     <div class="form-submit">
-        <s:submit value="%{getText('button.go'}"/>
+        <s:submit value="%{getText('button.go')}"/>
     </div>
 </s:form>
