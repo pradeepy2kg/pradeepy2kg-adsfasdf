@@ -49,6 +49,7 @@ public class RolePermissionUtils {
         deoBitSet.set(Permission.DELETE_MARRIAGE);
         deoBitSet.set(Permission.PRINT_MARRIAGE_LICENSE);
         deoBitSet.set(Permission.PRINT_MARRIAGE_EXTRACT);
+        deoBitSet.set(Permission.SEARCH_REGISTRAR);
 
         // ADR
 
@@ -93,6 +94,7 @@ public class RolePermissionUtils {
         adminBitSet.set(Permission.SERVICE_MASTER_DATA_MANAGEMENT);
         adminBitSet.set(Permission.USER_PREFERENCES);
         adminBitSet.set(Permission.REGISTRAR_MANAGEMENT);
+        adminBitSet.set(Permission.SEARCH_REGISTRAR);
         adminBitSet.set(Permission.EVENTS_MANAGEMENT);
         adminBitSet.set(Permission.INDEX_RECORDS);
 
