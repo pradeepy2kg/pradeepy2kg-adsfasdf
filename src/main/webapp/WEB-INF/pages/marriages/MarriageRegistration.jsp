@@ -12,9 +12,9 @@
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 <script type="text/javascript">
 
-
+/*
     $(function() {
-               /*
+
        $('img#male_lookup').bind('click', function(evt1) {
             var id1 = $("input#malePIN").attr("value");
             //var datePicker = $('#fatherDatePicker');
@@ -56,7 +56,7 @@
                         $("textarea#regNameInEnglishLang").val(data1.fullNameInEnglishLanguage);
                         $("textarea#regPlaceInOfficialLang").val(data1.address);
                     });
-        }); */
+        });
 
         $('img#place').bind('click', function(evt4) {
             var id = $("textarea#regPlaceInOfficialLang").attr("value");
@@ -170,7 +170,7 @@
             ;
         }
 
-    });
+    });      */
 
     function validateMarriageDetails() {
         var errormsg = "";
@@ -249,7 +249,7 @@
             <s:textfield name="marriage.registrarOrMinisterPIN" id="regPIN" maxLength="10"/>
         </s:else>
         <img src="<s:url value='/images/search-father.png' />"
-             style="vertical-align:middle; margin-left:20px;" id="registrar_lookup" onclick="registrarLookup('regPIN')">
+             style="vertical-align:middle; margin-left:20px;" id="registrar_lookup" onmouseover="registrarLookup('regPIN')">
     </td>
 </tr>
 <tr>
@@ -343,7 +343,7 @@
                 <td>&nbsp;</td>
                 <td>
                     <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px;"
-                         id="place">
+                         id="place" onmouseover="transliterate('regPlaceInOfficialLang', 'regPlaceInEnglishLang')">
                 </td>
             </tr>
             </tbody>
@@ -390,7 +390,7 @@
                 <td>&nbsp;</td>
                 <td>
                     <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px;"
-                         id="regName">
+                         id="regName" onmouseover="transliterate('regNameInOfficialLang', 'regNameInEnglishLang')">
                 </td>
             </tr>
             </tbody>
@@ -457,11 +457,11 @@
         </td>
         <td colspan="1" align="left">
             <s:textfield name="marriage.male.identificationNumberMale" id="malePIN" maxLength="10"/>
-            <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="male_lookup" onclick="personLookup('malePIN', 'Male')">
+            <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="male_lookup" onmouseover="personLookup('malePIN', 'Male')">
         </td>
         <td colspan="1" align="left">
             <s:textfield name="marriage.female.identificationNumberFemale" id="femalePIN" maxLength="10"/>
-            <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="female_lookup" onclick="personLookup('femalePIN', 'Female')">
+            <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="female_lookup" onmouseover="personLookup('femalePIN', 'Female')">
         </td>
     </tr>
     <tr>
@@ -593,11 +593,11 @@
     <tr>
         <td>
             <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px;"
-                 id="maleName">
+                 id="maleName" onmouseover="transliterate('nameOfficialMale', 'name_english_male')">
         </td>
         <td>
             <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px;"
-                 id="femaleName">
+                 id="femaleName" onmouseover="transliterate('nameOfficialFemale', 'name_english_female')">
         </td>
     </tr>
 
