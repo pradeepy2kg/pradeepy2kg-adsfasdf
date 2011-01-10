@@ -20,6 +20,7 @@
     }
 </style>
 <div class="marriage-extract-outer">
+<s:if test="mode=='print'">
 <table class="table_reg_header_01">
     <caption></caption>
     <col width="420px"/>
@@ -92,6 +93,7 @@
     </tr>
     </tbody>
 </table>
+</s:if>
 <table border="1" style="margin-top:1px;width:100%;border:1px solid #000;border-collapse:collapse;"
        cellpadding="2px">
     <caption/>
@@ -488,7 +490,7 @@
                 <br>தொடர் இலக்கம்<br>Serial Number</span></label>
         </td>
         <td align="center">
-            <s:label name="marriage.idUKey"/>
+            <s:label name="marriage.serialNumber"/>
         </td>
         <td>
             <label>

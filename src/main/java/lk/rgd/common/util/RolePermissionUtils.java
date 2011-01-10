@@ -50,6 +50,7 @@ public class RolePermissionUtils {
         deoBitSet.set(Permission.PRINT_MARRIAGE_LICENSE);
         deoBitSet.set(Permission.PRINT_MARRIAGE_EXTRACT);
         deoBitSet.set(Permission.SEARCH_REGISTRAR);
+        deoBitSet.set(Permission.VIEW_MARRIAGE_REGISTER);
 
         // ADR
 
