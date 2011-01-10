@@ -68,7 +68,7 @@ public class JSONPersonLookupService extends HttpServlet {
             response.setContentType("application/json; charset=utf-8");
             PrintWriter out = response.getWriter();
 
-            HashMap<String,Object> untyped = new HashMap<String,Object>();
+            HashMap<String, Object> untyped = new HashMap<String, Object>();
 
             final String nameInOfficialLanguage = person.getFullNameInOfficialLanguage();
             // For any record in the PRS the name should be available at least one language (e.g. for migrated data)
@@ -80,7 +80,12 @@ public class JSONPersonLookupService extends HttpServlet {
             untyped.put("gender", person.getGender());
             untyped.put("dateOfBirth", person.getDateOfBirth());
             untyped.put("placeOfBirth", person.getPlaceOfBirth());
+            int raceId = (person.getRace() != null) ? person.getRace().getRaceId() : 0;
+            untyped.put("race", raceId);
 
+            if (person.getLastAddress() != null && person.getLastAddress().isPermanent()) {
+                untyped.put("address", person.getLastAddress().getLine1());
+            }
             if (person.getLastAddress() != null) {
                 untyped.put("lastAddress", person.getLastAddress().toString());
             } else {

@@ -164,6 +164,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
             assDSDivision.add(dsDivisionDAO.getDSDivisionByPK(assignedDivisions[i]));
         }
 
+
         //todo change password length
         int randomPasswordLength = (int) (Math.random() * 6) + 10;
         if (userId == null) {
@@ -172,6 +173,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
             user.setAssignedBDDistricts(assDistrict);
             user.setAssignedMRDistricts(assDistrict);
             user.setAssignedBDDSDivisions(assDSDivision);
+            user.setAssignedMRDSDivisions(assDSDivision);
             try {
                 service.createUser(user, currentUser);
             } catch (RGDRuntimeException e) {
@@ -198,6 +200,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
             updatedUser.setAssignedBDDistricts(assDistrict);
             updatedUser.setAssignedMRDistricts(assDistrict);
             updatedUser.setAssignedBDDSDivisions(assDSDivision);
+            updatedUser.setAssignedMRDSDivisions(assDSDivision);
             updatedUser.setRole(roleDAO.getRole(roleId));
 
             if (isAssignedLocations(updatedUser)) {

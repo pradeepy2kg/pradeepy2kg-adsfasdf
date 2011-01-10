@@ -182,7 +182,7 @@ function validate() {
         return false;
     }
     errormsg = "";
-    return false;
+    return true;
 }
 
 function validateOptionals() {
@@ -698,7 +698,8 @@ $('select#dsDivisionId').bind('change', function(evt2) {
             தற்போதைய வதிவிட முகவரி <br>
             Resident Address
         </td>
-        <td colspan="4" height="20px">රාජ්‍ය භාෂාවෙන් / in tamil / in Official Language<s:label value="*" cssStyle="color:red;font-size:10pt"/></td>
+        <td colspan="4" height="20px">රාජ්‍ය භාෂාවෙන් / in tamil / in Official Language<s:label value="*"
+                                                                                                cssStyle="color:red;font-size:10pt"/></td>
         <td colspan="4" height="20px">ඉංග්‍රීසි භාෂාවෙන් / in tamil / In English</td>
     </tr>
     <tr>
@@ -951,7 +952,8 @@ $('select#dsDivisionId').bind('change', function(evt2) {
             தற்போதைய வதிவிட முகவரி <br>
             Resident Address
         </td>
-        <td colspan="4" height="20px">රාජ්‍ය භාෂාවෙන් / in tamil / in Official Language<s:label value="*" cssStyle="color:red;font-size:10pt"/></td>
+        <td colspan="4" height="20px">රාජ්‍ය භාෂාවෙන් / in tamil / in Official Language<s:label value="*"
+                                                                                                cssStyle="color:red;font-size:10pt"/></td>
         <td colspan="4" height="20px">ඉංග්‍රීසි භාෂාවෙන් / in tamil / In English</td>
     </tr>
     <tr>
