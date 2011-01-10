@@ -219,7 +219,7 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
         }
         return result;
     }
-
+    
     private void loadValuesToDeathAlterationObject(DeathAlteration da) {
         DeathRegister dr = deathRegisterDAO.getById(da.getDeathRegisterIDUkey());
         if (dr.getDeathPerson().getDeathPersonNameOfficialLang() != null) {

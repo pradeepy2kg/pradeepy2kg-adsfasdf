@@ -182,6 +182,12 @@ function validate() {
     if (dateOfReg < dateOfDeath) {
         errormsg = errormsg + "\n" + document.getElementById("error7").value;
     }
+    domObject = document.getElementById('deathPersonAge');
+    if (!isFieldEmpty(domObject)) {
+        //validate age
+        isNumeric(domObject.value, 'p1error1', 'invalidAgeAtDeath')
+
+    }
 
     // validations that can skip
     if (!check.checked) {
@@ -201,14 +207,6 @@ function validate() {
         if (isFieldEmpty(domObject)) {
             errormsg = errormsg + "\n" + document.getElementById('error11').value;
         }
-        domObject = document.getElementById('deathPersonAge');
-        if (!isFieldEmpty(domObject)) {
-            //validate age
-            validateNumber(domObject.value, 'p1error1', 'invalidAgeAtDeath')
-        }
-
-        /* var lessThan30Yes = document.getElementsByName('death.infantLessThan30Days')[0];
-         alert(lessThan30Yes.value)*/
     }
 
     if (errormsg != "") {

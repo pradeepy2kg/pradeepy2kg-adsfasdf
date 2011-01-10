@@ -329,14 +329,16 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             approvalList = deathAlterationService.getAlterationApprovalListByDeathDivision(pageNo, rowNo, divisionUKey, user);
         } else {
             approvalList = deathAlterationService.getAlterationApprovalListByDeathDivision(1, rowNo,
-                user.getPrefBDDSDivision().getDsDivisionUKey(), user);
+                user.getPrimaryLocation().getDsDivisionId(), user);
         }
     }
 
+
     public String deathAlterationApprovalListInit() {
+        //todo fixe here
         logger.debug("loading death alteration approval list page ");
         populatePrimaryLists(districtUKey, dsDivisionId, language, user);
-        divisionUKey = user.getPrefBDDSDivision().getDsDivisionUKey();
+        divisionUKey = user.getPrimaryLocation().getDsDivisionId();
         pageNo = 1;
         findDeathAlterationForApproval();
         userLocations = commonUtil.populateActiveUserLocations(user, language);
