@@ -7,12 +7,15 @@
 <script type="text/javascript" src="<s:url value="/js/division.js"/>"></script>
 <script type="text/javascript" src="<s:url value="/js/datePicker.js"/>"></script>
 <script type="text/javascript" src="<s:url value="/js/marriageregistervalidation.js"/>"></script>
+<script type="text/javascript" src="<s:url value="/js/personlookup.js"/>"></script>
+<script type="text/javascript" src="<s:url value="/js/registrarlookup.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 <script type="text/javascript">
 
 
     $(function() {
-        $('img#male_lookup').bind('click', function(evt1) {
+               /*
+       $('img#male_lookup').bind('click', function(evt1) {
             var id1 = $("input#malePIN").attr("value");
             //var datePicker = $('#fatherDatePicker');
             //var error = document.getElementById('error10').value;
@@ -53,7 +56,7 @@
                         $("textarea#regNameInEnglishLang").val(data1.fullNameInEnglishLanguage);
                         $("textarea#regPlaceInOfficialLang").val(data1.address);
                     });
-        });
+        }); */
 
         $('img#place').bind('click', function(evt4) {
             var id = $("textarea#regPlaceInOfficialLang").attr("value");
@@ -246,7 +249,7 @@
             <s:textfield name="marriage.registrarOrMinisterPIN" id="regPIN" maxLength="10"/>
         </s:else>
         <img src="<s:url value='/images/search-father.png' />"
-             style="vertical-align:middle; margin-left:20px;" id="registrar_lookup">
+             style="vertical-align:middle; margin-left:20px;" id="registrar_lookup" onclick="registrarLookup('regPIN')">
     </td>
 </tr>
 <tr>
@@ -454,11 +457,11 @@
         </td>
         <td colspan="1" align="left">
             <s:textfield name="marriage.male.identificationNumberMale" id="malePIN" maxLength="10"/>
-            <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="male_lookup">
+            <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="male_lookup" onclick="personLookup('malePIN', 'Male')">
         </td>
         <td colspan="1" align="left">
             <s:textfield name="marriage.female.identificationNumberFemale" id="femalePIN" maxLength="10"/>
-            <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="female_lookup">
+            <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="female_lookup" onclick="personLookup('femalePIN', 'Female')">
         </td>
     </tr>
     <tr>
@@ -468,12 +471,12 @@
             Date of Birth
         </td>
         <td colspan="1">
-            <s:textfield name="marriage.male.dateOfBirthMale" id="dateOfBirthMaleDatePicker" maxLength="10"
-                         onmouseover="datepicker('dateOfBirthMaleDatePicker')"/>
+            <s:textfield name="marriage.male.dateOfBirthMale" id="dateOfBirthMale" maxLength="10"
+                         onmouseover="datepicker('dateOfBirthMale')"/>
         </td>
         <td colspan="1">
-            <s:textfield name="marriage.female.dateOfBirthFemale" id="dateOfBirthFemaleDatePicker" maxLength="10"
-                         onmouseover="datepicker('dateOfBirthFemaleDatePicker')"/>
+            <s:textfield name="marriage.female.dateOfBirthFemale" id="dateOfBirthFemale" maxLength="10"
+                         onmouseover="datepicker('dateOfBirthFemale')"/>
         </td>
     </tr>
     <tr>

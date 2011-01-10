@@ -137,5 +137,5 @@ function isDate(fieldId, messageId, errormsg) {
         }
 
         return errormsg;
-     }
-}  
+    }
+}
