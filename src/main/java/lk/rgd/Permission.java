@@ -38,6 +38,7 @@ public final class Permission {
     public static final int PRINT_MARRIAGE_LICENSE = 33; //can use this permission bit for printing license/certificate ...
     public static final int PRINT_MARRIAGE_EXTRACT = 34;
     public static final int VIEW_SCANNED_MARRIAGE_CERT = 35;
+    public static final int SEARCH_REGISTRAR = 36;
 
     // permission for PRS
     public static final int PRS_ADD_PERSON = 50;
