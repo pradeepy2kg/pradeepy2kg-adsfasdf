@@ -181,8 +181,9 @@ public class MarriageRegister implements Serializable, Cloneable {
     @Column(name = "REG_MIN_PIN")
     private long registrarOrMinisterPIN;
 
+    //colum name - to be renamed to SERIAL_NUMBER
     @Column(length = 10, name = "REG_SERIAL", nullable = true)
-    private String regSerial;
+    private String serialNumber;
 
     @Column(name = "MARRIAGE_DATE", nullable = true)
     @Temporal(value = TemporalType.DATE)
@@ -446,12 +447,12 @@ public class MarriageRegister implements Serializable, Cloneable {
         this.serialOfFemaleNotice = serialOfFemaleNotice;
     }
 
-    public String getRegSerial() {
-        return regSerial;
+    public String getSerialNumber() {
+        return serialNumber;
     }
 
-    public void setRegSerial(String regSerial) {
-        this.regSerial = WebUtils.filterBlanks(regSerial);
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = WebUtils.filterBlanks(serialNumber);
     }
 
     public Date getRegistrationDate() {

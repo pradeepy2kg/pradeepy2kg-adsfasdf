@@ -661,7 +661,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         marriageRegister.setRegistrationDate(marriage.getRegistrationDate());
         marriageRegister.setPreferredLanguage(marriage.getPreferredLanguage());
         marriageRegister.setTypeOfMarriage(marriage.getTypeOfMarriage());
-        marriageRegister.setRegSerial(marriage.getRegSerial());
+        marriageRegister.setSerialNumber(marriage.getSerialNumber());
         marriageRegister.setState(MarriageRegister.State.REG_DATA_ENTRY);
     }
 
