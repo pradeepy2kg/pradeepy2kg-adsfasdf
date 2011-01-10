@@ -171,7 +171,7 @@
                 <s:iterator status="approvalStatus" value="marriageRegisterSearchList">
                     <tr>
                         <td align="center">
-                            <s:property value="regSerial"/>
+                            <s:property value="serialNumber"/>
                         </td>
                         <td>
                             <s:property value="male.nameInOfficialLanguageMale"/>

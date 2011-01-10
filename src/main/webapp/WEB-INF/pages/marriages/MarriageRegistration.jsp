@@ -636,11 +636,11 @@
                    <s:textfield name="idUKey" id="idUKey" maxLength="10" disabled="true"/>
                </s:else> --%>
 
-            <s:if test="marriage.regSerial==0">
-                <s:textfield name="marriage.regSerial" id="serialNumber" maxLength="10" value=""/>
+            <s:if test="marriage.serialNumber==0">
+                <s:textfield name="marriage.serialNumber" id="serialNumber" maxLength="10" value=""/>
             </s:if>
             <s:else>
-                <s:textfield name="marriage.regSerial" id="serialNumber" maxLength="10"/>
+                <s:textfield name="marriage.serialNumber" id="serialNumber" maxLength="10"/>
             </s:else>
         </td>
         <td>
