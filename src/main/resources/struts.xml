@@ -1387,6 +1387,12 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
+        <action name="eprViewMarriageRegister" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
+                method="marriageRegisterViewInit">
+            <result type="tiles" name="success">epr.marriageExtract</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
         <action name="eprRollBackNoticeToPrevious" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
                 method="rollBackApprovedToNonApproved">
             <result type="tiles" name="success">epr.marriageNoticeResults</result>

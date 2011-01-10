@@ -79,6 +79,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     private int printStart;
     private int licensePrintedLocationId;
     private int locationId;
+    private String mode;
 
     private long idUKey;
 
@@ -153,6 +154,14 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     public String marriageExtractInit() {
         marriage = marriageRegistrationService.getByIdUKey(idUKey, user);
         populateLocationList(marriage);
+        return SUCCESS;
+    }
+
+    /**
+     * Marriage Registration - View Marriage Register
+     */
+    public String marriageRegisterViewInit() {
+        marriage = marriageRegistrationService.getByIdUKey(idUKey, user);
         return SUCCESS;
     }
 
@@ -981,5 +990,13 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
 
     public void setWarningsAtApproval(boolean warningsAtApproval) {
         this.warningsAtApproval = warningsAtApproval;
+    }
+
+    public String getMode() {
+        return mode;
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
     }
 }

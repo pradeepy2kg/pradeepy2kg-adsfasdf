@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 <script type="text/javascript">
 
-/*
+/*  TODO : to be removed
     $(function() {
 
        $('img#male_lookup').bind('click', function(evt1) {
@@ -204,9 +204,8 @@
     }
 
 </script>
-
-<s:actionerror cssClass="actionmessage"/>
-<s:actionmessage cssClass="actionerror"/>
+<s:actionerror cssClass="actionerror"/>
+<s:actionmessage cssStyle="color:green;font-size:10pt"/>
 <div class="marriage-notice-outer">
 <s:form method="post" enctype="multipart/form-data" onsubmit="javascript:return validateMarriageDetails()">
 <s:hidden name="idUKey"/>
