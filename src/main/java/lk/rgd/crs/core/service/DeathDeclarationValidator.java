@@ -109,7 +109,7 @@ public class DeathDeclarationValidator {
             w.setSeverity(UserWarning.Severity.WARN);
             warnings.add(w);
         }
-        //check PRS record of this person
+        //check PRS record of this person                      
         if (deathRegister.getDeathPerson().getDeathPersonPINorNIC() != null) {
             Person deadPerson = populationRegistry.
                 findUniquePersonByPINorNIC(deathRegister.getDeathPerson().getDeathPersonPINorNIC(), user);
