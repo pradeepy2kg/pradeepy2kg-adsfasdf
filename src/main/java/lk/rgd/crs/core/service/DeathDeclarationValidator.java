@@ -9,6 +9,8 @@ import lk.rgd.crs.api.dao.DeathRegisterDAO;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.DeathRegister;
 import lk.rgd.crs.api.domain.DeclarantInfo;
+import lk.rgd.prs.api.domain.Person;
+import lk.rgd.prs.api.service.PopulationRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +31,7 @@ public class DeathDeclarationValidator {
     private static final String SERIAL_NUMBER_PATTERN = "20([1-9][0-9])[0|1]([0-9]{5})";
 
     private final DeathRegisterDAO deathRegisterDAO;
+    private static PopulationRegistry populationRegistry;
 
     private static final ResourceBundle rb_si =
         ResourceBundle.getBundle("messages/death_validation_messages", AppConstants.LK_SI);
@@ -37,8 +40,9 @@ public class DeathDeclarationValidator {
     private static final ResourceBundle rb_en =
         ResourceBundle.getBundle("messages/death_validation_messages", AppConstants.LK_EN);
 
-    public DeathDeclarationValidator(DeathRegisterDAO deathRegisterDAO) {
+    public DeathDeclarationValidator(DeathRegisterDAO deathRegisterDAO, PopulationRegistry populationRegistry) {
         this.deathRegisterDAO = deathRegisterDAO;
+        this.populationRegistry = populationRegistry;
     }
 
     /**
@@ -105,7 +109,19 @@ public class DeathDeclarationValidator {
             w.setSeverity(UserWarning.Severity.WARN);
             warnings.add(w);
         }
-
+        //check PRS record of this person
+        if (deathRegister.getDeathPerson().getDeathPersonPINorNIC() != null) {
+            Person deadPerson = populationRegistry.
+                findUniquePersonByPINorNIC(deathRegister.getDeathPerson().getDeathPersonPINorNIC(), user);
+            if (deadPerson != null && deadPerson.getDateOfBirth() != null) {
+                //check person date of birth
+                if (deadPerson.getDateOfBirth().getTime() > deathRegister.getDeath().getDateOfDeath().getTime()) {
+                    //now issue warnings
+                    warnings.add(new UserWarning(MessageFormat.format(rb.getString("date_of_birth_less_than_date_of_dead"),
+                        deathRegister.getDeath().getDateOfDeath(), deadPerson.getDateOfBirth()), UserWarning.Severity.WARN));
+                }
+            }
+        }
         return warnings;
     }
 

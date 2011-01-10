@@ -94,8 +94,10 @@ $(function() {
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
                 function(data1) {
                     $("textarea#deathPersonNameOfficialLang").val(data1.fullNameInOfficialLanguage);
-                    //$("textarea#deathPersonNameInEnglish").val(data1.fullNameInOfficialLanguage);
-                    $("textarea#deathPersonPermanentAddress").val(data2.lastAddress);
+                    $("input#deathPersonDOB").val(data1.dateOfBirth);
+                    $("select#deathPersonGender").val(data1.gender);
+                    $("select#deathPersonRace").val(data1.race);
+                    $("textarea#deathPersonPermanentAddress").val(data1.address);
                 });
     });
     $('img#death_person_father_lookup').bind('click', function(evt4) {
@@ -207,6 +209,11 @@ function validate() {
         if (isFieldEmpty(domObject)) {
             errormsg = errormsg + "\n" + document.getElementById('error11').value;
         }
+        var person_bd = new Date(document.getElementById('deathPersonDOB').value);
+        var date_of_death = new Date(document.getElementById('deathDatePicker').value);
+        if (date_of_death.getTime() > person_bd.getTime()) {
+            errormsg = errormsg + "\n" + document.getElementById('invalidDateRange').value;
+        }
     }
 
     if (errormsg != "") {
@@ -317,10 +324,12 @@ function personAgeDeath() {
     var death_person_age = date_of_death.getYear() - person_bd.getYear();
     if (!(dateOdBirthSubmitted && dateOfDeathSubmitted)) {
         document.getElementById("deathPersonAge").value = 0;
+
     }
     else {
         document.getElementById("deathPersonAge").value = death_person_age;
     }
+
 }
 </script>
 
@@ -733,7 +742,7 @@ function personAgeDeath() {
         </td>
         <td>
             <s:select list="raceList" name="deathPersonRace" headerKey="0" headerValue="%{getText('select_race.label')}"
-                      cssStyle="width:190px;"/>
+                      cssStyle="width:190px;" id="deathPersonRace"/>
         </td>
     </tr>
     </tbody>
@@ -871,7 +880,7 @@ function personAgeDeath() {
 <s:hidden id="p1errordate2" value="%{getText('p1.deathDate')}"/>
 <s:hidden id="p1errorSerial" value="%{getText('p1.serialNumber.format')}"/>
 <s:hidden id="invalidAgeAtDeath" value="%{getText('error.invalid.age.at.death')}"/>
-
+<s:hidden id="invalidDateRange" value="%{getText('error.dod.mst.lt.dob')}"/>
 
 <div class="skip-validation">
     <s:checkbox name="skipjavaScript" id="skipjs" value="false">
