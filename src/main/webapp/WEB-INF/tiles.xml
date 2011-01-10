@@ -588,4 +588,12 @@
         <put-attribute name="body" value="/WEB-INF/pages/marriages/LicenseToMarriage.jsp"/>
     </definition>
 
+   <definition name="epr.printScannedMarriageCertificate" extends="epr.template">
+        <description>
+            print scanned marriage certificate
+        </description>
+        <put-attribute name="title" value="title.marriage.scannedmarriagecertprint"/>
+        <put-attribute name="body" value="/WEB-INF/pages/marriages/DisplayScannedMarriageCert.jsp"/>
+    </definition>
+
 </tiles-definitions>

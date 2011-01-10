@@ -248,7 +248,6 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
      */
     @Transactional(propagation = Propagation.SUPPORTS)
     public Registrar getRegistrarByPin(long pin, User user) {
-        //TODO: remove this temporary fix and Add REGISTRAR_MANAGEMENT permission to DEO bitset
         if (!user.isAuthorized(Permission.SEARCH_REGISTRAR)) {
             handleException("User : " + user.getUserId() +
                 " is not authorized to manage manage registrars", ErrorCodes.PERMISSION_DENIED);

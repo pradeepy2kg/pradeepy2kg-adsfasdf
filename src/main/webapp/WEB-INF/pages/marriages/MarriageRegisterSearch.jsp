@@ -192,49 +192,49 @@
                             <td>&nbsp;</td>
                         </s:if>
                         <s:else>
-                            <td>
-                                <s:if test="(state.ordinal()==9 || state.ordinal()==11)">
-                                    <s:url id="cetificatePrintUrl" action="eprMarriageExtractInit.do">
-                                        <s:param name="idUKey" value="idUKey"/>
-                                    </s:url>
-                                    <s:a href="%{cetificatePrintUrl}">
-                                        <img src="<s:url value='/images/print_icon.gif'/>" border="none" height="25"/>
-                                    </s:a>
-                                </s:if>
-                                <s:else>
-                                    <s:url id="editSelected" action="eprMarriageRegistrationInit.do">
-                                        <s:param name="idUKey" value="idUKey"/>
-                                    </s:url>
-                                    <s:a href="%{editSelected}" title="%{getText('editToolTip.label')}">
-                                        <img src="<s:url value='/images/edit.png'/>" width="25" height="25"
-                                             border="none"/>
-                                    </s:a>
-
-                                    <s:url id="approveSelected" action="eprApproveMarriageRegistration.do">
-                                        <s:param name="idUKey" value="idUKey"/>
-                                    </s:url>
-                                    <s:a href="%{approveSelected}" title="%{getText('approveToolTip.label')}">
-                                        <img src="<s:url value='/images/approve.gif'/>" width="25" height="25"
-                                             border="none"/>
-                                    </s:a>
-
-                                    <s:url id="rejectSelected" action="eprMarriageRegistrationInit.do">
-                                        <s:param name="idUKey" value="idUKey"/>
-                                        <s:param name="mode">reject</s:param>
-                                    </s:url>
-                                    <s:a href="%{rejectSelected}" title="%{getText('rejectToolTip.label')}">
-                                        <img src="<s:url value='/images/reject.gif'/>" width="25" height="25"
-                                             border="none"/>
-                                    </s:a>
-                                </s:else>
-                            </td>
-                        </s:else>
-
                         <td>
+                            <s:if test="(state.ordinal()==9 || state.ordinal()==11)">
+                                <%-- <s:url id="cetificatePrintUrl" action="eprMarriageExtractInit.do">
+                                  <s:param name="idUKey" value="idUKey"/>
+                              </s:url>
+                              <s:a href="%{cetificatePrintUrl}">
+                                  <img src="<s:url value='/images/print_icon.gif'/>" border="none" height="25"/>
+                              </s:a>  --%>
+                            </s:if>
+                            <s:else>
+                                <s:url id="editSelected" action="eprMarriageRegistrationInit.do">
+                                    <s:param name="idUKey" value="idUKey"/>
+                                </s:url>
+                                <s:a href="%{editSelected}" title="%{getText('editToolTip.label')}">
+                                    <img src="<s:url value='/images/edit.png'/>" width="25" height="25"
+                                         border="none"/>
+                                </s:a>
+
+                                <s:url id="approveSelected" action="eprApproveMarriageRegistration.do">
+                                    <s:param name="idUKey" value="idUKey"/>
+                                </s:url>
+                                <s:a href="%{approveSelected}" title="%{getText('approveToolTip.label')}">
+                                    <img src="<s:url value='/images/approve.gif'/>" width="25" height="25"
+                                         border="none"/>
+                                </s:a>
+
+                                <s:url id="rejectSelected" action="eprMarriageRegistrationInit.do">
+                                    <s:param name="idUKey" value="idUKey"/>
+                                    <s:param name="mode">reject</s:param>
+                                </s:url>
+                                <s:a href="%{rejectSelected}" title="%{getText('rejectToolTip.label')}">
+                                    <img src="<s:url value='/images/reject.gif'/>" width="25" height="25"
+                                         border="none"/>
+                                </s:a>
+                            </s:else>
+                            </s:else>
+
                             <s:url id="image" action="eprDisplayScannedImage.do">
                                 <s:param name="idUKey" value="idUKey"/>
                             </s:url>
-                            <s:a href="%{image}">Scanned Image</s:a>
+                            <s:a href="%{image}">
+                                <img src="<s:url value='/images/print_icon.gif'/>" border="none" height="25"/>
+                            </s:a>
                         </td>
                     </tr>
                 </s:iterator>
