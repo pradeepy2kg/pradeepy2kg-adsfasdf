@@ -171,7 +171,7 @@ $(function() {
 
 function validateMarriageDetails() {
     var errormsg = "";
-    errormsg = validateEmptyField("marriageDatePicker", "errorMarriageDate", errormsg);
+    //errormsg = validateEmptyField("marriageDatePicker", "errorMarriageDate", errormsg);
     errormsg = isDate("marriageDatePicker", "errorMarriageDate", errormsg);
     //validate registrar details
     errormsg = validatePin("regPIN", "errorRegistrarPIN", errormsg);
@@ -184,10 +184,10 @@ function validateMarriageDetails() {
 
     //errormsg = validateEmptyField("malePIN", "errorMalePIN", errormsg);
     //errormsg = validateEmptyField("femalePIN", "errorFemalePIN", errormsg);
-    errormsg = validateEmptyField("dateOfBirthMaleDatePicker", "errorDateOfBirthMale", errormsg);
-    errormsg = isDate("dateOfBirthMaleDatePicker", "errorDateOfBirthMale", errormsg);
-    errormsg = validateEmptyField("dateOfBirthFemaleDatePicker", "errorDateOfBirthFemale", errormsg);
-    errormsg = isDate("dateOfBirthFemaleDatePicker", "errorDateOfBirthFemale", errormsg);
+    //errormsg = validateEmptyField("dateOfBirthMaleDatePicker", "errorDateOfBirthMale", errormsg);
+    //errormsg = isDate("dateOfBirthMaleDatePicker", "errorDateOfBirthMale", errormsg);
+    //errormsg = validateEmptyField("dateOfBirthFemaleDatePicker", "errorDateOfBirthFemale", errormsg);
+    //errormsg = isDate("dateOfBirthFemaleDatePicker", "errorDateOfBirthFemale", errormsg);
     errormsg = validateEmptyField("ageMale", "errorAgeMale", errormsg);
     errormsg = validateEmptyField("ageFemale", "errorAgeFemale", errormsg);
     errormsg = validateEmptyField("nameOfficialMale", "errorNameOfficialMale", errormsg);
@@ -196,7 +196,7 @@ function validateMarriageDetails() {
     errormsg = validateEmptyField("addressFemale", "errorAddressFemale", errormsg);
 
     errormsg = validateEmptyField("serialNumber", "errorSerialNumber", errormsg);
-    errormsg = validateEmptyField("registrationDatePicker", "errorRegistrationDate", errormsg);
+    errormsg = isDate("registrationDatePicker", "errorRegistrationDate", errormsg);
     return printErrorMessages(errormsg);
 }
 
@@ -728,12 +728,16 @@ function validateMarriageDetails() {
 <s:hidden id="errorRegistrationPlace"
           value="%{getText('error.invalid') + getText('error_js_marriageregister_registrationPlace')}"/>
 
+<%--
 <s:hidden id="errorMalePIN" value="%{getText('error.invalid') + getText('error_js_marriageregister_malePIN')}"/>
 <s:hidden id="errorFemalePIN" value="%{getText('error.invalid') + getText('error_js_marriageregister_femalePIN')}"/>
+
 <s:hidden id="errorDateOfBirthMale"
           value="%{getText('error.invalid') + getText('error_js_marriageregister_DateOfBirthMale')}"/>
 <s:hidden id="errorDateOfBirthFemale"
           value="%{getText('error.invalid') + getText('error_js_marriageregister_dateOfBirthFemale')}"/>
+
+ --%>
 <s:hidden id="errorAgeMale" value="%{getText('error.invalid') + getText('error_js_marriageregister_ageMale')}"/>
 <s:hidden id="errorAgeFemale" value="%{getText('error.invalid') + getText('error_js_marriageregister_ageFemale')}"/>
 <s:hidden id="errorNameOfficialMale"
