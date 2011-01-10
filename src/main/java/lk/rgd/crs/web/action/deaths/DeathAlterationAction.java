@@ -167,7 +167,8 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 DeathAlteration da = itr.next();
                 if (!da.getStatus().equals(DeathAlteration.State.FULLY_APPROVED)) {
                     logger.error("there is a ongoing alteration so cannot add a new");
-                    addActionError("error.existing.alterations.data.entry");
+                    addActionError(getText("error.existing.alterations.data.entry",
+                        new String[]{Long.toString(deathRegister.getIdUKey())}));
                     populatePrimaryLists(districtUKey, dsDivisionId, language, user);
                     return ERROR;
                 }

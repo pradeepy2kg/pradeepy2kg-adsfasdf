@@ -8,17 +8,16 @@
 <script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
-<script >
-  $(document).ready(function() {
-    $("#tabs").tabs();
-  });
-  </script>
+<script>
+    $(document).ready(function() {
+        $("#tabs").tabs();
+    });
+</script>
 <style type="text/css">
     #serialNumber {
         width: 232px
     }
 </style>
-
 
 
 <script type="text/javascript">
@@ -68,7 +67,7 @@
 
         var pin = document.getElementById('identificationNumber').value;
         var serial = document.getElementById('serialNumber').value;
-        var certifcateNumber = document.getElementById('certificateNumber').value;
+        var certifcateNumber = document.getElementById('idUKey').value;
         var valueArray = new Array(pin, serial, certifcateNumber);
 
         for (var i = 0; i < valueArray.length; i++) {
@@ -95,10 +94,13 @@
         else {
             return true;
         }
+        errormsg = "";
+        counter = 0;
         return false;
     }
 
-    function initPage(){}
+    function initPage() {
+    }
 
 </script>
 
@@ -107,101 +109,101 @@
 <s:form method="post" action="eprDeathAlterationPageLoad.do" onsubmit="javascript:return validateForm()">
     <%--section search by death certificate number--%>
     <div id="tabs" style="font-size:10pt;">
-            <ul>
-                    <li><a href="#fragment-1"><span> <s:label 
-                                    value="%{getText('label.tab.search.by.certificate.number')}"/></span></a></li>
-                    <li><a href="#fragment-2"><span><s:label
-                                    value="%{getText('label.search.by.death.person.pin')}"/></span></a></li>
-                    <li><a href="#fragment-3"><span><s:label
-                                    value="%{getText('label.tab.search.by.serial.number')}"/></span></a></li>
-                </ul>
+        <ul>
+            <li><a href="#fragment-1"><span> <s:label
+                    value="%{getText('label.tab.search.by.certificate.number')}"/></span></a></li>
+            <li><a href="#fragment-2"><span><s:label
+                    value="%{getText('label.search.by.death.person.pin')}"/></span></a></li>
+            <li><a href="#fragment-3"><span><s:label
+                    value="%{getText('label.tab.search.by.serial.number')}"/></span></a></li>
+        </ul>
 
-            <div id="fragment-1">
+        <div id="fragment-1">
 
-        <table cellpadding="2px" cellspacing="0">
-            <caption></caption>
-            <col width="265px">
-            <col width="500px">
-            <tbody>
-            <tr>
-                <td align="left">
-                    <s:label value="%{getText('label.certificate.number')}"/>
-                </td>
-                <td align="left">
-                    <s:textfield name="idUKey" id="idUKey" value=""/>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+            <table cellpadding="2px" cellspacing="0">
+                <caption></caption>
+                <col width="265px">
+                <col width="500px">
+                <tbody>
+                <tr>
+                    <td align="left">
+                        <s:label value="%{getText('label.certificate.number')}"/>
+                    </td>
+                    <td align="left">
+                        <s:textfield name="idUKey" id="idUKey" value=""/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
 
-    </div>
+        </div>
         <div id="fragment-2">
-    <%--section search by identification number--%>
+                <%--section search by identification number--%>
 
-        <table cellpadding="2px" cellspacing="0">
-            <caption></caption>
-            <col width="265px">
-            <col width="500px">
-            <tbody>
-            <tr>
-                <td align="left">
-                    <s:label value="%{getText('label.death.person.pin')}"/>
-                </td>
-                <td align="left">
-                    <s:textfield name="pin" id="identificationNumber" maxLength="10" value=""/>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+            <table cellpadding="2px" cellspacing="0">
+                <caption></caption>
+                <col width="265px">
+                <col width="500px">
+                <tbody>
+                <tr>
+                    <td align="left">
+                        <s:label value="%{getText('label.death.person.pin')}"/>
+                    </td>
+                    <td align="left">
+                        <s:textfield name="pin" id="identificationNumber" maxLength="10" value=""/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
 
-    </div>
+        </div>
         <div id="fragment-3">
-    <%--section search by serial number and bd/death division--%>
+                <%--section search by serial number and bd/death division--%>
 
-        <table>
-            <caption></caption>
-            <col width="250px">
-            <col width="250px">
-            <col width="50px">
-            <col width="250px">
-            <col width="250px">
-            <tr>
-                <td>
-                    <s:label value="%{getText('label.district')}"/>
-                </td>
-                <td>
-                    <s:select id="districtId" name="districtUKey" list="districtList" value="%{districtUKey}"
-                              cssStyle="width:98.5%; width:240px;"/>
-                </td>
-                <td></td>
-                <td>
-                    <s:label value="%{getText('label.dsDivision')}"/>
-                </td>
-                <td>
-                    <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{divisionUKey}"
-                              cssStyle="float:left;  width:240px;"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <s:label value="%{getText('label.bdDivision')}"/>
-                </td>
-                <td>
-                    <s:select id="divisionId" name="divisionUKey" value="%{divisionUKey}"
-                              list="bdDivisionList"
-                              cssStyle="float:left;  width:240px;"/>
-                </td>
-                <td></td>
-                <td>
-                    <s:label value="%{getText('label.serialNumber')}"/>
-                </td>
-                <td>
-                    <s:textfield name="serialNumber" id="serialNumber" maxLength="10" value=""/>
-                </td>
-            </tr>
-        </table>
+            <table>
+                <caption></caption>
+                <col width="250px">
+                <col width="250px">
+                <col width="50px">
+                <col width="250px">
+                <col width="250px">
+                <tr>
+                    <td>
+                        <s:label value="%{getText('label.district')}"/>
+                    </td>
+                    <td>
+                        <s:select id="districtId" name="districtUKey" list="districtList" value="%{districtUKey}"
+                                  cssStyle="width:98.5%; width:240px;"/>
+                    </td>
+                    <td></td>
+                    <td>
+                        <s:label value="%{getText('label.dsDivision')}"/>
+                    </td>
+                    <td>
+                        <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{divisionUKey}"
+                                  cssStyle="float:left;  width:240px;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <s:label value="%{getText('label.bdDivision')}"/>
+                    </td>
+                    <td>
+                        <s:select id="divisionId" name="divisionUKey" value="%{divisionUKey}"
+                                  list="bdDivisionList"
+                                  cssStyle="float:left;  width:240px;"/>
+                    </td>
+                    <td></td>
+                    <td>
+                        <s:label value="%{getText('label.serialNumber')}"/>
+                    </td>
+                    <td>
+                        <s:textfield name="serialNumber" id="serialNumber" maxLength="10" value=""/>
+                    </td>
+                </tr>
+            </table>
 
-   </div>
+        </div>
     </div>
     <%--section search button--%>
     <div class="form-submit">
