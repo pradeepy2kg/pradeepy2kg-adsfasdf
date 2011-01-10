@@ -89,48 +89,53 @@ function validateSelectOption(fieldId, messageId, errormsg) {
 // shan
 
 function isDate(fieldId, messageId, errormsg) {
-    var txtDate = document.getElementById(fieldId).value;
-
-    var day,      // day
-            month,    // month
-            year;     // year
-
-    if (txtDate.length !== 10) {
+    var domObject = document.getElementById(fieldId);
+    if (isFieldEmpty(domObject)) {
         return printValidationMessage(messageId, errormsg);
-    }
+    } else {
 
-    if (txtDate.substring(4, 5) !== '-' || txtDate.substring(7, 8) !== '-') {
-        return printValidationMessage(messageId, errormsg);
-    }
+        var txtDate = document.getElementById(fieldId).value;
 
-    month = txtDate.substring(5, 7) - 1; // because months in JS start from 0
-    day = txtDate.substring(8, 10) - 0;
-    year = txtDate.substring(0, 4) - 0;
+        var day,      // day
+                month,    // month
+                year;     // year
 
-    if (year < 1000 || year > 3000) {
-        return printValidationMessage(messageId, errormsg);
-    }
+        if (txtDate.length !== 10) {
+            return printValidationMessage(messageId, errormsg);
+        }
 
-    if (month > 0 || month < 13) {
-        if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {
-            if (day < 0 || day > 31) {
-                return printValidationMessage(messageId, errormsg);
-            }
-        } else {
-            if (month == 2) {
-                if (day < 0 || day > 29) {
+        if (txtDate.substring(4, 5) !== '-' || txtDate.substring(7, 8) !== '-') {
+            return printValidationMessage(messageId, errormsg);
+        }
+
+        month = txtDate.substring(5, 7) - 1; // because months in JS start from 0
+        day = txtDate.substring(8, 10) - 0;
+        year = txtDate.substring(0, 4) - 0;
+
+        if (year < 1000 || year > 3000) {
+            return printValidationMessage(messageId, errormsg);
+        }
+
+        if (month > 0 || month < 13) {
+            if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {
+                if (day < 0 || day > 31) {
                     return printValidationMessage(messageId, errormsg);
                 }
             } else {
-                if (day < 0 || day > 30) {
-                    return printValidationMessage(messageId, errormsg);
+                if (month == 2) {
+                    if (day < 0 || day > 29) {
+                        return printValidationMessage(messageId, errormsg);
+                    }
+                } else {
+                    if (day < 0 || day > 30) {
+                        return printValidationMessage(messageId, errormsg);
+                    }
                 }
             }
+        } else {
+            return printValidationMessage(messageId, errormsg);
         }
-    }
-    else {
-        return printValidationMessage(messageId, errormsg);
-    }
 
-    return errormsg;
+        return errormsg;
+     }
 }  
