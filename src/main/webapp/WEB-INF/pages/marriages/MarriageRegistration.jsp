@@ -11,194 +11,194 @@
 <script type="text/javascript">
 
 
-$(function() {
-    $('img#male_lookup').bind('click', function(evt1) {
-        var id1 = $("input#malePIN").attr("value");
-        //var datePicker = $('#fatherDatePicker');
-        //var error = document.getElementById('error10').value;
-        //calculateBirthDay(id1, datePicker, error);
-        $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
-                function(data1) {
-                    $("textarea#nameOfficialMale").val(data1.fullNameInOfficialLanguage);
-                    $("textarea#addressMale").val(data1.lastAddress);
-                    var maleDOB = data1.dateOfBirth;
-                    if (maleDOB != null) {
-                        $("input#dateOfBirthMaleDatePicker").val(maleDOB);
-                    }
-                });
+    $(function() {
+        $('img#male_lookup').bind('click', function(evt1) {
+            var id1 = $("input#malePIN").attr("value");
+            //var datePicker = $('#fatherDatePicker');
+            //var error = document.getElementById('error10').value;
+            //calculateBirthDay(id1, datePicker, error);
+            $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
+                    function(data1) {
+                        $("textarea#nameOfficialMale").val(data1.fullNameInOfficialLanguage);
+                        $("textarea#addressMale").val(data1.lastAddress);
+                        var maleDOB = data1.dateOfBirth;
+                        if (maleDOB != null) {
+                            $("input#dateOfBirthMaleDatePicker").val(maleDOB);
+                        }
+                    });
+        });
+
+        $('img#female_lookup').bind('click', function(evt2) {
+            var id2 = $("input#femalePIN").attr("value");
+            //var datePicker = $('#motherDatePicker');
+            //var error = document.getElementById('error11').value;
+            //calculateBirthDay(id2, datePicker, error);
+            $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id2},
+                    function(data2) {
+                        $("textarea#nameOfficialFemale").val(data2.fullNameInOfficialLanguage);
+                        $("textarea#addressFemale").val(data2.lastAddress);
+                        var femaleDOB = data2.dateOfBirth;
+                        if (femaleDOB != null) {
+                            $("input#dateOfBirthFemaleDatePicker").val(femaleDOB);
+                        }
+                    });
+        });
+
+
+        $('img#registrar_lookup').bind('click', function(evt3) {
+            var id1 = $("input#regPIN").attr("value");
+            $.getJSON('/ecivil/crs/RegistrarLookupService', {pinOrNic:id1},
+                    function(data1) {
+                        $("textarea#regNameInOfficialLang").val(data1.fullNameInOfficialLanguage);
+                        $("textarea#regNameInEnglishLang").val(data1.fullNameInEnglishLanguage);
+                        $("textarea#regPlaceInOfficialLang").val(data1.address);
+                    });
+        });
+
+        $('img#place').bind('click', function(evt4) {
+            var id = $("textarea#regPlaceInOfficialLang").attr("value");
+            var wsMethod = "transliterate";
+            var soapNs = "http://translitwebservice.transliteration.icta.com/";
+
+            var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
+            soapBody.attr("xmlns:trans", soapNs);
+            soapBody.appendChild(new SOAPObject('InputName')).val(id);
+            soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
+            soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
+            soapBody.appendChild(new SOAPObject('Gender')).val('U');
+
+            //Create a new SOAP Request
+            var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
+
+            //Lets send it
+            SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
+            SOAPClient.SendRequest(sr, processResponse2); //Send request to server and assign a callback
+        });
+
+        function processResponse2(respObj) {
+            //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
+            $("textarea#regPlaceInEnglishLang").val(respObj.Body[0].transliterateResponse[0].
+            return[0].Text
+        )
+            ;
+        }
+
+        $('img#regName').bind('click', function(evt4) {
+            var id = $("textarea#regNameInOfficialLang").attr("value");
+            var wsMethod = "transliterate";
+            var soapNs = "http://translitwebservice.transliteration.icta.com/";
+
+            var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
+            soapBody.attr("xmlns:trans", soapNs);
+            soapBody.appendChild(new SOAPObject('InputName')).val(id);
+            soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
+            soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
+            soapBody.appendChild(new SOAPObject('Gender')).val('U');
+
+            //Create a new SOAP Request
+            var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
+
+            //Lets send it
+            SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
+            SOAPClient.SendRequest(sr, processResponse1); //Send request to server and assign a callback
+        });
+
+        function processResponse1(respObj) {
+            //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
+            $("textarea#regNameInEnglishLang").val(respObj.Body[0].transliterateResponse[0].
+            return[0].Text
+        )
+            ;
+        }
+
+        $('img#maleName').bind('click', function(evt4) {
+            var id = $("textarea#nameOfficialMale").attr("value");
+            var wsMethod = "transliterate";
+            var soapNs = "http://translitwebservice.transliteration.icta.com/";
+
+            var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
+            soapBody.attr("xmlns:trans", soapNs);
+            soapBody.appendChild(new SOAPObject('InputName')).val(id);
+            soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
+            soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
+            soapBody.appendChild(new SOAPObject('Gender')).val('U');
+
+            //Create a new SOAP Request
+            var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
+
+            //Lets send it
+            SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
+            SOAPClient.SendRequest(sr, processResponse3); //Send request to server and assign a callback
+        });
+
+        function processResponse3(respObj) {
+            //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
+            $("textarea#name_english_male").val(respObj.Body[0].transliterateResponse[0].
+            return[0].Text
+        )
+            ;
+        }
+
+        $('img#femaleName').bind('click', function(evt4) {
+            var id = $("textarea#nameOfficialFemale").attr("value");
+            var wsMethod = "transliterate";
+            var soapNs = "http://translitwebservice.transliteration.icta.com/";
+
+            var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
+            soapBody.attr("xmlns:trans", soapNs);
+            soapBody.appendChild(new SOAPObject('InputName')).val(id);
+            soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
+            soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
+            soapBody.appendChild(new SOAPObject('Gender')).val('U');
+
+            //Create a new SOAP Request
+            var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
+
+            //Lets send it
+            SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
+            SOAPClient.SendRequest(sr, processResponse4); //Send request to server and assign a callback
+        });
+
+        function processResponse4(respObj) {
+            //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
+            $("textarea#name_english_female").val(respObj.Body[0].transliterateResponse[0].
+            return[0].Text
+        )
+            ;
+        }
+
     });
 
-    $('img#female_lookup').bind('click', function(evt2) {
-        var id2 = $("input#femalePIN").attr("value");
-        //var datePicker = $('#motherDatePicker');
-        //var error = document.getElementById('error11').value;
-        //calculateBirthDay(id2, datePicker, error);
-        $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id2},
-                function(data2) {
-                    $("textarea#nameOfficialFemale").val(data2.fullNameInOfficialLanguage);
-                    $("textarea#addressFemale").val(data2.lastAddress);
-                    var femaleDOB = data2.dateOfBirth;
-                    if (femaleDOB != null) {
-                        $("input#dateOfBirthFemaleDatePicker").val(femaleDOB);
-                    }
-                });
-    });
+    function validateMarriageDetails() {
+        var errormsg = "";
+        //errormsg = validateEmptyField("marriageDatePicker", "errorMarriageDate", errormsg);
+        errormsg = isDate("marriageDatePicker", "errorMarriageDate", errormsg);
+        //validate registrar details
+        errormsg = validatePin("regPIN", "errorRegistrarPIN", errormsg);
+        errormsg = validateEmptyField("regPlaceInOfficialLang", "errorRegistrationPlace", errormsg);
+        errormsg = validateEmptyField("regNameInOfficialLang", "errorRegistrarName", errormsg);
 
+        //validate Male/Female
+        errormsg = validateSelectOption("maleRace", "errorMaleRace", errormsg);
+        errormsg = validateSelectOption("femaleRace", "errorFemaleRace", errormsg);
 
-    $('img#registrar_lookup').bind('click', function(evt3) {
-        var id1 = $("input#regPIN").attr("value");
-        $.getJSON('/ecivil/crs/RegistrarLookupService', {pinOrNic:id1},
-                function(data1) {
-                    $("textarea#regNameInOfficialLang").val(data1.fullNameInOfficialLanguage);
-                    $("textarea#regNameInEnglishLang").val(data1.fullNameInEnglishLanguage);
-                    $("textarea#regPlaceInOfficialLang").val(data1.address);
-                });
-    });
+        //errormsg = validateEmptyField("malePIN", "errorMalePIN", errormsg);
+        //errormsg = validateEmptyField("femalePIN", "errorFemalePIN", errormsg);
+        //errormsg = validateEmptyField("dateOfBirthMaleDatePicker", "errorDateOfBirthMale", errormsg);
+        //errormsg = isDate("dateOfBirthMaleDatePicker", "errorDateOfBirthMale", errormsg);
+        //errormsg = validateEmptyField("dateOfBirthFemaleDatePicker", "errorDateOfBirthFemale", errormsg);
+        //errormsg = isDate("dateOfBirthFemaleDatePicker", "errorDateOfBirthFemale", errormsg);
+        errormsg = validateEmptyField("ageMale", "errorAgeMale", errormsg);
+        errormsg = validateEmptyField("ageFemale", "errorAgeFemale", errormsg);
+        errormsg = validateEmptyField("nameOfficialMale", "errorNameOfficialMale", errormsg);
+        errormsg = validateEmptyField("nameOfficialFemale", "errorNameOfficialFemale", errormsg);
+        errormsg = validateEmptyField("addressMale", "errorAddressMale", errormsg);
+        errormsg = validateEmptyField("addressFemale", "errorAddressFemale", errormsg);
 
-    $('img#place').bind('click', function(evt4) {
-        var id = $("textarea#regPlaceInOfficialLang").attr("value");
-        var wsMethod = "transliterate";
-        var soapNs = "http://translitwebservice.transliteration.icta.com/";
-
-        var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
-        soapBody.attr("xmlns:trans", soapNs);
-        soapBody.appendChild(new SOAPObject('InputName')).val(id);
-        soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
-        soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
-        soapBody.appendChild(new SOAPObject('Gender')).val('U');
-
-        //Create a new SOAP Request
-        var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
-
-        //Lets send it
-        SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
-        SOAPClient.SendRequest(sr, processResponse2); //Send request to server and assign a callback
-    });
-
-    function processResponse2(respObj) {
-        //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("textarea#regPlaceInEnglishLang").val(respObj.Body[0].transliterateResponse[0].
-        return[0].Text
-    )
-        ;
+        errormsg = validateEmptyField("serialNumber", "errorSerialNumber", errormsg);
+        errormsg = isDate("registrationDatePicker", "errorRegistrationDate", errormsg);
+        return printErrorMessages(errormsg);
     }
-
-    $('img#regName').bind('click', function(evt4) {
-        var id = $("textarea#regNameInOfficialLang").attr("value");
-        var wsMethod = "transliterate";
-        var soapNs = "http://translitwebservice.transliteration.icta.com/";
-
-        var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
-        soapBody.attr("xmlns:trans", soapNs);
-        soapBody.appendChild(new SOAPObject('InputName')).val(id);
-        soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
-        soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
-        soapBody.appendChild(new SOAPObject('Gender')).val('U');
-
-        //Create a new SOAP Request
-        var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
-
-        //Lets send it
-        SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
-        SOAPClient.SendRequest(sr, processResponse1); //Send request to server and assign a callback
-    });
-
-    function processResponse1(respObj) {
-        //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("textarea#regNameInEnglishLang").val(respObj.Body[0].transliterateResponse[0].
-        return[0].Text
-    )
-        ;
-    }
-
-    $('img#maleName').bind('click', function(evt4) {
-        var id = $("textarea#nameOfficialMale").attr("value");
-        var wsMethod = "transliterate";
-        var soapNs = "http://translitwebservice.transliteration.icta.com/";
-
-        var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
-        soapBody.attr("xmlns:trans", soapNs);
-        soapBody.appendChild(new SOAPObject('InputName')).val(id);
-        soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
-        soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
-        soapBody.appendChild(new SOAPObject('Gender')).val('U');
-
-        //Create a new SOAP Request
-        var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
-
-        //Lets send it
-        SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
-        SOAPClient.SendRequest(sr, processResponse3); //Send request to server and assign a callback
-    });
-
-    function processResponse3(respObj) {
-        //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("textarea#name_english_male").val(respObj.Body[0].transliterateResponse[0].
-        return[0].Text
-    )
-        ;
-    }
-
-    $('img#femaleName').bind('click', function(evt4) {
-        var id = $("textarea#nameOfficialFemale").attr("value");
-        var wsMethod = "transliterate";
-        var soapNs = "http://translitwebservice.transliteration.icta.com/";
-
-        var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
-        soapBody.attr("xmlns:trans", soapNs);
-        soapBody.appendChild(new SOAPObject('InputName')).val(id);
-        soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
-        soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
-        soapBody.appendChild(new SOAPObject('Gender')).val('U');
-
-        //Create a new SOAP Request
-        var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
-
-        //Lets send it
-        SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
-        SOAPClient.SendRequest(sr, processResponse4); //Send request to server and assign a callback
-    });
-
-    function processResponse4(respObj) {
-        //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("textarea#name_english_female").val(respObj.Body[0].transliterateResponse[0].
-        return[0].Text
-    )
-        ;
-    }
-
-});
-
-function validateMarriageDetails() {
-    var errormsg = "";
-    //errormsg = validateEmptyField("marriageDatePicker", "errorMarriageDate", errormsg);
-    errormsg = isDate("marriageDatePicker", "errorMarriageDate", errormsg);
-    //validate registrar details
-    errormsg = validatePin("regPIN", "errorRegistrarPIN", errormsg);
-    errormsg = validateEmptyField("regPlaceInOfficialLang", "errorRegistrationPlace", errormsg);
-    errormsg = validateEmptyField("regNameInOfficialLang", "errorRegistrarName", errormsg);
-
-    //validate Male/Female
-    errormsg = validateSelectOption("maleRace", "errorMaleRace", errormsg);
-    errormsg = validateSelectOption("femaleRace", "errorFemaleRace", errormsg);
-
-    //errormsg = validateEmptyField("malePIN", "errorMalePIN", errormsg);
-    //errormsg = validateEmptyField("femalePIN", "errorFemalePIN", errormsg);
-    //errormsg = validateEmptyField("dateOfBirthMaleDatePicker", "errorDateOfBirthMale", errormsg);
-    //errormsg = isDate("dateOfBirthMaleDatePicker", "errorDateOfBirthMale", errormsg);
-    //errormsg = validateEmptyField("dateOfBirthFemaleDatePicker", "errorDateOfBirthFemale", errormsg);
-    //errormsg = isDate("dateOfBirthFemaleDatePicker", "errorDateOfBirthFemale", errormsg);
-    errormsg = validateEmptyField("ageMale", "errorAgeMale", errormsg);
-    errormsg = validateEmptyField("ageFemale", "errorAgeFemale", errormsg);
-    errormsg = validateEmptyField("nameOfficialMale", "errorNameOfficialMale", errormsg);
-    errormsg = validateEmptyField("nameOfficialFemale", "errorNameOfficialFemale", errormsg);
-    errormsg = validateEmptyField("addressMale", "errorAddressMale", errormsg);
-    errormsg = validateEmptyField("addressFemale", "errorAddressFemale", errormsg);
-
-    errormsg = validateEmptyField("serialNumber", "errorSerialNumber", errormsg);
-    errormsg = isDate("registrationDatePicker", "errorRegistrationDate", errormsg);
-    return printErrorMessages(errormsg);
-}
 
 </script>
 
@@ -463,8 +463,7 @@ function validateMarriageDetails() {
     </tr>
     <tr>
         <td colspan="1">
-            උපන් දිනය
-            <s:label value="*" cssStyle="color:red;font-size:10pt;"/><br>
+            උපන් දිනය<br>
             பிறந்த திகதி <br>
             Date of Birth
         </td>
@@ -626,7 +625,8 @@ function validateMarriageDetails() {
     <col>
     <tr>
         <td><label><span class="font-8">අනුක්‍රමික අංකය
-                        <s:label value="*" cssStyle="color:red;font-size:10pt;"/> <br>தொடர் இலக்கம்<br>Serial Number</span></label>
+                        <s:label value="*"
+                                 cssStyle="color:red;font-size:10pt;"/> <br>தொடர் இலக்கம்<br>Serial Number</span></label>
         </td>
         <td align="center">
                 <%-- <s:if test="idUKey==0">
