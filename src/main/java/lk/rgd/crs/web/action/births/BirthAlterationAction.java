@@ -154,7 +154,13 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             addActionError(getText("cp1.error.entryNotAvailable"));
             populateBasicLists();
             return ERROR;
+        } else if (!bdf.getLifeCycleInfo().isActiveRecord()) {
+            logger.debug("found record is not active ");
+            addActionError(getText("error.entry.is.archived", new String[]{Long.toString(bdf.getIdUKey())}));
+            populateBasicLists();
+            return ERROR;
         } else {
+
             try {
                 birthAlterationValidator.checkOnGoingAlterationOnThisSection(bdf.getIdUKey(), alterationType, user);
             }
