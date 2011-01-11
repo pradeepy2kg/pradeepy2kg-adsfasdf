@@ -46,15 +46,26 @@
         <action name="eprLogin" class="lk.rgd.crs.web.action.LoginAction" method="login">
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="cacheControl"/>
-            <result type="tiles" name="successADMIN">epr.home</result>
+            <!--<result type="tiles" name="successADMIN">epr.home</result>
             <result type="tiles" name="successRG">epr.rghome</result>
             <result type="tiles" name="successARG">epr.arghome</result>
             <result type="tiles" name="successDR">epr.drhome</result>
             <result type="tiles" name="successADR">epr.adrhome</result>
-            <result type="tiles" name="successDEO">epr.deohome</result>
+            <result type="tiles" name="successDEO">epr.deohome</result>-->
+
+            <result type="redirectAction" name="successADMIN"><param name="actionName">eprStatHome</param></result>
+            <result type="redirectAction" name="successRG"><param name="actionName">eprStatHome</param></result>
+            <result type="redirectAction" name="successARG"><param name="actionName">eprStatHome</param></result>
+            <result type="redirectAction" name="successDR"><param name="actionName">eprStatHome</param></result>
+            <result type="redirectAction" name="successADR"><param name="actionName">eprStatHome</param></result>
+            <result type="redirectAction" name="successDEO"><param name="actionName">eprStatHome</param></result>
 
             <result name="expired">/WEB-INF/pages/preferences/PasswordChange.jsp</result>
             <result name="error">/WEB-INF/pages/login/login.jsp</result>
+        </action>
+
+        <action name="eprStatHome" class="lk.rgd.crs.web.action.LoginAction" method="showHomeStatistics">
+            <result type="tiles" name="success">epr.home</result>
         </action>
 
         <action name="eprLogout" class="lk.rgd.crs.web.action.LoginAction" method="logout">

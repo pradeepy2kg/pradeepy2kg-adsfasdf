@@ -3,6 +3,8 @@ package lk.rgd.crs.web.action;
 import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.AppParameter;
+import lk.rgd.common.api.domain.Role;
+import lk.rgd.common.api.domain.Statistics;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.core.AuthorizationException;
@@ -41,14 +43,14 @@ public class LoginAction extends ActionSupport implements SessionAware {
     //for home page charts
     private int totalDeclarations;
     private int totalDecArrivals;
-    private int approvalPendings;
-    private int totalConfirmChages;
+    private int approvalPending;
+    private int totalConfirmChanges;
     private int confirmApproved;
     private int confirmApprovedPending;
     private int confirmPrinted;
-    private int confimPrintingPending;
+    private int confirmPrintingPending;
     private int BCprinted;
-    private int BCPrintPendings;
+    private int BCPrintPending;
     private int stillBirths;
     private int SBPendingApprovals;
 
@@ -65,14 +67,19 @@ public class LoginAction extends ActionSupport implements SessionAware {
     private String startDate;
     private String endDate;
 
+    private Statistics statistics;
+    private String role;
+    private StatisticsDAO statisticsDAO;
+
     public LoginAction(UserManager userManager, AppParametersDAO appParaDao, DistrictDAO districtDAO,
-        DSDivisionDAO dsDivisionDAO, UserDAO userDAO, RoleDAO roleDAO) {
+        DSDivisionDAO dsDivisionDAO, UserDAO userDAO, RoleDAO roleDAO, StatisticsDAO statisticsDAO) {
         this.userManager = userManager;
         this.appParaDao = appParaDao;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.userDAO = userDAO;
         this.roleDAO = roleDAO;
+        this.statisticsDAO = statisticsDAO;
     }
 
     public Locale getLocale() {
@@ -162,14 +169,14 @@ public class LoginAction extends ActionSupport implements SessionAware {
             //todo : to be removed when dashboard implemented
             totalDeclarations = 10;
             totalDecArrivals = 11;
-            approvalPendings = 12;
-            totalConfirmChages = 13;
+            approvalPending = 12;
+            totalConfirmChanges = 13;
             confirmApproved = 14;
             confirmApprovedPending = 15;
             confirmPrinted = 16;
-            confimPrintingPending = 17;
+            confirmPrintingPending = 17;
             BCprinted = 18;
-            BCPrintPendings = 19;
+            BCPrintPending = 19;
             stillBirths = 20;
             SBPendingApprovals = 21;
 
@@ -192,6 +199,35 @@ public class LoginAction extends ActionSupport implements SessionAware {
             logger.error("Exception is :P {} {} ", e, e.toString());
             return ERROR;
         }
+    }
+
+    public String showHomeStatistics() {
+
+        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
+        logger.debug("Logged User's UserName : {}", user.getUserId());
+        logger.debug("Logged User's Role : {}", user.getRole());
+        role = user.getRole().getRoleId();
+
+        statistics = statisticsDAO.getByUser(user.getUserId());
+        if (statistics == null) {
+            statistics = new Statistics();
+        }
+
+        districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
+        if (districtList.size() > 0) {
+            districtId = districtList.keySet().iterator().next();
+        }
+        divisionList = dsDivisionDAO.getAllDSDivisionNames(districtId, user.getPrefLanguage(), user);
+        if (divisionList.size() > 0) {
+            dsDivisionId = divisionList.keySet().iterator().next();
+            deoList = userDAO.getDEOsByDSDivision(user.getPrefLanguage(), user,
+            dsDivisionDAO.getDSDivisionByPK(dsDivisionId), roleDAO.getRole(Role.ROLE_DEO));
+        }     
+        deoUserId = 1;
+        /*adrList = userDAO.getADRsByDistrictId(districtDAO.getDistrict(districtId), roleDAO.getRole(Role.ROLE_ADR));
+        adrUserId = 1;*/
+
+        return SUCCESS;
     }
 
     void populateLists(User user, String usertype) {
@@ -375,20 +411,20 @@ public class LoginAction extends ActionSupport implements SessionAware {
         this.totalDecArrivals = totalDecArrivals;
     }
 
-    public int getApprovalPendings() {
-        return approvalPendings;
+    public int getApprovalPending() {
+        return approvalPending;
     }
 
-    public void setApprovalPendings(int approvalPendings) {
-        this.approvalPendings = approvalPendings;
+    public void setApprovalPending(int approvalPending) {
+        this.approvalPending = approvalPending;
     }
 
-    public int getTotalConfirmChages() {
-        return totalConfirmChages;
+    public int getTotalConfirmChanges() {
+        return totalConfirmChanges;
     }
 
-    public void setTotalConfirmChages(int totalConfirmChages) {
-        this.totalConfirmChages = totalConfirmChages;
+    public void setTotalConfirmChanges(int totalConfirmChanges) {
+        this.totalConfirmChanges = totalConfirmChanges;
     }
 
     public int getConfirmApproved() {
@@ -415,12 +451,12 @@ public class LoginAction extends ActionSupport implements SessionAware {
         this.confirmPrinted = confirmPrinted;
     }
 
-    public int getConfimPrintingPending() {
-        return confimPrintingPending;
+    public int getConfirmPrintingPending() {
+        return confirmPrintingPending;
     }
 
-    public void setConfimPrintingPending(int confimPrintingPending) {
-        this.confimPrintingPending = confimPrintingPending;
+    public void setConfirmPrintingPending(int confirmPrintingPending) {
+        this.confirmPrintingPending = confirmPrintingPending;
     }
 
     public int getBCprinted() {
@@ -431,12 +467,12 @@ public class LoginAction extends ActionSupport implements SessionAware {
         this.BCprinted = BCprinted;
     }
 
-    public int getBCPrintPendings() {
-        return BCPrintPendings;
+    public int getBCPrintPending() {
+        return BCPrintPending;
     }
 
-    public void setBCPrintPendings(int BCPrintPendings) {
-        this.BCPrintPendings = BCPrintPendings;
+    public void setBCPrintPending(int BCPrintPending) {
+        this.BCPrintPending = BCPrintPending;
     }
 
     public int getStillBirths() {
@@ -533,5 +569,21 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
     public void setAdrUserId(int adrUserId) {
         this.adrUserId = adrUserId;
+    }
+
+    public Statistics getStatistics() {
+        return statistics;
+    }
+
+    public void setStatistics(Statistics statistics) {
+        this.statistics = statistics;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }
