@@ -13,7 +13,7 @@
     </definition>
 
     <definition name="epr.home" extends="epr.template">
-        <put-attribute name="body" value="/WEB-INF/pages/home.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/pages/StatHome.jsp"/>
         <put-attribute name="title" value="home.title"/>
     </definition>
 
