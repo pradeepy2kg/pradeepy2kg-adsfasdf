@@ -102,7 +102,8 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
             switch (e.getErrorCode()) {
                 case ErrorCodes.INVALID_DATA:
                     addActionError(getText("message.approveData.invalid"));
-                    break;
+                    loadPRSManagementPage();
+                    return SUCCESS;
                 case ErrorCodes.INVALID_STATE_FOR_PRS_APPROVAL:
                 case ErrorCodes.PERMISSION_DENIED:
                     addActionError(getText("message.noPermission"));
@@ -114,9 +115,7 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
             if (direct) {
                 initPermissions();
             } else {
-                pageNo = (pageNo == 0) ? 1 : pageNo;
-                populateLocations();
-                getSearchResultsPage();
+                loadPRSManagementPage();
             }
             addActionMessage(getText("message.approval.success"));
             logger.debug("Approving person with personUKey : {} approved successfully", personUKey);
@@ -154,9 +153,7 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
                 }
             }
 
-            pageNo = (pageNo == 0) ? 1 : pageNo;
-            populateLocations();
-            getSearchResultsPage();
+            loadPRSManagementPage();
             return SUCCESS;
         }
     }
@@ -187,9 +184,7 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
                 }
             }
 
-            pageNo = (pageNo == 0) ? 1 : pageNo;
-            populateLocations();
-            getSearchResultsPage();
+            loadPRSManagementPage();
             return SUCCESS;
         }
     }
@@ -207,9 +202,7 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
             if (direct) {
                 initPermissions();
             } else {
-                pageNo = (pageNo == 0) ? 1 : pageNo;
-                populateLocations();
-                getSearchResultsPage();
+                loadPRSManagementPage();
             }
 
         } catch (RGDRuntimeException e) {
@@ -232,9 +225,7 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
         if (direct) {
             // nothing to do
         } else {
-            pageNo = (pageNo == 0) ? 1 : pageNo;
-            populateLocations();
-            getSearchResultsPage();
+            loadPRSManagementPage();
         }
         return SUCCESS;
     }
@@ -271,6 +262,15 @@ public class PersonApprovalAction extends ActionSupport implements SessionAware 
         clearSearchFieldValues();
         displayResultSize();
         return SUCCESS;
+    }
+
+    /**
+     * This method is used to load PRS management list page
+     */
+    private void loadPRSManagementPage() {
+        pageNo = (pageNo == 0) ? 1 : pageNo;
+        populateLocations();
+        getSearchResultsPage();
     }
 
     /**

@@ -5,8 +5,10 @@ import lk.rgd.Permission;
 import lk.rgd.common.api.Auditable;
 import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.util.DateTimeUtils;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.service.PRSRecordsIndexer;
+import lk.rgd.crs.core.service.PopulationRegisterValidator;
 import lk.rgd.prs.api.dao.PersonCitizenshipDAO;
 import lk.rgd.prs.api.dao.PersonDAO;
 import lk.rgd.prs.api.domain.Address;
@@ -40,14 +42,16 @@ public class PopulationRegistryImpl implements PopulationRegistry {
     private final PINGenerator pinGenerator;
     private final PRSRecordsIndexer prsIndexer;
     private final PersonCitizenshipDAO citizenshipDAO;
+    private final PopulationRegisterValidator populationRegisterValidator;
     private final Random rand = new Random(System.currentTimeMillis());
 
     public PopulationRegistryImpl(PersonDAO personDao, PINGenerator pinGenerator, PRSRecordsIndexer prsIndexer,
-        PersonCitizenshipDAO citizenshipDAO) {
+        PersonCitizenshipDAO citizenshipDAO, PopulationRegisterValidator populationRegisterValidator) {
         this.personDao = personDao;
         this.pinGenerator = pinGenerator;
         this.prsIndexer = prsIndexer;
         this.citizenshipDAO = citizenshipDAO;
+        this.populationRegisterValidator = populationRegisterValidator;
     }
 
     /**
@@ -99,7 +103,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
         logger.debug("Adding an existing person to the PRS by user : {}", user.getUserId());
         long pin = -1;
 
-        validateRequiredFields(person);
+        populationRegisterValidator.validateMinimalRequirementsOfNewPerson(person);
         if (!user.isAuthorized(Permission.PRS_LOOKUP_PERSON_BY_KEYS)) {
             handleException("User : " + user.getUserId() + " is not allowed to lookup entries on the PRS by keys (nic/temporaryPIN)",
                 ErrorCodes.PRS_LOOKUP_BY_KEYS_DENIED);
@@ -113,12 +117,12 @@ public class PopulationRegistryImpl implements PopulationRegistry {
         final List<Person> exactRecord = new ArrayList<Person>();
         if (person.getTemporaryPin() != null) {
             Person p = personDao.findPersonByTemporaryPIN(person.getTemporaryPin());
-            if (p != null && (p.getStatus() == Person.Status.SEMI_VERIFIED || p.getStatus() == Person.Status.UNVERIFIED)) {
+            if (p != null && (isRecordInDataEntry(p.getStatus()) || p.getStatus() == Person.Status.VERIFIED)) {
                 exactRecord.add(personDao.findPersonByTemporaryPIN(person.getTemporaryPin()));
             }
         } else if (person.getNic() != null) {
             for (Person p : personDao.findPersonsByNIC(person.getNic())) {
-                if (p.getStatus() == Person.Status.SEMI_VERIFIED || p.getStatus() == Person.Status.UNVERIFIED) {
+                if (isRecordInDataEntry(p.getStatus()) || p.getStatus() == Person.Status.VERIFIED) {
                     exactRecord.add(p);
                 }
             }
@@ -129,7 +133,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
         }
 
         if (exactRecord.isEmpty() || ignoreDuplicates) {
-            person.setStatus(Person.Status.SEMI_VERIFIED);
+            person.setStatus(Person.Status.DATA_ENTRY);
             person.setLifeStatus(Person.LifeStatus.ALIVE);
             person.setSubmittedLocation(user.getPrimaryLocation());
             // generate a PIN for existing person
@@ -194,9 +198,11 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             }
         }
         // load current address to the transient field
-        final Address currentAdd = person.getLastAddress();
-        if (currentAdd != null && !isEmptyString(currentAdd.getLine1())) {
-            person.setCurrentAddress(currentAdd.getLine1());
+        if (addresses != null && addresses.size() > 1) {
+            final Address currentAdd = person.getLastAddress();
+            if (currentAdd != null && !isEmptyString(currentAdd.getLine1())) {
+                person.setCurrentAddress(currentAdd.getLine1());
+            }
         }
         logger.debug("Person citizenship list loaded for personUKey: {} with size : {} loaded", personUKey,
             person.getCountries().size());
@@ -212,15 +218,12 @@ public class PopulationRegistryImpl implements PopulationRegistry {
         final long personUKey = person.getPersonUKey();
         logger.debug("Attempt to edit PRS entry before approval with personUKey : {}", personUKey);
         validateAccessOfUserToEdit(user);
-        validateRequiredFields(person);
+        populationRegisterValidator.validateMinimalRequirementsOfNewPerson(person);
         Person existing = personDao.getByUKey(personUKey);
 
-        // TODO if birth exist can not edit , throw exception (use alteration process)
-        // TODO is this applicable after approval not for before approval
-
         final Person.Status currentState = existing.getStatus();
-        if (currentState == Person.Status.SEMI_VERIFIED || currentState == Person.Status.UNVERIFIED) {
-            existing.setStatus(Person.Status.SEMI_VERIFIED);
+        if (isRecordInDataEntry(currentState)) {
+            existing.setStatus(Person.Status.DATA_ENTRY);
             existing.setLifeStatus(Person.LifeStatus.ALIVE);
             existing.setSubmittedLocation(user.getPrimaryLocation());
             // setting updated fields to the existing person
@@ -231,21 +234,20 @@ public class PopulationRegistryImpl implements PopulationRegistry {
 
             final String permanentAddress = person.getPermanentAddress();
             final String currentAddress = person.getCurrentAddress();
+
+            Set<Address> addresses = existing.getAddresses();
             // update permanent address of the person to the PRS
-            if (isNotEmpty(permanentAddress)) {
-                Set<Address> addresses = existing.getAddresses();
-                if (addresses != null) {
-                    for (Address permanentAdd : addresses) {
-                        if (permanentAdd.isPermanent()) {
-                            permanentAdd.setLine1(permanentAddress);
-                            personDao.updateAddress(permanentAdd);
-                            break;
-                        }
+            if (isNotEmpty(permanentAddress) && addresses != null) {
+                for (Address permanentAdd : addresses) {
+                    if (permanentAdd.isPermanent()) {
+                        permanentAdd.setLine1(permanentAddress);
+                        personDao.updateAddress(permanentAdd);
+                        break;
                     }
                 }
             }
             // update current address of the person to the PRS
-            if (isNotEmpty(currentAddress)) {
+            if (isNotEmpty(currentAddress) && addresses != null && addresses.size() > 1) {
                 final Address currentAdd = existing.getLastAddress();
                 if (currentAdd != null) {
                     currentAdd.setLine1(currentAddress);
@@ -253,12 +255,27 @@ public class PopulationRegistryImpl implements PopulationRegistry {
                     personDao.updateAddress(currentAdd);
                 }
             }
+
+            // if currently does not have any addresses add permanent or current address
+            if (isNotEmpty(permanentAddress) && addresses != null && addresses.isEmpty()) {
+                final Address permanentAdd = new Address(permanentAddress);
+                permanentAdd.setPermanent(true);
+                existing.specifyAddress(permanentAdd);
+                personDao.addAddress(permanentAdd);
+            }
+            if (isNotEmpty(currentAddress) && addresses != null && addresses.size() >= 1) {
+                final Address currentAdd = new Address(currentAddress);
+                existing.specifyAddress(currentAdd);
+                personDao.addAddress(currentAdd);
+            }
+
+
             if (permanentAddress != null || currentAddress != null) {
                 personDao.updatePerson(existing, user);
                 prsIndexer.updateIndex(existing);
             }
+
             // update citizenship list of the person to the PRS
-            // TODO need to find a better solution
             if (citizenshipList != null && !citizenshipList.isEmpty()) {
                 final Set<PersonCitizenship> existingCitizens = existing.getCountries();
                 for (PersonCitizenship pc : existingCitizens) {
@@ -283,7 +300,8 @@ public class PopulationRegistryImpl implements PopulationRegistry {
         final long personUKey = person.getPersonUKey();
         logger.debug("Attempt to edit approved PRS entry with personUKey : {}", personUKey);
 
-        // TODO validate permission to edit approved data
+        // check whether if user have permission to approve PRS entries
+        validateAccessOfUserToApprove(user);
         if (!user.isAuthorized(Permission.PRS_EDIT_PERSON_AFTER_APPROVE)) {
             handleException("User : " + user.getUserId() + " is not allowed to edit approved entries on the PRS by keys (uKey)",
                 ErrorCodes.PRS_EDIT_RECORD_DENIED_AFTER_APPROVE);
@@ -298,14 +316,11 @@ public class PopulationRegistryImpl implements PopulationRegistry {
         validatePersonState(existing, Person.Status.VERIFIED);
         validateAccessToLocation(existing.getSubmittedLocation(), user);
 
-        final Person.Status currentState = existing.getStatus();
-        if (currentState == Person.Status.VERIFIED) {
+        // TODO if birth exist can not edit , throw exception (use alteration process)
+        // TODO is this applicable after approval not for before approval
 
-
-        } else {
-            handleException("Cannot edit approved PRS record with personUKey : " + personUKey + " Illegal state : " +
-                currentState, ErrorCodes.ILLEGAL_STATE);
-        }
+        // TODO from here
+        // only Approved person record exist now
 
 
         // TODO chathuranga
@@ -317,53 +332,60 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public List<UserWarning> approvePerson(long personUKey, boolean ignoreWarnings, User user) {
-        // TODO still implementing don't review
-        // TODO validate access(location??) and (required fields) minimum requirements
-
-        // TODO generate pin if pin == null
 
         // check user permission for approve
         validateAccessOfUserToApprove(user);
         Person existing = personDao.getByUKey(personUKey);
         // does the user have access to existing records submitted location
         validateAccessToLocation(existing.getSubmittedLocation(), user);
-//        validateRequiredFields(existing);
+        // check all required fields are filled before approval
+        populationRegisterValidator.validateMinimalRequirementsOfExistingPerson(existing);
 
         // is the person record currently existing in a state for approval
         final Person.Status currentState = existing.getStatus();
-        if (Person.Status.SEMI_VERIFIED != currentState && !existing.getLifeCycleInfo().isActiveRecord()) {
+        if (!isRecordInDataEntry(currentState) && !existing.getLifeCycleInfo().isActiveRecord()) {
             handleException("Cannot approve PRS entry : " + personUKey + " Illegal state : " + currentState,
                 ErrorCodes.INVALID_STATE_FOR_PRS_APPROVAL);
         }
-        // TODO validate and output warning list
-//        List<UserWarning> warnings = Collections.emptyList();
-        List<UserWarning> warnings = new ArrayList<UserWarning>();
-        warnings.add(new UserWarning("Sample Warning", UserWarning.Severity.WARN));
+
+        List<UserWarning> warnings = populationRegisterValidator.validateStandardRequirements(personDao, existing, user);
 
         if (!warnings.isEmpty() && ignoreWarnings) {
-            logger.debug("inside warning list");
+            StringBuilder sb = new StringBuilder();
+            if (existing.getComments() != null) {
+                sb.append(existing.getComments()).append("\n");
+            }
 
+            sb.append(DateTimeUtils.getISO8601FormattedString(new Date())).
+                append(" - Approved PRS entry ignoring warnings. User : ").append(user.getUserId()).append("\n");
+
+            for (UserWarning w : warnings) {
+                sb.append(w.getSeverity());
+                sb.append("-");
+                sb.append(w.getMessage());
+            }
+            existing.setComments(sb.toString());
         }
 
         if (warnings.isEmpty() || ignoreWarnings) {
-            // TODO remove this
-            warnings = Collections.emptyList();
             existing.setStatus(Person.Status.VERIFIED);
             existing.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
             existing.getLifeCycleInfo().setApprovalOrRejectUser(user);
 
-            if (existing.getPin() == null && existing.getTemporaryPin() == null) {
-                // TODO add required field validation and remove transient check
-                final long pin = pinGenerator.generateTemporaryPINNumber(existing.getDateOfBirth(), existing.getGender() == 0);
+            // if approving person does not have a pin generate pin
+            if (existing.getPin() == null) {
+                final long pin = pinGenerator.generatePINNumber(existing.getDateOfBirth(), existing.getGender() == 0);
                 existing.setPin(pin);
             }
-            // TODO change this
-            updatePerson(existing, user);
+
+            personDao.updatePerson(existing, user);
+            prsIndexer.updateIndex(existing);
             logger.debug("Approved of PRS entry : {} Ignore warnings : {}", personUKey, ignoreWarnings);
+            return Collections.emptyList();
         } else {
             logger.debug("Approval of PRS entry : {} stopped due to warnings", personUKey);
+            return warnings;
         }
-        return warnings;
     }
 
     /**
@@ -399,7 +421,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
 
         // a PRS entry can be deleted by DEO or higher before approval
         final Person.Status currentState = existing.getStatus();
-        if (currentState == Person.Status.SEMI_VERIFIED || currentState == Person.Status.UNVERIFIED) {
+        if (isRecordInDataEntry(currentState)) {
             existing.setStatus(Person.Status.DELETED);
             existing.getLifeCycleInfo().setActiveRecord(false);
             existing.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
@@ -447,7 +469,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
 
         // a PRS entry can be rejected by ADR or higher before approval
         final Person.Status currentState = existing.getStatus();
-        if (currentState == Person.Status.SEMI_VERIFIED || currentState == Person.Status.UNVERIFIED) {
+        if (isRecordInDataEntry(currentState)) {
             existing.setStatus(Person.Status.CANCELLED);
             existing.getLifeCycleInfo().setActiveRecord(false);
             existing.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
@@ -463,6 +485,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
+    // TODO chathuranga remove this if unnecessary
     public void markPRSCertificateAsPrinted(long personUKey, User user) {
         logger.debug("Attempt to mark PRS certificate as marked for PRS entry with personUKey : {}", personUKey);
         if (!user.isAuthorized(Permission.PRS_MARK_CERT_PRINTED)) {
@@ -476,10 +499,6 @@ public class PopulationRegistryImpl implements PopulationRegistry {
 
         final Person.Status currentState = existing.getStatus();
         if (currentState == Person.Status.VERIFIED) {
-            existing.setStatus(Person.Status.CERT_PRINTED);
-            // TODO if needed certificate printed location add them here
-            personDao.updatePerson(existing, user);
-            prsIndexer.updateIndex(existing);
             logger.debug("Marked PRS certificate as printed for PRS entry with personUKey : {} by user : {}",
                 personUKey, user.getUserId());
         } else {
@@ -805,6 +824,17 @@ public class PopulationRegistryImpl implements PopulationRegistry {
         logger.debug("Get PRS record by LocationId : {} and TemporaryPIN : {}", location.getLocationUKey(), tempPin);
         validateAccessToLocation(location, user);
         return personDao.getByLocationAndTempPIN(location, tempPin);
+    }
+
+    /**
+     * Checks whether the given state is in data entry level, that is not approved yet
+     *
+     * @param currentState current status of the record
+     * @return if the given state in data entry mode returns true, else false
+     */
+    private boolean isRecordInDataEntry(Person.Status currentState) {
+        return (currentState == Person.Status.SEMI_VERIFIED || currentState == Person.Status.UNVERIFIED ||
+            currentState == Person.Status.DATA_ENTRY);
     }
 
     private void setChangedFieldsBeforeUpdate(final Person existing, final Person passing) {

@@ -228,7 +228,7 @@
                             </s:if>
                         </td>
                         <td align="center">
-                            <s:if test="status.ordinal() == 0 || status.ordinal() == 1">
+                            <s:if test="status.ordinal() <= 2">
                                 <s:url id="editSelected" action="eprEditPerson.do">
                                     <s:param name="personUKey" value="personUKey"/>
                                     <s:param name="pageNo" value="%{#request.pageNo}"/>
@@ -242,7 +242,7 @@
                             </s:if>
                         </td>
                         <td align="center">
-                            <s:if test="status.ordinal() == 0 || status.ordinal() == 1">
+                            <s:if test="status.ordinal() <= 2">
                                 <s:url id="approveSelected" action="eprApprovePerson.do">
                                     <s:param name="personUKey" value="personUKey"/>
                                     <s:param name="pageNo" value="%{#request.pageNo}"/>
@@ -256,7 +256,7 @@
                             </s:if>
                         </td>
                         <td align="center">
-                            <s:if test="status.ordinal() == 0 || status.ordinal() == 1">
+                            <s:if test="status.ordinal() <= 2">
                                 <s:url id="rejectSelected" action="eprLoadRejectPerson.do">
                                     <s:param name="personUKey" value="personUKey"/>
                                     <s:param name="pageNo" value="%{#request.pageNo}"/>
@@ -270,7 +270,7 @@
                             </s:if>
                         </td>
                         <td align="center">
-                            <s:if test="status.ordinal() == 0 || status.ordinal() == 1">
+                            <s:if test="status.ordinal() <= 2">
                                 <s:url id="deleteSelected" action="eprLoadDeletePerson">
                                     <s:param name="personUKey" value="personUKey"/>
                                     <s:param name="pageNo" value="%{#request.pageNo}"/>
@@ -284,7 +284,7 @@
                             </s:if>
                         </td>
                         <td>
-                            <s:if test="status.ordinal() == 2">
+                            <s:if test="status.ordinal() == 3">
                                 <s:url id="printSelected" action="eprPRSCertificate.do">
                                     <s:param name="personUKey" value="personUKey"/>
                                     <s:param name="pageNo" value="%{#request.pageNo}"/>
@@ -296,7 +296,7 @@
                                          border="none"/>
                                 </s:a>
                             </s:if>
-                            <s:elseif test="status.ordinal() == 3">
+                            <%--<s:elseif test="status.ordinal() == 3">
                                 <s:url id="printSelected" action="eprPRSCertificate.do">
                                     <s:param name="personUKey" value="personUKey"/>
                                     <s:param name="pageNo" value="%{#request.pageNo}"/>
@@ -307,7 +307,7 @@
                                     <img src="<s:url value='/images/print_icon.gif'/>" width="25" height="25"
                                          border="none"/>
                                 </s:a>
-                            </s:elseif>
+                            </s:elseif>--%>
                         </td>
                     </tr>
                 </s:iterator>

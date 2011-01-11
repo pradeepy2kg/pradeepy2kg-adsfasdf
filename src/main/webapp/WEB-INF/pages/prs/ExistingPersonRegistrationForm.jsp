@@ -405,7 +405,7 @@
                     <td align="center"><s:property value="status"/></td>
                     <s:if test="allowEdit">
                         <td align="center">
-                            <s:if test="status.ordinal() != 2">
+                            <s:if test="status.ordinal() == 0 || status.ordinal() == 1 || status.ordinal() == 2">
                                 <s:url id="editPerson" action="eprEditPerson.do">
                                     <s:param name="personUKey" value="personUKey"/>
                                 </s:url>

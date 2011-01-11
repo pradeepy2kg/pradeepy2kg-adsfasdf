@@ -40,10 +40,10 @@ public class Person implements Serializable {
      * Unverified records may be inaccurate
      */
     public enum Status {
-        UNVERIFIED,      /** 0 - Record may be inaccurate - no PIN or NIC */
-        SEMI_VERIFIED,   /** 1 - Record may be inaccurate - NIC is available */
-        VERIFIED,        /** 2 - Record is confirmed to be accurate - PIN is available */
-        CERT_PRINTED,    /** 3 - PRS certificate is printed */
+        UNVERIFIED,      /** 0 - Record may be inaccurate - no PIN or NIC (added automatically) */
+        SEMI_VERIFIED,   /** 1 - Record may be inaccurate - NIC is available (added automatically) */
+        DATA_ENTRY,      /** 2 - Record is added by filling form */
+        VERIFIED,        /** 3 - Record is confirmed to be accurate - PIN is available */
         CANCELLED,       /** 4 - Record is cancelled as a duplicate or error */
         DELETED,         /** 5 - Record is deleted before approval by ADR or higher */
         ARCHIVED_ALTERED /** 6 - Record has been altered after approval */

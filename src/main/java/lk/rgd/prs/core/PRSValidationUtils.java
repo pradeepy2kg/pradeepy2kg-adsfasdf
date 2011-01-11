@@ -19,15 +19,6 @@ public class PRSValidationUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(PRSValidationUtils.class);
 
-    public static void validateRequiredFields(Person person) {
-        if (person.getDateOfRegistration() == null || person.getRace() == null || person.getDateOfBirth() == null ||
-            isEmptyString(person.getPlaceOfBirth()) || person.getPermanentAddress() == null ||
-            isEmptyString(person.getFullNameInOfficialLanguage()) || person.getCivilStatus() == null ||
-            isEmptyString(person.getFullNameInEnglishLanguage())) {
-            handleException("Adding person is incomplete, Check required field values", ErrorCodes.INVALID_DATA);
-        }
-    }
-
     public static void validatePersonState(Person person, Person.Status state) {
         if (state != person.getStatus()) {
             handleException("Person with personUKey : " + person.getPersonUKey() + " , in invalid state : " +

@@ -8,12 +8,12 @@ import org.slf4j.LoggerFactory;
  * @author Chathuranga Withana
  */
 public class PersonStatusUtil {
-
+    // TODO change this names to appropriate ones
     private static final Logger logger = LoggerFactory.getLogger(PersonStatusUtil.class);
     private static final String PERSON_UNVERIFIED = "අනුමත නොකළ / #Unverified# / Unverified";
     private static final String PERSON_SEMI_VERIFIED = "අර්ධව අනුමතයි / #Semi Verified# / Semi Verified";
+    private static final String PERSON_DATA_ENTRY = "දත්ත ඇතුලත් කිරීම/ #Data Entry# / Data Entry";
     private static final String PERSON_VERIFIED = "අනුමතයි / #Verified# / Verified";
-    private static final String PERSON_CERT_PRINTED = "සහතිකය මුද්‍රිතයි / #Certificate Printed# / Certificate Printed";
     private static final String PERSON_CANCELLED = "අවලංගුයි / #Cancelled# / Cancelled";
     private static final String PERSON_DELETED = "ප්‍රතික්ෂේපිතයි / #Rejected# / Rejected";
 
@@ -23,10 +23,10 @@ public class PersonStatusUtil {
                 return PERSON_UNVERIFIED;
             case SEMI_VERIFIED:
                 return PERSON_SEMI_VERIFIED;
+            case DATA_ENTRY:
+                return PERSON_DATA_ENTRY;
             case VERIFIED:
                 return PERSON_VERIFIED;
-            case CERT_PRINTED:
-                return PERSON_CERT_PRINTED;
             case CANCELLED:
                 return PERSON_CANCELLED;
             case DELETED:

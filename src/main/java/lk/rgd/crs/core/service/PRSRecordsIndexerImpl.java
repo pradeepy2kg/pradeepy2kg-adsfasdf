@@ -167,7 +167,7 @@ public class PRSRecordsIndexerImpl implements PRSRecordsIndexer {
                 }
 
                 logger.info("PRS Indexing process started at : " + new Date() + " successfully completed indexing : " +
-                    count + " records. Indexing took: " + (System.currentTimeMillis() - start)/1000 + " S");
+                    count + " records. Indexing took: " + (System.currentTimeMillis() - start) / 1000 + " S");
 
                 optimizeIndex();
 
@@ -234,8 +234,8 @@ public class PRSRecordsIndexerImpl implements PRSRecordsIndexer {
                 try {
                     conn.close();
                 } catch (Exception e) {}
+                }
             }
-        }
 
         logger.error("Failed to re-index PRS range from : {} to : {}", startIDUkey, endIDUkey);
         return false;
@@ -299,7 +299,7 @@ public class PRSRecordsIndexerImpl implements PRSRecordsIndexer {
             }
         }*/
     }
-    
+
     public void addRecord(ResultSet rs) throws SQLException, IOException, SolrServerException {
 
         SolrInputDocument d = new SolrInputDocument();
@@ -374,10 +374,10 @@ public class PRSRecordsIndexerImpl implements PRSRecordsIndexer {
                 return "U";
             case SEMI_VERIFIED:
                 return "S";
+            case DATA_ENTRY:
+                return "N";
             case VERIFIED:
                 return "V";
-            case CERT_PRINTED:
-                return "P";
             case CANCELLED:
                 return "C";
             case DELETED:
@@ -408,13 +408,13 @@ public class PRSRecordsIndexerImpl implements PRSRecordsIndexer {
 
             try {
                 long s = startIDUKey;
-                long e = startIDUKey-1;
+                long e = startIDUKey - 1;
                 while (s <= endIDUKey) {
                     e += 1000;
                     if (e > endIDUKey) {
                         e = endIDUKey;
                     }
-                    
+
                     indexRange(id, s, e);
                     s = e + 1;
                 }
