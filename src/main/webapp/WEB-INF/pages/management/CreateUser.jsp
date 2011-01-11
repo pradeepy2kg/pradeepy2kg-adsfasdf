@@ -81,7 +81,7 @@
         if (document.getElementById("districtId") != null) {
             domObject = document.getElementById("districtId");
             var user = document.getElementById("role").options[document.getElementById("role").selectedIndex].value;
-            if (user != "RG") {
+            if (user != "RG" && user != "ADMIN") {
                 if (isFieldEmpty(domObject)) {
                     errormsg = errormsg + document.getElementById("error5").value + "\n";
                 }
@@ -90,7 +90,7 @@
         if (document.getElementById("divisionId") != null) {
             domObject = document.getElementById("divisionId");
             var user = document.getElementById("role").options[document.getElementById("role").selectedIndex].value;
-            if (user != "RG") {
+            if (user != "RG" && user != "ARG" && user != "DR" && user != "ADMIN") {
                 if (isFieldEmpty(domObject)) {
                     errormsg = errormsg + document.getElementById("error6").value + "\n";
                 }
@@ -99,7 +99,7 @@
         if (document.getElementById("districtIdCurrent") != null) {
             domObject = document.getElementById("districtIdCurrent");
             var user = document.getElementById("role").options[document.getElementById("role").selectedIndex].value;
-            if (user != "RG") {
+            if (user != "RG" && user != "ADMIN") {
                 if (isFieldEmpty(domObject)) {
                     errormsg = errormsg + document.getElementById("error5").value + "\n";
                 }
@@ -108,7 +108,7 @@
         if (document.getElementById("divisionIdCurrent") != null) {
             domObject = document.getElementById("divisionIdCurrent");
             var user = document.getElementById("role").options[document.getElementById("role").selectedIndex].value;
-            if (user != "RG") {
+            if (user != "RG" && user != "ARG" && user != "DR" && user != "ADMIN") {
                 if (isFieldEmpty(domObject)) {
                     errormsg = errormsg + document.getElementById("error6").value + "\n";
                 }
@@ -137,28 +137,44 @@
     }
 
     function changeMultiSelect() {
+
+        changeElement("districtIdCurrent", false);
+        changeElement("districtId", false);
+        changeElement("divisionId", false);
+        changeElement("divisionIdCurrent", false);
+
+        changeSelectionMode("districtIdCurrent", true);
+        changeSelectionMode("districtId", true);
+        changeSelectionMode("divisionId", true);
+        changeSelectionMode("divisionIdCurrent", true);
+
         var selected = document.getElementById("role").options[document.getElementById("role").selectedIndex].value;
-        if (selected == "RG") {
+        if (selected == "RG" || selected == "ADMIN") {
             changeElement("districtIdCurrent", true);
             changeElement("districtId", true);
             changeElement("divisionId", true);
             changeElement("divisionIdCurrent", true);
-        } else {
-            changeElement("districtIdCurrent", false);
-            changeElement("districtId", false);
-            changeElement("divisionId", false);
-            changeElement("divisionIdCurrent", false);
         }
         if (selected == "DEO" || selected == "ADR") {
             changeSelectionMode("districtIdCurrent", false);
             changeSelectionMode("districtId", false);
             changeSelectionMode("divisionId", false);
             changeSelectionMode("divisionIdCurrent", false);
-        } else {
+        }
+        if (selected == "ARG") {
             changeSelectionMode("districtIdCurrent", true);
             changeSelectionMode("districtId", true);
-            changeSelectionMode("divisionId", true);
-            changeSelectionMode("divisionIdCurrent", true);
+
+            changeElement("divisionId", true);
+            changeElement("divisionIdCurrent", true);
+        }
+
+        if (selected == "DR") {
+            changeSelectionMode("districtIdCurrent", false);
+            changeSelectionMode("districtId", false);
+
+            changeElement("divisionId", true);
+            changeElement("divisionIdCurrent", true);
         }
     }
     function changeSelectionMode(elemName, selection) {
