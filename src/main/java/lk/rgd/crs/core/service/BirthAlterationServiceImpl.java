@@ -38,13 +38,15 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
     private final BirthDeclarationDAO birthDeclarationDAO;
     private final PersonDAO personDAO;
     private final PopulationRegistry ecivil;
+    private final BirthAlterationValidator birthAlterationValidator;
 
     public BirthAlterationServiceImpl(BirthAlterationDAO birthAlterationDAO, BirthDeclarationDAO birthDeclarationDAO,
-        PopulationRegistry ecivil, PersonDAO personDAO) {
+        PopulationRegistry ecivil, PersonDAO personDAO, BirthAlterationValidator birthAlterationValidator) {
         this.birthAlterationDAO = birthAlterationDAO;
         this.birthDeclarationDAO = birthDeclarationDAO;
         this.ecivil = ecivil;
         this.personDAO = personDAO;
+        this.birthAlterationValidator = birthAlterationValidator;
     }
 
     /**
@@ -55,6 +57,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
         //todo amith call to adding validator (check must fill fields)
         //validate can be added a BA for this BC by state
         logger.debug("Adding new birth alteration record on request of : {}", ba.getDeclarant().getDeclarantFullName());
+  //      birthAlterationValidator.checkOnGoingAlterationOnThisSection(ba.getBdfIDUKey(), ba.getType(), user);
         ba.setSubmittedLocation(user.getPrimaryLocation());
         ba.setStatus(BirthAlteration.State.DATA_ENTRY);
         // any user (DEO, ADR of any DS office or BD division etc) can add a birth alteration request
