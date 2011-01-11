@@ -499,7 +499,7 @@ function personAgeDeath() {
     </td>
     <td colspan="4">
         <s:label value="YYYY-MM-DD" cssStyle="font-size:10px"/><br>
-        <s:textfield id="deathDatePicker" name="death.dateOfDeath"/>
+        <s:textfield id="deathDatePicker" name="death.dateOfDeath" maxLength="10"/>
     </td>
     <td>
         වෙලාව
@@ -548,7 +548,7 @@ function personAgeDeath() {
         <br>சிங்களம்அல்லது தமிழ் மொழியில்
         <br>In Sinhala or Tamil
     </td>
-    <td colspan="5"><s:textfield name="death.placeOfDeath" cssStyle="width:555px;" id="placeOfDeath"/></td>
+    <td colspan="5"><s:textfield name="death.placeOfDeath" cssStyle="width:555px;" id="placeOfDeath" maxLength="240"/></td>
 </tr>
 <tr>
     <td colspan="2">
@@ -557,7 +557,7 @@ function personAgeDeath() {
         <br>In English
     </td>
     <td colspan="5">
-        <s:textfield name="death.placeOfDeathInEnglish" id="placeOfDeathInEnglish" cssStyle="width:555px;"/>
+        <s:textfield name="death.placeOfDeathInEnglish" id="placeOfDeathInEnglish" cssStyle="width:555px;" maxLength="240"/>
         <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px 0;"
              id="place">
     </td>
@@ -595,13 +595,13 @@ function personAgeDeath() {
         <br>இறப்பிற்கான காரணம்
         <br>Cause of death
     </td>
-    <td colspan="4"><s:textarea name="death.causeOfDeath" cssStyle="width:420px; "/></td>
+    <td colspan="4"><s:textarea name="death.causeOfDeath" cssStyle="width:420px; " /></td>
     <td colspan="2">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
         ේතුවේ ICD කේත අංකය
         <br>காரணத்திற்கான ICD குறியீட்டு இலக்கம்
         <br>ICD Code of cause
     </td>
-    <td colspan="2"><s:textfield name="death.icdCodeOfCause" cssStyle="width:225px;"/></td>
+    <td colspan="2"><s:textfield name="death.icdCodeOfCause" cssStyle="width:225px;" maxLength="240"/></td>
 </tr>
 <tr>
     <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
@@ -668,7 +668,7 @@ function personAgeDeath() {
                  id="death_person_NIC_X" onclick="javascript:addXorV('deathPerson_PINorNIC','X','error12')">
             <br>
             <s:textfield name="deathPerson.deathPersonPINorNIC" id="deathPerson_PINorNIC"
-                         cssStyle="float:left;"/>
+                         cssStyle="float:left;" maxLength="10"/>
             <img src="<s:url value="/images/search-father.png" />"
                  style="vertical-align:middle; margin-left:20px;" id="death_person_lookup">
 
@@ -692,7 +692,7 @@ function personAgeDeath() {
             <br>கடவுச் சீட்டு
             <br>Passport No.
         </td>
-        <td><s:textfield name="deathPerson.deathPersonPassportNo" cssStyle="width:180px;"/></td>
+        <td><s:textfield name="deathPerson.deathPersonPassportNo" cssStyle="width:180px;" maxLength="15"/></td>
     </tr>
 
     </tbody>
@@ -720,7 +720,7 @@ function personAgeDeath() {
             <br>வயது அல்லது அனுமான வயது
             <br>Age or probable Age
         </td>
-        <td><s:textfield name="deathPerson.deathPersonAge" id="deathPersonAge" onfocus="personAgeDeath();"/></td>
+        <td><s:textfield name="deathPerson.deathPersonAge" id="deathPersonAge" onfocus="personAgeDeath();" maxLength="3"/></td>
     </tr>
     <tr>
         <td>
@@ -765,7 +765,7 @@ function personAgeDeath() {
             <br>Name in either of the official languages (Sinhala / Tamil)
         </td>
         <td colspan="6"><s:textarea name="deathPerson.deathPersonNameOfficialLang" id="deathPersonNameOfficialLang"
-                                    cssStyle="width:880px;"/>
+                                    cssStyle="width:880px;" />
         </td>
     </tr>
     <tr>
@@ -807,7 +807,7 @@ function personAgeDeath() {
                  onclick="javascript:addXorV('deathPersonFather_PINorNIC','X','error12')">
             <br>
             <s:textfield name="deathPerson.deathPersonFatherPINorNIC" id="deathPersonFather_PINorNIC"
-                         cssStyle="float:left;"/>
+                         cssStyle="float:left;" maxLength="10"/>
 
             <img src="<s:url value="/images/search-father.png" />"
                  style="vertical-align:middle; margin-left:20px;" id="death_person_father_lookup">
@@ -840,7 +840,7 @@ function personAgeDeath() {
                  onclick="javascript:addXorV('deathPersonMother_PINorNIC','X','error12')">
             <br>
             <s:textfield name="deathPerson.deathPersonMotherPINorNIC" id="deathPersonMother_PINorNIC"
-                         cssStyle="float:left;"/>
+                         cssStyle="float:left;" maxLength="10"/>
             <img src="<s:url value="/images/search-mother.png" />"
                  style="vertical-align:middle; margin-left:20px;" id="death_person_mother_lookup"></td>
     </tr>

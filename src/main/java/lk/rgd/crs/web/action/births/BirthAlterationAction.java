@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 
 /**
- * @author amith jayasekara
+ * 
  */
 public class BirthAlterationAction extends ActionSupport implements SessionAware {
 

@@ -290,21 +290,21 @@
             <br>தொலைபேசி இலக்கம்
             <br>Telephone
         </td>
-        <td colspan="2"><s:textfield id="declarantPhone" name="declarant.declarantPhone"/></td>
+        <td colspan="2"><s:textfield id="declarantPhone" name="declarant.declarantPhone" maxLength="10"/></td>
         <td colspan="1">
             ඉ -තැපැල
             <br>மின்னஞ்சல்
             <br>Email
         </td>
         <td colspan="2">
-            <s:textfield id="declarantEMail" name="declarant.declarantEMail" cssStyle="text-transform:none;"/>
+            <s:textfield id="declarantEMail" name="declarant.declarantEMail" cssStyle="text-transform:none;" maxLength="240"/>
         </td>
     </tr>
     <tr>
         <td colspan="2">ප්‍රකාශකයා අත්සන්කල දිනය<br>பிரதிக்கினையாளர் கையொப்பமிட்ட திகதி <br>Declaranat Signed Date</td>
         <td colspan="5">
             <s:label value="YYYY-MM-DD" cssStyle="font-size:10px"/><br>
-            <s:textfield id="declarantDatePicker" name=""/>
+            <s:textfield id="declarantDatePicker" name="" maxLength="10"/>
         </td>
     </tr>
     </tbody>
@@ -385,7 +385,7 @@
         <td colspan="1">
             <s:label value="YYYY-MM-DD" cssStyle="margin-left:2%;font-size:10px"/><br>
             <s:textfield id="submitDatePicker" cssStyle="float:left;"
-                         name="notifyingAuthority.notifyingAuthoritySignDate"/></td>
+                         name="notifyingAuthority.notifyingAuthoritySignDate" maxLength="10"/></td>
     </tr>
     </tbody>
 </table>
