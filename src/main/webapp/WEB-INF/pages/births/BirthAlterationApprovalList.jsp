@@ -168,8 +168,7 @@
 
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<s:actionerror cssStyle="color:red;font-size:9pt;"/>
-<s:actionmessage cssStyle="color:black;font-size:9pt;"/>
+
 <%
     User user = (User) session.getAttribute("user_bean");
 %>
@@ -246,6 +245,8 @@
     </div>
 </s:form>
 <br>
+<s:actionerror cssStyle="color:red;font-size:9pt;"/>
+<s:actionmessage cssStyle="color:black;font-size:9pt;"/>
 <fieldset style="margin-bottom:10px;margin-top:50px;border:none">
     <legend></legend>
     <s:if test="birthAlterationPendingApprovalList.size==0">

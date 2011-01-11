@@ -77,7 +77,7 @@ public class Alteration27A {
     }
 
     public void setMothersNameAfterMarriage(String mothersNameAfterMarriage) {
-        this.mothersNameAfterMarriage = WebUtils.filterBlanks(mothersNameAfterMarriage);
+        this.mothersNameAfterMarriage = WebUtils.filterBlanksAndToUpper(mothersNameAfterMarriage);
     }
 
 }

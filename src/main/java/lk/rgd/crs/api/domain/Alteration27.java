@@ -26,7 +26,7 @@ public class Alteration27 {
     }
 
     public void setChildFullNameOfficialLang(String childFullNameOfficialLang) {
-        this.childFullNameOfficialLang = WebUtils.filterBlanks(childFullNameOfficialLang);
+        this.childFullNameOfficialLang = WebUtils.filterBlanksAndToUpper(childFullNameOfficialLang);
     }
 
     public String getChildFullNameEnglish() {
@@ -34,6 +34,6 @@ public class Alteration27 {
     }
 
     public void setChildFullNameEnglish(String childFullNameEnglish) {
-        this.childFullNameEnglish = WebUtils.filterBlanks(childFullNameEnglish);
+        this.childFullNameEnglish = WebUtils.filterBlanksAndToUpper(childFullNameEnglish);
     }
 }

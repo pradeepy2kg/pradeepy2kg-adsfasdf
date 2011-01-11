@@ -541,18 +541,21 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             }
             catch (CRSRuntimeException e) {
                 logger.error("cannot set bit set for birth alteration : {}", idUKey);
+                addActionError(getText("error.approval.failed.birth.alteration", new String[]{Long.toString(idUKey)}));
                 populateBasicLists();
                 filterBirthAlteration();
                 return ERROR;
             }
         } else {
             logger.debug("unable to find birth alteration for approving : {} ", idUKey);
+            addActionError(getText("error.unable.to.find.for.approve.birth.alteration", new String[]{Long.toString(idUKey)}));
             populateBasicLists();
             filterBirthAlteration();
             return ERROR;
         }
 
         logger.debug("apply changes to birth alteration : alteration id  {}", idUKey);
+        addActionMessage(getText("message.approve.success.birth.alteration", new String[]{Long.toString(idUKey)}));
         populateBasicLists();
         filterBirthAlteration();
         return SUCCESS;
@@ -785,8 +788,8 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
 
             if (!(parent.getMotherAgeAtBirth() == mother.getMotherAgeAtBirth())) {
                 changesList.add(new FieldValue(
-                    parent.getMotherAgeAtBirth() != 0 ? Integer.toString(parent.getMotherAgeAtBirth()) : null,
-                    mother.getMotherAgeAtBirth() != 0 ? Integer.toString(mother.getMotherAgeAtBirth()) : null,
+                    parent.getMotherAgeAtBirth() != null ? Integer.toString(parent.getMotherAgeAtBirth()) : null,
+                    mother.getMotherAgeAtBirth() != null ? Integer.toString(mother.getMotherAgeAtBirth()) : null,
                     Alteration52_1.MOTHER_AGE_AT_BIRTH, lk.rgd.common.util.CommonUtil.
                         getYesOrNo(birthAlteration.getApprovalStatuses().get(Alteration52_1.MOTHER_AGE_AT_BIRTH), language)));
             }
