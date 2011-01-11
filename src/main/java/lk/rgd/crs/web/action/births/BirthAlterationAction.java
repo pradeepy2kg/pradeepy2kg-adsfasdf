@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 
 /**
- * 
+ *
  */
 public class BirthAlterationAction extends ActionSupport implements SessionAware {
 
@@ -261,6 +261,19 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         if (birthAlteration != null) {
             BirthDeclaration bdf = service.getById(birthAlteration.getBdfIDUKey());
             getBirthCertificateInfo(bdf);
+            switch (birthAlteration.getType()) {
+                case TYPE_27A:
+                    populate27AForInitEdit(birthAlteration);
+                    break;
+                case TYPE_52_1_E:
+                case TYPE_52_1_H:
+                case TYPE_52_1_A:
+                case TYPE_52_1_B:
+                case TYPE_52_1_D:
+                case TYPE_52_1_I:
+                    populate52_1ForInitEdit(birthAlteration);
+                    break;
+            }
         } else {
             logger.debug("unable to find birth alteration for edit idUKey : {}", idUKey);
             addActionError(getText("error.unable.find.birth.alteration.for.edit", new String[]{"" + idUKey}));
@@ -273,6 +286,32 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         alterationType = birthAlteration.getType();
         editMode = true;
         return SUCCESS;
+    }
+
+    private void populate27AForInitEdit(BirthAlteration birthAlteration) {
+        if (birthAlteration.getAlt27A().getFather() != null) {
+            fatherCountryId = (birthAlteration.getAlt27A().getFather().getFatherCountry() != null) ?
+                birthAlteration.getAlt27A().getFather().getFatherCountry().getCountryId() : 0;
+            fatherRaceId = (birthAlteration.getAlt27A().getFather().getFatherRace() != null) ?
+                birthAlteration.getAlt27A().getFather().getFatherRace().getRaceId() : 0;
+        }
+    }
+
+    private void populate52_1ForInitEdit(BirthAlteration birthAlteration) {
+        //setting drop downs for child info
+        if (birthAlteration.getAlt52_1() != null) {
+            BDDivision birthDivision = birthAlteration.getAlt52_1().getBirthDivision();
+            birthDistrictId = birthDivision.getDistrict().getDistrictUKey();
+            birthDivisionId = birthDivision.getBdDivisionUKey();
+            dsDivisionId = birthDivision.getDsDivision().getDsDivisionUKey();
+        }
+        //mother details
+        if (birthAlteration.getAlt52_1().getMother() != null) {
+            motherRaceId = (birthAlteration.getAlt52_1().getMother().getMotherRace() != null) ?
+                birthAlteration.getAlt52_1().getMother().getMotherRace().getRaceId() : 0;
+            motherCountryId = (birthAlteration.getAlt52_1().getMother().getMotherCountry() != null) ?
+                birthAlteration.getAlt52_1().getMother().getMotherCountry().getCountryId() : 0;
+        }
     }
 
     /**
@@ -1030,13 +1069,13 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         /*if informant is null then populate informant from bdf
         *in the edit mode populate informant information if  informant information were not changed in first time
         * */
-        if (alt52_1.getInformant() == null) {
-            if (bdfInformant != null) {
-                alt52_1.setInformant(new AlterationInformatInfo(bdfInformant.getInformantType(),
-                    bdfInformant.getInformantName(), bdfInformant.getInformantNICorPIN(), bdfInformant.getInformantAddress()));
-            }
-        } else {
-            editInformantInfo = true;
+        if (bdfInformant != null) {
+            AlterationInformatInfo alterationInformatInfo = new AlterationInformatInfo();
+            alterationInformatInfo.setInformantAddress(bdfInformant.getInformantAddress());
+            alterationInformatInfo.setInformantName(bdfInformant.getInformantName());
+            alterationInformatInfo.setInformantNICorPIN(bdfInformant.getInformantNICorPIN());
+            alterationInformatInfo.setInformantType(bdfInformant.getInformantType());
+            alt52_1.setInformant(alterationInformatInfo);
         }
         if (child != null) {
             if (alt52_1.getDateOfBirth() == null) {
@@ -1048,9 +1087,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             if (alt52_1.getPlaceOfBirthEnglish() == null) {
                 alt52_1.setPlaceOfBirthEnglish(child.getPlaceOfBirthEnglish());
             }
-            if (alt52_1.getChildGender() == 0) {
-                alt52_1.setChildGender(child.getChildGender());
-            }
+            alt52_1.setChildGender(child.getChildGender());
             if (alt52_1.getBirthDivision() != null) {
                 editChildInfo = true;
                 birthDivisionId = alt52_1.getBirthDivision().getDivisionId();
@@ -1113,7 +1150,6 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             } else {
                 if (father.getFatherCountry() != null) {
                     fatherCountryId = father.getFatherCountry().getCountryId();
-                    logger.debug("populated {} father country id is :{}", father.getFatherFullName(), fatherCountryId);
                 }
                 if (father.getFatherRace() != null) {
                     fatherRaceId = father.getFatherRace().getRaceId();
@@ -1151,6 +1187,11 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             }
             break;
             case TYPE_27A: {
+                //setting father race and country
+                updated.getAlt27A().getFather().setFatherCountry((fatherCountryId != 0) ?
+                    countryDAO.getCountry(fatherCountryId) : null);
+                updated.getAlt27A().getFather().setFatherRace((fatherRaceId != 0) ?
+                    raceDAO.getRace(fatherRaceId) : null);
                 existing.setAlt27A(updated.getAlt27A());
             }
             break;
@@ -1161,6 +1202,12 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             case TYPE_52_1_E:
             case TYPE_52_1_H:
             case TYPE_52_1_I: {
+                updated.getAlt52_1().getMother().setMotherCountry((motherCountryId != 0) ?
+                    countryDAO.getCountry(motherCountryId) : null);
+                updated.getAlt52_1().getMother().setMotherRace((motherRaceId != 0) ?
+                    raceDAO.getRace(motherRaceId) : null);
+                updated.getAlt52_1().setBirthDivision((birthDivisionId != 0) ?
+                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId) : null);
                 existing.setAlt52_1(updated.getAlt52_1());
             }
         }

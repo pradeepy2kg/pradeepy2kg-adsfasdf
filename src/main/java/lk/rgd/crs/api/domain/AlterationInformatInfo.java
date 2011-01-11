@@ -3,18 +3,27 @@ package lk.rgd.crs.api.domain;
 import lk.rgd.common.util.WebUtils;
 
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
 /**
  * @author Ashoka Ekanayaka
- * Class to encapsulate fields related to informat information on alteration of a birth certificate
+ *         Class to encapsulate fields related to informat information on alteration of a birth certificate
  */
+@Embeddable
 public class AlterationInformatInfo {
-    public AlterationInformatInfo(InformantInfo.InformantType type, String name, String NICorPIN, String address) {
-        informantType = type;
-        informantName = name;
-        informantNICorPIN = NICorPIN;
-        informantAddress = address;
-    }
+
+
+    @Column(nullable = true)
+    private InformantInfo.InformantType informantType;
+
+    @Column(nullable = true, length = 600)
+    private String informantName;
+
+    @Column(nullable = true, length = 10)
+    private String informantNICorPIN;
+
+    @Column(nullable = true, length = 255)
+    private String informantAddress;
 
     public InformantInfo.InformantType getInformantType() {
         return informantType;
@@ -47,16 +56,5 @@ public class AlterationInformatInfo {
     public void setInformantAddress(String informantAddress) {
         this.informantAddress = WebUtils.filterBlanks(informantAddress);
     }
-
-    @Column(nullable = true)
-    private InformantInfo.InformantType informantType;
-
-    @Column(nullable = true, length = 600)
-    private String informantName;
-
-    @Column(nullable = true, length = 10)
-    private String informantNICorPIN;
-
-    @Column(nullable = true, length = 255)
-    private String informantAddress;
 }
+
