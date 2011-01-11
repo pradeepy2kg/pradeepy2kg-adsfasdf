@@ -25,15 +25,16 @@
 
                 </div>
                 <div class="form-submit" align="center">
-                    <s:if test="status.ordinal()<2 & (#session.user_bean.role.roleId.equals('ARG') | #session.user_bean.role.roleId.equals('RG'))">
+                    <s:set name="birthDivision" value="%{birthAlteration.birthRecordDivision}"/>
+                    <s:if test="birthAlteration.status.ordinal()<2 && (#session.user_bean.role.roleId.equals('ARG') | #session.user_bean.role.roleId.equals('RG'))">
                         <%
-                            BDDivision deathDivision = (BDDivision) pageContext.getAttribute("deathDivision");
-                            int deathDSDivsion = deathDivision.getDsDivision().getDsDivisionUKey();
+                            BDDivision birthDivision = (BDDivision) pageContext.getAttribute("birthDivision");
+                            int deathDSDivsion = birthDivision.getDsDivision().getDsDivisionUKey();
                             boolean approveRights = user.isAllowedAccessToBDDSDivision(deathDSDivsion);
                             if (approveRights) {
                         %>
                         <s:form action="eprApproveBirthAlterationInit.do">
-                            <s:hidden name="idUKey" value="%{#request.idUKey}"/>
+                            <s:hidden name="idUKey" value="%{birthAlteration.idUKey}"/>
                             <s:submit name="approve" value="%{getText('approve.label')}"/>
                         </s:form>
                         <%}%>
