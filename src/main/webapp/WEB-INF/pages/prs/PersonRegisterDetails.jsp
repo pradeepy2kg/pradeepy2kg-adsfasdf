@@ -14,7 +14,7 @@
     <s:param name="personUKey" value="#request.personUKey"/>
 </s:url>
 <s:url id="newEntry" action="eprExistingPersonRegInit.do"/>
-<s:url id="edit" action="eprEditPerson.do">
+<s:url id="edit" action="eprDirectEditPerson.do">
     <s:param name="personUKey" value="#request.personUKey"/>
 </s:url>
 <s:url id="approve" action="eprDirectApprovePerson.do">

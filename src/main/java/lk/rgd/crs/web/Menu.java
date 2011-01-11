@@ -136,6 +136,7 @@ public class Menu {
         adrPRSLink.put("eprPRSCertificate.do", new Link(null, "/ecivil/prs/", "eprPRSCertificate.do", Permission.PRS_PRINT_CERT));
         adrPRSLink.put("eprDirectPRSCertificate.do", new Link(null, "/ecivil/prs/", "eprDirectPRSCertificate.do", Permission.PRS_PRINT_CERT));
         adrPRSLink.put("eprBackRegisterDetails.do", new Link(null, "/ecivil/prs/", "eprBackRegisterDetails.do", Permission.PRS_ADD_PERSON));
+        adrPRSLink.put("eprBackToRegisterDetails.do", new Link(null, "/ecivil/prs/", "eprBackToRegisterDetails.do", Permission.PRS_ADD_PERSON));
         adrPRSLink.put("eprBackPRSSearchList.do", new Link(null, "/ecivil/prs/", "eprBackPRSSearchList.do", Permission.PRS_APPROVE_PERSON));
         adrPRSLink.put("eprLoadRejectPerson.do", new Link(null, "/ecivil/prs/", "eprLoadRejectPerson.do", Permission.PRS_REJECT_PERSON));
         adrPRSLink.put("eprRejectPerson.do", new Link(null, "/ecivil/prs/", "eprRejectPerson.do", Permission.PRS_REJECT_PERSON));

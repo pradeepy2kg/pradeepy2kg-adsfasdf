@@ -36,8 +36,7 @@
             "bLengthChange": false,
             "bFilter": true,
             "aaSorting": [
-                [0,'desc'],
-                [1,'desc']
+                [0,'desc']
             ],
             "bInfo": false,
             "bAutoWidth": false,

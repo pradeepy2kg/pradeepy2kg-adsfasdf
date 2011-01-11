@@ -81,7 +81,7 @@ public class PopulationRegisterValidator {
     /**
      * Validate typical requirements for a PRS entry
      *
-     * @param personDAO
+     * @param personDAO the person DAO
      * @param person    the Person to validate
      * @param user      the user initiating the validation
      * @return a list of warning issued against the Person record
@@ -99,6 +99,21 @@ public class PopulationRegisterValidator {
         }
 
         warnings.add(new UserWarning("Sample Warning", UserWarning.Severity.WARN));
+
+
+        /*if (person.getTemporaryPin() != null) {
+            Person p = personDAO.findPersonByTemporaryPIN(person.getTemporaryPin());
+            if (p != null && (isRecordInDataEntry(p.getStatus()) || p.getStatus() == Person.Status.VERIFIED)) {
+                exactRecord.add(personDao.findPersonByTemporaryPIN(person.getTemporaryPin()));
+            }
+        } else if (person.getNic() != null) {
+            for (Person p : personDAO.findPersonsByNIC(person.getNic())) {
+                if (isRecordInDataEntry(p.getStatus()) || p.getStatus() == Person.Status.VERIFIED) {
+                    exactRecord.add(p);
+                }
+            }
+        }*/
+
 
         return warnings;
     }

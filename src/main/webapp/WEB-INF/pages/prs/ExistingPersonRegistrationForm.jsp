@@ -214,8 +214,13 @@
 
         function processResponse1(respObj) {
             //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-            $("textarea#personFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
-        };
+            $("textarea#personFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].
+            return[0].Text
+        )
+            ;
+        }
+
+        ;
     });
 
     $(function() {
@@ -716,8 +721,25 @@
 <s:hidden id="citizenship" name="citizenship"/>
 <s:hidden name="person.personUKey" value="%{#request.personUKey}"/>
 <s:hidden name="personUKey" value="%{#request.personUKey}"/>
-
 </s:form>
+<s:if test="personUKey > 0">
+    <s:if test="direct">
+        <s:url id="previous" action="eprBackToRegisterDetails.do" namespace="../prs"/>
+    </s:if>
+    <s:else>
+        <s:url id="previous" action="eprBackPRSSearchList.do" namespace="../prs">
+            <s:param name="pageNo" value="%{#request.pageNo}"/>
+            <s:param name="locationId" value="%{#request.locationId}"/>
+            <s:param name="printStart" value="%{#request.printStart}"/>
+        </s:url>
+    </s:else>
+    <s:form action="%{previous}" method="get">
+        <s:hidden name="personUKey" value="%{#request.personUKey}"/>
+        <div class="form-submit">
+            <s:submit value="%{getText('previous.label')}"/>
+        </div>
+    </s:form>
+</s:if>
 
 <s:hidden id="error0" value="%{getText('er.invalid.inputType')}"/>
 <s:hidden id="error1" value="%{getText('er.label.submitDatePicker')}"/>
