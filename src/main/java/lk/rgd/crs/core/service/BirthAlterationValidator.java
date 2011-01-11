@@ -3,6 +3,7 @@ package lk.rgd.crs.core.service;
 import lk.rgd.ErrorCodes;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.CRSRuntimeException;
+import lk.rgd.crs.api.dao.BirthAlterationDAO;
 import lk.rgd.crs.api.domain.BirthAlteration;
 import lk.rgd.crs.api.service.BirthAlterationService;
 import org.slf4j.Logger;
@@ -18,21 +19,21 @@ import java.util.List;
 
 public class BirthAlterationValidator {
     private static final Logger logger = LoggerFactory.getLogger(BirthAlterationValidator.class);
-    private final BirthAlterationService birthAlterationService;
+    private final BirthAlterationDAO birthAlterationDAO;
 
-    public BirthAlterationValidator(BirthAlterationService birthAlterationService) {
-        this.birthAlterationService = birthAlterationService;
+    public BirthAlterationValidator(BirthAlterationDAO birthAlterationDAO) {
+        this.birthAlterationDAO = birthAlterationDAO;
     }
 
     public void checkOnGoingAlterationOnThisSection(long birthCertificateId, BirthAlteration.
         AlterationType alterationType, User user) {
         boolean isOnGoing = false;
         //get active birth alterations for
-        List<BirthAlteration> birthAlterationList = birthAlterationService.
-            getBirthAlterationByBirthCertificateNumber(birthCertificateId, user);
+        List<BirthAlteration> birthAlterationList = birthAlterationDAO.
+            getBirthAlterationByBirthCertificateNumber(birthCertificateId);
         outer:
         for (BirthAlteration ba : birthAlterationList) {
-            if (ba.getLifeCycleInfo().isActiveRecord() && (ba.getStatus()==BirthAlteration.State.DATA_ENTRY)) {
+            if (ba.getLifeCycleInfo().isActiveRecord() && (ba.getStatus() == BirthAlteration.State.DATA_ENTRY)) {
                 switch (alterationType) {
                     case TYPE_27:
                         if (ba.getAlt27() != null) {
