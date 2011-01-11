@@ -1,10 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<style type="text/css" title="currentStyle">
-    @import "../lib/datatables/media/css/demo_page.css";
-    @import "../lib/datatables/media/css/demo_table.css";
-    @import "../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css";
-</style>
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 
@@ -30,6 +25,7 @@
         width: 100%;
         margin: 10px 5px 15px 5px;
         border: #333 1px solid;
+        padding: 0;
     }
 
     #stat-charts {
@@ -72,11 +68,31 @@
         margin-right: 5px;
     }
 
-        /*input {
-            width: 40px;
-            border:none;
-            background-color: #f0f8ff;
-        }*/
+    #rg-birth, #rg-death, #rg-mrg {
+        width: 100%;
+        border: black 1px solid;
+        padding-bottom:20px;
+    }
+
+    #birth-pie, #death-pie, #mrg-pie {
+        width:300px;
+        height:300px;
+        padding:0px;
+        margin:0 auto;
+        display: block;
+        clear:both;
+        float:none;
+    }
+
+    #birth-bar, #death-bar, #mrg-bar {
+        width:90%;
+        height:200px;
+        float:none;
+        display:block;
+        float:none;
+        margin:0 auto;
+    }
+
 </style>
 
 <script type="text/javascript">
@@ -156,6 +172,8 @@
 
     $(document).ready(function() {
         var data = new StatObject();
+        data.userRole = $("input#userRole").val();
+
         data.late_b = parseInt($("input#birthsLateSubmissions").val());
         data.normal_b = parseInt($("input#birthsNormalSubmissions").val());
         data.rejected_b = parseInt($("input#birthsRejectedItems").val());
@@ -190,204 +208,242 @@
 </script>
 
 <div id="home-page-outer">
-    <s:if test="role == 'ADMIN'">
-        <img src="<s:url value="/images/dashboard.png" />">
-    </s:if>
-    <s:else>
-        <s:if test="role != 'DEO'">
-            <div id="stat-preferences">
-                <table border="0" width="100%" cellpadding="5" cellspacing="5">
-                    <tr bgcolor="#eeeeee">
-                        <th colspan="4" align="left">Custom Search</th>
-                    </tr>
-                    <tr>
-                        <td width="20%" align="right">District</td>
-                        <td width="30%" align="left">
-                            <s:select
-                                    id="district"
-                                    name="districtId"
-                                    list="districtList"
-                                    />
-                        </td>
-                        <td width="20%" align="right">DSDivision</td>
-                        <td width="30%" align="left">
-                            <s:select
-                                    id="dsDivision"
-                                    name="dsDivisionId"
-                                    list="divisionList"
-                                    />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="right">Start Date</td>
-                        <td align="left">
-                            <s:textfield id="sdate" name="startDate" cssStyle="width:70%;"/>
-                        </td>
-                        <td align="right">End Date</td>
-                        <td align="left">
-                            <s:textfield id="edate" name="endDate" cssStyle="width:70%;"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <s:if test="role == 'RG' || role == 'ARG'">
-                            <td align="right"><%--ADR--%>&nbsp;</td>
-                            <td align="left">&nbsp;
-                                    <%--    <s:select
-                                    id="adrUser"
-                                    name="adrUserId"
-                                    list="adrList"
-                                    />--%>
-                            </td>
-                        </s:if>
-                        <s:else>
-                            <td align="right">DEO</td>
-                            <td align="left">
-                                <s:select
-                                        id="deoUser"
-                                        name="deoUserId"
-                                        list="deoList"
-                                        />
-                            </td>
-                        </s:else>
-                        <td>&nbsp;</td>
-                        <td><s:submit align="right"/></td>
-                    </tr>
-                </table>
-            </div>
-        </s:if>
-        <div id="stat-charts">
-
-            <div id="stat-birth">
-                <table border="0" cellpadding="0" cellspacing="0" width="99%" align="center">
-                    <tr>
-                        <td colspan="4">Birth Statistics</td>
-                    </tr>
-                    <tr>
-                        <td width="25%">All Pending :
-                            <input style="border:none;width:40px;" type="text" id="all_pending_b" readonly="true"
-                                   maxlength="3"/>
-                        </td>
-                        <td width="25%">Arrears :
-                            <input style="border:none;width:40px;" type="text" id="arrears_b" readonly="true"
-                                   maxlength="3"/>
-                        </td>
-                        <td width="50%" colspan="2" rowspan="6">
-                            <div id="chart3"></div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" rowspan="2">
-                            <div id="chart1"></div>
-                        </td>
-                    </tr>
-                    <tr></tr>
-                    <tr>
-                        <td>Total Submitted Items :
-                            <input style="border:none;width:40px;" type="text" id="total_submitted_b" readonly="true"
-                                   maxlength="3"/>
-                        </td>
-                        <td>Late Items :
-                            <input style="border:none;width:40px;" type="text" id="late_b" readonly="true"
-                                   maxlength="3"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" rowspan="2">
-                            <div id="chart2"></div>
-                        </td>
-                    </tr>
-                    <tr></tr>
-                </table>
-            </div>
-
-            <div id="stat-death">
-                <table border="0" cellpadding="0" cellspacing="0" width="99%" align="center">
-                    <tr>
-                        <td colspan="4">Death Statistics</td>
-                    </tr>
-                    <tr>
-                        <td width="25%">All Pending :
-                            <input style="border:none;width:40px;" type="text" id="all_pending_d" readonly="true"
-                                   maxlength="3"/>
-                        </td>
-                        <td width="25%">Arrears :
-                            <input style="border:none;width:40px;" type="text" id="arrears_d" readonly="true"
-                                   maxlength="3"/>
-                        </td>
-                        <td width="50%" colspan="2" rowspan="6">
-                            <div id="chart6"></div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" rowspan="2">
-                            <div id="chart4"></div>
-                        </td>
-                    </tr>
-                    <tr></tr>
-                    <tr>
-                        <td>Total Submitted Items :
-                            <input style="border:none;width:40px;" type="text" id="total_submitted_d" readonly="true"
-                                   maxlength="3"/>
-                        </td>
-                        <td>Late Items :
-                            <input style="border:none;width:40px;" type="text" id="late_d" readonly="true"
-                                   maxlength="3"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" rowspan="2">
-                            <div id="chart5"></div>
-                        </td>
-                    </tr>
-                    <tr></tr>
-                </table>
-            </div>
-
-            <div id="stat-marriage">
-                <table border="0" cellpadding="0" cellspacing="0" width="99%" align="center">
-                    <tr>
-                        <td colspan="4">Marriage Statistics</td>
-                    </tr>
-                    <tr>
-                        <td width="25%">All Pending :
-                            <input style="border:none;width:40px;" type="text" id="all_pending_m" readonly="true"
-                                   maxlength="3"/>
-                        </td>
-                        <td width="25%">Arrears :
-                            <input style="border:none;width:40px;" type="text" id="arrears_m" readonly="true"
-                                   maxlength="3"/>
-                        </td>
-                        <td width="50%" colspan="2" rowspan="6">
-                            <div id="chart9"></div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" rowspan="2">
-                            <div id="chart7"></div>
-                        </td>
-                    </tr>
-                    <tr></tr>
-                    <tr>
-                        <td>Total Submitted Items :
-                            <input style="border:none;width:40px;" type="text" id="total_submitted_m" readonly="true"
-                                   maxlength="3"/>
-                        </td>
-                        <td>Late Items :
-                            <input style="border:none;width:40px;" type="text" id="late_m" readonly="true"
-                                   maxlength="3"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" rowspan="2">
-                            <div id="chart8"></div>
-                        </td>
-                    </tr>
-                    <tr></tr>
-                </table>
-            </div>
-
+<s:if test="role == 'ADMIN'">
+    <img src="<s:url value="/images/dashboard.png" />">
+</s:if>
+<s:else>
+<s:if test="role != 'DEO'">
+    <div id="stat-preferences">
+        <table border="0" width="100%" cellpadding="5" cellspacing="5">
+            <tr bgcolor="#eeeeee">
+                <th colspan="4" align="left">Custom Search</th>
+            </tr>
+            <tr>
+                <td width="20%" align="right">District</td>
+                <td width="30%" align="left">
+                    <s:select
+                            id="district"
+                            name="districtId"
+                            list="districtList"
+                            />
+                </td>
+                <td width="20%" align="right">DSDivision</td>
+                <td width="30%" align="left">
+                    <s:select
+                            id="dsDivision"
+                            name="dsDivisionId"
+                            list="divisionList"
+                            />
+                </td>
+            </tr>
+            <tr>
+                <td align="right">Start Date</td>
+                <td align="left">
+                    <s:textfield id="sdate" name="startDate" cssStyle="width:70%;"/>
+                </td>
+                <td align="right">End Date</td>
+                <td align="left">
+                    <s:textfield id="edate" name="endDate" cssStyle="width:70%;"/>
+                </td>
+            </tr>
+            <tr>
+                <s:if test="role == 'RG' || role == 'ARG'">
+                    <td align="right">&nbsp;</td>
+                    <td align="left">&nbsp;</td>
+                </s:if>
+                <s:else>
+                    <td align="right">DEO</td>
+                    <td align="left">
+                        <s:select
+                                id="deoUser"
+                                name="deoUserId"
+                                list="deoList"
+                                />
+                    </td>
+                </s:else>
+                <td>&nbsp;</td>
+                <td><s:submit align="right"/></td>
+            </tr>
+        </table>
+    </div>
+</s:if>
+<s:if test="role == 'DEO' || role == 'ADR' || role == 'DR'">
+    <div id="stat-charts">
+        <div id="stat-birth">
+            <table border="0" cellpadding="0" cellspacing="0" width="99%" align="center">
+                <tr>
+                    <td colspan="4">Birth Statistics</td>
+                </tr>
+                <tr>
+                    <td width="25%">All Pending :
+                        <input style="border:none;width:40px;" type="text" id="all_pending_b" readonly="true"
+                               maxlength="3"/>
+                    </td>
+                    <td width="25%">Arrears :
+                        <input style="border:none;width:40px;" type="text" id="arrears_b" readonly="true"
+                               maxlength="3"/>
+                    </td>
+                    <td width="50%" colspan="2" rowspan="6">
+                        <div id="chart3"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" rowspan="2">
+                        <div id="chart1"></div>
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <td>Total Submitted Items :
+                        <input style="border:none;width:40px;" type="text" id="total_submitted_b"
+                               readonly="true"
+                               maxlength="3"/>
+                    </td>
+                    <td>Late Items :
+                        <input style="border:none;width:40px;" type="text" id="late_b" readonly="true"
+                               maxlength="3"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" rowspan="2">
+                        <div id="chart2"></div>
+                    </td>
+                </tr>
+                <tr></tr>
+            </table>
         </div>
-    </s:else>
+
+        <div id="stat-death">
+            <table border="0" cellpadding="0" cellspacing="0" width="99%" align="center">
+                <tr>
+                    <td colspan="4">Death Statistics</td>
+                </tr>
+                <tr>
+                    <td width="25%">All Pending :
+                        <input style="border:none;width:40px;" type="text" id="all_pending_d" readonly="true"
+                               maxlength="3"/>
+                    </td>
+                    <td width="25%">Arrears :
+                        <input style="border:none;width:40px;" type="text" id="arrears_d" readonly="true"
+                               maxlength="3"/>
+                    </td>
+                    <td width="50%" colspan="2" rowspan="6">
+                        <div id="chart6"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" rowspan="2">
+                        <div id="chart4"></div>
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <td>Total Submitted Items :
+                        <input style="border:none;width:40px;" type="text" id="total_submitted_d"
+                               readonly="true"
+                               maxlength="3"/>
+                    </td>
+                    <td>Late Items :
+                        <input style="border:none;width:40px;" type="text" id="late_d" readonly="true"
+                               maxlength="3"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" rowspan="2">
+                        <div id="chart5"></div>
+                    </td>
+                </tr>
+                <tr></tr>
+            </table>
+        </div>
+
+        <div id="stat-marriage">
+            <table border="0" cellpadding="0" cellspacing="0" width="99%" align="center">
+                <tr>
+                    <td colspan="4">Marriage Statistics</td>
+                </tr>
+                <tr>
+                    <td width="25%">All Pending :
+                        <input style="border:none;width:40px;" type="text" id="all_pending_m" readonly="true"
+                               maxlength="3"/>
+                    </td>
+                    <td width="25%">Arrears :
+                        <input style="border:none;width:40px;" type="text" id="arrears_m" readonly="true"
+                               maxlength="3"/>
+                    </td>
+                    <td width="50%" colspan="2" rowspan="6">
+                        <div id="chart9"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" rowspan="2">
+                        <div id="chart7"></div>
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <td>Total Submitted Items :
+                        <input style="border:none;width:40px;" type="text" id="total_submitted_m"
+                               readonly="true"
+                               maxlength="3"/>
+                    </td>
+                    <td>Late Items :
+                        <input style="border:none;width:40px;" type="text" id="late_m" readonly="true"
+                               maxlength="3"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" rowspan="2">
+                        <div id="chart8"></div>
+                    </td>
+                </tr>
+                <tr></tr>
+            </table>
+        </div>
+    </div>
+</s:if>
+<s:else>
+    <table border="0" width="100%" style="margin-left:5px;">
+        <tr>
+            <td>Birth Statistics</td>
+            <td>Death Statistics</td>
+            <td>Marriage Statistics</td>
+        </tr>
+        <tr>
+            <td>
+                <div id="rg-birth">
+                    <div id="birth-pie">
+
+                    </div>
+                    <div id="birth-bar">
+
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div id="rg-death">
+                    <div id="death-pie">
+
+                    </div>
+                    <div id="death-bar">
+
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div id="rg-mrg">
+                    <div id="mrg-pie">
+
+                    </div>
+                    <div id="mrg-bar">
+
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</s:else>
+</s:else>
 </div>
 
 <s:hidden id="birthsLateSubmissions" value="%{statistics.birthsLateSubmissions}"/>

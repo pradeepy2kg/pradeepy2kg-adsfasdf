@@ -211,6 +211,14 @@ public class LoginAction extends ActionSupport implements SessionAware {
         statistics = statisticsDAO.getByUser(user.getUserId());
         if (statistics == null) {
             statistics = new Statistics();
+
+            /* statistics.setBirthsRejectedItems(2);
+            statistics.setBirthsThisMonthPendingItems(4);
+            statistics.setBirthsTotalSubmissions(3);
+            statistics.setBirthsApprovedItems(6);
+            statistics.setBirthsArrearsPendingItems(2);
+            statistics.setBirthsLateSubmissions(1);*/
+
         }
 
         districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
@@ -221,8 +229,8 @@ public class LoginAction extends ActionSupport implements SessionAware {
         if (divisionList.size() > 0) {
             dsDivisionId = divisionList.keySet().iterator().next();
             deoList = userDAO.getDEOsByDSDivision(user.getPrefLanguage(), user,
-            dsDivisionDAO.getDSDivisionByPK(dsDivisionId), roleDAO.getRole(Role.ROLE_DEO));
-        }     
+                dsDivisionDAO.getDSDivisionByPK(dsDivisionId), roleDAO.getRole(Role.ROLE_DEO));
+        }
         deoUserId = 1;
         /*adrList = userDAO.getADRsByDistrictId(districtDAO.getDistrict(districtId), roleDAO.getRole(Role.ROLE_ADR));
         adrUserId = 1;*/
