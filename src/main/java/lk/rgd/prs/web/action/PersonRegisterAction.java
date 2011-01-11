@@ -43,6 +43,7 @@ public class PersonRegisterAction extends ActionSupport implements SessionAware 
     private User user;
     private Person person;
 
+    private boolean direct;
     private boolean ignoreDuplicate;
     private boolean allowEdit;
     private boolean allowApprove;
@@ -134,6 +135,15 @@ public class PersonRegisterAction extends ActionSupport implements SessionAware 
                 citizenshipList.add(pc);
             }
         }
+        return SUCCESS;
+    }
+
+    /**
+     * This method is used to return back from PRS certificate to person register details page
+     */
+    public String backFromPRSCertificate() {
+        logger.debug("Return back from PRS certificate to person details page in direct mode : {}", direct);
+        initPermissions();
         return SUCCESS;
     }
 
@@ -307,6 +317,14 @@ public class PersonRegisterAction extends ActionSupport implements SessionAware 
     public void setCitizenship(String citizenship) {
         this.citizenship = WebUtils.filterBlanksAndToUpper(citizenship);
         logger.debug("setting citizenship list : {}", citizenship);
+    }
+
+    public boolean isDirect() {
+        return direct;
+    }
+
+    public void setDirect(boolean direct) {
+        this.direct = direct;
     }
 
     public boolean isIgnoreDuplicate() {

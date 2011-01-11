@@ -113,7 +113,8 @@
         </action>
 
         <action name="eprDirectEditPerson" class="lk.rgd.prs.web.action.PersonRegisterAction" method="personEditInit">
-            <result type="tiles" name="success">epr.personRegisterDetails</result>
+             <param name="direct">true</param>
+            <result type="tiles" name="success">epr.existingPersonRegistration</result>
         </action>
 
         <action name="eprPRSCertificate" class="lk.rgd.prs.web.action.PersonDetailsAction" method="initPRSCertificate">
@@ -164,6 +165,12 @@
         </action>
 
         <action name="eprBackRegisterDetails" class="lk.rgd.prs.web.action.PersonApprovalAction"
+                method="backFromPRSCertificate">
+            <param name="direct">true</param>
+            <result type="tiles" name="success">epr.personRegisterDetails</result>
+        </action>
+
+        <action name="eprBackToRegisterDetails" class="lk.rgd.prs.web.action.PersonRegisterAction"
                 method="backFromPRSCertificate">
             <param name="direct">true</param>
             <result type="tiles" name="success">epr.personRegisterDetails</result>
