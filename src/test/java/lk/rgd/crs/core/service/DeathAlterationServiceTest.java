@@ -69,7 +69,7 @@ public class DeathAlterationServiceTest extends TestCase {
 
     public void testAlterations() throws Exception {
         // register death in colombo
-        long drIdUKey = registerDeath(20102010);
+        long drIdUKey = registerDeath(2010020100);
 
         // submit an alteration in Gampaha - added by adr
         DeathAlteration da = new DeathAlteration();

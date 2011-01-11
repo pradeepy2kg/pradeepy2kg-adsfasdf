@@ -302,7 +302,7 @@ public class DeathAlterationActionTest extends CustomStrutsTestCase {
     public void testDeathAlterationEditModeInit() throws Exception {
         Map session = userLogin("rg", "password");
         request.setParameter("deathAlterationId", "7");
-        initAndExecute("/alteration/eprDeathAlterationEdit.do", session);
+        initAndExecute("/alteration/eprDeathAlterationEditInit.do", session);
         //check death alteration object is populated
         assertEquals("Action error", 0, deathAlterationAction.getActionErrors().size());
         assertEquals("Death alteration idUKey", 7, deathAlterationAction.getDeathAlterationId());

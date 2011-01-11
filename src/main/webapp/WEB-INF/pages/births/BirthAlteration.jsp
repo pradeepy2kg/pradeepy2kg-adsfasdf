@@ -804,7 +804,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
             </td>
             <td colspan="6"><s:select
                     list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
-                    name="alt52_1.childGender" cssStyle="width:50%; margin-left:5px;" id="childGender"/>
+                    name="birthAlteration.alt52_1.childGender" cssStyle="width:50%; margin-left:5px;" id="childGender" value="%{birthAlteration.alt52_1.childGender}"/>
         </tr>
         </tbody>
     </table>
@@ -994,7 +994,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 PIN / NIC of the Informant
             </td>
             <td colspan="2"><s:textfield id="informent_pinOrNic"
-                                         name="birthAlteration.alt52_1.informant. informantNICorPIN"/></td>
+                                         name="birthAlteration.alt52_1.informant.informantNICorPIN"/></td>
         </tr>
         <tr>
             <td>නම<br>
@@ -1069,7 +1069,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 Country
             </td>
             <td><s:select name="fatherCountryId" list="countryList" headerKey="0" id="fatherCountryId"
-                          headerValue="%{getText('select_country.label')}" cssStyle="width:80%;"/></td>
+                          headerValue="%{getText('select_country.label')}" cssStyle="width:80%;" value="%{fatherCountryId}"/></td>
         </tr>
         <tr>
             <td>ගමන් බලපත්‍ර අංකය<br>
@@ -1097,7 +1097,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
             </td>
             <td><s:select list="raceList" name="fatherRaceId" headerKey="0" id="fatherRaceId"
                           headerValue="%{getText('select_race.label')}"
-                          cssStyle="width:80%;"/></td>
+                          cssStyle="width:80%;" value="%{fatherRaceId}"/></td>
         </tr>
         <tr>
             <td>උපන් ස්ථානය<br>
