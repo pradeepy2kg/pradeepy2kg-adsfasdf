@@ -145,10 +145,6 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     }
 
     public String createUser() {
-        //todo : to be removed
-        //User updated = (User) session.get(WebConstants.SESSION_UPDATED_USER);
-        // todo...
-
         /* get the current user who are logged in */
         /* user = new User */
         User currentUser = (User) session.get(WebConstants.SESSION_USER_BEAN);
@@ -156,16 +152,28 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         user.setStatus(User.State.INACTIVE);
 
         Set assDistrict = new HashSet();
+        Set assDSDivision = new HashSet();
+
         for (int i = 0; i < assignedDistricts.length; i++) {
             assDistrict.add(districtDAO.getDistrict(assignedDistricts[i]));
         }
-        Set assDSDivision = new HashSet();
-        for (int i = 0; i < assignedDivisions.length; i++) {
-            assDSDivision.add(dsDivisionDAO.getDSDivisionByPK(assignedDivisions[i]));
+
+        if (roleId.equals(Role.ROLE_DEO) || roleId.equals(Role.ROLE_ADR)) {
+            for (int i = 0; i < assignedDistricts.length; i++) {
+                assDSDivision.add(dsDivisionDAO.getDSDivisionByPK(assignedDivisions[i]));
+            }
         }
+        if (roleId.equals(Role.ROLE_DR) || roleId.equals(Role.ROLE_ARG)) {
+            Iterator<District> it = assDistrict.iterator();
+            while (it.hasNext()) {
+                assDSDivision.addAll(dsDivisionDAO.getAllDSDivisionByDistrictKey(it.next().getDistrictUKey()));
+            }
+        }
+        /*if (roleDAO.getRole(roleId).equals(Role.ROLE_RG) || roleDAO.getRole(roleId).equals(Role.ROLE_ADMIN)) {
 
+        }*/
 
-        //todo change password length
+        //TODO change password length
         int randomPasswordLength = (int) (Math.random() * 6) + 10;
         if (userId == null) {
             randomPassword = getRandomPassword(randomPasswordLength);
@@ -255,18 +263,19 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
 
     public String initUser() {
         populate();
-        User currentUser = (User) session.get(WebConstants.SESSION_USER_BEAN);
+
+        User currentUser = (User) session.get(WebConstants.SESSION_USER_BEAN);     // admin
         logger.debug("user language {}", currentUser.getPrefLanguage());
+
         populateDynamicLists(currentUser.getPrefLanguage());
+
         if (userId != null) {
-            user = service.getUserByID(getUserId());
+            user = service.getUserByID(userId);
             currentDistrictList = convertDistricSetToMap(user.getAssignedBDDistricts());
             currentbdDivisionList = convertDivisionSetToMap(user.getAssignedBDDSDivisions());
             roleId = user.getRole().getRoleId();
             logger.info("current district list size  : {} for user : {}", currentDistrictList.size(), user.getUserName());
             logger.info("current division list size  : {} for user : {}", currentbdDivisionList.size(), user.getUserName());
-            //TODO : to be removed
-            //session.put(WebConstants.SESSION_UPDATED_USER, user);
         }
         return "pageLoad";
     }
@@ -687,6 +696,9 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         logger.debug("List : {}", locationList.size());
     }
 
+    /**
+     * populates Districts, Roles and Locations
+     */
     private void populate() {
         logger.debug("USER ID = {}", userId);
         logger.debug("lang : {}", language);
@@ -695,6 +707,13 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         }
         if (roleList == null) {
             roleList = roleDAO.getRoleList();
+            Iterator<String> it = roleList.keySet().iterator();
+            while (it.hasNext()) {
+                String r = it.next();
+                if (r.equals(Role.ROLE_DEO)) {
+                    roleId = r;
+                }
+            }
         }
         if (locationList == null) {
             locationList = locationDAO.getLocationList(language, currentUser);
@@ -702,26 +721,29 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         }
     }
 
+    /**
+     * this sets default values that should appear on the jsp page
+     */
     private void populateDynamicLists(String language) {
-        if (getUserDistrictId() == 0) {
+        if (userDistrictId == 0) {
             if (!districtList.isEmpty()) {
-                setUserDistrictId(districtList.keySet().iterator().next());
-                logger.debug("first allowed district in the list {} was set", getUserDistrictId());
+                userDistrictId = districtList.keySet().iterator().next();
+                logger.debug("first allowed district in the list {} was set", userDistrictId);
             }
         }
-        dsDivisionList = dsDivisionDAO.getAllDSDivisionNames(getUserDistrictId(), language, user);
+        dsDivisionList = dsDivisionDAO.getAllDSDivisionNames(userDistrictId, language, user);
 
-        if (getDsDivisionId() == 0) {
+        if (dsDivisionId == 0) {
             if (!dsDivisionList.isEmpty()) {
-                setDsDivisionId(dsDivisionList.keySet().iterator().next());
-                logger.debug("first allowed DS Div in the list {} was set", getDsDivisionId());
+                dsDivisionId = dsDivisionList.keySet().iterator().next();
+                logger.debug("first allowed DS Div in the list {} was set", dsDivisionId);
             }
         }
+        divisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
 
-        setDivisionList(bdDivisionDAO.getBDDivisionNames(getDsDivisionId(), language, user));
-        if (getDivisionId() == 0) {
-            setDivisionId(dsDivisionList.keySet().iterator().next());
-            logger.debug("first allowed BD Div in the list {} was set", getDivisionId());
+        if (divisionId == 0) {
+            divisionId = dsDivisionList.keySet().iterator().next();
+            logger.debug("first allowed BD Div in the list {} was set", divisionId);
         }
     }
 
