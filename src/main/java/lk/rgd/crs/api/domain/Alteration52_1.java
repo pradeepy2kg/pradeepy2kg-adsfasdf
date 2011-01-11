@@ -98,7 +98,7 @@ public class Alteration52_1 {
     }
 
     public void setNatureOfError(String natureOfError) {
-        this.natureOfError = WebUtils.filterBlanks(natureOfError);
+        this.natureOfError = WebUtils.filterBlanksAndToUpper(natureOfError);
     }
 
     public Date getDateOfBirth() {
@@ -114,7 +114,7 @@ public class Alteration52_1 {
     }
 
     public void setPlaceOfBirth(String placeOfBirth) {
-        this.placeOfBirth =WebUtils.filterBlanks(placeOfBirth);
+        this.placeOfBirth = WebUtils.filterBlanksAndToUpper(placeOfBirth);
     }
 
     public String getPlaceOfBirthEnglish() {
@@ -122,7 +122,7 @@ public class Alteration52_1 {
     }
 
     public void setPlaceOfBirthEnglish(String placeOfBirthEnglish) {
-        this.placeOfBirthEnglish = WebUtils.filterBlanks(placeOfBirthEnglish);
+        this.placeOfBirthEnglish = WebUtils.filterBlanksAndToUpper(placeOfBirthEnglish);
     }
 
     public BDDivision getBirthDivision() {
