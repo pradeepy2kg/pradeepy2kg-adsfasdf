@@ -163,8 +163,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
 
             try {
                 birthAlterationValidator.checkOnGoingAlterationOnThisSection(bdf.getIdUKey(), alterationType, user);
-            }
-            catch (CRSRuntimeException e) {
+            } catch (CRSRuntimeException e) {
                 addActionError(getText("error.ongoing.alteration.on.this.section", new String[]{"" + idUKey}));
                 populateBasicLists();
                 return ERROR;
@@ -243,8 +242,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         birthAlteration.setBdfIDUKey(bdId);
         try {
             alterationService.addBirthAlteration(birthAlteration, user);
-        }
-        catch (CRSRuntimeException e) {
+        } catch (CRSRuntimeException e) {
             //todo enhance and show reason why unable to add amith
             logger.debug("error while adding birth alteration for birth certificate : certificate idUKey {} and" +
                 " alteration type : {}", bdId, alterationType);
@@ -307,9 +305,11 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         //setting drop downs for child info
         if (birthAlteration.getAlt52_1() != null) {
             BDDivision birthDivision = birthAlteration.getAlt52_1().getBirthDivision();
-            birthDistrictId = birthDivision.getDistrict().getDistrictUKey();
-            birthDivisionId = birthDivision.getBdDivisionUKey();
-            dsDivisionId = birthDivision.getDsDivision().getDsDivisionUKey();
+            if (birthDivision != null) {
+                birthDistrictId = birthDivision.getDistrict().getDistrictUKey();
+                birthDivisionId = birthDivision.getBdDivisionUKey();
+                dsDivisionId = birthDivision.getDsDivision().getDsDivisionUKey();
+            }
         }
         //mother details
         if (birthAlteration.getAlt52_1().getMother() != null) {
@@ -347,8 +347,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
                 populateBirthAlterationForUpdate(existingBirthAlteration, birthAlteration);
                 alterationService.updateBirthAlteration(existingBirthAlteration, user);
                 logger.debug("birth alteration update success fully : alteration idUKey {}", idUKey);
-            }
-            catch (CRSRuntimeException exception) {
+            } catch (CRSRuntimeException exception) {
                 logger.debug("unable to update birth alteration idUKey : {}", idUKey);
                 addActionError(getText("error.unable.to.edit", new String[]{"" + idUKey}));
                 return ERROR;
@@ -388,8 +387,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         logger.debug("attempt to mark birth alteration idUKey : {} as printed", idUKey);
         try {
             alterationService.markBirthAlterationNoticeAsPrinted(idUKey, user);
-        }
-        catch (CRSRuntimeException e) {
+        } catch (CRSRuntimeException e) {
             switch (e.getErrorCode()) {
                 case ErrorCodes.INVALID_STATE_FOR_MARK_AS_PRINT_BIRTH_ALTERATION: {
                     logger.debug("birth alteration idUKey : {} is already marked as printed", idUKey);
@@ -544,8 +542,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
                     }
                 }
                 alterationService.approveBirthAlteration(birthAlteration, approveBitset, user);
-            }
-            catch (CRSRuntimeException e) {
+            } catch (CRSRuntimeException e) {
                 logger.error("cannot set bit set for birth alteration : {}", idUKey);
                 addActionError(getText("error.approval.failed.birth.alteration", new String[]{Long.toString(idUKey)}));
                 populateBasicLists();
@@ -596,8 +593,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         try {
             alterationService.rejectBirthAlteration(idUKey, comment, user);
             logger.debug("successfully rejected birth alteration idUKey : {}", idUKey);
-        }
-        catch (CRSRuntimeException e) {
+        } catch (CRSRuntimeException e) {
             logger.debug("unable to reject birth alteration idUKey : {}", idUKey);
             addActionError(getText("error.unable.to.reject", new String[]{"" + idUKey}));
             populateBasicLists();
@@ -617,8 +613,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         logger.debug("attempt delete birth alteration idUKey : {}", idUKey);
         try {
             alterationService.deleteBirthAlteration(idUKey, user);
-        }
-        catch (CRSRuntimeException e) {
+        } catch (CRSRuntimeException e) {
             switch (e.getErrorCode()) {
                 case ErrorCodes.CAN_NOT_FIND_BIRTH_ALTERATION: {
                     addActionError(getText("error.unable.to.find.birth.alteration.for.delete", new String[]{Long.toString(idUKey)}));
@@ -770,7 +765,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
                     child.getChildGender() != 0 ? Integer.toString(child.getChildGender()) : null,
                     alt52_1.getChildGender() != 0 ? Integer.toString(alt52_1.getChildGender()) : null,
                     Alteration52_1.GENDER, lk.rgd.common.util.CommonUtil.
-                        getYesOrNo(birthAlteration.getApprovalStatuses().get(Alteration52_1.GENDER), language)));
+                    getYesOrNo(birthAlteration.getApprovalStatuses().get(Alteration52_1.GENDER), language)));
             }
         }
         FieldValue fv = compareBDDivision(register.getBirthDivision(), alt52_1.getBirthDivision(),
@@ -797,7 +792,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
                     parent.getMotherAgeAtBirth() != null ? Integer.toString(parent.getMotherAgeAtBirth()) : null,
                     mother.getMotherAgeAtBirth() != null ? Integer.toString(mother.getMotherAgeAtBirth()) : null,
                     Alteration52_1.MOTHER_AGE_AT_BIRTH, lk.rgd.common.util.CommonUtil.
-                        getYesOrNo(birthAlteration.getApprovalStatuses().get(Alteration52_1.MOTHER_AGE_AT_BIRTH), language)));
+                    getYesOrNo(birthAlteration.getApprovalStatuses().get(Alteration52_1.MOTHER_AGE_AT_BIRTH), language)));
             }
 
             compareStringValues(parent.getMotherAddress(), mother.getMotherAddress(),
