@@ -20,13 +20,13 @@ public class DeclarantInfo implements Serializable, Cloneable {
      * 3 - sonOrDaughter, 4 - relative, 5 - other ,6 -spouse
      */
     public enum DeclarantType {
-        FATHER,
-        MOTHER,
-        BORTHER_OR_SISTER,
-        SON_OR_DAUGHTER,
-        RELATIVE,
-        OTHER,
-        SPOUSE //husband_or_wife
+        FATHER,//0
+        MOTHER,//1
+        BORTHER_OR_SISTER,//2
+        SON_OR_DAUGHTER,//3
+        RELATIVE,//4
+        OTHER,//5
+        SPOUSE //husband_or_wife 6
     }
 
     @Column(nullable = true)

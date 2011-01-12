@@ -213,7 +213,7 @@
             <br>Husband / Wife
         </td>
         <td colspan="1" align="center"><s:radio id="declarantType" name="declarant.declarantType"
-                                                list="#@java.util.HashMap@{'MOTHER':''}"/></td>
+                                                list="#@java.util.HashMap@{'SPOUSE':''}"/></td>
         <td colspan="1">
             සහෝදරයා සහෝදරිය
             <br>சகோதரான்/ சகோதரி

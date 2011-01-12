@@ -2,7 +2,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <script type="text/javascript">
-    function initPage(){}
+    function initPage() {
+    }
 </script>
 
 <div id="death-declaration-form-2-outer">
@@ -20,7 +21,7 @@
                 <td colspan="6">ප්‍රකාශකයාගේ විස්තර<br>அறிவிப்பு கொடுப்பவரின் தகவல்கள்<br>Details of the Declarant</td>
             </tr>
             <tr>
-                <td >
+                <td>
                     අනන්‍යතා අංකය
                     <br>அடையாள எண்
                     <br>Identification Number
@@ -29,19 +30,19 @@
                         value="%{#session.deathRegister.declarant.declarantNICorPIN}"/></td>
             </tr>
             <tr>
-                <td >නම<br>கொடுப்பவரின் பெயர்<br>Name</td>
+                <td>නම<br>கொடுப்பவரின் பெயர்<br>Name</td>
                 <td colspan="5"><s:label value="%{#session.deathRegister.declarant.declarantFullName}"/></td>
             </tr>
             <tr>
-                <td >තැපැල් ලිපිනය<br>தபால் முகவரி<br>Postal Address</td>
+                <td>තැපැල් ලිපිනය<br>தபால் முகவரி<br>Postal Address</td>
                 <td colspan="5"><s:label value="%{#session.deathRegister.declarant.declarantAddress}"/></td>
             </tr>
             <tr>
-                <td >ඇමතුම් විස්තර<br>இலக்க வகை <br>Contact Details</td>
-                <td >දුරකතනය<br>தொலைபேசி இலக்கம் <br>Telephone</td>
+                <td>ඇමතුම් විස්තර<br>இலக்க வகை <br>Contact Details</td>
+                <td>දුරකතනය<br>தொலைபேசி இலக்கம் <br>Telephone</td>
                 <td colspan="2"><s:label value="%{#session.deathRegister.declarant.declarantPhone}"/></td>
-                <td >ඉ -තැපැල<br>மின்னஞ்சல்<br>Email</td>
-                <td ><s:label value="%{#session.deathRegister.declarant.declarantEMail}"/></td>
+                <td>ඉ -තැපැල<br>மின்னஞ்சல்<br>Email</td>
+                <td><s:label value="%{#session.deathRegister.declarant.declarantEMail}"/></td>
             </tr>
                 <%--TODO--%>
             <tr>
@@ -65,6 +66,9 @@
                     </s:elseif>
                     <s:elseif test="session.deathRegister.declarant.declarantType.ordinal() == 5">
                         <s:label value="%{getText('death.declarant.other.label')}"/>
+                    </s:elseif>
+                    <s:elseif test="session.deathRegister.declarant.declarantType.ordinal() == 6">
+                        <s:label value="%{getText('death.declarant.spouse.label')}"/>
                     </s:elseif>
                 </td>
             </tr>
@@ -92,7 +96,7 @@
                 </s:elseif>
             </tr>
             <tr>
-                <td >
+                <td>
                     අනන්‍යතා අංකය
                     <br>அடையாள எண்
                     <br>Identification Number
@@ -112,7 +116,7 @@
                         value="%{#session.deathRegister.notifyingAuthority.notifyingAuthorityAddress}"/></td>
             </tr>
             <tr>
-                <td >දිනය<br>திகதி<br>Date</td>
+                <td>දිනය<br>திகதி<br>Date</td>
                 <td colspan="4"><s:label
                         value="%{#session.deathRegister.notifyingAuthority.notifyingAuthoritySignDate}"/></td>
             </tr>

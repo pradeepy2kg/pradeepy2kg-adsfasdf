@@ -97,8 +97,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private String language;
 
     public AdoptionAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
-                          AdoptionOrderService service, CountryDAO countryDAO, AppParametersDAO appParametersDAO,
-                          BirthRegistrationService birthRegistrationService, CourtDAO courtDAO) {
+        AdoptionOrderService service, CountryDAO countryDAO, AppParametersDAO appParametersDAO,
+        BirthRegistrationService birthRegistrationService, CourtDAO courtDAO) {
         this.service = service;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
@@ -123,7 +123,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         if (adoption.isApplicantMother()) {
             //check wife details are already filled if so give action error
             if (adoption.getWifeName() != null || adoption.getWifePassport() != null
-                    || adoption.getWifePINorNIC() != null) {
+                || adoption.getWifePINorNIC() != null) {
                 addActionError(getText("er.if.applicant.type.mother.wife.detail.null"));
                 basicLists();
                 return "invalidBirthCertificateNumber";
@@ -167,6 +167,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             logger.debug("added an adoption successfully with idUKey : {}", adoption.getIdUKey());
             setIdUKey(adoption.getIdUKey());
             setAllowApproveAdoption(user.isAuthorized(Permission.APPROVE_ADOPTION));
+            addActionMessage(getText("message.add.successfully.adoption", new String[]{adoption.getCourtOrderNumber()}));
         }
         return SUCCESS;
     }
@@ -240,9 +241,9 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         if (adoption.getBirthDivisionId() > 0) {
             birthDivisionName = bdDivisionDAO.getNameByPK(adoption.getBirthDivisionId(), language);
             dsDivisionName = dsDivisionDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(
-                    adoption.getBirthDivisionId()).getDsDivision().getDsDivisionUKey(), language);
+                adoption.getBirthDivisionId()).getDsDivision().getDsDivisionUKey(), language);
             birthDistrictName = districtDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(
-                    adoption.getBirthDivisionId()).getDistrict().getDistrictUKey(), language);
+                adoption.getBirthDivisionId()).getDistrict().getDistrictUKey(), language);
         }
         if (adoption.getApplicantCountryId() > 0) {
             applicantCountryName = countryDAO.getNameByPK(adoption.getApplicantCountryId(), language);
@@ -278,7 +279,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             genderEn = GenderUtil.getGender(adoption.getChildGender(), AppConstants.ENGLISH);
             genderSi = GenderUtil.getGender(adoption.getChildGender(), AppConstants.SINHALA);
             courtName = courtDAO.getNameByPK(adoption.getCourt().getCourtUKey(),
-                    adoption.getLanguageToTransliterate());
+                adoption.getLanguageToTransliterate());
             return SUCCESS;
         }
     }
@@ -333,7 +334,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             return "skip";
         }
         if ((adoption.getStatus() != AdoptionOrder.State.CERTIFICATE_ISSUE_REQUEST_CAPTURED) &&
-                (adoption.getStatus() != AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED)) {
+            (adoption.getStatus() != AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED)) {
             addActionError(getText("adoption.not.permited.operation"));
             logger.debug("Current state of adoption certificate : {}", adoption.getStatus());
             return ERROR;
@@ -383,8 +384,11 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
      */
     public String markAdoptionCertificateAsPrinted() {
         logger.debug("requested to mark adoption certificate as printed with idUKey : {} alreadyPrinted : {} ", idUKey, alreadyPrinted);
-        if (!alreadyPrinted) {
+        try {
             service.setStatusToPrintedCertificate(idUKey, user);
+        }
+        catch (CRSRuntimeException e) {
+            logger.debug("invalide state for mark as print adoption order idUKey : {}", idUKey);
         }
         populate();
         initPermissionForApprovalAndPrint();
@@ -394,6 +398,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         } else {
             adoptionApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
         }
+        logger.debug("marked as print succesfully adoption order idUKey : {}", idUKey);
         return SUCCESS;
     }
 
@@ -525,6 +530,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         logger.debug("requested to approve AdoptionOrder with idUKey : {}", idUKey);
         try {
             service.approveAdoptionOrder(getIdUKey(), user);
+            addActionMessage(getText("message.successfully.approved.adoption.order"));
         } catch (CRSRuntimeException e) {
             addActionError(getText("adoption.error.no.permission"));
         }
@@ -561,6 +567,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         logger.debug("requested to reject AdoptionOrder with idUKey : {}", idUKey);
         try {
             service.rejectAdoptionOrder(idUKey, user);
+            addActionMessage(getText("message.successfully.reject.adoption"));
         } catch (CRSRuntimeException e) {
             addActionError(getText("adoption.error.no.permission"));
         }
@@ -578,6 +585,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     public String deleteAdoption() {
         logger.debug("requested to delete AdoptionOrder with idUKey : {}", idUKey);
         service.deleteAdoptionOrder(idUKey, user);
+        addActionMessage(getText("message.successfully.deleted"));
         populateApprovalAndPrintList();
         return SUCCESS;
     }
@@ -644,7 +652,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         adoption = service.getById(idUKey, user);
         if (adoption != null) {
             courtName = courtDAO.getNameByPK(adoption.getCourt().getCourtUKey(),
-                    ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage());
+                ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage());
             if (adoption.getStatus().equals(AdoptionOrder.State.NOTICE_LETTER_PRINTED)) {
                 session.put(WebConstants.SESSION_ADOPTION_ORDER, adoption);
 

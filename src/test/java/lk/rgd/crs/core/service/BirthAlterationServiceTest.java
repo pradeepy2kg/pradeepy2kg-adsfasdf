@@ -81,7 +81,7 @@ public class BirthAlterationServiceTest extends TestCase {
         ba.setAlt27(alt27);
         ba.getDeclarant().setDeclarantFullName("Declarant name");
         ba.getDeclarant().setDeclarantAddress("Declarant address");
-        ba.getDeclarant().setDeclarantType(DeclarantInfo.DeclarantType.FATHER);
+       ba.getDeclarant().setDeclarantType(DeclarantInfo.DeclarantType.FATHER);
         ba.setBirthRecordDivision(colomboBDDivision);
         ba.setDateReceived(new Date());
         ba.setBdfIDUKey(bdfIdUKey);
