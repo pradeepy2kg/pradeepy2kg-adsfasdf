@@ -765,7 +765,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
                     child.getChildGender() != 0 ? Integer.toString(child.getChildGender()) : null,
                     alt52_1.getChildGender() != 0 ? Integer.toString(alt52_1.getChildGender()) : null,
                     Alteration52_1.GENDER, lk.rgd.common.util.CommonUtil.
-                    getYesOrNo(birthAlteration.getApprovalStatuses().get(Alteration52_1.GENDER), language)));
+                        getYesOrNo(birthAlteration.getApprovalStatuses().get(Alteration52_1.GENDER), language)));
             }
         }
         FieldValue fv = compareBDDivision(register.getBirthDivision(), alt52_1.getBirthDivision(),
@@ -792,7 +792,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
                     parent.getMotherAgeAtBirth() != null ? Integer.toString(parent.getMotherAgeAtBirth()) : null,
                     mother.getMotherAgeAtBirth() != null ? Integer.toString(mother.getMotherAgeAtBirth()) : null,
                     Alteration52_1.MOTHER_AGE_AT_BIRTH, lk.rgd.common.util.CommonUtil.
-                    getYesOrNo(birthAlteration.getApprovalStatuses().get(Alteration52_1.MOTHER_AGE_AT_BIRTH), language)));
+                        getYesOrNo(birthAlteration.getApprovalStatuses().get(Alteration52_1.MOTHER_AGE_AT_BIRTH), language)));
             }
 
             compareStringValues(parent.getMotherAddress(), mother.getMotherAddress(),
@@ -1194,11 +1194,15 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             break;
             case TYPE_27A: {
                 //setting father race and country
-                updated.getAlt27A().getFather().setFatherCountry((fatherCountryId != 0) ?
-                    countryDAO.getCountry(fatherCountryId) : null);
-                updated.getAlt27A().getFather().setFatherRace((fatherRaceId != 0) ?
-                    raceDAO.getRace(fatherRaceId) : null);
-                existing.setAlt27A(updated.getAlt27A());
+                if (updated.getAlt27A() != null) {
+                    if (updated.getAlt27A().getFather() != null) {
+                        updated.getAlt27A().getFather().setFatherCountry((fatherCountryId != 0) ?
+                            countryDAO.getCountry(fatherCountryId) : null);
+                        updated.getAlt27A().getFather().setFatherRace((fatherRaceId != 0) ?
+                            raceDAO.getRace(fatherRaceId) : null);
+                    }
+                    existing.setAlt27A(updated.getAlt27A());
+                }
             }
             break;
             //all following cases are treat as same only different is how the approve
@@ -1208,13 +1212,17 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             case TYPE_52_1_E:
             case TYPE_52_1_H:
             case TYPE_52_1_I: {
-                updated.getAlt52_1().getMother().setMotherCountry((motherCountryId != 0) ?
-                    countryDAO.getCountry(motherCountryId) : null);
-                updated.getAlt52_1().getMother().setMotherRace((motherRaceId != 0) ?
-                    raceDAO.getRace(motherRaceId) : null);
-                updated.getAlt52_1().setBirthDivision((birthDivisionId != 0) ?
-                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId) : null);
-                existing.setAlt52_1(updated.getAlt52_1());
+                if (updated.getAlt52_1() != null) {
+                    if (updated.getAlt52_1().getMother() != null) {
+                        updated.getAlt52_1().getMother().setMotherCountry((motherCountryId != 0) ?
+                            countryDAO.getCountry(motherCountryId) : null);
+                        updated.getAlt52_1().getMother().setMotherRace((motherRaceId != 0) ?
+                            raceDAO.getRace(motherRaceId) : null);
+                    }
+                    updated.getAlt52_1().setBirthDivision((birthDivisionId != 0) ?
+                        bdDivisionDAO.getBDDivisionByPK(birthDivisionId) : null);
+                    existing.setAlt52_1(updated.getAlt52_1());
+                }
             }
         }
         //populate other fields that can be edit
