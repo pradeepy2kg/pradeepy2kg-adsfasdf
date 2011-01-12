@@ -3,6 +3,9 @@ package lk.rgd.crs.core.service;
 import lk.rgd.AppConstants;
 import lk.rgd.ErrorCodes;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.util.DateTimeUtils;
+import lk.rgd.common.util.NameFormatUtil;
+import lk.rgd.common.util.PinAndNicUtils;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.prs.PRSRuntimeException;
 import lk.rgd.prs.api.dao.PersonDAO;
@@ -12,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.naming.spi.Resolver;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -31,6 +35,7 @@ public class PopulationRegisterValidator {
         ResourceBundle.getBundle("messages/prs_validation_messages", AppConstants.LK_EN);
 
     private static final Logger logger = LoggerFactory.getLogger(PopulationRegisterValidator.class);
+    private static final String POSSIBLE_DUPLICATE = "possible_duplicate";
     private final PersonDAO personDAO;
 
     public PopulationRegisterValidator(PersonDAO personDAO) {
@@ -98,24 +103,73 @@ public class PopulationRegisterValidator {
             rb = rb_ta;
         }
 
-        warnings.add(new UserWarning("Sample Warning", UserWarning.Severity.WARN));
+        final Long tempPin = person.getTemporaryPin();
+        final String nic = person.getNic();
 
-
-        /*if (person.getTemporaryPin() != null) {
+        // TODO need to add solr search duplicates also
+        // check if this is a duplicate entry by temporary pin
+        if (tempPin != null) {
             Person p = personDAO.findPersonByTemporaryPIN(person.getTemporaryPin());
-            if (p != null && (isRecordInDataEntry(p.getStatus()) || p.getStatus() == Person.Status.VERIFIED)) {
-                exactRecord.add(personDao.findPersonByTemporaryPIN(person.getTemporaryPin()));
+            if (p != null && (isRecordInDataEntryOrApproved(p.getStatus()))) {
+                addDuplicateWarning(warnings, rb, p);
             }
-        } else if (person.getNic() != null) {
+        }
+        // check if this a duplicate entry by nic
+        if (nic != null) {
             for (Person p : personDAO.findPersonsByNIC(person.getNic())) {
-                if (isRecordInDataEntry(p.getStatus()) || p.getStatus() == Person.Status.VERIFIED) {
-                    exactRecord.add(p);
+                if (isRecordInDataEntryOrApproved(p.getStatus())) {
+                    addDuplicateWarning(warnings, rb, p);
                 }
             }
+        }
+
+        // validate person pin or nic
+        String pinOrNic = person.getNic();
+        if (!PinAndNicUtils.isValidNIC(pinOrNic)) {
+            UserWarning w = new UserWarning(MessageFormat.format(rb.getString("invalid_person_nic"), pinOrNic));
+            w.setSeverity(UserWarning.Severity.ERROR);
+            warnings.add(w);
+        }
+
+        // TODO chathuranga uncomment
+        // validate person temporary pin
+        /* if (!PinAndNicUtils.isValidPIN(tempPin, , user)) {
+            UserWarning w = new UserWarning(MessageFormat.format(rb.getString("invalid_person_tempPin"), pinOrNic));
+            w.setSeverity(UserWarning.Severity.ERROR);
+            warnings.add(w);
+        }
+
+        // validate mother pin or nic
+        pinOrNic = person.getMotherPINorNIC();
+        if (!PinAndNicUtils.isValidPINorNIC(pinOrNic, , user)) {
+            UserWarning w = new UserWarning(MessageFormat.format(rb.getString("invalid_mother_pin"), pinOrNic));
+            w.setSeverity(UserWarning.Severity.ERROR);
+            warnings.add(w);
+        }
+
+        // validate father pin or nic
+        pinOrNic = person.getFatherPINorNIC();
+        if (!PinAndNicUtils.isValidPINorNIC(pinOrNic, , user)) {
+            UserWarning w = new UserWarning(MessageFormat.format(rb.getString("invalid_father_pin"), pinOrNic));
+            w.setSeverity(UserWarning.Severity.ERROR);
+            warnings.add(w);
         }*/
 
+        // TODO more validations to be added
 
         return warnings;
+    }
+
+    private void addDuplicateWarning(List<UserWarning> warnings, ResourceBundle rb, Person p) {
+        warnings.add(
+            new UserWarning(MessageFormat.format(rb.getString(POSSIBLE_DUPLICATE), p.getPersonUKey(),
+                DateTimeUtils.getISO8601FormattedString(p.getDateOfBirth()),
+                NameFormatUtil.getDisplayName(p.getFullNameInOfficialLanguage(), 30), p.getStatus())));
+    }
+
+    private boolean isRecordInDataEntryOrApproved(Person.Status currentState) {
+        return (currentState == Person.Status.SEMI_VERIFIED || currentState == Person.Status.UNVERIFIED ||
+            currentState == Person.Status.DATA_ENTRY || currentState == Person.Status.VERIFIED);
     }
 
     private boolean isEmptyString(String s) {

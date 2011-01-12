@@ -14,7 +14,7 @@
 </s:else>
 <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;">
     <legend><b><s:label value="%{getText('message.personWarning.label')}"/></b></legend>
-    <table class="birth-declaration-approval-warning-table" style="margin-left:10px;">
+    <table class="birth-declaration-approval-warning-table" style="margin-left:10px;margin-top:10px;">
         <s:iterator value="#request.warnings">
             <tr>
                 <td><s:property value="message"/></td>
