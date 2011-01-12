@@ -56,7 +56,7 @@ public class DistrictDAOImpl extends BaseDAO implements DistrictDAO, Preloadable
         if (user == null) {
             logger.error("Error getting DistrictNames using null for User");
             throw new IllegalArgumentException("User can not be null");
-        } else if (Role.ROLE_RG.equals(user.getRole().getRoleId())) {
+        } else if (Role.ROLE_RG.equals(user.getRole().getRoleId()) || Role.ROLE_ADMIN.equals(user.getRole().getRoleId())) {
             // admins and RG has full access
             return result;
         } else {

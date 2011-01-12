@@ -59,6 +59,13 @@ public interface LocationDAO {
     public String getLocationNameByPK(int locationUKey, String language);
 
     /**
+     * Return cached locations
+     *
+     * @return map
+     */
+    public Map<Integer, Location> getPreLoadedLocations();
+
+    /**
      * @param locationCode
      * @return
      */

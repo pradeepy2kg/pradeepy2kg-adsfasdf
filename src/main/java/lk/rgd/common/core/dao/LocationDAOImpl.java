@@ -134,6 +134,10 @@ public class LocationDAOImpl extends BaseDAO implements LocationDAO, Preloadable
         return map;
     }
 
+    public Map<Integer, Location> getPreLoadedLocations() {
+        return locationsByPK;
+    }
+
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public void preload() {
         Query q = em.createNamedQuery("getAllLocations");

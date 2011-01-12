@@ -93,13 +93,20 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
         /* lists are generated according to the user */
         session.remove(WebConstants.SESSION_EXSISTING_REGISTRAR);
         User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
+        String usrRole = user.getRole().getRoleId();
+        districtId = 1;
+        dsDivisionId = 0;
+   
         districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
-        this.districtId = districtList.keySet().iterator().next();
+        if (districtList != null) {
+            districtId = districtList.keySet().iterator().next();
+        }
         dsDivisionList = dsDivisionDAO.getAllDSDivisionNames(districtId, user.getPrefLanguage(), user);
-        this.dsDivisionId = -1;//dsDivisionList.keySet().iterator().next();
-
-        this.state = true;
-        this.type = Assignment.Type.BIRTH;
+        if (dsDivisionList != null) {
+            dsDivisionId = districtList.keySet().iterator().next();
+        }
+        state = true;
+        type = Assignment.Type.BIRTH;
         //filter(); /* populating search results */
 
         return SUCCESS;
