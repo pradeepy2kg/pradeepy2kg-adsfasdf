@@ -8,6 +8,7 @@
     }
 </script>
 <s:actionerror cssStyle="color:red;font-size:10pt"/>
+<s:actionmessage cssStyle="color:black;font-size:10pt"/>
 <div id="adoption-page">
     <s:url id="approveAdoption" action="eprAdoptionDirectApproval.do">
         <s:param name="idUKey" value="#request.idUKey"/>
