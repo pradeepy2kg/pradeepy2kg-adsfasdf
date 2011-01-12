@@ -53,12 +53,24 @@
             <result type="tiles" name="successADR">epr.adrhome</result>
             <result type="tiles" name="successDEO">epr.deohome</result>-->
 
-            <result type="redirectAction" name="successADMIN"><param name="actionName">eprStatHome</param></result>
-            <result type="redirectAction" name="successRG"><param name="actionName">eprStatHome</param></result>
-            <result type="redirectAction" name="successARG"><param name="actionName">eprStatHome</param></result>
-            <result type="redirectAction" name="successDR"><param name="actionName">eprStatHome</param></result>
-            <result type="redirectAction" name="successADR"><param name="actionName">eprStatHome</param></result>
-            <result type="redirectAction" name="successDEO"><param name="actionName">eprStatHome</param></result>
+            <result type="redirectAction" name="successADMIN">
+                <param name="actionName">eprStatHome</param>
+            </result>
+            <result type="redirectAction" name="successRG">
+                <param name="actionName">eprStatHome</param>
+            </result>
+            <result type="redirectAction" name="successARG">
+                <param name="actionName">eprStatHome</param>
+            </result>
+            <result type="redirectAction" name="successDR">
+                <param name="actionName">eprStatHome</param>
+            </result>
+            <result type="redirectAction" name="successADR">
+                <param name="actionName">eprStatHome</param>
+            </result>
+            <result type="redirectAction" name="successDEO">
+                <param name="actionName">eprStatHome</param>
+            </result>
 
             <result name="expired">/WEB-INF/pages/preferences/PasswordChange.jsp</result>
             <result name="error">/WEB-INF/pages/login/login.jsp</result>
@@ -113,7 +125,7 @@
         </action>
 
         <action name="eprDirectEditPerson" class="lk.rgd.prs.web.action.PersonRegisterAction" method="personEditInit">
-             <param name="direct">true</param>
+            <param name="direct">true</param>
             <result type="tiles" name="success">epr.existingPersonRegistration</result>
         </action>
 
@@ -1405,7 +1417,8 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
-        <action name="eprMarriageRegisterRejectInit" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
+        <action name="eprMarriageRegisterRejectInit"
+                class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
                 method="marriageRegisterViewInit">
             <result type="tiles" name="success">epr.marriageExtract</result>
             <result type="tiles" name="error">epr.error</result>

@@ -243,7 +243,7 @@
                         <s:url id="reRegisterBirthUrl" action="../births/eprAdoptionBirthRegistrationInit.do">
                             <s:param name="adoptionId" value="idUKey"/>
                         </s:url>
-                        <s:if test="status.ordinal() >4 && allowEditAdoption">
+                        <s:if test="status.ordinal() ==5 && allowEditAdoption">
                             <s:a href="%{reRegisterBirthUrl}" title="%{getText('AdoptionReRegistrationTooltip.label')}">
                                 <img src="<s:url value='/images/add_page.png'/>" border="none" width="25" height="25"/>
                             </s:a>

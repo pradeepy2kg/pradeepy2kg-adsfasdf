@@ -16,6 +16,7 @@ import lk.rgd.crs.api.dao.AdoptionOrderDAO;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.dao.BirthDeclarationDAO;
 import lk.rgd.crs.api.domain.*;
+import lk.rgd.crs.api.service.AdoptionOrderService;
 import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.core.ValidationUtils;
 import lk.rgd.prs.api.domain.Address;
@@ -49,12 +50,13 @@ public class BirthRegistrationServiceImpl implements
     private final BirthRecordsIndexer birthRecordsIndexer;
     private final AdoptionOrderDAO adoptionOrderDAO;
     private final BirthDeclarationValidator birthDeclarationValidator;
+    private final AdoptionOrderService adoptionOrderService;
 
     public BirthRegistrationServiceImpl(
         BirthDeclarationDAO birthDeclarationDAO, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
         BDDivisionDAO bdDivisionDAO, CountryDAO countryDAO, RaceDAO raceDAO, PopulationRegistry ecivil,
         AppParametersDAO appParametersDAO, UserManager userManager, BirthRecordsIndexer birthRecordsIndexer,
-        AdoptionOrderDAO adoptionOrderDAO, BirthDeclarationValidator birthDeclarationValidator) {
+        AdoptionOrderDAO adoptionOrderDAO, BirthDeclarationValidator birthDeclarationValidator, AdoptionOrderService adoptionOrderService) {
         this.birthDeclarationDAO = birthDeclarationDAO;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
@@ -67,6 +69,7 @@ public class BirthRegistrationServiceImpl implements
         this.birthRecordsIndexer = birthRecordsIndexer;
         this.adoptionOrderDAO = adoptionOrderDAO;
         this.birthDeclarationValidator = birthDeclarationValidator;
+        this.adoptionOrderService = adoptionOrderService;
     }
 
     /**
@@ -129,9 +132,20 @@ public class BirthRegistrationServiceImpl implements
 
         // validate if the minimum required fields are adequately filled
         birthDeclarationValidator.validateMinimalRequirements(bdf);
+        addBirthDeclaration(bdf, ignoreWarnings, user);
+        //updating adoption record
 
+        AdoptionOrder order = adoptionOrderService.getById(bdf.getRegister().getAdoptionUKey(), user);
+        if (order != null) {
+            order.setStatus(AdoptionOrder.State.RE_REGISTRATION_REQUESTED);
+            adoptionOrderService.updateAdoptionOrder(order, user);
+        } else {
+            handleException("Unable to update adoption order while adding re registration of birth decleration " +
+                "for adoption order idUKey " + bdf.getRegister().getAdoptionUKey(),
+                ErrorCodes.UNABLE_TO_UPDATE_ADOPTION_ORDER);
+        }
         // TODO adoption specific validations
-
+/*
         AdoptionOrder existing = adoptionOrderDAO.getById(bdf.getRegister().getAdoptionUKey());
         final AdoptionOrder.State currentState = existing.getStatus();
         if (AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED == currentState) {
@@ -143,7 +157,7 @@ public class BirthRegistrationServiceImpl implements
         } else {
             handleException("Cannot archive adoption order : " + bdf.getRegister().getAdoptionUKey() +
                 " Illegal state : " + currentState, ErrorCodes.ILLEGAL_STATE);
-        }
+        }*/
 
         logger.debug("Added a new adoption birth declaration. IDUKey : {}", bdf.getIdUKey());
         return null;
@@ -446,6 +460,8 @@ public class BirthRegistrationServiceImpl implements
         final BirthDeclaration.State currentState = existing.getRegister().getStatus();
         if (currentState == BirthDeclaration.State.DATA_ENTRY) {
             birthDeclarationDAO.deleteBirthDeclaration(bdf.getIdUKey());
+            //updating adoption order
+            updatingAdoptionOrder(bdf, user);
             logger.debug("Deleted adoption birth declaration record : {} in data entry state", bdf.getIdUKey());
 
         } else {
@@ -691,11 +707,19 @@ public class BirthRegistrationServiceImpl implements
             adoption.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
             adoption.getLifeCycleInfo().setApprovalOrRejectUser(user);
             birthDeclarationDAO.updateBirthDeclaration(adoption, user);
+            //updating corresponding adoption order and clear any other existing registrations
+            AdoptionOrder adoptionOrder = adoptionOrderService.getById(adoption.getRegister().getAdoptionUKey(), user);
+            adoptionOrder.setStatus(AdoptionOrder.State.RE_REGISTERED);
+            adoptionOrderService.updateAdoptionOrder(adoptionOrder, user);
             logger.debug("Approved adoption birth declaration record : {} Ignore warnings : {}", adoption.getIdUKey(), ignoreWarnings);
         } else {
             logger.debug("Approval of adoption birth declaration record : {} stopped due to warnings", adoption.getIdUKey());
         }
         return warnings;
+    }
+
+    private void clearingExistingAdoptionReRegistrations(AdoptionOrder adoptionOrder) {
+
     }
 
     /**
@@ -1087,11 +1111,30 @@ public class BirthRegistrationServiceImpl implements
             bdf.getLifeCycleInfo().setApprovalOrRejectUser(user);
 
             birthDeclarationDAO.updateBirthDeclaration(bdf, user);
+            updatingAdoptionOrder(bdf, user);
             logger.debug("Rejected birth declaration record : {} by user : {}", bdf.getIdUKey(), user.getUserId());
 
         } else {
             handleException("Cannot reject birth declaration / confirmation : " + bdf.getIdUKey() +
                 " Illegal state : " + currentState, ErrorCodes.INVALID_STATE_FOR_BDF_REJECTION);
+        }
+    }
+
+    private void updatingAdoptionOrder(BirthDeclaration birthDeclaration, User user) {
+        //if we rejecting adoption we have to change the adoption order state for prev
+        if (birthDeclaration.getRegister().getBirthType() == BirthDeclaration.BirthType.ADOPTION) {
+            logger.debug("attempt to change state of the adoption order : {} ,birth record idUKey : {}",
+                birthDeclaration.getRegister().getAdoptionUKey(), birthDeclaration.getIdUKey());
+            try {
+                AdoptionOrder adoptionOrder = adoptionOrderService.getById(birthDeclaration.getRegister().getAdoptionUKey(), user);
+                adoptionOrder.setStatus(AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED);
+                adoptionOrderService.updateAdoptionOrder(adoptionOrder, user);
+            }
+            catch (CRSRuntimeException e) {
+                handleException("Cannot update adoption order idUKey : " +
+                    birthDeclaration.getRegister().getAdoptionUKey() + " birth record idUKey :" +
+                    birthDeclaration.getIdUKey(), ErrorCodes.UNABLE_TO_UPDATE_ADOPTION_ORDER);
+            }
         }
     }
 

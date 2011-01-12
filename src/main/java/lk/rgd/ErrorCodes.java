@@ -58,6 +58,7 @@ public class ErrorCodes {
     public static final int INCOMPLETE_ALTERATION = 1010;
     //duplicate BDF serial number
     public static final int POSSIBLE_DUPLICATION_OF_BDF_SERIAL_NUMBER = 1011;
+    public static final int UNABLE_TO_UPDATE_ADOPTION_ORDER = 1012;
 
 
     // error codes 2001 - 3000 indicate permission denied errors

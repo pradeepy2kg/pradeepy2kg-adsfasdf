@@ -334,7 +334,9 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             return "skip";
         }
         if ((adoption.getStatus() != AdoptionOrder.State.CERTIFICATE_ISSUE_REQUEST_CAPTURED) &&
-            (adoption.getStatus() != AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED)) {
+            (adoption.getStatus() != AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED) &&
+            adoption.getStatus() != AdoptionOrder.State.RE_REGISTRATION_REQUESTED &&
+            adoption.getStatus() != AdoptionOrder.State.RE_REGISTERED) {
             addActionError(getText("adoption.not.permited.operation"));
             logger.debug("Current state of adoption certificate : {}", adoption.getStatus());
             return ERROR;

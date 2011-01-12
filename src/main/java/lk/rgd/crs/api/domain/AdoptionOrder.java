@@ -16,14 +16,14 @@ import java.util.Date;
 // TODO add a constraint to ensure court ID and court order number combination is unique
 
 @NamedQueries({
-        @NamedQuery(name = "adoption.filter.by.status.paginated", query = "SELECT adoption FROM AdoptionOrder adoption " +
-                "WHERE adoption.status = :status " + "ORDER BY adoption.orderIssuedDate desc"),
+    @NamedQuery(name = "adoption.filter.by.status.paginated", query = "SELECT adoption FROM AdoptionOrder adoption " +
+        "WHERE adoption.status = :status " + "ORDER BY adoption.orderIssuedDate desc"),
 
-        @NamedQuery(name = "get.by.court.and.courtOrderNumber", query = "SELECT adoption FROM AdoptionOrder adoption " +
-                "WHERE adoption.courtOrderNumber = :courtOrderNumber"),
-        // TODO fix this to use the courtUKey
+    @NamedQuery(name = "get.by.court.and.courtOrderNumber", query = "SELECT adoption FROM AdoptionOrder adoption " +
+        "WHERE adoption.courtOrderNumber = :courtOrderNumber"),
+    // TODO fix this to use the courtUKey
 
-        @NamedQuery(name = "getAllAdoptions", query = "SELECT adoption FROM AdoptionOrder adoption")
+    @NamedQuery(name = "getAllAdoptions", query = "SELECT adoption FROM AdoptionOrder adoption")
 })
 
 public class AdoptionOrder implements Serializable {
@@ -40,6 +40,8 @@ public class AdoptionOrder implements Serializable {
         CERTIFICATE_ISSUE_REQUEST_CAPTURED, //4 Acertifcate is requested
 
         ADOPTION_CERTIFICATE_PRINTED, //5 Acertifcate is requested
+        RE_REGISTRATION_REQUESTED,// 6 requesting an adoption re registration
+        RE_REGISTERED // 7 re registered
     }
 
     public enum ApplicantType {
@@ -284,7 +286,7 @@ public class AdoptionOrder implements Serializable {
     public String getChildExistingNameToLength(int maxLength) {
         if (childExistingName != null && childExistingName.length() > maxLength) {
             return "..." + childExistingName.substring(childExistingName.length() - maxLength + 3,
-                    childExistingName.length());
+                childExistingName.length());
         }
         return childExistingName;
     }
@@ -300,7 +302,7 @@ public class AdoptionOrder implements Serializable {
     public String getChildNewNameToLength(int maxLength) {
         if (childNewName != null && childNewName.length() > maxLength) {
             return "..." + childNewName.substring(childNewName.length() - maxLength + 3,
-                    childNewName.length());
+                childNewName.length());
         }
         return childNewName;
     }
