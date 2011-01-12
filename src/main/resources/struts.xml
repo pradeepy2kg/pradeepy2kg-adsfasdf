@@ -741,12 +741,20 @@
 
         <action name="eprChangePass" class="lk.rgd.crs.web.action.UserPreferencesAction"
                 method="changePassword">
-            <result type="tiles" name="successADMIN">epr.home</result>
+            <!--<result type="tiles" name="successADMIN">epr.home</result>
             <result type="tiles" name="successRG">epr.rghome</result>
             <result type="tiles" name="successARG">epr.arghome</result>
             <result type="tiles" name="successDR">epr.drhome</result>
             <result type="tiles" name="successADR">epr.adrhome</result>
-            <result type="tiles" name="successDEO">epr.deohome</result>
+            <result type="tiles" name="successDEO">epr.deohome</result>-->
+
+            <result type="tiles" name="successADMIN">epr.home</result>
+            <result type="tiles" name="successRG">epr.home</result>
+            <result type="tiles" name="successARG">epr.home</result>
+            <result type="tiles" name="successDR">epr.home</result>
+            <result type="tiles" name="successADR">epr.home</result>
+            <result type="tiles" name="successDEO">epr.home</result>
+
             <result name="error">/WEB-INF/pages/preferences/PasswordChange.jsp</result>
         </action>
 

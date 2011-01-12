@@ -169,9 +169,6 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 assDSDivision.addAll(dsDivisionDAO.getAllDSDivisionByDistrictKey(it.next().getDistrictUKey()));
             }
         }
-        /*if (roleDAO.getRole(roleId).equals(Role.ROLE_RG) || roleDAO.getRole(roleId).equals(Role.ROLE_ADMIN)) {
-
-        }*/
 
         //TODO change password length
         int randomPasswordLength = (int) (Math.random() * 6) + 10;
@@ -182,6 +179,13 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
             user.setAssignedMRDistricts(assDistrict);
             user.setAssignedBDDSDivisions(assDSDivision);
             user.setAssignedMRDSDivisions(assDSDivision);
+            /*if (roleId.equals(Role.ROLE_RG) || roleId.equals(Role.ROLE_ADMIN)) {
+                user.setPrimaryLocation(locationDAO.getLocation(1));
+                userLocation = new UserLocation();
+                userLocation.setLocation(user.getPrimaryLocation());
+                userLocation.setLocationId(1);
+                userLocation.setUser(user);
+            }*/
             try {
                 service.createUser(user, currentUser);
             } catch (RGDRuntimeException e) {
@@ -210,6 +214,13 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
             updatedUser.setAssignedBDDSDivisions(assDSDivision);
             updatedUser.setAssignedMRDSDivisions(assDSDivision);
             updatedUser.setRole(roleDAO.getRole(roleId));
+            /*if (roleDAO.getRole(roleId).equals(Role.ROLE_RG) || roleDAO.getRole(roleId).equals(Role.ROLE_ADMIN)) {
+                user.setPrimaryLocation(locationDAO.getLocation(1));
+                userLocation = new UserLocation();
+                userLocation.setLocation(user.getPrimaryLocation());
+                userLocation.setLocationId(1);
+                userLocation.setUser(user);
+            }*/
 
             if (isAssignedLocations(updatedUser)) {
                 updatedUser.setStatus(User.State.ACTIVE);
@@ -678,22 +689,29 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
 
     private void populateLocationListOnly() {
         locationList = new HashMap<Integer, String>();
-        Set<DSDivision> st = userDAO.getUserByPK(userId).getAssignedBDDSDivisions();
+        Map<Integer, Location> allLocations = locationDAO.getPreLoadedLocations();
+        User user = userDAO.getUserByPK(userId);
+        Set<DSDivision> st = user.getAssignedBDDSDivisions();
+        
         for (DSDivision ds : st) {
-            locationList.putAll(locationDAO.getLocationByDSDivisionID(ds.getDsDivisionUKey(), userDAO.getUserByPK(userId).getPrefLanguage()));
+            locationList.putAll(locationDAO.getLocationByDSDivisionID(ds.getDsDivisionUKey(), user.getPrefLanguage()));
+
         }
         if (userLocationDAO.getActiveUserLocations(userId, true).size() > 0) {
-            User u = userDAO.getUserByPK(userId);
-            u.setStatus(User.State.ACTIVE);
-            service.updateUser(u);
-            logger.debug("User Activated {}", userDAO.getUserByPK(userId).getUserName());
+            user.setStatus(User.State.ACTIVE);
+            service.updateUser(user);
+            logger.debug("User Activated {}", user.getUserName());
         } else {
-            User u = userDAO.getUserByPK(userId);
-            u.setStatus(User.State.INACTIVE);
-            service.updateUser(u);
-            logger.debug("User Deactivated {}", userDAO.getUserByPK(userId).getUserName());
+            user.setStatus(User.State.INACTIVE);
+            service.updateUser(user);
+            logger.debug("User Deactivated {}", user.getUserName());
         }
         logger.debug("List : {}", locationList.size());
+
+        if (user.getRole().getRoleId().equals(Role.ROLE_RG) || user.getRole().getRoleId().equals(Role.ROLE_ADMIN)) {
+            locationList.put(1, locationDAO.getLocationNameByPK(1, user.getPrefLanguage()));
+        }
+
     }
 
     /**
