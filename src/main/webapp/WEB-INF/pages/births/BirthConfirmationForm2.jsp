@@ -64,7 +64,8 @@
         return returnval;
     }
 
-    function initPage(){}
+    function initPage() {
+    }
 </script>
 
 <div id="birth-confirmation-form-outer">
@@ -146,14 +147,15 @@
             <s:hidden name="skipConfirmationChages" value="%{#request.skipConfirmationChages}"/>
             <s:submit value="%{getText('next.label')}"/>
         </div>
+    </s:form>
 
-        <div class="next-previous">
-            <s:url id="backUrl" action="eprBirthConfirmation">
-                <s:param name="back" value="true"/>
-                <s:param name="pageNo" value="{pageNo - 1}"/>
-                <s:param name="skipConfirmationChages" value="#request.skipConfirmationChages"/>
-            </s:url>
-            <s:a href="%{backUrl}"><s:label value="%{getText('previous.label')}"/></s:a>
+    <s:form action="eprBirthConfirmation.do" method="post">
+        <s:hidden name="back" value="true"/>
+        <s:hidden name="pageNo" value="%{pageNo - 1}"/>
+        <s:hidden name="skipConfirmationChages" value="%{#request.skipConfirmationChages}"/>
+
+        <div class="form-submit">
+            <s:submit value="%{getText('previous.label')}"/>
         </div>
     </s:form>
 

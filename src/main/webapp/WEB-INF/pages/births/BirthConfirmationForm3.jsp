@@ -186,7 +186,8 @@
                 <td colspan="2"><label> ඉහත සදහන් තොරතුරු නිවැරදි බව සහතික කරමි
                     <br>மேற்குறிப்பிட்ட விபரங்கள் சரியானவை என இத்தால் உறுதிப்படுத்துகிறேன்.
                     <br>I hereby certify that the above information are correct </label></td>
-                <td colspan="1"><label>දිනය <s:label value="*" cssStyle="color:red;font-size:10pt"/><br>திகதி<br>Date</label></td>
+                <td colspan="1"><label>දිනය <s:label value="*"
+                                                     cssStyle="color:red;font-size:10pt"/><br>திகதி<br>Date</label></td>
                 <td colspan="4">
                         <s:label value="YYYY-MM-DD" cssStyle="margin-left:10px;font-size:10px"/><br>
                         <s:textfield id="datePicker" name="confirmant.confirmantSignDate" cssStyle="float:left;"/>
@@ -198,20 +199,20 @@
         <div class="form-submit">
             <s:submit value="%{getText('next.label')}"/>
         </div>
-        <s:if test="#request.skipConfirmationChages==false">
-            <div class="next-previous">
-            <s:url id="backUrl" action="eprBirthConfirmation">
-                <s:param name="back" value="true"/>
-                <s:param name="pageNo" value="{pageNo - 1}"/>
-                <s:param name="skipConfirmationChages" value="#request.skipConfirmationChages"/>
-            </s:url>
-
-            <s:a href="%{backUrl}"><s:label value="%{getText('previous.label')}"/></s:a> </s:if>
-
-
-        </div>
         <s:hidden name="skipConfirmationChages" value="%{#request.skipConfirmationChages}"/>
     </s:form>
+
+    <s:if test="#request.skipConfirmationChages==false">
+        <s:form action="eprBirthConfirmation.do" method="post">
+            <s:hidden name="back" value="true"/>
+            <s:hidden name="pageNo" value="%{pageNo - 1}"/>
+            <s:hidden name="skipConfirmationChages" value="%{#request.skipConfirmationChages}"/>
+
+            <div class="form-submit">
+                <s:submit value="%{getText('previous.label')}"/>
+            </div>
+        </s:form>
+    </s:if>
 
     <s:hidden id="error1" value="%{getText('confirmant.person.value')}"/>
     <s:hidden id="error2" value="%{getText('cp3.error.NIC.value')}"/>
