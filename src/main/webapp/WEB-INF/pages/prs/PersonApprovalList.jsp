@@ -223,7 +223,7 @@
                         </td>
                         <td>
                             <s:if test="fullNameInOfficialLanguage != null">
-                                <%= NameFormatUtil.getDisplayName((String) request.getAttribute("fullNameInOfficialLanguage"), 70)%>
+                                <%= NameFormatUtil.getDisplayName((String) request.getAttribute("fullNameInOfficialLanguage"), 80)%>
                             </s:if>
                         </td>
                         <td align="center">
