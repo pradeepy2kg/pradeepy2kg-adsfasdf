@@ -1,6 +1,8 @@
 package lk.rgd.crs.web.action;
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.common.api.domain.Role;
+import lk.rgd.common.api.domain.Statistics;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,16 +31,15 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
     private String prefLanguage;
     private String userType;
     private int birthDistrictId;
-    //private int dsDivisionId;
 
     private User user;
     private Map session;
 
-    //private Map<Integer, String> districtList;
     private Map<Integer, String> dsDivisionList;
 
     private final DistrictDAO districtDAO;
     private final DSDivisionDAO dsDivisionDAO;
+    private final StatisticsDAO statisticsDAO;
     private final UserManager userManager;
     private static final Logger logger = LoggerFactory.getLogger(UserPreferencesAction.class);
 
@@ -60,6 +61,8 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
 
     private String startDate;
     private String endDate;
+    private String role;
+    private Statistics statistics;
 
     /**
      * following properties are checked by  PASSWORD_PATTERN
@@ -73,12 +76,13 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
     private static final String PASSWORD_PATTERN =
         "(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$";
 
-    public UserPreferencesAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, UserManager userManager, RoleDAO roleDAO, UserDAO userDAO) {
+    public UserPreferencesAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, UserManager userManager, RoleDAO roleDAO, UserDAO userDAO, StatisticsDAO statisticsDAO) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.userManager = userManager;
         this.roleDAO = roleDAO;
         this.userDAO = userDAO;
+        this.statisticsDAO = statisticsDAO;
     }
 
     /**
@@ -106,6 +110,26 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
                 dsDivisionId = dsDivisionList.keySet().iterator().next();
             }
         }
+
+        role = userType;
+
+        statistics = statisticsDAO.getByUser(user.getUserId());
+        if (statistics == null) {
+            statistics = new Statistics();
+        }
+
+        districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
+        if (districtList.size() > 0) {
+            districtId = districtList.keySet().iterator().next();
+        }
+        divisionList = dsDivisionDAO.getAllDSDivisionNames(districtId, user.getPrefLanguage(), user);
+        if (divisionList.size() > 0) {
+            dsDivisionId = divisionList.keySet().iterator().next();
+            deoList = userDAO.getDEOsByDSDivision(user.getPrefLanguage(), user,
+                dsDivisionDAO.getDSDivisionByPK(dsDivisionId), roleDAO.getRole(Role.ROLE_DEO));
+        }
+        deoUserId = 1;
+
         return "pageload";
     }
 
@@ -122,6 +146,8 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
 
         logger.debug("inside selectUserPreference() : {} passed.", prefLanguage);
         logger.debug("inside selectUserPreference() District : {} and DS division {} passed.", birthDistrictId, dsDivisionId);
+
+        role = user.getRole().getRoleId();
 
         return "success";
     }
@@ -427,5 +453,21 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
 
     public void setStartDate(String startDate) {
         this.startDate = startDate;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public Statistics getStatistics() {
+        return statistics;
+    }
+
+    public void setStatistics(Statistics statistics) {
+        this.statistics = statistics;
     }
 }
