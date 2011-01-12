@@ -175,7 +175,7 @@
 </fieldset>
 </s:form>
 <%--<s:actionerror/>--%>
-<s:actionmessage cssClass="alreadyPrinted"/>
+<s:actionmessage/>
 <s:if test="#request.warnings != null">
     <div id="birth-confirm-approval-message" class="font-9" align="center">
         <table width="100%" cellpadding="0" cellspacing="0">
