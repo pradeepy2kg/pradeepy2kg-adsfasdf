@@ -1189,6 +1189,8 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
 
     private void populateBirthAlterationForUpdate(BirthAlteration existing, BirthAlteration updated) {
         //there are 3 acts in birth alteration and one and only one get populated for on alteration
+        logger.debug("attempt to populate birth alteration for update for idUKey : {} , and type : {}",
+            idUKey, existing.getType());
         switch (existing.getType()) {
             case TYPE_27: {
                 //only populate ALT 27 A object
@@ -1223,6 +1225,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         //populate other fields that can be edit
         existing.setDateReceived(updated.getDateReceived());
         existing.setDeclarant(updated.getDeclarant());
+        logger.debug("populate birth alteration for edit completed idUKey : {}", idUKey);
     }
 
     public int getPageNo() {
