@@ -122,7 +122,7 @@
 
     <div>
         <s:form action="eprBirthConfirmationBulkPrint" name="birth_confirm_print">
-            <s:actionmessage cssClass="alreadyPrinted"/>
+            <s:actionmessage/>
             <s:if test="printList.size > 0">
                 <fieldset style="border:none">
                     <table id="com-print-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">

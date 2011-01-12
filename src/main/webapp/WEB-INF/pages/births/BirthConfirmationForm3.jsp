@@ -21,9 +21,9 @@
         $('img#confirmant_lookup').bind('click', function(evt1) {
             var id1 = $("input#confirmantNICorPIN").attr("value");
             $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
-                    function(data1) {
-                        $("textarea#confirmantFullName").val(data1.fullNameInOfficialLanguage);
-                    });
+                     function(data1) {
+                         $("textarea#confirmantFullName").val(data1.fullNameInOfficialLanguage);
+                     });
         });
     });
 
@@ -109,7 +109,9 @@
 
             <tr>
                 <td width="40px">29</td>
-                <td colspan="1"><label>තහවුරු කරන්නේ කවුරුන් විසින් ද? <br>பிறப்பினை உறுதிப்படுத்துவது யாரால்?<br>Person
+                <td colspan="1"><label>තහවුරු කරන්නේ කවුරුන් විසින් ද?
+                    <s:label value="*" cssStyle="color:red;font-size:10pt"/>
+                    <br>பிறப்பினை உறுதிப்படுத்துவது யாரால்?<br>Person
                     Confirming Information</label></td>
                 <td>
                     <table class="sub_table">
@@ -173,7 +175,7 @@
             <tr>
                 <td>16</td>
                 <td colspan="1"><label>
-                    උපත තහවුරු කරන්නාගේ සම්පූර්ණ නම
+                    උපත තහවුරු කරන්නාගේ සම්පූර්ණ නම<s:label value="*" cssStyle="color:red;font-size:10pt"/>
                     <br>பிறப்​பை உறுதிப்படுத்துபவரின் முழுப் பெயர்
                     <br>Full Name of the person confirming the birth details</label></td>
                 <td colspan="4"><s:textarea name="confirmant.confirmantFullName" id="confirmantFullName"
@@ -184,7 +186,7 @@
                 <td colspan="2"><label> ඉහත සදහන් තොරතුරු නිවැරදි බව සහතික කරමි
                     <br>மேற்குறிப்பிட்ட விபரங்கள் சரியானவை என இத்தால் உறுதிப்படுத்துகிறேன்.
                     <br>I hereby certify that the above information are correct </label></td>
-                <td colspan="1"><label>දිනය <br>திகதி<br>Date</label></td>
+                <td colspan="1"><label>දිනය <s:label value="*" cssStyle="color:red;font-size:10pt"/><br>திகதி<br>Date</label></td>
                 <td colspan="4">
                         <s:label value="YYYY-MM-DD" cssStyle="margin-left:10px;font-size:10px"/><br>
                         <s:textfield id="datePicker" name="confirmant.confirmantSignDate" cssStyle="float:left;"/>
