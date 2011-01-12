@@ -104,7 +104,7 @@ public class ValidationUtils {
             handleException("User : " + user.getUserId() + " is not allowed to access marriage register - idUKey :" +
                 register.getIdUKey(), ErrorCodes.PERMISSION_DENIED);
         }
-    }
+    }   
 
     private static void handleException(String message, int code) {
         logger.error(message);

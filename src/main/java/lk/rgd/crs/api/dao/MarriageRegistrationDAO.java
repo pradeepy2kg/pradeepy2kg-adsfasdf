@@ -8,6 +8,7 @@ import lk.rgd.crs.api.domain.MarriageRegister;
 
 import java.util.Date;
 import java.util.List;
+import java.util.EnumSet;
 
 /**
  * @author amith jayasekara
@@ -149,12 +150,39 @@ public interface MarriageRegistrationDAO {
     /**
      * Returns paginated marriage register list
      *
-     * @param pageNo   the page number (starting from 1)
-     * @param noOfRows no of rows to be to be retured
-     * @param isActive Active or inactive status
+     * @param stateList list of marriage register states
+     * @param pageNo    the page number (starting from 1)
+     * @param noOfRows  no of rows to be retured
+     * @param isActive  Active or inactive status of the marriage register
      * @return
      */
-    public List<MarriageRegister> getPaginatedMarriageRegisterList(int pageNo, int noOfRows, boolean isActive);
+    public List<MarriageRegister> getPaginatedMarriageRegisterList(EnumSet stateList, int pageNo, int noOfRows, boolean isActive);
+
+    /**
+     * Returns paginated marriage register list filtered by the DS Division
+     *
+     * @param dsDivision DS division where the marriage is registered
+     * @param stateList  list of marriage register states
+     * @param pageNo     the page number (starting from 1)
+     * @param noOfRows   no of rows to be retured
+     * @param isActive   Active or inactive status of the marriage register
+     * @return
+     */
+    public List<MarriageRegister> getPaginatedMarriageRegisterListByDSDivision(DSDivision dsDivision, EnumSet stateList, int pageNo,
+        int noOfRows, boolean isActive);
+
+    /**
+     * Returns paginated marriage register list filtered by a list of Districts
+     *
+     * @param districtList list of districts
+     * @param stateList    list of marriage register states
+     * @param pageNo       the page number (starting from 1)
+     * @param noOfRows     no of rows to be retured
+     * @param isActive     Active or inactive status of the marriage register
+     * @return
+     */
+    public List<MarriageRegister> getPaginatedMarriageRegisterListByDistricts(District districtList, EnumSet stateList, int pageNo,
+        int noOfRows, boolean isActive);
 
     /**
      * Returns paginated list of active/inactive Marriage Notices based on the MRDivision
@@ -262,9 +290,9 @@ public interface MarriageRegistrationDAO {
     /**
      * Returns all Marriage Registration records which are created by given User
      *
-     * @param user created user
+     * @param user  created user
      * @param start
-     *@param end @return list of Marriage Registrations
+     * @param end   @return list of Marriage Registrations
      */
     public List<MarriageRegister> getByCreatedUser(User user, Date start, Date end);
 }

@@ -367,7 +367,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<MarriageRegister> getMarriageRegistersByDistrict(District district, int pageNumber,
         int numOfRows, boolean active, User user) {
-        //validate user access to the district
+        //TODO : validate user access to the district
         return marriageRegistrationDAO.getPaginatedListByDistrict(district,
             MarriageRegister.State.REG_DATA_ENTRY, pageNumber, numOfRows, true);
     }
@@ -377,7 +377,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<MarriageRegister> getMarriageRegisterByState(MarriageRegister.State state, int pageNumber, int numOfRows, boolean active, User user) {
-        //validate user access
+        //TODO validate user access
         return marriageRegistrationDAO.getPaginatedMarriageRegisterListByState(state, pageNumber, numOfRows, active);
     }
 
@@ -386,8 +386,23 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<MarriageRegister> getMarriageRegisterList(int pageNumber, int numOfRows, boolean isActive, User user) {
-        //validate user access
-        return marriageRegistrationDAO.getPaginatedMarriageRegisterList(pageNumber, numOfRows, isActive);
+        EnumSet<MarriageRegister.State> stateList = EnumSet.of(MarriageRegister.State.LICENSE_PRINTED,
+            MarriageRegister.State.REG_DATA_ENTRY,
+            MarriageRegister.State.REGISTRATION_APPROVED,
+            MarriageRegister.State.REGISTRATION_REJECTED,
+            MarriageRegister.State.EXTRACT_PRINTED);
+        //TODO validate user access
+        if (Role.ROLE_DEO.equals(user.getRole().getRoleId()) || Role.ROLE_ADR.equals(user.getRole().getRoleId())) {
+            //TODO : user.getAssignedMRDSDivisions() - verify not null
+            return marriageRegistrationDAO.getPaginatedMarriageRegisterListByDSDivision(user.getAssignedMRDSDivisions().iterator().next(), stateList, pageNumber, numOfRows, isActive);
+        } else if (Role.ROLE_DR.equals(user.getRole().getRoleId()) || Role.ROLE_ARG.equals(user.getRole().getRoleId())) {
+            return marriageRegistrationDAO.getPaginatedMarriageRegisterListByDistricts(user.getAssignedMRDistricts().iterator().next(), stateList, pageNumber, numOfRows, isActive);
+        } else if (Role.ROLE_RG.equals(user.getRole().getRoleId())) {
+            return marriageRegistrationDAO.getPaginatedMarriageRegisterList(stateList, pageNumber, numOfRows, isActive);
+        } else {
+            //TODO: handle error
+            return new ArrayList<MarriageRegister>();
+        }
     }
 
     /**

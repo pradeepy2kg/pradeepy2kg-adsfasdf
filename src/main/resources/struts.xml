@@ -1406,7 +1406,7 @@
         </action>
 
         <action name="eprMarriageRegisterRejectInit" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
-                method="marriageRegisterRejectInit">
+                method="marriageRegisterViewInit">
             <result type="tiles" name="success">epr.marriageExtract</result>
             <result type="tiles" name="error">epr.error</result>
         </action>

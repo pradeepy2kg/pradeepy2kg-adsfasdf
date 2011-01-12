@@ -593,7 +593,7 @@
             print scanned marriage certificate
         </description>
         <put-attribute name="title" value="title.marriage.scannedmarriagecertprint"/>
-        <put-attribute name="body" value="/WEB-INF/pages/marriages/DisplayScannedMarriageCert.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/pages/marriages/ScannedMarriageCertificate.jsp"/>
     </definition>
 
 </tiles-definitions>

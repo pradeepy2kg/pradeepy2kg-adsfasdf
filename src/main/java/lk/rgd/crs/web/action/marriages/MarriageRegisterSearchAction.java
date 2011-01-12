@@ -158,15 +158,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     }
 
     /**
-     * Marriage Registration - Loading marriage register reject page
-     */
-    public String marriageRegisterRejectInit() {
-        marriage = marriageRegistrationService.getByIdUKey(idUKey, user);
-        return SUCCESS;
-    }
-
-    /**
-     * Marriage Registration - View Marriage Register
+     * Marriage Registration - View Marriage Registration page
      */
     public String marriageRegisterViewInit() {
         marriage = marriageRegistrationService.getByIdUKey(idUKey, user);
@@ -224,6 +216,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     public String marriageRegisterSearchResult() {
         pageNo += 1;
         noOfRows = appParametersDAO.getIntParameter(MR_APPROVAL_ROWS_PER_PAGE);
+
         if (noticeSerialNo != null) {
             //TODO: search by serial number, clear tabs
         } else {
@@ -242,7 +235,8 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
             } else {  // nothing selected
                 //find all records marriage registration pending
                 if (state == -1) {
-                    marriageRegisterSearchList = marriageRegistrationService.getMarriageRegisterList(pageNo, noOfRows, true, user);
+                        marriageRegisterSearchList = marriageRegistrationService.getMarriageRegisterList(pageNo, noOfRows, true, user);
+
                 } else {
                     marriageRegisterSearchList = marriageRegistrationService.getMarriageRegisterByState(
                         StateUtil.getStateById(state), pageNo, noOfRows, true, user);
