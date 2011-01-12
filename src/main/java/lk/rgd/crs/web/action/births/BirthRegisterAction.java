@@ -508,7 +508,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         }
         bdf = new BirthDeclaration();
         bdf.getRegister().setBirthType(birthType);
-
+        bdf.getRegister().setAdoptionUKey(adoptionId);
+      
         // population fields in adoption order to birth declaration
         bdf.getRegister().setAdoptionUKey(ao.getIdUKey());
         long existBDUKey = ao.getBirthCertificateNumber();
