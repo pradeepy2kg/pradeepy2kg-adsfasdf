@@ -218,7 +218,7 @@ public class BirthDeclarationValidator {
         // confirmant pin or nic
         pinOrNic = bdf.getConfirmant().getConfirmantNICorPIN();
         if (!PinAndNicUtils.isValidPINorNIC(pinOrNic, ecivil, user)) {
-            UserWarning w = new UserWarning(MessageFormat.format(rb.getString("invalid_informant_pin"), pinOrNic));
+            UserWarning w = new UserWarning(MessageFormat.format(rb.getString("invalid_confirmant_pin"), pinOrNic));
             w.setSeverity(UserWarning.Severity.ERROR);
             warnings.add(w);
         }
