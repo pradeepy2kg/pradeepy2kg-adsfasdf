@@ -1,6 +1,7 @@
 package lk.rgd.crs.web.action.births;
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.crs.api.domain.BDDivision;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -145,6 +146,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
                 }
             }
             service.updateAdoptionOrder(adoption, user);
+            addActionMessage(getText("message.successfully.edited.adoption.order",
+                new String[]{adoption.getCourtOrderNumber()}));
         } else {
             birthCertificateNo = adoption.getBirthCertificateNumber();
             if (birthCertificateNo > 0) {
@@ -169,6 +172,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             setAllowApproveAdoption(user.isAuthorized(Permission.APPROVE_ADOPTION));
             addActionMessage(getText("message.add.successfully.adoption", new String[]{adoption.getCourtOrderNumber()}));
         }
+
         return SUCCESS;
     }
 
@@ -209,10 +213,14 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             addActionError(getText("adoption.error.editNotAllowed"));
             return ERROR;
         }
-        // todo remove
-        // language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         populate();
         populateAllDSDivisionList();
+        if (adoption.getBirthDivisionId() != 0) {
+            BDDivision bdDivision = bdDivisionDAO.getBDDivisionByPK(adoption.getBirthDivisionId());
+            birthDistrictId = bdDivision.getDistrict().getDistrictUKey();
+            birthDivisionId = bdDivision.getBdDivisionUKey();
+            dsDivisionId = bdDivision.getDsDivision().getDsDivisionUKey();
+        }
         return SUCCESS;
     }
 
@@ -647,6 +655,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         // String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         populateBasicLists(language);
         populateDynamicLists(language);
+
+
     }
 
     public String populateAdoption() {
@@ -663,7 +673,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
                     addActionError(getText("er.label.notice.not.printed.cannot_capture_data"));
                 }
                 adoption = null;
-                //todo amith
+                //simple fix for bug 2184
+                courtName = "";
                 addActionError(getText("er.label.invalid.data"));
             }
         } else {
