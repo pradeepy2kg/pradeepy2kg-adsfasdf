@@ -14,6 +14,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.Date;
 import java.util.List;
+import java.util.EnumSet;
 
 /**
  * @author amith jayasekara
@@ -182,11 +183,40 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<MarriageRegister> getPaginatedMarriageRegisterList(int pageNo,
+    public List<MarriageRegister> getPaginatedMarriageRegisterList(EnumSet stateList, int pageNo,
         int noOfRows, boolean isActive) {
         Query q = em.createNamedQuery("findMarriageRegister").
             setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("active", isActive);
+        q.setParameter("stateList", stateList);
+        return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<MarriageRegister> getPaginatedMarriageRegisterListByDSDivision(DSDivision dsDivision, EnumSet stateList, int pageNo,
+        int noOfRows, boolean isActive) {
+        Query q = em.createNamedQuery("findMarriageRegisterByDSDivision").
+            setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+        q.setParameter("active", isActive);
+        q.setParameter("stateList", stateList);
+        q.setParameter("dsDivision", dsDivision);
+        return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<MarriageRegister> getPaginatedMarriageRegisterListByDistricts(District districtList, EnumSet stateList, int pageNo,
+        int noOfRows, boolean isActive) {
+        Query q = em.createNamedQuery("findMarriageRegisterByDistricts").
+            setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+        q.setParameter("active", isActive);
+        q.setParameter("stateList", stateList);
+        q.setParameter("districtList", districtList);
         return q.getResultList();
     }
 

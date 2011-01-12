@@ -13,165 +13,165 @@
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 <script type="text/javascript">
 
-/*  TODO : to be removed
-    $(function() {
+    /*  TODO : to be removed
+     $(function() {
 
-       $('img#male_lookup').bind('click', function(evt1) {
-            var id1 = $("input#malePIN").attr("value");
-            //var datePicker = $('#fatherDatePicker');
-            //var error = document.getElementById('error10').value;
-            //calculateBirthDay(id1, datePicker, error);
-            $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
-                    function(data1) {
-                        $("textarea#nameOfficialMale").val(data1.fullNameInOfficialLanguage);
-                        $("textarea#addressMale").val(data1.lastAddress);
-                        var maleDOB = data1.dateOfBirth;
-                        if (maleDOB != null) {
-                            $("input#dateOfBirthMaleDatePicker").val(maleDOB);
-                        }
-                    });
-        });
+     $('img#male_lookup').bind('click', function(evt1) {
+     var id1 = $("input#malePIN").attr("value");
+     //var datePicker = $('#fatherDatePicker');
+     //var error = document.getElementById('error10').value;
+     //calculateBirthDay(id1, datePicker, error);
+     $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
+     function(data1) {
+     $("textarea#nameOfficialMale").val(data1.fullNameInOfficialLanguage);
+     $("textarea#addressMale").val(data1.lastAddress);
+     var maleDOB = data1.dateOfBirth;
+     if (maleDOB != null) {
+     $("input#dateOfBirthMaleDatePicker").val(maleDOB);
+     }
+     });
+     });
 
-        $('img#female_lookup').bind('click', function(evt2) {
-            var id2 = $("input#femalePIN").attr("value");
-            //var datePicker = $('#motherDatePicker');
-            //var error = document.getElementById('error11').value;
-            //calculateBirthDay(id2, datePicker, error);
-            $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id2},
-                    function(data2) {
-                        $("textarea#nameOfficialFemale").val(data2.fullNameInOfficialLanguage);
-                        $("textarea#addressFemale").val(data2.lastAddress);
-                        var femaleDOB = data2.dateOfBirth;
-                        if (femaleDOB != null) {
-                            $("input#dateOfBirthFemaleDatePicker").val(femaleDOB);
-                        }
-                    });
-        });
+     $('img#female_lookup').bind('click', function(evt2) {
+     var id2 = $("input#femalePIN").attr("value");
+     //var datePicker = $('#motherDatePicker');
+     //var error = document.getElementById('error11').value;
+     //calculateBirthDay(id2, datePicker, error);
+     $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id2},
+     function(data2) {
+     $("textarea#nameOfficialFemale").val(data2.fullNameInOfficialLanguage);
+     $("textarea#addressFemale").val(data2.lastAddress);
+     var femaleDOB = data2.dateOfBirth;
+     if (femaleDOB != null) {
+     $("input#dateOfBirthFemaleDatePicker").val(femaleDOB);
+     }
+     });
+     });
 
 
-        $('img#registrar_lookup').bind('click', function(evt3) {
-            var id1 = $("input#regPIN").attr("value");
-            $.getJSON('/ecivil/crs/RegistrarLookupService', {pinOrNic:id1},
-                    function(data1) {
-                        $("textarea#regNameInOfficialLang").val(data1.fullNameInOfficialLanguage);
-                        $("textarea#regNameInEnglishLang").val(data1.fullNameInEnglishLanguage);
-                        $("textarea#regPlaceInOfficialLang").val(data1.address);
-                    });
-        });
+     $('img#registrar_lookup').bind('click', function(evt3) {
+     var id1 = $("input#regPIN").attr("value");
+     $.getJSON('/ecivil/crs/RegistrarLookupService', {pinOrNic:id1},
+     function(data1) {
+     $("textarea#regNameInOfficialLang").val(data1.fullNameInOfficialLanguage);
+     $("textarea#regNameInEnglishLang").val(data1.fullNameInEnglishLanguage);
+     $("textarea#regPlaceInOfficialLang").val(data1.address);
+     });
+     });
 
-        $('img#place').bind('click', function(evt4) {
-            var id = $("textarea#regPlaceInOfficialLang").attr("value");
-            var wsMethod = "transliterate";
-            var soapNs = "http://translitwebservice.transliteration.icta.com/";
+     $('img#place').bind('click', function(evt4) {
+     var id = $("textarea#regPlaceInOfficialLang").attr("value");
+     var wsMethod = "transliterate";
+     var soapNs = "http://translitwebservice.transliteration.icta.com/";
 
-            var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
-            soapBody.attr("xmlns:trans", soapNs);
-            soapBody.appendChild(new SOAPObject('InputName')).val(id);
-            soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
-            soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
-            soapBody.appendChild(new SOAPObject('Gender')).val('U');
+     var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
+     soapBody.attr("xmlns:trans", soapNs);
+     soapBody.appendChild(new SOAPObject('InputName')).val(id);
+     soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
+     soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
+     soapBody.appendChild(new SOAPObject('Gender')).val('U');
 
-            //Create a new SOAP Request
-            var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
+     //Create a new SOAP Request
+     var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
 
-            //Lets send it
-            SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
-            SOAPClient.SendRequest(sr, processResponse2); //Send request to server and assign a callback
-        });
+     //Lets send it
+     SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
+     SOAPClient.SendRequest(sr, processResponse2); //Send request to server and assign a callback
+     });
 
-        function processResponse2(respObj) {
-            //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-            $("textarea#regPlaceInEnglishLang").val(respObj.Body[0].transliterateResponse[0].
-            return[0].Text
-        )
-            ;
-        }
+     function processResponse2(respObj) {
+     //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
+     $("textarea#regPlaceInEnglishLang").val(respObj.Body[0].transliterateResponse[0].
+     return[0].Text
+     )
+     ;
+     }
 
-        $('img#regName').bind('click', function(evt4) {
-            var id = $("textarea#regNameInOfficialLang").attr("value");
-            var wsMethod = "transliterate";
-            var soapNs = "http://translitwebservice.transliteration.icta.com/";
+     $('img#regName').bind('click', function(evt4) {
+     var id = $("textarea#regNameInOfficialLang").attr("value");
+     var wsMethod = "transliterate";
+     var soapNs = "http://translitwebservice.transliteration.icta.com/";
 
-            var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
-            soapBody.attr("xmlns:trans", soapNs);
-            soapBody.appendChild(new SOAPObject('InputName')).val(id);
-            soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
-            soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
-            soapBody.appendChild(new SOAPObject('Gender')).val('U');
+     var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
+     soapBody.attr("xmlns:trans", soapNs);
+     soapBody.appendChild(new SOAPObject('InputName')).val(id);
+     soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
+     soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
+     soapBody.appendChild(new SOAPObject('Gender')).val('U');
 
-            //Create a new SOAP Request
-            var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
+     //Create a new SOAP Request
+     var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
 
-            //Lets send it
-            SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
-            SOAPClient.SendRequest(sr, processResponse1); //Send request to server and assign a callback
-        });
+     //Lets send it
+     SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
+     SOAPClient.SendRequest(sr, processResponse1); //Send request to server and assign a callback
+     });
 
-        function processResponse1(respObj) {
-            //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-            $("textarea#regNameInEnglishLang").val(respObj.Body[0].transliterateResponse[0].
-            return[0].Text
-        )
-            ;
-        }
+     function processResponse1(respObj) {
+     //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
+     $("textarea#regNameInEnglishLang").val(respObj.Body[0].transliterateResponse[0].
+     return[0].Text
+     )
+     ;
+     }
 
-        $('img#maleName').bind('click', function(evt4) {
-            var id = $("textarea#nameOfficialMale").attr("value");
-            var wsMethod = "transliterate";
-            var soapNs = "http://translitwebservice.transliteration.icta.com/";
+     $('img#maleName').bind('click', function(evt4) {
+     var id = $("textarea#nameOfficialMale").attr("value");
+     var wsMethod = "transliterate";
+     var soapNs = "http://translitwebservice.transliteration.icta.com/";
 
-            var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
-            soapBody.attr("xmlns:trans", soapNs);
-            soapBody.appendChild(new SOAPObject('InputName')).val(id);
-            soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
-            soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
-            soapBody.appendChild(new SOAPObject('Gender')).val('U');
+     var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
+     soapBody.attr("xmlns:trans", soapNs);
+     soapBody.appendChild(new SOAPObject('InputName')).val(id);
+     soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
+     soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
+     soapBody.appendChild(new SOAPObject('Gender')).val('U');
 
-            //Create a new SOAP Request
-            var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
+     //Create a new SOAP Request
+     var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
 
-            //Lets send it
-            SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
-            SOAPClient.SendRequest(sr, processResponse3); //Send request to server and assign a callback
-        });
+     //Lets send it
+     SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
+     SOAPClient.SendRequest(sr, processResponse3); //Send request to server and assign a callback
+     });
 
-        function processResponse3(respObj) {
-            //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-            $("textarea#name_english_male").val(respObj.Body[0].transliterateResponse[0].
-            return[0].Text
-        )
-            ;
-        }
+     function processResponse3(respObj) {
+     //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
+     $("textarea#name_english_male").val(respObj.Body[0].transliterateResponse[0].
+     return[0].Text
+     )
+     ;
+     }
 
-        $('img#femaleName').bind('click', function(evt4) {
-            var id = $("textarea#nameOfficialFemale").attr("value");
-            var wsMethod = "transliterate";
-            var soapNs = "http://translitwebservice.transliteration.icta.com/";
+     $('img#femaleName').bind('click', function(evt4) {
+     var id = $("textarea#nameOfficialFemale").attr("value");
+     var wsMethod = "transliterate";
+     var soapNs = "http://translitwebservice.transliteration.icta.com/";
 
-            var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
-            soapBody.attr("xmlns:trans", soapNs);
-            soapBody.appendChild(new SOAPObject('InputName')).val(id);
-            soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
-            soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
-            soapBody.appendChild(new SOAPObject('Gender')).val('U');
+     var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
+     soapBody.attr("xmlns:trans", soapNs);
+     soapBody.appendChild(new SOAPObject('InputName')).val(id);
+     soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
+     soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
+     soapBody.appendChild(new SOAPObject('Gender')).val('U');
 
-            //Create a new SOAP Request
-            var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
+     //Create a new SOAP Request
+     var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
 
-            //Lets send it
-            SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
-            SOAPClient.SendRequest(sr, processResponse4); //Send request to server and assign a callback
-        });
+     //Lets send it
+     SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
+     SOAPClient.SendRequest(sr, processResponse4); //Send request to server and assign a callback
+     });
 
-        function processResponse4(respObj) {
-            //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-            $("textarea#name_english_female").val(respObj.Body[0].transliterateResponse[0].
-            return[0].Text
-        )
-            ;
-        }
+     function processResponse4(respObj) {
+     //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
+     $("textarea#name_english_female").val(respObj.Body[0].transliterateResponse[0].
+     return[0].Text
+     )
+     ;
+     }
 
-    });      */
+     });      */
 
     function validateMarriageDetails() {
         var errormsg = "";
@@ -206,222 +206,236 @@
 
 </script>
 <s:actionerror cssClass="actionerror"/>
-<s:actionmessage cssStyle="color:green;font-size:10pt"/>
+<s:actionmessage cssStyle="color:blue;font-size:10pt"/>
 <div class="marriage-notice-outer">
 <s:form method="post" enctype="multipart/form-data" onsubmit="javascript:return validateMarriageDetails()">
 <s:hidden name="idUKey"/>
 <s:hidden name="mode"/>
 <table border="1" style="margin-top:1px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
        cellpadding="5px">
-<caption></caption>
-<col width="200px"/>
-<col/>
-<col/>
-<col/>
-<col/>
-<col/>
-<col/>
-<col/>
-<col/>
-<tbody>
-<tr>
-    <td>
-        <label>
+    <caption></caption>
+    <col width="200px"/>
+    <col/>
+    <col/>
+    <col/>
+    <col/>
+    <col/>
+    <col/>
+    <col/>
+    <col/>
+    <tbody>
+    <tr>
+        <td>
+            <label>
                 <span class="font-8">විවාහ දිනය
                     <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
                     <br>in tamil<br>Date of Marriage</span>
-        </label>
-    </td>
-    <td colspan="2" align="left">
-        <s:label value="YYYY-MM-DD" cssStyle="margin-left:20px;font-size:10px"/><br>
-        <s:textfield name="marriage.dateOfMarriage" id="marriageDatePicker" maxLength="10"
-                     onmouseover="datepicker('marriageDatePicker')" cssStyle="margin-right:80px"/>
-    </td>
-    <td colspan="3"><label><span class="font-8">රෙජිස්ට්‍රාර්ගේ/දේවගැතිගේ අනන්‍යතා අංකය
+            </label>
+        </td>
+        <td colspan="2" align="left">
+            <s:label value="YYYY-MM-DD" cssStyle="margin-left:20px;font-size:10px"/><br>
+            <s:textfield name="marriage.dateOfMarriage" id="marriageDatePicker" maxLength="10"
+                         onmouseover="datepicker('marriageDatePicker')" cssStyle="margin-right:80px"/>
+        </td>
+        <td colspan="3"><label><span class="font-8">රෙජිස්ට්‍රාර්ගේ/දේවගැතිගේ අනන්‍යතා අංකය
                     <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
                     <br>அடையாள எண் <br>Identification number of Registrar/Minister</span></label>
-    </td>
-    <td align="center" colspan="3">
-        <s:if test="marriage.registrarOrMinisterPIN==0">
-            <s:textfield name="marriage.registrarOrMinisterPIN" id="regPIN" maxLength="10" value=""/>
-        </s:if>
-        <s:else>
-            <s:textfield name="marriage.registrarOrMinisterPIN" id="regPIN" maxLength="10"/>
-        </s:else>
-        <img src="<s:url value='/images/search-father.png' />"
-             style="vertical-align:middle; margin-left:20px;" id="registrar_lookup" onmouseover="registrarLookup('regPIN')">
-    </td>
-</tr>
-<tr>
-    <td>
-        විවාහ ස්ථානයේ ස්වභාවය
-        <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-        <br>in tamil
-        <br>Type of Marriage Place
-    </td>
-    <td colspan="8">
-        <s:radio id="typeOfMarriagePlace" name="marriage.typeOfMarriagePlace" list="typeOfMarriagePlaceList"
-                 listValue="type"
-                 theme="horizontal"/>
-    </td>
-</tr>
-<tr>
-    <td>
-        දිස්ත්‍රික්කය
-        <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-        <br>மாவட்டம்
-        <br>District
-    </td>
-    <td colspan="3">
-        <s:select id="districtId" name="marriageDistrictId" list="districtList"
-                  value="marriageDistrictId"
-                  cssStyle="width:98.5%; width:240px;"
-                  onchange="populateDSDivisions('districtId','dsDivisionId','mrDivisionId', 'Marriage', false)"/>
-    </td>
-    <td colspan="2"><label><span class="font-8">
+        </td>
+        <td align="center" colspan="3">
+            <s:if test="marriage.registrarOrMinisterPIN==0">
+                <s:textfield name="marriage.registrarOrMinisterPIN" id="regPIN" maxLength="10" value=""/>
+            </s:if>
+            <s:else>
+                <s:textfield name="marriage.registrarOrMinisterPIN" id="regPIN" maxLength="10"/>
+            </s:else>
+            <img src="<s:url value='/images/search-father.png' />"
+                 style="vertical-align:middle; margin-left:20px;" id="registrar_lookup"
+                 onmouseover="registrarLookup('regPIN')">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            විවාහ ස්ථානයේ ස්වභාවය
+            <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
+            <br>in tamil
+            <br>Type of Marriage Place
+        </td>
+        <td colspan="8">
+            <s:radio id="typeOfMarriagePlace" name="marriage.typeOfMarriagePlace" list="typeOfMarriagePlaceList"
+                     listValue="type"
+                     theme="horizontal"/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            දිස්ත්‍රික්කය
+            <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
+            <br>மாவட்டம்
+            <br>District
+        </td>
+        <td colspan="3">
+            <s:select id="districtId" name="marriageDistrictId" list="districtList"
+                      value="marriageDistrictId"
+                      cssStyle="width:98.5%; width:240px;"
+                      onchange="populateDSDivisions('districtId','dsDivisionId','mrDivisionId', 'Marriage', false)"/>
+        </td>
+        <td colspan="2"><label><span class="font-8">
             ප්‍රාදේශීය ලේකම් කොට්ඨාශය
                 <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
                 <br>பிரதேச செயளாளர் பிரிவு <br>Divisional Secretariat</span>
-    </label>
-    </td>
-    <td align="center" colspan="3">
-        <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="dsDivisionId"
-                  cssStyle="width:98.5%; width:240px;"
-                  onchange="populateDivisions('dsDivisionId', 'mrDivisionId', 'Marriage', false)"/>
-    </td>
-</tr>
+        </label>
+        </td>
+        <td align="center" colspan="3">
+            <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="dsDivisionId"
+                      cssStyle="width:98.5%; width:240px;"
+                      onchange="populateDivisions('dsDivisionId', 'mrDivisionId', 'Marriage', false)"/>
+        </td>
+    </tr>
 
-<tr>
-    <td><label><span class="font-8">
+    <tr>
+        <td><label><span class="font-8">
         ලියාපදිංචි කිරීමේ කොට්ඨාශය
                <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
                     <br>பதிவுப் பிரிவு  <br>Registration Division</span>
-    </label>
-    </td>
-    <td colspan="8">
-        <s:select id="mrDivisionId" name="mrDivisionId" list="mrDivisionList"
-                  value="marriage.mrDivision.mrDivisionUKey" headerKey="1"
-                  cssStyle="width:98.5%; width:240px;"/>
-    </td>
-</tr>
-<tr>
-    <td>
-        විවාහය සිදු කල ස්ථානය<br>
-        in tamil <br>
-        place of Marriage
-    </td>
-    <td colspan="8">
-        <table width="100%">
-            <caption/>
-            <col width="150px"/>
-            <col/>
-            <tbody>
-            <tr>
-                <td>
-                    රාජ්‍ය භාෂාවෙන්
-                    <s:label value="*" cssStyle="color:red;font-size:10pt;"/><br>
-                    தமிழ் மொழியில் <br>
-                    Official Language
-                </td>
-                <td>
-                    <s:textarea name="marriage.regPlaceInOfficialLang" id="regPlaceInOfficialLang"
-                                cssStyle="width:98.2%;"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    ඉංග්‍රීසි භාෂාවෙන්<br>
-                    ஆங்கில மொழியில்<br>
-                    In English
-                </td>
-                <td>
-                    <s:textarea name="marriage.regPlaceInEnglishLang" id="regPlaceInEnglishLang"
-                                cssStyle="width:98.2%;"/>
-                </td>
-            </tr>
-            <tr>
-                <td>&nbsp;</td>
-                <td>
-                    <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px;"
-                         id="place" onmouseover="transliterate('regPlaceInOfficialLang', 'regPlaceInEnglishLang')">
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </td>
-</tr>
+        </label>
+        </td>
+        <td colspan="8">
+            <s:select id="mrDivisionId" name="mrDivisionId" list="mrDivisionList"
+                      value="marriage.mrDivision.mrDivisionUKey" headerKey="1"
+                      cssStyle="width:98.5%; width:240px;"/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            විවාහය සිදු කල ස්ථානය<br>
+            in tamil <br>
+            place of Marriage
+        </td>
+        <td colspan="8">
+            <table width="100%">
+                <caption/>
+                <col width="150px"/>
+                <col/>
+                <tbody>
+                <tr>
+                    <td>
+                        රාජ්‍ය භාෂාවෙන්
+                        <s:label value="*" cssStyle="color:red;font-size:10pt;"/><br>
+                        தமிழ் மொழியில் <br>
+                        Official Language
+                    </td>
+                    <td>
+                        <s:textarea name="marriage.regPlaceInOfficialLang" id="regPlaceInOfficialLang"
+                                    cssStyle="width:98.2%;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        ඉංග්‍රීසි භාෂාවෙන්<br>
+                        ஆங்கில மொழியில்<br>
+                        In English
+                    </td>
+                    <td>
+                        <s:textarea name="marriage.regPlaceInEnglishLang" id="regPlaceInEnglishLang"
+                                    cssStyle="width:98.2%;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>
+                        <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px;"
+                             id="place" onclick="transliterate('regPlaceInOfficialLang', 'regPlaceInEnglishLang')">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
 
-<tr>
-    <td>
-        රෙජිස්ට්‍රාර්තැන / දේවගැතිතැන<br>
-        in tamil <br>
-        Registrar / Minister
-    </td>
-    <td colspan="8">
-        <table width="100%">
-            <caption/>
-            <col width="150px"/>
-            <col/>
-            <tbody>
-            <tr>
-                <td>
-                    රාජ්‍ය භාෂාවෙන්
-                    <s:label value="*" cssStyle="color:red;font-size:10pt;"/><br>
-                    தமிழ் மொழியில் <br>
-                    Official Language
-                </td>
-                <td>
-                    <s:textarea name="marriage.regNameInOfficialLang" id="regNameInOfficialLang"
-                                cssStyle="width:98.2%;"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    ඉංග්‍රීසි භාෂාවෙන්<br>
-                    ஆங்கில மொழியில்<br>
-                    In English
-                </td>
-                <td>
-                    <s:textarea name="marriage.regNameInEnglishLang" id="regNameInEnglishLang"
-                                cssStyle="width:98.2%;"/>
-                </td>
-            </tr>
-            <tr>
-                <td>&nbsp;</td>
-                <td>
-                    <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px;"
-                         id="regName" onmouseover="transliterate('regNameInOfficialLang', 'regNameInEnglishLang')">
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </td>
-</tr>
-
-<tr>
-    <td>
-        විවාහයේ ස්වභාවය
-        <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-        <br>type of marriage in tamil
-        <br>Type of Marriage
-    </td>
-    <td colspan="8">
-        <table width="100%">
-            <caption/>
-            <col/>
-            <col/>
-            <tbody>
-            <tr>
-                <td>
-                    <s:radio name="marriage.typeOfMarriage" list="marriageTypeList" listValue="type"
-                             theme="horizontal"/>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </td>
-</tr>
-</tbody>
+    <tr>
+        <td>
+            රෙජිස්ට්‍රාර්තැන / දේවගැතිතැන<br>
+            in tamil <br>
+            Registrar / Minister
+        </td>
+        <td colspan="8">
+            <table width="100%">
+                <caption/>
+                <col width="150px"/>
+                <col/>
+                <tbody>
+                <tr>
+                    <td>
+                        රාජ්‍ය භාෂාවෙන්
+                        <s:label value="*" cssStyle="color:red;font-size:10pt;"/><br>
+                        தமிழ் மொழியில் <br>
+                        Official Language
+                    </td>
+                    <td>
+                        <s:textarea name="marriage.regNameInOfficialLang" id="regNameInOfficialLang"
+                                    cssStyle="width:98.2%;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        ඉංග්‍රීසි භාෂාවෙන්<br>
+                        ஆங்கில மொழியில்<br>
+                        In English
+                    </td>
+                    <td>
+                        <s:textarea name="marriage.regNameInEnglishLang" id="regNameInEnglishLang"
+                                    cssStyle="width:98.2%;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>
+                        <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px;"
+                             id="regName" onclick="transliterate('regNameInOfficialLang', 'regNameInEnglishLang')">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<table border="1" style="margin-top:15px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
+       cellpadding="5px">
+    <caption></caption>
+    <col width="200px"/>
+    <col/>
+    <tbody>
+    <tr>
+        <td>
+            විවාහයේ ස්වභාවය
+            <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
+            <br>type of marriage in tamil
+            <br>Type of Marriage
+        </td>
+        <td>
+            <table width="100%">
+                <caption/>
+                <col/>
+                <col/>
+                <tbody>
+                <tr>
+                    <td>
+                        <s:if test="mode=='register'">
+                            <s:radio name="marriage.typeOfMarriage" list="marriageTypeList" listValue="type"
+                                     theme="horizontal" disabled="true"/>
+                        </s:if>
+                        <s:else>
+                            <s:radio name="marriage.typeOfMarriage" list="marriageTypeList" listValue="type"
+                                     theme="horizontal"/>
+                        </s:else>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
 </table>
 
 <%--section heading Male/Female details --%>
@@ -443,59 +457,94 @@
 <table border="2"
        style="margin-top:10px;margin-bottom:20px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
        cellpadding="5px">
-    <caption/>
-    <col width="200px"/>
-    <col width="410px"/>
-    <col/>
-    <tbody>
-    <tr>
-        <td colspan="1">
-            අනන්‍යතා අංකය
-            <br>
-            அடையாள எண் <br>
-            Identification Number.
-        </td>
-        <td colspan="1" align="left">
+<caption/>
+<col width="200px"/>
+<col width="410px"/>
+<col/>
+<tbody>
+<tr>
+    <td colspan="1">
+        අනන්‍යතා අංකය
+        <br>
+        அடையாள எண் <br>
+        Identification Number.
+    </td>
+    <td colspan="1" align="left">
+        <s:if test="mode=='register'">
+            <s:textfield name="marriage.male.identificationNumberMale" id="malePIN" maxLength="10" disabled="true"/>
+        </s:if>
+        <s:else>
             <s:textfield name="marriage.male.identificationNumberMale" id="malePIN" maxLength="10"/>
-            <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="male_lookup" onmouseover="personLookup('malePIN', 'Male')">
-        </td>
-        <td colspan="1" align="left">
+            <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="male_lookup"
+                 onmouseover="personLookup('malePIN', 'Male')">
+        </s:else>
+    </td>
+    <td colspan="1" align="left">
+        <s:if test="mode=='register'">
+            <s:textfield name="marriage.female.identificationNumberFemale" id="femalePIN" maxLength="10"
+                         disabled="true"/>
+        </s:if>
+        <s:else>
             <s:textfield name="marriage.female.identificationNumberFemale" id="femalePIN" maxLength="10"/>
-            <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="female_lookup" onmouseover="personLookup('femalePIN', 'Female')">
-        </td>
-    </tr>
-    <tr>
-        <td colspan="1">
-            උපන් දිනය<br>
-            பிறந்த திகதி <br>
-            Date of Birth
-        </td>
-        <td colspan="1">
+            <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="female_lookup"
+                 onmouseover="personLookup('femalePIN', 'Female')">
+        </s:else>
+    </td>
+</tr>
+<tr>
+    <td colspan="1">
+        උපන් දිනය<br>
+        பிறந்த திகதி <br>
+        Date of Birth
+    </td>
+    <td colspan="1">
+        <s:if test="mode=='register'">
+            <s:textfield name="marriage.male.dateOfBirthMale" id="dateOfBirthMale" maxLength="10" disabled="true"/>
+        </s:if>
+        <s:else>
             <s:textfield name="marriage.male.dateOfBirthMale" id="dateOfBirthMale" maxLength="10"
                          onmouseover="datepicker('dateOfBirthMale')"/>
-        </td>
-        <td colspan="1">
+        </s:else>
+
+
+    </td>
+    <td colspan="1">
+        <s:if test="mode=='register'">
+            <s:textfield name="marriage.female.dateOfBirthFemale" id="dateOfBirthFemale" maxLength="10"
+                         disabled="true"/>
+        </s:if>
+        <s:else>
             <s:textfield name="marriage.female.dateOfBirthFemale" id="dateOfBirthFemale" maxLength="10"
                          onmouseover="datepicker('dateOfBirthFemale')"/>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="1">
-            පසුවූ උපන් දිනයට වයස
-            <s:label value="*" cssStyle="color:red;font-size:10pt;"/><br>
-            in tamil <br>
-            Age at last Birthday
+        </s:else>
+    </td>
+</tr>
+<tr>
+    <td colspan="1">
+        පසුවූ උපන් දිනයට වයස
+        <s:label value="*" cssStyle="color:red;font-size:10pt;"/><br>
+        in tamil <br>
+        Age at last Birthday
 
-        </td>
-        <td colspan="1">
+    </td>
+    <td colspan="1">
+        <s:if test="mode=='register'">
+            <s:textfield name="marriage.male.ageAtLastBirthDayMale" id="ageMale" maxLength="3" disabled="true"/>
+        </s:if>
+        <s:else>
             <s:if test="marriage.male.ageAtLastBirthDayMale==0">
                 <s:textfield name="marriage.male.ageAtLastBirthDayMale" id="ageMale" maxLength="3" value=""/>
             </s:if>
             <s:else>
                 <s:textfield name="marriage.male.ageAtLastBirthDayMale" id="ageMale" maxLength="3"/>
             </s:else>
-        </td>
-        <td colspan="1">
+        </s:else>
+    </td>
+    <td colspan="1">
+        <s:if test="mode=='register'">
+            <s:textfield name="marriage.female.ageAtLastBirthDayFemale" id="ageFemale" maxLength="3" disabled="true"/>
+        </s:if>
+        <s:else>
             <s:if test="marriage.female.ageAtLastBirthDayFemale==0">
                 <s:textfield name="marriage.female.ageAtLastBirthDayFemale" id="ageFemale" maxLength="3"
                              value=""/>
@@ -503,94 +552,149 @@
             <s:else>
                 <s:textfield name="marriage.female.ageAtLastBirthDayFemale" id="ageFemale" maxLength="3"/>
             </s:else>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            ජාතිය
-            <s:label value="*" cssStyle="color:red;font-size:10pt;"/><br>
-            Race <br>
+        </s:else>
 
-        </td>
-        <td>
+    </td>
+</tr>
+<tr>
+    <td>
+        ජාතිය
+        <s:label value="*" cssStyle="color:red;font-size:10pt;"/><br>
+        Race <br>
+
+    </td>
+    <td>
+        <s:if test="mode=='register'">
+            <s:select id="maleRace" list="raceList" name="marriage.male.maleRace.raceId" headerKey="0"
+                      headerValue="%{getText('select_race.label')}"
+                      cssStyle="width:200px;" disabled="true"/>
+        </s:if>
+        <s:else>
             <s:select id="maleRace" list="raceList" name="marriage.male.maleRace.raceId" headerKey="0"
                       headerValue="%{getText('select_race.label')}"
                       cssStyle="width:200px;"/>
-        </td>
-        <td>
+        </s:else>
+    </td>
+    <td>
+        <s:if test="mode=='register'">
+            <s:select id="femaleRace" list="raceList" name="marriage.female.femaleRace.raceId" headerKey="0"
+                      headerValue="%{getText('select_race.label')}"
+                      cssStyle="width:200px;" disabled="true"/>
+        </s:if>
+        <s:else>
             <s:select id="femaleRace" list="raceList" name="marriage.female.femaleRace.raceId" headerKey="0"
                       headerValue="%{getText('select_race.label')}"
                       cssStyle="width:200px;"/>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            සිවිල් තත්වය
-            <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-            <br> சிவில் நிலைமை
-            <br> Civil Status
-        </td>
-        <td>
-            <table>
-                <caption/>
-                <col/>
-                <tbody>
-                <tr>
-                    <td>
-                        <s:radio name="marriage.male.civilStatusMale" list="civilStatusMale" theme="horizontal"/>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </td>
+        </s:else>
 
-        <td>
-            <table>
-                <caption/>
-                <col/>
-                <tbody>
-                <tr>
-                    <td>
+
+    </td>
+</tr>
+<tr>
+    <td>
+        සිවිල් තත්වය
+        <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
+        <br> சிவில் நிலைமை
+        <br> Civil Status
+    </td>
+    <td>
+        <table>
+            <caption/>
+            <col/>
+            <tbody>
+            <tr>
+                <td>
+                    <s:if test="mode=='register'">
+                        <s:radio name="marriage.male.civilStatusMale" list="civilStatusMale" theme="horizontal"
+                                 disabled="true"/>
+                    </s:if>
+                    <s:else>
+                        <s:radio name="marriage.male.civilStatusMale" list="civilStatusMale" theme="horizontal"/>
+                    </s:else>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </td>
+
+    <td>
+        <table>
+            <caption/>
+            <col/>
+            <tbody>
+            <tr>
+                <td>
+                    <s:if test="mode=='register'">
+                        <s:radio name="marriage.female.civilStatusFemale" list="civilStatusFemale" theme="horizontal"
+                                 disabled="true"/>
+                    </s:if>
+                    <s:else>
                         <s:radio name="marriage.female.civilStatusFemale" list="civilStatusFemale" theme="horizontal"/>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            නම රාජ්‍ය භාෂාවෙන්
-            (සිංහල / දෙමළ)
-            <s:label value="*" cssStyle="color:red;font-size:10pt;"/><br>
-            பெயர் அரச கரும மொழியில் (சிங்களம் / தமிழ்) <br>
-            Name in any of the official languages (Sinhala / Tamil)
-        </td>
-        <td>
-            <s:textarea name="marriage.male.nameInOfficialLanguageMale" id="nameOfficialMale"
-                        cssStyle="width:98.2%;"/>
-        </td>
-        <td>
+                    </s:else>
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </td>
+</tr>
+<tr>
+    <td>
+        නම රාජ්‍ය භාෂාවෙන්
+        (සිංහල / දෙමළ)
+        <s:label value="*" cssStyle="color:red;font-size:10pt;"/><br>
+        பெயர் அரச கரும மொழியில் (சிங்களம் / தமிழ்) <br>
+        Name in any of the official languages (Sinhala / Tamil)
+    </td>
+    <td>
+        <s:if test="mode=='register'">
+            <s:textarea name="marriage.male.nameInOfficialLanguageMale" id="nameOfficialMale" cssStyle="width:98.2%;"
+                        disabled="true"/>
+        </s:if>
+        <s:else>
+            <s:textarea name="marriage.male.nameInOfficialLanguageMale" id="nameOfficialMale" cssStyle="width:98.2%;"/>
+        </s:else>
+    </td>
+    <td>
+        <s:if test="mode=='register'">
+            <s:textarea name="marriage.female.nameInOfficialLanguageFemale" id="nameOfficialFemale"
+                        cssStyle="width:98.2%;" disabled="true"/>
+        </s:if>
+        <s:else>
             <s:textarea name="marriage.female.nameInOfficialLanguageFemale" id="nameOfficialFemale"
                         cssStyle="width:98.2%;"/>
-        </td>
-    </tr>
+        </s:else>
+    </td>
+</tr>
 
-    <tr>
-        <td rowspan="2">
-            නම ඉංග්‍රීසි භාෂාවෙන් <br>
-            பெயர் ஆங்கில மொழியில் <br>
-            Name in English
-        </td>
-        <td>
+<tr>
+    <td>
+        නම ඉංග්‍රීසි භාෂාවෙන් <br>
+        பெயர் ஆங்கில மொழியில் <br>
+        Name in English
+    </td>
+    <td>
+        <s:if test="mode=='register'">
+            <s:textarea name="marriage.male.nameInEnglishMale" id="name_english_male" cssStyle="width:98.2%;"
+                        disabled="true"/>
+        </s:if>
+        <s:else>
             <s:textarea name="marriage.male.nameInEnglishMale" id="name_english_male" cssStyle="width:98.2%;"/>
-        </td>
-        <td>
+        </s:else>
+    </td>
+    <td>
+        <s:if test="mode=='register'">
+            <s:textarea name="marriage.female.nameInEnglishFemale" id="name_english_female" cssStyle="width:98.2%;"
+                        disabled="true"/>
+        </s:if>
+        <s:else>
             <s:textarea name="marriage.female.nameInEnglishFemale" id="name_english_female" cssStyle="width:98.2%;"/>
-        </td>
-    </tr>
-
+        </s:else>
+    </td>
+</tr>
+<s:if test="mode!='register'">
     <tr>
+        <td>&nbsp;</td>
         <td>
             <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px;"
                  id="maleName" onmouseover="transliterate('nameOfficialMale', 'name_english_male')">
@@ -600,24 +704,36 @@
                  id="femaleName" onmouseover="transliterate('nameOfficialFemale', 'name_english_female')">
         </td>
     </tr>
-
-    <tr>
-        <td>
-            පදිංචි ලිපිනය
-            <s:label value="*" cssStyle="color:red;font-size:10pt;"/> <br>
-            தற்போதைய வதிவிட முகவரி <br>
-            Resident Address
-        </td>
-        <td>
+</s:if>
+<tr>
+    <td rowspan="2">
+        පදිංචි ලිපිනය
+        <s:label value="*" cssStyle="color:red;font-size:10pt;"/> <br>
+        தற்போதைய வதிவிட முகவரி <br>
+        Resident Address
+    </td>
+    <td>
+        <s:if test="mode=='register'">
+            <s:textarea name="marriage.male.residentAddressMaleInOfficialLang" id="addressMale"
+                        cssStyle="width:98.2%;" disabled="true"/>
+        </s:if>
+        <s:else>
             <s:textarea name="marriage.male.residentAddressMaleInOfficialLang" id="addressMale"
                         cssStyle="width:98.2%;"/>
-        </td>
-        <td>
+        </s:else>
+    </td>
+    <td>
+        <s:if test="mode=='register'">
+            <s:textarea name="marriage.female.residentAddressFemaleInOfficialLang" id="addressFemale"
+                        cssStyle="width:98.2%;" disabled="true"/>
+        </s:if>
+        <s:else>
             <s:textarea name="marriage.female.residentAddressFemaleInOfficialLang" id="addressFemale"
                         cssStyle="width:98.2%;"/>
-        </td>
-    </tr>
-    </tbody>
+        </s:else>
+    </td>
+</tr>
+</tbody>
 </table>
 <table border="1" style="margin-top:1px;width:100%;border:1px solid #000;border-collapse:collapse;"
        cellpadding="2px">
@@ -638,12 +754,16 @@
                <s:else>
                    <s:textfield name="idUKey" id="idUKey" maxLength="10" disabled="true"/>
                </s:else> --%>
-
-            <s:if test="marriage.serialNumber==0">
-                <s:textfield name="marriage.serialNumber" id="serialNumber" maxLength="10" value=""/>
+            <s:if test="mode=='register'">
+                <s:textfield name="idUKey" id="idUKey" maxLength="10" disabled="true"/>
             </s:if>
             <s:else>
-                <s:textfield name="marriage.serialNumber" id="serialNumber" maxLength="10"/>
+                <s:if test="marriage.serialNumber==0">
+                    <s:textfield name="marriage.serialNumber" id="serialNumber" maxLength="10" value=""/>
+                </s:if>
+                <s:else>
+                    <s:textfield name="marriage.serialNumber" id="serialNumber" maxLength="10"/>
+                </s:else>
             </s:else>
         </td>
         <td>

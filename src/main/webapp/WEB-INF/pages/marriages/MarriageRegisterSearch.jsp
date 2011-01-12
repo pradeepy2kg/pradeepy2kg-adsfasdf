@@ -32,7 +32,7 @@
     });
 </script>
 <s:actionerror cssClass="actionerror"/>
-<s:actionmessage cssStyle="color:green;font-size:10pt"/>
+<s:actionmessage cssStyle="color:blue;font-size:10pt"/>
 <s:form action="eprMarriageRegisterSearch.do" method="POST" onsubmit="javascript:return validate()">
     <div id="tabs" style="font-size:10pt;">
         <ul>
@@ -179,61 +179,48 @@
                         <td align="center">
                             <s:property value="male.identificationNumberMale"/>
                         </td>
-                            <%-- <td align="center">
-                               <s:url id="registerSelected" action="eprMarriageRegistrationInit.do">
-                                   <s:param name="idUKey" value="idUKey"/>
-                                   <s:param name="mode">register</s:param>
-                               </s:url>
-                               <s:a href="%{registerSelected}" title="%{getText('tooltip.marriageregister.register')}">
-                                   <img src="<s:url value='/images/couple.jpg'/>" width="25" height="25" border="none"/>
-                               </s:a>
-                           </td> --%>
                         <td>
-                            <s:if test="(state.ordinal()==10)">
-                                <s:url id="view" action="eprViewMarriageRegister.do">
+                            <%-- Register licenced marriage  --%>
+                            <s:if test="(state.ordinal()==7)">  <%-- Licence printed --%>
+                                <s:url id="registerSelected" action="eprMarriageRegistrationInit.do">
                                     <s:param name="idUKey" value="idUKey"/>
-                                    <s:param name="mode">view</s:param>
+                                    <s:param name="mode">register</s:param>
                                 </s:url>
-                                <s:a href="%{view}">
-                                    VIEW
+                                <s:a href="%{registerSelected}" title="%{getText('tooltip.marriageregister.register')}">
+                                    <img src="<s:url value='/images/couple.jpg'/>" width="25" height="25"
+                                         border="none"/>
                                 </s:a>
                             </s:if>
-
                             <s:else>
-                                <s:url id="view" action="eprViewMarriageRegister.do">
-                                    <s:param name="idUKey" value="idUKey"/>
-                                    <s:param name="mode">view</s:param>
-                                </s:url>
-                                <s:a href="%{view}">
-                                    VIEW
-                                </s:a>
-
-                                <s:url id="printCert" action="eprDisplayScannedImage.do">
-                                    <s:param name="idUKey" value="idUKey"/>
-                                </s:url>
-                                <s:a href="%{printCert}">
-                                    <img src="<s:url value='/images/print_icon.gif'/>" border="none" height="25"/>
-                                </s:a>
-
-                                <s:if test="(state.ordinal()==9 || state.ordinal()==11)">
+                                <%-- print extract of marriage  --%>
+                                <s:if test="(state.ordinal()==9 || state.ordinal()==11)"> <%-- Registration approved or Extract Printed --%>
                                     <s:url id="printExtract" action="eprMarriageExtractInit.do">
                                         <s:param name="idUKey" value="idUKey"/>
                                         <s:param name="mode">print</s:param>
                                     </s:url>
-                                    <s:a href="%{printExtract}">
-                                        PE
+                                    <s:a href="%{printExtract}" title="%{getText('tooltip.marriageextract.print')}">
+                                        <img src="<s:url value='/images/print_icon.gif'/>" border="none" height="25"/>
                                     </s:a>
                                 </s:if>
-
                                 <s:else>
-                                    <s:url id="editSelected" action="eprMarriageRegistrationInit.do">
-                                        <s:param name="idUKey" value="idUKey"/>
-                                    </s:url>
+                                    <%-- Edit  --%>
+                                    <s:if test="serialNumber==null">
+                                        <s:url id="editSelected" action="eprMarriageRegistrationInit.do">
+                                            <s:param name="idUKey" value="idUKey"/>
+                                            <s:param name="mode">register</s:param>
+                                        </s:url>
+                                    </s:if>
+                                    <s:else>
+                                        <s:url id="editSelected" action="eprMarriageRegistrationInit.do">
+                                            <s:param name="idUKey" value="idUKey"/>
+                                        </s:url>
+                                    </s:else>
                                     <s:a href="%{editSelected}" title="%{getText('editToolTip.label')}">
                                         <img src="<s:url value='/images/edit.png'/>" width="25" height="25"
                                              border="none"/>
                                     </s:a>
 
+                                    <%-- Approve  --%>
                                     <s:url id="approveSelected" action="eprApproveMarriageRegistration.do">
                                         <s:param name="idUKey" value="idUKey"/>
                                     </s:url>
@@ -242,6 +229,7 @@
                                              border="none"/>
                                     </s:a>
 
+                                    <%-- Reject --%>
                                     <s:url id="rejectSelected" action="eprMarriageRegisterRejectInit.do">
                                         <s:param name="idUKey" value="idUKey"/>
                                         <s:param name="mode">reject</s:param>
@@ -250,10 +238,32 @@
                                         <img src="<s:url value='/images/reject.gif'/>" width="25" height="25"
                                              border="none"/>
                                     </s:a>
-
                                 </s:else>
 
+                                <%-- View  --%>
+                                <s:if test="(state.ordinal()==9|| state.ordinal()==10 || state.ordinal()==11)"><%-- Registration rejected, approved or Extract Printed --%>
+                                    <s:url id="view" action="eprViewMarriageRegister.do">
+                                        <s:param name="idUKey" value="idUKey"/>
+                                        <s:param name="mode">view</s:param>
+                                    </s:url>
+                                    <s:a href="%{view}">
+                                        <img src="<s:url value='/images/view_icon.png'/>" width="25" height="25"
+                                             border="none"/>
+                                    </s:a>
+                                </s:if>
+
+                                <%-- View scanned marriage cert  --%>
+                                <s:if test="(scannedImagePath != null)">
+                                    <s:url id="printCert" action="eprDisplayScannedImage.do">
+                                        <s:param name="idUKey" value="idUKey"/>
+                                    </s:url>
+                                    <s:a href="%{printCert}" title="%{getText('tooltip.scannedmarriagecert.print')}">
+                                        <img src="<s:url value='/images/print_image.jpeg'/>" width="30" height="30"
+                                             border="none"/>
+                                    </s:a>
+                                </s:if>
                             </s:else>
+
                         </td>
                     </tr>
                 </s:iterator>

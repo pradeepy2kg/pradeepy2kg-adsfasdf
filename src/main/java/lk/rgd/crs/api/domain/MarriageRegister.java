@@ -117,6 +117,19 @@ import java.util.Date;
 
     @NamedQuery(name = "findMarriageRegister", query = "SELECT mr FROM MarriageRegister mr " +
         "WHERE mr.lifeCycleInfo.activeRecord = :active " +
+        "AND mr.state IN (:stateList) " +
+        "ORDER BY mr.idUKey DESC "),
+
+    @NamedQuery(name = "findMarriageRegisterByDSDivision", query = "SELECT mr FROM MarriageRegister mr " +
+        "WHERE mr.lifeCycleInfo.activeRecord = :active " +
+        "AND (mr.mrDivision IS NOT NULL AND mr.mrDivision.dsDivision = :dsDivision) " +
+        "AND mr.state IN (:stateList) " +
+        "ORDER BY mr.idUKey DESC "),
+
+    @NamedQuery(name = "findMarriageRegisterByDistricts", query = "SELECT mr FROM MarriageRegister mr " +
+        "WHERE mr.lifeCycleInfo.activeRecord = :active " +
+        "AND (mr.mrDivision IS NOT NULL AND mr.mrDivision.dsDivision.district IN (:districtList)) " +
+        "AND mr.state IN (:stateList) " +
         "ORDER BY mr.idUKey DESC "),
 
     @NamedQuery(name = "get.mr.by.createdUser", query = "SELECT mr FROM MarriageRegister mr " +
