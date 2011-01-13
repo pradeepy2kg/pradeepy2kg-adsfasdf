@@ -118,6 +118,7 @@
         <action name="eprPersonDetails" class="lk.rgd.prs.web.action.PersonDetailsAction"
                 method="personDetails">
             <result type="tiles" name="success">epr.personDetails</result>
+            <result type="tiles" name="pageLoad">epr.PRSAdvancedSearch</result>
         </action>
 
         <action name="eprEditPerson" class="lk.rgd.prs.web.action.PersonRegisterAction" method="personEditInit">
