@@ -43,8 +43,11 @@
                 counter++;
             }
         }
-        if (counter != 1) {
+        if (counter != 1 && counter != 0) {
             errormsg = errormsg + document.getElementById('msg_oneMechanism').value;
+        }
+        if (counter == 0) {
+            errormsg = errormsg + document.getElementById('no.data.entered').value;
         }
         if (pin.value != "") {
             validatePINorNIC(pin, "err_invalide_input_type", "filed_pin");
@@ -147,5 +150,6 @@
     </fieldset>
 </s:if>
 <s:hidden id="msg_oneMechanism" value="%{getText('search.use.one.mechanism')}"/>
+<s:hidden id="no.data.entered" value="%{getText('no.data')}"/>
 <s:hidden id="filed_pin" value="%{getText('label.tab.search.by.registrar.pin')}"/>
 <s:hidden id="err_invalide_input_type" value="%{getText('invalide.data')}"/> 
