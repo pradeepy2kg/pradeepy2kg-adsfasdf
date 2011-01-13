@@ -23,6 +23,7 @@ import java.util.Set;
 public class PersonDetailsAction extends ActionSupport implements SessionAware {
 
     private static final Logger logger = LoggerFactory.getLogger(PersonDetailsAction.class);
+    private static final String PAGE_LOAD = "pageLoad";
 
     // services and DAOs
     private final PopulationRegistry service;
@@ -60,21 +61,27 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
     public String personDetails() {
         logger.debug("getting extended details of an existing person in PRS");
         person = service.getLoadedObjectByUKey(personUKey, user);
-        gender = GenderUtil.getGender(person.getGender(), user.getPrefLanguage());
-        if (person.getRace() != null) {
-            race = raceDAO.getNameByPK(person.getRace().getRaceId(), user.getPrefLanguage());
+        if (person != null) {
+            gender = GenderUtil.getGender(person.getGender(), user.getPrefLanguage());
+            if (person.getRace() != null) {
+                race = raceDAO.getNameByPK(person.getRace().getRaceId(), user.getPrefLanguage());
+            }
+            if (person.getCivilStatus() != null) {
+                civilStatus = CivilStatusUtil.getCivilStatus(person.getCivilStatus(), user.getPrefLanguage());
+            }
+            if (person.getLifeStatus() != null) {
+                lifeStatus = LifeStatusUtil.getLifeStatus(person.getLifeStatus(), user.getPrefLanguage());
+            }
+            children = service.findAllChildren(person, user);
+            logger.debug("number of children for {} is {}", person.getFullNameInOfficialLanguage(), children.size());
+            siblings = service.findAllSiblings(person, user);
+            logger.debug("number of siblings for {} is {}", person.getFullNameInOfficialLanguage(), siblings.size());
+            return SUCCESS;
+        } else {
+            logger.debug("For Person with personUKey : {} does not have a valid PRS entry", personUKey);
+            addActionError(getText("message.person_null"));
+            return PAGE_LOAD;
         }
-        if (person.getCivilStatus() != null) {
-            civilStatus = CivilStatusUtil.getCivilStatus(person.getCivilStatus(), user.getPrefLanguage());
-        }
-        if (person.getLifeStatus() != null) {
-            lifeStatus = LifeStatusUtil.getLifeStatus(person.getLifeStatus(), user.getPrefLanguage());
-        }
-        children = service.findAllChildren(person, user);
-        logger.debug("number of children for {} is {}", person.getFullNameInOfficialLanguage(), children.size());
-        siblings = service.findAllSiblings(person, user);
-        logger.debug("number of siblings for {} is {}", person.getFullNameInOfficialLanguage(), siblings.size());
-        return SUCCESS;
     }
 
     /**

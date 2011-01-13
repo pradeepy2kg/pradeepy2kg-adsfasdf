@@ -144,6 +144,7 @@
         <ul id="selection"></ul>
 
     </div>
+    <s:actionerror cssClass="alreadyPrinted" cssStyle="font-size:10pt;"/>
 
     <fieldset style="border:none">
         <div id="result">
