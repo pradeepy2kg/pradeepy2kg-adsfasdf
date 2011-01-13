@@ -75,6 +75,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     private String districtEn;
     private String dsDivisionEn;
     private String msg;
+    private String selectedRole;
 
     private BDDivision bdDivision;
     private DSDivision dsDivision;
@@ -624,15 +625,14 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     }
 
     public String selectUsers() {
-        populate();
+        //populate();
+        selectedRole = roleId;
         int pageNo = 1;
         usersList = service.getUsersByRole("");
         if (getUserDistrictId() == 0 && getRoleId().length() == 1 && getNameOfUser().length() == 0) {
             usersList = service.getAllUsers();
         } else if (getUserDistrictId() == 0 && getRoleId().length() != 1) {
-
             usersList = service.getUsersByRole(getRoleId());
-
         } else if (getUserDistrictId() != 0 && getRoleId().length() == 1) {
             usersList = service.getUsersByAssignedMRDistrict(districtDAO.getDistrict(getUserDistrictId()));
         } else if (getUserDistrictId() != 0 && getRoleId().length() != 1) {
@@ -642,6 +642,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
             usersList = service.getUsersByNameMatch(getNameOfUser());
         }
         session.put("viewUsers", usersList);
+        populate();
         return "success";
     }
 
@@ -692,7 +693,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         Map<Integer, Location> allLocations = locationDAO.getPreLoadedLocations();
         User user = userDAO.getUserByPK(userId);
         Set<DSDivision> st = user.getAssignedBDDSDivisions();
-        
+
         for (DSDivision ds : st) {
             locationList.putAll(locationDAO.getLocationByDSDivisionID(ds.getDsDivisionUKey(), user.getPrefLanguage()));
 
@@ -1267,5 +1268,13 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
 
     public void setPrimaryLocationSelectionList(List<Location> primaryLocationSelectionList) {
         this.primaryLocationSelectionList = primaryLocationSelectionList;
+    }
+
+    public String getSelectedRole() {
+        return selectedRole;
+    }
+
+    public void setSelectedRole(String selectedRole) {
+        this.selectedRole = selectedRole;
     }
 }

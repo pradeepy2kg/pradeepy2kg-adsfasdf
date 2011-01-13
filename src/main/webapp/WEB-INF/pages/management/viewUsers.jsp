@@ -30,6 +30,15 @@
     }
 </script>
 
+<style type="text/css">
+    #search-title {
+        width:100%;
+        text-align:center;
+        height:50px;
+        font-size:16px;
+        color:blue;
+    }
+</style>
 
 <div id="view-users">
     <s:actionmessage cssStyle="text-align:left;"/>
@@ -70,7 +79,9 @@
             </s:form>
     </fieldset>
     <s:if test="#session.viewUsers!=null">
-
+            <div id="search-title">
+                 Search Results for : <s:property value="%{selectedRole}"/>
+            </div>
         <fieldset style="border:none">
             <s:form name="users_print" action="" method="POST">
                 <table id="users-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
