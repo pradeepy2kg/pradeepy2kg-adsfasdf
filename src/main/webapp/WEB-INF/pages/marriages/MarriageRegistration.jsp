@@ -344,7 +344,7 @@
                     <td>&nbsp;</td>
                     <td>
                         <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px;"
-                             id="place" onclick="transliterate('regPlaceInOfficialLang', 'regPlaceInEnglishLang')">
+                             id="place" onmouseover="transliterate('regPlaceInOfficialLang', 'regPlaceInEnglishLang')">
                     </td>
                 </tr>
                 </tbody>
