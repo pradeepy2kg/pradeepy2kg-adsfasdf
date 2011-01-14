@@ -32,12 +32,10 @@ function drawChart(data) {
     /* --- Births Pie Chart --- */
     if (data.approved_b == 0 && data.rejected_b == 0 && data.arrears_pend_b == 0 && data.thismonth_pend_b == 0) {
         if (data.userRole == 'RG' || data.userRole == 'ARG') {
-            alert(data.userRole);
             var ele = document.getElementById("birth-pie");
             if(ele != null)
                     ele.innerHTML = html_code;
         } else {
-            alert(data.userRole);
             var ele = document.getElementById("chart3");
             if(ele != null)
                 ele.innerHTML = html_code;

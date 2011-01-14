@@ -760,7 +760,7 @@
         </action>
 
         <action name="eprBackChangePass" class="lk.rgd.crs.web.action.UserPreferencesAction" method="back">
-            <result name="pageload" type="tiles">epr.home</result>
+            <result name="success" type="tiles">epr.home</result>
         </action>
 
         <action name="eprpassChangePageLoad" class="lk.rgd.crs.web.action.UserPreferencesAction"
