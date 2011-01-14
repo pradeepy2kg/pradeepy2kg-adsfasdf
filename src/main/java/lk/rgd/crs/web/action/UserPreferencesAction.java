@@ -64,6 +64,8 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
     private String role;
     private Statistics statistics;
 
+    private String userRole;
+
     /**
      * following properties are checked by  PASSWORD_PATTERN
      * <p/>
@@ -149,6 +151,24 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
 
         role = user.getRole().getRoleId();
 
+        statistics = statisticsDAO.getByUser(user.getUserId());
+        if (statistics == null) {
+            statistics = new Statistics();
+        }
+
+        districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
+        if (districtList.size() > 0) {
+            districtId = districtList.keySet().iterator().next();
+        }
+        divisionList = dsDivisionDAO.getAllDSDivisionNames(districtId, user.getPrefLanguage(), user);
+        if (divisionList.size() > 0) {
+            dsDivisionId = divisionList.keySet().iterator().next();
+            deoList = userDAO.getDEOsByDSDivision(user.getPrefLanguage(), user,
+                dsDivisionDAO.getDSDivisionByPK(dsDivisionId), roleDAO.getRole(Role.ROLE_DEO));
+        }
+        deoUserId = 1;
+        userRole = role;
+
         return "success";
     }
 
@@ -186,16 +206,16 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
         }
         if (newPassword.equals(retypeNewPassword)) {
             userManager.updatePassword(newPassword, user);
-            String userRole = user.getRole().getRoleId();
-            logger.debug("return value of change password method is success{}", userRole);
+            String uRole = user.getRole().getRoleId();
+            logger.debug("return value of change password method is success{}", uRole);
             addActionMessage(getText("password.changed.success.label"));
             //return "success" + userRole;
 
-            if (userRole.equals("RG") || userRole.equals("ARG")) {
+            if (uRole.equals("RG") || uRole.equals("ARG")) {
                 populateLists(user, WebConstants.USER_ARG);
             }
-            if (userRole.equals("DR") || (userRole).equals("ADR")) {
-                populateLists(user, userRole);
+            if (uRole.equals("DR") || (uRole).equals("ADR")) {
+                populateLists(user, uRole);
             }
 
             role = userType;
@@ -216,8 +236,9 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
                     dsDivisionDAO.getDSDivisionByPK(dsDivisionId), roleDAO.getRole(Role.ROLE_DEO));
             }
             deoUserId = 1;
+            userRole = uRole;
 
-            return "success" + userRole;
+            return "success" + uRole;
 
         } else {
             addActionError(getText("password.mismatch.lable"));
@@ -488,5 +509,13 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
 
     public void setStatistics(Statistics statistics) {
         this.statistics = statistics;
+    }
+
+    public String getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
     }
 }
