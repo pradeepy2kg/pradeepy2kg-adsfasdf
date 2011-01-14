@@ -11,7 +11,7 @@ public abstract class BirthStatistics {
     private int total;
     private int maleTotal;
     private int femaleTotal;
-    private List<BirthStatistics> totals;
+    //private List<BirthStatistics> totals;
 
     public int getTotal() {
         return total;
