@@ -1121,6 +1121,9 @@
             <result type="tiles" name="success">epr.indexRecords</result>
         </action>
 
+        <action name="eprCreateReports" class="lk.rgd.crs.web.action.ReportsAction" method="create">
+            <result type="tiles" name="success">epr.indexRecords</result>
+        </action>
     </package>
 
     <package name="alteration" namespace="/alteration" extends="NG">

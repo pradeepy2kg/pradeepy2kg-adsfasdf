@@ -68,3 +68,9 @@
         </table>
     </fieldset>
 </div>
+
+<div align="center">
+    <s:a href="/ecivil/management/eprCreateReports.do">
+        <s:label value="Create Statistics Reports"/>
+    </s:a>
+</div>

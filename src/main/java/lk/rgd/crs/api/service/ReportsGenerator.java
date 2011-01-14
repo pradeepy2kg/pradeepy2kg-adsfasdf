@@ -8,5 +8,17 @@ import lk.rgd.crs.api.bean.BirthIslandWideStatistics;
  */
 public interface ReportsGenerator {
 
+    /**
+     *    Generate a complete statistics object containing whole islandwide stats
+     * @return  BirthIslandWideStatistics
+     */
     public BirthIslandWideStatistics generate();
+
+    /**
+     *  Creates a Standard CSV file from the generated IslandWide stats.
+     *  currently assumes. stats are already geneated.
+     * // todo check if a CSV file already generated and avaialble for the given year.
+     * @return String the path and name of the created CSV file.
+     */
+    public String createReport();
 }
