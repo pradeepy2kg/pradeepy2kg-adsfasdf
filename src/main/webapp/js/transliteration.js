@@ -18,7 +18,7 @@ function transliterate(textInOfficialLang, textInEnglishLang) {
 
     //Lets send it
     SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
-    SOAPClient.SendRequest(sr, processResponse1()); //Send request to server and assign a callback
+    SOAPClient.SendRequest(sr, processResponse1); //Send request to server and assign a callback
 }
 
 function processResponse1(respObj) {

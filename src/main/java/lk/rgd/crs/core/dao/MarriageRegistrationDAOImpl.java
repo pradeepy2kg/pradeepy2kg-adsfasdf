@@ -202,29 +202,34 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
         EnumSet stateList, boolean isActive, Date startDate, Date endDate, int pageNo, int noOfRows) {
 
         StringBuilder query = new StringBuilder("").append("SELECT mr FROM MarriageRegister mr " +
-            "WHERE mr.lifeCycleInfo.activeRecord = :active ");
+            "WHERE mr.lifeCycleInfo.activeRecord = :active");
+
+        String mrDivisionEquals = "";
 
         if (AppConstants.MARRIAGE.equals(divisionType)) {
-            query.append("AND (mr.mrDivision IS NOT NULL AND mr.mrDivision.mrDivisionUKey = :divisionUKey) ");
+            mrDivisionEquals = "mr.mrDivision.mrDivisionUKey = :divisionUKey)";
 
         } else if (AppConstants.DS_DIVISION.equals(divisionType)) {
-            query.append("AND (mr.mrDivision IS NOT NULL AND mr.mrDivision.dsDivision.dsDivisionUKey = :divisionUKey) ");
+            mrDivisionEquals = "mr.mrDivision.dsDivision.dsDivisionUKey = :divisionUKey)";
 
         } else if (AppConstants.DISTRICT.equals(divisionType)) {
-            query.append("AND (mr.mrDivision IS NOT NULL AND mr.mrDivision.dsDivision.district.districtUKey = :divisionUKey) ");
+            mrDivisionEquals = "mr.mrDivision.dsDivision.district.districtUKey = :divisionUKey)";
 
         } else if (AppConstants.ALL.equals(divisionType)) {
-            query.append("AND (mr.mrDivision IS NOT NULL AND mr.mrDivision.dsDivision.dsDivisionUKey IN (:dsDivisionList)) ");
-
+            mrDivisionEquals = "mr.mrDivision.dsDivision.dsDivisionUKey IN (:dsDivisionList))";
         }
-        query.append("AND mr.state IN (:stateList) ")
+
+        if (!mrDivisionEquals.isEmpty()) {
+            query.append(" AND (mr.mrDivision IS NOT NULL AND ");
+                query.append(mrDivisionEquals);
+        }
+
+        query.append(" AND mr.state IN (:stateList) ")
             .append((startDate != null & endDate != null) ? "AND (mr.dateOfMarriage IS NOT NULL AND mr.dateOfMarriage " +
                 "BETWEEN :startDate AND :endDate) " : " ")
             .append("ORDER BY mr.idUKey DESC ");
 
         Query q = em.createQuery(query.toString()).setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
-        //TODO: namedquery has to be removed from marriage register
-        //Query q = em.createNamedQuery("findMarriageRegisterByDSDivision").
 
         q.setParameter("active", isActive);
         q.setParameter("stateList", stateList);
