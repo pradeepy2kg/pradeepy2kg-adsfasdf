@@ -248,7 +248,7 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
      */
     @Transactional(propagation = Propagation.SUPPORTS)
     public Registrar getRegistrarByPin(long pin, User user) {
-        if (!user.isAuthorized(Permission.SEARCH_REGISTRAR)) {
+        if (!user.isAuthorized(Permission.REGISTRAR_MANAGEMENT)) {
             handleException("User : " + user.getUserId() +
                 " is not authorized to manage manage registrars", ErrorCodes.PERMISSION_DENIED);
         }
