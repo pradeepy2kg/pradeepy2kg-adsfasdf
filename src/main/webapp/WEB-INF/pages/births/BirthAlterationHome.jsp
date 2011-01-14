@@ -1,7 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <script type="text/javascript">
-    function initPage(){}
+    function initPage() {
+    }
 </script>
 
 <style type="text/css">
@@ -43,7 +44,7 @@
     }
 
     .lable-adr {
-        font-size:9pt;
+        font-size: 9pt;
         position: absolute;
         width: 102px;
         text-align: center;
@@ -51,50 +52,58 @@
     }
 
     .lable-child-birth {
-        font-size:9pt;
+        font-size: 9pt;
         position: absolute;
         width: 300px;
         text-align: center;
         margin: 109px 0px 0px 76px;
     }
+
     .receive-birth-cetificate {
-        font-size:9pt;
+        font-size: 9pt;
         position: absolute;
         width: 300px;
         text-align: center;
         margin: 50px 0px 0px 250px;
     }
+
     .receive-new-birth-cetificate {
-        font-size:9pt;
+        font-size: 9pt;
         position: absolute;
         width: 100px;
         text-align: center;
-        margin:320px 0px 0px 180px;
+        margin: 320px 0px 0px 180px;
     }
+
     .request-ba {
-        font-size:9pt;
+        font-size: 9pt;
         position: absolute;
         width: 150px;
         text-align: center;
-        margin:90px 0px 0px 562px;
+        margin: 90px 0px 0px 562px;
     }
 </style>
 
 <s:a href="eprBirthAlterationInit.do">
-    <div class="link_data_entry"><s:label value="(1) %{getText('data.entry.lable')}" cssStyle="cursor:pointer;"/></div>
+    <div class="link_data_entry"><s:label value="(1) %{getText('data.entry.lable')}"
+                                          cssStyle="cursor:pointer;font-size:9pt"/></div>
 </s:a>
 <s:a href="eprBirthAlterationPendingApproval.do">
-    <div class=" link-approval"><s:label value="  (2)%{getText('data.approve')}" cssStyle="cursor:pointer;"/></div>
+    <div class=" link-approval"><s:label value="  (2)%{getText('data.approve')}"
+                                         cssStyle="cursor:pointer; font-size:9pt"/></div>
 </s:a>
 <s:a href="">
-    <div class=" link-print"><s:label value="(3) %{getText('print.lable')}" cssStyle="cursor:pointer;"/></div>
+    <div class=" link-print"><s:label value="(3) %{getText('print.lable')}"
+                                      cssStyle="cursor:pointer; font-size:9pt"/></div>
 </s:a>
 
 
 <%--div for lables--%>
-<div class="lable-adr"><s:label value="%{getText('data.approve')}/DR"/></div>
-<div class="lable-child-birth"><s:label value="%{getText('lb.birth.child')}"/></div>
-<div class="receive-birth-cetificate"><s:label value="%{getText('receive.birth.cetificate.lable')}"/></div>
-<div class="receive-new-birth-cetificate"><s:label value="%{getText('receive.new.birth.cetificate.lable')}"/></div>
-<div class="request-ba"><s:label value="%{getText('request.ba.lable')}"/></div>
+<div class="lable-adr"><s:label value="%{getText('data.approve')}/DR" cssStyle="font-size:10px"/></div>
+<div class="lable-child-birth"><s:label value="%{getText('lb.birth.child')}" cssStyle="font-size:10px"/></div>
+<div class="receive-birth-cetificate"><s:label value="%{getText('receive.birth.cetificate.lable')}"
+                                               cssStyle="font-size:10px"/></div>
+<div class="receive-new-birth-cetificate"><s:label value="%{getText('receive.new.birth.cetificate.lable')}"
+                                                   cssStyle="font-size:10px"/></div>
+<div class="request-ba"><s:label value="%{getText('request.ba.lable')}" cssStyle="font-size:9px"/></div>
 <div class="bg1"></div>

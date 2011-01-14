@@ -1,7 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <script type="text/javascript">
-    function initPage(){}
+    function initPage() {
+    }
 </script>
 <style type="text/css">
 .birth-registration-outer {
@@ -78,6 +79,8 @@
 .link5 {
     text-align: center;
     position: absolute;
+    bottom: 25px;
+    left: 210px;
     width: 135px;
     height: 45px;
     margin: 440px 0px 0px 455px;
@@ -96,7 +99,7 @@
 }
 
 .link7 {
-    text-align:center;
+    text-align: center;
     background: url('<s:url value="/images/for.png"/> ') no-repeat;
     position: absolute;
     width: 100px;
@@ -106,11 +109,13 @@
     color: black;
 
 }
+
 .text-margin {
-        text-align: center;
-        margin-left:2px;
-        margin-top: 24px;
-    }
+    text-align: center;
+    margin-left: 2px;
+    margin-top: 24px;
+}
+
 .lable01 {
     font-size: 9pt;
     text-align: center;
@@ -213,6 +218,8 @@
     font-size: 9pt;
     text-align: center;
     position: absolute;
+    top: 210px;
+    left: 250px;
     width: 120px;
     margin: 100px 0px 0px 190px;
 }
@@ -241,16 +248,19 @@
     margin: 370px 0px 0px 355px;
 
 }
-.lable-nochanges{
-     font-size: 9pt;
+
+.lable-nochanges {
+    font-size: 9pt;
     text-align: center;
     position: absolute;
     width: 120px;
     margin: 455px 0px 0px 315px;
 }
-.lable-DSoffice{
-    font:small-caps;
-     font-size: 11pt;color:black;
+
+.lable-DSoffice {
+    font: small-caps;
+    font-size: 11pt;
+    color: black;
     text-align: center;
     position: absolute;
     width: 150px;
@@ -261,45 +271,55 @@
 </style>
 
 <div class="birth-registration-outer">
-    <div class="lable01"><s:label value="%{getText('lb.late.fill')}"/></div>
-    <div class="lable-MR"><s:label value="%{getText('lb.medical.registrar')}"/></div>
-    <div class="lable-late-reg"><s:label value="%{getText('lb.late')}"/></div>
-    <div class="lable-fill"><s:label value="%{getText('lb.late.fill')}"/></div>
-    <div class="lable-ADR"><s:label value="%{getText('lb.late.approve')}"/></div>
-    <div class="lable-parent"><s:label value="%{getText('lb.birth.child')}"/></div>
-    <div class="lable-edit1"><s:label value="%{getText('lb.edit.lable')}"/></div>
-    <div class="lable-edit2"><s:label value="%{getText('lb.edit.lable')}"/></div>
-    <div class="lable-recevie"><s:label value="%{getText('lb.receive.birth.certificate')}"/></div>
-    <div class="lable-send-confirmation"><s:label value="%{getText('lb.send.confirmation.form')}"/></div>
-    <div class="lable-recevie-confirmation"><s:label value="%{getText('lb.receive.confirmation.form')}"/></div>
-    <div class="lable-issue-receipt"><s:label value="%{getText('lb.issue.receipt')}"/></div>
-    <div class="lable-submit-bundle"><s:label value="%{getText('lb.submit.bundle')}"/></div>
-    <div class="lable-approve-nochanges"><s:label value="%{getText('lb.approve.nochanges')}"/></div>
-    <div class="lable-changes"><s:label value="%{getText('lb.changes')}"/></div>
-     <div class="lable-nochanges"><s:label value="%{getText('lb.nochanges')}"/></div>
-    <div class="lable-DSoffice"><s:label value="%{getText('sb.office')}"/></div>
+    <div class="lable01"><s:label value="%{getText('lb.late.fill')}" cssStyle="font-size:10px"/></div>
+    <div class="lable-MR"><s:label value="%{getText('lb.medical.registrar')}" cssStyle="font-size:10px"/></div>
+    <div class="lable-late-reg"><s:label value="%{getText('lb.late')}" cssStyle="font-size:10px"/></div>
+    <div class="lable-fill"><s:label value="%{getText('lb.late.fill')}" cssStyle="font-size:10px"/></div>
+    <div class="lable-ADR"><s:label value="%{getText('lb.late.approve')}" cssStyle="font-size:10px"/></div>
+    <div class="lable-parent"><s:label value="%{getText('lb.birth.child')}" cssStyle="font-size:10px"/></div>
+    <div class="lable-edit1"><s:label value="%{getText('lb.edit.lable')}" cssStyle="font-size:10px"/></div>
+    <div class="lable-edit2"><s:label value="%{getText('lb.edit.lable')}" cssStyle="font-size:10px"/></div>
+    <div class="lable-recevie"><s:label value="%{getText('lb.receive.birth.certificate')}"
+                                        cssStyle="font-size:10px"/></div>
+    <div class="lable-send-confirmation"><s:label value="%{getText('lb.send.confirmation.form')}"
+                                                  cssStyle="font-size:10px"/></div>
+    <div class="lable-recevie-confirmation"><s:label value="%{getText('lb.receive.confirmation.form')}"
+                                                     cssStyle="font-size:10px"/></div>
+    <div class="lable-issue-receipt"><s:label value="%{getText('lb.issue.receipt')}" cssStyle="font-size:10px"/></div>
+    <div class="lable-submit-bundle"><s:label value="%{getText('lb.submit.bundle')}" cssStyle="font-size:10px"/></div>
+    <div class="lable-approve-nochanges"><s:label value="%{getText('lb.approve.nochanges')}"
+                                                  cssStyle="font-size:10px"/></div>
+    <div class="lable-changes"><s:label value="%{getText('lb.changes')}" cssStyle="font-size:10px"/></div>
+    <div class="lable-nochanges"><s:label value="%{getText('lb.nochanges')}" cssStyle="font-size:10px"/></div>
+    <div class="lable-DSoffice"><s:label value="%{getText('sb.office')}" cssStyle="font-size:10px"/></div>
     <s:a href="eprStillBirth.do">
         <div class="link7">
-           <div class="text-margin "><s:label value="%{getText('lb.still.birth')}" cssStyle="cursor:pointer"/></div>
+            <div class="text-margin "><s:label value="%{getText('lb.still.birth')}"
+                                               cssStyle="cursor:pointer;font-size:10px"/></div>
         </div>
     </s:a>
     <s:a href="eprBirthRegistrationInit.do">
-        <div class="link1"><s:label value="%{getText('lb.data.entry')}" cssStyle="cursor:pointer"/></div>
+        <div class="link1"><s:label value="%{getText('lb.data.entry')}" cssStyle="cursor:pointer;font-size:10px"/></div>
     </s:a>
     <s:a href="eprBirthRegisterApproval.do">
-        <div class="link2"><s:label value="%{getText('lb.approve.ADR')}" cssStyle="cursor:pointer"/></div>
+        <div class="link2"><s:label value="%{getText('lb.approve.ADR')}"
+                                    cssStyle="cursor:pointer;font-size:10px"/></div>
     </s:a>
     <s:a href="eprBirthConfirmationPrintList.do?confirmListFlag=true">
-        <div class="link3"><s:label value="%{getText('lb.print.confirmation')}" cssStyle="cursor:pointer"/></div>
+        <div class="link3"><s:label value="%{getText('lb.print.confirmation')}"
+                                    cssStyle="cursor:pointer;font-size:10px"/></div>
     </s:a>
     <s:a href="eprBirthConfirmationApproval.do">
-        <div class="link4"><s:label value="%{getText('lb.approve.changes')}" cssStyle="cursor:pointer"/></div>
+        <div class="link4"><s:label value="%{getText('lb.approve.changes')}"
+                                    cssStyle="cursor:pointer;font-size:10px"/></div>
     </s:a>
     <s:a href="eprBirthCertificateList.do">
-        <div class="link5"><s:label value="%{getText('lb.print.certificate')}" cssStyle="cursor:pointer"/></div>
+        <div class="link5"><s:label value="%{getText('lb.print.certificate')}"
+                                    cssStyle="cursor:pointer;font-size:10px"/></div>
     </s:a>
     <s:a href="eprBirthConfirmationInit.do">
-        <div class="link6"><s:label value="%{getText('lb.capture.confirmation')}" cssStyle="cursor:pointer"/></div>
+        <div class="link6"><s:label value="%{getText('lb.capture.confirmation')}"
+                                    cssStyle="cursor:pointer;font-size:10px"/></div>
     </s:a>
     <div class="bg1"></div>
 </div>

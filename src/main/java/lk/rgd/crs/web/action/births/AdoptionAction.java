@@ -117,8 +117,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     public String addOrEditAdoption() {
         User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         adoption.setStatus(AdoptionOrder.State.DATA_ENTRY);
-        populateBasicLists(language);
-        populateAllDSDivisionList();
+        //  populateBasicLists(language);         bug 2202
+        //    populateAllDSDivisionList();
         long birthCertificateNo = 0;
         //check applicant type
         if (adoption.isApplicantMother()) {
@@ -134,7 +134,6 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         if (idUKey > 0) {
             AdoptionOrder existingOrder = service.getById(idUKey, user);
             adoption.setIdUKey(idUKey);
-            adoption.setLifeCycleInfo(existingOrder.getLifeCycleInfo());
             birthCertificateNo = adoption.getBirthCertificateNumber();
             if (birthCertificateNo > 0) {
                 logger.info("checking the given birth Certificate for birth certificate number : {}", birthCertificateNo);
@@ -145,6 +144,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
                     return "invalidBirthCertificateNumber";
                 }
             }
+            populateAdoptionObjectForEdit(adoption, existingOrder);
             service.updateAdoptionOrder(adoption, user);
             addActionMessage(getText("message.successfully.edited.adoption.order",
                 new String[]{adoption.getCourtOrderNumber()}));
@@ -175,6 +175,21 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
         return SUCCESS;
     }
+
+    private void populateAdoptionObjectForEdit(AdoptionOrder adoption, AdoptionOrder existingOrder) {
+//populating by default disabled fields other wise data already entered to them getting lost due to method use
+//  to edit adoption
+        adoption.setLifeCycleInfo(existingOrder.getLifeCycleInfo());
+        adoption.setBirthCertificateNumber((adoption.getBirthCertificateNumber() != 0) ?
+            adoption.getBirthCertificateNumber() : existingOrder.getBirthCertificateNumber());
+        adoption.setBirthRegistrationSerial((adoption.getBirthRegistrationSerial() != 0) ?
+            adoption.getBirthRegistrationSerial() : existingOrder.getBirthRegistrationSerial());
+        if (birthDivisionId == 0) {
+            adoption.setBirthDivisionId(existingOrder.getBirthDivisionId());
+        }
+//todo amith bug 2202 populate others
+    }
+
 
     public String adoptionDeclaration() {
         logger.debug("initializing adoption registration");
@@ -220,9 +235,17 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             birthDistrictId = bdDivision.getDistrict().getDistrictUKey();
             birthDivisionId = bdDivision.getBdDivisionUKey();
             dsDivisionId = bdDivision.getDsDivision().getDsDivisionUKey();
+            //get DSDivision list for the district
+            allDSDivisionList = dsDivisionDAO.getAllDSDivisionNames(birthDistrictId, language, user);
+            //get bd divisions for edit list
+            bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
+
         }
+        //populate court
+        courtId = adoption.getCourt().getCourtUKey();
         return SUCCESS;
     }
+
 
     private boolean isApplicantMother(AdoptionOrder adoption) {
 
