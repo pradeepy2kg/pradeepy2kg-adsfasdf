@@ -18,6 +18,7 @@
 <s:hidden id="error4" value="%{getText('searchEndDate.label')}"/>
 
 <script>
+    function initPage(){}
 
     $(function() {
         $("#searchStartDatePicker").datepicker({

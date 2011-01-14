@@ -92,8 +92,8 @@
                 <td></td>
                 <td>
                     <div class="form-submit">
-                        <s:submit value="%{getText('submit.label')}" />
-                        <s:submit action="eprBackChangePass" value="%{getText('cancel.button')}" cssStyle="float:right;"/>                        
+                        <s:submit action="eprBackChangePass" value="%{getText('cancel.button')}" />
+                        <s:submit value="%{getText('submit.label')}" cssStyle="float:right;"/>
                     </div>
                 </td>
             </tr>
