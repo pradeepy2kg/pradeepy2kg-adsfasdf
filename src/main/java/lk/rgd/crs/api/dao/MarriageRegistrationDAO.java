@@ -9,6 +9,7 @@ import lk.rgd.crs.api.domain.MarriageRegister;
 import java.util.Date;
 import java.util.List;
 import java.util.EnumSet;
+import java.util.Set;
 
 /**
  * @author amith jayasekara
@@ -159,17 +160,21 @@ public interface MarriageRegistrationDAO {
     public List<MarriageRegister> getPaginatedMarriageRegisterList(EnumSet stateList, int pageNo, int noOfRows, boolean isActive);
 
     /**
-     * Returns paginated marriage register list filtered by the DS Division
+     * Returns Marriage Register list
      *
-     * @param dsDivision DS division where the marriage is registered
-     * @param stateList  list of marriage register states
-     * @param pageNo     the page number (starting from 1)
-     * @param noOfRows   no of rows to be retured
-     * @param isActive   Active or inactive status of the marriage register
+     * @param divisionType   type of division (district, DS division or MR division)
+     * @param divisionUKey   Primary key of the division
+     * @param dsDivisionList Permitted list of Divisions when divisionUKey is empty
+     * @param stateList      List of States the marriage register can have
+     * @param isActive       Active or inactive status of marriage register
+     * @param startDate      from date of the date range - Marriage Date of the marriage register
+     * @param endDate        to date of the date range - Marriage Date of the marriage register
+     * @param pageNo         the page number (starting from 1)
+     * @param noOfRows       no of rows to be retured
      * @return
      */
-    public List<MarriageRegister> getPaginatedMarriageRegisterListByDSDivision(DSDivision dsDivision, EnumSet stateList, int pageNo,
-        int noOfRows, boolean isActive);
+    public List<MarriageRegister> getPaginatedMarriageRegisterList(String divisionType, int divisionUKey, Set<DSDivision> dsDivisionList,
+        EnumSet stateList, boolean isActive, Date startDate, Date endDate, int pageNo, int noOfRows);
 
     /**
      * Returns paginated marriage register list filtered by a list of Districts
@@ -181,7 +186,7 @@ public interface MarriageRegistrationDAO {
      * @param isActive     Active or inactive status of the marriage register
      * @return
      */
-    public List<MarriageRegister> getPaginatedMarriageRegisterListByDistricts(District districtList, EnumSet stateList, int pageNo,
+    public List<MarriageRegister> getPaginatedMarriageRegisterListByDistricts(Set<District> districtList, EnumSet stateList, int pageNo,
         int noOfRows, boolean isActive);
 
     /**

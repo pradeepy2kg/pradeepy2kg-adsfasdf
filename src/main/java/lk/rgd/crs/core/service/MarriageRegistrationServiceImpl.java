@@ -5,11 +5,15 @@ import lk.rgd.Permission;
 import lk.rgd.AppConstants;
 import lk.rgd.common.api.Auditable;
 import lk.rgd.common.api.dao.UserLocationDAO;
+import lk.rgd.common.api.dao.DistrictDAO;
+import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.domain.*;
 import lk.rgd.common.api.service.UserManager;
+import lk.rgd.common.util.StateUtil;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.MarriageRegistrationDAO;
+import lk.rgd.crs.api.dao.MRDivisionDAO;
 import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.domain.MarriageNotice;
 import lk.rgd.crs.api.domain.MarriageRegister;
@@ -38,19 +42,27 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     private final UserManager userManager;
     private final String contentRoot;
     private final String contentType;
+    private final MRDivisionDAO mrDivisionDAO;
+    private final DSDivisionDAO dsDivisionDAO;
+    private final DistrictDAO districtDAO;
     //TODO: this is to be changed
     private ContentRepository contentRepository = new ContentRepositoryImpl(AppConstants.CONTENT_ROOT);
 
     public MarriageRegistrationServiceImpl(MarriageRegistrationDAO marriageRegistrationDAO, UserManager userManager,
         MarriageRegistrationValidator marriageRegistrationValidator, UserLocationDAO userLocationDAO,
-        String contentRoot, String contentType) {
+        String contentRoot, String contentType, MRDivisionDAO mrDivisionDAO, DSDivisionDAO dsDivisionDAO,
+        DistrictDAO districtDAO) {
         this.marriageRegistrationDAO = marriageRegistrationDAO;
         this.marriageRegistrationValidator = marriageRegistrationValidator;
+        //todo: to be removed
         this.userLocationDAO = userLocationDAO;
         this.userManager = userManager;
         //TODO: to be changed
         this.contentRoot = AppConstants.CONTENT_ROOT;
         this.contentType = contentType;
+        this.mrDivisionDAO = mrDivisionDAO;
+        this.dsDivisionDAO = dsDivisionDAO;
+        this.districtDAO = districtDAO;
     }
 
     /**
@@ -384,30 +396,6 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     /**
      * @inheritDoc
      */
-    @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<MarriageRegister> getMarriageRegisterList(int pageNumber, int numOfRows, boolean isActive, User user) {
-        EnumSet<MarriageRegister.State> stateList = EnumSet.of(MarriageRegister.State.LICENSE_PRINTED,
-            MarriageRegister.State.REG_DATA_ENTRY,
-            MarriageRegister.State.REGISTRATION_APPROVED,
-            MarriageRegister.State.REGISTRATION_REJECTED,
-            MarriageRegister.State.EXTRACT_PRINTED);
-        //TODO validate user access
-        if (Role.ROLE_DEO.equals(user.getRole().getRoleId()) || Role.ROLE_ADR.equals(user.getRole().getRoleId())) {
-            //TODO : user.getAssignedMRDSDivisions() - verify not null
-            return marriageRegistrationDAO.getPaginatedMarriageRegisterListByDSDivision(user.getAssignedMRDSDivisions().iterator().next(), stateList, pageNumber, numOfRows, isActive);
-        } else if (Role.ROLE_DR.equals(user.getRole().getRoleId()) || Role.ROLE_ARG.equals(user.getRole().getRoleId())) {
-            return marriageRegistrationDAO.getPaginatedMarriageRegisterListByDistricts(user.getAssignedMRDistricts().iterator().next(), stateList, pageNumber, numOfRows, isActive);
-        } else if (Role.ROLE_RG.equals(user.getRole().getRoleId())) {
-            return marriageRegistrationDAO.getPaginatedMarriageRegisterList(stateList, pageNumber, numOfRows, isActive);
-        } else {
-            //TODO: handle error
-            return new ArrayList<MarriageRegister>();
-        }
-    }
-
-    /**
-     * @inheritDoc
-     */
     @Transactional(propagation = Propagation.REQUIRED)
     public List<UserWarning> approveMarriageNotice(long idUKey, MarriageNotice.Type type, boolean ignoreWarnings, User user) {
         logger.debug("attempt to approve marriage notice with idUKey : {} and notice type : {}", idUKey, type);
@@ -510,6 +498,39 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         ValidationUtils.validateAccessToMRDivision(mrDivision, user);
         return marriageRegistrationDAO.getPaginatedListForStateByMRDivision(mrDivision,
             MarriageRegister.State.REG_DATA_ENTRY, pageNumber, numOfRows, true);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<MarriageRegister> getMarriageRegisterList(String divisionType, int divisionUKey, MarriageRegister.State state,
+        boolean isActive, Date startDate, Date endDate, int pageNumber, int numOfRows, User user) {
+
+        Set<DSDivision> dsDivisionList = null;
+        EnumSet<MarriageRegister.State> stateList = StateUtil.getMarriageRegisterStateList(state);
+        //validate user access
+        if (AppConstants.MARRIAGE.equals(divisionType)) {
+            ValidationUtils.validateAccessToMRDivision(mrDivisionDAO.getMRDivisionByPK(divisionUKey), user);
+
+        } else if (AppConstants.DS_DIVISION.equals(divisionType)) {
+            ValidationUtils.validateAccessToDSDivision(dsDivisionDAO.getDSDivisionByPK(divisionUKey), user);
+
+        } else if (AppConstants.DISTRICT.equals(divisionType)) {
+            ValidationUtils.validateAccessToMRDistrict(user, districtDAO.getDistrict(divisionUKey));
+
+        } else {
+            //If no divisions selected find all DS divisions available for user
+            if (!Role.ROLE_RG.equals(user.getRole().getRoleId())) {
+                //TODO: if DS division list avalable for DR and ARG, this method is ok
+                //TODO: else find particular division list based on the user role
+                dsDivisionList = user.getAssignedMRDSDivisions();
+                divisionType = AppConstants.ALL;
+            }
+        }
+
+        return marriageRegistrationDAO.getPaginatedMarriageRegisterList(divisionType, divisionUKey, dsDivisionList,
+            stateList, isActive, startDate, endDate, pageNumber, numOfRows);
     }
 
     /**
