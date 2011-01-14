@@ -152,22 +152,21 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         user.setRole(roleDAO.getRole(roleId));
         user.setStatus(User.State.INACTIVE);
 
-        Set assDistrict = new HashSet();
-        Set assDSDivision = new HashSet();
+        Set<District> assDistrict = new HashSet<District>();
+        Set<DSDivision> assDSDivision = new HashSet<DSDivision>();
 
-        for (int i = 0; i < assignedDistricts.length; i++) {
-            assDistrict.add(districtDAO.getDistrict(assignedDistricts[i]));
+        for (int districtUKey : assignedDistricts) {
+            assDistrict.add(districtDAO.getDistrict(districtUKey));
         }
 
         if (roleId.equals(Role.ROLE_DEO) || roleId.equals(Role.ROLE_ADR)) {
-            for (int i = 0; i < assignedDistricts.length; i++) {
-                assDSDivision.add(dsDivisionDAO.getDSDivisionByPK(assignedDivisions[i]));
+            for (int districtUKey : assignedDistricts) {
+                assDSDivision.add(dsDivisionDAO.getDSDivisionByPK(districtUKey));
             }
         }
         if (roleId.equals(Role.ROLE_DR) || roleId.equals(Role.ROLE_ARG)) {
-            Iterator<District> it = assDistrict.iterator();
-            while (it.hasNext()) {
-                assDSDivision.addAll(dsDivisionDAO.getAllDSDivisionByDistrictKey(it.next().getDistrictUKey()));
+            for (int districtUKey : assignedDistricts) {
+                assDSDivision.addAll(dsDivisionDAO.getAllDSDivisionByDistrictKey(districtUKey));
             }
         }
 
@@ -180,13 +179,6 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
             user.setAssignedMRDistricts(assDistrict);
             user.setAssignedBDDSDivisions(assDSDivision);
             user.setAssignedMRDSDivisions(assDSDivision);
-            /*if (roleId.equals(Role.ROLE_RG) || roleId.equals(Role.ROLE_ADMIN)) {
-                user.setPrimaryLocation(locationDAO.getLocation(1));
-                userLocation = new UserLocation();
-                userLocation.setLocation(user.getPrimaryLocation());
-                userLocation.setLocationId(1);
-                userLocation.setUser(user);
-            }*/
             try {
                 service.createUser(user, currentUser);
             } catch (RGDRuntimeException e) {
@@ -215,13 +207,6 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
             updatedUser.setAssignedBDDSDivisions(assDSDivision);
             updatedUser.setAssignedMRDSDivisions(assDSDivision);
             updatedUser.setRole(roleDAO.getRole(roleId));
-            /*if (roleDAO.getRole(roleId).equals(Role.ROLE_RG) || roleDAO.getRole(roleId).equals(Role.ROLE_ADMIN)) {
-                user.setPrimaryLocation(locationDAO.getLocation(1));
-                userLocation = new UserLocation();
-                userLocation.setLocation(user.getPrimaryLocation());
-                userLocation.setLocationId(1);
-                userLocation.setUser(user);
-            }*/
 
             if (isAssignedLocations(updatedUser)) {
                 updatedUser.setStatus(User.State.ACTIVE);
@@ -245,11 +230,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     }
 
     public boolean isAssignedLocations(User u) {
-        if (u.getLocations().isEmpty()) {
-            return false;
-        } else {
-            return true;
-        }
+        return !u.getLocations().isEmpty();
     }
 
     public String inactiveUser() {      /* delete icon clicked */
@@ -303,11 +284,12 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         if (userLocationNameList != null) {
             logger.debug("size of the user location list is :{}", userLocationNameList.size());
         }
-        Location prmLocation = userDAO.getUserByPK(userId).getPrimaryLocation();
+        User user = userDAO.getUserByPK(userId);
+        Location prmLocation = user.getPrimaryLocation();
         if (prmLocation != null) {
             primaryLocation = prmLocation.getLocationUKey();
         }
-        populateLocationListOnly();
+        populateLocationListOnly(user);
         //populate();
         return SUCCESS;
     }
@@ -317,7 +299,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         UserLocation userLocation = userLocationDAO.getUserLocation(user.getUserId(), locationId);
         //service.addUserLocation(userLocation, currentUser, true);
         addPrimaryLocation(userLocation, currentUser);
-        Location prmLocation = userDAO.getUserByPK(userId).getPrimaryLocation();
+        Location prmLocation = user.getPrimaryLocation();
         if (prmLocation != null) {
             primaryLocation = prmLocation.getLocationUKey();
         } else {
@@ -327,13 +309,14 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         logger.debug("Active location of {} user is :{}", userId, locationDAO.getLocation(locationId).getEnLocationName());
         userLocationNameList = userLocationDAO.getUserLocationsListByUserId(userId);
         //populate();
-        populateLocationListOnly();
+        populateLocationListOnly(user);
         return SUCCESS;
     }
 
     public String assignedUserLocation() {
         //primaryLocation = userDAO.getUserByPK(userId).getPrimaryLocation().getLocationUKey();
-        Location prmLocation = userDAO.getUserByPK(userId).getPrimaryLocation();
+        User user = userDAO.getUserByPK(userId);
+        Location prmLocation = user.getPrimaryLocation();
         if (prmLocation != null) {
             primaryLocation = prmLocation.getLocationUKey();
         }
@@ -349,7 +332,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                     userLocation.setLocation(tempLocation);
                 } else {
                     addActionError(getText("please.select.valid.location"));
-                    populateLocationListOnly();
+                    populateLocationListOnly(user);
                     userLocationNameList = userLocationDAO.getUserLocationsListByUserId(userId);
                     return SUCCESS;
                 }
@@ -378,7 +361,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
             }
         }
         //populate();
-        populateLocationListOnly();
+        populateLocationListOnly(user);
         userLocationNameList = userLocationDAO.getUserLocationsListByUserId(userId);
         return SUCCESS;
     }
@@ -396,7 +379,8 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     }
 
     public String activeUserLocation() {
-        Location prmLocation = userDAO.getUserByPK(userId).getPrimaryLocation();
+        User user = userDAO.getUserByPK(userId);
+        Location prmLocation = user.getPrimaryLocation();
         if (prmLocation != null) {
             primaryLocation = prmLocation.getLocationUKey();
         }
@@ -404,12 +388,13 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         logger.debug("Active location of {} user is :{}", userId, locationDAO.getLocation(locationId).getEnLocationName());
         userLocationNameList = userLocationDAO.getUserLocationsListByUserId(userId);
         //populate();
-        populateLocationListOnly();
+        populateLocationListOnly(user);
         return SUCCESS;
     }
 
     public String inactiveUserLocation() {
-        Location prmLocation = userDAO.getUserByPK(userId).getPrimaryLocation();
+        User user = userDAO.getUserByPK(userId);
+        Location prmLocation = user.getPrimaryLocation();
         if (prmLocation != null) {
             primaryLocation = prmLocation.getLocationUKey();
         }
@@ -420,7 +405,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         }
         logger.debug("Inactive location of {} user is :{}", userId, locationDAO.getLocation(locationId).getEnLocationName());
         userLocationNameList = userLocationDAO.getUserLocationsListByUserId(userId);
-        populateLocationListOnly();
+        populateLocationListOnly(user);
         //populate();
         return SUCCESS;
     }
@@ -688,10 +673,10 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         return SUCCESS;
     }
 
-    private void populateLocationListOnly() {
+    private void populateLocationListOnly(User user) {
         locationList = new HashMap<Integer, String>();
         Map<Integer, Location> allLocations = locationDAO.getPreLoadedLocations();
-        User user = userDAO.getUserByPK(userId);
+        //User user = userDAO.getUserByPK(userId);
         Set<DSDivision> st = user.getAssignedBDDSDivisions();
 
         for (DSDivision ds : st) {

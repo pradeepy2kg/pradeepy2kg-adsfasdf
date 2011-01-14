@@ -32,54 +32,84 @@ function drawChart(data) {
     /* --- Births Pie Chart --- */
     if (data.approved_b == 0 && data.rejected_b == 0 && data.arrears_pend_b == 0 && data.thismonth_pend_b == 0) {
         if (data.userRole == 'RG' || data.userRole == 'ARG') {
-            document.getElementById("birth-pie").innerHTML = html_code;
+            alert(data.userRole);
+            var ele = document.getElementById("birth-pie");
+            if(ele != null)
+                    ele.innerHTML = html_code;
         } else {
-            document.getElementById("chart3").innerHTML = html_code;
+            alert(data.userRole);
+            var ele = document.getElementById("chart3");
+            if(ele != null)
+                ele.innerHTML = html_code;
         }
     } else {
         if (data.userRole == 'RG' || data.userRole == 'ARG') {
-            drawPieChart(data, 'birth-pie', 'birth');
+            var ele = document.getElementById("birth-pie");
+            if(ele != null)
+                drawPieChart(data, 'birth-pie', 'birth');
         } else {
-            drawPieChart(data, 'chart3', 'birth');
+            var ele = document.getElementById("chart3");
+            if(ele != null)
+                drawPieChart(data, 'chart3', 'birth');
         }
     }
 
     /* --- Deaths Pie Chart --- */
     if (data.approved_d == 0 && data.rejected_d == 0 && data.arrears_pend_d == 0 && data.thismonth_pend_d == 0) {
         if (data.userRole == 'RG' || data.userRole == 'ARG') {
-            document.getElementById("death-pie").innerHTML = html_code;
+            var ele = document.getElementById("death-pie");
+            if(ele != null)
+                ele.innerHTML = html_code;
         } else {
-            document.getElementById("chart6").innerHTML = html_code;
+            var ele = document.getElementById("chart6");
+            if(ele != null)
+                ele.innerHTML = html_code;
         }
     } else {
         if (data.userRole == 'RG' || data.userRole == 'ARG') {
-            drawPieChart(data, 'death-pie', 'birth');
+            var ele = document.getElementById("death-pie");
+            if(ele != null)
+                drawPieChart(data, 'death-pie', 'birth');
         } else {
-            drawPieChart(data, 'chart6', 'death');
+            var ele = document.getElementById("chart6");
+            if(ele != null)
+                drawPieChart(data, 'chart6', 'death');
         }
     }
 
     /* --- Marriages Pie Chart  */
     if (data.approved_m == 0 && data.rejected_m == 0 && data.arrears_pend_m == 0 && data.thismonth_pend_m == 0) {
         if (data.userRole == 'RG' || data.userRole == 'ARG') {
-            document.getElementById("mrg-pie").innerHTML = html_code;
+            var ele = document.getElementById("mrg-pie");
+            if(ele != null)
+                ele.innerHTML = html_code;
         } else {
-            document.getElementById("chart9").innerHTML = html_code;
+            var ele = document.getElementById("chart9");
+            if(ele != null)
+                ele.innerHTML = html_code;
         }
     } else {
         if (data.userRole == 'RG' || data.userRole == 'ARG') {
-            drawPieChart(data, 'mrg-pie', 'birth');
+            var ele = document.getElementById("mrg-pie");
+            if(ele != null)
+                drawPieChart(data, 'mrg-pie', 'birth');
         } else {
-            drawPieChart(data, 'chart9', 'mrg');
+            var ele = document.getElementById("chart9");
+            if(ele != null)
+                drawPieChart(data, 'chart9', 'mrg');
         }
     }
 
     if (data.userRole == 'RG' || data.userRole == 'ARG') {
 
         if (data.arrears_pend_b == 0 && data.thismonth_pend_b == 0) {
-            document.getElementById("birth-bar").innerHTML = html_code;
+            var ele = document.getElementById("birth-bar");
+            if(ele != null)
+                ele.innerHTML = html_code;
         } else {
-            drawHorizontalBarChart(
+            var ele = document.getElementById("birth-bar");
+            if(ele != null)
+                drawHorizontalBarChart(
                     data.arrears_pend_b,
                     data.thismonth_pend_b,
                     "Arrears",
@@ -89,9 +119,13 @@ function drawChart(data) {
         }
 
         if (data.arrears_pend_d == 0 && data.thismonth_pend_d == 0) {
-            document.getElementById("death-bar").innerHTML = html_code;
+            var ele = document.getElementById("death-bar");
+            if(ele != null)
+                ele.innerHTML = html_code;
         } else {
-            drawHorizontalBarChart(
+            var ele = document.getElementById("death-bar");
+            if(ele != null)
+                drawHorizontalBarChart(
                     data.arrears_pend_d,
                     data.thismonth_pend_d,
                     "Arrears",
@@ -101,9 +135,13 @@ function drawChart(data) {
         }
 
         if (data.arrears_pend_m == 0 && data.thismonth_pend_m == 0) {
-            document.getElementById("mrg-bar").innerHTML = html_code;
+            var ele = document.getElementById("mrg-bar");
+            if(ele != null)
+                ele.innerHTML = html_code;
         } else {
-            drawHorizontalBarChart(
+            var ele = document.getElementById("mrg-bar");
+            if(ele != null)
+                drawHorizontalBarChart(
                     data.arrears_pend_m,
                     data.thismonth_pend_m,
                     "Arrears",
@@ -115,9 +153,13 @@ function drawChart(data) {
     } else {
 
         if (data.arrears_pend_b == 0 && data.thismonth_pend_b == 0) {
-            document.getElementById("chart1").innerHTML = html_code;
+            var ele = document.getElementById("chart1");
+            if(ele != null)
+                ele.innerHTML = html_code;
         } else {
-            drawHorizontalBarChart(
+            var ele = document.getElementById("chart1");
+            if(ele != null)
+                drawHorizontalBarChart(
                     data.arrears_pend_b,
                     data.thismonth_pend_b,
                     "Arrears",
@@ -130,9 +172,13 @@ function drawChart(data) {
         document.getElementById("arrears_b").setAttribute("value", data.arrears_pend_b);
 
         if (data.late_b == 0 && data.normal_b == 0) {
-            document.getElementById("chart2").innerHTML = html_code;
+            var ele = document.getElementById("chart2");
+            if(ele != null)
+                ele.innerHTML = html_code;
         } else {
-            drawHorizontalBarChart(
+            var ele = document.getElementById("chart2");
+            if(ele != null)
+                drawHorizontalBarChart(
                     data.late_b,
                     data.normal_b,
                     "Late",
@@ -147,9 +193,13 @@ function drawChart(data) {
         // -------------------------
 
         if (data.arrears_pend_d == 0 && data.thismonth_pend_d == 0) {
-            document.getElementById("chart4").innerHTML = html_code;
+            var ele = document.getElementById("chart4");
+            if(ele != null)
+                ele.innerHTML = html_code;
         } else {
-            drawHorizontalBarChart(
+            var ele = document.getElementById("chart4");
+            if(ele != null)
+                drawHorizontalBarChart(
                     data.arrears_pend_d,
                     data.thismonth_pend_d,
                     "Arrears",
@@ -162,9 +212,13 @@ function drawChart(data) {
         document.getElementById("arrears_d").setAttribute("value", data.arrears_pend_d);
 
         if (data.late_d == 0 && data.normal_d == 0) {
-            document.getElementById("chart5").innerHTML = html_code;
+            var ele = document.getElementById("chart5");
+            if(ele != null)
+                ele.innerHTML = html_code;
         } else {
-            drawHorizontalBarChart(
+            var ele = document.getElementById("chart5");
+            if(ele != null)
+                drawHorizontalBarChart(
                     data.late_d,
                     data.normal_d,
                     "Arrears",
@@ -178,9 +232,13 @@ function drawChart(data) {
 
         // -------------------------
         if (data.arrears_pend_m == 0 && data.thismonth_pend_m == 0) {
-            document.getElementById("chart7").innerHTML = html_code;
+            var ele = document.getElementById("chart7");
+            if(ele != null)
+                ele.innerHTML = html_code;
         } else {
-            drawHorizontalBarChart(
+            var ele = document.getElementById("chart7");
+            if(ele != null)
+                drawHorizontalBarChart(
                     data.arrears_pend_m,
                     data.thismonth_pend_m,
                     "Arrears",
@@ -193,9 +251,13 @@ function drawChart(data) {
         document.getElementById("arrears_m").setAttribute("value", data.arrears_pend_m);
 
         if (data.late_m == 0 && data.normal_m == 0) {
-            document.getElementById("chart8").innerHTML = html_code;
+            var ele = document.getElementById("chart8");
+            if(ele != null)
+                ele.innerHTML = html_code;
         } else {
-            drawHorizontalBarChart(
+            var ele = document.getElementById("chart8");
+            if(ele != null)
+                drawHorizontalBarChart(
                     data.late_m,
                     data.normal_m,
                     "Late",
