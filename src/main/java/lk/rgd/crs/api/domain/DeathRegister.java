@@ -108,6 +108,7 @@ public class DeathRegister implements Serializable, Cloneable {
     private State status;
 
     @Enumerated
+    @Column(nullable = false)
     private Type deathType;
 
     // comment for rejecting death declaration

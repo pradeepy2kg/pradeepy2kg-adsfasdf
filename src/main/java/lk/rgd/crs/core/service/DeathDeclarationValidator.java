@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -103,8 +104,14 @@ public class DeathDeclarationValidator {
 
         //check is there any duplications in PIN
         String deathPersonPinOrNIC = deathRegister.getDeathPerson().getDeathPersonPINorNIC();
-        List deathsWithSamePin = deathRegisterDAO.getDeathRegisterByDeathPersonPINorNIC(deathPersonPinOrNIC);
-        if (deathsWithSamePin.size() > 1) {
+        List<DeathRegister> deathsWithSamePin = deathRegisterDAO.getDeathRegisterByDeathPersonPINorNIC(deathPersonPinOrNIC);
+        List<DeathRegister> deList = new LinkedList<DeathRegister>();
+        for (DeathRegister dr : deathsWithSamePin) {
+            if (dr.getStatus() == DeathRegister.State.APPROVED) {
+                deList.add(dr);
+            }
+        }
+        if (deList.size() > 0) {
             UserWarning w = new UserWarning(MessageFormat.format(rb.getString("same_death_person_pin_found_in_previous_recode"), deathPersonPinOrNIC));
             w.setSeverity(UserWarning.Severity.WARN);
             warnings.add(w);

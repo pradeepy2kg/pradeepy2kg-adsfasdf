@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 
 
-<s:if test="deathType.ordinal()==2 || deathType.ordinal() == 3">
+<s:if test="pageType == 1">
     <s:set name="row" value="3"/>
 </s:if>
 <s:else>
@@ -215,7 +215,7 @@ function validate() {
             errormsg = errormsg + "\n" + document.getElementById('invalidDateRange').value;
         }
     }
-
+    otherValidations();
     if (errormsg != "") {
         alert(errormsg);
         returnval = false;
@@ -223,6 +223,13 @@ function validate() {
 
     errormsg = "";
     return returnval;
+}
+function otherValidations() {
+    var bellow30Days = document.getElementsByName("death.infantLessThan30Days")[1];
+    var age = document.getElementById("deathPersonAge").value;
+    if (bellow30Days.value && (age > 0)) {
+        errormsg = errormsg + "\n" + document.getElementById('invalidDataAge').value;
+    }
 }
 
 $(function() {
@@ -347,12 +354,12 @@ function personAgeDeath() {
         <td width="300px"></td>
         <td align="center" style="font-size:12pt; width:430px"><img src="<s:url value="/images/official-logo.png"/>"
                                                                     alt=""/><br>
-            <s:if test="deathType.ordinal() == 0 || deathType.ordinal() == 1">
+            <s:if test="pageType == 0">
                 මරණ ප්‍රකාශයක් [30, 39(1), 41(1) (උ) වගන්ති] - සාමාන්‍ය මරණ හා හදිසි මරණ
                 <br>இறப்பு பிரதிக்கினை [30, 39(1), 41(1) (உ) பிரிவு ]- சாதாரண மரணம் மற்றும் திடீா் மரணம்
                 <br>Declaration of Death [Sections 30, 39(1) and 41(1)(e)] – Normal Death or Sudden Death
             </s:if>
-            <s:elseif test="deathType.ordinal() == 2 || deathType.ordinal() == 3">
+            <s:elseif test="pageType == 1">
                 මරණ ප්‍රකාශයක් [36වෙනි වගන්තිය] - කාලය ඉකුත් වූ මරණ ලියාපදිංචි කිරීම හෝ නැතිවුණු පුද්ගලයෙකුගේ මරණ
                 <br>மரண பிரதிக்கினை [36வது பிரிவு ] - காலந் தாழ்த்திய இறப்பினை பதிவு செய்தல் அல்லது காணாமற் போன நபரின் மரணம்
                 <br>Declaration of Death [Section 36] – Late registration or Death of missing person
@@ -429,7 +436,7 @@ function personAgeDeath() {
 </s:if>
 
 <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse;" class="font-9">
-<col width="150px"/>
+<col width="155px"/>
 <col width="120px"/>
 <col width="120px"/>
 <col width="90px"/>
@@ -450,7 +457,7 @@ function personAgeDeath() {
 <s:if test="pageType ==0">
     <tr>
         <td>
-            (1)හදිසි මරණයක්ද ?
+            (1)හදිසි මරණයක්ද ? <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
             <br>திடீா் மரணமா?
             <br>Sudden death?
         </td>
@@ -465,7 +472,7 @@ function personAgeDeath() {
 <s:elseif test="pageType==1">
     <tr>
         <td colspan="2" width="275px">
-            (2)නැතිවුණු පුද්ගලයෙකුගේ මරණයක්ද ?
+            (2)නැතිවුණු පුද්ගලයෙකුගේ මරණයක්ද ? <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
             <br>காணாமற்போன நபரது மரணமா?
             <br>Is the death of a missing person?
         </td>
@@ -473,7 +480,7 @@ function personAgeDeath() {
             <s:radio name="deathType" list="#@java.util.HashMap@{'MISSING':''}" value="%{deathType}"/>
         </td>
         <td colspan="2" width="275px">
-            කාලය ඉකුත් වූ මරණ(සාමාන්‍ය මරණ)
+            කාලය ඉකුත් වූ මරණ(සාමාන්‍ය මරණ) <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
             <br>in ta
             <br>Late registration (Normal Death)
 
@@ -482,7 +489,7 @@ function personAgeDeath() {
             <s:radio name="deathType" list="#@java.util.HashMap@{'LATE_NORMAL':''}" value="%{deathType}"/>
         </td>
         <td colspan="2" width="275px">
-            කාලය ඉකුත් වූ මරණ(හදිසි මරණ )
+            කාලය ඉකුත් වූ මරණ(හදිසි මරණ ) <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
             <br>in ta
             <br>Late registration (Sudden Death)
         </td>
@@ -548,7 +555,8 @@ function personAgeDeath() {
         <br>சிங்களம்அல்லது தமிழ் மொழியில்
         <br>In Sinhala or Tamil
     </td>
-    <td colspan="5"><s:textfield name="death.placeOfDeath" cssStyle="width:555px;" id="placeOfDeath" maxLength="240"/></td>
+    <td colspan="5"><s:textfield name="death.placeOfDeath" cssStyle="width:555px;" id="placeOfDeath"
+                                 maxLength="240"/></td>
 </tr>
 <tr>
     <td colspan="2">
@@ -557,7 +565,8 @@ function personAgeDeath() {
         <br>In English
     </td>
     <td colspan="5">
-        <s:textfield name="death.placeOfDeathInEnglish" id="placeOfDeathInEnglish" cssStyle="width:555px;" maxLength="240"/>
+        <s:textfield name="death.placeOfDeathInEnglish" id="placeOfDeathInEnglish" cssStyle="width:555px;"
+                     maxLength="240"/>
         <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px 0;"
              id="place">
     </td>
@@ -595,7 +604,7 @@ function personAgeDeath() {
         <br>இறப்பிற்கான காரணம்
         <br>Cause of death
     </td>
-    <td colspan="4"><s:textarea name="death.causeOfDeath" cssStyle="width:420px; " /></td>
+    <td colspan="4"><s:textarea name="death.causeOfDeath" cssStyle="width:420px; "/></td>
     <td colspan="2">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
         ේතුවේ ICD කේත අංකය
         <br>காரணத்திற்கான ICD குறியீட்டு இலக்கம்
@@ -720,7 +729,8 @@ function personAgeDeath() {
             <br>வயது அல்லது அனுமான வயது
             <br>Age or probable Age
         </td>
-        <td><s:textfield name="deathPerson.deathPersonAge" id="deathPersonAge" onfocus="personAgeDeath();" maxLength="3"/></td>
+        <td><s:textfield name="deathPerson.deathPersonAge" id="deathPersonAge" onfocus="personAgeDeath();"
+                         maxLength="3"/></td>
     </tr>
     <tr>
         <td>
@@ -765,7 +775,7 @@ function personAgeDeath() {
             <br>Name in either of the official languages (Sinhala / Tamil)
         </td>
         <td colspan="6"><s:textarea name="deathPerson.deathPersonNameOfficialLang" id="deathPersonNameOfficialLang"
-                                    cssStyle="width:880px;" />
+                                    cssStyle="width:880px;"/>
         </td>
     </tr>
     <tr>
@@ -881,6 +891,7 @@ function personAgeDeath() {
 <s:hidden id="p1errorSerial" value="%{getText('p1.serialNumber.format')}"/>
 <s:hidden id="invalidAgeAtDeath" value="%{getText('error.invalid.age.at.death')}"/>
 <s:hidden id="invalidDateRange" value="%{getText('error.dod.mst.lt.dob')}"/>
+<s:hidden id="invalidDataAge" value="%{getText('error.if.bellow30.age.must.0')}"/>
 
 <div class="skip-validation">
     <s:checkbox name="skipjavaScript" id="skipjs" value="false">
