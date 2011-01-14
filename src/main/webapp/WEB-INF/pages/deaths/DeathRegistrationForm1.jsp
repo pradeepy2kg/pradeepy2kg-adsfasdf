@@ -16,7 +16,7 @@
 <s:else>
     <s:set name="row" value="2"/>
 </s:else>
-
+<s:hidden id="pageType" value="%{pageType}"/>
 <script type="text/javascript">
 
 
@@ -190,6 +190,16 @@ function validate() {
         isNumeric(domObject.value, 'p1error1', 'invalidAgeAtDeath')
 
     }
+    var pageType = document.getElementById("pageType").value;
+    if (pageType == 0) {
+        validateRadioButtons(new Array(document.getElementsByName('deathType')[0].checked,
+                document.getElementsByName('deathType')[1].checked));
+    }
+    else {
+        validateRadioButtons(new Array(document.getElementsByName('deathType')[0].checked,
+                document.getElementsByName('deathType')[1].checked, document.getElementsByName('deathType')[2].checked));
+    }
+
 
     // validations that can skip
     if (!check.checked) {
@@ -217,13 +227,26 @@ function validate() {
     }
     otherValidations();
     if (errormsg != "") {
-        alert(errormsg);
+         alert(errormsg);
         returnval = false;
     }
 
     errormsg = "";
     return returnval;
 }
+
+function validateRadioButtons(array) {
+    var atleastOneSelect = false;
+    for (var i = 0; i < array.length; i++) {
+        if (array[i] == true) {
+            atleastOneSelect = true;
+        }
+    }
+    if (!atleastOneSelect) {
+        errormsg = errormsg + "\n" + document.getElementById('mustFillType').value;
+    }
+}
+
 function otherValidations() {
     var bellow30Days = document.getElementsByName("death.infantLessThan30Days")[1];
     var age = document.getElementById("deathPersonAge").value;
@@ -892,6 +915,8 @@ function personAgeDeath() {
 <s:hidden id="invalidAgeAtDeath" value="%{getText('error.invalid.age.at.death')}"/>
 <s:hidden id="invalidDateRange" value="%{getText('error.dod.mst.lt.dob')}"/>
 <s:hidden id="invalidDataAge" value="%{getText('error.if.bellow30.age.must.0')}"/>
+<s:hidden id="mustFillType" value="%{getText('error.must.fill.type')}"/>
+
 
 <div class="skip-validation">
     <s:checkbox name="skipjavaScript" id="skipjs" value="false">
