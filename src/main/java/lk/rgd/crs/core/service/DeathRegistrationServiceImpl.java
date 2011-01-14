@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -484,6 +485,38 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
                 getUserSignature(deathRegister.getDeath().getPreferredLanguage()));
         }
 
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<DeathRegister> getPaginatedDeathRegisterListByDeathDivisionAndRegistrationDateRange(int deathDivisionId,
+        Date startDate, Date endDate, boolean active, User user) {
+        return Collections.emptyList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<DeathRegister> getPaginatedDeathRegisterListByDistrictAndRegistrationDateRange(int districtId,
+        Date startDate, Date endDate, boolean active, User user) {
+        throw new UnsupportedOperationException("not yet implemented");
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<DeathRegister> getPaginatedDeathRegisterListByDSDivisionAndRegistrationDateRange(int dsDivisionId,
+        Date startDate, Date endDate, boolean active, int pageNo, int numOfRows, User user) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("attempt to get list of death register objects by dsDivision idUKey :" + dsDivisionId +
+                " and from :" + startDate + " to : " + endDate + "and active :" + active);
+        }
+        return deathRegisterDAO.getPaginatedDeathRegisterListByDSDivisionAndRegistrationDateRange(dsDivisionId, startDate,
+            endDate, pageNo, numOfRows, active);
     }
 
     /**

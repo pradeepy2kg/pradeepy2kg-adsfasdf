@@ -106,7 +106,7 @@ public interface DeathRegisterDAO {
      * @return the death registration results
      */
     public List<DeathRegister> getByBDDivisionAndRegistrationDateRange(BDDivision deathDivision,
-                                                                       Date startDate, Date endDate, int pageNo, int noOfRows);
+        Date startDate, Date endDate, int pageNo, int noOfRows);
 
     /**
      * Get the list of death registrations for a given state based on given dsDivision
@@ -139,11 +139,11 @@ public interface DeathRegisterDAO {
 
     /**
      * Returns count of all records which are in given state
-     * 
+     *
      * @param status    Death Register form's state
      * @param startDate start Date
      * @param endDate   end Date
-     * @return  the count of records
+     * @return the count of records
      */
     public int getDeathCertificateCount(DeathRegister.State status, Date startDate, Date endDate);
 
@@ -152,9 +152,23 @@ public interface DeathRegisterDAO {
      *
      * @param user  created user
      * @param start
-     *@param end @return list of death Registrations
+     * @param end   @return list of death Registrations
      */
     public List<DeathRegister> getByCreatedUser(User user, Date start, Date end);
+
+    /**
+     * get death register object list for given death ds division and for the given time frame
+     *
+     * @param dsDivisionId dsDivision
+     * @param startDate    registrations from
+     * @param endDate      registrations to
+     * @param pageNo       page number
+     * @param numOfRows    number of rows to be fetched
+     * @param active       active records
+     * @return list of death register objects
+     */
+    public List<DeathRegister> getPaginatedDeathRegisterListByDSDivisionAndRegistrationDateRange(int dsDivisionId,
+        Date startDate, Date endDate, int pageNo, int numOfRows, boolean active);
 }
 
 

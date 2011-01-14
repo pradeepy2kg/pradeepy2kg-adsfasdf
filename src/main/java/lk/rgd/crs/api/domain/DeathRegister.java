@@ -48,7 +48,10 @@ import java.io.Serializable;
     @NamedQuery(name = "get.dr.count", query = "SELECT COUNT(dr) FROM DeathRegister dr " +
         "WHERE dr.status =:status AND (dr.lifeCycleInfo.createdTimestamp BETWEEN :startDate AND :endDate)"),
     @NamedQuery(name = "get.dr.by.createdUser", query = "SELECT dr FROM DeathRegister dr " +
-        " WHERE dr.lifeCycleInfo.createdUser =:user AND (dr.lifeCycleInfo.createdTimestamp BETWEEN :startDate AND :endDate)")
+        " WHERE dr.lifeCycleInfo.createdUser =:user AND (dr.lifeCycleInfo.createdTimestamp BETWEEN :startDate AND :endDate)"),
+    @NamedQuery(name = "get.all.by.death.division.time.frame", query = "SELECT dr FROM DeathRegister dr WHERE " +
+        "(dr.death.deathDivision.bdDivisionUKey = :dsDivisionId AND dr.lifeCycleInfo.activeRecord =:active " +
+        "AND (dr.lifeCycleInfo.createdTimestamp BETWEEN :startDate AND :endDate)) ")
 })
 public class DeathRegister implements Serializable, Cloneable {
 
