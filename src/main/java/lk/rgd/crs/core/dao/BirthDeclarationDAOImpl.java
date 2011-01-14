@@ -346,7 +346,7 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
         Date startDate, Date endDate, BirthDeclaration.State status) {
         Query q = em.createNamedQuery("get.by.dsdivision.and.status");
         q.setParameter("dsDivision", dsDivision);
-        q.setParameter("status", status.ordinal());
+        q.setParameter("status", status);
         q.setParameter("start", startDate);
         q.setParameter("end", endDate);
         return q.getResultList();

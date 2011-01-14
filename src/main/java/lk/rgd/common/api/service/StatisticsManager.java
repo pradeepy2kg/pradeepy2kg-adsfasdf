@@ -1,6 +1,7 @@
 package lk.rgd.common.api.service;
 
 import lk.rgd.common.api.domain.Statistics;
+import lk.rgd.common.api.domain.User;
 
 /**
  * @author shan
@@ -20,5 +21,13 @@ public interface StatisticsManager {
      * statistics of every user and stores in the STATISTICS table.
      */
     public void triggerScheduledStatJobs();
+
+    /**
+     * Return Statistics object for given user
+     * 
+     * @param user  user
+     * @return statistics object
+     */
+    public Statistics getStatisticsForUser(User user);
 
 }

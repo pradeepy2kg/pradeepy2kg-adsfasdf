@@ -41,23 +41,24 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
     }
 
     /**
-     *    Generate a complete statistics object containing whole islandwide
-     * @return  BirthIslandWideStatistics
+     * Generate a complete statistics object containing whole islandwide
+     *
+     * @return BirthIslandWideStatistics
      */
     public BirthIslandWideStatistics generate() {
-        List <DSDivision> dsDivisions = dsDivisionDAO.findAll();
+        List<DSDivision> dsDivisions = dsDivisionDAO.findAll();
         User systemUser = userManagementService.getSystemUser();
-        List <BirthDeclaration> birthRecords;
+        List<BirthDeclaration> birthRecords;
 
         Calendar c = Calendar.getInstance();
         Date endDate = c.getTime();
         c.set(c.get(Calendar.YEAR), 0, 0);
         Date startDate = c.getTime();
 
-        int all=0, allMales=0, allFemales=0;
+        int all = 0, allMales = 0, allFemales = 0;
         for (DSDivision dsDivision : dsDivisions) {
             birthRecords = birthRegister.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
-                    BirthDeclaration.State.ARCHIVED_CERT_GENERATED, systemUser);   // returns all records so far in this year
+                BirthDeclaration.State.ARCHIVED_CERT_GENERATED, systemUser);   // returns all records so far in this year
             int dsIndex = dsDivision.getDsDivisionUKey(); // todo support tracking at DSDivision level
             int districtIndex = dsDivision.getDistrict().getDistrictUKey();
             BirthDistrictStatistics districtStats = statistics.totals.get(districtIndex);
@@ -88,28 +89,31 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         statistics.setFemaleTotal(statistics.getFemaleTotal() + allFemales);
 
         logger.debug("IslandWide Stats generated : total - {}, total males - {}",
-                statistics.getTotal(), statistics.getMaleTotal());
+            statistics.getTotal(), statistics.getMaleTotal());
 
         return statistics;
     }
 
     /**
-     *  Creates a Standard CSV file from the generated IslandWide stats.
-     *  currently assumes. stats are already geneated.
+     * Creates a Standard CSV file from the generated IslandWide stats.
+     * currently assumes. stats are already geneated.
      * // todo check if a CSV file already generated and avaialble for the given year.
+     *
      * @return String the path and name of the created CSV file.
      */
     public String createReport() {
         StringBuilder csv = new StringBuilder();
         csv.append("District,Total,Male,Female\n");
         csv.append("Sri Lanka,");
-        csv.append(statistics.getTotal()+",");
-        csv.append(statistics.getMaleTotal()+",");
-        csv.append(statistics.getFemaleTotal()+",\n");
+        csv.append(statistics.getTotal() + ",");
+        csv.append(statistics.getMaleTotal() + ",");
+        csv.append(statistics.getFemaleTotal() + ",\n");
 
         int length = statistics.totals.size();
-        for (int i=0; i<length; i++) {
+        for (int i = 0; i < length; i++) {
             BirthDistrictStatistics districtStats = statistics.totals.get(i);
+            csv.append(i);
+            csv.append(",");
             csv.append(districtStats.getTotal());
             csv.append(",");
             csv.append(districtStats.getMaleTotal());
@@ -124,7 +128,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
             out.write(csv.toString().getBytes());
             out.close();
         } catch (IOException e) {
-            logger.error("Error writing the CSV - {} {}", file.getPath()+file.getName(), e.getMessage());
+            logger.error("Error writing the CSV - {} {}", file.getPath() + file.getName(), e.getMessage());
         }
 
         return null;
