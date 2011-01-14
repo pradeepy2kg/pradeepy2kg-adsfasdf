@@ -58,4 +58,20 @@ public class StateUtil {
         }
         throw new IllegalArgumentException();
     }
+
+    public static EnumSet<MarriageRegister.State> getMarriageRegisterStateList(MarriageRegister.State state) {
+        EnumSet<MarriageRegister.State> stateList;
+        if (state == null) {
+            stateList = EnumSet.of(MarriageRegister.State.LICENSE_PRINTED,
+                MarriageRegister.State.REG_DATA_ENTRY,
+                MarriageRegister.State.REGISTRATION_APPROVED,
+                MarriageRegister.State.REGISTRATION_REJECTED,
+                MarriageRegister.State.EXTRACT_PRINTED);
+        } else {
+            stateList = EnumSet.of(state);
+        }
+        return stateList;
+    }
+
+
 }

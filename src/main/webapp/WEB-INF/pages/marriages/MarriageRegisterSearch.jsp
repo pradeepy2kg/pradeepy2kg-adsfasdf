@@ -10,6 +10,7 @@
 <script src="/ecivil/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<s:url value="/js/division.js"/>"></script>
+<script type="text/javascript" src="<s:url value="/js/datePicker.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
 <script type="text/javascript" src="../js/validate.js"></script>
@@ -59,7 +60,7 @@
                     </td>
                     <td>
                         <s:textfield id="searchStartDatePicker" name="searchStartDate" cssStyle="width:150px"
-                                     maxLength="10"/>
+                                     maxLength="10" onmouseover="datepicker('searchStartDatePicker')"/>
                     </td>
                     <td></td>
                     <td>
@@ -67,7 +68,7 @@
                     </td>
                     <td>
                         <s:textfield id="searchEndDatePicker" name="searchEndDate" cssStyle="width:150px"
-                                     maxLength="10"/>
+                                     maxLength="10" onmouseover="datepicker('searchEndDatePicker')"/>
                     </td>
                 </tr>
 
@@ -246,7 +247,7 @@
                                         <s:param name="idUKey" value="idUKey"/>
                                         <s:param name="mode">view</s:param>
                                     </s:url>
-                                    <s:a href="%{view}">
+                                    <s:a href="%{view}" title="%{getText('tooltip.view')}">
                                         <img src="<s:url value='/images/view_icon.png'/>" width="25" height="25"
                                              border="none"/>
                                     </s:a>

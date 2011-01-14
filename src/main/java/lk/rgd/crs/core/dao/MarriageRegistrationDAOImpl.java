@@ -7,6 +7,7 @@ import lk.rgd.common.core.dao.BaseDAO;
 import lk.rgd.crs.api.dao.MarriageRegistrationDAO;
 import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.domain.MarriageRegister;
+import lk.rgd.AppConstants;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +16,7 @@ import javax.persistence.Query;
 import java.util.Date;
 import java.util.List;
 import java.util.EnumSet;
+import java.util.Set;
 
 /**
  * @author amith jayasekara
@@ -196,13 +198,48 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<MarriageRegister> getPaginatedMarriageRegisterListByDSDivision(DSDivision dsDivision, EnumSet stateList, int pageNo,
-        int noOfRows, boolean isActive) {
-        Query q = em.createNamedQuery("findMarriageRegisterByDSDivision").
-            setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+    public List<MarriageRegister> getPaginatedMarriageRegisterList(String divisionType, int divisionUKey, Set<DSDivision> dsDivisionList,
+        EnumSet stateList, boolean isActive, Date startDate, Date endDate, int pageNo, int noOfRows) {
+
+        StringBuilder query = new StringBuilder("").append("SELECT mr FROM MarriageRegister mr " +
+            "WHERE mr.lifeCycleInfo.activeRecord = :active ");
+
+        if (AppConstants.MARRIAGE.equals(divisionType)) {
+            query.append("AND (mr.mrDivision IS NOT NULL AND mr.mrDivision.mrDivisionUKey = :divisionUKey) ");
+
+        } else if (AppConstants.DS_DIVISION.equals(divisionType)) {
+            query.append("AND (mr.mrDivision IS NOT NULL AND mr.mrDivision.dsDivision.dsDivisionUKey = :divisionUKey) ");
+
+        } else if (AppConstants.DISTRICT.equals(divisionType)) {
+            query.append("AND (mr.mrDivision IS NOT NULL AND mr.mrDivision.dsDivision.district.districtUKey = :divisionUKey) ");
+
+        } else if (AppConstants.ALL.equals(divisionType)) {
+            query.append("AND (mr.mrDivision IS NOT NULL AND mr.mrDivision.dsDivision.dsDivisionUKey IN (:dsDivisionList)) ");
+
+        }
+        query.append("AND mr.state IN (:stateList) ")
+            .append((startDate != null & endDate != null) ? "AND (mr.dateOfMarriage IS NOT NULL AND mr.dateOfMarriage " +
+                "BETWEEN :startDate AND :endDate) " : " ")
+            .append("ORDER BY mr.idUKey DESC ");
+
+        Query q = em.createQuery(query.toString()).setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+        //TODO: namedquery has to be removed from marriage register
+        //Query q = em.createNamedQuery("findMarriageRegisterByDSDivision").
+
         q.setParameter("active", isActive);
         q.setParameter("stateList", stateList);
-        q.setParameter("dsDivision", dsDivision);
+        if (divisionUKey != 0) {
+            q.setParameter("divisionUKey", divisionUKey);
+        }
+        if (dsDivisionList != null) {
+            q.setParameter("dsDivisionList", dsDivisionList);
+        }
+        if (startDate != null) {
+            q.setParameter("startDate", startDate);
+        }
+        if (endDate != null) {
+            q.setParameter("endDate", endDate);
+        }
         return q.getResultList();
     }
 
@@ -210,7 +247,7 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<MarriageRegister> getPaginatedMarriageRegisterListByDistricts(District districtList, EnumSet stateList, int pageNo,
+    public List<MarriageRegister> getPaginatedMarriageRegisterListByDistricts(Set<District> districtList, EnumSet stateList, int pageNo,
         int noOfRows, boolean isActive) {
         Query q = em.createNamedQuery("findMarriageRegisterByDistricts").
             setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);

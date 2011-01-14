@@ -323,17 +323,6 @@ public interface MarriageRegistrationService {
         boolean isActive, User user);
 
     /**
-     * Returns paginated marriage register list
-     *
-     * @param pageNumber page number for pagination
-     * @param numOfRows  number of rows to be retured
-     * @param isActive   Active or Inactive status
-     * @param user       user who performs the action
-     * @return
-     */
-    public List<MarriageRegister> getMarriageRegisterList(int pageNumber, int numOfRows, boolean isActive, User user);
-
-    /**
      * get marriage registration list by given MRDivision
      *
      * @param mrDivision MRDivision
@@ -345,6 +334,23 @@ public interface MarriageRegistrationService {
      */
     public List<MarriageRegister> getMarriageRegisterByMRDivision(MRDivision mrDivision, int pageNumber,
         int numOfRows, boolean active, User user);
+
+    /**
+     * Returns Marriage Register list
+     *
+     * @param divisionType type of division (district, DS division or MR division)
+     * @param divisionUKey Primary key of the division
+     * @param state        state the marriage register
+     * @param isActive     Active or inactive status of marriage register
+     * @param startDate    from date of the date range - Marriage Date of the marriage register
+     * @param endDate      to date of the date range - Marriage Date of the marriage register
+     * @param pageNumber   the page number (starting from 1)
+     * @param numOfRows    no of rows to be retured
+     * @return
+     */
+    public List<MarriageRegister> getMarriageRegisterList(String divisionType, int divisionUKey,
+        MarriageRegister.State state, boolean isActive, Date startDate, Date endDate,
+        int pageNumber, int numOfRows, User user);
 
     /**
      * Returns the active/inactive list of Marriage Registers by PIN or NIC of male or female party

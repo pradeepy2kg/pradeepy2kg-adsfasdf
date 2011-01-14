@@ -59,6 +59,14 @@ public class AppConstants {
      */
     public static final String DS_DIVISION = "DS";
     /**
+     * District type
+     */
+    public static final String DISTRICT = "District";
+    /**
+     * None - nothing specified
+     */
+    public static final String NONE = "None";
+    /**
      * All
      */
     public static final String ALL = "all";

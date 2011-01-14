@@ -216,33 +216,40 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     public String marriageRegisterSearchResult() {
         pageNo += 1;
         noOfRows = appParametersDAO.getIntParameter(MR_APPROVAL_ROWS_PER_PAGE);
+        MarriageRegister.State mrState = null;
+        String divisionType = AppConstants.NONE;
+        int divisionId = 0;
+
+        if (state != -1) {
+            mrState = StateUtil.getStateById(state);
+        }
 
         if (noticeSerialNo != null) {
-            //TODO: search by serial number, clear tabs
+            //TODO: search by serial number/ pin
+            //TODO: clear tabs
+
         } else {
             if (districtId != 0 & dsDivisionId != 0 & mrDivisionId != 0) { // all selected
                 //filter by mr division
-                marriageRegisterSearchList = marriageRegistrationService.getMarriageRegisterByMRDivision
-                    (mrDivisionDAO.getMRDivisionByPK(mrDivisionId), pageNo, noOfRows, true, user);
+                divisionId = mrDivisionId;
+                divisionType = AppConstants.MARRIAGE;
+
             } else if (districtId != 0 & dsDivisionId != 0) { // only mr division selected
                 //filter by ds division
-                marriageRegisterSearchList = marriageRegistrationService.getMarriageRegistersByDSDivision
-                    (dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, true, user);
+                divisionId = dsDivisionId;
+                divisionType = AppConstants.DS_DIVISION;
+
             } else if (districtId != 0) { // only district selected
                 //filter by district
-                marriageRegisterSearchList = marriageRegistrationService.getMarriageRegistersByDistrict
-                    (districtDAO.getDistrict(districtId), pageNo, noOfRows, true, user);
-            } else {  // nothing selected
-                //find all records marriage registration pending
-                if (state == -1) {
-                        marriageRegisterSearchList = marriageRegistrationService.getMarriageRegisterList(pageNo, noOfRows, true, user);
+                divisionId = districtId;
+                divisionType = AppConstants.DISTRICT;
 
-                } else {
-                    marriageRegisterSearchList = marriageRegistrationService.getMarriageRegisterByState(
-                        StateUtil.getStateById(state), pageNo, noOfRows, true, user);
-                }
             }
         }
+
+        marriageRegisterSearchList = marriageRegistrationService.getMarriageRegisterList(divisionType, divisionId,
+            mrState, true, searchStartDate, searchEndDate, pageNo, noOfRows, user);
+
         if (marriageRegisterSearchList.size() == 0) {
             addActionError(getText("error.marriageregister.norecords"));
         }
