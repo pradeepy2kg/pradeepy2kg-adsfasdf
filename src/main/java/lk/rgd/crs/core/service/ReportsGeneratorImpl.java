@@ -1,40 +1,20 @@
 package lk.rgd.crs.core.service;
 
-import lk.rgd.common.api.dao.AppParametersDAO;
 import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.DSDivisionDAO;
-import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
-import lk.rgd.common.core.index.SolrIndexManager;
-import lk.rgd.common.util.CivilStatusUtil;
-import lk.rgd.common.util.GenderUtil;
-import lk.rgd.common.util.LifeStatusUtil;
-import lk.rgd.crs.api.service.PRSRecordsIndexer;
+import lk.rgd.common.api.service.UserManager;
 import lk.rgd.crs.api.service.ReportsGenerator;
 import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.api.bean.BirthIslandWideStatistics;
 import lk.rgd.crs.api.domain.BirthDeclaration;
-import lk.rgd.crs.core.DatabaseInitializer;
-import lk.rgd.prs.api.dao.PersonDAO;
-import lk.rgd.prs.api.domain.Address;
-import lk.rgd.prs.api.domain.Person;
-import lk.rgd.prs.api.domain.PersonCitizenship;
-import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.common.SolrInputDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.sql.DataSource;
-import java.io.IOException;
-import java.sql.*;
-import java.util.Date;
 import java.util.List;
 import java.util.Calendar;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.Date;
 
 /**
  * @author asankha
@@ -42,23 +22,37 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ReportsGeneratorImpl implements ReportsGenerator {
     private static final Logger logger = LoggerFactory.getLogger(ReportsGeneratorImpl.class);
 
-    private final BirthRegistrationService register;
+    private final BirthRegistrationService birthRegister;
     private final DistrictDAO districtDAO;
     private final DSDivisionDAO dsDivisionDAO;
+    private final UserManager userManagementService;
 
-    public ReportsGeneratorImpl(BirthRegistrationService register, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO) {
-        this.register = register;
+    public ReportsGeneratorImpl(BirthRegistrationService birthRegister, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, UserManager service) {
+        this.birthRegister = birthRegister;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
+        this.userManagementService = service;
     }
 
     public BirthIslandWideStatistics generate() {
         BirthIslandWideStatistics statistics = BirthIslandWideStatistics.getInstance();
         List <DSDivision> dsDivisions = dsDivisionDAO.findAll();
+        User systemUser = userManagementService.getSystemUser();
+        List <BirthDeclaration> birthRecords;
+
+        Calendar c = Calendar.getInstance();
+        Date endDate = c.getTime();
+        c.set(c.get(Calendar.YEAR), 0, 0);
+        Date startDate = c.getTime();
         for (DSDivision dsDivision : dsDivisions) {
-            //register.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, Calendar.getInstance().getTime(), Calendar.getInstance().getTime(),
-            //        BirthDeclaration.State.ARCHIVED_CERT_GENERATED, User);
-            // todo get all birth entries for this DS with birth date falls in the given year     
+            birthRecords = birthRegister.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
+                    BirthDeclaration.State.ARCHIVED_CERT_GENERATED, systemUser);   // returns all records so far in this year
+            int dsIndex = dsDivision.getDsDivisionUKey(); // index to track the placeholder in the list inside statistics object
+            int districtIndex = dsDivision.getDistrict().getDistrictUKey();
+            for (BirthDeclaration bd : birthRecords) {
+                //statistics.totals.set();
+                //todo update the totals in statistics object for these indexes.
+            }
         }
         return statistics;
     }
