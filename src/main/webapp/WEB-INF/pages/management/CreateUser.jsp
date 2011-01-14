@@ -201,204 +201,228 @@
     }
 </script>
 <div id="user-create-outer">
-    <fieldset
-            style="border:2px solid #c3dcee;margin-left:12em;margin-right:20.5em;margin-top:2.5em;margin-bottom:15px;">
-        <table class="user-create-table" cellspacing="0" cellpadding="0">
-            <s:form name="userCreationForm" action="eprUserCreation" method="POST"
-                    onsubmit="javascript:return validate()">
-            <s:if test="userId == null">
-                <tr>
-                    <td width="50%">
-                        <s:label value="%{getText('user_id.label')}"/>
-                        <s:label value="*" cssStyle="color:red;font-size:12pt;"/>
-                    </td>
-                    <td width="50%">
-                        <s:textfield name="user.userId" id="checkUserId"
-                                     cssStyle="text-transform:none;width:90%;margin-left:0;"/>
-                    </td>
-                </tr>
+<fieldset
+        style="border:2px solid #c3dcee;margin-left:12em;margin-right:20.5em;margin-top:2.5em;margin-bottom:15px;">
+<table class="user-create-table" cellspacing="0" cellpadding="0">
+<caption/>
+<col/>
+<col/>
+<col/>
+<s:form name="userCreationForm" action="eprUserCreation" method="POST"
+        onsubmit="javascript:return validate()">
+<s:if test="userId == null">
+    <tr>
+        <td width="50%">
+            <s:label value="%{getText('user_id.label')}"/>
+            <s:label value="*" cssStyle="color:red;font-size:12pt;"/>
+        </td>
+        <td width="50%">
+            <s:textfield name="user.userId" id="checkUserId"
+                         cssStyle="text-transform:none;width:90%;margin-left:0;"/>
+        </td>
+        <td></td>
+    </tr>
+</s:if>
+<s:else>
+    <tr>
+        <td height="30px"><s:label value="%{getText('user_id.label')}"/></td>
+        <td height="30px"><s:label name="user.userId" disabled="true"/></td>
+        <td></td>
+    </tr>
+</s:else>
+<tr>
+    <td>
+        <s:label value="%{getText('user_name.label')}"/>
+        <s:label value="*" cssStyle="color:red;font-size:12pt;"/>
+    </td>
+    <td>
+        <s:textfield name="user.userName" id="userName"
+                     cssStyle="text-transform:none;width:90%;margin-left:0;"/>
+    </td>
+    <td></td>
+</tr>
+<tr>
+    <td>
+        <s:label value="%{getText('user_pin.label')}"/>
+        <s:label value="*" cssStyle="color:red;font-size:12pt;"/>
+    </td>
+    <td>
+        <s:textfield name="user.pin" id="userPin" cssStyle="text-transform:none;width:90%;margin-left:0;"
+                     maxLength="10"/>
+    </td>
+    <td></td>
+</tr>
+<tr>
+    <td><s:label value="%{getText('si.en.signature')}"/></td>
+    <td>
+        <s:textarea name="user.sienSignatureText" id="userName"
+                    cssStyle="text-transform:none;width:90%;margin-left:0;"/>
+
+    </td>
+    <td>
+        <s:a href="" title="%{getText('sinhalaSignature.tooltip')}">
+            <img src="<s:url value='/images/question.jpg'/>" width="25" height="25" border="none"/>
+        </s:a>
+    </td>
+</tr>
+<tr>
+    <td><s:label value="%{getText('ta.en.signature')}"/></td>
+    <td>
+        <s:textarea name="user.taenSignatureText" id="userPin"
+                    cssStyle="text-transform:none;width:90%;margin-left:0;"/>
+    </td>
+    <td>
+        <s:a href="" title="%{getText('tamilSignature.tooltip')}">
+            <img src="<s:url value='/images/question.jpg'/>" width="25" height="25" border="none"/>
+        </s:a>
+    </td>
+</tr>
+<tr>
+    <td><s:label value="%{getText('preffered_language.label')}"/></td>
+    <td>
+        <s:select list="#@java.util.HashMap@{'en':'English','si':'සිංහල','ta':'Tamil'}"
+                  name="user.prefLanguage" id="prefferedLanguage" cssStyle="width:90%;margin-left:0;"/>
+    </td>
+    <td></td>
+</tr>
+
+<tr>
+    <td>
+        <s:label value="%{getText('user_role.label')}"/>
+    </td>
+    <td>
+        <s:select list="roleList" name="roleId" id="role" cssStyle="width:90%;margin-left:0;"
+                  onchange="changeMultiSelect();"/>
+    </td>
+    <td></td>
+</tr>
+
+<div id="abc">
+    <tr>
+        <td width="50%">
+            <s:if test="user != null">
+                <s:label value="%{getText('assigned_districts.label')}"/>
+                <s:label value="*" cssStyle="color:red;font-size:12pt;"/>
             </s:if>
-            <s:else>
-                <tr>
-                    <td height="30px"><s:label value="%{getText('user_id.label')}"/></td>
-                    <td height="30px"><s:label name="user.userId" disabled="true"/></td>
-                </tr>
-            </s:else>
-            <tr>
-                <td>
-                    <s:label value="%{getText('user_name.label')}"/>
+        </td>
+        <td width="50%">
+            <s:if test="user != null">
+                <s:select list="districtList" name="assignedDistricts" multiple="true"
+                          cssStyle="width:90%;margin-left:0;padding-left:0;"
+                          size="10"
+                          id="districtIdCurrent" value="currentDistrictList"/>
+            </s:if>
+        </td>
+        <td></td>
+    </tr>
+</div>
+<tr>
+    <s:label>
+        <td>
+            <s:if test="user != null">
+                <s:label value="%{getText('assigned_ds_divisions.label')}"/>
+                <s:label value="*" cssStyle="color:red;font-size:12pt;"/>
+            </s:if>
+        </td>
+        <td>
+            <s:if test="user != null">
+                <s:select list="currentbdDivisionList" name="assignedDivisions" multiple="true"
+                          size="10"
+                          id="divisionIdCurrent" value="currentbdDivisionList"
+                          cssStyle="margin-left:0;width:90%"/>
+            </s:if>
+        </td>
+        <td></td>
+    </s:label>
+</tr>
+    <%--todo--%>
+<div id="edit">
+    <tr>
+        <td>
+            <s:if test="user == null">
+                <s:label value="%{getText('assigned_districts.label')}"/>
+                <s:label value="*" cssStyle="color:red;font-size:12pt;"/>
+            </s:if>
+        </td>
+        <td>
+            <s:if test="user == null">
+                <s:select list="districtList" name="assignedDistricts" multiple="true" size="10"
+                          id="districtId" cssStyle="width:90%;margin-left:0;"/>
+            </s:if>
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <s:label>
+            <td>
+                <s:if test="user == null">
+                    <s:label value="%{getText('assigned_ds_divisions.label')}"/>
                     <s:label value="*" cssStyle="color:red;font-size:12pt;"/>
-                </td>
-                <td>
-                    <s:textfield name="user.userName" id="userName"
-                                 cssStyle="text-transform:none;width:90%;margin-left:0;"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <s:label value="%{getText('user_pin.label')}"/>
-                    <s:label value="*" cssStyle="color:red;font-size:12pt;"/>
-                </td>
-                <td>
-                    <s:textfield name="user.pin" id="userPin" cssStyle="text-transform:none;width:90%;margin-left:0;"
-                                 maxLength="10"/>
-                </td>
+                </s:if>
+            </td>
+            <td>
+                <s:if test="user == null">
+                    <s:select list=" dsDivisionList" name="assignedDivisions" multiple="true"
+                              size="10"
+                              id="divisionId" cssStyle="width:90%;margin-left:0;"/>
+                </s:if>
+            </td>
+            <td></td>
+        </s:label>
+    </tr>
+</div>
+    <%--todo end--%>
 
-            </tr>
-            <tr>
-                <td><s:label value="%{getText('si.en.signature')}"/></td>
-                <td>
-                    <s:textarea name="user.sienSignatureText" id="userName"
-                                cssStyle="text-transform:none;width:90%;margin-left:0;"/>
-                </td>
-            </tr>
-            <tr>
-                <td><s:label value="%{getText('ta.en.signature')}"/></td>
-                <td>
-                    <s:textarea name="user.taenSignatureText" id="userPin"
-                                cssStyle="text-transform:none;width:90%;margin-left:0;"/>
-                </td>
-            </tr>
-            <tr>
-                <td><s:label value="%{getText('preffered_language.label')}"/></td>
-                <td>
-                    <s:select list="#@java.util.HashMap@{'en':'English','si':'සිංහල','ta':'Tamil'}"
-                              name="user.prefLanguage" id="prefferedLanguage" cssStyle="width:90%;margin-left:0;"/>
-                </td>
-            </tr>
+<tr>
 
-            <tr>
-                <td>
-                    <s:label value="%{getText('user_role.label')}"/>
-                </td>
-                <td>
-                    <s:select list="roleList" name="roleId" id="role" cssStyle="width:90%;margin-left:0;"
-                              onchange="changeMultiSelect();"/>
-                </td>
-
-            </tr>
-
-            <div id="abc">
+    <td colspan="2">
+        <s:if test="userId != null">
+            <s:hidden name="userId" value="%{userId}"/>
+            <table style="width:100%;float:right;">
                 <tr>
-                    <td width="50%">
-                        <s:if test="user != null">
-                            <s:label value="%{getText('assigned_districts.label')}"/>
-                            <s:label value="*" cssStyle="color:red;font-size:12pt;"/>
-                        </s:if>
-                    </td>
-                    <td width="50%">
-                        <s:if test="user != null">
-                            <s:select list="districtList" name="assignedDistricts" multiple="true"
-                                      cssStyle="width:90%;margin-left:0;padding-left:0;"
-                                      size="10"
-                                      id="districtIdCurrent" value="currentDistrictList"/>
-                        </s:if>
-                    </td>
-                </tr>
-            </div>
-            <tr>
-                <s:label>
-                    <td>
-                        <s:if test="user != null">
-                            <s:label value="%{getText('assigned_ds_divisions.label')}"/>
-                            <s:label value="*" cssStyle="color:red;font-size:12pt;"/>
-                        </s:if>
+                    <td style="width:75%">
+                        <div>
+                            <s:label value="Change User Password"/>
+                            <s:checkbox name="changePassword"/>
+                        </div>
                     </td>
                     <td>
-                        <s:if test="user != null">
-                            <s:select list="currentbdDivisionList" name="assignedDivisions" multiple="true"
-                                      size="10"
-                                      id="divisionIdCurrent" value="currentbdDivisionList"
-                                      cssStyle="margin-left:0;width:90%"/>
-                        </s:if>
-                    </td>
-                </s:label>
-            </tr>
-                <%--todo--%>
-            <div id="edit">
-                <tr>
-                    <td>
-                        <s:if test="user == null">
-                            <s:label value="%{getText('assigned_districts.label')}"/>
-                            <s:label value="*" cssStyle="color:red;font-size:12pt;"/>
-                        </s:if>
-                    </td>
-                    <td>
-                        <s:if test="user == null">
-                            <s:select list="districtList" name="assignedDistricts" multiple="true" size="10"
-                                      id="districtId" cssStyle="width:90%;margin-left:0;"/>
-                        </s:if>
-                    </td>
-                </tr>
-                <tr>
-                    <s:label>
-                        <td>
-                            <s:if test="user == null">
-                                <s:label value="%{getText('assigned_ds_divisions.label')}"/>
-                                <s:label value="*" cssStyle="color:red;font-size:12pt;"/>
-                            </s:if>
-                        </td>
-                        <td>
-                            <s:if test="user == null">
-                                <s:select list=" dsDivisionList" name="assignedDivisions" multiple="true"
-                                          size="10"
-                                          id="divisionId" cssStyle="width:90%;margin-left:0;"/>
-                            </s:if>
-                        </td>
-                    </s:label>
-                </tr>
-            </div>
-                <%--todo end--%>
-
-            <tr>
-
-                <td colspan="2">
-                    <s:if test="userId != null">
-                        <s:hidden name="userId" value="%{userId}"/>
-                        <table style="width:100%;float:right;">
-                            <tr>
-                                <td style="width:75%">
-                                    <div>
-                                        <s:label value="Change User Password"/>
-                                        <s:checkbox name="changePassword"/>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="form-submit">
-                                        <s:submit value="%{getText('edit_user.label')}"
-                                                  cssStyle="margin-top:10px;margin-right:20px;"/>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-
-                    </s:if>
-                    <s:if test="userId == null">
                         <div class="form-submit">
-                            <s:submit value="%{getText('create_user.label')}"
+                            <s:submit value="%{getText('edit_user.label')}"
                                       cssStyle="margin-top:10px;margin-right:20px;"/>
                         </div>
-                    </s:if>
-                </td>
-            </tr>
-        </table>
+                    </td>
+                    <td></td>
+                </tr>
+            </table>
 
-        <s:hidden id="buttonName" value="%{getText('assigned_ds_divisions.label')}"/>
-        <s:hidden id="error1" value="%{getText('user.id.label')}"/>
-        <s:hidden id="error2" value="%{getText('user.name.label')}"/>
-        <s:hidden id="error3" value="%{getText('user.PIN.label')}"/>
-        <s:hidden id="error4" value="%{getText('user.PIN.invalid')}"/>
-        <s:hidden id="error5" value="%{getText('user.district')}"/>
-        <s:hidden id="error6" value="%{getText('user.divisions')}"/>
-
-        </s:form>
-        <s:if test="userId != null">
-            <s:form action="eprViewUsers.do">
-                <div class="form-submit" style="margin-right:50px;">
-                    <s:submit value="BACK" cssStyle="margin-top:10px;" name="button"/>
-                </div>
-            </s:form>
         </s:if>
-    </fieldset>
+        <s:if test="userId == null">
+            <div class="form-submit">
+                <s:submit value="%{getText('create_user.label')}"
+                          cssStyle="margin-top:10px;margin-right:20px;"/>
+            </div>
+        </s:if>
+    </td>
+</tr>
+</table>
+
+<s:hidden id="buttonName" value="%{getText('assigned_ds_divisions.label')}"/>
+<s:hidden id="error1" value="%{getText('user.id.label')}"/>
+<s:hidden id="error2" value="%{getText('user.name.label')}"/>
+<s:hidden id="error3" value="%{getText('user.PIN.label')}"/>
+<s:hidden id="error4" value="%{getText('user.PIN.invalid')}"/>
+<s:hidden id="error5" value="%{getText('user.district')}"/>
+<s:hidden id="error6" value="%{getText('user.divisions')}"/>
+
+</s:form>
+<s:if test="userId != null">
+    <s:form action="eprViewUsers.do">
+        <div class="form-submit" style="margin-right:50px;">
+            <s:submit value="BACK" cssStyle="margin-top:10px;" name="button"/>
+        </div>
+    </s:form>
+</s:if>
+</fieldset>
 </div>
 
