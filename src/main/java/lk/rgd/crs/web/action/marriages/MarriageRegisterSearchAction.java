@@ -152,7 +152,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
      * Marriage Registration - Loding the extract of marriage register for print
      */
     public String marriageExtractInit() {
-        marriage = marriageRegistrationService.getByIdUKey(idUKey, user);
+        marriage = marriageRegistrationService.getMarriageRegisterByIdUKey(idUKey, user);
         populateLocationList(marriage);
         return SUCCESS;
     }

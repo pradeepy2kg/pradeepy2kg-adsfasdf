@@ -221,7 +221,7 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
 
         if (!mrDivisionEquals.isEmpty()) {
             query.append(" AND (mr.mrDivision IS NOT NULL AND ");
-                query.append(mrDivisionEquals);
+            query.append(mrDivisionEquals);
         }
 
         query.append(" AND mr.state IN (:stateList) ")
