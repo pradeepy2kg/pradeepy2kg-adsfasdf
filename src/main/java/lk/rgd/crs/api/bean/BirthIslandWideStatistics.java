@@ -17,7 +17,11 @@ public class BirthIslandWideStatistics extends BirthStatistics {
 
     private BirthIslandWideStatistics() {
         // todo initialization in here. instance.setTotal(total) etc
+        int length = totals.size();
+        for (int i=0; i<length; i++) {
+            totals.set(i, new BirthDistrictStatistics());
+        }
     }
 
-    private List<BirthDistrictStatistics> totals = new ArrayList<BirthDistrictStatistics>(26); //todo get this from district dao
+    public List<BirthDistrictStatistics> totals = new ArrayList<BirthDistrictStatistics>(26); //todo get this from district dao
 }
