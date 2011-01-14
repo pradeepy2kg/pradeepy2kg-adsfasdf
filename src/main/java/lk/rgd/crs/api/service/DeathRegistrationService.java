@@ -153,7 +153,7 @@ public interface DeathRegistrationService {
      * @throws lk.rgd.crs.CRSRuntimeException for un-authorized operations
      */
     public List<DeathRegister> getByBDDivisionAndRegistrationDateRange(BDDivision deathDivision,
-                                                                       Date startDate, Date endDate, int pageNo, int noOfRows, User user);
+        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
 
     /**
      * Get the list of death registrations for a given state based on given DSDivision
@@ -221,6 +221,7 @@ public interface DeathRegistrationService {
 
     /**
      * Returns all statistics information related to Deaths
+     *
      * @param user
      * @return CommonStatistics object which encapsulated all the death statistics information
      */
@@ -232,4 +233,45 @@ public interface DeathRegistrationService {
      * @param user user DEO / ADR
      */
     public CommonStatistics getDeathStatisticsForUser(String user);
+
+    /**
+     * get list of death register objects for given time frame and given DSDivision
+     *
+     * @param dsDivisionId dsDivision id
+     * @param startDate    registrations from
+     * @param endDate      registrations to
+     * @param active       active record
+     * @param pageNo       page number
+     * @param numOfRows    number of rows to be fetched
+     * @param user         user who performs the action
+     * @return list of death register object
+     */
+    public List<DeathRegister> getPaginatedDeathRegisterListByDSDivisionAndRegistrationDateRange(int dsDivisionId,
+        Date startDate, Date endDate, boolean active, int pageNo, int numOfRows, User user);
+
+    /**
+     * get list of death register objects for given time frame and given district
+     *
+     * @param districtId district id
+     * @param startDate  registrations from
+     * @param endDate    registrations to
+     * @param active     active record
+     * @param user       user who performs the action
+     * @return list of death register object
+     */
+    public List<DeathRegister> getPaginatedDeathRegisterListByDistrictAndRegistrationDateRange(int districtId,
+        Date startDate, Date endDate, boolean active, User user);
+
+    /**
+     * get list of death register objects for given time frame and given Death registration division
+     *
+     * @param deathDivisionId death division id
+     * @param startDate       registrations from
+     * @param endDate         registrations to
+     * @param active          active record
+     * @param user            user who performs the action
+     * @return list of death register object
+     */
+    public List<DeathRegister> getPaginatedDeathRegisterListByDeathDivisionAndRegistrationDateRange(int deathDivisionId,
+        Date startDate, Date endDate, boolean active, User user);
 }
