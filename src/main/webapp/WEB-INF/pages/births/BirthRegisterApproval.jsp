@@ -11,7 +11,8 @@
 <script type="text/javascript" src="../js/validate.js"></script>
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
 <script>
-    function initPage(){}
+    function initPage() {
+    }
 
     $(function() {
         $("#searchStartDatePicker").datepicker({
@@ -47,36 +48,36 @@
         $('select#birthDistrictId').bind('change', function(evt1) {
             var id = $("select#birthDistrictId").attr("value");
             $.getJSON('/ecivil/crs/DivisionLookupService', {id:id},
-                    function(data) {
-                        var options1 = '';
-                        var ds = data.dsDivisionList;
-                        for (var i = 0; i < ds.length; i++) {
-                            options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
-                        }
-                        $("select#dsDivisionId").html(options1);
+                     function(data) {
+                         var options1 = '';
+                         var ds = data.dsDivisionList;
+                         for (var i = 0; i < ds.length; i++) {
+                             options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                         }
+                         $("select#dsDivisionId").html(options1);
 
-                        var options2 = '';
-                        var bd = data.bdDivisionList;
-                        options2 += '<option value="' + 0 + '">' + <s:label value="%{getText('all.divisions.label')}"/> + '</option>';
-                        for (var j = 0; j < bd.length; j++) {
-                            options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
-                        }
-                        $("select#birthDivisionId").html(options2);
-                    });
+                         var options2 = '';
+                         var bd = data.bdDivisionList;
+                         options2 += '<option value="' + 0 + '">' + <s:label value="%{getText('all.divisions.label')}"/> + '</option>';
+                         for (var j = 0; j < bd.length; j++) {
+                             options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
+                         }
+                         $("select#birthDivisionId").html(options2);
+                     });
         });
 
         $('select#dsDivisionId').bind('change', function(evt2) {
             var id = $("select#dsDivisionId").attr("value");
             $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:2},
-                    function(data) {
-                        var options = '';
-                        var bd = data.bdDivisionList;
-                        options += '<option value="' + 0 + '">' + <s:label value="%{getText('all.divisions.label')}"/>  + '</option>';
-                        for (var i = 0; i < bd.length; i++) {
-                            options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
-                        }
-                        $("select#birthDivisionId").html(options);
-                    });
+                     function(data) {
+                         var options = '';
+                         var bd = data.bdDivisionList;
+                         options += '<option value="' + 0 + '">' + <s:label value="%{getText('all.divisions.label')}"/>  + '</option>';
+                         for (var i = 0; i < bd.length; i++) {
+                             options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
+                         }
+                         $("select#birthDivisionId").html(options);
+                     });
         })
     });
 
@@ -90,10 +91,8 @@
         var name = new Array();
         var value = new Array();
         var j = 0;
-        for (var k = 0; k < i; k++)
-        {
-            if (form.elements[k].name == fieldName)
-            {
+        for (var k = 0; k < i; k++) {
+            if (form.elements[k].name == fieldName) {
                 if (form.elements[k].checked == true) {
                     value[j] = form.elements[k].value;
                     j++;
@@ -102,51 +101,39 @@
         }
         checkSelect(form, allCheck);
     }
-    function selectCheck(obj, form, allCheck)
-    {
+    function selectCheck(obj, form, allCheck) {
         var i = form.elements.length;
-        for (var k = 0; k < i; k++)
-        {
-            if (form.elements[k].name == fieldName)
-            {
+        for (var k = 0; k < i; k++) {
+            if (form.elements[k].name == fieldName) {
                 form.elements[k].checked = obj;
             }
         }
         selectall(form, allCheck);
     }
 
-    function selectallMe(form, allCheck)
-    {
-        if (allCheck.checked == true)
-        {
+    function selectallMe(form, allCheck) {
+        if (allCheck.checked == true) {
             selectCheck(true, form, allCheck);
         }
-        else
-        {
+        else {
             selectCheck(false, form, allCheck);
         }
     }
-    function checkSelect(form, allCheck)
-    {
+    function checkSelect(form, allCheck) {
         var i = form.elements.length;
         var berror = true;
-        for (var k = 0; k < i; k++)
-        {
-            if (form.elements[k].name == fieldName)
-            {
-                if (form.elements[k].checked == false)
-                {
+        for (var k = 0; k < i; k++) {
+            if (form.elements[k].name == fieldName) {
+                if (form.elements[k].checked == false) {
                     berror = false;
                     break;
                 }
             }
         }
-        if (berror == false)
-        {
+        if (berror == false) {
             allCheck.checked = false;
         }
-        else
-        {
+        else {
             allCheck.checked = true;
         }
     }
@@ -175,6 +162,12 @@
         }
         errormsg = "";
         return returnval;
+    }
+
+    function deleteWarning() {
+        var ret = true;
+        ret = confirm(document.getElementById('warning').value)
+        return ret;
     }
 </script>
 
@@ -279,7 +272,7 @@
                     <%--<td><s:property value="%{#approvalStatus.count + recordCounter}"/></td>--%>
                 <td>
                     <s:if test="(register.birthType.ordinal() != 3) && (approvalPendingList.size>1)">
-                            <s:checkbox name="index"
+                        <s:checkbox name="index"
                                     onclick="javascript:selectall(document.birth_register_approval_body,document.birth_register_approval_body.allCheck)"
                                     title="%{getText('select.label')}" value="%{#index}"
                                     fieldValue="%{#approvalList.idUKey}"/>
@@ -360,15 +353,14 @@
                         <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
                         <s:param name="recordCounter" value="#request.recordCounter"/>
                     </s:url>
-                    <td align="center"><s:a href="%{deleteSelected}"
-                                            title="%{getText('deleteToolTip.label')}"><img
-                            src="<s:url value='/images/delete.gif'/>" width="25" height="25"
-                            border="none"/></s:a>
+                    <td align="center">
+                        <s:a href="%{deleteSelected}" title="%{getText('deleteToolTip.label')}"><img
+                                src="<s:url value='/images/delete.gif'/>" width="25" height="25"
+                                border="none" onclick="javascript:return deleteWarning()"/></s:a>
                     </td>
                 </s:if>
             </tr>
-            <%--select_all checkbox is visible only if
-        counter is greater than one--%>
+            <%--select_all checkbox is visible only if counter is greater than one--%>
             <s:set name="counter" scope="request" value="#approvalStatus.count"/>
         </s:iterator>
         </tbody>
@@ -435,6 +427,7 @@
     <s:hidden id="error2" value="%{getText('p1.serial.text')}"/>
     <s:hidden id="error3" value="%{getText('searchStartDate.label')}"/>
     <s:hidden id="error4" value="%{getText('searchEndDate.label')}"/>
+    <s:hidden id="warning" value="%{getText('birthDelete.warning.label')}"/>
 </div>
 </div>
 <%-- Styling Completed --%>
