@@ -18,7 +18,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
@@ -44,16 +43,25 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
      * Generate a complete statistics object containing whole islandwide
      *
      * @return BirthIslandWideStatistics
+     * @param year
      */
-    public BirthIslandWideStatistics generate() {
+    public BirthIslandWideStatistics generate(int year) {
         List<DSDivision> dsDivisions = dsDivisionDAO.findAll();
         User systemUser = userManagementService.getSystemUser();
         List<BirthDeclaration> birthRecords;
 
-        Calendar c = Calendar.getInstance();
-        Date endDate = c.getTime();
-        c.set(c.get(Calendar.YEAR), 0, 0);
-        Date startDate = c.getTime();
+        Calendar cal = Calendar.getInstance();
+        //Date endDate = c.getTime();
+        //c.set(c.get(Calendar.YEAR), 0, 0);
+        //Date startDate = c.getTime();
+
+        /* January first of the year */
+        cal.set(year, 0, 1);
+        Date startDate = cal.getTime();
+
+        /* December 31st of the year */
+        cal.set(year, 11, 31);
+        Date endDate = cal.getTime();
 
         int all = 0, allMales = 0, allFemales = 0;
         for (DSDivision dsDivision : dsDivisions) {

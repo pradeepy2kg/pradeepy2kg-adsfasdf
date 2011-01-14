@@ -11,8 +11,9 @@ public interface ReportsGenerator {
     /**
      *    Generate a complete statistics object containing whole islandwide stats
      * @return  BirthIslandWideStatistics
+     * @param year
      */
-    public BirthIslandWideStatistics generate();
+    public BirthIslandWideStatistics generate(int year);
 
     /**
      *  Creates a Standard CSV file from the generated IslandWide stats.
