@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head profile="http://selenium-ide.openqa.org/profiles/test-case">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="selenium.base" href=""/>
+        <title>NewMuslimMarriageRegistrationTest</title>
+    </head>
+    <body>
+        <table cellpadding="1" cellspacing="1" border="1">
+            <thead>
+                <tr>
+                    <td rowspan="1" colspan="3">NewMuslimMarriageRegistrationTest</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>open</td>
+                    <td>/ecivil/</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>eprLogin_userName</td>
+                    <td>rg</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>eprLogin_password</td>
+                    <td>password</td>
+                </tr>
+                <tr>
+                    <td>clickAndWait</td>
+                    <td>eprLogin_0</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>open</td>
+                    <td>/ecivil/marriages/eprMarriageRegistrationInit.do</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>click</td>
+                    <td>marriageDatePicker</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>marriageDatePicker</td>
+                    <td>2010-01-06</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>regPIN</td>
+                    <td>3242342342</td>
+                </tr>
+                <tr>
+                    <td>click</td>
+                    <td>typeOfMarriagePlaceOTHER</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>regPlaceInOfficialLang</td>
+                    <td>gdfgdf</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>regPlaceInEnglishLang</td>
+                    <td>gdfgfdg</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>regNameInOfficialLang</td>
+                    <td>dgdfgfd</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>regNameInEnglishLang</td>
+                    <td>dfgdfgdf</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>regNameInOfficialLang</td>
+                    <td>රාජ්‍ය භාෂාවෙන්</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>regPlaceInOfficialLang</td>
+                    <td>රාජ්‍ය භාෂාවෙන්</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>regPlaceInOfficialLang</td>
+                    <td>රාජ්‍ය භාෂාවෙන් place of Marriage</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>regNameInOfficialLang</td>
+                    <td>රාජ්‍ය භාෂාවෙන් Registrar / Minister</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>regNameInEnglishLang</td>
+                    <td>In English</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>regNameInEnglishLang</td>
+                    <td>In English&nbsp;&nbsp;Registrar / Minister</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>regPlaceInEnglishLang</td>
+                    <td>In English&nbsp;&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>regPlaceInEnglishLang</td>
+                    <td>In English&nbsp;&nbsp;&nbsp;place of Marriage</td>
+                </tr>
+                <tr>
+                    <td>click</td>
+                    <td>eprMarriageRegistrationInit_marriage_typeOfMarriageMUSLIM</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>malePIN</td>
+                    <td>3454353453</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>femalePIN</td>
+                    <td>5345354353</td>
+                </tr>
+                <tr>
+                    <td>click</td>
+                    <td>dateOfBirthMaleDatePicker</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>dateOfBirthMaleDatePicker</td>
+                    <td>2010-01-01</td>
+                </tr>
+                <tr>
+                    <td>click</td>
+                    <td>dateOfBirthFemaleDatePicker</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>dateOfBirthFemaleDatePicker</td>
+                    <td>2010-01-01</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>ageMale</td>
+                    <td>32</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>ageFemale</td>
+                    <td>32</td>
+                </tr>
+                <tr>
+                    <td>select</td>
+                    <td>maleRace</td>
+                    <td>label=3 : Indian Tamil</td>
+                </tr>
+                <tr>
+                    <td>select</td>
+                    <td>femaleRace</td>
+                    <td>label=4 : Sri Lankan Moor</td>
+                </tr>
+                <tr>
+                    <td>click</td>
+                    <td>eprMarriageRegistrationInit_marriage_male_civilStatusMaleWIDOWED</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>click</td>
+                    <td>eprMarriageRegistrationInit_marriage_female_civilStatusFemaleWIDOWED</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>nameOfficialMale</td>
+                    <td>නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>nameOfficialFemale</td>
+                    <td>නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ) *</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>nameOfficialMale</td>
+                    <td>නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ) male</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>nameOfficialFemale</td>
+                    <td>නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ) female</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>name_english_male</td>
+                    <td>Name in English&nbsp;&nbsp;male</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>name_english_female</td>
+                    <td>Name in English Female</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>addressMale</td>
+                    <td>Resident Address male</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>addressFemale</td>
+                    <td>male</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>addressFemale</td>
+                    <td>Resident Address female</td>
+                </tr>
+                <tr>
+                    <td>click</td>
+                    <td>registrationDatePicker</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>registrationDatePicker</td>
+                    <td>2011-08-09</td>
+                </tr>
+                <tr>
+                    <td>click</td>
+                    <td>eprMarriageRegistrationInit_marriage_preferredLanguageta</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>clickAndWait</td>
+                    <td>eprMarriageRegistrationInit_eprRegisterNewMarriage</td>
+                    <td></td>
+                </tr>
+
+            </tbody>
+        </table>
+    </body>
+</html>
