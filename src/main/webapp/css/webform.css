@@ -1758,7 +1758,9 @@
 }
 
 .birth-registration-form-details-warning-table {
-    margin-left: 40px;
+    margin-left: 50px;
+    font-size:11pt;
+    color:red;
 }
 
 .birth-registration-form-details-button-table {
