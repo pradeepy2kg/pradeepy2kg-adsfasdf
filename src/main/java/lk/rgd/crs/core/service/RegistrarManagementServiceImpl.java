@@ -250,9 +250,9 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
     public Registrar getRegistrarByPin(long pin, User user) {
         if (!user.isAuthorized(Permission.SEARCH_REGISTRAR)) {
             handleException("User : " + user.getUserId() +
-                " is not authorized to manage manage registrars", ErrorCodes.PERMISSION_DENIED);
+                " is not authorized to search registrars", ErrorCodes.PERMISSION_DENIED);
         }
-        logger.debug("Requesting List of registrars by pin number : {} ", pin);
+        logger.debug("Requesting a registrar by pin number : {} ", pin);
         return registrarDao.getRegistrarByPin(pin);
     }
 
