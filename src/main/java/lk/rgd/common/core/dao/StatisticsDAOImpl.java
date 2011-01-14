@@ -1,19 +1,21 @@
 package lk.rgd.common.core.dao;
 
 import lk.rgd.common.api.dao.StatisticsDAO;
-import lk.rgd.common.api.domain.CommonStatistics;
 import lk.rgd.common.api.domain.Statistics;
-import lk.rgd.common.api.domain.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author shan
  */
 public class StatisticsDAOImpl extends BaseDAO implements StatisticsDAO {
+    private static final Logger logger = LoggerFactory.getLogger(StatisticsDAOImpl.class);
 
     /**
      * @inheritDoc
@@ -33,9 +35,11 @@ public class StatisticsDAOImpl extends BaseDAO implements StatisticsDAO {
      * @inheritDoc
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public void addStatistics(Statistics statistics) {
         statistics.setCreatedTimestamp(new Date());
         em.persist(statistics);
+        logger.debug("Statistics ID : {}", statistics.getIdUkey());
     }
 
     @Override
