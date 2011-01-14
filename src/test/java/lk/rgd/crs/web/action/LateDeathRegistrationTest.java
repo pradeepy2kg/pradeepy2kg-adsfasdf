@@ -204,7 +204,7 @@ public class LateDeathRegistrationTest extends CustomStrutsTestCase {
         request.setParameter("death.causeOfDeathEstablished", "false");
         request.setParameter("death.dateOfDeath", "2010-08-01");
         request.setParameter("death.dateOfRegistration", "2010-08-17");
-        request.setParameter("death.deathSerialNo", "123");
+        request.setParameter("death.deathSerialNo", "2010012345");
         request.setParameter("death.icdCodeOfCause", "33EE");
         request.setParameter("death.infantLessThan30Days", "false");
         request.setParameter("death.placeOfBurial", "මහරගම");
@@ -233,9 +233,9 @@ public class LateDeathRegistrationTest extends CustomStrutsTestCase {
 
         initAndExucute("/deaths/eprDeathDeclaration.do", session);
         session = deathAction.getSession();
-        assertEquals("Action erros for Adoption Declaration ", 0, deathAction.getActionErrors().size());
+        assertEquals("Action errors for Adoption Declaration ", 0, deathAction.getActionErrors().size());
 
-        assertEquals("Caurse of Death", "BUS ACCIDENT", ddf.getDeath().getCauseOfDeath());
+        assertEquals("Course of Death", "BUS ACCIDENT", ddf.getDeath().getCauseOfDeath());
         assertEquals("Date of Death", "2010-08-01", DateTimeUtils.getISO8601FormattedString(ddf.getDeath().getDateOfDeath()));
         assertEquals("date of Registration", "2010-08-17", DateTimeUtils.getISO8601FormattedString(ddf.getDeath().getDateOfRegistration()));
         assertEquals("Cause Of Death Established", false, ddf.getDeath().isCauseOfDeathEstablished());
@@ -243,7 +243,7 @@ public class LateDeathRegistrationTest extends CustomStrutsTestCase {
         assertEquals("Icd Code Of Cause", "33EE", ddf.getDeath().getIcdCodeOfCause());
         assertEquals("Place of Death", "මහරගම මහරෝහල", ddf.getDeath().getPlaceOfDeath());
         assertEquals("Place of Burial", "මහරගම", ddf.getDeath().getPlaceOfBurial());
-        assertEquals("Time of daath", "12:30", ddf.getDeath().getTimeOfDeath());
+        assertEquals("Time of drath", "12:30", ddf.getDeath().getTimeOfDeath());
         assertEquals("deathDistrictId", 11, ddf.getDeath().getDeathDivision().getDistrict().getDistrictId());
         assertEquals("deathDivisionId", 1, ddf.getDeath().getDeathDivision().getDivisionId());
         assertEquals("deathPersonFatherFullName", "SAMARAKONE P.", ddf.getDeathPerson().getDeathPersonFatherFullName());
