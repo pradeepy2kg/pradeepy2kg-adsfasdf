@@ -107,6 +107,20 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public MarriageRegister getMarriageRegisterByIdUKey(long idUKey, User user) {
+        logger.debug("attempt to get marriage register by idUKey : {} ", idUKey);
+        if (!user.isAuthorized(Permission.PRINT_MARRIAGE_EXTRACT)) {
+            handleException("User : " + user.getUserId() + " is not authorized to search marriage register", ErrorCodes.PERMISSION_DENIED);
+        }
+        MarriageRegister marriageRegister = marriageRegistrationDAO.getByIdUKey(idUKey);
+        ValidationUtils.validateAccessToMRDivision(marriageRegister.getMrDivision(), user);
+        return marriageRegister;
+    }
+
+    /**
+     * @inheritDoc
+     */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<MarriageRegister> getMarriageNoticeByDistrict(District district, int pageNo, int noOfRows,
         boolean active, User user) {
@@ -521,6 +535,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
 
         } else {
             //If no divisions selected find all DS divisions available for user
+            //TODO: handle error if user inactive
             if (!Role.ROLE_RG.equals(user.getRole().getRoleId())) {
                 //TODO: if DS division list avalable for DR and ARG, this method is ok
                 //TODO: else find particular division list based on the user role

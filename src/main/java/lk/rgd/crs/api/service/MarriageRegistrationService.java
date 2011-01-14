@@ -46,6 +46,15 @@ public interface MarriageRegistrationService {
     public MarriageRegister getByIdUKey(long idUKey, User user);
 
     /**
+     * Find marriage register by idUKey
+     *
+     * @param idUKey primary key of Marriage Register
+     * @param user   user who performs the action
+     * @return
+     */
+    public MarriageRegister getMarriageRegisterByIdUKey(long idUKey, User user);
+
+    /**
      * Returns a paginated list of Marriage Notices based on the specified District
      *
      * @param district the district

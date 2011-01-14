@@ -45,7 +45,7 @@ public class StateUtil {
 
         for (MarriageRegister.State state : statList) {
             stateList.put(state.ordinal(), getTextByState(state, language));
-            logger.error("State Ordinal : {}", state.ordinal());
+            logger.debug("State Ordinal : {}", state.ordinal());
         }
         return stateList;
     }
