@@ -405,6 +405,11 @@
         <put-attribute name="title" value="Index Records"/>
     </definition>
 
+    <definition name="epr.generateReports" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/management/GenerateReports.jsp"/>
+        <put-attribute name="title" value="report.title"/>
+    </definition>
+
     <!--  User Preferences Tiles -->
     <definition name="epr.UserPreferences" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/preferences/UserPreferences.jsp"/>
