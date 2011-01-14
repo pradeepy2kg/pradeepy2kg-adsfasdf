@@ -35,7 +35,7 @@ $(function() {
                 ageMonth = ageMonthTOday - ageMonthBDay;
                 ageYear = ageYearTOday - ageYearBDay;
             }
-            else    if (ageYearTOday > ageYearBDay) {
+            else if (ageYearTOday > ageYearBDay) {
                 ageMonth = (ageMonthTOday + 12) - ageMonthBDay;
                 ageYear = (ageYearTOday - 1) - ageYearBDay;
             }
@@ -281,7 +281,8 @@ function enableSerialNumber(mode) {
         </td>
         <td>
             <s:label value="YYYY-MM-DD" cssStyle="margin-left:5px;font-size:10px"/><br>
-            <s:textfield id="receivedDatePicker" name="adoption.orderReceivedDate" cssStyle="width:200px" maxLength="10"/>
+            <s:textfield id="receivedDatePicker" name="adoption.orderReceivedDate" cssStyle="width:200px"
+                         maxLength="10"/>
         </td>
     </tr>
     <tr>
@@ -289,7 +290,7 @@ function enableSerialNumber(mode) {
             <br>நீதிமன்றம்
             <br>Court
         </td>
-        <td><s:select list="courtList" name="courtId" cssStyle="margin-left:5px;width:300px;"/>
+        <td><s:select list="courtList" name="courtId" cssStyle="margin-left:5px;width:300px;" value="%{courtId}"/>
     </tr>
     <tr>
         <td>
@@ -311,7 +312,8 @@ function enableSerialNumber(mode) {
         </td>
         <td>
             <s:fielderror name="duplicateCourtOrderNumberError" cssStyle="color:red;font-size:10pt"/>
-            <s:textfield name="adoption.courtOrderNumber" id="courtOrderNumber" cssStyle="margin-left:5px;" maxLength="240"/>
+            <s:textfield name="adoption.courtOrderNumber" id="courtOrderNumber" cssStyle="margin-left:5px;"
+                         maxLength="240"/>
         </td>
     </tr>
     <tr>
@@ -323,7 +325,7 @@ function enableSerialNumber(mode) {
         <td><s:textfield name="adoption.judgeName" id="judgeName" cssStyle="margin-left:5px;" maxLength="250"/></td>
     </tr>
     <tr>
-        <td>සහතිකය නිකුත් කල යුතු භාෂාව <br>சான்றிதழ் வழங்கப்பட வேண்டிய மொழி  <br>Preferred
+        <td>සහතිකය නිකුත් කල යුතු භාෂාව <br>சான்றிதழ் வழங்கப்பட வேண்டிய மொழி <br>Preferred
             Language for
         </td>
         <td style="text-align:left;" width="30px">
@@ -414,11 +416,12 @@ function enableSerialNumber(mode) {
             <br>கடவுச் சீட்டு
             <br>Passport No.
         </td>
-        <td><s:textfield name="adoption.applicantPassport" id="applcantPassportNumber" cssStyle="width:90%" maxLength="15"/></td>
+        <td><s:textfield name="adoption.applicantPassport" id="applcantPassportNumber" cssStyle="width:90%"
+                         maxLength="15"/></td>
     </tr>
     <tr>
         <td>
-            අයදුම් කරුගේ නම  <s:label value="*" cssStyle="color:red;font-size:10pt"/>
+            අයදුම් කරුගේ නම <s:label value="*" cssStyle="color:red;font-size:10pt"/>
             <br>விண்ணப்பதாரியின் பெயா்
             <br>Name of the Applicant
         </td>
@@ -488,7 +491,8 @@ function enableSerialNumber(mode) {
             Passport No.
         </td>
         <td>
-            <s:textfield name="adoption.wifePassport" id="wifePassport" cssStyle="width:90%" maxLength="15"> </s:textfield>
+            <s:textfield name="adoption.wifePassport" id="wifePassport" cssStyle="width:90%"
+                         maxLength="15"> </s:textfield>
         </td>
     </tr>
     <tr>
@@ -551,7 +555,7 @@ function enableSerialNumber(mode) {
     </tr>
     <tr>
         <td>
-            වයස  <s:label value="*" cssStyle="color:red;font-size:10pt"/>
+            වයස <s:label value="*" cssStyle="color:red;font-size:10pt"/>
             <br>வயது
             <br>Age
         </td>
@@ -561,7 +565,8 @@ function enableSerialNumber(mode) {
             <br>Years
         </td>
         <td><s:textfield name="adoption.childAgeYears" id="childAgeYears" cssStyle="width:87%"
-                         onchange="validateNum(document.getElementById('childAgeYears').value)" maxLength="3"/></td>
+                         onchange="validateNum(document.getElementById('childAgeYears').value)" maxLength="3"
+                         value="%{adoption.childAgeYears}"/></td>
         <td>
             මාස
             <br>மாதங்கள்
@@ -569,12 +574,13 @@ function enableSerialNumber(mode) {
         </td>
         <td><s:textfield name="adoption.childAgeMonths" id="childAgeMonths" onclick="calYearAndMonth()"
                          cssStyle="width:91%"
-                         onchange="validateNum(document.getElementById('childAgeMonths').value)" maxLength="2"/></td>
+                         onchange="validateNum(document.getElementById('childAgeMonths').value)" maxLength="2"
+                         value="%{adoption.childAgeMonths}"/></td>
     </tr>
     <tr>
         <td>
             දැනට පවතින නම
-            (නමක් දී ඇති නම්)    <s:label value="*" cssStyle="color:blue;font-size:11pt"/>
+            (නමක් දී ඇති නම්) <s:label value="*" cssStyle="color:blue;font-size:11pt"/>
             <br>தற்போதைய பெயா்
             (ஏற்கனவே பெயா் வழங்கப்பட்டிருந்தால்)
             <br>Existing Name
@@ -631,7 +637,7 @@ function enableSerialNumber(mode) {
                                  onclick="enableCertificateNumber(true);" cssStyle="margin-left:14px"/></td>
         </td>
         <td colspan="1"><s:textfield name="adoption.birthCertificateNumber" id="birthCertificateNumber"
-                maxLength="10"/></td>
+                                     maxLength="10"/></td>
     </tr>
 </table>
 <table class="adoption-reg-form-header-table">

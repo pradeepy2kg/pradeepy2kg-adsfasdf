@@ -1,7 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <script type="text/javascript">
-    function initPage(){}
+    function initPage() {
+    }
 </script>
 <style type="text/css">
     .bg1 {
@@ -55,7 +56,7 @@
         text-align: center;
         position: absolute;
         width: 135px;
-        height:40px;
+        height: 40px;
         margin: 462px 0px 0px 302px;
         cursor: pointer;
     }
@@ -143,24 +144,28 @@
 </style>
 <%-- div tags for main links --%>
 <s:a href="eprAdoptionRegistrationAction.do">
-    <div class=" link-data-entry"><s:label value="%{getText('lb.data.entry')}" cssStyle="cursor:pointer;"/></div>
+    <div class=" link-data-entry"><s:label value="%{getText('lb.data.entry')}"
+                                           cssStyle="cursor:pointer;font-size:10px"/></div>
 </s:a>
 <s:a href="eprAdoptionApprovalAndPrint.do">
-    <div class="link-approval"><s:label value="%{getText('lb.approve.ADR')}" cssStyle="cursor:pointer;"/></div>
+    <div class="link-approval"><s:label value="%{getText('lb.approve.ADR')}"
+                                        cssStyle="cursor:pointer;font-size:10px"/></div>
 </s:a>
 <s:a href="eprAdoptionApprovalAndPrint.do">
     <div class="link-print-application"><s:label value="%{getText('lb.print.application.lable01')}"
-                                                 cssStyle="cursor:pointer;"/><br/>
+                                                 cssStyle="cursor:pointer;font-size:10px"/><br/>
         <s:label value="%{getText('lb.print.application.lable02')}"/></div>
 </s:a>
 <s:a href="eprAdoptionApprovalAndPrint.do">
-    <div class="link-print-certified"><s:label value="%{getText('lb.adoption.print.certified.copy')}" cssStyle="cursor:pointer;"/>
+    <div class="link-print-certified"><s:label value="%{getText('lb.adoption.print.certified.copy')}"
+                                               cssStyle="cursor:pointer;font-size:10px"/>
         <br/>
-        <s:label value="%{getText('lb.deo.adr.lable')}" cssStyle="cursor:pointer;"/>
+        <s:label value="%{getText('lb.deo.adr.lable')}" cssStyle="cursor:pointer;font-size:10px"/>
     </div>
 </s:a>
 <s:a href="eprAdoptionApplicantInfo.do">
-    <div class="link-data-entry-02"><s:label value="%{getText('lb.data.entry.applicant.info')}" cssStyle="cursor:pointer;"/></div>
+    <div class="link-data-entry-02"><s:label value="%{getText('lb.data.entry.applicant.info')}"
+                                             cssStyle="cursor:pointer;"/></div>
 </s:a>
 <%-- div tags for labels of image--%>
 <div class="label01"><s:label value="%{getText('lb.receive.copy')}"/></div>
