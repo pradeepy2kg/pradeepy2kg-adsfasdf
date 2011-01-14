@@ -30,8 +30,7 @@
             <tr>
                 <td width="20%" align="right"><s:label value="%{getText('select.year.label')}"/></td>
                 <td width="50%">
-                    <s:select list="#@java.util.HashMap@{'0':'2011','1':'2010','2':'2009'}"
-                            name="year" id="selectYear" cssStyle="width:300px;"/>
+                    <s:select list="yearList" name="year" id="selectYear" cssStyle="width:300px;"/>
                 </td>
                 <td width="30%">&nbsp;</td>
             </tr>
