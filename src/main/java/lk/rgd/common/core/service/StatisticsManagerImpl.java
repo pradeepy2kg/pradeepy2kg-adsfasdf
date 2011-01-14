@@ -81,11 +81,7 @@ public class StatisticsManagerImpl implements StatisticsManager {
         /* get a list of all ADRs */
         List<User> adrUserList = userDAO.getUsersByRole(Role.ROLE_ADR);
 
-        logger.debug("adr size = {}", adrUserList.size());
-
         adrUserList.addAll(userDAO.getUsersByRole(Role.ROLE_DR));
-
-        logger.debug("full size = {}", adrUserList.size());
 
         /* get one ADR at a time */
         for (User adrUser : adrUserList) {
@@ -94,22 +90,22 @@ public class StatisticsManagerImpl implements StatisticsManager {
             Statistics statistics = populateStatistics(adrUser, startTime, endTime);
 
             /* get assigned dsDivision list for ADR */
-            Set<DSDivision> dsDivisionList = adrUser.getAssignedBDDSDivisions();
+            /*Set<DSDivision> dsDivisionList = adrUser.getAssignedBDDSDivisions();
             Iterator<DSDivision> i = dsDivisionList.iterator();
 
-            /* get one dsDivision at a time */
+            *//* get one dsDivision at a time *//*
             while (i.hasNext()) {
                 DSDivision dsDivision = i.next();
 
-                /* get one DEO at a time */
+                *//* get one DEO at a time *//*
                 for (User deoForAdr : deoUserList) {
                     if (deoForAdr.getAssignedBDDSDivisions().contains(dsDivision)) {
 
-                        /* get statistics of DEO */
+                        *//* get statistics of DEO *//*
                         Statistics statisticsOfDeo = statisticsDAO.getByUser(deoForAdr.getUserId());
 
                         if (statisticsOfDeo != null) {
-                            /* add DEO Birth statistics to ADR statistics */
+                            *//* add DEO Birth statistics to ADR statistics *//*
                             {
                                 statistics.setBirthsApprovedItems(statistics.getBirthsApprovedItems() +
                                     statisticsOfDeo.getBirthsApprovedItems());
@@ -119,7 +115,7 @@ public class StatisticsManagerImpl implements StatisticsManager {
                             statistics.setBirthsTotalPendingItems(statistics.getBirthsTotalPendingItems() +
                                 statisticsOfDeo.getBirthsTotalPendingItems());
 
-                            /* add DEO Death statistics to ADR statistics */
+                            *//* add DEO Death statistics to ADR statistics *//*
                             statistics.setDeathsApprovedItems(statistics.getDeathsApprovedItems() +
                                 statisticsOfDeo.getBirthsApprovedItems());
                             statistics.setDeathsRejectedItems(statistics.getDeathsRejectedItems() +
@@ -127,7 +123,7 @@ public class StatisticsManagerImpl implements StatisticsManager {
                             statistics.setDeathsTotalPendingItems(statistics.getDeathsTotalPendingItems() +
                                 statisticsOfDeo.getDeathsTotalPendingItems());
 
-                            /* add DEO Marriage statistics to ADR statistics */
+                            *//* add DEO Marriage statistics to ADR statistics *//*
                             statistics.setMrgApprovedItems(statistics.getMrgApprovedItems() +
                                 statisticsOfDeo.getMrgApprovedItems());
                             statistics.setMrgRejectedItems(statistics.getMrgRejectedItems() +
@@ -137,7 +133,7 @@ public class StatisticsManagerImpl implements StatisticsManager {
                         }
                     }
                 }
-            }
+            }*/
 
             /* save record */
             statisticsDAO.addStatistics(statistics);
@@ -153,21 +149,21 @@ public class StatisticsManagerImpl implements StatisticsManager {
             Statistics statistics = populateStatistics(drUser, startTime, endTime);
 
             /* get assigned dsDivision list for DR */
-            Set<DSDivision> dsDivisionList = drUser.getAssignedBDDSDivisions();
+            /*Set<DSDivision> dsDivisionList = drUser.getAssignedBDDSDivisions();
             Iterator<DSDivision> i = dsDivisionList.iterator();
 
-            /* get one dsDivision at a time */
+            *//* get one dsDivision at a time *//*
             while (i.hasNext()) {
                 DSDivision dsDivision = i.next();
 
-                /* get one ADR at a time */
+                *//* get one ADR at a time *//*
                 for (User adrForDr : adrUserList) {     // todo: may be this is not the best
                     if (adrForDr.getAssignedBDDSDivisions().contains(dsDivision)) {
 
-                        /* get statistics of ADR */
+                        *//* get statistics of ADR *//*
                         Statistics statisticsOfAdr = statisticsDAO.getByUser(adrForDr.getUserId());
 
-                        /* add ADR Birth statistics to DR statistics */
+                        *//* add ADR Birth statistics to DR statistics *//*
                         statistics.setBirthsApprovedItems(statistics.getBirthsApprovedItems() +
                             statisticsOfAdr.getBirthsApprovedItems());
                         statistics.setBirthsRejectedItems(statistics.getBirthsRejectedItems() +
@@ -175,7 +171,7 @@ public class StatisticsManagerImpl implements StatisticsManager {
                         statistics.setBirthsTotalPendingItems(statistics.getBirthsTotalPendingItems() +
                             statisticsOfAdr.getBirthsTotalPendingItems());
 
-                        /* add ADR Death statistics to DR statistics */
+                        *//* add ADR Death statistics to DR statistics *//*
                         statistics.setDeathsApprovedItems(statistics.getDeathsApprovedItems() +
                             statisticsOfAdr.getBirthsApprovedItems());
                         statistics.setDeathsRejectedItems(statistics.getDeathsRejectedItems() +
@@ -183,7 +179,7 @@ public class StatisticsManagerImpl implements StatisticsManager {
                         statistics.setDeathsTotalPendingItems(statistics.getDeathsTotalPendingItems() +
                             statisticsOfAdr.getDeathsTotalPendingItems());
 
-                        /* add ADR Marriage statistics to DR statistics */
+                        *//* add ADR Marriage statistics to DR statistics *//*
                         statistics.setMrgApprovedItems(statistics.getMrgApprovedItems() +
                             statisticsOfAdr.getMrgApprovedItems());
                         statistics.setMrgRejectedItems(statistics.getMrgRejectedItems() +
@@ -193,15 +189,47 @@ public class StatisticsManagerImpl implements StatisticsManager {
                     }
                 }
 
-            }
+            }*/
+            statisticsDAO.addStatistics(statistics);
 
         }
+
+        /* get a list of all ARGs */
         List<User> argUserList = userDAO.getUsersByRole(Role.ROLE_ARG);   // todo
 
+        /* get a ARG at a time */
+        for (User argUser : argUserList) {
+
+            /* statistics object current ARG */
+            Statistics statistics = populateStatistics(argUser, startTime, endTime);
+
+            statisticsDAO.addStatistics(statistics);
+
+        }
+
+        /* get a list of all RGs */
         List<User> rgUserList = userDAO.getUsersByRole(Role.ROLE_RG);    // todo
+
+        /* get a RG at a time */
+        for (User rgUser : rgUserList) {
+
+            /* statistics object current RG */
+            Statistics statistics = populateStatistics(rgUser, startTime, endTime);
+
+            statisticsDAO.addStatistics(statistics);
+            
+        }
 
     }
 
+    /**
+     * This is for triggerScheduledStatJobs()
+     *
+     * @param user
+     * @param startTime
+     * @param endTime
+     * @return
+     */
     private Statistics populateStatistics(User user, Date startTime, Date endTime) {
 
         /* statistics object for current User */
@@ -265,6 +293,18 @@ public class StatisticsManagerImpl implements StatisticsManager {
             }
         }
 
+        return statistics;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public Statistics getStatisticsForUser(User user) {
+        Statistics statistics;
+        statistics = statisticsDAO.getByUser(user.getUserId());
+        if (statistics == null) {
+            statistics = new Statistics();
+        }
         return statistics;
     }
 
