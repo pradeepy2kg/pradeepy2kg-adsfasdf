@@ -2,10 +2,29 @@
   @author Indunil Moremada
 --%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script type="text/javascript">
-    function initPage(){}
+    function initPage() {
+        disableButton(true);
+    }
+
+    function disableButton(mode) {
+        if (mode) {
+            document.getElementById('approve').style.display = 'none';
+        }
+        else {
+            document.getElementById('approve').style.display = 'block';
+        }
+    }
+
+    function selectCheckbox() {
+        var ok = document.getElementById('ignoreWarning');
+        if (ok.checked) {
+            disableButton(false)
+        } else {
+            disableButton(true)
+        }
+    }
 </script>
 
 <s:if test="#request.warnings.size>0">
@@ -21,15 +40,28 @@
                         </tr>
                     </s:iterator>
                 </table>
-                <table class="birth-registration-form-details-button-table">
+                <table align="center" border="0">
+                    <col width="350px;"/>
+                    <col width="20px;"/>
+                    <col width="130px;"/>
                     <tr>
-                        <td><s:label value="%{getText('ignoreWorning.label')}" name="ignoreWorning"/></td>
-                        <td><s:checkbox name="ignoreWarning"/></td>
+                        <td colspan="3"><br></td>
+                    </tr>
+                    <tr>
+                        <td height="60px;">
+                            <s:label value="%{getText('ignoreWorning.label')}" cssStyle="float:right;"/>
+                        </td>
+                        <td>
+                            <s:checkbox id="ignoreWarning" name="ignoreWarning" onclick="javascript:selectCheckbox()"/>
+                        </td>
+                        <td>
+                            <div class="form-submit">
+                                <s:submit id="approve" name="approve" value="%{getText('approve.label')}"/>
+                            </div>
+                        </td>
                         <s:hidden value="%{#request.bdId}" name="bdId"/>
                         <s:hidden value="true" name="directApprovalFlag"/>
                         <s:hidden value="true" name="confirmationApprovalFlag"/>
-                        <td class="button" align="left"><s:submit name="approve"
-                                                                  value="%{getText('approve.label')}"/></td>
                     </tr>
                 </table>
             </fieldset>
@@ -63,19 +95,18 @@
                     <s:if test="#request.allowApproveBDF">
                         <s:if test="approved">
                             <s:a href="%{printBirthCertificate}">
-                                <s:label
-                                        value="%{getText('printBirthCertificate_link.label')}"/></s:a> &nbsp;&nbsp;&nbsp;&nbsp;
+                                <s:label value="%{getText('printBirthCertificate_link.label')}"/></s:a>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
                         </s:if>
-
                         <s:else>
                             <s:a href="%{approveConfirmation}"><s:label value="%{getText('approve_link.label')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
                         </s:else>
                     </s:if>
                     <s:if test="skipConfirmationChages">
                         <%--<s:if test="#request.allowPrintCertificate">--%>
-                            <s:a href="%{printBirthCertificate}">
-                                <s:label
-                                        value="%{getText('printBirthCertificate_link.label')}"/></s:a> &nbsp;&nbsp;&nbsp;&nbsp;
+                        <s:a href="%{printBirthCertificate}">
+                            <s:label value="%{getText('printBirthCertificate_link.label')}"/></s:a>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
                         <%--</s:if>--%>
                     </s:if>
                 </td>

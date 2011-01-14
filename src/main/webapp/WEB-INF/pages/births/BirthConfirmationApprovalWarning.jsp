@@ -1,6 +1,29 @@
 <%--@author Indunil Moremada--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<script type="text/javascript">
+    function initPage() {
+        disableButton(true);
+    }
+
+    function disableButton(mode) {
+        if (mode) {
+            document.getElementById('approve').style.display = 'none';
+        }
+        else {
+            document.getElementById('approve').style.display = 'block';
+        }
+    }
+
+    function selectCheckbox() {
+        var ok = document.getElementById('ignoreWarning');
+        if (ok.checked) {
+            disableButton(false)
+        } else {
+            disableButton(true)
+        }
+    }
+</script>
 
 <div id="birth-declaration-approval-warning-outer">
     <fieldset>
@@ -14,7 +37,6 @@
         </table>
         <s:form action="eprConfirmationIgnoreWarning" name="birthConfirmationApprovalWarningForm">
         <table align="center" border="0">
-
             <tr>
                 <s:hidden name="pageNo" value="%{#request.pageNo}"/>
                 <s:hidden name="birthDistrictId" value="%{#request.birthDistrictId}"/>
@@ -27,14 +49,19 @@
                 <s:hidden name="confirmationApprovalFlag" value="true"/>
             </tr>
             <tr>
+                <td colspan="3"><br></td>
+            </tr>
+            <tr>
                 <td><s:label value="%{getText('ignoreWorning.label')}" name="ignoreWarning"/></td>
-                <td><s:checkbox name="ignoreWarning"/></td>
+                <td><s:checkbox id="ignoreWarning" name="ignoreWarning" onclick="javascript:selectCheckbox()"/></td>
                 <td>
-                    <div class="form-submit"><s:submit name="approve" value="%{getText('approve.label')}"/></div>
                 </td>
             </tr>
         </table>
     </fieldset>
+    <div class="form-submit" style="margin-right:400px;">
+        <s:submit id="approve" name="approve" value="%{getText('approve.label')}"/>
+    </div>
     </s:form>
 </div>
 </div>

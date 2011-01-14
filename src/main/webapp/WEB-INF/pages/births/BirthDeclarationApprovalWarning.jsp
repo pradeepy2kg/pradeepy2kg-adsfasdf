@@ -2,7 +2,27 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <script type="text/javascript">
-    function initPage(){}
+    function initPage() {
+        disableButton(true);
+    }
+
+    function disableButton(mode) {
+        if (mode) {
+            document.getElementById('approve').style.display = 'none';
+        }
+        else {
+            document.getElementById('approve').style.display = 'block';
+        }
+    }
+
+    function selectCheckbox() {
+        var ok = document.getElementById('ignoreWarning');
+        if (ok.checked) {
+            disableButton(false)
+        } else {
+            disableButton(true)
+        }
+    }
 </script>
 <div id="birth-declaration-approval-warning-outer">
     <fieldset>
@@ -17,7 +37,6 @@
         <s:form action="eprIgnoreWarning" name="birthDeclarationApprovalWarningForm">
         <table align="center" border="0">
             <tr>
-
                 <s:hidden name="pageNo" value="%{#request.pageNo}"/>
                 <s:hidden name="birthDistrictId" value="%{#request.birthDistrictId}"/>
                 <s:hidden name="birthDivisionId" value="%{#request.birthDivisionId}"/>
@@ -29,16 +48,12 @@
             </tr>
             <tr>
                 <td><s:label value="%{getText('ignoreWorning.label')}" name="ignoreWarning"/></td>
-                <td><s:checkbox name="ignoreWarning"/></td>
+                <td><s:checkbox name="ignoreWarning" id="ignoreWarning" onclick="javascript:selectCheckbox()"/></td>
                 <td>
-                    <div class="form-submit"><s:submit name="approve" value="%{getText('approve.label')}"/></div>
                 </td>
             </tr>
-                <%--<tr>
-                    <td><s:label value="%{getText('comment.label')}" name="comment"/></td>
-                    <td><s:textarea name="comments"/> </td>
-                </tr>--%>
         </table>
     </fieldset>
+    <div class="form-submit" style="margin-right:400px;"><s:submit id="approve" name="approve" value="%{getText('approve.label')}"/></div>
     </s:form>
 </div>
