@@ -122,8 +122,9 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         try {
             FileOutputStream out = new FileOutputStream(file);
             out.write(csv.toString().getBytes());
+            out.close();
         } catch (IOException e) {
-            logger.error("Path not Found or access denied - {} {}", file.getPath()+file.getName(), e.getMessage());
+            logger.error("Error writing the CSV - {} {}", file.getPath()+file.getName(), e.getMessage());
         }
 
         return null;
