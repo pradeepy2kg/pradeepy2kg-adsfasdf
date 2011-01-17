@@ -31,5 +31,5 @@
     <s:if test="allowEdit">
         <s:a href="%{edit}"><s:label value="%{getText('label.edit')}"/></s:a>
     </s:if>
-    <s:a href="%{newEntry}"><s:label value="%{getText('addNewBDF_link.label')}"/></s:a>
+    <s:a href="%{newEntry}"><s:label value="%{getText('addNewPerson.label')}"/></s:a>
 </div>
