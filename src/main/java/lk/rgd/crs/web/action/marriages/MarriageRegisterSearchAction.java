@@ -192,7 +192,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     }
 
     public String markMarriageExtractAsPrinted() {
-        MarriageRegister register = marriageRegistrationService.getByIdUKey(idUKey, user);
+        MarriageRegister register = marriageRegistrationService.getMarriageRegisterByIdUKey(idUKey, user, Permission.PRINT_MARRIAGE_EXTRACT);
         if (register != null && register.getState() == MarriageRegister.State.EXTRACT_PRINTED) {
             addActionMessage(getText("message.marriagerextract.alreadymarkedasprinted"));
             return SUCCESS;
