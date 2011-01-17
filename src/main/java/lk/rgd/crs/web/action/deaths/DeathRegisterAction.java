@@ -396,13 +396,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     public String approveDeath() {
         logger.debug("requested to approve Death Declaration with idUKey : {} and current state : {} ", idUKey,
             currentStatus);
-        try {
-            warnings = service.approveDeathRegistration(idUKey, user, ignoreWarning);
-            addActionMessage(getText("message.approve.success", new String[]{Long.toString(idUKey)}));
-        } catch (RGDRuntimeException e) {
-            addActionError(getText("error.death.registration.approval.fail", new String[]{Long.toString(idUKey)}));
-            logger.debug("death register approval fails idUKey : {} ", idUKey);
-        }
+        approveDeathRegistration();
         if (warnings != null && warnings.size() > 0) {
             return "warning";
         }
@@ -421,10 +415,25 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public String directApproveDeath() {
         logger.debug("requested to direct approve Death Declaration with idUKey : {}", idUKey);
-        warnings = service.approveDeathRegistration(idUKey, user, ignoreWarning);
+        try {
+            warnings = service.approveDeathRegistration(idUKey, user, ignoreWarning);
+            addActionMessage(getText("message.approve.success", new String[]{Long.toString(idUKey)}));
+            pageNo = 3;
+        } catch (RGDRuntimeException e) {
+            switch (e.getErrorCode()) {
+                case ErrorCodes.PRS_DUPLICATE_NIC:
+                    final DeathRegister dr = service.getById(idUKey, user);
+                    addActionError(getText("error.death.duplicateNic.fail",
+                        new String[]{Long.toString(dr.getDeath().getDeathSerialNo()), dr.getDeathPerson().getDeathPersonPINorNIC()}));
+                    break;
+                default:
+                    addActionError(getText("error.death.registration.approval.fail", new String[]{Long.toString(idUKey)}));
+            }
+            logger.debug("death register approval fails idUKey : {} ", idUKey);
+            pageNo = 2;
+        }
         initPermissionForApprovalAndPrint();
         populate();
-        pageNo = 3;
         directApprove = true;
         return SUCCESS;
     }
@@ -432,12 +441,26 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     public String directApproveIgnoringWornings() {
         logger.debug("Direct approve death registration with IdUKey : {} IgnoreWarning : {}", idUKey, ignoreWarning);
         if (ignoreWarning) {
-            service.approveDeathRegistration(idUKey, user, ignoreWarning);
+            try {
+                warnings = service.approveDeathRegistration(idUKey, user, ignoreWarning);
+                addActionMessage(getText("message.approve.success", new String[]{Long.toString(idUKey)}));
+                pageNo = 4;
+            } catch (RGDRuntimeException e) {
+                switch (e.getErrorCode()) {
+                    case ErrorCodes.PRS_DUPLICATE_NIC:
+                        final DeathRegister dr = service.getById(idUKey, user);
+                        addActionError(getText("error.death.duplicateNic.fail",
+                            new String[]{Long.toString(dr.getDeath().getDeathSerialNo()), dr.getDeathPerson().getDeathPersonPINorNIC()}));
+                        break;
+                    default:
+                        addActionError(getText("error.death.registration.approval.fail", new String[]{Long.toString(idUKey)}));
+                }
+                logger.debug("death register approval fails idUKey : {} ", idUKey);
+                pageNo = 2;
+            }
             initPermissionForApprovalAndPrint();
             populate();
         }
-        pageNo = 4;
-        addActionMessage(getText("message.approve.success", new String[]{Long.toString(idUKey)}));
         return SUCCESS;
     }
 
@@ -601,6 +624,34 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         } else {
             setNextFlag(false);
         }
+    }
+
+    /**
+     * This method is used to approve death registrations
+     */
+    private void approveDeathRegistration() {
+        try {
+            warnings = service.approveDeathRegistration(idUKey, user, ignoreWarning);
+            addActionMessage(getText("message.approve.success", new String[]{Long.toString(idUKey)}));
+        } catch (RGDRuntimeException e) {
+            handleDeathApprovalException(e);
+        }
+    }
+
+    /**
+     * This method is used to handle death approval related exceptions and show appropriate messages
+     */
+    private void handleDeathApprovalException(RGDRuntimeException e) {
+        switch (e.getErrorCode()) {
+            case ErrorCodes.PRS_DUPLICATE_NIC:
+                final DeathRegister dr = service.getById(idUKey, user);
+                addActionError(getText("error.death.duplicateNic.fail",
+                    new String[]{Long.toString(dr.getDeath().getDeathSerialNo()), dr.getDeathPerson().getDeathPersonPINorNIC()}));
+                break;
+            default:
+                addActionError(getText("error.death.registration.approval.fail", new String[]{Long.toString(idUKey)}));
+        }
+        logger.debug("death register approval fails idUKey : {} ", idUKey);
     }
 
     private void populate() {

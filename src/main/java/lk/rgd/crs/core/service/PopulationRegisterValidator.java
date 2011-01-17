@@ -105,19 +105,20 @@ public class PopulationRegisterValidator {
 
         final Long tempPin = person.getTemporaryPin();
         final String nic = person.getNic();
+        final long personUKey = person.getPersonUKey();
 
         // TODO need to add solr search duplicates also
         // check if this is a duplicate entry by temporary pin
         if (tempPin != null) {
             Person p = personDAO.findPersonByTemporaryPIN(person.getTemporaryPin());
-            if (p != null && (isRecordInDataEntryOrApproved(p.getStatus()))) {
+            if (p != null && (isRecordInDataEntryOrApproved(p.getStatus())) && personUKey != p.getPersonUKey()) {
                 addDuplicateWarning(warnings, rb, p);
             }
         }
         // check if this a duplicate entry by nic
         if (nic != null) {
             for (Person p : personDAO.findPersonsByNIC(person.getNic())) {
-                if (isRecordInDataEntryOrApproved(p.getStatus())) {
+                if (isRecordInDataEntryOrApproved(p.getStatus()) && personUKey != p.getPersonUKey()) {
                     addDuplicateWarning(warnings, rb, p);
                 }
             }

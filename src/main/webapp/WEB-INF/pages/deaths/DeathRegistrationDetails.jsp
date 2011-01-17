@@ -55,18 +55,18 @@
     </div>
     <div id="death-registration-details-footer">
         <div class="form-submit">
-            <s:if test="pageNo==2">
+            <s:if test="%{pageNo}==2">
                 <s:url id="newDR" action="eprInitDeathDeclaration.do">
                     <s:param name="addNewMode" value="true"/>
                     <s:param name="oldIdUKey" value="#request.idUKey"/>
                 </s:url>
                 <s:a href="%{newDR}"><s:label value="%{getText('newDR.label')}"/></s:a>
-                <s:url id="approveDR" action="eprDirectApproveDeath.do">
-                    <s:param name="idUKey" value="#request.idUKey"/>
-                    <s:param name="currentStatus" value="%{#request.currentStatus}"/>
-                </s:url>
             </s:if>
-            <s:if test="(!(#session.user_bean.role.roleId.equals('DEO')))">
+            <s:if test="(!(#session.user_bean.role.roleId.equals('DEO'))) && pageNo == 2">
+                <s:url id="approveDR" action="eprDirectApproveDeath.do">
+                    <s:param name="idUKey" value="idUKey"/>
+                    <s:param name="currentStatus" value="currentStatus"/>
+                </s:url>
                 <s:a href="%{approveDR}"><s:label value="%{getText('approveDR.label')}"/></s:a>
 
             </s:if>
