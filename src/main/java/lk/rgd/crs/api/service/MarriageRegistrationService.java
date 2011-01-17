@@ -50,9 +50,10 @@ public interface MarriageRegistrationService {
      *
      * @param idUKey primary key of Marriage Register
      * @param user   user who performs the action
+     * @param permission permission level of the action
      * @return
      */
-    public MarriageRegister getMarriageRegisterByIdUKey(long idUKey, User user);
+    public MarriageRegister getMarriageRegisterByIdUKey(long idUKey, User user, int permission);
 
     /**
      * Returns a paginated list of Marriage Notices based on the specified District

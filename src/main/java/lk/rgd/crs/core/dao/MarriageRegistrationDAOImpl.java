@@ -216,7 +216,7 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
             mrDivisionEquals = "mr.mrDivision.dsDivision.district.districtUKey = :divisionUKey)";
 
         } else if (AppConstants.ALL.equals(divisionType)) {
-            mrDivisionEquals = "mr.mrDivision.dsDivision.dsDivisionUKey IN (:dsDivisionList))";
+            mrDivisionEquals = "mr.mrDivision.dsDivision IN (:dsDivisionList))";
         }
 
         if (!mrDivisionEquals.isEmpty()) {
