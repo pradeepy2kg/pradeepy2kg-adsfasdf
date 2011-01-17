@@ -6,6 +6,7 @@ import lk.rgd.common.RGDRuntimeException;
 import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.crs.api.service.ReportsGenerator;
@@ -135,7 +136,11 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         int length = statistics.totals.size();
         for (int i = 0; i < length; i++) {
             BirthDistrictStatistics districtStats = statistics.totals.get(i);
-            csv.append(i);
+            District district = districtDAO.getDistrict(i+1);
+            String districtId = "Unknown";
+            if(district != null)
+                districtId = district.getEnDistrictName();
+            csv.append(districtId);
             csv.append(",");
             csv.append(districtStats.getTotal());
             csv.append(",");
