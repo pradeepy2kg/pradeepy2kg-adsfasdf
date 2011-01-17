@@ -98,6 +98,7 @@ public class RolePermissionUtils {
         adminBitSet.set(Permission.SEARCH_REGISTRAR);
         adminBitSet.set(Permission.EVENTS_MANAGEMENT);
         adminBitSet.set(Permission.INDEX_RECORDS);
+        adminBitSet.set(Permission.GENERATE_REPORTS);
 
 
     }

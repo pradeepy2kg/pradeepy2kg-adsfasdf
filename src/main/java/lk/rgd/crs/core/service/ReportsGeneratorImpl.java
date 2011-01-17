@@ -1,5 +1,8 @@
 package lk.rgd.crs.core.service;
 
+import lk.rgd.ErrorCodes;
+import lk.rgd.Permission;
+import lk.rgd.common.RGDRuntimeException;
 import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.domain.DSDivision;
@@ -42,10 +45,16 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
     /**
      * Generate a complete statistics object containing whole islandwide
      *
-     * @return BirthIslandWideStatistics
-     * @param year
+     * @param user
+     * @return BirthIslandWideStatistics  @param year
      */
-    public BirthIslandWideStatistics generate(int year) {
+    public BirthIslandWideStatistics generate(int year, User user) {
+
+        if (!user.isAuthorized(Permission.GENERATE_REPORTS)) {
+            handleException(user.getUserName() + " doesn't have permission to create a user",
+                ErrorCodes.PERMISSION_DENIED);
+        }
+
         List<DSDivision> dsDivisions = dsDivisionDAO.findAll();
         User systemUser = userManagementService.getSystemUser();
         List<BirthDeclaration> birthRecords;
@@ -100,6 +109,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
             statistics.getTotal(), statistics.getMaleTotal());
 
         return statistics;
+
     }
 
     /**
@@ -108,8 +118,13 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
      * // todo check if a CSV file already generated and avaialble for the given year.
      *
      * @return String the path and name of the created CSV file.
+     * @param user
      */
-    public String createReport() {
+    public String createReport(User user) {
+        if (!user.isAuthorized(Permission.GENERATE_REPORTS)) {
+            handleException(user.getUserName() + " doesn't have permission to create a user",
+                ErrorCodes.PERMISSION_DENIED);
+        }
         StringBuilder csv = new StringBuilder();
         csv.append("District,Total,Male,Female\n");
         csv.append("Sri Lanka,");
@@ -140,5 +155,10 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         }
 
         return null;
+    }
+
+    private void handleException(String message, int code) {
+        logger.error(message);
+        throw new RGDRuntimeException(message, code);
     }
 }

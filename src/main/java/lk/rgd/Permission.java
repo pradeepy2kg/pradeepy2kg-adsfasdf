@@ -52,4 +52,7 @@ public final class Permission {
     public static final int PRS_PRINT_CERT = 57;
     public static final int PRS_MARK_CERT_PRINTED = 58;
     public static final int PRS_EDIT_PERSON_AFTER_APPROVE = 59;
+
+    // permission for Reports
+    public static final int GENERATE_REPORTS = 60;
 }

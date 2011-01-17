@@ -1,5 +1,6 @@
 package lk.rgd.crs.api.service;
 
+import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.bean.BirthIslandWideStatistics;
 
 /**
@@ -10,16 +11,17 @@ public interface ReportsGenerator {
 
     /**
      *    Generate a complete statistics object containing whole islandwide stats
-     * @return  BirthIslandWideStatistics
-     * @param year
+     * @return  BirthIslandWideStatistics  @param year
+     * @param user
      */
-    public BirthIslandWideStatistics generate(int year);
+    public BirthIslandWideStatistics generate(int year, User user);
 
     /**
      *  Creates a Standard CSV file from the generated IslandWide stats.
      *  currently assumes. stats are already geneated.
      * // todo check if a CSV file already generated and avaialble for the given year.
      * @return String the path and name of the created CSV file.
+     * @param user
      */
-    public String createReport();
+    public String createReport(User user);
 }
