@@ -296,10 +296,21 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
 
     public String editPrimaryLocation() {
         User user = userDAO.getUserByPK(userId);
-        UserLocation userLocation = userLocationDAO.getUserLocation(user.getUserId(), locationId);
+        Location toPrimary = locationDAO.getLocation(locationId);
+        UserLocation uLocation = userLocationDAO.getUserLocation(userId, locationId);
+        if (!uLocation.getLifeCycleInfo().isActive()) {
+            addActionError(getText("inactive.primary.warning"));
+            primaryLocation = service.getUserByID(userId).getPrimaryLocation().getLocationUKey();
+            userLocationNameList = userLocationDAO.getUserLocationsListByUserId(userId);
+            populateLocationListOnly(user);
+            return SUCCESS;
+        }
+        user.setPrimaryLocation(toPrimary);
+        service.updateUser(user);
         //service.addUserLocation(userLocation, currentUser, true);
-        addPrimaryLocation(userLocation, currentUser);
-        Location prmLocation = user.getPrimaryLocation();
+        //addPrimaryLocation(userLocation, currentUser);
+
+        Location prmLocation = service.getUserByID(userId).getPrimaryLocation();
         if (prmLocation != null) {
             primaryLocation = prmLocation.getLocationUKey();
         } else {
@@ -314,7 +325,6 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     }
 
     public String assignedUserLocation() {
-        //primaryLocation = userDAO.getUserByPK(userId).getPrimaryLocation().getLocationUKey();
         User user = userDAO.getUserByPK(userId);
         Location prmLocation = user.getPrimaryLocation();
         if (prmLocation != null) {
@@ -323,10 +333,9 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         if (pageType == 0) {
             UserLocation checkUserLocation = userLocationDAO.getUserLocation(userId, locationId);
             if (checkUserLocation != null) {
-                addFieldError("duplicateIdNumberError", "This Location  Already Assigned For User   :" + userId);
+                addFieldError("duplicateIdNumberError", getText("duplicate.location") + userId);
                 logger.debug("{} location is already assigned for user  :{}", locationDAO.getLocation(locationId).getEnLocationName(), userId);
             } else {
-                //userLocation.setLocation();
                 Location tempLocation = locationDAO.getLocation(locationId);
                 if (tempLocation != null) {
                     userLocation.setLocation(tempLocation);
@@ -337,10 +346,13 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                     return SUCCESS;
                 }
                 userLocation.setUserId(userId);
-                userLocation.setUser(userDAO.getUserByPK(userId));
+                userLocation.setUser(user);
                 service.addUserLocation(userLocation, currentUser);
-                if (userDAO.getUserByPK(userId).getPrimaryLocation() == null) {
-                    addPrimaryLocation(userLocation, currentUser);
+                if (user.getPrimaryLocation() == null) {
+                    user.setPrimaryLocation(tempLocation);
+                    service.updateUser(user);
+                    primaryLocation = service.getUserByID(userId).getPrimaryLocation().getLocationUKey();
+                    logger.debug("Primary location {}", service.getUserByID(userId).getPrimaryLocation().getEnLocationName());
                 }
 
                 //userDAO.addPrimaryLocation(User user, Location primaryLocation);
@@ -360,22 +372,9 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 addFieldError("duplicateIdNumberError", "This Location Can Not Be Edit");
             }
         }
-        //populate();
         populateLocationListOnly(user);
         userLocationNameList = userLocationDAO.getUserLocationsListByUserId(userId);
         return SUCCESS;
-    }
-
-    private void addPrimaryLocation(UserLocation userLocation, User currentUser) {
-        if (userLocation.getLifeCycleInfo().isActive()) {
-            Location location = userLocation.getLocation();
-            User user = userLocation.getUser();
-            user.setPrimaryLocation(location);
-            service.updateUser(user, currentUser);
-            primaryLocation = location.getLocationUKey();
-        } else {
-            addActionError(getText("inactive.primary.warning"));
-        }
     }
 
     public String activeUserLocation() {
@@ -422,7 +421,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     public String initAddDivisionsAndDsDivision() {
         populate();
         populateDynamicLists(language);
-        return "success";
+        return SUCCESS;
     }
 
     public String initDivisionList() {
@@ -511,19 +510,26 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
 
     public String addDivisionsAndDsDivisions() {
         int checkDuplicate = 0;
+        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
+        String language = user.getPrefLanguage();
         switch (pageType) {
             case 1:
-                District checkDistrit = districtDAO.getDistrictByCode(district.getDistrictId());
-                if (checkDistrit != null) {
+                District checkDistrict = districtDAO.getDistrictByCode(district.getDistrictId());
+                if (checkDistrict != null) {
                     addFieldError("duplicateIdNumberError", "District Id Number Already Used. Please Insert Another Number");
-                    logger.debug("Duplicate District code number is :", checkDistrit.getDistrictId());
+                    logger.debug("Duplicate District code number is :", checkDistrict.getDistrictId());
                     checkDuplicate++;
                 }
                 if (checkDuplicate == 0) {
                     district.setActive(true);
                     dataManagementService.addDistrict(district, currentUser);
                     logger.debug("New Id of new District {} is   :{}", district.getEnDistrictName(), district.getDistrictId());
-                    msg = " New District Was Added  :" + district.getEnDistrictName();
+                    if(language.equals("si"))
+                        msg = getText("new.district.add") + " : " + district.getSiDistrictName();
+                    else if(language.equals("en"))
+                        msg = getText("new.district.add") + " : " + district.getEnDistrictName();
+                    else if(language.equals("ta"))
+                        msg = getText("new.district.add") + " : " + district.getTaDistrictName();
                 }
                 break;
             case 2:
@@ -539,7 +545,12 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                     dsDivision.setActive(true);
                     dataManagementService.addDSDivision(dsDivision, currentUser);
                     logger.debug("New Id of new Ds Division {} is   :{}", dsDivision.getEnDivisionName(), dsDivision.getDivisionId());
-                    msg = "New DSDivision Was Added :" + dsDivision.getEnDivisionName();
+                    if(language.equals("si"))
+                        msg = getText("new.dsDivision.add") + " : " + dsDivision.getSiDivisionName();
+                    else if(language.equals("en"))
+                        msg = getText("new.dsDivision.add") + " : " + dsDivision.getEnDivisionName();
+                    else if(language.equals("ta"))
+                        msg = getText("new.dsDivision.add") + " : " + dsDivision.getTaDivisionName();
                 }
                 break;
             case 3:
@@ -554,7 +565,12 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                     bdDivision.setActive(true);
                     dataManagementService.addBDDivision(bdDivision, currentUser);
                     logger.debug("New Id of New Division {} is   :{}", bdDivision.getEnDivisionName(), bdDivision.getDivisionId());
-                    msg = "New BDDivision Was Added  :" + bdDivision.getEnDivisionName();
+                    if(language.equals("si"))
+                        msg = getText("new.bdDivision.add") + " : " + bdDivision.getSiDivisionName();
+                    else if(language.equals("en"))
+                        msg = getText("new.bdDivision.add") + " : " + bdDivision.getEnDivisionName();
+                    else if(language.equals("ta"))
+                        msg = getText("new.bdDivision.add") + " : " + bdDivision.getTaDivisionName();
                 }
                 break;
             case 4:
@@ -569,7 +585,13 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                     mrDivision.setActive(true);
                     dataManagementService.addMRDivision(mrDivision, currentUser);
                     logger.debug("New Id of New MRDivision {} is   :{}", mrDivision.getEnDivisionName(), mrDivision.getDivisionId());
-                    msg = "New MRDivision Was Added  :" + mrDivision.getEnDivisionName();
+                    if(language.equals("si"))
+                        msg = getText("new.mrDivision.add") + " : " + mrDivision.getSiDivisionName();
+                    else if(language.equals("en"))
+                        msg = getText("new.mrDivision.add") + " : " + mrDivision.getEnDivisionName();
+                    else if(language.equals("ta"))
+                        msg = getText("new.mrDivision.add") + " : " + mrDivision.getTaDivisionName();
+
                 }
                 break;
             case 5:
@@ -582,7 +604,12 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 if (checkDuplicate == 0) {
                     dataManagementService.addCourt(court, currentUser);
                     logger.debug("New Id of New Court {} is  :{}", locationDAO.getLocation(locationId), locationId);
-                    msg = "New Court Was Added  :" + court.getEnCourtName();
+                    if(language.equals("si"))
+                        msg = getText("new.court.add") + " : " + court.getSiCourtName();
+                    else if(language.equals("en"))
+                        msg = getText("new.court.add") + " : " + court.getEnCourtName();
+                    else if(language.equals("ta"))
+                        msg = getText("new.court.add") + " : " + court.getTaCourtName();
                 }
                 break;
             case 6:
@@ -596,7 +623,12 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                     location.setDsDivisionId(dsDivisionId);
                     dataManagementService.addLocation(location, currentUser);
                     logger.debug("New Id of New Location {} is  :{}", locationDAO.getLocation(locationId), locationId);
-                    msg = "New Location Was Added  :" + location.getEnLocationName();
+                    if(language.equals("si"))
+                        msg = location.getSiLocationName() + " "+ getText("new.location.add");
+                    else if(language.equals("en"))
+                        msg = getText("new.location.add") + " : " + location.getEnLocationName();
+                    else if(language.equals("ta"))
+                        msg = getText("new.location.add") + " : " + location.getTaLocationName();
                 }
 
         }

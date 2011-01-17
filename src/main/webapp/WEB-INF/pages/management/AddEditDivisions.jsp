@@ -401,7 +401,7 @@
 <fieldset style="border:2px solid #c3dcee;margin-left:6em;margin-right:20.5em;margin-top:2.5em;width:80%">
     <table style="border:none;font:12pt bold;" align="center">
         <tr>
-            <td><s:label name="msg"/>
+            <td><s:label cssStyle="color:blue;" name="msg"/>
                 <s:fielderror name="duplicateIdNumberError" cssStyle="color:red;font-size:10pt"/></td>
         </tr>
     </table>
