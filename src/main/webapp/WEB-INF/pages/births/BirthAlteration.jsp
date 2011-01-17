@@ -753,9 +753,10 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 <s:label value="மாவட்டம் /"/><br>
                 <s:label value=" District"/>
             </td>
-            <td colspan="4"><s:select id="childBirthDistrictId" name="birthDistrictId" list="allDistrictList"
-                                      value="districtId"
-                                      cssStyle="width:95%"/></td>
+            <td colspan="4">
+                <s:select id="childBirthDistrictId" name="birthDistrictId" list="allDistrictList"
+                          value="%{birthDistrictId}"
+                          cssStyle="width:95%"/></td>
         </tr>
         <tr>
             <td colspan="2"><s:label value="ප්‍රාදේශීය ලේකම් කොට්ඨාශය /"/> <br>
@@ -804,7 +805,8 @@ function validateBirthYear(domElement, errorText, errorCode) {
             </td>
             <td colspan="6"><s:select
                     list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
-                    name="birthAlteration.alt52_1.childGender" cssStyle="width:50%; margin-left:5px;" id="childGender" value="%{birthAlteration.alt52_1.childGender}"/>
+                    name="birthAlteration.alt52_1.childGender" cssStyle="width:50%; margin-left:5px;" id="childGender"
+                    value="%{birthAlteration.alt52_1.childGender}"/>
         </tr>
         </tbody>
     </table>
@@ -1069,7 +1071,8 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 Country
             </td>
             <td><s:select name="fatherCountryId" list="countryList" headerKey="0" id="fatherCountryId"
-                          headerValue="%{getText('select_country.label')}" cssStyle="width:80%;" value="%{fatherCountryId}"/></td>
+                          headerValue="%{getText('select_country.label')}" cssStyle="width:80%;"
+                          value="%{fatherCountryId}"/></td>
         </tr>
         <tr>
             <td>ගමන් බලපත්‍ර අංකය<br>

@@ -120,7 +120,7 @@ function validate() {
     var domObject;
     var returnval;
     var check = document.getElementById('skipjs');
-    var declarationType = document.getElementById('deathTypeId');
+    var declarationType = document.getElementById('pageType');
 
     //validation for emptry fields
     domObject = document.getElementById('deathSerialNo');
@@ -139,7 +139,7 @@ function validate() {
         isDate(domObject.value, 'p1error1', 'p1errordate1');
     }
 
-    if (declarationType.value == 2) {
+    if (declarationType.value == 1) {
         domObject = document.getElementById('resonForLateRegistration');
         if (isFieldEmpty(domObject)) {
             isEmpty(domObject, '', 'error13');
@@ -190,6 +190,7 @@ function validate() {
         isNumeric(domObject.value, 'p1error1', 'invalidAgeAtDeath')
 
     }
+
     var pageType = document.getElementById("pageType").value;
     if (pageType == 0) {
         validateRadioButtons(new Array(document.getElementsByName('deathType')[0].checked,
@@ -221,7 +222,7 @@ function validate() {
         }
         var person_bd = new Date(document.getElementById('deathPersonDOB').value);
         var date_of_death = new Date(document.getElementById('deathDatePicker').value);
-        if (date_of_death.getTime() > person_bd.getTime()) {
+        if (date_of_death.getTime() < person_bd.getTime()) {
             errormsg = errormsg + "\n" + document.getElementById('invalidDateRange').value;
         }
     }
@@ -931,7 +932,9 @@ function personAgeDeath() {
 <s:hidden name="pageType" value="%{pageType}"/>
 </s:form>
 
+<%--
 <s:hidden id="pageType" value="%{pageType}"/>
+--%>
 <s:hidden id="error13" value="%{getText('enter.reasonForLate.label')}"/>
 
 </div>

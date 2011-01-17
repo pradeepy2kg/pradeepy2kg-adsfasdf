@@ -285,11 +285,35 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             filterBirthAlteration();
             return ERROR;
         }
-        populateBasicLists();
+        //in edit mode we do  not expecting to load first district and its DSDivisions
+
+        userLocations = commonUtil.populateActiveUserLocations(user, language);
+        districtList = districtDAO.getDistrictNames(language, user);
+        dsDivisionList = dsDivisionDAO.getDSDivisionNames(birthDistrictId, getLanguage(), user);
+        bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, getLanguage(), user);
+
         populateCountryRacesAndAllDSDivisions();
         alterationType = birthAlteration.getType();
         editMode = true;
         return SUCCESS;
+    }
+
+    private void loadDropDownListForGivenDistrict(int districtId) {
+        districtList = districtDAO.getDistrictNames(language, user);
+        if (birthDistrictId == 0) {
+            if (!districtList.isEmpty()) {
+                birthDistrictId = districtList.keySet().iterator().next();
+                logger.debug("first allowed district in the list {} was set", birthDistrictId);
+            }
+        }
+
+        dsDivisionList = dsDivisionDAO.getDSDivisionNames(birthDistrictId, getLanguage(), user);
+        if (dsDivisionId == 0) {
+            if (!dsDivisionList.isEmpty()) {
+                dsDivisionId = dsDivisionList.keySet().iterator().next();
+                logger.debug("first allowed DS Division in the list {} was set", dsDivisionId);
+            }
+        }
     }
 
     private void populate27AForInitEdit(BirthAlteration birthAlteration) {
@@ -1219,8 +1243,8 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
                         updated.getAlt52_1().getMother().setMotherRace((motherRaceId != 0) ?
                             raceDAO.getRace(motherRaceId) : null);
                     }
-                    updated.getAlt52_1().setBirthDivision((birthDivisionId != 0) ?
-                        bdDivisionDAO.getBDDivisionByPK(birthDivisionId) : null);
+                    updated.getAlt52_1().setBirthDivision((divisionAltaration != 0) ?
+                        bdDivisionDAO.getBDDivisionByPK(divisionAltaration) : null);
                     existing.setAlt52_1(updated.getAlt52_1());
                 }
             }
@@ -1646,5 +1670,13 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
 
     public void setBirthDeclaration(BirthDeclaration birthDeclaration) {
         this.birthDeclaration = birthDeclaration;
+    }
+
+    public int getBirthDistrictId() {
+        return birthDistrictId;
+    }
+
+    public void setBirthDistrictId(int birthDistrictId) {
+        this.birthDistrictId = birthDistrictId;
     }
 }

@@ -98,7 +98,7 @@ function validate() {
 
         domObject = document.getElementById('father_pin_or_nic_male');
         if (!isFieldEmpty(domObject)) {
-            validatePINorNIC(domObject, "text_invalid_data", "text_fa_id_female")
+            validatePINorNIC(domObject, "text_invalid_data", "text_fa_id_male")
         }
 
         domObject = document.getElementById('passport_male');

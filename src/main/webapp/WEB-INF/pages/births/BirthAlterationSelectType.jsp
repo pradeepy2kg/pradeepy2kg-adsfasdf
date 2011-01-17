@@ -154,7 +154,7 @@
                 <tr>
                     <td width="135px"><s:label name="confirmationSearch"
                                                value="%{getText('idNumber.lable')}"/></td>
-                    <td width="200px"><s:textfield name="nicOrPin" id="idNumberSearch" maxLength="10"/></td>
+                    <td width="200px"><s:textfield name="nicOrPin" id="idNumberSearch" maxLength="10" value=""/></td>
 
                 </tr>
             </table>
