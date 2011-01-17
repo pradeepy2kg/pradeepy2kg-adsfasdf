@@ -13,6 +13,10 @@ public abstract class BirthStatistics {
     private int femaleTotal;
     //private List<BirthStatistics> totals;
 
+    private int legitimacyBirths;
+    private int illegitimacyBirths;
+    private int hospitalBirths;
+
     public int getTotal() {
         return total;
     }
@@ -35,5 +39,29 @@ public abstract class BirthStatistics {
 
     public void setFemaleTotal(int femaleTotal) {
         this.femaleTotal = femaleTotal;
+    }
+
+    public int getHospitalBirths() {
+        return hospitalBirths;
+    }
+
+    public void setHospitalBirths(int hospitalBirths) {
+        this.hospitalBirths = hospitalBirths;
+    }
+
+    public int getIllegitimacyBirths() {
+        return illegitimacyBirths;
+    }
+
+    public void setIllegitimacyBirths(int illegitimacyBirths) {
+        this.illegitimacyBirths = illegitimacyBirths;
+    }
+
+    public int getLegitimacyBirths() {
+        return legitimacyBirths;
+    }
+
+    public void setLegitimacyBirths(int legitimacyBirths) {
+        this.legitimacyBirths = legitimacyBirths;
     }
 }
