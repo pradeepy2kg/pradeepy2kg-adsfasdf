@@ -4,6 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
+<script type="text/javascript" src="<s:url value="/js/certuser.js"/>"></script>
 <style type="text/css">
     #marriage-extract-outer table tr td {
         padding: 0 5px;
@@ -19,6 +20,11 @@
         }
     }
 </style>
+
+<script>
+    function initPage() {
+    }
+</script>
 <div class="marriage-extract-outer">
 <s:if test="mode=='print'">
     <table class="table_reg_header_01">
@@ -41,7 +47,7 @@
                                 <td>
 
                                     <s:select id="locationId" name="licensePrintedLocationId" list="locationList"
-                                              cssStyle="width:300px;"/>
+                                              cssStyle="width:300px;" onchange="populateCertifiedUserList()"/>
 
                                 </td>
                             </tr>
@@ -49,7 +55,7 @@
                                 <td><s:label value="%{getText('signOfficer.label')}"/></td>
                                 <td>
                                     <s:select id="issueUserId" name="licenseIssuedUserId" list="userList"
-                                              cssStyle="width:300px;"/>
+                                              cssStyle="width:300px;" onchange="printCertifiedUser()"/>
                                 </td>
                             </tr>
                         </table>
@@ -94,6 +100,7 @@
         </tbody>
     </table>
 </s:if>
+
 <table border="1" style="margin-top:1px;width:100%;border:1px solid #000;border-collapse:collapse;"
        cellpadding="2px">
     <caption/>

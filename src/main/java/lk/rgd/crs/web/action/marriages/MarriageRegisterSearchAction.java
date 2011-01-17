@@ -3,6 +3,7 @@ package lk.rgd.crs.web.action.marriages;
 import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.AppConstants;
 import lk.rgd.ErrorCodes;
+import lk.rgd.Permission;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.District;
@@ -152,7 +153,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
      * Marriage Registration - Loding the extract of marriage register for print
      */
     public String marriageExtractInit() {
-        marriage = marriageRegistrationService.getMarriageRegisterByIdUKey(idUKey, user);
+        marriage = marriageRegistrationService.getMarriageRegisterByIdUKey(idUKey, user, Permission.PRINT_MARRIAGE_EXTRACT);
         populateLocationList(marriage);
         return SUCCESS;
     }
@@ -161,7 +162,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
      * Marriage Registration - View Marriage Registration page
      */
     public String marriageRegisterViewInit() {
-        marriage = marriageRegistrationService.getByIdUKey(idUKey, user);
+        marriage = marriageRegistrationService.getMarriageRegisterByIdUKey(idUKey, user, Permission.VIEW_MARRIAGE_REGISTER);
         return SUCCESS;
     }
 

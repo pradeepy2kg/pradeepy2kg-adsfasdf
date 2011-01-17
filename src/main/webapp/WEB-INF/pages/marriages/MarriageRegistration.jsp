@@ -344,7 +344,7 @@
                     <td>&nbsp;</td>
                     <td>
                         <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px;"
-                             id="place" onmouseover="transliterate('regPlaceInOfficialLang', 'regPlaceInEnglishLang')">
+                             id="place" onclick="transliterate('regPlaceInOfficialLang', 'regPlaceInEnglishLang')">
                     </td>
                 </tr>
                 </tbody>
@@ -697,11 +697,11 @@
         <td>&nbsp;</td>
         <td>
             <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px;"
-                 id="maleName" onmouseover="transliterate('nameOfficialMale', 'name_english_male')">
+                 id="maleName" onclick="transliterate('nameOfficialMale', 'name_english_male')">
         </td>
         <td>
             <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px;"
-                 id="femaleName" onmouseover="transliterate('nameOfficialFemale', 'name_english_female')">
+                 id="femaleName" onclick="transliterate('nameOfficialFemale', 'name_english_female')">
         </td>
     </tr>
 </s:if>
