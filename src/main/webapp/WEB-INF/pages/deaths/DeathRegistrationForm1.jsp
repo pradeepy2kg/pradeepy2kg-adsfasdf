@@ -227,7 +227,7 @@ function validate() {
     }
     otherValidations();
     if (errormsg != "") {
-         alert(errormsg);
+        alert(errormsg);
         returnval = false;
     }
 
@@ -928,9 +928,10 @@ function personAgeDeath() {
     <s:hidden name="rowNumber" value="%{row}"/>
     <s:submit value="%{getText('next.label')}" cssStyle="margin-top:10px;"/>
 </div>
+<s:hidden name="pageType" value="%{pageType}"/>
 </s:form>
 
-<s:hidden id="deathTypeId" value="%{deathType.ordinal()}"/>
+<s:hidden id="pageType" value="%{pageType}"/>
 <s:hidden id="error13" value="%{getText('enter.reasonForLate.label')}"/>
 
 </div>

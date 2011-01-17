@@ -310,7 +310,6 @@
     </tbody>
 </table>
 
-
 <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse;"
        class="font-9">
     <col width="150px"/>
@@ -319,11 +318,11 @@
     <col/>
     <tbody>
     <tr class="form-sub-title">
-        <td colspan="4"><s:if test="deathType.ordinal() == 0 || deathType.ordinal() == 1">
+        <td colspan="4"><s:if test="pageType==0">
             තොරතුරු වාර්තා කරන පාර්ශවය / මරණ පරීක්ෂක හෝ අධිකරණ වෛද්‍ය නිලධාරී
             <br>தகவல் அறிக்கையிடும் திறத்தார்/ மரண பரிசோதகா் அல்லது வைத்திய அதிகாரி
             <br>Notifying Authority / Inquirer into deaths or Judicial Medical Officer </s:if>
-            <s:elseif test="deathType.ordinal() == 2 || deathType.ordinal() == 3">
+            <s:elseif test="pageType == 1">
                 දිස්ත්‍රික් රෙජිස්ට්‍රාර් / රෙජිස්ට්‍රාර් ජෙනරාල්
                 <br>மாவட்ட பதிவாளா்/ பதிவாளா் நாயகம்
                 <br>District Registrar / Registrar General

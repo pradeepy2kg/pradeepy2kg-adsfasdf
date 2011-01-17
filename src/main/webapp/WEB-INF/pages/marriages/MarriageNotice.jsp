@@ -6,6 +6,8 @@
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
 <script type="text/javascript" src="<s:url value="/js/division.js"/>"></script>
+<script type="text/javascript" src="<s:url value="/js/transliteration.js"/>"></script>
+
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 
 <script type="text/javascript">
@@ -371,6 +373,13 @@ $('select#dsDivisionId').bind('change', function(evt2) {
             });
 });
 </script>
+<style type="text/css">
+    .abc {
+        position: relative;
+        bottom: 15px;
+        left: 5px;
+    }
+</style>
 
 <s:if test="editMode">
     <s:if test="secondNotice">
@@ -679,6 +688,8 @@ $('select#dsDivisionId').bind('change', function(evt2) {
         </td>
         <td colspan="6" height="100x">
             <s:textarea name="marriage.male.nameInEnglishMale" id="name_english_male" cssStyle="width:98.2%;"/>
+            <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px;"
+                 id="regName" onclick="transliterate('name_official_male', 'name_english_male')">
         </td>
     </tr>
 </table>
@@ -933,6 +944,8 @@ $('select#dsDivisionId').bind('change', function(evt2) {
         </td>
         <td colspan="6" height="100x">
             <s:textarea name="marriage.female.nameInEnglishFemale" id="name_english_female" cssStyle="width:98.2%;"/>
+            <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px;"
+                 id="regName" onclick="transliterate('name_official_female', 'name_english_female')">
         </td>
     </tr>
 </table>
@@ -966,7 +979,12 @@ $('select#dsDivisionId').bind('change', function(evt2) {
         </td>
         <td colspan="4" height="100px">
             <s:textarea name="marriage.female.residentAddressFemaleInEnglish" id="address_female_english"
-                        cssStyle="width:98.2%;"/>
+                        cssStyle="width:75%;"/>
+                <%--        <div class="abc">
+                    <img src="<s:url value="/images/transliterate.png"/>"
+                         style="vertical-align:middle;margin:5px;width:80px;height:30px"
+                         id="regName2" onclick="transliterate('address_female_official', 'address_female_english')">
+                </div>--%>
         </td>
     </tr>
     <tr>
