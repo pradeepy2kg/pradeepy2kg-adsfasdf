@@ -45,7 +45,7 @@ public class DeathAlterationInfo implements Serializable {
     @Column(nullable = true)
     private String placeOfBurial;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private boolean suddenDeath;
 
 
