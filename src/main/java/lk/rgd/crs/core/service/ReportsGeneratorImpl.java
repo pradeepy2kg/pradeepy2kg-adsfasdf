@@ -14,6 +14,7 @@ import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.api.bean.BirthIslandWideStatistics;
 import lk.rgd.crs.api.bean.BirthDistrictStatistics;
 import lk.rgd.crs.api.domain.BirthDeclaration;
+import lk.rgd.crs.web.ReportCodes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,10 +50,10 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
      * @param user
      * @return BirthIslandWideStatistics  @param year
      */
-    public BirthIslandWideStatistics generate(int year, User user) {
+    public BirthIslandWideStatistics generate_2_2(int year, User user) {
 
         if (!user.isAuthorized(Permission.GENERATE_REPORTS)) {
-            handleException(user.getUserName() + " doesn't have permission to create a user",
+            handleException(user.getUserName() + " doesn't have permission to generate the report",
                 ErrorCodes.PERMISSION_DENIED);
         }
 
@@ -61,9 +62,6 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         List<BirthDeclaration> birthRecords;
 
         Calendar cal = Calendar.getInstance();
-        //Date endDate = c.getTime();
-        //c.set(c.get(Calendar.YEAR), 0, 0);
-        //Date startDate = c.getTime();
 
         /* January first of the year */
         cal.set(year, 0, 1);
@@ -118,28 +116,25 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
      * currently assumes. stats are already geneated.
      * // todo check if a CSV file already generated and avaialble for the given year.
      *
-     * @return String the path and name of the created CSV file.
      * @param user
+     * @param headerCode
+     * @return String the path and name of the created CSV file.
      */
-    public String createReport(User user) {
+    public String createReport(User user, int headerCode) {
         if (!user.isAuthorized(Permission.GENERATE_REPORTS)) {
-            handleException(user.getUserName() + " doesn't have permission to create a user",
+            handleException(user.getUserName() + " doesn't have permission to create the report",
                 ErrorCodes.PERMISSION_DENIED);
         }
-        StringBuilder csv = new StringBuilder();
-        csv.append("District,Total,Male,Female\n");
-        csv.append("Sri Lanka,");
-        csv.append(statistics.getTotal() + ",");
-        csv.append(statistics.getMaleTotal() + ",");
-        csv.append(statistics.getFemaleTotal() + ",\n");
+        StringBuilder csv = getReportHeader(headerCode);
 
         int length = statistics.totals.size();
         for (int i = 0; i < length; i++) {
             BirthDistrictStatistics districtStats = statistics.totals.get(i);
-            District district = districtDAO.getDistrict(i+1);
+            District district = districtDAO.getDistrict(i + 1);
             String districtId = "Unknown";
-            if(district != null)
+            if (district != null) {
                 districtId = district.getEnDistrictName();
+            }
             csv.append(districtId);
             csv.append(",");
             csv.append(districtStats.getTotal());
@@ -165,5 +160,21 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
     private void handleException(String message, int code) {
         logger.error(message);
         throw new RGDRuntimeException(message, code);
+    }
+
+    private StringBuilder getReportHeader(int code) {
+        StringBuilder csv = new StringBuilder();
+
+        switch (code) {
+            case ReportCodes.TABLE_2_2:
+                csv.append("District,Total,Male,Female\n");
+                csv.append("Sri Lanka,");
+                csv.append(statistics.getTotal() + ",");
+                csv.append(statistics.getMaleTotal() + ",");
+                csv.append(statistics.getFemaleTotal() + ",\n");
+                break;
+        }
+
+        return csv;
     }
 }

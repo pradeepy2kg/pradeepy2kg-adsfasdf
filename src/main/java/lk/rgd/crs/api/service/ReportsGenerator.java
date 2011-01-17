@@ -11,17 +11,16 @@ public interface ReportsGenerator {
 
     /**
      *    Generate a complete statistics object containing whole islandwide stats
-     * @return  BirthIslandWideStatistics  @param year
-     * @param user
+     * @return  BirthIslandWideStatistics  @param year  @param user
      */
-    public BirthIslandWideStatistics generate(int year, User user);
+    public BirthIslandWideStatistics generate_2_2(int year, User user);
 
     /**
      *  Creates a Standard CSV file from the generated IslandWide stats.
      *  currently assumes. stats are already geneated.
      * // todo check if a CSV file already generated and avaialble for the given year.
-     * @return String the path and name of the created CSV file.
-     * @param user
+     * @return String the path and name of the created CSV file.  @param user
+     * @param headerCode
      */
-    public String createReport(User user);
+    public String createReport(User user, int headerCode);
 }

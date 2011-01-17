@@ -3,6 +3,7 @@ package lk.rgd.crs.web.action;
 import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.common.RGDRuntimeException;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.crs.web.ReportCodes;
 import lk.rgd.crs.web.WebConstants;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
@@ -47,8 +48,8 @@ public class ReportsAction extends ActionSupport implements SessionAware {
 
         User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         try {
-            reportsService.generate(year, user); //todo don't generate if we already have one
-            reportsService.createReport(user);
+            generateReport(year, user, ReportCodes.TABLE_2_2);                //todo don't generate if we already have one
+            reportsService.createReport(user, ReportCodes.TABLE_2_2);
         } catch (RGDRuntimeException error) {
             addActionError(getText("permission.denied"));
         }
@@ -90,5 +91,13 @@ public class ReportsAction extends ActionSupport implements SessionAware {
     @Override
     public void setSession(Map<String, Object> session) {
         this.session = session;
+    }
+
+    private void generateReport(int year, User user, int reportCode) {
+        switch (reportCode) {
+            case ReportCodes.TABLE_2_2:
+                reportsService.generate_2_2(year, user);
+                break;
+        }
     }
 }
