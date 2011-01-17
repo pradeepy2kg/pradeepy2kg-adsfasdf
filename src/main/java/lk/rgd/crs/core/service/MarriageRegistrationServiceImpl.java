@@ -85,7 +85,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     @Transactional(propagation = Propagation.REQUIRED)
     public void addMarriageRegister(MarriageRegister marriageRegister, User user, File scannedImage) {
         //TODO: Validate marriage details
-        checkUserPermission(Permission.ADD_MARRIAGE, ErrorCodes.PERMISSION_DENIED, " add Muslim Marriages", user);
+        ValidationUtils.validateUserPermission(Permission.ADD_MARRIAGE, user);
         marriageRegistrationDAO.addMarriageRegister(marriageRegister, user);
         if (marriageRegister != null && scannedImage != null) {
             logger.debug("Marriage Register IDUKEY : {}", marriageRegister.getIdUKey());
@@ -242,7 +242,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     @Transactional(propagation = Propagation.REQUIRED)
     public void updateMarriageRegister(MarriageRegister marriageRegister, User user) {
         logger.debug("attempt to update marriage register/notice record : idUKey : {}", marriageRegister.getIdUKey());
-        checkUserPermission(Permission.EDIT_MARRIAGE, ErrorCodes.PERMISSION_DENIED, " edit  marriage register ", user);
+        ValidationUtils.validateUserPermission(Permission.EDIT_MARRIAGE, user);
         marriageRegistrationDAO.updateMarriageRegister(marriageRegister, user);
     }
 
@@ -252,7 +252,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     @Transactional(propagation = Propagation.REQUIRED)
     public void updateMuslimMarriageDetails(MarriageRegister marriageRegister, User user) {
         //TODO: Validate Marriage details
-        checkUserPermission(Permission.EDIT_MARRIAGE, ErrorCodes.PERMISSION_DENIED, " update  marriage register ", user);
+        ValidationUtils.validateUserPermission(Permission.EDIT_MARRIAGE, user);
         marriageRegistrationDAO.updateMarriageRegister(marriageRegister, user);
     }
 
@@ -262,7 +262,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     @Transactional(propagation = Propagation.REQUIRED)
     public void updateMarriageRegistrationDetails(MarriageRegister marriageRegister, User user) {
         //TODO: Validate Marriage details
-        checkUserPermission(Permission.EDIT_MARRIAGE, ErrorCodes.PERMISSION_DENIED, " update  marriage register ", user);
+        ValidationUtils.validateUserPermission(Permission.EDIT_MARRIAGE, user);
         marriageRegistrationDAO.updateMarriageRegister(marriageRegister, user);
     }
 
@@ -350,6 +350,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     /**
      * @inheritDoc
      */
+    //TODO: this method is to be removed
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public MarriageRegister getActiveRecordByMRDivisionAndSerialNo(MRDivision mrDivision, long serialNo, User user) {
         logger.debug("Get active record by MRDivision : {} and Serial Number : {}", mrDivision.getMrDivisionUKey(),
@@ -363,6 +364,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      * @inheritDoc only REGISTER_DATA_ENTRY state records are consider as pending marriage register records
      * only record captured division users are allowed to access the marriage record
      */
+    //TODO: this method is to be removed
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<MarriageRegister> getMarriageRegisterBySerialAndMRDivision(long serialNumber,
         MRDivision mrDivision, int pageNumber, int numOfRows, boolean active, User user) {
@@ -377,6 +379,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     /**
      * @inheritDoc
      */
+    //TODO: this method is to be removed
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<MarriageRegister> getMarriageRegistersByDSDivision(DSDivision dsDivision, int pageNumber,
         int numOfRows, boolean active, User user) {
@@ -390,6 +393,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     /**
      * @inheritDoc
      */
+    //TODO: this method is to be removed
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<MarriageRegister> getMarriageRegistersByDistrict(District district, int pageNumber,
         int numOfRows, boolean active, User user) {
@@ -401,6 +405,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     /**
      * @inheritDoc
      */
+    //TODO: this method is to be removed
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<MarriageRegister> getMarriageRegisterByState(MarriageRegister.State state, int pageNumber, int numOfRows, boolean active, User user) {
         //TODO validate user access
@@ -482,8 +487,10 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void approveMarriageRegister(long idUKey, User user) {
-        checkUserPermission(Permission.APPROVE_MARRIAGE, ErrorCodes.PERMISSION_DENIED, "approve marriage register", user);
+        ValidationUtils.validateUserPermission(Permission.APPROVE_MARRIAGE, user);
         MarriageRegister marriageRegister = marriageRegistrationDAO.getByIdUKey(idUKey);
+        //TODO: to be removed if mr division validations not required
+        ValidationUtils.validateUserAccessToMRDivision(marriageRegister.getMrDivision().getMrDivisionUKey(), user);
         marriageRegister.setState(MarriageRegister.State.REGISTRATION_APPROVED);
         marriageRegistrationDAO.updateMarriageRegister(marriageRegister, user);
     }
@@ -493,8 +500,10 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void rejectMarriageRegister(long idUKey, String comment, User user) {
-        checkUserPermission(Permission.APPROVE_MARRIAGE, ErrorCodes.PERMISSION_DENIED, "approve marriage register", user);
+        //todo: define permission for reject
+        ValidationUtils.validateUserPermission(Permission.APPROVE_MARRIAGE, user);
         MarriageRegister marriageRegister = marriageRegistrationDAO.getByIdUKey(idUKey);
+        ValidationUtils.validateUserAccessToMRDivision(marriageRegister.getMrDivision().getMrDivisionUKey(), user);
         marriageRegister.setState(MarriageRegister.State.REGISTRATION_REJECTED);
         //TODO validate comment if needed
         marriageRegister.setRegistrationRejectComment(comment);
@@ -504,6 +513,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     /**
      * @inheritDoc
      */
+    //TODO: this method is to be removed
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<MarriageRegister> getMarriageRegisterByMRDivision(MRDivision mrDivision, int pageNumber,
         int numOfRows, boolean active, User user) {
@@ -523,7 +533,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
 
         Set<DSDivision> dsDivisionList = null;
         EnumSet<MarriageRegister.State> stateList = StateUtil.getMarriageRegisterStateList(state);
-        //validate user access
+        //TODO: validatitions to mr divisions are to be removed if not need
         if (AppConstants.MARRIAGE.equals(divisionType)) {
             ValidationUtils.validateAccessToMRDivision(mrDivisionDAO.getMRDivisionByPK(divisionUKey), user);
 
@@ -592,18 +602,19 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void markMarriageExtractAsPrinted(long idUKey, Location issuedLocation, User issuedUser, User user) {
+        ValidationUtils.validateUserPermission(Permission.PRINT_MARRIAGE_EXTRACT, user);
         MarriageRegister register = marriageRegistrationDAO.getByIdUKey(idUKey);
         if (register == null) {
             handleException("Marriage Register could not be found - idUKey : "
                 + idUKey, ErrorCodes.MARRIAGE_REGISTER_NOT_FOUND);
         } else {
             if (register.getState() == MarriageRegister.State.REGISTRATION_APPROVED) {
-                ValidationUtils.validateAccessToMarriageRegister(register, user);
+                ValidationUtils.validateUserAccessToMRDivision(register.getMrDivision().getMrDivisionUKey(), user);
                 setMarriageExtractPrintingDetails(register, issuedUser, issuedLocation);
                 marriageRegistrationDAO.updateMarriageRegister(register, user);
             } else {
                 handleException("Invalid state of marriage register - idUKey :" + idUKey + " Current State is " +
-                    register.getState(), ErrorCodes.INVALID_STATE_FOR_PRINT_LICENSE);
+                    register.getState(), ErrorCodes.INVALID_STATE_OF_MARRIAGE_REGISTER);
             }
         }
     }
