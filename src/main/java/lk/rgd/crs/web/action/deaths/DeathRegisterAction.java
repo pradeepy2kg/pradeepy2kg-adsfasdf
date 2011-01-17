@@ -417,7 +417,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         logger.debug("requested to direct approve Death Declaration with idUKey : {}", idUKey);
         try {
             warnings = service.approveDeathRegistration(idUKey, user, ignoreWarning);
-            addActionMessage(getText("message.approve.success", new String[]{Long.toString(idUKey)}));
+            addActionMessage(getText("message.approve.success"));
             pageNo = 3;
         } catch (RGDRuntimeException e) {
             switch (e.getErrorCode()) {
@@ -443,7 +443,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         if (ignoreWarning) {
             try {
                 warnings = service.approveDeathRegistration(idUKey, user, ignoreWarning);
-                addActionMessage(getText("message.approve.success", new String[]{Long.toString(idUKey)}));
+                addActionMessage(getText("message.approve.success"));
                 pageNo = 4;
             } catch (RGDRuntimeException e) {
                 switch (e.getErrorCode()) {
