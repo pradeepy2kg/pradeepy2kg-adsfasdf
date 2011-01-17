@@ -381,7 +381,9 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     public String deathDeclarationEditMode() {
         logger.debug("death edit mode requested for idUkey : {} ", idUKey);
         DeathRegister deathRegister = service.getById(idUKey, user);
+
         deathType = deathRegister.getDeathType();
+        pageTypeGetter(deathType);
         beanPopulate(deathRegister);
 
         if (deathRegister.getStatus() != DeathRegister.State.DATA_ENTRY) {
@@ -391,6 +393,20 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         session.put(WebConstants.SESSION_DEATH_DECLARATION_BEAN, deathRegister);
         populate();
         return SUCCESS;
+    }
+
+    private void pageTypeGetter(DeathRegister.Type type) {
+        switch (type) {
+            case NORMAL:
+            case SUDDEN:
+                pageType = 0;
+                break;
+            case LATE_SUDDEN:
+            case LATE_NORMAL:
+            case MISSING:
+                pageType = 1;
+                break;
+        }
     }
 
     public String approveDeath() {
