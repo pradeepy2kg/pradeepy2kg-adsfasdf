@@ -417,7 +417,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         logger.debug("requested to direct approve Death Declaration with idUKey : {}", idUKey);
         try {
             warnings = service.approveDeathRegistration(idUKey, user, ignoreWarning);
-            addActionMessage(getText("message.approve.success"));
+            displayApprovalSuccess();
             pageNo = 3;
         } catch (RGDRuntimeException e) {
             switch (e.getErrorCode()) {
@@ -443,7 +443,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         if (ignoreWarning) {
             try {
                 warnings = service.approveDeathRegistration(idUKey, user, ignoreWarning);
-                addActionMessage(getText("message.approve.success"));
+                displayApprovalSuccess();
                 pageNo = 4;
             } catch (RGDRuntimeException e) {
                 switch (e.getErrorCode()) {
@@ -632,7 +632,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private void approveDeathRegistration() {
         try {
             warnings = service.approveDeathRegistration(idUKey, user, ignoreWarning);
-            addActionMessage(getText("message.approve.success"));
+            displayApprovalSuccess();
         } catch (RGDRuntimeException e) {
             handleDeathApprovalException(e);
         }
@@ -652,6 +652,12 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                 addActionError(getText("error.death.registration.approval.fail", new String[]{Long.toString(idUKey)}));
         }
         logger.debug("death register approval fails idUKey : {} ", idUKey);
+    }
+
+    private void displayApprovalSuccess() {
+        if (warnings != null && warnings.isEmpty()) {
+            addActionMessage(getText("message.approve.success"));
+        }
     }
 
     private void populate() {
