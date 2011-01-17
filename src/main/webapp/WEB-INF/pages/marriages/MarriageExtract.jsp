@@ -101,6 +101,60 @@
     </table>
 </s:if>
 
+
+<table border="1" style="margin-top:15px;width:100%;border:1px solid #000;border-collapse:collapse;"
+       cellpadding="2px">
+    <caption/>
+    <col width="450px"/>
+    <col width="225px"/>
+    <col width="300px"/>
+    <col width="250px"/>
+    <col width="175px"/>
+    <tr>
+        <td colspan="1">
+            සහතික කරනු ලබන නිලධාරියා ගේ නම, තනතුර සහ අත්සන <br>
+            சான்றிதழ் அளிக்கும் அதிகாரியின் பெயர், பதவி, கையொப்பம் <br>
+            Name, Signature and Designation of certifying officer
+        </td>
+        <td colspan="4">
+            <s:label id="signature" value="%{licenseIssueUserSignature}"/>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="1">
+            නිකුත් කළ ස්ථානය <br>
+            வழங்கிய இடம் <br>
+            Place of Issue
+        </td>
+        <td colspan="4">
+            <s:label id="placeOfIssue" value="%{licenseIssuePlace}"/>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="1">
+            දිස්ත්‍රික්කය <br>
+            மாவட்டம் <br>
+            District
+        </td>
+        <td colspan="1">
+            <s:label id="districtInOl" value="%{licenseIssueDistrictInOL}"/>
+            <br>
+            <s:label id="districtInEn" value="%{licenseIssueDistrictInEN}"/>
+        </td>
+        <td colspan="1">
+            ප්‍රාදේශීය ලේකම් කොට්ඨාශය <br>
+            பிரதேச செயளாளர் பிரிவு <br>
+            Divisional Secretariat <br>
+        </td>
+        <td colspan="2">
+            <s:label id="dsDivisionInOL" value="%{licenseIssueDivisionInOL}"/>
+            <br>
+            <s:label id="dsDivisionInEn" value="%{licenseIssueDivisionInEN}"/>
+        </td>
+    </tr>
+</table>
+
+
 <table border="1" style="margin-top:1px;width:100%;border:1px solid #000;border-collapse:collapse;"
        cellpadding="2px">
     <caption/>

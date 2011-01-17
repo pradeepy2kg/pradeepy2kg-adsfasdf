@@ -92,17 +92,27 @@ public class ValidationUtils {
     }
 
     /**
-     * Validate access to the Extract of Marriage
+     * Validate user access to the Marriage Division
      *
-     * @param register Marriage Register
-     * @param user     user who performs the action
+     * @param mrDivisionUKey primary key of MR division
+     * @param user           user who performs the action
      */
-    public static void validateAccessToMarriageRegister(MarriageRegister register, User user) {
+    public static void validateUserAccessToMRDivision(int mrDivisionUKey, User user) {
         if (!(User.State.ACTIVE == user.getStatus() && (Role.ROLE_RG.equals(user.getRole().getRoleId())) ||
-            (register.getMrDivision() != null &&
-                user.isAllowedAccessToMRDSDivision(register.getMrDivision().getMrDivisionUKey())))) {
-            handleException("User : " + user.getUserId() + " is not allowed to access marriage register - idUKey :" +
-                register.getIdUKey(), ErrorCodes.PERMISSION_DENIED);
+            user.isAllowedAccessToMRDSDivision(mrDivisionUKey))) {
+            handleException("User : " + user.getUserId() + " is not allowed to access to the MR Division", ErrorCodes.PERMISSION_DENIED);
+        }
+    }
+
+    /**
+     * Validate user permission to perform an action
+     *
+     * @param permission permission level of the action
+     * @param user       user who performs the action
+     */
+    public static void validateUserPermission(int permission, User user) {
+        if (!user.isAuthorized(permission)) {
+            handleException("User : " + user.getUserId() + " is not authorized to perform this action", ErrorCodes.PERMISSION_DENIED);
         }
     }
 
