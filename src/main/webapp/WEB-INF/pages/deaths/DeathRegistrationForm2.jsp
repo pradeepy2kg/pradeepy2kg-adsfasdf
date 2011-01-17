@@ -119,12 +119,11 @@
         } else {
             isDate(domObject.value, 'error1', 'p2error6');
         }
-
         // validate declarant phone number
         domObject = document.getElementById('declarantPhone');
-        if (!isFieldEmpty(domObject))
-            validatePhoneNo(domObject.value, 'error1', 'error3');
-
+        if (!isFieldEmpty(domObject)) {
+            validatePhoneNo(domObject, 'error1', 'error3');
+        }
         // validate declarant email address
         domObject = document.getElementById('declarantEMail');
         if (!isFieldEmpty(domObject))
@@ -297,7 +296,8 @@
             <br>Email
         </td>
         <td colspan="2">
-            <s:textfield id="declarantEMail" name="declarant.declarantEMail" cssStyle="text-transform:none;" maxLength="240"/>
+            <s:textfield id="declarantEMail" name="declarant.declarantEMail" cssStyle="text-transform:none;"
+                         maxLength="240"/>
         </td>
     </tr>
     <tr>
