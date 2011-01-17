@@ -58,7 +58,7 @@
         if (!isFieldEmpty(domObject)) {
             validatePINorNIC(domObject, 'error0', 'error8');
         }
-               if (errormsg != "") {
+        if (errormsg != "") {
             alert(errormsg);
             returnval = false;
         }
@@ -126,7 +126,7 @@
             document.getElementById("death-info-check").disabled = true;
             document.getElementById('death').value = true;
             var fieldIds = new Array('deathDatePicker', 'deathTimePicker', 'placeOfDeath', 'placeOfDeathInEnglish', 'cause_of_death',
-                    'ICD_code', 'placeOfBurial', 'act5353', 'act5252', 'cause_of_death_yesfalse', 'cause_of_death_notrue');
+                    'ICD_code', 'placeOfBurial', 'act53true', 'act52false', 'cause_of_death_yesfalse', 'cause_of_death_notrue');
             enableFields(fieldIds);
         });
 
@@ -166,18 +166,19 @@
 
 
     function initPage() {
-        var idNames;
+        var idNames;                                                //    cause_of_death_yesfalse ,cause_of_death_notrue , act52false ,act53true
         var checkIdNames;
         var fieldIds;
         idNames = new Array('death-info', 'death-person-info');
         checkIdNames = new Array('death-person-info-check', 'death-info-check');
-        fieldIds = new Array('deathDatePicker', 'cause_of_death_yesfalse', 'act5252', 'motherNIC', 'motherName', 'fatherName',
+        fieldIds = new Array('deathDatePicker', 'cause_of_death_yesfalse', 'motherNIC', 'motherName', 'fatherName',
                 'fatherPinNic', 'nameEnglish', 'address', 'nameOfficialLang', 'deathAge', 'deathPersonGender', 'deathPersonRaceList'
                 , 'deathPerson_PINorNIC', 'deathPersonCountryList', 'passportNumber', 'placeOfBurial', 'cause_of_death', 'ICD_code'
-                , 'cause_of_death_notrue', 'placeOfDeath', 'placeOfDeathInEnglish', 'act5353', 'act5252', 'deathTimePicker'
+                , 'cause_of_death_notrue', 'placeOfDeath', 'placeOfDeathInEnglish', 'deathTimePicker', 'act53true', 'act52false'
                 );
 
         //set serial number
+
 
         for (var i = 0; i < idNames.length; i++) {
             document.getElementById(idNames[i]).style.display = 'none';
@@ -191,7 +192,6 @@
         for (var i = 0; i < fieldIds.length; i++) {
             document.getElementById(fieldIds[i]).disabled = true;
         }
-
     }
 </script>
 <div id="death-alteration-outer">
@@ -397,8 +397,8 @@
                 Yes (Section 53)
             </td>
             <td align="center">
-                <s:radio name=""
-                         list="#@java.util.HashMap@{'53':''}"
+                <s:radio name="deathAlteration.deathInfo.suddenDeath"
+                         list="#@java.util.HashMap@{'true':''}"
                          id="act53" onclick="validateAct(value)"/>
             </td>
             <td>
@@ -407,8 +407,8 @@
                 No (Section 52 (1))
             </td>
             <td align="center">
-                <s:radio name=""
-                         list="#@java.util.HashMap@{'52':''}"
+                <s:radio name="deathAlteration.deathInfo.suddenDeath"
+                         list="#@java.util.HashMap@{'false':''}"
                          id="act52" onclick="validateAct(value)"/>
             </td>
         </tr>

@@ -11,6 +11,7 @@ import java.util.Date;
 
 /**
  * class for death info   for alteration
+ *
  * @author amith jayasekara
  */
 @Embeddable
@@ -43,6 +44,10 @@ public class DeathAlterationInfo implements Serializable {
 
     @Column(nullable = true)
     private String placeOfBurial;
+
+    @Column(nullable = false)
+    private boolean suddenDeath;
+
 
     public String getPlaceOfDeath() {
         return placeOfDeath;
@@ -106,5 +111,13 @@ public class DeathAlterationInfo implements Serializable {
 
     public void setCauseOfDeath(String causeOfDeath) {
         this.causeOfDeath = WebUtils.filterBlanks(causeOfDeath);
+    }
+
+    public boolean isSuddenDeath() {
+        return suddenDeath;
+    }
+
+    public void setSuddenDeath(boolean suddenDeath) {
+        this.suddenDeath = suddenDeath;
     }
 }

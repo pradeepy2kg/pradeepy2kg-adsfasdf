@@ -530,6 +530,24 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                     lk.rgd.common.util.CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(DeathAlteration.CAUSE_OF_DEATH_ESTABLISHED), preferedLan)
                 ));
             }
+            //compare sudden death
+            if ((deathRegister.getDeathType() == DeathRegister.Type.NORMAL && deathAlteration.getDeathInfo().isSuddenDeath()) ||
+                (deathRegister.getDeathType() == DeathRegister.Type.SUDDEN && !deathAlteration.getDeathInfo().isSuddenDeath())) {
+                changesList.add(new FieldValue(lk.rgd.common.util.CommonUtil.getYesOrNo((deathRegister.getDeathType() ==
+                    DeathRegister.Type.SUDDEN) ? true : false, preferedLan),
+                    lk.rgd.common.util.CommonUtil.getYesOrNo(deathAlteration.getDeathInfo().isSuddenDeath(), preferedLan),
+                    DeathAlteration.SUDDEN_DEATH,
+                    lk.rgd.common.util.CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(DeathAlteration.SUDDEN_DEATH), preferedLan)
+                ));
+            }
+            if (!(deathRegister.getDeath().isCauseOfDeathEstablished() ==
+                deathAlteration.getDeathInfo().isCauseOfDeathEstablished())) {
+                changesList.add(new FieldValue(lk.rgd.common.util.CommonUtil.getYesOrNo(deathRegister.getDeath().isCauseOfDeathEstablished(), preferedLan),
+                    lk.rgd.common.util.CommonUtil.getYesOrNo(deathAlteration.getDeathInfo().isCauseOfDeathEstablished(), preferedLan),
+                    DeathAlteration.CAUSE_OF_DEATH_ESTABLISHED,
+                    lk.rgd.common.util.CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(DeathAlteration.CAUSE_OF_DEATH_ESTABLISHED), preferedLan)
+                ));
+            }
 
         }
 
