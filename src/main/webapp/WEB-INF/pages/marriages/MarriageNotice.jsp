@@ -5,6 +5,7 @@
 <script src="/ecivil/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
+<script type="text/javascript" src="<s:url value="/js/division.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 
 <script type="text/javascript">
@@ -432,7 +433,8 @@ $('select#dsDivisionId').bind('change', function(evt2) {
                     <td>
                         <s:select id="districtId" name="marriageDistrictId" list="districtList"
                                   value="marriageDistrictId"
-                                  cssStyle="width:98.5%; width:195px;"/>
+                                  cssStyle="width:98.5%; width:195px;"
+                                  onchange="populateDSDivisions('districtId','dsDivisionId','mrDivisionId', 'Marriage', false)"/>
                     </td>
                 </tr>
                 <tr>
@@ -443,7 +445,8 @@ $('select#dsDivisionId').bind('change', function(evt2) {
                     </td>
                     <td>
                         <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="dsDivisionId"
-                                  cssStyle="width:98.5%; width:195px;"/>
+                                  cssStyle="width:98.5%; width:195px;"
+                                  onchange="populateDivisions('dsDivisionId', 'mrDivisionId', 'Marriage', false)"/>
                     </td>
                 </tr>
                 <tr>
@@ -694,7 +697,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
     <tbody>
     <tr>
         <td rowspan="2">
-            පදිංචි ලිපිනය <br>
+            පදිංචි ලිපිනය <s:label value="*" cssStyle="color:red;font-size:10pt"/><br>
             தற்போதைய வதிவிட முகவரி <br>
             Resident Address
         </td>
@@ -948,7 +951,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
     <tbody>
     <tr>
         <td rowspan="2">
-            පදිංචි ලිපිනය <br>
+            පදිංචි ලිපිනය <s:label value="*" cssStyle="color:red;font-size:10pt"/><br>
             தற்போதைய வதிவிட முகவரி <br>
             Resident Address
         </td>
