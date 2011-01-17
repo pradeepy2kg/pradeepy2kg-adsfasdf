@@ -632,7 +632,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private void approveDeathRegistration() {
         try {
             warnings = service.approveDeathRegistration(idUKey, user, ignoreWarning);
-            addActionMessage(getText("message.approve.success", new String[]{Long.toString(idUKey)}));
+            addActionMessage(getText("message.approve.success"));
         } catch (RGDRuntimeException e) {
             handleDeathApprovalException(e);
         }
