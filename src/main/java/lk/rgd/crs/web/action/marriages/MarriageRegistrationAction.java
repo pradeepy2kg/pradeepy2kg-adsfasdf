@@ -141,6 +141,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             marriageRegistrationService.addMarriageNotice(marriage, noticeType, user);
             addActionMessage(getText("message.notice.successfully.add"));
             logger.debug("successfully added marriage notice serial number: {}");
+            idUKey = marriage.getIdUKey();
             return SUCCESS;
         }
         catch (CRSRuntimeException e) {
@@ -583,8 +584,8 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         }*/
     }
 
-    public String displayScannedImage(){
-       return SUCCESS;
+    public String displayScannedImage() {
+        return SUCCESS;
     }
 
     /**
