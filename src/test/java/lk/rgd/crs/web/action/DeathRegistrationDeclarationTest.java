@@ -96,7 +96,7 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
             java.util.GregorianCalendar gCal = new GregorianCalendar();
             //Death info
             DeathInfo death = new DeathInfo();
-            death.setDeathSerialNo(2010012345 + i);
+            death.setDeathSerialNo(2010091045 + i);
             death.setPlaceOfDeath("place of death :" + i);
             gCal.add(Calendar.DATE, -20);
             death.setDateOfDeath(gCal.getTime());
@@ -109,7 +109,7 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
             //death person info
             DeathPersonInfo person = new DeathPersonInfo();
             person.setDeathPersonGender(0);
-            person.setDeathPersonNameOfficialLang("name in offocial lang" + i);
+            person.setDeathPersonNameOfficialLang("name in official lang" + i);
             person.setDeathPersonAge(25);
             person.setDeathPersonCountry(sriLanka);
             person.setDeathPersonFatherFullName("father full name " + i);
@@ -119,10 +119,10 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
             person.setDeathPersonNameInEnglish("name in english" + i);
             person.setDeathPersonPermanentAddress("address" + i);
 
-            //notifu authority info
+            //notifying authority info
             NotifyingAuthorityInfo notify = new NotifyingAuthorityInfo();
             notify.setNotifyingAuthorityName("notify name :" + i);
-            notify.setNotifyingAuthorityAddress("notifi address :" + i);
+            notify.setNotifyingAuthorityAddress("notifying address :" + i);
             notify.setNotifyingAuthorityPIN("" + 123456789 + i);
             gCal.add(Calendar.DATE, -1);
             notify.setNotifyingAuthoritySignDate(gCal.getTime());
@@ -330,7 +330,7 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
         User sampleUser = loginSampleUser();
         DeathRegister death = null;
         //DATA_ENTRY mode
-        death = deathRegistrationService.getByBDDivisionAndDeathSerialNo(colomboBDDivision, 2010012347, sampleUser);
+        death = deathRegistrationService.getByBDDivisionAndDeathSerialNo(colomboBDDivision, 2010091047, sampleUser);
 
         Map session = userLogin("rg", "password");
         //this is a DATA_ENTRY state recode
@@ -342,9 +342,9 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
 
         //try to edit non editable recode
         //this recode in APPROVE state
-        death = deathRegistrationService.getByBDDivisionAndDeathSerialNo(colomboBDDivision, 2010012351, sampleUser);
+        death = deathRegistrationService.getByBDDivisionAndDeathSerialNo(colomboBDDivision, 2010091051, sampleUser);
         deathRegistrationService.approveDeathRegistration(death.getIdUKey(), sampleUser, true);
-        death = deathRegistrationService.getByBDDivisionAndDeathSerialNo(colomboBDDivision, 2010012351, sampleUser);
+        death = deathRegistrationService.getByBDDivisionAndDeathSerialNo(colomboBDDivision, 2010091051, sampleUser);
 
         request.setParameter("idUKey", "" + death.getIdUKey());
         initAndExucute("/deaths/eprDeathEditMode.do", session);
@@ -359,7 +359,7 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
         Map session = userLogin("rg", "password");
         User sampleUser = loginSampleUser();
         DeathRegister death = null;
-        death = deathRegistrationService.getByBDDivisionAndDeathSerialNo(colomboBDDivision, 2010012349, sampleUser);
+        death = deathRegistrationService.getByBDDivisionAndDeathSerialNo(colomboBDDivision, 2010091049, sampleUser);
         approveRejectComman("/deaths/eprRejectDeath.do", session, death.getIdUKey());
         logger.info("testing death reject completed");
     }
@@ -367,7 +367,7 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
     public void testDeathApprove() throws Exception {
         User sampleUser = loginSampleUser();
         DeathRegister death = null;
-        death = deathRegistrationService.getByBDDivisionAndDeathSerialNo(colomboBDDivision, 2010012350, sampleUser);
+        death = deathRegistrationService.getByBDDivisionAndDeathSerialNo(colomboBDDivision, 2010091050, sampleUser);
         Map session = userLogin("rg", "password");
         approveRejectComman("/deaths/eprApproveDeath.do", session, death.getIdUKey());
         logger.info("testing death approve completed");
@@ -376,7 +376,7 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
     public void testDeathDelete() throws Exception {
         User sampleUser = loginSampleUser();
         DeathRegister death = null;
-        death = deathRegistrationService.getByBDDivisionAndDeathSerialNo(colomboBDDivision, 2010012351, sampleUser);
+        death = deathRegistrationService.getByBDDivisionAndDeathSerialNo(colomboBDDivision, 2010091051, sampleUser);
         Map session = userLogin("rg", "password");
         approveRejectComman("/deaths/eprDeleteDeath.do", session, death.getIdUKey());
         logger.info("testing death delete completed");
@@ -385,7 +385,7 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
     public void testDeathVeiwMode() throws Exception {
         User sampleUser = loginSampleUser();
         DeathRegister death = null;
-        death = deathRegistrationService.getByBDDivisionAndDeathSerialNo(colomboBDDivision, 2010012348, sampleUser);
+        death = deathRegistrationService.getByBDDivisionAndDeathSerialNo(colomboBDDivision, 2010091048, sampleUser);
         Map session = userLogin("rg", "password");
         request.setParameter("idUKey", "" + death.getIdUKey());
         initAndExucute("/deaths/eprDeathViewMode.do", session);
