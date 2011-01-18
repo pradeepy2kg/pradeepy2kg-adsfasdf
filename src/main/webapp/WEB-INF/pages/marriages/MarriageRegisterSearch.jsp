@@ -33,7 +33,7 @@
         });
     });
 </script>
-<s:actionerror cssClass="actionerror"/>
+<s:actionerror cssStyle="color:red;font-size:10pt"/>
 <s:actionmessage cssStyle="color:blue;font-size:10pt"/>
 <s:form action="eprMarriageRegisterSearch.do" method="POST" onsubmit="javascript:return validate()">
     <div id="tabs" style="font-size:10pt;">
@@ -204,7 +204,7 @@
                                         <img src="<s:url value='/images/print_icon.gif'/>" border="none" height="25"/>
                                     </s:a>
                                 </s:if>
-                                <s:else>
+                                <s:elseif test="(state.ordinal()!=10)">
                                     <%-- Edit  --%>
                                     <s:if test="serialNumber==null">
                                         <s:url id="editSelected" action="eprMarriageRegistrationInit.do">
@@ -223,6 +223,7 @@
                                     </s:a>
 
                                     <%-- Approve  --%>
+                                    <s:if test="(!#session.user_bean.role.roleId.equals('DEO'))))">
                                     <s:url id="approveSelected" action="eprApproveMarriageRegistration.do">
                                         <s:param name="idUKey" value="idUKey"/>
                                     </s:url>
@@ -240,7 +241,8 @@
                                         <img src="<s:url value='/images/reject.gif'/>" width="25" height="25"
                                              border="none"/>
                                     </s:a>
-                                </s:else>
+                                    </s:if>
+                                </s:elseif>
 
                                 <%-- View  --%>
                                 <s:if test="(state.ordinal()==9|| state.ordinal()==10 || state.ordinal()==11)"><%-- Registration rejected, approved or Extract Printed --%>
@@ -255,7 +257,7 @@
                                 </s:if>
 
                                 <%-- View scanned marriage cert  --%>
-                                <s:if test="(scannedImagePath != null)">
+                                <s:if test="(scannedImagePath != null) && state.ordinal()!=10">
                                     <s:url id="printCert" action="eprDisplayScannedImage.do">
                                         <s:param name="idUKey" value="idUKey"/>
                                     </s:url>

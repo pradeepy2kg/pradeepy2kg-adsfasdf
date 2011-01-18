@@ -45,7 +45,7 @@
     }
 
 </script>
-<s:actionerror cssClass="actionerror"/>
+<s:actionerror cssStyle="color:red;font-size:10pt"/>
 <s:actionmessage cssStyle="color:blue;font-size:10pt"/>
 <div class="marriage-notice-outer">
 <s:form method="post" enctype="multipart/form-data" onsubmit="javascript:return validateMarriageDetails()">
