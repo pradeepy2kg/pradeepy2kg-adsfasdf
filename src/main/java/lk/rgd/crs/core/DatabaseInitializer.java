@@ -20,9 +20,7 @@ import org.springframework.test.jdbc.SimpleJdbcTestUtils;
 
 import javax.sql.DataSource;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Initializes an in-memory database for testing and populates it with sample/initial data

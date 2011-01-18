@@ -234,6 +234,8 @@ public class Menu {
         deoDeathLink.put("eprDeathApprovalAndPrint.do", new Link("death_approve_print_list.label", "/ecivil/deaths/", "eprDeathApprovalAndPrint.do", Permission.EDIT_DEATH));
 
         deoDeathLink.put("eprDeathFilterByStatus.do", new Link(null, "/ecivil/deaths/", "eprDeathFilterByStatus.do", Permission.EDIT_DEATH));
+        deoDeathLink.put("eprDeathFilterByStatusNext.do", new Link(null, "/ecivil/deaths/", "eprDeathFilterByStatusNext.do", Permission.EDIT_DEATH));
+        deoDeathLink.put("eprDeathFilterByStatusPreviouse.do", new Link(null, "/ecivil/deaths/", "eprDeathFilterByStatusPreviouse.do", Permission.EDIT_DEATH));
         deoDeathLink.put("eprInitDeathHome.do", new Link(null, "/ecivil/deaths/", "eprInitDeathHome.do", Permission.EDIT_DEATH));
         deoDeathLink.put("eprDeathDeclaration.do", new Link(null, "/ecivil/deaths/", "eprDeathDeclaration.do", Permission.EDIT_DEATH));
         deoDeathLink.put("eprDeathCertificate.do", new Link(null, "/ecivil/deaths/", "eprDeathCertificate.do", Permission.EDIT_DEATH));
