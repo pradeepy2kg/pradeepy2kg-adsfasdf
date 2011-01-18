@@ -786,7 +786,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
             Anulled
         </td>
         <td>
-            <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'ANULLED':''}"
+            <s:radio name="marriage.male.civilStatusMale" list="#@java.util.HashMap@{'ANNULLED':''}"
                      value="%{marriage.male.civilStatusMale}"/>
         </td>
     </tr>
@@ -1047,7 +1047,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
             Anulled
         </td>
         <td>
-            <s:radio name="marriage.female.civilStatusFemale" list="#@java.util.HashMap@{'ANULLED':''}"
+            <s:radio name="marriage.female.civilStatusFemale" list="#@java.util.HashMap@{'ANNULLED':''}"
                      value="%{marriage.female.civilStatusFemale}"/>
         </td>
     </tr>
