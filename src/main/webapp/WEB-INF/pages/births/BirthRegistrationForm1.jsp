@@ -49,34 +49,34 @@ $(function() {
     $('select#districtId').bind('change', function(evt1) {
         var id = $("select#districtId").attr("value");
         $.getJSON('/ecivil/crs/DivisionLookupService', {id:id},
-                function(data) {
-                    var options1 = '';
-                    var ds = data.dsDivisionList;
-                    for (var i = 0; i < ds.length; i++) {
-                        options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
-                    }
-                    $("select#dsDivisionId").html(options1);
+                 function(data) {
+                     var options1 = '';
+                     var ds = data.dsDivisionList;
+                     for (var i = 0; i < ds.length; i++) {
+                         options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                     }
+                     $("select#dsDivisionId").html(options1);
 
-                    var options2 = '';
-                    var bd = data.bdDivisionList;
-                    for (var j = 0; j < bd.length; j++) {
-                        options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
-                    }
-                    $("select#birthDivisionId").html(options2);
-                });
+                     var options2 = '';
+                     var bd = data.bdDivisionList;
+                     for (var j = 0; j < bd.length; j++) {
+                         options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
+                     }
+                     $("select#birthDivisionId").html(options2);
+                 });
     });
 
     $('select#dsDivisionId').bind('change', function(evt2) {
         var id = $("select#dsDivisionId").attr("value");
         $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:2},
-                function(data) {
-                    var options = '';
-                    var bd = data.bdDivisionList;
-                    for (var i = 0; i < bd.length; i++) {
-                        options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
-                    }
-                    $("select#birthDivisionId").html(options);
-                });
+                 function(data) {
+                     var options = '';
+                     var bd = data.bdDivisionList;
+                     for (var i = 0; i < bd.length; i++) {
+                         options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
+                     }
+                     $("select#birthDivisionId").html(options);
+                 });
     });
 
 
@@ -132,7 +132,10 @@ $(function() {
 
     function processResponse2(respObj) {
         //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
+        $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].
+        return[0].Text
+    )
+        ;
     }
 });
 
@@ -247,10 +250,12 @@ function liveBirthCommonTags(check) {
     //birth weight
     domObject = document.getElementById('childBirthWeight');
     if (!check.checked) {
-        isEmpty(domObject, "", 'error4');
+        if (isFieldEmpty(domObject)) {
+            isEmpty(domObject, "", 'error4');
+        } else {
+            validateBirthWeight(domObject, 'error13', 'error23')
+        }
     }
-    if (!isFieldEmpty(domObject))
-        validateNumber(domObject.value, 'error13', 'error23');
 
     // child rank
     domObject = document.getElementById('childRank');
@@ -271,6 +276,21 @@ function liveBirthCommonTags(check) {
         }
     }
 }
+// validate birth weight of the child
+function validateBirthWeight(domElement, errorText, errorCode) {
+    with (domElement) {
+        var mode = false;
+        var reg = /^([0-9]\.?([0-9]*))$/;
+        if (reg.test(value.trim()) == false) {
+            mode = true;
+        } else if (value.trim() >= 10) {
+            mode = true;
+        }
+        if (mode) {
+            errormsg = errormsg + "\n" + document.getElementById(errorText).value + " : " + document.getElementById(errorCode).value;
+        }
+    }
+}
 
 //check live birth is a belated birth gives warnings
 function dateRange() {
@@ -279,7 +299,7 @@ function dateRange() {
         var birthdate = new Date(document.getElementById('birthDatePicker').value);
         var submit = new Date(document.getElementById('submitDatePicker').value);
         //comparing 90 days delay
-        var one_day = 1000 * 60 * 60 * 24 ;
+        var one_day = 1000 * 60 * 60 * 24;
         var numDays = Math.ceil((submit.getTime() - birthdate.getTime()) / (one_day));
         if (numDays >= 90) {
             if (numDays >= 365) {
@@ -342,16 +362,17 @@ function initPage() {
                     <s:fielderror name="duplicateSerialNumberError" cssStyle="color:red;font-size:9pt;"/>
                 </tr>
                 <tr>
-                    <td><label><span class="font-8">අනුක්‍රමික අංකය<s:label value="*" cssStyle="color:red;font-size:10pt;"/> <br>தொடர் இலக்கம்<br>Serial Number</span></label>
+                    <td><label><span class="font-8">අනුක්‍රමික අංකය<s:label value="*"
+                                                                            cssStyle="color:red;font-size:10pt;"/> <br>தொடர் இலக்கம்<br>Serial Number</span></label>
                     </td>
                     <td>
-<%--                        <s:if test="editMode">
-                            <s:textfield name="register.bdfSerialNo" id="bdfSerialNo" readonly="true"/>
-                        </s:if>
-                        <s:else>--%>
-                            <s:textfield name="register.bdfSerialNo" id="bdfSerialNo" maxLength="10"/>
-    <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>         --%>
-                    <%--    </s:else>--%>
+                            <%--                        <s:if test="editMode">
+                                <s:textfield name="register.bdfSerialNo" id="bdfSerialNo" readonly="true"/>
+                            </s:if>
+                            <s:else>--%>
+                        <s:textfield name="register.bdfSerialNo" id="bdfSerialNo" maxLength="10"/>
+                            <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>         --%>
+                            <%--    </s:else>--%>
                     </td>
                 </tr>
             </table>
@@ -367,7 +388,8 @@ function initPage() {
                 <tr>
                     <td>
                         <label>
-                            <span class="font-8">භාරගත්  දිනය<s:label value="*" cssStyle="color:red;font-size:10pt;"/> <br>பிறப்பைப் பதிவு திகதி <br>Submitted Date</span>
+                            <span class="font-8">භාරගත්  දිනය<s:label value="*"
+                                                                      cssStyle="color:red;font-size:10pt;"/> <br>பிறப்பைப் பதிவு திகதி <br>Submitted Date</span>
                         </label>
                     </td>
                     <td><s:label value="YYYY-MM-DD" cssStyle="margin-left:20px;font-size:10px"/><br>
@@ -476,7 +498,7 @@ function initPage() {
     <td colspan="3" style="border-right:none;">
         <s:label value="YYYY-MM-DD" cssStyle="margin-left:20px;font-size:10px"/><br>
         <s:textfield id="birthDatePicker" name="child.dateOfBirth" onchange="dateRange();" maxLength="10"/>
-        <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>--%>
+            <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>--%>
     </td>
     <td colspan="4" style="border-left:none;">
         <div id="belatedError" style="color:red; font-size:11pt"/>
@@ -484,7 +506,7 @@ function initPage() {
 </tr>
 <tr>
     <td rowspan="6"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපන්
-        ස්ථානය   <s:label value="*" cssStyle="color:red;font-size:14pt;"/>
+        ස්ථානය <s:label value="*" cssStyle="color:red;font-size:14pt;"/>
         <br>பிறந்த இடம்
         <br> Place of Birth</label></td>
     <td><label>දිස්ත්‍රික්කය மாவட்டம் District</label></td>
@@ -515,7 +537,7 @@ function initPage() {
     <td><label>සිංහල හෝ දෙමළ භාෂාවෙන් <br>சிங்களம்அல்லது தமிழ் மொழியில்<br>In Sinhala or Tamil</label></td>
     <td colspan="6"><s:textfield name="child.placeOfBirth" id="placeOfBirth" cssStyle="width:95%;"
                                  maxLength="255"/>
-        <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>          --%>
+            <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>          --%>
     </td>
 </tr>
 <tr>
@@ -595,7 +617,7 @@ function initPage() {
             </td>
         </s:if>
         <td colspan="2"><s:textfield name="child.childBirthWeight" id="childBirthWeight"
-                                     cssStyle="width:95%;" maxLength="6"/></td>
+                                     cssStyle="width:95%;" maxLength="4"/></td>
     </s:if>
     <s:elseif test="birthType.ordinal() == 0">
         <td colspan="2">
@@ -612,10 +634,10 @@ function initPage() {
     <td class="font-9">
         <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
             <s:if test="birthType.ordinal() != 0">
-            සජිවි උපත් අනුපිළි‍‍වල අනුව කීවෙනි ළමයා
-            ද?
-            <br>பிறப்பு ஒழுங்கு
-            <br>According to Live Birth Order, rank of the child?
+                සජිවි උපත් අනුපිළි‍‍වල අනුව කීවෙනි ළමයා
+                ද?
+                <br>பிறப்பு ஒழுங்கு
+                <br>According to Live Birth Order, rank of the child?
             </s:if>
             <s:else>
                 උපත් අනුපිළිවල අනුව කීවෙනි උපතද?

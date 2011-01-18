@@ -249,7 +249,7 @@ public class BirthDeclarationValidator {
         checkDuplicatePinOrNic(grandFatherPin, greatGrandPin, warnings, rb, "duplicate_grandFather_greatGrand_pin");
     }
 
-    private void checkDuplicatePinOrNic(final String s1, final String s2, final List<UserWarning> warnings, ResourceBundle rb, String key) {
+    private final void checkDuplicatePinOrNic(final String s1, final String s2, final List<UserWarning> warnings, ResourceBundle rb, String key) {
         try {
             if (s1.equals(s2)) {
                 warnings.add(new UserWarning(MessageFormat.format(rb.getString(key), s1)));
