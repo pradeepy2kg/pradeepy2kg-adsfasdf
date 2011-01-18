@@ -10,10 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import lk.rgd.crs.api.service.ReportsGenerator;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Generate and create statistical reports.
@@ -25,7 +22,9 @@ public class ReportsAction extends ActionSupport implements SessionAware {
 
     private final ReportsGenerator reportsService;
     private int year;
+    private int chartType;
     private List<Integer> yearList;
+    private Map<Integer, String> chartList;
     private Map session;
 
     public ReportsAction(ReportsGenerator reportsService) {
@@ -33,7 +32,7 @@ public class ReportsAction extends ActionSupport implements SessionAware {
     }
 
     public String loadPage() {
-        populateYearList();
+        populateLists();
         year = yearList.iterator().next();
         return SUCCESS;
     }
@@ -48,20 +47,27 @@ public class ReportsAction extends ActionSupport implements SessionAware {
 
         User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         try {
-            generateReport(year, user, ReportCodes.TABLE_2_2);                //todo don't generate if we already have one
-            reportsService.createReport(user, ReportCodes.TABLE_2_2);
+            if (chartType == 0) {
+                logger.debug("Chart Type {}", chartType);
+                generateReport(year, user, ReportCodes.TABLE_2_2);                //todo don't generate if we already have one
+                reportsService.createReport(user, ReportCodes.TABLE_2_2);
+            } else if (chartType == 1) {
+                logger.debug("Chart Type {}", chartType);
+                generateReport(year, user, ReportCodes.TABLE_2_8);
+                reportsService.createReport(user, ReportCodes.TABLE_2_8);
+            }
         } catch (RGDRuntimeException error) {
             addActionError(getText("permission.denied"));
         }
         addActionMessage(getText("report.generation.completed"));
         logger.debug("Selected year {}", year);
 
-        populateYearList();
+        populateLists();
 
         return ActionSupport.SUCCESS;
     }
 
-    private void populateYearList() {
+    private void populateLists() {
         yearList = new ArrayList<Integer>();
         Calendar cal = Calendar.getInstance();
         int thisYear = cal.get(Calendar.YEAR);
@@ -70,6 +76,10 @@ public class ReportsAction extends ActionSupport implements SessionAware {
             cal.add(Calendar.YEAR, -1);
             yearList.add(cal.get(Calendar.YEAR));
         }
+
+        chartList = new HashMap<Integer, String>();
+        chartList.put(0, "TABLE 2.2");
+        chartList.put(1, "TABLE 2.8");
     }
 
     public int getYear() {
@@ -88,6 +98,26 @@ public class ReportsAction extends ActionSupport implements SessionAware {
         this.yearList = yearList;
     }
 
+    public Map<Integer, String> getChartList() {
+        return chartList;
+    }
+
+    public void setChartList(Map<Integer, String> chartList) {
+        this.chartList = chartList;
+    }
+
+    public int getChartType() {
+        return chartType;
+    }
+
+    public void setChartType(int chartType) {
+        this.chartType = chartType;
+    }
+
+    public Map getSession() {
+        return session;
+    }
+
     @Override
     public void setSession(Map<String, Object> session) {
         this.session = session;
@@ -97,6 +127,9 @@ public class ReportsAction extends ActionSupport implements SessionAware {
         switch (reportCode) {
             case ReportCodes.TABLE_2_2:
                 reportsService.generate_2_2(year, user);
+                break;
+            case ReportCodes.TABLE_2_8:
+                reportsService.generate_2_8(year, user);
                 break;
         }
     }
