@@ -155,6 +155,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     public String marriageExtractInit() {
         marriage = marriageRegistrationService.getMarriageRegisterByIdUKey(idUKey, user, Permission.PRINT_MARRIAGE_EXTRACT);
         populateLocationList(marriage);
+        populateMarriageExtract(marriage);
         return SUCCESS;
     }
 
@@ -540,6 +541,32 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         //populate race name in sin and race name in en for male and female parties
         maleRaceInEn = notice.getMale().getMaleRace() != null ? notice.getMale().getMaleRace().getEnRaceName() : "";
         femaleRaceInEn = notice.getFemale().getFemaleRace() != null ? notice.getFemale().getFemaleRace().getEnRaceName() : "";
+        licenseIssueDistrictInEN = issuingDistrict.getEnDistrictName();
+        licenseIssueDivisionInEN = issuingDSDivision.getEnDivisionName();
+    }
+
+        /**
+     * set additional displaying values
+     */
+    private void populateMarriageExtract(MarriageRegister marriageRegister) {
+        //setting issuing location and user
+        //display values
+        DSDivision issuingDSDivision = dsDivisionDAO.getDSDivisionByPK(marriageRegister.getExtractIssuedLocation().getDsDivisionId());
+        District issuingDistrict = issuingDSDivision.getDistrict();
+        if (AppConstants.SINHALA.equals(marriageRegister.getPreferredLanguage())) {
+            //Sinhala pref lang
+            licenseIssuePlace = marriageRegister.getExtractIssuedLocation().getSienLocationSignature();
+            licenseIssueUserSignature = marriageRegister.getExtractCertifiedUser().getUserSignature(AppConstants.SINHALA);
+            licenseIssueDistrictInOL = issuingDistrict.getSiDistrictName();
+            licenseIssueDivisionInOL = issuingDSDivision.getSiDivisionName();
+        } else {
+            //tamil pref lang
+            licenseIssuePlace = marriageRegister.getExtractIssuedLocation().getTaenLocationSignature();
+            licenseIssueUserSignature = marriageRegister.getExtractCertifiedUser().getUserSignature(AppConstants.TAMIL);
+            licenseIssueDistrictInOL = issuingDistrict.getTaDistrictName();
+            licenseIssueDivisionInOL = issuingDSDivision.getTaDivisionName();
+        }
+        //populate race name in sin and race name in en for male and female parties
         licenseIssueDistrictInEN = issuingDistrict.getEnDistrictName();
         licenseIssueDivisionInEN = issuingDSDivision.getEnDivisionName();
     }
