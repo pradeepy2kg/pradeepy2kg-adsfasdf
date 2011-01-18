@@ -61,7 +61,7 @@ public class DeathDeclarationValidator {
             isEmptyString(deathRegister.getNotifyingAuthority().getNotifyingAuthorityAddress()) ||
             isEmptyString(deathRegister.getNotifyingAuthority().getNotifyingAuthorityPIN());
         //validating serial number and duplicate serial numbers
-    //    validateSerialNumber(deathRegister.getDeath().getDeathSerialNo(), deathRegister.getDeath().getDeathDivision());
+        validateSerialNumber(deathRegister.getDeath().getDeathSerialNo(), deathRegister.getDeath().getDeathDivision());
         //validate declerent
         validateDeathDeclerentForAddingDeathRegistration(deathRegister.getDeclarant());
         if (primaryCondition) {

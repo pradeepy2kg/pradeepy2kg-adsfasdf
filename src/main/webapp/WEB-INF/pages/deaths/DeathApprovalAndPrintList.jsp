@@ -398,6 +398,39 @@
 </s:iterator>
 </tbody>
 </table>
+<div class="next-previous" style="float:right;margin-right:10px;clear:both;">
+    <s:url id="previousUrl" action="eprDeathFilterByStatusPreviouse.do">
+        <s:param name="pageNo" value="%{#request.pageNo}"/>
+        <s:param name="deathDistrictId" value="#request.deathDistrictId"/>
+        <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
+        <s:param name="deathDivisionId" value="#request.deathDivisionId"/>
+        <s:param name="printStart" value="#request.printStart"/>
+        <s:param name="fromDate" value="#request.fromDate"/>
+        <s:param name="endDate" value="#request.endDate"/>
+    </s:url>
+    <s:url id="nextUrl" action="eprDeathFilterByStatusNext.do">
+        <s:param name="pageNo" value="%{#request.pageNo}"/>
+        <s:param name="deathDistrictId" value="#request.deathDistrictId"/>
+        <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
+        <s:param name="deathDivisionId" value="#request.deathDivisionId"/>
+        <s:param name="printStart" value="#request.printStart"/>
+        <s:param name="fromDate" value="#request.fromDate"/>
+        <s:param name="endDate" value="#request.endDate"/>
+    </s:url>
+    <s:if test="pageNo!=1 || deathApprovalAndPrintList.size==0">
+        <s:a href="%{previousUrl}">
+            <img src="<s:url value='/images/previous.gif'/>" border="none"/>
+        </s:a>
+        <s:label value="%{getText('previous.label')}"/>
+    </s:if>
+    <s:if test="deathApprovalAndPrintList.size >=50">
+
+        <s:a href="%{nextUrl}">
+            <img src="<s:url value='/images/next.gif'/>" border="none"/>
+        </s:a>
+        <s:label value="%{getText('next.label')}"/>
+    </s:if>
+</div>
 </fieldset>
 <%--customize based on user role--%>
 
@@ -414,6 +447,7 @@
     document.getElementById('printImage').style.display = 'none';
 </script>
 </s:if>
+
 
 
 

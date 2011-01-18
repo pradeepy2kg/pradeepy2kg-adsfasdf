@@ -46,6 +46,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private int deathPersonCountry;
     private int deathPersonRace;
     private int locationId;
+    private int printStart;
 
     private final DistrictDAO districtDAO;
     private final BDDivisionDAO bdDivisionDAO;
@@ -321,11 +322,8 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         return SUCCESS;
     }
 
+    private void filterDeathRegistrationApprovalList() {
 
-    public String filterByStatus() {
-        logger.debug("requested to filter by : {}", currentStatus);
-        setPageNo(1);
-        noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
         initPermissionForApprovalAndPrint();
 
         searchByDate = ((fromDate != null) && (endDate != null));
@@ -369,9 +367,58 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                 }
             }
         }
+    }
+
+    public String filterByStatus() {
+        logger.debug("requested to filter by : {}", currentStatus);
+        //     setPageNo(1);
+        noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
+        pageNo = 1;
+        filterDeathRegistrationApprovalList();
         populate();
         paginationHandler(deathApprovalAndPrintList.size());
         return SUCCESS;
+    }
+
+
+    /**
+     * This method is used for pagination(move backward) in marriage notice search list page
+     */
+    public String previouseDeathRegisterApprovalPage() {
+        logger.debug("Previous page of Marriage notices search list loaded");
+        noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
+        pageNo = printStart / noOfRows;
+        printStart -= noOfRows;
+        filterDeathRegistrationApprovalList();
+        showNoticeSearchResultSize();
+        populate();
+        paginationHandler(deathApprovalAndPrintList.size());
+        return SUCCESS;
+    }
+
+    /**
+     * This method is used for pagination(move forward) in marriage notice search list page
+     */
+    public String nextDeathRegisterApprovalPage() {
+        logger.debug("Next page of Marriage notices search list loaded");
+        noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
+        pageNo = ((printStart + noOfRows) / noOfRows) + 1;
+        printStart += noOfRows;
+        filterDeathRegistrationApprovalList();
+        showNoticeSearchResultSize();
+        populate();
+        paginationHandler(deathApprovalAndPrintList.size());
+        return SUCCESS;
+    }
+
+    /**
+     * This method is used to show action message if search result list is empty
+     */
+    private void showNoticeSearchResultSize() {
+        if (deathApprovalAndPrintList.size() == 0) {
+            addActionMessage(getText("noItemMsg.label"));
+        }
+        logger.debug("death register print and approval list loaded with size : {}", deathApprovalAndPrintList.size());
     }
 
     public String test() {
@@ -1394,5 +1441,13 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public void setPageType(int pageType) {
         this.pageType = pageType;
+    }
+
+    public int getPrintStart() {
+        return printStart;
+    }
+
+    public void setPrintStart(int printStart) {
+        this.printStart = printStart;
     }
 }

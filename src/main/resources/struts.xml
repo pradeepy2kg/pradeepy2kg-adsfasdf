@@ -661,6 +661,16 @@
 
         <action name="eprDeathFilterByStatus" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
                 method="filterByStatus">
+            <param name="pageNo">1</param>
+            <result type="tiles" name="success">epr.deathApproveAndPrint</result>
+        </action>
+
+        <action name="eprDeathFilterByStatusNext" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
+                method="nextDeathRegisterApprovalPage">
+            <result type="tiles" name="success">epr.deathApproveAndPrint</result>
+        </action>
+        <action name="eprDeathFilterByStatusPreviouse" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
+                method="previouseDeathRegisterApprovalPage">
             <result type="tiles" name="success">epr.deathApproveAndPrint</result>
         </action>
         <!--todo-->
