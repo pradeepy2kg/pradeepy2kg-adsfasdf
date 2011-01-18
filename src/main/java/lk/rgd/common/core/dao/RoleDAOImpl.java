@@ -18,7 +18,7 @@ public class RoleDAOImpl extends BaseDAO implements RoleDAO, PreloadableDAO {
     private final Map<String, String> roleListByRoleId = new HashMap<String, String>();
     private List<Role> roleList = null;
 
-    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public Role getRole(String roleId) {
         logger.debug("Loading role : {}", roleId);
         return em.find(Role.class, roleId);

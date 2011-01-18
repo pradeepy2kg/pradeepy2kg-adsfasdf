@@ -146,85 +146,30 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     }
 
     public String createUser() {
-        /* get the current user who are logged in */
-        /* user = new User */
         User currentUser = (User) session.get(WebConstants.SESSION_USER_BEAN);
-        user.setRole(roleDAO.getRole(roleId));
-        user.setStatus(User.State.INACTIVE);
-
-        Set<District> assDistrict = new HashSet<District>();
-        Set<DSDivision> assDSDivision = new HashSet<DSDivision>();
-
-        for (int districtUKey : assignedDistricts) {
-            assDistrict.add(districtDAO.getDistrict(districtUKey));
-        }
-
-        if (roleId.equals(Role.ROLE_DEO) || roleId.equals(Role.ROLE_ADR)) {
-            for (int districtUKey : assignedDistricts) {
-                assDSDivision.add(dsDivisionDAO.getDSDivisionByPK(districtUKey));
-            }
-        }
-        if (roleId.equals(Role.ROLE_DR) || roleId.equals(Role.ROLE_ARG)) {
-            for (int districtUKey : assignedDistricts) {
-                assDSDivision.addAll(dsDivisionDAO.getAllDSDivisionByDistrictKey(districtUKey));
-            }
-        }
-
-        //TODO change password length
+        boolean isNewUser = false;
         int randomPasswordLength = (int) (Math.random() * 6) + 10;
-        if (userId == null) {
-            randomPassword = getRandomPassword(randomPasswordLength);
-            user.setPasswordHash(hashPassword(randomPassword));
-            user.setAssignedBDDistricts(assDistrict);
-            user.setAssignedMRDistricts(assDistrict);
-            user.setAssignedBDDSDivisions(assDSDivision);
-            user.setAssignedMRDSDivisions(assDSDivision);
-            try {
-                service.createUser(user, currentUser);
-            } catch (RGDRuntimeException e) {
-                if (e.getErrorCode() == ErrorCodes.ENTITY_ALREADY_EXIST) {
-                    addActionMessage(getText("user.already.assigned"));
-                    pageNo = 2;
-                    return SUCCESS;
-                }
+        randomPassword = getRandomPassword(randomPasswordLength);
+        
+        try {
+            isNewUser = service.createUser(user, currentUser, userId, roleId, assignedDistricts, changePassword, randomPassword);
+        } catch (RGDRuntimeException e) {
+            if (e.getErrorCode() == ErrorCodes.ENTITY_ALREADY_EXIST) {
+                addActionMessage(getText("user.already.assigned"));
+                pageNo = 2;
+                return SUCCESS;
             }
+        }
+        if (isNewUser) {
             userId = user.getUserId();
             addActionMessage(getText("data.Save.Success.label"));
             pageNo = 1;
         } else {
-            logger.debug("Edited user name {}", user.getUserName());
-
-            User updatedUser = service.getUserByID(userId);
-
-            updatedUser.setUserName(user.getUserName());
-            updatedUser.setPin(user.getPin());
-            updatedUser.setSienSignatureText(user.getSienSignatureText());
-            updatedUser.setTaenSignatureText(user.getTaenSignatureText());
-            updatedUser.setPrefLanguage(user.getPrefLanguage());
-
-            updatedUser.setAssignedBDDistricts(assDistrict);
-            updatedUser.setAssignedMRDistricts(assDistrict);
-            updatedUser.setAssignedBDDSDivisions(assDSDivision);
-            updatedUser.setAssignedMRDSDivisions(assDSDivision);
-            updatedUser.setRole(roleDAO.getRole(roleId));
-
-            if (isAssignedLocations(updatedUser)) {
-                updatedUser.setStatus(User.State.ACTIVE);
-            } else {
-                updatedUser.setStatus(User.State.INACTIVE);
-            }
-            if (changePassword) {
-                logger.debug("Change password {}", userDAO.getUserByPK(userId).getUserName());
-                randomPassword = getRandomPassword(randomPasswordLength);
-                updatedUser.setPasswordHash(hashPassword(randomPassword));
-            }
-            service.updateUser(updatedUser, currentUser);
-            //todo : to be removed
-            //session.remove(WebConstants.SESSION_UPDATED_USER);
             session.put("viewUsers", null);
             addActionMessage(getText("edit.Data.Save.Success.label"));
             pageNo = 3;
         }
+
         populate();
         return SUCCESS;
     }
@@ -524,12 +469,13 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                     district.setActive(true);
                     dataManagementService.addDistrict(district, currentUser);
                     logger.debug("New Id of new District {} is   :{}", district.getEnDistrictName(), district.getDistrictId());
-                    if(language.equals("si"))
+                    if (language.equals("si")) {
                         msg = getText("new.district.add") + " : " + district.getSiDistrictName();
-                    else if(language.equals("en"))
+                    } else if (language.equals("en")) {
                         msg = getText("new.district.add") + " : " + district.getEnDistrictName();
-                    else if(language.equals("ta"))
+                    } else if (language.equals("ta")) {
                         msg = getText("new.district.add") + " : " + district.getTaDistrictName();
+                    }
                 }
                 break;
             case 2:
@@ -545,12 +491,13 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                     dsDivision.setActive(true);
                     dataManagementService.addDSDivision(dsDivision, currentUser);
                     logger.debug("New Id of new Ds Division {} is   :{}", dsDivision.getEnDivisionName(), dsDivision.getDivisionId());
-                    if(language.equals("si"))
+                    if (language.equals("si")) {
                         msg = getText("new.dsDivision.add") + " : " + dsDivision.getSiDivisionName();
-                    else if(language.equals("en"))
+                    } else if (language.equals("en")) {
                         msg = getText("new.dsDivision.add") + " : " + dsDivision.getEnDivisionName();
-                    else if(language.equals("ta"))
+                    } else if (language.equals("ta")) {
                         msg = getText("new.dsDivision.add") + " : " + dsDivision.getTaDivisionName();
+                    }
                 }
                 break;
             case 3:
@@ -565,12 +512,13 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                     bdDivision.setActive(true);
                     dataManagementService.addBDDivision(bdDivision, currentUser);
                     logger.debug("New Id of New Division {} is   :{}", bdDivision.getEnDivisionName(), bdDivision.getDivisionId());
-                    if(language.equals("si"))
+                    if (language.equals("si")) {
                         msg = getText("new.bdDivision.add") + " : " + bdDivision.getSiDivisionName();
-                    else if(language.equals("en"))
+                    } else if (language.equals("en")) {
                         msg = getText("new.bdDivision.add") + " : " + bdDivision.getEnDivisionName();
-                    else if(language.equals("ta"))
+                    } else if (language.equals("ta")) {
                         msg = getText("new.bdDivision.add") + " : " + bdDivision.getTaDivisionName();
+                    }
                 }
                 break;
             case 4:
@@ -585,12 +533,13 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                     mrDivision.setActive(true);
                     dataManagementService.addMRDivision(mrDivision, currentUser);
                     logger.debug("New Id of New MRDivision {} is   :{}", mrDivision.getEnDivisionName(), mrDivision.getDivisionId());
-                    if(language.equals("si"))
+                    if (language.equals("si")) {
                         msg = getText("new.mrDivision.add") + " : " + mrDivision.getSiDivisionName();
-                    else if(language.equals("en"))
+                    } else if (language.equals("en")) {
                         msg = getText("new.mrDivision.add") + " : " + mrDivision.getEnDivisionName();
-                    else if(language.equals("ta"))
+                    } else if (language.equals("ta")) {
                         msg = getText("new.mrDivision.add") + " : " + mrDivision.getTaDivisionName();
+                    }
 
                 }
                 break;
@@ -604,12 +553,13 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 if (checkDuplicate == 0) {
                     dataManagementService.addCourt(court, currentUser);
                     logger.debug("New Id of New Court {} is  :{}", locationDAO.getLocation(locationId), locationId);
-                    if(language.equals("si"))
+                    if (language.equals("si")) {
                         msg = getText("new.court.add") + " : " + court.getSiCourtName();
-                    else if(language.equals("en"))
+                    } else if (language.equals("en")) {
                         msg = getText("new.court.add") + " : " + court.getEnCourtName();
-                    else if(language.equals("ta"))
+                    } else if (language.equals("ta")) {
                         msg = getText("new.court.add") + " : " + court.getTaCourtName();
+                    }
                 }
                 break;
             case 6:
@@ -623,12 +573,13 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                     location.setDsDivisionId(dsDivisionId);
                     dataManagementService.addLocation(location, currentUser);
                     logger.debug("New Id of New Location {} is  :{}", locationDAO.getLocation(locationId), locationId);
-                    if(language.equals("si"))
-                        msg = location.getSiLocationName() + " "+ getText("new.location.add");
-                    else if(language.equals("en"))
+                    if (language.equals("si")) {
+                        msg = location.getSiLocationName() + " " + getText("new.location.add");
+                    } else if (language.equals("en")) {
                         msg = getText("new.location.add") + " : " + location.getEnLocationName();
-                    else if(language.equals("ta"))
+                    } else if (language.equals("ta")) {
                         msg = getText("new.location.add") + " : " + location.getTaLocationName();
+                    }
                 }
 
         }
