@@ -410,6 +410,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
                 case ErrorCodes.INVALID_STATE_FOR_PRINT_LICENSE:
                     addActionError(getText("error.print.license.failed.invalid.state"));
             }
+            addActionError(getText("error.print.license.failed"));
             getApprovalPendingNotices();
             return ERROR;
         }
@@ -545,7 +546,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         licenseIssueDivisionInEN = issuingDSDivision.getEnDivisionName();
     }
 
-        /**
+    /**
      * set additional displaying values
      */
     private void populateMarriageExtract(MarriageRegister marriageRegister) {

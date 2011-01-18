@@ -887,7 +887,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
         </td>
         <td colspan="3">
             <s:textfield name="marriage.female.ageAtLastBirthDayFemale" id="age_at_last_bd_female" maxLength="3"
-                         value="%{marriage.male.ageAtLastBirthDayMale}" onfocus="partyAge(1);"/>
+                         value="%{marriage.female.ageAtLastBirthDayFemale}" onfocus="partyAge(1);"/>
         </td>
     </tr>
     <tr>
