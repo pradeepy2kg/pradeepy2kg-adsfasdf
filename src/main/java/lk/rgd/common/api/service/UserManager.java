@@ -126,6 +126,17 @@ public interface UserManager {
      */
     void createUser(User userToCreate, User adminUser);
 
+
+    /**
+     * Create a new user
+     * 
+     * @param user
+     * @param userId
+     * @param roleId
+     * @param admin
+     */
+    public boolean createUser(User user, User admin, String userId, String roleId, int[] assDistricts, boolean changePassword, String randomPassword);
+
     /**
      * Update a user
      *

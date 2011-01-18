@@ -14,9 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author asankha
@@ -29,16 +27,20 @@ public class UserManagerImpl implements UserManager {
     private final LocationDAO locationDao;
     private final UserLocationDAO userLocationDao;
     private final RoleDAO roleDao;
+    private final DistrictDAO districtDAO;
+    private final DSDivisionDAO dsDivisionDAO;
     private final AppParametersDAO appParaDao;
     private static final String SYSTEM_USER_NAME = "system";
 
     public UserManagerImpl(UserDAO userDao, RoleDAO roleDao, AppParametersDAO appParaDao,
-        LocationDAO locationDao, UserLocationDAO userLocationDao) {
+        LocationDAO locationDao, UserLocationDAO userLocationDao, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO) {
         this.userDao = userDao;
         this.roleDao = roleDao;
         this.appParaDao = appParaDao;
         this.locationDao = locationDao;
         this.userLocationDao = userLocationDao;
+        this.districtDAO = districtDAO;
+        this.dsDivisionDAO = dsDivisionDAO;
     }
 
     /**
@@ -90,6 +92,8 @@ public class UserManagerImpl implements UserManager {
     }
 
     /**
+     * todo remove
+     *
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
@@ -118,6 +122,103 @@ public class UserManagerImpl implements UserManager {
             logger.debug("New user {} created by : {}", userToCreate.getUserName(), adminUser.getUserName());
 
         }
+    }
+
+    /**
+     * @param user
+     * @param userId
+     * @param roleId
+     * @param adminUser
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public boolean createUser(User user, User adminUser, String userId, String roleId, int[] assignedDistricts, boolean changePassword, String randomPassword) {
+
+        boolean isNewUser = false;
+
+        if (!adminUser.isAuthorized(Permission.USER_MANAGEMENT)) {
+            handleException(adminUser.getUserName() + " doesn't have permission to create a user",
+                ErrorCodes.AUTHORIZATION_FAILS_USER_MANAGEMENT);
+
+        } else {
+            Set<District> assDistrict = new HashSet<District>();
+            Set<DSDivision> assDSDivision = new HashSet<DSDivision>();
+
+            for (int districtUKey : assignedDistricts) {
+                assDistrict.add(districtDAO.getDistrict(districtUKey));
+            }
+
+            if (roleId.equals(Role.ROLE_DEO) || roleId.equals(Role.ROLE_ADR)) {
+                for (int districtUKey : assignedDistricts) {
+                    assDSDivision.add(dsDivisionDAO.getDSDivisionByPK(districtUKey));
+                }
+            }
+            if (roleId.equals(Role.ROLE_DR) || roleId.equals(Role.ROLE_ARG)) {
+                for (int districtUKey : assignedDistricts) {
+                    assDSDivision.addAll(dsDivisionDAO.getAllDSDivisionByDistrictKey(districtUKey));
+                }
+            }
+
+            user.setStatus(User.State.INACTIVE);
+
+            if (userId == null) {
+                isNewUser = true;
+                /*randomPassword = getRandomPassword(randomPasswordLength);*/
+                user.setPasswordHash(hashPassword(randomPassword));
+                user.setAssignedBDDistricts(assDistrict);
+                user.setAssignedMRDistricts(assDistrict);
+                user.setAssignedBDDSDivisions(assDSDivision);
+                user.setAssignedMRDSDivisions(assDSDivision);
+                user.setRole(roleDao.getRole(roleId));
+
+                java.util.GregorianCalendar gCal = new GregorianCalendar();
+                gCal.add(Calendar.DATE, -1);
+                user.setPasswordExpiry(gCal.getTime());
+
+                User checkDuplicate = userDao.getUserByPK(user.getUserId());
+                if (checkDuplicate != null) {
+                    handleException("User Name is already assigned", ErrorCodes.ENTITY_ALREADY_EXIST);
+                } else {
+                    userDao.addUser(user, adminUser);
+                }
+
+            } else {
+                isNewUser = false;
+                User updatedUser = userDao.getUserByPK(userId);
+
+                updatedUser.setUserName(user.getUserName());
+                updatedUser.setPin(user.getPin());
+                updatedUser.setSienSignatureText(user.getSienSignatureText());
+                updatedUser.setTaenSignatureText(user.getTaenSignatureText());
+                updatedUser.setPrefLanguage(user.getPrefLanguage());
+
+                updatedUser.setAssignedBDDistricts(assDistrict);
+                updatedUser.setAssignedMRDistricts(assDistrict);
+                updatedUser.setAssignedBDDSDivisions(assDSDivision);
+                updatedUser.setAssignedMRDSDivisions(assDSDivision);
+                updatedUser.setRole(roleDao.getRole(roleId));
+
+                if (!updatedUser.getLocations().isEmpty()) {
+                    updatedUser.setStatus(User.State.ACTIVE);
+                } else {
+                    updatedUser.setStatus(User.State.INACTIVE);
+                }
+                if (changePassword) {
+                    logger.debug("Change password {}", userDao.getUserByPK(userId).getUserName());
+                    /*randomPassword = getRandomPassword(randomPasswordLength);*/
+                    updatedUser.setPasswordHash(hashPassword(randomPassword));
+                }
+
+                User existing = userDao.getUserByPK(user.getUserId());
+                if (existing.getStatus() == User.State.DELETED) {
+                    handleException("Attempt to modify deleted account : " + existing.getUserId() +
+                        " by : " + adminUser.getUserId() + " denied", ErrorCodes.AUTHORIZATION_FAILS_USER_MANAGEMENT);
+                }
+                userDao.updateUser(user, adminUser);
+
+            }
+        }
+        return isNewUser;
+
     }
 
     /**
@@ -224,7 +325,7 @@ public class UserManagerImpl implements UserManager {
 
         } else {
             userToDelete.setStatus(User.State.DELETED);
-            userDao.updateUser(userToDelete,adminUser);
+            userDao.updateUser(userToDelete, adminUser);
         }
     }
 

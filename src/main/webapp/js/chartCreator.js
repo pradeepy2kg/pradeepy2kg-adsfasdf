@@ -33,22 +33,26 @@ function drawChart(data) {
     if (data.approved_b == 0 && data.rejected_b == 0 && data.arrears_pend_b == 0 && data.thismonth_pend_b == 0) {
         if (data.userRole == 'RG' || data.userRole == 'ARG') {
             var ele = document.getElementById("birth-pie");
-            if(ele != null)
-                    ele.innerHTML = html_code;
+            if (ele != null) {
+                ele.innerHTML = html_code;
+            }
         } else {
             var ele = document.getElementById("chart3");
-            if(ele != null)
+            if (ele != null) {
                 ele.innerHTML = html_code;
+            }
         }
     } else {
         if (data.userRole == 'RG' || data.userRole == 'ARG') {
             var ele = document.getElementById("birth-pie");
-            if(ele != null)
+            if (ele != null) {
                 drawPieChart(data, 'birth-pie', 'birth');
+            }
         } else {
             var ele = document.getElementById("chart3");
-            if(ele != null)
+            if (ele != null) {
                 drawPieChart(data, 'chart3', 'birth');
+            }
         }
     }
 
@@ -56,22 +60,26 @@ function drawChart(data) {
     if (data.approved_d == 0 && data.rejected_d == 0 && data.arrears_pend_d == 0 && data.thismonth_pend_d == 0) {
         if (data.userRole == 'RG' || data.userRole == 'ARG') {
             var ele = document.getElementById("death-pie");
-            if(ele != null)
+            if (ele != null) {
                 ele.innerHTML = html_code;
+            }
         } else {
             var ele = document.getElementById("chart6");
-            if(ele != null)
+            if (ele != null) {
                 ele.innerHTML = html_code;
+            }
         }
     } else {
         if (data.userRole == 'RG' || data.userRole == 'ARG') {
             var ele = document.getElementById("death-pie");
-            if(ele != null)
+            if (ele != null) {
                 drawPieChart(data, 'death-pie', 'birth');
+            }
         } else {
             var ele = document.getElementById("chart6");
-            if(ele != null)
+            if (ele != null) {
                 drawPieChart(data, 'chart6', 'death');
+            }
         }
     }
 
@@ -79,22 +87,26 @@ function drawChart(data) {
     if (data.approved_m == 0 && data.rejected_m == 0 && data.arrears_pend_m == 0 && data.thismonth_pend_m == 0) {
         if (data.userRole == 'RG' || data.userRole == 'ARG') {
             var ele = document.getElementById("mrg-pie");
-            if(ele != null)
+            if (ele != null) {
                 ele.innerHTML = html_code;
+            }
         } else {
             var ele = document.getElementById("chart9");
-            if(ele != null)
+            if (ele != null) {
                 ele.innerHTML = html_code;
+            }
         }
     } else {
         if (data.userRole == 'RG' || data.userRole == 'ARG') {
             var ele = document.getElementById("mrg-pie");
-            if(ele != null)
+            if (ele != null) {
                 drawPieChart(data, 'mrg-pie', 'birth');
+            }
         } else {
             var ele = document.getElementById("chart9");
-            if(ele != null)
+            if (ele != null) {
                 drawPieChart(data, 'chart9', 'mrg');
+            }
         }
     }
 
@@ -102,170 +114,223 @@ function drawChart(data) {
 
         if (data.arrears_pend_b == 0 && data.thismonth_pend_b == 0) {
             var ele = document.getElementById("birth-bar");
-            if(ele != null)
+            if (ele != null) {
                 ele.innerHTML = html_code;
+            }
         } else {
             var ele = document.getElementById("birth-bar");
-            if(ele != null)
+            if (ele != null) {
                 drawHorizontalBarChart(
-                    data.arrears_pend_b,
-                    data.thismonth_pend_b,
-                    "Arrears",
-                    "This Month",
-                    "birth-bar"
-                    );
+                        data.arrears_pend_b,
+                        data.thismonth_pend_b,
+                        "Arrears",
+                        "This Month",
+                        "birth-bar"
+                        );
+            }
         }
 
         if (data.arrears_pend_d == 0 && data.thismonth_pend_d == 0) {
             var ele = document.getElementById("death-bar");
-            if(ele != null)
+            if (ele != null) {
                 ele.innerHTML = html_code;
+            }
         } else {
             var ele = document.getElementById("death-bar");
-            if(ele != null)
+            if (ele != null) {
                 drawHorizontalBarChart(
-                    data.arrears_pend_d,
-                    data.thismonth_pend_d,
-                    "Arrears",
-                    "This Month",
-                    "death-bar"
-                    );
+                        data.arrears_pend_d,
+                        data.thismonth_pend_d,
+                        "Arrears",
+                        "This Month",
+                        "death-bar"
+                        );
+            }
         }
 
         if (data.arrears_pend_m == 0 && data.thismonth_pend_m == 0) {
             var ele = document.getElementById("mrg-bar");
-            if(ele != null)
+            if (ele != null) {
                 ele.innerHTML = html_code;
+            }
         } else {
             var ele = document.getElementById("mrg-bar");
-            if(ele != null)
+            if (ele != null) {
                 drawHorizontalBarChart(
-                    data.arrears_pend_m,
-                    data.thismonth_pend_m,
-                    "Arrears",
-                    "This Month",
-                    "mrg-bar"
-                    );
+                        data.arrears_pend_m,
+                        data.thismonth_pend_m,
+                        "Arrears",
+                        "This Month",
+                        "mrg-bar"
+                        );
+            }
         }
 
     } else {
 
         if (data.arrears_pend_b == 0 && data.thismonth_pend_b == 0) {
             var ele = document.getElementById("chart1");
-            if(ele != null)
+            if (ele != null) {
                 ele.innerHTML = html_code;
+            }
         } else {
             var ele = document.getElementById("chart1");
-            if(ele != null)
+            if (ele != null) {
                 drawHorizontalBarChart(
-                    data.arrears_pend_b,
-                    data.thismonth_pend_b,
-                    "Arrears",
-                    "This Month",
-                    "chart1"
-                    );
+                        data.arrears_pend_b,
+                        data.thismonth_pend_b,
+                        "Arrears",
+                        "This Month",
+                        "chart1"
+                        );
+            }
         }
 
-        document.getElementById("all_pending_b").setAttribute("value", (data.arrears_pend_b + data.thismonth_pend_b));
-        document.getElementById("arrears_b").setAttribute("value", data.arrears_pend_b);
+        var ele = document.getElementById("all_pending_b");
+        if (ele != null) {
+            document.getElementById("all_pending_b").setAttribute("value", (data.arrears_pend_b + data.thismonth_pend_b));
+        }
+        var ele = document.getElementById("arrears_b");
+        if (ele != null) {
+            document.getElementById("arrears_b").setAttribute("value", data.arrears_pend_b);
+        }
 
         if (data.late_b == 0 && data.normal_b == 0) {
             var ele = document.getElementById("chart2");
-            if(ele != null)
+            if (ele != null) {
                 ele.innerHTML = html_code;
+            }
         } else {
             var ele = document.getElementById("chart2");
-            if(ele != null)
+            if (ele != null) {
                 drawHorizontalBarChart(
-                    data.late_b,
-                    data.normal_b,
-                    "Late",
-                    "Normal",
-                    "chart2"
-                    );
+                        data.late_b,
+                        data.normal_b,
+                        "Late",
+                        "Normal",
+                        "chart2"
+                        );
+            }
         }
 
-        document.getElementById("total_submitted_b").setAttribute("value", (data.late_b + data.normal_b));
-        document.getElementById("late_b").setAttribute("value", data.late_b);
+        var ele = document.getElementById("total_submitted_b");
+        if (ele != null) {
+            document.getElementById("total_submitted_b").setAttribute("value", (data.late_b + data.normal_b));
+        }
+
+        var ele = document.getElementById("late_b");
+        if (ele != null) {
+            document.getElementById("late_b").setAttribute("value", data.late_b);
+        }
 
         // -------------------------
 
         if (data.arrears_pend_d == 0 && data.thismonth_pend_d == 0) {
             var ele = document.getElementById("chart4");
-            if(ele != null)
+            if (ele != null) {
                 ele.innerHTML = html_code;
+            }
         } else {
             var ele = document.getElementById("chart4");
-            if(ele != null)
+            if (ele != null) {
                 drawHorizontalBarChart(
-                    data.arrears_pend_d,
-                    data.thismonth_pend_d,
-                    "Arrears",
-                    "This Month",
-                    "chart4"
-                    );
+                        data.arrears_pend_d,
+                        data.thismonth_pend_d,
+                        "Arrears",
+                        "This Month",
+                        "chart4"
+                        );
+            }
         }
-
-        document.getElementById("all_pending_d").setAttribute("value", (data.arrears_pend_d + data.thismonth_pend_d));
-        document.getElementById("arrears_d").setAttribute("value", data.arrears_pend_d);
+        var ele = document.getElementById("all_pending_d");
+        if (ele != null) {
+            document.getElementById("all_pending_d").setAttribute("value", (data.arrears_pend_d + data.thismonth_pend_d));
+        }
+        var ele = document.getElementById("arrears_d");
+        if (ele != null) {
+            document.getElementById("arrears_d").setAttribute("value", data.arrears_pend_d);
+        }
 
         if (data.late_d == 0 && data.normal_d == 0) {
             var ele = document.getElementById("chart5");
-            if(ele != null)
+            if (ele != null) {
                 ele.innerHTML = html_code;
+            }
         } else {
             var ele = document.getElementById("chart5");
-            if(ele != null)
+            if (ele != null) {
                 drawHorizontalBarChart(
-                    data.late_d,
-                    data.normal_d,
-                    "Arrears",
-                    "This Month",
-                    "chart5"
-                    );
+                        data.late_d,
+                        data.normal_d,
+                        "Arrears",
+                        "This Month",
+                        "chart5"
+                        );
+            }
         }
 
-        document.getElementById("total_submitted_d").setAttribute("value", (data.late_d + data.normal_d));
-        document.getElementById("late_d").setAttribute("value", data.late_d);
+        var ele = document.getElementById("total_submitted_d");
+        if (ele != null) {
+            document.getElementById("total_submitted_d").setAttribute("value", (data.late_d + data.normal_d));
+        }
+        var ele = document.getElementById("late_d");
+        if (ele != null) {
+            document.getElementById("late_d").setAttribute("value", data.late_d);
+        }
 
         // -------------------------
         if (data.arrears_pend_m == 0 && data.thismonth_pend_m == 0) {
             var ele = document.getElementById("chart7");
-            if(ele != null)
+            if (ele != null) {
                 ele.innerHTML = html_code;
+            }
         } else {
             var ele = document.getElementById("chart7");
-            if(ele != null)
+            if (ele != null) {
                 drawHorizontalBarChart(
-                    data.arrears_pend_m,
-                    data.thismonth_pend_m,
-                    "Arrears",
-                    "This Month",
-                    "chart7"
-                    );
+                        data.arrears_pend_m,
+                        data.thismonth_pend_m,
+                        "Arrears",
+                        "This Month",
+                        "chart7"
+                        );
+            }
         }
-
-        document.getElementById("all_pending_m").setAttribute("value", (data.arrears_pend_m + data.thismonth_pend_m));
-        document.getElementById("arrears_m").setAttribute("value", data.arrears_pend_m);
+        var ele = document.getElementById("all_pending_m");
+        if (ele != null) {
+            document.getElementById("all_pending_m").setAttribute("value", (data.arrears_pend_m + data.thismonth_pend_m));
+        }
+        var ele = document.getElementById("arrears_m");
+        if (ele != null) {
+            document.getElementById("arrears_m").setAttribute("value", data.arrears_pend_m);
+        }
 
         if (data.late_m == 0 && data.normal_m == 0) {
             var ele = document.getElementById("chart8");
-            if(ele != null)
+            if (ele != null) {
                 ele.innerHTML = html_code;
+            }
         } else {
             var ele = document.getElementById("chart8");
-            if(ele != null)
+            if (ele != null) {
                 drawHorizontalBarChart(
-                    data.late_m,
-                    data.normal_m,
-                    "Late",
-                    "Normal",
-                    "chart8"
-                    );
+                        data.late_m,
+                        data.normal_m,
+                        "Late",
+                        "Normal",
+                        "chart8"
+                        );
+            }
         }
 
-        document.getElementById("total_submitted_m").setAttribute("value", (data.late_m + data.normal_m));
-        document.getElementById("late_m").setAttribute("value", data.late_m);
+        var ele = document.getElementById("total_submitted_m");
+        if (ele != null) {
+            document.getElementById("total_submitted_m").setAttribute("value", (data.late_m + data.normal_m));
+        }
+        var ele = document.getElementById("late_m");
+        if (ele != null) {
+            document.getElementById("late_m").setAttribute("value", data.late_m);
+        }
 
     }
 }
