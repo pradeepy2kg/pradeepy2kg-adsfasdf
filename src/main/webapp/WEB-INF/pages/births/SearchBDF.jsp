@@ -96,7 +96,7 @@
 
     function initPage(){}
 </script>
-<div id="birth-confirmation-search">
+<div id="birth-confirmation-search" style="font-size:10pt;">
     <s:actionerror cssStyle="color:red;font-size:10pt"/>
 
         <ul>
@@ -112,7 +112,7 @@
 
         <div id="fragment-1">
 
-            <table class="search-option-table">
+            <table class="search-option-table" >
                 <caption></caption>
                 <col/>
                 <col/>
