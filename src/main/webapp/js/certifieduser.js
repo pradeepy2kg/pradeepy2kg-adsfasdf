@@ -1,4 +1,5 @@
 function populateCertifiedUserList() {
+    //TODO: to be generalized
         var id = $("select#locationId").attr('value');
         var options = '';
         if (id > 0) {
