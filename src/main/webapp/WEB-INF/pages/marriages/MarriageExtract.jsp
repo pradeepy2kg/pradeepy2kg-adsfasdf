@@ -62,9 +62,11 @@
                 <div class="form-submit">
                     <s:submit value="%{getText('button.print')}" onclick="printPage()"/>
                 </div>
+                <%--
                 <div class="form-submit">
                     <s:submit value="%{getText('button.back')}"/>
                 </div>
+                --%>
             </td>
         </tr>
 
