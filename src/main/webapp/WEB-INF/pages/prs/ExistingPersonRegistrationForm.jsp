@@ -214,8 +214,13 @@
 
         function processResponse1(respObj) {
             //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-            $("textarea#personFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
-        };
+            $("textarea#personFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].
+            return[0].Text
+        )
+            ;
+        }
+
+        ;
     });
 
     $(function() {
@@ -234,19 +239,26 @@
         });
     });
 
-    // Enable citizen list minimized in page load
+    // Enable citizen list minimized in page load and disable save buttons
     function initPage() {
         document.getElementById('citizen-info-min').style.display = 'none';
         document.getElementById('citizenDetails').style.display = 'none';
         disableButton(true);
     }
 
+    // Disable buttons until user checks ignore duplicates
     function disableButton(mode) {
-        if (mode) {
-            document.getElementById('approve').style.display = 'none';
-        }
-        else {
-            document.getElementById('approve').style.display = 'block';
+        var domObject = document.getElementById('approve');
+        var duplicates = document.getElementById('persons-table');
+        if (domObject != null && duplicates != null) {
+            if (mode) {
+                document.getElementById('approve').style.display = 'none';
+                document.getElementById('submitButton').style.display = 'none';
+            }
+            else {
+                document.getElementById('approve').style.display = 'block';
+                document.getElementById('submitButton').style.display = 'block';
+            }
         }
     }
 
@@ -439,15 +451,19 @@
             </tbody>
         </table>
         <table width="80%" align="right" style="padding:0;cellspacing:0;cellpadding:0;">
+            <col width="5%"/>
+            <col width="75%"/>
+            <col width="20%"/>
             <tr>
-                <td height="10px;"><s:checkbox name="ignoreDuplicate" id="ignoreDuplicate"/></td>
+                <td height="53px;"><s:checkbox name="ignoreDuplicate" id="ignoreDuplicate"
+                                               onclick="javascript:selectCheckbox()"/></td>
                 <td>
                     <span style="color:red;">
                     <s:label value="%{getText('label.ignoreDuplicates')}" name="ignoreDuplicate"/>
                     </span>
                 </td>
-                <td style="padding:0 0">
-                    <div class="form-submit" style="padding:0 0;margin-top:0px;">
+                <td>
+                    <div class="form-submit" style="padding:0px;margin:0px;">
                         <s:submit id="approve" name="approve" value="%{getText('save.label')}"/></div>
                 </td>
             </tr>
