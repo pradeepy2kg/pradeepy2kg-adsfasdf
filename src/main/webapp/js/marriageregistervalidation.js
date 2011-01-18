@@ -86,6 +86,26 @@ function validateSelectOption(fieldId, messageId, errormsg) {
     }
 }
 
+function calculateAge(birthDay, age) {
+    var dateOdBirthSubmitted = true;
+    var person_bd = new Date();
+    var dom = null;
+    dom = document.getElementById(birthDay);
+    person_bd = new Date(document.getElementById(birthDay).value);
+    if (isFieldEmpty(dom)) {
+        dateOdBirthSubmitted = false;
+    }
+
+    var today = new Date();
+    var person_age = today.getYear() - person_bd.getYear();
+    if (!(dateOdBirthSubmitted)) {
+        document.getElementById(age).value = 0;
+    }
+    else {
+        document.getElementById(age).value = person_age;
+    }
+}
+
 // shan
 
 function isDate(fieldId, messageId, errormsg) {

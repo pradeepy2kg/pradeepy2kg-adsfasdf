@@ -4,9 +4,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
-<script type="text/javascript" src="<s:url value="/js/certuser.js"/>"></script>
+<script type="text/javascript" src="<s:url value="/js/certifieduser.js"/>"></script>
 <style type="text/css">
-    #marriage-extract-outer table tr td {
+    #marriage-notice-outer table tr td {
         padding: 0 5px;
     }
 
@@ -19,13 +19,17 @@
             display: none;
         }
     }
+
+    #birth-certificate-outer .form-submit {
+        margin: 5px 0 15px 0;
+    }
 </style>
 
-<script>
+<script type="text/javascript">
     function initPage() {
     }
 </script>
-<div class="marriage-extract-outer">
+<div class="marriage-notice-outer">
 <s:if test="mode=='print'">
     <table class="table_reg_header_01">
         <caption></caption>
@@ -81,7 +85,9 @@
 
         <tr style="font-size:9pt">
             <td colspan="1">&nbsp;</td>
-            <td align="center" style="font-size:12pt;"><img src="<s:url value="/images/official-logo.png"/>"</td>
+            <td align="center" style="font-size:12pt;">
+                <img src="<s:url value='/images/official-logo.png'/>"/>
+            </td>
             <td> &nbsp;</td>
         </tr>
         <tr>
@@ -100,63 +106,7 @@
         </tbody>
     </table>
 </s:if>
-
-
-<table border="1" style="margin-top:15px;width:100%;border:1px solid #000;border-collapse:collapse;"
-       cellpadding="2px">
-    <caption/>
-    <col width="450px"/>
-    <col width="225px"/>
-    <col width="300px"/>
-    <col width="250px"/>
-    <col width="175px"/>
-    <tr>
-        <td colspan="1">
-            සහතික කරනු ලබන නිලධාරියා ගේ නම, තනතුර සහ අත්සන <br>
-            சான்றிதழ் அளிக்கும் அதிகாரியின் பெயர், பதவி, கையொப்பம் <br>
-            Name, Signature and Designation of certifying officer
-        </td>
-        <td colspan="4">
-            <s:label id="signature" value="%{licenseIssueUserSignature}"/>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="1">
-            නිකුත් කළ ස්ථානය <br>
-            வழங்கிய இடம் <br>
-            Place of Issue
-        </td>
-        <td colspan="4">
-            <s:label id="placeOfIssue" value="%{licenseIssuePlace}"/>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="1">
-            දිස්ත්‍රික්කය <br>
-            மாவட்டம் <br>
-            District
-        </td>
-        <td colspan="1">
-            <s:label id="districtInOl" value="%{licenseIssueDistrictInOL}"/>
-            <br>
-            <s:label id="districtInEn" value="%{licenseIssueDistrictInEN}"/>
-        </td>
-        <td colspan="1">
-            ප්‍රාදේශීය ලේකම් කොට්ඨාශය <br>
-            பிரதேச செயளாளர் பிரிவு <br>
-            Divisional Secretariat <br>
-        </td>
-        <td colspan="2">
-            <s:label id="dsDivisionInOL" value="%{licenseIssueDivisionInOL}"/>
-            <br>
-            <s:label id="dsDivisionInEn" value="%{licenseIssueDivisionInEN}"/>
-        </td>
-    </tr>
-</table>
-
-
-<table border="1" style="margin-top:1px;width:100%;border:1px solid #000;border-collapse:collapse;"
-       cellpadding="2px">
+<table border="1" style="margin-top:1px;width:100%;border:1px solid #000;border-collapse:collapse;" cellpadding="2px">
     <caption/>
     <col width="175px"/>
     <col/>
@@ -371,7 +321,6 @@
     </tr>
     </tbody>
 </table>
-
 <table border="2"
        style="margin-top:10px;margin-bottom:20px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
        cellpadding="5px">
@@ -539,32 +488,66 @@
     </tr>
     </tbody>
 </table>
-<table border="1" style="margin-top:1px;width:100%;border:1px solid #000;border-collapse:collapse;"
-       cellpadding="2px">
-    <caption/>
-    <col width="200px">
-    <col>
-    <col>
-    <col>
-    <tr>
-        <td><label><span class="font-8">අනුක්‍රමික අංකය
+<s:if test="mode=='print'">
+    <table border="1" style="margin-top:15px;width:100%;border:1px solid #000;border-collapse:collapse;"
+           cellpadding="2px">
+        <caption/>
+        <col width="300px"/>
+        <col/>
+        <col/>
+        <col/>
+        <tr>
+            <td colspan="1"><span class="font-8">
+            සහතික කරනු ලබන නිලධාරියා ගේ නම, තනතුර සහ අත්සන <br>
+            சான்றிதழ் அளிக்கும் அதிகாரியின் பெயர், பதவி, கையொப்பம் <br>
+            Name, Signature and Designation of certifying officer
+        </span>
+            </td>
+            <td colspan="3">
+                <s:if test="marriage.preferredLanguage=='si'">
+                    <s:label id="signature" name="marriage.extractCertifiedUser.sienSignatureText"/>
+                </s:if>
+                <s:elseif test="marriage.preferredLanguage=='ta'">
+                    <s:label id="signature" name="marriage.extractCertifiedUser.taenSignatureText"/>
+                </s:elseif>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="1"><span class="font-8">
+            නිකුත් කළ ස්ථානය <br>
+            வழங்கிய இடம் <br>
+            Place of Issue
+        </span>
+            </td>
+            <td colspan="3">
+                <s:if test="marriage.preferredLanguage=='si'">
+                    <s:label id="placeOfIssue" name="marriage.extractIssuedLocation.sienLocationSignature"/>
+                </s:if>
+                <s:elseif test="marriage.preferredLanguage=='ta'">
+                    <s:label id="placeOfIssue" name="marriage.extractIssuedLocation.taenLocationSignature"/>
+                </s:elseif>
+            </td>
+        </tr>
+        <tr>
+            <td><label><span class="font-8">අනුක්‍රමික අංකය
                 <br>தொடர் இலக்கம்<br>Serial Number</span></label>
-        </td>
-        <td align="center">
-            <s:label name="marriage.serialNumber"/>
-        </td>
-        <td>
-            <label>
+            </td>
+            <td align="center">
+                <s:label id="serialNumber" name="marriage.idUKey"/>
+            </td>
+            <td>
+                <label>
                     <span class="font-8">ලියාපදිංචි දිනය
                         <br>பெறப்பட்ட திகதி  <br>Date of Registration</span>
-            </label>
-        </td>
-        <td>
-            <s:label value="YYYY-MM-DD" cssStyle="margin-left:10px;font-size:10px"/><br>
-            <s:label name="marriage.registrationDate"/>
-        </td>
-    </tr>
-</table>
+                </label>
+            </td>
+            <td>
+                <s:label value="YYYY-MM-DD" cssStyle="margin-left:10px;font-size:10px"/><br>
+                <s:label name="marriage.registrationDate"/>
+            </td>
+        </tr>
+    </table>
+</s:if>
 <s:if test="mode=='reject'">
     <s:form method="post">
         <s:hidden name="idUKey"/>
