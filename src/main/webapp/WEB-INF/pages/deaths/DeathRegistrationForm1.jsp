@@ -233,7 +233,7 @@ function validate() {
     }
 
     errormsg = "";
-    return false;
+    return returnval;
 }
 
 function validateRadioButtons(array) {
