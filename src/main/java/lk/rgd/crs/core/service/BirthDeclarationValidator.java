@@ -11,13 +11,15 @@ import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.domain.ChildInfo;
 import lk.rgd.crs.api.domain.InformantInfo;
 import lk.rgd.crs.api.domain.ParentInfo;
-import lk.rgd.prs.api.domain.Person;
 import lk.rgd.prs.api.service.PopulationRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.text.MessageFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * A class to contain validations for BDFs
@@ -176,12 +178,17 @@ public class BirthDeclarationValidator {
             }
         }
 
+        // check pin or nic duplicates in birth register
+        checkNicOrPinDuplicates(bdf, warnings, rb);
+
         // validate notifying authority - initially we will need to allow a PIC or NIC for the NA
-        if (!PinAndNicUtils.isValidPINorNIC(bdf.getNotifyingAuthority().getNotifyingAuthorityPIN(), ecivil, user)) {
-            UserWarning w = new UserWarning(MessageFormat.format(rb.getString("invalid_na_pin"),
-                bdf.getNotifyingAuthority().getNotifyingAuthorityPIN()));
-            w.setSeverity(UserWarning.Severity.ERROR);
-            warnings.add(w);
+        {
+            if (!PinAndNicUtils.isValidPINorNIC(bdf.getNotifyingAuthority().getNotifyingAuthorityPIN(), ecivil, user)) {
+                UserWarning w = new UserWarning(MessageFormat.format(rb.getString("invalid_na_pin"),
+                    bdf.getNotifyingAuthority().getNotifyingAuthorityPIN()));
+                w.setSeverity(UserWarning.Severity.ERROR);
+                warnings.add(w);
+            }
         }
 
         // TODO cross check if this person is a valid registrar on the date of registration
@@ -226,6 +233,30 @@ public class BirthDeclarationValidator {
         // TODO validate if confirmant is known to be dead on this date
 
         return warnings;
+    }
+
+    private final void checkNicOrPinDuplicates(BirthDeclaration bdf, List<UserWarning> warnings, ResourceBundle rb) {
+        final String fatherPin = bdf.getParent().getFatherNICorPIN();
+        final String motherPin = bdf.getParent().getMotherNICorPIN();
+        final String greatGrandPin = bdf.getGrandFather().getGreatGrandFatherNICorPIN();
+        final String grandFatherPin = bdf.getGrandFather().getGrandFatherNICorPIN();
+
+        checkDuplicatePinOrNic(motherPin, fatherPin, warnings, rb, "duplicate_father_mother_pin");
+        checkDuplicatePinOrNic(fatherPin, grandFatherPin, warnings, rb, "duplicate_father_grandFather_pin");
+        checkDuplicatePinOrNic(fatherPin, greatGrandPin, warnings, rb, "duplicate_father_greatGrand_pin");
+        checkDuplicatePinOrNic(motherPin, grandFatherPin, warnings, rb, "duplicate_mother_grandFather_pin");
+        checkDuplicatePinOrNic(motherPin, greatGrandPin, warnings, rb, "duplicate_mother_grandFather_pin");
+        checkDuplicatePinOrNic(grandFatherPin, greatGrandPin, warnings, rb, "duplicate_grandFather_greatGrand_pin");
+    }
+
+    private void checkDuplicatePinOrNic(final String s1, final String s2, final List<UserWarning> warnings, ResourceBundle rb, String key) {
+        try {
+            if (s1.equals(s2)) {
+                warnings.add(new UserWarning(MessageFormat.format(rb.getString(key), s1)));
+            }
+        } catch (NullPointerException expected) {
+            // since pin or nic(s1) can be null
+        }
     }
 
     private static void handleException(String msg, int errorCode) {
