@@ -188,7 +188,7 @@ public interface DeathRegistrationService {
      * @param user     user who has permissions to retrive death register
      * @return give list of death register objects based on death persosns pin or NIC number
      */
-    public List<DeathRegister> getByPinOrNic(long pinOrNic, User user);
+    public List<DeathRegister> getByPinOrNic(String pinOrNic, User user);
 
     /**
      * Returns the active Death Declaration record for a given serialNo under a selected BD Division
