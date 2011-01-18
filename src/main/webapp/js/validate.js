@@ -180,7 +180,7 @@ function validateBirthYearWithNIC(yearNIC, yearDatePicker, errorText) {
 
 // print error message
 function printMessage(errorText, errorCode) {
-    errormsg = errormsg + "\n" + document.getElementById(errorText).value + " " + document.getElementById(errorCode).value;
+    errormsg = errormsg + "\n" + document.getElementById(errorText).value + " : " + document.getElementById(errorCode).value;
     // errormsg = errormsg + "<br>" + document.getElementById(errorText).value + " " + document.getElementById(errorCode).value;
 }
 
