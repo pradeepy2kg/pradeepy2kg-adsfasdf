@@ -1,4 +1,5 @@
 /* @author Mahesha Kalpanie */
+//TODO: calculate age at person lookup
 function personLookup(pin, type) {
         var id1 = $("input#" + pin).attr("value");
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
@@ -11,4 +12,5 @@ function personLookup(pin, type) {
                     }
                 });
 }
+
 
