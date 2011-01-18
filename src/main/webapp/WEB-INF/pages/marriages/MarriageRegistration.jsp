@@ -316,7 +316,7 @@
         <s:else>
             <s:textfield name="marriage.male.identificationNumberMale" id="malePIN" maxLength="10"/>
             <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="male_lookup"
-                 onmouseover="personLookup('malePIN', 'Male')">
+                 onclick="personLookup('malePIN', 'Male');">
         </s:else>
     </td>
     <td colspan="1" align="left">
@@ -327,7 +327,7 @@
         <s:else>
             <s:textfield name="marriage.female.identificationNumberFemale" id="femalePIN" maxLength="10"/>
             <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="female_lookup"
-                 onmouseover="personLookup('femalePIN', 'Female')">
+                  onclick="personLookup('femalePIN', 'Female');">
         </s:else>
     </td>
 </tr>
