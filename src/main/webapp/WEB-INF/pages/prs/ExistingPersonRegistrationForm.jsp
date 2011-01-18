@@ -238,6 +238,25 @@
     function initPage() {
         document.getElementById('citizen-info-min').style.display = 'none';
         document.getElementById('citizenDetails').style.display = 'none';
+        disableButton(true);
+    }
+
+    function disableButton(mode) {
+        if (mode) {
+            document.getElementById('approve').style.display = 'none';
+        }
+        else {
+            document.getElementById('approve').style.display = 'block';
+        }
+    }
+
+    function selectCheckbox() {
+        var ok = document.getElementById('ignoreDuplicate');
+        if (ok.checked) {
+            disableButton(false)
+        } else {
+            disableButton(true)
+        }
     }
 
     // Minimize and maximize citizen list
@@ -421,7 +440,7 @@
         </table>
         <table width="80%" align="right" style="padding:0;cellspacing:0;cellpadding:0;">
             <tr>
-                <td height="10px;"><s:checkbox name="ignoreDuplicate"/></td>
+                <td height="10px;"><s:checkbox name="ignoreDuplicate" id="ignoreDuplicate"/></td>
                 <td>
                     <span style="color:red;">
                     <s:label value="%{getText('label.ignoreDuplicates')}" name="ignoreDuplicate"/>
@@ -429,7 +448,7 @@
                 </td>
                 <td style="padding:0 0">
                     <div class="form-submit" style="padding:0 0;margin-top:0px;">
-                        <s:submit name="approve" value="%{getText('save.label')}"/></div>
+                        <s:submit id="approve" name="approve" value="%{getText('save.label')}"/></div>
                 </td>
             </tr>
         </table>
