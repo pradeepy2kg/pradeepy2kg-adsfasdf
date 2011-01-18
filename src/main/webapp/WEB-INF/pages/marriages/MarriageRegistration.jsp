@@ -44,6 +44,19 @@
         return printErrorMessages(errormsg);
     }
 
+    function validateRegistrationDetails() {
+        var errormsg = "";
+        //errormsg = validateEmptyField("marriageDatePicker", "errorMarriageDate", errormsg);
+        errormsg = isDate("marriageDatePicker", "errorMarriageDate", errormsg);
+        //validate registrar details
+        errormsg = validatePin("regPIN", "errorRegistrarPIN", errormsg);
+        errormsg = validateEmptyField("regPlaceInOfficialLang", "errorRegistrationPlace", errormsg);
+        errormsg = validateEmptyField("regNameInOfficialLang", "errorRegistrarName", errormsg);
+        errormsg = isDate("registrationDatePicker", "errorRegistrationDate", errormsg);
+        return printErrorMessages(errormsg);
+    }
+
+
 </script>
 <s:actionerror cssStyle="color:red;font-size:10pt"/>
 <s:actionmessage cssStyle="color:blue;font-size:10pt"/>
@@ -327,7 +340,7 @@
         <s:else>
             <s:textfield name="marriage.female.identificationNumberFemale" id="femalePIN" maxLength="10"/>
             <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="female_lookup"
-                  onclick="personLookup('femalePIN', 'Female');">
+                 onclick="personLookup('femalePIN', 'Female');">
         </s:else>
     </td>
 </tr>
@@ -343,7 +356,8 @@
         </s:if>
         <s:else>
             <s:textfield name="marriage.male.dateOfBirthMale" id="dateOfBirthMale" maxLength="10"
-                         onmouseover="datepicker('dateOfBirthMale')" onchange="calculateAge('dateOfBirthMale','ageMale');"/>
+                         onmouseover="datepicker('dateOfBirthMale')"
+                         onchange="calculateAge('dateOfBirthMale','ageMale');"/>
         </s:else>
 
 
@@ -355,7 +369,8 @@
         </s:if>
         <s:else>
             <s:textfield name="marriage.female.dateOfBirthFemale" id="dateOfBirthFemale" maxLength="10"
-                         onmouseover="datepicker('dateOfBirthFemale')" onchange="calculateAge('dateOfBirthFemale','ageFemale');"/>
+                         onmouseover="datepicker('dateOfBirthFemale')"
+                         onchange="calculateAge('dateOfBirthFemale','ageFemale');"/>
         </s:else>
     </td>
 </tr>
