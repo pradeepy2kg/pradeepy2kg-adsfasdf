@@ -82,8 +82,8 @@
 
         //validate   number fields
         isNumeric(certifcateNumber, 'invalideDateErr', 'certificateNumberFi')
-        isNumeric(serial, 'invalideDateErr', 'serialNumnerFi')
-        isNumeric(pin, 'invalideDateErr', 'pinNumberFi')
+        validateSerialNo(serial, 'invalideDateErr', 'serialNumnerFi')
+        validatePINorNIC(pin, 'invalideDateErr', 'pinNumberFi')
 
         if (errormsg != "") {
             alert(errormsg)
