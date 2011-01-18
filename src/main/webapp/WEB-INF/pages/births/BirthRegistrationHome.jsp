@@ -41,7 +41,7 @@
     position: absolute;
     width: 135px;
     height: 45px;
-    margin: 150px 0px 0px 455px;
+    margin: 154px 0px 0px 455px;
     font-size: 10pt;
     color: black;
 }
@@ -51,7 +51,7 @@
     position: absolute;
     width: 135px;
     height: 45px;
-    margin: 220px 0px 0px 455px;
+    margin: 224px 0px 0px 455px;
     font-size: 10pt;
     color: black;
 }
@@ -79,11 +79,9 @@
 .link5 {
     text-align: center;
     position: absolute;
-    bottom: 25px;
-    left: 210px;
     width: 135px;
     height: 45px;
-    margin: 440px 0px 0px 455px;
+    margin: 450px 0px 0px 455px;
     font-size: 10pt;
     color: black;
 }
@@ -93,7 +91,7 @@
     position: absolute;
     width: 135px;
     height: 45px;
-    margin: 365px 0px 0px 240px;
+    margin: 368px 0px 0px 240px;
     font-size: 10pt;
     color: black;
 }
@@ -267,7 +265,10 @@
     margin: 555px 0px 0px 445px;
 }
 
-
+.remove-underline {
+    text-decoration: none;
+    color: black;
+}
 </style>
 
 <div class="birth-registration-outer">
@@ -294,32 +295,50 @@
     <div class="lable-DSoffice"><s:label value="%{getText('sb.office')}" cssStyle="font-size:10px"/></div>
     <s:a href="eprStillBirth.do">
         <div class="link7">
-            <div class="text-margin "><s:label value="%{getText('lb.still.birth')}"
-                                               cssStyle="cursor:pointer;font-size:10px"/></div>
+            <div class="text-margin ">
+                <s:label value="%{getText('lb.still.birth')}" cssStyle="cursor:pointer;font-size:10px"/>
+            </div>
         </div>
     </s:a>
     <s:a href="eprBirthRegistrationInit.do">
-        <div class="link1"><s:label value="%{getText('lb.data.entry')}" cssStyle="cursor:pointer;font-size:10px"/></div>
+        <div class="link1">
+            <s:label value="%{getText('lb.data.entry')}" cssStyle="cursor:pointer;font-size:10px"/>
+        </div>
     </s:a>
-    <s:a href="eprBirthRegisterApproval.do">
-        <div class="link2"><s:label value="%{getText('lb.approve.ADR')}"
-                                    cssStyle="cursor:pointer;font-size:10px"/></div>
-    </s:a>
+    <div class="link2">
+        <s:if test="(!(#session.user_bean.role.roleId.equals('DEO')))">
+            <s:a href="eprBirthRegisterApproval.do" cssClass="remove-underline">
+                <s:label value="%{getText('lb.approve.ADR')}" cssStyle="cursor:pointer;font-size:10px;"/>
+            </s:a>
+        </s:if>
+        <s:else>
+            <s:label value="%{getText('lb.approve.ADR')}" cssStyle="font-size:10px"/>
+        </s:else>
+    </div>
     <s:a href="eprBirthConfirmationPrintList.do?confirmListFlag=true">
-        <div class="link3"><s:label value="%{getText('lb.print.confirmation')}"
-                                    cssStyle="cursor:pointer;font-size:10px"/></div>
+        <div class="link3">
+            <s:label value="%{getText('lb.print.confirmation')}" cssStyle="cursor:pointer;font-size:10px"/>
+        </div>
     </s:a>
-    <s:a href="eprBirthConfirmationApproval.do">
-        <div class="link4"><s:label value="%{getText('lb.approve.changes')}"
-                                    cssStyle="cursor:pointer;font-size:10px"/></div>
-    </s:a>
+    <div class="link4">
+        <s:if test="(!(#session.user_bean.role.roleId.equals('DEO')))">
+            <s:a href="eprBirthConfirmationApproval.do" cssClass="remove-underline">
+                <s:label value="%{getText('lb.approve.changes')}" cssStyle="cursor:pointer;font-size:10px"/>
+            </s:a>
+        </s:if>
+        <s:else>
+            <s:label value="%{getText('lb.approve.changes')}" cssStyle="font-size:10px"/>
+        </s:else>
+    </div>
     <s:a href="eprBirthCertificateList.do">
-        <div class="link5"><s:label value="%{getText('lb.print.certificate')}"
-                                    cssStyle="cursor:pointer;font-size:10px"/></div>
+        <div class="link5">
+            <s:label value="%{getText('lb.print.certificate')}" cssStyle="cursor:pointer;font-size:10px"/>
+        </div>
     </s:a>
     <s:a href="eprBirthConfirmationInit.do">
-        <div class="link6"><s:label value="%{getText('lb.capture.confirmation')}"
-                                    cssStyle="cursor:pointer;font-size:10px"/></div>
+        <div class="link6">
+            <s:label value="%{getText('lb.capture.confirmation')}" cssStyle="cursor:pointer;font-size:10px"/>
+        </div>
     </s:a>
     <div class="bg1"></div>
 </div>
