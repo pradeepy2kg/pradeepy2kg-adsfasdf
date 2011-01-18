@@ -134,6 +134,12 @@
             changeSelectionMode("divisionId", true);
             changeSelectionMode("divisionIdCurrent", true);
         }
+        if (selected == "RG" || selected == "ADMIN") {
+            changeElement("districtIdCurrent", true);
+            changeElement("districtId", true);
+            changeElement("divisionId", true);
+            changeElement("divisionIdCurrent", true);
+        }
     }
 
     function changeMultiSelect() {
