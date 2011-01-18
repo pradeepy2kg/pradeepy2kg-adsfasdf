@@ -6,10 +6,6 @@
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
 <script type="text/javascript" src="<s:url value="/js/certifieduser.js"/>"></script>
 <style type="text/css">
-    #marriage-notice-outer table tr td {
-        padding: 0 5px;
-    }
-
     @media print {
         .form-submit {
             display: none;
@@ -19,19 +15,10 @@
             display: none;
         }
     }
-
-    #birth-certificate-outer .form-submit {
-        margin: 5px 0 15px 0;
-    }
 </style>
-
-<script type="text/javascript">
-    function initPage() {
-    }
-</script>
 <div class="marriage-notice-outer">
 <s:if test="mode=='print'">
-    <table class="table_reg_header_01">
+    <table border="0" style="margin-top:1px;width:100%;" cellpadding="2px">
         <caption></caption>
         <col width="420px"/>
         <col width="200px"/>
@@ -49,10 +36,8 @@
                                     <s:label value="%{getText('placeOfIssue.label')}"/>
                                 </td>
                                 <td>
-
                                     <s:select id="locationId" name="licensePrintedLocationId" list="locationList"
                                               cssStyle="width:300px;" onchange="populateCertifiedUserList()"/>
-
                                 </td>
                             </tr>
                             <tr>
@@ -163,23 +148,22 @@
     </tr>
 </table>
 
-<table class="table_reg_header_01">
+<table border="0" style="margin-top:1px;width:100%;" cellpadding="2px">
     <caption></caption>
-    <col width="420px"/>
-    <col width="200px"/>
     <col/>
     <tbody>
     <tr>
-        <td colspan="3">&nbsp;</td>
+        <td>&nbsp;</td>
     </tr>
     <tr style="font-size:14pt">
-        <td colspan="3" align="center">
+        <td align="center">
             විවාහ විස්තර / in tamil / Details of Marriage
         </td>
     </tr>
     </tbody>
 </table>
-<table border="1" style="margin-top:1px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
+
+<table border="1" style="margin-top:1px;width:100%;border:1px solid #000;border-collapse:collapse; font-size:12px"
        cellpadding="5px">
     <caption></caption>
     <col width="200px"/>
@@ -286,7 +270,6 @@
             <table width="100%">
                 <caption/>
                 <col/>
-                <col/>
                 <tbody>
                 <tr>
                     <td>
@@ -305,13 +288,17 @@
     </tr>
     </tbody>
 </table>
-
 <%--section heading Male/Female details --%>
-<table style="margin-top:20px;margin-bottom:20px;width:100%;font-size:16px">
+<table border="2"
+       style="margin-top:10px;margin-bottom:20px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
+       cellpadding="5px">
     <caption/>
+    <col width="200px"/>
+    <col/>
+    <col/>
     <tbody>
     <tr>
-        <td></td>
+        <td>&nbsp;</td>
         <td align="center">
             පුරුෂ පාර්ශ්වය / in tamil / Male Party
         </td>
@@ -319,53 +306,43 @@
             ස්ත්‍රී පාර්ශ්වය / in tamil / Female Party
         </td>
     </tr>
-    </tbody>
-</table>
-<table border="2"
-       style="margin-top:10px;margin-bottom:20px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
-       cellpadding="5px">
-    <caption/>
-    <col width="200px"/>
-    <col width="410px"/>
-    <col/>
-    <tbody>
     <tr>
-        <td colspan="1">
+        <td>
             අනන්‍යතා අංකය <br>
             அடையாள எண் <br>
             Identification Number.
         </td>
-        <td colspan="1" align="left">
+        <td align="left">
             <s:label name="marriage.male.identificationNumberMale"/>
         </td>
-        <td colspan="1" align="left">
+        <td align="left">
             <s:label name="marriage.female.identificationNumberFemale"/>
         </td>
     </tr>
     <tr>
-        <td colspan="1">
+        <td>
             උපන් දිනය <br>
             பிறந்த திகதி <br>
             Date of Birth
         </td>
-        <td colspan="1">
+        <td>
             <s:label name="marriage.male.dateOfBirthMale"/>
         </td>
-        <td colspan="1">
+        <td>
             <s:label name="marriage.female.dateOfBirthFemale"/>
         </td>
     </tr>
     <tr>
-        <td colspan="1">
+        <td>
             පසුවූ උපන් දිනයට වයස <br>
             in tamil <br>
             Age at last Birthday
 
         </td>
-        <td colspan="1">
+        <td>
             <s:label name="marriage.male.ageAtLastBirthDayMale"/>
         </td>
-        <td colspan="1">
+        <td>
             <s:label name="marriage.female.ageAtLastBirthDayFemale"/>
         </td>
     </tr>
@@ -422,7 +399,6 @@
                 </tbody>
             </table>
         </td>
-
         <td>
             <table>
                 <caption/>
@@ -458,7 +434,6 @@
             <s:label name="marriage.female.nameInOfficialLanguageFemale"/>
         </td>
     </tr>
-
     <tr>
         <td>
             නම ඉංග්‍රීසි භාෂාවෙන් <br>
@@ -472,7 +447,6 @@
             <s:label name="marriage.female.nameInEnglishFemale"/>
         </td>
     </tr>
-
     <tr>
         <td>
             පදිංචි ලිපිනය <br>
@@ -493,11 +467,11 @@
            cellpadding="2px">
         <caption/>
         <col width="300px"/>
-        <col/>
-        <col/>
+        <col width="200px"/>
+        <col width="300px"/>
         <col/>
         <tr>
-            <td colspan="1"><span class="font-8">
+            <td><span class="font-8">
             සහතික කරනු ලබන නිලධාරියා ගේ නම, තනතුර සහ අත්සන <br>
             சான்றிதழ் அளிக்கும் அதிகாரியின் பெயர், பதவி, கையொப்பம் <br>
             Name, Signature and Designation of certifying officer
@@ -513,7 +487,7 @@
             </td>
         </tr>
         <tr>
-            <td colspan="1"><span class="font-8">
+            <td><span class="font-8">
             නිකුත් කළ ස්ථානය <br>
             வழங்கிய இடம் <br>
             Place of Issue
@@ -562,15 +536,20 @@
                     <br>Comment in ta
                     <br>Comment
                 </td>
-                <td colspan="3">
+                <td>
                     <s:textarea name="comment" id="registrationRejectComment"
                                 cssStyle="width:98.2%;" rows="5"/>
                 </td>
             </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="form-submit">
+                        <s:submit action="eprRejectMarriageRegistration"
+                                  value="%{getText('button.marriageregister.reject')}"/>
+                    </div>
+                </td>
+            </tr>
         </table>
-        <div class="form-submit">
-            <s:submit action="eprRejectMarriageRegistration" value="%{getText('button.marriageregister.reject')}"/>
-        </div>
     </s:form>
 </s:if>
 </div>

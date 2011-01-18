@@ -1,3 +1,4 @@
+/* @author Mahesha Kalpanie  */
 function populateCertifiedUserList() {
     //TODO: to be generalized
         var id = $("select#locationId").attr('value');
