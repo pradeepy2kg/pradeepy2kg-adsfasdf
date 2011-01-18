@@ -150,7 +150,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         boolean isNewUser = false;
         int randomPasswordLength = (int) (Math.random() * 6) + 10;
         randomPassword = getRandomPassword(randomPasswordLength);
-        
+
         try {
             isNewUser = service.createUser(user, currentUser, userId, roleId, assignedDistricts, changePassword, randomPassword);
         } catch (RGDRuntimeException e) {
@@ -220,6 +220,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
 
     public String viewUsers() {
         populate();
+        roleId = "ALL";
         session.put("viewUsers", null);
         return "success";
     }
@@ -593,24 +594,44 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     }
 
     public String selectUsers() {
-        //populate();
         selectedRole = roleId;
-        int pageNo = 1;
+        String keepRole = roleId;
         usersList = service.getUsersByRole("");
-        if (getUserDistrictId() == 0 && getRoleId().length() == 1 && getNameOfUser().length() == 0) {
+
+        if (userDistrictId == 0 /*ALL*/ && selectedRole.equals("ALL")/*ALL*/ && nameOfUser.length() == 0 /*No Name*/) {
             usersList = service.getAllUsers();
-        } else if (getUserDistrictId() == 0 && getRoleId().length() != 1) {
-            usersList = service.getUsersByRole(getRoleId());
-        } else if (getUserDistrictId() != 0 && getRoleId().length() == 1) {
-            usersList = service.getUsersByAssignedMRDistrict(districtDAO.getDistrict(getUserDistrictId()));
-        } else if (getUserDistrictId() != 0 && getRoleId().length() != 1) {
-            usersList = service.getUsersByRoleAndAssignedMRDistrict(roleDAO.getRole(getRoleId()), districtDAO.getDistrict(getUserDistrictId()));
+            selectedRole = "ALL";
+        } else {
+            if (userDistrictId == 0 && nameOfUser.length() == 0) {
+                usersList = service.getUsersByRole(selectedRole);
+            } else if (userDistrictId == 0 && selectedRole.equals("ALL")) {
+                usersList = service.getUsersByIDMatch(nameOfUser);
+                selectedRole = nameOfUser;
+            } else if (nameOfUser.length() == 0 && selectedRole.equals("ALL")) {
+                District district = districtDAO.getDistrict(userDistrictId);
+                usersList = service.getUsersByAssignedBDDistrict(district);
+                selectedRole = district.getEnDistrictName();
+            } else if(!selectedRole.equals("ALL") && userDistrictId != 0 && nameOfUser.length() == 0) {
+                District district = districtDAO.getDistrict(userDistrictId);
+                usersList = service.getUsersByRoleAndAssignedBDDistrict(roleDAO.getRole(selectedRole), district);
+                selectedRole = selectedRole + " AND " + district.getEnDistrictName();
+            } else if(!selectedRole.equals("ALL") && nameOfUser.length() != 0 && userDistrictId == 0) {
+                List<User> tempRole = service.getUsersByRole(selectedRole);
+                List<User> tempName = service.getUsersByIDMatch(nameOfUser);
+                for(User userN : tempName) {
+                    for(User userR : tempRole) {
+                        if(userN.getUserId().equals(userR.getUserId())){
+                            usersList.add(userR);
+                        }
+                    }
+                }
+                selectedRole = selectedRole + " AND " + nameOfUser;
+            }
         }
-        if (getNameOfUser().length() != 0) {
-            usersList = service.getUsersByNameMatch(getNameOfUser());
-        }
+
         session.put("viewUsers", usersList);
         populate();
+        roleId = keepRole;
         return "success";
     }
 

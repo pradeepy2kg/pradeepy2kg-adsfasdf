@@ -59,7 +59,7 @@
                 <tbody>
                 <tr>
                     <td style="width:75px;"><label> Role </label></td>
-                    <td style="width:260px;"><s:select name="roleId" list="roleList" headerKey="0"
+                    <td style="width:260px;"><s:select name="roleId" list="roleList" headerKey="ALL"
                                                        headerValue="ALL"/></td>
                     <td rowspan="2" style="width:75px;">OR</td>
                     <td rowspan="2"><label>Name </label></td>
