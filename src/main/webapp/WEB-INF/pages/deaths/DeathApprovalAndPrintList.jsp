@@ -417,14 +417,13 @@
         <s:param name="fromDate" value="#request.fromDate"/>
         <s:param name="endDate" value="#request.endDate"/>
     </s:url>
-    <s:if test="pageNo!=1 || deathApprovalAndPrintList.size==0">
+    <s:if test="pageNo!=1 || deathApprovalAndPrintList.size>=50">
         <s:a href="%{previousUrl}">
             <img src="<s:url value='/images/previous.gif'/>" border="none"/>
         </s:a>
         <s:label value="%{getText('previous.label')}"/>
     </s:if>
     <s:if test="deathApprovalAndPrintList.size >=50">
-
         <s:a href="%{nextUrl}">
             <img src="<s:url value='/images/next.gif'/>" border="none"/>
         </s:a>
