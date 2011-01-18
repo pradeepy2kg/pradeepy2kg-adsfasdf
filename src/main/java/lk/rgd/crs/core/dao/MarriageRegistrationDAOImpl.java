@@ -204,6 +204,8 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
         StringBuilder query = new StringBuilder("").append("SELECT mr FROM MarriageRegister mr " +
             "WHERE mr.lifeCycleInfo.activeRecord = :active");
 
+        //query.append(" AND (mr.mrDivision IS NULL OR ");
+
         String mrDivisionEquals = "";
 
         if (AppConstants.MARRIAGE.equals(divisionType)) {
@@ -222,6 +224,7 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
         if (!mrDivisionEquals.isEmpty()) {
             query.append(" AND (mr.mrDivision IS NOT NULL AND ");
             query.append(mrDivisionEquals);
+            //query.append(" OR mr.mrDivision IS EMPTY)");
         }
 
         query.append(" AND mr.state IN (:stateList) ")

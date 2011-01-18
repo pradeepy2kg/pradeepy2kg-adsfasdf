@@ -546,13 +546,13 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         } else {
             //If no divisions selected find all DS divisions available for user
             //TODO: handle error if user inactive
-            if (!Role.ROLE_RG.equals(user.getRole().getRoleId())) {
+            /*if (!Role.ROLE_RG.equals(user.getRole().getRoleId())) {
                 //TODO: handle error if user.getAssignedMRDSDivisions() == null
                 //TODO: if DS division list avalable for DR and ARG, this method is ok
                 //TODO: else find particular division list based on the user role
                 dsDivisionList = user.getAssignedMRDSDivisions();
                 divisionType = AppConstants.ALL;
-            }
+            } */
         }
 
         return marriageRegistrationDAO.getPaginatedMarriageRegisterList(divisionType, divisionUKey, dsDivisionList,

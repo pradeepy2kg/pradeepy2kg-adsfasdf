@@ -204,7 +204,7 @@
                                         <img src="<s:url value='/images/print_icon.gif'/>" border="none" height="25"/>
                                     </s:a>
                                 </s:if>
-                                <s:elseif test="(state.ordinal()!=10)">
+                                <s:elseif test="(state.ordinal()!=10)">   <%-- If Not rejected  --%>
                                     <%-- Edit  --%>
                                     <s:if test="serialNumber==null">
                                         <s:url id="editSelected" action="eprMarriageRegistrationInit.do">
