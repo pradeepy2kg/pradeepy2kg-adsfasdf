@@ -11,6 +11,7 @@
         }
         if (errMsg != "") {
             alert(errMsg)
+            errMsg="";
             return false;
         }
         return true;
