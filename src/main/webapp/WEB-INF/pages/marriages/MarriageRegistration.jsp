@@ -343,7 +343,7 @@
         </s:if>
         <s:else>
             <s:textfield name="marriage.male.dateOfBirthMale" id="dateOfBirthMale" maxLength="10"
-                         onmouseover="datepicker('dateOfBirthMale')"/>
+                         onmouseover="datepicker('dateOfBirthMale')" onchange="calculateAge('dateOfBirthMale','ageMale');"/>
         </s:else>
 
 
@@ -355,7 +355,7 @@
         </s:if>
         <s:else>
             <s:textfield name="marriage.female.dateOfBirthFemale" id="dateOfBirthFemale" maxLength="10"
-                         onmouseover="datepicker('dateOfBirthFemale')"/>
+                         onmouseover="datepicker('dateOfBirthFemale')" onchange="calculateAge('dateOfBirthFemale','ageFemale');"/>
         </s:else>
     </td>
 </tr>
@@ -373,12 +373,10 @@
         </s:if>
         <s:else>
             <s:if test="marriage.male.ageAtLastBirthDayMale==0">
-                <s:textfield name="marriage.male.ageAtLastBirthDayMale" id="ageMale" maxLength="3" value=""
-                        onfocus="calculateAge('dateOfBirthMale','ageMale');"/>
+                <s:textfield name="marriage.male.ageAtLastBirthDayMale" id="ageMale" maxLength="3" value=""/>
             </s:if>
             <s:else>
-                <s:textfield name="marriage.male.ageAtLastBirthDayMale" id="ageMale" maxLength="3"
-                             onfocus="calculateAge('dateOfBirthMale','ageMale');"/>
+                <s:textfield name="marriage.male.ageAtLastBirthDayMale" id="ageMale" maxLength="3"/>
             </s:else>
         </s:else>
     </td>
@@ -389,11 +387,10 @@
         <s:else>
             <s:if test="marriage.female.ageAtLastBirthDayFemale==0">
                 <s:textfield name="marriage.female.ageAtLastBirthDayFemale" id="ageFemale" maxLength="3"
-                             value="" onfocus="calculateAge('dateOfBirthFemale','ageFemale');"/>
+                             value=""/>
             </s:if>
             <s:else>
-                <s:textfield name="marriage.female.ageAtLastBirthDayFemale" id="ageFemale" maxLength="3"
-                        onfocus="calculateAge('dateOfBirthFemale','ageFemale');"/>
+                <s:textfield name="marriage.female.ageAtLastBirthDayFemale" id="ageFemale" maxLength="3"/>
             </s:else>
         </s:else>
 
