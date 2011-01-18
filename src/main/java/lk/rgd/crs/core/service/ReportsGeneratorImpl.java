@@ -135,14 +135,14 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         cal.set(year, 11, 31);
         Date endDate = cal.getTime();
 
-        int all = 0, allMales = 0, allFemales = 0;
+        int all = 0, allMales = 0, allFemales = 0, allLegBirths = 0, allIllegBirths = 0, allHospitalBirths = 0;
         for (DSDivision dsDivision : dsDivisions) {
             birthRecords = birthRegister.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
                 BirthDeclaration.State.ARCHIVED_CERT_GENERATED, systemUser);   // returns all records so far in this year
-            int dsIndex = dsDivision.getDsDivisionUKey(); // todo support tracking at DSDivision level
+
             int districtIndex = dsDivision.getDistrict().getDistrictUKey();
             BirthDistrictStatistics districtStats = statistics.totals.get(districtIndex);
-            int males = 0, females = 0;
+            int males = 0, females = 0, legBirths = 0, illegBirths = 0, hospitalBirths = 0;
             for (BirthDeclaration bd : birthRecords) {
                 int gender = bd.getChild().getChildGender();
                 if (gender == 0) {
@@ -150,14 +150,17 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 } else if (gender == 1) {
                     females++;
                 }
-                if((bd.getMarriage().getParentsMarried() == MarriageInfo.MarriedStatus.MARRIED)
+                if ((bd.getMarriage().getParentsMarried() == MarriageInfo.MarriedStatus.MARRIED)
                     || bd.getMarriage().getDateOfMarriage().before(bd.getChild().getDateOfBirth())) {
-                    districtStats.setLegitimacyBirths(districtStats.getLegitimacyBirths() + 1);
+                    //districtStats.setLegitimacyBirths(districtStats.getLegitimacyBirths() + 1);
+                    legBirths++;
                 } else {
-                    districtStats.setIllegitimacyBirths(districtStats.getIllegitimacyBirths() + 1);
+                    //districtStats.setIllegitimacyBirths(districtStats.getIllegitimacyBirths() + 1);
+                    illegBirths++;
                 }
-                if(bd.getChild().getBirthAtHospital()) {
-                    districtStats.setHospitalBirths(districtStats.getHospitalBirths() + 1);
+                if (bd.getChild().getBirthAtHospital()) {
+                    //districtStats.setHospitalBirths(districtStats.getHospitalBirths() + 1);
+                    hospitalBirths++;
                 }
             }
 
@@ -165,10 +168,21 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
             all += dsDivTotal;
             allFemales += females;
             allMales += males;
+            allLegBirths += legBirths;
+            allIllegBirths += illegBirths;
+            allHospitalBirths += hospitalBirths;
 
             districtStats.setTotal(districtStats.getTotal() + dsDivTotal);
             districtStats.setMaleTotal(districtStats.getMaleTotal() + males);
             districtStats.setFemaleTotal(districtStats.getFemaleTotal() + females);
+            districtStats.setLegitimacyBirths(districtStats.getLegitimacyBirths() + legBirths);
+            districtStats.setIllegitimacyBirths(districtStats.getIllegitimacyBirths() + illegBirths);
+            districtStats.setHospitalBirths(districtStats.getHospitalBirths() + hospitalBirths);
+            float divide = (float)districtStats.getFemaleTotal();
+            if(divide == 0){
+                divide = 1;
+            }
+            districtStats.setProportion((districtStats.getMaleTotal()/divide) * 100.0f);
 
             statistics.totals.set(districtIndex, districtStats);
         }
@@ -176,6 +190,14 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         statistics.setTotal(statistics.getTotal() + all);
         statistics.setMaleTotal(statistics.getMaleTotal() + allMales);
         statistics.setFemaleTotal(statistics.getFemaleTotal() + allFemales);
+        statistics.setLegitimacyBirths(statistics.getLegitimacyBirths() + allLegBirths);
+        statistics.setIllegitimacyBirths(statistics.getIllegitimacyBirths() + allIllegBirths);
+        statistics.setHospitalBirths(statistics.getHospitalBirths() + allHospitalBirths);
+        float divide = (float)statistics.getFemaleTotal();
+        if(divide == 0) {
+            divide = 1;
+        }
+        statistics.setProportion((statistics.getMaleTotal()/divide) * 100.0f);
 
         return statistics;
     }
@@ -197,21 +219,49 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         StringBuilder csv = getReportHeader(headerCode);
 
         int length = statistics.totals.size();
-        for (int i = 0; i < length; i++) {
-            BirthDistrictStatistics districtStats = statistics.totals.get(i);
-            District district = districtDAO.getDistrict(i + 1);
-            String districtId = "Unknown";
-            if (district != null) {
-                districtId = district.getEnDistrictName();
+
+        if (headerCode == ReportCodes.TABLE_2_2) {
+            for (int i = 0; i < length; i++) {
+                BirthDistrictStatistics districtStats = statistics.totals.get(i);
+                District district = districtDAO.getDistrict(i + 1);
+                String districtId = "Unknown";
+                if (district != null) {
+                    districtId = district.getEnDistrictName();
+                }
+                csv.append(districtId);
+                csv.append(",");
+                csv.append(districtStats.getTotal());
+                csv.append(",");
+                csv.append(districtStats.getMaleTotal());
+                csv.append(",");
+                csv.append(districtStats.getFemaleTotal());
+                csv.append("\n");
             }
-            csv.append(districtId);
-            csv.append(",");
-            csv.append(districtStats.getTotal());
-            csv.append(",");
-            csv.append(districtStats.getMaleTotal());
-            csv.append(",");
-            csv.append(districtStats.getFemaleTotal());
-            csv.append("\n");
+        } else if (headerCode == ReportCodes.TABLE_2_8) {
+            for(int i = 0; i < length; i++) {
+                BirthDistrictStatistics districtStats = statistics.totals.get(i);
+                District district = districtDAO.getDistrict(i + 1);
+                String districtId = "Unknown";
+                if (district != null) {
+                    districtId = district.getEnDistrictName();
+                }
+                csv.append(districtId);
+                csv.append(",");
+                csv.append(districtStats.getTotal());
+                csv.append(",");
+                csv.append(districtStats.getMaleTotal());
+                csv.append(",");
+                csv.append(districtStats.getFemaleTotal());
+                csv.append(",");
+                csv.append(districtStats.getProportion());
+                csv.append(",");
+                csv.append(districtStats.getLegitimacyBirths());
+                csv.append(",");
+                csv.append(districtStats.getIllegitimacyBirths());
+                csv.append(",");
+                csv.append(districtStats.getHospitalBirths());
+                csv.append("\n");
+            }
         }
 
         File file = new File("districtTotals.csv"); //todo define and enforce location+filename rules
@@ -245,8 +295,14 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
             case ReportCodes.TABLE_2_8:
                 csv.append("District,Total,Male,Female,Proportion of male births per 100 female births," +
                     "Legitimacy Births,Illegitimacy Births,Hospital Births\n");
-                csv.append("Sri Lanka");
-                //csv.append("");      todo
+                csv.append("Sri Lanka,");
+                csv.append(statistics.getTotal() + ",");
+                csv.append(statistics.getMaleTotal() + ",");
+                csv.append(statistics.getFemaleTotal() + ",");
+                csv.append(statistics.getProportion() + ",");
+                csv.append(statistics.getLegitimacyBirths() + ",");
+                csv.append(statistics.getIllegitimacyBirths() + ",");
+                csv.append(statistics.getHospitalBirths() + ",\n");
                 break;
         }
 

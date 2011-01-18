@@ -17,6 +17,8 @@ public abstract class BirthStatistics {
     private int illegitimacyBirths;
     private int hospitalBirths;
 
+    private float proportion;
+
     public int getTotal() {
         return total;
     }
@@ -63,5 +65,13 @@ public abstract class BirthStatistics {
 
     public void setLegitimacyBirths(int legitimacyBirths) {
         this.legitimacyBirths = legitimacyBirths;
+    }
+
+    public float getProportion() {
+        return proportion;
+    }
+
+    public void setProportion(float proportion) {
+        this.proportion = proportion;
     }
 }

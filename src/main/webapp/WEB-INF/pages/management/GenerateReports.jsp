@@ -35,6 +35,13 @@
                 <td width="30%">&nbsp;</td>
             </tr>
             <tr>
+                <td width="20%" align="right"><s:label value="Select Chart"/></td>
+                <td width="50%">
+                    <s:select list="chartList" name="chartType" id="selectChart" cssStyle="width:300px;"/>
+                </td>
+                <td width="30%">&nbsp;</td>
+            </tr>
+            <tr>
                 <td>&nbsp;</td>
                 <td colspan="2" align="left">
                     <s:submit/>
