@@ -132,7 +132,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             //only get first record others ignored  because there can be NIC duplications
             //TODO amith very important use try catch here :D there can be invalid  user access then it throws an exceptions
             logger.debug("attempt to load death register by pin number : {}", pin);
-            List<DeathRegister> deathRegisterList = deathRegistrationService.getByPinOrNic(Long.parseLong(pin), user);
+            List<DeathRegister> deathRegisterList = deathRegistrationService.getByPinOrNic(pin, user);
             if (deathRegisterList != null) {
                 deathRegister = deathRegisterList.get(0);
             }
