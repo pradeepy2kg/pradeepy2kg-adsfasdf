@@ -233,7 +233,7 @@ function validate() {
     }
 
     errormsg = "";
-    return returnval;
+    return false;
 }
 
 function validateRadioButtons(array) {
@@ -249,9 +249,11 @@ function validateRadioButtons(array) {
 }
 
 function otherValidations() {
-    var bellow30Days = document.getElementsByName("death.infantLessThan30Days")[1];
+    var bellow30Days = document.getElementsByName("death.infantLessThan30Days")[1].checked;
+    //alert(bellow30Days)
+    //  alert(document.getElementsByName("death.infantLessThan30Days")[0].checked)
     var age = document.getElementById("deathPersonAge").value;
-    if (bellow30Days.value && (age > 0)) {
+    if (bellow30Days && (age > 0)) {
         errormsg = errormsg + "\n" + document.getElementById('invalidDataAge').value;
     }
 }

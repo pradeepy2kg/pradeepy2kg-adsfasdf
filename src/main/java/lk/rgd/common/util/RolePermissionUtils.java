@@ -52,7 +52,6 @@ public class RolePermissionUtils {
         deoBitSet.set(Permission.SEARCH_REGISTRAR);
         deoBitSet.set(Permission.VIEW_MARRIAGE_REGISTER);
         deoBitSet.set(Permission.SEARCH_MARRIAGE);
-
         // ADR
 
         adrBitSet = new BitSet();

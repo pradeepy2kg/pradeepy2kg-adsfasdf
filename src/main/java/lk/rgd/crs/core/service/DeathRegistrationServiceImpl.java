@@ -423,10 +423,8 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     @Transactional(propagation = Propagation.SUPPORTS)
     public List<DeathRegister> getByPinOrNic(String pinOrNic, User user) {
         List<DeathRegister> deathRegisterList = deathRegisterDAO.getDeathRegisterByDeathPersonPINorNIC(pinOrNic);
-        DeathRegister deathRegister = null;
         if (deathRegisterList.size() > 0) {
-            deathRegister = deathRegisterList.get(0);
-            validateAccessOfUser(user, deathRegister);
+            validateAccessOfUser(user, deathRegisterList.get(0));
             return deathRegisterList;
         } else {
             return null;
