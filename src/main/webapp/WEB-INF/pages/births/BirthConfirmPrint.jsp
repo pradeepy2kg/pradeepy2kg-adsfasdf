@@ -32,38 +32,39 @@
         $('select#birthDistrictId').bind('change', function(evt1) {
             var id = $("select#birthDistrictId").attr("value");
             $.getJSON('/ecivil/crs/DivisionLookupService', {id:id},
-                    function(data) {
-                        var options1 = '';
-                        var ds = data.dsDivisionList;
-                        for (var i = 0; i < ds.length; i++) {
-                            options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
-                        }
-                        $("select#dsDivisionId").html(options1);
+                     function(data) {
+                         var options1 = '';
+                         var ds = data.dsDivisionList;
+                         for (var i = 0; i < ds.length; i++) {
+                             options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                         }
+                         $("select#dsDivisionId").html(options1);
 
-                        var options2 = '';
-                        var bd = data.bdDivisionList;
-                        for (var j = 0; j < bd.length; j++) {
-                            options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
-                        }
-                        $("select#birthDivisionId").html(options2);
-                    });
+                         var options2 = '';
+                         var bd = data.bdDivisionList;
+                         for (var j = 0; j < bd.length; j++) {
+                             options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
+                         }
+                         $("select#birthDivisionId").html(options2);
+                     });
         });
 
         $('select#dsDivisionId').bind('change', function(evt2) {
             var id = $("select#dsDivisionId").attr("value");
             $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:2},
-                    function(data) {
-                        var options = '';
-                        var bd = data.bdDivisionList;
-                        for (var i = 0; i < bd.length; i++) {
-                            options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
-                        }
-                        $("select#birthDivisionId").html(options);
-                    });
+                     function(data) {
+                         var options = '';
+                         var bd = data.bdDivisionList;
+                         for (var i = 0; i < bd.length; i++) {
+                             options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
+                         }
+                         $("select#birthDivisionId").html(options);
+                     });
         })
     })
 
-    function initPage(){}
+    function initPage() {
+    }
 
 </script>
 <script type="text/javascript" src="<s:url value="/js/selectAll.js"/>"></script>
@@ -166,10 +167,18 @@
                                         <s:param name="printed" value="#request.printed"/>
                                         <s:param name="printStart" value="#request.printStart"/>
                                     </s:url>
-                                    <s:a href="%{cetificatePrintUrl}" title="%{getText('print.label')}">
-                                        <img src="<s:url value='/images/print_icon.gif'/>" border="none" width="25"
-                                             height="25"/>
-                                    </s:a>
+                                    <s:if test="register.status.ordinal() == 1">
+                                        <s:a href="%{cetificatePrintUrl}" title="%{getText('print.label')}">
+                                            <img src="<s:url value='/images/print_icon.gif'/>" border="none" width="25"
+                                                 height="25"/>
+                                        </s:a>
+                                    </s:if>
+                                    <s:else>
+                                        <s:a href="%{cetificatePrintUrl}" title="%{getText('reprint.label')}">
+                                            <img src="<s:url value='/images/print_icon.gif'/>" border="none" width="25"
+                                                 height="25"/>
+                                        </s:a>
+                                    </s:else>
                                 </td>
                             </tr>
                         </s:iterator>
@@ -177,7 +186,7 @@
                     </table>
                 </fieldset>
 
- <%--               <div class="form-submit">
+                <%--               <div class="form-submit">
                     <s:label><s:checkbox name="allCheck"
                                          onclick="javascript:selectallMe(document.birth_confirm_print,document.birth_confirm_print.allCheck)"/>
                         <span><s:label name="select_all" value="%{getText('select_all.label')}"/></span></s:label>
