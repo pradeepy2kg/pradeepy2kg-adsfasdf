@@ -101,7 +101,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
                         logger.debug("no result found for birth registration serial number :" + serialNo +
                             " and birth division id :" + birthDistrictId + " and ds division id : " + dsDivisionId);
                     }
-                    addActionError(getText("SearchBDF.error.NoResult.for.serial", new String[]{Long.toString(serialNo)}));
+                    addActionMessage(getText("SearchBDF.error.NoResult.for.serial", new String[]{Long.toString(serialNo)}));
                 }
             }
 
