@@ -233,13 +233,15 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
             mrState = StateUtil.getStateById(state);
         }
 
-        //Search by license serial number
+        //Search by license serial number - IDukey
         if (noticeSerialNo != null) {
+            //todo: remove licensed MR from other searches
             marriageRegisterSearchList = new ArrayList<MarriageRegister>();
             marriageRegisterSearchList.add(marriageRegistrationService.getMarriageRegisterByIdUKeyAndState
                 (noticeSerialNo, user, MarriageRegister.State.LICENSE_PRINTED, Permission.SEARCH_MARRIAGE));
 
         } else if (pinOrNic != null) {
+            //todo: filter by state
             marriageRegisterSearchList = marriageRegistrationService.getMarriageRegisterByIdNumber(pinOrNic, true, user);
 
         } else {

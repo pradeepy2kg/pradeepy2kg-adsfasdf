@@ -50,7 +50,11 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
         Query q = em.createNamedQuery("getMarriageRegisterByIdUKeyAndState");
         q.setParameter("idUKey", idUKey);
         q.setParameter("state", state);
-        return (MarriageRegister)q.getSingleResult();
+        if (q.getResultList().isEmpty()) {
+            return null;
+        } else {
+            return (MarriageRegister)q.getSingleResult();
+        }
     }
 
     /**
