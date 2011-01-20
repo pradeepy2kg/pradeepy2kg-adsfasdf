@@ -113,7 +113,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     @Transactional(propagation = Propagation.SUPPORTS)
     public MarriageRegister getMarriageRegisterByIdUKey(long idUKey, User user, int permission) {
         logger.debug("attempt to get marriage register by idUKey : {} ", idUKey);
-        ValidationUtils.validateUserPermission(Permission.SEARCH_MARRIAGE, user);
+        ValidationUtils.validateUserPermission(permission, user);
         MarriageRegister marriageRegister = marriageRegistrationDAO.getByIdUKey(idUKey);
         ValidationUtils.validateAccessToMRDivision(marriageRegister.getMrDivision(), user);
         return marriageRegister;
@@ -123,8 +123,9 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.SUPPORTS)
-    public MarriageRegister getMarriageRegisterByIdUKeyAndState(long idUKey, User user, MarriageRegister.State state) {
-        ValidationUtils.validateUserPermission(Permission.SEARCH_MARRIAGE, user);
+    public MarriageRegister getMarriageRegisterByIdUKeyAndState(long idUKey, User user,
+        MarriageRegister.State state, int permission) {
+        ValidationUtils.validateUserPermission(permission, user);
         return marriageRegistrationDAO.getMarriageRegisterByIdUKeyAndState(idUKey, state);
     }
 
