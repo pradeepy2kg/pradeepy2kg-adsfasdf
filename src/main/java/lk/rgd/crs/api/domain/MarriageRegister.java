@@ -126,6 +126,11 @@ import java.util.Date;
         "AND mr.state IN (:stateList) " +
         "ORDER BY mr.idUKey DESC "),
 
+    @NamedQuery(name = "getMarriageRegisterByIdUKeyAndState", query = "SELECT mr FROM MarriageRegister mr " +
+        "WHERE mr.lifeCycleInfo.activeRecord IS TRUE " +
+        "AND mr.idUKey = :idUKey " +
+        "AND mr.state = :state"),
+
     @NamedQuery(name = "findMarriageRegisterByDistricts", query = "SELECT mr FROM MarriageRegister mr " +
         "WHERE mr.lifeCycleInfo.activeRecord = :active " +
         "AND (mr.mrDivision IS NOT NULL AND mr.mrDivision.dsDivision.district IN (:districtList)) " +

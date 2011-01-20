@@ -28,9 +28,18 @@ public interface MarriageRegistrationDAO {
      * get marriage register object by it's idUKey
      *
      * @param idUKey primary key of the record
-     * @return user who performs the action
+     * @return
      */
     public MarriageRegister getByIdUKey(long idUKey);
+
+    /**
+     * get marriage register primary key and state.
+     *
+     * @param idUKey primary key of the record
+     * @param state  state of the marriage register
+     * @return
+     */
+    public MarriageRegister getMarriageRegisterByIdUKeyAndState(long idUKey, MarriageRegister.State state);
 
     /**
      * updating given marriage register object

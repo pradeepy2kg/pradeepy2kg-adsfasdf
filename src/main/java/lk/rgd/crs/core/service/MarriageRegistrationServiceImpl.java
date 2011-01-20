@@ -122,6 +122,15 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public MarriageRegister getMarriageRegisterByIdUKeyAndState(long idUKey, User user, MarriageRegister.State state) {
+        ValidationUtils.validateUserPermission(Permission.SEARCH_MARRIAGE, user);
+        return marriageRegistrationDAO.getMarriageRegisterByIdUKeyAndState(idUKey, state);
+    }
+
+    /**
+     * @inheritDoc
+     */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<MarriageRegister> getMarriageNoticeByDistrict(District district, int pageNo, int noOfRows,
         boolean active, User user) {
