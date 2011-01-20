@@ -53,6 +53,10 @@ public class ReportsAction extends ActionSupport implements SessionAware {
                 reportsService.createReport(user, ReportCodes.TABLE_2_2);
             } else if (chartType == 1) {
                 logger.debug("Chart Type {}", chartType);
+                generateReport(year, user, ReportCodes.TABLE_2_4);
+                reportsService.createReport(user, ReportCodes.TABLE_2_4);
+            } else if (chartType == 3) {
+                logger.debug("Chart Type {}", chartType);
                 generateReport(year, user, ReportCodes.TABLE_2_8);
                 reportsService.createReport(user, ReportCodes.TABLE_2_8);
             } else if (chartType == 2) {
@@ -83,8 +87,9 @@ public class ReportsAction extends ActionSupport implements SessionAware {
 
         chartList = new HashMap<Integer, String>();
         chartList.put(0, "TABLE 2.2");
-        chartList.put(1, "TABLE 2.8");
+        chartList.put(1, "TABLE 2.4");
         chartList.put(2, "TABLE 2.5");
+        chartList.put(3, "TABLE 2.8");
     }
 
     public int getYear() {
@@ -138,6 +143,10 @@ public class ReportsAction extends ActionSupport implements SessionAware {
                 break;
             case ReportCodes.TABLE_2_5:
                 reportsService.generate_2_5(year, user);
+                break;
+            case ReportCodes.TABLE_2_4:
+                reportsService.generate_2_4(year, user);
+                break;
         }
     }
 }

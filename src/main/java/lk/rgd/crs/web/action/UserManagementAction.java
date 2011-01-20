@@ -152,7 +152,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         randomPassword = getRandomPassword(randomPasswordLength);
 
         try {
-            isNewUser = service.createUser(user, currentUser, userId, roleId, assignedDistricts, changePassword, randomPassword);
+            isNewUser = service.createUser(user, currentUser, userId, roleId, assignedDistricts, assignedDivisions, changePassword, randomPassword);
         } catch (RGDRuntimeException e) {
             if (e.getErrorCode() == ErrorCodes.ENTITY_ALREADY_EXIST) {
                 addActionMessage(getText("user.already.assigned"));
@@ -236,7 +236,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
             primaryLocation = prmLocation.getLocationUKey();
         }
         populateLocationListOnly(user);
-        //populate();
+        //populate();                                                                                                     // todo shan
         return SUCCESS;
     }
 
@@ -679,13 +679,10 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
 
     private void populateLocationListOnly(User user) {
         locationList = new HashMap<Integer, String>();
-        Map<Integer, Location> allLocations = locationDAO.getPreLoadedLocations();
-        //User user = userDAO.getUserByPK(userId);
         Set<DSDivision> st = user.getAssignedBDDSDivisions();
 
         for (DSDivision ds : st) {
             locationList.putAll(locationDAO.getLocationByDSDivisionID(ds.getDsDivisionUKey(), user.getPrefLanguage()));
-
         }
         if (userLocationDAO.getActiveUserLocations(userId, true).size() > 0) {
             user.setStatus(User.State.ACTIVE);
