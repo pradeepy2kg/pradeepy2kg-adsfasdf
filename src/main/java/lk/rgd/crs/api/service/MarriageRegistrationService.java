@@ -68,6 +68,16 @@ public interface MarriageRegistrationService {
         MarriageRegister.State state, int permission);
 
     /**
+     * Returns a Marriage register filtered by serial number
+     *
+     * @param serialNumber Serial Number of the marriage register
+     * @param user       user who performs the action
+     * @param permission permission level of the action
+     * @return
+     */
+    public List<MarriageRegister> getMarriageRegisterBySerialNumber(long serialNumber, User user, int permission);
+
+    /**
      * Returns a paginated list of Marriage Notices based on the specified District
      *
      * @param district the district

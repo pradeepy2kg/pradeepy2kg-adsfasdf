@@ -234,6 +234,16 @@ public interface MarriageRegistrationDAO {
     public List<MarriageRegister> getNoticeByPINorNIC(String id, boolean active);
 
     /**
+     * Returns a Marriage register filtered by serial number
+     *
+     * @param serialNumber Serial Number of the marriage register
+     * @param stateList list of possible states of the marriage register
+     * @return
+     */
+    public List<MarriageRegister> getMarriageRegisterBySerialNumber(long serialNumber, 
+        EnumSet<MarriageRegister.State> stateList);
+
+    /**
      * Find the marriage register by male or female identification number or
      * find a list of marriage register by registrar identification number
      *

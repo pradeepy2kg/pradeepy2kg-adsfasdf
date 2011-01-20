@@ -41,10 +41,13 @@
             <a href="#fragment-1"><span><s:label value="%{getText('search.by.MRDivision.label')}"/></span></a>
         </li>
         <li>
-            <a href="#fragment-2"><span> <s:label value="%{getText('label.search.by.pin')}"/></span></a>
+            <a href="#fragment-2"><span> <s:label value="%{getText('label.marriageregister.search.bypin')}"/></span></a>
         </li>
         <li>
-            <a href="#fragment-3"><span> <s:label value="%{getText('label.search.by.serial')}"/></span></a>
+            <a href="#fragment-3"><span> <s:label value="%{getText('label.marriageregister.search.byserial')}"/></span></a>
+        </li>
+        <li>
+            <a href="#fragment-4"><span> <s:label value="%{getText('label.marriageregister.search.byIdUKey')}"/></span></a>
         </li>
     </ul>
     <s:form action="eprMarriageRegisterSearch.do" method="POST" onsubmit="javascript:return validate()">
@@ -136,7 +139,7 @@
                 <tbody>
                 <tr>
                     <td>
-                        <s:label value="%{getText('pin.label')}"/>
+                        <s:label value="%{getText('label.marriageregister.pin')}"/>
                     </td>
                     <td><s:textfield name="pinOrNic" id="pinOrNic" maxLength="10"/></td>
                     <td>
@@ -160,10 +163,35 @@
                 <tbody>
                 <tr>
                     <td>
-                        <s:label value="%{getText('serial.label')}"/>
+                        <s:label value="%{getText('label.marriageregister.serial')}"/>
                     </td>
                     <td>
                         <s:textfield id="noticeSerialNo" name="noticeSerialNo" cssStyle="width:232px;" maxLength="10"/>
+                    </td>
+                    <td>
+                        <div class="form-submit">
+                            <s:submit value="%{getText('bdfSearch.button')}"/>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </s:form>
+        <s:form action="eprMarriageRegisterSearch.do" method="POST" onsubmit="javascript:return validate()">
+        <div id="fragment-4">
+            <table>
+                <caption/>
+                <col width="280px"/>
+                <col width="10px"/>
+                <col/>
+                <tbody>
+                <tr>
+                    <td>
+                        <s:label value="%{getText('label.marriageregister.number')}"/>
+                    </td>
+                    <td>
+                        <s:textfield id="idUKey" name="idUKey" cssStyle="width:232px;" maxLength="10"/>
                     </td>
                     <td>
                         <div class="form-submit">

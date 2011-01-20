@@ -199,7 +199,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     }
 
     public String markMarriageExtractAsPrinted() {
-        MarriageRegister register = marriageRegistrationService.getMarriageRegisterByIdUKeyAndState(idUKey, user, 
+        MarriageRegister register = marriageRegistrationService.getMarriageRegisterByIdUKeyAndState(idUKey, user,
             MarriageRegister.State.EXTRACT_PRINTED, Permission.PRINT_MARRIAGE_EXTRACT);
         if (register != null) {
             addActionMessage(getText("message.marriagerextract.alreadymarkedasprinted"));
@@ -233,16 +233,25 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
             mrState = StateUtil.getStateById(state);
         }
 
-        //Search by license serial number - IDukey
-        if (noticeSerialNo != null) {
+        //Search by marriage registration number - IDukey
+        if (idUKey != 0) {
             //todo: remove licensed MR from other searches
             marriageRegisterSearchList = new ArrayList<MarriageRegister>();
-            marriageRegisterSearchList.add(marriageRegistrationService.getMarriageRegisterByIdUKeyAndState
-                (noticeSerialNo, user, MarriageRegister.State.LICENSE_PRINTED, Permission.SEARCH_MARRIAGE));
-
+            //todo: filter by divisions if not a licensed marriage
+            MarriageRegister marriageRegister = marriageRegistrationService.getMarriageRegisterByIdUKeyAndState
+                (idUKey, user, MarriageRegister.State.LICENSE_PRINTED, Permission.SEARCH_MARRIAGE);
+            if (marriageRegister != null) {
+                marriageRegisterSearchList.add(marriageRegister);
+            }
         } else if (pinOrNic != null) {
             //todo: filter by state
+            //search by male/female/registrar identification number
             marriageRegisterSearchList = marriageRegistrationService.getMarriageRegisterByIdNumber(pinOrNic, true, user);
+
+        } else if (noticeSerialNo != null) {
+            //search by marriage serial number.
+            marriageRegisterSearchList = marriageRegistrationService.getMarriageRegisterBySerialNumber(noticeSerialNo,
+                user, Permission.SEARCH_MARRIAGE);
 
         } else {
             if (districtId != 0 & dsDivisionId != 0 & mrDivisionId != 0) { // all selected
@@ -265,7 +274,6 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
             marriageRegisterSearchList = marriageRegistrationService.getMarriageRegisterList(divisionType, divisionId,
                 mrState, true, searchStartDate, searchEndDate, pageNo, noOfRows, user);
         }
-
 
         if (marriageRegisterSearchList.size() == 0) {
             addActionError(getText("error.marriageregister.norecords"));

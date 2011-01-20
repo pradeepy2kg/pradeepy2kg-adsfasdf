@@ -132,6 +132,17 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<MarriageRegister> getMarriageRegisterBySerialNumber(long serialNumber, User user, int permission) {
+        EnumSet<MarriageRegister.State>  stateList = StateUtil.getMarriageRegisterStateList(null);
+        ValidationUtils.validateUserPermission(permission, user);
+        return marriageRegistrationDAO.getMarriageRegisterBySerialNumber(serialNumber, stateList);
+        //TODO validate access to MR
+    }
+
+    /**
+     * @inheritDoc
+     */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<MarriageRegister> getMarriageNoticeByDistrict(District district, int pageNo, int noOfRows,
         boolean active, User user) {
