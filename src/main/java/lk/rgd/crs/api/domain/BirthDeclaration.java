@@ -100,7 +100,10 @@ import java.io.Serializable;
     @NamedQuery(name = "get.bc.count", query = "SELECT COUNT(bdf) FROM BirthDeclaration bdf" +
         " WHERE bdf.register.status =:status AND (bdf.lifeCycleInfo.createdTimestamp BETWEEN :startDate AND :endDate)"),
     @NamedQuery(name = "get.bc.by.createdUser", query = "SELECT bdf FROM BirthDeclaration bdf " +
-        " WHERE bdf.lifeCycleInfo.createdUser =:user AND (bdf.lifeCycleInfo.createdTimestamp BETWEEN :startDate AND :endDate)")
+        " WHERE bdf.lifeCycleInfo.createdUser =:user AND (bdf.lifeCycleInfo.createdTimestamp BETWEEN :startDate AND :endDate)"),
+    @NamedQuery(name = "get.by.serial.and.ds.id", query = "SELECT bdf FROM BirthDeclaration bdf" +
+        " WHERE bdf.register.bdfSerialNo =:serial AND bdf.register.birthDivision.dsDivision.dsDivisionUKey =:dsId " +
+        "AND bdf.lifeCycleInfo.activeRecord IS TRUE ")
 })
 public class BirthDeclaration implements Serializable, Cloneable {
 
@@ -227,7 +230,7 @@ public class BirthDeclaration implements Serializable, Cloneable {
         lifeCycleInfo.getCertificateGeneratedUser().getUserName();
         lifeCycleInfo.getCreatedUser().getUserName();
         lifeCycleInfo.getLastUpdatedUser().getUserName();
-        
+
         newBDF.setIdUKey(0);
         newBDF.setLifeCycleInfo(lifeCycleInfo.clone());
         newBDF.setRegister(register.clone());

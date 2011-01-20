@@ -394,6 +394,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
                 existing.setMrDivisionOfFemaleNotice(mrDivision);
             }
         }
+        existing.setTypeOfMarriage(marriageRegister.getTypeOfMarriage());
         existing.setLicenseCollectType(marriageRegister.getLicenseCollectType());
         existing.setPreferredLanguage(marriageRegister.getPreferredLanguage());
     }

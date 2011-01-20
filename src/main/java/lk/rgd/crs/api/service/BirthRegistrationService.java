@@ -657,5 +657,15 @@ public interface BirthRegistrationService {
      * @return list of active birth alterations
      */
     public List<BirthAlteration> getActiveBirthAlterationByBirthCertificateNumber(long certificateNumber, User user);
+
+    /**
+     * get all active birth records for given DSDivision and serial number
+     *
+     * @param serialNumber serial number
+     * @param dsDivision   dsDivision id
+     * @param user         user who performs the action
+     * @return list of active birth records
+     */
+    public List<BirthDeclaration> getActiveRecordByDSDivisionAndSerialNumber(long serialNumber, int dsDivision, User user);
 }
 

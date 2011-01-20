@@ -1994,6 +1994,16 @@ public class BirthRegistrationServiceImpl implements
         throw new UnsupportedOperationException("unsupported contact amith");
     }
 
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER)
+    public List<BirthDeclaration> getActiveRecordByDSDivisionAndSerialNumber(long serialNumber, int dsDivision, User user) {
+        logger.debug("attempt to get birth records by ds division: {} and serial number: {}", dsDivision, serialNumber);
+        ValidationUtils.validateAccessToDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivision), user);
+        return birthDeclarationDAO.getActiveBirthRecordByDSDivisionAndSerialNumber(serialNumber, dsDivision);
+    }
+
     private PersonCitizenship getPersonCitizenship(Country country, String passportNo, Person person) {
         PersonCitizenship pc = new PersonCitizenship();
         pc.setCountry(country);

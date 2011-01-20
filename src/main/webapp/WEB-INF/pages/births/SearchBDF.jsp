@@ -74,111 +74,132 @@
         })
     });
     var errormsg = "";
-    function validate() {
-        var domObject;
-        var returnval = true;
+    var counter = 0;
 
-        domObject = document.getElementById('bdfSerialNoId1');
-        if (!isFieldEmpty(domObject))
-            isNumeric(domObject.value, 'error1', 'error2');
+    function validateForm() {
+        var bdfSerialNumber = document.getElementById('bdfSerialNoId1').value;
+        var conSerial = document.getElementById('bdfSerialNoId2').value;
+        var valueArray = new Array(bdfSerialNumber, conSerial);
 
-        domObject = document.getElementById('bdfSerialNoId2');
-        if (!isFieldEmpty(domObject))
-            isNumeric(domObject.value, 'error1', 'error2');
-
-        if (errormsg != "") {
-            alert(errormsg);
-            returnval = false;
+        for (var i = 0; i < valueArray.length; i++) {
+            var c = valueArray[i];
+            if (c != "") {
+                counter++
+            }
         }
-        errormsg = "";
-        return returnval;
+        if (counter != 1) {
+            errormsg = errormsg + document.getElementById('oneMethodErr').value;
+        }
+
+        var domObject = document.getElementById('bdfSerialNoId1');
+        if (domObject.value != "") {
+            validateSerialNo(domObject, 'invalideDateErr', 'bdfSerialNumber');
+        }
+        domObject = document.getElementById('bdfSerialNoId2');
+        if (domObject.value != "") {
+            validateSerialNo(domObject, 'invalideDateErr', 'confSerialNumber');
+        }
+        if (errormsg != "") {
+            alert(errormsg)
+            errormsg = "";
+            counter = 0;
+            return false;
+        }
+        else {
+            return true;
+        }
+        return false;
     }
 
-    function initPage(){}
+    function initPage() {
+    }
 </script>
 <div id="birth-confirmation-search" style="font-size:10pt;">
     <s:actionerror cssStyle="color:red;font-size:10pt"/>
 
-        <ul>
-            <li><a href="#fragment-1"><span> <s:label name="registrationSearch"
-                                                      value="%{getText('registrationSerchTab.label')}"/></span></a>
-            </li>
-            <li><a href="#fragment-2"><span><s:label name="confirmationSearch"
-                                                     value="%{getText('confirmationSearchTab.label')}"/></span></a></li>
-        </ul>
+    <ul>
+        <li><a href="#fragment-1"><span> <s:label name="registrationSearch"
+                                                  value="%{getText('registrationSerchTab.label')}"/></span></a>
+        </li>
+        <li><a href="#fragment-2"><span><s:label name="confirmationSearch"
+                                                 value="%{getText('confirmationSearchTab.label')}"/></span></a></li>
+    </ul>
     <s:form action="eprBDFSearchBySerialNo.do" name="birthConfirmationSearchForm" id="search-bdf-form"
-            onsubmit="javascript:return validate()" method="post">
+            onsubmit="javascript:return validateForm()" method="post">
 
 
-        <div id="fragment-1">
+    <div id="fragment-1">
 
-            <table class="search-option-table" >
-                <caption></caption>
-                <col/>
-                <col/>
-                <col/>
-                <col/>
-                <col/>
-                <tbody>
+        <table class="search-option-table">
+            <caption></caption>
+            <col/>
+            <col/>
+            <col/>
+            <col/>
+            <col/>
+            <tbody>
+            <tr>
+                <td><s:label name="declarationSearialNumber"
+                             value="%{getText('searchDeclarationSearial.label')}"/></td>
+                <td><s:textfield name="serialNo" id="bdfSerialNoId1" maxLength="10" value=""/></td>
+                <td><s:label name="district" value="%{getText('district.label')}"/></td>
+                <td>
+                    <s:select id="birthDistrictId" name="birthDistrictId" list="districtList"
+                              value="birthDistrictId" cssStyle="width:240px;float:left;"/>
+                </td>
+            </tr>
+            <tr>
+                <td><s:label name="division" value="%{getText('select_DS_division.label')}"/></td>
+                <td>
+                    <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
+                              cssStyle="float:left;  width:240px;"/>
+                </td>
+                <td><s:label name="bdDivision" value="%{getText('select_BD_division.label')}"/></td>
+                <td>
+                    <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}"
+                              list="bdDivisionList" cssStyle=" width:240px;float:left;"
+                              headerValue="%{getText('all.divisions.label')}" headerKey="0"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3"></td>
+                <td>
+                    <div class="form-submit"><s:submit value="%{getText('bdfSearch.button')}" name="search"
+                                                       cssStyle="float:left;margin :5px 63px 0 5px;"/></div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+
+        </s:form>
+    </div>
+    <%--   <br/>--%>
+    <div id="fragment-2">
+        <s:form action="eprBDFSearchByIdUKey.do" method="post" onsubmit="javascript:return validateForm()">
+            <table class="search-option-table">
+
                 <tr>
-                    <td><s:label name="declarationSearialNumber"
-                                 value="%{getText('searchDeclarationSearial.label')}"/></td>
-                    <td><s:textfield name="serialNo" id="bdfSerialNoId1" maxLength="10"/></td>
-                    <td><s:label name="district" value="%{getText('district.label')}"/></td>
-                    <td>
-                        <s:select id="birthDistrictId" name="birthDistrictId" list="districtList"
-                                  value="birthDistrictId" cssStyle="width:240px;float:left;"/>
+                    <td width="250px"><s:label name="confirmationSearch"
+                                               value="%{getText('searchConfirmationSerial.label')}"/></td>
+                    <td width="250px"><s:textfield name="idUKey" id="bdfSerialNoId2" maxLength="10" value=""/></td>
+                    <td width="250px">
+                        <div class="form-submit"><s:submit value="%{getText('bdfSearch.button')}"
+                                                           name="search"
+                                                           cssStyle="float:left;margin :5px 30px 7px 5px;"/></div>
                     </td>
+                    <td width="750px"></td>
                 </tr>
-                <tr>
-                    <td><s:label name="division" value="%{getText('select_DS_division.label')}"/></td>
-                    <td>
-                        <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
-                                  cssStyle="float:left;  width:240px;"/>
-                    </td>
-                    <td><s:label name="bdDivision" value="%{getText('select_BD_division.label')}"/></td>
-                    <td >
-                        <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}"
-                                  list="bdDivisionList" cssStyle=" width:240px;float:left;"
-                                  headerValue="%{getText('all.divisions.label')}" headerKey="0"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="3"></td>
-                    <td>
-                        <div class="form-submit"><s:submit value="%{getText('bdfSearch.button')}" name="search" cssStyle="float:left;margin :5px 63px 0 5px;"/></div>
-                    </td>
-                </tr>
-                </tbody>
             </table>
 
-
-            </s:form>
-        </div>
-        <%--   <br/>--%>
-        <div id="fragment-2">
-            <s:form action="eprBDFSearchByIdUKey.do" method="post" onsubmit="javascript:return validate()">
-                <table class="search-option-table">
-                    
-                    <tr>
-                        <td width="250px"><s:label name="confirmationSearch"
-                                                   value="%{getText('searchConfirmationSerial.label')}"/></td>
-                        <td width="250px"><s:textfield name="idUKey" id="bdfSerialNoId2"/></td>
-                        <td width="250px">
-                            <div class="form-submit"><s:submit value="%{getText('bdfSearch.button')}"
-                                                               name="search" cssStyle="float:left;margin :5px 30px 7px 5px;"/></div>
-                        </td>
-                        <td width="750px"></td>
-                    </tr>
-                </table>
-
-            </s:form>
+        </s:form>
 
     </div>
 </div>
 <br/>
 
 <div>
+    <s:actionmessage cssStyle="color:blue;font-size:10pt"/>
     <s:if test="#request.bdf != null || #request.searchResultList.size>0">
         <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
             <legend>
@@ -318,8 +339,10 @@
             </table>
         </fieldset>
     </s:if>
-
-    <s:hidden id="error1" value="%{getText('p1.invalide.inputType')}"/>
-    <s:hidden id="error2" value="%{getText('p1.serial.text')}"/>
+    
+    <s:hidden id="oneMethodErr" value="%{getText('err.use.one,method.to.search')}"/>
+    <s:hidden id="invalideDateErr" value="%{getText('err.invalide.data')}"/>
+    <s:hidden id="bdfSerialNumber" value="%{getText('field.bdf.serial')}"/>
+    <s:hidden id="confSerialNumber" value="%{getText('conf.serial.number')}"/>
 
 </div>
