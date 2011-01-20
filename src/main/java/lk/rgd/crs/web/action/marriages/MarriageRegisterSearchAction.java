@@ -244,7 +244,6 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
                 marriageRegisterSearchList.add(marriageRegister);
             }
         } else if (pinOrNic != null) {
-            //todo: filter by state, mr division
             //search by male/female/registrar identification number
             marriageRegisterSearchList = marriageRegistrationService.getMarriageRegisterByPINNumber(pinOrNic, true, user);
 

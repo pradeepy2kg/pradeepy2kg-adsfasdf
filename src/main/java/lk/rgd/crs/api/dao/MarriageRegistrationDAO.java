@@ -236,23 +236,24 @@ public interface MarriageRegistrationDAO {
     /**
      * Returns a Marriage register filtered by serial number
      *
-     * @param serialNumber Serial Number of the marriage register
-     * @param stateList    list of possible states of the marriage register
+     * @param serialNumber   Serial Number of the marriage register
+     * @param stateList      list of possible states of the marriage register
+     * @param dsDivisionList permitted DS divisions list of the particular user
      * @return
      */
     public List<MarriageRegister> getMarriageRegisterBySerialNumber(long serialNumber,
-        EnumSet<MarriageRegister.State> stateList);
+        EnumSet<MarriageRegister.State> stateList, Set<DSDivision> dsDivisionList);
 
     /**
      * Find the marriage register by male or female identification number or
      * find a list of marriage register by registrar identification number
      *
-     * @param id        the identification number (male or female or registrar PIN or NIC)
-     * @param active    status of the marriage register active or inactive
-     * @param stateList list of possible states of the marriage register
+     * @param id             the identification number (male or female or registrar PIN or NIC)
+     * @param stateList      list of possible states of the marriage register
+     * @param dsDivisionList permitted DS divisions list of the particular user
      * @return
      */
-    public List<MarriageRegister> getMarriageRegisterByIdNumber(String id, boolean active,
+    public List<MarriageRegister> getMarriageRegisterByIdNumber(String id,
         EnumSet<MarriageRegister.State> stateList, Set<DSDivision> dsDivisionList);
 
     /**
