@@ -131,6 +131,11 @@ import java.util.Date;
         "AND mr.idUKey = :idUKey " +
         "AND mr.state = :state"),
 
+    @NamedQuery(name = "findMarriageBySerialNumber", query = "SELECT mr FROM MarriageRegister mr " +
+        "WHERE mr.lifeCycleInfo.activeRecord IS TRUE " +
+        "AND mr.serialNumber = :serialNumber " +
+        "AND mr.state IN (:stateList)"),
+
     @NamedQuery(name = "findMarriageRegisterByDistricts", query = "SELECT mr FROM MarriageRegister mr " +
         "WHERE mr.lifeCycleInfo.activeRecord = :active " +
         "AND (mr.mrDivision IS NOT NULL AND mr.mrDivision.dsDivision.district IN (:districtList)) " +
@@ -199,7 +204,8 @@ public class MarriageRegister implements Serializable, Cloneable {
     @Column(name = "REG_MIN_PIN")
     private long registrarOrMinisterPIN;
 
-    //colum name - to be renamed to SERIAL_NUMBER
+    //TODO: colum name - to be renamed to SERIAL_NUMBER
+    //TODO: convert to integer
     @Column(length = 10, name = "REG_SERIAL", nullable = true)
     private String serialNumber;
 

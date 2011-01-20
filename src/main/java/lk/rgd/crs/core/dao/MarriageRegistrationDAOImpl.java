@@ -13,10 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
-import java.util.Date;
-import java.util.List;
-import java.util.EnumSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author amith jayasekara
@@ -92,7 +89,7 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
     public List<MarriageRegister> getNoticeByMRDivisionAndSerialNo(MRDivision mrDivision,
         long serialNo, boolean active) {
         Query q = em.createNamedQuery("get.notice.by.mrDivision.and.serial");
-        q.setParameter("mrDivision", mrDivision);
+        q.setParameter("mrDivision", mrDivision);      
         q.setParameter("serialNo", serialNo);
         q.setParameter("active", active);
         return q.getResultList();
@@ -321,6 +318,18 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
     }
 
     /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<MarriageRegister> getMarriageRegisterBySerialNumber(long serialNumber,
+        EnumSet<MarriageRegister.State>  stateList) {
+        Query q = em.createNamedQuery("findMarriageBySerialNumber");
+        q.setParameter("serialNumber", Long.toString(serialNumber));
+        q.setParameter("stateList", stateList);
+        return q.getResultList();
+    }
+
+        /**
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
