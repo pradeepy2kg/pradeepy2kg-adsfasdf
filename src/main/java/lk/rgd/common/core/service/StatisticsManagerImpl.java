@@ -46,8 +46,6 @@ public class StatisticsManagerImpl implements StatisticsManager {
         this.birthDeclarationDAO = birthDeclarationDAO;
         this.deathRegisterDAO = deathRegisterDAO;
         this.marriageRegistrationDAO = marriageRegistrationDAO;
-        /*this.dsDivisionDAO = dsDivisionDAO;
-        this.districtDAO = districtDAO;*/
     }
 
     /**
@@ -66,21 +64,13 @@ public class StatisticsManagerImpl implements StatisticsManager {
     public void triggerScheduledStatJobs() {
         logger.info("Start executing Statistics related scheduled tasks..");
 
-        /* start of the day */                         // todo remove dates
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, -1);
-        Date startTime = cal.getTime();
-
-        /* now */
-        Date endTime = new Date();
-
         populateAllUserLists();
 
-        calculateDEOStatistics(startTime, endTime);
-        calculateADRStatistics(startTime, endTime);
-        calculateDRStatistics(startTime, endTime);
-        calculateARGStatistics(startTime, endTime);
-        calculateRGStatistics(startTime, endTime);
+        calculateDEOStatistics();
+        calculateADRStatistics();
+        calculateDRStatistics();
+        calculateARGStatistics();
+        calculateRGStatistics();
     }
 
     private void populateAllUserLists() {
@@ -91,32 +81,40 @@ public class StatisticsManagerImpl implements StatisticsManager {
         rgUserList = userDAO.getUsersByRole(Role.ROLE_RG);
     }
 
-    private Statistics calculateDEOStatistics(Date startTime, Date endTime) {
-        Statistics statistics = new Statistics();
-
+    private void calculateDEOStatistics() {
+        Statistics statistics;
         if (deoUserList != null) {
             /* get one DEO at a time */
             for (User deoUser : deoUserList) {
 
                 /* statistics object for current DEO */
-                statistics = populateStatistics(deoUser/*, startTime, endTime*/, null);
+                statistics = populateStatistics(deoUser, null);
+
+                /* this can't be null. but ... */
+                if(statistics == null) {
+                    statistics = new Statistics();
+                }
 
                 /* save record */
                 statisticsDAO.addStatistics(statistics);
             }
         }
-        return statistics;
     }
 
-    private void calculateADRStatistics(Date startTime, Date endTime) {
-        Statistics statistics = new Statistics();
+    private void calculateADRStatistics() {
+        Statistics statistics;
 
-        if (adrUserList != null)
-            /* get one ADR at a time */ {
+        if (adrUserList != null) {
+            /* get one ADR at a time */
             for (User adrUser : adrUserList) {
 
                 /* statistics object current ADR */
-                statistics = populateStatistics(adrUser/*, startTime, endTime*/, null);
+                statistics = populateStatistics(adrUser, null);
+
+                /* this can't be null. but ... */
+                if(statistics == null) {
+                    statistics = new Statistics();
+                }
 
                 /* get assigned dsDivision list for ADR */
                 Set<DSDivision> dsDivisionList = adrUser.getAssignedBDDSDivisions();
@@ -127,38 +125,12 @@ public class StatisticsManagerImpl implements StatisticsManager {
                     if (deoUserList != null)
                         /* get one DEO at a time */ {
                         for (User deoForAdr : deoUserList) {
+                            
                             if (deoForAdr.getAssignedBDDSDivisions().contains(dsDivision)) {
 
                                 /* get statistics of DEO */
-                                Statistics statisticsOfDeo = statisticsDAO.getByUser(deoForAdr.getUserId());
-
-                                if (statisticsOfDeo != null) {
-                                    /* add DEO Birth statistics to ADR statistics */
-                                    {
-                                        statistics.setBirthsApprovedItems(statistics.getBirthsApprovedItems() +
-                                            statisticsOfDeo.getBirthsApprovedItems());
-                                    }
-                                    statistics.setBirthsRejectedItems(statistics.getBirthsRejectedItems() +
-                                        statisticsOfDeo.getBirthsRejectedItems());
-                                    statistics.setBirthsTotalPendingItems(statistics.getBirthsTotalPendingItems() +
-                                        statisticsOfDeo.getBirthsTotalPendingItems());
-
-                                    /* add DEO Death statistics to ADR statistics */
-                                    statistics.setDeathsApprovedItems(statistics.getDeathsApprovedItems() +
-                                        statisticsOfDeo.getBirthsApprovedItems());
-                                    statistics.setDeathsRejectedItems(statistics.getDeathsRejectedItems() +
-                                        statisticsOfDeo.getDeathsRejectedItems());
-                                    statistics.setDeathsTotalPendingItems(statistics.getDeathsTotalPendingItems() +
-                                        statisticsOfDeo.getDeathsTotalPendingItems());
-
-                                    /* add DEO Marriage statistics to ADR statistics */
-                                    statistics.setMrgApprovedItems(statistics.getMrgApprovedItems() +
-                                        statisticsOfDeo.getMrgApprovedItems());
-                                    statistics.setMrgRejectedItems(statistics.getMrgRejectedItems() +
-                                        statisticsOfDeo.getMrgRejectedItems());
-                                    statistics.setMrgTotalPendingItems(statistics.getMrgTotalPendingItems() +
-                                        statisticsOfDeo.getMrgTotalPendingItems());
-                                }
+                                statistics = populateStatistics(deoForAdr, statistics);
+                                
                             }
                         }
                     }
@@ -170,8 +142,8 @@ public class StatisticsManagerImpl implements StatisticsManager {
         }
     }
 
-    private void calculateDRStatistics(Date startTime, Date endTime) {
-        Statistics statistics = new Statistics();
+    private void calculateDRStatistics() {
+        Statistics statistics;
 
         if (drUserList != null)
             /* get a DR at a time */ {
@@ -179,6 +151,11 @@ public class StatisticsManagerImpl implements StatisticsManager {
 
                 /* statistics object current DR */
                 statistics = populateStatistics(drUser/*, startTime, endTime*/, null);
+
+                /* this can't be null. but ... */
+                if(statistics == null) {
+                    statistics = new Statistics();
+                }
 
                 /* get assigned dsDivision list for DR */
                 Set<DSDivision> dsDivisionList = drUser.getAssignedBDDSDivisions();
@@ -188,35 +165,12 @@ public class StatisticsManagerImpl implements StatisticsManager {
 
                     if (deoUserList != null)
                         /* get one DEO at a time */ {
-                        for (User deoForDr : deoUserList) {     // todo: may be this is not the best
+                        for (User deoForDr : deoUserList) {
+                            
                             if (deoForDr.getAssignedBDDSDivisions().contains(dsDivision)) {
 
                                 /* get statistics of DEO */
-                                Statistics statisticsOfAdr = statisticsDAO.getByUser(deoForDr.getUserId());
-
-                                /* add DEO Birth statistics to DR statistics */
-                                statistics.setBirthsApprovedItems(statistics.getBirthsApprovedItems() +
-                                    statisticsOfAdr.getBirthsApprovedItems());
-                                statistics.setBirthsRejectedItems(statistics.getBirthsRejectedItems() +
-                                    statisticsOfAdr.getBirthsRejectedItems());
-                                statistics.setBirthsTotalPendingItems(statistics.getBirthsTotalPendingItems() +
-                                    statisticsOfAdr.getBirthsTotalPendingItems());
-
-                                /* add DEO Death statistics to DR statistics */
-                                statistics.setDeathsApprovedItems(statistics.getDeathsApprovedItems() +
-                                    statisticsOfAdr.getBirthsApprovedItems());
-                                statistics.setDeathsRejectedItems(statistics.getDeathsRejectedItems() +
-                                    statisticsOfAdr.getDeathsRejectedItems());
-                                statistics.setDeathsTotalPendingItems(statistics.getDeathsTotalPendingItems() +
-                                    statisticsOfAdr.getDeathsTotalPendingItems());
-
-                                /* add DEO Marriage statistics to DR statistics */
-                                statistics.setMrgApprovedItems(statistics.getMrgApprovedItems() +
-                                    statisticsOfAdr.getMrgApprovedItems());
-                                statistics.setMrgRejectedItems(statistics.getMrgRejectedItems() +
-                                    statisticsOfAdr.getMrgRejectedItems());
-                                statistics.setMrgTotalPendingItems(statistics.getMrgTotalPendingItems() +
-                                    statisticsOfAdr.getMrgTotalPendingItems());
+                                statistics = populateStatistics(deoForDr, statistics);
                             }
                         }
                     }
@@ -227,8 +181,8 @@ public class StatisticsManagerImpl implements StatisticsManager {
         }
     }
 
-    private void calculateARGStatistics(Date startTime, Date endTime) {
-        Statistics statistics = new Statistics();
+    private void calculateARGStatistics() {
+        Statistics statistics;
 
         if (argUserList != null)
             /* get a ARG at a time */ {
@@ -236,6 +190,11 @@ public class StatisticsManagerImpl implements StatisticsManager {
 
                 /* statistics object current ARG */
                 statistics = populateStatistics(argUser/*, startTime, endTime*/, null);
+
+                /* this can't be null. but ... */
+                if(statistics == null) {
+                    statistics = new Statistics();
+                }
 
                 /* get assigned dsDivision list for ARG */
                 Set<DSDivision> dsDivisionList = argUser.getAssignedBDDSDivisions();
@@ -346,8 +305,8 @@ public class StatisticsManagerImpl implements StatisticsManager {
         }
     }
 
-    private Statistics calculateRGStatistics(Date startTime, Date endTime) {
-        Statistics statistics = new Statistics();
+    private void calculateRGStatistics() {
+        Statistics statistics;
 
         if (rgUserList != null)
             /* get a RG at a time */ {
@@ -355,6 +314,11 @@ public class StatisticsManagerImpl implements StatisticsManager {
 
                 /* statistics object current RG */
                 statistics = populateStatistics(rgUser/*, startTime, endTime*/, null);
+
+                /* this can't be null. but ... */
+                if(statistics == null) {
+                    statistics = new Statistics();
+                }
 
                 Set<DSDivision> dsDivisionList = rgUser.getAssignedBDDSDivisions();
                 Set<District> districtList = rgUser.getAssignedBDDistricts();
@@ -493,7 +457,6 @@ public class StatisticsManagerImpl implements StatisticsManager {
                 statisticsDAO.addStatistics(statistics);
             }
         }
-        return statistics;
     }
 
     /**
@@ -519,6 +482,8 @@ public class StatisticsManagerImpl implements StatisticsManager {
         if (stat == null) {
             statistics = new Statistics();
         } else {
+
+            /* this assignment reduces complexity */
             statistics = stat;
         }
         statistics.setUser(user);
@@ -595,7 +560,6 @@ public class StatisticsManagerImpl implements StatisticsManager {
                         }
                     }
                 }
-
             }
             if (user.getRole().getRoleId().equals(Role.ROLE_ARG)) {
                 statistics = populateStatistics(user, null);
