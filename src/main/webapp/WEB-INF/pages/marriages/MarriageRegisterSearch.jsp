@@ -42,7 +42,10 @@
                 <a href="#fragment-1"><span><s:label value="%{getText('search.by.MRDivision.label')}"/></span></a>
             </li>
             <li>
-                <a href="#fragment-2"><span> <s:label value="%{getText('search.by.pin.label')}"/></span></a>
+                <a href="#fragment-2"><span> <s:label value="%{getText('label.search.by.pin')}"/></span></a>
+            </li>
+            <li>
+                <a href="#fragment-3"><span> <s:label value="%{getText('label.search.by.serial')}"/></span></a>
             </li>
         </ul>
 
@@ -70,23 +73,6 @@
                     <td>
                         <s:textfield id="searchEndDatePicker" name="searchEndDate" cssStyle="width:150px"
                                      maxLength="10" onmouseover="datepicker('searchEndDatePicker')"/>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        <s:label value="%{getText('serial.label')}"/>
-                    </td>
-                    <td>
-                        <s:textfield id="noticeSerialNo" name="noticeSerialNo" cssStyle="width:232px;" maxLength="10"/>
-                    </td>
-                    <td></td>
-                    <td>
-                        <s:label value="%{getText('label.state')}"/>
-                    </td>
-                    <td>
-                        <s:select id="state" name="state" list="stateList" headerKey="-1"
-                                  cssStyle="width:98.5%; width:240px;"/>
                     </td>
                 </tr>
                 <tr>
@@ -119,12 +105,20 @@
                                   value="mrDivisionId"
                                   cssStyle="width:98.5%; width:240px;"/>
                     </td>
-                    <td></td>
+                    <td colspan="3">
+                        &nbsp;
+                    </td>
+                </tr>
+                <tr>
                     <td>
-
+                        <s:label value="%{getText('label.state')}"/>
                     </td>
                     <td>
-
+                        <s:select id="state" name="state" list="stateList" headerKey="-1"
+                                  cssStyle="width:98.5%; width:240px;"/>
+                    </td>
+                    <td colspan="3">
+                        &nbsp;
                     </td>
                 </tr>
                 </tbody>
@@ -141,9 +135,28 @@
                     <td>
                         <s:label value="%{getText('pin.label')}"/>
                     </td>
-                    <td></td>
+                    <td>&nbsp;</td>
                     <td>
                         <s:textfield name="pinOrNic" id="pinOrNic" maxLength="10"/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="fragment-3">
+            <table>
+                <caption/>
+                <col width="280px"/>
+                <col width="10px"/>
+                <col/>
+                <tbody>
+                <tr>
+                    <td>
+                        <s:label value="%{getText('serial.label')}"/>
+                    </td>
+                    <td>&nbsp;</td>
+                    <td>
+                        <s:textfield id="noticeSerialNo" name="noticeSerialNo" cssStyle="width:232px;" maxLength="10"/>
                     </td>
                 </tr>
                 </tbody>
@@ -182,7 +195,7 @@
                             <s:property value="male.identificationNumberMale"/>
                         </td>
                         <td>
-                            <%-- Register licenced marriage  --%>
+                                <%-- Register licenced marriage  --%>
                             <s:if test="(state.ordinal()==7)">  <%-- Licence printed --%>
                                 <s:url id="registerSelected" action="eprMarriageRegistrationInit.do">
                                     <s:param name="idUKey" value="idUKey"/>
@@ -224,23 +237,23 @@
 
                                     <%-- Approve  --%>
                                     <s:if test="(!#session.user_bean.role.roleId.equals('DEO'))">
-                                    <s:url id="approveSelected" action="eprApproveMarriageRegistration.do">
-                                        <s:param name="idUKey" value="idUKey"/>
-                                    </s:url>
-                                    <s:a href="%{approveSelected}" title="%{getText('approveToolTip.label')}">
-                                        <img src="<s:url value='/images/approve.gif'/>" width="25" height="25"
-                                             border="none"/>
-                                    </s:a>
+                                        <s:url id="approveSelected" action="eprApproveMarriageRegistration.do">
+                                            <s:param name="idUKey" value="idUKey"/>
+                                        </s:url>
+                                        <s:a href="%{approveSelected}" title="%{getText('approveToolTip.label')}">
+                                            <img src="<s:url value='/images/approve.gif'/>" width="25" height="25"
+                                                 border="none"/>
+                                        </s:a>
 
-                                    <%-- Reject --%>
-                                    <s:url id="rejectSelected" action="eprMarriageRegisterRejectInit.do">
-                                        <s:param name="idUKey" value="idUKey"/>
-                                        <s:param name="mode">reject</s:param>
-                                    </s:url>
-                                    <s:a href="%{rejectSelected}" title="%{getText('rejectToolTip.label')}">
-                                        <img src="<s:url value='/images/reject.gif'/>" width="25" height="25"
-                                             border="none"/>
-                                    </s:a>
+                                        <%-- Reject --%>
+                                        <s:url id="rejectSelected" action="eprMarriageRegisterRejectInit.do">
+                                            <s:param name="idUKey" value="idUKey"/>
+                                            <s:param name="mode">reject</s:param>
+                                        </s:url>
+                                        <s:a href="%{rejectSelected}" title="%{getText('rejectToolTip.label')}">
+                                            <img src="<s:url value='/images/reject.gif'/>" width="25" height="25"
+                                                 border="none"/>
+                                        </s:a>
                                     </s:if>
                                 </s:elseif>
 
