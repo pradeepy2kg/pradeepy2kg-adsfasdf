@@ -35,134 +35,144 @@
 </script>
 <s:actionerror cssStyle="color:red;font-size:10pt"/>
 <s:actionmessage cssStyle="color:blue;font-size:10pt"/>
+<div id="tabs" style="font-size:10pt;">
+<ul>
+    <li>
+        <a href="#fragment-1"><span><s:label value="%{getText('search.by.MRDivision.label')}"/></span></a>
+    </li>
+    <li>
+        <a href="#fragment-2"><span> <s:label value="%{getText('label.search.by.pin')}"/></span></a>
+    </li>
+    <li>
+        <a href="#fragment-3"><span> <s:label value="%{getText('label.search.by.serial')}"/></span></a>
+    </li>
+</ul>
 <s:form action="eprMarriageRegisterSearch.do" method="POST" onsubmit="javascript:return validate()">
-    <div id="tabs" style="font-size:10pt;">
-        <ul>
-            <li>
-                <a href="#fragment-1"><span><s:label value="%{getText('search.by.MRDivision.label')}"/></span></a>
-            </li>
-            <li>
-                <a href="#fragment-2"><span> <s:label value="%{getText('label.search.by.pin')}"/></span></a>
-            </li>
-            <li>
-                <a href="#fragment-3"><span> <s:label value="%{getText('label.search.by.serial')}"/></span></a>
-            </li>
-        </ul>
-
-        <div id="fragment-1">
-            <table>
-                <caption/>
-                <col width="250px"/>
-                <col width="250px"/>
-                <col width="24px"/>
-                <col width="250px"/>
-                <col width="250px"/>
-                <tbody>
-                <tr>
-                    <td>
-                        <s:label value="%{getText('date.from.label')}" cssStyle=" margin-right:5px;"/>
-                    </td>
-                    <td>
-                        <s:textfield id="searchStartDatePicker" name="searchStartDate" cssStyle="width:150px"
-                                     maxLength="10" onmouseover="datepicker('searchStartDatePicker')"/>
-                    </td>
-                    <td></td>
-                    <td>
-                        <s:label value="%{getText('date.to.label')}" cssStyle=" margin-right:5px;"/>
-                    </td>
-                    <td>
-                        <s:textfield id="searchEndDatePicker" name="searchEndDate" cssStyle="width:150px"
-                                     maxLength="10" onmouseover="datepicker('searchEndDatePicker')"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <s:label value="%{getText('district.label')}"/>
-                    </td>
-                    <td>
-                        <s:select id="districtId" name="districtId" list="districtList"
-                                  value="districtId"
-                                  cssStyle="width:98.5%; width:240px;"
-                                  onchange="populateDSDivisions('districtId','dsDivisionId','mrDivisionId', 'Marriage', true)"/>
-                    </td>
-                    <td></td>
-                    <td>
-                        <s:label value="%{getText('select_DS_division.label')}"/>
-                    </td>
-                    <td>
-                        <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList"
-                                  value="dsDivisionId"
-                                  cssStyle="width:98.5%; width:240px;"
-                                  onchange="populateDivisions('dsDivisionId', 'mrDivisionId', 'Marriage', true)"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <s:label value="%{getText('select_BD_division.label')}"/>
-                    </td>
-                    <td>
-                        <s:select id="mrDivisionId" name="mrDivisionId" list="mrDivisionList"
-                                  value="mrDivisionId"
-                                  cssStyle="width:98.5%; width:240px;"/>
-                    </td>
-                    <td colspan="3">
-                        &nbsp;
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <s:label value="%{getText('label.state')}"/>
-                    </td>
-                    <td>
-                        <s:select id="state" name="state" list="stateList" headerKey="-1"
-                                  cssStyle="width:98.5%; width:240px;"/>
-                    </td>
-                    <td colspan="3">
-                        &nbsp;
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <div id="fragment-2">
-            <table>
-                <caption/>
-                <col width="280px"/>
-                <col width="10px"/>
-                <col/>
-                <tbody>
-                <tr>
-                    <td>
-                        <s:label value="%{getText('pin.label')}"/>
-                    </td>
-                    <td>&nbsp;</td>
-                    <td>
-                        <s:textfield name="pinOrNic" id="pinOrNic" maxLength="10"/>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <div id="fragment-3">
-            <table>
-                <caption/>
-                <col width="280px"/>
-                <col width="10px"/>
-                <col/>
-                <tbody>
-                <tr>
-                    <td>
-                        <s:label value="%{getText('serial.label')}"/>
-                    </td>
-                    <td>&nbsp;</td>
-                    <td>
-                        <s:textfield id="noticeSerialNo" name="noticeSerialNo" cssStyle="width:232px;" maxLength="10"/>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+    <div id="fragment-1">
+        <table>
+            <caption/>
+            <col width="250px"/>
+            <col width="250px"/>
+            <col width="24px"/>
+            <col width="250px"/>
+            <col width="250px"/>
+            <tbody>
+            <tr>
+                <td>
+                    <s:label value="%{getText('date.from.label')}" cssStyle=" margin-right:5px;"/>
+                </td>
+                <td>
+                    <s:textfield id="searchStartDatePicker" name="searchStartDate" cssStyle="width:150px"
+                                 maxLength="10" onmouseover="datepicker('searchStartDatePicker')"/>
+                </td>
+                <td></td>
+                <td>
+                    <s:label value="%{getText('date.to.label')}" cssStyle=" margin-right:5px;"/>
+                </td>
+                <td>
+                    <s:textfield id="searchEndDatePicker" name="searchEndDate" cssStyle="width:150px"
+                                 maxLength="10" onmouseover="datepicker('searchEndDatePicker')"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <s:label value="%{getText('district.label')}"/>
+                </td>
+                <td>
+                    <s:select id="districtId" name="districtId" list="districtList"
+                              value="districtId"
+                              cssStyle="width:98.5%; width:240px;"
+                              onchange="populateDSDivisions('districtId','dsDivisionId','mrDivisionId', 'Marriage', true)"/>
+                </td>
+                <td></td>
+                <td>
+                    <s:label value="%{getText('select_DS_division.label')}"/>
+                </td>
+                <td>
+                    <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList"
+                              value="dsDivisionId"
+                              cssStyle="width:98.5%; width:240px;"
+                              onchange="populateDivisions('dsDivisionId', 'mrDivisionId', 'Marriage', true)"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <s:label value="%{getText('select_BD_division.label')}"/>
+                </td>
+                <td>
+                    <s:select id="mrDivisionId" name="mrDivisionId" list="mrDivisionList"
+                              value="mrDivisionId"
+                              cssStyle="width:98.5%; width:240px;"/>
+                </td>
+                <td colspan="3">
+                    &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <s:label value="%{getText('label.state')}"/>
+                </td>
+                <td>
+                    <s:select id="state" name="state" list="stateList" headerKey="-1"
+                              cssStyle="width:98.5%; width:240px;"/>
+                </td>
+                <td colspan="3">
+                    &nbsp;
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
+    <div class="form-submit">
+        <s:submit value="%{getText('bdfSearch.button')}"/>
+    </div>
+</s:form>
+<s:form action="eprMarriageRegisterSearch.do" method="POST" onsubmit="javascript:return validate()">
+    <div id="fragment-2">
+        <table>
+            <caption/>
+            <col width="280px"/>
+            <col width="10px"/>
+            <col/>
+            <tbody>
+            <tr>
+                <td>
+                    <s:label value="%{getText('pin.label')}"/>
+                </td>
+                <td>&nbsp;</td>
+                <td>
+                    <s:textfield name="pinOrNic" id="pinOrNic" maxLength="10"/>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="form-submit">
+        <s:submit value="%{getText('bdfSearch.button')}"/>
+    </div>
+</s:form>
+<s:form action="eprMarriageRegisterSearch.do" method="POST" onsubmit="javascript:return validate()">
+    <div id="fragment-3">
+        <table>
+            <caption/>
+            <col width="280px"/>
+            <col width="10px"/>
+            <col/>
+            <tbody>
+            <tr>
+                <td>
+                    <s:label value="%{getText('serial.label')}"/>
+                </td>
+                <td>&nbsp;</td>
+                <td>
+                    <s:textfield id="noticeSerialNo" name="noticeSerialNo" cssStyle="width:232px;" maxLength="10"/>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    </div>
+
     <div class="form-submit">
         <s:submit value="%{getText('bdfSearch.button')}"/>
     </div>
@@ -280,7 +290,6 @@
                                     </s:a>
                                 </s:if>
                             </s:else>
-
                         </td>
                     </tr>
                 </s:iterator>
