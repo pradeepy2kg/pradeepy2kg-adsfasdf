@@ -232,28 +232,40 @@
     </s:url>
 
     <td align="center">
-        <s:a href="%{editSelected}" title="%{getText('editTooltip.label')}">
-            <img id="editImage" src="<s:url value='/images/edit.png'/>" width="25" height="25"
-                 border="none"/></s:a>
+        <s:if test="status.ordinal() == 0">
+            <s:a href="%{editSelected}" title="%{getText('editTooltip.label')}">
+                <img id="editImage" src="<s:url value='/images/edit.png'/>" width="25" height="25"
+                     border="none"/></s:a>
+        </s:if>
     </td>
-    <td align="center"><s:a href="%{approveSelected}"
-                            title="%{getText('approveTooltip.label')}">
-        <img src="<s:url value='/images/approve.gif'/>" width="25" height="25"
-             border="none" id="approveImage"/></s:a>
+    <td align="center">
+        <s:if test="(!(session.user_bean.role.roleId.equals('DEO'))) && status.ordinal() == 0">
+            <s:a href="%{approveSelected}"
+                 title="%{getText('approveTooltip.label')}">
+                <img src="<s:url value='/images/approve.gif'/>" width="25" height="25"
+                     border="none" id="approveImage"/></s:a>
+        </s:if>
     </td>
-    <td align="center"><s:a href="%{rejectSelected}"
-                            title="%{getText('rejectTooltip.label')}"><img id="rejectImage"
-                                                                           src="<s:url value='/images/reject.gif'/>"
-                                                                           width="25"
-                                                                           height="25"
-                                                                           border="none"/></s:a>
+    <td align="center">
+            <%----%>
+        <s:if test="(!(session.user_bean.role.roleId.equals('DEO'))) && status.ordinal() == 0">
+            <s:a href="%{rejectSelected}"
+                 title="%{getText('rejectTooltip.label')}"><img id="rejectImage"
+                                                                src="<s:url value='/images/reject.gif'/>"
+                                                                width="25"
+                                                                height="25"
+                                                                border="none"/></s:a>
+        </s:if>
     </td>
-    <td align="center"><s:a href="%{deleteSelected}"
-                            title="%{getText('deleteToolTip.label')}"><img id='deleteImage'
-                                                                           src="<s:url value='/images/delete.gif'/>"
-                                                                           width="25"
-                                                                           height="25"
-                                                                           border="none"/></s:a>
+    <td align="center">
+        <s:if test="status.ordinal() == 0">
+            <s:a href="%{deleteSelected}"
+                 title="%{getText('deleteToolTip.label')}"><img id='deleteImage'
+                                                                src="<s:url value='/images/delete.gif'/>"
+                                                                width="25"
+                                                                height="25"
+                                                                border="none"/></s:a>
+        </s:if>
     </td>
     <td align="center"><s:a href="%{viewSelected}"
                             title="%{getText('viewDeathRegistrationTooltip.label')}">
@@ -417,7 +429,7 @@
         <s:param name="fromDate" value="#request.fromDate"/>
         <s:param name="endDate" value="#request.endDate"/>
     </s:url>
-    <s:if test="pageNo!=1 || deathApprovalAndPrintList.size>=50">
+    <s:if test="pageNo!=1">
         <s:a href="%{previousUrl}">
             <img src="<s:url value='/images/previous.gif'/>" border="none"/>
         </s:a>

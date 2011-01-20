@@ -19,12 +19,12 @@
 </script>
 <div id="death-registration-deatails-outer">
     <div id="death-registration-details-header">
-        <s:actionmessage/>
+        <s:actionmessage cssStyle="color:blue; font-size:10pt"/>
         <s:actionerror cssStyle="color:red;font-size:10pt"/>
     </div>
 
     <div id="death-registration-details-body">
-        <s:if test="#request.warnings.size>0">
+        <s:if test="#request.warnings.size>0 && !ignoreWarning">
             <fieldset>
             <legend><b><s:label value="%{getText('death_approval_warning.label')}"/></b></legend>
             <table class="birth-declaration-approval-warning-table">

@@ -116,6 +116,30 @@ public class DeathDeclarationValidator {
             w.setSeverity(UserWarning.Severity.WARN);
             warnings.add(w);
         }
+        //check if the father nic or mother nic or death person nic is same
+        //check mother and father pin nic same
+        String fatherPINorNIC = deathRegister.getDeathPerson().getDeathPersonFatherPINorNIC();
+        String motherPINorNIC = deathRegister.getDeathPerson().getDeathPersonMotherPINorNIC();
+        String deathPersonPINorNIC = deathRegister.getDeathPerson().getDeathPersonPINorNIC();
+        String notifyAuthority = deathRegister.getNotifyingAuthority().getNotifyingAuthorityPIN();
+        if (deathPersonPINorNIC != null) {
+            if (deathPersonPINorNIC.equals(fatherPINorNIC)) {
+                warnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.deathPerson.nic.equals.father.nic"),
+                    deathPersonPINorNIC, fatherPINorNIC), UserWarning.Severity.WARN));
+            }
+            if (deathPersonPINorNIC.equals(motherPINorNIC)) {
+                warnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.deathPerson.nic.equals.mother.nic"),
+                    deathPersonPINorNIC, motherPINorNIC), UserWarning.Severity.WARN));
+            }
+            if (deathPersonPINorNIC.equals(notifyAuthority)) {
+                warnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.deathPerson.nic.equals.notify.nic"),
+                    deathPersonPINorNIC, notifyAuthority), UserWarning.Severity.WARN));
+            }
+        }
+        if (fatherPINorNIC != null && fatherPINorNIC.equals(motherPINorNIC)) {
+            warnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.father.nic.equals.mother.nic"),fatherPINorNIC)));
+        }
+
         //check PRS record of this person                      
         if (deathRegister.getDeathPerson().getDeathPersonPINorNIC() != null) {
             Person deadPerson = populationRegistry.
