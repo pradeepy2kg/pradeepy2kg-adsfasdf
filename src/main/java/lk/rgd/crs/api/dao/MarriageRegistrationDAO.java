@@ -225,6 +225,16 @@ public interface MarriageRegistrationDAO {
     public List<MarriageRegister> getNoticeByPINorNIC(String id, boolean active);
 
     /**
+     * Find the marriage register by male or female identification number or
+     * find a list of marriage register by registrar identification number
+     *
+     * @param id  the identification number (male or female or registrar PIN or NIC)
+     * @param active status of the marriage register active or inactive
+     * @return
+     */
+    public List<MarriageRegister> getMarriageRegisterByIdNumber(String id, boolean active);
+
+    /**
      * Returns a limited list of MarriageRegistrations for given status and identification number (it can be male or
      * female NIC or unique PIN)
      *
