@@ -42,13 +42,14 @@ import java.util.Date;
         "OR (mr.female.identificationNumberFemale IS NOT NULL AND mr.female.identificationNumberFemale = :id)) " +
         "AND ((mr.state <= 3) OR (mr.state =7))  AND mr.lifeCycleInfo.activeRecord = :active ORDER BY mr.idUKey DESC"),
 
+    //TODO: to be removed
     @NamedQuery(name = "findMarriageByIdNumber", query = "SELECT mr FROM MarriageRegister mr " +
         "WHERE ((mr.male.identificationNumberMale IS NOT NULL AND mr.male.identificationNumberMale = :id) " +
         "OR (mr.female.identificationNumberFemale IS NOT NULL AND mr.female.identificationNumberFemale = :id) " +
         "OR (mr.registrarOrMinisterPIN IS NOT NULL AND mr.registrarOrMinisterPIN = :id)) " +
         "AND mr.state IN (:stateList) " +
         "AND mr.mrDivision.dsDivision IS NOT NULL AND mr.mrDivision.dsDivision IN (:dsDivisionList) " +
-        "AND mr.lifeCycleInfo.activeRecord = :active ORDER BY mr.idUKey DESC"),
+        "AND mr.lifeCycleInfo.activeRecord IS TRUE ORDER BY mr.idUKey DESC"),
 
     @NamedQuery(name = "get.notice.by.mrDivision.and.serial", query = "SELECT mr FROM MarriageRegister mr " +
         "WHERE ((mr.mrDivisionOfMaleNotice IS NOT NULL AND mr.mrDivisionOfMaleNotice = :mrDivision " +
@@ -136,6 +137,7 @@ import java.util.Date;
     @NamedQuery(name = "findMarriageBySerialNumber", query = "SELECT mr FROM MarriageRegister mr " +
         "WHERE mr.lifeCycleInfo.activeRecord IS TRUE " +
         "AND mr.serialNumber = :serialNumber " +
+        "AND mr.mrDivision.dsDivision IS NOT NULL AND mr.mrDivision.dsDivision IN (:dsDivisionList) " +
         "AND mr.state IN (:stateList)"),
 
     @NamedQuery(name = "findMarriageRegisterByDistricts", query = "SELECT mr FROM MarriageRegister mr " +

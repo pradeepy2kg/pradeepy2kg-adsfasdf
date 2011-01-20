@@ -322,10 +322,12 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<MarriageRegister> getMarriageRegisterBySerialNumber(long serialNumber,
-        EnumSet<MarriageRegister.State> stateList) {
+        EnumSet<MarriageRegister.State> stateList, Set<DSDivision> dsDivisionList) {
+        //TODO: use createQuery for this 
         Query q = em.createNamedQuery("findMarriageBySerialNumber");
         q.setParameter("serialNumber", Long.toString(serialNumber));
         q.setParameter("stateList", stateList);
+        q.setParameter("dsDivisionList", dsDivisionList);
         return q.getResultList();
     }
 
@@ -333,13 +335,25 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<MarriageRegister> getMarriageRegisterByIdNumber(String id, boolean active,
+    public List<MarriageRegister> getMarriageRegisterByIdNumber(String id,
         EnumSet<MarriageRegister.State> stateList, Set<DSDivision> dsDivisionList) {
-        Query q = em.createNamedQuery("findMarriageByIdNumber");
+
+        StringBuilder query = new StringBuilder("").append("SELECT mr FROM MarriageRegister mr " +
+            "WHERE ((mr.male.identificationNumberMale IS NOT NULL AND mr.male.identificationNumberMale = :id) " +
+            "OR (mr.female.identificationNumberFemale IS NOT NULL AND mr.female.identificationNumberFemale = :id) " +
+            "OR (mr.registrarOrMinisterPIN IS NOT NULL AND mr.registrarOrMinisterPIN = :id)) " +
+            "AND mr.state IN (:stateList) ");
+        if (dsDivisionList != null) {
+            query.append("AND mr.mrDivision.dsDivision IS NOT NULL AND mr.mrDivision.dsDivision IN (:dsDivisionList) ");
+        }
+        query.append("AND mr.lifeCycleInfo.activeRecord IS TRUE ORDER BY mr.idUKey DESC");
+
+        Query q = em.createQuery(query.toString());
         q.setParameter("id", id);
-        q.setParameter("active", active);
         q.setParameter("stateList", stateList);
-        q.setParameter("dsDivisionList", dsDivisionList);
+        if (dsDivisionList != null) {
+            q.setParameter("dsDivisionList", dsDivisionList);
+        }
         return q.getResultList();
     }
 
