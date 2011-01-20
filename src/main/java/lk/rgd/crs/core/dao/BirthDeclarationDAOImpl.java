@@ -376,4 +376,14 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
         return q.getResultList();
     }
 
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<BirthDeclaration> getActiveBirthRecordByDSDivisionAndSerialNumber(long serialNumber, int dsDivisionId) {
+        Query q = em.createNamedQuery("get.by.serial.and.ds.id");
+        q.setParameter("serial", serialNumber);
+        q.setParameter("dsId", dsDivisionId);
+        return q.getResultList();
+    }
 }

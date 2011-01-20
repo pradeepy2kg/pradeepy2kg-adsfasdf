@@ -94,6 +94,7 @@ $(function() {
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
                 function(data1) {
                     $("textarea#deathPersonNameOfficialLang").val(data1.fullNameInOfficialLanguage);
+                    $("textarea#deathPersonNameInEnglish").val(data1.fullNameInEnglishLanguage)
                     $("input#deathPersonDOB").val(data1.dateOfBirth);
                     $("select#deathPersonGender").val(data1.gender);
                     $("select#deathPersonRace").val(data1.race);

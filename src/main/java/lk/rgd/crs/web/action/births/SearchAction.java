@@ -82,26 +82,32 @@ public class SearchAction extends ActionSupport implements SessionAware {
      * @return String
      */
     public String searchBDFBySerialNumber() {
-        logger.debug("inside searchBDFBySerialNumber() : search parameters serialNo {}, birthDistrictId {} and birthDivisionId " +
-            birthDivisionId, serialNo, birthDistrictId + " received");
+        if (logger.isDebugEnabled()) {
+            logger.debug("attempt to search birth record by serial number :" + serialNo + "and birth division :" +
+                birthDivisionId + " and ds division id :" + dsDivisionId);
+        }
         try {
             if (serialNo != null) {
-                bdf = service.getActiveRecordByBDDivisionAndSerialNo(
-                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId), serialNo, user);
-                setStatus(bdf.getRegister().getStatus().toString());
-            } else {
                 if (birthDivisionId != 0) {
-                    searchResultList = service.getByBirthDivision(bdDivisionDAO.getBDDivisionByPK(birthDivisionId), user);
+                    //search by birth division and the serial number
+                    bdf = service.getActiveRecordByBDDivisionAndSerialNo(
+                        bdDivisionDAO.getBDDivisionByPK(birthDivisionId), serialNo, user);
                 } else {
-                    searchResultList = service.getByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId), user);
+                    //search by ds division
+                    searchResultList = service.getActiveRecordByDSDivisionAndSerialNumber(serialNo, dsDivisionId, user);
+                }
+                if (bdf == null & (searchResultList != null && searchResultList.size() == 0)) {
+                    if (logger.isDebugEnabled()) {
+                        logger.debug("no result found for birth registration serial number :" + serialNo +
+                            " and birth division id :" + birthDistrictId + " and ds division id : " + dsDivisionId);
+                    }
+                    addActionError(getText("SearchBDF.error.NoResult.for.serial", new String[]{Long.toString(serialNo)}));
                 }
             }
+
         } catch (CRSRuntimeException e) {
             logger.error("inside searchBDFBySerialNumber() ", e);
             addActionError(getText("SearchBDF.error." + e.getErrorCode()));
-        } catch (Exception e) {
-            logger.error("inside searchBDFBySerialNumber() ", e);
-            addActionError(getText("SearchBDF.error.NoResult"));
         }
         populate();
         return SUCCESS;

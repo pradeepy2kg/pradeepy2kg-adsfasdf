@@ -113,7 +113,7 @@ public interface BirthDeclarationDAO {
      * Get the active record by Serial number
      *
      * @param serialNo Serial Number of the Birth Decleration
-     * @param state     Status of the Birth Declaration
+     * @param state    Status of the Birth Declaration
      * @return the BDF marked as active, or null if it doesn't exist
      */
     public BirthDeclaration getActiveRecordBySerialNo(long serialNo, BirthDeclaration.State state);
@@ -320,5 +320,14 @@ public interface BirthDeclarationDAO {
      * @param end   @return list of birth declarations
      */
     public List<BirthDeclaration> getByCreatedUser(User user, Date start, Date end);
+
+    /**
+     * get active birth records by dsDivision and serial number
+     *
+     * @param serialNumber serial number
+     * @param dsDivisionId dsDivision id
+     * @return list of birth records
+     */
+    public List<BirthDeclaration> getActiveBirthRecordByDSDivisionAndSerialNumber(long serialNumber, int dsDivisionId);
 }
 

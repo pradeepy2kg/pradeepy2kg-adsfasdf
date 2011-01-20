@@ -72,6 +72,7 @@ public class JSONPersonLookupService extends HttpServlet {
 
             final String nameInOfficialLanguage = person.getFullNameInOfficialLanguage();
             // For any record in the PRS the name should be available at least one language (e.g. for migrated data)
+            untyped.put("fullNameInEnglishLanguage", person.getFullNameInEnglishLanguage());
             if (nameInOfficialLanguage == null || nameInOfficialLanguage.trim().length() == 0) {
                 untyped.put("fullNameInOfficialLanguage", person.getFullNameInEnglishLanguage());
             } else {
