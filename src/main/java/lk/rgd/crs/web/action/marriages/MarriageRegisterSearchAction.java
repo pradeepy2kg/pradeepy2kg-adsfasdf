@@ -199,8 +199,9 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     }
 
     public String markMarriageExtractAsPrinted() {
-        MarriageRegister register = marriageRegistrationService.getMarriageRegisterByIdUKey(idUKey, user, Permission.PRINT_MARRIAGE_EXTRACT);
-        if (register != null && register.getState() == MarriageRegister.State.EXTRACT_PRINTED) {
+        MarriageRegister register = marriageRegistrationService.getMarriageRegisterByIdUKeyAndState(idUKey, user, 
+            MarriageRegister.State.EXTRACT_PRINTED, Permission.PRINT_MARRIAGE_EXTRACT);
+        if (register != null) {
             addActionMessage(getText("message.marriagerextract.alreadymarkedasprinted"));
             return SUCCESS;
         } else {
@@ -236,7 +237,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         if (noticeSerialNo != null) {
             marriageRegisterSearchList = new ArrayList<MarriageRegister>();
             marriageRegisterSearchList.add(marriageRegistrationService.getMarriageRegisterByIdUKeyAndState
-                (noticeSerialNo, user, MarriageRegister.State.LICENSE_PRINTED));
+                (noticeSerialNo, user, MarriageRegister.State.LICENSE_PRINTED, Permission.SEARCH_MARRIAGE));
 
         } else if (pinOrNic != null) {
             marriageRegisterSearchList = marriageRegistrationService.getMarriageRegisterByIdNumber(pinOrNic, true, user);
