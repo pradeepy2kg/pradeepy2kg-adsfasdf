@@ -18,6 +18,7 @@ public class StateUtil {
     private static final Logger logger = LoggerFactory.getLogger(StateUtil.class);
 
     private static String getTextByState(MarriageRegister.State state, String language) {
+        //TODO: Include the license printed state too
         switch (state) {
             case REG_DATA_ENTRY:
                 return LocaleUtil.getLocalizedString(language, "text.state.new");
@@ -25,7 +26,7 @@ public class StateUtil {
                 return LocaleUtil.getLocalizedString(language, "text.state.approved");
             case REGISTRATION_REJECTED:
                 return LocaleUtil.getLocalizedString(language, "text.state.rejected");
-            case LICENSE_PRINTED:
+            case EXTRACT_PRINTED:
                 return LocaleUtil.getLocalizedString(language, "text.state.printed");
         }
         logger.error("Invalid State : {}", state);
@@ -33,11 +34,11 @@ public class StateUtil {
     }
 
     public static Map<Integer, String> getStateByLanguage(String language) {
-
+        //TODO: Include the license printed state too
         EnumSet<MarriageRegister.State> statList = EnumSet.of(MarriageRegister.State.REG_DATA_ENTRY,
             MarriageRegister.State.REGISTRATION_APPROVED,
             MarriageRegister.State.REGISTRATION_REJECTED,
-            MarriageRegister.State.LICENSE_PRINTED);
+            MarriageRegister.State.EXTRACT_PRINTED);
 
         Map<Integer, String> stateList = new HashMap<Integer, String>();
 

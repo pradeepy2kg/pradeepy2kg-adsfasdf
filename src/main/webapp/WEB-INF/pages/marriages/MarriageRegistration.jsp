@@ -689,7 +689,7 @@
             <s:submit action="eprRegisterNoticedMarriage" value="%{getText('button.marriageregister.register')}"/>
         </s:if>
         <s:elseif test="mode=='reject'">
-            <s:submit action="eprRejectMarriageRegistration" value="%{getText('button.marriageregister.reject')}"/>
+            <s:submit action="eprRejectMarriageRegistration" value="%{getText('button.reject')}"/>
         </s:elseif>
         <s:else>
             <s:submit action="eprUpdateMarriage" value="%{getText('button.marriageregister.update')}"/>
