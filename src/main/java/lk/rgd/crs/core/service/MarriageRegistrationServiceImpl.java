@@ -135,9 +135,12 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     @Transactional(propagation = Propagation.SUPPORTS)
     public List<MarriageRegister> getMarriageRegisterBySerialNumber(long serialNumber, User user, int permission) {
         ValidationUtils.validateUserPermission(permission, user);
-        EnumSet<MarriageRegister.State>  stateList = StateUtil.getMarriageRegisterStateList(null);
-        return marriageRegistrationDAO.getMarriageRegisterBySerialNumber(serialNumber, stateList);
-        //TODO validate access to MR
+        EnumSet<MarriageRegister.State> stateList = StateUtil.getMarriageRegisterStateList(null);
+        Set<DSDivision> dsDivisionList = null;
+        if (!Role.ROLE_RG.equals(user.getRole().getRoleId())) {
+            dsDivisionList = user.getAssignedMRDSDivisions();
+        }
+        return marriageRegistrationDAO.getMarriageRegisterBySerialNumber(serialNumber, stateList, dsDivisionList);
     }
 
     /**
@@ -177,11 +180,14 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<MarriageRegister> getMarriageRegisterByIdNumber(String pinOrNic, boolean active, User user) {
+    public List<MarriageRegister> getMarriageRegisterByPINNumber(String pinOrNic, boolean active, User user) {
         ValidationUtils.validateUserPermission(Permission.SEARCH_MARRIAGE, user);
-        EnumSet<MarriageRegister.State>  stateList = StateUtil.getMarriageRegisterStateList(null);
-        return marriageRegistrationDAO.getMarriageRegisterByIdNumber(pinOrNic, active, stateList);
-        //TODO:validate access to Marriage Division
+        EnumSet<MarriageRegister.State> stateList = StateUtil.getMarriageRegisterStateList(null);
+        Set<DSDivision> dsDivisionList = null;
+        if (!Role.ROLE_RG.equals(user.getRole().getRoleId())) {
+            dsDivisionList = user.getAssignedMRDSDivisions();
+        }
+        return marriageRegistrationDAO.getMarriageRegisterByIdNumber(pinOrNic, stateList, dsDivisionList);
     }
 
     /**
