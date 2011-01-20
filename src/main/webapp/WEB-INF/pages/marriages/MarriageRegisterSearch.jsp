@@ -223,7 +223,7 @@
                                     </s:a>
 
                                     <%-- Approve  --%>
-                                    <s:if test="(!#session.user_bean.role.roleId.equals('DEO'))))">
+                                    <s:if test="(!#session.user_bean.role.roleId.equals('DEO'))">
                                     <s:url id="approveSelected" action="eprApproveMarriageRegistration.do">
                                         <s:param name="idUKey" value="idUKey"/>
                                     </s:url>
