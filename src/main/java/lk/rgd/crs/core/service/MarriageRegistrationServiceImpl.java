@@ -177,11 +177,11 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<MarriageRegister> getMarriageRegisterByIdNumber(String pinOrNic, boolean active, User user) {
+    public List<MarriageRegister> getMarriageRegisterByPINNumber(String pinOrNic, boolean active, User user) {
         ValidationUtils.validateUserPermission(Permission.SEARCH_MARRIAGE, user);
         EnumSet<MarriageRegister.State>  stateList = StateUtil.getMarriageRegisterStateList(null);
-        return marriageRegistrationDAO.getMarriageRegisterByIdNumber(pinOrNic, active, stateList);
-        //TODO:validate access to Marriage Division
+        Set<DSDivision> dsDivisionList = user.getAssignedMRDSDivisions();
+        return marriageRegistrationDAO.getMarriageRegisterByIdNumber(pinOrNic, active, stateList, dsDivisionList);
     }
 
     /**

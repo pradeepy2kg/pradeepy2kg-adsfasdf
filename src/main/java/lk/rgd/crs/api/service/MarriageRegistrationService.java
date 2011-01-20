@@ -138,7 +138,7 @@ public interface MarriageRegistrationService {
      * @param user     the user who perform the action
      * @return
      */
-    public List<MarriageRegister> getMarriageRegisterByIdNumber(String pinOrNic, boolean active, User user);
+    public List<MarriageRegister> getMarriageRegisterByPINNumber(String pinOrNic, boolean active, User user);
 
     /**
      * Returns the active/inactive MarriageRegister record for given serial number of any party and under selected

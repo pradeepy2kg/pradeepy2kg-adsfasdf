@@ -333,11 +333,13 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<MarriageRegister> getMarriageRegisterByIdNumber(String id, boolean active, EnumSet<MarriageRegister.State> stateList) {
+    public List<MarriageRegister> getMarriageRegisterByIdNumber(String id, boolean active,
+        EnumSet<MarriageRegister.State> stateList, Set<DSDivision> dsDivisionList) {
         Query q = em.createNamedQuery("findMarriageByIdNumber");
         q.setParameter("id", id);
         q.setParameter("active", active);
         q.setParameter("stateList", stateList);
+        q.setParameter("dsDivisionList", dsDivisionList);
         return q.getResultList();
     }
 

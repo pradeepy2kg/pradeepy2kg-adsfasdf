@@ -47,6 +47,7 @@ import java.util.Date;
         "OR (mr.female.identificationNumberFemale IS NOT NULL AND mr.female.identificationNumberFemale = :id) " +
         "OR (mr.registrarOrMinisterPIN IS NOT NULL AND mr.registrarOrMinisterPIN = :id)) " +
         "AND mr.state IN (:stateList) " +
+        "AND mr.mrDivision.dsDivision IS NOT NULL AND mr.mrDivision.dsDivision IN (:dsDivisionList) " +
         "AND mr.lifeCycleInfo.activeRecord = :active ORDER BY mr.idUKey DESC"),
 
     @NamedQuery(name = "get.notice.by.mrDivision.and.serial", query = "SELECT mr FROM MarriageRegister mr " +
