@@ -3,6 +3,7 @@ package lk.rgd.crs.web.action;
 import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.common.api.domain.Role;
 import lk.rgd.common.api.domain.Statistics;
+import lk.rgd.common.api.service.StatisticsManager;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +42,7 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
     private final DSDivisionDAO dsDivisionDAO;
     private final StatisticsDAO statisticsDAO;
     private final UserManager userManager;
+    private final StatisticsManager statisticsManager;
     private static final Logger logger = LoggerFactory.getLogger(UserPreferencesAction.class);
 
     private boolean emptyFeild;
@@ -78,13 +80,15 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
     private static final String PASSWORD_PATTERN =
         "(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$";
 
-    public UserPreferencesAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, UserManager userManager, RoleDAO roleDAO, UserDAO userDAO, StatisticsDAO statisticsDAO) {
+    public UserPreferencesAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, UserManager userManager, RoleDAO roleDAO, UserDAO userDAO,
+        StatisticsDAO statisticsDAO, StatisticsManager statisticsManager) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.userManager = userManager;
         this.roleDAO = roleDAO;
         this.userDAO = userDAO;
         this.statisticsDAO = statisticsDAO;
+        this.statisticsManager = statisticsManager;
     }
 
     /**
@@ -243,6 +247,38 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
             addActionError(getText("password.mismatch.lable"));
             return "error";
         }
+    }
+
+    public String showPasswordChangeStatistics() {
+
+        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
+        logger.debug("Logged User's UserName : {}", user.getUserId());
+        logger.debug("Logged User's Role : {}", user.getRole());
+        role = user.getRole().getRoleId();
+
+        statistics = statisticsDAO.getByUser(user.getUserId());
+        if (statistics == null) {
+            statistics = statisticsManager.getStatisticsForUser(user);
+            if (statistics == null) {
+                statistics = new Statistics();
+            }
+        }
+
+        districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
+        if (districtList.size() > 0) {
+            districtId = districtList.keySet().iterator().next();
+        }
+        divisionList = dsDivisionDAO.getAllDSDivisionNames(districtId, user.getPrefLanguage(), user);
+        if (divisionList.size() > 0) {
+            dsDivisionId = divisionList.keySet().iterator().next();
+            deoList = userDAO.getDEOsByDSDivision(user.getPrefLanguage(), user,
+                dsDivisionDAO.getDSDivisionByPK(dsDivisionId), roleDAO.getRole(Role.ROLE_DEO));
+        }
+        deoUserId = 1;
+        /*adrList = userDAO.getADRsByDistrictId(districtDAO.getDistrict(districtId), roleDAO.getRole(Role.ROLE_ADR));
+        adrUserId = 1;*/
+
+        return SUCCESS;
     }
 
     void populateLists(User user, String usertype) {

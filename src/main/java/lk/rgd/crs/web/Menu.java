@@ -108,6 +108,7 @@ public class Menu {
         preferanceLink.put("eprBackChangePass.do", new Link(null, "/ecivil/preferences/", "eprBackChangePass.do", Permission.USER_PREFERENCES));
         preferanceLink.put("passChangePageLoad.do", new Link(null, "/ecivil/preferences/", "passChangePageLoad.do", Permission.USER_PREFERENCES));
         preferanceLink.put("eprUserPreferencesAction.do", new Link(null, "/ecivil/preferences/", "eprUserPreferencesAction.do", Permission.USER_PREFERENCES));
+        preferanceLink.put("showPasswordChangeStatistics.do", new Link(null, "/ecivil/preferences/", "showPasswordChangeStatistics.do", Permission.USER_PREFERENCES));
 
         //search links
         searchLink.put("eprSearchPageLoad.do", new Link("search.label", "/ecivil/births/", "eprSearchPageLoad.do", Permission.SEARCH_BDF));
