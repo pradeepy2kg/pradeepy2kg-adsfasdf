@@ -42,6 +42,12 @@ import java.util.Date;
         "OR (mr.female.identificationNumberFemale IS NOT NULL AND mr.female.identificationNumberFemale = :id)) " +
         "AND ((mr.state <= 3) OR (mr.state =7))  AND mr.lifeCycleInfo.activeRecord = :active ORDER BY mr.idUKey DESC"),
 
+    @NamedQuery(name = "findMarriageByIdNumber", query = "SELECT mr FROM MarriageRegister mr " +
+        "WHERE ((mr.male.identificationNumberMale IS NOT NULL AND mr.male.identificationNumberMale = :id) " +
+        "OR (mr.female.identificationNumberFemale IS NOT NULL AND mr.female.identificationNumberFemale = :id) " +
+        "OR (mr.registrarOrMinisterPIN IS NOT NULL AND mr.registrarOrMinisterPIN = :id)) " +
+        "AND mr.lifeCycleInfo.activeRecord = :active ORDER BY mr.idUKey DESC"),
+
     @NamedQuery(name = "get.notice.by.mrDivision.and.serial", query = "SELECT mr FROM MarriageRegister mr " +
         "WHERE ((mr.mrDivisionOfMaleNotice IS NOT NULL AND mr.mrDivisionOfMaleNotice = :mrDivision " +
         "AND mr.serialOfMaleNotice IS NOT NULL AND mr.serialOfMaleNotice = :serialNo) " +

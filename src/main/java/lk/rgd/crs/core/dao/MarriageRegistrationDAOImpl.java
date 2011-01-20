@@ -304,6 +304,17 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
         return q.getResultList();
     }
 
+        /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<MarriageRegister> getMarriageRegisterByIdNumber(String id, boolean active) {
+        Query q = em.createNamedQuery("findMarriageByIdNumber");
+        q.setParameter("id", id);
+        q.setParameter("active", active);
+        return q.getResultList();
+    }
+
     /**
      * @inheritDoc
      */

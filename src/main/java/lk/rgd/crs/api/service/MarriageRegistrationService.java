@@ -48,8 +48,8 @@ public interface MarriageRegistrationService {
     /**
      * Find marriage register by idUKey
      *
-     * @param idUKey primary key of Marriage Register
-     * @param user   user who performs the action
+     * @param idUKey     primary key of Marriage Register
+     * @param user       user who performs the action
      * @param permission permission level of the action
      * @return
      */
@@ -106,6 +106,17 @@ public interface MarriageRegistrationService {
      * @return list of marriage records
      */
     public List<MarriageRegister> getMarriageNoticePendingApprovalByPINorNIC(String pinOrNic, boolean active, User user);
+
+    /**
+     * Find the marriage register by male or female identification number or
+     * find a list of marriage register by registrar identification number
+     *
+     * @param pinOrNic     the identification number (male or female or registrar PIN or NIC)
+     * @param active status of the marriage register active or inactive
+     * @param user   the user who perform the action
+     * @return
+     */
+    public List<MarriageRegister> getMarriageRegisterByIdNumber(String pinOrNic, boolean active, User user);
 
     /**
      * Returns the active/inactive MarriageRegister record for given serial number of any party and under selected

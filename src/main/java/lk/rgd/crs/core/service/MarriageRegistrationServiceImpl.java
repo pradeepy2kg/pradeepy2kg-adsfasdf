@@ -46,7 +46,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     private final DSDivisionDAO dsDivisionDAO;
     private final DistrictDAO districtDAO;
     //TODO: this is to be changed
-    private ContentRepository contentRepository = new ContentRepositoryImpl(AppConstants.CONTENT_ROOT);
+    private ContentRepository contentRepository = null;
 
     public MarriageRegistrationServiceImpl(MarriageRegistrationDAO marriageRegistrationDAO, UserManager userManager,
         MarriageRegistrationValidator marriageRegistrationValidator, UserLocationDAO userLocationDAO,
@@ -57,12 +57,17 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         //todo: to be removed
         this.userLocationDAO = userLocationDAO;
         this.userManager = userManager;
-        //TODO: to be changed
-        this.contentRoot = AppConstants.CONTENT_ROOT;
+        //TODO: to be removed
+        //this.contentRoot = AppConstants.CONTENT_ROOT;
+        this.contentRoot = contentRoot;
         this.contentType = contentType;
         this.mrDivisionDAO = mrDivisionDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.districtDAO = districtDAO;
+
+        //TODO: to be changed
+        contentRepository = new ContentRepositoryImpl(contentRoot);
+
     }
 
     /**
@@ -110,9 +115,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     @Transactional(propagation = Propagation.SUPPORTS)
     public MarriageRegister getMarriageRegisterByIdUKey(long idUKey, User user, int permission) {
         logger.debug("attempt to get marriage register by idUKey : {} ", idUKey);
-        if (!user.isAuthorized(permission)) {
-            handleException("User : " + user.getUserId() + " is not authorized to access marriage register", ErrorCodes.PERMISSION_DENIED);
-        }
+        ValidationUtils.validateUserPermission(Permission.SEARCH_MARRIAGE, user);
         MarriageRegister marriageRegister = marriageRegistrationDAO.getByIdUKey(idUKey);
         ValidationUtils.validateAccessToMRDivision(marriageRegister.getMrDivision(), user);
         return marriageRegister;
@@ -149,6 +152,16 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         logger.debug("Attempt to get marriage notice pending results for identification number : {} ", pinOrNic);
         List<MarriageRegister> results = marriageRegistrationDAO.getNoticeByPINorNIC(pinOrNic, active);
         return removingAccessDeniedItemsFromList(results, user);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<MarriageRegister> getMarriageRegisterByIdNumber(String pinOrNic, boolean active, User user) {
+        ValidationUtils.validateUserPermission(Permission.SEARCH_MARRIAGE, user);
+        return marriageRegistrationDAO.getMarriageRegisterByIdNumber(pinOrNic, active);
+        //TODO:validate access to Marriage Division
     }
 
     /**
@@ -562,6 +575,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     /**
      * @inheritDoc
      */
+    //TODO: to be removed
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<MarriageRegister> getMarriageRegisterByPINorNIC(String pinOrNic, boolean active, User user) {
         logger.debug("Attempt to get marriage registers results for identification number : {} ", pinOrNic);

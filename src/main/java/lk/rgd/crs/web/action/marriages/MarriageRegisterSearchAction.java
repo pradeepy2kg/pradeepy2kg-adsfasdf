@@ -233,8 +233,9 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         }
 
         if (noticeSerialNo != null) {
-            //TODO: search by serial number/ pin
-            //TODO: clear tabs
+
+        } else if (pinOrNic != null) {
+            marriageRegisterSearchList = marriageRegistrationService.getMarriageRegisterByIdNumber(pinOrNic, true, user);
 
         } else {
             if (districtId != 0 & dsDivisionId != 0 & mrDivisionId != 0) { // all selected
@@ -253,10 +254,11 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
                 divisionType = AppConstants.DISTRICT;
 
             }
+
+            marriageRegisterSearchList = marriageRegistrationService.getMarriageRegisterList(divisionType, divisionId,
+                mrState, true, searchStartDate, searchEndDate, pageNo, noOfRows, user);
         }
 
-        marriageRegisterSearchList = marriageRegistrationService.getMarriageRegisterList(divisionType, divisionId,
-            mrState, true, searchStartDate, searchEndDate, pageNo, noOfRows, user);
 
         if (marriageRegisterSearchList.size() == 0) {
             addActionError(getText("error.marriageregister.norecords"));
