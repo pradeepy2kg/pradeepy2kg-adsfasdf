@@ -57,8 +57,6 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         //todo: to be removed
         this.userLocationDAO = userLocationDAO;
         this.userManager = userManager;
-        //TODO: to be removed
-        //this.contentRoot = AppConstants.CONTENT_ROOT;
         this.contentRoot = contentRoot;
         this.contentType = contentType;
         this.mrDivisionDAO = mrDivisionDAO;

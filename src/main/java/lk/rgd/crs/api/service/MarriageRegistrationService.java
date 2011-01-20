@@ -111,9 +111,9 @@ public interface MarriageRegistrationService {
      * Find the marriage register by male or female identification number or
      * find a list of marriage register by registrar identification number
      *
-     * @param pinOrNic     the identification number (male or female or registrar PIN or NIC)
-     * @param active status of the marriage register active or inactive
-     * @param user   the user who perform the action
+     * @param pinOrNic the identification number (male or female or registrar PIN or NIC)
+     * @param active   status of the marriage register active or inactive
+     * @param user     the user who perform the action
      * @return
      */
     public List<MarriageRegister> getMarriageRegisterByIdNumber(String pinOrNic, boolean active, User user);

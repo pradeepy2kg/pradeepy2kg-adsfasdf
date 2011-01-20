@@ -228,7 +228,7 @@ public interface MarriageRegistrationDAO {
      * Find the marriage register by male or female identification number or
      * find a list of marriage register by registrar identification number
      *
-     * @param id  the identification number (male or female or registrar PIN or NIC)
+     * @param id     the identification number (male or female or registrar PIN or NIC)
      * @param active status of the marriage register active or inactive
      * @return
      */

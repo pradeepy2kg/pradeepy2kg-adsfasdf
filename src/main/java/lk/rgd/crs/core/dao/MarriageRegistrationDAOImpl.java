@@ -304,7 +304,7 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
         return q.getResultList();
     }
 
-        /**
+    /**
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
