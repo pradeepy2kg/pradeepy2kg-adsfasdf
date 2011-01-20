@@ -111,7 +111,7 @@
 .text-margin {
     text-align: center;
     margin-left: 2px;
-    margin-top: 24px;
+    margin-top: 28px;
 }
 
 .lable01 {
@@ -119,7 +119,7 @@
     text-align: center;
     position: absolute;
     width: 140px;
-    margin: 95px 0px 0px 45px;
+    margin: 120px 0px 0px 30px;
 }
 
 .lable-MR {
@@ -136,7 +136,7 @@
     text-align: center;
     position: absolute;
     width: 180px;
-    margin: 300px 0px 0px 735px;
+    margin: 300px 0px 0px 764px;
 }
 
 .lable-fill {
@@ -144,7 +144,7 @@
     text-align: center;
     position: absolute;
     width: 160px;
-    margin: 100px 0px 0px 720px;
+    margin: 120px 0px 0px 764px;
 }
 
 .lable-ADR {
@@ -169,7 +169,7 @@
     text-align: center;
     position: absolute;
     width: 120px;
-    margin: 160px 0px 0px 550px;
+    margin: 160px 0px 0px 556px;
 }
 
 .lable-edit2 {
@@ -177,7 +177,7 @@
     text-align: center;
     position: absolute;
     width: 120px;
-    margin: 230px 0px 0px 550px;
+    margin: 230px 0px 0px 556px;
 }
 
 .lable-recevie {
@@ -219,7 +219,7 @@
     top: 210px;
     left: 250px;
     width: 120px;
-    margin: 100px 0px 0px 190px;
+    margin: 96px 0px 0px 190px;
 }
 
 .lable-submit-bundle {
@@ -243,7 +243,7 @@
     text-align: center;
     position: absolute;
     width: 120px;
-    margin: 370px 0px 0px 355px;
+    margin: 380px 0px 0px 355px;
 
 }
 
