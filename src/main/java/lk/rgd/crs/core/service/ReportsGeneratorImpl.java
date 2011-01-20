@@ -57,7 +57,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
      * @param user
      * @return BirthIslandWideStatistics  @param year
      */
-    public BirthIslandWideStatistics generate_2_2(int year, User user) {
+    public BirthIslandWideStatistics generate_2_2(int year, User user) { //TODO - find more efficient way to do this. statistics object is useless if i use this type of method
         if (!user.isAuthorized(Permission.GENERATE_REPORTS)) {
             handleException(user.getUserName() + " doesn't have permission to generate the report",
                 ErrorCodes.PERMISSION_DENIED);
@@ -120,7 +120,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
     /**
      * @inheritDoc
      */
-    public BirthIslandWideStatistics generate_2_8(int year, User user) {
+    public BirthIslandWideStatistics generate_2_8(int year, User user) { //TODO - find more efficient way to do this. statistics object become useless if i use this type of method
         if (!user.isAuthorized(Permission.GENERATE_REPORTS)) {
             handleException(user.getUserName() + " doesn't have permission to generate the report",
                 ErrorCodes.PERMISSION_DENIED);
@@ -207,7 +207,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
     /**
      * @inheritDoc
      */
-    public BirthIslandWideStatistics generate_2_5(int year, User user) {
+    public BirthIslandWideStatistics generate_2_5(int year, User user) {  //TODO - find more efficient way to do this. statistics object become useless if i use this type of method
         if (!user.isAuthorized(Permission.GENERATE_REPORTS)) {
             handleException(user.getUserName() + " doesn't have permission to generate the report",
                 ErrorCodes.PERMISSION_DENIED);
@@ -291,6 +291,51 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
             statistics.totals.set(districtIndex, districtStats);
         }
 
+        return statistics;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public BirthIslandWideStatistics generate_2_4(int year, User user) {
+        /*if (!user.isAuthorized(Permission.GENERATE_REPORTS)) { TODO - find more efficient way to do this. statistics object become useless if i use this type of method
+            handleException(user.getUserName() + " doesn't have permission to generate the report",
+                ErrorCodes.PERMISSION_DENIED);
+        }
+
+        List<DSDivision> dsDivisions = dsDivisionDAO.findAll();
+        User systemUser = userManagementService.getSystemUser();
+        List<BirthDeclaration> birthRecords;
+
+        Calendar cal = Calendar.getInstance();
+
+        *//* January first of the year *//*
+        cal.set(year, 0, 1);
+        Date startDate = cal.getTime();
+
+        *//* December 31st of the year *//*
+        cal.set(year, 11, 31);
+        Date endDate = cal.getTime();
+
+        for (DSDivision dsDivision : dsDivisions) {
+            birthRecords = birthRegister.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
+                BirthDeclaration.State.ARCHIVED_CERT_GENERATED, systemUser);
+
+            int districtIndex = dsDivision.getDistrict().getDistrictUKey();
+            BirthDistrictStatistics districtStats = statistics.totals.get(districtIndex);
+
+            for (BirthDeclaration bd : birthRecords) {
+                Calendar calender = Calendar.getInstance();
+                calender.setTime(bd.getChild().getDateOfBirth());
+                int month = calender.get(Calendar.MONTH);
+
+                BirthMonthlyStatistics birthMonthlyStatistics = districtStats.monthlyTotals.get(month);
+                BirthRaceStatistics birthRaceStatistics = birthMonthlyStatistics.raceTotals.get(bd.getParent().getFatherRace().getRaceId());
+
+                birthRaceStatistics.setTotalBirthFromRaces(0);
+            }
+
+        }*/
         return statistics;
     }
 
@@ -379,6 +424,8 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                     csv.append("\n");
                 }
                 break;
+            case ReportCodes.TABLE_2_4:
+                break;
 
         }
 
@@ -454,6 +501,9 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 }
                 csv.append(total + ",");
                 csv.append(",\n");
+                break;
+            case ReportCodes.TABLE_2_4:
+                break;
         }
 
         return csv;

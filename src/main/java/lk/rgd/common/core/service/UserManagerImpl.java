@@ -131,7 +131,7 @@ public class UserManagerImpl implements UserManager {
      * @param adminUser
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public boolean createUser(User user, User adminUser, String userId, String roleId, int[] assignedDistricts, boolean changePassword, String randomPassword) {
+    public boolean createUser(User user, User adminUser, String userId, String roleId, int[] assignedDistricts, int[] assDivisions, boolean changePassword, String randomPassword) {
 
         boolean isNewUser = false;
 
@@ -148,8 +148,8 @@ public class UserManagerImpl implements UserManager {
             }
 
             if (roleId.equals(Role.ROLE_DEO) || roleId.equals(Role.ROLE_ADR)) {
-                for (int districtUKey : assignedDistricts) {
-                    assDSDivision.add(dsDivisionDAO.getDSDivisionByPK(districtUKey));
+                for (int dsDivisionId : assDivisions) {
+                    assDSDivision.add(dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
                 }
             }
             if (roleId.equals(Role.ROLE_DR) || roleId.equals(Role.ROLE_ARG)) {

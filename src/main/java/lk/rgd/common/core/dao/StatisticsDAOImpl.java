@@ -20,7 +20,7 @@ public class StatisticsDAOImpl extends BaseDAO implements StatisticsDAO {
     /**
      * @inheritDoc
      */
-    @Override
+    @Override @Transactional(propagation = Propagation.NEVER)
     public Statistics getByUser(String userId) {
         Query query = em.createNamedQuery("get.by.user");
         query.setParameter("userId", userId);

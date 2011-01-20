@@ -6,6 +6,7 @@ import lk.rgd.common.api.domain.AppParameter;
 import lk.rgd.common.api.domain.Role;
 import lk.rgd.common.api.domain.Statistics;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.service.StatisticsManager;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.core.AuthorizationException;
 import lk.rgd.crs.web.Menu;
@@ -14,10 +15,7 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Indunil Moremada
@@ -70,9 +68,10 @@ public class LoginAction extends ActionSupport implements SessionAware {
     private Statistics statistics;
     private String role;
     private StatisticsDAO statisticsDAO;
+    private StatisticsManager statisticsManager;
 
     public LoginAction(UserManager userManager, AppParametersDAO appParaDao, DistrictDAO districtDAO,
-        DSDivisionDAO dsDivisionDAO, UserDAO userDAO, RoleDAO roleDAO, StatisticsDAO statisticsDAO) {
+        DSDivisionDAO dsDivisionDAO, UserDAO userDAO, RoleDAO roleDAO, StatisticsDAO statisticsDAO, StatisticsManager statisticsManager) {
         this.userManager = userManager;
         this.appParaDao = appParaDao;
         this.districtDAO = districtDAO;
@@ -80,6 +79,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
         this.userDAO = userDAO;
         this.roleDAO = roleDAO;
         this.statisticsDAO = statisticsDAO;
+        this.statisticsManager = statisticsManager;
     }
 
     public Locale getLocale() {
@@ -210,15 +210,10 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
         statistics = statisticsDAO.getByUser(user.getUserId());
         if (statistics == null) {
-            statistics = new Statistics();
-
-            /* statistics.setBirthsRejectedItems(2);
-            statistics.setBirthsThisMonthPendingItems(4);
-            statistics.setBirthsTotalSubmissions(3);
-            statistics.setBirthsApprovedItems(6);
-            statistics.setBirthsArrearsPendingItems(2);
-            statistics.setBirthsLateSubmissions(1);*/
-
+            statistics = statisticsManager.getStatisticsForUser(user);
+            if (statistics == null) {
+                statistics = new Statistics();
+            }
         }
 
         districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);

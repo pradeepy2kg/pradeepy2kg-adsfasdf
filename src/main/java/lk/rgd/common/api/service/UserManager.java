@@ -135,7 +135,7 @@ public interface UserManager {
      * @param roleId
      * @param admin
      */
-    public boolean createUser(User user, User admin, String userId, String roleId, int[] assDistricts, boolean changePassword, String randomPassword);
+    public boolean createUser(User user, User admin, String userId, String roleId, int[] assDistricts, int[] assDivisions, boolean changePassword, String randomPassword);
 
     /**
      * Update a user
