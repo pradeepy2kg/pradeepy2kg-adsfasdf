@@ -16,11 +16,18 @@
     function validateMarriageDetails() {
         var errormsg = "";
         //errormsg = validateEmptyField("marriageDatePicker", "errorMarriageDate", errormsg);
-        errormsg = isDate("marriageDatePicker", "errorMarriageDate", errormsg);
+        ////errormsg = isDate("marriageDatePicker", "errorMarriageDate", errormsg);
         //validate registrar details
-        errormsg = validatePin("regPIN", "errorRegistrarPIN", errormsg);
-        errormsg = validateEmptyField("regPlaceInOfficialLang", "errorRegistrationPlace", errormsg);
-        errormsg = validateEmptyField("regNameInOfficialLang", "errorRegistrarName", errormsg);
+        ////errormsg = validatePin("regPIN", "errorRegistrarPIN", errormsg);
+        ////errormsg = validateEmptyField("regPlaceInOfficialLang", "errorRegistrationPlace", errormsg);
+        ////errormsg = validateEmptyField("regNameInOfficialLang", "errorRegistrarName", errormsg);
+
+        var mode = document.getElementById("mode").value;
+
+        errormsg = validateRegistrationDetails(errormsg);
+        if (mode == 'register') {
+            return printErrorMessages(errormsg);
+        }
 
         //validate Male/Female
         errormsg = validateSelectOption("maleRace", "errorMaleRace", errormsg);
@@ -40,12 +47,11 @@
         errormsg = validateEmptyField("addressFemale", "errorAddressFemale", errormsg);
 
         errormsg = validateEmptyField("serialNumber", "errorSerialNumber", errormsg);
-        errormsg = isDate("registrationDatePicker", "errorRegistrationDate", errormsg);
+        ////errormsg = isDate("registrationDatePicker", "errorRegistrationDate", errormsg);
         return printErrorMessages(errormsg);
     }
 
-    function validateRegistrationDetails() {
-        var errormsg = "";
+    function validateRegistrationDetails(errormsg) {
         //errormsg = validateEmptyField("marriageDatePicker", "errorMarriageDate", errormsg);
         errormsg = isDate("marriageDatePicker", "errorMarriageDate", errormsg);
         //validate registrar details
@@ -53,7 +59,7 @@
         errormsg = validateEmptyField("regPlaceInOfficialLang", "errorRegistrationPlace", errormsg);
         errormsg = validateEmptyField("regNameInOfficialLang", "errorRegistrarName", errormsg);
         errormsg = isDate("registrationDatePicker", "errorRegistrationDate", errormsg);
-        return printErrorMessages(errormsg);
+        return errormsg;
     }
 
 
@@ -63,7 +69,7 @@
 <div class="marriage-notice-outer">
 <s:form method="post" enctype="multipart/form-data" onsubmit="javascript:return validateMarriageDetails()">
 <s:hidden name="idUKey"/>
-<s:hidden name="mode"/>
+<s:hidden name="mode" id="mode"/>
 <table border="1" style="margin-top:1px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
        cellpadding="5px">
     <caption></caption>

@@ -493,7 +493,6 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         if (idUKey != 0) {
             marriage = marriageRegistrationService.getByIdUKey(idUKey, user);
             if ("register".equals(mode)) {
-                marriage.setTypeOfMarriage(MarriageType.GENERAL);
                 marriage.setTypeOfMarriagePlace(TypeOfMarriagePlace.REGISTRAR_OFFICE);
             }
         } else {
