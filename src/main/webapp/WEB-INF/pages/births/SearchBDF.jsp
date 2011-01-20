@@ -115,7 +115,7 @@
     }
 </script>
 <div id="birth-confirmation-search" style="font-size:10pt;">
-    <s:actionerror cssStyle="color:red;font-size:10pt"/>
+
 
     <ul>
         <li><a href="#fragment-1"><span> <s:label name="registrationSearch"
@@ -197,9 +197,10 @@
     </div>
 </div>
 <br/>
-
+<s:actionerror cssStyle="color:red;font-size:10pt"/>
+<s:actionmessage cssStyle="color:blue;font-size:10pt"/>
 <div>
-    <s:actionmessage cssStyle="color:blue;font-size:10pt"/>
+
     <s:if test="#request.bdf != null || #request.searchResultList.size>0">
         <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
             <legend>
@@ -339,7 +340,7 @@
             </table>
         </fieldset>
     </s:if>
-    
+
     <s:hidden id="oneMethodErr" value="%{getText('err.use.one,method.to.search')}"/>
     <s:hidden id="invalideDateErr" value="%{getText('err.invalide.data')}"/>
     <s:hidden id="bdfSerialNumber" value="%{getText('field.bdf.serial')}"/>
