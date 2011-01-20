@@ -208,12 +208,12 @@ public class UserManagerImpl implements UserManager {
                     updatedUser.setPasswordHash(hashPassword(randomPassword));
                 }
 
-                User existing = userDao.getUserByPK(user.getUserId());
+                User existing = userDao.getUserByPK(userId);
                 if (existing.getStatus() == User.State.DELETED) {
                     handleException("Attempt to modify deleted account : " + existing.getUserId() +
                         " by : " + adminUser.getUserId() + " denied", ErrorCodes.AUTHORIZATION_FAILS_USER_MANAGEMENT);
                 }
-                userDao.updateUser(user, adminUser);
+                userDao.updateUser(updatedUser, adminUser);
 
             }
         }
