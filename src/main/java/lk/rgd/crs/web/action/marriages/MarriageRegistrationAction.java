@@ -608,7 +608,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             addActionError(getText("error.marriageregister.failedtoupdate"));
             return marriageRegistrationInit();
         }
-        addActionMessage("message.marriageregister.updated");
+        addActionMessage(getText("message.marriageregister.updated"));
         return SUCCESS;
     }
 
@@ -628,7 +628,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             addActionError(getText("error.marriageregister.registrationfailed"));
             return marriageRegistrationInit();
         }
-        addActionMessage("message.marriageregister.registered");
+        addActionMessage(getText("message.marriageregister.registered"));
         return SUCCESS;
     }
 
