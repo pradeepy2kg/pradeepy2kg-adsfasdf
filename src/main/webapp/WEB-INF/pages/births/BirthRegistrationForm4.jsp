@@ -35,10 +35,10 @@
         $('img#notifier_lookup').bind('click', function(evt1) {
             var id1 = $("input#notifyingAuthorityPIN").attr("value");
             $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
-                    function(data1) {
-                        $("textarea#notifyingAuthorityName").val(data1.fullNameInOfficialLanguage);
-                        $("textarea#notifyingAuthorityAddress").val(data1.lastAddress);
-                    });
+                     function(data1) {
+                         $("textarea#notifyingAuthorityName").val(data1.fullNameInOfficialLanguage);
+                         $("textarea#notifyingAuthorityAddress").val(data1.lastAddress);
+                     });
         });
         //        $('#notifying_authority_NIC_V').bind('click', function() {
         //            if ($('#notifyingAuthorityPIN').val().length == 9) {
@@ -90,10 +90,22 @@
         } else {
             isDate(domObject.value, 'error1', 'error2');
         }
+        // notify date before submitted date
         var submit = new Date(document.getElementById('submitDatePicker').value);
-        domObject = new Date(domObject.value);
-        if (domObject.getTime() < submit.getTime()) {
+        if (signdate.getTime() > submit.getTime()) {
             errormsg = errormsg + "\n" + document.getElementById('p4error6').value;
+        }
+
+        // notify date after informant date
+        var inform = new Date(document.getElementById('informantDate').value);
+        if (signdate.getTime() < inform.getTime()) {
+            errormsg = errormsg + "\n" + document.getElementById('error7').value;
+        }
+
+        // notifying date after child date of birth
+        var dob = new Date(document.getElementById('dateOfBirth').value);
+        if (signdate.getTime() < dob.getTime()) {
+            errormsg = errormsg + "\n" + document.getElementById('error6').value;
         }
 
         domObject = document.getElementById('bdfLateBelate');
@@ -142,7 +154,7 @@
                 </td>
             </tr>
             <tr>
-                <td ><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+                <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
                     අනන්‍යතා අංකය <s:label value="*" cssStyle="color:red;font-size:14pt;"/>
                     <br>அடையாள எண்
                     <br>Identification Number</label></td>
@@ -158,16 +170,17 @@
                                  maxLength="10"/>
                     <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
                          id="notifier_lookup"/>
-                    <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>--%>
+                        <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>--%>
                 </td>
             </tr>
             <tr>
                 <td width="200px" colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-                    නම<s:label value="*" cssStyle="color:red;font-size:14pt;"/><br>கொடுப்பவரின் பெயர் <br>Name</label></td>
+                    නම<s:label value="*" cssStyle="color:red;font-size:14pt;"/><br>கொடுப்பவரின் பெயர் <br>Name</label>
+                </td>
                 <td colspan="4">
                     <s:textarea name="notifyingAuthority.notifyingAuthorityName" id="notifyingAuthorityName"
                                 cssStyle="width:95%;"/>
-                    <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>--%>
+                        <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>--%>
                 </td>
             </tr>
             <tr>
@@ -177,16 +190,17 @@
                 <td colspan="4"><s:textarea name="notifyingAuthority.notifyingAuthorityAddress"
                                             id="notifyingAuthorityAddress"
                                             cssStyle="width:95%;"/>
-                    <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>--%>
+                        <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>--%>
                 </td>
             </tr>
             <tr>
-                <td width="200px"><label>දිනය<s:label value="*" cssStyle="color:red;font-size:14pt;"/> <br>திகதி <br>Date</label></td>
+                <td width="200px"><label>දිනය<s:label value="*" cssStyle="color:red;font-size:14pt;"/> <br>திகதி <br>Date</label>
+                </td>
                 <td colspan="4">
                     <s:label value="YYYY-MM-DD" cssStyle="float:left;margin-left:1%;font-size:10px"/><br>
                     <s:textfield name="notifyingAuthority.notifyingAuthoritySignDate" id="modifiedDatePicker"
                                  cssStyle="float:left;margin-right:60px;" maxLength="10"/>
-                    <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>--%>
+                        <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>--%>
                 </td>
             </tr>
             </tbody>
@@ -250,10 +264,12 @@
     <s:hidden id="p4error5" value="%{getText('notifierNIC.text')}"/>
     <s:hidden id="p4error6" value="%{getText('p4.notifydate.with.reg.date')}"/>
     <s:hidden id="submitDatePicker" value="%{register.dateOfRegistration}"/>
+    <s:hidden id="dateOfBirth" value="%{child.dateOfBirth}"/>
+    <s:hidden id="informantDate" value="%{informant.informantSignDate}"/>
     <s:hidden id="bdfLateBelate" name="bdfLateOrBelated"/>
     <s:hidden id="error3" value="%{getText('late.caseFileNo.text')}"/>
     <s:hidden id="error4" value="%{getText('late.comments.text')}"/>
     <s:hidden id="error5" value="%{getText('NIC.error.add.VX')}"/>
-
-
+    <s:hidden id="error6" value="%{getText('notifyDate.and.birthDate')}"/>
+    <s:hidden id="error7" value="%{getText('notifyDate.and.informDate')}"/>
 </div>

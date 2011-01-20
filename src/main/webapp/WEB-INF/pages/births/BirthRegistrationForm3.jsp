@@ -42,28 +42,28 @@ $(function() {
     $('img#informant_lookup').bind('click', function(evt1) {
         var id1 = $("input#informantNICorPIN").attr("value");
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
-                function(data1) {
-                    $("textarea#informantName").val(data1.fullNameInOfficialLanguage);
-                    $("textarea#informantAddress").val(data1.lastAddress);
-                });
+                 function(data1) {
+                     $("textarea#informantName").val(data1.fullNameInOfficialLanguage);
+                     $("textarea#informantAddress").val(data1.lastAddress);
+                 });
     });
 
     $('img#grandFather_lookup').bind('click', function(evt2) {
         var id2 = $("input#grandFatherNICorPIN").attr("value");
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id2},
-                function(data2) {
-                    $("textarea#grandFatherFullName").val(data2.fullNameInOfficialLanguage);
-                    $("input#grandFatherBirthPlace").val(data2.placeOfBirth);
-                });
+                 function(data2) {
+                     $("textarea#grandFatherFullName").val(data2.fullNameInOfficialLanguage);
+                     $("input#grandFatherBirthPlace").val(data2.placeOfBirth);
+                 });
     });
 
     $('img#greatGrandFather_lookup').bind('click', function(evt3) {
         var id3 = $("input#greatGrandFatherNICorPIN").attr("value");
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id3},
-                function(data3) {
-                    $("textarea#greatGrandFatherFullName").val(data3.fullNameInOfficialLanguage);
-                    $("input#greatGrandFatherBirthPlace").val(data3.placeOfBirth);
-                });
+                 function(data3) {
+                     $("textarea#greatGrandFatherFullName").val(data3.fullNameInOfficialLanguage);
+                     $("input#greatGrandFatherBirthPlace").val(data3.placeOfBirth);
+                 });
     });
 
     $('#grandFatherNICorPIN').change(function() {
@@ -96,9 +96,11 @@ function setInformPerson(id) {
             name = document.getElementById("fatherFullNameLable").value;
             nICorPIN = document.getElementById("fatherNICorPINLable").value;
             address = "";
-            if (document.getElementsByName("marriage.parentsMarried")[0].checked ||
-                document.getElementsByName("marriage.parentsMarried")[2].checked) {
-                address = document.getElementById("motherAddressLable").value;
+            if (document.getElementsByName("marriage.parentsMarried")[0] != null) {
+                if (document.getElementsByName("marriage.parentsMarried")[0].checked ||
+                        document.getElementsByName("marriage.parentsMarried")[2].checked) {
+                    address = document.getElementById("motherAddressLable").value;
+                }
             }
             phonoNo = "";
             email = "";
@@ -207,11 +209,11 @@ function generateGrandFatherBirthYear(grandFatherNIC, grandFatherBirthYear) {
 function validateParentsMaritalStatus() {
     var domObject;
 
-    // for parrents married - Yes
+    // for parents married - Yes
     domObject = document.getElementsByName("marriage.parentsMarried")[0];
     validateMarriageDetails(domObject);
 
-    // for parrents married - No
+    // for parents married - No
     domObject = document.getElementsByName("marriage.parentsMarried")[1];
     validateParentSigns(domObject);
 
@@ -310,6 +312,12 @@ function validateInformant() {
     if (domObject.getTime() > submit.getTime()) {
         errormsg = errormsg + "\n" + document.getElementById('error17').value;
     }
+    // informant date after child date of birth
+    domObject = new Date(document.getElementById('informDatePicker').value);
+    var dob = new Date(document.getElementById('dateOfBirth').value);
+    if (domObject.getTime() < dob.getTime()) {
+        errormsg = errormsg + "\n" + document.getElementById('error18').value;
+    }
 }
 
 // check informant type selected
@@ -374,6 +382,7 @@ function disableSignature() {
     if (name.value.length == 0) {
         mode = true;
     }
+    showSignRequired(!mode);
     if (mode) {
         document.getElementById('fatherSigned').checked = false;
         document.getElementById('motherSigned').checked = false;
@@ -387,16 +396,43 @@ function initPage() {
     if (declarationType.value != 0) {
         if (document.getElementsByName("marriage.parentsMarried")[0].checked) {
             disableSigns(true);
+            showMarriageRequired(true);
+            showSignRequired(false);
         } else if (document.getElementsByName("marriage.parentsMarried")[1].checked) {
             disableMarriage(true);
             disableSignature();
+            showMarriageRequired(false);
         } else if (document.getElementsByName("marriage.parentsMarried")[2].checked) {
             //disableSigns(true);
             disableSignature();
+            showMarriageRequired(true);
+            showSignRequired(false);
         } else if (document.getElementsByName("marriage.parentsMarried")[3].checked) {
             disableMarriage(true);
             disableSigns(true);
+            showMarriageRequired(false);
+            showSignRequired(false);
         }
+    }
+}
+
+function showMarriageRequired(mode) {
+    if (mode) {
+        document.getElementById('placeStar').style.display = '';
+        document.getElementById('dateStar').style.display = '';
+    }
+    else {
+        document.getElementById('placeStar').style.display = 'none';
+        document.getElementById('dateStar').style.display = 'none';
+    }
+}
+
+function showSignRequired(mode) {
+    if (mode) {
+        document.getElementById('signatureStars').style.display = '';
+    }
+    else {
+        document.getElementById('signatureStars').style.display = 'none';
     }
 }
 
@@ -434,13 +470,14 @@ function initPage() {
                     <tr>
                         <td><label>ඔව්<br>ஆம்<br>Yes</label></td>
                         <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'MARRIED':''}"
-                                     onclick="disableMarriage(false);disableSigns(true)" id="marriedId1"/>
+                                     onclick="disableMarriage(false);disableSigns(true);showMarriageRequired(true);showSignRequired(false);"
+                                     id="marriedId1"/>
                         </td>
                     </tr>
                     <tr>
                         <td><label>නැත<br>இல்லை<br>No</label></td>
                         <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'UNMARRIED':''}"
-                                     onclick="disableMarriage(true);disableSigns(false)"/>
+                                     onclick="disableMarriage(true);disableSigns(false);showMarriageRequired(false);"/>
                         </td>
                     </tr>
                     <tr>
@@ -448,24 +485,28 @@ function initPage() {
                         </td>
                         <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'NO_SINCE_MARRIED':''}"
                                      id="marriedId3"
-                                     onclick="disableMarriage(false);disableSigns(true)"/>
+                                     onclick="disableMarriage(false);disableSigns(true);showMarriageRequired(true);showSignRequired(false);"/>
                         </td>
                     </tr>
                     <tr>
                         <td><label>නොදනී<br>தெரியாது<br>Unknown</label></td>
                         <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'UNKNOWN':''}"
-                                     onclick="disableMarriage(true);disableSigns(true)" id="unknownMarriage"/>
+                                     onclick="disableMarriage(true);disableSigns(true);showMarriageRequired(false);showSignRequired(false);"
+                                     id="unknownMarriage"/>
                         </td>
                     </tr>
                     </tbody>
                 </table>
             </td>
-            <td><label>විවාහ වු ස්ථානය<br>விவாகம் இடம்பெற்ற இடம் <br>Place of Marriage</label></td>
+            <td><label>විවාහ වු ස්ථානය<s:label id="placeStar" value="*"
+                                               cssStyle="width:10px;color:red;font-size:14pt;"/>
+                <br>விவாகம் இடம்பெற்ற இடம் <br>Place of Marriage</label></td>
             <td colspan="2"><s:textfield name="marriage.placeOfMarriage" id="placeOfMarriage"
                                          cssStyle="float:left;"/></td>
         </tr>
         <tr>
-            <td><label>විවාහ වු දිනය<br>விவாகம் இடம்பெற்ற திகதி <br>Date of Marriage</label></td>
+            <td><label>විවාහ වු දිනය<s:label id="dateStar" value="*" cssStyle="color:red;font-size:14pt;"/>
+                <br>விவாகம் இடம்பெற்ற திகதி <br>Date of Marriage</label></td>
             <td colspan="2">
                     <s:label value="YYYY-MM-DD" cssStyle="margin-left:5px;font-size:10px"/><br>
                     <s:textfield name="marriage.dateOfMarriage" id="marriageDatePicker"
@@ -474,6 +515,7 @@ function initPage() {
         <tr id="motherFatherSign">
             <td colspan="3" rowspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
                 මව්පියන් විවාහ වි නොමැති නම් පියාගේ තොරතුරු ඇතුලත් කර ගැනිම සදහා මව සහ පියාගේ අත්සන්
+                <s:label id="signatureStars" value="*" cssStyle="color:red;font-size:14pt;"/>
                 <br>பெற்றோர் மணம் செய்யாதிருப்பின், தகப்பனின் தகவல்கள் பதிவு செய்ய வேண்டுமெனின் பெற்றோரின் கையொப்பம்
                 <br> If parents are not married, signatures of mother and father to include father's particulars</label>
             </td>
@@ -746,6 +788,7 @@ function initPage() {
 
 <s:hidden id="fatherName" value="%{parent.fatherFullName}"/>
 <s:hidden id="submitDatePicker" value="%{register.dateOfRegistration}"/>
+<s:hidden id="dateOfBirth" value="%{child.dateOfBirth}"/>
 <s:hidden id="p3error11" value="%{getText('p1.YearofBirthOfGrandFather')}"/>
 <s:hidden id="p3error10" value="%{getText('p1.YearofBirthOfGreatGrandFather')}"/>
 <s:hidden id="error10" value="%{getText('p1.invalid.emailInformant.text')}"/>
@@ -756,6 +799,7 @@ function initPage() {
 <s:hidden id="error15" value="%{getText('greatGrandFatherNICorPIN.text')}"/>
 <s:hidden id="error16" value="%{getText('p3.Informant.telephone.error.value')}"/>
 <s:hidden id="error17" value="%{getText('p3.informdate.with.reg.date')}"/>
+<s:hidden id="error18" value="%{getText('informDate.and.birthDate')}"/>
 <s:hidden id="infomantDate" value="%{getText('p3.informant.date')}"/>
 
 <%--Father information --%>

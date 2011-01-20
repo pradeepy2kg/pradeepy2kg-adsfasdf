@@ -86,7 +86,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
 
         boolean mysql = false;
 
-        // detect the target DB 
+        // detect the target DB
         EntityManagerFactoryInfo emf = (EntityManagerFactoryInfo) ctx.getBean("entityManagerFactory");
         if ("org.hibernate.dialect.MySQLDialect".equals(emf.getPersistenceUnitInfo().getProperties().
             getProperty("hibernate.dialect"))) {
