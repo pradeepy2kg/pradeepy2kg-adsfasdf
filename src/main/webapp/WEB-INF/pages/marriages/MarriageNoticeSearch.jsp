@@ -316,11 +316,10 @@
 
                             approval and reject are only allowed to ARG or higher
                             --%>
-
-                        <s:if test="(type.ordinal()==0 && state.ordinal() == 0) ||
-                         (type.ordinal()==1 && (state.ordinal() != 1 && state.ordinal() < 3)) ||
-                         (type.ordinal()==2 && (state.ordinal() != 2 && state.ordinal() < 3)) &&
-                         (!(#session.user_bean.role.roleId.equals('DEO')))">
+                        <s:if test="(!(session.user_bean.role.roleId.equals('DEO'))) &&
+                ((type.ordinal()==0 && state.ordinal() == 0) ||
+                 (type.ordinal()==1 && (state.ordinal() != 1 && state.ordinal() < 3)) ||
+                 (type.ordinal()==2 && (state.ordinal() != 2 && state.ordinal() < 3)))">
                             <s:url id="approveSelected" action="eprApproveMarriageNotice.do">
                                 <s:param name="idUKey" value="idUKey"/>
                                 <s:param name="noticeType" value="type"/>
@@ -337,10 +336,10 @@
                         </s:if>
                     </td>
                     <td align="center">
-                        <s:if test="(type.ordinal()==0 && state.ordinal() == 0) ||
-                         (type.ordinal()==1 && (state.ordinal() != 1 && state.ordinal() < 3)) ||
-                         (type.ordinal()==2 && (state.ordinal() != 2 && state.ordinal() < 3)) &&
-                         (!(#session.user_bean.role.roleId.equals('DEO')))">
+                        <s:if test="(!(session.user_bean.role.roleId.equals('DEO'))) &&
+                ((type.ordinal()==0 && state.ordinal() == 0) ||
+                 (type.ordinal()==1 && (state.ordinal() != 1 && state.ordinal() < 3)) ||
+                 (type.ordinal()==2 && (state.ordinal() != 2 && state.ordinal() < 3)))">
                             <s:url id="rejectSelected" action="eprMarriageNoticeRejectInit.do">
                                 <s:param name="idUKey" value="idUKey"/>
                                 <s:param name="noticeType" value="type"/>
@@ -431,3 +430,9 @@
 <s:hidden id="error4" value="%{getText('searchEndDate.label')}"/>
 <s:hidden id="error5" value="%{getText('pin.label')}"/>
 <s:hidden id="error6" value="%{getText('enter.registrationDivision.label')}"/>
+
+<%--
+<s:property value="(type.ordinal()==0 && state.ordinal() == 0) ||
+                         (type.ordinal()==1 && (state.ordinal() != 1 && state.ordinal() < 3)) ||
+                         (type.ordinal()==2 && (state.ordinal() != 2 && state.ordinal() < 3)) &&
+                         (!(#session.user_bean.role.roleId.equals('DEO')))" />--%>

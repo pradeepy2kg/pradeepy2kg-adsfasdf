@@ -130,12 +130,18 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     public String marriageNoticeSearchInit() {
         logger.debug("Marriage notice search page loaded");
 //        commonUtil.populateDynamicListsWithAllOption(districtList, dsDivisionList, mrDivisionList, user, language);
-        populateBasicLists();
-        pageNo += 1;
-        getApprovalPendingNotices();
-        showNoticeSearchResultSize();
-        // by doing following previously user entered values will be removed in jsp page
-        clearSearchingOptionValues();
+        try {
+            populateBasicLists();
+            pageNo += 1;
+            getApprovalPendingNotices();
+            showNoticeSearchResultSize();
+            // by doing following previously user entered values will be removed in jsp page
+            clearSearchingOptionValues();
+        }
+        catch (CRSRuntimeException e) {
+            logger.debug("exception while loading page");
+            return ERROR;
+        }
         return SUCCESS;
     }
 

@@ -1337,6 +1337,7 @@
         <action name="eprMarriageNoticeSearchInit" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
                 method="marriageNoticeSearchInit">
             <result type="tiles" name="success">epr.marriageNoticeSearchHome</result>
+            <result type="tiles" name="error">epr.error</result>
         </action>
 
         <action name="eprMarriageNoticeSearchNext" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
