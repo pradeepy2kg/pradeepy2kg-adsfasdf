@@ -232,7 +232,11 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
             mrState = StateUtil.getStateById(state);
         }
 
+        //Search by license serial number
         if (noticeSerialNo != null) {
+            marriageRegisterSearchList = new ArrayList<MarriageRegister>();
+            marriageRegisterSearchList.add(marriageRegistrationService.getMarriageRegisterByIdUKeyAndState
+                (noticeSerialNo, user, MarriageRegister.State.LICENSE_PRINTED));
 
         } else if (pinOrNic != null) {
             marriageRegisterSearchList = marriageRegistrationService.getMarriageRegisterByIdNumber(pinOrNic, true, user);

@@ -56,6 +56,16 @@ public interface MarriageRegistrationService {
     public MarriageRegister getMarriageRegisterByIdUKey(long idUKey, User user, int permission);
 
     /**
+     * get marriage register primary key and state.
+     *
+     * @param idUKey primary key of the record
+     * @param user   user who performs the action
+     * @param state  state of the marriage register
+     * @return
+     */
+    public MarriageRegister getMarriageRegisterByIdUKeyAndState(long idUKey, User user, MarriageRegister.State state);
+
+    /**
      * Returns a paginated list of Marriage Notices based on the specified District
      *
      * @param district the district

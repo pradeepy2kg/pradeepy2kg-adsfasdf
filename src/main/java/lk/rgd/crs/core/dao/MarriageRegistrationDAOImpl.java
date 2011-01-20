@@ -46,6 +46,16 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
     /**
      * @inheriteDoc
      */
+    public MarriageRegister getMarriageRegisterByIdUKeyAndState(long idUKey, MarriageRegister.State state) {
+        Query q = em.createNamedQuery("getMarriageRegisterByIdUKeyAndState");
+        q.setParameter("idUKey", idUKey);
+        q.setParameter("state", state);
+        return (MarriageRegister)q.getSingleResult();
+    }
+
+    /**
+     * @inheriteDoc
+     */
     @Transactional(propagation = Propagation.MANDATORY)
     public void updateMarriageRegister(MarriageRegister marriageRegister, User user) {
         marriageRegister.getLifeCycleInfo().setCreatedTimestamp(new Date());
@@ -184,6 +194,7 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
     /**
      * @inheritDoc
      */
+    //TODO : to be removed
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<MarriageRegister> getPaginatedMarriageRegisterList(EnumSet stateList, int pageNo,
         int noOfRows, boolean isActive) {
@@ -236,6 +247,7 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
 
         q.setParameter("active", isActive);
         q.setParameter("stateList", stateList);
+
         if (divisionUKey != 0) {
             q.setParameter("divisionUKey", divisionUKey);
         }
