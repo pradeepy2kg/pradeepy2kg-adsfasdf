@@ -134,8 +134,8 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      */
     @Transactional(propagation = Propagation.SUPPORTS)
     public List<MarriageRegister> getMarriageRegisterBySerialNumber(long serialNumber, User user, int permission) {
-        EnumSet<MarriageRegister.State>  stateList = StateUtil.getMarriageRegisterStateList(null);
         ValidationUtils.validateUserPermission(permission, user);
+        EnumSet<MarriageRegister.State>  stateList = StateUtil.getMarriageRegisterStateList(null);
         return marriageRegistrationDAO.getMarriageRegisterBySerialNumber(serialNumber, stateList);
         //TODO validate access to MR
     }
@@ -179,7 +179,8 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<MarriageRegister> getMarriageRegisterByIdNumber(String pinOrNic, boolean active, User user) {
         ValidationUtils.validateUserPermission(Permission.SEARCH_MARRIAGE, user);
-        return marriageRegistrationDAO.getMarriageRegisterByIdNumber(pinOrNic, active);
+        EnumSet<MarriageRegister.State>  stateList = StateUtil.getMarriageRegisterStateList(null);
+        return marriageRegistrationDAO.getMarriageRegisterByIdNumber(pinOrNic, active, stateList);
         //TODO:validate access to Marriage Division
     }
 

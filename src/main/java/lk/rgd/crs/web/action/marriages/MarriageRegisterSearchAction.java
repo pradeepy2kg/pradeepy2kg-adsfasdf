@@ -237,14 +237,14 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         if (idUKey != 0) {
             //todo: remove licensed MR from other searches
             marriageRegisterSearchList = new ArrayList<MarriageRegister>();
-            //todo: filter by divisions if not a licensed marriage
+            //todo: filter by divisions if not a licensed marriage, find in all states
             MarriageRegister marriageRegister = marriageRegistrationService.getMarriageRegisterByIdUKeyAndState
                 (idUKey, user, MarriageRegister.State.LICENSE_PRINTED, Permission.SEARCH_MARRIAGE);
             if (marriageRegister != null) {
                 marriageRegisterSearchList.add(marriageRegister);
             }
         } else if (pinOrNic != null) {
-            //todo: filter by state
+            //todo: filter by state, mr division
             //search by male/female/registrar identification number
             marriageRegisterSearchList = marriageRegistrationService.getMarriageRegisterByIdNumber(pinOrNic, true, user);
 

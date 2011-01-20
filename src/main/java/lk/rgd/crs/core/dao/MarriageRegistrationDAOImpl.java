@@ -50,7 +50,7 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
         if (q.getResultList().isEmpty()) {
             return null;
         } else {
-            return (MarriageRegister)q.getSingleResult();
+            return (MarriageRegister) q.getSingleResult();
         }
     }
 
@@ -89,7 +89,7 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
     public List<MarriageRegister> getNoticeByMRDivisionAndSerialNo(MRDivision mrDivision,
         long serialNo, boolean active) {
         Query q = em.createNamedQuery("get.notice.by.mrDivision.and.serial");
-        q.setParameter("mrDivision", mrDivision);      
+        q.setParameter("mrDivision", mrDivision);
         q.setParameter("serialNo", serialNo);
         q.setParameter("active", active);
         return q.getResultList();
@@ -322,21 +322,22 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<MarriageRegister> getMarriageRegisterBySerialNumber(long serialNumber,
-        EnumSet<MarriageRegister.State>  stateList) {
+        EnumSet<MarriageRegister.State> stateList) {
         Query q = em.createNamedQuery("findMarriageBySerialNumber");
         q.setParameter("serialNumber", Long.toString(serialNumber));
         q.setParameter("stateList", stateList);
         return q.getResultList();
     }
 
-        /**
+    /**
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<MarriageRegister> getMarriageRegisterByIdNumber(String id, boolean active) {
+    public List<MarriageRegister> getMarriageRegisterByIdNumber(String id, boolean active, EnumSet<MarriageRegister.State> stateList) {
         Query q = em.createNamedQuery("findMarriageByIdNumber");
         q.setParameter("id", id);
         q.setParameter("active", active);
+        q.setParameter("stateList", stateList);
         return q.getResultList();
     }
 

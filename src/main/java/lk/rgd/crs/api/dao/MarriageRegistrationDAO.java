@@ -249,9 +249,10 @@ public interface MarriageRegistrationDAO {
      *
      * @param id     the identification number (male or female or registrar PIN or NIC)
      * @param active status of the marriage register active or inactive
+     * @param stateList list of possible states of the marriage register
      * @return
      */
-    public List<MarriageRegister> getMarriageRegisterByIdNumber(String id, boolean active);
+    public List<MarriageRegister> getMarriageRegisterByIdNumber(String id, boolean active, EnumSet<MarriageRegister.State>  stateList);
 
     /**
      * Returns a limited list of MarriageRegistrations for given status and identification number (it can be male or
