@@ -8,12 +8,42 @@ import java.util.List;
  * Bean to contain all calculated summary statistics district wise. These will be used to export into CSV format and/or display in JSP
  */
 public class BirthDistrictStatistics extends BirthStatistics {
+
+    private int totalBirthFromDistricts;
+    private int maleBirthFromDistricts;
+    private int femaleBirthFromDistricts;
+    public List<BirthMonthlyStatistics> monthlyTotals;
+
+    public static final int NO_OF_MONTHS = 12;
+
     public BirthDistrictStatistics() {
-        int length = totals.size();
-        for (int i=0; i<length; i++) {
-            totals.set(i, new BirthMonthlyStatistics());
+        monthlyTotals = new ArrayList<BirthMonthlyStatistics>();
+        for (int i = 0; i < NO_OF_MONTHS; i++) {
+            monthlyTotals.add(new BirthMonthlyStatistics());
         }
+    }   
+
+    public int getFemaleBirthFromDistricts() {
+        return femaleBirthFromDistricts;
     }
 
-    public List<BirthMonthlyStatistics> totals = new ArrayList<BirthMonthlyStatistics>(12);
+    public void setFemaleBirthFromDistricts(int femaleBirthFromDistricts) {
+        this.femaleBirthFromDistricts = femaleBirthFromDistricts;
+    }
+
+    public int getMaleBirthFromDistricts() {
+        return maleBirthFromDistricts;
+    }
+
+    public void setMaleBirthFromDistricts(int maleBirthFromDistricts) {
+        this.maleBirthFromDistricts = maleBirthFromDistricts;
+    }
+
+    public int getTotalBirthFromDistricts() {
+        return totalBirthFromDistricts;
+    }
+
+    public void setTotalBirthFromDistricts(int totalBirthFromDistricts) {
+        this.totalBirthFromDistricts = totalBirthFromDistricts;
+    }
 }
