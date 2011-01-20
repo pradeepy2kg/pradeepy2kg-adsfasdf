@@ -382,10 +382,18 @@
                                 <s:param name="mrDivisionId" value="#request.mrDivisionId"/>
                                 <s:param name="printStart" value="#request.printStart"/>
                             </s:url>
-                            <s:a href="%{printSelected}" title="%{getText('printToolTip.label')}">
-                                <img src="<s:url value='/images/print_icon.gif'/>" width="25" height="25"
-                                     border="none"/>
-                            </s:a>
+                            <s:if test="state.ordinal()==3">
+                                <s:a href="%{printSelected}" title="%{getText('printToolTip.label')}">
+                                    <img src="<s:url value='/images/print_icon.gif'/>" width="25" height="25"
+                                         border="none"/>
+                                </s:a>
+                            </s:if>
+                            <s:if test="state.ordinal()==7">
+                                <s:a href="%{printSelected}" title="%{getText('reprintToolTip.label')}">
+                                    <img src="<s:url value='/images/print_icon.gif'/>" width="25" height="25"
+                                         border="none"/>
+                                </s:a>
+                            </s:if>
                         </s:if>
                     </td>
                 </tr>
