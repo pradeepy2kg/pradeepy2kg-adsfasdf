@@ -199,9 +199,9 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     }
 
     public String markMarriageExtractAsPrinted() {
-        MarriageRegister register = marriageRegistrationService.getMarriageRegisterByIdUKeyAndState(idUKey, user,
-            MarriageRegister.State.EXTRACT_PRINTED, Permission.PRINT_MARRIAGE_EXTRACT);
-        if (register != null) {
+        MarriageRegister marriageRegister = marriageRegistrationService.getMarriageRegisterByIdUKey(idUKey, user,
+            Permission.PRINT_MARRIAGE_EXTRACT);
+        if (marriageRegister != null && marriageRegister.getState() == MarriageRegister.State.EXTRACT_PRINTED) {
             addActionMessage(getText("message.marriagerextract.alreadymarkedasprinted"));
             return SUCCESS;
         } else {
@@ -235,11 +235,9 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
 
         //Search by marriage registration number - IDukey
         if (idUKey != 0) {
-            //todo: remove licensed MR from other searches
             marriageRegisterSearchList = new ArrayList<MarriageRegister>();
-            //todo: filter by divisions if not a licensed marriage, find in all states
             MarriageRegister marriageRegister = marriageRegistrationService.getMarriageRegisterByIdUKeyAndState
-                (idUKey, user, MarriageRegister.State.LICENSE_PRINTED, Permission.SEARCH_MARRIAGE);
+                (idUKey, user, Permission.SEARCH_MARRIAGE);
             if (marriageRegister != null) {
                 marriageRegisterSearchList.add(marriageRegister);
             }

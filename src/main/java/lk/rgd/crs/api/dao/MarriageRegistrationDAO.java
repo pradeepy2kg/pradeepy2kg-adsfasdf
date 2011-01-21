@@ -36,10 +36,10 @@ public interface MarriageRegistrationDAO {
      * get marriage register primary key and state.
      *
      * @param idUKey primary key of the record
-     * @param state  state of the marriage register
+     * @param stateList  possible states of the marriage register
      * @return
      */
-    public MarriageRegister getMarriageRegisterByIdUKeyAndState(long idUKey, MarriageRegister.State state);
+    public MarriageRegister getMarriageRegisterByIdUKeyAndState(long idUKey, EnumSet<MarriageRegister.State> stateList);
 
     /**
      * updating given marriage register object
