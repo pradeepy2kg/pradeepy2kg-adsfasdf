@@ -537,7 +537,7 @@
     </tr>
 
     <tr>
-        <td style="border-top:none; border-bottom:none;"></td>
+        <td style="border-top:none; border-bottom:none;">&nbsp;</td>
         <td colspan="1" class="table_reg_cell_02" style="border-top:1px solid #000;">
             <s:label value="දිස්ත්‍රික්කය /மாவட்டம் /District"/>
         </td>
@@ -559,7 +559,7 @@
             </s:else></td>
     </tr>
     <tr>
-        <td style="border-top:none;"></td>
+        <td style="border-top:none;">&nbsp;</td>
         <td colspan="1"><s:label value="ප්‍රාදේශීය ලේකම් කොට්ඨාශය /"/><br>
             <s:label value="பிரதேச செயளாளா் பிரிவு/"/><br>
             <s:label value="Divisional Secretariat"/><br></td>
@@ -705,7 +705,7 @@
             grandfather of the child born in Sri Lanka</label></td>
     </tr>
     <tr>
-        <td rowspan="2" style="width:55px"></td>
+        <td rowspan="2" style="width:55px">&nbsp;</td>
         <td width="200px"><label>ඔහුගේ සම්පුර්ණ නම<br>அவரின் முழுப் பேயர் <br>His Full Name</label></td>
         <td colspan="4"><s:label value="%{#request.grandFather.grandFatherFullName}"
                                  cssStyle="width:98%;"/></td>
@@ -725,7 +725,7 @@
             born in Sri Lanka and if great grandfather born in Sri Lanka great grand father's</label></td>
     </tr>
     <tr>
-        <td rowspan="2"></td>
+        <td rowspan="2">&nbsp;</td>
         <td><label>සම්පුර්ණ නම <br>முழுப் பெயர் <br>Full Name</label></td>
         <td colspan="3"><s:label value="%{#request.grandFather.greatGrandFatherFullName}"
                                  cssStyle="width:98%;"/></td>
