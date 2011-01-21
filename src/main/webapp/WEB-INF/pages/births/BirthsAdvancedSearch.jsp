@@ -37,16 +37,17 @@
 <script type="text/javascript" src="../lib/ajaxsolr/widgets/TextWidget.js"></script>
 
 <script type="text/javascript" src="../lib/daterangepicker/daterangepicker.jQuery.js"></script>
-<link rel="stylesheet" href="../css/ui.daterangepicker.css" type="text/css" />
+<link rel="stylesheet" href="../css/ui.daterangepicker.css" type="text/css"/>
 
 <script>
-  $(document).ready(function() {
-    $("#tabs").tabs();
-    $('#queryDOBRange').daterangepicker({arrows:true});
-  });
+    $(document).ready(function() {
+        $("#tabs").tabs();
+        $('#queryDOBRange').daterangepicker({arrows:true});
+    });
 
-  function initPage(){}
-    
+    function initPage() {
+    }
+
 </script>
 
 
@@ -65,51 +66,70 @@
                 <li><a href="#fragment-7"><span>Advanced Search</span></a></li>
             </ul>
             <div id="fragment-1">
-                <div id="searchPIN">
-                    <span>Search PIN Number</span>
-                    <input type="text" id="queryPIN" name="queryPIN"/>
-                </div>
-                <div id="searchMothersNICorPIN">
-                    <span>Search by Mothers NIC or PIN</span>
-                    <input type="text" id="queryMothersNICorPIN" name="queryMothersNICorPIN"/>
-                </div>
+                <table>
+                    <tr>
+                        <div id="searchPIN">
+                            <td><span>Search PIN Number</span></td>
+                            <td><input type="text" id="queryPIN" name="queryPIN"/></td>
+                        </div>
+                    </tr>
+                    <tr>
+                        <div id="searchMothersNICorPIN">
+                            <td><span>Search by Mothers NIC or PIN</span></td>
+                            <td><input type="text" id="queryMothersNICorPIN" name="queryMothersNICorPIN"/></td>
+                        </div>
+                    </tr>
+                </table>
             </div>
             <div id="fragment-2">
-                <div id="searchEnglish">
-                    <span>Search full name in English</span>
-                    <input type="text" id="queryEnglish" name="queryEnglish"/>
-                </div>
-                <div id="searchOfficial">
-                    <span>Search full name in Official Language</span>
-                    <input type="text" id="queryOfficial" name="queryOfficial"/>
-                </div>
+                <table>
+                    <tr>
+                        <div id="searchEnglish">
+                            <td><span>Search full name in English</span></td>
+                            <td><input type="text" id="queryEnglish" name="queryEnglish"/></td>
+                        </div>
+                    </tr>
+                    <tr>
+                        <div id="searchOfficial">
+                            <td><span>Search full name in Official Language</span></td>
+                            <td><input type="text" id="queryOfficial" name="queryOfficial"/></td>
+                        </div>
+                    </tr>
+                </table>
             </div>
             <div id="fragment-3">
                 <fieldset style="border:none">
-                <span>Gender</span>
-                <div class="tagcloud" id="childGender"></div>
-                <div class="clear"></div>
+                    <span>Gender</span>
+
+                    <div class="tagcloud" id="childGender"></div>
+                    <div class="clear"></div>
                 </fieldset>
             </div>
             <div id="fragment-4">
                 <fieldset style="border:none">
-                <span>Registration District</span>
-                <div class="tagcloud" id="birthDistrict"></div>
-                <div class="clear"></div>
+                    <span>Registration District</span>
+
+                    <div class="tagcloud" id="birthDistrict"></div>
+                    <div class="clear"></div>
                 </fieldset>
             </div>
             <div id="fragment-5">
                 <fieldset style="border:none">
-                <span>Registration  Division</span>
-                <div class="tagcloud" id="birthDivision"></div>
-                <div class="clear"></div>
+                    <span>Registration  Division</span>
+
+                    <div class="tagcloud" id="birthDivision"></div>
+                    <div class="clear"></div>
                 </fieldset>
             </div>
             <div id="fragment-6">
-                <div id="searchDOBRange">
-                    <span>Choose Date of Birth Range</span>
-                    <input type="text" id="queryDOBRange" name="queryDOBRange"/>
-                </div>
+                <table>
+                    <tr>
+                        <div id="searchDOBRange">
+                            <td><span>Choose Date of Birth Range</span></td>
+                            <td><input type="text" id="queryDOBRange" name="queryDOBRange"/></td>
+                        </div>
+                    </tr>
+                </table>
             </div>
             <div id="fragment-7">
                 <div id="searchAdvanced">
