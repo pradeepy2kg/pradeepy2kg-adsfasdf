@@ -368,6 +368,7 @@ function disableSigns(mode) {
             mode = true;
         }
     }
+    showSignRequired(!mode);
     document.getElementById('motherSigned').disabled = mode;
     document.getElementById('fatherSigned').disabled = mode;
     if (mode) {
@@ -406,7 +407,7 @@ function initPage() {
             //disableSigns(true);
             disableSignature();
             showMarriageRequired(true);
-            showSignRequired(false);
+
         } else if (document.getElementsByName("marriage.parentsMarried")[3].checked) {
             disableMarriage(true);
             disableSigns(true);
