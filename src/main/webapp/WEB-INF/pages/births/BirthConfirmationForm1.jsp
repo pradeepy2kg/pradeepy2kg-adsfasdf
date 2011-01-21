@@ -173,7 +173,7 @@
                         <td><label><span class="font-8">අනුක්‍රමික අංකය<s:label value="*"
                                                                                 cssStyle="color:red;font-size:10pt"/><br>தொடர் இலக்கம்<br>Serial Number</span></label>
                         </td>
-                        <td><s:textfield name="bdId" id="SerialNo"/>
+                        <td><s:textfield name="bdId" id="SerialNo" value="%{bdId}"/>
                             <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>--%>
                         </td>
                     </tr>
@@ -465,6 +465,7 @@
 <s:if test="bdId != 0">
     <div class="form-submit">
         <s:submit value="%{getText('next.label')}" id="next"/>
+        <s:hidden value="%{#request.bdId}" name="bdId"/>
     </div>
 </s:if>
 </s:form>
@@ -481,4 +482,5 @@
 <s:hidden id="error7" value="%{getText('motherPINorNIC.label')}"/>
 
 </div>
+
 <%-- Styling Completed --%>

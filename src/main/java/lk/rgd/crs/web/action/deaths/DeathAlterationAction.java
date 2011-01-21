@@ -254,6 +254,11 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 existing.setDeathPerson(deathAlteration.getDeathPerson());
             }
             existing.setDeclarant(deathAlteration.getDeclarant());
+            existing.setHowErrorHappen(deathAlteration.getHowErrorHappen());
+            existing.setBcOfFather(deathAlteration.isBcOfFather());
+            existing.setBcOfMother(deathAlteration.isBcOfMother());
+            existing.setMcOfParents(deathAlteration.isMcOfParents());
+            existing.setOtherDocuments(deathAlteration.getOtherDocuments());
             deathAlterationService.updateDeathAlteration(existing, user);
 
             addActionMessage(getText("alt.edit.message.success",

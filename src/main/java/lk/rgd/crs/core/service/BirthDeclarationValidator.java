@@ -16,10 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * A class to contain validations for BDFs
@@ -180,6 +177,23 @@ public class BirthDeclarationValidator {
 
         // check pin or nic duplicates in birth register
         checkNicOrPinDuplicates(bdf, warnings, rb);
+
+        //check child ranks
+        List<BirthDeclaration> prevChildList = Collections.emptyList();
+        if (bdf.getParent().getMotherNICorPIN() != null && bdf.getChild().getChildRank() != null) {
+            prevChildList = birthDeclarationDAO.getListOfLiveBirthsForGivenMother(bdf.getParent().getMotherNICorPIN());
+        }
+
+        for (BirthDeclaration birthDeclaration : prevChildList) {
+            if (bdf.getChild().getChildRank().equals(birthDeclaration.getChild().getChildRank()) &&
+                birthDeclaration.getRegister().getStatus() != BirthDeclaration.State.DATA_ENTRY) {
+                UserWarning w = new UserWarning(MessageFormat.format(rb.getString("duplicate_child_rank"),
+                    bdf.getChild().getChildRank()));
+                w.setSeverity(UserWarning.Severity.ERROR);
+                warnings.add(w);
+                break;
+            }
+        }
 
         // validate notifying authority - initially we will need to allow a PIC or NIC for the NA
         {
