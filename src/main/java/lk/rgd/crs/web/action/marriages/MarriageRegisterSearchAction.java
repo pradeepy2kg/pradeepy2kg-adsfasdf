@@ -151,7 +151,6 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     public String marriageRegisterSearchInit() {
         commonUtil.populateDynamicListsWithAllOption(districtList, dsDivisionList, mrDivisionList, user, language);
         stateList = StateUtil.getStateByLanguage(language);
-        idUKey = 0;
         marriageRegisterSearchResult();
         return SUCCESS;
     }
@@ -237,10 +236,12 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         //Search by marriage registration number - IDukey
         if (idUKey != 0) {
             marriageRegisterSearchList = new ArrayList<MarriageRegister>();
+            logger.debug("serch by Idukey : {}", idUKey);
             MarriageRegister marriageRegister = marriageRegistrationService.getMarriageRegisterByIdUKeyAndState
                 (idUKey, user, Permission.SEARCH_MARRIAGE);
             if (marriageRegister != null) {
                 marriageRegisterSearchList.add(marriageRegister);
+                logger.debug("marriageRegisterSearchList size : {} ", marriageRegisterSearchResult().length());
             }
         } else if (pinOrNic != null) {
             //search by male/female/registrar identification number

@@ -12,10 +12,10 @@
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<s:url value="/js/division.js"/>"></script>
 <script type="text/javascript" src="<s:url value="/js/datePicker.js"/>"></script>
+<script type="text/javascript" src="<s:url value="/js/marriageregistervalidation.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
-<script type="text/javascript" src="../js/validate.js"></script>
-<script>
+<script type="text/javascript">
     $(document).ready(function() {
         $("#tabs").tabs();
     });
@@ -32,6 +32,12 @@
             "sPaginationType": "full_numbers"
         });
     });
+
+    function validateSerial() {
+        var errormsg = "";
+        errormsg = validateSerialNo("serialNumber", "errorSerialNumber", errormsg);
+        return printErrorMessages(errormsg);
+    }
 </script>
 <s:actionerror cssStyle="color:red;font-size:10pt"/>
 <s:actionmessage cssStyle="color:blue;font-size:10pt"/>
@@ -50,7 +56,7 @@
             <a href="#fragment-4"><span> <s:label value="%{getText('label.marriageregister.search.byIdUKey')}"/></span></a>
         </li>
     </ul>
-    <s:form action="eprMarriageRegisterSearch.do" method="POST" onsubmit="javascript:return validate()">
+    <s:form action="eprMarriageRegisterSearch.do" id="generalSearch" method="POST">
         <div id="fragment-1">
             <table>
                 <caption/>
@@ -129,7 +135,7 @@
             </table>
         </div>
     </s:form>
-    <s:form action="eprMarriageRegisterSearch.do" method="POST" onsubmit="javascript:return validate()">
+    <s:form action="eprMarriageRegisterSearch.do" id="searchByPIN" method="POST">
         <div id="fragment-2">
             <table>
                 <caption/>
@@ -153,7 +159,7 @@
             </table>
         </div>
     </s:form>
-    <s:form action="eprMarriageRegisterSearch.do" method="POST" onsubmit="javascript:return validate()">
+    <s:form action="eprMarriageRegisterSearch.do" id="searchBySerial" method="POST" onsubmit="javascript:return validateSerial()">
         <div id="fragment-3">
             <table>
                 <caption/>
@@ -166,7 +172,7 @@
                         <s:label value="%{getText('label.marriageregister.serial')}"/>
                     </td>
                     <td>
-                        <s:textfield id="noticeSerialNo" name="noticeSerialNo" cssStyle="width:232px;" maxLength="10"/>
+                        <s:textfield id="serialNumber" name="noticeSerialNo" cssStyle="width:232px;" maxLength="10"/>
                     </td>
                     <td>
                         <div class="form-submit">
@@ -178,7 +184,7 @@
             </table>
         </div>
     </s:form>
-        <s:form action="eprMarriageRegisterSearch.do" method="POST" onsubmit="javascript:return validate()">
+    <s:form action="eprMarriageRegisterSearch.do" id="searchByIdUKey" method="POST">
         <div id="fragment-4">
             <table>
                 <caption/>
@@ -325,8 +331,5 @@
         </fieldset>
     </s:if>
 </div>
-<s:hidden id="error1" value="%{getText('p1.invalide.inputType')}"/>
-<s:hidden id="error2" value="%{getText('marriageNotice.serial.label')}"/>
-<s:hidden id="error3" value="%{getText('searchStartDate.label')}"/>
-<s:hidden id="error4" value="%{getText('searchEndDate.label')}"/>
-<s:hidden id="error5" value="%{getText('pin.label')}"/>
+<s:hidden id="errorSerialNumber"
+          value="%{getText('error.invalid') + getText('error_js_marriageregister_serialNumber')}"/>

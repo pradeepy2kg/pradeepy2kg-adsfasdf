@@ -53,6 +53,25 @@ function validatePin(fieldId, messageId, errormsg) {
 
 }
 
+function validateSerialNo(fieldId, messageId, errormsg) {
+    var domObject = document.getElementById(fieldId);
+
+    if (isFieldEmpty(domObject)) {
+        return printValidationMessage(messageId, errormsg);
+    }
+    var reg = /^20([1-9][0-9])[0|1]([0-9]{5})$/;
+    var notbe = /^20([1-9][0-9])[0|1]([0]{5})$/;
+
+    if (notbe.test(domObject.value.trim()) == true) {
+        return printValidationMessage(messageId, errormsg);
+    } else {
+        if (reg.test(domObject.value.trim()) == false) {
+            return printValidationMessage(messageId, errormsg);
+        }
+    }
+    return errormsg;
+}
+
 function isValidPIN(domElement) {
     with (domElement) {
         var reg = /^(([0-9]{10})|([0-9]{9}[X|x|V|v]))$/;

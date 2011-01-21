@@ -46,7 +46,7 @@
         errormsg = validateEmptyField("addressMale", "errorAddressMale", errormsg);
         errormsg = validateEmptyField("addressFemale", "errorAddressFemale", errormsg);
 
-        errormsg = validateEmptyField("serialNumber", "errorSerialNumber", errormsg);
+        errormsg = validateSerialNo("serialNumber", "errorSerialNumber", errormsg);
         ////errormsg = isDate("registrationDatePicker", "errorRegistrationDate", errormsg);
         return printErrorMessages(errormsg);
     }
