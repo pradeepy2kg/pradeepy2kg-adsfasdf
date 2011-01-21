@@ -36,7 +36,6 @@ import java.io.Serializable;
     @NamedQuery(name = "get.by.bddivision", query = "SELECT bdf FROM BirthDeclaration bdf " +
         "WHERE bdf.register.birthDivision = :birthDivision " +
         "ORDER BY bdf.register.dateOfRegistration desc"),
-
     @NamedQuery(name = "get.historical.records.by.bddivision.and.serialNo", query = "SELECT bdf FROM BirthDeclaration bdf " +
         "WHERE (bdf.register.birthDivision = :birthDivision AND bdf.register.bdfSerialNo = :bdfSerialNo) " +
         "AND bdf.lifeCycleInfo.activeRecord IS FALSE " +
@@ -103,7 +102,9 @@ import java.io.Serializable;
         " WHERE bdf.lifeCycleInfo.createdUser =:user AND (bdf.lifeCycleInfo.createdTimestamp BETWEEN :startDate AND :endDate)"),
     @NamedQuery(name = "get.by.serial.and.ds.id", query = "SELECT bdf FROM BirthDeclaration bdf" +
         " WHERE bdf.register.bdfSerialNo =:serial AND bdf.register.birthDivision.dsDivision.dsDivisionUKey =:dsId " +
-        "AND bdf.lifeCycleInfo.activeRecord IS TRUE ")
+        "AND bdf.lifeCycleInfo.activeRecord IS TRUE "),
+    @NamedQuery(name = "get.bdf.by.mother", query = "SELECT bdf FROM BirthDeclaration bdf WHERE " +
+        "(bdf.parent.motherNICorPIN =:mother AND bdf.register.birthType =:type AND bdf.lifeCycleInfo.activeRecord IS TRUE) ")
 })
 public class BirthDeclaration implements Serializable, Cloneable {
 

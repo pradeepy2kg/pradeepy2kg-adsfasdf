@@ -87,8 +87,11 @@
                 counter++
             }
         }
-        if (counter != 1) {
+        if (counter > 1) {
             errormsg = errormsg + document.getElementById('oneMethodErr').value;
+        }
+        if (counter == 0) {
+            errormsg = errormsg + document.getElementById('atleastOne').value;
         }
 
         var domObject = document.getElementById('bdfSerialNoId1');
@@ -342,6 +345,7 @@
     </s:if>
 
     <s:hidden id="oneMethodErr" value="%{getText('err.use.one,method.to.search')}"/>
+    <s:hidden id="atleastOne" value="%{getText('err.no.searching.criteria')}"/>
     <s:hidden id="invalideDateErr" value="%{getText('err.invalide.data')}"/>
     <s:hidden id="bdfSerialNumber" value="%{getText('field.bdf.serial')}"/>
     <s:hidden id="confSerialNumber" value="%{getText('conf.serial.number')}"/>

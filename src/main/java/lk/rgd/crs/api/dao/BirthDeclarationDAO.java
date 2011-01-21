@@ -329,5 +329,13 @@ public interface BirthDeclarationDAO {
      * @return list of birth records
      */
     public List<BirthDeclaration> getActiveBirthRecordByDSDivisionAndSerialNumber(long serialNumber, int dsDivisionId);
+
+    /**
+     * get list of active live birth declaration for given mother
+     *
+     * @param motherIdentification mother pin or nic
+     * @return list of birth records
+     */
+    public List<BirthDeclaration> getListOfLiveBirthsForGivenMother(String motherIdentification);
 }
 
