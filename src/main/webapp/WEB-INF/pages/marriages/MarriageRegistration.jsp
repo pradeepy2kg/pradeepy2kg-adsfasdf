@@ -688,6 +688,7 @@
         <s:if test="mode=='register'">
             <s:submit action="eprRegisterNoticedMarriage" value="%{getText('button.marriageregister.register')}"/>
         </s:if>
+        <%-- todo : to be removed--%>
         <s:elseif test="mode=='reject'">
             <s:submit action="eprRejectMarriageRegistration" value="%{getText('button.reject')}"/>
         </s:elseif>
