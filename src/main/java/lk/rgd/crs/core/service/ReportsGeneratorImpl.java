@@ -41,6 +41,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
     private final UserManager userManagementService;
     BirthIslandWideStatistics statistics = BirthIslandWideStatistics.getInstance();
     private int[][] age_race_total;
+    private int[][] table_2_4;
 
     public ReportsGeneratorImpl(BirthRegistrationService birthRegister, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, RaceDAO raceDAO, UserManager service) {
         this.birthRegister = birthRegister;
@@ -49,6 +50,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         this.raceDAO = raceDAO;
         this.userManagementService = service;
         age_race_total = new int[BirthMonthlyStatistics.NO_OF_RACES][BirthRaceStatistics.NO_OF_AGE_GROUPS];
+        table_2_4 = new int[26][15];
     }
 
     /**
@@ -298,44 +300,36 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
      * @inheritDoc
      */
     public BirthIslandWideStatistics generate_2_4(int year, User user) {
-        /*if (!user.isAuthorized(Permission.GENERATE_REPORTS)) { TODO - find more efficient way to do this. statistics object become useless if i use this type of method
+        if (!user.isAuthorized(Permission.GENERATE_REPORTS)) {
             handleException(user.getUserName() + " doesn't have permission to generate the report",
                 ErrorCodes.PERMISSION_DENIED);
         }
 
-        List<DSDivision> dsDivisions = dsDivisionDAO.findAll();
+        List<DSDivision> dsDivisionList = dsDivisionDAO.findAll();
         User systemUser = userManagementService.getSystemUser();
         List<BirthDeclaration> birthRecords;
 
         Calendar cal = Calendar.getInstance();
 
-        *//* January first of the year *//*
+        /* January first of the year */
         cal.set(year, 0, 1);
         Date startDate = cal.getTime();
 
-        *//* December 31st of the year *//*
+        /* December 31st of the year */
         cal.set(year, 11, 31);
         Date endDate = cal.getTime();
 
-        for (DSDivision dsDivision : dsDivisions) {
+        for (DSDivision dsDivision : dsDivisionList) {
             birthRecords = birthRegister.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
                 BirthDeclaration.State.ARCHIVED_CERT_GENERATED, systemUser);
-
-            int districtIndex = dsDivision.getDistrict().getDistrictUKey();
-            BirthDistrictStatistics districtStats = statistics.totals.get(districtIndex);
-
-            for (BirthDeclaration bd : birthRecords) {
-                Calendar calender = Calendar.getInstance();
-                calender.setTime(bd.getChild().getDateOfBirth());
-                int month = calender.get(Calendar.MONTH);
-
-                BirthMonthlyStatistics birthMonthlyStatistics = districtStats.monthlyTotals.get(month);
-                BirthRaceStatistics birthRaceStatistics = birthMonthlyStatistics.raceTotals.get(bd.getParent().getFatherRace().getRaceId());
-
-                birthRaceStatistics.setTotalBirthFromRaces(0);
+            int districtId = dsDivision.getDistrictId() - 1;
+            for (BirthDeclaration birthDeclaration : birthRecords) {
+                int raceId = birthDeclaration.getParent().getMotherRace().getRaceId() - 1;
+                table_2_4[districtId][raceId] += 1;
             }
 
-        }*/
+        }
+
         return statistics;
     }
 
@@ -425,6 +419,21 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 }
                 break;
             case ReportCodes.TABLE_2_4:
+                int total = 0;
+                for (int i = 0; i < 26; i++) {
+                    District district = districtDAO.getDistrict(i + 1);
+                    String districtId = "Unknown";
+                    if (district != null) {
+                        districtId = district.getEnDistrictName();
+                    }
+                    csv.append(districtId + ",");
+                    total = 0;
+                    for (int j = 0; j < 13; j++) {
+                        csv.append(table_2_4[i][j] + ",");
+                        total += table_2_4[i][j];
+                    }
+                    csv.append(total + "\n");
+                }
                 break;
 
         }
@@ -503,6 +512,27 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 csv.append(",\n");
                 break;
             case ReportCodes.TABLE_2_4:
+
+                csv.append("District,");
+                for (int i = 0; i < 13; i++) {
+                    csv.append(raceDAO.getRace(i + 1).getEnRaceName() + ",");
+                }
+                csv.append("All Ethnic Groups\n");
+                csv.append("Sri Lanka,");
+                for (int i = 0; i < 13; i++) {
+                    total = 0;
+                    for (int j = 0; j < 26; j++) {
+                        total += table_2_4[j][i];
+                    }
+                    csv.append(total + ",");
+                }
+                total = 0;
+                for (int i = 0; i < 13; i++) {
+                    total += table_2_4[0][i];
+                }
+                csv.append(total + ",");
+                csv.append("\n");
+
                 break;
         }
 
