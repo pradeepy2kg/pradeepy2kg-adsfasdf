@@ -220,14 +220,22 @@
             <table id="approval-list-table" width="100%" cellpadding="0" cellspacing="0" class="display"
                    style="font-size:10pt;">
                 <thead>
-                <tr>
+                <tr><%--
                     <th width="20px"><s:label value="%{getText('alt.serial.number')}"/></th>
                     <th width="650px"><s:label value="%{getText('name.label')}"/></th>
                     <th width="100px"><s:label value="%{getText('edit.label')}"/></th>
                     <th width="100px"><s:label value="%{getText('delete.label')}"/></th>
                     <th width="100px"><s:label value="%{getText('reject.label')}"/></th>
                     <th width="100px"><s:label value="%{getText('approve.label')}"/></th>
-                    <th width="100px"><s:label value="%{getText('print.label')}"/></th>
+                    <th width="100px"><s:label value="%{getText('print.label')}"/></th>--%>
+
+                    <th width="100px"><s:label value="%{getText('alt.serial.number')}"/></th>
+                    <th width="870px"><s:label value="%{getText('name.label')}"/></th>
+                    <th width="40px"></th>
+                    <th width="40px"></th>
+                    <th width="40px"></th>
+                    <th width="40px"></th>
+                    <th width="40px"></th>
                 </tr>
                 </thead>
                 <tbody>
