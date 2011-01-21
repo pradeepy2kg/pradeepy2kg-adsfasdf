@@ -13,7 +13,7 @@
     #space{
         width:100%;
         margin:0 auto;
-        height:100px;
+        height:20px;
     }
     #passwordTable{
         margin:0 auto;
@@ -32,7 +32,7 @@
                 <col width="50%">
                 <tbody>
                 <tr>
-                    <th colspan="2"><b><s:label value="%{getText('changes.lable')}"/></b></th>
+                    <th colspan="2"><b><s:label value="%{getText('changePassword.label')}"/></b></th>
                 </tr>
                 <tr>
                     <td colspan="2">
@@ -72,8 +72,8 @@
                     <td>&nbsp;</td>
                     <td style="padding-right:30px;">
                         <div class="form-submit">
-                            <s:submit value="%{getText('submit.label')}" cssStyle="margin-right:40px;width:80px;"/>
-                            <s:submit action="eprBackChangePass" value="%{getText('cancel.button')}" cssStyle="width:80px;float:right;"/>
+                            <s:submit action="eprBackChangePass" value="%{getText('cancel.button')}" cssStyle="margin-right:40px;"/>
+                            <s:submit value="%{getText('submit.label')}" cssStyle="float:right;"/>
                         </div>
                     </td>
                 </tr>
