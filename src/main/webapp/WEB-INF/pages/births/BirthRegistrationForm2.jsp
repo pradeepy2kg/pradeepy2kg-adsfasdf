@@ -96,6 +96,8 @@ $(function() {
                 function(data1) {
                     $("textarea#fatherFullName").val(data1.fullNameInOfficialLanguage);
                     $("input#fatherPlaceOfBirth").val(data1.placeOfBirth);
+                   $("select#fatherRaceId").val(data1.race)
+                    //
                     var fatherDOB = data1.dateOfBirth;
                     if (fatherDOB != null) {
                         $("input#fatherDatePicker").val(fatherDOB);
@@ -124,7 +126,7 @@ $(function() {
         var regNIC = /^([0-9]{9}[X|x|V|v])$/;
         var day = id.substring(2, 5);
         var BirthYear = 19 + id.substring(0, 2);
-        var D = new Date(BirthYear) ;
+        var D = new Date(BirthYear);
         if ((id.search(regNIC) == 0) && (day >= 501 && day <= 866)) {
             if ((day > 559) && ((D.getFullYear() % 4) != 0 )) {
                 day = id.substring(2, 5) - 2;
@@ -428,7 +430,8 @@ function commonTags() {
             ජාතිය<br>இனம்<br>
             Father's Race</label></td>
         <td colspan="6" class="table_reg_cell_02">
-            <s:select list="raceList" name="fatherRace" headerKey="0" headerValue="%{getText('select_race.label')}"
+            <s:select list="raceList" id="fatherRaceId" name="fatherRace" headerKey="0"
+                      headerValue="%{getText('select_race.label')}"
                       cssStyle="width:200px;"/>
         </td>
     </tr>
