@@ -143,13 +143,15 @@ public class SearchAction extends ActionSupport implements SessionAware {
         logger.debug("inside searchBDFByIdUKey() : search parameter idUKey {} recieved", idUKey);
         try {
             bdf = service.getById(idUKey, user);
-            setStatus(bdf.getRegister().getStatus().toString());
+            if (bdf != null) {
+                setStatus(bdf.getRegister().getStatus().toString());
+            } else {
+                logger.debug("inside searchBDFByIdUKey() : No result found for Birth declaration UKey : {}", idUKey);
+                addActionError(getText("SearchBDF.error.NoResult"));
+            }
         } catch (CRSRuntimeException e) {
             logger.error("inside searchBDFByIdUKey() SearchBDFByIdUKey : ", e);
             addActionError(getText("SearchBDF.error." + e.getErrorCode()));
-        } catch (Exception e) {
-            logger.error("inside searchBDFByIdUKey() SearchBDFByIdUKey :  ", e);
-            addActionError(getText("SearchBDF.error.NoResult"));
         }
         populate();
         return SUCCESS;

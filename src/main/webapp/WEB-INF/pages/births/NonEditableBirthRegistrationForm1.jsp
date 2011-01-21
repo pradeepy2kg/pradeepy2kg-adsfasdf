@@ -21,7 +21,7 @@
     }
 </style>
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
-<div class="birth-registration-form-outer" id="birth-registration-form-1-outer">
+<div id="birth-certificate-outer">
 
 <s:if test="#request.archivedEntryList.size>0">
 <fieldset style="border:2px inset red; width:400px;">
@@ -75,7 +75,7 @@
         <td>
             <table class="table_non_editable_reg_page" cellspacing="0" cellpadding="0" style="width:300px; ">
                 <tr>
-                    <td style="width:60%"><label><span class="font-8">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span></label>
+                    <td style="width:60%"><label><span class="font-9">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span></label>
                     </td>
                     <%--<td><s:label value="%{#request.register.bdfSerialNo}"/></td>--%>
                     <td><s:label name="bdId"/></td>
@@ -85,7 +85,7 @@
                    style="width:300px;margin-top:10px;">
                 <tr>
                     <td style="width:60%">
-                        <label><span class="font-8">භාරගත් දිනය
+                        <label><span class="font-9">භාරගත් දිනය
                             <br>பெறப்பட்ட திகதி
                             <br>Submitted Date</span></label>
                     </td>
@@ -96,7 +96,8 @@
         </td>
     </tr>
     <tr>
-        <td colspan="3">
+        <td colspan="3" class="font-8">
+            <br>
             <s:if test="birthType.ordinal() == 1 || birthType.ordinal() == 3">
                 දැනුම් දෙන්නා (දෙමවිපියන් / භාරකරු) විසින් සම්පුර්ණ කර තොරතුරු වාර්තා කරන නිලධාරි වෙත භාර දිය
                 යුතුය. මෙම
@@ -133,7 +134,7 @@
 </table>
 
 
-<table class="table_non_editable_reg_page" cellspacing="0" cellpadding="0">
+<table class="table_non_editable_reg_page" cellspacing="0" cellpadding="0" style="font-size:9pt;">
 
 <caption></caption>
 <col/>
@@ -363,7 +364,7 @@
 </tr>
 </tbody>
 </table>
-<table class="table_non_editable_reg_page" cellspacing="0" style="margin-top:20px;">
+<table class="table_non_editable_reg_page" cellspacing="0" style="margin-top:20px;font-size:9pt;">
     <caption></caption>
     <col/>
     <col/>
@@ -376,13 +377,13 @@
     <col/>
     <tbody>
     <tr>
-        <td colspan="9" style="text-align:center;font-size:12pt">පියාගේ විස්තර
+        <td colspan="9" style="text-align:center;font-size:11pt">පියාගේ විස්තර
             <br>தந்தை பற்றிய தகவல்
             <br>Details of the Father
         </td>
     </tr>
     <tr>
-        <td rowspan="2" width="200px"><label><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+        <td rowspan="2" width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
             අනන්‍යතා අංකය <br>
             அடையாள எண் <br>Identification Number</label></td>
         <td rowspan="2" width="200px" class="find-person"><s:label
@@ -450,7 +451,8 @@
     </tr>
 </table>
 
-<table class="table_non_editable_reg_page" cellspacing="0" style="margin-top:20px;">
+<div style="page-break-after:always;"></div>
+<table class="table_non_editable_reg_page" cellspacing="0" style="margin-top:20px;font-size:9pt;">
     <caption></caption>
     <col/>
     <col/>
@@ -463,7 +465,7 @@
     <col/>
     <tbody>
     <tr>
-        <td colspan="9" style="text-align:center;font-size:12pt"> මවගේ විස්තර <br>தாய் பற்றிய தகவல் <br>Details of the
+        <td colspan="9" style="text-align:center;font-size:11pt"> මවගේ විස්තර <br>தாய் பற்றிய தகவல் <br>Details of the
             Mother
         </td>
     </tr>
@@ -618,7 +620,7 @@
 <%--pageNo 3--%>
 
 <s:if test="#request.register.birthType.ordinal() != 0">
-<table class="table_non_editable_reg_page" cellspacing="0" style="margin-top:20px;">
+<table class="table_non_editable_reg_page" cellspacing="0" style="margin-top:20px;font-size:9pt;">
     <caption></caption>
     <col/>
     <col/>
@@ -627,7 +629,7 @@
     <col/>
     <tbody>
     <tr>
-        <td colspan="5" style="text-align:center;font-size:12pt">විවාහයේ විස්තර
+        <td colspan="5" style="text-align:center;font-size:11pt">විවාහයේ විස්තර
             <br>திருமணத்தின் விபரங்கள்
             <br>Details of the Marriage
         </td>
@@ -682,7 +684,7 @@
 </table>
 
 
-<table class="table_non_editable_reg_page" cellspacing="0" cellpadding="0" style="margin-top:20px;">
+<table class="table_non_editable_reg_page" cellspacing="0" cellpadding="0" style="margin-top:20px;font-size:9pt;">
     <caption></caption>
     <col/>
     <col/>
@@ -691,7 +693,7 @@
     <col/>
     <tbody>
     <tr>
-        <td colspan="5" style="text-align:center;font-size:12pt">සීයාගේ / මී මුත්තා ගේ විස්තර
+        <td colspan="5" style="text-align:center;font-size:11pt">සීයාගේ / මී මුත්තා ගේ විස්තර
             <br>தாத்தாவின் / பாட்டனின் விபரங்கள்
             <br>Details of the Grand Father / Great Grand Father
         </td>
@@ -740,7 +742,8 @@
 </table>
 </s:if>
 
-<table class="table_non_editable_reg_page" cellspacing="0" cellpadding="0" style="margin-top:20px;">
+<div style="page-break-after:always;"></div>
+<table class="table_non_editable_reg_page" cellspacing="0" cellpadding="0" style="margin-top:20px;font-size:9pt;">
     <caption></caption>
     <col width="200px"/>
     <col width="100px"/>
@@ -749,7 +752,7 @@
 
     <tbody>
     <tr>
-        <td colspan="5" style="text-align:center;font-size:12pt">දැනුම් දෙන්නාගේ විස්තර<br>அறிவிப்பு கொடுப்பவரின்
+        <td colspan="5" style="text-align:center;font-size:11pt">දැනුම් දෙන්නාගේ විස්තර<br>அறிவிப்பு கொடுப்பவரின்
             தகவல்கள் <br>Details of the Informant
         </td>
     </tr>
@@ -845,7 +848,7 @@
 <%--End page no 3--%>
 
 
-<table class="table_non_editable_reg_page" cellspacing="0" cellpadding="0" style="margin-top:20px;">
+<table class="table_non_editable_reg_page" cellspacing="0" cellpadding="0" style="margin-top:20px;font-size:9pt;">
     <caption></caption>
     <col/>
     <col/>
@@ -854,7 +857,7 @@
     <col/>
     <tbody>
     <tr>
-        <td colspan="5" style="text-align:center;font-size:12pt"> තොරතුරු වාර්තා කරන පාර්ශවය
+        <td colspan="5" style="text-align:center;font-size:11pt"> තොරතුරු වාර්තා කරන පාර්ශවය
             <br>அதிகாரியிடம் தெரிவித்தல்
             <br>Notifying Authority
         </td>
@@ -905,7 +908,7 @@
 </div>
 </s:if>
 </s:if>
-
+</div>
 <div class="form-submit">
     <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
 </div>
@@ -914,4 +917,3 @@
     <s:submit value="%{getText('previous.label')}" cssStyle="margin-top:10px;"/>
 </div>
 </s:form>
-
