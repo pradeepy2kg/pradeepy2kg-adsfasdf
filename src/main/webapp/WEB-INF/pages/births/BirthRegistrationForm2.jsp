@@ -96,6 +96,7 @@ $(function() {
                 function(data1) {
                     $("textarea#fatherFullName").val(data1.fullNameInOfficialLanguage);
                     $("input#fatherPlaceOfBirth").val(data1.placeOfBirth);
+                    $("select#fatherRaceId").val(data1.race);
                     var fatherDOB = data1.dateOfBirth;
                     if (fatherDOB != null) {
                         $("input#fatherDatePicker").val(fatherDOB);
@@ -113,6 +114,7 @@ $(function() {
                     $("textarea#motherFullName").val(data2.fullNameInOfficialLanguage);
                     $("input#motherPlaceOfBirth").val(data2.placeOfBirth);
                     $("textarea#motherAddress").val(data2.lastAddress);
+                    $("select#motherRaceId").val(data2.race);
                     var motherDOB = data2.dateOfBirth;
                     if (motherDOB != null) {
                         $("input#motherDatePicker").val(motherDOB);
@@ -143,11 +145,9 @@ $(function() {
 
             datePicker.datepicker('setDate', new Date(D.getYear(), D.getMonth(), D.getDate()));
         } else {
-            alert(error);
+//            alert(error);
         }
-    }
-
-    ;
+    };
 
     $('#mother_lookup').click(function() {
         var child_bday = new Date(document.getElementById('childDateOfBirth').value);
@@ -428,7 +428,7 @@ function commonTags() {
             ජාතිය<br>இனம்<br>
             Father's Race</label></td>
         <td colspan="6" class="table_reg_cell_02">
-            <s:select list="raceList" name="fatherRace" headerKey="0" headerValue="%{getText('select_race.label')}"
+            <s:select id="fatherRaceId" list="raceList" name="fatherRace" headerKey="0" headerValue="%{getText('select_race.label')}"
                       cssStyle="width:200px;"/>
         </td>
     </tr>
@@ -570,7 +570,7 @@ function commonTags() {
                                                                                                      value="#i+1"/>
             )ම‌වගේ ජාතිය<br>இனம்<br>
             Mother's Race</label></td>
-        <td colspan="2"><s:select list="raceList" name="motherRace" headerKey="0"
+        <td colspan="2"><s:select id="motherRaceId" list="raceList" name="motherRace" headerKey="0"
                                   headerValue="%{getText('select_race.label')}"/></td>
 
         <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i"
