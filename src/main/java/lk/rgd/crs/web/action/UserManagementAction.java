@@ -212,8 +212,8 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
             currentDistrictList = convertDistricSetToMap(user.getAssignedBDDistricts());
             currentbdDivisionList = convertDivisionSetToMap(user.getAssignedBDDSDivisions());
             roleId = user.getRole().getRoleId();
-            logger.info("current district list size  : {} for user : {}", currentDistrictList.size(), user.getUserName());
-            logger.info("current division list size  : {} for user : {}", currentbdDivisionList.size(), user.getUserName());
+            logger.debug("current district list size  : {} for user : {}", currentDistrictList.size(), user.getUserName());
+            logger.debug("current division list size  : {} for user : {}", currentbdDivisionList.size(), user.getUserName());
         }
         return "pageLoad";
     }
