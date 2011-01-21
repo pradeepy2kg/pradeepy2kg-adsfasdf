@@ -53,6 +53,39 @@ function validatePin(fieldId, messageId, errormsg) {
 
 }
 
+function validateIdUkey(fieldId, messageId, errormsg) {
+    var domObject = document.getElementById(fieldId);
+
+    if (isFieldEmpty(domObject)) {
+        return printValidationMessage(messageId, errormsg);
+    }
+    if (!isNumeric(domObject.value)) {
+        return printValidationMessage(messageId, errormsg);
+    }
+    return errormsg;
+}
+
+//  check for valid numeric strings
+function isNumeric(strString) {
+    var strValidChars = "123456789";
+    var strChar;
+    var blnResult = true;
+
+    if (strString.length == 0) return false;
+
+    //  test strString consists of valid characters listed above
+    for (i = 0; i < strString.length && blnResult == true; i++)
+    {
+        strChar = strString.charAt(i);
+        if (strValidChars.indexOf(strChar) == -1)
+        {
+            blnResult = false;
+        }
+    }
+    return blnResult;
+}
+
+
 function validateSerialNo(fieldId, messageId, errormsg) {
     var domObject = document.getElementById(fieldId);
 
