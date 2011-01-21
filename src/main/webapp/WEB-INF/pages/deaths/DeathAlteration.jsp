@@ -714,16 +714,20 @@
     </table>
 </div>
 <br>
-<table class="death-alteration-table-style01" style=" margin-top:20px;width:100%;" cellpadding="0"
+<table class="death-alteration-table-style02" style=" margin-top:20px;width:100%;" cellpadding="0" cellpadding="2px"
        cellspacing="0">
     <tr>
-        <td colspan="8" style="text-align:center;font-size:12pt;width:90%;border-right:none">
+        <td align="center" style="text-align:center;font-size:12pt">
             දෝෂය හා එය සිදුවූ අන්දම පිලිබඳ ලුහුඬු විස්තර<br>
             தாத்தாவின் / பாட்டனின் விபரங்கள்<br>
             Nature of the error and a brief explanation of how the error occurred
         </td>
-        <td style="border-right:none"></td>
-        <td></td>
+    </tr>
+    <tr>
+        <td align="center">
+            <s:textarea name="deathAlteration.howErrorHappen" cssStyle="width:98%"
+                        value="%{deathAlteration.howErrorHappen}"/>
+        </td>
     </tr>
 </table>
 <br>

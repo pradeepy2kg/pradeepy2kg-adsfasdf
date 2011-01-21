@@ -386,4 +386,15 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
         q.setParameter("dsId", dsDivisionId);
         return q.getResultList();
     }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public List<BirthDeclaration> getListOfLiveBirthsForGivenMother(String motherIdentification) {
+        Query q = em.createNamedQuery("get.bdf.by.mother");
+        q.setParameter("mother", motherIdentification);
+        q.setParameter("type", BirthDeclaration.BirthType.LIVE);
+        return q.getResultList();
+    }
 }

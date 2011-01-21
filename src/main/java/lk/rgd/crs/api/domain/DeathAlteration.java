@@ -146,6 +146,9 @@ public class DeathAlteration {
     @Column
     private String comments;
 
+    @Column
+    private String howErrorHappen;
+
     @Column(name = "deathPersonPinOriginal")
     private String deathPersonPin;
 
@@ -332,4 +335,13 @@ public class DeathAlteration {
     public void setRequestedAlterations(BitSet requestedAlterations) {
         this.requestedAlterations = requestedAlterations;
     }
+
+    public String getHowErrorHappen() {
+        return howErrorHappen;
+    }
+
+    public void setHowErrorHappen(String howErrorHappen) {
+        this.howErrorHappen = howErrorHappen;
+    }
+
 }

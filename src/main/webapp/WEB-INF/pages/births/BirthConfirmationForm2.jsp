@@ -32,7 +32,10 @@
 
         function processResponse(respObj) {
             //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-            $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
+            $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].
+            return[0].Text
+        )
+            ;
         }
     })
 
@@ -145,6 +148,7 @@
         <div class="form-submit">
             <s:hidden name="pageNo" value="2"/>
             <s:hidden name="skipConfirmationChages" value="%{#request.skipConfirmationChages}"/>
+            <s:hidden value="%{#request.bdId}" name="bdId"/>
             <s:submit value="%{getText('next.label')}"/>
         </div>
     </s:form>
@@ -156,6 +160,7 @@
 
         <div class="form-submit">
             <s:submit value="%{getText('previous.label')}"/>
+            <s:hidden value="%{#request.bdId}" name="bdId"/>
         </div>
     </s:form>
 
