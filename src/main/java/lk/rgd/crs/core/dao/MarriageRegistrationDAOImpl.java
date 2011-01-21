@@ -43,10 +43,10 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
     /**
      * @inheriteDoc
      */
-    public MarriageRegister getMarriageRegisterByIdUKeyAndState(long idUKey, MarriageRegister.State state) {
+    public MarriageRegister getMarriageRegisterByIdUKeyAndState(long idUKey, EnumSet<MarriageRegister.State> stateList) {
         Query q = em.createNamedQuery("getMarriageRegisterByIdUKeyAndState");
         q.setParameter("idUKey", idUKey);
-        q.setParameter("state", state);
+        q.setParameter("stateList", stateList);
         if (q.getResultList().isEmpty()) {
             return null;
         } else {
@@ -323,11 +323,21 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<MarriageRegister> getMarriageRegisterBySerialNumber(long serialNumber,
         EnumSet<MarriageRegister.State> stateList, Set<DSDivision> dsDivisionList) {
-        //TODO: use createQuery for this 
-        Query q = em.createNamedQuery("findMarriageBySerialNumber");
+
+        StringBuilder query = new StringBuilder("").append("SELECT mr FROM MarriageRegister mr " +
+            "WHERE mr.serialNumber = :serialNumber " +
+            "AND mr.state IN (:stateList) ");
+        if (dsDivisionList != null) {
+            query.append("AND mr.mrDivision.dsDivision IS NOT NULL AND mr.mrDivision.dsDivision IN (:dsDivisionList) ");
+        }
+        query.append("AND mr.lifeCycleInfo.activeRecord IS TRUE ORDER BY mr.idUKey DESC");
+
+        Query q = em.createQuery(query.toString());
         q.setParameter("serialNumber", Long.toString(serialNumber));
         q.setParameter("stateList", stateList);
-        q.setParameter("dsDivisionList", dsDivisionList);
+        if (dsDivisionList != null) {
+            q.setParameter("dsDivisionList", dsDivisionList);
+        }
         return q.getResultList();
     }
 

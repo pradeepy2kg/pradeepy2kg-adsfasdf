@@ -132,8 +132,8 @@ import java.util.Date;
     @NamedQuery(name = "getMarriageRegisterByIdUKeyAndState", query = "SELECT mr FROM MarriageRegister mr " +
         "WHERE mr.lifeCycleInfo.activeRecord IS TRUE " +
         "AND mr.idUKey = :idUKey " +
-        "AND mr.state = :state"),
-
+        "AND mr.state IN (:stateList)"),
+        //TODO: to be removed
     @NamedQuery(name = "findMarriageBySerialNumber", query = "SELECT mr FROM MarriageRegister mr " +
         "WHERE mr.lifeCycleInfo.activeRecord IS TRUE " +
         "AND mr.serialNumber = :serialNumber " +

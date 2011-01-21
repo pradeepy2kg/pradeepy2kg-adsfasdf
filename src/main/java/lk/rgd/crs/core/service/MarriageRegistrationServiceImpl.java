@@ -114,6 +114,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     public MarriageRegister getMarriageRegisterByIdUKey(long idUKey, User user, int permission) {
         logger.debug("attempt to get marriage register by idUKey : {} ", idUKey);
         ValidationUtils.validateUserPermission(permission, user);
+        //TODO: filter by MR states list
         MarriageRegister marriageRegister = marriageRegistrationDAO.getByIdUKey(idUKey);
         ValidationUtils.validateAccessToMRDivision(marriageRegister.getMrDivision(), user);
         return marriageRegister;
@@ -123,10 +124,17 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.SUPPORTS)
-    public MarriageRegister getMarriageRegisterByIdUKeyAndState(long idUKey, User user,
-        MarriageRegister.State state, int permission) {
+    public MarriageRegister getMarriageRegisterByIdUKeyAndState(long idUKey, User user, int permission) {
         ValidationUtils.validateUserPermission(permission, user);
-        return marriageRegistrationDAO.getMarriageRegisterByIdUKeyAndState(idUKey, state);
+
+        EnumSet<MarriageRegister.State> stateList = StateUtil.getMarriageRegisterStateList(null);
+        stateList.add(MarriageRegister.State.LICENSE_PRINTED);
+
+        MarriageRegister marriageRegister =  marriageRegistrationDAO.getMarriageRegisterByIdUKeyAndState(idUKey, stateList);
+        if (marriageRegister != null && marriageRegister.getState() != MarriageRegister.State.LICENSE_PRINTED) {
+            ValidationUtils.validateUserAccessToMRDivision(marriageRegister.getMrDivision().getMrDivisionUKey(), user);
+        }
+        return marriageRegister;
     }
 
     /**
@@ -585,13 +593,13 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         } else {
             //If no divisions selected find all DS divisions available for user
             //TODO: handle error if user inactive
-            /*if (!Role.ROLE_RG.equals(user.getRole().getRoleId())) {
+            if (!Role.ROLE_RG.equals(user.getRole().getRoleId())) {
                 //TODO: handle error if user.getAssignedMRDSDivisions() == null
                 //TODO: if DS division list avalable for DR and ARG, this method is ok
                 //TODO: else find particular division list based on the user role
                 dsDivisionList = user.getAssignedMRDSDivisions();
                 divisionType = AppConstants.ALL;
-            } */
+            }
         }
 
         return marriageRegistrationDAO.getPaginatedMarriageRegisterList(divisionType, divisionUKey, dsDivisionList,
