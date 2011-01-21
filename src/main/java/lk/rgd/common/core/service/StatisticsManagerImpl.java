@@ -548,6 +548,7 @@ public class StatisticsManagerImpl implements StatisticsManager {
         if (statistics == null) {
             if (user.getRole().getRoleId().equals(Role.ROLE_DEO)) {
                 statistics = populateStatistics(user, null);
+                statisticsDAO.addStatistics(statistics);
             }
             if (user.getRole().getRoleId().equals(Role.ROLE_ADR) || user.getRole().getRoleId().equals(Role.ROLE_DR)) {
                 statistics = populateStatistics(user, null);
@@ -560,6 +561,7 @@ public class StatisticsManagerImpl implements StatisticsManager {
                         }
                     }
                 }
+                statisticsDAO.addStatistics(statistics);
             }
             if (user.getRole().getRoleId().equals(Role.ROLE_ARG)) {
                 statistics = populateStatistics(user, null);
@@ -569,6 +571,7 @@ public class StatisticsManagerImpl implements StatisticsManager {
                         statistics = populateStatistics(oneUser, statistics);
                     }
                 }
+                statisticsDAO.addStatistics(statistics);
             }
             if (user.getRole().getRoleId().equals(Role.ROLE_RG)) {
                 statistics = populateStatistics(user, null);
@@ -579,6 +582,7 @@ public class StatisticsManagerImpl implements StatisticsManager {
                         statistics = populateStatistics(oneUser, statistics);
                     }
                 }
+                statisticsDAO.addStatistics(statistics);
             }
         }
         return statistics;

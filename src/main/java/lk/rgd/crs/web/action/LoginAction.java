@@ -233,9 +233,9 @@ public class LoginAction extends ActionSupport implements SessionAware {
         return SUCCESS;
     }
 
-    void populateLists(User user, String usertype) {
+    void populateLists(User user, String userType) {
 
-        if (usertype.equals(WebConstants.USER_ARG) || usertype.equals(WebConstants.USER_RG)) {
+        if (userType.equals(WebConstants.USER_ARG) || userType.equals(WebConstants.USER_RG)) {
             if (districtList == null) {
                 districtList = districtDAO.getAllDistrictNames(user.getPrefLanguage(), user);
                 logger.debug("district List : {}", districtList.size());
@@ -253,7 +253,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
                 }
             }
 
-        } else if (usertype.toLowerCase().equals(WebConstants.USER_ADR)) {
+        } else if (userType.toLowerCase().equals(WebConstants.USER_ADR)) {
             if (districtList == null) {
                 districtList = districtDAO.getAllDistrictNames(user.getPrefLanguage(), user);
                 logger.debug("district List : {}", districtList.size());
@@ -277,7 +277,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
                     user.getPrefLanguage(), user, dsDivisionDAO.getDSDivisionByPK(divisionList.keySet().iterator().next()), roleDAO.getRole("DEO"));
                 logger.debug("DEO List : {}", deoList.size());
             }
-        } else if (usertype.toLowerCase().equals(WebConstants.USER_DR)) {
+        } else if (userType.toLowerCase().equals(WebConstants.USER_DR)) {
             if (districtList == null) {
                 districtList = districtDAO.getAllDistrictNames(user.getPrefLanguage(), user);
                 logger.debug("district List : {}", districtList.size());
