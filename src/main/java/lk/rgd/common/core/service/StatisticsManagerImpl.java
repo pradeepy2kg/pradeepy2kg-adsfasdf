@@ -589,10 +589,10 @@ public class StatisticsManagerImpl implements StatisticsManager {
                 statistics.setUser(user);
                 statisticsDAO.addStatistics(statistics);
             }
-        } else {
+        } /*else {
             Calendar cal = Calendar.getInstance();
             cal.add(Calendar.HOUR, -2);
-            if (statistics.getCreatedTimestamp().before(cal.getTime())) {
+            //if (statistics.getCreatedTimestamp().before(cal.getTime())) {
                 if (user.getRole().getRoleId().equals(Role.ROLE_DEO)) {
                     deleteEntries(statistics);
                     statistics = populateStatistics(user, statistics);
@@ -635,8 +635,8 @@ public class StatisticsManagerImpl implements StatisticsManager {
                     }
                     statisticsDAO.updateStatistics(statistics);
                 }
-            }
-        }
+            }*/
+        //}
 
         return statistics;
     }
