@@ -1,6 +1,6 @@
 <%-- @author Mahesha Kalpanie --%>
-<%@ page import="lk.rgd.prs.api.domain.Person" %>
 <%@ page import="lk.rgd.common.util.CivilStatusUtil" %>
+<%@ page import="lk.rgd.prs.api.domain.Person" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
@@ -24,7 +24,12 @@
         margin: 5px 0 15px 0;
     }
 </style>
-<div class="marriage-notice-outer">
+<script type="text/javascript">
+    function initPage() {
+    }
+</script>
+
+<div id="birth-certificate-outer">
 <s:if test="mode=='print'">
     <table border="0" style="margin-top:1px;width:100%;" cellpadding="2px">
         <caption></caption>
@@ -62,12 +67,12 @@
         </tr>
         <tr>
             <td colspan="3" align="right">
-                <div class="form-submit">
+                <div class="form-submit" style="margin-top:0;">
                     <s:submit value="%{getText('button.mark.as.print')}"/>
                     <s:hidden name="idUKey" value="%{marriage.idUKey}"/>
                     </s:form>
                 </div>
-                <div class="form-submit">
+                <div class="form-submit" style="margin-top:0;margin-right:5px;">
                     <s:submit value="%{getText('button.print')}" onclick="printPage()"/>
                 </div>
                     <%--
