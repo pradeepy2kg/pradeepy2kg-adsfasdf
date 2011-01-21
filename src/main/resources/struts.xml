@@ -8,7 +8,7 @@
     <constant name="struts.custom.i18n.resources" value="textproperties"/>
     <constant name="struts.action.extension" value="do"/>
     <constant name="struts.objectFactory" value="spring"/>
-    <constant name="struts.devMode" value="true"/>
+    <constant name="struts.devMode" value="false"/>
 
     <package name="NG" namespace="/NG" extends="struts-default">
         <result-types>
