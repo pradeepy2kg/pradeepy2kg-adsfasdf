@@ -93,15 +93,15 @@ $(function() {
         var error = document.getElementById('error10').value;
         calculateBirthDay(id1, datePicker, error);
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
-                function(data1) {
-                    $("textarea#fatherFullName").val(data1.fullNameInOfficialLanguage);
-                    $("input#fatherPlaceOfBirth").val(data1.placeOfBirth);
-                    $("select#fatherRaceId").val(data1.race);
-                    var fatherDOB = data1.dateOfBirth;
-                    if (fatherDOB != null) {
-                        $("input#fatherDatePicker").val(fatherDOB);
-                    }
-                });
+                 function(data1) {
+                     $("textarea#fatherFullName").val(data1.fullNameInOfficialLanguage);
+                     $("input#fatherPlaceOfBirth").val(data1.placeOfBirth);
+                     $("select#fatherRaceId").val(data1.race);
+                     var fatherDOB = data1.dateOfBirth;
+                     if (fatherDOB != null) {
+                         $("input#fatherDatePicker").val(fatherDOB);
+                     }
+                 });
     });
 
     $('img#mother_lookup').bind('click', function(evt2) {
@@ -110,23 +110,23 @@ $(function() {
         var error = document.getElementById('error11').value;
         calculateBirthDay(id2, datePicker, error);
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id2},
-                function(data2) {
-                    $("textarea#motherFullName").val(data2.fullNameInOfficialLanguage);
-                    $("input#motherPlaceOfBirth").val(data2.placeOfBirth);
-                    $("textarea#motherAddress").val(data2.lastAddress);
-                    $("select#motherRaceId").val(data2.race);
-                    var motherDOB = data2.dateOfBirth;
-                    if (motherDOB != null) {
-                        $("input#motherDatePicker").val(motherDOB);
-                    }
-                });
+                 function(data2) {
+                     $("textarea#motherFullName").val(data2.fullNameInOfficialLanguage);
+                     $("input#motherPlaceOfBirth").val(data2.placeOfBirth);
+                     $("textarea#motherAddress").val(data2.lastAddress);
+                     $("select#motherRaceId").val(data2.race);
+                     var motherDOB = data2.dateOfBirth;
+                     if (motherDOB != null) {
+                         $("input#motherDatePicker").val(motherDOB);
+                     }
+                 });
     });
 
     function calculateBirthDay(id, datePicker, error) {
         var regNIC = /^([0-9]{9}[X|x|V|v])$/;
         var day = id.substring(2, 5);
         var BirthYear = 19 + id.substring(0, 2);
-        var D = new Date(BirthYear) ;
+        var D = new Date(BirthYear);
         if ((id.search(regNIC) == 0) && (day >= 501 && day <= 866)) {
             if ((day > 559) && ((D.getFullYear() % 4) != 0 )) {
                 day = id.substring(2, 5) - 2;
@@ -144,10 +144,10 @@ $(function() {
             }
 
             datePicker.datepicker('setDate', new Date(D.getYear(), D.getMonth(), D.getDate()));
-        } else {
-//            alert(error);
+        } else if ((id.search(regNIC) == 0) && ((day >= 367 && day <= 501)) | (day > 867)) {
+            alert(error);
         }
-    };
+    }
 
     $('#mother_lookup').click(function() {
         var child_bday = new Date(document.getElementById('childDateOfBirth').value);
@@ -163,15 +163,15 @@ $(function() {
         var id = $("select#motherDistrictId").attr("value");
         var label = $("input#dsDivisionLabel").attr("value");
         $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:3},
-                function(data) {
-                    var options = '';
-                    var ds = data.dsDivisionList;
-                    options += '<option value="-1">' + label + '</option>';
-                    for (var i = 0; i < ds.length; i++) {
-                        options += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
-                    }
-                    $("select#motherDSDivisionId").html(options);
-                });
+                 function(data) {
+                     var options = '';
+                     var ds = data.dsDivisionList;
+                     options += '<option value="-1">' + label + '</option>';
+                     for (var i = 0; i < ds.length; i++) {
+                         options += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                     }
+                     $("select#motherDSDivisionId").html(options);
+                 });
     });
 })
 
@@ -428,7 +428,8 @@ function commonTags() {
             ජාතිය<br>இனம்<br>
             Father's Race</label></td>
         <td colspan="6" class="table_reg_cell_02">
-            <s:select id="fatherRaceId" list="raceList" name="fatherRace" headerKey="0" headerValue="%{getText('select_race.label')}"
+            <s:select id="fatherRaceId" list="raceList" name="fatherRace" headerKey="0"
+                      headerValue="%{getText('select_race.label')}"
                       cssStyle="width:200px;"/>
         </td>
     </tr>
