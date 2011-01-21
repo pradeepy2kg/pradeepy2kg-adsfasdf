@@ -197,7 +197,7 @@
                         <s:label value="%{getText('label.marriageregister.number')}"/>
                     </td>
                     <td>
-                        <s:textfield id="idUKey" name="idUKey" cssStyle="width:232px;" maxLength="10"/>
+                        <s:textfield id="marriageIdUKey" name="marriageIdUKey" cssStyle="width:232px;" maxLength="10"/>
                     </td>
                     <td>
                         <div class="form-submit">
