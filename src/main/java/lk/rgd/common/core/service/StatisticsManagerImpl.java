@@ -91,7 +91,7 @@ public class StatisticsManagerImpl implements StatisticsManager {
                 statistics = populateStatistics(deoUser, null);
 
                 /* this can't be null. but ... */
-                if(statistics == null) {
+                if (statistics == null) {
                     statistics = new Statistics();
                 }
 
@@ -112,7 +112,7 @@ public class StatisticsManagerImpl implements StatisticsManager {
                 statistics = populateStatistics(adrUser, null);
 
                 /* this can't be null. but ... */
-                if(statistics == null) {
+                if (statistics == null) {
                     statistics = new Statistics();
                 }
 
@@ -125,12 +125,12 @@ public class StatisticsManagerImpl implements StatisticsManager {
                     if (deoUserList != null)
                         /* get one DEO at a time */ {
                         for (User deoForAdr : deoUserList) {
-                            
+
                             if (deoForAdr.getAssignedBDDSDivisions().contains(dsDivision)) {
 
                                 /* get statistics of DEO */
                                 statistics = populateStatistics(deoForAdr, statistics);
-                                
+
                             }
                         }
                     }
@@ -153,7 +153,7 @@ public class StatisticsManagerImpl implements StatisticsManager {
                 statistics = populateStatistics(drUser/*, startTime, endTime*/, null);
 
                 /* this can't be null. but ... */
-                if(statistics == null) {
+                if (statistics == null) {
                     statistics = new Statistics();
                 }
 
@@ -166,7 +166,7 @@ public class StatisticsManagerImpl implements StatisticsManager {
                     if (deoUserList != null)
                         /* get one DEO at a time */ {
                         for (User deoForDr : deoUserList) {
-                            
+
                             if (deoForDr.getAssignedBDDSDivisions().contains(dsDivision)) {
 
                                 /* get statistics of DEO */
@@ -192,7 +192,7 @@ public class StatisticsManagerImpl implements StatisticsManager {
                 statistics = populateStatistics(argUser/*, startTime, endTime*/, null);
 
                 /* this can't be null. but ... */
-                if(statistics == null) {
+                if (statistics == null) {
                     statistics = new Statistics();
                 }
 
@@ -316,7 +316,7 @@ public class StatisticsManagerImpl implements StatisticsManager {
                 statistics = populateStatistics(rgUser/*, startTime, endTime*/, null);
 
                 /* this can't be null. but ... */
-                if(statistics == null) {
+                if (statistics == null) {
                     statistics = new Statistics();
                 }
 
@@ -486,7 +486,7 @@ public class StatisticsManagerImpl implements StatisticsManager {
             /* this assignment reduces complexity */
             statistics = stat;
         }
-        statistics.setUser(user);
+        //statistics.setUser(user);
 
         /* get all the Birth Statistics in last day */
         List<BirthDeclaration> bdfList = birthDeclarationDAO.getByCreatedUser(user, startDate, endDate);
@@ -542,12 +542,14 @@ public class StatisticsManagerImpl implements StatisticsManager {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.NEVER)
     public Statistics getStatisticsForUser(User user) {
         Statistics statistics;
         statistics = statisticsDAO.getByUser(user.getUserId());
         if (statistics == null) {
             if (user.getRole().getRoleId().equals(Role.ROLE_DEO)) {
                 statistics = populateStatistics(user, null);
+                statistics.setUser(user);
                 statisticsDAO.addStatistics(statistics);
             }
             if (user.getRole().getRoleId().equals(Role.ROLE_ADR) || user.getRole().getRoleId().equals(Role.ROLE_DR)) {
@@ -561,6 +563,7 @@ public class StatisticsManagerImpl implements StatisticsManager {
                         }
                     }
                 }
+                statistics.setUser(user);
                 statisticsDAO.addStatistics(statistics);
             }
             if (user.getRole().getRoleId().equals(Role.ROLE_ARG)) {
@@ -571,6 +574,7 @@ public class StatisticsManagerImpl implements StatisticsManager {
                         statistics = populateStatistics(oneUser, statistics);
                     }
                 }
+                statistics.setUser(user);
                 statisticsDAO.addStatistics(statistics);
             }
             if (user.getRole().getRoleId().equals(Role.ROLE_RG)) {
@@ -582,10 +586,90 @@ public class StatisticsManagerImpl implements StatisticsManager {
                         statistics = populateStatistics(oneUser, statistics);
                     }
                 }
+                statistics.setUser(user);
                 statisticsDAO.addStatistics(statistics);
             }
+        } else {
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.HOUR, -2);
+            if (statistics.getCreatedTimestamp().before(cal.getTime())) {
+                if (user.getRole().getRoleId().equals(Role.ROLE_DEO)) {
+                    deleteEntries(statistics);
+                    statistics = populateStatistics(user, statistics);
+                    statisticsDAO.updateStatistics(statistics);
+                }
+                if (user.getRole().getRoleId().equals(Role.ROLE_ADR) || user.getRole().getRoleId().equals(Role.ROLE_DR)) {
+                    deleteEntries(statistics);
+                    statistics = populateStatistics(user, statistics);
+                    Set<DSDivision> dsDivisionList = user.getAssignedBDDSDivisions();
+                    List<User> deoList = userDAO.getUsersByRole(Role.ROLE_DEO);
+                    for (DSDivision dsDivision : dsDivisionList) {
+                        for (User deo : deoList) {
+                            if (deo.getAssignedBDDSDivisions().contains(dsDivision)) {
+                                statistics = populateStatistics(deo, statistics);
+                            }
+                        }
+                    }
+                    statisticsDAO.updateStatistics(statistics);
+                }
+                if (user.getRole().getRoleId().equals(Role.ROLE_ARG)) {
+                    deleteEntries(statistics);
+                    statistics = populateStatistics(user, statistics);
+                    List<User> allUserList = userDAO.getAllUsers();
+                    for (User oneUser : allUserList) {
+                        if (oneUser.getRole().getRoleId().equals(Role.ROLE_DEO) || oneUser.getRole().getRoleId().equals(Role.ROLE_ADR) || oneUser.getRole().getRoleId().equals(Role.ROLE_DR)) {
+                            statistics = populateStatistics(oneUser, statistics);
+                        }
+                    }
+                    statisticsDAO.updateStatistics(statistics);
+                }
+                if (user.getRole().getRoleId().equals(Role.ROLE_RG)) {
+                    deleteEntries(statistics);
+                    statistics = populateStatistics(user, statistics);
+                    List<User> allUserList = userDAO.getAllUsers();
+                    for (User oneUser : allUserList) {
+                        if (!oneUser.getUserId().equals(user.getUserId()) && !oneUser.getRole().getRoleId().equals(Role.ROLE_RG)) {
+                            logger.debug("RG gets the user : {}", oneUser.getUserId());
+                            statistics = populateStatistics(oneUser, statistics);
+                        }
+                    }
+                    statisticsDAO.updateStatistics(statistics);
+                }
+            }
         }
+
         return statistics;
+    }
+
+    private Statistics deleteEntries(Statistics st) {
+        st.setBirthsApprovedItems(0);
+        st.setBirthsArrearsPendingItems(0);
+        st.setBirthsLateSubmissions(0);
+        st.setBirthsNormalSubmissions(0);
+        st.setBirthsRejectedItems(0);
+        st.setBirthsThisMonthPendingItems(0);
+        st.setBirthsTotalPendingItems(0);
+        st.setBirthsTotalSubmissions(0);
+
+        st.setDeathsApprovedItems(0);
+        st.setDeathsArrearsPendingItems(0);
+        st.setDeathsLateSubmissions(0);
+        st.setDeathsNormalSubmissions(0);
+        st.setDeathsRejectedItems(0);
+        st.setDeathsThisMonthPendingItems(0);
+        st.setDeathsTotalPendingItems(0);
+        st.setDeathsTotalSubmissions(0);
+
+        st.setMrgApprovedItems(0);
+        st.setMrgArrearsPendingItems(0);
+        st.setMrgLateSubmissions(0);
+        st.setMrgNormalSubmissions(0);
+        st.setMrgRejectedItems(0);
+        st.setMrgThisMonthPendingItems(0);
+        st.setMrgTotalPendingItems(0);
+        st.setMrgTotalSubmissions(0);
+
+        return st;
     }
 
 }

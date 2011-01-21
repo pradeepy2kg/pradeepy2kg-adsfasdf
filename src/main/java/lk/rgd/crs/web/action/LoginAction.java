@@ -208,12 +208,9 @@ public class LoginAction extends ActionSupport implements SessionAware {
         logger.debug("Logged User's Role : {}", user.getRole());
         role = user.getRole().getRoleId();
 
-        statistics = statisticsDAO.getByUser(user.getUserId());
+        statistics = statisticsManager.getStatisticsForUser(user);
         if (statistics == null) {
-            statistics = statisticsManager.getStatisticsForUser(user);
-            if (statistics == null) {
-                statistics = new Statistics();
-            }
+            statistics = new Statistics();
         }
 
         districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
