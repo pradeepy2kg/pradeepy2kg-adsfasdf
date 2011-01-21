@@ -558,7 +558,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         populateRegistrationDetails(marriageRegister);
         populateMaleFemaleDetails(marriageRegister);
         try {
-            marriageRegistrationService.updateMarriageRegister(marriageRegister, user);
+            marriageRegistrationService.updateMarriageRegister(marriageRegister, user, scannedImage);
         } catch (CRSRuntimeException e) {
             addActionError(getText("error.marriageregister.failedtoupdate"));
             return marriageRegistrationInit();
@@ -604,7 +604,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         populateRegistrationDetails(marriageRegister);
         populateMaleFemaleDetails(marriageRegister);
         try {
-            marriageRegistrationService.updateMarriageRegister(marriageRegister, user);
+            marriageRegistrationService.updateMarriageRegister(marriageRegister, user, scannedImage);
         } catch (CRSRuntimeException e) {
             addActionError(getText("error.marriageregister.failedtoupdate"));
             return marriageRegistrationInit();
@@ -624,7 +624,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         }
         populateRegistrationDetails(marriageRegister);
         try {
-            marriageRegistrationService.updateMarriageRegister(marriageRegister, user);
+            marriageRegistrationService.updateMarriageRegister(marriageRegister, user, scannedImage);
         } catch (CRSRuntimeException e) {
             addActionError(getText("error.marriageregister.registrationfailed"));
             return marriageRegistrationInit();
