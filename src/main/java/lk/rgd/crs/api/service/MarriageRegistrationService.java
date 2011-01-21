@@ -69,8 +69,8 @@ public interface MarriageRegistrationService {
      * Returns a Marriage register filtered by serial number
      *
      * @param serialNumber Serial Number of the marriage register
-     * @param user       user who performs the action
-     * @param permission permission level of the action
+     * @param user         user who performs the action
+     * @param permission   permission level of the action
      * @return
      */
     public List<MarriageRegister> getMarriageRegisterBySerialNumber(long serialNumber, User user, int permission);
@@ -201,7 +201,7 @@ public interface MarriageRegistrationService {
      * @param marriageRegister marriage register object to be updated
      * @param user             user who performs the action
      */
-    public void updateMarriageRegister(MarriageRegister marriageRegister, User user);
+    public void updateMarriageRegister(MarriageRegister marriageRegister, User user, File scannedImage);
 
     /**
      * update Muslim marriage details
@@ -209,13 +209,14 @@ public interface MarriageRegistrationService {
      * @param marriageRegister
      * @param user
      */
+    //TODO to be removed
     public void updateMuslimMarriageDetails(MarriageRegister marriageRegister, User user);
 
     /**
      * update marriage registration detail (registrar details, registration place, etc)
      *
-     * @param marriageRegister
-     * @param user
+     * @param marriageRegister marriage register record to be updated
+     * @param user             user who performs the action
      */
     public void updateMarriageRegistrationDetails(MarriageRegister marriageRegister, User user);
 

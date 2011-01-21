@@ -10,6 +10,7 @@ import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.domain.*;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.util.StateUtil;
+import lk.rgd.common.util.UniqueIDGenerator;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.MarriageRegistrationDAO;
@@ -93,7 +94,8 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         if (marriageRegister != null && scannedImage != null) {
             logger.debug("Marriage Register IDUKEY : {}", marriageRegister.getIdUKey());
             //TODO: Create a unique id (file name) for the image (dont use marriageRegister.getIdUKey())
-            marriageRegister.setScannedImagePath(contentRepository.storeFile(marriageRegister.getMrDivision().getMrDivisionUKey(), marriageRegister.getIdUKey(), scannedImage));
+            marriageRegister.setScannedImagePath(contentRepository.storeFile(marriageRegister.getMrDivision().
+                getMrDivisionUKey(), UniqueIDGenerator.get(), scannedImage));
             marriageRegistrationDAO.updateMarriageRegister(marriageRegister, user);
         }
     }
@@ -130,7 +132,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         EnumSet<MarriageRegister.State> stateList = StateUtil.getMarriageRegisterStateList(null);
         stateList.add(MarriageRegister.State.LICENSE_PRINTED);
 
-        MarriageRegister marriageRegister =  marriageRegistrationDAO.getMarriageRegisterByIdUKeyAndState(idUKey, stateList);
+        MarriageRegister marriageRegister = marriageRegistrationDAO.getMarriageRegisterByIdUKeyAndState(idUKey, stateList);
         if (marriageRegister != null && marriageRegister.getState() != MarriageRegister.State.LICENSE_PRINTED) {
             ValidationUtils.validateUserAccessToMRDivision(marriageRegister.getMrDivision().getMrDivisionUKey(), user);
         }
@@ -287,15 +289,24 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void updateMarriageRegister(MarriageRegister marriageRegister, User user) {
+    public void updateMarriageRegister(MarriageRegister marriageRegister, User user, File scannedImage) {
         logger.debug("attempt to update marriage register/notice record : idUKey : {}", marriageRegister.getIdUKey());
         ValidationUtils.validateUserPermission(Permission.EDIT_MARRIAGE, user);
         marriageRegistrationDAO.updateMarriageRegister(marriageRegister, user);
+
+        if (marriageRegister != null && scannedImage != null) {
+            logger.debug("Marriage Register IDUKEY : {}", marriageRegister.getIdUKey());
+            //TODO: Create a unique id (file name) for the image (dont use marriageRegister.getIdUKey())
+            marriageRegister.setScannedImagePath(contentRepository.storeFile(marriageRegister.getMrDivision().
+                getMrDivisionUKey(), UniqueIDGenerator.get(), scannedImage));
+            marriageRegistrationDAO.updateMarriageRegister(marriageRegister, user);
+        }
     }
 
     /**
      * @inheritDoc
      */
+    //TODO to be removed
     @Transactional(propagation = Propagation.REQUIRED)
     public void updateMuslimMarriageDetails(MarriageRegister marriageRegister, User user) {
         //TODO: Validate Marriage details
