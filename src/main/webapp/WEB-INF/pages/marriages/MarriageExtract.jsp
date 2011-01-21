@@ -6,6 +6,10 @@
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
 <script type="text/javascript" src="<s:url value="/js/certifieduser.js"/>"></script>
 <style type="text/css">
+    #marriage-notice-outer table tr td {
+        padding: 0 5px;
+    }
+
     @media print {
         .form-submit {
             display: none;
@@ -14,6 +18,10 @@
         #locationSignId {
             display: none;
         }
+    }
+
+    #birth-certificate-outer .form-submit {
+        margin: 5px 0 15px 0;
     }
 </style>
 <div class="marriage-notice-outer">
@@ -62,11 +70,11 @@
                 <div class="form-submit">
                     <s:submit value="%{getText('button.print')}" onclick="printPage()"/>
                 </div>
-                <%--
-                <div class="form-submit">
-                    <s:submit value="%{getText('button.back')}"/>
-                </div>
-                --%>
+                    <%--
+                    <div class="form-submit">
+                        <s:submit value="%{getText('button.back')}"/>
+                    </div>
+                    --%>
             </td>
         </tr>
 

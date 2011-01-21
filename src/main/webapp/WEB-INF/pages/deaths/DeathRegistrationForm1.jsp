@@ -402,12 +402,7 @@ function personAgeDeath() {
                                                                             cssStyle="color:red;font-size:10pt"/><br>தொடர் இலக்கம்<br>Serial Number</span></label>
                     </td>
                     <td>
-                        <s:if test="editMode">
-                            <s:textfield name="death.deathSerialNo" id="deathSerialNo" readonly="true"/>
-                        </s:if>
-                        <s:else>
-                            <s:textfield name="death.deathSerialNo" id="deathSerialNo" maxLength="10"/>
-                        </s:else>
+                        <s:textfield name="death.deathSerialNo" id="deathSerialNo" maxLength="10"/>
                     </td>
                 </tr>
             </table>
