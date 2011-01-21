@@ -185,12 +185,10 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         ddf = (DeathRegister) session.get(WebConstants.SESSION_DEATH_DECLARATION_BEAN);
         switch (pageNo) {
             case 1:
-                if (ddf.getIdUKey() == 0) {
-                    DeathRegister dd = service.getByBDDivisionAndDeathSerialNo(death.getDeathDivision(), death.getDeathSerialNo(), user);
-                    if (dd != null) {
-                        addFieldError("duplicateSerialNumberError", getText("p1.duplicateSerialNumber.label"));
-                        pageNo = 0;
-                    }
+                DeathRegister dd = service.getByBDDivisionAndDeathSerialNo(death.getDeathDivision(), death.getDeathSerialNo(), user);
+                if (dd != null) {
+                    addFieldError("duplicateSerialNumberError", getText("p1.duplicateSerialNumber.label"));
+                    pageNo = 0;
                 }
                 //  deathType = ddf.getDeathType();  this is the bug 2139
                 ddf.setDeath(death);
