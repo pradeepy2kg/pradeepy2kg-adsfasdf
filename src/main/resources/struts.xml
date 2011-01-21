@@ -1156,6 +1156,10 @@
             <result type="tiles" name="success">epr.generateReports</result>
         </action>
 
+        <action name="eprPopulateStatistics" class="lk.rgd.crs.web.action.ReportsAction" method="populateStatistics">
+            <result type="tiles" name="success">epr.generateReports</result>
+        </action>
+
     </package>
 
     <package name="alteration" namespace="/alteration" extends="NG">
