@@ -82,6 +82,8 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     private int locationId;
     private String mode;
 
+    private long marriageIdUKey;
+
     private long idUKey;
 
     private String comment;
@@ -234,14 +236,14 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         }
 
         //Search by marriage registration number - IDukey
-        if (idUKey != 0) {
+        if (marriageIdUKey != 0) {
             marriageRegisterSearchList = new ArrayList<MarriageRegister>();
-            logger.debug("serch by Idukey : {}", idUKey);
+            logger.debug("serch by Idukey : {}", marriageIdUKey);
             MarriageRegister marriageRegister = marriageRegistrationService.getMarriageRegisterByIdUKeyAndState
-                (idUKey, user, Permission.SEARCH_MARRIAGE);
+                (marriageIdUKey, user, Permission.SEARCH_MARRIAGE);
             if (marriageRegister != null) {
                 marriageRegisterSearchList.add(marriageRegister);
-                logger.debug("marriageRegisterSearchList size : {} ", marriageRegisterSearchResult().length());
+                logger.debug("marriageRegisterSearchList size : {} ", marriageRegisterSearchList.size());
             }
         } else if (pinOrNic != null) {
             //search by male/female/registrar identification number
@@ -1059,4 +1061,13 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     public void setMode(String mode) {
         this.mode = mode;
     }
+
+    public long getMarriageIdUKey() {
+        return marriageIdUKey;
+    }
+
+    public void setMarriageIdUKey(long marriageIdUKey) {
+        this.marriageIdUKey = marriageIdUKey;
+    }
+
 }
