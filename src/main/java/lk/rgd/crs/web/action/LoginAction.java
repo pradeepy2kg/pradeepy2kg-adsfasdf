@@ -2,10 +2,7 @@ package lk.rgd.crs.web.action;
 
 import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.common.api.dao.*;
-import lk.rgd.common.api.domain.AppParameter;
-import lk.rgd.common.api.domain.Role;
-import lk.rgd.common.api.domain.Statistics;
-import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.*;
 import lk.rgd.common.api.service.StatisticsManager;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.core.AuthorizationException;
@@ -53,12 +50,17 @@ public class LoginAction extends ActionSupport implements SessionAware {
     private int SBPendingApprovals;
 
     private Map<Integer, String> districtList;
+    private Set<District> districtListStat;
     private Map<Integer, String> divisionList;
+    private Map<Integer, String> divisionListStat;
+
     private List<String> deoList;
     private List<String> adrList;
 
     private int dsDivisionId;
+    private int dsDivisionIdStat;
     private int districtId;
+    private int districtIdStat;
     private int deoUserId;
     private int adrUserId;
 
@@ -209,11 +211,36 @@ public class LoginAction extends ActionSupport implements SessionAware {
         role = user.getRole().getRoleId();
 
         statistics = statisticsManager.getStatisticsForUser(user);
-        if (statistics == null) {
+        if (statistics != null) {
+            if (!statisticsManager.existsStatisticsForUser(user)) {
+                statisticsManager.addStatistics(user, statistics);
+            } else {
+                Calendar cal = Calendar.getInstance();
+                cal.add(Calendar.HOUR, -(cal.get(Calendar.HOUR_OF_DAY) + 1));
+                if (statistics.getCreatedTimestamp().before(cal.getTime())) {
+                    statisticsManager.updateStatistics(user.getUserId(), statistics);
+                }
+            }
+        } else {
             statistics = new Statistics();
         }
 
-        districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
+        Set<District> districtSet = user.getAssignedBDDistricts();
+        districtList = new HashMap<Integer, String>();
+        for (District district : districtSet) {
+            if (user.getPrefLanguage().equals("en")) {
+                districtList.put(district.getDistrictUKey(), district.getEnDistrictName());
+            } else if (user.getPrefLanguage().equals("si")) {
+                districtList.put(district.getDistrictUKey(), district.getSiDistrictName());
+            } else if (user.getPrefLanguage().equals("ta")) {
+                districtList.put(district.getDistrictUKey(), district.getTaDistrictName());
+            }
+        }
+
+        if (user.getRole().getRoleId().equals(Role.ROLE_RG)) {
+            districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
+        }
+
         if (districtList.size() > 0) {
             districtId = districtList.keySet().iterator().next();
         }
@@ -224,8 +251,6 @@ public class LoginAction extends ActionSupport implements SessionAware {
                 dsDivisionDAO.getDSDivisionByPK(dsDivisionId), roleDAO.getRole(Role.ROLE_DEO));
         }
         deoUserId = 1;
-        /*adrList = userDAO.getADRsByDistrictId(districtDAO.getDistrict(districtId), roleDAO.getRole(Role.ROLE_ADR));
-        adrUserId = 1;*/
 
         return SUCCESS;
     }

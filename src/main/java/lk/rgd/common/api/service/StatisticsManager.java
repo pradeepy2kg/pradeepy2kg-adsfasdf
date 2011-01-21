@@ -17,6 +17,12 @@ public interface StatisticsManager {
     public void updateStatistics(String userId, Statistics statistics);
 
     /**
+     * Updates statisticsList. invoked by scheduled task only
+     *
+     */
+    public void updateStatisticsList();
+
+    /**
      * This scheduled task runs on every week day at 11.00 PM. it collects
      * statistics of every user and stores in the STATISTICS table.
      */
@@ -29,5 +35,21 @@ public interface StatisticsManager {
      * @return statistics object
      */
     public Statistics getStatisticsForUser(User user);
+
+    /**
+     * Save a statistics record
+     *
+     * @param user
+     * @param statistics
+     */
+    public void addStatistics(User user, Statistics statistics);
+
+    /**
+     *  check whether user has a statistics record already
+     *
+     * @param user
+     * @return  true - if exists : false - if not
+     */
+    public boolean existsStatisticsForUser(User user);
 
 }

@@ -49,6 +49,9 @@
             </tr>
         </table>
         </s:form>
+        <s:form action="eprPopulateStatistics.do" method="post">
+            <td colspan="3"><s:submit/></td>
+        </s:form>
     </div>
 </div>
 <div id="message">

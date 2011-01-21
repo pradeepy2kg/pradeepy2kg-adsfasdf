@@ -3,6 +3,7 @@ package lk.rgd.crs.web.action;
 import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.common.RGDRuntimeException;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.service.StatisticsManager;
 import lk.rgd.crs.web.ReportCodes;
 import lk.rgd.crs.web.WebConstants;
 import org.apache.struts2.interceptor.SessionAware;
@@ -21,14 +22,16 @@ public class ReportsAction extends ActionSupport implements SessionAware {
     private static final Logger logger = LoggerFactory.getLogger(EventsViewerAction.class);
 
     private final ReportsGenerator reportsService;
+    private final StatisticsManager statisticsManager;
     private int year;
     private int chartType;
     private List<Integer> yearList;
     private Map<Integer, String> chartList;
     private Map session;
 
-    public ReportsAction(ReportsGenerator reportsService) {
+    public ReportsAction(ReportsGenerator reportsService, StatisticsManager statisticsManager) {
         this.reportsService = reportsService;
+        this.statisticsManager = statisticsManager;
     }
 
     public String loadPage() {
@@ -73,6 +76,13 @@ public class ReportsAction extends ActionSupport implements SessionAware {
         populateLists();
 
         return ActionSupport.SUCCESS;
+    }
+
+    public String populateStatistics() {
+        statisticsManager.triggerScheduledStatJobs();
+        statisticsManager.updateStatisticsList();
+        populateLists();
+        return SUCCESS;
     }
 
     private void populateLists() {

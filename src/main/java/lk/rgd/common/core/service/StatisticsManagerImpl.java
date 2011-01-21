@@ -6,6 +6,7 @@ import lk.rgd.common.api.dao.StatisticsDAO;
 import lk.rgd.common.api.dao.UserDAO;
 import lk.rgd.common.api.domain.*;
 import lk.rgd.common.api.service.StatisticsManager;
+import lk.rgd.common.core.dao.StatisticsDAOImpl;
 import lk.rgd.crs.api.dao.BirthDeclarationDAO;
 import lk.rgd.crs.api.dao.DeathRegisterDAO;
 import lk.rgd.crs.api.dao.MarriageRegistrationDAO;
@@ -30,14 +31,13 @@ public class StatisticsManagerImpl implements StatisticsManager {
     private final BirthDeclarationDAO birthDeclarationDAO;
     private final DeathRegisterDAO deathRegisterDAO;
     private final MarriageRegistrationDAO marriageRegistrationDAO;
-    /*private final DSDivisionDAO dsDivisionDAO;
-    private final DistrictDAO districtDAO;*/
 
-    List<User> deoUserList;
-    List<User> adrUserList;
-    List<User> drUserList;
-    List<User> argUserList;
-    List<User> rgUserList;
+    private List<User> deoUserList;
+    private List<User> adrUserList;
+    private List<User> drUserList;
+    private List<User> argUserList;
+    private List<User> rgUserList;
+    private static List<Statistics> statisticsList;
 
     public StatisticsManagerImpl(StatisticsDAO statisticsDAO, UserDAO userDAO, BirthDeclarationDAO birthDeclarationDAO,
         DeathRegisterDAO deathRegisterDAO, /*DSDivisionDAO dsDivisionDAO, DistrictDAO districtDAO,*/ MarriageRegistrationDAO marriageRegistrationDAO) {
@@ -46,22 +46,45 @@ public class StatisticsManagerImpl implements StatisticsManager {
         this.birthDeclarationDAO = birthDeclarationDAO;
         this.deathRegisterDAO = deathRegisterDAO;
         this.marriageRegistrationDAO = marriageRegistrationDAO;
+        statisticsList = new ArrayList<Statistics>();
     }
 
     /**
      * @inheritDoc
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public void updateStatistics(String userId, Statistics statistics) {
-        // todo
+        statisticsDAO.updateStatistics(statistics);
     }
 
     /**
      * @inheritDoc
      */
     @Override
-    @Transactional(propagation = Propagation.NEVER)
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void updateStatisticsList() {
+        for (Statistics stat : StatisticsManagerImpl.statisticsList) {
+            if (existsStatisticsForUser(stat.getUser())) {
+                statisticsDAO.updateStatistics(stat);
+            } else {
+                statisticsDAO.addStatistics(stat);
+            }
+        }
+    }
+
     public void triggerScheduledStatJobs() {
+        runScheduledStatJobs();
+        logger.debug("Start Statistics Recording...");
+        //updateStatisticsList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+
+    @Transactional(propagation = Propagation.NEVER)
+    public void runScheduledStatJobs() {
         logger.info("Start executing Statistics related scheduled tasks..");
 
         populateAllUserLists();
@@ -71,6 +94,9 @@ public class StatisticsManagerImpl implements StatisticsManager {
         calculateDRStatistics();
         calculateARGStatistics();
         calculateRGStatistics();
+
+        //updateStatisticsList();
+
     }
 
     private void populateAllUserLists() {
@@ -96,7 +122,9 @@ public class StatisticsManagerImpl implements StatisticsManager {
                 }
 
                 /* save record */
-                statisticsDAO.addStatistics(statistics);
+//                statisticsDAO.addStatistics(statistics);
+                statistics.setUser(deoUser);
+                statisticsList.add(statistics);
             }
         }
     }
@@ -137,7 +165,9 @@ public class StatisticsManagerImpl implements StatisticsManager {
                 }
 
                 /* save record */
-                statisticsDAO.addStatistics(statistics);
+//                statisticsDAO.addStatistics(statistics);
+                statistics.setUser(adrUser);
+                statisticsList.add(statistics);
             }
         }
     }
@@ -175,8 +205,9 @@ public class StatisticsManagerImpl implements StatisticsManager {
                         }
                     }
                 }
-                statisticsDAO.addStatistics(statistics);
-
+//                statisticsDAO.addStatistics(statistics);
+                statistics.setUser(drUser);
+                statisticsList.add(statistics);
             }
         }
     }
@@ -208,6 +239,9 @@ public class StatisticsManagerImpl implements StatisticsManager {
                             if (deoForDr.getAssignedBDDSDivisions().contains(dsDivision)) {
                                 /* get statistics of DEO */
                                 Statistics statisticsOfAdr = statisticsDAO.getByUser(deoForDr.getUserId());
+                                if (statisticsOfAdr == null) {
+                                    statisticsOfAdr = new Statistics();
+                                }
 
                                 /* add DEO Birth statistics to ARG statistics */
                                 statistics.setBirthsApprovedItems(statistics.getBirthsApprovedItems() +
@@ -299,8 +333,9 @@ public class StatisticsManagerImpl implements StatisticsManager {
                     }
                 }
 
-                statisticsDAO.addStatistics(statistics);
-
+//                statisticsDAO.addStatistics(statistics);
+                statistics.setUser(argUser);
+                statisticsList.add(statistics);
             }
         }
     }
@@ -332,6 +367,9 @@ public class StatisticsManagerImpl implements StatisticsManager {
                             if (deoForDr.getAssignedBDDSDivisions().contains(dsDivision)) {
                                 /* get statistics of DEO */
                                 Statistics statisticsOfDeo = statisticsDAO.getByUser(deoForDr.getUserId());
+                                if (statisticsOfDeo == null) {
+                                    statisticsOfDeo = new Statistics();
+                                }
 
                                 /* add DEO Birth statistics to ARG statistics */
                                 statistics.setBirthsApprovedItems(statistics.getBirthsApprovedItems() +
@@ -453,8 +491,9 @@ public class StatisticsManagerImpl implements StatisticsManager {
                         }
                     }
                 }
-
-                statisticsDAO.addStatistics(statistics);
+//                statisticsDAO.addStatistics(statistics);
+                statistics.setUser(rgUser);
+                statisticsList.add(statistics);
             }
         }
     }
@@ -542,7 +581,7 @@ public class StatisticsManagerImpl implements StatisticsManager {
     /**
      * @inheritDoc
      */
-    @Transactional(propagation = Propagation.NEVER)
+    @Override
     public Statistics getStatisticsForUser(User user) {
         Statistics statistics;
         statistics = statisticsDAO.getByUser(user.getUserId());
@@ -550,7 +589,6 @@ public class StatisticsManagerImpl implements StatisticsManager {
             if (user.getRole().getRoleId().equals(Role.ROLE_DEO)) {
                 statistics = populateStatistics(user, null);
                 statistics.setUser(user);
-                statisticsDAO.addStatistics(statistics);
             }
             if (user.getRole().getRoleId().equals(Role.ROLE_ADR) || user.getRole().getRoleId().equals(Role.ROLE_DR)) {
                 statistics = populateStatistics(user, null);
@@ -564,7 +602,6 @@ public class StatisticsManagerImpl implements StatisticsManager {
                     }
                 }
                 statistics.setUser(user);
-                statisticsDAO.addStatistics(statistics);
             }
             if (user.getRole().getRoleId().equals(Role.ROLE_ARG)) {
                 statistics = populateStatistics(user, null);
@@ -575,7 +612,6 @@ public class StatisticsManagerImpl implements StatisticsManager {
                     }
                 }
                 statistics.setUser(user);
-                statisticsDAO.addStatistics(statistics);
             }
             if (user.getRole().getRoleId().equals(Role.ROLE_RG)) {
                 statistics = populateStatistics(user, null);
@@ -587,58 +623,64 @@ public class StatisticsManagerImpl implements StatisticsManager {
                     }
                 }
                 statistics.setUser(user);
-                statisticsDAO.addStatistics(statistics);
             }
-        } /*else {
-            Calendar cal = Calendar.getInstance();
-            cal.add(Calendar.HOUR, -2);
-            //if (statistics.getCreatedTimestamp().before(cal.getTime())) {
-                if (user.getRole().getRoleId().equals(Role.ROLE_DEO)) {
-                    deleteEntries(statistics);
-                    statistics = populateStatistics(user, statistics);
-                    statisticsDAO.updateStatistics(statistics);
-                }
-                if (user.getRole().getRoleId().equals(Role.ROLE_ADR) || user.getRole().getRoleId().equals(Role.ROLE_DR)) {
-                    deleteEntries(statistics);
-                    statistics = populateStatistics(user, statistics);
-                    Set<DSDivision> dsDivisionList = user.getAssignedBDDSDivisions();
-                    List<User> deoList = userDAO.getUsersByRole(Role.ROLE_DEO);
-                    for (DSDivision dsDivision : dsDivisionList) {
-                        for (User deo : deoList) {
-                            if (deo.getAssignedBDDSDivisions().contains(dsDivision)) {
-                                statistics = populateStatistics(deo, statistics);
-                            }
+        } else {
+            if (user.getRole().getRoleId().equals(Role.ROLE_DEO)) {
+                deleteEntries(statistics);
+                statistics = populateStatistics(user, statistics);
+            }
+            if (user.getRole().getRoleId().equals(Role.ROLE_ADR) || user.getRole().getRoleId().equals(Role.ROLE_DR)) {
+                deleteEntries(statistics);
+                statistics = populateStatistics(user, statistics);
+                Set<DSDivision> dsDivisionList = user.getAssignedBDDSDivisions();
+                List<User> deoList = userDAO.getUsersByRole(Role.ROLE_DEO);
+                for (DSDivision dsDivision : dsDivisionList) {
+                    for (User deo : deoList) {
+                        if (deo.getAssignedBDDSDivisions().contains(dsDivision)) {
+                            statistics = populateStatistics(deo, statistics);
                         }
                     }
-                    statisticsDAO.updateStatistics(statistics);
                 }
-                if (user.getRole().getRoleId().equals(Role.ROLE_ARG)) {
-                    deleteEntries(statistics);
-                    statistics = populateStatistics(user, statistics);
-                    List<User> allUserList = userDAO.getAllUsers();
-                    for (User oneUser : allUserList) {
-                        if (oneUser.getRole().getRoleId().equals(Role.ROLE_DEO) || oneUser.getRole().getRoleId().equals(Role.ROLE_ADR) || oneUser.getRole().getRoleId().equals(Role.ROLE_DR)) {
-                            statistics = populateStatistics(oneUser, statistics);
-                        }
+            }
+            if (user.getRole().getRoleId().equals(Role.ROLE_ARG)) {
+                deleteEntries(statistics);
+                statistics = populateStatistics(user, statistics);
+                List<User> allUserList = userDAO.getAllUsers();
+                for (User oneUser : allUserList) {
+                    if (oneUser.getRole().getRoleId().equals(Role.ROLE_DEO) || oneUser.getRole().getRoleId().equals(Role.ROLE_ADR) || oneUser.getRole().getRoleId().equals(Role.ROLE_DR)) {
+                        statistics = populateStatistics(oneUser, statistics);
                     }
-                    statisticsDAO.updateStatistics(statistics);
                 }
-                if (user.getRole().getRoleId().equals(Role.ROLE_RG)) {
-                    deleteEntries(statistics);
-                    statistics = populateStatistics(user, statistics);
-                    List<User> allUserList = userDAO.getAllUsers();
-                    for (User oneUser : allUserList) {
-                        if (!oneUser.getUserId().equals(user.getUserId()) && !oneUser.getRole().getRoleId().equals(Role.ROLE_RG)) {
-                            logger.debug("RG gets the user : {}", oneUser.getUserId());
-                            statistics = populateStatistics(oneUser, statistics);
-                        }
+            }
+            if (user.getRole().getRoleId().equals(Role.ROLE_RG)) {
+                deleteEntries(statistics);
+                statistics = populateStatistics(user, statistics);
+                List<User> allUserList = userDAO.getAllUsers();
+                for (User oneUser : allUserList) {
+                    if (!oneUser.getUserId().equals(user.getUserId()) && !oneUser.getRole().getRoleId().equals(Role.ROLE_RG)) {
+                        logger.debug("RG gets the user : {}", oneUser.getUserId());
+                        statistics = populateStatistics(oneUser, statistics);
                     }
-                    statisticsDAO.updateStatistics(statistics);
                 }
-            }*/
-        //}
+            }
+        }
 
         return statistics;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void addStatistics(User user, Statistics statistics) {
+        statisticsDAO.addStatistics(statistics);
+    }
+
+    @Override
+    public boolean existsStatisticsForUser(User user) {
+        if (statisticsDAO.getByUser(user.getUserId()) == null) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     private Statistics deleteEntries(Statistics st) {

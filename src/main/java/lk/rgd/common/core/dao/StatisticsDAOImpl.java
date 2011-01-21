@@ -20,7 +20,8 @@ public class StatisticsDAOImpl extends BaseDAO implements StatisticsDAO {
     /**
      * @inheritDoc
      */
-    @Override @Transactional(propagation = Propagation.NEVER)
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS)
     public Statistics getByUser(String userId) {
         Query query = em.createNamedQuery("get.by.user");
         query.setParameter("userId", userId);
@@ -35,15 +36,18 @@ public class StatisticsDAOImpl extends BaseDAO implements StatisticsDAO {
      * @inheritDoc
      */
     @Override
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.MANDATORY)
     public void addStatistics(Statistics statistics) {
         statistics.setCreatedTimestamp(new Date());
         em.persist(statistics);
         logger.debug("Statistics ID : {}", statistics.getIdUkey());
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS)
+    @Transactional(propagation = Propagation.MANDATORY)
     public void updateStatistics(Statistics statistics) {
         statistics.setCreatedTimestamp(new Date());
         em.merge(statistics);
