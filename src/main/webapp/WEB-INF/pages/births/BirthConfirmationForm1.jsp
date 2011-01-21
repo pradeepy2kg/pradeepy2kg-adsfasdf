@@ -73,7 +73,10 @@
 
         function processResponse(respObj) {
             //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-            $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
+            $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].
+            return[0].Text
+        )
+            ;
         }
     })
 
@@ -459,9 +462,11 @@
 
 <s:hidden name="pageNo" value="1"/>
 
-<div class="form-submit">
-    <s:submit value="%{getText('next.label')}" id="next"/>
-</div>
+<s:if test="bdId != 0">
+    <div class="form-submit">
+        <s:submit value="%{getText('next.label')}" id="next"/>
+    </div>
+</s:if>
 </s:form>
 
 <s:hidden id="error2" value="%{getText('cp1.error.serialNum.value')}"/>
