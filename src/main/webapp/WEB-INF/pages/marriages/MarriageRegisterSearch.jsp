@@ -33,11 +33,36 @@
         });
     });
 
+    //TODO : following methods has to be generalized
     function validateSerial() {
         var errormsg = "";
         errormsg = validateSerialNo("serialNumber", "errorSerialNumber", errormsg);
         return printErrorMessages(errormsg);
     }
+
+    function validatePINNumber() {
+        var errormsg = "";
+        errormsg = validatePin("pinOrNic", "errorRegistrarPIN", errormsg);
+        return printErrorMessages(errormsg);
+    }
+
+    function validateDateRange() {
+        //TODO : Date range validation
+        //TODO: Validate for leap years
+        //TODO: remove validation if both date fields are empty.
+        var errormsg = "";
+        errormsg = isDate("searchStartDatePicker", "errorStartDate", errormsg);
+        errormsg = isDate("searchEndDatePicker", "errorEndDate", errormsg);
+        return printErrorMessages(errormsg);
+    }
+
+    function validateMarriageIdUkey(){
+        var errormsg = "";
+        errormsg = validateIdUkey("marriageIdUKey", "errorMarriageIdUKey", errormsg);
+        return printErrorMessages(errormsg);
+    }
+
+
 </script>
 <s:actionerror cssStyle="color:red;font-size:10pt"/>
 <s:actionmessage cssStyle="color:blue;font-size:10pt"/>
@@ -135,7 +160,8 @@
             </table>
         </div>
     </s:form>
-    <s:form action="eprMarriageRegisterSearch.do" id="searchByPIN" method="POST">
+    <s:form action="eprMarriageRegisterSearch.do" id="searchByPIN" method="POST"
+            onsubmit="javascript:return validatePINNumber()">
         <div id="fragment-2">
             <table>
                 <caption/>
@@ -159,7 +185,8 @@
             </table>
         </div>
     </s:form>
-    <s:form action="eprMarriageRegisterSearch.do" id="searchBySerial" method="POST" onsubmit="javascript:return validateSerial()">
+    <s:form action="eprMarriageRegisterSearch.do" id="searchBySerial" method="POST"
+            onsubmit="javascript:return validateSerial()">
         <div id="fragment-3">
             <table>
                 <caption/>
@@ -184,7 +211,8 @@
             </table>
         </div>
     </s:form>
-    <s:form action="eprMarriageRegisterSearch.do" id="searchByIdUKey" method="POST">
+    <s:form action="eprMarriageRegisterSearch.do" id="searchByIdUKey" method="POST"
+            onsubmit="javascript:return validateMarriageIdUkey()">
         <div id="fragment-4">
             <table>
                 <caption/>
@@ -197,7 +225,8 @@
                         <s:label value="%{getText('label.marriageregister.number')}"/>
                     </td>
                     <td>
-                        <s:textfield id="marriageIdUKey" name="marriageIdUKey" cssStyle="width:232px;" maxLength="10"/>
+                        <s:textfield id="marriageIdUKey" name="marriageIdUKey" cssStyle="width:232px;"
+                                     maxLength="10" value=""/>
                     </td>
                     <td>
                         <div class="form-submit">
@@ -332,4 +361,14 @@
     </s:if>
 </div>
 <s:hidden id="errorSerialNumber"
-          value="%{getText('error.invalid') + getText('error_js_marriageregister_serialNumber')}"/>
+          value="%{getText('error.invalid') + getText('label.marriageregister.serial')}"/>
+<s:hidden id="errorRegistrarPIN"
+          value="%{getText('error.invalid') + getText('label.marriageregister.pin')}"/>
+<s:hidden id="errorStartDate"
+          value="%{getText('error.invalid') + getText('date.from.label')}"/>
+<s:hidden id="errorEndDate"
+          value="%{getText('error.invalid') + getText('date.to.label')}"/>
+<s:hidden id="errorMarriageIdUKey"
+          value="%{getText('error.invalid') + getText('label.marriageregister.number')}"/>
+
+
