@@ -21,9 +21,9 @@
         $('img#confirmant_lookup').bind('click', function(evt1) {
             var id1 = $("input#confirmantNICorPIN").attr("value");
             $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
-                     function(data1) {
-                         $("textarea#confirmantFullName").val(data1.fullNameInOfficialLanguage);
-                     });
+                    function(data1) {
+                        $("textarea#confirmantFullName").val(data1.fullNameInOfficialLanguage);
+                    });
         });
     });
 
@@ -207,7 +207,7 @@
             <s:hidden name="back" value="true"/>
             <s:hidden name="pageNo" value="%{pageNo - 1}"/>
             <s:hidden name="skipConfirmationChages" value="%{#request.skipConfirmationChages}"/>
-
+            <s:hidden value="%{#request.bdId}" name="bdId"/>
             <div class="form-submit">
                 <s:submit value="%{getText('previous.label')}"/>
             </div>
