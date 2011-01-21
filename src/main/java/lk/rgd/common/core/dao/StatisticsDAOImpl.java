@@ -43,7 +43,9 @@ public class StatisticsDAOImpl extends BaseDAO implements StatisticsDAO {
     }
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS)
     public void updateStatistics(Statistics statistics) {
+        statistics.setCreatedTimestamp(new Date());
         em.merge(statistics);
     }
 }
