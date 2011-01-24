@@ -70,6 +70,7 @@ public class RolePermissionUtils {
         adrBitSet.set(Permission.PRINT_MARRIAGE_CERTIFICATE);
         adrBitSet.set(Permission.APPROVE_MARRIAGE);
         adrBitSet.set(Permission.VIEW_SCANNED_MARRIAGE_CERT);
+        adrBitSet.set(Permission.DIVORCE);
 
         // DR
         drBitSet = new BitSet();

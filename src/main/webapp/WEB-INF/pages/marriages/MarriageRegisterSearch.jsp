@@ -56,7 +56,7 @@
         return printErrorMessages(errormsg);
     }
 
-    function validateMarriageIdUkey(){
+    function validateMarriageIdUkey() {
         var errormsg = "";
         errormsg = validateIdUkey("marriageIdUKey", "errorMarriageIdUKey", errormsg);
         return printErrorMessages(errormsg);
@@ -352,6 +352,16 @@
                                     </s:a>
                                 </s:if>
                             </s:else>
+
+                            <s:if test="(!#session.user_bean.role.roleId.equals('DEO')) && state.ordinal()==10">
+                                <s:url id="divorce" action="eprDivorce.do">
+                                    <s:param name="idUKey" value="idUKey"/>
+                                </s:url>
+                                <s:a href="%{divorce}" title="%{getText('tooltip.marriageregister.divorce')}">
+                                    <img src="<s:url value='/images/warning.png'/>" width="30" height="30"
+                                         border="none"/>
+                                </s:a>
+                            </s:if>
                         </td>
                     </tr>
                 </s:iterator>

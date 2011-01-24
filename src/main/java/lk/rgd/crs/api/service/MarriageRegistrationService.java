@@ -509,17 +509,27 @@ public interface MarriageRegistrationService {
     /**
      * Approve muslim or noticed marriage registration
      *
-     * @param idUKey
-     * @param user
+     * @param idUKey primary key of the marriage register
+     * @param user   user who perform the action
      */
     public void approveMarriageRegister(long idUKey, User user);
 
     /**
+     * Update the status of marriage register
+     *
+     * @param idUKey     primary key of the marriage register
+     * @param user       user who perform the action
+     * @param permission permission level of the action
+     * @param state      state of the marriage register
+     */
+    public void updateMarriageRegisterState(long idUKey, User user, int permission, MarriageRegister.State state);
+
+    /**
      * reject muslim or noticed marriage registration
      *
-     * @param idUKey
-     * @param comment
-     * @param user
+     * @param idUKey  primary key of the marriage register
+     * @param comment comment on the marriage register
+     * @param user    user who perform the action
      */
     public void rejectMarriageRegister(long idUKey, String comment, User user);
 

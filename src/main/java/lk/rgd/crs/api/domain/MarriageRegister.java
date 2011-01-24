@@ -164,7 +164,8 @@ public class MarriageRegister implements Serializable, Cloneable {
         REG_DATA_ENTRY,//8
         REGISTRATION_APPROVED,//9
         REGISTRATION_REJECTED, //10
-        EXTRACT_PRINTED //11
+        EXTRACT_PRINTED, //11
+        DIVORCE //12
     }
 
     public enum LicenseCollectType {
