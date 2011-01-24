@@ -18,6 +18,13 @@
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
+    <bean id="mbeanServer" class="java.lang.management.ManagementFactory" factory-method="getPlatformMBeanServer" />
+
+    <bean id="jmxAgent" class="lk.rgd.common.JMXAgent" init-method="init">
+      <property name="entityManagerFactory" ref="entityManagerFactory"/>
+      <property name="mbs" ref="mbeanServer"/>
+    </bean>
+
     <!--A special bean that initializes the database -->
     <bean id="dbInit" class="lk.rgd.crs.core.DatabaseInitializer">
         <property name="dataSource" ref="dataSource"/>

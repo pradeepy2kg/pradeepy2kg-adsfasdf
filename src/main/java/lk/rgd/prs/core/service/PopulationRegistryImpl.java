@@ -535,6 +535,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             personDao.updatePerson(existing, user);
 
             // now add the update as a new record
+            person.setPersonUKey(0);
             personDao.addPerson(person, user);
             // add to the Solr index - both archived record and new record
             prsIndexer.updateIndex(existing);
