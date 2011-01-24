@@ -207,7 +207,7 @@ public class MarriageRegister implements Serializable, Cloneable {
     private TypeOfMarriagePlace typeOfMarriagePlace;
 
     @Column(name = "REG_MIN_PIN")
-    private long registrarOrMinisterPIN;
+    private String  registrarOrMinisterPIN;
 
     //TODO: colum name - to be renamed to SERIAL_NUMBER
     //TODO: convert to integer
@@ -380,11 +380,11 @@ public class MarriageRegister implements Serializable, Cloneable {
         this.typeOfMarriage = typeOfMarriage;
     }
 
-    public long getRegistrarOrMinisterPIN() {
+    public String getRegistrarOrMinisterPIN() {
         return registrarOrMinisterPIN;
     }
 
-    public void setRegistrarOrMinisterPIN(long registrarOrMinisterPIN) {
+    public void setRegistrarOrMinisterPIN(String registrarOrMinisterPIN) {
         this.registrarOrMinisterPIN = registrarOrMinisterPIN;
     }
 
