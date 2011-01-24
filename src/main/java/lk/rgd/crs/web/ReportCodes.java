@@ -11,13 +11,15 @@ public class ReportCodes {
     public static final String TABLE_2_5_TITLE = "Table 2.5 : LIVE BIRTHS REGISTERED BY AGE OF MOTHER AND RACE";
     public static final String TABLE_2_7_TITLE = "Table 2.7 : LIVE BIRTHS REGISTERED BY AGE OF MOTHER AND DISTRICT";
     public static final String TABLE_2_6_TITLE = "Table 2.6 : LIVE BIRTHS REGISTERED BY MONTH,SEX AND DISTRICT";
+    public static final String TABLE_2_2A_TITLE = "Table 2.2a : LIVE BIRTHS BY DISTRICT OF USUAL RESIDENCE OF MOTHER AND MONTH";
 
     public static final int TABLE_2_2_COLUMN = 4;
     public static final int TABLE_2_4_COLUMN = 15;
     public static final int TABLE_2_8_COLUMN = 8;
     public static final int TABLE_2_5_COLUMN = 11;
     public static final int TABLE_2_7_COLUMN = 11;
-    public static final int TABLE_2_76COLUMN = 16;
+    public static final int TABLE_2_6_COLUMN = 16;
+    public static final int TABLE_2_2A_COLUMN = 14;
 
     public static final int TABLE_2_2 = 1;
     public static final int TABLE_2_4 = 2;
@@ -25,6 +27,7 @@ public class ReportCodes {
     public static final int TABLE_2_5 = 4;
     public static final int TABLE_2_7 = 5;
     public static final int TABLE_2_6 = 6;
+    public static final int TABLE_2_2A = 7;
 
     public static final String TABLE_2_2_NAME = "TABLE_2_2";
     public static final String TABLE_2_4_NAME = "TABLE_2_4";
@@ -32,6 +35,6 @@ public class ReportCodes {
     public static final String TABLE_2_5_NAME = "TABLE_2_5";
     public static final String TABLE_2_7_NAME = "TABLE_2_7";
     public static final String TABLE_2_6_NAME = "TABLE_2_6";
-
+    public static final String TABLE_2_2A_NAME = "TABLE_2_2A";
 
 }
