@@ -194,7 +194,6 @@
             <a id="search.label" href="/ecivil/births/eprSearchPageLoad.do">
                 <s:label value="%{getText('search.label')}"/>
             </a>
-
         </li>
         <li>
             <a id="birth_certificate_search.label" href="/ecivil/births/eprBirthCertificateSearch.do">
