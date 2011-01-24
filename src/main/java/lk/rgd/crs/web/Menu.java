@@ -374,6 +374,8 @@ public class Menu {
         deoMarriageLink.put("eprDisplayScannedImage.do", new Link(null, "/ecivil/marriages/", "eprDisplayScannedImage.do", Permission.PRINT_MARRIAGE_EXTRACT, null));
         deoMarriageLink.put("eprViewMarriageRegister.do", new Link(null, "/ecivil/marriages/", " eprViewMarriageRegister.do", Permission.VIEW_MARRIAGE_REGISTER, null));
         deoMarriageLink.put("eprMarriageNoticeSearchInit.do", new Link("menu.marriage.notice.search", "/ecivil/marriages/", "eprMarriageNoticeSearchInit.do", Permission.SEARCH_MARRIAGE, null));
+        deoMarriageLink.put("eprMarriageRegisterSearch.do", new Link(null, "/ecivil/marriages/", "eprMarriageRegisterSearch.do", Permission.SEARCH_MARRIAGE, null));
+
         // ADR marriage links
         adrMarriageLink.putAll(deoMarriageLink);
         adrMarriageLink.put("eprMarriageNoticeSearchNext.do", new Link(null, "/ecivil/marriages/", "eprMarriageNoticeSearchNext.do", Permission.SEARCH_MARRIAGE, null));
@@ -383,7 +385,6 @@ public class Menu {
         adrMarriageLink.put("eprMarriageNoticeReject.do", new Link(null, "/ecivil/marriages/", "eprMarriageNoticeReject.do", Permission.APPROVE_MARRIAGE, null));
         adrMarriageLink.put("eprApproveMarriageRegistration.do", new Link(null, "/ecivil/marriages/", "eprApproveMarriageRegistration.do", Permission.APPROVE_MARRIAGE, null));
         adrMarriageLink.put("eprRejectMarriageRegistration.do", new Link(null, "/ecivil/marriages/", "eprRejectMarriageRegistration.do", Permission.APPROVE_MARRIAGE, null));
-        adrMarriageLink.put("eprMarriageRegisterSearch.do", new Link(null, "/ecivil/marriages/", "eprMarriageRegisterSearch.do", Permission.SEARCH_MARRIAGE, null));
         adrMarriageLink.put("eprRegisterAndApproveNewMarriage.do", new Link(null, "/ecivil/marriages/", "eprRegisterAndApproveNewMarriage.do", Permission.APPROVE_MARRIAGE, null));
         adrMarriageLink.put("eprUpdateAndApproveMuslimMarriage.do", new Link(null, "/ecivil/marriages/", "eprUpdateAndApproveMuslimMarriage.do", Permission.APPROVE_MARRIAGE, null));
         adrMarriageLink.put("eprMarriageRegisterRejectInit.do", new Link(null, "/ecivil/marriages/", "eprMarriageRegisterRejectInit.do", Permission.APPROVE_MARRIAGE, null));
