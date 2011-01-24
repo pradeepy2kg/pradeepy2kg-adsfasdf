@@ -7,69 +7,69 @@
     <ul class="menu">
         <li>
             <a href="#">
-                <s:label value="%{getText('category_admin_task')}"/>
+                நிருவாக நடவடிக்கை
             </a>
             <ul class="acitem">
                 <li>
                     <a id="creat_user.label" href="/ecivil/management/eprInitUserCreation.do">
-                        <s:label value="%{getText('creat_user.label')}"/>
+                        பாவனையாளரை உட்புகுத்தல்
                     </a>
                 </li>
                 <li>
                     <a id="viewUsers.label" href="/ecivil/management/eprViewUsers.do">
-                        <s:label value="%{getText('viewUsers.label')}"/>
+                        பாவனையாளர் தேடுதல்
                     </a>
                 </li>
                 <li>
                     <a id="addDivision.label" href="/ecivil/management/eprInitAddDivisionsAndDsDivisions.do">
-                        <s:label value="%{getText('addDivision.label')}"/>
+                        பிரிவினை உட்புகுத்தல்
                     </a>
                 </li>
                 <li>
                     <a id="registrars.managment" href="/ecivil/management/eprRegistrarsManagment.do">
-                        <s:label value="%{getText('registrars.managment')}"/>
+                        பதிவாளார் நிருவாகம்
                     </a>
                 </li>
                 <li>
                     <a id="registrar.add" href="/ecivil/management/eprRegistrarsAdd.do">
-                        <s:label value="%{getText('registrar.add')}"/>
+                        புதிய பதிவாளர்களை உட்புகுத்தல்
                     </a>
                 </li>
                 <li>
                     <a id="eventManege.label" href="/ecivil/management/eprInitEventsManagement.do">
-                        <s:label value="%{getText('eventManege.label')}"/>
+                        முகாமைத்துவம்
                     </a>
                 </li>
                 <li>
                     <a id="indexRecords.label" href="/ecivil/management/eprIndexRecords.do">
-                        <s:label value="%{getText('indexRecords.label')}"/>
+                        சுட்டெண் அறிக்கை
                     </a>
                 </li>
                 <li>
                     <a id="search.registrar" href="/ecivil/management/eprFindRegistrar.do">
-                        <s:label value="%{getText('search.registrar')}"/>
+                        பதிவாளரினை தேடுதல்
                     </a>
                 </li>
                 <li>
                     <a id="report.title" href="/ecivil/management/eprInitCreateReports.do">
-                        <s:label value="%{getText('report.title')}"/>
+                        Report Generation ta
                     </a>
                 </li>
             </ul>
         </li>
         <li>
             <a href="#">
-                <s:label value="%{getText('category_user_preferance')}"/>
+                தனிநபர் தேடுதல்
             </a>
             <ul class="acitem">
                 <li>
                     <a id="userPreference.label" href="/ecivil/preferences/eprUserPreferencesInit.do">
-                        <s:label value="%{getText('userPreference.label')}"/>
+                        பாவனையாளரின் எண்ணம்
                     </a>
                 </li>
                 <li>
                     <a id="changePassword.label" href="/ecivil/preferences/eprpassChangePageLoad.do">
-                        <s:label value="%{getText('changePassword.label')}"/>
+                        இரகசிய சொல்லினை மாற்றுதல்
                     </a>
                 </li>
             </ul>

@@ -13,33 +13,32 @@
 <li>
     </s:else>
     <a href="/ecivil/births/eprBirthRegistrationHome.do">
-        <s:label value="%{getText('category_birth_registration')}"/>
+        BIRTH REGISTRATION
     </a>
     <ul class="acitem">
         <li>
             <a id="birth_registration.label" href="/ecivil/births/eprBirthRegistrationInit.do">
-                <s:label value="%{getText('birth_registration.label')}"/>
+                (1) Birth Registration
             </a>
         </li>
         <li>
             <a id="still_birth_registration.label" href="/ecivil/births/eprStillBirthRegistrationInit.do">
-                <s:label value="%{getText('still_birth_registration.label')}"/>
+                (1) Still Birth Registration
             </a>
         </li>
         <li>
             <a id="birth_confirmation_print.label" href="/ecivil/births/eprBirthConfirmationPrintList.do">
-                <s:label value="%{getText('birth_confirmation_print.label')}"/>
+                (3) Birth Confirmation Print
             </a>
         </li>
         <li>
             <a id="birth_confirmation.label" href="/ecivil/births/eprBirthConfirmationInit.do">
-                <s:label value="%{getText('birth_confirmation.label')}"/>
+                (4) Birth Confirmation
             </a>
-
         </li>
         <li>
             <a id="print_birthcertificate.label" href="/ecivil/births/eprBirthCertificateList.do">
-                <s:label value="%{getText('print_birthcertificate.label')}"/>
+                (6) Print Birth Certificate
             </a>
         </li>
     </ul>
@@ -52,22 +51,22 @@
 <li>
     </s:else>
     <a href="/ecivil/deaths/eprInitDeathHome.do">
-        <s:label value="%{getText('category_death_registraion')}"/>
+        DEATH REGISTRATION
     </a>
     <ul class="acitem">
         <li>
             <a id="death_registration.label" href="/ecivil/deaths/eprInitDeathDeclaration.do">
-                <s:label value="%{getText('death_registration.label')}"/>
+                (1) Death Registration
             </a>
         </li>
         <li>
             <a id="late_death_registration.label" href="/ecivil/deaths/eprInitLateDeathDeclaration.do">
-                <s:label value="%{getText('late_death_registration.label')}"/>
+                (1) Late Death Registration
             </a>
         </li>
         <li>
             <a id="death_approve_print_list.label" href="/ecivil/deaths/eprDeathApprovalAndPrint.do">
-                <s:label value="%{getText('death_approve_print_list.label')}"/>
+                (2) Death Approve And Print List
             </a>
         </li>
     </ul>
@@ -80,27 +79,27 @@
 <li>
     </s:else>
     <a href="/ecivil/adoption/eprAdoptionRegistrationHome.do">
-        <s:label value="%{getText('category_adoption')}"/>
+        ADOPTION REGISTRATION
     </a>
     <ul class="acitem">
         <li>
             <a id="adoption_registration.label" href="/ecivil/adoption/eprAdoptionRegistrationAction.do">
-                <s:label value="%{getText('adoption_registration.label')}"/>
+                (1) Adoption Registration
             </a>
         </li>
         <li>
             <a id="adoption_approval_and_print.lable" href="/ecivil/adoption/eprAdoptionApprovalAndPrint.do">
-                <s:label value="%{getText('adoption_approval_and_print.lable')}"/>
+                (2) Adoption Approval And Print
             </a>
         </li>
         <li>
             <a id="adoption_applicant.label" href="/ecivil/adoption/eprAdoptionApplicantInfo.do">
-                <s:label value="%{getText('adoption_applicant.label')}"/>
+                (3) Adoption Applicant
             </a>
         </li>
         <li>
             <a id="adoption_re_registration.label" href="/ecivil/adoption/eprAdoptionReRegistration.do">
-                <s:label value="%{getText('adoption_re_registration.label')}"/>
+                (4) Adoption Reregistration
             </a>
         </li>
     </ul>
@@ -113,28 +112,28 @@
 <li>
     </s:else>
     <a href="/ecivil/alteration/eprBirthAlterationHome.do">
-        <s:label value="%{getText('category_alteration')}"/>
+        ALTERATION
     </a>
     <ul class="acitem">
         <li>
             <a id="birth_alteration.label" href="/ecivil/alteration/eprBirthAlterationInit.do">
-                <s:label value="%{getText('birth_alteration.title')}"/>
+                Birth Registration Alteration
             </a>
         </li>
         <li>
             <a id="birth_alteration_pending_approval.title"
                href="/ecivil/alteration/eprBirthAlterationPendingApproval.do">
-                <s:label value="%{getText('birth_alteration_pending_approval.title')}"/>
+                Birth Alteration Approval
             </a>
         </li>
         <li>
             <a id="death.registration.alteration" href="/ecivil/alteration/eprDeathAlterationSearchHome.do">
-                <s:label value="%{getText('death.registration.alteration')}"/>
+                Death Registration Alteration
             </a>
         </li>
         <li>
             <a id="label.manage.alterations" href="/ecivil/alteration/eprApproveDeathAlterationsInit.do">
-                <s:label value="%{getText('label.manage.alterations')}"/>
+                Manage Death Alteration
             </a>
         </li>
     </ul>
@@ -147,17 +146,17 @@
 <li>
     </s:else>
     <a href="#">
-        <s:label value="%{getText('category_user_preferance')}"/>
+        USER PREFERENCE
     </a>
     <ul class="acitem">
         <li>
             <a id="userPreference.label" href="/ecivil/preferences/eprUserPreferencesInit.do">
-                <s:label value="%{getText('userPreference.label')}"/>
+                User Preferences
             </a>
         </li>
         <li>
             <a id="changePassword.label" href="/ecivil/preferences/eprpassChangePageLoad.do">
-                <s:label value="%{getText('changePassword.label')}"/>
+                Change Password
             </a>
         </li>
     </ul>
@@ -170,12 +169,12 @@
 <li>
     </s:else>
     <a href="#">
-        <s:label value="%{getText('category_prs')}"/>
+        PRS
     </a>
     <ul class="acitem">
         <li>
             <a id="prs.personRegistration.label" href="/ecivil/prs/eprExistingPersonRegInit.do">
-                <s:label value="%{getText('prs.personRegistration.label')}"/>
+                Person Registration
             </a>
         </li>
     </ul>
@@ -188,27 +187,27 @@
 <li>
     </s:else>
     <a href="#">
-        <s:label value="%{getText('category_certificate_search')}"/>
+        SEARCH RECORDS
     </a>
     <ul class="acitem">
         <li>
             <a id="search.label" href="/ecivil/births/eprSearchPageLoad.do">
-                <s:label value="%{getText('search.label')}"/>
+                Birth Declaration / Confirmation Search
             </a>
         </li>
         <li>
             <a id="birth_certificate_search.label" href="/ecivil/births/eprBirthCertificateSearch.do">
-                <s:label value="%{getText('birth_certificate_search.label')}"/>
+                Birth Certificate Search
             </a>
         </li>
         <li>
             <a id="death_certificate_search.label" href="/ecivil/deaths/eprDeathCertificateSearch.do">
-                <s:label value="%{getText('death_certificate_search.label')}"/>
+                Death Certificate Search
             </a>
         </li>
         <li>
             <a id="birth.advanceSearch.label" href="/ecivil/births/eprBirthsAdvancedSearch.do">
-                <s:label value="%{getText('birth.advanceSearch.label')}"/>
+                Birth Records Search
             </a>
         </li>
     </ul>
@@ -221,27 +220,27 @@
 <li>
     </s:else>
     <a href="#">
-        <s:label value="%{getText('category_marrage_registraion')}"/>
+        MARRIAGE REGISTRATION
     </a>
     <ul class="acitem">
         <li>
             <a id="menu.marriage.notice" href="/ecivil/marriages/eprSelectNoticeType.do">
-                <s:label value="%{getText('menu.marriage.notice')}"/>
+                Marriage Notice
             </a>
         </li>
         <li>
             <a id="menu.marriage.register.search" href="/ecivil/marriages/eprMarriageRegisterSearchInit.do">
-                <s:label value="%{getText('menu.marriage.register.search')}"/>
+                Marriage Register Search
             </a>
         </li>
         <li>
             <a id="menu.marriage.registration" href="/ecivil/marriages/eprMarriageRegistrationInit.do">
-                <s:label value="%{getText('menu.marriage.registration')}"/>
+                Marriage Registration
             </a>
         </li>
         <li>
             <a id="menu.marriage.notice.search" href="/ecivil/marriages/eprMarriageNoticeSearchInit.do">
-                <s:label value="%{getText('menu.marriage.notice.search')}"/>
+                Search Notice
             </a>
         </li>
     </ul>

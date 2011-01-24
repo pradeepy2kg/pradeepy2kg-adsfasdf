@@ -4,295 +4,295 @@
 <link rel="stylesheet" type="text/css" href='/ecivil/css/menu.css'/>
 
 <div id="xmain-menu">
-    <ul class="menu">
+<ul class="menu">
 <s:if test="%{#session.context=='birth'}">
 <li class="exp">
     </s:if>
     <s:else>
-        <li>
+<li>
     </s:else>
     <a href="/ecivil/births/eprBirthRegistrationHome.do">
-        <s:label value="%{getText('category_birth_registration')}"/>
+        උපත් ලියාපදිංචිය
     </a>
-            <ul class="acitem">
-                <li>
+    <ul class="acitem">
+        <li>
             <a id="birth_registration.label" href="/ecivil/births/eprBirthRegistrationInit.do">
-                <s:label value="%{getText('birth_registration.label')}"/>
+                (1) සජීවී උපතක් ලියාපදිංචි කිරීම
             </a>
-                </li>
-                <li>
-            <a id="still_birth_registration.label" href="/ecivil/births/eprStillBirthRegistrationInit.do">
-                <s:label value="%{getText('still_birth_registration.label')}"/>
-            </a>
-                </li>
-                <li>
-            <a id="birth_confirmation_print.label" href="/ecivil/births/eprBirthConfirmationPrintList.do">
-                <s:label value="%{getText('birth_confirmation_print.label')}"/>
-            </a>
-                </li>
-                <li>
-            <a id="birth_confirmation.label" href="/ecivil/births/eprBirthConfirmationInit.do">
-                <s:label value="%{getText('birth_confirmation.label')}"/>
-            </a>
-                </li>
-                <li>
-            <a id="print_birthcertificate.label" href="/ecivil/births/eprBirthCertificateList.do">
-                <s:label value="%{getText('print_birthcertificate.label')}"/>
-            </a>
-                </li>
-                <li>
-                    <a id="birth_register_approval.label" href="/ecivil/births/eprBirthRegisterApproval.do"
-               style="color:red">
-                <s:label value="%{getText('birth_register_approval.label')}"/>
-            </a>
-                </li>
-                <li>
-                    <a id="birth_confirmation_approval.label" href="/ecivil/births/eprBirthConfirmationApproval.do"
-               style="color:red">
-                <s:label value="%{getText('birth_confirmation_approval.label')}"/>
-            </a>
-                </li>
-            </ul>
         </li>
+        <li>
+            <a id="still_birth_registration.label" href="/ecivil/births/eprStillBirthRegistrationInit.do">
+                (1) මළ උපතක් ලියාපදිංචිය
+            </a>
+        </li>
+        <li>
+            <a id="birth_confirmation_print.label" href="/ecivil/births/eprBirthConfirmationPrintList.do">
+                (3) උපත් තහවුරු කිරීම් මුද්‍රණය
+            </a>
+        </li>
+        <li>
+            <a id="birth_confirmation.label" href="/ecivil/births/eprBirthConfirmationInit.do">
+                (4) උපත් තහවුරු කිරීම
+            </a>
+        </li>
+        <li>
+            <a id="print_birthcertificate.label" href="/ecivil/births/eprBirthCertificateList.do">
+                (6) උප්පැන්න සහතික මුද්‍රණය
+            </a>
+        </li>
+        <li>
+            <a id="birth_register_approval.label" href="/ecivil/births/eprBirthRegisterApproval.do"
+               style="color:red">
+                (2) උපත් ලියාපදිංචි අනුමතය
+            </a>
+        </li>
+        <li>
+            <a id="birth_confirmation_approval.label" href="/ecivil/births/eprBirthConfirmationApproval.do"
+               style="color:red">
+                (5) උපත් තහවුරු අනුමත කිරීම
+            </a>
+        </li>
+    </ul>
+</li>
 
 <s:if test="%{#session.context=='death'}">
 <li class="exp">
     </s:if>
     <s:else>
-        <li>
+<li>
     </s:else>
     <a href="/ecivil/deaths/eprInitDeathHome.do">
-        <s:label value="%{getText('category_death_registraion')}"/>
+        මරණ ලියාපදිංචිය
     </a>
-            <ul class="acitem">
-                <li>
+    <ul class="acitem">
+        <li>
             <a id="death_registration.label" href="/ecivil/deaths/eprInitDeathDeclaration.do">
-                <s:label value="%{getText('death_registration.label')}"/>
+                (1) සාමාන්‍ය මරණ සහ හදිසි මරණ ලියාපදිංචිය
             </a>
-                </li>
-                <li>
-            <a id="late_death_registration.label" href="/ecivil/deaths/eprInitLateDeathDeclaration.do">
-                <s:label value="%{getText('late_death_registration.label')}"/>
-            </a>
-                </li>
-                <li>
-            <a id="death_approve_print_list.label" href="/ecivil/deaths/eprDeathApprovalAndPrint.do">
-                <s:label value="%{getText('death_approve_print_list.label')}"/>
-            </a>
-                </li>
-            </ul>
         </li>
+        <li>
+            <a id="late_death_registration.label" href="/ecivil/deaths/eprInitLateDeathDeclaration.do">
+                (1) කාලය ඉකුත් වූ මරණ ලියාපදිංචිය
+            </a>
+        </li>
+        <li>
+            <a id="death_approve_print_list.label" href="/ecivil/deaths/eprDeathApprovalAndPrint.do">
+                (2) මරණ අනුමැතිය සහ මුද්‍රණය
+            </a>
+        </li>
+    </ul>
+</li>
 
 <s:if test="%{#session.context=='adoption'}">
 <li class="exp">
     </s:if>
     <s:else>
-        <li>
+<li>
     </s:else>
     <a href="/ecivil/adoption/eprAdoptionRegistrationHome.do">
-        <s:label value="%{getText('category_adoption')}"/>
+        දරුකමට හදාගැනීම ලියාපදිංචිය
     </a>
-            <ul class="acitem">
-                <li>
+    <ul class="acitem">
+        <li>
             <a id="adoption_registration.label" href="/ecivil/adoption/eprAdoptionRegistrationAction.do">
-                <s:label value="%{getText('adoption_registration.label')}"/>
+                (1) දරුකමට හදාගැනීම ලියාපදිංචිය
             </a>
-                </li>
-                <li>
-            <a id="adoption_approval_and_print.lable" href="/ecivil/adoption/eprAdoptionApprovalAndPrint.do">
-                <s:label value="%{getText('adoption_approval_and_print.lable')}"/>
-            </a>
-                </li>
-                <li>
-            <a id="adoption_applicant.label" href="/ecivil/adoption/eprAdoptionApplicantInfo.do">
-                <s:label value="%{getText('adoption_applicant.label')}"/>
-            </a>
-                </li>
-                <li>
-            <a id="adoption_re_registration.label" href="/ecivil/adoption/eprAdoptionReRegistration.do">
-                <s:label value="%{getText('adoption_re_registration.label')}"/>
-            </a>
-                </li>
-            </ul>
         </li>
+        <li>
+            <a id="adoption_approval_and_print.lable" href="/ecivil/adoption/eprAdoptionApprovalAndPrint.do">
+                (2) දරුකමට හදාගැනීම අනුමත කිරීම සහ මුද්‍රණය
+            </a>
+        </li>
+        <li>
+            <a id="adoption_applicant.label" href="/ecivil/adoption/eprAdoptionApplicantInfo.do">
+                (3) අයදුම්කරුගේ විස්තර
+            </a>
+        </li>
+        <li>
+            <a id="adoption_re_registration.label" href="/ecivil/adoption/eprAdoptionReRegistration.do">
+                (4) දරුකමට හදාගැනීම දෙවන ලියාපදිංචිය
+            </a>
+        </li>
+    </ul>
+</li>
 
 <s:if test="%{#session.context=='alteration'}">
 <li class="exp">
     </s:if>
     <s:else>
-        <li>
+<li>
     </s:else>
     <a href="/ecivil/alteration/eprBirthAlterationHome.do">
-        <s:label value="%{getText('category_alteration')}"/>
+        වෙනස් කිරීම් සිදුකිරීම
     </a>
-            <ul class="acitem">
-                <li>
+    <ul class="acitem">
+        <li>
             <a id="birth_alteration.label" href="/ecivil/alteration/eprBirthAlterationInit.do">
-                <s:label value="%{getText('birth_alteration.title')}"/>
+                උප්පැන්න සහතිකයේ වෙනස් කිරීම්
             </a>
-                </li>
-                <li>
-                    <a id="birth_alteration_pending_approval.title"
-               href="/ecivil/alteration/eprBirthAlterationPendingApproval.do">
-                <s:label value="%{getText('birth_alteration_pending_approval.title')}"/>
-            </a>
-                </li>
-                <li>
-            <a id="death.registration.alteration" href="/ecivil/alteration/eprDeathAlterationSearchHome.do">
-                <s:label value="%{getText('death.registration.alteration')}"/>
-            </a>
-                </li>
-                <li>
-            <a id="label.manage.alterations" href="/ecivil/alteration/eprApproveDeathAlterationsInit.do">
-                <s:label value="%{getText('label.manage.alterations')}"/>
-            </a>
-                </li>
-            </ul>
         </li>
+        <li>
+            <a id="birth_alteration_pending_approval.title"
+               href="/ecivil/alteration/eprBirthAlterationPendingApproval.do">
+                උප්පැන්න  සටහනක විස්තර වෙනස් කිරීම අනුමත කිරීම
+            </a>
+        </li>
+        <li>
+            <a id="death.registration.alteration" href="/ecivil/alteration/eprDeathAlterationSearchHome.do">
+                මරණ සහතිකයේ වෙනස් කම් කිරිම්
+            </a>
+        </li>
+        <li>
+            <a id="label.manage.alterations" href="/ecivil/alteration/eprApproveDeathAlterationsInit.do">
+                මරණ සහතිකයේ වෙනස් කිරීම හැසිරවීම
+            </a>
+        </li>
+    </ul>
+</li>
 
 <s:if test="%{#session.context=='preference'}">
 <li class="exp">
     </s:if>
     <s:else>
-        <li>
+<li>
     </s:else>
     <a href="#">
-        <s:label value="%{getText('category_user_preferance')}"/>
+        පුද්ගලික තේරීම්
     </a>
-            <ul class="acitem">
-                <li>
+    <ul class="acitem">
+        <li>
             <a id="userPreference.label" href="/ecivil/preferences/eprUserPreferencesInit.do">
-                <s:label value="%{getText('userPreference.label')}"/>
+                පරිශීලක අභිමතය
             </a>
-                </li>
-                <li>
-            <a id="changePassword.label" href="/ecivil/preferences/eprpassChangePageLoad.do">
-                <s:label value="%{getText('changePassword.label')}"/>
-            </a>
-                </li>
-            </ul>
         </li>
+        <li>
+            <a id="changePassword.label" href="/ecivil/preferences/eprpassChangePageLoad.do">
+                මුරපදය වෙනස් කිරීම
+            </a>
+        </li>
+    </ul>
+</li>
 
 <s:if test="%{#session.context=='prs'}">
 <li class="exp">
     </s:if>
     <s:else>
-        <li>
+<li>
     </s:else>
     <a href="#">
-        <s:label value="%{getText('category_prs')}"/>
+        පුද්ගල ලියාපදිංචි සේවා
     </a>
-            <ul class="acitem">
-                <li>
+    <ul class="acitem">
+        <li>
             <a id="prs.personRegistration.label" href="/ecivil/prs/eprExistingPersonRegInit.do">
-                <s:label value="%{getText('prs.personRegistration.label')}"/>
+                පුද්ගල ලියාපදිංචිය
             </a>
-                </li>
-                <li>
-            <a id="prs.advanceSearch.label" href="/ecivil/prs/eprPRSAdvancedSearch.do">
-                <s:label value="%{getText('prs.advanceSearch.label')}"/>
-            </a>
-                </li>
-                <li>
-            <a id="prs.personApproval.label" href="/ecivil/prs/eprPersonApproval.do">
-                <s:label value="%{getText('prs.personApproval.label')}"/>
-            </a>
-                </li>
-            </ul>
         </li>
+        <li>
+            <a id="prs.advanceSearch.label" href="/ecivil/prs/eprPRSAdvancedSearch.do">
+                පුද්ගල වාර්තා සෙවීම
+            </a>
+        </li>
+        <li>
+            <a id="prs.personApproval.label" href="/ecivil/prs/eprPersonApproval.do">
+                පුද්ගල ලියාපදිංචි කළමනාකරණය
+            </a>
+        </li>
+    </ul>
+</li>
 
 <s:if test="%{#session.context=='certificateSearch'}">
 <li class="exp">
     </s:if>
     <s:else>
-        <li>
+<li>
     </s:else>
     <a href="#">
-        <s:label value="%{getText('category_certificate_search')}"/>
+        වාර්තා සෙවුම
     </a>
-            <ul class="acitem">
-                <li>
+    <ul class="acitem">
+        <li>
             <a id="search.label" href="/ecivil/births/eprSearchPageLoad.do">
-                <s:label value="%{getText('search.label')}"/>
+                උපත් ප්‍රකාශන / තහවුරු සෙවීම
             </a>
-                </li>
-                <li>
-            <a id="birth_certificate_search.label" href="/ecivil/births/eprBirthCertificateSearch.do">
-                <s:label value="%{getText('birth_certificate_search.label')}"/>
-            </a>
-                </li>
-                <li>
-            <a id="death_certificate_search.label" href="/ecivil/deaths/eprDeathCertificateSearch.do">
-                <s:label value="%{getText('death_certificate_search.label')}"/>
-            </a>
-                </li>
-                <li>
-            <a id="birth.advanceSearch.label" href="/ecivil/births/eprBirthsAdvancedSearch.do">
-                <s:label value="%{getText('birth.advanceSearch.label')}"/>
-            </a>
-                </li>
-            </ul>
         </li>
+        <li>
+            <a id="birth_certificate_search.label" href="/ecivil/births/eprBirthCertificateSearch.do">
+                උප්පැන්න සහතික සෙවීම
+            </a>
+        </li>
+        <li>
+            <a id="death_certificate_search.label" href="/ecivil/deaths/eprDeathCertificateSearch.do">
+                මරණ සහතික සෙවීම
+            </a>
+        </li>
+        <li>
+            <a id="birth.advanceSearch.label" href="/ecivil/births/eprBirthsAdvancedSearch.do">
+                උපත් වාර්තා සෙවීම
+            </a>
+        </li>
+    </ul>
+</li>
 
 <s:if test="%{#session.context=='admin'}">
 <li class="exp">
     </s:if>
     <s:else>
-        <li>
+<li>
     </s:else>
     <a href="#">
-        <s:label value="%{getText('category_admin_task')}"/>
+        පරිපාලන කටයුතු
     </a>
-            <ul class="acitem">
-                <li>
+    <ul class="acitem">
+        <li>
             <a id="registrars.managment" href="/ecivil/management/eprRegistrarsManagment.do" style="color:red">
-                <s:label value="%{getText('registrars.managment')}"/>
+                රෙජිස්ට්‍රාර් වරු පරිපාලනය
             </a>
-                </li>
-                <li>
-            <a id="registrar.add" href="/ecivil/management/eprRegistrarsAdd.do" style="color:red">
-                <s:label value="%{getText('registrar.add')}"/>
-            </a>
-                </li>
-                <li>
-            <a id="search.registrar" href="/ecivil/management/eprFindRegistrar.do" style="color:red">
-                <s:label value="%{getText('search.registrar')}"/>
-            </a>
-                </li>
-            </ul>
         </li>
+        <li>
+            <a id="registrar.add" href="/ecivil/management/eprRegistrarsAdd.do" style="color:red">
+                නව රෙජිස්ට්‍රාර් වරයකු ඇතුල් කිරීම
+            </a>
+        </li>
+        <li>
+            <a id="search.registrar" href="/ecivil/management/eprFindRegistrar.do" style="color:red">
+                රෙජිස්ට්‍රාර්වරයකු සෙවීම
+            </a>
+        </li>
+    </ul>
+</li>
 
 <s:if test="%{#session.context=='marriage'}">
 <li class="exp">
     </s:if>
     <s:else>
-        <li>
+<li>
     </s:else>
     <a href="#">
-        <s:label value="%{getText('category_marrage_registraion')}"/>
+        විවාහ ලියාපදිංචිය
     </a>
-            <ul class="acitem">
-                <li>
+    <ul class="acitem">
+        <li>
             <a id="menu.marriage.notice" href="/ecivil/marriages/eprSelectNoticeType.do">
-                <s:label value="%{getText('menu.marriage.notice')}"/>
+                විවාහ දැන්වීම
             </a>
-                </li>
-                <li>
+        </li>
+        <li>
             <a id="menu.marriage.register.search" href="/ecivil/marriages/eprMarriageRegisterSearchInit.do">
-                <s:label value="%{getText('menu.marriage.register.search')}"/>
+                විවාහ ලේකම් පොත සේවීම
             </a>
-                </li>
-                <li>
+        </li>
+        <li>
             <a id="menu.marriage.registration" href="/ecivil/marriages/eprMarriageRegistrationInit.do">
-                <s:label value="%{getText('menu.marriage.registration')}"/>
+                විවාහ ලියාපදිංචිය
             </a>
-                </li>
-                <li>
+        </li>
+        <li>
             <a id="menu.marriage.notice.search" href="/ecivil/marriages/eprMarriageNoticeSearchInit.do">
-                <s:label value="%{getText('menu.marriage.notice.search')}"/>
+                විවාහ දැන්වීම් සෙවීම
             </a>
-                </li>
-            </ul>
         </li>
     </ul>
+</li>
+</ul>
 </div>

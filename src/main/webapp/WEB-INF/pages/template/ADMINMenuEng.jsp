@@ -7,69 +7,69 @@
     <ul class="menu">
         <li>
             <a href="#">
-                <s:label value="%{getText('category_admin_task')}"/>
+                ADMIN TASK
             </a>
             <ul class="acitem">
                 <li>
                     <a id="creat_user.label" href="/ecivil/management/eprInitUserCreation.do">
-                        <s:label value="%{getText('creat_user.label')}"/>
+                        Create User
                     </a>
                 </li>
                 <li>
                     <a id="viewUsers.label" href="/ecivil/management/eprViewUsers.do">
-                        <s:label value="%{getText('viewUsers.label')}"/>
+                        Search Users
                     </a>
                 </li>
                 <li>
                     <a id="addDivision.label" href="/ecivil/management/eprInitAddDivisionsAndDsDivisions.do">
-                        <s:label value="%{getText('addDivision.label')}"/>
+                        Add Divisions
                     </a>
                 </li>
                 <li>
                     <a id="registrars.managment" href="/ecivil/management/eprRegistrarsManagment.do">
-                        <s:label value="%{getText('registrars.managment')}"/>
+                        Manage Assignments
                     </a>
                 </li>
                 <li>
                     <a id="registrar.add" href="/ecivil/management/eprRegistrarsAdd.do">
-                        <s:label value="%{getText('registrar.add')}"/>
+                        Add Registrar
                     </a>
                 </li>
                 <li>
                     <a id="eventManege.label" href="/ecivil/management/eprInitEventsManagement.do">
-                        <s:label value="%{getText('eventManege.label')}"/>
+                        View Events
                     </a>
                 </li>
                 <li>
                     <a id="indexRecords.label" href="/ecivil/management/eprIndexRecords.do">
-                        <s:label value="%{getText('indexRecords.label')}"/>
+                        Index Records
                     </a>
                 </li>
                 <li>
                     <a id="search.registrar" href="/ecivil/management/eprFindRegistrar.do">
-                        <s:label value="%{getText('search.registrar')}"/>
+                        Search Registrar
                     </a>
                 </li>
                 <li>
                     <a id="report.title" href="/ecivil/management/eprInitCreateReports.do">
-                        <s:label value="%{getText('report.title')}"/>
+                        Report Generation
                     </a>
                 </li>
             </ul>
         </li>
         <li>
             <a href="#">
-                <s:label value="%{getText('category_user_preferance')}"/>
+                USER PREFERENCE
             </a>
             <ul class="acitem">
                 <li>
                     <a id="userPreference.label" href="/ecivil/preferences/eprUserPreferencesInit.do">
-                        <s:label value="%{getText('userPreference.label')}"/>
+                        User Preferences
                     </a>
                 </li>
                 <li>
                     <a id="changePassword.label" href="/ecivil/preferences/eprpassChangePageLoad.do">
-                        <s:label value="%{getText('changePassword.label')}"/>
+                        Change Password
                     </a>
                 </li>
             </ul>
