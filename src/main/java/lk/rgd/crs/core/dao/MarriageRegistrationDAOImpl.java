@@ -255,10 +255,8 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
         if (dsDivisionList != null) {
             q.setParameter("dsDivisionList", dsDivisionList);
         }
-        if (startDate != null) {
+        if (startDate != null & endDate != null) {
             q.setParameter("startDate", startDate);
-        }
-        if (endDate != null) {
             q.setParameter("endDate", endDate);
         }
         return q.getResultList();

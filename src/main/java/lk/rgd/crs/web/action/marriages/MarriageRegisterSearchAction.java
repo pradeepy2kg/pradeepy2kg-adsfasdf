@@ -153,8 +153,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     public String marriageRegisterSearchInit() {
         commonUtil.populateDynamicListsWithAllOption(districtList, dsDivisionList, mrDivisionList, user, language);
         stateList = StateUtil.getStateByLanguage(language);
-        marriageRegisterSearchResult();
-        return SUCCESS;
+        return marriageRegisterSearchResult();
     }
 
     /**
