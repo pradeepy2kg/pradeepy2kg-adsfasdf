@@ -337,7 +337,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
                 checkUserPermission(Permission.ADD_MARRIAGE, ErrorCodes.PERMISSION_DENIED,
                     " add second notice to marriage register ", user);
                 //get user warnings when adding  second notice   and return warnings
-                List<UserWarning> warnings = marriageRegistrationValidator.validateAddingSecondNoticeAndEdit(notice, type);
+                List<UserWarning> warnings = marriageRegistrationValidator.validateAddingSecondNoticeAndEdit(notice, type,user);
                 marriageRegistrationValidator.validateMarriageNotice(notice, type);
                 if (warnings != null && warnings.size() > 0 && !ignoreWarnings) {
                     logger.debug("warnings found while adding second notice to the existing marriage notice idUKey : {}",
@@ -824,7 +824,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     public List<UserWarning> editMarriageNotice(MarriageRegister notice, MarriageNotice.Type type,
         boolean ignoreWarnings, User user) {
         logger.debug("attempt to edit marriage notice idUKey : {}", notice.getIdUKey());
-        List<UserWarning> warnings = marriageRegistrationValidator.validateAddingSecondNoticeAndEdit(notice, type);
+        List<UserWarning> warnings = marriageRegistrationValidator.validateAddingSecondNoticeAndEdit(notice, type,user);
         if (warnings != null && warnings.size() > 0 && !ignoreWarnings) {
             logger.debug("warnings found while adding second notice to the existing marriage notice idUKey : {}",
                 notice.getIdUKey());

@@ -230,10 +230,16 @@ public class MarriageRegistrationValidator {
      * @param type     type of the second notice
      * @return
      */
-    public List<UserWarning> validateAddingSecondNoticeAndEdit(MarriageRegister existing, MarriageNotice.Type type) {
+    public List<UserWarning> validateAddingSecondNoticeAndEdit(MarriageRegister existing, MarriageNotice.Type type,User user) {
         List<UserWarning> warning = new ArrayList<UserWarning>();
         //if second notice is a MALE notice and if its records current state is FEMALE_NOTICE_APPROVED and
         //second notice is nominating that female should get the notice and vise-versa
+        ResourceBundle rb = rb_en;
+        if (AppConstants.SINHALA.equals(user.getPrefLanguage())) {
+            rb = rb_si;
+        } else if (AppConstants.TAMIL.equals(user.getPrefLanguage())) {
+            rb = rb_ta;
+        }
         boolean checkFail = ((type == MarriageNotice.Type.MALE_NOTICE) &&
             (existing.getState() == MarriageRegister.State.FEMALE_NOTICE_APPROVED) &&
             ((existing.getLicenseCollectType() == MarriageRegister.LicenseCollectType.HAND_COLLECT_FEMALE)
@@ -244,7 +250,7 @@ public class MarriageRegistrationValidator {
                     || (existing.getLicenseCollectType() == MarriageRegister.LicenseCollectType.MAIL_TO_MALE)));
 
         if (checkFail) {
-            warning.add(new UserWarning("warn.add.or.rollback.other.party.approval", UserWarning.Severity.WARN));
+            warning.add(new UserWarning(rb.getString("warn.add.or.rollback.other.party.approval"), UserWarning.Severity.WARN));
             return warning;
         }
         return Collections.emptyList();
