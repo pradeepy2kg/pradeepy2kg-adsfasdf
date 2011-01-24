@@ -221,6 +221,25 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         return SUCCESS;
     }
 
+    public String divorce() {
+        //todo : add action messages/errors
+        MarriageRegister marriageRegister = marriageRegistrationService.getMarriageRegisterByIdUKey(idUKey, user,
+            Permission.PRINT_MARRIAGE_EXTRACT);
+        if (marriageRegister != null && marriageRegister.getState() != MarriageRegister.State.EXTRACT_PRINTED) {
+            return ERROR;
+        } else {
+            try {
+                //TODO : refactor rename licensePrintedLocationId and licenseIssuedUserId in order to user this attribute for both notice and Extract print
+                marriageRegistrationService.updateMarriageRegisterState(idUKey, user, Permission.DIVORCE,
+                    MarriageRegister.State.DIVORCE);
+            }
+            catch (CRSRuntimeException e) {
+                return ERROR;
+            }
+        }
+        return SUCCESS;
+    }
+
     /**
      * loading search result page for marriage register
      */

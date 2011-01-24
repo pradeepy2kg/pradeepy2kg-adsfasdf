@@ -553,6 +553,18 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         marriageRegistrationDAO.updateMarriageRegister(marriageRegister, user);
     }
 
+        /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void updateMarriageRegisterState(long idUKey, User user, int permission, MarriageRegister.State state) {
+        ValidationUtils.validateUserPermission(permission, user);
+        MarriageRegister marriageRegister = marriageRegistrationDAO.getByIdUKey(idUKey);
+        ValidationUtils.validateUserAccessToMRDivision(marriageRegister.getMrDivision().getMrDivisionUKey(), user);
+        marriageRegister.setState(state);
+        marriageRegistrationDAO.updateMarriageRegister(marriageRegister, user);
+    }
+
     /**
      * @inheritDoc
      */

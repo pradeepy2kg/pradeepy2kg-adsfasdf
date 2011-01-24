@@ -1542,10 +1542,18 @@
             <result name="error" type="tiles">epr.error</result>
         </action>
 
+        <action name="eprDivorce" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
+                method="markMarriageExtractAsPrinted">
+            <result name="success" type="tiles">epr.success</result>
+            <result name="error" type="tiles">epr.error</result>
+        </action>
+
         <action name="eprDisplayScannedImage" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
                 method="displayScannedImage">
             <result name="success" type="tiles">epr.printScannedMarriageCertificate</result>
             <result name="error" type="tiles">epr.error</result>
         </action>
+
+
     </package>
 </struts>
