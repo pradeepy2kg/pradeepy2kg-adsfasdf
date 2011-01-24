@@ -43,6 +43,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
     private int[][] age_race_total;
     private int[][] table_2_4;
     private int[][] age_district_total;
+    private int year;
 
     public ReportsGeneratorImpl(BirthRegistrationService birthRegister, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, RaceDAO raceDAO, UserManager service) {
         this.birthRegister = birthRegister;
@@ -62,6 +63,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
      * @return BirthIslandWideStatistics  @param year
      */
     public BirthIslandWideStatistics generate_2_2(int year, User user) { //TODO - find more efficient way to do this. statistics object is useless if i use this type of method
+        this.year = year;
         if (!user.isAuthorized(Permission.GENERATE_REPORTS)) {
             handleException(user.getUserName() + " doesn't have permission to generate the report",
                 ErrorCodes.PERMISSION_DENIED);
@@ -125,6 +127,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
      * @inheritDoc
      */
     public BirthIslandWideStatistics generate_2_8(int year, User user) { //TODO - find more efficient way to do this. statistics object become useless if i use this type of method
+        this.year = year;
         if (!user.isAuthorized(Permission.GENERATE_REPORTS)) {
             handleException(user.getUserName() + " doesn't have permission to generate the report",
                 ErrorCodes.PERMISSION_DENIED);
@@ -212,6 +215,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
      * @inheritDoc
      */
     public BirthIslandWideStatistics generate_2_5(int year, User user) {  //TODO - find more efficient way to do this. statistics object become useless if i use this type of method
+        this.year = year;
         if (!user.isAuthorized(Permission.GENERATE_REPORTS)) {
             handleException(user.getUserName() + " doesn't have permission to generate the report",
                 ErrorCodes.PERMISSION_DENIED);
@@ -302,6 +306,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
      * @inheritDoc
      */
     public BirthIslandWideStatistics generate_2_4(int year, User user) {
+        this.year = year;
         if (!user.isAuthorized(Permission.GENERATE_REPORTS)) {
             handleException(user.getUserName() + " doesn't have permission to generate the report",
                 ErrorCodes.PERMISSION_DENIED);
@@ -460,7 +465,13 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
 
         }
 
-        File file = new File("districtTotals.csv"); //todo define and enforce location+filename rules
+        String dirPath =  "reports"+ File.separator + year;
+        File dir = new File(dirPath);
+        dir.mkdirs();
+
+        String filePath = dirPath + File.separator + "districtTotals.csv";
+        File file = new File(filePath);
+
         try {
             FileOutputStream out = new FileOutputStream(file);
             out.write(csv.toString().getBytes());
