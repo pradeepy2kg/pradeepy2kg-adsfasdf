@@ -359,11 +359,12 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         String filename = "unknown";
 
         int length = statistics.totals.size();
-
+        List<BirthDistrictStatistics> districtStat;
+        int i = 0;
         switch (headerCode) {
             case ReportCodes.TABLE_2_2:
                 filename = ReportCodes.TABLE_2_2_NAME + ".csv";
-                for (int i = 0; i < length; i++) {
+                for (i = 0; i < length; i++) {
                     BirthDistrictStatistics districtStats = statistics.totals.get(i);
                     District district = districtDAO.getDistrict(i + 1);
                     String districtId = "Unknown";
@@ -382,7 +383,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 break;
             case ReportCodes.TABLE_2_8:
                 filename = ReportCodes.TABLE_2_8_NAME + ".csv";
-                for (int i = 0; i < length; i++) {
+                for (i = 0; i < length; i++) {
                     BirthDistrictStatistics districtStats = statistics.totals.get(i);
                     District district = districtDAO.getDistrict(i + 1);
                     String districtId = "Unknown";
@@ -409,7 +410,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 break;
             case ReportCodes.TABLE_2_5:
                 filename = ReportCodes.TABLE_2_5_NAME + ".csv";
-                for (int i = 0; i < BirthMonthlyStatistics.NO_OF_RACES; i++) {
+                for (i = 0; i < BirthMonthlyStatistics.NO_OF_RACES; i++) {
                     Race race = raceDAO.getRace(i + 1);
                     String raceId = "Unknown-Race";
                     if (race != null) {
@@ -432,7 +433,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
             case ReportCodes.TABLE_2_4:
                 filename = ReportCodes.TABLE_2_4_NAME + ".csv";
                 int total = 0;
-                for (int i = 0; i < 26; i++) {
+                for (i = 0; i < 26; i++) {
                     District district = districtDAO.getDistrict(i + 1);
                     String districtId = "Unknown";
                     if (district != null) {
@@ -449,7 +450,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 break;
             case ReportCodes.TABLE_2_7:
                 filename = ReportCodes.TABLE_2_7_NAME + ".csv";
-                for (int i = 0; i < BirthIslandWideStatistics.NO_OF_DISTRICTS; i++) {
+                for (i = 0; i < BirthIslandWideStatistics.NO_OF_DISTRICTS; i++) {
                     District district = districtDAO.getDistrict(i);
                     String districtName = "Unknown";
                     if (district != null) {
@@ -471,8 +472,8 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
             case ReportCodes.TABLE_2_6:
                 filename = ReportCodes.TABLE_2_6_NAME + ".csv";
 
-                List<BirthDistrictStatistics> districtStat = statistics.totals;
-                int i = 0;
+                districtStat = statistics.totals;
+                i = 0;
                 for (BirthDistrictStatistics bds : districtStat) {
                     District district = districtDAO.getDistrict(i);
                     String districtName = "Unknown";
@@ -496,6 +497,28 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                     csv.append("\n");
                     i++;
 
+                }
+                break;
+            case ReportCodes.TABLE_2_2A:
+                filename = ReportCodes.TABLE_2_2A_NAME + ".csv";
+
+                districtStat = statistics.totals;
+                i = 0;
+                for (BirthDistrictStatistics bds : districtStat) {
+                    District district = districtDAO.getDistrict(i);
+                    String districtName = "Unknown";
+                    if (district != null) {
+                        districtName = district.getEnDistrictName();
+                    }
+                    csv.append(districtName + ",");
+                    List<BirthMonthlyStatistics> birthMonthlyStat = bds.monthlyTotals;
+                    int month_t = 0;
+                    for (BirthMonthlyStatistics bms : birthMonthlyStat) {
+                        csv.append(bms.getTotalBirthFromMonths() + ",");
+                        month_t += bms.getTotalBirthFromMonths();
+                    }
+                    csv.append(month_t + "\n");
+                    i++;
                 }
                 break;
 
@@ -680,6 +703,27 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 csv.append(tot + "," + male + "," + female);
                 csv.append("\n");
 
+                break;
+            case ReportCodes.TABLE_2_2A:
+                csv.append("District,January,February,March,April,May,June,July,August,September,October,November,December,Total\n");
+                csv.append("Sri Lanka");
+
+                districtStat = statistics.totals;
+                int arr[] = new int[12];
+                for (BirthDistrictStatistics bds : districtStat) {
+                    List<BirthMonthlyStatistics> birthMonthlyStat = bds.monthlyTotals;
+                    int k = 0;
+                    for (BirthMonthlyStatistics bms : birthMonthlyStat) {
+                        arr[k] += bms.getTotalBirthFromMonths();
+                    }
+                }
+                int t = 0;
+                for (int k = 0; k < arr.length; k++) {
+                    csv.append("," + arr[k]);
+                    t += arr[k];
+                }
+                csv.append("," + t);
+                csv.append("\n");
                 break;
         }
 
