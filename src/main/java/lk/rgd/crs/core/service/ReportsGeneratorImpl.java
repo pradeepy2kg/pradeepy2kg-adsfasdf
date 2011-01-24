@@ -356,11 +356,13 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 ErrorCodes.PERMISSION_DENIED);
         }
         StringBuilder csv = getReportHeader(headerCode);
+        String filename = "unknown";
 
         int length = statistics.totals.size();
 
         switch (headerCode) {
             case ReportCodes.TABLE_2_2:
+                filename = ReportCodes.TABLE_2_2_NAME + ".csv";
                 for (int i = 0; i < length; i++) {
                     BirthDistrictStatistics districtStats = statistics.totals.get(i);
                     District district = districtDAO.getDistrict(i + 1);
@@ -379,6 +381,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 }
                 break;
             case ReportCodes.TABLE_2_8:
+                filename = ReportCodes.TABLE_2_8_NAME + ".csv";
                 for (int i = 0; i < length; i++) {
                     BirthDistrictStatistics districtStats = statistics.totals.get(i);
                     District district = districtDAO.getDistrict(i + 1);
@@ -405,6 +408,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 }
                 break;
             case ReportCodes.TABLE_2_5:
+                filename = ReportCodes.TABLE_2_5_NAME + ".csv";
                 for (int i = 0; i < BirthMonthlyStatistics.NO_OF_RACES; i++) {
                     Race race = raceDAO.getRace(i + 1);
                     String raceId = "Unknown-Race";
@@ -426,6 +430,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 }
                 break;
             case ReportCodes.TABLE_2_4:
+                filename = ReportCodes.TABLE_2_4_NAME + ".csv";
                 int total = 0;
                 for (int i = 0; i < 26; i++) {
                     District district = districtDAO.getDistrict(i + 1);
@@ -443,6 +448,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 }
                 break;
             case ReportCodes.TABLE_2_7:
+                filename = ReportCodes.TABLE_2_7_NAME + ".csv";
                 for (int i = 0; i < BirthIslandWideStatistics.NO_OF_DISTRICTS; i++) {
                     District district = districtDAO.getDistrict(i);
                     String districtName = "Unknown";
@@ -462,21 +468,57 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                     csv.append("\n");
                 }
                 break;
+            case ReportCodes.TABLE_2_6:
+                filename = ReportCodes.TABLE_2_6_NAME + ".csv";
+
+                List<BirthDistrictStatistics> districtStat = statistics.totals;
+                int i = 0;
+                for (BirthDistrictStatistics bds : districtStat) {
+                    District district = districtDAO.getDistrict(i);
+                    String districtName = "Unknown";
+                    if (district != null) {
+                        districtName = district.getEnDistrictName();
+                    }
+                    csv.append(districtName);
+                    List<BirthMonthlyStatistics> birthMonthlyStat = bds.monthlyTotals;
+                    int month_t = 0, month_m = 0, month_f = 0;
+                    for (BirthMonthlyStatistics bms : birthMonthlyStat) {
+                        csv.append("," + bms.getTotalBirthFromMonths());
+                        month_t += bms.getTotalBirthFromMonths();
+                        csv.append("," + bms.getMaleBirthFromMonths());
+                        month_m += bms.getMaleBirthFromMonths();
+                        csv.append("," + bms.getFemaleBirthFromMonths());
+                        month_f += bms.getFemaleBirthFromMonths();
+                    }
+                    csv.append("," + month_t);
+                    csv.append("," + month_m);
+                    csv.append("," + month_f);
+                    csv.append("\n");
+                    i++;
+
+                }
+                break;
 
         }
 
-        String dirPath =  "reports"+ File.separator + year;
+        String dirPath = "reports" + File.separator + year;
         File dir = new File(dirPath);
         dir.mkdirs();
 
-        String filePath = dirPath + File.separator + "districtTotals.csv";
+        String filePath = dirPath + File.separator + filename;
         File file = new File(filePath);
 
-        try {
+        try
+
+        {
             FileOutputStream out = new FileOutputStream(file);
             out.write(csv.toString().getBytes());
             out.close();
-        } catch (IOException e) {
+        } catch (
+            IOException e
+            )
+
+        {
             logger.error("Error writing the CSV - {} {}", file.getPath() + file.getName(), e.getMessage());
         }
 
@@ -492,7 +534,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         StringBuilder csv = new StringBuilder();
         //int[][] age_race_male = new int[13][9];     // age 2 - 10 , race 1 - 13
         //int[][] age_race_female = new int[13][9];     // age 2 - 10 , race 1 - 13
-
+        List<BirthDistrictStatistics> districtStat;
         switch (code) {
             case ReportCodes.TABLE_2_2:
                 csv.append("District,Total,Male,Female\n");
@@ -517,7 +559,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 csv.append("Race,Less than 15,15-19,20-24,25-29,30-34,35-39,40-44,45-49,50 & above,All Ages\n");
                 csv.append("All Race,");
 
-                List<BirthDistrictStatistics> districtStat = statistics.totals;
+                districtStat = statistics.totals;
                 for (BirthDistrictStatistics bds : districtStat) {
                     List<BirthMonthlyStatistics> birthMonthlyStat = bds.monthlyTotals;
                     for (BirthMonthlyStatistics bms : birthMonthlyStat) {
@@ -572,8 +614,8 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 csv.append("District,Less than 15,15-19,20-24,25-29,30-34,35-39,40-44,45-49,50 & above,All Ages\n");
                 csv.append("Sri Lanka,");
                 int dist = 0;
-                List<BirthDistrictStatistics> districtStatistics = statistics.totals;
-                for (BirthDistrictStatistics bds : districtStatistics) {
+                districtStat = statistics.totals;
+                for (BirthDistrictStatistics bds : districtStat) {
                     List<BirthMonthlyStatistics> birthMonthlyStat = bds.monthlyTotals;
                     for (BirthMonthlyStatistics bms : birthMonthlyStat) {
                         List<BirthRaceStatistics> birthRaceStat = bms.raceTotals;
@@ -596,6 +638,48 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 }
                 csv.append(Total + ",");
                 csv.append(",\n");
+                break;
+            case ReportCodes.TABLE_2_6:
+                csv.append(",,January,,,February,,,March,,,April,,,May,,,June,,,July,,,August,,,September,,,October,,,November,,,December,,,Total,,\n");
+                csv.append("District,total,male,female,");
+                for (int i = 0; i < 12; i++) {
+                    csv.append("total,male,female,");
+                }
+                csv.append("\nSri Lanka,");
+                int m[][] = new int[12][3];
+                districtStat = statistics.totals;
+                int i = 0, j = 0;
+                for (BirthDistrictStatistics bds : districtStat) {
+                    List<BirthMonthlyStatistics> birthMonthlyStat = bds.monthlyTotals;
+                    j = 0;
+                    for (BirthMonthlyStatistics bms : birthMonthlyStat) {
+                        m[j][0] += bms.getTotalBirthFromMonths();
+                        m[j][1] += bms.getMaleBirthFromMonths();
+                        m[j][2] += bms.getFemaleBirthFromMonths();
+                        j++;
+                    }
+                    i++;
+                }
+                int tot = 0, male = 0, female = 0;
+                for (i = 0; i < 12; i++) {
+                    for (j = 0; j < 3; j++) {
+                        csv.append(m[i][j] + ",");
+                        switch (j) {
+                            case 0:
+                                tot += m[i][j];
+                                break;
+                            case 1:
+                                male += m[i][j];
+                                break;
+                            case 2:
+                                female += m[i][j];
+                                break;
+                        }
+                    }
+                }
+                csv.append(tot + "," + male + "," + female);
+                csv.append("\n");
+
                 break;
         }
 
