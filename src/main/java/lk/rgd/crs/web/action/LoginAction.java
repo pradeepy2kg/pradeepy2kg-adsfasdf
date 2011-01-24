@@ -6,6 +6,7 @@ import lk.rgd.common.api.domain.*;
 import lk.rgd.common.api.service.StatisticsManager;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.core.AuthorizationException;
+import lk.rgd.crs.web.Link;
 import lk.rgd.crs.web.Menu;
 import lk.rgd.crs.web.WebConstants;
 import org.apache.struts2.interceptor.SessionAware;
