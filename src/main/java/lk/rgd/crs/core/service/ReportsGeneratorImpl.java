@@ -42,6 +42,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
     BirthIslandWideStatistics statistics = BirthIslandWideStatistics.getInstance();
     private int[][] age_race_total;
     private int[][] table_2_4;
+    private int[][] age_district_total;
 
     public ReportsGeneratorImpl(BirthRegistrationService birthRegister, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, RaceDAO raceDAO, UserManager service) {
         this.birthRegister = birthRegister;
@@ -51,6 +52,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         this.userManagementService = service;
         age_race_total = new int[BirthMonthlyStatistics.NO_OF_RACES][BirthRaceStatistics.NO_OF_AGE_GROUPS];
         table_2_4 = new int[26][15];
+        age_district_total = new int[BirthIslandWideStatistics.NO_OF_DISTRICTS][BirthRaceStatistics.NO_OF_AGE_GROUPS];
     }
 
     /**
@@ -435,6 +437,26 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                     csv.append(total + "\n");
                 }
                 break;
+            case ReportCodes.TABLE_2_7:
+                for (int i = 0; i < BirthIslandWideStatistics.NO_OF_DISTRICTS; i++) {
+                    District district = districtDAO.getDistrict(i);
+                    String districtName = "Unknown";
+                    if (district != null) {
+                        districtName = district.getEnDistrictName();
+                    }
+                    csv.append(districtName);
+                    csv.append(",");
+
+                    int Total = 0;
+                    for (int j = 0; j < BirthRaceStatistics.NO_OF_AGE_GROUPS; j++) {
+                        csv.append(age_district_total[i][j]);
+                        csv.append(",");
+                        Total += age_district_total[i][j];
+                    }
+                    csv.append(Total);
+                    csv.append("\n");
+                }
+                break;
 
         }
 
@@ -533,6 +555,36 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 csv.append(total + ",");
                 csv.append("\n");
 
+                break;
+            case ReportCodes.TABLE_2_7:
+
+                csv.append("District,Less than 15,15-19,20-24,25-29,30-34,35-39,40-44,45-49,50 & above,All Ages\n");
+                csv.append("Sri Lanka,");
+                int dist = 0;
+                List<BirthDistrictStatistics> districtStatistics = statistics.totals;
+                for (BirthDistrictStatistics bds : districtStatistics) {
+                    List<BirthMonthlyStatistics> birthMonthlyStat = bds.monthlyTotals;
+                    for (BirthMonthlyStatistics bms : birthMonthlyStat) {
+                        List<BirthRaceStatistics> birthRaceStat = bms.raceTotals;
+                        for (BirthRaceStatistics brs : birthRaceStat) {
+                            int age = 0;
+                            List<BirthAgeGroupStatistics> birthAgeGroupStat = brs.ageGroupTotals;
+                            for (BirthAgeGroupStatistics bags : birthAgeGroupStat) {
+                                age_district_total[dist][age] = age_district_total[dist][age] + bags.getTotalBirths();
+                                age++;
+                            }
+
+                        }
+                    }
+                    dist++;
+                }
+                int Total = 0;
+                for (int i = 0; i < BirthRaceStatistics.NO_OF_AGE_GROUPS; i++) {
+                    csv.append(age_district_total[0][i] + ",");
+                    Total += age_district_total[0][i];
+                }
+                csv.append(Total + ",");
+                csv.append(",\n");
                 break;
         }
 
