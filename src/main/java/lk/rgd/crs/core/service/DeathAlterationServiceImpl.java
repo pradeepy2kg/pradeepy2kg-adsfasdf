@@ -215,7 +215,7 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
         List<DeathAlteration> result = deathAlterationDAO.getDeathAlterationByDeathPersonPin(pin);
         for (DeathAlteration da : result) {
             loadValuesToDeathAlterationObject(da);
-            validateAccessOfUserForApproval(da, user);
+        //    validateAccessOfUserForApproval(da, user);
         }
         return result;
     }

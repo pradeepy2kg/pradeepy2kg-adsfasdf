@@ -444,6 +444,8 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         logger.debug("attempt to delete death alteration : idUKey :{} by User : {}", deathAlterationId, user.getUserName());
         deathAlterationService.deleteDeathAlteration(deathAlterationId, user);
         populatePrimaryLists(districtUKey, dsDivisionId, language, user);
+        populateListAfterSuccessOrFail();
+        findDeathAlterationForApproval();
         logger.debug("death alteration deleted success : alteration id :{}", deathAlterationId);
         addActionMessage(getText("message.delete.death.alteration.success"));
         return SUCCESS;

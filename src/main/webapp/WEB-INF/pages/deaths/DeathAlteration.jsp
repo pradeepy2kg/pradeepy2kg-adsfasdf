@@ -79,7 +79,7 @@
         }
         errormsg = "";
 
-        return false;
+        return returnval;
     }
 
     function validateRadioButtons(array, errorText) {

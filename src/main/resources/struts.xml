@@ -1319,7 +1319,7 @@
 
         <action name="eprDeathAlterationDelete" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"
                 method="deleteDeathAlteration">
-            <result type="tiles" name="success">epr.deathAlterationSearchHome</result>
+            <result type="tiles" name="success">epr.deathAlterationApprovalHome</result>
         </action>
 
         <action name="eprDeathAlterationReject" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"
