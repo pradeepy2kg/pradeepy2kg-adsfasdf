@@ -92,8 +92,8 @@
                     <div class="form-submit">
                         <s:form action="eprRollBackNoticeToPreviousAndEditNotice.do">
                             <s:submit cssStyle="width:150px" value="%{getText('button.roll.back')}"/>
-                            <s:hidden name="ignoreWarnings" value="true"/>
-                            <s:submit cssStyle="width:150px" value="%{getText('button.ignoreWarnings')}"/>
+                            <%--            <s:hidden name="ignoreWarnings" value="true"/>
+                          <s:submit cssStyle="width:150px" value="%{getText('button.ignoreWarnings')}"/>--%>
                             <s:hidden name="idUKey" value="%{#request.idUKey}"/>
                             <s:hidden name="pageNo" value="%{#request.pageNo}"/>
                             <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
@@ -112,8 +112,8 @@
                     <div class="form-submit">
                         <s:form action="eprRollBackNoticeToPreviousAndEditNotice.do">
                             <s:submit cssStyle="width:150px" value="%{getText('button.proceed')}"/>
-                            <s:hidden name="ignoreWarnings" value="true"/>
-                            <s:submit cssStyle="width:150px" value="%{getText('button.ignoreWarnings')}"/>
+                            <%--             <s:hidden name="ignoreWarnings" value="true"/>
+                          <s:submit cssStyle="width:150px" value="%{getText('button.ignoreWarnings')}"/>--%>
                             <s:hidden name="idUKey" value="%{#request.idUKey}"/>
                             <s:hidden name="pageNo" value="%{#request.pageNo}"/>
                             <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
@@ -126,6 +126,7 @@
                             <s:hidden name="searchStartDate" value="%{#request.searchStartDate}"/>
                             <s:hidden name="searchEndDate" value="%{#request.searchEndDate}"/>
                             <s:hidden name="pinOrNic" value="%{#request.pinOrNic}"/>
+                            <s:hidden name="editMode" value="true"/>
                         </s:form>
                     </div>
                 </td>
