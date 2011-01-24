@@ -13,134 +13,20 @@
 </style>
 <%
     User user = (User) session.getAttribute("user_bean");
-    Role userRole = user.getRole();
+    String userRole = user.getRole().getRoleId();
 %>
-<div id="xmain-menu">
-    <ul class="menu">
-        <s:iterator value="#session.allowed_menue" id="menue">
-            <s:if test="%{value.size > 0}">
-                <s:if test="%{#session.context==key}">
-                    <li class="exp">
-                </s:if>
-                <s:else><li></s:else>
-                <s:if test="%{key == 'birth'}">
-                    <s:a href="/ecivil/births/eprBirthRegistrationHome.do">
-                        <s:label value="%{getText('category_birth_registration')}"/>
-                    </s:a>
-                </s:if>
+<%if (Role.ROLE_DEO.equals(userRole)) {%>
+<%@ include file="DEOMenu.jsp" %>
+<%} else if (Role.ROLE_ADR.equals(userRole)) {%>
+<%@ include file="ADRMenu.jsp" %>
+<%} else if (Role.ROLE_DR.equals(userRole)) {%>
+<%@ include file="DRMenu.jsp" %>
+<%} else if (Role.ROLE_ARG.equals(userRole)) {%>
+<%@ include file="ARGMenu.jsp" %>
+<%} else if (Role.ROLE_RG.equals(userRole)) {%>
+<%@ include file="RGMenu.jsp"%>
+<%} else if (Role.ROLE_ADMIN.equals(userRole)) {%>
+<%@ include file="ADMINMenu.jsp"%>
+<%}%>
 
-                <s:if test="%{key == 'death'}">
-                    <s:a href="/ecivil/deaths/eprInitDeathHome.do">
-                        <s:label value="%{getText('category_death_registraion')}"/>
-                    </s:a>
-                </s:if>
-
-                <s:if test="%{key == 'marriage'}">
-                    <s:a href="#">
-                        <s:label value="%{getText('category_marrage_registraion')}"/>
-                    </s:a>
-                </s:if>
-
-                <s:if test="%{key == 'adoption'}">
-                    <s:a href="/ecivil/adoption/eprAdoptionRegistrationHome.do">
-                        <s:label value="%{getText('category_adoption')}"/>
-                    </s:a>
-                </s:if>
-
-                <s:if test="%{key == 'preference'}">
-                    <s:a href="#">
-                        <s:label value="%{getText('category_user_preferance')}"/>
-                    </s:a>
-                </s:if>
-
-                <s:if test="%{key == 'reports'}">
-                    <s:a href="#">
-                        <s:label value="%{getText('category_reports')}"/>
-                    </s:a>
-                </s:if>
-
-                <s:if test="%{key == 'admin'}">
-                    <s:a href="#">
-                        <s:label value="%{getText('category_admin_task')}"/>
-                    </s:a>
-                </s:if>
-
-                <s:if test="%{key == 'prs'}">
-                    <s:a href="#">
-                        <s:label value="%{getText('category_prs')}"/>
-                    </s:a>
-                </s:if>
-
-                <s:if test="%{key == 'alteration'}">
-                    <s:a href="/ecivil/alteration/eprBirthAlterationHome.do">
-                        <s:label value="%{getText('category_alteration')}"/>
-                    </s:a>
-                </s:if>
-                <s:if test="%{key == 'certificateSearch'}">
-                    <s:a href="#">
-                        <s:label value="%{getText('category_certificate_search')}"/>
-                    </s:a>
-                </s:if>
-
-                <ul class="acitem">
-                    <s:iterator value="value" id="x">
-                        <s:if test="%{value.propertyKey != null}">
-
-                            <li>
-                                <s:set name="permission" value="%{value.permissionKey}" scope="request"/>
-                                <%
-                                    int x = 0;
-                                    int permissionBit = (Integer) request.getAttribute("permission");
-                                    if (userRole.getRoleId().equals("RG") || userRole.getRoleId().equals("ARG") ||
-                                            userRole.getRoleId().equals("ADR") || userRole.getRoleId().equals("DR")) {
-                                        x = RolePermissionUtils.checkLinkRole(userRole, permissionBit);
-                                    } else {
-                                        x = 7;
-                                    }
-
-                                    switch (x)
-
-                                    {
-                                        case 2:
-                                %>
-                                    <%--adr link style--%>
-                                <s:a href="%{value.category+value.action}" id="%{value.propertyKey}"
-                                     cssStyle="color:red">
-                                    <s:property
-                                            value="%{getText(value.propertyKey)}"/>
-                                </s:a>
-                                <%
-                                        break;
-                                    case 4:
-                                %>
-
-                                    <%--arg link style--%>
-                                <s:a href="%{value.category+value.action}" id="%{value.propertyKey}"
-                                     cssStyle="color:green">
-                                    <s:property
-                                            value="%{getText(value.propertyKey)}"/>
-                                </s:a>
-                                <%
-                                        break;
-                                    default:
-                                %>
-                                    <%--default link style--%>
-                                <s:a href="%{value.category+value.action}" id="%{value.propertyKey}"
-                                        >
-                                    <s:property
-                                            value="%{getText(value.propertyKey)}"/>
-                                </s:a>
-                                <%
-                                    }
-                                %>
-                            </li>
-                        </s:if>
-                    </s:iterator>
-                </ul>
-                </li>
-            </s:if>
-        </s:iterator>
-    </ul>
-
-</div>
 
