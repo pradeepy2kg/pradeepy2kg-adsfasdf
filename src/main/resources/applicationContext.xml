@@ -48,11 +48,6 @@
         <property name="persistenceUnitName" value="punit"/>
     </bean>
 
-    <!--Standard Spring transactional DataSource definition-->
-    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource"/>
-    </bean>
-
     <!-- DO NOT define any Spring beans here - instead use the included spring.xml below -->
     <import resource="spring.xml"/>
 </beans>
