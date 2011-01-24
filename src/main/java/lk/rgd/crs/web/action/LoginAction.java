@@ -211,7 +211,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
         logger.debug("Logged User's Role : {}", user.getRole());
         role = user.getRole().getRoleId();
 
-        statistics = statisticsManager.getStatisticsForUser(user);
+        /*statistics = statisticsManager.getStatisticsForUser(user);
         if (statistics != null) {
             if (!statisticsManager.existsStatisticsForUser(user)) {
                 statisticsManager.addStatistics(user, statistics);
@@ -224,7 +224,9 @@ public class LoginAction extends ActionSupport implements SessionAware {
             }
         } else {
             statistics = new Statistics();
-        }
+        }*/
+
+        statistics = new Statistics();
 
         Set<District> districtSet = user.getAssignedBDDistricts();
         districtList = new HashMap<Integer, String>();
