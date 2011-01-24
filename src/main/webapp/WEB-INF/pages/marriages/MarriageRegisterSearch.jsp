@@ -353,7 +353,7 @@
                                 </s:if>
                             </s:else>
 
-                            <s:if test="(!#session.user_bean.role.roleId.equals('DEO')) && state.ordinal()==10">
+                            <s:if test="(!#session.user_bean.role.roleId.equals('DEO')) && state.ordinal()==11">
                                 <s:url id="divorce" action="eprDivorce.do">
                                     <s:param name="idUKey" value="idUKey"/>
                                 </s:url>
