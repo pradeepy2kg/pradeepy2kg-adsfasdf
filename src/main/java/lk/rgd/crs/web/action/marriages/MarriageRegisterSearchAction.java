@@ -238,12 +238,10 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         //Search by marriage registration number - IDukey
         if (marriageIdUKey != 0) {
             marriageRegisterSearchList = new ArrayList<MarriageRegister>();
-            logger.debug("serch by Idukey : {}", marriageIdUKey);
             MarriageRegister marriageRegister = marriageRegistrationService.getMarriageRegisterByIdUKeyAndState
                 (marriageIdUKey, user, Permission.SEARCH_MARRIAGE);
             if (marriageRegister != null) {
                 marriageRegisterSearchList.add(marriageRegister);
-                logger.debug("marriageRegisterSearchList size : {} ", marriageRegisterSearchList.size());
             }
         } else if (pinOrNic != null) {
             //search by male/female/registrar identification number
@@ -274,6 +272,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
 
             marriageRegisterSearchList = marriageRegistrationService.getMarriageRegisterList(divisionType, divisionId,
                 mrState, true, searchStartDate, searchEndDate, pageNo, noOfRows, user);
+            districtId = 0;
         }
 
         if (marriageRegisterSearchList.size() == 0) {
