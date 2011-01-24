@@ -20,5 +20,18 @@ rm -rf /data/logs/*
 
 #sleep 2
 #echo "Starting Tomcat .."
+
+mkdir /data/tomcat6/webapps/ecivil
+cd /data/tomcat6/webapps/ecivil
+jar xvf ../ecivil.war
+rm ../ecivil.war
+cd /data/code/popreg
+
+ant -Dtomcat.home=/data/tomcat6 -Dwebapp.path=/data/tomcat6/webapps/ecivil
+
+#echo " "
+#echo "Extract the WAR file to /data/tomcat6/webapps/ecivil"
+#echo "ant -Dtomcat.home=/data/tomcat6 -Dwebapp.path=/data/tomcat6/webapps/ecivil"
+#echo " "
 echo "Backup and clear database and start Tomcat as /data/tomcat6/bin/catalina.sh start"
 
