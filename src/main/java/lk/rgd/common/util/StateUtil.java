@@ -28,6 +28,8 @@ public class StateUtil {
                 return LocaleUtil.getLocalizedString(language, "text.state.rejected");
             case EXTRACT_PRINTED:
                 return LocaleUtil.getLocalizedString(language, "text.state.printed");
+            case DIVORCE:
+                return LocaleUtil.getLocalizedString(language, "text.state.divorced");
         }
         logger.error("Invalid State : {}", state);
         throw new IllegalArgumentException("Invalid State : {}" + state);
@@ -38,7 +40,8 @@ public class StateUtil {
         EnumSet<MarriageRegister.State> statList = EnumSet.of(MarriageRegister.State.REG_DATA_ENTRY,
             MarriageRegister.State.REGISTRATION_APPROVED,
             MarriageRegister.State.REGISTRATION_REJECTED,
-            MarriageRegister.State.EXTRACT_PRINTED);
+            MarriageRegister.State.EXTRACT_PRINTED,
+            MarriageRegister.State.DIVORCE);
 
         Map<Integer, String> stateList = new HashMap<Integer, String>();
 
@@ -66,7 +69,8 @@ public class StateUtil {
             stateList = EnumSet.of(MarriageRegister.State.REG_DATA_ENTRY,
                 MarriageRegister.State.REGISTRATION_APPROVED,
                 MarriageRegister.State.REGISTRATION_REJECTED,
-                MarriageRegister.State.EXTRACT_PRINTED);
+                MarriageRegister.State.EXTRACT_PRINTED,
+            MarriageRegister.State.DIVORCE);
         } else {
             stateList = EnumSet.of(state);
         }
