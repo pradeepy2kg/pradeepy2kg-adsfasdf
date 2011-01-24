@@ -308,7 +308,7 @@
                     getAttribute("marriage.female.civilStatusFemale"), (String) request.getAttribute("marriage.preferredLanguage"))%>
             <br>
             <%=CivilStatusUtil.getCivilStatus((Person.CivilStatus)
-                    request.getAttribute("marriage.male.civilStatusMale"), "en")%>
+                    request.getAttribute("marriage.female.civilStatusFemale"), "en")%>
         </td>
         <td align="center">
             <s:label value="%{femaleRaceInOL}"/>
