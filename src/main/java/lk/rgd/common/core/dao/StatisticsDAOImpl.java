@@ -52,4 +52,15 @@ public class StatisticsDAOImpl extends BaseDAO implements StatisticsDAO {
         statistics.setCreatedTimestamp(new Date());
         em.merge(statistics);
     }
+
+    @Override
+    @Transactional(propagation = Propagation.MANDATORY)
+    public int deleteAll() {
+        Query query = em.createNativeQuery("DELETE FROM COMMON.STATISTICS");
+        try {
+            return query.executeUpdate();
+        } catch (Exception e) {
+            return 0;
+        }
+    }
 }

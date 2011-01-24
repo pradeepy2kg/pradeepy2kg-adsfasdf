@@ -30,4 +30,11 @@ public interface StatisticsDAO {
      */
     public void updateStatistics(Statistics statistics);
 
+    /**
+     * Delete all from statistics table
+     *
+     * @return deleted record count
+     */
+    public int deleteAll();
+
 }
