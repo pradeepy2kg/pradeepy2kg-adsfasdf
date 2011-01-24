@@ -11,7 +11,7 @@
     <s:else>
 <li>
     </s:else>
-    <a href="#">
+    <a href="/ecivil/births/eprBirthRegistrationHome.do">
         <s:label value="%{getText('category_birth_registration')}"/>
     </a>
     <ul class="acitem">
@@ -50,7 +50,7 @@
     <s:else>
 <li>
     </s:else>
-    <a href="#">
+    <a href="/ecivil/deaths/eprInitDeathHome.do">
         <s:label value="%{getText('category_death_registraion')}"/>
     </a>
     <ul class="acitem">
@@ -78,7 +78,7 @@
     <s:else>
 <li>
     </s:else>
-    <a href="#">
+    <a href="/ecivil/adoption/eprAdoptionRegistrationHome.do">
         <s:label value="%{getText('category_adoption')}"/>
     </a>
     <ul class="acitem">
@@ -111,7 +111,7 @@
     <s:else>
 <li>
     </s:else>
-    <a href="#">
+    <a href="/ecivil/alteration/eprBirthAlterationHome.do">
         <s:label value="%{getText('category_alteration')}"/>
     </a>
     <ul class="acitem">
