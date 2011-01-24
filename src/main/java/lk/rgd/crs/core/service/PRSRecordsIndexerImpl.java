@@ -138,14 +138,14 @@ public class PRSRecordsIndexerImpl implements PRSRecordsIndexer {
                 long count = rs.getLong(1);
                 conn.close();
 
-                long block = (maxUKey - minUKey) / THREADS;
+                long block = ((maxUKey - minUKey) / THREADS) + 1;
                 if (block > MILLION) {
                     block = MILLION;
                 }
 
                 int threads = THREADS + 1;
                 doneSignal = new CountDownLatch(threads);
-                logger.info("Using : 51 threads with a block size of : " + block +
+                logger.info("Using : " + threads + " threads with a block size of : " + block +
                     " to process : " + count + " rows from : " + minUKey + " to: " + maxUKey);
 
                 long startIDUkey = minUKey;
@@ -286,18 +286,36 @@ public class PRSRecordsIndexerImpl implements PRSRecordsIndexer {
         d.addField(FIELD_CIVIL_STATUS, CivilStatusUtil.getStatusAsString(person.getCivilStatus()));
         d.addField(FIELD_RECORD_STATUS, getRecordStatus(person.getStatus()));
 
-        /*asankha
         try {
             solrIndexManager.getPRSServer().add(d);
+        } catch (SolrServerException e) {
+            if (Boolean.getBoolean("ecivildb.mysql")) {
+                logger.error("Solr Error updating Solr index for Person with UKey : " + person.getPersonUKey(), e);
+                // throw an error causing a rollback, only when using MySQL (i.e. production) and not on unit tests
+                throw new PRSRuntimeException("", ErrorCodes.PRS_INDEX_UPDATE_FAILED, e);
+            } else {
+                logger.error("Solr Error updating Solr index for Person with UKey : {}", person.getPersonUKey());
+            }
+        } catch (IOException e) {
+            if (Boolean.getBoolean("ecivildb.mysql")) {
+                logger.error("IO Error updating Solr index for Person with UKey : " + person.getPersonUKey(), e);
+                // throw an error causing a rollback, only when using MySQL (i.e. production) and not on unit tests
+                throw new PRSRuntimeException("", ErrorCodes.PRS_INDEX_UPDATE_FAILED, e);
+            } else {
+                logger.error("IO Error updating Solr index for Person with UKey : {}", person.getPersonUKey());
+            }
+            e.printStackTrace();
         } catch (Exception e) {
             if (Boolean.getBoolean("ecivildb.mysql")) {
-                logger.error("Error updating Solr index for Person with UKey : " + person.getPersonUKey(), e);
+                logger.error("Unknown Error updating Solr index for Person with UKey : " + person.getPersonUKey(), e);
                 // throw an error causing a rollback, only when using MySQL (i.e. production) and not on unit tests
-                //throw new PRSRuntimeException("", ErrorCodes.PRS_INDEX_UPDATE_FAILED, e);
+                throw new PRSRuntimeException("", ErrorCodes.PRS_INDEX_UPDATE_FAILED, e);
             } else {
                 logger.error("Error updating Solr index for Person with UKey : {}", person.getPersonUKey());
             }
-        }*/
+        }
+
+        logger.debug("Updated Solr index for Person with UKey : {}", person.getPersonUKey());
     }
 
     public void addRecord(ResultSet rs) throws SQLException, IOException, SolrServerException {
