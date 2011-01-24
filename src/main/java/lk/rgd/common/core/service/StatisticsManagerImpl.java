@@ -65,18 +65,13 @@ public class StatisticsManagerImpl implements StatisticsManager {
     @Transactional(propagation = Propagation.REQUIRED)
     public void updateStatisticsList() {
         for (Statistics stat : StatisticsManagerImpl.statisticsList) {
-            if (existsStatisticsForUser(stat.getUser())) {
-                statisticsDAO.updateStatistics(stat);
-            } else {
-                statisticsDAO.addStatistics(stat);
-            }
+            statisticsDAO.addStatistics(stat);
         }
     }
 
     public void triggerScheduledStatJobs() {
         runScheduledStatJobs();
         logger.debug("Start Statistics Recording...");
-        //updateStatisticsList();
     }
 
     /**
@@ -94,8 +89,6 @@ public class StatisticsManagerImpl implements StatisticsManager {
         calculateDRStatistics();
         calculateARGStatistics();
         calculateRGStatistics();
-
-        //updateStatisticsList();
 
     }
 
@@ -681,6 +674,12 @@ public class StatisticsManagerImpl implements StatisticsManager {
         } else {
             return true;
         }
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void deleteOldStatistics() {
+        statisticsDAO.deleteAll();
     }
 
     private Statistics deleteEntries(Statistics st) {

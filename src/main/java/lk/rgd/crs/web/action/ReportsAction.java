@@ -79,6 +79,7 @@ public class ReportsAction extends ActionSupport implements SessionAware {
     }
 
     public String populateStatistics() {
+        statisticsManager.deleteOldStatistics();
         statisticsManager.triggerScheduledStatJobs();
         statisticsManager.updateStatisticsList();
         populateLists();

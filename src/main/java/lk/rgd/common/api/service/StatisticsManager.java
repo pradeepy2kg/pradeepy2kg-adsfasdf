@@ -52,4 +52,9 @@ public interface StatisticsManager {
      */
     public boolean existsStatisticsForUser(User user);
 
+    /**
+     * delete all from statistics table
+     */
+    public void deleteOldStatistics();
+
 }
