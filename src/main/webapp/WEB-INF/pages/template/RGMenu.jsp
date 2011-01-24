@@ -1,6 +1,6 @@
 <div id="xmain-menu">
     <ul class="menu">
-        <li class="exp">
+        <li>
             <a href="/ecivil/births/eprBirthRegistrationHome.do"><label>BIRTH REGISTRATION</label></a>
             <ul class="acitem">
                 <li>
