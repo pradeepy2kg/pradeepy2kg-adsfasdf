@@ -31,6 +31,7 @@ public class UserManagerImpl implements UserManager {
     private final DSDivisionDAO dsDivisionDAO;
     private final AppParametersDAO appParaDao;
     private static final String SYSTEM_USER_NAME = "system";
+    private final User systemUser;
 
     public UserManagerImpl(UserDAO userDao, RoleDAO roleDao, AppParametersDAO appParaDao,
         LocationDAO locationDao, UserLocationDAO userLocationDao, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO) {
@@ -41,6 +42,7 @@ public class UserManagerImpl implements UserManager {
         this.userLocationDao = userLocationDao;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
+        systemUser = userDao.getUserByPK(SYSTEM_USER_NAME);
     }
 
     /**
@@ -74,7 +76,7 @@ public class UserManagerImpl implements UserManager {
      * @inheritDoc
      */
     public User getSystemUser() {
-        return userDao.getUserByPK(SYSTEM_USER_NAME);
+        return systemUser;
     }
 
     /**
