@@ -7,69 +7,69 @@
     <ul class="menu">
         <li>
             <a href="#">
-                <s:label value="%{getText('category_admin_task')}"/>
+                පරිපාලන කටයුතු
             </a>
             <ul class="acitem">
                 <li>
                     <a id="creat_user.label" href="/ecivil/management/eprInitUserCreation.do">
-                        <s:label value="%{getText('creat_user.label')}"/>
+                        පරිශිලකයකු ඇතුල් කිරීම
                     </a>
                 </li>
                 <li>
                     <a id="viewUsers.label" href="/ecivil/management/eprViewUsers.do">
-                        <s:label value="%{getText('viewUsers.label')}"/>
+                        පරිශීලකයන් සෙවීම
                     </a>
                 </li>
                 <li>
                     <a id="addDivision.label" href="/ecivil/management/eprInitAddDivisionsAndDsDivisions.do">
-                        <s:label value="%{getText('addDivision.label')}"/>
+                        කොට්ඨාශ  ඇතුල් කිරීම
                     </a>
                 </li>
                 <li>
                     <a id="registrars.managment" href="/ecivil/management/eprRegistrarsManagment.do">
-                        <s:label value="%{getText('registrars.managment')}"/>
+                        රෙජිස්ට්‍රාර් වරු පරිපාලනය
                     </a>
                 </li>
                 <li>
                     <a id="registrar.add" href="/ecivil/management/eprRegistrarsAdd.do">
-                        <s:label value="%{getText('registrar.add')}"/>
+                        නව රෙජිස්ට්‍රාර් වරයකු ඇතුල් කිරීම
                     </a>
                 </li>
                 <li>
                     <a id="eventManege.label" href="/ecivil/management/eprInitEventsManagement.do">
-                        <s:label value="%{getText('eventManege.label')}"/>
+                        වාර්තා ගත පද්ධති ක්‍රියාකාරකම්
                     </a>
                 </li>
                 <li>
                     <a id="indexRecords.label" href="/ecivil/management/eprIndexRecords.do">
-                        <s:label value="%{getText('indexRecords.label')}"/>
+                        දත්ත සුචි ගත කිරීම
                     </a>
                 </li>
                 <li>
                     <a id="search.registrar" href="/ecivil/management/eprFindRegistrar.do">
-                        <s:label value="%{getText('search.registrar')}"/>
+                        රෙජිස්ට්‍රාර්වරයකු සෙවීම
                     </a>
                 </li>
                 <li>
                     <a id="report.title" href="/ecivil/management/eprInitCreateReports.do">
-                        <s:label value="%{getText('report.title')}"/>
+                        වාර්තා සැකසීම
                     </a>
                 </li>
             </ul>
         </li>
         <li>
             <a href="#">
-                <s:label value="%{getText('category_user_preferance')}"/>
+                පුද්ගලික තේරීම්
             </a>
             <ul class="acitem">
                 <li>
                     <a id="userPreference.label" href="/ecivil/preferences/eprUserPreferencesInit.do">
-                        <s:label value="%{getText('userPreference.label')}"/>
+                        පරිශීලක අභිමතය
                     </a>
                 </li>
                 <li>
                     <a id="changePassword.label" href="/ecivil/preferences/eprpassChangePageLoad.do">
-                        <s:label value="%{getText('changePassword.label')}"/>
+                        මුරපදය වෙනස් කිරීම
                     </a>
                 </li>
             </ul>
