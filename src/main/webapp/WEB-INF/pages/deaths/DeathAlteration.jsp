@@ -12,7 +12,6 @@
     var errormsg = "";
     function validate() {
         var bothEmpty;
-
         var returnval = true;
         var domObject;
         domObject = document.getElementById("reciveDatePicker");
@@ -28,6 +27,7 @@
         } else {
             isDate(domObject.value, 'error0', 'error2');
         }
+
 
         domObject = document.getElementById("deathPerson_PINorNIC");
         if (!isFieldEmpty(domObject)) {
@@ -54,9 +54,24 @@
             validatePINorNIC(domObject, 'error0', 'error7');
         }
 
+        validateRadioButtons(new Array(document.getElementsByName('deathAlteration.declarant.declarantType')[0].checked,
+                document.getElementsByName('deathAlteration.declarant.declarantType')[1].checked,
+                document.getElementsByName('deathAlteration.declarant.declarantType')[2].checked,
+                document.getElementsByName('deathAlteration.declarant.declarantType')[3].checked,
+                document.getElementsByName('deathAlteration.declarant.declarantType')[4].checked,
+                document.getElementsByName('deathAlteration.declarant.declarantType')[5].checked), "declerent_type");
+
         domObject = document.getElementById("declarant_pinOrNic");
         if (!isFieldEmpty(domObject)) {
             validatePINorNIC(domObject, 'error0', 'error8');
+        }
+        domObject = document.getElementById("declarantName");
+        if (isFieldEmpty(domObject)) {
+            printMessage('declerent_name', "text_must_fill")
+        }
+        domObject = document.getElementById("declarantAddress");
+        if (isFieldEmpty(domObject)) {
+            printMessage('declerent_address', "text_must_fill")
         }
         if (errormsg != "") {
             alert(errormsg);
@@ -64,7 +79,19 @@
         }
         errormsg = "";
 
-        return returnval;
+        return false;
+    }
+
+    function validateRadioButtons(array, errorText) {
+        var atleastOneSelect = false;
+        for (var i = 0; i < array.length; i++) {
+            if (array[i] == true) {
+                atleastOneSelect = true;
+            }
+        }
+        if (!atleastOneSelect) {
+            printMessage(errorText, "text_must_select")
+        }
     }
 </script>
 
@@ -939,4 +966,9 @@
 <s:hidden id="error8" value="%{getText('er.label.declarant_pinOrNic')}"/>
 <s:hidden id="error9" value="%{getText('er.label.cannot.empty')}"/>
 <s:hidden id="error10" value="%{getText('er.label.declarent.type')}"/>
+<s:hidden id="declerent_type" value="%{getText('label.declarent.type.must.fill')}"/>
+<s:hidden id="text_must_select" value="%{getText('label.must.select')}"/>
+<s:hidden id="text_must_fill" value="%{getText('label.must.fill')}"/>
+<s:hidden id="declerent_name" value="%{getText('label.declerent.name')}"/>
+<s:hidden id="declerent_address" value="%{getText('label.declerent.address')}"/>
 

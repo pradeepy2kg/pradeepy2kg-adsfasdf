@@ -417,6 +417,7 @@
     <s:url id="backUrl" action="eprDeathDeclaration.do">
         <s:param name="back" value="true"/>
         <s:param name="pageNo" value="{pageNo - 1}"/>
+       <s:param name="idUKey" value="%{#request.idUKey}"/>
     </s:url>
     <s:a href="%{backUrl}"><s:label value="%{getText('previous.label')}"/></s:a>
 </div>

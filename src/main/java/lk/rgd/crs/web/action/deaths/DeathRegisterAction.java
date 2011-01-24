@@ -186,7 +186,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         switch (pageNo) {
             case 1:
                 DeathRegister dd = service.getByBDDivisionAndDeathSerialNo(death.getDeathDivision(), death.getDeathSerialNo(), user);
-                if (dd != null) {
+                if (dd != null && idUKey == 0) {
                     addFieldError("duplicateSerialNumberError", getText("p1.duplicateSerialNumber.label"));
                     pageNo = 0;
                 }
@@ -428,9 +428,9 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         DeathRegister deathRegister = service.getById(idUKey, user);
 
         deathType = deathRegister.getDeathType();
+        idUKey = deathRegister.getIdUKey();
         pageTypeGetter(deathType);
         beanPopulate(deathRegister);
-
         if (deathRegister.getStatus() != DeathRegister.State.DATA_ENTRY) {
             addActionError("death.error.editNotAllowed");
             return ERROR;

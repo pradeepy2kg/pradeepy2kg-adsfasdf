@@ -928,6 +928,7 @@ function personAgeDeath() {
     <s:submit value="%{getText('next.label')}" cssStyle="margin-top:10px;"/>
 </div>
 <s:hidden name="pageType" value="%{pageType}"/>
+<s:hidden name="idUKey" value="%{#request.idUKey}"/>
 </s:form>
 
 <%--
@@ -936,3 +937,4 @@ function personAgeDeath() {
 <s:hidden id="error13" value="%{getText('enter.reasonForLate.label')}"/>
 
 </div>
+
