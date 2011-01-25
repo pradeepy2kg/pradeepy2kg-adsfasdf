@@ -26,6 +26,12 @@
             </a>
         </li>
         <li>
+            <a id="birth_register_approval.label" href="/ecivil/births/eprBirthRegisterApproval.do"
+               style="color:red">
+                (2) උපත් ලියාපදිංචි අනුමතය
+            </a>
+        </li>
+        <li>
             <a id="birth_confirmation_print.label" href="/ecivil/births/eprBirthConfirmationPrintList.do">
                 (3) උපත් තහවුරු කිරීම් මුද්‍රණය
             </a>
@@ -36,20 +42,14 @@
             </a>
         </li>
         <li>
-            <a id="print_birthcertificate.label" href="/ecivil/births/eprBirthCertificateList.do">
-                (6) උප්පැන්න සහතික මුද්‍රණය
-            </a>
-        </li>
-        <li>
-            <a id="birth_register_approval.label" href="/ecivil/births/eprBirthRegisterApproval.do"
-               style="color:red">
-                (2) උපත් ලියාපදිංචි අනුමතය
-            </a>
-        </li>
-        <li>
             <a id="birth_confirmation_approval.label" href="/ecivil/births/eprBirthConfirmationApproval.do"
                style="color:red">
                 (5) උපත් තහවුරු අනුමත කිරීම
+            </a>
+        </li>
+        <li>
+            <a id="print_birthcertificate.label" href="/ecivil/births/eprBirthCertificateList.do">
+                (6) උප්පැන්න සහතික මුද්‍රණය
             </a>
         </li>
     </ul>
@@ -134,7 +134,7 @@
         <li>
             <a id="birth_alteration_pending_approval.title"
                href="/ecivil/alteration/eprBirthAlterationPendingApproval.do">
-                උප්පැන්න  සටහනක විස්තර වෙනස් කිරීම අනුමත කිරීම
+                උප්පැන්න සටහනක විස්තර වෙනස් කිරීම අනුමත කිරීම
             </a>
         </li>
         <li>

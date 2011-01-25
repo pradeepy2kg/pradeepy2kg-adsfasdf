@@ -26,6 +26,12 @@
             </a>
         </li>
         <li>
+            <a id="birth_register_approval.label" href="/ecivil/births/eprBirthRegisterApproval.do"
+               style="color:red">
+                (2) Birth Registration Approval
+            </a>
+        </li>
+        <li>
             <a id="birth_confirmation_print.label" href="/ecivil/births/eprBirthConfirmationPrintList.do">
                 (3) Birth Confirmation Print
             </a>
@@ -36,20 +42,14 @@
             </a>
         </li>
         <li>
-            <a id="print_birthcertificate.label" href="/ecivil/births/eprBirthCertificateList.do">
-                (6) Print Birth Certificate
-            </a>
-        </li>
-        <li>
-            <a id="birth_register_approval.label" href="/ecivil/births/eprBirthRegisterApproval.do"
-               style="color:red">
-                (2) Birth Registration Approval
-            </a>
-        </li>
-        <li>
             <a id="birth_confirmation_approval.label" href="/ecivil/births/eprBirthConfirmationApproval.do"
                style="color:red">
                 (5) Birth Confirmation Pending Approval
+            </a>
+        </li>
+        <li>
+            <a id="print_birthcertificate.label" href="/ecivil/births/eprBirthCertificateList.do">
+                (6) Print Birth Certificate
             </a>
         </li>
     </ul>

@@ -26,6 +26,17 @@
             </a>
         </li>
         <li>
+            <a id="birth_register_approval.label" href="/ecivil/births/eprBirthRegisterApproval.do">
+                (2) උපත් ලියාපදිංචි අනුමතය
+            </a>
+        </li>
+        <li>
+            <a id="birth_register_belated_approval.label"
+               href="/ecivil/births/eprBirthRegisterBelatedApproval.do" style="color:green">
+                (2) කල්පසු වූ උපත් ලියාපදිංචි අනුමතය
+            </a>
+        </li>
+        <li>
             <a id="birth_confirmation_print.label" href="/ecivil/births/eprBirthConfirmationPrintList.do">
                 (3) උපත් තහවුරු කිරීම් මුද්‍රණය
             </a>
@@ -36,24 +47,13 @@
             </a>
         </li>
         <li>
-            <a id="print_birthcertificate.label" href="/ecivil/births/eprBirthCertificateList.do">
-                (6) උප්පැන්න සහතික මුද්‍රණය
-            </a>
-        </li>
-        <li>
-            <a id="birth_register_approval.label" href="/ecivil/births/eprBirthRegisterApproval.do">
-                (2) උපත් ලියාපදිංචි අනුමතය
-            </a>
-        </li>
-        <li>
             <a id="birth_confirmation_approval.label" href="/ecivil/births/eprBirthConfirmationApproval.do">
                 (5) උපත් තහවුරු අනුමත කිරීම
             </a>
         </li>
         <li>
-            <a id="birth_register_belated_approval.label"
-               href="/ecivil/births/eprBirthRegisterBelatedApproval.do" style="color:green">
-                කල්පසු වූ උපත් ලියාපදිංචි අනුමතය
+            <a id="print_birthcertificate.label" href="/ecivil/births/eprBirthCertificateList.do">
+                (6) උප්පැන්න සහතික මුද්‍රණය
             </a>
         </li>
     </ul>
@@ -138,7 +138,7 @@
         <li>
             <a id="birth_alteration_pending_approval.title"
                href="/ecivil/alteration/eprBirthAlterationPendingApproval.do">
-                උප්පැන්න  සටහනක විස්තර වෙනස් කිරීම අනුමත කිරීම
+                උප්පැන්න සටහනක විස්තර වෙනස් කිරීම අනුමත කිරීම
             </a>
         </li>
         <li>
