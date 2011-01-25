@@ -83,6 +83,8 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
         existing.setStatus(DeathAlteration.State.REJECT);
         existing.setComments(comment);
         existing.getLifeCycleInfo().setActiveRecord(false);
+        existing.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
+        existing.getLifeCycleInfo().setApprovalOrRejectUser(user);
         deathAlterationDAO.updateDeathAlteration(existing, user);
         logger.debug("Rejected death alteration record : {}", idUKey);
     }
@@ -215,11 +217,11 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
         List<DeathAlteration> result = deathAlterationDAO.getDeathAlterationByDeathPersonPin(pin);
         for (DeathAlteration da : result) {
             loadValuesToDeathAlterationObject(da);
-        //    validateAccessOfUserForApproval(da, user);
+            //    validateAccessOfUserForApproval(da, user);
         }
         return result;
     }
-    
+
     private void loadValuesToDeathAlterationObject(DeathAlteration da) {
         DeathRegister dr = deathRegisterDAO.getById(da.getDeathRegisterIDUkey());
         if (dr.getDeathPerson().getDeathPersonNameOfficialLang() != null) {
