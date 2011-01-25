@@ -261,10 +261,11 @@
                             <s:property value="serialNumber"/>
                         </td>
                         <td>
-                            <s:property value="male.nameInOfficialLanguageMale"/>
+                            <%-- todo : veryfy the below method returns the correct value --%>
+                            <%=NameFormatUtil.getDisplayName(request.getAttribute("male.nameInOfficialLanguageMale").toString(), 60)%>
                         </td>
                         <td>
-                            <s:property value="female.nameInOfficialLanguageFemale"/>
+                            <%=NameFormatUtil.getDisplayName(request.getAttribute("female.nameInOfficialLanguageFemale").toString(), 60)%>
                         </td>
                         <td>
                                 <%-- Register licenced marriage  --%>
