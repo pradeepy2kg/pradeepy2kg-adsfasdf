@@ -39,13 +39,19 @@
             minutes = now.getMinutes();
             hours = now.getHours() % 12;
 
-            el.onfocus = function() {
+            el.onclick = function() {
                 canvas.style.display = 'block';
-                canvas.focus();
+                canvas.display();
             };
 
-            base.$el.after(canvas);
+
             draw();
+
+            base.$el.after(canvas);
+               el.onblur=function(){
+               //   alert(el.value);
+                canvas.display='none';
+            };
         };
 
         var clickclock = function(e) {
@@ -183,7 +189,9 @@
         function sethours(point) {
             var tumbler = ctx.isPointInPath(point.x + size / 2, point.y + size / 2);
             ampm = tumbler ? !ampm : ampm;
-            if (tumbler) return;
+            if (tumbler) {
+                return;
+            }
 
             var angle = Math.atan2(point.y, point.x) + Math.PI * 2;
             var distance = Math.sqrt(Math.pow(point.x, 2) + Math.pow(point.y, 2));
