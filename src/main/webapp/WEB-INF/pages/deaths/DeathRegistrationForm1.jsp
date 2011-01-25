@@ -199,7 +199,7 @@ function validate() {
     }
     else {
         validateRadioButtons(new Array(document.getElementsByName('deathType')[0].checked,
-                document.getElementsByName('deathType')[1].checked, document.getElementsByName('deathType')[2].checked));
+                document.getElementsByName('deathType')[1].checked));
     }
 
 
@@ -495,31 +495,49 @@ function personAgeDeath() {
 </s:if>
 <s:elseif test="pageType==1">
     <tr>
-        <td colspan="2" width="275px">
+        <td colspan="4">
             (2)නැතිවුණු පුද්ගලයෙකුගේ මරණයක්ද ? <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
             <br>காணாமற்போன நபரது மரணமா?
             <br>Is the death of a missing person?
         </td>
         <td align="center">
-            <s:radio name="deathType" list="#@java.util.HashMap@{'MISSING':''}" value="%{deathType}"/>
+             <s:radio name="deathType" list="#@java.util.HashMap@{'MISSING':''}" value="%{deathType}"/>
         </td>
-        <td colspan="2" width="275px">
-            කාලය ඉකුත් වූ මරණ(සාමාන්‍ය මරණ) <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
+        <td colspan="3">
+            කාලය ඉකුත් වූ මරණ <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
             <br>in ta
-            <br>Late registration (Normal Death)
-
+            <br>Late registration 
         </td>
         <td align="center">
             <s:radio name="deathType" list="#@java.util.HashMap@{'LATE_NORMAL':''}" value="%{deathType}"/>
         </td>
-        <td colspan="2" width="275px">
-            කාලය ඉකුත් වූ මරණ(හදිසි මරණ ) <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-            <br>in ta
-            <br>Late registration (Sudden Death)
-        </td>
-        <td align="center">
-            <s:radio name="deathType" list="#@java.util.HashMap@{'LATE_SUDDEN':''}" value="%{deathType}"/>
-        </td>
+
+            <%--
+            <td colspan="2" width="275px">
+                (2)නැතිවුණු පුද්ගලයෙකුගේ මරණයක්ද ? <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
+                <br>காணாமற்போன நபரது மரணமா?
+                <br>Is the death of a missing person?
+            </td>
+            <td align="center">
+                <s:radio name="deathType" list="#@java.util.HashMap@{'MISSING':''}" value="%{deathType}"/>
+            </td>
+            <td colspan="2" width="275px">
+                කාලය ඉකුත් වූ මරණ(සාමාන්‍ය මරණ) <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
+                <br>in ta
+                <br>Late registration (Normal Death)
+
+            </td>
+            <td align="center">
+                <s:radio name="deathType" list="#@java.util.HashMap@{'LATE_NORMAL':''}" value="%{deathType}"/>
+            </td>
+            <td colspan="2" width="275px">
+                කාලය ඉකුත් වූ මරණ(හදිසි මරණ ) <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
+                <br>in ta
+                <br>Late registration (Sudden Death)
+            </td>
+            <td align="center">
+                <s:radio name="deathType" list="#@java.util.HashMap@{'LATE_SUDDEN':''}" value="%{deathType}"/>
+            </td>--%>
     </tr>
 </s:elseif>
 <tr>
