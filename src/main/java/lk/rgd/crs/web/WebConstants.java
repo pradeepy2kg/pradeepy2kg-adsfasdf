@@ -59,7 +59,7 @@ public class WebConstants {
     //public static final String SESSION_UPDATED_USER = "updated_user";
     public static final String USER_ID = "userId";
     public static final String CERTIFICATE_ID = "certificateId";
-    public static final String PERSON_ID = "personId";
+    public static final String PERSON_ID = "personUKey";
     public static final String SEARCH_USERS_LIST = "viewUsers";
 
     //to indicate time durations for statistics

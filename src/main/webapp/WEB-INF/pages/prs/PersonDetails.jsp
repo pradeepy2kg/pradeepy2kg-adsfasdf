@@ -2,12 +2,28 @@
 <%@ page import="lk.rgd.prs.api.domain.Person" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
 <script type="text/javascript">
     function initPage() {
     }
 </script>
 
-<div class="prs-person-report-outer">
+<div id="birth-certificate-outer">
+
+<s:url id="print" action="eprPRSCertificate.do">
+    <s:param name="personUKey" value="%{person.personUKey}"/>
+</s:url>
+<s:url id="advanceSearch" action="eprPRSAdvancedSearch.do"/>
+
+<div class="form-submit" style="margin-right:5px;margin-top:5px;">
+    <s:a href="%{print}"><s:label value="%{getText('prs_certificate.label')}"/></s:a>
+</div>
+<div class="form-submit" style="margin:5px 0 0 5px;margin-right:5px;">
+    <s:a href="%{printPage}" onclick="printPage()"><s:label value="%{getText('print.button')}"/></s:a>
+</div>
+<div class="form-submit" style="margin-top:5px;">
+    <s:a href="%{advanceSearch}"><s:label value="%{getText('search_record.label')}"/></s:a>
+</div>
 
 <table style="width:100%; border:none; border-collapse:collapse;">
     <tbody>
@@ -84,6 +100,7 @@
                 <s:label value="%{person.dateOfBirth}"/><br>
                 <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
             </s:if>
+            <s:else>&nbsp;</s:else>
         </td>
         <td>
             උපන් ස්ථානය
@@ -113,6 +130,7 @@
                 <s:label value="%{person.dateOfDeath}"/><br>
                 <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
             </s:if>
+            <s:else>&nbsp;</s:else>
         </td>
     </tr>
     <tr>
@@ -148,7 +166,7 @@
             <br>Name in official language
         </td>
         <td colspan="5">
-            <s:label value="%{person.fullNameInOfficialLanguage}"/>
+            <s:label value="%{person.fullNameInOfficialLanguage}" cssStyle="font-size:12pt;"/>
         </td>
     </tr>
     <tr>
@@ -158,7 +176,7 @@
             <br>Name in English
         </td>
         <td colspan="5">
-            <s:label value="%{person.fullNameInEnglishLanguage}"/>
+            <s:label value="%{person.fullNameInEnglishLanguage}" cssStyle="font-size:10pt;"/>
         </td>
     </tr>
     </tbody>
@@ -263,6 +281,7 @@
                     <s:label value="%{person.lastAddress.startDate}"/><br>
                     <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
                 </s:if>
+                <s:else>&nbsp;</s:else>
             </td>
         </tr>
         <tr>
@@ -309,6 +328,7 @@
                             <s:property value="%{startDate}"/><br>
                             <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
                         </s:if>
+                        <s:else>&nbsp;</s:else>
                     </td>
                     <td>
                         අවසානය
@@ -320,6 +340,7 @@
                             <s:property value="%{endDate}"/><br>
                             <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
                         </s:if>
+                        <s:else>&nbsp;</s:else>
                     </td>
                 </tr>
             </s:if>
@@ -392,6 +413,7 @@
                 <s:label value="%{person.father.dateOfBirth}"/><br>
                 <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
             </s:if>
+            <s:else>&nbsp;</s:else>
         </td>
         <td>
             <s:url id="personDetails" action="eprPersonDetails">
@@ -414,6 +436,7 @@
                 <s:label value="%{person.mother.dateOfBirth}"/><br>
                 <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
             </s:if>
+            <s:else>&nbsp;</s:else>
         </td>
         <td>
             <s:url id="personDetails" action="eprPersonDetails">
@@ -450,6 +473,7 @@
                     <s:property value="dateOfBirth"/><br>
                     <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
                 </s:if>
+                <s:else>&nbsp;</s:else>
             </td>
             <td>
                 <s:url id="personDetails" action="eprPersonDetails">
@@ -489,6 +513,7 @@
                     <s:property value="dateOfBirth"/><br>
                     <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
                 </s:if>
+                <s:else>&nbsp;</s:else>
             </td>
             <td>
                 <s:url id="personDetails" action="eprPersonDetails">
@@ -565,6 +590,7 @@
                         <s:property value="dateOfMarriage"/><br>
                         <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
                     </s:if>
+                    <s:else>&nbsp;</s:else>
                 </td>
                 <td>
                     <s:if test="preferredLanguage == 'si'">
@@ -585,6 +611,7 @@
                             <s:property value="groom.dateOfBirth"/><br>
                             <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
                         </s:if>
+                        <s:else>&nbsp;</s:else>
                     </td>
                     <td>
                         <s:url id="groomDetails" action="eprPersonDetails">
@@ -604,6 +631,7 @@
                             <s:property value="bride.dateOfBirth"/><br>
                             <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
                         </s:if>
+                        <s:else>&nbsp;</s:else>
                     </td>
                     <td>
                         <s:url id="brideDetails" action="eprPersonDetails">
@@ -636,6 +664,7 @@
 </s:else>
 <br>
 
+<%--<div style="page-break-after:always;"></div>--%>
 <table style="width:100%; border:none; border-collapse:collapse;">
     <tr>
         <td align="center" style="font-size:12pt;">
@@ -664,6 +693,7 @@
                 <s:label value="%{person.lifeCycleInfo.createdTimestamp}"/><br>
                 <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
             </s:if>
+            <s:else>&nbsp;</s:else>
         </td>
         <td>
             ඇතුල් කල පුද්ගලයා
@@ -683,6 +713,7 @@
                 <s:label value="%{person.lifeCycleInfo.lastUpdatedTimestamp}"/><br>
                 <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
             </s:if>
+            <s:else>&nbsp;</s:else>
         </td>
         <td>
             අවසන් වෙනස් කිරීම කල පුද්ගලයා
@@ -702,6 +733,7 @@
                 <s:label value="%{person.lifeCycleInfo.approvalOrRejectTimestamp}"/><br>
                 <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
             </s:if>
+            <s:else>&nbsp;</s:else>
         </td>
         <td>
             අනුමත හෝ ප්‍රතික්ෂේප කල පුද්ගලයා
@@ -709,9 +741,9 @@
             <br>Approved or Rejected by
         </td>
         <td>
-        <s:if test="person.lifeCycleInfo.approvalOrRejectUser != null">
-            <s:label value="%{person.lifeCycleInfo.approvalOrRejectUser.userName}"/>
-        </s:if>
+            <s:if test="person.lifeCycleInfo.approvalOrRejectUser != null">
+                <s:label value="%{person.lifeCycleInfo.approvalOrRejectUser.userName}"/>
+            </s:if>
         </td>
     </tr>
     <tr>
@@ -737,12 +769,14 @@
     </tbody>
 </table>
 
-<s:url id="print" action="eprPRSCertificate.do">
-    <s:param name="personUKey" value="%{person.personUKey}"/>
-</s:url>
-
-<div id="prsCertificate-page" class="form-submit" style="margin:5px 0 0 10px;margin-right:0px;">
-    <s:a href="%{print}"><s:label value="%{getText('print_certificate.button')}"/></s:a>
+<div class="form-submit" style="margin-right:5px;margin-top:5px;">
+    <s:a href="%{print}"><s:label value="%{getText('prs_certificate.label')}"/></s:a>
+</div>
+<div class="form-submit" style="margin:5px 0 0 5px;margin-right:5px;">
+    <s:a href="%{printPage}" onclick="printPage()"><s:label value="%{getText('print.button')}"/></s:a>
+</div>
+<div class="form-submit" style="margin-top:5px;">
+    <s:a href="%{advanceSearch}"><s:label value="%{getText('search_record.label')}"/></s:a>
 </div>
 <br><br>
 </div>

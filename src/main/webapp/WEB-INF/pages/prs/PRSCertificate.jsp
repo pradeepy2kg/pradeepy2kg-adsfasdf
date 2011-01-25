@@ -36,15 +36,18 @@
 </s:if>
 <s:else>
     <s:if test="%{person.status.ordinal() == 2}">
-        <s:url id="markPrint" action="eprMarkPRSCertificate.do" namespace="../prs"/>
+        <s:url id="markPrint" action="eprPersonDetails.do" namespace="../prs"/>
+        <%--<s:url id="markPrint" action="eprMarkPRSCertificate.do" namespace="../prs"/>--%>
     </s:if>
     <s:else>
-        <s:url id="markPrint" action="eprBackPRSSearchList.do" namespace="../prs"/>
+        <s:url id="markPrint" action="eprPersonDetails.do" namespace="../prs"/>
+        <%--<s:url id="markPrint" action="eprBackPRSSearchList.do" namespace="../prs"/>--%>
     </s:else>
-    <s:url id="previous" action="eprBackPRSSearchList.do" namespace="../prs">
-        <s:param name="pageNo" value="%{#request.pageNo}"/>
-        <s:param name="locationId" value="%{#request.locationId}"/>
-        <s:param name="printStart" value="%{#request.printStart}"/>
+    <s:url id="previous" action="eprPersonDetails.do" namespace="../prs">
+        <s:param name="personUKey" value="%{#request.personUKey}"/>
+        <%--<s:param name="pageNo" value="%{#request.pageNo}"/>--%>
+        <%--<s:param name="locationId" value="%{#request.locationId}"/>--%>
+        <%--<s:param name="printStart" value="%{#request.printStart}"/>--%>
     </s:url>
 </s:else>
 
@@ -172,7 +175,7 @@
             <br>பெயர்
             <br>Name
         </td>
-        <td colspan="5" style="font-size:13pt">
+        <td colspan="5" style="font-size:12pt">
             <s:label value="%{person.fullNameInOfficialLanguage}"/>
         </td>
     </tr>
@@ -182,7 +185,7 @@
             <br>ஆங்கிலத்தில் பெயர்
             <br>Name in English
         </td>
-        <td colspan="5" style="font-size:13pt">
+        <td colspan="5" style="font-size:11pt">
             <s:label value="%{person.fullNameInEnglishLanguage}"/>
         </td>
     </tr>
