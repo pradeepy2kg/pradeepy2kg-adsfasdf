@@ -5,7 +5,12 @@
 
 <div id="xmain-menu">
     <ul class="menu">
+        <s:if test="%{#session.context=='admin'}">
+        <li class="exp">
+            </s:if>
+            <s:else>
         <li>
+            </s:else>
             <a href="#">
                 පරිපාලන කටයුතු
             </a>
@@ -57,7 +62,13 @@
                 </li>
             </ul>
         </li>
+
+        <s:if test="%{#session.context=='preference'}">
+        <li class="exp">
+            </s:if>
+            <s:else>
         <li>
+            </s:else>
             <a href="#">
                 පුද්ගලික තේරීම්
             </a>
