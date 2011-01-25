@@ -120,7 +120,6 @@
             <br>Type of Marriage Place
         </td>
         <td colspan="3">
-            <br>
             <s:radio id="typeOfMarriagePlace" name="marriage.typeOfMarriagePlace" list="typeOfMarriagePlaceList"
                      listValue="type"
                      theme="horizontal"/>
@@ -281,7 +280,6 @@
                 <tbody>
                 <tr>
                     <td>
-                        <br>
                         <s:if test="mode=='register'">
                             <s:radio name="marriage.typeOfMarriage" list="marriageTypeList" listValue="type"
                                      theme="horizontal" disabled="true"/>
@@ -464,7 +462,6 @@
             <tbody>
             <tr>
                 <td>
-                    <br>
                     <s:if test="mode=='register'">
                         <s:radio name="marriage.male.civilStatusMale" list="civilStatusMale" theme="horizontal"
                                  disabled="true"/>
