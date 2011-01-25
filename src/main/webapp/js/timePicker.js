@@ -43,15 +43,12 @@
                 canvas.style.display = 'block';
                 canvas.display();
             };
-
-
             draw();
-
             base.$el.after(canvas);
-               el.onblur=function(){
-               //   alert(el.value);
-                canvas.display='none';
+            el.onblur = function() {
+                canvas.display = 'none';
             };
+
         };
 
         var clickclock = function(e) {
