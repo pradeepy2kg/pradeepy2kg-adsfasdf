@@ -286,7 +286,7 @@ public class PRSRecordsIndexerImpl implements PRSRecordsIndexer {
         d.addField(FIELD_CIVIL_STATUS, CivilStatusUtil.getStatusAsString(person.getCivilStatus()));
         d.addField(FIELD_RECORD_STATUS, getRecordStatus(person.getStatus()));
 
-        try {
+        /*try {
             solrIndexManager.getPRSServer().add(d);
         } catch (SolrServerException e) {
             if (Boolean.getBoolean("ecivildb.mysql")) {
@@ -315,7 +315,7 @@ public class PRSRecordsIndexerImpl implements PRSRecordsIndexer {
             }
         }
 
-        logger.debug("Updated Solr index for Person with UKey : {}", person.getPersonUKey());
+        logger.debug("Updated Solr index for Person with UKey : {}", person.getPersonUKey());*/
     }
 
     public void addRecord(ResultSet rs) throws SQLException, IOException, SolrServerException {
