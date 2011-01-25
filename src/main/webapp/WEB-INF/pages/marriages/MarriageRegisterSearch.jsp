@@ -249,8 +249,8 @@
                 <thead>
                 <tr>
                     <th width="70px"><s:label value="%{getText('serial.label')}"/></th>
-                    <th><s:label value="%{getText('partyName.label')}"/></th>
-                    <th width="150px" align="center"><s:label value="%{getText('pin.label')}"/></th>
+                    <th><s:label value="%{getText('label.marriageregister.nameofmale')}"/></th>
+                    <th><s:label value="%{getText('label.marriageregister.nameoffemale')}"/></th>
                     <th width="150px"></th>
                 </tr>
                 </thead>
@@ -263,8 +263,8 @@
                         <td>
                             <s:property value="male.nameInOfficialLanguageMale"/>
                         </td>
-                        <td align="center">
-                            <s:property value="male.identificationNumberMale"/>
+                        <td>
+                            <s:property value="female.nameInOfficialLanguageFemale"/>
                         </td>
                         <td>
                                 <%-- Register licenced marriage  --%>
