@@ -1,6 +1,7 @@
 package lk.rgd.crs.web.action.births;
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
 import lk.rgd.common.api.dao.AppParametersDAO;
 import lk.rgd.common.api.dao.DSDivisionDAO;
@@ -416,7 +417,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                 }
                 addActionMessage((getText("message.approval.Success")));
             } catch (CRSRuntimeException e) {
-                logger.error("inside approveIgnoringWarning() : {} ", e);
+                logger.debug("inside approveIgnoringWarning() Error Code : {} ", e.getErrorCode());
                 addActionError(getText("brapproval.ignoreWarningApproval.error." + e.getErrorCode()));
             }
         }
@@ -495,11 +496,20 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             try {
                 service.rejectBirthDeclaration(bdf, comments, user);
 
-            }
-            catch (Exception e) {
-                logger.error("failed to reject birth declaration/confirmation {}", e);
-                addActionError(getText("brapproval.reject.commentRequired"));
-                return "rejectGetComments";
+            } catch (CRSRuntimeException e) {
+                logger.debug("failed to reject birth declaration/confirmation : Error Code is {}", e.getErrorCode());
+
+                switch (e.getErrorCode()) {
+                    case ErrorCodes.PERMISSION_DENIED:
+                    case ErrorCodes.INVALID_STATE_FOR_BDF_REJECTION:
+                        addActionError(getText("message.noPermission"));
+                        return "rejectGetComments";
+                    case ErrorCodes.COMMENT_REQUIRED_BDF_REJECT:
+                        addActionError(getText("brapproval.reject.commentRequired"));
+                        return "rejectGetComments";
+                    default:
+                        logger.error("Unhandled Exception : {}", e);
+                }
             }
             initPermission(approveBelated);
             populate();
@@ -538,10 +548,17 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             } else if (birthType == BirthDeclaration.BirthType.BELATED) {
                 service.deleteBelatedBirthDeclaration(bdf, false, user);
             }
-        }
-        catch (CRSRuntimeException e) {
-            addActionError(getText("brapproval.delete.error." + e.getErrorCode()));
-            logger.error("inside delete: {} ", e);
+
+        } catch (CRSRuntimeException e) {
+            logger.debug("failed to delete birth declaration/confirmation : Error Code is {}", e.getErrorCode());
+            switch (e.getErrorCode()) {
+                case ErrorCodes.PERMISSION_DENIED:
+                case ErrorCodes.ILLEGAL_STATE:
+                    addActionError(getText("brapproval.delete.error." + e.getErrorCode()));
+                    break;
+                default:
+                    logger.error("Unhandled Exception : {}", e);
+            }
         }
         noOfRows = appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE);
 

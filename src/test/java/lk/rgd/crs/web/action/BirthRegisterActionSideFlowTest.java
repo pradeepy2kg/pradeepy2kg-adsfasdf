@@ -432,7 +432,7 @@ public class BirthRegisterActionSideFlowTest extends CustomStrutsTestCase {
         session = approveAction.getSession();
         assertEquals("session size incorrect", 4, session.size());
         assertNotNull("Warnings should not be null", approveAction.getWarnings());
-        assertEquals(4, approveAction.getWarnings().size());
+        assertEquals(5, approveAction.getWarnings().size());
         assertEquals(0, getBDFById(persistedBDId).getRegister().getStatus().ordinal());
 
         // approving submit ignore warnings
