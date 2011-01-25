@@ -12,6 +12,9 @@ public class BirthIslandWideStatistics extends BirthStatistics {
     public List<BirthDistrictStatistics> totals; //todo get this from district dao
     public static final int NO_OF_DISTRICTS = 26;
     private static BirthIslandWideStatistics instance = new BirthIslandWideStatistics();
+    public static boolean is2_8Populated = false;
+    public static boolean isPopulated = false;
+    public static boolean is2_3Populated = false;
 
     public static BirthIslandWideStatistics getInstance() {
         return instance;

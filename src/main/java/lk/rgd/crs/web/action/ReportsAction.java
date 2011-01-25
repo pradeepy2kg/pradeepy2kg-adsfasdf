@@ -78,7 +78,12 @@ public class ReportsAction extends ActionSupport implements SessionAware {
                 logger.debug("Chart Type {}", chartType);
                 generateReport(year, user, ReportCodes.TABLE_2_2A);
                 reportsService.createReport(user, ReportCodes.TABLE_2_2A);
+            } else if (chartType == 7) {
+                logger.debug("Chart Type {}", chartType);
+                generateReport(year, user, ReportCodes.TABLE_2_3);
+                reportsService.createReport(user, ReportCodes.TABLE_2_3);
             }
+
         } catch (RGDRuntimeException error) {
             addActionError(getText("permission.denied"));
         }
@@ -116,6 +121,7 @@ public class ReportsAction extends ActionSupport implements SessionAware {
         chartList.put(4, "TABLE 2.7");
         chartList.put(5, "TABLE 2.6");
         chartList.put(6, "TABLE 2.2A");
+        chartList.put(7, "TABLE 2.3");
     }
 
     public int getYear() {
@@ -181,6 +187,9 @@ public class ReportsAction extends ActionSupport implements SessionAware {
                 break;
             case ReportCodes.TABLE_2_2A:
                 reportsService.generate_2_5(year, user);
+                break;
+            case ReportCodes.TABLE_2_3:
+                reportsService.generate_2_3(year, user);
                 break;
         }
     }
