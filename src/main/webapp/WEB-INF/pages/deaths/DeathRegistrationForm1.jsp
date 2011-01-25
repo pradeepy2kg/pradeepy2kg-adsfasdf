@@ -357,8 +357,9 @@ function personAgeDeath() {
     var date_of_death = new Date(document.getElementById('deathDatePicker').value);
     var death_person_age = date_of_death.getYear() - person_bd.getYear();
     if (!(dateOdBirthSubmitted && dateOfDeathSubmitted)) {
-        document.getElementById("deathPersonAge").value = 0;
-
+        if (isFieldEmpty(document.getElementById("deathPersonAge"))) {
+            document.getElementById("deathPersonAge").value = 0;
+        }
     }
     else {
         document.getElementById("deathPersonAge").value = death_person_age;
