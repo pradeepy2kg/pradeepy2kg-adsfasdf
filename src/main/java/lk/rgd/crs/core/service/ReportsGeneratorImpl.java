@@ -12,7 +12,9 @@ import lk.rgd.common.api.domain.Race;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.crs.api.bean.*;
+import lk.rgd.crs.api.domain.ChildInfo;
 import lk.rgd.crs.api.domain.MarriageInfo;
+import lk.rgd.crs.api.domain.ParentInfo;
 import lk.rgd.crs.api.service.ReportsGenerator;
 import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.api.domain.BirthDeclaration;
@@ -65,7 +67,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
     public BirthIslandWideStatistics generate_2_2(int year, User user) { //TODO - find more efficient way to do this. statistics object is useless if i use this type of method
         this.year = year;
         if (!user.isAuthorized(Permission.GENERATE_REPORTS)) {
-            handleException(user.getUserName() + " doesn't have permission to generate the report",
+            handleException(user.getUserId() + " doesn't have permission to generate the report",
                 ErrorCodes.PERMISSION_DENIED);
         }
 
@@ -92,11 +94,13 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
             BirthDistrictStatistics districtStats = statistics.totals.get(districtIndex);
             int males = 0, females = 0;
             for (BirthDeclaration bd : birthRecords) {
-                int gender = bd.getChild().getChildGender();
-                if (gender == 0) {
-                    males++;
-                } else if (gender == 1) {
-                    females++;
+                if (bd.getChild() != null) {
+                    int gender = bd.getChild().getChildGender();
+                    if (gender == 0) {
+                        males++;
+                    } else if (gender == 1) {
+                        females++;
+                    }
                 }
             }
 
@@ -128,8 +132,12 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
      */
     public BirthIslandWideStatistics generate_2_8(int year, User user) { //TODO - find more efficient way to do this. statistics object become useless if i use this type of method
         this.year = year;
+        if (statistics.is2_8Populated) {
+            return statistics;
+        }
+
         if (!user.isAuthorized(Permission.GENERATE_REPORTS)) {
-            handleException(user.getUserName() + " doesn't have permission to generate the report",
+            handleException(user.getUserId() + " doesn't have permission to generate the report",
                 ErrorCodes.PERMISSION_DENIED);
         }
 
@@ -156,20 +164,31 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
             BirthDistrictStatistics districtStats = statistics.totals.get(districtIndex);
             int males = 0, females = 0, legBirths = 0, illegBirths = 0, hospitalBirths = 0;
             for (BirthDeclaration bd : birthRecords) {
-                int gender = bd.getChild().getChildGender();
+                ChildInfo cInfo = bd.getChild();
+                MarriageInfo mInfo = bd.getMarriage();
+
+                int gender = cInfo.getChildGender();
                 if (gender == 0) {
                     males++;
                 } else if (gender == 1) {
                     females++;
                 }
-                if ((bd.getMarriage().getParentsMarried() == MarriageInfo.MarriedStatus.MARRIED)
-                    || bd.getMarriage().getDateOfMarriage().before(bd.getChild().getDateOfBirth())) {
-                    legBirths++;
-                } else {
-                    illegBirths++;
+
+                if (mInfo != null) {
+                    if (mInfo.getParentsMarried() != null && mInfo.getDateOfMarriage() != null && bd.getChild() != null
+                        && bd.getChild().getDateOfBirth() != null) {
+                        if ((mInfo.getParentsMarried() == MarriageInfo.MarriedStatus.MARRIED)
+                            || mInfo.getDateOfMarriage().before(cInfo.getDateOfBirth())) {
+                            legBirths++;
+                        } else {
+                            illegBirths++;
+                        }
+                    }
                 }
-                if (bd.getChild().getBirthAtHospital()) {
-                    hospitalBirths++;
+                if (cInfo != null) {
+                    if (cInfo.getBirthAtHospital()) {
+                        hospitalBirths++;
+                    }
                 }
             }
 
@@ -189,7 +208,11 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
             districtStats.setHospitalBirths(districtStats.getHospitalBirths() + hospitalBirths);
             float divide = (float) districtStats.getFemaleTotal();
             if (divide == 0) {
-                divide = 1;
+                if (districtStats.getMaleTotal() != 0) {
+                    divide = districtStats.getMaleTotal();
+                } else {
+                    divide = 1;
+                }
             }
             districtStats.setProportion((districtStats.getMaleTotal() / divide) * 100.0f);
 
@@ -204,20 +227,27 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         statistics.setHospitalBirths(statistics.getHospitalBirths() + allHospitalBirths);
         float divide = (float) statistics.getFemaleTotal();
         if (divide == 0) {
-            divide = 1;
+            if (statistics.getMaleTotal() != 0) {
+                divide = statistics.getMaleTotal();
+            } else {
+                divide = 1;
+            }
         }
         statistics.setProportion((statistics.getMaleTotal() / divide) * 100.0f);
+        statistics.is2_8Populated = true;
 
         return statistics;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public BirthIslandWideStatistics generate_2_5(int year, User user) {  //TODO - find more efficient way to do this. statistics object become useless if i use this type of method
+    public BirthIslandWideStatistics generate_2_3(int year, User user) {
+
         this.year = year;
+        if (statistics.is2_3Populated) {
+            return statistics;
+        }
+
         if (!user.isAuthorized(Permission.GENERATE_REPORTS)) {
-            handleException(user.getUserName() + " doesn't have permission to generate the report",
+            handleException(user.getUserId() + " doesn't have permission to generate the report",
                 ErrorCodes.PERMISSION_DENIED);
         }
 
@@ -243,14 +273,86 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
             BirthDistrictStatistics districtStats = statistics.totals.get(districtIndex);
 
             for (BirthDeclaration bd : birthRecords) {
-                Calendar calender = Calendar.getInstance();
-                calender.setTime(bd.getChild().getDateOfBirth());
-                int month = calender.get(Calendar.MONTH);
+                ChildInfo childInfo;
+                if (bd.getChild() != null && bd.getChild().getChildRank() != null) {
+                    childInfo = bd.getChild();
+                    int rank = childInfo.getChildRank();
+                    int gender = childInfo.getChildGender();
+
+                    for (BirthChildRankStatistics brs : districtStats.birthOrder) {
+                        if (brs.getRank() == rank) {
+                            int valid = 0;
+                            if (gender == 0) {
+                                brs.setMaleTotal(brs.getMaleTotal() + 1);
+                                valid++;
+                            } else {
+                                brs.setFemaleTotal(brs.getFemaleTotal() + 1);
+                                valid++;
+                            }
+                            if (valid == 1) {
+                                brs.setTotal(brs.getTotal() + 1);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        statistics.is2_3Populated = true;
+        return statistics;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public BirthIslandWideStatistics generate_2_5(int year, User user) {  //TODO - find more efficient way to do this. statistics object become useless if i use this type of method
+        this.year = year;
+        if (statistics.isPopulated) {
+            return statistics;
+        }
+
+        if (!user.isAuthorized(Permission.GENERATE_REPORTS)) {
+            handleException(user.getUserId() + " doesn't have permission to generate the report",
+                ErrorCodes.PERMISSION_DENIED);
+        }
+
+        List<DSDivision> dsDivisions = dsDivisionDAO.findAll();
+        User systemUser = userManagementService.getSystemUser();
+        List<BirthDeclaration> birthRecords;
+
+        Calendar cal = Calendar.getInstance();
+
+        /* January first of the year */
+        cal.set(year, 0, 1);
+        Date startDate = cal.getTime();
+
+        /* December 31st of the year */
+        cal.set(year, 11, 31);
+        Date endDate = cal.getTime();
+
+        for (DSDivision dsDivision : dsDivisions) {
+            birthRecords = birthRegister.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
+                BirthDeclaration.State.ARCHIVED_CERT_GENERATED, systemUser);
+
+            int districtIndex = dsDivision.getDistrict().getDistrictUKey();
+            BirthDistrictStatistics districtStats = statistics.totals.get(districtIndex);
+
+            for (BirthDeclaration bd : birthRecords) {
+                //Calendar calender = Calendar.getInstance();
+                Date date = bd.getChild().getDateOfBirth();
+                int month = date.getMonth();
 
                 BirthMonthlyStatistics birthMonthlyStatistics = districtStats.monthlyTotals.get(month);
-                BirthRaceStatistics birthRaceStatistics = birthMonthlyStatistics.raceTotals.get(bd.getParent().getFatherRace().getRaceId());
+                BirthRaceStatistics birthRaceStatistics = birthMonthlyStatistics.raceTotals.get(0);
+                ParentInfo pInfo = bd.getParent();
+                if (pInfo != null && pInfo.getFatherRace() != null) {
+                    birthRaceStatistics = birthMonthlyStatistics.raceTotals.get(pInfo.getFatherRace().getRaceId());
+                }
                 BirthAgeGroupStatistics birthAgeGroupStatistics;
-                int age = bd.getParent().getMotherAgeAtBirth() / 5;
+                int age = 0;
+                if (pInfo != null && pInfo.getMotherAgeAtBirth() != null) {
+                    age = pInfo.getMotherAgeAtBirth() / 5;
+                }
                 if (age < 3) {
                     birthAgeGroupStatistics = birthRaceStatistics.ageGroupTotals.get(2);
                 } else if (age < 11) {
@@ -285,7 +387,9 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                     birthRaceStatistics.setTotalBirthFromRaces(birthRaceStatistics.getTotalBirthFromRaces() + birthAgeGroupStatistics.getTotalBirths());
                 }
 
-                birthMonthlyStatistics.raceTotals.set(bd.getParent().getFatherRace().getRaceId(), birthRaceStatistics);
+                if (bd.getParent() != null && bd.getParent().getFatherRace() != null) {
+                    birthMonthlyStatistics.raceTotals.set(bd.getParent().getFatherRace().getRaceId(), birthRaceStatistics);
+                }
                 birthMonthlyStatistics.setMaleBirthFromMonths(birthMonthlyStatistics.getMaleBirthFromMonths() + birthRaceStatistics.getMaleBirthFromRaces());
                 birthMonthlyStatistics.setFemaleBirthFromMonths(birthMonthlyStatistics.getFemaleBirthFromMonths() + birthRaceStatistics.getFemaleBirthFromRaces());
                 birthMonthlyStatistics.setTotalBirthFromMonths(birthMonthlyStatistics.getTotalBirthFromMonths() + birthRaceStatistics.getTotalBirthFromRaces());
@@ -298,7 +402,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
             }
             statistics.totals.set(districtIndex, districtStats);
         }
-
+        statistics.isPopulated = true;
         return statistics;
     }
 
@@ -308,7 +412,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
     public BirthIslandWideStatistics generate_2_4(int year, User user) {
         this.year = year;
         if (!user.isAuthorized(Permission.GENERATE_REPORTS)) {
-            handleException(user.getUserName() + " doesn't have permission to generate the report",
+            handleException(user.getUserId() + " doesn't have permission to generate the report",
                 ErrorCodes.PERMISSION_DENIED);
         }
 
@@ -333,7 +437,9 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
             for (BirthDeclaration birthDeclaration : birthRecords) {
                 int raceId = 0;
                 try {
-                    raceId = birthDeclaration.getParent().getMotherRace().getRaceId() - 1;
+                    if (birthDeclaration.getParent() != null && birthDeclaration.getParent().getMotherRace() != null) {
+                        raceId = birthDeclaration.getParent().getMotherRace().getRaceId() - 1;
+                    }
                 } catch (NullPointerException e) {
                     raceId = 0;
                 }
@@ -357,7 +463,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
 
     public String createReport(User user, int headerCode) {
         if (!user.isAuthorized(Permission.GENERATE_REPORTS)) {
-            handleException(user.getUserName() + " doesn't have permission to create the report",
+            handleException(user.getUserId() + " doesn't have permission to create the report",
                 ErrorCodes.PERMISSION_DENIED);
         }
         StringBuilder csv = getReportHeader(headerCode);
@@ -390,7 +496,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 filename = ReportCodes.TABLE_2_8_NAME + ".csv";
                 for (i = 0; i < length; i++) {
                     BirthDistrictStatistics districtStats = statistics.totals.get(i);
-                    District district = districtDAO.getDistrict(i + 1);
+                    District district = districtDAO.getDistrict(i);
                     String districtId = "Unknown";
                     if (district != null) {
                         districtId = district.getEnDistrictName();
@@ -455,6 +561,11 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 break;
             case ReportCodes.TABLE_2_7:
                 filename = ReportCodes.TABLE_2_7_NAME + ".csv";
+                for (int p = 0, n = BirthIslandWideStatistics.NO_OF_DISTRICTS; p < n; p++) {
+                    for (int q = 0; q < BirthRaceStatistics.NO_OF_AGE_GROUPS; q++) {
+                        age_district_total[p][q] = 0;
+                    }
+                }
                 for (i = 0; i < BirthIslandWideStatistics.NO_OF_DISTRICTS; i++) {
                     District district = districtDAO.getDistrict(i);
                     String districtName = "Unknown";
@@ -526,6 +637,21 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                     i++;
                 }
                 break;
+            case ReportCodes.TABLE_2_3:
+                filename = ReportCodes.TABLE_2_3_NAME + ".csv";
+
+                districtStat = statistics.totals;
+                i = 0;
+                for (BirthDistrictStatistics bds : districtStat) {
+                    District district = districtDAO.getDistrict(i);
+                    String districtName = "Unknown";
+                    if (district != null) {
+                        districtName = district.getEnDistrictName();
+                    }
+                    csv.append(districtName + ",");
+                    csv.append("\n");
+                    i++;
+                }
 
         }
 
@@ -588,6 +714,11 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 csv.append("All Race,");
 
                 districtStat = statistics.totals;
+                for (int i = 0; i < BirthMonthlyStatistics.NO_OF_RACES; i++) {
+                    for (int j = 0; j < BirthRaceStatistics.NO_OF_AGE_GROUPS; j++) {
+                        age_race_total[i][j] = 0;
+                    }
+                }
                 for (BirthDistrictStatistics bds : districtStat) {
                     List<BirthMonthlyStatistics> birthMonthlyStat = bds.monthlyTotals;
                     for (BirthMonthlyStatistics bms : birthMonthlyStat) {
@@ -654,7 +785,6 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                                 age_district_total[dist][age] = age_district_total[dist][age] + bags.getTotalBirths();
                                 age++;
                             }
-
                         }
                     }
                     dist++;
@@ -728,6 +858,44 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                     t += arr[k];
                 }
                 csv.append("," + t);
+                csv.append("\n");
+                break;
+            case ReportCodes.TABLE_2_3:
+                districtStat = statistics.totals;
+                csv.append("District,");
+                int array[][] = new int[10][3];
+
+                for (BirthDistrictStatistics district : districtStat) {
+                    List<BirthChildRankStatistics> rankList = district.birthOrder;
+                    for (BirthChildRankStatistics bcs : rankList) {
+                        int rank = bcs.getRank();
+                        array[rank][0] += bcs.getMaleTotal();
+                        array[rank][1] += bcs.getFemaleTotal();
+                        array[rank][2] += bcs.getTotal();
+                    }
+                }
+                for (int b = 0; b < 10; b++) {
+                    if (b == 0) {
+                        csv.append(",Unknown,,");
+                    } else {
+                        csv.append(",rank : " + b + ",,");
+                    }
+                }
+                csv.append(",Total,,");
+                int dis_male = 0, dis_female = 0, dis_total = 0;
+                csv.append("\nSri Lanka");
+                for (int k = 0; k < 10; k++) {
+                    for (int l = 0; l < 3; l++) {
+                        csv.append("," + array[k][l]);
+                        if(l == 2)
+                            dis_total += array[k][l];
+                        if(l == 0)
+                            dis_male += array[k][l];
+                        if(l == 1)
+                            dis_female += array[k][l];
+                    }
+                }
+                csv.append(","+dis_male+","+dis_female+"," + dis_total);
                 csv.append("\n");
                 break;
         }

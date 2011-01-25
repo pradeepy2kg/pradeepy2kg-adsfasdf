@@ -28,6 +28,7 @@ public class ReportCodes {
     public static final int TABLE_2_7 = 5;
     public static final int TABLE_2_6 = 6;
     public static final int TABLE_2_2A = 7;
+    public static final int TABLE_2_3 = 8;
 
     public static final String TABLE_2_2_NAME = "TABLE_2_2";
     public static final String TABLE_2_4_NAME = "TABLE_2_4";
@@ -36,5 +37,6 @@ public class ReportCodes {
     public static final String TABLE_2_7_NAME = "TABLE_2_7";
     public static final String TABLE_2_6_NAME = "TABLE_2_6";
     public static final String TABLE_2_2A_NAME = "TABLE_2_2A";
+    public static final String TABLE_2_3_NAME = "TABLE_2_3";
 
 }
