@@ -1,33 +1,32 @@
 package lk.rgd.prs.web;
 
-import org.krysalis.barcode4j.output.bitmap.BitmapCanvasProvider;
+import lk.rgd.common.api.domain.User;
+import lk.rgd.crs.web.WebConstants;
+import lk.rgd.prs.api.domain.Person;
+import lk.rgd.prs.api.service.PopulationRegistry;
+import org.krysalis.barcode4j.BarcodeDimension;
 import org.krysalis.barcode4j.impl.datamatrix.DataMatrixBean;
 import org.krysalis.barcode4j.impl.datamatrix.SymbolShapeHint;
-import org.krysalis.barcode4j.BarcodeDimension;
+import org.krysalis.barcode4j.output.bitmap.BitmapCanvasProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import java.io.IOException;
-import java.awt.image.BufferedImage;
-import java.net.URLEncoder;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
-import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import lk.rgd.crs.web.WebConstants;
-import lk.rgd.prs.api.service.PopulationRegistry;
-import lk.rgd.prs.api.domain.Person;
-import lk.rgd.common.api.domain.User;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 /**
- *  Generates and serves a barcode image of a person registered in PRS
- *  @author: Ashoka Ekanayaka
+ * Generates and serves a barcode image of a person registered in PRS
+ *
+ * @author: Ashoka Ekanayaka
  */
 public class BarCodeImageServlet extends HttpServlet {
     private static final Logger logger = LoggerFactory.getLogger(BarCodeImageServlet.class);
@@ -43,8 +42,8 @@ public class BarCodeImageServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        try{
+        throws ServletException, IOException {
+        try {
             long personId = Long.parseLong(request.getParameter(WebConstants.PERSON_ID));
             logger.debug("Person Id received {}", personId);
 
@@ -83,8 +82,8 @@ public class BarCodeImageServlet extends HttpServlet {
 
                     //Set up the canvas provider for monochrome gif output
                     BitmapCanvasProvider canvas = new BitmapCanvasProvider(
-                            out, "image/gif", dpi, BufferedImage.TYPE_BYTE_BINARY, false, 0);
-                    canvas.establishDimensions(new BarcodeDimension(25,25));
+                        out, "image/gif", dpi, BufferedImage.TYPE_BYTE_BINARY, false, 0);
+                    canvas.establishDimensions(new BarcodeDimension(25, 25));
 
                     //prepare data
                     StringBuffer buffer = new StringBuffer();
@@ -117,13 +116,13 @@ public class BarCodeImageServlet extends HttpServlet {
                 logger.debug("person not found {}", personId);
             }
         } catch (Exception e) {
-            logger.error("Unexpected error generating the bar code : " + e.getLocalizedMessage() );
+            logger.error("Unexpected error generating the bar code : " + e.getLocalizedMessage());
         }
     }
 
     protected void doPost(
         HttpServletRequest request, HttpServletResponse response
-        ) throws ServletException, IOException {
+    ) throws ServletException, IOException {
 
         // Pass through to the doPost method:
         doGet(request, response);

@@ -52,7 +52,6 @@
                 null,
                 null,
                 null,
-                null
             ]
         });
     });
@@ -205,7 +204,6 @@
                     <th width="10px" style="padding-left:3px;"></th>
                     <th width="10px" style="padding-left:3px;"></th>
                     <th width="10px" style="padding-left:3px;"></th>
-                    <th width="10px" style="padding-left:3px;"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -282,7 +280,8 @@
                                 </s:a>
                             </s:if>
                         </td>
-                        <td>
+                        <%--Currently this list only holds approval pending items--%>
+                        <%--<td>
                             <s:if test="status.ordinal() == 3">
                                 <s:url id="printSelected" action="eprPRSCertificate.do">
                                     <s:param name="personUKey" value="personUKey"/>
@@ -295,19 +294,7 @@
                                          border="none"/>
                                 </s:a>
                             </s:if>
-                            <%--<s:elseif test="status.ordinal() == 3">
-                                <s:url id="printSelected" action="eprPRSCertificate.do">
-                                    <s:param name="personUKey" value="personUKey"/>
-                                    <s:param name="pageNo" value="%{#request.pageNo}"/>
-                                    <s:param name="locationId" value="#request.locationId"/>
-                                    <s:param name="printStart" value="#request.printStart"/>
-                                </s:url>
-                                <s:a href="%{printSelected}" title="%{getText('reprint.label')}">
-                                    <img src="<s:url value='/images/print_icon.gif'/>" width="25" height="25"
-                                         border="none"/>
-                                </s:a>
-                            </s:elseif>--%>
-                        </td>
+                        </td>--%>
                     </tr>
                 </s:iterator>
                 </tbody>
