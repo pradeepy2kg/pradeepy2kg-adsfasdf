@@ -233,11 +233,14 @@
                         </td>
                     </tr>
                     <tr>
-                        <td width="200px"><label>ලිපිගොනු අංකය<br>கோவை இலக்கம் <br>Case File Number</label></td>
+                        <td width="200px"><label>ලිපිගොනු අංකය
+                            <s:label value="*" cssStyle="color:red;font-size:14pt;"/>
+                            <br>கோவை இலக்கம் <br>Case File Number</label></td>
                         <td colspan="2"><s:textfield name="register.caseFileNumber" id="caseFileNumber"/></td>
                     </tr>
                     <tr>
-                        <td><label>අදහස් දක්වන්න<br>கருத்தினை தெரிவிக்கவும் <br>Add Comments </label></td>
+                        <td><label>අදහස් දක්වන්න <s:label value="*" cssStyle="color:red;font-size:14pt;"/>
+                            <br>கருத்தினை தெரிவிக்கவும் <br>Add Comments </label></td>
                         <td><s:textarea name="register.comments" id="comments" cssStyle="width:98%;" rows="10"/></td>
                     </tr>
                     </tbody>
