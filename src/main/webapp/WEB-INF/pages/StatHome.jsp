@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
-<link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
+<link rel="stylesheet" href="lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 
 <script type="text/javascript" src="/ecivil/lib/jquery/jquery.jqplot.js"></script>
 <script type="text/javascript" src="/ecivil/lib/jquery/jqplot.categoryAxisRenderer.js"></script>
@@ -213,6 +213,7 @@
 </s:if>
 <s:else>
 <s:if test="role != 'DEO'">
+<%--<s:form action="eprShowStatistics.do" method="post">--%>
     <div id="stat-preferences">
         <table border="0" width="100%" cellpadding="5" cellspacing="5">
             <tr bgcolor="#eeeeee">
@@ -266,6 +267,7 @@
             </tr>
         </table>
     </div>
+<%--</s:form>--%>
 </s:if>
 <s:if test="role == 'DEO' || role == 'ADR' || role == 'DR'">
     <div id="stat-charts">

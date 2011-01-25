@@ -135,12 +135,18 @@ public class LoginAction extends ActionSupport implements SessionAware {
                     user.getLifeCycleInfo().setActive(false);
                     addActionError("Please contact Admin to Active your Account");
                 } else {
-                    addActionError("Incorrect user name or password.");
-                    user.setLoginAttempts(loginAttempts + 1);
+                    if (user.getStatus().equals(User.State.DELETED)) {
+                        addActionError("Your user account has been deleted. Please contact Administrator");
+                    } else {
+                        addActionError("Incorrect user name or password");
+                        user.setLoginAttempts(loginAttempts + 1);
+                    }
                 }
-                userManager.updateUser(user);
+                if (!user.getStatus().equals(User.State.DELETED)) {
+                    userManager.updateUser(user);
+                }
             } else {
-                addActionError("Incorrect user name or password.");
+                addActionError("Incorrect user name or password");
             }
             logger.error("{} : {}", e.getMessage(), e);
             return ERROR;

@@ -93,6 +93,11 @@
             <result type="tiles" name="success">epr.home</result>
         </action>
 
+        <action name="eprShowStatistics" class="lk.rgd.crs.web.action.UserPreferencesAction" method="showStatistics">
+            <interceptor-ref name="default"/>
+            <result type="tiles" name="success" >epr.home</result>
+        </action>
+
     </package>
 
     <package name="prs" namespace="/prs" extends="NG">
@@ -1075,6 +1080,12 @@
                 method="inactiveUser">
             <result type="tiles" name="success">epr.viewUsers</result>
         </action>
+
+        <action name="eprDoInactiveUsers" class="lk.rgd.crs.web.action.UserManagementAction"
+                method="doInactiveUser">
+            <result type="tiles" name="success">epr.viewUsers</result>
+        </action>
+
         <action name="eprActiveUsers" class="lk.rgd.crs.web.action.UserManagementAction"
                 method="activeUser">
             <result type="tiles" name="success">epr.viewUsers</result>

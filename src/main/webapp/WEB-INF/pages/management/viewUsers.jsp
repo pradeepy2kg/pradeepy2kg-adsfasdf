@@ -119,10 +119,18 @@
                             <s:url id="activeSelected" action="eprActiveUsers.do">
                                 <s:param name="userId" value="userId"/>
                             </s:url>
+                            <s:url id="inactiveSelected" action="eprDoInactiveUsers.do">
+                                <s:param name="userId" value="userId"/>
+                            </s:url>
                             <td align="center">
                                 <s:if test="!(lifeCycleInfo.active)">
                                     <s:a href="%{activeSelected}">
                                         <img src="<s:url value='/images/approve.gif'/>" width="25" height="25"
+                                             border="none"/></s:a>
+                                </s:if>
+                                <s:if test="(lifeCycleInfo.active)">
+                                    <s:a href="%{inactiveSelected}">
+                                        <img src="<s:url value='/images/reject.gif'/>" width="25" height="25"
                                              border="none"/></s:a>
                                 </s:if>
                             </td>
