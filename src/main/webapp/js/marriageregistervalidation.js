@@ -211,3 +211,27 @@ function isDate(fieldId, messageId, errormsg) {
         return errormsg;
     }
 }
+
+function isInteger(s) {
+    var i;
+    for (i = 0; i < s.length; i++) {
+        // Check that current character is number.
+        var c = s.charAt(i);
+        if (((c < "0") || (c > "9"))) {
+            return false;
+        }
+    }
+    // All characters are numbers.
+    return true;
+}
+
+//add X or V at the end of the NIC
+//todo : to be modified
+function addXorV(domElement, letter, error) {
+    var reg = /^([0-9]{9})$/;
+    if ((document.getElementById(domElement).value.length == 9) && isInteger((document.getElementById(domElement).value))) {
+        document.getElementById(domElement).value = document.getElementById(domElement).value + letter;
+    } else {
+        alert(document.getElementById(error).value);
+    }
+}

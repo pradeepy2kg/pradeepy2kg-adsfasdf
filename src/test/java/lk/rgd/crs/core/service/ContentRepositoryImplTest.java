@@ -46,5 +46,9 @@ public class ContentRepositoryImplTest extends TestCase {
         path = cr.storeFile(division, 262, f);
         Assert.assertEquals("/1/00/01/" + 262 ,path);
 
+        // check update of the same idukey
+        path = cr.storeFile(division, 262, f);
+        Assert.assertEquals("/1/00/01/" + 262 ,path);
+
     }
 }

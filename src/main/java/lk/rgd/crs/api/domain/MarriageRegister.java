@@ -298,6 +298,7 @@ public class MarriageRegister implements Serializable, Cloneable {
     @Temporal(value = TemporalType.DATE)
     private Date dateOfMaleNotice;
 
+    //todo to be removed
     @Column(name = "NOTICE_PIN_M_N")
     private long registrarPINOfMaleNotice;
 
@@ -318,6 +319,7 @@ public class MarriageRegister implements Serializable, Cloneable {
     @Temporal(value = TemporalType.DATE)
     private Date dateOfFemaleNotice;
 
+    //todo to be removed
     @Column(name = "NOTICE_PIN_F_N")
     private long registrarPINOfFemaleNotice;
 
