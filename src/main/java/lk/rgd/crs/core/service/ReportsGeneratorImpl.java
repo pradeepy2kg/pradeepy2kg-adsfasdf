@@ -329,9 +329,14 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         for (DSDivision dsDivision : dsDivisionList) {
             birthRecords = birthRegister.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
                 BirthDeclaration.State.ARCHIVED_CERT_GENERATED, systemUser);
-            int districtId = dsDivision.getDistrictId() - 1;
+            int districtId = dsDivision.getDistrict().getDistrictUKey() - 1;
             for (BirthDeclaration birthDeclaration : birthRecords) {
-                int raceId = birthDeclaration.getParent().getMotherRace().getRaceId() - 1;
+                int raceId = 0;
+                try {
+                    raceId = birthDeclaration.getParent().getMotherRace().getRaceId() - 1;
+                } catch (NullPointerException e) {
+                    raceId = 0;
+                }
                 table_2_4[districtId][raceId] += 1;
             }
 
@@ -366,7 +371,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 filename = ReportCodes.TABLE_2_2_NAME + ".csv";
                 for (i = 0; i < length; i++) {
                     BirthDistrictStatistics districtStats = statistics.totals.get(i);
-                    District district = districtDAO.getDistrict(i + 1);
+                    District district = districtDAO.getDistrict(i);
                     String districtId = "Unknown";
                     if (district != null) {
                         districtId = district.getEnDistrictName();
