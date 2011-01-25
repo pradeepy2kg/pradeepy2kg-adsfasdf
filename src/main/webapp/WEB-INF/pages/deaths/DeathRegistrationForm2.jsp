@@ -135,9 +135,6 @@
         if (!isFieldEmpty(domObject)) {
             validatePINorNIC(domObject, 'error1', 'error4');
         }
-        else {
-            errormsg = errormsg + "\n" + document.getElementById('error14').value;
-        }
 
         domObject = document.getElementById('declarantFullName');
         if (isFieldEmpty(domObject)) {
@@ -246,7 +243,7 @@
     </tr>
     <tr>
         <td colspan="4">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-            අනන්‍යතා අංකය <s:label value="*" cssStyle="color:red;font-size:10pt"/>
+            අනන්‍යතා අංකය
             <br>அடையாள எண்
             <br>Identification No.
         </td>
