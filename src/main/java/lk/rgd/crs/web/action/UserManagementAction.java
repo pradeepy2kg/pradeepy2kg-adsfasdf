@@ -181,9 +181,20 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     public String inactiveUser() {      /* delete icon clicked */
         populate();
         user = service.getUserByID(userId);
+        user.getLifeCycleInfo().setActive(false);
         service.deleteUser(user, (User) session.get(WebConstants.SESSION_USER_BEAN));
         logger.debug("Deleting  user {} is successoption body.full", user.getUserId());
         usersList = service.getAllUsers();      /* because of this user loses his search result */
+        session.put("viewUsers", usersList);
+        return "success";
+    }
+
+    public String doInactiveUser() { 
+        populate();
+        user = service.getUserByID(userId);
+        user.getLifeCycleInfo().setActive(false);
+        service.updateUser(user, (User) session.get(WebConstants.SESSION_USER_BEAN));
+        usersList = service.getAllUsers();
         session.put("viewUsers", usersList);
         return "success";
     }
