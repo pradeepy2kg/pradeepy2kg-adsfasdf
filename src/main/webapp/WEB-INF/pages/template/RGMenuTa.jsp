@@ -26,6 +26,17 @@
             </a>
         </li>
         <li>
+            <a id="birth_register_approval.label" href="/ecivil/births/eprBirthRegisterApproval.do">
+                (2) பிறப்பு பதிவிற்கான அனுமதி
+            </a>
+        </li>
+        <li>
+            <a id="birth_register_belated_approval.label"
+               href="/ecivil/births/eprBirthRegisterBelatedApproval.do" style="color:green">
+                (2) காலங்கடந்த பிறப்பிற்கான அனுமதி
+            </a>
+        </li>
+        <li>
             <a id="birth_confirmation_print.label" href="/ecivil/births/eprBirthConfirmationPrintList.do">
                 (3) பிறப்பு உறுதிபடித்தும் அச்சு
             </a>
@@ -36,24 +47,13 @@
             </a>
         </li>
         <li>
-            <a id="print_birthcertificate.label" href="/ecivil/births/eprBirthCertificateList.do">
-                (6) பிறப்புச் சான்றிதழ் அச்சு
-            </a>
-        </li>
-        <li>
-            <a id="birth_register_approval.label" href="/ecivil/births/eprBirthRegisterApproval.do">
-                (2) பிறப்பு பதிவிற்கான அனுமதி
-            </a>
-        </li>
-        <li>
             <a id="birth_confirmation_approval.label" href="/ecivil/births/eprBirthConfirmationApproval.do">
                 (5) பிறப்பினை உறுதிபடுத்துவதினை அனுமதித்தல்
             </a>
         </li>
         <li>
-            <a id="birth_register_belated_approval.label"
-               href="/ecivil/births/eprBirthRegisterBelatedApproval.do" style="color:green">
-                காலங்கடந்த பிறப்பிற்கான அனுமதி
+            <a id="print_birthcertificate.label" href="/ecivil/births/eprBirthCertificateList.do">
+                (6) பிறப்புச் சான்றிதழ் அச்சு
             </a>
         </li>
     </ul>
@@ -194,7 +194,7 @@
         </li>
         <li>
             <a id="prs.advanceSearch.label" href="/ecivil/prs/eprPRSAdvancedSearch.do">
-                நபரின் அறிக்கையினை  தேடுதல்
+                நபரின் அறிக்கையினை தேடுதல்
             </a>
         </li>
         <li>
@@ -232,7 +232,7 @@
         </li>
         <li>
             <a id="birth.advanceSearch.label" href="/ecivil/births/eprBirthsAdvancedSearch.do">
-                பிறப்பு அறிக்கையினை  தேடுதல்
+                பிறப்பு அறிக்கையினை தேடுதல்
             </a>
         </li>
     </ul>
