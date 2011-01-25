@@ -339,6 +339,7 @@ function initSerialNumber() {
 
 function initPage() {
     initSerialNumber();
+    document.getElementById('resonForLateRegistration').value = document.getElementById('reasonForLateDefaultText').value;
 }
 
 function personAgeDeath() {
@@ -936,6 +937,6 @@ function personAgeDeath() {
 <s:hidden id="pageType" value="%{pageType}"/>
 --%>
 <s:hidden id="error13" value="%{getText('enter.reasonForLate.label')}"/>
-
+<s:hidden id="reasonForLateDefaultText" value="%{getText('text.default.reason')}"/>
 </div>
 
