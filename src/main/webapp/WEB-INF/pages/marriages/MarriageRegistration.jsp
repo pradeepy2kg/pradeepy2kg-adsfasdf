@@ -390,10 +390,12 @@
         </s:if>
         <s:else>
             <s:if test="marriage.male.ageAtLastBirthDayMale==0">
-                <s:textfield name="marriage.male.ageAtLastBirthDayMale" id="ageMale" maxLength="3" value=""/>
+                <s:textfield name="marriage.male.ageAtLastBirthDayMale" id="ageMale" maxLength="3" value=""
+                        onfocus="calculateAge('dateOfBirthMale','ageMale');"/>
             </s:if>
             <s:else>
-                <s:textfield name="marriage.male.ageAtLastBirthDayMale" id="ageMale" maxLength="3"/>
+                <s:textfield name="marriage.male.ageAtLastBirthDayMale" id="ageMale" maxLength="3"
+                        onfocus="calculateAge('dateOfBirthMale','ageMale');"/>
             </s:else>
         </s:else>
     </td>
@@ -404,10 +406,11 @@
         <s:else>
             <s:if test="marriage.female.ageAtLastBirthDayFemale==0">
                 <s:textfield name="marriage.female.ageAtLastBirthDayFemale" id="ageFemale" maxLength="3"
-                             value=""/>
+                             value="" onfocus="calculateAge('dateOfBirthFemale','ageFemale');"/>
             </s:if>
             <s:else>
-                <s:textfield name="marriage.female.ageAtLastBirthDayFemale" id="ageFemale" maxLength="3"/>
+                <s:textfield name="marriage.female.ageAtLastBirthDayFemale" id="ageFemale" maxLength="3"
+                         onfocus="calculateAge('dateOfBirthFemale','ageFemale');"/>
             </s:else>
         </s:else>
 
