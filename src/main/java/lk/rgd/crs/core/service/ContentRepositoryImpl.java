@@ -99,11 +99,19 @@ public class ContentRepositoryImpl implements ContentRepository {
             divisionMap.put(division, holder);
         }
 
-        File leafFile = new File(nodeDir, Long.toString(idUKey));
+        String ext = ".tiff";
+        final int dotPos = ext.indexOf('.');
+        if (dotPos != -1) {
+            ext = ext.substring(dotPos);
+        }
+        File leafFile = new File(nodeDir, Long.toString(idUKey) + ext);
 
         try {
-            if (leafFile.createNewFile()) {
+            if (!leafFile.exists() && leafFile.createNewFile()) {
                 holder.incrementCount();
+                CommonUtil.copyStreams(new FileInputStream(image), new FileOutputStream(leafFile));
+                return leafFile.getAbsolutePath().substring(startPos);
+            } else if (leafFile.exists()) {
                 CommonUtil.copyStreams(new FileInputStream(image), new FileOutputStream(leafFile));
                 return leafFile.getAbsolutePath().substring(startPos);
             } else {

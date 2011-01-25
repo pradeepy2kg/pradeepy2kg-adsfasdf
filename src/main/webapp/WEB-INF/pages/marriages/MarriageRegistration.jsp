@@ -53,7 +53,7 @@
 
     function validateRegistrationDetails(errormsg) {
         //errormsg = validateEmptyField("marriageDatePicker", "errorMarriageDate", errormsg);
-        errormsg = isDate("marriageDatePicker", "errorMarriageDate", errormsg);
+        errormsg = isDate("marriageDatePick", "errorMarriageDate", errormsg);
         //validate registrar details
         errormsg = validatePin("regPIN", "errorRegistrarPIN", errormsg);
         errormsg = validateEmptyField("regPlaceInOfficialLang", "errorRegistrationPlace", errormsg);
@@ -77,30 +77,30 @@
     <col/>
     <col/>
     <col/>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
     <tbody>
     <tr>
         <td>
             <label>
-                <span class="font-8">විවාහ දිනය
-                    <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-                    <br>in tamil<br>Date of Marriage</span>
+                    <span class="font-8">විවාහ දිනය
+                        <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
+                        <br>in tamil<br>Date of Marriage</span>
             </label>
         </td>
-        <td colspan="2" align="left">
-            <s:label value="YYYY-MM-DD" cssStyle="margin-left:20px;font-size:10px"/><br>
-            <s:textfield name="marriage.dateOfMarriage" id="marriageDatePicker" maxLength="10"
-                         onmouseover="datepicker('marriageDatePicker')" cssStyle="margin-right:80px"/>
+        <td>
+            <s:label value="YYYY-MM-DD" cssStyle="margin-left:10px;font-size:10px"/><br>
+            <s:textfield name="marriage.dateOfMarriage" id="marriageDatePick" maxLength="10"
+                         onmouseover="datepicker('marriageDatePick')"/>
         </td>
-        <td colspan="3"><label><span class="font-8">රෙජිස්ට්‍රාර්ගේ/දේවගැතිගේ අනන්‍යතා අංකය
+        <td><label><span class="font-8">රෙජිස්ට්‍රාර්ගේ/දේවගැතිගේ අනන්‍යතා අංකය
                     <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
                     <br>அடையாள எண் <br>Identification number of Registrar/Minister</span></label>
         </td>
-        <td align="center" colspan="3">
+        <td>
+            <img src="<s:url value="/images/alphabet-V.gif" />"
+                 id="NIC_V" onclick="javascript:addXorV('regPIN','V','errorOnXOrVOfRegistrarPIN');">
+            <img src="<s:url value="/images/alphabet-X.gif" />"
+                 id="NIC_X" onclick="javascript:addXorV('regPIN','X','errorOnXOrVOfRegistrarPIN');">
+            <br>
             <s:if test="marriage.registrarOrMinisterPIN==0">
                 <s:textfield name="marriage.registrarOrMinisterPIN" id="regPIN" maxLength="10" value=""/>
             </s:if>
@@ -108,7 +108,7 @@
                 <s:textfield name="marriage.registrarOrMinisterPIN" id="regPIN" maxLength="10"/>
             </s:else>
             <img src="<s:url value='/images/search-father.png' />"
-                 style="vertical-align:middle; margin-left:20px;" id="registrar_lookup"
+                 style="vertical-align:middle;" id="registrar_lookup"
                  onmouseover="registrarLookup('regPIN')">
         </td>
     </tr>
@@ -119,10 +119,12 @@
             <br>in tamil
             <br>Type of Marriage Place
         </td>
-        <td colspan="8">
+        <td colspan="3">
+            <br>
             <s:radio id="typeOfMarriagePlace" name="marriage.typeOfMarriagePlace" list="typeOfMarriagePlaceList"
                      listValue="type"
                      theme="horizontal"/>
+            <br>
         </td>
     </tr>
     <tr>
@@ -132,25 +134,24 @@
             <br>மாவட்டம்
             <br>District
         </td>
-        <td colspan="3">
+        <td>
             <s:select id="districtId" name="marriageDistrictId" list="districtList"
                       value="marriageDistrictId"
                       cssStyle="width:98.5%; width:240px;"
                       onchange="populateDSDivisions('districtId','dsDivisionId','mrDivisionId', 'Marriage', false)"/>
         </td>
-        <td colspan="2"><label><span class="font-8">
+        <td><label><span class="font-8">
             ප්‍රාදේශීය ලේකම් කොට්ඨාශය
                 <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
                 <br>பிரதேச செயளாளர் பிரிவு <br>Divisional Secretariat</span>
         </label>
         </td>
-        <td align="center" colspan="3">
+        <td>
             <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="dsDivisionId"
                       cssStyle="width:98.5%; width:240px;"
                       onchange="populateDivisions('dsDivisionId', 'mrDivisionId', 'Marriage', false)"/>
         </td>
     </tr>
-
     <tr>
         <td><label><span class="font-8">
         ලියාපදිංචි කිරීමේ කොට්ඨාශය
@@ -158,7 +159,7 @@
                     <br>பதிவுப் பிரிவு  <br>Registration Division</span>
         </label>
         </td>
-        <td colspan="8">
+        <td colspan="3">
             <s:select id="mrDivisionId" name="mrDivisionId" list="mrDivisionList"
                       value="marriage.mrDivision.mrDivisionUKey" headerKey="1"
                       cssStyle="width:98.5%; width:240px;"/>
@@ -170,7 +171,7 @@
             in tamil <br>
             place of Marriage
         </td>
-        <td colspan="8">
+        <td colspan="3">
             <table width="100%">
                 <caption/>
                 <col width="150px"/>
@@ -217,7 +218,7 @@
             in tamil <br>
             Registrar / Minister
         </td>
-        <td colspan="8">
+        <td colspan="3">
             <table width="100%">
                 <caption/>
                 <col width="150px"/>
@@ -280,6 +281,7 @@
                 <tbody>
                 <tr>
                     <td>
+                        <br>
                         <s:if test="mode=='register'">
                             <s:radio name="marriage.typeOfMarriage" list="marriageTypeList" listValue="type"
                                      theme="horizontal" disabled="true"/>
@@ -288,6 +290,7 @@
                             <s:radio name="marriage.typeOfMarriage" list="marriageTypeList" listValue="type"
                                      theme="horizontal"/>
                         </s:else>
+                        <br>
                     </td>
                 </tr>
                 </tbody>
@@ -296,23 +299,6 @@
     </tr>
     </tbody>
 </table>
-
-<%--section heading Male/Female details --%>
-<table style="margin-top:20px;margin-bottom:20px;width:100%;font-size:16px">
-    <caption/>
-    <tbody>
-    <tr>
-        <td></td>
-        <td align="center">
-            පුරුෂ පාර්ශ්වය / in tamil / Male Party
-        </td>
-        <td align="center">
-            ස්ත්‍රී පාර්ශ්වය / in tamil / Female Party
-        </td>
-    </tr>
-    </tbody>
-</table>
-
 <table border="2"
        style="margin-top:10px;margin-bottom:20px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
        cellpadding="5px">
@@ -321,6 +307,16 @@
 <col width="410px"/>
 <col/>
 <tbody>
+    <%--section heading Male/Female details --%>
+<tr>
+    <td>&nbsp;</td>
+    <td align="center">
+        පුරුෂ පාර්ශ්වය / in tamil / Male Party
+    </td>
+    <td align="center">
+        ස්ත්‍රී පාර්ශ්වය / in tamil / Female Party
+    </td>
+</tr>
 <tr>
     <td colspan="1">
         අනන්‍යතා අංකය
@@ -465,6 +461,7 @@
             <tbody>
             <tr>
                 <td>
+                    <br>
                     <s:if test="mode=='register'">
                         <s:radio name="marriage.male.civilStatusMale" list="civilStatusMale" theme="horizontal"
                                  disabled="true"/>
@@ -472,6 +469,7 @@
                     <s:else>
                         <s:radio name="marriage.male.civilStatusMale" list="civilStatusMale" theme="horizontal"/>
                     </s:else>
+                    <br>
                 </td>
             </tr>
             </tbody>
@@ -505,25 +503,26 @@
         (සිංහල / දෙමළ)
         <s:label value="*" cssStyle="color:red;font-size:10pt;"/><br>
         பெயர் அரச கரும மொழியில் (சிங்களம் / தமிழ்) <br>
-        Name in any of the official languages (Sinhala / Tamil)
+        Name in official language (Sinhala / Tamil)
     </td>
     <td>
         <s:if test="mode=='register'">
             <s:textarea name="marriage.male.nameInOfficialLanguageMale" id="nameOfficialMale" cssStyle="width:98.2%;"
-                        disabled="true"/>
+                        rows="5" disabled="true"/>
         </s:if>
         <s:else>
-            <s:textarea name="marriage.male.nameInOfficialLanguageMale" id="nameOfficialMale" cssStyle="width:98.2%;"/>
+            <s:textarea name="marriage.male.nameInOfficialLanguageMale" id="nameOfficialMale" cssStyle="width:98.2%;"
+                        rows="5"/>
         </s:else>
     </td>
     <td>
         <s:if test="mode=='register'">
             <s:textarea name="marriage.female.nameInOfficialLanguageFemale" id="nameOfficialFemale"
-                        cssStyle="width:98.2%;" disabled="true"/>
+                        cssStyle="width:98.2%;" rows="5" disabled="true"/>
         </s:if>
         <s:else>
             <s:textarea name="marriage.female.nameInOfficialLanguageFemale" id="nameOfficialFemale"
-                        cssStyle="width:98.2%;"/>
+                        cssStyle="width:98.2%;" rows="5"/>
         </s:else>
     </td>
 </tr>
@@ -537,37 +536,31 @@
     <td>
         <s:if test="mode=='register'">
             <s:textarea name="marriage.male.nameInEnglishMale" id="name_english_male" cssStyle="width:98.2%;"
-                        disabled="true"/>
+                        rows="5" disabled="true"/>
         </s:if>
         <s:else>
-            <s:textarea name="marriage.male.nameInEnglishMale" id="name_english_male" cssStyle="width:98.2%;"/>
+            <s:textarea name="marriage.male.nameInEnglishMale" id="name_english_male" cssStyle="width:98.2%;"
+                        rows="5"/>
+            <br>
+            <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px;"
+                 id="maleName" onclick="transliterate('nameOfficialMale', 'name_english_male')">
         </s:else>
     </td>
     <td>
         <s:if test="mode=='register'">
             <s:textarea name="marriage.female.nameInEnglishFemale" id="name_english_female" cssStyle="width:98.2%;"
-                        disabled="true"/>
+                        rows="5" disabled="true"/>
         </s:if>
         <s:else>
-            <s:textarea name="marriage.female.nameInEnglishFemale" id="name_english_female" cssStyle="width:98.2%;"/>
+            <s:textarea name="marriage.female.nameInEnglishFemale" id="name_english_female" cssStyle="width:98.2%;"
+                        rows="5"/>
+            <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px;"
+                 id="femaleName" onclick="transliterate('nameOfficialFemale', 'name_english_female')">
         </s:else>
     </td>
 </tr>
-<s:if test="mode!='register'">
-    <tr>
-        <td>&nbsp;</td>
-        <td>
-            <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px;"
-                 id="maleName" onclick="transliterate('nameOfficialMale', 'name_english_male')">
-        </td>
-        <td>
-            <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px;"
-                 id="femaleName" onclick="transliterate('nameOfficialFemale', 'name_english_female')">
-        </td>
-    </tr>
-</s:if>
 <tr>
-    <td rowspan="2">
+    <td>
         පදිංචි ලිපිනය
         <s:label value="*" cssStyle="color:red;font-size:10pt;"/> <br>
         தற்போதைய வதிவிட முகவரி <br>
@@ -576,21 +569,21 @@
     <td>
         <s:if test="mode=='register'">
             <s:textarea name="marriage.male.residentAddressMaleInOfficialLang" id="addressMale"
-                        cssStyle="width:98.2%;" disabled="true"/>
+                        cssStyle="width:98.2%;" rows="5" disabled="true"/>
         </s:if>
         <s:else>
             <s:textarea name="marriage.male.residentAddressMaleInOfficialLang" id="addressMale"
-                        cssStyle="width:98.2%;"/>
+                        rows="5" cssStyle="width:98.2%;"/>
         </s:else>
     </td>
     <td>
         <s:if test="mode=='register'">
             <s:textarea name="marriage.female.residentAddressFemaleInOfficialLang" id="addressFemale"
-                        cssStyle="width:98.2%;" disabled="true"/>
+                        rows="5" cssStyle="width:98.2%;" disabled="true"/>
         </s:if>
         <s:else>
             <s:textarea name="marriage.female.residentAddressFemaleInOfficialLang" id="addressFemale"
-                        cssStyle="width:98.2%;"/>
+                        rows="5" cssStyle="width:98.2%;"/>
         </s:else>
     </td>
 </tr>
@@ -608,7 +601,7 @@
                         <s:label value="*"
                                  cssStyle="color:red;font-size:10pt;"/> <br>தொடர் இலக்கம்<br>Serial Number</span></label>
         </td>
-        <td align="center">
+        <td>
                 <%-- <s:if test="idUKey==0">
                    <s:textfield name="idUKey" id="idUKey" maxLength="10" disabled="true" value=""/>
                </s:if>
@@ -673,7 +666,6 @@
                             cssStyle="width:98.2%;"/>
             </td>
         </tr>
-
     </s:if>
 </table>
 <div class="form-submit">
@@ -702,6 +694,8 @@
     </s:else>
 </div>
 </s:form>
+<s:hidden id="errorOnXOrVOfRegistrarPIN" value="%{getText('NIC.error.add.VX')}"/>
+
 <s:hidden id="errorMarriageDate"
           value="%{getText('error.invalid') + getText('error_js_marriageregister_marriagedate')}"/>
 <s:hidden id="errorRegistrationDate"

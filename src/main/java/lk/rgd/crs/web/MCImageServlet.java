@@ -65,6 +65,7 @@ public class MCImageServlet extends HttpServlet {
                 if (!user.isAuthorized(Permission.VIEW_SCANNED_MARRIAGE_CERT)) {
                     logger.error("User : {} is not allowed to view scanned certificates", user.getUserId());
                     resp.sendError(HttpServletResponse.SC_FORBIDDEN, ACCESS_DENIED);
+                    return;
                 }
             }
         }
@@ -78,6 +79,7 @@ public class MCImageServlet extends HttpServlet {
             } catch (Exception e) {
                 logger.error("Invalid Marriage idUKey : {} used for scanned image fetch", id);
                 resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, INVALID_ID);
+                return;
             }
 
             final String path = mrService.getImagePathByIdUKey(idUKey, user);
@@ -89,15 +91,18 @@ public class MCImageServlet extends HttpServlet {
                 } else {
                     logger.error("Cannot locate file : " + file.getAbsolutePath());
                     resp.sendError(HttpServletResponse.SC_NOT_FOUND, CANNOT_FIND);
+                    return;
                 }
             } else {
                 logger.error("Invalid Marriage idUKey : {} or scanned image not found", idUKey);
                 resp.sendError(HttpServletResponse.SC_NOT_FOUND, NOT_EXIST);
+                return;
             }
 
         } else {
             logger.error("Marriage idUKey not specified for scanned image fetch");
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, INVALID_ID);
+            return;
         }
     }
 

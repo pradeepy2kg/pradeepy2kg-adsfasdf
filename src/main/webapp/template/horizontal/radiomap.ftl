@@ -64,5 +64,5 @@
 <label for="${parameters.id?html}${itemKeyStr?html}"><#rt/>
     ${itemValue}<#t/>
 </label>
-<br><br>
+<br>
 </@s.iterator>
