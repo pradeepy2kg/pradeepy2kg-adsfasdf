@@ -15,7 +15,6 @@
     </p>
     <p>
         <img alt="Scanned Marriage Certificate"
-             src="${pageContext.request.contextPath}/crs/Image?idUKey=<s:property value='idUKey'/>"
-             height="1200" width="1000"/>
+             src="${pageContext.request.contextPath}/crs/Image?idUKey=<s:property value='idUKey'/>" width="1000"/>
     </p>
 </div>

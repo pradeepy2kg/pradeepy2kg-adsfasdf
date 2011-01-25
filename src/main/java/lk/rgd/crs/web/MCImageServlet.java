@@ -10,6 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import javax.imageio.ImageIO;
+import javax.media.jai.PlanarImage;
+import javax.media.jai.operator.TIFFDescriptor;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.util.Arrays;
+import com.sun.media.jai.codec.SeekableStream;
 
 /**
  * Validates user access, and serves scanned image of the marriage certificate
@@ -110,7 +114,7 @@ public class MCImageServlet extends HttpServlet {
 
         // Prepare some variables. The ETag is an unique identifier of the file.
         final String fileName = file.getName();
-        final long length = file.length();
+        long length = file.length();
         final long lastModified = file.lastModified();
         String eTag = fileName + "_" + length + "_" + lastModified;
 
@@ -137,16 +141,38 @@ public class MCImageServlet extends HttpServlet {
             contentType = this.contentType;
         }
 
+        File tmpFile = null;
+        if (contentType.contains("tiff")) {
+            tmpFile = File.createTempFile("mc_tmp_", "png");
+            // Convert TIFF to PlanarImage
+            PlanarImage image = TIFFDescriptor.create(
+                SeekableStream.wrapInputStream(new FileInputStream(file), true), null, null, null);
+            ImageIO.write(image, "png", new FileOutputStream(tmpFile));
+
+            file = tmpFile;
+            length = file.length();
+            contentType = "image/png";
+        }
+
         // Initialize response.
         response.reset();
         response.setBufferSize(DEFAULT_BUFFER_SIZE);
         response.setHeader("ETag", eTag);
         response.setDateHeader("Last-Modified", lastModified);
         response.setDateHeader("Expires", System.currentTimeMillis() + DEFAULT_EXPIRE_TIME);
+        response.setHeader("Content-Disposition", "inline");
 
         response.setContentType(contentType);
         response.setHeader("Content-Length", String.valueOf(length)); // do not try to gzip images
         CommonUtil.copyStreams(new FileInputStream(file), response.getOutputStream());
+
+        if (tmpFile != null) {
+            try {
+                if (!tmpFile.delete()) {
+                    tmpFile.deleteOnExit();
+                }
+            } catch (Exception ignore) {}
+        }
     }
 
     /**
@@ -177,5 +203,13 @@ public class MCImageServlet extends HttpServlet {
             out.print(msg);
             out.flush();
         } catch (IOException ignore) {}
+    }
+
+    public static void main(String[] args) throws Exception {
+        PlanarImage image = TIFFDescriptor.create(
+            SeekableStream.wrapInputStream(new FileInputStream("/tmp/0003C752.TIF"), true), null, null, null);
+
+        ImageIO.write(image, "png", new FileOutputStream("/tmp/acp.png"));
+
     }
 }
