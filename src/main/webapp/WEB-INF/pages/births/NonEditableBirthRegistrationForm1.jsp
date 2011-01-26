@@ -41,6 +41,7 @@
 
                 <s:url id="viewSelected" action="eprViewBDFInNonEditableMode.do">
                     <s:param name="bdId" value="idUKey"/>
+                    <s:param name="advanceSearch" value="%{#request.advanceSearch}"/>
                 </s:url>
                 <td><s:a href="%{viewSelected}" title="%{getText('view.label')}">
                     <img src="<s:url value='/images/view_1.gif'/>" width="25" height="25" border="none"/></s:a></td>
@@ -912,8 +913,17 @@
 <div class="form-submit">
     <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
 </div>
+<s:if test="advanceSearch">
+<s:form action="eprBirthsAdvancedSearch.do">
+<div class="form-submit">
+    <s:submit value="%{getText('search_record.label')}" cssStyle="margin-top:10px;"/>
+</div>
+</s:form>
+</s:if>
+<s:else>
 <s:form action="eprSearchPageLoad.do">
 <div class="form-submit">
     <s:submit value="%{getText('previous.label')}" cssStyle="margin-top:10px;"/>
 </div>
-</s:form>
+</s:form>    
+</s:else>

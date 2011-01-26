@@ -31,6 +31,7 @@ import java.util.*;
  */
 public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private static final Logger logger = LoggerFactory.getLogger(BirthRegisterAction.class);
+    private static final String BIRTH_ADVANCE_SEARCH = "advanceSearch";
 
     private final BirthRegistrationService service;
     private final BirthAlterationService birthAlterationService;
@@ -105,6 +106,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private boolean allowApproveBDF;
     private boolean allowPrintCertificate;
     private boolean editMode;
+    private boolean advanceSearch;
 
     private BirthDeclaration.BirthType birthType;
     private boolean directPrint;
@@ -600,26 +602,32 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         logger.debug("initializing non editable mode for bdId {}", bdId);
         try {
             bdf = service.getById(bdId, user);
-            birthType = bdf.getRegister().getBirthType();
-            if (bdf.getRegister().getStatus().ordinal() == 5) {
-                logger.debug("searching revisions for bdId {} ", bdId);
-                archivedEntryList = service.getArchivedCorrectedEntriesForGivenSerialNo(bdf.getRegister().getBirthDivision(), bdf.getRegister().getBdfSerialNo(), user);
-            }
-            if (BirthDeclaration.BirthType.ADOPTION == birthType) {
-                oldBDInfo = new OldBDInfo();
-                populateOldBD(oldBDInfo, bdf);
-//               session.put(WebConstants.SESSION_OLD_BD_FOR_ADOPTION, oldBDInfo);
-            }
-            // session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
-            register = bdf.getRegister();
-            child = bdf.getChild();
-            parent = bdf.getParent();
-            marriage = bdf.getMarriage();
-            grandFather = bdf.getGrandFather();
-            grandFather = bdf.getGrandFather();
-            informant = bdf.getInformant();
-            notifyingAuthority = bdf.getNotifyingAuthority();
+            if (bdf != null) {
+                birthType = bdf.getRegister().getBirthType();
+                if (bdf.getRegister().getStatus().ordinal() == 5) {
+                    logger.debug("searching revisions for bdId {} ", bdId);
+                    archivedEntryList = service.getArchivedCorrectedEntriesForGivenSerialNo(
+                        bdf.getRegister().getBirthDivision(), bdf.getRegister().getBdfSerialNo(), user);
+                }
+                if (BirthDeclaration.BirthType.ADOPTION == birthType) {
+                    oldBDInfo = new OldBDInfo();
+                    populateOldBD(oldBDInfo, bdf);
+                }
 
+                register = bdf.getRegister();
+                child = bdf.getChild();
+                parent = bdf.getParent();
+                marriage = bdf.getMarriage();
+                grandFather = bdf.getGrandFather();
+                grandFather = bdf.getGrandFather();
+                informant = bdf.getInformant();
+                notifyingAuthority = bdf.getNotifyingAuthority();
+            } else {
+                addActionError(getText("message.birthRecord_null"));
+                if (advanceSearch) {
+                    return BIRTH_ADVANCE_SEARCH;
+                }
+            }
         } catch (Exception e) {
             handleErrors(e);
             addActionError(getText("p1.invalid.Entry"));
@@ -1517,6 +1525,14 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setEditMode(boolean editMode) {
         this.editMode = editMode;
+    }
+
+    public boolean isAdvanceSearch() {
+        return advanceSearch;
+    }
+
+    public void setAdvanceSearch(boolean advanceSearch) {
+        this.advanceSearch = advanceSearch;
     }
 
     public long getIdUKey() {

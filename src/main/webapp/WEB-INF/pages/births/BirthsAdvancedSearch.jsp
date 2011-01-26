@@ -70,13 +70,13 @@
                     <tr>
                         <div id="searchPIN">
                             <td><span>Search PIN Number</span></td>
-                            <td><input type="text" id="queryPIN" name="queryPIN"/></td>
+                            <td><input type="text" id="queryPIN" name="queryPIN" maxlength="10"/></td>
                         </div>
                     </tr>
                     <tr>
                         <div id="searchMothersNICorPIN">
                             <td><span>Search by Mothers NIC or PIN</span></td>
-                            <td><input type="text" id="queryMothersNICorPIN" name="queryMothersNICorPIN"/></td>
+                            <td><input type="text" id="queryMothersNICorPIN" name="queryMothersNICorPIN" maxlength="10"/></td>
                         </div>
                     </tr>
                 </table>
@@ -141,6 +141,7 @@
 
         <ul id="selection"></ul>
     </div>
+    <s:actionerror cssClass="alreadyPrinted" cssStyle="font-size:10pt;"/>
 
     <fieldset style="border:none">
         <div id="result">

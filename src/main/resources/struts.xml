@@ -264,8 +264,8 @@
         <action name="eprViewBDFInNonEditableMode" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
                 method="viewInNonEditableMode">
             <result type="tiles" name="success">epr.non_editable_birthRegistration_form1</result>
-            <!--<result type="tiles" name="success"></result>-->
             <result type="tiles" name="error">epr.error</result>
+            <result type="tiles" name="advanceSearch">epr.BirthsAdvancedSearch</result>
         </action>
 
         <action name="eprBirthConfirmation" class="lk.rgd.crs.web.action.births.BirthRegisterAction"

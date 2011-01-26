@@ -36,7 +36,7 @@
             for (var i = 0, l = this.manager.response.response.docs.length; i < l; i++) {
                 var doc = this.manager.response.response.docs[i];
 
-                table += '<tr><td><a href="eprBirthRegistrationInit.do?bdId=' + doc.idUKey + '">' + doc.idUKey + '</a></td><td>' + doc.pin + '</td><td>' + (doc.dateOfBirth == null ? "" : doc.dateOfBirth.substring(0,10)) +
+                table += '<tr><td><a href="eprViewBDFInNonEditableMode.do?bdId=' + doc.idUKey + '&advanceSearch='+ true +'">' + doc.idUKey + '</a></td><td>' + doc.pin + '</td><td>' + (doc.dateOfBirth == null ? "" : doc.dateOfBirth.substring(0,10)) +
                 '</td><td>' + doc.childGender + '</td><td>' + doc.childFullNameEnglish +
                 '</td><td>' + doc.childFullNameOfficialLang + '</td><td>' + doc.birthDivision +
                 '</td><td>' + doc.birthDistrict + '</td></tr>';
@@ -52,7 +52,7 @@
                 "bInfo": false,
                 "bAutoWidth": false,
                 "bJQueryUI": true,
-                "sPaginationType": "full_numbers"                
+                "sPaginationType": "full_numbers"
             });
         },
 
