@@ -89,8 +89,10 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     public void addMarriageRegister(MarriageRegister marriageRegister, User user, File scannedImage, String fileName) {
         //TODO: Validate marriage details
         ValidationUtils.validateUserPermission(Permission.ADD_MARRIAGE, user);
-        marriageRegistrationDAO.addMarriageRegister(marriageRegister, user);
-        if (marriageRegister != null && scannedImage != null) {
+        //todo: validate serial number
+        marriageRegistrationValidator.validateMarriageRegisterSerialNumber(marriageRegister.getSerialNumber(),
+            marriageRegister.getMrDivision());
+        if (scannedImage != null) {
             logger.debug("Marriage Register IDUKEY : {}", marriageRegister.getIdUKey());
             //TODO: Create a unique id (file name) for the image (dont use marriageRegister.getIdUKey())
             //todo: to be refactored
@@ -296,9 +298,11 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     public void updateMarriageRegister(MarriageRegister marriageRegister, User user, File scannedImage, String fileName) {
         logger.debug("attempt to update marriage register/notice record : idUKey : {}", marriageRegister.getIdUKey());
         ValidationUtils.validateUserPermission(Permission.EDIT_MARRIAGE, user);
+        marriageRegistrationValidator.validateMarriageRegisterSerialNumber(marriageRegister.getSerialNumber(),
+            marriageRegister.getMrDivision());
         marriageRegistrationDAO.updateMarriageRegister(marriageRegister, user);
 
-        if (marriageRegister != null && scannedImage != null) {
+        if (scannedImage != null) {
             logger.debug("Marriage Register IDUKEY : {}", marriageRegister.getIdUKey());
             //TODO: Create a unique id (file name) for the image (dont use marriageRegister.getIdUKey())
             //todo: to be refactored

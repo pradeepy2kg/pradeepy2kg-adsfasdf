@@ -1408,18 +1408,20 @@
         <action name="eprRegisterNewMarriage" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
                 method="registerNewMarriage">
             <result type="tiles" name="success">epr.success</result>
+            <result type="tiles" name="input">epr.marriageRegistration</result>
         </action>
 
         <action name="eprUpdateMarriage" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
                 method="updateMarriageDetails">
             <result type="tiles" name="success">epr.success</result>
+            <result type="tiles" name="input">epr.marriageRegistration</result>
         </action>
 
         <action name="eprUpdateAndApproveMuslimMarriage"
                 class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
                 method="updateAndApproveMuslimMarriage">
             <result type="tiles" name="success">epr.success</result>
-            <result type="tiles" name="error">epr.marriageRegistration</result>
+            <result type="tiles" name="input">epr.marriageRegistration</result>
         </action>
 
         <action name="eprRegisterNoticedMarriage" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"

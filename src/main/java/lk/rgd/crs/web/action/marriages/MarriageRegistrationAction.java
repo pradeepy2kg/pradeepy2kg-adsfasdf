@@ -490,7 +490,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
      * Marriage Registration -Marriage Details page load
      */
     public String marriageRegistrationInit() {
-        logger.debug("Marriage Details - idUKey : {}", idUKey);
+        //logger.debug("Marriage Details - idUKey : {}", idUKey);
         populateLists();
         if (idUKey != 0) {
             marriage = marriageRegistrationService.getByIdUKey(idUKey, user);
@@ -513,12 +513,27 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
      * Marriage Registration - persist new marriage entry through the page for muslim type marrige
      */
     public String registerNewMarriage() {
+        /*if (scannedImage == null) {
+            addActionError(getText(""));
+            populateLists();
+            return INPUT;
+        }*/
         populateMuslimMarriageDetails();
         try {
             marriageRegistrationService.addMarriageRegister(marriage, user, scannedImage, scannedImageFileName);
         } catch (CRSRuntimeException e) {
-            addActionError(getText("error.marriageregister.registrationfailed"));
-            return marriageRegistrationInit();
+            switch (e.getErrorCode()) {
+                case ErrorCodes.INVALID_SERIAL_NUMBER:
+                    addActionError(getText("message.invalid.serialNumber.found"));
+                    break;
+                case ErrorCodes.DUPLICATE_SERIAL_NUMBER:
+                    addActionError(getText("message.duplicate.serialNumber.found"));
+                    break;
+                default:
+                    addActionError(getText("error.marriageregister.registrationfailed"));
+            }
+            populateLists();
+            return INPUT;
         }
         addActionMessage(getText("message.marriageregister.registered"));
         return SUCCESS;
@@ -533,14 +548,25 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         try {
             marriageRegistrationService.addMarriageRegister(marriage, user, scannedImage, scannedImageFileName);
         } catch (CRSRuntimeException e) {
-            addActionError(getText("error.marriageregister.registrationfailed"));
-            return marriageRegistrationInit();
+            switch (e.getErrorCode()) {
+                case ErrorCodes.INVALID_SERIAL_NUMBER:
+                    addActionError(getText("message.invalid.serialNumber.found"));
+                    break;
+                case ErrorCodes.DUPLICATE_SERIAL_NUMBER:
+                    addActionError(getText("message.duplicate.serialNumber.found"));
+                    break;
+                default:
+                    addActionError(getText("error.marriageregister.registrationfailed"));
+            }
+            populateLists();
+            return INPUT;
         }
         try {
             marriageRegistrationService.approveMarriageRegister(marriage.getIdUKey(), user);
         } catch (CRSRuntimeException e) {
             addActionError(getText("error.marriageregister.approvalfailed"));
-            return marriageRegistrationInit();
+            populateLists();
+            return INPUT;
         }
         addActionMessage(getText("message.marriageregister.registeredandapproved"));
         return SUCCESS;
@@ -554,21 +580,32 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         MarriageRegister marriageRegister = marriageRegistrationService.getByIdUKey(idUKey, user);
         if (marriageRegister == null) {
             addActionError(getText("error.marriageregister.notfound"));
-            return marriageRegistrationInit();
+            return ERROR;
         }
         populateRegistrationDetails(marriageRegister);
         populateMaleFemaleDetails(marriageRegister);
         try {
             marriageRegistrationService.updateMarriageRegister(marriageRegister, user, scannedImage, scannedImageFileName);
         } catch (CRSRuntimeException e) {
-            addActionError(getText("error.marriageregister.failedtoupdate"));
-            return marriageRegistrationInit();
+            switch (e.getErrorCode()) {
+                case ErrorCodes.INVALID_SERIAL_NUMBER:
+                    addActionError(getText("message.invalid.serialNumber.found"));
+                    break;
+                case ErrorCodes.DUPLICATE_SERIAL_NUMBER:
+                    addActionError(getText("message.duplicate.serialNumber.found"));
+                    break;
+                default:
+                    addActionError(getText("error.marriageregister.failedtoupdate"));
+            }
+            populateLists();
+            return INPUT;
         }
         try {
             marriageRegistrationService.approveMarriageRegister(marriageRegister.getIdUKey(), user);
         } catch (CRSRuntimeException e) {
             addActionError(getText("error.marriageregister.approvalfailed"));
-            return marriageRegistrationInit();
+            populateLists();
+            return INPUT;
         }
         addActionMessage(getText("message.marriageregister.updatedandapproved"));
         return SUCCESS;
@@ -600,15 +637,25 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         MarriageRegister marriageRegister = marriageRegistrationService.getByIdUKey(idUKey, user);
         if (marriageRegister == null) {
             addActionError(getText("error.marriageregister.notfound"));
-            return marriageRegistrationInit();
+            return ERROR;
         }
         populateRegistrationDetails(marriageRegister);
         populateMaleFemaleDetails(marriageRegister);
         try {
             marriageRegistrationService.updateMarriageRegister(marriageRegister, user, scannedImage, scannedImageFileName);
         } catch (CRSRuntimeException e) {
-            addActionError(getText("error.marriageregister.failedtoupdate"));
-            return marriageRegistrationInit();
+            switch (e.getErrorCode()) {
+                case ErrorCodes.INVALID_SERIAL_NUMBER:
+                    addActionError(getText("message.invalid.serialNumber.found"));
+                    break;
+                case ErrorCodes.DUPLICATE_SERIAL_NUMBER:
+                    addActionError(getText("message.duplicate.serialNumber.found"));
+                    break;
+                default:
+                    addActionError(getText("error.marriageregister.failedtoupdate"));
+            }
+            populateLists();
+            return INPUT;
         }
         addActionMessage(getText("message.marriageregister.updated"));
         return SUCCESS;
