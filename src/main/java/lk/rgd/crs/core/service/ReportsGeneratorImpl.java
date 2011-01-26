@@ -45,6 +45,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
     private int[][] age_race_total;
     private int[][] table_2_4;
     private int[][] age_district_total;
+    private int[][] district_race_total;
     private int year;
 
     public ReportsGeneratorImpl(BirthRegistrationService birthRegister, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, RaceDAO raceDAO, UserManager service) {
@@ -56,6 +57,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         age_race_total = new int[BirthMonthlyStatistics.NO_OF_RACES][BirthRaceStatistics.NO_OF_AGE_GROUPS];
         table_2_4 = new int[26][15];
         age_district_total = new int[BirthIslandWideStatistics.NO_OF_DISTRICTS][BirthRaceStatistics.NO_OF_AGE_GROUPS];
+        
     }
 
     /**
@@ -88,7 +90,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         int all = 0, allMales = 0, allFemales = 0;
         for (DSDivision dsDivision : dsDivisions) {
             birthRecords = birthRegister.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
-                BirthDeclaration.State.ARCHIVED_CERT_GENERATED, systemUser);   // returns all records so far in this year
+                BirthDeclaration.State.ARCHIVED_CERT_PRINTED, systemUser);   // returns all records so far in this year
             int dsIndex = dsDivision.getDsDivisionUKey(); // todo support tracking at DSDivision level
             int districtIndex = dsDivision.getDistrict().getDistrictUKey();
             BirthDistrictStatistics districtStats = statistics.totals.get(districtIndex);
@@ -158,7 +160,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         int all = 0, allMales = 0, allFemales = 0, allLegBirths = 0, allIllegBirths = 0, allHospitalBirths = 0;
         for (DSDivision dsDivision : dsDivisions) {
             birthRecords = birthRegister.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
-                BirthDeclaration.State.ARCHIVED_CERT_GENERATED, systemUser);   // returns all records so far in this year
+                BirthDeclaration.State.ARCHIVED_CERT_PRINTED, systemUser);   // returns all records so far in this year
 
             int districtIndex = dsDivision.getDistrict().getDistrictUKey();
             BirthDistrictStatistics districtStats = statistics.totals.get(districtIndex);
@@ -267,7 +269,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
 
         for (DSDivision dsDivision : dsDivisions) {
             birthRecords = birthRegister.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
-                BirthDeclaration.State.ARCHIVED_CERT_GENERATED, systemUser);
+                BirthDeclaration.State.ARCHIVED_CERT_PRINTED, systemUser);
 
             int districtIndex = dsDivision.getDistrict().getDistrictUKey();
             BirthDistrictStatistics districtStats = statistics.totals.get(districtIndex);
@@ -332,7 +334,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
 
         for (DSDivision dsDivision : dsDivisions) {
             birthRecords = birthRegister.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
-                BirthDeclaration.State.ARCHIVED_CERT_GENERATED, systemUser);
+                BirthDeclaration.State.ARCHIVED_CERT_PRINTED, systemUser);
 
             int districtIndex = dsDivision.getDistrict().getDistrictUKey();
             BirthDistrictStatistics districtStats = statistics.totals.get(districtIndex);
@@ -432,7 +434,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
 
         for (DSDivision dsDivision : dsDivisionList) {
             birthRecords = birthRegister.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
-                BirthDeclaration.State.ARCHIVED_CERT_GENERATED, systemUser);
+                BirthDeclaration.State.ARCHIVED_CERT_PRINTED, systemUser);
             int districtId = dsDivision.getDistrict().getDistrictUKey() - 1;
             for (BirthDeclaration birthDeclaration : birthRecords) {
                 int raceId = 0;
@@ -448,6 +450,38 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
 
         }
 
+        return statistics;
+    }
+
+    public BirthIslandWideStatistics generate_2_11(int year, User user) {
+        this.year = year;
+        if (!user.isAuthorized(Permission.GENERATE_REPORTS)) {
+            handleException(user.getUserId() + " doesn't have permission to generate the report",
+                ErrorCodes.PERMISSION_DENIED);
+        }
+
+        List<DSDivision> dsDivisionList = dsDivisionDAO.findAll();
+        User systemUser = userManagementService.getSystemUser();
+        List<BirthDeclaration> birthRecords;
+
+        Calendar cal = Calendar.getInstance();
+
+        /* January first of the year */
+        cal.set(year, 0, 1);
+        Date startDate = cal.getTime();
+
+        /* December 31st of the year */
+        cal.set(year, 11, 31);
+        Date endDate = cal.getTime();
+
+        for (DSDivision dsDivision : dsDivisionList) {
+            birthRecords = birthRegister.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
+                BirthDeclaration.State.ARCHIVED_CERT_PRINTED, systemUser);
+            int districtId = dsDivision.getDistrict().getDistrictUKey() - 1;
+            for (BirthDeclaration birthDeclaration : birthRecords) {
+
+            }
+        }
         return statistics;
     }
 
@@ -649,6 +683,18 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                         districtName = district.getEnDistrictName();
                     }
                     csv.append(districtName + ",");
+                    int dis_total = 0, dis_male = 0, dis_female = 0;
+                    List<BirthChildRankStatistics> bcs = bds.birthOrder;
+                    for(BirthChildRankStatistics rankStat : bcs) {
+                        csv.append(rankStat.getMaleTotal() + ",");
+                        csv.append(rankStat.getFemaleTotal() + ",");
+                        csv.append(rankStat.getTotal() + ",");
+
+                        dis_total += rankStat.getTotal();
+                        dis_female += rankStat.getFemaleTotal();
+                        dis_male += rankStat.getMaleTotal();
+                    }
+                    csv.append(dis_male + "," + dis_female + "," + dis_total);
                     csv.append("\n");
                     i++;
                 }
@@ -882,6 +928,12 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                     }
                 }
                 csv.append(",Total,,");
+                csv.append("\n,");
+                for(int c = 0; c < 10; c++) {
+                    csv.append("male,female,total,");
+                }
+                csv.append("male,female,total");
+
                 int dis_male = 0, dis_female = 0, dis_total = 0;
                 csv.append("\nSri Lanka");
                 for (int k = 0; k < 10; k++) {
