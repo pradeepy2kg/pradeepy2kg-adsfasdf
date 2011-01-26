@@ -54,16 +54,26 @@
         DEATH REGISTRATION
     </a>
     <ul class="acitem">
-        <li>
-            <a id="death_registration.label" href="/ecivil/deaths/eprInitDeathDeclaration.do">
-                (1) Death Registration
-            </a>
-        </li>
-        <li>
-            <a id="late_death_registration.label" href="/ecivil/deaths/eprInitLateDeathDeclaration.do">
-                (1) Late Death Registration
-            </a>
-        </li>
+             <li>
+                    <a id="death_registration.label" href="/ecivil/deaths/eprInitDeathDeclaration.do">
+                        (1) Death Registration
+                    </a>
+                </li>
+                <li>
+                    <a id="late_death_registration.label" href="/ecivil/deaths/eprInitLateDeathDeclaration.do">
+                        (1) Late Death Registration
+                    </a>
+                </li>
+                <li>
+                    <a id="sudden_death_registration.label" href="/ecivil/deaths/eprInitSuddenDeathDeclaration.do">
+                        (1) Sudden Death Registration
+                    </a>
+                </li>
+                <li>
+                    <a id="missing_person_registration.label" href="/ecivil/deaths/eprInitMissingPersonDeclaration.do">
+                        (1) Missing Person Registration
+                    </a>
+                </li>
         <li>
             <a id="death_approve_print_list.label" href="/ecivil/deaths/eprDeathApprovalAndPrint.do">
                 (2) Death Approve And Print List
