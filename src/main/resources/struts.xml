@@ -1449,7 +1449,7 @@
 
         <action name="eprMarriageRegisterSearchInit"
                 class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
-                method="marriageRegisterSearchInit">
+                method="marriageRegisterSearchPageLoad">
             <result type="tiles" name="success">epr.marriageRegisterSearchInit</result>
         </action>
 
