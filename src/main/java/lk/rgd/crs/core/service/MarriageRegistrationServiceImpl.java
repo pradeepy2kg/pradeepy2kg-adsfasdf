@@ -93,7 +93,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         if (marriageRegister != null && scannedImage != null) {
             logger.debug("Marriage Register IDUKEY : {}", marriageRegister.getIdUKey());
             //TODO: Create a unique id (file name) for the image (dont use marriageRegister.getIdUKey())
-
+            //todo: to be refactored
             int dotPos = fileName.indexOf('.');
             if (dotPos != -1) {
                 fileName = fileName.substring(dotPos);
@@ -301,6 +301,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         if (marriageRegister != null && scannedImage != null) {
             logger.debug("Marriage Register IDUKEY : {}", marriageRegister.getIdUKey());
             //TODO: Create a unique id (file name) for the image (dont use marriageRegister.getIdUKey())
+            //todo: to be refactored
             int dotPos = fileName.indexOf('.');
             if (dotPos != -1) {
                 fileName = fileName.substring(dotPos);
