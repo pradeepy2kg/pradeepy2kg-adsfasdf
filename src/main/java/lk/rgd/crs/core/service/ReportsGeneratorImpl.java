@@ -46,6 +46,8 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
     private int[][] table_2_4;
     private int[][] age_district_total;
     private int[][][] month_race_total;
+    private int[][][] sector_leg_total;
+    int total_arr[];
     private int year;
 
     public ReportsGeneratorImpl(BirthRegistrationService birthRegister, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, RaceDAO raceDAO, UserManager service) {
@@ -58,6 +60,8 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         table_2_4 = new int[26][15];
         age_district_total = new int[BirthIslandWideStatistics.NO_OF_DISTRICTS][BirthRaceStatistics.NO_OF_AGE_GROUPS];
         month_race_total = new int[BirthDistrictStatistics.NO_OF_MONTHS][BirthMonthlyStatistics.NO_OF_RACES][3];
+        sector_leg_total = new int[38][3][3];
+        total_arr = new int[9];
     }
 
     /**
@@ -496,7 +500,82 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 }
             }
         }
-        logger.debug("j");
+        return statistics;
+    }
+
+    public BirthIslandWideStatistics generate_2_10(int year, User user) {
+        sector_leg_total = new int[38][3][3];
+        this.year = year;
+        if (!user.isAuthorized(Permission.GENERATE_REPORTS)) {
+            handleException(user.getUserId() + " doesn't have permission to generate the report",
+                ErrorCodes.PERMISSION_DENIED);
+        }
+
+        List<DSDivision> dsDivisionList = dsDivisionDAO.findAll();
+        User systemUser = userManagementService.getSystemUser();
+        List<BirthDeclaration> birthRecords;
+
+        Calendar cal = Calendar.getInstance();
+
+        /* January first of the year */
+        cal.set(year, 0, 1);
+        Date startDate = cal.getTime();
+
+        /* December 31st of the year */
+        cal.set(year, 11, 31);
+        Date endDate = cal.getTime();
+
+        for (DSDivision dsDivision : dsDivisionList) {
+            birthRecords = birthRegister.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
+                BirthDeclaration.State.ARCHIVED_CERT_PRINTED, systemUser);
+            for (BirthDeclaration birthDeclaration : birthRecords) {
+                int ageId = 0;
+                ChildInfo childInfo = birthDeclaration.getChild();
+                ParentInfo parentInfo = birthDeclaration.getParent();
+                MarriageInfo mInfo = birthDeclaration.getMarriage();
+
+                if (childInfo != null && parentInfo != null) {
+                    try {
+                        ageId = parentInfo.getMotherAgeAtBirth();
+                    } catch (Exception e) {
+                        ageId = 0;
+                    }
+                    if (ageId > 50) {
+                        ageId = 50;
+                    } else if (ageId >= 13) {
+                        ageId -= 13;
+                    }
+
+                    if (mInfo != null) {
+                        if (mInfo.getParentsMarried() != null && mInfo.getDateOfMarriage() != null && childInfo.getDateOfBirth() != null) {
+                            if ((mInfo.getParentsMarried() == MarriageInfo.MarriedStatus.MARRIED)
+                                || mInfo.getDateOfMarriage().before(childInfo.getDateOfBirth())) {
+                                if (childInfo.getChildGender() == 0) {
+                                    sector_leg_total[ageId][0][0] += 1;     // 0 - legitimacy    // 1 - illegitimacy
+                                    sector_leg_total[ageId][0][2] += 1;     // 0 - male           // 1 - female
+                                    sector_leg_total[ageId][2][2] += 1;                     // 2 - total
+                                } else if (childInfo.getChildGender() == 1) {
+                                    sector_leg_total[ageId][0][1] += 1;
+                                    sector_leg_total[ageId][0][2] += 1;
+                                    sector_leg_total[ageId][2][2] += 1;
+                                }
+                            } else {
+                                if (childInfo.getChildGender() == 0) {
+                                    sector_leg_total[ageId][1][0] += 1;
+                                    sector_leg_total[ageId][1][2] += 1;
+                                    sector_leg_total[ageId][2][2] += 1;
+                                } else if (childInfo.getChildGender() == 1) {
+                                    sector_leg_total[ageId][1][1] += 1;
+                                    sector_leg_total[ageId][1][2] += 1;
+                                    sector_leg_total[ageId][2][2] += 1;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         return statistics;
     }
 
@@ -733,10 +812,37 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                     csv.append("," + rTotal);
                     csv.append("\n");
                 }
+                break;
+            case ReportCodes.TABLE_2_10:
+                filename = ReportCodes.TABLE_2_10_NAME + ".csv";
 
+                for (int k = 0; k < 38; k++) {
+                    csv.append((k + 13) + ",");
+
+                    csv.append(sector_leg_total[k][2][2] + ",");
+                    csv.append((sector_leg_total[k][2][2] / checkZero(total_arr[0]))*100.0 + ",");
+                    csv.append(sector_leg_total[k][2][0] + ",,");
+                    csv.append((sector_leg_total[k][2][0] / checkZero(total_arr[0]))*100.0 + ",");
+                    csv.append(sector_leg_total[k][2][1] + ",");
+                    csv.append((sector_leg_total[k][2][1] / checkZero(total_arr[0]))*100.0 + ",");
+
+                    csv.append(sector_leg_total[k][0][2] + ",");
+                    csv.append((sector_leg_total[k][0][2] / checkZero(total_arr[0]))*100.0 + ",");
+                    csv.append(sector_leg_total[k][0][0] + ",");
+                    csv.append((sector_leg_total[k][0][0] / checkZero(total_arr[0]))*100.0 + ",");
+                    csv.append(sector_leg_total[k][0][1] + ",");
+                    csv.append((sector_leg_total[k][0][1] / checkZero(total_arr[0]))*100.0 + ",");
+
+                    csv.append(sector_leg_total[k][1][2] + ",");
+                    csv.append((sector_leg_total[k][1][2] / checkZero(total_arr[0]))*100.0 + ",");
+                    csv.append(sector_leg_total[k][1][0] + ",");
+                    csv.append((sector_leg_total[k][1][0] / checkZero(total_arr[0]))*100.0 + ",");
+                    csv.append(sector_leg_total[k][1][1] + ",");
+                    csv.append((sector_leg_total[k][1][1] / checkZero(total_arr[0]))*100.0 + ",");
+                    csv.append("\n");
+                }
 
                 break;
-
         }
 
         String dirPath = "reports" + File.separator + year;
@@ -761,6 +867,13 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         }
 
         return null;
+    }
+
+    private float checkZero (int i) {
+        if (i == 0) {
+            i = 1;
+        }
+        return (float)i;
     }
 
     private void handleException(String message, int code) {
@@ -1022,6 +1135,31 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 csv.append("," + oMale);
                 csv.append("," + oFemale);
                 csv.append("," + oTotal);
+                csv.append("\n");
+                break;
+            case ReportCodes.TABLE_2_10:
+                csv.append("Sector/age of Mother,,,,Total,,,,,,Legitimacy Births,,,,,,Illegitimacy Births,,,\n");
+                csv.append(",,Total,,Male,,Female,,Total,,Male,,Female,,Total,,Male,,Female\n");
+                csv.append(",NO,%,NO,%,NO,%,NO,%,NO,%,NO,%,NO,%,NO,%,NO,%\n");
+                csv.append("All sector total");
+                total_arr = new int[9];
+                for (int k = 0; k < 38; k++) {
+                    total_arr[0] += sector_leg_total[k][2][2];
+                    total_arr[1] += sector_leg_total[k][2][0];
+                    total_arr[2] += sector_leg_total[k][2][1];
+
+                    total_arr[3] += sector_leg_total[k][0][2];
+                    total_arr[4] += sector_leg_total[k][0][0];
+                    total_arr[5] += sector_leg_total[k][0][1];
+
+                    total_arr[6] += sector_leg_total[k][1][2];
+                    total_arr[7] += sector_leg_total[k][1][0];
+                    total_arr[8] += sector_leg_total[k][1][1];
+                }
+                for (int k = 0; k < total_arr.length; k++) {
+                    csv.append("," + total_arr[k]);
+                    csv.append(",100.0");
+                }
                 csv.append("\n");
                 break;
         }
