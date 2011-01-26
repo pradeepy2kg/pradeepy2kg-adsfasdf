@@ -324,6 +324,18 @@
                 <br>மாவட்ட பதிவாளா்/ பதிவாளா் நாயகம்
                 <br>District Registrar / Registrar General
             </s:elseif>
+            <s:elseif test="pageType == 2">
+                sudden <br>
+                තොරතුරු වාර්තා කරන පාර්ශවය / මරණ පරීක්ෂක හෝ අධිකරණ වෛද්‍ය නිලධාරී
+                <br>தகவல் அறிக்கையிடும் திறத்தார்/ மரண பரிசோதகா் அல்லது வைத்திய அதிகாரி
+                <br>Notifying Authority / Inquirer into deaths or Judicial Medical Officer
+            </s:elseif>
+            <s:elseif test="pageType == 3">
+                missing <br>
+                දිස්ත්‍රික් රෙජිස්ට්‍රාර් / රෙජිස්ට්‍රාර් ජෙනරාල්
+                <br>மாவட்ட பதிவாளா்/ பதிவாளா் நாயகம்
+                <br>District Registrar / Registrar General
+            </s:elseif>
         </td>
     </tr>
     <tr>
@@ -414,7 +426,8 @@
     <s:url id="backUrl" action="eprDeathDeclaration.do">
         <s:param name="back" value="true"/>
         <s:param name="pageNo" value="{pageNo - 1}"/>
-       <s:param name="idUKey" value="%{#request.idUKey}"/>
+        <s:param name="idUKey" value="%{#request.idUKey}"/>
+        <s:param name="pageType" value="%{pageType}"/>
     </s:url>
     <s:a href="%{backUrl}"><s:label value="%{getText('previous.label')}"/></s:a>
 </div>

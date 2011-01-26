@@ -10,12 +10,18 @@
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 
 
-<s:if test="pageType == 1">
-    <s:set name="row" value="3"/>
+<s:if test="pageType == 0">
+    <s:set name="row" value="1"/>
 </s:if>
-<s:else>
+<s:elseif test="pageType == 1">
     <s:set name="row" value="2"/>
-</s:else>
+</s:elseif>
+<s:elseif test="pageType == 2">
+    <s:set name="row" value="1"/>
+</s:elseif>
+<s:elseif test="pageType == 3">
+    <s:set name="row" value="1"/>
+</s:elseif>
 <s:hidden id="pageType" value="%{pageType}"/>
 <script type="text/javascript">
 
@@ -191,16 +197,16 @@ function validate() {
         isNumeric(domObject.value, 'p1error1', 'invalidAgeAtDeath')
 
     }
-
-    var pageType = document.getElementById("pageType").value;
-    if (pageType == 0) {
-        validateRadioButtons(new Array(document.getElementsByName('deathType')[0].checked,
-                document.getElementsByName('deathType')[1].checked));
-    }
-    else {
-        validateRadioButtons(new Array(document.getElementsByName('deathType')[0].checked,
-                document.getElementsByName('deathType')[1].checked));
-    }
+    /*
+     var pageType = document.getElementById("pageType").value;
+     if (pageType == 0) {
+     validateRadioButtons(new Array(document.getElementsByName('deathType')[0].checked,
+     document.getElementsByName('deathType')[1].checked));
+     }
+     else {
+     validateRadioButtons(new Array(document.getElementsByName('deathType')[0].checked,
+     document.getElementsByName('deathType')[1].checked));
+     }*/
 
 
     // validations that can skip
@@ -393,6 +399,18 @@ function personAgeDeath() {
                 <br>மரண பிரதிக்கினை [36வது பிரிவு ] - காலந் தாழ்த்திய இறப்பினை பதிவு செய்தல் அல்லது காணாமற் போன நபரின் மரணம்
                 <br>Declaration of Death [Section 36] – Late registration or Death of missing person
             </s:elseif>
+            <s:elseif test="pageType == 2">
+                sudden death <br>
+                මරණ ප්‍රකාශයක් [30, 39(1), 41(1) (උ) වගන්ති] - සාමාන්‍ය මරණ හා හදිසි මරණ
+                <br>இறப்பு பிரதிக்கினை [30, 39(1), 41(1) (உ) பிரிவு ]- சாதாரண மரணம் மற்றும் திடீா் மரணம்
+                <br>Declaration of Death [Sections 30, 39(1) and 41(1)(e)] – Normal Death or Sudden Death
+            </s:elseif>
+            <s:elseif test="pageType == 3">
+                missing person <br>
+                මරණ ප්‍රකාශයක් [36වෙනි වගන්තිය] - කාලය ඉකුත් වූ මරණ ලියාපදිංචි කිරීම හෝ නැතිවුණු පුද්ගලයෙකුගේ මරණ
+                <br>மரண பிரதிக்கினை [36வது பிரிவு ] - காலந் தாழ்த்திய இறப்பினை பதிவு செய்தல் அல்லது காணாமற் போன நபரின் மரணம்
+                <br>Declaration of Death [Section 36] – Late registration or Death of missing person
+            </s:elseif>
         </td>
         <td>
             <table class="table_reg_datePicker_page_01">
@@ -440,6 +458,19 @@ function personAgeDeath() {
                 <br>பதியப்படாத மரணம் சம்பந்தமாக இங்கு கீழ் பிரதிக்கினை செய்யப்படும் விபரங்கள் எனது அறிவிக்கும் நம்பிக்கைக்கும் உரியவகையில் உண்மையானதும் சரியானதும் எனவும் இறப்பு நிகழ்ந்து அல்லது வீடு அல்லது கட்டிடம் அல்லாத இடத்திலிருந்து அப்பிரேதத்தைக் கண்டு மூன்று மாதங்களுக்குள் இறப்பினை பதிவதற்கு இயலாது போனது கீழ் குறிப்பிடப்படும் காரணத்தினால் ஆகும் என ….......................................................................வதியும் ….........................................................ஆகிய நான் நோ்மையாகவும் உண்மையாகவும் பயபக்தியுடனும் பிரதிக்கினை செய்கின்றேன்.
                 <br>I …. of …. solemnly, sincerely, and truly declare that the particulars stated below relating to an unregistered death, are true and correct to the best of my knowledge and belief, and that the death has not been registered within three months from its occurrence or from the finding of the corpse in a place other than a house or a building, for this reason.
             </s:elseif>
+            <s:elseif test="pageType== 2">
+                sudden death <br>
+                ප්‍රකාශකයා විසින් මරණය සිදු වූ කොට්ටාශයේ මරණ රෙජිස්ට්‍රාර් තැන වෙත ලබා දිය යුතුය. මෙම තොරතුරු මත සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ මරණය ලියාපදිංචි කරනු ලැබේ.
+                <br>தகவல் தருபவரால் இறப்பு நிகழ்ந்த பிரிவின் இறப்பு பதிவாளாரிடம் சமா்ப்பித்தல் வேண்டும். இத்தகவலின்படி சிவில் பதிவு அமைப்பில் பிறப்பு பதிவு செய்யப்படும்
+                <br>Should be perfected by the declarant and the duly completed form should be forwarded to the Registrar of Deaths of the division where the death has occurred. The death will be registered in the Civil Registration System based on the information provided in this form.
+
+            </s:elseif>
+            <s:elseif test="pageType== 3">
+                missing person <br>
+                ලියාපදිංචි නොකරන ලද මරණයක් සම්බන්ධයෙන් මෙහි පහත ප්‍රකාශ කරනු ලබන විස්තර මගේ දැනීමේ හා විශ්වාසයේ ප්‍රකාර සැබෑ බව හා නිවැරදි බවද, මරණය සිදුවී, නැතහොත් ගෘහයක් හෝ ගොඩනැගිල්ලක් නොවන ස්ථානයක තිබී මෘතශරීරය සම්බවී, මාස තුඅනක් ඇතුලත දී මරණය ලියාපදිංචි කිරීමට නොහැකි වුයේ මෙහි පහත සඳහන් කාරණය හේතු කොටගෙන බවද, ..... පදිංචි .... වන මම ගාම්භීරතා පුර්වකාවද, අවංක ලෙසද, සැබෑ ලෙසද, මෙයින් ප්‍රකාශ කරමි.
+                <br>பதியப்படாத மரணம் சம்பந்தமாக இங்கு கீழ் பிரதிக்கினை செய்யப்படும் விபரங்கள் எனது அறிவிக்கும் நம்பிக்கைக்கும் உரியவகையில் உண்மையானதும் சரியானதும் எனவும் இறப்பு நிகழ்ந்து அல்லது வீடு அல்லது கட்டிடம் அல்லாத இடத்திலிருந்து அப்பிரேதத்தைக் கண்டு மூன்று மாதங்களுக்குள் இறப்பினை பதிவதற்கு இயலாது போனது கீழ் குறிப்பிடப்படும் காரணத்தினால் ஆகும் என ….......................................................................வதியும் ….........................................................ஆகிய நான் நோ்மையாகவும் உண்மையாகவும் பயபக்தியுடனும் பிரதிக்கினை செய்கின்றேன்.
+                <br>I …. of …. solemnly, sincerely, and truly declare that the particulars stated below relating to an unregistered death, are true and correct to the best of my knowledge and belief, and that the death has not been registered within three months from its occurrence or from the finding of the corpse in a place other than a house or a building, for this reason.
+            </s:elseif>
         </td>
     </tr>
     </tbody>
@@ -460,209 +491,181 @@ function personAgeDeath() {
 </s:if>
 
 <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse;" class="font-9">
-<col width="155px"/>
-<col width="120px"/>
-<col width="120px"/>
-<col width="90px"/>
-<col width="120px"/>
-<col width="100 0px"/>
-<col width="120px"/>
-<col width="130px"/>
-<col/>
-<tbody>
+    <col width="155px"/>
+    <col width="120px"/>
+    <col width="120px"/>
+    <col width="90px"/>
+    <col width="120px"/>
+    <col width="100 0px"/>
+    <col width="120px"/>
+    <col width="130px"/>
+    <col/>
+    <tbody>
 
-<tr>
-    <td colspan="9" class="form-sub-title">
-        මරණය පිලිබඳ විස්තර
-        <br>இறப்பு பற்றிய தகவல்
-        <br>Information about the Death
-    </td>
-</tr>
-<s:if test="pageType ==0">
     <tr>
-        <td>
-            (1)හදිසි මරණයක්ද ? <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-            <br>திடீா் மரணமா?
-            <br>Sudden death?
+        <td colspan="9" class="form-sub-title">
+            මරණය පිලිබඳ විස්තර
+            <br>இறப்பு பற்றிய தகவல்
+            <br>Information about the Death
         </td>
-        <td colspan="3">ඔව් xx Yes</td>
-        <td align="center"><s:radio name="deathType" list="#@java.util.HashMap@{'SUDDEN':''}"
-                                    value="%{deathType}"/></td>
-        <td colspan="3">නැත xx No</td>
-        <td align="center"><s:radio name="deathType" list="#@java.util.HashMap@{'NORMAL':''}"
-                                    value="%{deathType}"/></td>
     </tr>
-</s:if>
-<s:elseif test="pageType==1">
+        <%--<s:if test="pageType ==0">
+            <tr>
+                <td>
+                    (1)හදිසි මරණයක්ද ? <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
+                    <br>திடீா் மரணமா?
+                    <br>Sudden death?
+                </td>
+                <td colspan="3">ඔව් xx Yes</td>
+                <td align="center"><s:radio name="deathType" list="#@java.util.HashMap@{'SUDDEN':''}"
+                                            value="%{deathType}"/></td>
+                <td colspan="3">නැත xx No</td>
+                <td align="center"><s:radio name="deathType" list="#@java.util.HashMap@{'NORMAL':''}"
+                                            value="%{deathType}"/></td>
+            </tr>
+        </s:if>
+        <s:elseif test="pageType==1">
+            <tr>
+                <td colspan="4">
+                    (2)නැතිවුණු පුද්ගලයෙකුගේ මරණයක්ද ? <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
+                    <br>காணாமற்போன நபரது மரணமா?
+                    <br>Is the death of a missing person?
+                </td>
+                <td align="center">
+                     <s:radio name="deathType" list="#@java.util.HashMap@{'MISSING':''}" value="%{deathType}"/>
+                </td>
+                <td colspan="3">
+                    කාලය ඉකුත් වූ මරණ <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
+                    <br>in ta
+                    <br>Late registration
+                </td>
+                <td align="center">
+                    <s:radio name="deathType" list="#@java.util.HashMap@{'LATE_NORMAL':''}" value="%{deathType}"/>
+                </td>
+            </tr>
+        </s:elseif>--%>
     <tr>
-        <td colspan="4">
-            (2)නැතිවුණු පුද්ගලයෙකුගේ මරණයක්ද ? <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-            <br>காணாமற்போன நபரது மரணமா?
-            <br>Is the death of a missing person?
+        <td>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+            මරණය සිදු වූ දිනය <s:label value="*" cssStyle="color:red;font-size:10pt"/>
+            <br>இறந்த திகதி
+            <br>Date of Death
         </td>
-        <td align="center">
-             <s:radio name="deathType" list="#@java.util.HashMap@{'MISSING':''}" value="%{deathType}"/>
+        <td colspan="4">
+            <s:label value="YYYY-MM-DD" cssStyle="font-size:10px"/><br>
+            <s:textfield id="deathDatePicker" name="death.dateOfDeath" maxLength="10"/>
+        </td>
+        <td>
+            වෙලාව
+            <br>நேரம்
+            <br>Time
         </td>
         <td colspan="3">
-            කාලය ඉකුත් වූ මරණ <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-            <br>in ta
-            <br>Late registration 
+            <s:textfield name="death.timeOfDeath" id="timePicker"/>
         </td>
-        <td align="center">
-            <s:radio name="deathType" list="#@java.util.HashMap@{'LATE_NORMAL':''}" value="%{deathType}"/>
-        </td>
-
-            <%--
-            <td colspan="2" width="275px">
-                (2)නැතිවුණු පුද්ගලයෙකුගේ මරණයක්ද ? <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-                <br>காணாமற்போன நபரது மரணமா?
-                <br>Is the death of a missing person?
-            </td>
-            <td align="center">
-                <s:radio name="deathType" list="#@java.util.HashMap@{'MISSING':''}" value="%{deathType}"/>
-            </td>
-            <td colspan="2" width="275px">
-                කාලය ඉකුත් වූ මරණ(සාමාන්‍ය මරණ) <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-                <br>in ta
-                <br>Late registration (Normal Death)
-
-            </td>
-            <td align="center">
-                <s:radio name="deathType" list="#@java.util.HashMap@{'LATE_NORMAL':''}" value="%{deathType}"/>
-            </td>
-            <td colspan="2" width="275px">
-                කාලය ඉකුත් වූ මරණ(හදිසි මරණ ) <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-                <br>in ta
-                <br>Late registration (Sudden Death)
-            </td>
-            <td align="center">
-                <s:radio name="deathType" list="#@java.util.HashMap@{'LATE_SUDDEN':''}" value="%{deathType}"/>
-            </td>--%>
     </tr>
-</s:elseif>
-<tr>
-    <td>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-        මරණය සිදු වූ දිනය <s:label value="*" cssStyle="color:red;font-size:10pt"/>
-        <br>இறந்த திகதி
-        <br>Date of Death
-    </td>
-    <td colspan="4">
-        <s:label value="YYYY-MM-DD" cssStyle="font-size:10px"/><br>
-        <s:textfield id="deathDatePicker" name="death.dateOfDeath" maxLength="10"/>
-    </td>
-    <td>
-        වෙලාව
-        <br>நேரம்
-        <br>Time
-    </td>
-    <td colspan="3">
-        <s:textfield name="death.timeOfDeath" id="timePicker"/>
-    </td>
-</tr>
-<tr>
-    <td rowspan="5">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-        මරණය සිදු වූ ස්ථානය<s:label value="*" cssStyle="color:red;font-size:10pt"/>
-        <br>இறப்பு நிகழந்த இடம்
-        <br>Place of Death
-    </td>
-    <td colspan="3">දිස්ත්‍රික්කය / மாவட்டம் / District</td>
-    <td colspan="5"><s:select id="deathDistrictId" name="deathDistrictId" list="districtList"/></td>
-</tr>
-<tr>
-    <td colspan="3">
-        ප්‍රාදේශීය ලේකම් කොට්ඨාශය /
-        <br>பிரதேச செயளாளா் பிரிவு /
-        <br>Divisional Secretariat
-    </td>
-    <td colspan="5"><s:select id="deathDsDivisionId" name="dsDivisionId" list="dsDivisionList"
-                              cssStyle="float:left; "/></td>
-</tr>
-<tr>
-    <td colspan="3">
-        ලියාපදිංචි කිරීමේ කොට්ඨාශය /
-        <br>பதிவுப் பிரிவு /
-        <br>Registration Division
-    </td>
-    <td colspan="5"><s:select id="deathDivisionId" name="deathDivisionId" list="bdDivisionList"
-                              cssStyle="float:left;"/></td>
-</tr>
-<tr>
-    <td rowspan="2" colspan="1">
-        ස්ථානය
-        <br>இடம்
-        <br>Place
-    </td>
-    <td colspan="2">
-        සිංහල හෝ දෙමළ භාෂාවෙන්
-        <br>சிங்களம்அல்லது தமிழ் மொழியில்
-        <br>In Sinhala or Tamil
-    </td>
-    <td colspan="5"><s:textfield name="death.placeOfDeath" cssStyle="width:555px;" id="placeOfDeath"
-                                 maxLength="240"/></td>
-</tr>
-<tr>
-    <td colspan="2">
-        ඉංග්‍රීසි භාෂාවෙන්
-        <br>ஆங்கில மொழியில்
-        <br>In English
-    </td>
-    <td colspan="5">
-        <s:textfield name="death.placeOfDeathInEnglish" id="placeOfDeathInEnglish" cssStyle="width:555px;"
-                     maxLength="240"/>
-        <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px 0;"
-             id="place">
-    </td>
-</tr>
-<tr>
-    <td rowspan="2" colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-        මරණයට හේතුව තහවුරුද?
-        <br>இறப்பிற்கான காரணம் உறுதியானதா?
-        <br>Is the cause of death established?
-    </td>
-    <td colspan="1">නැත / இல்லை / No</td>
-    <td colspan="2" align="center"><s:radio name="death.causeOfDeathEstablished"
-                                            list="#@java.util.HashMap@{'false':''}"
-                                            id=""/></td>
-    <td rowspan="2" colspan="3">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-        මරණය දින 30 කට අඩු ළදරුවෙකුගේද?
-        <br>இறப்பு 30 நாட்களுக்கு குறைவான சிசுவினதா?
-        <br>Is the death of an infant less than 30 days?
-    </td>
-    <td colspan="1">නැත / இல்லை / No</td>
-    <td colspan="1" align="center"><s:radio name="death.infantLessThan30Days"
-                                            list="#@java.util.HashMap@{'false':''}"/></td>
-</tr>
-<tr>
-    <td colspan="1">ඔව් / ஆம் /Yes</td>
-    <td colspan="2" align="center"><s:radio name="death.causeOfDeathEstablished"
-                                            list="#@java.util.HashMap@{'true':''}"/></td>
-    <td colspan="1">ඔව් / ஆம் /Yes</td>
-    <td colspan="1" align="center"><s:radio name="death.infantLessThan30Days"
-                                            list="#@java.util.HashMap@{'true':''}"/></td>
-</tr>
-<tr>
-    <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-        මරණයට හේතුව
-        <br>இறப்பிற்கான காரணம்
-        <br>Cause of death
-    </td>
-    <td colspan="4"><s:textarea name="death.causeOfDeath" cssStyle="width:420px; "/></td>
-    <td colspan="2">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-        ේතුවේ ICD කේත අංකය
-        <br>காரணத்திற்கான ICD குறியீட்டு இலக்கம்
-        <br>ICD Code of cause
-    </td>
-    <td colspan="2"><s:textfield name="death.icdCodeOfCause" cssStyle="width:225px;" maxLength="240"/></td>
-</tr>
-<tr>
-    <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-        ආදාහන හෝ භූමදාන ස්ථානය<s:label value="*" cssStyle="color:red;font-size:10pt"/>
-        <br>அடக்கம் செய்த அல்லது தகனஞ் செய்த இடம்
-        <br>Place of burial or cremation
-    </td>
-    <td colspan="8"><s:textarea name="death.placeOfBurial" id="placeOfBurial" cssStyle="width:880px;"/></td>
-</tr>
-<s:if test="deathType.ordinal() == 2 || deathType.ordinal() == 3">
+    <tr>
+        <td rowspan="5">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+            මරණය සිදු වූ ස්ථානය<s:label value="*" cssStyle="color:red;font-size:10pt"/>
+            <br>இறப்பு நிகழந்த இடம்
+            <br>Place of Death
+        </td>
+        <td colspan="3">දිස්ත්‍රික්කය / மாவட்டம் / District</td>
+        <td colspan="5"><s:select id="deathDistrictId" name="deathDistrictId" list="districtList"/></td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            ප්‍රාදේශීය ලේකම් කොට්ඨාශය /
+            <br>பிரதேச செயளாளா் பிரிவு /
+            <br>Divisional Secretariat
+        </td>
+        <td colspan="5"><s:select id="deathDsDivisionId" name="dsDivisionId" list="dsDivisionList"
+                                  cssStyle="float:left; "/></td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            ලියාපදිංචි කිරීමේ කොට්ඨාශය /
+            <br>பதிவுப் பிரிவு /
+            <br>Registration Division
+        </td>
+        <td colspan="5"><s:select id="deathDivisionId" name="deathDivisionId" list="bdDivisionList"
+                                  cssStyle="float:left;"/></td>
+    </tr>
+    <tr>
+        <td rowspan="2" colspan="1">
+            ස්ථානය
+            <br>இடம்
+            <br>Place
+        </td>
+        <td colspan="2">
+            සිංහල හෝ දෙමළ භාෂාවෙන්
+            <br>சிங்களம்அல்லது தமிழ் மொழியில்
+            <br>In Sinhala or Tamil
+        </td>
+        <td colspan="5"><s:textfield name="death.placeOfDeath" cssStyle="width:555px;" id="placeOfDeath"
+                                     maxLength="240"/></td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            ඉංග්‍රීසි භාෂාවෙන්
+            <br>ஆங்கில மொழியில்
+            <br>In English
+        </td>
+        <td colspan="5">
+            <s:textfield name="death.placeOfDeathInEnglish" id="placeOfDeathInEnglish" cssStyle="width:555px;"
+                         maxLength="240"/>
+            <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px 0;"
+                 id="place">
+        </td>
+    </tr>
+    <tr>
+        <td rowspan="2" colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+            මරණයට හේතුව තහවුරුද?
+            <br>இறப்பிற்கான காரணம் உறுதியானதா?
+            <br>Is the cause of death established?
+        </td>
+        <td colspan="1">නැත / இல்லை / No</td>
+        <td colspan="2" align="center"><s:radio name="death.causeOfDeathEstablished"
+                                                list="#@java.util.HashMap@{'false':''}"
+                                                id=""/></td>
+        <td rowspan="2" colspan="3">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+            මරණය දින 30 කට අඩු ළදරුවෙකුගේද?
+            <br>இறப்பு 30 நாட்களுக்கு குறைவான சிசுவினதா?
+            <br>Is the death of an infant less than 30 days?
+        </td>
+        <td colspan="1">නැත / இல்லை / No</td>
+        <td colspan="1" align="center"><s:radio name="death.infantLessThan30Days"
+                                                list="#@java.util.HashMap@{'false':''}"/></td>
+    </tr>
+    <tr>
+        <td colspan="1">ඔව් / ஆம் /Yes</td>
+        <td colspan="2" align="center"><s:radio name="death.causeOfDeathEstablished"
+                                                list="#@java.util.HashMap@{'true':''}"/></td>
+        <td colspan="1">ඔව් / ஆம் /Yes</td>
+        <td colspan="1" align="center"><s:radio name="death.infantLessThan30Days"
+                                                list="#@java.util.HashMap@{'true':''}"/></td>
+    </tr>
+    <tr>
+        <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+            මරණයට හේතුව
+            <br>இறப்பிற்கான காரணம்
+            <br>Cause of death
+        </td>
+        <td colspan="4"><s:textarea name="death.causeOfDeath" cssStyle="width:420px; "/></td>
+        <td colspan="2">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+            ේතුවේ ICD කේත අංකය
+            <br>காரணத்திற்கான ICD குறியீட்டு இலக்கம்
+            <br>ICD Code of cause
+        </td>
+        <td colspan="2"><s:textfield name="death.icdCodeOfCause" cssStyle="width:225px;" maxLength="240"/></td>
+    </tr>
+    <tr>
+        <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+            ආදාහන හෝ භූමදාන ස්ථානය<s:label value="*" cssStyle="color:red;font-size:10pt"/>
+            <br>அடக்கம் செய்த அல்லது தகனஞ் செய்த இடம்
+            <br>Place of burial or cremation
+        </td>
+        <td colspan="8"><s:textarea name="death.placeOfBurial" id="placeOfBurial" cssStyle="width:880px;"/></td>
+    </tr>
     <tr>
         <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
             වෙනත් තොරතුරු
@@ -672,20 +675,19 @@ function personAgeDeath() {
         <td colspan="8"><s:textarea name="death.anyOtherInformation" id="anyOtherInfo"
                                     cssStyle="width:880px;"/></td>
     </tr>
-</s:if>
-<tr>
-    <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-        මරණ
-        සහතිකය නිකුත් කල යුතු භාෂාව
-        <br>சான்றிதழ் வழங்கப்பட வேண்டிய மொழி
-        <br>Preferred
-        Language for
-        Death Certificate </label></td>
-    <td colspan="7"><s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'தமிழ்'}"
-                              name="death.preferredLanguage"
-                              cssStyle="width:190px; margin-left:5px;"></s:select></td>
-</tr>
-</tbody>
+    <tr>
+        <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+            මරණ
+            සහතිකය නිකුත් කල යුතු භාෂාව
+            <br>சான்றிதழ் வழங்கப்பட வேண்டிய மொழி
+            <br>Preferred
+            Language for
+            Death Certificate </label></td>
+        <td colspan="7"><s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'தமிழ்'}"
+                                  name="death.preferredLanguage"
+                                  cssStyle="width:190px; margin-left:5px;"></s:select></td>
+    </tr>
+    </tbody>
 </table>
 
 <table border="1"

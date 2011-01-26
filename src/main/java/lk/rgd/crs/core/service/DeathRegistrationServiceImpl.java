@@ -56,9 +56,9 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         //validate access of the user  to Death division
         ValidationUtils.validateAccessToBDDivision(user, deathRegistration.getDeath().getDeathDivision());
         deathDeclarationValidator.validateMinimalRequirements(deathRegistration);
-        if (deathRegistration.getDeathType() != DeathRegister.Type.LATE_NORMAL &&
+        if (deathRegistration.getDeathType() != DeathRegister.Type.LATE &&
             deathRegistration.getDeathType() != DeathRegister.Type.MISSING &&
-            deathRegistration.getDeathType() != DeathRegister.Type.LATE_SUDDEN) {
+            deathRegistration.getDeathType() != DeathRegister.Type.SUDDEN) {
             handleException("Invalid death type : " + deathRegistration.getDeathType(), ErrorCodes.ILLEGAL_STATE);
         }
         addDeathRegistration(deathRegistration, user);
@@ -74,9 +74,6 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         //validate access of the user  to Death division
         ValidationUtils.validateAccessToBDDivision(user, deathRegistration.getDeath().getDeathDivision());
         deathDeclarationValidator.validateMinimalRequirements(deathRegistration);
-        if (deathRegistration.getDeathType() != DeathRegister.Type.NORMAL && deathRegistration.getDeathType() != DeathRegister.Type.SUDDEN) {
-            handleException("Invalid death type : " + deathRegistration.getDeathType(), ErrorCodes.ILLEGAL_STATE);
-        }
         addDeathRegistration(deathRegistration, user);
         logger.debug("added a normal/sudden registration with idUKey : {} ", deathRegistration.getIdUKey());
     }
