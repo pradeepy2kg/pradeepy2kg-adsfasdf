@@ -10,7 +10,6 @@ import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.domain.*;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.util.StateUtil;
-import lk.rgd.common.util.UniqueIDGenerator;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.MarriageRegistrationDAO;

@@ -18,11 +18,11 @@
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
-    <bean id="mbeanServer" class="java.lang.management.ManagementFactory" factory-method="getPlatformMBeanServer" />
+    <bean id="mbeanServer" class="java.lang.management.ManagementFactory" factory-method="getPlatformMBeanServer"/>
 
     <bean id="jmxAgent" class="lk.rgd.common.JMXAgent" init-method="init">
-      <property name="entityManagerFactory" ref="entityManagerFactory"/>
-      <property name="mbs" ref="mbeanServer"/>
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+        <property name="mbs" ref="mbeanServer"/>
     </bean>
 
     <!--A special bean that initializes the database -->
@@ -81,7 +81,8 @@
 
     <bean id="cronTriggerStat" class="org.springframework.scheduling.quartz.CronTriggerBean">
         <property name="jobDetail" ref="scheduledStatJobs"/>
-        <property name="cronExpression" value="0 0 23 ? * MON-FRI"/>     <!--0 0 23 ? * MON-FRI-->
+        <property name="cronExpression" value="0 0 23 ? * MON-FRI"/>
+        <!--0 0 23 ? * MON-FRI-->
     </bean>
 
     <!-- Start the Triggers - use Cron trigger for production use with an appropriate schedule -->

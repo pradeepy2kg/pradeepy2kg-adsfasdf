@@ -88,7 +88,6 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     private MarriageNotice.Type noticeType;
 
     private File scannedImage;
-    private String scannedImageContentType; // The content type of the file
     private String scannedImageFileName; // The uploaded file name and path
 
     public MarriageRegistrationAction(MarriageRegistrationService marriageRegistrationService,
@@ -518,7 +517,6 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         try {
             marriageRegistrationService.addMarriageRegister(marriage, user, scannedImage, scannedImageFileName);
             addActionMessage("uploaded file name " + scannedImageFileName);
-            addActionMessage("uploaded content type " + scannedImageContentType);
         } catch (CRSRuntimeException e) {
             addActionError(getText("error.marriageregister.registrationfailed"));
             return marriageRegistrationInit();
@@ -963,14 +961,6 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     public void setScannedImage(File scannedImage) {
         this.scannedImage = scannedImage;
-    }
-
-    public String getScannedImageContentType() {
-        return scannedImageContentType;
-    }
-
-    public void setScannedImageContentType(String scannedImageContentType) {
-        this.scannedImageContentType = scannedImageContentType;
     }
 
     public String getScannedImageFileName() {
