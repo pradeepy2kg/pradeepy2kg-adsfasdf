@@ -34,7 +34,7 @@ public interface MarriageRegistrationService {
      * @param user             user who perform the action
      * @param user             Scanned Image of the Marriage Certificate
      */
-    public void addMarriageRegister(MarriageRegister marriageRegister, User user, File scannedImage);
+    public void addMarriageRegister(MarriageRegister marriageRegister, User user, File scannedImage, String fileName);
 
     /**
      * get marriage register object by its idUKey value
@@ -201,7 +201,7 @@ public interface MarriageRegistrationService {
      * @param marriageRegister marriage register object to be updated
      * @param user             user who performs the action
      */
-    public void updateMarriageRegister(MarriageRegister marriageRegister, User user, File scannedImage);
+    public void updateMarriageRegister(MarriageRegister marriageRegister, User user, File scannedImage, String fileName);
 
     /**
      * update Muslim marriage details
