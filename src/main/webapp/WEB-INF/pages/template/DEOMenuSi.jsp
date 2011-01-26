@@ -56,12 +56,22 @@
     <ul class="acitem">
         <li>
             <a id="death_registration.label" href="/ecivil/deaths/eprInitDeathDeclaration.do">
-                (1) සාමාන්‍ය මරණ සහ හදිසි මරණ ලියාපදිංචිය
+                (1) සාමාන්‍ය මරණ ලියාපදිංචිය
             </a>
         </li>
         <li>
             <a id="late_death_registration.label" href="/ecivil/deaths/eprInitLateDeathDeclaration.do">
-                (1) කාලය ඉකුත් වූ මරණ ලියාපදිංචිය
+                (1)කාලය ඉකුත් වූ මරණ ලියාපදිංචිය
+            </a>
+        </li>
+        <li>
+            <a id="sudden_death_registration.label" href="/ecivil/deaths/eprInitSuddenDeathDeclaration.do">
+                (1)හදිසි මරණ ලියාපදිංචිය
+            </a>
+        </li>
+        <li>
+            <a id="missing_person_registration.label" href="/ecivil/deaths/eprInitMissingPersonDeclaration.do">
+                (1)නැතිවුණු පුද්ගලයෙකුගේ මරණ ලියාපදිංචිය
             </a>
         </li>
         <li>
@@ -123,7 +133,7 @@
         <li>
             <a id="birth_alteration_pending_approval.title"
                href="/ecivil/alteration/eprBirthAlterationPendingApproval.do">
-                උප්පැන්න  සටහනක විස්තර වෙනස් කිරීම අනුමත කිරීම
+                උප්පැන්න සටහනක විස්තර වෙනස් කිරීම අනුමත කිරීම
             </a>
         </li>
         <li>

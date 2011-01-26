@@ -73,3 +73,8 @@ You can apply for a new death certificate with altered value in ta
 * මුස්ලිම් විවාහ(Muslim Marriage)
 
 * උප්පැන්න සහතිකය නිකුත් කල යුතු භාෂාව (Preferred Language for Birth Certificate)
+
+normal death registration in ta
+late death registration in ta
+sudden death registration in ta
+missing death registration in ta

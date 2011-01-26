@@ -56,12 +56,22 @@
     <ul class="acitem">
         <li>
             <a id="death_registration.label" href="/ecivil/deaths/eprInitDeathDeclaration.do">
-                (1) சாதாரண மற்றும் திடீர் மரண பதிவு
+                (1)normal death registration in ta
             </a>
         </li>
         <li>
             <a id="late_death_registration.label" href="/ecivil/deaths/eprInitLateDeathDeclaration.do">
-                (1) காலங்கடந்த இறப்பினை பதிவு செய்தல்
+                (1)late death registration in ta
+            </a>
+        </li>
+        <li>
+            <a id="sudden_death_registration.label" href="/ecivil/deaths/eprInitSuddenDeathDeclaration.do">
+                (1)sudden death registration in ta
+            </a>
+        </li>
+        <li>
+            <a id="missing_person_registration.label" href="/ecivil/deaths/eprInitMissingPersonDeclaration.do">
+                (1)missing death registration in ta
             </a>
         </li>
         <li>
@@ -207,7 +217,7 @@
         </li>
         <li>
             <a id="birth.advanceSearch.label" href="/ecivil/births/eprBirthsAdvancedSearch.do">
-                பிறப்பு அறிக்கையினை  தேடுதல்
+                பிறப்பு அறிக்கையினை தேடுதல்
             </a>
         </li>
     </ul>
