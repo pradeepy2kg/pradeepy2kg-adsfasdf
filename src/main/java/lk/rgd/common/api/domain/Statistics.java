@@ -15,10 +15,10 @@ import java.util.Date;
 })
 public class Statistics implements Serializable {
 
-    /*@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idUkey;*/
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long idUkey;
+
     @OneToOne
     @JoinColumn(name = "userId", nullable = false)
     private User user;
@@ -233,13 +233,13 @@ public class Statistics implements Serializable {
         DeathsTotalSubmissions = deathsTotalSubmissions;
     }
 
-    /*public long getIdUkey() {
+    public long getIdUkey() {
         return idUkey;
     }
 
     public void setIdUkey(long idUkey) {
         this.idUkey = idUkey;
-    }*/
+    }
 
     public int getMrgApprovedItems() {
         return MrgApprovedItems;
