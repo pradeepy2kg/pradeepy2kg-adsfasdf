@@ -169,17 +169,6 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         DeathRegister ddf;
         if (back) {
             populate((DeathRegister) session.get(WebConstants.SESSION_DEATH_DECLARATION_BEAN));
-            switch (deathType) {
-                case NORMAL:
-                case SUDDEN:
-                    pageType = 0;
-                    break;
-                case LATE_SUDDEN:
-                case LATE_NORMAL:
-                case MISSING:
-                    pageType = 1;
-                    break;
-            }
             return "form" + pageNo;
         }
         ddf = (DeathRegister) session.get(WebConstants.SESSION_DEATH_DECLARATION_BEAN);
@@ -190,7 +179,20 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                     addFieldError("duplicateSerialNumberError", getText("p1.duplicateSerialNumber.label"));
                     pageNo = 0;
                 }
-                //  deathType = ddf.getDeathType();  this is the bug 2139
+                switch (pageType) {
+                    case 0:
+                        deathType = DeathRegister.Type.NORMAL;
+                        break;
+                    case 1:
+                        deathType = DeathRegister.Type.LATE;
+                        break;
+                    case 2:
+                        deathType = DeathRegister.Type.SUDDEN;
+                        break;
+                    case 3:
+                        deathType = DeathRegister.Type.MISSING;
+                        break;
+                }
                 ddf.setDeath(death);
                 ddf.setDeathPerson(deathPerson);
                 ddf.setDeathType(deathType);
@@ -203,11 +205,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                 idUKey = ddf.getIdUKey();
                 if (idUKey == 0) {
                     try {
-                        if (DeathRegister.Type.NORMAL == deathType || DeathRegister.Type.SUDDEN == deathType) {
-                            service.addNormalDeathRegistration(ddf, user);
-                        } else if (DeathRegister.Type.LATE_NORMAL == deathType || DeathRegister.Type.MISSING == deathType) {
-                            service.addLateDeathRegistration(ddf, user);
-                        }
+                        service.addNormalDeathRegistration(ddf, user);
                         idUKey = ddf.getIdUKey();
                         addActionMessage(getText("saveSuccess.label"));
                     } catch (CRSRuntimeException e) {
@@ -222,13 +220,9 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                         pageNo = 0;
                     }
                 } else {
-                    if (DeathRegister.Type.NORMAL == deathType || DeathRegister.Type.SUDDEN == deathType
-                        || DeathRegister.Type.LATE_NORMAL == deathType || DeathRegister.Type.MISSING == deathType) {
-                        service.updateDeathRegistration(ddf, user);
-                        addActionMessage(getText("editDataSaveSuccess.label"));
-                    }
+                    service.updateDeathRegistration(ddf, user);
+                    addActionMessage(getText("editDataSaveSuccess.label"));
                 }
-
         }
         populate(ddf);
         return "form" + pageNo;
@@ -443,13 +437,16 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private void pageTypeGetter(DeathRegister.Type type) {
         switch (type) {
             case NORMAL:
-            case SUDDEN:
                 pageType = 0;
                 break;
-            case LATE_SUDDEN:
-            case LATE_NORMAL:
-            case MISSING:
+            case LATE:
                 pageType = 1;
+                break;
+            case SUDDEN:
+                pageType = 2;
+                break;
+            case MISSING:
+                pageType = 3;
                 break;
         }
     }
@@ -558,6 +555,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         DeathRegister death = service.getById(idUKey, user);
         if (death.getStatus().equals(DeathRegister.State.DATA_ENTRY)) {
             service.deleteDeathRegistration(idUKey, user);
+            addActionMessage(getText("message.successfully.deleted"));
         }
         noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
         if (deathDivisionId != 0) {

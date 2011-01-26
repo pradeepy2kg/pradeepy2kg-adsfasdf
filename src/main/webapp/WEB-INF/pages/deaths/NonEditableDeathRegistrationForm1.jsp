@@ -2,7 +2,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <script type="text/javascript">
-    function initPage(){}
+    function initPage() {
+    }
 </script>
 
 <div id="death-declaration-form-1-outer">
@@ -31,12 +32,24 @@
     </tr>
     <tr>
         <td align="center" class="font-12">
-            <s:if test="deathType.ordinal() == 0 || deathType.ordinal() == 1">
+            <s:if test="deathType.ordinal() == 0">
                 ප්‍රකාශයක් [30, 39(1), 41(1) (උ) වගන්ති] - සාමාන්‍ය මරණ හා හදිසි මරණ <br/>
                 ஒரு பிறப்பைப் பதிவு செய்வதற்கான விபரங்கள் <br/>
                 Declaration of Death [Sections 30, 39(1) and 41(1)(e)] – Normal Death or Sudden Death
             </s:if>
-            <s:elseif test="deathType.ordinal() == 2 || deathType.ordinal() == 3">
+            <s:elseif test="deathType.ordinal() == 2">
+                ප්‍රකාශයක් [30, 39(1), 41(1) (උ) වගන්ති] - සාමාන්‍ය මරණ හා හදිසි මරණ <br/>
+                ஒரு பிறப்பைப் பதிவு செய்வதற்கான விபரங்கள் <br/>
+                Declaration of Death [Sections 30, 39(1) and 41(1)(e)] – Normal Death or Sudden Death
+            </s:elseif>
+            <s:elseif test="deathType.ordinal() == 1">
+                Late<br>
+                මරණ ප්‍රකාශයක් [36වෙනි වගන්තිය] - කාලය ඉකුත් වූ මරණ ලියාපදිංචි කිරීම හෝ නැතිවුණු පුද්ගලයෙකුගේ මරණ <br/>
+                ஒரு பிறப்பைப் பதிவு செய்வதற்கான விபரங்கள் <br/>
+                Declaration of Death [Section 36] – Late registration or Death of missing person
+            </s:elseif>
+            <s:elseif test="deathType.ordinal() == 3">
+                Missing <br>
                 මරණ ප්‍රකාශයක් [36වෙනි වගන්තිය] - කාලය ඉකුත් වූ මරණ ලියාපදිංචි කිරීම හෝ නැතිවුණු පුද්ගලයෙකුගේ මරණ <br/>
                 ஒரு பிறப்பைப் பதிவு செய்வதற்கான விபரங்கள் <br/>
                 Declaration of Death [Section 36] – Late registration or Death of missing person
@@ -51,7 +64,7 @@
     </tr>
     <tr>
         <td colspan="4" class="font-9" style="text-align:justify;">
-            <s:if test="deathType.ordinal() == 0 || deathType.ordinal() == 1">
+            <s:if test="deathType.ordinal() == 0">
                 ප්‍රකාශකයා විසින් මරණය සිදු වූ කොට්ටාශයේ මරණ රෙජිස්ට්‍රාර් තැන වෙත ලබා දිය යුතුය. මෙම තොරතුරු මත
                 සිවිල්
                 ලියාපදිංචි කිරිමේ පද්ධතියේ මරණය ලියාපදිංචි කරනු ලැබේ.
@@ -62,7 +75,27 @@
                 the
                 Civil Registration System based on the information provided in this form.
             </s:if>
-            <s:elseif test="deathType.ordinal() == 2 || deathType.ordinal() == 3">
+
+            <s:elseif test="deathType.ordinal() == 2">
+                ප්‍රකාශකයා විසින් මරණය සිදු වූ කොට්ටාශයේ මරණ රෙජිස්ට්‍රාර් තැන වෙත ලබා දිය යුතුය. මෙම තොරතුරු මත
+                සිවිල්
+                ලියාපදිංචි කිරිමේ පද්ධතියේ මරණය ලියාපදිංචි කරනු ලැබේ.
+                <br>தகவல் தருபவரால் (பெற்றோர்/பொறுப்பாளர்) பூா்த்தி செய்யப்பட்டு தகவல் சேகரிக்கும் அதிகாரியிடம்
+                சமா்ப்பித்தல் வேண்டும். இத்தகவலின்படி சிவில் பதிவு அமைப்பில் பிறப்பு பதிவு செய்யப்படும்
+                <br>Should be perfected by the declarant and the duly completed form should be forwarded to the
+                Registrar of Deaths of the division where the death has occurred. The death will be registered in
+                the
+                Civil Registration System based on the information provided in this form.
+            </s:elseif>
+
+            <s:elseif test="deathType.ordinal() == 1">
+                ලියාපදිංචි නොකරන ලද මරණයක් සම්බන්ධයෙන් මෙහි පහත ප්‍රකාශ කරනු ලබන විස්තර මගේ දැනීමේ හා විශ්වාසයේ ප්‍රකාර සැබෑ බව හා නිවැරදි බවද, මරණය සිදුවී, නැතහොත් ගෘහයක් හෝ ගොඩනැගිල්ලක් නොවන ස්ථානයක තිබී මෘතශරීරය සම්බවී, මාස තුඅනක් ඇතුලත දී මරණය ලියාපදිංචි කිරීමට නොහැකි වුයේ මෙහි පහත සඳහන් කාරණය හේතු කොටගෙන බවද, ..... පදිංචි .... වන මම ගාම්භීරතා පුර්වකාවද, අවංක ලෙසද, සැබෑ ලෙසද, මෙයින් ප්‍රකාශ කරමි.
+                <br>பதியப்படாத மரணம் சம்பந்தமாக இங்கு கீழ் பிரதிக்கினை செய்யப்படும் விபரங்கள் எனது அறிவிக்கும் நம்பிக்கைக்கும் உரியவகையில் உண்மையானதும் சரியானதும் எனவும் இறப்பு நிகழ்ந்து அல்லது வீடு அல்லது கட்டிடம் அல்லாத இடத்திலிருந்து அப்பிரேதத்தைக் கண்டு மூன்று மாதங்களுக்குள் இறப்பினை பதிவதற்கு இயலாது போனது கீழ் குறிப்பிடப்படும் காரணத்தினால் ஆகும் என ….......................................................................வதியும் ….........................................................ஆகிய நான் நோ்மையாகவும் உண்மையாகவும் பயபக்தியுடனும் பிரதிக்கினை செய்கின்றேன்.
+                <br>I …. of …. solemnly, sincerely, and truly declare that the particulars stated below relating to an unregistered death, are true and correct to the best of my knowledge and belief, and that the death has not been registered within three months from its occurrence or from the finding of the corpse in a place other than a house or a building, for this reason.
+            </s:elseif>
+
+
+            <s:elseif test="deathType.ordinal() == 3">
                 ලියාපදිංචි නොකරන ලද මරණයක් සම්බන්ධයෙන් මෙහි පහත ප්‍රකාශ කරනු ලබන විස්තර මගේ දැනීමේ හා විශ්වාසයේ ප්‍රකාර සැබෑ බව හා නිවැරදි බවද, මරණය සිදුවී, නැතහොත් ගෘහයක් හෝ ගොඩනැගිල්ලක් නොවන ස්ථානයක තිබී මෘතශරීරය සම්බවී, මාස තුඅනක් ඇතුලත දී මරණය ලියාපදිංචි කිරීමට නොහැකි වුයේ මෙහි පහත සඳහන් කාරණය හේතු කොටගෙන බවද, ..... පදිංචි .... වන මම ගාම්භීරතා පුර්වකාවද, අවංක ලෙසද, සැබෑ ලෙසද, මෙයින් ප්‍රකාශ කරමි.
                 <br>பதியப்படாத மரணம் சம்பந்தமாக இங்கு கீழ் பிரதிக்கினை செய்யப்படும் விபரங்கள் எனது அறிவிக்கும் நம்பிக்கைக்கும் உரியவகையில் உண்மையானதும் சரியானதும் எனவும் இறப்பு நிகழ்ந்து அல்லது வீடு அல்லது கட்டிடம் அல்லாத இடத்திலிருந்து அப்பிரேதத்தைக் கண்டு மூன்று மாதங்களுக்குள் இறப்பினை பதிவதற்கு இயலாது போனது கீழ் குறிப்பிடப்படும் காரணத்தினால் ஆகும் என ….......................................................................வதியும் ….........................................................ஆகிய நான் நோ்மையாகவும் உண்மையாகவும் பயபக்தியுடனும் பிரதிக்கினை செய்கின்றேன்.
                 <br>I …. of …. solemnly, sincerely, and truly declare that the particulars stated below relating to an unregistered death, are true and correct to the best of my knowledge and belief, and that the death has not been registered within three months from its occurrence or from the finding of the corpse in a place other than a house or a building, for this reason.
@@ -71,7 +104,7 @@
     </tr>
     </tbody>
 </table>
-<s:if test="deathType.ordinal() == 2 || deathType.ordinal() == 3">
+<s:if test="deathType.ordinal() == 1">
     <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse;" class="font-9">
         <tr>
             <td width="150px">(1)මරණය ලියාපදිංචි කිරීම ප්‍රමාද වීමට කාරණය <br/>
@@ -102,24 +135,19 @@
             <br>Information about the Death
         </td>
     </tr>
-    <s:if test="deathType.ordinal() == 0 || deathType.ordinal() == 1">
+    <s:if test="deathType.ordinal() == 2">
         <tr>
-            <td >
+            <td>
                 හදිසි මරණයක්ද ? <br/>
                 திடீர் மரணமா?<br/>
                 Sudden death?
             </td>
             <td colspan="8">
-                <s:if test="deathType.ordinal() == 0">
-                    <s:label value="%{getText('yes.label')}"/>
-                </s:if>
-                <s:elseif test="deathType.ordinal() == 1">
-                    <s:label value="%{getText('no.label')}"/>
-                </s:elseif>
+                <s:label value="%{getText('yes.label')}"/>
             </td>
         </tr>
     </s:if>
-    <s:elseif test="deathType.ordinal() == 2 || deathType.ordinal() == 3">
+    <s:elseif test="deathType.ordinal() == 3">
         <tr>
             <td colspan="2">
                 නැතිවුණු පුද්ගලයෙකුගේ මරණයක්ද ? <br/>
@@ -127,12 +155,7 @@
                 Is the death of a missing person?
             </td>
             <td colspan="6">
-                <s:if test="deathType.ordinal() == 2">
-                    <s:label value="%{getText('yes.label')}"/>
-                </s:if>
-                <s:elseif test="deathType.ordinal() == 3">
-                    <s:label value="%{getText('no.label')}"/>
-                </s:elseif>
+                <s:label value="%{getText('yes.label')}"/>
             </td>
         </tr>
     </s:elseif>
@@ -381,8 +404,7 @@
 </div>
 </s:form>
 <script type="text/javascript">
-    function setTime()
-    {
+    function setTime() {
         var list = document.getElementById("time");
         var array = new Array('1', '2', '3');
         list.list = array;

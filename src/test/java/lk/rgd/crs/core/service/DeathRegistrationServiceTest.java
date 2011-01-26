@@ -100,7 +100,7 @@ public class DeathRegistrationServiceTest extends TestCase {
 
         // try adding a late death
         DeathRegister ddf3 = getMinimalDDF(20101010, dob.getTime(), colomboBDDivision);
-        ddf3.setDeathType(DeathRegister.Type.LATE_NORMAL);
+        ddf3.setDeathType(DeathRegister.Type.LATE);
         try {
             deathRegService.addNormalDeathRegistration(ddf3, deoColomboColombo);
             fail("Should not allow addition of illegal death type records");
