@@ -99,6 +99,7 @@ public class ContentRepositoryImpl implements ContentRepository {
             divisionMap.put(division, holder);
         }
 
+        //todo: to be removed
         /*String ext = ".tiff";
         final int dotPos = ext.indexOf('.');
         if (dotPos != -1) {
