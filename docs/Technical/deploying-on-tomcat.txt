@@ -7,6 +7,9 @@ Use Gzip compression on both Tomcat and Apache, and ensure URI's are encoded in 
 
 Static content is served off Apache, and only dynamic requests are forwarded to Tomcat / Servlets. See configurations below
 
+When installing Apache, also install mod_jk (sudo apt-get install libapache2-mod-jk) and SSL support (sudo a2enmod ssl)
+See http://www.tc.umn.edu/~brams006/selfsign_ubuntu.html for info on setting up SSL
+
 Apache is configured via /etc/apache2/apache2.conf Use keepalive on
 Ensure server name is specified, and an include exists for the mod_jk configuration as follows:
 ServerName "10.42.104.232"
@@ -19,7 +22,7 @@ popreg@pluto:/etc/apache2$ cat /data/tomcat6/conf/server.xml
      define subcomponents such as "Valves" at this level.
      Documentation at /docs/config/server.html
  -->
-<Server port="8005" shutdown="SHUTDOWN">
+<Server port="-1">
 
   <!--APR library loader. Documentation at /docs/apr.html -->
   <Listener className="org.apache.catalina.core.AprLifecycleListener" SSLEngine="on" />
@@ -30,12 +33,23 @@ popreg@pluto:/etc/apache2$ cat /data/tomcat6/conf/server.xml
   <Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener" />
 
   <Service name="Catalina">
-  
+
+  <!-- Define an HTTP Connector on port 8080 only bound to the local interface (For Solr use *ONLY*) -->
+  <Connector port="8080" protocol="HTTP/1.1" address="127.0.0.1"
+      maxHttpHeaderSize="8192"
+      maxThreads="40" minSpareThreads="10" maxSpareThreads="25"
+      enableLookups="false" redirectPort="8090" acceptCount="100"
+      connectionTimeout="20000" disableUploadTimeout="true"
+      compression="on"
+      compressionMinSize="2048"
+      compressableMimeType="text/html,text/xml,application/json"
+      URIEncoding="UTF-8"/>
+
     <!-- Define an AJP 1.3 Connector on port 8009 -->
-    <Connector port="8009" protocol="AJP/1.3"  
+    <Connector port="8009" protocol="AJP/1.3"
         maxHttpHeaderSize="8192"
         maxThreads="150" minSpareThreads="25" maxSpareThreads="75"
-        enableLookups="false" redirectPort="8443" acceptCount="100"
+        enableLookups="false" redirectPort="8090" acceptCount="100"
         connectionTimeout="20000" disableUploadTimeout="true"
         compression="on"
         compressionMinSize="2048"
