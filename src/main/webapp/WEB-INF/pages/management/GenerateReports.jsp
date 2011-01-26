@@ -50,7 +50,7 @@
         </table>
         </s:form>
         <s:form action="eprPopulateStatistics.do" method="post">
-            <td colspan="3"><s:submit/></td>
+            <td colspan="3"><s:submit value="Populate Statistics"/></td>
         </s:form>
     </div>
 </div>

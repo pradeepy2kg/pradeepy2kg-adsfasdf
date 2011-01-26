@@ -23,6 +23,7 @@ import lk.rgd.prs.api.domain.Marriage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Calendar;
 import java.util.Date;
@@ -49,6 +50,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
     private int[][][] sector_leg_total;
     int total_arr[];
     private int year;
+    private BirthDistrictYearStatistics[] districtYearStatisticsList;
 
     public ReportsGeneratorImpl(BirthRegistrationService birthRegister, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, RaceDAO raceDAO, UserManager service) {
         this.birthRegister = birthRegister;
@@ -62,6 +64,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         month_race_total = new int[BirthDistrictStatistics.NO_OF_MONTHS][BirthMonthlyStatistics.NO_OF_RACES][3];
         sector_leg_total = new int[38][3][3];
         total_arr = new int[9];
+        districtYearStatisticsList = new BirthDistrictYearStatistics[26];
     }
 
     /**
@@ -579,6 +582,73 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         return statistics;
     }
 
+    public BirthIslandWideStatistics generate_2_12(int year, User user) {
+        districtYearStatisticsList = new BirthDistrictYearStatistics[26];
+        for (int k = 0; k < districtYearStatisticsList.length; k++) {
+            districtYearStatisticsList[k] = new BirthDistrictYearStatistics();
+        }
+        this.year = year;
+        if (!user.isAuthorized(Permission.GENERATE_REPORTS)) {
+            handleException(user.getUserId() + " doesn't have permission to generate the report",
+                ErrorCodes.PERMISSION_DENIED);
+        }
+
+        List<DSDivision> dsDivisionList = dsDivisionDAO.findAll();
+        User systemUser = userManagementService.getSystemUser();
+        List<BirthDeclaration> birthRecords;
+
+        Calendar cal = Calendar.getInstance();
+
+        /* January first of the year */
+        cal.set(year, 0, 1);
+        Date startDate = cal.getTime();
+
+        /* December 31st of the year */
+        cal.set(year, 11, 31);
+        Date endDate = cal.getTime();
+
+        for (DSDivision dsDivision : dsDivisionList) {
+            birthRecords = birthRegister.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
+                BirthDeclaration.State.ARCHIVED_CERT_PRINTED, systemUser);
+            int districtIndex = dsDivision.getDistrict().getDistrictUKey() - 1;
+            for (BirthDeclaration birthDeclaration : birthRecords) {
+                ChildInfo childInfo = birthDeclaration.getChild();
+                if (childInfo != null) {
+                    int gender = childInfo.getChildGender();
+                    Date date = childInfo.getDateOfBirth();
+                    int month = 0;
+                    int birthYear = 0;
+                    int lastYear = 0;
+                    if (date != null) {
+                        cal.setTime(date);
+                        month = cal.get(Calendar.MONTH);
+                        birthYear = cal.get(Calendar.YEAR);
+                        lastYear = year - 1;
+                    }
+                    int a = 0, b = 0, c = 0;
+                    if (birthYear == year) { // during this year
+                        districtYearStatisticsList[districtIndex].during_this_year_month_array[month][gender] += 1;
+                        districtYearStatisticsList[districtIndex].during_this_year_month_array[month][2] += 1;
+                        districtYearStatisticsList[districtIndex].total_year_month_array[month][gender] += districtYearStatisticsList[districtIndex].during_this_year_month_array[month][gender];
+                        districtYearStatisticsList[districtIndex].total_year_month_array[month][2] += districtYearStatisticsList[districtIndex].during_this_year_month_array[month][2];
+                    } else if (birthYear == lastYear) { // during last year
+                        districtYearStatisticsList[districtIndex].during_last_year_month_array[month][gender] += 1;
+                        districtYearStatisticsList[districtIndex].during_last_year_month_array[month][2] += 1;
+                        districtYearStatisticsList[districtIndex].total_year_month_array[month][gender] += districtYearStatisticsList[districtIndex].during_last_year_month_array[month][gender];
+                        districtYearStatisticsList[districtIndex].total_year_month_array[month][2] += districtYearStatisticsList[districtIndex].during_last_year_month_array[month][2];
+                    } else if (birthYear < lastYear) { // before last year
+                        districtYearStatisticsList[districtIndex].before_last_year_month_array[month][gender] += 1;
+                        districtYearStatisticsList[districtIndex].before_last_year_month_array[month][2] += 1;
+                        districtYearStatisticsList[districtIndex].total_year_month_array[month][gender] += districtYearStatisticsList[districtIndex].before_last_year_month_array[month][gender];
+                        districtYearStatisticsList[districtIndex].total_year_month_array[month][2] += districtYearStatisticsList[districtIndex].before_last_year_month_array[month][2];
+                    }
+                }
+            }
+        }
+
+        return statistics;
+    }
+
     /**
      * Creates a Standard CSV file from the generated IslandWide stats.
      * currently assumes. stats are already geneated.
@@ -820,25 +890,93 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                     csv.append((k + 13) + ",");
 
                     csv.append(sector_leg_total[k][2][2] + ",");
-                    csv.append((sector_leg_total[k][2][2] / checkZero(total_arr[0]))*100.0 + ",");
+                    csv.append((sector_leg_total[k][2][2] / checkZero(total_arr[0])) * 100.0 + ",");
                     csv.append(sector_leg_total[k][2][0] + ",,");
-                    csv.append((sector_leg_total[k][2][0] / checkZero(total_arr[0]))*100.0 + ",");
+                    csv.append((sector_leg_total[k][2][0] / checkZero(total_arr[0])) * 100.0 + ",");
                     csv.append(sector_leg_total[k][2][1] + ",");
-                    csv.append((sector_leg_total[k][2][1] / checkZero(total_arr[0]))*100.0 + ",");
+                    csv.append((sector_leg_total[k][2][1] / checkZero(total_arr[0])) * 100.0 + ",");
 
                     csv.append(sector_leg_total[k][0][2] + ",");
-                    csv.append((sector_leg_total[k][0][2] / checkZero(total_arr[0]))*100.0 + ",");
+                    csv.append((sector_leg_total[k][0][2] / checkZero(total_arr[0])) * 100.0 + ",");
                     csv.append(sector_leg_total[k][0][0] + ",");
-                    csv.append((sector_leg_total[k][0][0] / checkZero(total_arr[0]))*100.0 + ",");
+                    csv.append((sector_leg_total[k][0][0] / checkZero(total_arr[0])) * 100.0 + ",");
                     csv.append(sector_leg_total[k][0][1] + ",");
-                    csv.append((sector_leg_total[k][0][1] / checkZero(total_arr[0]))*100.0 + ",");
+                    csv.append((sector_leg_total[k][0][1] / checkZero(total_arr[0])) * 100.0 + ",");
 
                     csv.append(sector_leg_total[k][1][2] + ",");
-                    csv.append((sector_leg_total[k][1][2] / checkZero(total_arr[0]))*100.0 + ",");
+                    csv.append((sector_leg_total[k][1][2] / checkZero(total_arr[0])) * 100.0 + ",");
                     csv.append(sector_leg_total[k][1][0] + ",");
-                    csv.append((sector_leg_total[k][1][0] / checkZero(total_arr[0]))*100.0 + ",");
+                    csv.append((sector_leg_total[k][1][0] / checkZero(total_arr[0])) * 100.0 + ",");
                     csv.append(sector_leg_total[k][1][1] + ",");
-                    csv.append((sector_leg_total[k][1][1] / checkZero(total_arr[0]))*100.0 + ",");
+                    csv.append((sector_leg_total[k][1][1] / checkZero(total_arr[0])) * 100.0 + ",");
+                    csv.append("\n");
+                }
+
+                break;
+            case ReportCodes.TABLE_2_12:
+                filename = ReportCodes.TABLE_2_12_NAME + ".csv";
+
+                for (int k = 1; k < districtYearStatisticsList.length; k++) {
+                    District district = districtDAO.getDistrict(k);
+                    String districtName = "Unknown";
+                    if (district != null) {
+                        districtName = district.getEnDistrictName();
+                    }
+                    int all = 0, male = 0, female = 0;
+                    csv.append(districtName + "\n");
+                    csv.append("Before " + (year - 1) + ",");
+                    for (int l = 0; l < 12; l++) {
+                        csv.append(districtYearStatisticsList[k - 1].before_last_year_month_array[l][2] + ",");
+                        csv.append(districtYearStatisticsList[k - 1].before_last_year_month_array[l][0] + ",");
+                        csv.append(districtYearStatisticsList[k - 1].before_last_year_month_array[l][1] + ",");
+                        all += districtYearStatisticsList[k - 1].before_last_year_month_array[l][2];
+                        male += districtYearStatisticsList[k - 1].before_last_year_month_array[l][0];
+                        female += districtYearStatisticsList[k - 1].before_last_year_month_array[l][1];
+                    }
+                    csv.append(all + ",");
+                    csv.append(male + ",");
+                    csv.append(female + ",");
+                    all = 0;
+                    male = 0;
+                    female = 0;
+                    csv.append("\n");
+                    csv.append("During " + (year - 1) + ",");
+                    for (int l = 0; l < 12; l++) {
+                        csv.append(districtYearStatisticsList[k - 1].during_last_year_month_array[l][2] + ",");
+                        csv.append(districtYearStatisticsList[k - 1].during_last_year_month_array[l][0] + ",");
+                        csv.append(districtYearStatisticsList[k - 1].during_last_year_month_array[l][1] + ",");
+                        all += districtYearStatisticsList[k - 1].during_last_year_month_array[l][2];
+                        male += districtYearStatisticsList[k - 1].during_last_year_month_array[l][0];
+                        female += districtYearStatisticsList[k - 1].during_last_year_month_array[l][1];
+                    }
+                    csv.append(all + ",");
+                    csv.append(male + ",");
+                    csv.append(female + ",");
+                    all = 0;
+                    male = 0;
+                    female = 0;
+                    csv.append("\n");
+                    csv.append("During " + year + ",");
+                    for (int l = 0; l < 12; l++) {
+                        csv.append(districtYearStatisticsList[k - 1].during_this_year_month_array[l][2] + ",");
+                        csv.append(districtYearStatisticsList[k - 1].during_this_year_month_array[l][0] + ",");
+                        csv.append(districtYearStatisticsList[k - 1].during_this_year_month_array[l][1] + ",");
+                        all += districtYearStatisticsList[k - 1].during_this_year_month_array[l][2];
+                        male += districtYearStatisticsList[k - 1].during_this_year_month_array[l][0];
+                        female += districtYearStatisticsList[k - 1].during_this_year_month_array[l][1];
+                    }
+                    csv.append(all + ",");
+                    csv.append(male + ",");
+                    csv.append(female + ",");
+                    csv.append("\n");
+                    csv.append("Total,");
+
+                    for (int l = 0; l < 12; l++) {
+                        csv.append(districtYearStatisticsList[k - 1].total_year_month_array[l][2] + ",");
+                        csv.append(districtYearStatisticsList[k - 1].total_year_month_array[l][0] + ",");
+                        csv.append(districtYearStatisticsList[k - 1].total_year_month_array[l][1] + ",");
+                    }
+
                     csv.append("\n");
                 }
 
@@ -869,11 +1007,11 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         return null;
     }
 
-    private float checkZero (int i) {
+    private float checkZero(int i) {
         if (i == 0) {
             i = 1;
         }
-        return (float)i;
+        return (float) i;
     }
 
     private void handleException(String message, int code) {
@@ -1159,6 +1297,13 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 for (int k = 0; k < total_arr.length; k++) {
                     csv.append("," + total_arr[k]);
                     csv.append(",100.0");
+                }
+                csv.append("\n");
+                break;
+            case ReportCodes.TABLE_2_12:
+                csv.append("District / Year of Occurrence,,January,,,February,,,March,,,April,,,May,,,June,,,July,,,August,,,September,,,October,,,November,,,December,,,Total,\n");
+                for (int k = 0; k < 13; k++) {
+                    csv.append(",Total,Male,Female");
                 }
                 csv.append("\n");
                 break;
