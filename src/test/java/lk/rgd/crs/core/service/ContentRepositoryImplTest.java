@@ -15,7 +15,8 @@ public class ContentRepositoryImplTest extends TestCase {
 
         try {
             Runtime.getRuntime().exec("rm -rf /tmp/cr");
-        } catch (Exception ignore) {}
+        } catch (Exception ignore) {
+        }
 
         ContentRepository cr = new ContentRepositoryImpl("/tmp/cr");
 
@@ -25,13 +26,15 @@ public class ContentRepositoryImplTest extends TestCase {
         fos.close();
 
         int division = 1;
-        for (int i=1; i<=260; i++) {
+        String idUKey = null;
+        for (int i = 1; i <= 260; i++) {
+            idUKey = Integer.toString(i);
             if (i <= 255) {
-                String path = cr.storeFile(division, i, f);
-                Assert.assertEquals("/1/00/00/" + i ,path);
+                String path = cr.storeFile(division, idUKey, f);
+                Assert.assertEquals("/1/00/00/" + idUKey, path);
             } else {
-                String path = cr.storeFile(division, i, f);
-                Assert.assertEquals("/1/00/01/" + i, path);
+                String path = cr.storeFile(division, idUKey, f);
+                Assert.assertEquals("/1/00/01/" + idUKey, path);
             }
         }
 
@@ -40,15 +43,15 @@ public class ContentRepositoryImplTest extends TestCase {
 
         // test use of last directory for existing directory structure after re-initialization
         division = 1;
-        String path = cr.storeFile(division, 261, f);
-        Assert.assertEquals("/1/00/01/" + 261 ,path);
+        String path = cr.storeFile(division, Integer.toString(261), f);
+        Assert.assertEquals("/1/00/01/" + 261, path);
 
-        path = cr.storeFile(division, 262, f);
-        Assert.assertEquals("/1/00/01/" + 262 ,path);
+        path = cr.storeFile(division, Integer.toString(262), f);
+        Assert.assertEquals("/1/00/01/" + 262, path);
 
         // check update of the same idukey
-        path = cr.storeFile(division, 262, f);
-        Assert.assertEquals("/1/00/01/" + 262 ,path);
+        path = cr.storeFile(division, Integer.toString(262), f);
+        Assert.assertEquals("/1/00/01/" + 262, path);
 
     }
 }
