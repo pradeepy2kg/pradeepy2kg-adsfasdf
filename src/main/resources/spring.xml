@@ -228,7 +228,7 @@
         <constructor-arg ref="userLocationDAOImpl"/>
         <constructor-arg ref="userManagerService"/>
         <constructor-arg value="/data/scanned"/>
-        <constructor-arg value="image/tiff,image/png,image/gif,image/jpeg,image/pjpeg"/>
+        <constructor-arg value="image/tiff"/>
         <constructor-arg ref="mrDivisionDAOImpl"/>
         <constructor-arg ref="dsDivisionDAOImpl"/>
         <constructor-arg ref="districtDAOImpl"/>
