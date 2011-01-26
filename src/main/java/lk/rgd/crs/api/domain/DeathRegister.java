@@ -72,14 +72,24 @@ public class DeathRegister implements Serializable, Cloneable {
     public enum Type {
         NORMAL,  // 0 -  A normal death
 
-        SUDDEN,  // 1 - A sudden death
+        LATE,  // 1 - A sudden death
 
-        LATE_NORMAL,   // 2 - A late death registration for a normal death
+        SUDDEN,   // 2 - A late death registration for a sudden death
 
-        LATE_SUDDEN,   // 3 - A late death registration for a sudden death
-
-        MISSING   // 4 - A death of a missing person
+        MISSING   // 3 - A death of a missing person
     }
+
+/*        public enum Type {
+    NORMAL,  // 0 -  A normal death
+
+    SUDDEN,  // 1 - A sudden death
+
+    LATE_NORMAL,   // 2 - A late death registration for a normal death
+
+    LATE_SUDDEN,   // 3 - A late death registration for a sudden death
+
+    MISSING   // 4 - A death of a missing person
+}*/
 
     /**
      * This is an auto generated unique row identifier
