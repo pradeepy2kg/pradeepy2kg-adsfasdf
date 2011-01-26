@@ -60,6 +60,14 @@ public interface ReportsGenerator {
     public BirthIslandWideStatistics generate_2_11(int year, User user);
 
     /**
+     *
+     * @param year
+     * @param user
+     * @return
+     */
+    public BirthIslandWideStatistics generate_2_10(int year, User user);
+
+    /**
      * Creates a Standard CSV file from the generated IslandWide stats.
      * currently assumes. stats are already geneated.
      * // todo check if a CSV file already generated and avaialble for the given year.
