@@ -88,6 +88,8 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     private MarriageNotice.Type noticeType;
 
     private File scannedImage;
+    private String scannedImageContentType; // The content type of the file
+    private String scannedImageFileName; // The uploaded file name and path
 
     public MarriageRegistrationAction(MarriageRegistrationService marriageRegistrationService,
         MRDivisionDAO mrDivisionDAO, RaceDAO raceDAO, CountryDAO countryDAO,
@@ -514,7 +516,9 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     public String registerNewMarriage() {
         populateMuslimMarriageDetails();
         try {
-            marriageRegistrationService.addMarriageRegister(marriage, user, scannedImage);
+            marriageRegistrationService.addMarriageRegister(marriage, user, scannedImage, scannedImageFileName);
+            addActionMessage("uploaded file name " + scannedImageFileName);
+            addActionMessage("uploaded content type " + scannedImageContentType);
         } catch (CRSRuntimeException e) {
             addActionError(getText("error.marriageregister.registrationfailed"));
             return marriageRegistrationInit();
@@ -530,7 +534,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         //TODO: implement a single mothod allowing access only for adr and higher
         populateMuslimMarriageDetails();
         try {
-            marriageRegistrationService.addMarriageRegister(marriage, user, scannedImage);
+            marriageRegistrationService.addMarriageRegister(marriage, user, scannedImage, scannedImageFileName);
         } catch (CRSRuntimeException e) {
             addActionError(getText("error.marriageregister.registrationfailed"));
             return marriageRegistrationInit();
@@ -558,7 +562,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         populateRegistrationDetails(marriageRegister);
         populateMaleFemaleDetails(marriageRegister);
         try {
-            marriageRegistrationService.updateMarriageRegister(marriageRegister, user, scannedImage);
+            marriageRegistrationService.updateMarriageRegister(marriageRegister, user, scannedImage, scannedImageFileName);
         } catch (CRSRuntimeException e) {
             addActionError(getText("error.marriageregister.failedtoupdate"));
             return marriageRegistrationInit();
@@ -604,7 +608,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         populateRegistrationDetails(marriageRegister);
         populateMaleFemaleDetails(marriageRegister);
         try {
-            marriageRegistrationService.updateMarriageRegister(marriageRegister, user, scannedImage);
+            marriageRegistrationService.updateMarriageRegister(marriageRegister, user, scannedImage, scannedImageFileName);
         } catch (CRSRuntimeException e) {
             addActionError(getText("error.marriageregister.failedtoupdate"));
             return marriageRegistrationInit();
@@ -624,7 +628,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         }
         populateRegistrationDetails(marriageRegister);
         try {
-            marriageRegistrationService.updateMarriageRegister(marriageRegister, user, scannedImage);
+            marriageRegistrationService.updateMarriageRegister(marriageRegister, user, scannedImage, scannedImageFileName);
         } catch (CRSRuntimeException e) {
             addActionError(getText("error.marriageregister.registrationfailed"));
             return marriageRegistrationInit();
@@ -959,6 +963,22 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     public void setScannedImage(File scannedImage) {
         this.scannedImage = scannedImage;
+    }
+
+    public String getScannedImageContentType() {
+        return scannedImageContentType;
+    }
+
+    public void setScannedImageContentType(String scannedImageContentType) {
+        this.scannedImageContentType = scannedImageContentType;
+    }
+
+    public String getScannedImageFileName() {
+        return scannedImageFileName;
+    }
+
+    public void setScannedImageFileName(String scannedImageFileName) {
+        this.scannedImageFileName = scannedImageFileName;
     }
 }
 

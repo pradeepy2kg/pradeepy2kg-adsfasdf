@@ -14,5 +14,5 @@ public interface ContentRepository {
      * @param image the image file
      * @return the relative file path used to store the file
      */
-    public String storeFile(long division, long idUKey, File image);
+    public String storeFile(long division, String idUKey, File image);
 }

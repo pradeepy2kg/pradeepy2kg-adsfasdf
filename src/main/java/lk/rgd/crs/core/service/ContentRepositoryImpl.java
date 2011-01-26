@@ -55,7 +55,7 @@ public class ContentRepositoryImpl implements ContentRepository {
         this.startPos = contentRoot.length();
     }
 
-    public synchronized String storeFile(long division, long idUKey, File image) {
+    public synchronized String storeFile(long division, String idUKey, File image) {
 
         Holder holder = divisionMap.get(division);
         File nodeDir = holder != null ? holder.getDir() : null;
@@ -99,12 +99,14 @@ public class ContentRepositoryImpl implements ContentRepository {
             divisionMap.put(division, holder);
         }
 
-        String ext = ".tiff";
+        /*String ext = ".tiff";
         final int dotPos = ext.indexOf('.');
         if (dotPos != -1) {
             ext = ext.substring(dotPos);
         }
         File leafFile = new File(nodeDir, Long.toString(idUKey) + ext);
+        File leafFile = new File(nodeDir, Long.toString(idUKey));  */
+        File leafFile = new File(nodeDir,idUKey);
 
         try {
             if (!leafFile.exists() && leafFile.createNewFile()) {
