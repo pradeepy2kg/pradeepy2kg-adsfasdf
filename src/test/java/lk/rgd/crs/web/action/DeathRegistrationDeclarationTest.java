@@ -234,7 +234,7 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
 
 
     private Map userLogin(String username, String passwd) throws Exception {
-        request.setParameter("javaScript","true");
+        request.setParameter("javaScript", "true");
         request.setParameter("userName", username);
         request.setParameter("password", passwd);
         ActionProxy proxy = getActionProxy("/eprLogin.do");
@@ -401,8 +401,11 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
         //check request is populated
         compareApproveAndReject(correctData);
         assertEquals("No Action Errors", 0, deathAction.getActionErrors().size());
-        populate();
-        permissionToEditAndApprove();
+        if (deathAction.getWarnings() != null && deathAction.getWarnings().size() == 0) {
+            populate();
+            permissionToEditAndApprove();
+        }
+        //check process when warnings
     }
 
     private void settingApproveAndReject(String idUKey) {
