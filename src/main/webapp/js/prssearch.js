@@ -66,6 +66,12 @@ var Manager;
             field: 'passport'
         }));
 
+        Manager.addWidget(new AjaxSolr.TextWidget({
+            id: 'searchPOB',
+            target: '#searchPOB',
+            field: 'placeOfBirth'
+        }));
+
         Manager.addWidget(new AjaxSolr.AdvancedSearchWidget({
             id: 'searchAdvanced',
             target: '#searchAdvanced',
@@ -115,7 +121,7 @@ var Manager;
         }));
         
         Manager.addWidget(new AjaxSolr.TextWidget({
-            id: 'searchLastEmail',
+            id: 'searchEmail',
             target: '#searchEmail',
             field: 'email'
         }));

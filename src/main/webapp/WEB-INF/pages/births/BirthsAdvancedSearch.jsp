@@ -35,6 +35,7 @@
 <script type="text/javascript" src="../lib/ajaxsolr/widgets/TagcloudWidget.js"></script>
 <script type="text/javascript" src="../lib/ajaxsolr/widgets/CurrentSearchWidget.js"></script>
 <script type="text/javascript" src="../lib/ajaxsolr/widgets/TextWidget.js"></script>
+<script type="text/javascript" src="../lib/ajaxsolr/widgets/TermTextWidget.js"></script>
 
 <script type="text/javascript" src="../lib/daterangepicker/daterangepicker.jQuery.js"></script>
 <link rel="stylesheet" href="../css/ui.daterangepicker.css" type="text/css"/>
@@ -68,32 +69,24 @@
             <div id="fragment-1">
                 <table>
                     <tr>
-                        <div id="searchPIN">
-                            <td><span>Search PIN Number</span></td>
-                            <td><input type="text" id="queryPIN" name="queryPIN" maxlength="10"/></td>
-                        </div>
+                        <td><span>Search PIN Number</span></td>
+                        <td><div id="searchPIN"><input type="text" id="queryPIN" name="queryPIN" maxlength="10"/></div></td>
                     </tr>
                     <tr>
-                        <div id="searchMothersNICorPIN">
-                            <td><span>Search by Mothers NIC or PIN</span></td>
-                            <td><input type="text" id="queryMothersNICorPIN" name="queryMothersNICorPIN" maxlength="10"/></td>
-                        </div>
+                        <td><span>Search by Mothers NIC or PIN</span></td>
+                        <td><div id="searchMothersNICorPIN"><input type="text" id="queryMothersNICorPIN" name="queryMothersNICorPIN" maxlength="10"/></div></td>
                     </tr>
                 </table>
             </div>
             <div id="fragment-2">
                 <table>
                     <tr>
-                        <div id="searchEnglish">
-                            <td><span>Search full name in English</span></td>
-                            <td><input type="text" id="queryEnglish" name="queryEnglish"/></td>
-                        </div>
+                        <td><span>Search full name in English</span></td>
+                        <td><div id="searchEnglish"><input type="text" id="queryEnglish" name="queryEnglish"/></div></td>
                     </tr>
                     <tr>
-                        <div id="searchOfficial">
-                            <td><span>Search full name in Official Language</span></td>
-                            <td><input type="text" id="queryOfficial" name="queryOfficial"/></td>
-                        </div>
+                        <td><span>Search full name in Official Language</span></td>
+                        <td><div id="searchOfficial"><input type="text" id="queryOfficial" name="queryOfficial"/></div></td>
                     </tr>
                 </table>
             </div>
@@ -124,18 +117,14 @@
             <div id="fragment-6">
                 <table>
                     <tr>
-                        <div id="searchDOBRange">
-                            <td><span>Choose Date of Birth Range</span></td>
-                            <td><input type="text" id="queryDOBRange" name="queryDOBRange"/></td>
-                        </div>
+                        <td><span>Choose Date of Birth Range</span></td>
+                        <td><div id="searchDOBRange"><input type="text" id="queryDOBRange" name="queryDOBRange"/></div></td>
                     </tr>
                 </table>
             </div>
             <div id="fragment-7">
-                <div id="searchAdvanced">
-                    <span>Advanced Search</span>
-                    <input type="text" id="queryAdvanced" name="queryAdvanced" size="117" style="text-transform:none;"/>
-                </div>
+                <span>Advanced Search</span>
+                <div id="searchAdvanced"><input type="text" id="queryAdvanced" name="queryAdvanced" size="117" style="text-transform:none;"/></div>
             </div>
         </div>
 
