@@ -30,8 +30,8 @@
         }
 
         //validate Male/Female
-        errormsg = validateSelectOption("maleRace", "errorMaleRace", errormsg);
-        errormsg = validateSelectOption("femaleRace", "errorFemaleRace", errormsg);
+        errormsg = validateSelectOption("raceMale", "errorMaleRace", errormsg);
+        errormsg = validateSelectOption("raceFemale", "errorFemaleRace", errormsg);
 
         //errormsg = validateEmptyField("malePIN", "errorMalePIN", errormsg);
         //errormsg = validateEmptyField("femalePIN", "errorFemalePIN", errormsg);
@@ -423,24 +423,24 @@
     </td>
     <td>
         <s:if test="mode=='register'">
-            <s:select id="maleRace" list="raceList" name="marriage.male.maleRace.raceId" headerKey="0"
+            <s:select id="raceMale" list="raceList" name="marriage.male.maleRace.raceId" headerKey="0"
                       headerValue="%{getText('select_race.label')}"
                       cssStyle="width:200px;" disabled="true"/>
         </s:if>
         <s:else>
-            <s:select id="maleRace" list="raceList" name="marriage.male.maleRace.raceId" headerKey="0"
+            <s:select id="raceMale" list="raceList" name="marriage.male.maleRace.raceId" headerKey="0"
                       headerValue="%{getText('select_race.label')}"
                       cssStyle="width:200px;"/>
         </s:else>
     </td>
     <td>
         <s:if test="mode=='register'">
-            <s:select id="femaleRace" list="raceList" name="marriage.female.femaleRace.raceId" headerKey="0"
+            <s:select id="raceFemale" list="raceList" name="marriage.female.femaleRace.raceId" headerKey="0"
                       headerValue="%{getText('select_race.label')}"
                       cssStyle="width:200px;" disabled="true"/>
         </s:if>
         <s:else>
-            <s:select id="femaleRace" list="raceList" name="marriage.female.femaleRace.raceId" headerKey="0"
+            <s:select id="raceFemale" list="raceList" name="marriage.female.femaleRace.raceId" headerKey="0"
                       headerValue="%{getText('select_race.label')}"
                       cssStyle="width:200px;"/>
         </s:else>
