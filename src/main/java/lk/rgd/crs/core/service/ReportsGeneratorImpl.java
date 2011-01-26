@@ -45,7 +45,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
     private int[][] age_race_total;
     private int[][] table_2_4;
     private int[][] age_district_total;
-    private int[][] district_race_total;
+    private int[][][] month_race_total;
     private int year;
 
     public ReportsGeneratorImpl(BirthRegistrationService birthRegister, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, RaceDAO raceDAO, UserManager service) {
@@ -57,7 +57,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         age_race_total = new int[BirthMonthlyStatistics.NO_OF_RACES][BirthRaceStatistics.NO_OF_AGE_GROUPS];
         table_2_4 = new int[26][15];
         age_district_total = new int[BirthIslandWideStatistics.NO_OF_DISTRICTS][BirthRaceStatistics.NO_OF_AGE_GROUPS];
-        
+        month_race_total = new int[BirthDistrictStatistics.NO_OF_MONTHS][BirthMonthlyStatistics.NO_OF_RACES][3];
     }
 
     /**
@@ -454,6 +454,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
     }
 
     public BirthIslandWideStatistics generate_2_11(int year, User user) {
+        month_race_total = new int[BirthDistrictStatistics.NO_OF_MONTHS][BirthMonthlyStatistics.NO_OF_RACES][3];
         this.year = year;
         if (!user.isAuthorized(Permission.GENERATE_REPORTS)) {
             handleException(user.getUserId() + " doesn't have permission to generate the report",
@@ -477,11 +478,25 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         for (DSDivision dsDivision : dsDivisionList) {
             birthRecords = birthRegister.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
                 BirthDeclaration.State.ARCHIVED_CERT_PRINTED, systemUser);
-            int districtId = dsDivision.getDistrict().getDistrictUKey() - 1;
             for (BirthDeclaration birthDeclaration : birthRecords) {
+                ChildInfo childInfo = birthDeclaration.getChild();
+                ParentInfo parentInfo = birthDeclaration.getParent();
+                int monthId = childInfo.getDateOfBirth().getMonth();
 
+                if (childInfo != null && parentInfo != null) {
+                    int raceId = 13;
+                    if (parentInfo.getFatherRace() != null) {
+                        raceId = parentInfo.getFatherRace().getRaceId();
+                    }
+                    int gender = childInfo.getChildGender();
+                    if (gender == 0 || gender == 1) {
+                        month_race_total[monthId][raceId - 1][gender] += 1;
+                        month_race_total[monthId][raceId - 1][2] += 1;
+                    }
+                }
             }
         }
+        logger.debug("j");
         return statistics;
     }
 
@@ -685,7 +700,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                     csv.append(districtName + ",");
                     int dis_total = 0, dis_male = 0, dis_female = 0;
                     List<BirthChildRankStatistics> bcs = bds.birthOrder;
-                    for(BirthChildRankStatistics rankStat : bcs) {
+                    for (BirthChildRankStatistics rankStat : bcs) {
                         csv.append(rankStat.getMaleTotal() + ",");
                         csv.append(rankStat.getFemaleTotal() + ",");
                         csv.append(rankStat.getTotal() + ",");
@@ -698,6 +713,29 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                     csv.append("\n");
                     i++;
                 }
+                break;
+            case ReportCodes.TABLE_2_11:
+                filename = ReportCodes.TABLE_2_11_NAME + ".csv";
+                String months[] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+                for (int u = 0; u < months.length; u++) {
+                    int rTotal = 0, rMale = 0, rFemale = 0;
+                    csv.append(months[u]);
+                    for (int v = 0; v < BirthMonthlyStatistics.NO_OF_RACES; v++) {
+                        csv.append("," + month_race_total[u][v][0]);
+                        csv.append("," + month_race_total[u][v][1]);
+                        csv.append("," + month_race_total[u][v][2]);
+                        rTotal += month_race_total[u][v][2];
+                        rMale += month_race_total[u][v][0];
+                        rFemale += month_race_total[u][v][1];
+                    }
+                    csv.append("," + rMale);
+                    csv.append("," + rFemale);
+                    csv.append("," + rTotal);
+                    csv.append("\n");
+                }
+
+
+                break;
 
         }
 
@@ -929,7 +967,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 }
                 csv.append(",Total,,");
                 csv.append("\n,");
-                for(int c = 0; c < 10; c++) {
+                for (int c = 0; c < 10; c++) {
                     csv.append("male,female,total,");
                 }
                 csv.append("male,female,total");
@@ -939,15 +977,51 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 for (int k = 0; k < 10; k++) {
                     for (int l = 0; l < 3; l++) {
                         csv.append("," + array[k][l]);
-                        if(l == 2)
+                        if (l == 2) {
                             dis_total += array[k][l];
-                        if(l == 0)
+                        }
+                        if (l == 0) {
                             dis_male += array[k][l];
-                        if(l == 1)
+                        }
+                        if (l == 1) {
                             dis_female += array[k][l];
+                        }
                     }
                 }
-                csv.append(","+dis_male+","+dis_female+"," + dis_total);
+                csv.append("," + dis_male + "," + dis_female + "," + dis_total);
+                csv.append("\n");
+                break;
+            case ReportCodes.TABLE_2_11:
+                csv.append("Month");
+                for (int c = 1; c < BirthMonthlyStatistics.NO_OF_RACES + 1; c++) {
+                    csv.append(",," + raceDAO.getNameByPK(c, "en") + ",");
+                }
+                csv.append(",,Total,");
+                csv.append("\n,");
+                for (int c = 1; c < BirthMonthlyStatistics.NO_OF_RACES + 1; c++) {
+                    csv.append("male,female,total,");
+                }
+                csv.append("male,female,total,");
+                csv.append("\n");
+                csv.append("All Months");
+                int oMale = 0, oFemale = 0, oTotal = 0;
+                for (int d = 0; d < BirthMonthlyStatistics.NO_OF_RACES; d++) {
+                    int rTotal = 0, rMale = 0, rFemale = 0;
+                    for (int c = 0; c < BirthDistrictStatistics.NO_OF_MONTHS; c++) {
+                        rMale += month_race_total[c][d][0];
+                        rFemale += month_race_total[c][d][1];
+                        rTotal += month_race_total[c][d][2];
+                    }
+                    csv.append("," + rMale);
+                    csv.append("," + rFemale);
+                    csv.append("," + rTotal);
+                    oMale += rMale;
+                    oFemale += rFemale;
+                    oTotal += rTotal;
+                }
+                csv.append("," + oMale);
+                csv.append("," + oFemale);
+                csv.append("," + oTotal);
                 csv.append("\n");
                 break;
         }
