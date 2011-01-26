@@ -81,7 +81,7 @@ public class StatisticsManagerImpl implements StatisticsManager {
     @Transactional(propagation = Propagation.NEVER)
     public void runScheduledStatJobs() {
         logger.info("Start executing Statistics related scheduled tasks..");
-
+        statisticsList = new ArrayList<Statistics>();
         populateAllUserLists();
 
         calculateDEOStatistics();
