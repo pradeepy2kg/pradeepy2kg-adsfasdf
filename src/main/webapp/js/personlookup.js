@@ -10,6 +10,7 @@ function personLookup(pin, type) {
                     if (maleDOB != null) {
                         $("input#dateOfBirth" + type).val(maleDOB);
                     }
+                    $("select#race" + type).val(data1.race);
                 });
 }
 
