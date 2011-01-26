@@ -99,7 +99,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
                 fileName = fileName.substring(dotPos);
             }
             marriageRegister.setScannedImagePath(contentRepository.storeFile(marriageRegister.getMrDivision().
-                getMrDivisionUKey(), marriageRegister.getIdUKey() + fileName, scannedImage));
+                getMrDivisionUKey(), marriageRegister.getIdUKey() + fileName.toLowerCase(), scannedImage));
             marriageRegistrationDAO.updateMarriageRegister(marriageRegister, user);
         }
     }
