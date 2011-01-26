@@ -148,12 +148,21 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     }
 
     /**
-     * loading search page for marriage register
+     * loading search result page for marriage register
      */
     public String marriageRegisterSearchInit() {
         commonUtil.populateDynamicListsWithAllOption(districtList, dsDivisionList, mrDivisionList, user, language);
         stateList = StateUtil.getStateByLanguage(language);
         return marriageRegisterSearchResult();
+    }
+
+    /**
+     * loading search  page for marriage register
+     */
+    public String marriageRegisterSearchPageLoad() {
+        commonUtil.populateDynamicListsWithAllOption(districtList, dsDivisionList, mrDivisionList, user, language);
+        stateList = StateUtil.getStateByLanguage(language);
+        return SUCCESS;
     }
 
     /**
