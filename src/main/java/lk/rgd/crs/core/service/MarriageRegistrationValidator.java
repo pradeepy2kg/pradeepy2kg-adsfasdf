@@ -230,7 +230,7 @@ public class MarriageRegistrationValidator {
      * @param type     type of the second notice
      * @return
      */
-    public List<UserWarning> validateAddingSecondNoticeAndEdit(MarriageRegister existing, MarriageNotice.Type type,User user) {
+    public List<UserWarning> validateAddingSecondNoticeAndEdit(MarriageRegister existing, MarriageNotice.Type type, User user) {
         List<UserWarning> warning = new ArrayList<UserWarning>();
         //if second notice is a MALE notice and if its records current state is FEMALE_NOTICE_APPROVED and
         //second notice is nominating that female should get the notice and vise-versa
@@ -270,4 +270,30 @@ public class MarriageRegistrationValidator {
         logger.error(msg);
         throw new CRSRuntimeException(msg, errorCode);
     }
+
+    //TODO to be generalized
+    public void validateMarriageRegisterSerialNumber(long serialNumber, MRDivision mrDivision) {
+        boolean check = false;
+        if (serialNumber >= 2010000001L && serialNumber <= 2099199999L) {
+            String s = Long.toString(serialNumber);
+            if (!s.matches(SERIAL_NUMBER_PATTERN)) {
+                check = true;
+            }
+        } else {
+            check = true;
+        }
+        if (check) {
+            handleException("invalid serial number " + serialNumber + "unable to add marriage notice",
+                ErrorCodes.INVALID_SERIAL_NUMBER);
+        }
+
+        List<MarriageRegister> existingRecord = marriageRegistrationDAO.getMarriageRegisterBySerialAndMRDivision(
+            serialNumber, mrDivision);
+        if (existingRecord.size() != 0) {
+            handleException("serial number duplication  " + serialNumber + " for marriage division " +
+                mrDivision.getEnDivisionName(),
+                ErrorCodes.DUPLICATE_SERIAL_NUMBER);
+        }
+    }
+
 }

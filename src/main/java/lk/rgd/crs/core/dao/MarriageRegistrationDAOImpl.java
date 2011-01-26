@@ -448,4 +448,16 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
         q.setParameter("endDate", end);
         return q.getResultList();
     }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<MarriageRegister> getMarriageRegisterBySerialAndMRDivision(long serialNumber,
+        MRDivision mrDivision) {
+        Query q = em.createNamedQuery("getMarriageRegisterBySerialAndMRDivision");
+        q.setParameter("serialNumber", serialNumber);
+        q.setParameter("mrDivision", mrDivision);
+        return q.getResultList();
+    }
 }

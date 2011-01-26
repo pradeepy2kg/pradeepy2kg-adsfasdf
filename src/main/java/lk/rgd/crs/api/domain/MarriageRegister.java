@@ -133,7 +133,7 @@ import java.util.Date;
         "WHERE mr.lifeCycleInfo.activeRecord IS TRUE " +
         "AND mr.idUKey = :idUKey " +
         "AND mr.state IN (:stateList)"),
-        //TODO: to be removed
+    //TODO: to be removed
     @NamedQuery(name = "findMarriageBySerialNumber", query = "SELECT mr FROM MarriageRegister mr " +
         "WHERE mr.lifeCycleInfo.activeRecord IS TRUE " +
         "AND mr.serialNumber = :serialNumber " +
@@ -147,7 +147,13 @@ import java.util.Date;
         "ORDER BY mr.idUKey DESC "),
 
     @NamedQuery(name = "get.mr.by.createdUser", query = "SELECT mr FROM MarriageRegister mr " +
-        " WHERE mr.lifeCycleInfo.createdUser =:user AND (mr.lifeCycleInfo.createdTimestamp BETWEEN :startDate AND :endDate)")
+        " WHERE mr.lifeCycleInfo.createdUser =:user AND (mr.lifeCycleInfo.createdTimestamp BETWEEN :startDate AND :endDate)"),
+
+    @NamedQuery(name = "getMarriageRegisterBySerialAndMRDivision", query = "SELECT mr FROM MarriageRegister mr " +
+        "WHERE mr.lifeCycleInfo.activeRecord IS TRUE " +
+        "AND mr.serialNumber IS NOT NULL AND mr.serialNumber = :serialNumber " +
+        "AND mr.mrDivision IS NOT NULL AND mr.mrDivision = :mrDivision")
+
 })
 public class MarriageRegister implements Serializable, Cloneable {
     //todo add divorce related col
@@ -207,12 +213,12 @@ public class MarriageRegister implements Serializable, Cloneable {
     private TypeOfMarriagePlace typeOfMarriagePlace;
 
     @Column(name = "REG_MIN_PIN")
-    private String  registrarOrMinisterPIN;
+    private String registrarOrMinisterPIN;
 
     //TODO: colum name - to be renamed to SERIAL_NUMBER
     //TODO: convert to integer
     @Column(length = 10, name = "REG_SERIAL", nullable = true)
-    private String serialNumber;
+    private long serialNumber;
 
     @Column(name = "MARRIAGE_DATE", nullable = true)
     @Temporal(value = TemporalType.DATE)
@@ -478,12 +484,12 @@ public class MarriageRegister implements Serializable, Cloneable {
         this.serialOfFemaleNotice = serialOfFemaleNotice;
     }
 
-    public String getSerialNumber() {
+    public long getSerialNumber() {
         return serialNumber;
     }
 
-    public void setSerialNumber(String serialNumber) {
-        this.serialNumber = WebUtils.filterBlanks(serialNumber);
+    public void setSerialNumber(long serialNumber) {
+        this.serialNumber = serialNumber;
     }
 
     public Date getRegistrationDate() {

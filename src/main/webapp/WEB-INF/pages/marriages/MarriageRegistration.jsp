@@ -48,7 +48,7 @@
         errormsg = validateSerialNo("serialNumber", "errorSerialNumber", errormsg);
 
         //todo: validate Path exists
-        errormsg = validateEmptyField("scannedImage", "errorscannedImage", errormsg);
+       // errormsg = validateEmptyField("scannedImage", "errorscannedImage", errormsg);
 
         ////errormsg = isDate("registrationDatePicker", "errorRegistrationDate", errormsg);
         return printErrorMessages(errormsg);
@@ -660,6 +660,7 @@
     <tr>
         <td class="font-8">
             පරිලෝකනය කරන ලද පිටපත
+            <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
             <br>Scanned Image in ta
             <br>Scanned Image
         </td>

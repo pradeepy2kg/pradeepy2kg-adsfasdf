@@ -35,8 +35,8 @@ public interface MarriageRegistrationDAO {
     /**
      * get marriage register primary key and state.
      *
-     * @param idUKey primary key of the record
-     * @param stateList  possible states of the marriage register
+     * @param idUKey    primary key of the record
+     * @param stateList possible states of the marriage register
      * @return
      */
     public MarriageRegister getMarriageRegisterByIdUKeyAndState(long idUKey, EnumSet<MarriageRegister.State> stateList);
@@ -332,4 +332,14 @@ public interface MarriageRegistrationDAO {
      * @param end   @return list of Marriage Registrations
      */
     public List<MarriageRegister> getByCreatedUser(User user, Date start, Date end);
+
+    /**
+     * Find marriage register by the Serial Number and the MR division
+     *
+     * @param serialNumber Serial Number of the marriage register
+     * @param mrDivision   MR division of the marriage register
+     * @return
+     */
+    public List<MarriageRegister> getMarriageRegisterBySerialAndMRDivision(long serialNumber,
+        MRDivision mrDivision);
 }
