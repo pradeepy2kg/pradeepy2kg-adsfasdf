@@ -95,7 +95,7 @@
 
         <action name="eprShowStatistics" class="lk.rgd.crs.web.action.UserPreferencesAction" method="showStatistics">
             <interceptor-ref name="default"/>
-            <result type="tiles" name="success" >epr.home</result>
+            <result type="tiles" name="success">epr.home</result>
         </action>
 
     </package>
@@ -648,10 +648,28 @@
             <result type="tiles" name="success">epr.deathDeclaration_form1</result>
         </action>
 
+        <action name="eprInitSuddenDeathDeclaration" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
+                method="initDeathDeclaration">
+            <param name="pageType">2</param>
+            <result type="tiles" name="success">epr.deathDeclaration_form1</result>
+        </action>
+
+        <action name="eprInitMissingPersonDeclaration" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
+                method="initDeathDeclaration">
+            <param name="pageType">3</param>
+            <result type="tiles" name="success">epr.deathDeclaration_form1</result>
+        </action>
+
+
         <action name="eprLateDeathDeclaration" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
                 method="lateDeath">
             <result type="tiles" name="success">epr.home</result>
             <result type="tiles" name="error">epr.error</result>
+        </action>
+
+        <action name="eprDeathEditMode" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
+                method="deathDeclarationEditMode">
+            <result type="tiles" name="success">epr.deathDeclaration_form1</result>
         </action>
 
         <action name="eprDeathCertificate" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
@@ -679,7 +697,7 @@
             <result type="tiles" name="success">epr.deathApproveAndPrint</result>
         </action>
         <!--todo-->
-        <action name="eprDeathEditMode" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
+        <action name="eprDeathEditMoe" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
                 method="deathDeclarationEditMode">
             <result type="tiles" name="success">epr.deathDeclaration_form1</result>
         </action>
