@@ -516,7 +516,6 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         populateMuslimMarriageDetails();
         try {
             marriageRegistrationService.addMarriageRegister(marriage, user, scannedImage, scannedImageFileName);
-            addActionMessage("uploaded file name " + scannedImageFileName);
         } catch (CRSRuntimeException e) {
             addActionError(getText("error.marriageregister.registrationfailed"));
             return marriageRegistrationInit();

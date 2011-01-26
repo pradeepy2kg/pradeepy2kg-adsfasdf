@@ -45,8 +45,11 @@
         errormsg = validateEmptyField("nameOfficialFemale", "errorNameOfficialFemale", errormsg);
         errormsg = validateEmptyField("addressMale", "errorAddressMale", errormsg);
         errormsg = validateEmptyField("addressFemale", "errorAddressFemale", errormsg);
-
         errormsg = validateSerialNo("serialNumber", "errorSerialNumber", errormsg);
+
+        //todo: validate Path exists
+        errormsg = validateEmptyField("scannedImage", "errorscannedImage", errormsg);
+
         ////errormsg = isDate("registrationDatePicker", "errorRegistrationDate", errormsg);
         return printErrorMessages(errormsg);
     }
@@ -661,7 +664,7 @@
             <br>Scanned Image
         </td>
         <td colspan="3">
-            <s:file name="scannedImage"/>
+            <s:file name="scannedImage" id="scannedImage"/>
         </td>
     </tr>
     <s:if test="mode=='reject'">
@@ -742,5 +745,8 @@
 
 <s:hidden id="errorSerialNumber"
           value="%{getText('error.invalid') + getText('error_js_marriageregister_serialNumber')}"/>
+
+<s:hidden id="errorscannedImage"
+          value="%{getText('error.invalid') + getText('error_js_marriageregister_scannedImage')}"/>
 
 </div>
