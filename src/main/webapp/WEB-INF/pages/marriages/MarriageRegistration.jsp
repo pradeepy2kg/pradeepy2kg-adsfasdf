@@ -97,9 +97,9 @@
         </td>
         <td>
             <img src="<s:url value="/images/alphabet-V.gif" />"
-                 id="NIC_V" onclick="javascript:addXorV('regPIN','V','errorOnXOrVOfRegistrarPIN');">
+                 id="NIC_V" onclick="javascript:addXorV('regPIN','V','errorOnXOrVOfPIN');">
             <img src="<s:url value="/images/alphabet-X.gif" />"
-                 id="NIC_X" onclick="javascript:addXorV('regPIN','X','errorOnXOrVOfRegistrarPIN');">
+                 id="NIC_X" onclick="javascript:addXorV('regPIN','X','errorOnXOrVOfPIN');">
             <br>
             <s:if test="marriage.registrarOrMinisterPIN==0">
                 <s:textfield name="marriage.registrarOrMinisterPIN" id="regPIN" maxLength="10" value=""/>
@@ -327,6 +327,11 @@
             <s:textfield name="marriage.male.identificationNumberMale" id="malePIN" maxLength="10" disabled="true"/>
         </s:if>
         <s:else>
+            <img src="<s:url value="/images/alphabet-V.gif" />"
+                 id="NIC_V" onclick="javascript:addXorV('malePIN','V','errorOnXOrVOfPIN');">
+            <img src="<s:url value="/images/alphabet-X.gif" />"
+                 id="NIC_X" onclick="javascript:addXorV('malePIN','X','errorOnXOrVOfPIN');">
+            <br>
             <s:textfield name="marriage.male.identificationNumberMale" id="malePIN" maxLength="10"/>
             <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="male_lookup"
                  onclick="personLookup('malePIN', 'Male');">
@@ -338,6 +343,11 @@
                          disabled="true"/>
         </s:if>
         <s:else>
+            <img src="<s:url value="/images/alphabet-V.gif" />"
+                 id="NIC_V" onclick="javascript:addXorV('femalePIN','V','errorOnXOrVOfPIN');">
+            <img src="<s:url value="/images/alphabet-X.gif" />"
+                 id="NIC_X" onclick="javascript:addXorV('femalePIN','X','errorOnXOrVOfPIN');">
+            <br>
             <s:textfield name="marriage.female.identificationNumberFemale" id="femalePIN" maxLength="10"/>
             <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="female_lookup"
                  onclick="personLookup('femalePIN', 'Female');">
@@ -389,11 +399,11 @@
         <s:else>
             <s:if test="marriage.male.ageAtLastBirthDayMale==0">
                 <s:textfield name="marriage.male.ageAtLastBirthDayMale" id="ageMale" maxLength="3" value=""
-                        onfocus="calculateAge('dateOfBirthMale','ageMale');"/>
+                             onfocus="calculateAge('dateOfBirthMale','ageMale');"/>
             </s:if>
             <s:else>
                 <s:textfield name="marriage.male.ageAtLastBirthDayMale" id="ageMale" maxLength="3"
-                        onfocus="calculateAge('dateOfBirthMale','ageMale');"/>
+                             onfocus="calculateAge('dateOfBirthMale','ageMale');"/>
             </s:else>
         </s:else>
     </td>
@@ -408,7 +418,7 @@
             </s:if>
             <s:else>
                 <s:textfield name="marriage.female.ageAtLastBirthDayFemale" id="ageFemale" maxLength="3"
-                         onfocus="calculateAge('dateOfBirthFemale','ageFemale');"/>
+                             onfocus="calculateAge('dateOfBirthFemale','ageFemale');"/>
             </s:else>
         </s:else>
 
@@ -694,7 +704,7 @@
     </s:else>
 </div>
 </s:form>
-<s:hidden id="errorOnXOrVOfRegistrarPIN" value="%{getText('NIC.error.add.VX')}"/>
+<s:hidden id="errorOnXOrVOfPIN" value="%{getText('NIC.error.add.VX')}"/>
 
 <s:hidden id="errorMarriageDate"
           value="%{getText('error.invalid') + getText('error_js_marriageregister_marriagedate')}"/>
