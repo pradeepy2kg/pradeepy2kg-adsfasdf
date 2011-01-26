@@ -1554,7 +1554,7 @@
         </action>
 
         <action name="eprDivorce" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
-                method="markMarriageExtractAsPrinted">
+                method="divorce">
             <result name="success" type="tiles">epr.success</result>
             <result name="error" type="tiles">epr.error</result>
         </action>

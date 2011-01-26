@@ -290,7 +290,7 @@
                                         <img src="<s:url value='/images/print_icon.gif'/>" border="none" height="25"/>
                                     </s:a>
                                 </s:if>
-                                <s:elseif test="(state.ordinal()!=10)">   <%-- If Not rejected  --%>
+                                <s:elseif test="(state.ordinal()!=10 && state.ordinal()!=12)">   <%-- If Not rejected  --%>
                                     <%-- Edit  --%>
                                     <s:if test="serialNumber==null">
                                         <s:url id="editSelected" action="eprMarriageRegistrationInit.do">
@@ -331,7 +331,8 @@
                                 </s:elseif>
 
                                 <%-- View  --%>
-                                <s:if test="(state.ordinal()==9|| state.ordinal()==10 || state.ordinal()==11)"><%-- Registration rejected, approved or Extract Printed --%>
+                                <s:if test="(state.ordinal()==9|| state.ordinal()==10 || state.ordinal()==11 ||
+                                 state.ordinal()==12)"><%-- Registration rejected, approved or Extract Printed --%>
                                     <s:url id="view" action="eprViewMarriageRegister.do">
                                         <s:param name="idUKey" value="idUKey"/>
                                         <s:param name="mode">view</s:param>
