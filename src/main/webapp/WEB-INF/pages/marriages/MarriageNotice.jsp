@@ -12,6 +12,21 @@
 
 <script type="text/javascript">
 function initPage() {
+    var noticeType = document.getElementById('notice_type').value;
+    if (noticeType == "BOTH_NOTICE" || noticeType == "MALE_NOTICE") {
+        document.getElementById('maleNotFound').innerHTML = "";
+    }
+    if (noticeType == "BOTH_NOTICE" || noticeType == "FEMALE_NOTICE") {
+        document.getElementById('femaleNotFound').innerHTML = "";
+    }
+    var femaleNot = document.getElementById('femaleNotFoundError').value;
+    var maleNot = document.getElementById('maleNotFoundError').value;
+    if (femaleNot == "true") {
+        document.getElementById('femaleNotFound').innerHTML = document.getElementById('notFound').value;
+    }
+    if (maleNot == "true") {
+        document.getElementById('maleNotFound').innerHTML = document.getElementById('notFound').value;
+    }
 }
 
 var errormsg = "";
@@ -52,7 +67,7 @@ function validate() {
             printMessage("text_id_male", "text_must_fill")
         }
         else {
-            validatePINorNIC(domObject, "text_invalid_data", "text_id_male")
+            validatePIN(domObject, "text_invalid_data", "text_id_male")
         }
 
         domObject = document.getElementById('date_of_birth_male');
@@ -113,7 +128,7 @@ function validate() {
             printMessage("text_id_female", "text_must_fill")
         }
         else {
-            validatePINorNIC(domObject, "text_invalid_data", "text_id_female")
+            validatePIN(domObject, "text_invalid_data", "text_id_female")
         }
 
         domObject = document.getElementById('date_of_birth_female');
@@ -603,6 +618,9 @@ $('select#dsDivisionId').bind('change', function(evt2) {
         </td>
         <td colspan="2">
             <s:textfield name="marriage.male.identificationNumberMale" id="identification_male" maxLength="10"/>
+            <br>
+
+            <div id="maleNotFound" style="color:red; font-size:11pt"/>
         </td>
         </td>
         <td colspan="1">
@@ -858,6 +876,9 @@ $('select#dsDivisionId').bind('change', function(evt2) {
         </td>
         <td colspan="2">
             <s:textfield name="marriage.female.identificationNumberFemale" id="identification_female" maxLength="10"/>
+            <br>
+
+            <div id="femaleNotFound" style="color:red; font-size:11pt"/>
         </td>
         </td>
         <td colspan="1">
@@ -1129,7 +1150,11 @@ $('select#dsDivisionId').bind('change', function(evt2) {
 
 <%--additional validations--%>
 <s:hidden id="text_select_how_collect_license" value="%{getText('field.how.collect.license')}"/>
+
 <s:hidden id="text_select_proffered_language" value="%{getText('field.what.is.the.pref.language')}"/>
+<s:hidden id="notFound" value="%{getText('message.unable.to.find.person.for.given.pin')}"/>
+<s:hidden id="maleNotFoundError" value="%{malePartyNotFound}"/>
+<s:hidden id="femaleNotFoundError" value="%{femalePartyNotFound}"/>
 </div>
 
 

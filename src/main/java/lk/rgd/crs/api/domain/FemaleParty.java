@@ -16,8 +16,8 @@ import java.util.Date;
 public class FemaleParty {
 
     @Column(name = "F_IDENTIFICATION_NUMBER", nullable = true)
-    //pin or nic
-    private String identificationNumberFemale;
+    //pin only a pin
+    private long identificationNumberFemale;
 
     @Column(name = "F_DOB", nullable = true)
     @Temporal(value = TemporalType.DATE)
@@ -71,12 +71,12 @@ public class FemaleParty {
     @Column(name = "F_FULL_NAME_FATHER_ENGLISH", length = 600, nullable = true)
     private String fatherFullNameFemaleInEnglish;
 
-    public String getIdentificationNumberFemale() {
+    public long getIdentificationNumberFemale() {
         return identificationNumberFemale;
     }
 
-    public void setIdentificationNumberFemale(String identificationNumberFemale) {
-        this.identificationNumberFemale = WebUtils.filterBlanks(identificationNumberFemale);
+    public void setIdentificationNumberFemale(long identificationNumberFemale) {
+        this.identificationNumberFemale =identificationNumberFemale;
     }
 
     public Date getDateOfBirthFemale() {

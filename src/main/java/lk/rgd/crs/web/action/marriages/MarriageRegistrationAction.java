@@ -73,6 +73,8 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     private boolean secondNotice;
     private boolean editMode;
     private boolean ignoreWarnings;
+    private boolean malePartyNotFound;   //todo remove this is a temp for field errors
+    private boolean femalePartyNotFound;
     private String mode;
 
     private String language;
@@ -149,6 +151,14 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             switch (e.getErrorCode()) {
                 case ErrorCodes.INVALID_SERIAL_NUMBER:
                     addFieldError("duplicateSerialNumberError", getText("message.invalid.serialNumber.found"));
+                    break;
+                case ErrorCodes.UNABLE_TO_FOUND_BRIDE_AT_PRS:
+                    // addFieldError("brideIsNotInPRS", getText("message.unable.to.find.person.for.given.pin"));
+                    femalePartyNotFound = true;
+                    break;
+                case ErrorCodes.UNABLE_TO_FOUND_GROOM_AT_PRS:
+                    // addFieldError("groomIsNotInPRS", getText("message.unable.to.find.person.for.given.pin"));
+                    malePartyNotFound = true;
                     break;
                 case ErrorCodes.POSSIBLE_MARRIAGE_NOTICE_SERIAL_NUMBER_DUPLICATION:
                     addFieldError("duplicateSerialNumberError", getText("message.duplicate.serialNumber.found"));
@@ -252,14 +262,21 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             }
             catch (CRSRuntimeException e) {
                 switch (e.getErrorCode()) {
-                    case ErrorCodes.POSSIBLE_MARRIAGE_NOTICE_SERIAL_NUMBER_DUPLICATION: {
+                    case ErrorCodes.POSSIBLE_MARRIAGE_NOTICE_SERIAL_NUMBER_DUPLICATION:
                         addFieldError("duplicateSerialNumber", getText("error.duplicate.serial.number"));
                         //populating lists
                         commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
                             marriageDistrictId, dsDivisionId, mrDivisionId, "Marriage", user, language);
                         commonUtil.populateCountryAndRaceLists(countryList, raceList, language);
-                    }
-                    return "pageLoad";
+                        break;
+                    case ErrorCodes.UNABLE_TO_FOUND_BRIDE_AT_PRS:
+                        //  addFieldError("brideIsNotInPRS", getText("message.unable.to.find.person.for.given.pin"));
+                        femalePartyNotFound = true;
+                        break;
+                    case ErrorCodes.UNABLE_TO_FOUND_GROOM_AT_PRS:
+                        //  addFieldError("groomIsNotInPRS", getText("message.unable.to.find.person.for.given.pin"));
+                        malePartyNotFound = true;
+                        break;
                     default:
                         addActionError(getText("error.unable.to.add.marriage.notice",
                             new String[]{(noticeType == MarriageNotice.Type.FEMALE_NOTICE) ?
@@ -267,7 +284,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
                                 Long.toString(existingNotice.getSerialOfFemaleNotice())}));
                 }
                 logger.debug("unable to add second notice : idUKey {}", idUKey);
-
+                return "pageLoad";
             }
             if (userWarnings.size() > 0) {
                 //no need to null check we returning empty set if no warnings
@@ -1014,6 +1031,22 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     public void setScannedImageFileName(String scannedImageFileName) {
         this.scannedImageFileName = scannedImageFileName;
+    }
+
+    public boolean isMalePartyNotFound() {
+        return malePartyNotFound;
+    }
+
+    public void setMalePartyNotFound(boolean malePartyNotFound) {
+        this.malePartyNotFound = malePartyNotFound;
+    }
+
+    public boolean isFemalePartyNotFound() {
+        return femalePartyNotFound;
+    }
+
+    public void setFemalePartyNotFound(boolean femalePartyNotFound) {
+        this.femalePartyNotFound = femalePartyNotFound;
     }
 }
 

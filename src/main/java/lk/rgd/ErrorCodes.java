@@ -120,7 +120,9 @@ public class ErrorCodes {
     public static final int INVALID_STATE_OF_MARRIAGE_REGISTER = 6016;
     public static final int INVALID_USER_ON_CERTIFYING_MARRIAGE_EXTRACT = 6017;
     public static final int INVALID_LOCATION_ON_ISSUING_MARRIAGE_EXTRACT = 6018;
-    public static final int DUPLICATE_SERIAL_NUMBER = 6019;
+ 	public static final int DUPLICATE_SERIAL_NUMBER = 6019;
+    public static final int UNABLE_TO_FOUND_BRIDE_AT_PRS = 6019;
+    public static final int UNABLE_TO_FOUND_GROOM_AT_PRS = 6020;
 
     //birth alteration related error code 7001-7999
     public static final int INVALID_STATE_FOR_REJECT_BIRTH_ALTERATION = 7001;
