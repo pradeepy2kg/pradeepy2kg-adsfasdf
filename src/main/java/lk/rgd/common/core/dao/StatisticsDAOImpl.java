@@ -40,7 +40,7 @@ public class StatisticsDAOImpl extends BaseDAO implements StatisticsDAO {
     public void addStatistics(Statistics statistics) {
         statistics.setCreatedTimestamp(new Date());
         em.persist(statistics);
-        logger.debug("Statistics ID : {}", statistics.getIdUkey());
+        //logger.debug("Statistics ID : {}", statistics.getIdUkey());
     }
 
     /**

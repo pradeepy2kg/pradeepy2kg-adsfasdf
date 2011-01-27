@@ -1,5 +1,7 @@
 package lk.rgd.common.api.domain;
 
+import org.omg.CORBA.portable.Streamable;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -11,17 +13,16 @@ import java.util.Date;
 @Entity
 @Table(name = "STATISTICS", schema = "COMMON")
 @NamedQueries({
-    @NamedQuery(name = "get.by.user", query = "SELECT s FROM Statistics s WHERE s.user.userId = :userId")
+    @NamedQuery(name = "get.by.user", query = "SELECT s FROM Statistics s WHERE s.userId = :userId")
 })
 public class Statistics implements Serializable {
 
-    @Id
+    /*@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idUkey;
+    private long idUkey;*/
 
-    @OneToOne
-    @JoinColumn(name = "userId", nullable = false)
-    private User user;
+    @Id
+    private String userId;
 
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date createdTimestamp;
@@ -233,13 +234,13 @@ public class Statistics implements Serializable {
         DeathsTotalSubmissions = deathsTotalSubmissions;
     }
 
-    public long getIdUkey() {
+    /*public long getIdUkey() {
         return idUkey;
     }
 
     public void setIdUkey(long idUkey) {
         this.idUkey = idUkey;
-    }
+    }*/
 
     public int getMrgApprovedItems() {
         return MrgApprovedItems;
@@ -329,11 +330,11 @@ public class Statistics implements Serializable {
         MrgLateSubmissions = mrgLateSubmissions;
     }
 
-    public User getUser() {
-        return user;
+    public String getUser() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(String userId) {
+        this.userId = userId;
     }
 }
