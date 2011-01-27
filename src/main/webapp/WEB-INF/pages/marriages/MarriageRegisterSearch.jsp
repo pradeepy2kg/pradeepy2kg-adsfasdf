@@ -360,8 +360,9 @@
                                 </s:if>
                             </s:else>
                             <s:if test="(!#session.user_bean.role.roleId.equals('DEO')) && state.ordinal()==11">
-                                <s:url id="divorce" action="eprDivorce.do">
+                                <s:url id="divorce" action="eprMarriageRegisterDivorceInit">
                                     <s:param name="idUKey" value="idUKey"/>
+                                    <s:param name="mode">divorce</s:param>
                                 </s:url>
                                 <s:a href="%{divorce}" title="%{getText('tooltip.marriageregister.divorce')}">
                                     <img src="<s:url value='/images/warning.png'/>" width="30" height="30"
