@@ -258,10 +258,15 @@
                 <s:iterator status="approvalStatus" value="marriageRegisterSearchList">
                     <tr>
                         <td align="center">
-                            <s:property value="serialNumber"/>
+                            <s:if test="serialNumber==0">
+                                &nbsp;
+                            </s:if>
+                            <s:else>
+                                <s:property value="serialNumber"/>
+                            </s:else>
                         </td>
                         <td>
-                            <%-- todo : veryfy the below method returns the correct value --%>
+                                <%-- todo : veryfy the below method returns the correct value --%>
                             <%=NameFormatUtil.getDisplayName(request.getAttribute("male.nameInOfficialLanguageMale").toString(), 60)%>
                         </td>
                         <td>
@@ -290,9 +295,10 @@
                                         <img src="<s:url value='/images/print_icon.gif'/>" border="none" height="25"/>
                                     </s:a>
                                 </s:if>
-                                <s:elseif test="(state.ordinal()!=10 && state.ordinal()!=12)">   <%-- If Not rejected  --%>
+                                <s:elseif
+                                        test="(state.ordinal()!=10 && state.ordinal()!=12)">   <%-- If Not rejected  --%>
                                     <%-- Edit  --%>
-                                    <s:if test="serialNumber==null">
+                                    <s:if test="serialNumber==0">
                                         <s:url id="editSelected" action="eprMarriageRegistrationInit.do">
                                             <s:param name="idUKey" value="idUKey"/>
                                             <s:param name="mode">register</s:param>

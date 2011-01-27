@@ -203,7 +203,8 @@ public interface MarriageRegistrationService {
      * @param user             user who performs the action
      * @param fileName         Name of the scanned Marriage Certificate
      */
-    public void updateMarriageRegister(MarriageRegister marriageRegister, User user, File scannedImage, String fileName);
+    public void updateMarriageRegister(MarriageRegister marriageRegister, User user, File scannedImage,
+        String fileName, long serialNumber);
 
     /**
      * update Muslim marriage details
