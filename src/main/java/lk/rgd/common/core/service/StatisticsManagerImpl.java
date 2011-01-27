@@ -116,7 +116,7 @@ public class StatisticsManagerImpl implements StatisticsManager {
 
                 /* save record */
 //                statisticsDAO.addStatistics(statistics);
-                statistics.setUser(deoUser);
+                statistics.setUser(deoUser.getUserId());
                 statisticsList.add(statistics);
             }
         }
@@ -159,7 +159,7 @@ public class StatisticsManagerImpl implements StatisticsManager {
 
                 /* save record */
 //                statisticsDAO.addStatistics(statistics);
-                statistics.setUser(adrUser);
+                statistics.setUser(adrUser.getUserId());
                 statisticsList.add(statistics);
             }
         }
@@ -199,7 +199,7 @@ public class StatisticsManagerImpl implements StatisticsManager {
                     }
                 }
 //                statisticsDAO.addStatistics(statistics);
-                statistics.setUser(drUser);
+                statistics.setUser(drUser.getUserId());
                 statisticsList.add(statistics);
             }
         }
@@ -327,7 +327,7 @@ public class StatisticsManagerImpl implements StatisticsManager {
                 }
 
 //                statisticsDAO.addStatistics(statistics);
-                statistics.setUser(argUser);
+                statistics.setUser(argUser.getUserId());
                 statisticsList.add(statistics);
             }
         }
@@ -485,7 +485,7 @@ public class StatisticsManagerImpl implements StatisticsManager {
                     }
                 }
 //                statisticsDAO.addStatistics(statistics);
-                statistics.setUser(rgUser);
+                statistics.setUser(rgUser.getUserId());
                 statisticsList.add(statistics);
             }
         }
@@ -581,7 +581,7 @@ public class StatisticsManagerImpl implements StatisticsManager {
         if (statistics == null) {
             if (user.getRole().getRoleId().equals(Role.ROLE_DEO)) {
                 statistics = populateStatistics(user, null);
-                statistics.setUser(user);
+                statistics.setUser(user.getUserId());
             }
             if (user.getRole().getRoleId().equals(Role.ROLE_ADR) || user.getRole().getRoleId().equals(Role.ROLE_DR)) {
                 statistics = populateStatistics(user, null);
@@ -594,7 +594,7 @@ public class StatisticsManagerImpl implements StatisticsManager {
                         }
                     }
                 }
-                statistics.setUser(user);
+                statistics.setUser(user.getUserId());
             }
             if (user.getRole().getRoleId().equals(Role.ROLE_ARG)) {
                 statistics = populateStatistics(user, null);
@@ -604,7 +604,7 @@ public class StatisticsManagerImpl implements StatisticsManager {
                         statistics = populateStatistics(oneUser, statistics);
                     }
                 }
-                statistics.setUser(user);
+                statistics.setUser(user.getUserId());
             }
             if (user.getRole().getRoleId().equals(Role.ROLE_RG)) {
                 statistics = populateStatistics(user, null);
@@ -615,7 +615,7 @@ public class StatisticsManagerImpl implements StatisticsManager {
                         statistics = populateStatistics(oneUser, statistics);
                     }
                 }
-                statistics.setUser(user);
+                statistics.setUser(user.getUserId());
             }
         } else {
             if (user.getRole().getRoleId().equals(Role.ROLE_DEO)) {
