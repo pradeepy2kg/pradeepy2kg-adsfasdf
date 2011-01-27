@@ -72,6 +72,14 @@ import java.util.Date;
         "OR ((mr.mrDivisionOfFemaleNotice IN (SELECT m FROM MRDivision m WHERE (m.dsDivision = mr.mrDivisionOfFemaleNotice.dsDivision AND mr.mrDivisionOfFemaleNotice.dsDivision = :dsDivision))) " +
         "AND (mr.dateOfFemaleNotice IS NOT NULL AND mr.dateOfFemaleNotice BETWEEN :startDate AND :endDate))) ORDER BY mr.idUKey DESC "),
 
+    @NamedQuery(name = "get.notice.by.district.and.registerDate", query = "SELECT mr FROM MarriageRegister mr " +
+        "WHERE (mr.state <= 3 OR mr.state = 7) AND mr.lifeCycleInfo.activeRecord = :active " +
+        "AND ((mr.mrDivisionOfMaleNotice IN (SELECT m FROM MRDivision m WHERE (m.dsDivision.district = mr.mrDivisionOfMaleNotice.dsDivision.district AND mr.mrDivisionOfMaleNotice.dsDivision.district = :district )))" +
+        "AND (mr.dateOfMaleNotice IS NOT NULL AND mr.dateOfMaleNotice BETWEEN :startDate AND :endDate)) " +
+        "OR ((mr.mrDivisionOfFemaleNotice IN (SELECT m FROM MRDivision m WHERE (m.dsDivision.district = mr.mrDivisionOfFemaleNotice.dsDivision.district AND mr.mrDivisionOfFemaleNotice.dsDivision.district = :district ))) " +
+        "AND (mr.dateOfFemaleNotice IS NOT NULL AND mr.dateOfFemaleNotice BETWEEN :startDate AND :endDate)) " +
+        "ORDER BY mr.idUKey DESC "),
+
     @NamedQuery(name = "get.notice.by.male.and.female.identification", query = "SELECT mr FROM MarriageRegister mr" +
         " WHERE (mr.male.identificationNumberMale = :male AND mr.female.identificationNumberFemale = :female " +
         " AND mr.lifeCycleInfo.activeRecord IS TRUE AND mr.state=0) ORDER BY mr.idUKey desc"),
