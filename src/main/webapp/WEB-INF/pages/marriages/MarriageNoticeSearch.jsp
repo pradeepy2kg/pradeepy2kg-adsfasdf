@@ -94,7 +94,7 @@
 
         domObject = document.getElementById('pinOrNic');
         if (!isFieldEmpty(domObject)) {
-            validatePINorNIC(domObject, 'error1', 'error5');
+            validatePIN(domObject, 'error1', 'error5');
         }
 
         if (errormsg != "") {

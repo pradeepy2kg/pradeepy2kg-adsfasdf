@@ -16,8 +16,14 @@ import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.MarriageRegistrationService;
 import lk.rgd.crs.web.util.MarriageType;
 import lk.rgd.crs.web.util.TypeOfMarriagePlace;
+import lk.rgd.prs.api.domain.Person;
+import lk.rgd.prs.api.domain.PersonCitizenship;
+import lk.rgd.prs.api.service.PopulationRegistry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -25,9 +31,10 @@ import java.util.List;
  * @author amith jayasekara
  */
 public class MarriageRegistrationServiceTest extends TestCase {
-
+    private static final Logger logger = LoggerFactory.getLogger(MarriageRegistrationServiceTest.class);
     protected final ApplicationContext ctx = UnitTestManager.ctx;
     protected final MarriageRegistrationService marriageRegistrationService;
+    protected final PopulationRegistry populationRegistry;
     protected final CountryDAO countryDAO;
     protected final RaceDAO raceDAO;
     protected final UserManager userManager;
@@ -54,6 +61,7 @@ public class MarriageRegistrationServiceTest extends TestCase {
         mrDivisionDAO = (MRDivisionDAO) ctx.getBean("mrDivisionDAOImpl", MRDivisionDAO.class);
         marriageRegistrationService = (MarriageRegistrationService) ctx.getBean("marriageRegistrationService",
             MarriageRegistrationService.class);
+        populationRegistry = (PopulationRegistry) ctx.getBean("ecivilService", PopulationRegistry.class);
         try {
             deoColomboColombo = userManager.authenticateUser("deo-colombo-colombo", "password");
             adrColomboColombo = userManager.authenticateUser("adr-colombo-colombo", "password");
@@ -66,17 +74,37 @@ public class MarriageRegistrationServiceTest extends TestCase {
         colomboMRDivision = mrDivisionDAO.getMRDivisionByPK(1);
     }
 
+    private Person createPersonForMarriage() {
+        Person person = new Person();
+        person.setDateOfRegistration(new Date());
+        person.setRace(raceDAO.getRace(1));
+        person.setDateOfBirth(new Date());
+        person.setPlaceOfBirth("place of birth");
+        person.setFullNameInOfficialLanguage("full name in ol");
+        person.setFullNameInEnglishLanguage("full name in en");
+        person.setCivilStatus(Person.CivilStatus.NEVER_MARRIED);
+        person.setPermanentAddress("permanent address");
+        person.setStatus(Person.Status.DATA_ENTRY);
+        populationRegistry.addExistingPerson(person, Collections.<PersonCitizenship>emptyList(), true, rg);
+        // approve person
+        populationRegistry.approvePerson(person.getPersonUKey(), true, rg);
+        logger.error("generated person and approved");
+        return populationRegistry.getByUKey(person.getPersonUKey(), rg);
+    }
+
     public void testAddMinimalMarriageNotice() {
         //adding a marriage notice with minimal requirements
-        MarriageRegister notice = getMinimalMarriageNotice(2010012345L, colomboMRDivision, false, "1234567890",
-            "1234567899", MarriageNotice.Type.MALE_NOTICE, MarriageRegister.LicenseCollectType.MAIL_TO_MALE);
+        MarriageRegister notice = getMinimalMarriageNotice(2010012345L, colomboMRDivision, false,
+            createPersonForMarriage().getPin(), createPersonForMarriage().getPin(), MarriageNotice.Type.MALE_NOTICE,
+            MarriageRegister.LicenseCollectType.MAIL_TO_MALE);
         //assuming this is male notice
         //and male party is expecting the license
         //   notice.setLicenseRequestByMale(true);
         marriageRegistrationService.addMarriageNotice(notice, MarriageNotice.Type.MALE_NOTICE, rg);
         //now try to add a another MALE_NOTICE with same serial number
-        MarriageRegister noticeWithSameSerial = getMinimalMarriageNotice(2010012345L, colomboMRDivision, false, "1234567812",
-            "1234567810", MarriageNotice.Type.MALE_NOTICE, MarriageRegister.LicenseCollectType.MAIL_TO_MALE);
+        MarriageRegister noticeWithSameSerial = getMinimalMarriageNotice(2010012345L, colomboMRDivision, false,
+            createPersonForMarriage().getPin(),createPersonForMarriage().getPin(), MarriageNotice.Type.MALE_NOTICE,
+            MarriageRegister.LicenseCollectType.MAIL_TO_MALE);
         try {
             marriageRegistrationService.addMarriageNotice(noticeWithSameSerial, MarriageNotice.Type.MALE_NOTICE, rg);
         } catch (CRSRuntimeException exceptionExpected) {
@@ -90,14 +118,15 @@ public class MarriageRegistrationServiceTest extends TestCase {
     public void testAddSecondNotice() {
 
         //now test a normal add second notice process
-        MarriageRegister simpleFirstNotice = getMinimalMarriageNotice(2010045678L, colomboMRDivision, false, "4567891230",
-            "1234569875", MarriageNotice.Type.FEMALE_NOTICE, MarriageRegister.LicenseCollectType.MAIL_TO_MALE);
+        MarriageRegister simpleFirstNotice = getMinimalMarriageNotice(2010045678L, colomboMRDivision, false,
+            createPersonForMarriage().getPin(),createPersonForMarriage().getPin(), MarriageNotice.Type.FEMALE_NOTICE,
+            MarriageRegister.LicenseCollectType.MAIL_TO_MALE);
         marriageRegistrationService.addMarriageNotice(simpleFirstNotice, MarriageNotice.Type.FEMALE_NOTICE, rg);
         MarriageRegister simpleSecondNotice = marriageRegistrationService.
             getActiveRecordByMRDivisionAndSerialNo(colomboMRDivision, 2010045678L, rg);
         simpleSecondNotice.setSerialOfMaleNotice(2010045685L);
         simpleSecondNotice.setDateOfMaleNotice(new Date());
-        simpleSecondNotice.getMale().setIdentificationNumberMale("4567891220");
+        simpleSecondNotice.getMale().setIdentificationNumberMale(createPersonForMarriage().getPin());
         simpleSecondNotice.getMale().setDateOfBirthMale(new Date());
         simpleSecondNotice.setMrDivisionOfMaleNotice(colomboMRDivision);
         //adding
@@ -106,8 +135,9 @@ public class MarriageRegistrationServiceTest extends TestCase {
         assertEquals("not expecting warnings while add simple process", notExpecting.size(), 0);
 
         //try to add a second notice for single notice type that mean no second notice expecting exception
-        MarriageRegister singleNotice = getMinimalMarriageNotice(2010012357L, colomboMRDivision, true, "1234567893",
-            "1234567892", MarriageNotice.Type.BOTH_NOTICE, MarriageRegister.LicenseCollectType.MAIL_TO_MALE);
+        MarriageRegister singleNotice = getMinimalMarriageNotice(2010012357L, colomboMRDivision, true,
+            createPersonForMarriage().getPin(),createPersonForMarriage().getPin(), MarriageNotice.Type.BOTH_NOTICE,
+            MarriageRegister.LicenseCollectType.MAIL_TO_MALE);
         marriageRegistrationService.addMarriageNotice(singleNotice, MarriageNotice.Type.BOTH_NOTICE, rg);
         try {
             marriageRegistrationService.addSecondMarriageNotice(marriageRegistrationService.
@@ -120,8 +150,9 @@ public class MarriageRegistrationServiceTest extends TestCase {
         }
 
         //try to add a second notice
-        MarriageRegister maleNotice = getMinimalMarriageNotice(2010012347L, colomboMRDivision, false, "1234567893",
-            "1234567892", MarriageNotice.Type.MALE_NOTICE, MarriageRegister.LicenseCollectType.MAIL_TO_MALE);
+        MarriageRegister maleNotice = getMinimalMarriageNotice(2010012347L, colomboMRDivision, false,
+            createPersonForMarriage().getPin(),createPersonForMarriage().getPin(), MarriageNotice.Type.MALE_NOTICE,
+            MarriageRegister.LicenseCollectType.MAIL_TO_MALE);
         //and male is declaring female as the license owner
         maleNotice.setLicenseCollectType(MarriageRegister.LicenseCollectType.MAIL_TO_FEMALE);
         marriageRegistrationService.addMarriageNotice(maleNotice, MarriageNotice.Type.MALE_NOTICE, rg);
@@ -138,7 +169,7 @@ public class MarriageRegistrationServiceTest extends TestCase {
 
         femaleNotice.setSerialOfFemaleNotice(2010045687L);
         femaleNotice.setDateOfFemaleNotice(new Date());
-        femaleNotice.getFemale().setIdentificationNumberFemale("4567891210");
+        femaleNotice.getFemale().setIdentificationNumberFemale(createPersonForMarriage().getPin());
         femaleNotice.getFemale().setDateOfBirthFemale(new Date());
         femaleNotice.setMrDivisionOfFemaleNotice(colomboMRDivision);
 
@@ -168,7 +199,8 @@ public class MarriageRegistrationServiceTest extends TestCase {
     public void testMarriageNoticeApproval() {
         //add male notice license is expecting by male party
         MarriageRegister malePartySubmittedNotice = getMinimalMarriageNotice(2010012346L, colomboMRDivision, false,
-            "1234567899", "1234567898", MarriageNotice.Type.MALE_NOTICE, MarriageRegister.LicenseCollectType.MAIL_TO_MALE);
+            createPersonForMarriage().getPin(), createPersonForMarriage().getPin(),
+            MarriageNotice.Type.MALE_NOTICE, MarriageRegister.LicenseCollectType.MAIL_TO_MALE);
         //set female as the license request party
         marriageRegistrationService.addMarriageNotice(malePartySubmittedNotice, MarriageNotice.Type.MALE_NOTICE, rg);
         try {//now try to approve this record
@@ -188,7 +220,7 @@ public class MarriageRegistrationServiceTest extends TestCase {
             getActiveRecordByMRDivisionAndSerialNo(colomboMRDivision, 2010012346L, rg);
         //now setting mandatory female notice info
         FemaleParty female = new FemaleParty();
-        female.setIdentificationNumberFemale("1234567897");
+        female.setIdentificationNumberFemale(createPersonForMarriage().getPin());
         female.setDateOfBirthFemale(new Date());
         female.setNameInOfficialLanguageFemale("name in official language");
         //add female notice related data
@@ -238,8 +270,9 @@ public class MarriageRegistrationServiceTest extends TestCase {
     public void testMarriageNoticeReject() {
         //check process
         //rejecting when record in DATA_ENTRY stage (no matter how many notices are available)
-        MarriageRegister noticeInDE = getMinimalMarriageNotice(2010012586L, colomboMRDivision, false, "78945632315",
-            "8523698521", MarriageNotice.Type.MALE_NOTICE, MarriageRegister.LicenseCollectType.MAIL_TO_FEMALE);
+        MarriageRegister noticeInDE = getMinimalMarriageNotice(2010012586L, colomboMRDivision, false,
+            createPersonForMarriage().getPin(),createPersonForMarriage().getPin(),
+            MarriageNotice.Type.MALE_NOTICE, MarriageRegister.LicenseCollectType.MAIL_TO_FEMALE);
         marriageRegistrationService.addMarriageNotice(noticeInDE, MarriageNotice.Type.MALE_NOTICE, rg);
         //now noticeInDE is in DE and it can be rejected
         marriageRegistrationService.rejectMarriageNotice(marriageRegistrationService.
@@ -252,8 +285,9 @@ public class MarriageRegistrationServiceTest extends TestCase {
         assertEquals("Rejection comment", "testing reject for DE mode", noticeInDERejected.getNoticeRejectionComment());
 
         //rejecting a notice with state MALE_NOTICE_APPROVED
-        MarriageRegister noticeInMNA = getMinimalMarriageNotice(2010012587L, colomboMRDivision, false, "68945632315",
-            "6523698521", MarriageNotice.Type.MALE_NOTICE, MarriageRegister.LicenseCollectType.MAIL_TO_FEMALE);
+        MarriageRegister noticeInMNA = getMinimalMarriageNotice(2010012587L, colomboMRDivision, false,
+            createPersonForMarriage().getPin(), createPersonForMarriage().getPin(),
+            MarriageNotice.Type.MALE_NOTICE, MarriageRegister.LicenseCollectType.MAIL_TO_FEMALE);
         noticeInMNA.setLicenseCollectType(MarriageRegister.LicenseCollectType.MAIL_TO_FEMALE);
         marriageRegistrationService.addMarriageNotice(noticeInMNA, MarriageNotice.Type.MALE_NOTICE, rg);
         //approving male notice
@@ -267,7 +301,7 @@ public class MarriageRegistrationServiceTest extends TestCase {
         noticeInMNAApproved.setSerialOfFemaleNotice(2010078954L);
         noticeInMNAApproved.setMrDivisionOfFemaleNotice(colomboMRDivision);
         noticeInMNAApproved.setDateOfFemaleNotice(new Date());
-        noticeInMNAApproved.getFemale().setIdentificationNumberFemale("4567898210");
+        noticeInMNAApproved.getFemale().setIdentificationNumberFemale(createPersonForMarriage().getPin());
         noticeInMNAApproved.getFemale().setDateOfBirthFemale(new Date());
 
         marriageRegistrationService.addSecondMarriageNotice(noticeInMNAApproved, MarriageNotice.Type.FEMALE_NOTICE,
@@ -289,8 +323,9 @@ public class MarriageRegistrationServiceTest extends TestCase {
         //1>invalid state for rejection
         //2>invalid notice type for reject
         //case 1: we try to reject a notice which is in NOTICE_APPROVED state
-        MarriageRegister noticeInNoticeApproved = getMinimalMarriageNotice(2010012575L, colomboMRDivision, false, "1596324875",
-            "9865321475", MarriageNotice.Type.MALE_NOTICE, MarriageRegister.LicenseCollectType.MAIL_TO_FEMALE);
+        MarriageRegister noticeInNoticeApproved = getMinimalMarriageNotice(2010012575L, colomboMRDivision, false,
+            createPersonForMarriage().getPin(),createPersonForMarriage().getPin(),
+            MarriageNotice.Type.MALE_NOTICE, MarriageRegister.LicenseCollectType.MAIL_TO_FEMALE);
         //adding
         marriageRegistrationService.addMarriageNotice(noticeInNoticeApproved, MarriageNotice.Type.MALE_NOTICE, rg);
         MarriageRegister noticeInNoticeApprovedAdded = marriageRegistrationService.
@@ -307,8 +342,9 @@ public class MarriageRegistrationServiceTest extends TestCase {
                 ErrorCodes.INVALID_NOTICE_STATE_FOR_REJECT, expected.getErrorCode());
         }
         //check UNABLE_TO_REJECT_FEMALE
-        MarriageRegister noticeMaleToBeApprove = getMinimalMarriageNotice(2010012585L, colomboMRDivision, false, "1596324875",
-            "9865321475", MarriageNotice.Type.MALE_NOTICE, MarriageRegister.LicenseCollectType.MAIL_TO_FEMALE);
+        MarriageRegister noticeMaleToBeApprove = getMinimalMarriageNotice(2010012585L, colomboMRDivision, false,
+            createPersonForMarriage().getPin(),createPersonForMarriage().getPin(), MarriageNotice.Type.MALE_NOTICE,
+            MarriageRegister.LicenseCollectType.MAIL_TO_FEMALE);
         //adding
         marriageRegistrationService.addMarriageNotice(noticeMaleToBeApprove, MarriageNotice.Type.MALE_NOTICE, rg);
         MarriageRegister noticeMaleToBeApproveAdd = marriageRegistrationService.
@@ -329,8 +365,9 @@ public class MarriageRegistrationServiceTest extends TestCase {
     public void testPrintLicense() {
         //adding a marriage notice
         //male notice
-        MarriageRegister maleNotice = getMinimalMarriageNotice(2010036985L, colomboMRDivision, false, "9856451221",
-            "9856541254", MarriageNotice.Type.MALE_NOTICE, MarriageRegister.LicenseCollectType.MAIL_TO_FEMALE);
+        MarriageRegister maleNotice = getMinimalMarriageNotice(2010036985L, colomboMRDivision, false,
+            createPersonForMarriage().getPin(),createPersonForMarriage().getPin(), MarriageNotice.Type.MALE_NOTICE,
+            MarriageRegister.LicenseCollectType.MAIL_TO_FEMALE);
         //adding male notice
         marriageRegistrationService.addMarriageNotice(maleNotice, MarriageNotice.Type.MALE_NOTICE, rg);
         //get added male notice
@@ -340,7 +377,7 @@ public class MarriageRegistrationServiceTest extends TestCase {
         registerRecord.setSerialOfFemaleNotice(2010056458L);
         registerRecord.setLicenseCollectType(MarriageRegister.LicenseCollectType.MAIL_TO_FEMALE);
         registerRecord.setDateOfFemaleNotice(new Date());
-        registerRecord.getFemale().setIdentificationNumberFemale("4567898270");
+        registerRecord.getFemale().setIdentificationNumberFemale(createPersonForMarriage().getPin());
         registerRecord.getFemale().setDateOfBirthFemale(new Date());
 
         registerRecord.setMrDivisionOfFemaleNotice(colomboMRDivision);
@@ -371,7 +408,7 @@ public class MarriageRegistrationServiceTest extends TestCase {
 
 
     private MarriageRegister getMinimalMarriageNotice(long serialMale, MRDivision mrDivision, boolean isSingleNotice,
-        String malePin, String femalePin, MarriageNotice.Type type, MarriageRegister.LicenseCollectType licenseCollectType) {
+        long malePin, long femalePin, MarriageNotice.Type type, MarriageRegister.LicenseCollectType licenseCollectType) {
 
         MarriageRegister notice = new MarriageRegister();
         //male party
