@@ -14,6 +14,7 @@
 <script type="text/javascript">
 
     function validateMarriageDetails() {
+
         var errormsg = "";
         //errormsg = validateEmptyField("marriageDatePicker", "errorMarriageDate", errormsg);
         ////errormsg = isDate("marriageDatePicker", "errorMarriageDate", errormsg);
@@ -23,6 +24,7 @@
         ////errormsg = validateEmptyField("regNameInOfficialLang", "errorRegistrarName", errormsg);
 
         var mode = document.getElementById("mode").value;
+        var editMode = document.getElementById("editMode").value;
 
         errormsg = validateRegistrationDetails(errormsg);
         if (mode == 'register') {
@@ -45,12 +47,12 @@
         errormsg = validateEmptyField("nameOfficialFemale", "errorNameOfficialFemale", errormsg);
         errormsg = validateEmptyField("addressMale", "errorAddressMale", errormsg);
         errormsg = validateEmptyField("addressFemale", "errorAddressFemale", errormsg);
+
         errormsg = validateSerialNo("serialNumber", "errorSerialNumber", errormsg);
 
-        //todo: validate Path exists
-        //errormsg = validateEmptyField("scannedImage", "errorscannedImage", errormsg);
-
-
+        if(editMode == "false") {
+            errormsg = validateEmptyField("scannedImage", "errorscannedImage", errormsg);
+        }
         ////errormsg = isDate("registrationDatePicker", "errorRegistrationDate", errormsg);
         return printErrorMessages(errormsg);
     }
@@ -73,7 +75,7 @@
 <div class="marriage-notice-outer">
 <s:form method="post" enctype="multipart/form-data" onsubmit="javascript:return validateMarriageDetails()">
 <s:hidden name="idUKey"/>
-<s:hidden name="editMode"/>
+<s:hidden name="editMode" id="editMode"/>
 <s:hidden name="mode" id="mode"/>
 <table border="1" style="margin-top:1px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
        cellpadding="5px">
@@ -666,8 +668,17 @@
             <br>Scanned Image in ta
             <br>Scanned Image
         </td>
-        <td colspan="3">
+        <td colspan="2">
             <s:file name="scannedImage" id="scannedImage"/>
+            <s:if test="(marriage.scannedImagePath != null)">
+                <s:url id="printCert" action="eprDisplayScannedImage.do">
+                    <s:param name="idUKey" value="idUKey"/>
+                </s:url>
+                <s:a href="%{printCert}" title="%{getText('tooltip.marriageregister.viewscannedimage')}">
+                    <img src="<s:url value='/images/print_image.jpeg'/>" width="30" height="30"
+                         border="none"/>
+                </s:a>
+            </s:if>
         </td>
     </tr>
     <s:if test="mode=='reject'">

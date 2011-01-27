@@ -348,7 +348,6 @@
                                              border="none"/>
                                     </s:a>
                                 </s:if>
-
                                 <%-- View scanned marriage cert  --%>
                                 <s:if test="(scannedImagePath != null) && state.ordinal()!=10">
                                     <s:url id="printCert" action="eprDisplayScannedImage.do">
@@ -360,7 +359,6 @@
                                     </s:a>
                                 </s:if>
                             </s:else>
-
                             <s:if test="(!#session.user_bean.role.roleId.equals('DEO')) && state.ordinal()==11">
                                 <s:url id="divorce" action="eprDivorce.do">
                                     <s:param name="idUKey" value="idUKey"/>

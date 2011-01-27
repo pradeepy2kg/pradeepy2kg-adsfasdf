@@ -11,7 +11,8 @@
 </style>
 <div id="scanned-marriage-cert-outer">
     <p class="form-submit">
-       <button onclick="printPage();"><s:property value="getText('button.print')"/></button>
+        <button onclick="printPage();"><s:property value="getText('button.print')"/></button>
+        <input type=button value="Back" onClick="history.go(-1)">
     </p>
     <p>
         <img alt="Scanned Marriage Certificate"
