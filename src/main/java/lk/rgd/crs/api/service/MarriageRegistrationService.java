@@ -90,6 +90,21 @@ public interface MarriageRegistrationService {
         boolean active, User user);
 
     /**
+     * Returns a paginated list of Marriage Notices based on the specified District  and specified date rage
+     *
+     * @param district  the district
+     * @param startDate from this date
+     * @param endDate   to this date
+     * @param pageNo    the page number of the results required
+     * @param noOfRows  the number of rows to return per page
+     * @param active    include currently active or inactive items
+     * @param user      the user initiating the action
+     * @return the list of marriage notices filtered by District
+     */
+    public List<MarriageRegister> getMarriageNoticeByDistrictAndDateRange(District district, Date startDate,
+        Date endDate, int pageNo, int noOfRows, boolean active, User user);
+
+    /**
      * Returns a paginated list of Marriage Registers for which marriage notices are awaiting approval by ADR or higher
      * authority based on the specified DSDivision
      *
