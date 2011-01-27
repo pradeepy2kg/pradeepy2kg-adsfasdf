@@ -9,6 +9,7 @@ import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.util.DateTimeUtils;
 import lk.rgd.common.util.NameFormatUtil;
 import lk.rgd.common.util.WebUtils;
 import lk.rgd.common.util.StateUtil;
@@ -667,6 +668,20 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
                             // Search by All DSDivisions
                             searchList = WebUtils.populateNoticeList(marriageRegistrationService.
                                 getMarriageNoticeByDistrict(districtDAO.getDistrict(districtId), pageNo, noOfRows, true, user));
+                            if (searchStartDate != null && searchEndDate != null) {
+                                searchList = WebUtils.populateNoticeList(marriageRegistrationService.
+                                    getMarriageNoticeByDistrictAndDateRange(districtDAO.getDistrict(districtId),
+                                    searchStartDate, searchEndDate, pageNo, noOfRows, true, user));
+                                if (searchList.size() > 0) {
+                                    addActionMessage(getText("message.result.to.from",
+                                        new String[]{DateTimeUtils.getISO8601FormattedString(searchStartDate),
+                                            DateTimeUtils.getISO8601FormattedString(searchEndDate)}));
+                                } else {
+                                    addActionMessage(getText("no.message.result.to.from",
+                                        new String[]{DateTimeUtils.getISO8601FormattedString(searchStartDate),
+                                            DateTimeUtils.getISO8601FormattedString(searchEndDate)}));
+                                }
+                            }
                         }
                     } else {
                         // Search by specific DSDivision
@@ -678,6 +693,15 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
                             // Search by DSDivision and register date range of male or female notice
                             searchList = WebUtils.populateNoticeList(marriageRegistrationService.getMarriageNoticesByDSDivisionAndRegisterDateRange(
                                 dsDivisionDAO.getDSDivisionByPK(dsDivisionId), searchStartDate, searchEndDate, pageNo, noOfRows, true, user));
+                            if (searchList.size() > 0) {
+                                addActionMessage(getText("message.result.to.from",
+                                    new String[]{DateTimeUtils.getISO8601FormattedString(searchStartDate),
+                                        DateTimeUtils.getISO8601FormattedString(searchEndDate)}));
+                            } else {
+                                addActionMessage(getText("no.message.result.to.from",
+                                    new String[]{DateTimeUtils.getISO8601FormattedString(searchStartDate),
+                                        DateTimeUtils.getISO8601FormattedString(searchEndDate)}));
+                            }
                         }
                     }
                 } else {
@@ -689,6 +713,15 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
                         // Search by MRDivision and register date range of male or female notice
                         searchList = WebUtils.populateNoticeList(marriageRegistrationService.getMarriageNoticesByMRDivisionAndRegisterDateRange(
                             mrDivisionDAO.getMRDivisionByPK(mrDivisionId), searchStartDate, searchEndDate, pageNo, noOfRows, true, user));
+                        if (searchList.size() > 0) {
+                            addActionMessage(getText("message.result.to.from",
+                                new String[]{DateTimeUtils.getISO8601FormattedString(searchStartDate),
+                                    DateTimeUtils.getISO8601FormattedString(searchEndDate)}));
+                        } else {
+                            addActionMessage(getText("no.message.result.to.from",
+                                new String[]{DateTimeUtils.getISO8601FormattedString(searchStartDate),
+                                    DateTimeUtils.getISO8601FormattedString(searchEndDate)}));
+                        }
                     }
                 }
             } else {

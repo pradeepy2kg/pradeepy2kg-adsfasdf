@@ -152,7 +152,12 @@ import java.util.Date;
     @NamedQuery(name = "getMarriageRegisterBySerialAndMRDivision", query = "SELECT mr FROM MarriageRegister mr " +
         "WHERE mr.lifeCycleInfo.activeRecord IS TRUE " +
         "AND mr.serialNumber IS NOT NULL AND mr.serialNumber = :serialNumber " +
-        "AND mr.mrDivision IS NOT NULL AND mr.mrDivision = :mrDivision")
+        "AND mr.mrDivision IS NOT NULL AND mr.mrDivision = :mrDivision"),
+    @NamedQuery(name = "filter.notice.by.district.date.range", query = "SELECT mr FROM MarriageRegister mr " +
+        "WHERE (mr.state <= 3 OR mr.state = 7) AND mr.lifeCycleInfo.activeRecord = :active " +
+        "AND (mr.mrDivisionOfMaleNotice IN (SELECT m FROM MRDivision m WHERE (m.dsDivision.district = mr.mrDivisionOfMaleNotice.dsDivision.district AND mr.mrDivisionOfMaleNotice.dsDivision.district = :district ))" +
+        "OR mr.mrDivisionOfFemaleNotice IN (SELECT m FROM MRDivision m WHERE (m.dsDivision.district = mr.mrDivisionOfFemaleNotice.dsDivision.district AND mr.mrDivisionOfFemaleNotice.dsDivision.district = :district ))) " +
+        "ORDER BY mr.idUKey DESC ")
 
 })
 public class MarriageRegister implements Serializable, Cloneable {

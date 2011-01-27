@@ -92,6 +92,20 @@ public interface MarriageRegistrationDAO {
     public List<MarriageRegister> getPaginatedListByDistrict(District district, int pageNo, int noOfRows, boolean active);
 
     /**
+     * Returns a paginated list of active/inactive Marriage Notices based on the District and date range
+     *
+     * @param district  the district
+     * @param startDate from
+     * @param endDate   to
+     * @param pageNo    the page number (start from 1)
+     * @param noOfRows  the number of rows to return per page
+     * @param active    include currently active or inactive items
+     * @return the matching list of marriage registrations (marriage notices)
+     */
+    public List<MarriageRegister> getPaginatedListByDistrictAndDateRange(District district, Date startDate, Date endDate,
+        int pageNo, int noOfRows, boolean active);
+
+    /**
      * Returns paginated list of active/inactive Marriage Notices based on the DSDivision
      *
      * @param dsDivision the divisional secretariat

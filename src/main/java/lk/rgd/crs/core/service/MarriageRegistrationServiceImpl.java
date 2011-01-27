@@ -181,6 +181,18 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<MarriageRegister> getMarriageNoticeByDistrictAndDateRange(District district, Date startDate,
+        Date endDate, int pageNo, int noOfRows, boolean active, User user) {
+        logger.debug("Get Active : {} MarriageNotices by District : {}", active, district.getDistrictUKey());
+        ValidationUtils.validateAccessToMRDistrict(user, district);
+        return marriageRegistrationDAO.getPaginatedListByDistrictAndDateRange(district, startDate, endDate,
+            pageNo, noOfRows, active);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<MarriageRegister> getMarriageNoticePendingApprovalByDSDivision(DSDivision dsDivision, int pageNo,
         int noOfRows, boolean active, User user) {
         logger.debug("Get Active : {} MarriageNotices pending approval by DSDivision : {}", active,
