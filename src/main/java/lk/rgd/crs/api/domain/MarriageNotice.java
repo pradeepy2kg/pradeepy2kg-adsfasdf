@@ -16,7 +16,7 @@ public final class MarriageNotice {
     private final Long serialOfNotice;
     private final Date dateOfNotice;
     private final String partyNameInOfficialLang;
-    private final long partyPIN;
+    private final String partyPIN;
     private final Type type;
     private boolean hasSecond = true;
     private final MarriageRegister.State state;
@@ -73,7 +73,7 @@ public final class MarriageNotice {
         return partyNameInOfficialLang;
     }
 
-    public long getPartyPIN() {
+    public String getPartyPIN() {
         return partyPIN;
     }
 

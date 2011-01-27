@@ -193,8 +193,8 @@ public interface MarriageRegistrationService {
      * @param user                 the user initiating the action
      * @return marriage notice (marriage register object)
      */
-    public MarriageRegister getActiveMarriageNoticeByMaleAndFemaleIdentification(long maleIdentification,
-        long femaleIdentification, User user);
+    public MarriageRegister getActiveMarriageNoticeByMaleAndFemaleIdentification(String maleIdentification,
+        String femaleIdentification, User user);
 
     /**
      * update marriage notice/register

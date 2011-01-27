@@ -75,15 +75,15 @@ public class MarriageRegistrationValidator {
         }
         //check both parties are registered in PRS
         Person party = null;
-        if (notice.getFemale().getIdentificationNumberFemale() != 0) {
-            party = populationRegistry.findPersonByPIN(notice.getFemale().getIdentificationNumberFemale(), user);
+        if (notice.getFemale().getIdentificationNumberFemale() != null) {
+            //party = populationRegistry.findPersonByPIN(notice.getFemale().getIdentificationNumberFemale(), user);
             if (party == null) {
                 handleException("unable to found bride record on PRS , bride PIN : " +
                     notice.getFemale().getIdentificationNumberFemale(), ErrorCodes.UNABLE_TO_FOUND_BRIDE_AT_PRS);
             }
         }
-        if (notice.getMale().getIdentificationNumberMale() != 0) {
-            party = populationRegistry.findPersonByPIN(notice.getMale().getIdentificationNumberMale(), user);
+        if (notice.getMale().getIdentificationNumberMale() != null) {
+            //party = populationRegistry.findPersonByPIN(notice.getMale().getIdentificationNumberMale(), user);
             if (party == null) {
                 handleException("unable to found grrom record on PRS , groom PIN : " +
                     notice.getMale().getIdentificationNumberMale(), ErrorCodes.UNABLE_TO_FOUND_GROOM_AT_PRS);
@@ -171,13 +171,13 @@ public class MarriageRegistrationValidator {
     private void checkPreviouseActiveMarriages(MarriageRegister notice, List<UserWarning> userWarnings,
         ResourceBundle rb, User user) {
         //check male party is married before
-        Person person = populationRegistry.findPersonByPIN(notice.getMale().getIdentificationNumberMale(), user);
+        Person person = null; //populationRegistry.findPersonByPIN(notice.getMale().getIdentificationNumberMale(), user);
         if (!checkCivilState(person)) {
             userWarnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.male.is.not.legal.for.marry"),
                 notice.getMale().getIdentificationNumberMale()), UserWarning.Severity.WARN));
         }
         //check female party is married before
-        person = populationRegistry.findPersonByPIN(notice.getFemale().getIdentificationNumberFemale(), user);
+        person = null; //populationRegistry.findPersonByPIN(notice.getFemale().getIdentificationNumberFemale(), user);
         if (!checkCivilState(person)) {
             userWarnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.female.is.not.legal.for.marry"),
                 notice.getFemale().getIdentificationNumberFemale()), UserWarning.Severity.WARN));
@@ -273,8 +273,8 @@ public class MarriageRegistrationValidator {
     }
 
 
-    private void validateBasicNeeds(Long serial, Date recDate, long identificationNumber, Date dob, Boolean isSingle) {
-        if (serial == null || recDate == null || identificationNumber == 0 || dob == null || isSingle == null) {
+    private void validateBasicNeeds(Long serial, Date recDate, String identificationNumber, Date dob, Boolean isSingle) {
+        if (serial == null || recDate == null || identificationNumber == null || dob == null || isSingle == null) {
             handleException("marriage notice :serial" + serial + ": is incomplete can not add",
                 ErrorCodes.MR_INCOMPLETE_OBJECT);
         }
