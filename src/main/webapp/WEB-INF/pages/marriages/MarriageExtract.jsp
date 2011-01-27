@@ -90,9 +90,6 @@
             </td>
             <td> &nbsp;</td>
         </tr>
-        <tr>
-            <td colspan="3">&nbsp;</td>
-        </tr>
         <tr style="font-size:14pt">
             <td colspan="3" align="center">
                 ශ්‍රී ලංකා / ﻿இலங்கை / SRI LANKA
@@ -163,13 +160,10 @@
     </tr>
 </table>
 
-<table border="0" style="margin-top:1px;width:100%;" cellpadding="2px">
+<table border="0" style="margin-top:0px;width:100%;" cellpadding="2px">
     <caption></caption>
     <col/>
     <tbody>
-    <tr>
-        <td>&nbsp;</td>
-    </tr>
     <tr style="font-size:14pt">
         <td align="center">
             විවාහ විස්තර / in tamil / Details of Marriage
@@ -305,7 +299,7 @@
 </table>
 <%--section heading Male/Female details --%>
 <table border="2"
-       style="margin-top:10px;margin-bottom:20px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
+       style="margin-top:2px;margin-bottom:2px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
        cellpadding="5px">
     <caption/>
     <col width="200px"/>
@@ -478,7 +472,7 @@
     </tbody>
 </table>
 <s:if test="mode=='print'">
-    <table border="1" style="margin-top:15px;width:100%;border:1px solid #000;border-collapse:collapse;"
+    <table border="1" style="margin-top:3px;width:100%;border:1px solid #000;border-collapse:collapse;"
            cellpadding="2px">
         <caption/>
         <col width="300px"/>
