@@ -82,7 +82,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         logger.debug("attempt to add marriage notice male serial :{} female serial : {}", notice.getSerialOfMaleNotice(),
             notice.getSerialOfFemaleNotice() + ": notice type :" + type);
         checkUserPermission(Permission.ADD_MARRIAGE, ErrorCodes.PERMISSION_DENIED, "add second notice to marriage register", user);
-        //marriageRegistrationValidator.validateMarriageNotice(notice, type, user);
+        marriageRegistrationValidator.validateMarriageNotice(notice, type, user);
         populateObjectForPersisting(notice, type);
         notice.setState(MarriageRegister.State.DATA_ENTRY);
         marriageRegistrationDAO.addMarriageRegister(notice, user);
