@@ -507,14 +507,21 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
      * Marriage Registration -Marriage Details page load
      */
     public String marriageRegistrationInit() {
-        //logger.debug("Marriage Details - idUKey : {}", idUKey);
+        editMode = true;
         populateLists();
         if (idUKey != 0) {
+            //todo : enable edit mode if idukey available
             marriage = marriageRegistrationService.getByIdUKey(idUKey, user);
+
+            if (marriage != null && marriage.getState() == MarriageRegister.State.LICENSE_PRINTED) {
+                //todo: set editmode false if marriage is on license printed (registration) state
+                editMode = false;
+            }
             if ("register".equals(mode)) {
                 marriage.setTypeOfMarriagePlace(TypeOfMarriagePlace.REGISTRAR_OFFICE);
             }
         } else {
+            editMode = false;
             marriage = new MarriageRegister();
             marriage.setTypeOfMarriagePlace(TypeOfMarriagePlace.REGISTRAR_OFFICE);
             marriage.setTypeOfMarriage(MarriageType.GENERAL);
@@ -529,7 +536,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     /**
      * Marriage Registration - persist new marriage entry through the page for muslim type marrige
      */
-    public String registerNewMarriage() {
+    public String registerNewMarriage() {        
         populateMuslimMarriageDetails();
         try {
             marriageRegistrationService.addMarriageRegister(marriage, user, scannedImage, scannedImageFileName);
