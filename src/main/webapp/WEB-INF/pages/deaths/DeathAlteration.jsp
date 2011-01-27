@@ -21,11 +21,21 @@
             isDate(domObject.value, 'error0', 'error1');
         }
 
-        domObject = document.getElementById("deathDatePicker");
-        if (isFieldEmpty(domObject)) {
-            isEmpty(domObject, "", 'error2')
-        } else {
-            isDate(domObject.value, 'error0', 'error2');
+        if (document.getElementById('death-info-check').checked) {
+            domObject = document.getElementById("deathDatePicker");
+            if (isFieldEmpty(domObject)) {
+                isEmpty(domObject, "", 'error23')
+            }
+
+            domObject = document.getElementById("placeOfDeath");
+            if (isFieldEmpty(domObject)) {
+                isEmpty(domObject, "", 'error24')
+            }
+
+            domObject = document.getElementById("placeOfBurial");
+            if (isFieldEmpty(domObject)) {
+                isEmpty(domObject, "", 'error2')
+            }
         }
 
 
@@ -67,11 +77,11 @@
         }
         domObject = document.getElementById("declarantName");
         if (isFieldEmpty(domObject)) {
-            printMessage('declerent_name', "text_must_fill")
+            printMessage('text_must_fill', "declerent_name")
         }
         domObject = document.getElementById("declarantAddress");
         if (isFieldEmpty(domObject)) {
-            printMessage('declerent_address', "text_must_fill")
+            printMessage('text_must_fill', "declerent_address")
         }
         if (errormsg != "") {
             alert(errormsg);
@@ -90,7 +100,7 @@
             }
         }
         if (!atleastOneSelect) {
-            printMessage(errorText, "text_must_select")
+            printMessage("text_must_select", errorText)
         }
     }
 </script>
@@ -441,7 +451,7 @@
         </tr>
         <tr>
             <td colspan="2" style="border-top:2px">
-                (11)මරණය සිදු වූ දිනය <br>
+                (11)මරණය සිදු වූ දිනය <s:label value="*" cssStyle="color:red;font-size:10pt"/><br>
                 பிறந்த திகதி <br>
                 Date of Death
             </td>
@@ -466,7 +476,7 @@
                 Place of Death
             </td>
             <td colspan="2">
-                සිංහල හෝ දෙමළ භාෂාවෙන් <br>
+                සිංහල හෝ දෙමළ භාෂාවෙන් <s:label value="*" cssStyle="color:red;font-size:10pt"/><br>
                 சிங்களம் தமிழ் <br>
                 In Sinhala or Tamil
             </td>
@@ -530,7 +540,7 @@
             </td>
         </tr>
         <tr>
-            <td>(16)ආදාහන හෝ භූමදාන ස්ථානය <br>
+            <td>(16)ආදාහන හෝ භූමදාන ස්ථානය<s:label value="*" cssStyle="color:red;font-size:10pt"/> <br>
                 அடக்கம் செய்த அல்லது தகனஞ் செய்த இடம் <br>
                 Place of burial or cremation
             </td>
@@ -812,7 +822,7 @@
     <tbody>
     <tr>
         <td rowspan="2" width="200px">
-            (30)දැනුම් දෙන්නේ කවරකු වශයෙන්ද <br>
+            (30)දැනුම් දෙන්නේ කවරකු වශයෙන්ද <s:label value="*" cssStyle="color:red;font-size:10pt"/><br>
             தகவல் வழங்குபவர் <br>
             Capacity for giving information
         </td>
@@ -893,7 +903,7 @@
     </tr>
     <tr>
         <td>
-            (32)නම <br>
+            (32)නම <s:label value="*" cssStyle="color:red;font-size:10pt"/><br>
             கொடுப்பவரின் பெயர் <br>
             Name
         </td>
@@ -904,7 +914,7 @@
     </tr>
     <tr>
         <td>
-            (33)තැපැල් ලිපිනය <br>
+            (33)තැපැල් ලිපිනය <s:label value="*" cssStyle="color:red;font-size:10pt"/><br>
             தபால் முகவரி <br>
             Postal Address
         </td>
@@ -958,6 +968,8 @@
 <s:hidden id="error0" value="%{getText('er.invalid.inputType')}"/>
 <s:hidden id="error1" value="%{getText('er.label.reciveDatePicker')}"/>
 <s:hidden id="error2" value="%{getText('er.label.dateOfDeath')}"/>
+<s:hidden id="error23" value="%{getText('er.label.placeOfdeath')}"/>
+<s:hidden id="error24" value="%{getText('er.label.placeOfBurial')}"/>
 <s:hidden id="error3" value="%{getText('er.label.deathPerson_PINorNIC')}"/>
 <s:hidden id="error4" value="%{getText('er.label.passportNumber')}"/>
 <s:hidden id="error5" value="%{getText('er.label.deathAge')}"/>
