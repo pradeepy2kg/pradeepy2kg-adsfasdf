@@ -165,6 +165,39 @@ public class MarriageRegistrationValidator {
         return warning;
     }
 
+    public List<UserWarning> checkUserWarningsForSecondNoticeApproval(MarriageRegister existing, User user) {
+        List<UserWarning> warning = new ArrayList<UserWarning>();
+        ResourceBundle rb = rb_en;
+        if (AppConstants.SINHALA.equals(user.getPrefLanguage())) {
+            rb = rb_si;
+        } else if (AppConstants.TAMIL.equals(user.getPrefLanguage())) {
+            rb = rb_ta;
+        }
+        checkSamePinNumber(existing, warning, rb);
+        return warning;
+    }
+
+
+    private void checkSamePinNumber(MarriageRegister existing, List<UserWarning> warnings,
+        ResourceBundle rb) {
+        //todo mode warnings
+        //check both bride and groom has same pin number
+        if (existing.getMale().getIdentificationNumberMale().equals(existing.getFemale().getIdentificationNumberFemale())) {
+            warnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.both.bride.groom.has.same.pin"),
+                existing.getMale().getIdentificationNumberMale()), UserWarning.Severity.WARN));
+        }
+        //check booth father pin are same
+        if (existing.getFemale().getFatherIdentificationNumberFemale().equals(existing.getMale().getFatherIdentificationNumberMale())) {
+            warnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.both.father.same"),
+                existing.getFemale().getFatherIdentificationNumberFemale()), UserWarning.Severity.WARN));
+        }
+        //check brides father and groom are same
+        if (existing.getFemale().getFatherIdentificationNumberFemale().equals(existing.getMale().getIdentificationNumberMale())) {
+            warnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.groom.and.bride.father.same"),
+                existing.getFemale().getFatherIdentificationNumberFemale()), UserWarning.Severity.WARN));
+        }
+    }
+
     /**
      * validate advance features  validate at approving license party or approving both notice
      */

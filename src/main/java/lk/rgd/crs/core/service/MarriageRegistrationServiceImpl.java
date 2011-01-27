@@ -565,9 +565,10 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         //if current state is NOTICE_APPROVED that mean we approved single notice or we are approving second notice(license
         // collect party) when notice become NOTICE_APPROVE it eligible for printing License so we have to validate
         // that marriage in this evens as well
-        if (existingNotice.getState() == MarriageRegister.State.NOTICE_APPROVED) {
-            //todo
-        }
+     /*   if (existingNotice.getState() == MarriageRegister.State.NOTICE_APPROVED) {
+            warnings = marriageRegistrationValidator.checkUserWarningsForSecondNoticeApproval(existingNotice, user);
+            return warnings;
+        }*/
         if (warnings.size() == 0 || ignoreWarnings) {
             //if we change notice state to NOTICE_APPROVED  we have to validate more
             marriageRegistrationDAO.updateMarriageRegister(existingNotice, user);

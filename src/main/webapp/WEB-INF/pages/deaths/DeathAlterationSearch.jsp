@@ -65,10 +65,10 @@
 
     function validateForm() {
 
-        var pin = document.getElementById('identificationNumber').value;
-        var serial = document.getElementById('serialNumber').value;
-        var certifcateNumber = document.getElementById('idUKey').value;
-        var valueArray = new Array(pin, serial, certifcateNumber);
+        var pin = document.getElementById('identificationNumber');
+        var serial = document.getElementById('serialNumber');
+        var certifcateNumber = document.getElementById('idUKey');
+        var valueArray = new Array(pin.value, serial.value, certifcateNumber.value);
 
         for (var i = 0; i < valueArray.length; i++) {
             var c = valueArray[i];
@@ -76,15 +76,23 @@
                 counter++
             }
         }
+
         if (counter != 1) {
             errormsg = errormsg + document.getElementById('oneMethodErr').value;
         }
 
         //validate   number fields
-        isNumeric(certifcateNumber, 'invalideDateErr', 'certificateNumberFi')
-        validateSerialNo(serial, 'invalideDateErr', 'serialNumnerFi')
-        validatePINorNIC(pin, 'invalideDateErr', 'pinNumberFi')
-
+        if (counter == 1) {
+            if (!isFieldEmpty(certifcateNumber)) {
+                isNumeric(certifcateNumber.value, 'invalideDateErr', 'certificateNumberFi')
+            }
+            if (!isFieldEmpty(serial)) {
+                validateSerialNo(serial, 'invalideDateErr', 'serialNumnerFi')
+            }
+            if (!isFieldEmpty(pin)) {
+                validatePINorNIC(pin, 'invalideDateErr', 'pinNumberFi')
+            }
+        }
         if (errormsg != "") {
             alert(errormsg)
             errormsg = "";
@@ -92,7 +100,7 @@
             return false;
         }
         else {
-            return true;
+            return false;
         }
         errormsg = "";
         counter = 0;
@@ -130,7 +138,7 @@
                         <s:label value="%{getText('label.certificate.number')}"/>
                     </td>
                     <td align="left">
-                        <s:textfield name="idUKey" id="idUKey" value=""/>
+                        <s:textfield maxLength="10" name="idUKey" id="idUKey" value=""/>
                     </td>
                 </tr>
                 </tbody>
