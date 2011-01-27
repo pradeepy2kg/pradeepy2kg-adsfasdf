@@ -233,6 +233,7 @@
         <constructor-arg ref="mrDivisionDAOImpl"/>
         <constructor-arg ref="dsDivisionDAOImpl"/>
         <constructor-arg ref="districtDAOImpl"/>
+        <constructor-arg ref="ecivilService"/>
     </bean>
 
     <bean id="masterDataManagementService" class="lk.rgd.crs.core.service.MasterDataManagementServiceImpl">

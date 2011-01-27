@@ -1,22 +1,26 @@
 package lk.rgd.crs.core.service;
 
+import lk.rgd.AppConstants;
 import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
-import lk.rgd.AppConstants;
 import lk.rgd.common.api.Auditable;
-import lk.rgd.common.api.dao.UserLocationDAO;
-import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.DSDivisionDAO;
+import lk.rgd.common.api.dao.DistrictDAO;
+import lk.rgd.common.api.dao.UserLocationDAO;
 import lk.rgd.common.api.domain.*;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.util.StateUtil;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
-import lk.rgd.crs.api.dao.MarriageRegistrationDAO;
 import lk.rgd.crs.api.dao.MRDivisionDAO;
-import lk.rgd.crs.api.domain.*;
+import lk.rgd.crs.api.dao.MarriageRegistrationDAO;
+import lk.rgd.crs.api.domain.MRDivision;
+import lk.rgd.crs.api.domain.MaleParty;
+import lk.rgd.crs.api.domain.MarriageNotice;
+import lk.rgd.crs.api.domain.MarriageRegister;
 import lk.rgd.crs.api.service.MarriageRegistrationService;
 import lk.rgd.crs.core.ValidationUtils;
+import lk.rgd.prs.api.domain.Marriage;
 import lk.rgd.prs.api.domain.Person;
 import lk.rgd.prs.api.service.PopulationRegistry;
 import org.slf4j.Logger;
@@ -24,8 +28,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
 import java.io.File;
+import java.util.*;
 
 /**
  * implementation of the marriage registration service interface
@@ -47,11 +51,12 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     private final DistrictDAO districtDAO;
     //TODO: this is to be changed
     private ContentRepository contentRepository = null;
+    private final PopulationRegistry eCivil;
 
     public MarriageRegistrationServiceImpl(MarriageRegistrationDAO marriageRegistrationDAO, UserManager userManager,
         MarriageRegistrationValidator marriageRegistrationValidator, UserLocationDAO userLocationDAO,
         String contentRoot, String contentType, MRDivisionDAO mrDivisionDAO, DSDivisionDAO dsDivisionDAO,
-        DistrictDAO districtDAO) {
+        DistrictDAO districtDAO, PopulationRegistry eCivil) {
         this.marriageRegistrationDAO = marriageRegistrationDAO;
         this.marriageRegistrationValidator = marriageRegistrationValidator;
         //todo: to be removed
@@ -62,6 +67,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         this.mrDivisionDAO = mrDivisionDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.districtDAO = districtDAO;
+        this.eCivil = eCivil;
 
         //TODO: to be changed
         contentRepository = new ContentRepositoryImpl(contentRoot);
@@ -89,6 +95,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     public void addMarriageRegister(MarriageRegister marriageRegister, User user, File scannedImage, String fileName) {
         //TODO: Validate marriage details
         ValidationUtils.validateUserPermission(Permission.ADD_MARRIAGE, user);
+        //todo: validate serial number
         marriageRegistrationValidator.validateMarriageRegisterSerialNumber(marriageRegister.getSerialNumber(),
             marriageRegister.getMrDivision());
         marriageRegistrationDAO.addMarriageRegister(marriageRegister, user);
@@ -574,6 +581,79 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         ValidationUtils.validateUserAccessToMRDivision(marriageRegister.getMrDivision().getMrDivisionUKey(), user);
         marriageRegister.setState(MarriageRegister.State.REGISTRATION_APPROVED);
         marriageRegistrationDAO.updateMarriageRegister(marriageRegister, user);
+
+        // TODO following is not complete and only temporary solution to update person if they already exist in PRS
+        updateExistingPRSRecords(marriageRegister, user);
+    }
+
+    private void updateExistingPRSRecords(MarriageRegister mr, User user) {
+
+        logger.debug("Processing details of marriage to the PRS");
+        Person groom = null, bride = null;
+        String bridePinOrNic = mr.getFemale().getIdentificationNumberFemale();
+        String groomPinOrNic = mr.getMale().getIdentificationNumberMale();
+
+        // update Groom's entry in PRS
+        if (groomPinOrNic != null) {
+            groom = findGroomOrBride(groomPinOrNic, user);
+            if (groom != null) {
+                groom.setCivilStatus(Person.CivilStatus.MARRIED);
+                eCivil.updatePerson(groom, user);
+            }
+        }
+
+        // update Bride's entry in PRS
+        if (bridePinOrNic != null) {
+            bride = findGroomOrBride(bridePinOrNic, user);
+            if (bride != null) {
+                bride.setCivilStatus(Person.CivilStatus.MARRIED);
+                eCivil.updatePerson(bride, user);
+            }
+        }
+
+        // adding marriage entry to the PRS
+        if (groom != null && bride != null && mr.getDateOfMarriage() != null) {
+            Marriage m = new Marriage();
+            m.setGroom(groom);
+            m.setBride(bride);
+            m.setDateOfMarriage(mr.getDateOfMarriage());
+            m.setPlaceOfMarriage(mr.getRegPlaceInEnglishLang());
+            m.setState(Marriage.State.MARRIED);
+            m.setPreferredLanguage(mr.getPreferredLanguage());
+            groom.specifyMarriage(m);
+            bride.specifyMarriage(m);
+
+            // add marriage to the PRS
+            eCivil.addMarriage(m, user);
+            eCivil.updatePerson(groom, user);
+            eCivil.updatePerson(bride, user);
+        }
+    }
+
+    /**
+     * Returns matching person according to the specified nic or pin if person exist, else returns null
+     *
+     * @param nicOrPin the nic or pin to be searched
+     * @param user     the user performing the action
+     * @return matching person result if exist or null
+     */
+    private Person findGroomOrBride(String nicOrPin, User user) {
+        logger.debug("Location PRS entry using NIC or PIN : {}", nicOrPin);
+        Person person = null;
+        if (nicOrPin != null) {
+            try {
+                long pin = Long.parseLong(nicOrPin);
+                person = eCivil.findPersonByPIN(pin, user);
+            } catch (NumberFormatException ignore) {
+                List<Person> records = eCivil.findPersonsByNIC(nicOrPin, user);
+                if (records != null && records.size() == 1) {
+                    person = records.get(0);
+                } else if (records.size() > 1) {
+                    logger.debug("Could not locate a unique PRS entry using : {}", nicOrPin);
+                }
+            }
+        }
+        return person;
     }
 
     /**
