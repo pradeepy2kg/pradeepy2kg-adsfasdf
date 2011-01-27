@@ -89,9 +89,9 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     public void addMarriageRegister(MarriageRegister marriageRegister, User user, File scannedImage, String fileName) {
         //TODO: Validate marriage details
         ValidationUtils.validateUserPermission(Permission.ADD_MARRIAGE, user);
-        //todo: validate serial number
         marriageRegistrationValidator.validateMarriageRegisterSerialNumber(marriageRegister.getSerialNumber(),
             marriageRegister.getMrDivision());
+        marriageRegistrationDAO.addMarriageRegister(marriageRegister, user);
         if (scannedImage != null) {
             logger.debug("Marriage Register IDUKEY : {}", marriageRegister.getIdUKey());
             //TODO: Create a unique id (file name) for the image (dont use marriageRegister.getIdUKey())
@@ -295,11 +295,14 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void updateMarriageRegister(MarriageRegister marriageRegister, User user, File scannedImage, String fileName) {
+    public void updateMarriageRegister(MarriageRegister marriageRegister, User user, File scannedImage,
+        String fileName, long serialNumber) {
         logger.debug("attempt to update marriage register/notice record : idUKey : {}", marriageRegister.getIdUKey());
         ValidationUtils.validateUserPermission(Permission.EDIT_MARRIAGE, user);
-        marriageRegistrationValidator.validateMarriageRegisterSerialNumber(marriageRegister.getSerialNumber(),
-            marriageRegister.getMrDivision());
+        if (marriageRegister.getSerialNumber() != 0 && marriageRegister.getSerialNumber() != serialNumber) {
+            marriageRegistrationValidator.validateMarriageRegisterSerialNumber(marriageRegister.getSerialNumber(),
+                marriageRegister.getMrDivision());
+        }
         marriageRegistrationDAO.updateMarriageRegister(marriageRegister, user);
 
         if (scannedImage != null) {

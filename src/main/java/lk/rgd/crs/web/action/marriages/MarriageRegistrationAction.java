@@ -530,11 +530,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
      * Marriage Registration - persist new marriage entry through the page for muslim type marrige
      */
     public String registerNewMarriage() {
-        /*if (scannedImage == null) {
-            addActionError(getText(""));
-            populateLists();
-            return INPUT;
-        }*/
+        mode = "new";
         populateMuslimMarriageDetails();
         try {
             marriageRegistrationService.addMarriageRegister(marriage, user, scannedImage, scannedImageFileName);
@@ -599,10 +595,11 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             addActionError(getText("error.marriageregister.notfound"));
             return ERROR;
         }
+        long serialNumber = marriageRegister.getSerialNumber();
         populateRegistrationDetails(marriageRegister);
         populateMaleFemaleDetails(marriageRegister);
         try {
-            marriageRegistrationService.updateMarriageRegister(marriageRegister, user, scannedImage, scannedImageFileName);
+            marriageRegistrationService.updateMarriageRegister(marriageRegister, user, scannedImage, scannedImageFileName, serialNumber);
         } catch (CRSRuntimeException e) {
             switch (e.getErrorCode()) {
                 case ErrorCodes.INVALID_SERIAL_NUMBER:
@@ -656,10 +653,11 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             addActionError(getText("error.marriageregister.notfound"));
             return ERROR;
         }
+        long serialNumber = marriageRegister.getSerialNumber();
         populateRegistrationDetails(marriageRegister);
         populateMaleFemaleDetails(marriageRegister);
         try {
-            marriageRegistrationService.updateMarriageRegister(marriageRegister, user, scannedImage, scannedImageFileName);
+            marriageRegistrationService.updateMarriageRegister(marriageRegister, user, scannedImage, scannedImageFileName, serialNumber);
         } catch (CRSRuntimeException e) {
             switch (e.getErrorCode()) {
                 case ErrorCodes.INVALID_SERIAL_NUMBER:
@@ -685,11 +683,12 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         MarriageRegister marriageRegister = marriageRegistrationService.getByIdUKey(idUKey, user);
         if (marriageRegister == null) {
             addActionError(getText("error.marriageregister.notfound"));
-            return marriageRegistrationInit();
+            return ERROR;
         }
+        long serialNumber = marriageRegister.getSerialNumber();
         populateRegistrationDetails(marriageRegister);
         try {
-            marriageRegistrationService.updateMarriageRegister(marriageRegister, user, scannedImage, scannedImageFileName);
+            marriageRegistrationService.updateMarriageRegister(marriageRegister, user, scannedImage, scannedImageFileName, serialNumber);
         } catch (CRSRuntimeException e) {
             addActionError(getText("error.marriageregister.registrationfailed"));
             return marriageRegistrationInit();

@@ -48,7 +48,8 @@
         errormsg = validateSerialNo("serialNumber", "errorSerialNumber", errormsg);
 
         //todo: validate Path exists
-       // errormsg = validateEmptyField("scannedImage", "errorscannedImage", errormsg);
+        //errormsg = validateEmptyField("scannedImage", "errorscannedImage", errormsg);
+
 
         ////errormsg = isDate("registrationDatePicker", "errorRegistrationDate", errormsg);
         return printErrorMessages(errormsg);
