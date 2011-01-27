@@ -76,6 +76,7 @@ public class MarriageRegistrationValidator {
         //check both parties are registered in PRS
         Person party = null;
         if (notice.getFemale().getIdentificationNumberFemale() != null) {
+            //TODO: find person by PIN or NIC
             //party = populationRegistry.findPersonByPIN(notice.getFemale().getIdentificationNumberFemale(), user);
             if (party == null) {
                 handleException("unable to found bride record on PRS , bride PIN : " +
@@ -83,6 +84,7 @@ public class MarriageRegistrationValidator {
             }
         }
         if (notice.getMale().getIdentificationNumberMale() != null) {
+            //TODO: find person by PIN or NIC
             //party = populationRegistry.findPersonByPIN(notice.getMale().getIdentificationNumberMale(), user);
             if (party == null) {
                 handleException("unable to found grrom record on PRS , groom PIN : " +
@@ -171,12 +173,14 @@ public class MarriageRegistrationValidator {
     private void checkPreviouseActiveMarriages(MarriageRegister notice, List<UserWarning> userWarnings,
         ResourceBundle rb, User user) {
         //check male party is married before
+        //TODO: find person by PIN or NIC
         Person person = null; //populationRegistry.findPersonByPIN(notice.getMale().getIdentificationNumberMale(), user);
         if (!checkCivilState(person)) {
             userWarnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.male.is.not.legal.for.marry"),
                 notice.getMale().getIdentificationNumberMale()), UserWarning.Severity.WARN));
         }
         //check female party is married before
+        //TODO: find person by PIN or NIC
         person = null; //populationRegistry.findPersonByPIN(notice.getFemale().getIdentificationNumberFemale(), user);
         if (!checkCivilState(person)) {
             userWarnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.female.is.not.legal.for.marry"),
