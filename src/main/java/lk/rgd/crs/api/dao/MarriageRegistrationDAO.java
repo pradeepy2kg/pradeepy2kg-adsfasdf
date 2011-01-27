@@ -304,8 +304,8 @@ public interface MarriageRegistrationDAO {
      * @param femaleIdentification female party pin or nic
      * @return marriage notice(register object)
      */
-    public List<MarriageRegister> getActiveMarriageNoticeByMaleFemaleIdentification(long maleIdentification,
-        long femaleIdentification);
+    public List<MarriageRegister> getActiveMarriageNoticeByMaleFemaleIdentification(String maleIdentification,
+        String femaleIdentification);
 
     /**
      * removing marriage register object from the data base

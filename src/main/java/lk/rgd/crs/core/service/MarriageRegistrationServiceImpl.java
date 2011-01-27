@@ -76,7 +76,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         logger.debug("attempt to add marriage notice male serial :{} female serial : {}", notice.getSerialOfMaleNotice(),
             notice.getSerialOfFemaleNotice() + ": notice type :" + type);
         checkUserPermission(Permission.ADD_MARRIAGE, ErrorCodes.PERMISSION_DENIED, "add second notice to marriage register", user);
-        marriageRegistrationValidator.validateMarriageNotice(notice, type, user);
+        //marriageRegistrationValidator.validateMarriageNotice(notice, type, user);
         populateObjectForPersisting(notice, type);
         notice.setState(MarriageRegister.State.DATA_ENTRY);
         marriageRegistrationDAO.addMarriageRegister(notice, user);
@@ -275,8 +275,8 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public MarriageRegister getActiveMarriageNoticeByMaleAndFemaleIdentification(long maleIdentification,
-        long femaleIdentification, User user) {
+    public MarriageRegister getActiveMarriageNoticeByMaleAndFemaleIdentification(String maleIdentification,
+        String femaleIdentification, User user) {
         logger.debug("getting active marriage notice for male identification : {} :and female identification : {}",
             maleIdentification, femaleIdentification);
         //getting latest record
@@ -354,7 +354,8 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
                     " add second notice to marriage register ", user);
                 //get user warnings when adding  second notice   and return warnings
                 List<UserWarning> warnings = marriageRegistrationValidator.validateAddingSecondNoticeAndEdit(notice, type, user);
-                marriageRegistrationValidator.validateMarriageNotice(notice, type, user);
+                //TODO : uncomment after changing  marriageRegistrationValidator methods using String type for male/ female pin
+                //marriageRegistrationValidator.validateMarriageNotice(notice, type, user);
                 if (warnings != null && warnings.size() > 0 && !ignoreWarnings) {
                     logger.debug("warnings found while adding second notice to the existing marriage notice idUKey : {}",
                         notice.getIdUKey());
