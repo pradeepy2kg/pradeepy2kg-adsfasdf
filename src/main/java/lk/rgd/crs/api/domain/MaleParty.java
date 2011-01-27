@@ -17,7 +17,7 @@ public class MaleParty {
 
     @Column(name = "M_IDENTIFICATION_NUMBER", nullable = true)
     //pin only
-    private long identificationNumberMale;
+    private String identificationNumberMale;
 
     @Column(name = "M_DOB", nullable = true)
     @Temporal(value = TemporalType.DATE)
@@ -71,11 +71,11 @@ public class MaleParty {
     @Column(name = "M_FULL_NAME_FATHER_ENGLISH", length = 600, nullable = true)
     private String fatherFullNameMaleInEnglish;
 
-    public long getIdentificationNumberMale() {
+    public String getIdentificationNumberMale() {
         return identificationNumberMale;
     }
 
-    public void setIdentificationNumberMale(long identificationNumberMale) {
+    public void setIdentificationNumberMale(String identificationNumberMale) {
         this.identificationNumberMale = identificationNumberMale;
     }
 

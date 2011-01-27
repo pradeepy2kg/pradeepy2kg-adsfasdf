@@ -530,7 +530,6 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
      * Marriage Registration - persist new marriage entry through the page for muslim type marrige
      */
     public String registerNewMarriage() {
-        mode = "new";
         populateMuslimMarriageDetails();
         try {
             marriageRegistrationService.addMarriageRegister(marriage, user, scannedImage, scannedImageFileName);
