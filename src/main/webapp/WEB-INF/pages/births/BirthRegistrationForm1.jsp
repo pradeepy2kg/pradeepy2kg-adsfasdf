@@ -617,7 +617,7 @@ function initPage() {
             </td>
         </s:if>
         <td colspan="2"><s:textfield name="child.childBirthWeight" id="childBirthWeight"
-                                     cssStyle="width:95%;" maxLength="4"/></td>
+                                     cssStyle="width:95%;" maxLength="5"/></td>
     </s:if>
     <s:elseif test="birthType.ordinal() == 0">
         <td colspan="2">
