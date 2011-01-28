@@ -584,7 +584,7 @@
                 <td colspan="2">
                     <div class="form-submit">
                         <s:submit action="eprDivorce"
-                                  value="%{getText('button.divorce')}"/>
+                                  value="%{getText('button.marriageregister.divorced')}"/>
                     </div>
                 </td>
             </tr>

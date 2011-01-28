@@ -243,6 +243,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         MarriageRegister marriageRegister = marriageRegistrationService.getMarriageRegisterByIdUKey(idUKey, user,
             Permission.DIVORCE);
         if (marriageRegister != null && marriageRegister.getState() != MarriageRegister.State.EXTRACT_PRINTED) {
+            addActionError(getText("error.marriageregister.invalidstate"));
             return ERROR;
         } else {
             try {
@@ -251,9 +252,11 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
                     MarriageRegister.State.DIVORCE);
             }
             catch (CRSRuntimeException e) {
+                addActionError(getText("error.marriageregister.divorcefailed"));
                 return ERROR;
             }
         }
+        addActionError(getText("message.marriageregister.divorced"));
         return SUCCESS;
     }
 
