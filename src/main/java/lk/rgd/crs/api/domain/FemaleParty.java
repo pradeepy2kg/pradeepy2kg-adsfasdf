@@ -140,7 +140,7 @@ public class FemaleParty {
     }
 
     public void setNameInEnglishFemale(String nameInEnglishFemale) {
-        this.nameInEnglishFemale = WebUtils.filterBlanks(nameInEnglishFemale);
+        this.nameInEnglishFemale = WebUtils.filterBlanksAndToUpper(nameInEnglishFemale);
     }
 
     public String getResidentAddressFemaleInOfficialLang() {
@@ -156,7 +156,7 @@ public class FemaleParty {
     }
 
     public void setResidentAddressFemaleInEnglish(String residentAddressFemaleInEnglish) {
-        this.residentAddressFemaleInEnglish = WebUtils.filterBlanks(residentAddressFemaleInEnglish);
+        this.residentAddressFemaleInEnglish = WebUtils.filterBlanksAndToUpper(residentAddressFemaleInEnglish);
     }
 
     public String getRankOrProfessionFemaleInOfficialLang() {
@@ -172,7 +172,7 @@ public class FemaleParty {
     }
 
     public void setRankOrProfessionFemaleInEnglish(String rankOrProfessionFemaleInEnglish) {
-        this.rankOrProfessionFemaleInEnglish = WebUtils.filterBlanks(rankOrProfessionFemaleInEnglish);
+        this.rankOrProfessionFemaleInEnglish = WebUtils.filterBlanksAndToUpper(rankOrProfessionFemaleInEnglish);
     }
 
     public Person.CivilStatus getCivilStatusFemale() {
@@ -204,6 +204,6 @@ public class FemaleParty {
     }
 
     public void setFatherFullNameFemaleInEnglish(String fatherFullNameFemaleInEnglish) {
-        this.fatherFullNameFemaleInEnglish = WebUtils.filterBlanks(fatherFullNameFemaleInEnglish);
+        this.fatherFullNameFemaleInEnglish = WebUtils.filterBlanksAndToUpper(fatherFullNameFemaleInEnglish);
     }
 }

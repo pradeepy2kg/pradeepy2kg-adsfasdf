@@ -84,7 +84,7 @@ public class MaleParty {
     }
 
     public void setFatherFullNameMaleInEnglish(String fatherFullNameMaleInEnglish) {
-        this.fatherFullNameMaleInEnglish = WebUtils.filterBlanks(fatherFullNameMaleInEnglish);
+        this.fatherFullNameMaleInEnglish = WebUtils.filterBlanksAndToUpper(fatherFullNameMaleInEnglish);
     }
 
     public Date getDateOfBirthMale() {
@@ -148,7 +148,7 @@ public class MaleParty {
     }
 
     public void setNameInEnglishMale(String nameInEnglishMale) {
-        this.nameInEnglishMale = WebUtils.filterBlanks(nameInEnglishMale);
+        this.nameInEnglishMale = WebUtils.filterBlanksAndToUpper(nameInEnglishMale);
     }
 
     public String getResidentAddressMaleInOfficialLang() {
@@ -164,7 +164,7 @@ public class MaleParty {
     }
 
     public void setResidentAddressMaleInEnglish(String residentAddressMaleInEnglish) {
-        this.residentAddressMaleInEnglish = WebUtils.filterBlanks(residentAddressMaleInEnglish);
+        this.residentAddressMaleInEnglish = WebUtils.filterBlanksAndToUpper(residentAddressMaleInEnglish);
     }
 
     public String getRankOrProfessionMaleInOfficialLang() {
@@ -180,7 +180,7 @@ public class MaleParty {
     }
 
     public void setRankOrProfessionMaleInEnglish(String rankOrProfessionMaleInEnglish) {
-        this.rankOrProfessionMaleInEnglish = WebUtils.filterBlanks(rankOrProfessionMaleInEnglish);
+        this.rankOrProfessionMaleInEnglish = WebUtils.filterBlanksAndToUpper(rankOrProfessionMaleInEnglish);
     }
 
     public Person.CivilStatus getCivilStatusMale() {
