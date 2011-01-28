@@ -504,10 +504,12 @@
             </td>
             <td colspan="3">
                 <s:if test="marriage.preferredLanguage=='si'">
-                    <s:label id="placeOfIssue" name="marriage.extractIssuedLocation.sienLocationSignature"/>
+                   <s:label id="placeOfIssue" name="marriage.extractIssuedLocation.sienLocationSignature"/><br>
+                   <s:label id="placeName" name="marriage.extractIssuedLocation.siLocationName"/>
                 </s:if>
                 <s:elseif test="marriage.preferredLanguage=='ta'">
-                    <s:label id="placeOfIssue" name="marriage.extractIssuedLocation.taenLocationSignature"/>
+                    <s:label id="placeOfIssue" name="marriage.extractIssuedLocation.taenLocationSignature"/><br>
+                    <s:label id="placeName" name="marriage.extractIssuedLocation.taLocationName"/>
                 </s:elseif>
             </td>
         </tr>
