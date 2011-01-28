@@ -550,15 +550,11 @@
                                 cssStyle="width:98.2%;" rows="5"/>
                 </td>
             </tr>
-            <tr>
-                <td colspan="2">
-                    <div class="form-submit">
-                        <s:submit action="eprRejectMarriageRegistration"
-                                  value="%{getText('button.reject')}"/>
-                    </div>
-                </td>
-            </tr>
         </table>
+        <div class="form-submit">
+            <s:submit action="eprRejectMarriageRegistration"
+                      value="%{getText('button.reject')}"/>
+        </div>
     </s:form>
 </s:if>
 <s:if test="mode=='divorce'">
@@ -577,18 +573,14 @@
                 </td>
                 <td>
                     <s:textarea name="comment" id="registrationRejectComment"
-                                cssStyle="width:98.2%;" rows="5"/>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <div class="form-submit">
-                        <s:submit action="eprDivorce"
-                                  value="%{getText('button.marriageregister.divorced')}"/>
-                    </div>
+                                cssStyle="width:98.2%;" rows="15"/>
                 </td>
             </tr>
         </table>
+        <div class="form-submit">
+            <s:submit action="eprDivorce"
+                      value="%{getText('button.marriageregister.divorced')}"/>
+        </div>
     </s:form>
 </s:if>
 </div>

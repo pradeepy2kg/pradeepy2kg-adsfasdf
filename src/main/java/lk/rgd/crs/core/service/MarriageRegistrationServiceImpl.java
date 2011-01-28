@@ -673,11 +673,14 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void updateMarriageRegisterState(long idUKey, User user, int permission, MarriageRegister.State state) {
+    public void updateMarriageRegisterState(long idUKey, User user, int permission,
+        String comment, MarriageRegister.State state) {
+        //todo: to be renamed this method to divorce
         ValidationUtils.validateUserPermission(permission, user);
         MarriageRegister marriageRegister = marriageRegistrationDAO.getByIdUKey(idUKey);
         ValidationUtils.validateUserAccessToMRDivision(marriageRegister.getMrDivision().getMrDivisionUKey(), user);
         marriageRegister.setState(state);
+        marriageRegister.setRegistrationRejectComment(comment);
         marriageRegistrationDAO.updateMarriageRegister(marriageRegister, user);
     }
 
