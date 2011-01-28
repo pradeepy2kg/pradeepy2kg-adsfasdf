@@ -834,6 +834,8 @@ $('select#dsDivisionId').bind('change', function(evt2) {
         <td colspan="8">
             <s:textfield name="marriage.male.fatherIdentificationNumberMale" id="father_pin_or_nic_male"
                          cssStyle="width:240px;" maxLength="10"/>
+            <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="male_lookup"
+                 onclick="malePartyFather('father_pin_or_nic_male');">
         </td>
     </tr>
     <tr>
@@ -1117,6 +1119,8 @@ $('select#dsDivisionId').bind('change', function(evt2) {
         <td colspan="8">
             <s:textfield name="marriage.female.fatherIdentificationNumberFemale" id="father_pin_or_nic_female"
                          cssStyle="width:240px;" maxLength="10"/>
+            <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="male_lookup"
+                 onclick="femalePartyFather('father_pin_or_nic_female');">
         </td>
     </tr>
     <tr>
