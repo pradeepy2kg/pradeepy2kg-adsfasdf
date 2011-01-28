@@ -1,9 +1,5 @@
 package lk.rgd.common.core.index;
 
-import org.apache.commons.httpclient.HttpVersion;
-import org.apache.commons.httpclient.params.HttpClientParams;
-import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
-import org.apache.commons.httpclient.params.HttpParamsFactory;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.impl.CommonsHttpSolrServer;
 import org.apache.solr.client.solrj.response.SolrPingResponse;
@@ -17,9 +13,9 @@ public class SolrIndexManager {
 
     private static final Logger logger = LoggerFactory.getLogger(SolrIndexManager.class);
 
-    private CommonsHttpSolrServer birthServer;
-    private CommonsHttpSolrServer deathServer;
-    private CommonsHttpSolrServer prsServer;
+    private SolrServer birthServer;
+    private SolrServer deathServer;
+    private SolrServer prsServer;
     private String solrBirthURL;
     private String solrDeathURL;
     private String solrPRSURL;
@@ -38,10 +34,6 @@ public class SolrIndexManager {
             birthServer = new CommonsHttpSolrServer(solrBirthURL);
             deathServer = new CommonsHttpSolrServer(solrDeathURL);
             prsServer = new CommonsHttpSolrServer(solrPRSURL);
-
-            HttpClientParams params = new HttpClientParams();
-            params.setVersion(HttpVersion.HTTP_1_0);
-            prsServer.getHttpClient().setParams(params);
 
             SolrPingResponse pingResponse = birthServer.ping();
             if (pingResponse.getStatus() == 0) {
