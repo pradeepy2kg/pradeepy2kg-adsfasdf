@@ -249,14 +249,14 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
             try {
                 //TODO : refactor rename licensePrintedLocationId and licenseIssuedUserId in order to user this attribute for both notice and Extract print
                 marriageRegistrationService.updateMarriageRegisterState(idUKey, user, Permission.DIVORCE,
-                    MarriageRegister.State.DIVORCE);
+                    comment, MarriageRegister.State.DIVORCE);
             }
             catch (CRSRuntimeException e) {
                 addActionError(getText("error.marriageregister.divorcefailed"));
                 return ERROR;
             }
         }
-        addActionError(getText("message.marriageregister.divorced"));
+        addActionMessage(getText("message.marriageregister.divorced"));
         return SUCCESS;
     }
 
