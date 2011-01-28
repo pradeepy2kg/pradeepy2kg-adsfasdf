@@ -518,7 +518,7 @@ public class MarriageRegister implements Serializable, Cloneable {
     }
 
     public void setRegPlaceInEnglishLang(String regPlaceInEnglishLang) {
-        this.regPlaceInEnglishLang = WebUtils.filterBlanks(regPlaceInEnglishLang);
+        this.regPlaceInEnglishLang = WebUtils.filterBlanksAndToUpper(regPlaceInEnglishLang);
     }
 
     public String getRegPlaceInOfficialLang() {
@@ -566,7 +566,7 @@ public class MarriageRegister implements Serializable, Cloneable {
     }
 
     public void setRegNameInEnglishLang(String regNameInEnglishLang) {
-        this.regNameInEnglishLang = WebUtils.filterBlanks(regNameInEnglishLang);
+        this.regNameInEnglishLang = WebUtils.filterBlanksAndToUpper(regNameInEnglishLang);
     }
 
     public LicenseCollectType getLicenseCollectType() {
