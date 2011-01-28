@@ -15,7 +15,7 @@ public interface ReportsGenerator {
      *
      * @return BirthIslandWideStatistics  @param year  @param user
      */
-    public BirthIslandWideStatistics generate_2_2(int year, User user);
+    public BirthIslandWideStatistics generate_2_2(int year, User user, boolean clearCache);
 
     /**
      * Generate a complete statistics object containing whole islandwide stats
@@ -24,7 +24,7 @@ public interface ReportsGenerator {
      * @param user
      * @return BirthIslandWideStatistics
      */
-    public BirthIslandWideStatistics generate_2_8(int year, User user);
+    public BirthIslandWideStatistics generate_2_8(int year, User user, boolean clearCache);
 
     /**
      * Generate a complete statistics object containing whole islandwide stats
@@ -33,14 +33,50 @@ public interface ReportsGenerator {
      * @param user
      * @return
      */
-    public BirthIslandWideStatistics generate_2_5(int year, User user);
+    public BirthIslandWideStatistics generate_2_5_new(int year, User user, boolean clearCache);
+
+    /**
+     *
+     * @param year
+     * @param user
+     * @param clearCache
+     * @return
+     */
+    public BirthIslandWideStatistics generate_2_5(int year, User user, boolean clearCache);
+
+    /**
+     *
+     * @param year
+     * @param user
+     * @param clearCache
+     * @return
+     */
+    public BirthIslandWideStatistics generate_2_2a(int year, User user, boolean clearCache);
+
+    /**
+     *
+     * @param year
+     * @param user
+     * @param clearCache
+     * @return
+     */
+    public BirthIslandWideStatistics generate_2_7(int year, User user, boolean clearCache);
+
+    /**
+     *
+     * @param year
+     * @param user
+     * @param clearCache
+     * @return
+     */
+    public BirthIslandWideStatistics generate_2_6(int year, User user, boolean clearCache);
 
     /**
      * @param year
      * @param user
      * @return
      */
-    public BirthIslandWideStatistics generate_2_3(int year, User user);
+    public BirthIslandWideStatistics generate_2_3(int year, User user, boolean clearCache);
 
     /**
      * Generate a complete statistics object containing whole islandwide stats
@@ -49,28 +85,28 @@ public interface ReportsGenerator {
      * @param user
      * @return
      */
-    public BirthIslandWideStatistics generate_2_4(int year, User user);
+    public BirthIslandWideStatistics generate_2_4(int year, User user, boolean clearCache);
 
     /**
      * @param year
      * @param user
      * @return
      */
-    public BirthIslandWideStatistics generate_2_11(int year, User user);
+    public BirthIslandWideStatistics generate_2_11(int year, User user, boolean clearCache);
 
     /**
      * @param year
      * @param user
      * @return
      */
-    public BirthIslandWideStatistics generate_2_10(int year, User user);
+    public BirthIslandWideStatistics generate_2_10(int year, User user, boolean clearCache);
 
     /**
      * @param year
      * @param user
      * @return
      */
-    public BirthIslandWideStatistics generate_2_12(int year, User user);
+    public BirthIslandWideStatistics generate_2_12(int year, User user, boolean clearCache);
 
     /**
      * Creates a Standard CSV file from the generated IslandWide stats.

@@ -28,6 +28,7 @@ public class ReportsAction extends ActionSupport implements SessionAware {
     private List<Integer> yearList;
     private Map<Integer, String> chartList;
     private Map session;
+    private boolean clearCache;
 
     public ReportsAction(ReportsGenerator reportsService, StatisticsManager statisticsManager) {
         this.reportsService = reportsService;
@@ -47,6 +48,7 @@ public class ReportsAction extends ActionSupport implements SessionAware {
      */
     public String create() {
         // todo permission and security validations
+        logger.info("Clear Cache {}", clearCache);
 
         User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         try {
@@ -176,6 +178,14 @@ public class ReportsAction extends ActionSupport implements SessionAware {
         return session;
     }
 
+    public boolean isClearCache() {
+        return clearCache;
+    }
+
+    public void setClearCache(boolean clearCache) {
+        this.clearCache = clearCache;
+    }
+
     @Override
     public void setSession(Map<String, Object> session) {
         this.session = session;
@@ -184,37 +194,38 @@ public class ReportsAction extends ActionSupport implements SessionAware {
     private void generateReport(int year, User user, int reportCode) {
         switch (reportCode) {
             case ReportCodes.TABLE_2_2:
-                reportsService.generate_2_2(year, user);
+                reportsService.generate_2_2(year, user, clearCache);
                 break;
             case ReportCodes.TABLE_2_8:
-                reportsService.generate_2_8(year, user);
+                reportsService.generate_2_8(year, user, clearCache);
                 break;
             case ReportCodes.TABLE_2_5:
-                reportsService.generate_2_5(year, user);
+                reportsService.generate_2_5_new(year, user, clearCache);
                 break;
             case ReportCodes.TABLE_2_4:
-                reportsService.generate_2_4(year, user);
+                reportsService.generate_2_4(year, user, clearCache);
                 break;
             case ReportCodes.TABLE_2_7:
-                reportsService.generate_2_5(year, user);
+                //reportsService.generate_2_5(year, user, clearCache);
+                reportsService.generate_2_7(year, user, clearCache);
                 break;
             case ReportCodes.TABLE_2_6:
-                reportsService.generate_2_5(year, user);
+                reportsService.generate_2_6(year, user, clearCache);
                 break;
             case ReportCodes.TABLE_2_2A:
-                reportsService.generate_2_5(year, user);
+                reportsService.generate_2_2a(year, user, clearCache);
                 break;
             case ReportCodes.TABLE_2_3:
-                reportsService.generate_2_3(year, user);
+                reportsService.generate_2_3(year, user, clearCache);
                 break;
             case ReportCodes.TABLE_2_11:
-                reportsService.generate_2_11(year, user);
+                reportsService.generate_2_11(year, user, clearCache);
                 break;
             case ReportCodes.TABLE_2_10:
-                reportsService.generate_2_10(year, user);
+                reportsService.generate_2_10(year, user, clearCache);
                 break;
             case ReportCodes.TABLE_2_12:
-                reportsService.generate_2_12(year, user);
+                reportsService.generate_2_12(year, user, clearCache);
                 break;
         }
     }

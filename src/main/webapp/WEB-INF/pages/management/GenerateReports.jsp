@@ -42,6 +42,14 @@
                 <td width="30%">&nbsp;</td>
             </tr>
             <tr>
+                <td width="20%" align="right">
+                    <s:label value="Clear Cache"/>
+                </td>
+                <td>
+                    <s:checkbox name="clearCache" id="cacheId" value="false"></s:checkbox>
+                </td>
+            </tr>
+            <tr>
                 <td>&nbsp;</td>
                 <td colspan="2" align="left">
                     <s:submit/>
