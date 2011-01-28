@@ -87,7 +87,7 @@ public class BirthRecordsIndexer {
         try {
             addRecord(bdf);
             solrIndexManager.getBirthServer().commit();
-            logger.info("Successfully indexed birth record : {}", bdf.getIdUKey());
+            logger.debug("Successfully indexed birth record : {}", bdf.getIdUKey());
         } catch (Exception e) {
             logger.error("Error indexing birth record : " + bdf.getIdUKey() + " cause : " + e.getMessage()); // do not stack trace
         }
