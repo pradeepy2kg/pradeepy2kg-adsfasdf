@@ -5,7 +5,6 @@ function personLookup(pin, type) {
     $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
             function(data1) {
                 $("textarea#nameOfficial" + type).val(data1.fullNameInOfficialLanguage);
-                name_english_male
                 $("textarea#name_english_male" + type).val(data1.fullNameInOfficialLanguage);
                 $("textarea#address" + type).val(data1.lastAddress);
                 var maleDOB = data1.dateOfBirth;
