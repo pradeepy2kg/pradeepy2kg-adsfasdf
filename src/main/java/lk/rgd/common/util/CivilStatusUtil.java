@@ -82,7 +82,7 @@ public class CivilStatusUtil {
                 case DIVORCED:
                     return "දික්කසාද වී ඇත ";
                 case WIDOWED:
-                    return "වැන්දබු";
+                    return "වැන්දඹු";
             }
         } else if (AppConstants.TAMIL.equals(language)) {
             switch (state) {

@@ -109,6 +109,17 @@ public class MarriageRegistrationValidator {
         // todo license req party must be filled default is mail to male
     }
 
+    /**
+     * Validate minimum requirements of marriage register
+     *
+     * @param marriageRegister the marriage register to be validated
+     */
+    public void validateMinimalRequirementsOfMarriageRegister(MarriageRegister marriageRegister) {
+        logger.debug("Validate marriage register for minimal requirements");
+
+        // TODO  validate minimum requirements
+    }
+
     private void validateSerialNumber(long serialNumber, MRDivision mrDivision) {
         // validate registration serial number
         boolean check = false;

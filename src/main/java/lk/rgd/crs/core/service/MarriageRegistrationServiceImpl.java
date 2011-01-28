@@ -565,7 +565,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         //if current state is NOTICE_APPROVED that mean we approved single notice or we are approving second notice(license
         // collect party) when notice become NOTICE_APPROVE it eligible for printing License so we have to validate
         // that marriage in this evens as well
-     /*   if (existingNotice.getState() == MarriageRegister.State.NOTICE_APPROVED) {
+        /*   if (existingNotice.getState() == MarriageRegister.State.NOTICE_APPROVED) {
             warnings = marriageRegistrationValidator.checkUserWarningsForSecondNoticeApproval(existingNotice, user);
             return warnings;
         }*/
@@ -588,15 +588,32 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void approveMarriageRegister(long idUKey, User user) {
+
+        logger.debug("Attempt to approve marriage resister with idUKey : {}", idUKey);
+        // check user permission for marriage register approval
         ValidationUtils.validateUserPermission(Permission.APPROVE_MARRIAGE, user);
         MarriageRegister marriageRegister = marriageRegistrationDAO.getByIdUKey(idUKey);
         //TODO: to be removed if mr division validations not required
         ValidationUtils.validateUserAccessToMRDivision(marriageRegister.getMrDivision().getMrDivisionUKey(), user);
+        // check all required fields are filled before approval
+        marriageRegistrationValidator.validateMinimalRequirementsOfMarriageRegister(marriageRegister);
+
+        final MarriageRegister.State currentState = marriageRegister.getState();
+        if (currentState != MarriageRegister.State.REG_DATA_ENTRY) {
+            handleException("Cannot approve marriage register with idUKey : " + idUKey + ", Illegal State : " +
+                currentState, ErrorCodes.INVALID_STATE_FOR_APPROVAL);
+        }
+
+        // TODO need to store comments before approving ??
         marriageRegister.setState(MarriageRegister.State.REGISTRATION_APPROVED);
+        marriageRegister.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
+        marriageRegister.getLifeCycleInfo().setApprovalOrRejectUser(user);
         marriageRegistrationDAO.updateMarriageRegister(marriageRegister, user);
 
         // TODO following is not complete and only temporary solution to update person if they already exist in PRS
         updateExistingPRSRecords(marriageRegister, user);
+
+        logger.debug("Approved marriage register with idUKey : {}", idUKey);
     }
 
     private void updateExistingPRSRecords(MarriageRegister mr, User user) {
