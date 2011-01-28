@@ -512,8 +512,8 @@
             </td>
         </tr>
         <tr>
-            <td><label><span class="font-8">අනුක්‍රමික අංකය
-                <br>தொடர் இலக்கம்<br>Serial Number</span></label>
+            <td><label><span class="font-8">  ලියාපදිංචි අංකය
+                <br>பெறப்பட்ட இலக்கம்<br>Registration Number</span></label>
             </td>
             <td align="center">
                 <s:label id="serialNumber" name="marriage.idUKey"/>
@@ -550,15 +550,37 @@
                                 cssStyle="width:98.2%;" rows="5"/>
                 </td>
             </tr>
+        </table>
+        <div class="form-submit">
+            <s:submit action="eprRejectMarriageRegistration"
+                      value="%{getText('button.reject')}"/>
+        </div>
+    </s:form>
+</s:if>
+<s:if test="mode=='divorce'">
+    <s:form method="post">
+        <s:hidden name="idUKey"/>
+        <table border="1" style="margin-top:20px;width:100%;border:1px solid #000;border-collapse:collapse;"
+               cellpadding="2px">
+            <caption/>
+            <col width="200px">
+            <col>
             <tr>
-                <td colspan="2">
-                    <div class="form-submit">
-                        <s:submit action="eprRejectMarriageRegistration"
-                                  value="%{getText('button.reject')}"/>
-                    </div>
+                <td class="font-8">
+                    අදහස් දක්වන්න
+                    <br>Comment in ta
+                    <br>Comment
+                </td>
+                <td>
+                    <s:textarea name="comment" id="registrationRejectComment"
+                                cssStyle="width:98.2%;" rows="15"/>
                 </td>
             </tr>
         </table>
+        <div class="form-submit">
+            <s:submit action="eprDivorce"
+                      value="%{getText('button.marriageregister.divorced')}"/>
+        </div>
     </s:form>
 </s:if>
 </div>

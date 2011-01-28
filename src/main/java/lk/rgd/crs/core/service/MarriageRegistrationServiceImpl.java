@@ -82,7 +82,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         logger.debug("attempt to add marriage notice male serial :{} female serial : {}", notice.getSerialOfMaleNotice(),
             notice.getSerialOfFemaleNotice() + ": notice type :" + type);
         checkUserPermission(Permission.ADD_MARRIAGE, ErrorCodes.PERMISSION_DENIED, "add second notice to marriage register", user);
-        //marriageRegistrationValidator.validateMarriageNotice(notice, type, user);
+        marriageRegistrationValidator.validateMarriageNotice(notice, type, user);
         populateObjectForPersisting(notice, type);
         notice.setState(MarriageRegister.State.DATA_ENTRY);
         marriageRegistrationDAO.addMarriageRegister(notice, user);
@@ -673,11 +673,14 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void updateMarriageRegisterState(long idUKey, User user, int permission, MarriageRegister.State state) {
+    public void updateMarriageRegisterState(long idUKey, User user, int permission,
+        String comment, MarriageRegister.State state) {
+        //todo: to be renamed this method to divorce
         ValidationUtils.validateUserPermission(permission, user);
         MarriageRegister marriageRegister = marriageRegistrationDAO.getByIdUKey(idUKey);
         ValidationUtils.validateUserAccessToMRDivision(marriageRegister.getMrDivision().getMrDivisionUKey(), user);
         marriageRegister.setState(state);
+        marriageRegister.setRegistrationRejectComment(comment);
         marriageRegistrationDAO.updateMarriageRegister(marriageRegister, user);
     }
 

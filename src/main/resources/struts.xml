@@ -1504,6 +1504,13 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
+        <action name="eprMarriageRegisterDivorceInit"
+                class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
+                method="marriageRegisterDivorceInit">
+            <result type="tiles" name="success">epr.marriageExtract</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
         <action name="eprViewMarriageRegister" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
                 method="marriageRegisterViewInit">
             <result type="tiles" name="success">epr.marriageExtract</result>
