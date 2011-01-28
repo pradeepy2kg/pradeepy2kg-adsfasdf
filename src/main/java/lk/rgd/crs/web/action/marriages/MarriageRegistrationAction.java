@@ -125,6 +125,9 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             marriage = marriageRegistrationService.getByIdUKey(idUKey, user);
         } else {
             marriage = new MarriageRegister();
+            marriage.getFemale().setCivilStatusFemale(Person.CivilStatus.NEVER_MARRIED);
+            marriage.getMale().setCivilStatusMale(Person.CivilStatus.NEVER_MARRIED);
+            marriage.setTypeOfMarriage(MarriageType.GENERAL);
         }
         //populating lists
         commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
