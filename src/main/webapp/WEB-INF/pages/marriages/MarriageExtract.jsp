@@ -471,6 +471,27 @@
     </tr>
     </tbody>
 </table>
+<s:if test="marriage.state.ordinal()==12">
+    <table border="1" style="margin-top:20px;width:100%;border:1px solid #000;border-collapse:collapse;"
+           cellpadding="2px">
+        <caption/>
+        <col width="200px">
+        <col>
+        <tr>
+            <td class="font-8">
+                අදහස්
+                <br>Comment in ta
+                <br>Comment
+            </td>
+            <td>
+                <s:label id="comments" name="marriage.registrationRejectComment"/>
+            </td>
+        </tr>
+    </table>
+    <div class="form-submit" style="margin-top:0;margin-right:5px;">
+        <s:submit value="%{getText('button.print')}" onclick="printPage()"/>
+    </div>
+</s:if>
 <s:if test="mode=='print'">
     <table border="1" style="margin-top:3px;width:100%;border:1px solid #000;border-collapse:collapse;"
            cellpadding="2px">
@@ -504,8 +525,8 @@
             </td>
             <td colspan="3">
                 <s:if test="marriage.preferredLanguage=='si'">
-                   <s:label id="placeOfIssue" name="marriage.extractIssuedLocation.sienLocationSignature"/><br>
-                   <s:label id="placeName" name="marriage.extractIssuedLocation.siLocationName"/>
+                    <s:label id="placeOfIssue" name="marriage.extractIssuedLocation.sienLocationSignature"/><br>
+                    <s:label id="placeName" name="marriage.extractIssuedLocation.siLocationName"/>
                 </s:if>
                 <s:elseif test="marriage.preferredLanguage=='ta'">
                     <s:label id="placeOfIssue" name="marriage.extractIssuedLocation.taenLocationSignature"/><br>
