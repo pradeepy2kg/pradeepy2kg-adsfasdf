@@ -477,6 +477,16 @@
         <caption/>
         <col width="200px">
         <col>
+               <tr>
+            <td class="font-8">
+               තත්ත්වය
+                <br>State in ta
+                <br>State
+            </td>
+            <td>
+                <s:label value="%{getText('button.marriageregister.divorce')}"/>
+            </td>
+        </tr>
         <tr>
             <td class="font-8">
                 අදහස්
