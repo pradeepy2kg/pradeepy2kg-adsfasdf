@@ -62,6 +62,7 @@
         return printErrorMessages(errormsg);
     }
 
+    function initPage(){}
 
 </script>
 <s:actionerror cssStyle="color:red;font-size:10pt"/>
