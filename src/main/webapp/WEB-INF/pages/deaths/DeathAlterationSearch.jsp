@@ -100,7 +100,7 @@
             return false;
         }
         else {
-            return false;
+            return true;
         }
         errormsg = "";
         counter = 0;
