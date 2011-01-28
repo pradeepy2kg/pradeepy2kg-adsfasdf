@@ -183,6 +183,14 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         marriage = marriageRegistrationService.getMarriageRegisterByIdUKey(idUKey, user, Permission.VIEW_MARRIAGE_REGISTER);
         return SUCCESS;
     }
+    
+        /**
+     * Marriage Registration - Marriage Registration divorce page
+     */
+    public String marriageRegisterDivorceInit() {
+        marriage = marriageRegistrationService.getMarriageRegisterByIdUKey(idUKey, user, Permission.DIVORCE);
+        return SUCCESS;
+    }
 
     /**
      * populating locations and users for Marriage Extract Print
@@ -233,19 +241,22 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     public String divorce() {
         //todo : add action messages/errors
         MarriageRegister marriageRegister = marriageRegistrationService.getMarriageRegisterByIdUKey(idUKey, user,
-            Permission.PRINT_MARRIAGE_EXTRACT);
+            Permission.DIVORCE);
         if (marriageRegister != null && marriageRegister.getState() != MarriageRegister.State.EXTRACT_PRINTED) {
+            addActionError(getText("error.marriageregister.invalidstate"));
             return ERROR;
         } else {
             try {
                 //TODO : refactor rename licensePrintedLocationId and licenseIssuedUserId in order to user this attribute for both notice and Extract print
                 marriageRegistrationService.updateMarriageRegisterState(idUKey, user, Permission.DIVORCE,
-                    MarriageRegister.State.DIVORCE);
+                    comment, MarriageRegister.State.DIVORCE);
             }
             catch (CRSRuntimeException e) {
+                addActionError(getText("error.marriageregister.divorcefailed"));
                 return ERROR;
             }
         }
+        addActionMessage(getText("message.marriageregister.divorced"));
         return SUCCESS;
     }
 
