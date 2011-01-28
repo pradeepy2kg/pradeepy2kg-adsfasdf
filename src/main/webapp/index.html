@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>ePopulation Registry</title>
+    <script language="JavaScript">
+        function fullscreen(url) {
+            w = screen.availWidth;
+            h = screen.availHeight;
+            features = "width=" + w + ",height=" + h;
+            features += ",left=0,top=0,scrollbars=1,resizable=0,status=1";
+            window.open(url, "", features);
+        }
+
+        // Check for printer plugin
+        function checkPrintPlugin() {
+            if (typeof(jsPrintSetup) == 'undefined') {
+                installjsPrintSetup();
+            } else {
+                alert("Congradulations!\nYou already have the Printer plugin installed in your browser.");
+            }
+        }
+
+        // Install JSPrintSetup
+        function installjsPrintSetup() {
+            if (confirm("You don't have printer plugin.\nDo you want to install the Printer Plugin now?")) {
+                var xpi = new Object();
+                xpi['jsprintsetup'] = 'https://addons.mozilla.org/en-US/firefox/downloads/latest/8966/addon-8966-latest.xpi';
+                InstallTrigger.install(xpi);
+            }
+        }
+    </script>
+    <style type="text/css">
+        html {
+            background: url( ecivil/images/body-bg1.png) repeat;
+        }
+
+        #index-outer {
+            width: 1250px;
+            margin: auto;
+        }
+
+        #index-header {
+            width: 1250px;
+            height: 151px;
+        }
+
+        #index-body {
+            margin-top: 2px;
+        }
+
+        #index-footer {
+            width: 100%;
+            height: 30px;
+            float: left;
+            margin-top: 2px;
+            font-size: 10pt;
+            background: url( ecivil/images/title-bg-1.png) repeat-x;
+        }
+
+        #left-sidebar {
+            float: left;
+            width: 250px;
+            min-height: 300px;
+            margin-right: 5px;
+        }
+
+        #main-content {
+            float: left;
+            width: 740px;
+            min-height: 300px;
+            margin-right: 5px;
+        }
+
+        #right-sidebar {
+            float: right;
+            width: 250px;
+            min-height: 300px;
+        }
+
+        .block {
+            margin: 5px 0 10px 0;
+            background: url( ecivil/images/login-form-bg.png) repeat;
+        }
+
+        .block-title {
+            width: 100%;
+            height: 25px;
+            font-size: 12pt;
+            text-align: center;
+            vertical-align: middle;
+            line-height: 25px;
+            color: #002;
+            border-bottom: 2px inset #004;
+            background: url( ecivil/images/title-bg-1.png) repeat-x;
+        }
+
+        .block-data {
+            padding: 11px;
+            font-size: 10pt;
+            text-align: justify;
+            color: #004;
+        }
+    </style>
+</head>
+<body>
+<div id="index-outer">
+    <div id="index-header">
+        <img src=" ecivil/images/epr-header.png" align="center" width="1250px"/>
+    </div>
+    <div id="index-body">
+        <div id="left-sidebar">
+            <div class="block">
+                <div class="block-title">Fonts</div>
+                <div class="block-data">
+                    <p>Download <a
+                            href="http://www.locallanguages.lk/sinhala_how_to_install_in_english.html" target="blank">Sinhala</a>
+                        fonts.</p>
+                    <p><a href="http://www.locallanguages.lk/sinhala_how_to_install_in_english.html" target="blank">සිංහල අකුරු</a>
+                         ලබා ගැනීම.</p>
+                </div>
+            </div>
+        </div>
+        <div id="main-content">
+            <div class="block">
+                <div class="block-title">E-Population Registration System</div>
+                <div class="block-data">
+                    <a href="javascript:fullscreen('/ecivil/')" style="font-size:16pt; text-decoration:none;">
+                        Click Here to go to epopulation registry
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div id="right-sidebar">
+            <div class="block">
+                <div class="block-title">Print Plugin</div>
+                <div class="block-data">
+                    <p>Check wether you have already install the latest version of the printer plugin.</p>
+                    <p>If you do not have the printer plugin, click here to download</p>
+                    <p>මුද්‍රණය සඳහා අවශ්‍ය 	මෘදුකාංග ලබා ගැනීම.</p>
+
+                    <input type="button" onclick="checkPrintPlugin()" value="Install Printer Plugin">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div id="index-footer">
+    <div>
+        <div style="line-height:30px; margin-left:auto; margin-right:auto; width:100%; text-align:center;">
+            Copyright © 2010 » Registrar General&apos;s Department of Sri Lanka. All Rights Reserved.
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>
