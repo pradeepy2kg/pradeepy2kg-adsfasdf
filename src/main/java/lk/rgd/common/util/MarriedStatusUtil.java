@@ -47,13 +47,13 @@ public class MarriedStatusUtil {
         } else if (AppConstants.ENGLISH.equals(language)) {
             switch (state) {
                 case UNKNOWN:
-                    return "Unknown";
+                    return "UNKNOWN";
                 case MARRIED:
-                    return "Married";
+                    return "MARRIED";
                 case UNMARRIED:
-                    return "Unmarried";
+                    return "UNMARRIED";
                 case NO_SINCE_MARRIED:
-                    return "No, but since married";
+                    return "NO, BUT SINCE MARRIED";
             }
         } else {
             logger.error("Invalid language : {}", language);

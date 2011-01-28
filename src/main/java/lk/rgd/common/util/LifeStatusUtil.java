@@ -81,28 +81,28 @@ public class LifeStatusUtil {
         } else if (AppConstants.TAMIL.equals(language)) {
             switch (state) {
                 case UNKNOWN:
-                    return "Unknown";
+                    return "UNKNOWN IN TA";
                 case ALIVE:
-                    return "Alive";
+                    return "ALIVE IN TA";
                 case DEAD:
-                    return "Dead";
+                    return "DEAD IN TA";
                 case MISSING:
-                    return "Missing";
+                    return "MISSING IN TA";
                 case NON_RESIDENT:
-                    return "Non resident";
+                    return "NON RESIDENT IN TA";
             }
         } else if (AppConstants.ENGLISH.equals(language)) {
             switch (state) {
                 case UNKNOWN:
-                    return "Unknown";
+                    return "UNKNOWN";
                 case ALIVE:
-                    return "Alive";
+                    return "ALIVE";
                 case DEAD:
-                    return "Dead";
+                    return "DEAD";
                 case MISSING:
-                    return "Missing";
+                    return "MISSING";
                 case NON_RESIDENT:
-                    return "Non resident";
+                    return "NON RESIDENT";
             }
         } else {
             logger.error("Invalid language : {}", language);

@@ -102,17 +102,17 @@ public class CivilStatusUtil {
         } else if (AppConstants.ENGLISH.equals(language)) {
             switch (state) {
                 case NEVER_MARRIED:
-                    return "Never married";
+                    return "NEVER MARRIED";
                 case MARRIED:
-                    return "Married";
+                    return "MARRIED";
                 case ANNULLED:
-                    return "Annulled";
+                    return "ANNULLED";
                 case SEPARATED:
-                    return "Separated";
+                    return "SEPARATED";
                 case DIVORCED:
-                    return "Divorced";
+                    return "DIVORCED";
                 case WIDOWED:
-                    return "Widowed";
+                    return "WIDOWED";
             }
         } else {
             logger.error("Invalid language : {}", language);

@@ -10,12 +10,12 @@ import org.slf4j.LoggerFactory;
 public class PersonStatusUtil {
     // TODO change this names to appropriate ones
     private static final Logger logger = LoggerFactory.getLogger(PersonStatusUtil.class);
-    private static final String PERSON_UNVERIFIED = "අනුමත නොකළ / #Unverified# / Unverified";
-    private static final String PERSON_SEMI_VERIFIED = "අර්ධව අනුමතයි / #Semi Verified# / Semi Verified";
-    private static final String PERSON_DATA_ENTRY = "දත්ත ඇතුලත් කිරීම/ #Data Entry# / Data Entry";
-    private static final String PERSON_VERIFIED = "අනුමතයි / #Verified# / Verified";
-    private static final String PERSON_CANCELLED = "අවලංගුයි / #Cancelled# / Cancelled";
-    private static final String PERSON_DELETED = "ප්‍රතික්ෂේපිතයි / #Rejected# / Rejected";
+    private static final String PERSON_UNVERIFIED = "අනුමත නොකළ / #Unverified# / UNVERIFIED";
+    private static final String PERSON_SEMI_VERIFIED = "අර්ධව අනුමතයි / #Semi Verified# / SEMI VERIFIED";
+    private static final String PERSON_DATA_ENTRY = "දත්ත ඇතුලත් කිරීම/ #Data Entry# / DATA ENTRY";
+    private static final String PERSON_VERIFIED = "අනුමතයි / #Verified# / VERIFIED";
+    private static final String PERSON_CANCELLED = "අවලංගුයි / #Cancelled# / CANCELLED";
+    private static final String PERSON_DELETED = "ප්‍රතික්ෂේපිතයි / #Rejected# / REJECTED";
 
     public static String getPersonStatusString(Person.Status status) {
         switch (status) {

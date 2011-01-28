@@ -56,9 +56,9 @@ public class GenderUtil {
             }
         } else if (AppConstants.ENGLISH.equals(language)) {
             switch (code) {
-                case 0: return "Male";
-                case 1: return "Female";
-                case 2: return "Unknown";
+                case 0: return "MALE";
+                case 1: return "FEMALE";
+                case 2: return "UNKNOWN";
             }
         } else {
             logger.error("Invalid language : {}", language);
