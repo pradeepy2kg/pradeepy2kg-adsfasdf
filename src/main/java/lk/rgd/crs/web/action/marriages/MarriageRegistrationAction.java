@@ -123,6 +123,8 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             //loading existing marriage notice from the list page
             logger.debug("load existing marriage notice : idUKey {}", idUKey);
             marriage = marriageRegistrationService.getByIdUKey(idUKey, user);
+        } else {
+            marriage = new MarriageRegister();
         }
         //populating lists
         commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList,
@@ -536,7 +538,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     /**
      * Marriage Registration - persist new marriage entry through the page for muslim type marrige
      */
-    public String registerNewMarriage() {        
+    public String registerNewMarriage() {
         populateMuslimMarriageDetails();
         try {
             marriageRegistrationService.addMarriageRegister(marriage, user, scannedImage, scannedImageFileName);

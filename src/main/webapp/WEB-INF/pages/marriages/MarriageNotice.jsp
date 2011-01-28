@@ -7,6 +7,7 @@
 <script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
 <script type="text/javascript" src="<s:url value="/js/division.js"/>"></script>
 <script type="text/javascript" src="<s:url value="/js/transliteration.js"/>"></script>
+<script type="text/javascript" src="<s:url value="/js/personlookup.js"/>"></script>
 
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 
@@ -614,10 +615,12 @@ $('select#dsDivisionId').bind('change', function(evt2) {
         <td colspan="1">
             අනන්‍යතා අංකය <s:label value="*" cssStyle="color:red;font-size:10pt"/><br>
             அடையாள எண் <br>
-            Identification number
+            Identification number(PIN)
         </td>
         <td colspan="2">
             <s:textfield name="marriage.male.identificationNumberMale" id="identification_male" maxLength="10"/>
+            <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="male_lookup"
+                 onclick="malePersonLookUp('identification_male');">
             <br>
 
             <div id="maleNotFound" style="color:red; font-size:11pt"/>
@@ -738,10 +741,17 @@ $('select#dsDivisionId').bind('change', function(evt2) {
         <td colspan="4" height="100px">
             <s:textarea name="marriage.male.residentAddressMaleInOfficialLang" id="address_male_official"
                         cssStyle="width:98.2%;"/>
+            </br>
+            <img src="<s:url value="/images/transparent.png"/>"
+                 style="vertical-align:middle;margin:5px;width:80px;height:30px">
         </td>
         <td colspan="4" height="100px">
             <s:textarea name="marriage.male.residentAddressMaleInEnglish" id="address_male_english"
                         cssStyle="width:98.2%;"/>
+            </br>
+            <img src="<s:url value="/images/transliterate.png"/>"
+                 style="vertical-align:middle;margin:5px;width:80px;height:30px"
+                 onclick="transliterate('address_male_official', 'address_male_english')">
         </td>
     </tr>
     <tr>
@@ -758,11 +768,18 @@ $('select#dsDivisionId').bind('change', function(evt2) {
             <s:textfield name="marriage.male.rankOrProfessionMaleInOfficialLang" id="rank_male_official"
                          cssStyle="width:98.2%;"
                          maxLength="255"/>
+            </br>
+            <img src="<s:url value="/images/transparent.png"/>"
+                 style="vertical-align:middle;margin:5px;width:80px;height:30px">
         </td>
         <td colspan="4" height="40px">
             <s:textfield name="marriage.male.rankOrProfessionMaleInEnglish" id="rank_male_english"
                          cssStyle="width:98.2%;"
                          maxLength="255"/>
+            </br>
+            <img src="<s:url value="/images/transliterate.png"/>"
+                 style="vertical-align:middle;margin:5px;width:80px;height:30px"
+                 onclick="transliterate('rank_male_official', 'rank_male_english')">
         </td>
     </tr>
     <tr>
@@ -832,10 +849,17 @@ $('select#dsDivisionId').bind('change', function(evt2) {
         <td colspan="4" height="100px">
             <s:textarea name="marriage.male.fatherFullNameMaleInOfficialLang" id="father_full_name_male_official"
                         cssStyle="width:98.2%;"/>
+            </br>
+            <img src="<s:url value="/images/transparent.png"/>"
+                 style="vertical-align:middle;margin:5px;width:80px;height:30px">
         </td>
         <td colspan="4" height="100px">
             <s:textarea name="marriage.male.fatherFullNameMaleInEnglish" id="father_full_name_male_english"
                         cssStyle="width:98.2%;"/>
+            </br>
+            <img src="<s:url value="/images/transliterate.png"/>"
+                 style="vertical-align:middle;margin:5px;width:80px;height:30px"
+                 onclick="transliterate('father_full_name_male_official', 'father_full_name_male_english')">
         </td>
     </tr>
     </tbody>
@@ -872,10 +896,12 @@ $('select#dsDivisionId').bind('change', function(evt2) {
         <td colspan="1">
             අනන්‍යතා අංකය <s:label value="*" cssStyle="color:red;font-size:10pt"/><br>
             அடையாள எண் <br>
-            Identification number
+            Identification number(PIN)
         </td>
         <td colspan="2">
             <s:textfield name="marriage.female.identificationNumberFemale" id="identification_female" maxLength="10"/>
+            <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="male_lookup"
+                 onclick="femalePersonLookUp('identification_female');">
             <br>
 
             <div id="femaleNotFound" style="color:red; font-size:11pt"/>
@@ -997,15 +1023,18 @@ $('select#dsDivisionId').bind('change', function(evt2) {
         <td colspan="4" height="100px">
             <s:textarea name="marriage.female.residentAddressFemaleInOfficialLang" id="address_female_official"
                         cssStyle="width:98.2%;"/>
+            <br>
+            <img src="<s:url value="/images/transparent.png"/>"
+                 style="vertical-align:bottom;margin:5px;width:80px;height:30px">
+
         </td>
         <td colspan="4" height="100px">
             <s:textarea name="marriage.female.residentAddressFemaleInEnglish" id="address_female_english"
                         cssStyle="width:75%;"/>
-                <%--        <div class="abc">
-                    <img src="<s:url value="/images/transliterate.png"/>"
-                         style="vertical-align:middle;margin:5px;width:80px;height:30px"
-                         id="regName2" onclick="transliterate('address_female_official', 'address_female_english')">
-                </div>--%>
+            <br/>
+            <img src="<s:url value="/images/transliterate.png"/>"
+                 style="vertical-align:middle;margin:5px;width:80px;height:30px"
+                 id="regName2" onclick="transliterate('address_female_official', 'address_female_english')">
         </td>
     </tr>
     <tr>
@@ -1022,11 +1051,18 @@ $('select#dsDivisionId').bind('change', function(evt2) {
             <s:textfield name="marriage.female.rankOrProfessionFemaleInOfficialLang" id="rank_female_official"
                          cssStyle="width:98.2%;"
                          maxLength="255"/>
+            <br/>
+            <img src="<s:url value="/images/transparent.png"/>"
+                 style="vertical-align:middle;margin:5px;width:80px;height:30px">
         </td>
         <td colspan="4" height="40px">
             <s:textfield name="marriage.female.rankOrProfessionFemaleInEnglish" id="rank_female_english"
                          cssStyle="width:98.2%;"
                          maxLength="255"/>
+            <br/>
+            <img src="<s:url value="/images/transliterate.png"/>"
+                 style="vertical-align:middle;margin:5px;width:80px;height:30px"
+                 onclick="transliterate('rank_female_official', 'rank_female_english')">
         </td>
     </tr>
     <tr>
@@ -1096,10 +1132,17 @@ $('select#dsDivisionId').bind('change', function(evt2) {
         <td colspan="4" height="100px">
             <s:textarea name="marriage.female.fatherFullNameFemaleInOfficialLang" id="father_full_name_female_official"
                         cssStyle="width:98.2%;"/>
+            </br>
+            <img src="<s:url value="/images/transparent.png"/>"
+                 style="vertical-align:middle;margin:5px;width:80px;height:30px">
         </td>
         <td colspan="4" height="100px">
             <s:textarea name="marriage.female.fatherFullNameFemaleInEnglish" id="father_full_name_female_english"
                         cssStyle="width:98.2%;"/>
+            </br>
+            <img src="<s:url value="/images/transliterate.png"/>"
+                 style="vertical-align:middle;margin:5px;width:80px;height:30px"
+                 onclick="transliterate('father_full_name_female_official', 'father_full_name_female_english')">
         </td>
     </tr>
     </tbody>
