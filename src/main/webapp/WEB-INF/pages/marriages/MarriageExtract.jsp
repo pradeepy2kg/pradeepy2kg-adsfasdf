@@ -68,12 +68,12 @@
         <tr>
             <td colspan="3" align="right">
                 <div class="form-submit" style="margin-top:0;">
-                    <s:submit value="%{getText('button.mark.as.print')}"/>
+                    <s:submit value="%{getText('mark_as_print.button')}"/>
                     <s:hidden name="idUKey" value="%{marriage.idUKey}"/>
                     </s:form>
                 </div>
                 <div class="form-submit" style="margin-top:0;margin-right:5px;">
-                    <s:submit value="%{getText('button.print')}" onclick="printPage()"/>
+                    <s:submit value="%{getText('print.label')}" onclick="printPage()"/>
                 </div>
                     <%--
                     <div class="form-submit">
