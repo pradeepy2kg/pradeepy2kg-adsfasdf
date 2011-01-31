@@ -535,14 +535,15 @@ public interface MarriageRegistrationService {
     /**
      * Update the status of marriage register
      *
-     * @param idUKey     primary key of the marriage register
-     * @param user       user who perform the action
-     * @param permission permission level of the action
-     * @param comment    divorce comments
-     * @param state      state of the marriage register
+     * @param idUKey                 primary key of the marriage register
+     * @param user                   user who perform the action
+     * @param permission             permission level of the action
+     * @param comment                divorce comments
+     * @param effectiveDateOfDivorce effective date of the divorce
+     * @param state                  state of the marriage register
      */
     public void divorce(long idUKey, User user, int permission,
-        String comment, MarriageRegister.State state);
+        String comment, Date effectiveDateOfDivorce, MarriageRegister.State state);
 
     /**
      * reject muslim or noticed marriage registration

@@ -68,6 +68,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     private Date searchEndDate;
     private Date dateOfIssueLicense;
     private Date dateOfCancelLicense;
+    private Date effectiveDateOfDivorce;
 
     private String language;
     private String pinOrNic;
@@ -250,7 +251,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
             try {
                 //TODO : refactor rename licensePrintedLocationId and licenseIssuedUserId in order to user this attribute for both notice and Extract print
                 marriageRegistrationService.divorce(idUKey, user, Permission.DIVORCE,
-                    comment, MarriageRegister.State.DIVORCE);
+                    comment, effectiveDateOfDivorce, MarriageRegister.State.DIVORCE);
             }
             catch (CRSRuntimeException e) {
                 addActionError(getText("error.marriageregister.divorcefailed"));
@@ -1165,4 +1166,11 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         this.marriageIdUKey = marriageIdUKey;
     }
 
+    public Date getEffectiveDateOfDivorce() {
+        return effectiveDateOfDivorce;
+    }
+
+    public void setEffectiveDateOfDivorce(Date effectiveDateOfDivorce) {
+        this.effectiveDateOfDivorce = effectiveDateOfDivorce;
+    }
 }

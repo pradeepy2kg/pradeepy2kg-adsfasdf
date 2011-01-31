@@ -691,13 +691,16 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void divorce(long idUKey, User user, int permission,
-        String comment, MarriageRegister.State state) {
+        String comment, Date effectiveDateOfDivorce, MarriageRegister.State state) {
         //todo: to be renamed this method to divorce
         ValidationUtils.validateUserPermission(permission, user);
         MarriageRegister marriageRegister = marriageRegistrationDAO.getByIdUKey(idUKey);
         ValidationUtils.validateUserAccessToDSDivision(marriageRegister.getMrDivision().getDsDivision().getDsDivisionUKey(), user);
         marriageRegister.setState(state);
         marriageRegister.setDivorceComment(comment);
+        marriageRegister.setEffectiveDateOfDivorce(effectiveDateOfDivorce);
+        marriageRegister.setDivorcedByUser(user);
+        marriageRegister.setDivorcedDate(new Date());
         marriageRegistrationDAO.updateMarriageRegister(marriageRegister, user);
     }
 
@@ -713,6 +716,9 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         marriageRegister.setState(MarriageRegister.State.REGISTRATION_REJECTED);
         //TODO validate comment if needed
         marriageRegister.setRegistrationRejectComment(comment);
+        //marriageRegister.getLifeCycleInfo().setActiveRecord(false);
+        marriageRegister.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
+        marriageRegister.getLifeCycleInfo().setApprovalOrRejectUser(user);
         marriageRegistrationDAO.updateMarriageRegister(marriageRegister, user);
     }
 
