@@ -88,12 +88,12 @@
                     <tr><td><span>Search full name in Official Language</span></td>
                     <td><div id="searchOfficial"><input type="text" id="searchOfficial" name="searchOfficial"/></div></td>
                     <td><span>NIC</span></td>
-                    <td><div id="searchNIC"><input type="text" id="searchNic" name="searchNic" maxlength="10"/></div></td></tr>
+                    <td><div id="searchNIC"><input type="text" id="searchNic" name="searchNic" maxlength="10" style="text-transform:uppercase;"/></div></td></tr>
 
                     <tr><td><span>Search for name</span></td>
                     <td><div id="searchAllNames"><input type="text" id="searchAllNames" name="searchAllNames"/></div></td>
                     <td><span>Passport No</span></td>
-                    <td><div id="searchPassport"><input type="text" id="searchPassport" name="searchPassport" maxlength="15"/></div></td></tr>
+                    <td><div id="searchPassport"><input type="text" id="searchPassport" name="searchPassport" maxlength="15" style="text-transform:uppercase;"/></div></td></tr>
                 </table>
             </div>
             <div id="fragment-2">
