@@ -17,9 +17,9 @@ import java.util.*;
 
 /**
  * @author Indunil Moremada
- * @authar amith jayasekara
- * action class which handles the login and logout actions
- * of the EPR system
+ * @author amith jayasekara
+ *         action class which handles the login and logout actions
+ *         of the EPR system
  */
 public class LoginAction extends ActionSupport implements SessionAware {
 
@@ -91,16 +91,14 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
     /**
      * Handles the login process of the EPR system
-     * if login is success user is redirected
-     * home page otherwise he is redirected to
-     * the login page
+     * if login is success user is redirected to the
+     * his own home page otherwise he is redirected
+     * to the login page again
      *
-     * @return String
+     * @return String ERROR or (SUCCESS + USER)
      */
-
     public String login() {
 
-        /* check if java script enabled browser */
         if (javaScript.equals("false")) {
             addActionError("Please enable javaScript in your web browser");
             return ERROR;
@@ -109,24 +107,21 @@ public class LoginAction extends ActionSupport implements SessionAware {
         logger.debug("Detected userName : {} ", userName);
         User user;
         try {
-            /* try to authenticate user */
             user = userManager.authenticateUser(userName, userManager.hashPassword(password));
             if (user != null) {
-                /* if login succeeded update database record */
-                user.setLoginAttempts(1);   /* 1 = authorization ok */
+                user.setLoginAttempts(1);
                 userManager.updateUser(user);
             }
-            /* check if user have a preferred bd or mr ds division */
-            if (!user.getRole().getRoleId().equals("ADMIN") && !user.getRole().getRoleId().equals("RG")) {      /* no division */
-                if (user.getAssignedBDDSDivisions() != null && user.getAssignedBDDSDivisions().size() == 0) {   /*     for     */
-                    addActionError("You are not assign to any DS Division.Contact admin for resolve problem");  /* admin or rg */
+            if (!user.getRole().getRoleId().equals("ADMIN") && !user.getRole().getRoleId().equals("RG")) {
+                if (user.getAssignedBDDSDivisions() != null && user.getAssignedBDDSDivisions().size() == 0) {
+                    addActionError("You are not assign to any DS Division.Contact admin for resolve problem");
                     logger.error("User : {} , doesn't allocate to any DS Division", user.getUserName());
                     return ERROR;
                 }
             }
-        } catch (AuthorizationException e) {        /* if login fails. increment login attempts by 1 */
+        } catch (AuthorizationException e) {
             user = userManager.getUserByID(userName);
-            if (user != null) {  /* there is a user for given user name. but password is incorrect */
+            if (user != null) {
                 int loginAttempts = user.getLoginAttempts();
                 logger.debug("value of loging attempts :{}", loginAttempts);
                 int maxLoginAttempts = appParaDao.getIntParameter(AppParameter.MAX_NUMBER_OF_LOGIN_ATTEMPTS);
@@ -194,7 +189,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
             if (result.equals(SUCCESS)) {
                 if ((result + userRole).equals("successRG") || (result + userRole).equals("successARG")) {
-                    populateLists(user, WebConstants.USER_ARG);     /* WC.USER_ARG = userRole */
+                    populateLists(user, WebConstants.USER_ARG);
                 }
                 if ((result + userRole).equals("successDR") || (result + userRole).equals("successADR")) {
                     populateLists(user, userRole);
@@ -342,15 +337,9 @@ public class LoginAction extends ActionSupport implements SessionAware {
      * @return
      */
     private String checkUserExpiry(User user) {
-        int INACTIVE = 0;
-        int ACTIVE = 1;
-        int LOCKED_OUT = 2;
-        int DELETED = 3;
 
         User checkUser = userManager.getUserByID(user.getUserId());
-        if (checkUser.getStatus().ordinal() == INACTIVE ||
-            checkUser.getStatus().ordinal() == DELETED ||
-            checkUser.getStatus().ordinal() == LOCKED_OUT) {
+        if (checkUser.getStatus().equals(User.State.INACTIVE) || checkUser.getStatus().equals(User.State.DELETED) || checkUser.getStatus().equals(User.State.LOCKEDOUT)) {
             logger.warn("User Status is  INACTIVE for user :{}", user.getUserName());
             return ERROR;
         }
