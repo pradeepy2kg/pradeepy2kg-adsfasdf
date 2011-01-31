@@ -5,6 +5,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
 <script type="text/javascript" src="<s:url value="/js/certifieduser.js"/>"></script>
+<script type="text/javascript" src="<s:url value="/js/marriageregistervalidation.js"/>"></script>
 <style type="text/css">
     #marriage-notice-outer table tr td {
         padding: 0 5px;
@@ -26,6 +27,13 @@
 </style>
 <script type="text/javascript">
     function initPage() {
+    }
+
+    function validateMarriageDetails() {
+        var errormsg = "";
+        var mode = document.getElementById("mode").value;
+        errormsg = validateSerialNo("divorceComment", "errorComment", errormsg);
+        return printErrorMessages(errormsg);
     }
 </script>
 

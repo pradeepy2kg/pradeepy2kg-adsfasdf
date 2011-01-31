@@ -274,7 +274,7 @@ public class MarriageRegister implements Serializable, Cloneable {
      * User who perform the divorce
      */
     @OneToOne(fetch = FetchType.LAZY)
-    @Column(nullable = true)
+    @JoinColumn(nullable = true)
     private User divorcedByUser;
 
     /**
