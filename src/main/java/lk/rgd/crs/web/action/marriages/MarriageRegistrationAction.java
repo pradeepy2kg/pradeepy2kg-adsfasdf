@@ -579,6 +579,9 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
                 case ErrorCodes.DUPLICATE_SERIAL_NUMBER:
                     addActionError(getText("message.duplicate.serialNumber.found"));
                     break;
+                case ErrorCodes.PERMISSION_DENIED:
+                    addActionError(getText("message.permissiondenied"));
+                    break;
                 default:
                     addActionError(getText("error.marriageregister.registrationfailed"));
             }
