@@ -477,9 +477,9 @@
         <caption/>
         <col width="200px">
         <col>
-               <tr>
+        <tr>
             <td class="font-8">
-               තත්ත්වය
+                තත්ත්වය
                 <br>State in ta
                 <br>State
             </td>
@@ -495,6 +495,31 @@
             </td>
             <td>
                 <s:label id="comments" name="marriage.registrationRejectComment"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="font-8">
+                සහතික කරනු ලබන නිලධාරියා ගේ නම, තනතුර සහ අත්සන <br>
+                சான்றிதழ் அளிக்கும் அதிகாரியின் பெயர், பதவி, கையொப்பம் <br>
+                Name, Signature and Designation of certifying officer
+            </td>
+            <td>
+                <s:if test="marriage.preferredLanguage=='si'">
+                    <s:label name="marriage.lifeCycleInfo.lastUpdatedUser.sienSignatureText"/>
+                </s:if>
+                <s:if test="marriage.preferredLanguage=='ta'">
+                    <s:label name="marriage.lifeCycleInfo.lastUpdatedUser.taenSignatureText"/>
+                </s:if>
+            </td>
+        </tr>
+        <tr>
+            <td class="font-8">
+                නිකුත් කළ දිනය<br>
+                in tamil <br>
+                Date of Issue
+            </td>
+            <td>
+                <s:label name="marriage.lifeCycleInfo.lastUpdatedTimestamp"/>
             </td>
         </tr>
     </table>
