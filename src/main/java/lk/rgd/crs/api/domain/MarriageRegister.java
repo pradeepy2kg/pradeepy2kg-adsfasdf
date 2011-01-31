@@ -169,6 +169,7 @@ import java.util.Date;
 
 })
 public class MarriageRegister implements Serializable, Cloneable {
+
     //todo add divorce related col
 
     public enum State {
@@ -263,7 +264,31 @@ public class MarriageRegister implements Serializable, Cloneable {
     @Column(name = "REG_REJECT_COMMENT", nullable = true)
     private String registrationRejectComment;
 
+    /**
+     * Comments for divorce
+     */
+    @Column(nullable = true)
     private String divorceComment;
+
+    /**
+     * User who perform the divorce
+     */
+    @Column(nullable = true)
+    private User divorcedByUser;
+
+    /**
+     * Date of the divorce  
+     */
+    @Column(nullable = true)
+    @Temporal(value = TemporalType.TIMESTAMP)
+    private Date divorcedDate;
+
+    /**
+     * Effective Date of the Divorce
+     */
+    @Column(nullable = true)
+    @Temporal(value = TemporalType.TIMESTAMP)
+    private Date effectiveDateOfDivorce;
 
     /**
      * The user printing the license
@@ -657,6 +682,38 @@ public class MarriageRegister implements Serializable, Cloneable {
 
     public void setExtractPrintedTimestamp(Date extractPrintedTimestamp) {
         this.extractPrintedTimestamp = extractPrintedTimestamp;
+    }
+
+    public String getDivorceComment() {
+        return divorceComment;
+    }
+
+    public void setDivorceComment(String divorceComment) {
+        this.divorceComment = divorceComment;
+    }
+
+    public User getDivorcedByUser() {
+        return divorcedByUser;
+    }
+
+    public void setDivorcedByUser(User divorcedByUser) {
+        this.divorcedByUser = divorcedByUser;
+    }
+
+    public Date getDivorcedDate() {
+        return divorcedDate;
+    }
+
+    public void setDivorcedDate(Date divorcedDate) {
+        this.divorcedDate = divorcedDate;
+    }
+
+    public Date getEffectiveDateOfDivorce() {
+        return effectiveDateOfDivorce;
+    }
+
+    public void setEffectiveDateOfDivorce(Date effectiveDateOfDivorce) {
+        this.effectiveDateOfDivorce = effectiveDateOfDivorce;
     }
 }
 
