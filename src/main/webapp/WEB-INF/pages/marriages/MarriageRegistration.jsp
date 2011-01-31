@@ -654,7 +654,7 @@
             <br>Scanned Image in ta
             <br>Scanned Image
         </td>
-        <td colspan="2">
+        <td colspan="3">
             <s:file name="scannedImage" id="scannedImage"/>
             <s:if test="(marriage.scannedImagePath != null)">
                 <s:url id="printCert" action="eprDisplayScannedImage.do">
