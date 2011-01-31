@@ -178,15 +178,18 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         return !u.getLocations().isEmpty();
     }
 
-    public String inactiveUser() {      /* delete icon clicked */
+    /**
+     *  delete icon clicked
+     */
+    public String inactiveUser() {
         populate();
         user = service.getUserByID(userId);
         user.getLifeCycleInfo().setActive(false);
         service.deleteUser(user, (User) session.get(WebConstants.SESSION_USER_BEAN));
-        logger.debug("Deleting  user {} is successoption body.full", user.getUserId());
+        logger.debug("Deleting  user {} is success", user.getUserId());
         usersList = service.getAllUsers();      /* because of this user loses his search result */
         session.put("viewUsers", usersList);
-        return "success";
+        return SUCCESS;
     }
 
     public String doInactiveUser() { 
@@ -196,7 +199,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         service.updateUser(user, (User) session.get(WebConstants.SESSION_USER_BEAN));
         usersList = service.getAllUsers();
         session.put("viewUsers", usersList);
-        return "success";
+        return SUCCESS;
     }
 
     public String activeUser() {
@@ -207,7 +210,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         service.updateUser(user, (User) session.get(WebConstants.SESSION_USER_BEAN));
         usersList = service.getAllUsers();
         session.put("viewUsers", usersList);
-        return "success";
+        return SUCCESS;
     }
 
     public String initUser() {
@@ -233,7 +236,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         populate();
         roleId = "ALL";
         session.put("viewUsers", null);
-        return "success";
+        return SUCCESS;
     }
 
     public String initAssignedUserLocation() {
@@ -643,7 +646,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         session.put("viewUsers", usersList);
         populate();
         roleId = keepRole;
-        return "success";
+        return SUCCESS;
     }
 
     public String indexRecords() {

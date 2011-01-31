@@ -45,7 +45,7 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
     private final StatisticsManager statisticsManager;
     private static final Logger logger = LoggerFactory.getLogger(UserPreferencesAction.class);
 
-    private boolean emptyFeild;
+    private boolean emptyField;
     private Pattern pattern;
 
     private final UserDAO userDAO;
@@ -172,7 +172,7 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
         deoUserId = 1;
         userRole = role;
 
-        return "success";
+        return SUCCESS;
     }
 
     public String showStatistics () {
@@ -228,7 +228,7 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
     public String changePassword() {
         logger.info("requesting a password change.......");
 
-        if (emptyFeild) {
+        if (emptyField) {
             addActionError(getText("emptry.feild.lable"));
             return "error";
         }
@@ -276,11 +276,11 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
             deoUserId = 1;
             userRole = uRole;
 
-            return "success" + uRole;
+            return SUCCESS + uRole;
 
         } else {
             addActionError(getText("password.mismatch.lable"));
-            return "error";
+            return ERROR;
         }
     }
 
@@ -464,7 +464,7 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
 
     public void setNewPassword(String newPassword) {
         if (WebUtils.filterBlanks(newPassword) == null) {
-            setEmptyFeild(true);
+            setEmptyField(true);
         }
         this.newPassword = newPassword;
     }
@@ -475,7 +475,7 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
 
     public void setRetypeNewPassword(String retypeNewPassword) {
         if (WebUtils.filterBlanks(retypeNewPassword) == null) {
-            setEmptyFeild(true);
+            setEmptyField(true);
         }
         this.retypeNewPassword = retypeNewPassword;
     }
@@ -502,7 +502,7 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
 
     public void setExistingPassword(String existingPassword) {
         if (WebUtils.filterBlanks(existingPassword) == null) {
-            setEmptyFeild(true);
+            setEmptyField(true);
         }
         this.existingPassword = existingPassword;
     }
@@ -515,12 +515,12 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
         this.user = user;
     }
 
-    public boolean isEmptyFeild() {
-        return emptyFeild;
+    public boolean isEmptyField() {
+        return emptyField;
     }
 
-    public void setEmptyFeild(boolean emptyFeild) {
-        this.emptyFeild = emptyFeild;
+    public void setEmptyField(boolean emptyField) {
+        this.emptyField = emptyField;
     }
 
     public List<String> getAdrList() {
