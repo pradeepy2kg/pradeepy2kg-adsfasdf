@@ -62,7 +62,8 @@
         return printErrorMessages(errormsg);
     }
 
-    function initPage(){}
+    function initPage() {
+    }
 
 </script>
 <s:actionerror cssStyle="color:red;font-size:10pt"/>
@@ -379,6 +380,37 @@
         </fieldset>
     </s:if>
 </div>
+<fieldset style="border:none;">
+    <div class="next-previous" style="float:right;margin-right:10px;clear:both;">
+        <s:url id="previousUrl" action="eprMarriageRegisterSearchPrevious.do">
+            <s:param name="pageNo" value="%{#request.pageNo}"/>
+            <s:param name="districtId" value="#request.districtId"/>
+            <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
+            <s:param name="mrDivisionId" value="#request.mrDivisionId"/>
+            <s:param name="printStart" value="#request.printStart"/>
+        </s:url>
+        <s:url id="nextUrl" action="eprMarriageRegisterSearchNext.do">
+            <s:param name="pageNo" value="%{#request.pageNo}"/>
+            <s:param name="districtId" value="#request.districtId"/>
+            <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
+            <s:param name="mrDivisionId" value="#request.mrDivisionId"/>
+            <s:param name="printStart" value="#request.printStart"/>
+        </s:url>
+        <%--<s:if test="printStart!=0 & printStart>0">--%>
+        <s:if test="printStart!=0 & pageNo !=1">
+            <s:a href="%{previousUrl}">
+                <img src="<s:url value='/images/previous.gif'/>" border="none"/>
+            </s:a>
+            <s:label value="%{getText('previous.label')}"/>
+        </s:if>
+        <s:if test="marriageRegisterSearchList.size >=50">
+            <s:a href="%{nextUrl}">
+                <img src="<s:url value='/images/next.gif'/>" border="none"/>
+            </s:a>
+            <s:label value="%{getText('next.label')}"/>
+        </s:if>
+    </div>
+</fieldset>
 <s:hidden id="errorSerialNumber"
           value="%{getText('error.invalid') + getText('label.marriageregister.serial')}"/>
 <s:hidden id="errorRegistrarPIN"
