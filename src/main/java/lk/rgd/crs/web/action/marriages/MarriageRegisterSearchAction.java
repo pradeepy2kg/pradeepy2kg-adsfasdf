@@ -154,6 +154,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     public String marriageRegisterSearchInit() {
         commonUtil.populateDynamicListsWithAllOption(districtList, dsDivisionList, mrDivisionList, user, language);
         stateList = StateUtil.getStateByLanguage(language);
+        pageNo += 1;
         return marriageRegisterSearchResult();
     }
 
@@ -183,8 +184,8 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         marriage = marriageRegistrationService.getMarriageRegisterByIdUKey(idUKey, user, Permission.VIEW_MARRIAGE_REGISTER);
         return SUCCESS;
     }
-    
-        /**
+
+    /**
      * Marriage Registration - Marriage Registration divorce page
      */
     public String marriageRegisterDivorceInit() {
@@ -263,8 +264,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     /**
      * loading search result page for marriage register
      */
-    public String marriageRegisterSearchResult() {
-        pageNo += 1;
+    private String marriageRegisterSearchResult() {
         noOfRows = appParametersDAO.getIntParameter(MR_APPROVAL_ROWS_PER_PAGE);
         MarriageRegister.State mrState = null;
         String divisionType = AppConstants.NONE;
@@ -545,6 +545,31 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         printStart += noOfRows;
         populateBasicLists();
         showNoticeSearchResultSize();
+        return SUCCESS;
+    }
+
+    public String previousRegisterPage() {
+        logger.debug("Previous page of Marriage register search list loaded");
+        noOfRows = appParametersDAO.getIntParameter(MR_APPROVAL_ROWS_PER_PAGE);
+        pageNo = printStart / noOfRows;
+        marriageRegisterSearchResult();
+        printStart -= noOfRows;
+        commonUtil.populateDynamicListsWithAllOption(districtList, dsDivisionList, mrDivisionList, user, language);
+        stateList = StateUtil.getStateByLanguage(language);
+        return SUCCESS;
+    }
+
+    /**
+     * This method is used for pagination(move forward) in marriage notice search list page
+     */
+    public String nextRegisterPage() {
+        logger.debug("Next page of Marriage register search list loaded");
+        noOfRows = appParametersDAO.getIntParameter(MR_APPROVAL_ROWS_PER_PAGE);
+        pageNo = ((printStart + noOfRows) / noOfRows) + 1;
+        marriageRegisterSearchResult();
+        printStart += noOfRows;
+        commonUtil.populateDynamicListsWithAllOption(districtList, dsDivisionList, mrDivisionList, user, language);
+        stateList = StateUtil.getStateByLanguage(language);
         return SUCCESS;
     }
 

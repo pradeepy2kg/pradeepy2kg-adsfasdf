@@ -660,7 +660,7 @@
             <result type="tiles" name="success">epr.deathDeclaration_form1</result>
         </action>
 
-
+        <!--todo remove this action no usage-->
         <action name="eprLateDeathDeclaration" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
                 method="lateDeath">
             <result type="tiles" name="success">epr.home</result>
@@ -1398,6 +1398,17 @@
         <action name="eprMarriageNoticeSearchPrevious"
                 class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction" method="previousNoticesPage">
             <result type="tiles" name="success">epr.marriageNoticeSearchHome</result>
+        </action>
+
+        <action name="eprMarriageRegisterSearchNext"
+                class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
+                method="nextRegisterPage">
+            <result type="tiles" name="success">epr.marriageRegisterSearchInit</result>
+        </action>
+
+        <action name="eprMarriageRegisterSearchPrevious"
+                class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction" method="previousRegisterPage">
+            <result type="tiles" name="success">epr.marriageRegisterSearchInit</result>
         </action>
 
         <action name="eprMarriageRegistrationInit" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
