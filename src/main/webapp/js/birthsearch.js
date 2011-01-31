@@ -89,7 +89,6 @@ var Manager;
         for (var name in params) {
             Manager.store.addByValue(name, params[name]);
         }
-        Manager.doRequest();
     });
 
 })(jQuery);
