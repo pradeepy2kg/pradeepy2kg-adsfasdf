@@ -127,10 +127,16 @@ public class UserManagerImpl implements UserManager {
     }
 
     /**
-     * @param user
-     * @param userId
-     * @param roleId
-     * @param adminUser
+     *
+     * @param user                  New user object
+     * @param adminUser             Administrator
+     * @param userId                UserId of current user
+     * @param roleId                roleId
+     * @param assignedDistricts     assigned Districts
+     * @param assDivisions          assigned Divisions
+     * @param changePassword        changePassword (true/false)
+     * @param randomPassword        randomly generated password
+     * @return                      is new user
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public boolean createUser(User user, User adminUser, String userId, String roleId, int[] assignedDistricts, int[] assDivisions, boolean changePassword, String randomPassword) {

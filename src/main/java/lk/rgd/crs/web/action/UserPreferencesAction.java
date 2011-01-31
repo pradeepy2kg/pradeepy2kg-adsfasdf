@@ -181,13 +181,15 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
         logger.debug("Logged User's Role : {}", user.getRole());
         role = user.getRole().getRoleId();
 
-        statistics = statisticsDAO.getByUser(user.getUserId());
+        /*statistics = statisticsDAO.getByUser(user.getUserId());    TODO: remove this comments after the performance tests
         if (statistics == null) {
             statistics = statisticsManager.getStatisticsForUser(user);
             if (statistics == null) {
                 statistics = new Statistics();
             }
-        }
+        }*/
+
+        statistics = new Statistics();   // TODO: remove this line after the performance tests
 
         districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
         if (districtList.size() > 0) {
@@ -254,10 +256,12 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
 
             role = userType;
 
-            statistics = statisticsDAO.getByUser(user.getUserId());
+            /*statistics = statisticsDAO.getByUser(user.getUserId());   TODO: remove this comments after the performance tests
             if (statistics == null) {
                 statistics = new Statistics();
-            }
+            }*/
+
+            statistics = new Statistics();  // TODO: remove this line after the performance tests
 
             districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
             if (districtList.size() > 0) {
@@ -287,13 +291,15 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
         logger.debug("Logged User's Role : {}", user.getRole());
         role = user.getRole().getRoleId();
 
-        statistics = statisticsDAO.getByUser(user.getUserId());
+        /*statistics = statisticsDAO.getByUser(user.getUserId());       TODO: remove this comments after the performance tests
         if (statistics == null) {
             statistics = statisticsManager.getStatisticsForUser(user);
             if (statistics == null) {
                 statistics = new Statistics();
             }
-        }
+        }*/
+
+        statistics = new Statistics();    // TODO: remove this line after the performance tests
 
         districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
         if (districtList.size() > 0) {
@@ -388,11 +394,13 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
     }
 
     public String back() {
-        //return this.userPreferenceInit();
-        statistics = statisticsDAO.getByUser(user.getUserId());
+        //return this.userPreferenceInit();    TODO: remove this comments after the performance tests
+        /*statistics = statisticsDAO.getByUser(user.getUserId());
         if (statistics == null) {
             statistics = new Statistics();
-        }
+        }*/
+
+        statistics = new Statistics();  // TODO: remove this line after the performance tests
 
         districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
         if (districtList.size() > 0) {

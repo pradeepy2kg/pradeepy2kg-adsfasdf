@@ -217,7 +217,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
         logger.debug("Logged User's Role : {}", user.getRole());
         role = user.getRole().getRoleId();
 
-        /*statistics = statisticsManager.getStatisticsForUser(user);
+        /*statistics = statisticsManager.getStatisticsForUser(user);       TODO: remove comment after the performance tests
         if (statistics != null) {
             if (!statisticsManager.existsStatisticsForUser(user)) {
                 statisticsManager.addStatistics(user, statistics);
@@ -232,7 +232,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
             statistics = new Statistics();
         }*/
 
-        statistics = new Statistics();
+        statistics = new Statistics();      // todo: remove this after the performance tests
 
         Set<District> districtSet = user.getAssignedBDDistricts();
         districtList = new HashMap<Integer, String>();
@@ -344,13 +344,13 @@ public class LoginAction extends ActionSupport implements SessionAware {
     private String checkUserExpiry(User user) {
         int INACTIVE = 0;
         int ACTIVE = 1;
-        int LOCKEDOUT = 2;
+        int LOCKED_OUT = 2;
         int DELETED = 3;
 
         User checkUser = userManager.getUserByID(user.getUserId());
         if (checkUser.getStatus().ordinal() == INACTIVE ||
             checkUser.getStatus().ordinal() == DELETED ||
-            checkUser.getStatus().ordinal() == LOCKEDOUT) {
+            checkUser.getStatus().ordinal() == LOCKED_OUT) {
             logger.warn("User Status is  INACTIVE for user :{}", user.getUserName());
             return ERROR;
         }
