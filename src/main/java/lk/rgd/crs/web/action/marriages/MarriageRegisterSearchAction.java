@@ -248,7 +248,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         } else {
             try {
                 //TODO : refactor rename licensePrintedLocationId and licenseIssuedUserId in order to user this attribute for both notice and Extract print
-                marriageRegistrationService.updateMarriageRegisterState(idUKey, user, Permission.DIVORCE,
+                marriageRegistrationService.divorce(idUKey, user, Permission.DIVORCE,
                     comment, MarriageRegister.State.DIVORCE);
             }
             catch (CRSRuntimeException e) {
