@@ -779,7 +779,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
             </br>
             <img src="<s:url value="/images/transliterate.png"/>"
                  style="vertical-align:middle;margin:5px;width:80px;height:30px"
-                 onclick="transliterate('rank_male_official', 'rank_male_english')">
+                 onclick="transliterateTextField('rank_male_official', 'rank_male_english')">
         </td>
     </tr>
     <tr>
@@ -1064,7 +1064,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
             <br/>
             <img src="<s:url value="/images/transliterate.png"/>"
                  style="vertical-align:middle;margin:5px;width:80px;height:30px"
-                 onclick="transliterate('rank_female_official', 'rank_female_english')">
+                 onclick="transliterateTextField('rank_female_official', 'rank_female_english')">
         </td>
     </tr>
     <tr>
