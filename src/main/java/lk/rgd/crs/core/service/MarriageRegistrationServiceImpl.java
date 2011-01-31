@@ -147,7 +147,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
 
         MarriageRegister marriageRegister = marriageRegistrationDAO.getMarriageRegisterByIdUKeyAndState(idUKey, stateList);
         if (marriageRegister != null && marriageRegister.getState() != MarriageRegister.State.LICENSE_PRINTED) {
-            ValidationUtils.validateUserAccessToMRDivision(marriageRegister.getMrDivision().getDsDivision().getDsDivisionUKey(), user);
+            ValidationUtils.validateUserAccessToDSDivision(marriageRegister.getMrDivision().getDsDivision().getDsDivisionUKey(), user);
         }
         return marriageRegister;
     }
@@ -594,7 +594,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         ValidationUtils.validateUserPermission(Permission.APPROVE_MARRIAGE, user);
         MarriageRegister marriageRegister = marriageRegistrationDAO.getByIdUKey(idUKey);
         //TODO: to be removed if mr division validations not required
-        ValidationUtils.validateUserAccessToMRDivision(marriageRegister.getMrDivision().getDsDivision().getDsDivisionUKey(), user);
+        ValidationUtils.validateUserAccessToDSDivision(marriageRegister.getMrDivision().getDsDivision().getDsDivisionUKey(), user);
         // check all required fields are filled before approval
         marriageRegistrationValidator.validateMinimalRequirementsOfMarriageRegister(marriageRegister);
 
@@ -690,14 +690,14 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void updateMarriageRegisterState(long idUKey, User user, int permission,
+    public void divorce(long idUKey, User user, int permission,
         String comment, MarriageRegister.State state) {
         //todo: to be renamed this method to divorce
         ValidationUtils.validateUserPermission(permission, user);
         MarriageRegister marriageRegister = marriageRegistrationDAO.getByIdUKey(idUKey);
-        ValidationUtils.validateUserAccessToMRDivision(marriageRegister.getMrDivision().getDsDivision().getDsDivisionUKey(), user);
+        ValidationUtils.validateUserAccessToDSDivision(marriageRegister.getMrDivision().getDsDivision().getDsDivisionUKey(), user);
         marriageRegister.setState(state);
-        marriageRegister.setRegistrationRejectComment(comment);
+        marriageRegister.setDivorceComment(comment);
         marriageRegistrationDAO.updateMarriageRegister(marriageRegister, user);
     }
 
@@ -709,7 +709,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         //todo: define permission for reject
         ValidationUtils.validateUserPermission(Permission.APPROVE_MARRIAGE, user);
         MarriageRegister marriageRegister = marriageRegistrationDAO.getByIdUKey(idUKey);
-        ValidationUtils.validateUserAccessToMRDivision(marriageRegister.getMrDivision().getDsDivision().getDsDivisionUKey(), user);
+        ValidationUtils.validateUserAccessToDSDivision(marriageRegister.getMrDivision().getDsDivision().getDsDivisionUKey(), user);
         marriageRegister.setState(MarriageRegister.State.REGISTRATION_REJECTED);
         //TODO validate comment if needed
         marriageRegister.setRegistrationRejectComment(comment);
@@ -816,7 +816,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
                 + idUKey, ErrorCodes.MARRIAGE_REGISTER_NOT_FOUND);
         } else {
             if (register.getState() == MarriageRegister.State.REGISTRATION_APPROVED) {
-                ValidationUtils.validateUserAccessToMRDivision(register.getMrDivision().getDsDivision().getDsDivisionUKey(), user);
+                ValidationUtils.validateUserAccessToDSDivision(register.getMrDivision().getDsDivision().getDsDivisionUKey(), user);
                 setMarriageExtractPrintingDetails(register, issuedUser, issuedLocation);
                 marriageRegistrationDAO.updateMarriageRegister(register, user);
             } else {

@@ -92,15 +92,15 @@ public class ValidationUtils {
     }
 
     /**
-     * Validate user access to the Marriage Division
+     * Validate user access to the DS Division
      *
-     * @param mrDivisionUKey primary key of MR division
+     * @param dsDivisionUKey primary key of DS division
      * @param user           user who performs the action
      */
-    public static void validateUserAccessToMRDivision(int mrDivisionUKey, User user) {
+    public static void validateUserAccessToDSDivision(int dsDivisionUKey, User user) {
         if (!(User.State.ACTIVE == user.getStatus() && (Role.ROLE_RG.equals(user.getRole().getRoleId())) ||
-            user.isAllowedAccessToMRDSDivision(mrDivisionUKey))) {
-            handleException("User : " + user.getUserId() + " is not allowed to access to the MR Division", ErrorCodes.PERMISSION_DENIED);
+            user.isAllowedAccessToMRDSDivision(dsDivisionUKey))) {
+            handleException("User : " + user.getUserId() + " is not allowed to access to the DS Division", ErrorCodes.PERMISSION_DENIED);
         }
     }
 

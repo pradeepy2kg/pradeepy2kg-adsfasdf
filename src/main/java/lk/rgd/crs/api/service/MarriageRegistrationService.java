@@ -541,7 +541,7 @@ public interface MarriageRegistrationService {
      * @param comment    divorce comments
      * @param state      state of the marriage register
      */
-    public void updateMarriageRegisterState(long idUKey, User user, int permission,
+    public void divorce(long idUKey, User user, int permission,
         String comment, MarriageRegister.State state);
 
     /**
