@@ -28,78 +28,54 @@ public class Statistics implements Serializable {
     private Date createdTimestamp;
 
     /* Births */
-    @Column(name = "b_total_sub")
     private int birthsTotalSubmissions;
 
-    @Column(name = "b_late_sub")
     private int birthsLateSubmissions;
 
-    @Column(name = "b_noml_sub")
     private int birthsNormalSubmissions;
 
-    @Column(name = "b_appr_itm")
     private int birthsApprovedItems;
 
-    @Column(name = "b_rej_itm")
     private int birthsRejectedItems;
 
-    @Column(name = "b_total_pnd_itm")
     private int birthsTotalPendingItems;
 
-    @Column(name = "b_arr_pnd_itm")
     private int birthsArrearsPendingItems;
 
-    @Column(name = "b_month_pnd_itm")
     private int birthsThisMonthPendingItems;
 
     /* Deaths */
-    @Column(name = "d_total_sub")
     private int DeathsTotalSubmissions;
 
-    @Column(name = "d_late_sub")
     private int DeathsLateSubmissions;
 
-    @Column(name = "d_noml_sub")
     private int DeathsNormalSubmissions;
 
-    @Column(name = "d_appr_itm")
     private int DeathsApprovedItems;
 
-    @Column(name = "d_rej_itm")
     private int DeathsRejectedItems;
 
-    @Column(name = "d_total_pen_itm")
     private int DeathsTotalPendingItems;
 
-    @Column(name = "d_arr_pnd_itm")
     private int DeathsArrearsPendingItems;
 
-    @Column(name = "d_month_pnd_itm")
     private int DeathsThisMonthPendingItems;
 
     /* Marriages */
-    @Column(name = "m_total_sub")
     private int MrgTotalSubmissions;
 
-    @Column(name = "m_late_sub")
     private int MrgLateSubmissions;
 
-    @Column(name = "m_noml_sub")
     private int MrgNormalSubmissions;
 
-    @Column(name = "m_appr_itm")
     private int MrgApprovedItems;
 
-    @Column(name = "m_rej_itm")
     private int MrgRejectedItems;
 
-    @Column(name = "m_total_itm")
     private int MrgTotalPendingItems;
 
-    @Column(name = "m_arr_pnd_itm")
     private int MrgArrearsPendingItems;
 
-    @Column(name = "m_month_pnd_itm")
     private int MrgThisMonthPendingItems;
 
     public Statistics() {
