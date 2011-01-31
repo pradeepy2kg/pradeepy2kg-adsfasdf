@@ -71,14 +71,14 @@ function isNumeric(strString) {
     var strChar;
     var blnResult = true;
 
-    if (strString.length == 0) return false;
+    if (strString.length == 0) {
+        return false;
+    }
 
     //  test strString consists of valid characters listed above
-    for (i = 0; i < strString.length && blnResult == true; i++)
-    {
+    for (i = 0; i < strString.length && blnResult == true; i++) {
         strChar = strString.charAt(i);
-        if (strValidChars.indexOf(strChar) == -1)
-        {
+        if (strValidChars.indexOf(strChar) == -1) {
             blnResult = false;
         }
     }
@@ -165,7 +165,6 @@ function isFutureDate(selectDate) {
 }
 
 // shan
-
 function isDate(fieldId, messageId, errormsg) {
     var domObject = document.getElementById(fieldId);
     if (isFieldEmpty(domObject)) {
@@ -173,7 +172,7 @@ function isDate(fieldId, messageId, errormsg) {
     } else {
         var txtDate = document.getElementById(fieldId).value;
 
-        if(isFutureDate(txtDate)){
+        if (isFutureDate(txtDate)) {
             return printValidationMessage(messageId, errormsg);
         } else {
 
@@ -189,7 +188,7 @@ function isDate(fieldId, messageId, errormsg) {
                 return printValidationMessage(messageId, errormsg);
             }
 
-            month = txtDate.substring(5, 7) - 1; // because months in JS start from 0
+            month = txtDate.substring(5, 7); 
             day = txtDate.substring(8, 10) - 0;
             year = txtDate.substring(0, 4) - 0;
 
