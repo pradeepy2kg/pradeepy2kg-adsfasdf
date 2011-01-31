@@ -710,43 +710,43 @@
 <s:hidden id="errorOnXOrVOfPIN" value="%{getText('NIC.error.add.VX')}"/>
 
 <s:hidden id="errorMarriageDate"
-          value="%{getText('error.invalid') + getText('error_js_marriageregister_marriagedate')}"/>
+          value="%{getText('error.invalid') + getText('error.js.marriageregister.marriagedate')}"/>
 <s:hidden id="errorRegistrationDate"
-          value="%{getText('error.invalid') + getText('error_js_marriageregister_registrationdate')}"/>
+          value="%{getText('error.invalid') + getText('error.js.marriageregister.registrationdate')}"/>
 <s:hidden id="errorRegistrarPIN"
-          value="%{getText('error.invalid') + getText('error_js_marriageregister_registrarPIN')}"/>
+          value="%{getText('error.invalid') + getText('error.js.marriageregister.registrarPIN')}"/>
 <s:hidden id="errorRegistrarName"
-          value="%{getText('error.invalid') + getText('error_js_marriageregister_registrarName')}"/>
+          value="%{getText('error.invalid') + getText('error.js.marriageregister.registrarName')}"/>
 <s:hidden id="errorRegistrationPlace"
-          value="%{getText('error.invalid') + getText('error_js_marriageregister_registrationPlace')}"/>
+          value="%{getText('error.invalid') + getText('error.js.marriageregister.registrationPlace')}"/>
 
 <%--
-<s:hidden id="errorMalePIN" value="%{getText('error.invalid') + getText('error_js_marriageregister_malePIN')}"/>
-<s:hidden id="errorFemalePIN" value="%{getText('error.invalid') + getText('error_js_marriageregister_femalePIN')}"/>
+<s:hidden id="errorMalePIN" value="%{getText('error.invalid') + getText('error.js.marriageregister.malePIN')}"/>
+<s:hidden id="errorFemalePIN" value="%{getText('error.invalid') + getText('error.js.marriageregister.femalePIN')}"/>
 
 <s:hidden id="errorDateOfBirthMale"
-          value="%{getText('error.invalid') + getText('error_js_marriageregister_DateOfBirthMale')}"/>
+          value="%{getText('error.invalid') + getText('error.js.marriageregister.DateOfBirthMale')}"/>
 <s:hidden id="errorDateOfBirthFemale"
-          value="%{getText('error.invalid') + getText('error_js_marriageregister_dateOfBirthFemale')}"/>
+          value="%{getText('error.invalid') + getText('error.js.marriageregister.dateOfBirthFemale')}"/>
 
  --%>
-<s:hidden id="errorAgeMale" value="%{getText('error.invalid') + getText('error_js_marriageregister_ageMale')}"/>
-<s:hidden id="errorAgeFemale" value="%{getText('error.invalid') + getText('error_js_marriageregister_ageFemale')}"/>
+<s:hidden id="errorAgeMale" value="%{getText('error.invalid') + getText('error.js.marriageregister.ageMale')}"/>
+<s:hidden id="errorAgeFemale" value="%{getText('error.invalid') + getText('error.js.marriageregister.ageFemale')}"/>
 <s:hidden id="errorNameOfficialMale"
-          value="%{getText('error.invalid') + getText('error_js_marriageregister_nameOfficialMale')}"/>
+          value="%{getText('error.invalid') + getText('error.js.marriageregister.nameOfficialMale')}"/>
 <s:hidden id="errorNameOfficialFemale"
-          value="%{getText('error.invalid') + getText('error_js_marriageregister_nameOfficialFemale')}"/>
-<s:hidden id="errorAddressMale" value="%{getText('error.invalid') + getText('error_js_marriageregister_addressMale')}"/>
+          value="%{getText('error.invalid') + getText('error.js.marriageregister.nameOfficialFemale')}"/>
+<s:hidden id="errorAddressMale" value="%{getText('error.invalid') + getText('error.js.marriageregister.addressMale')}"/>
 <s:hidden id="errorAddressFemale"
-          value="%{getText('error.invalid') + getText('error_js_marriageregister_addressFemale')}"/>
+          value="%{getText('error.invalid') + getText('error.js.marriageregister.addressFemale')}"/>
 
-<s:hidden id="errorMaleRace" value="%{getText('error.invalid') + getText('error_js_marriageregister_maleRace')}"/>
-<s:hidden id="errorFemaleRace" value="%{getText('error.invalid') + getText('error_js_marriageregister_femaleRace')}"/>
+<s:hidden id="errorMaleRace" value="%{getText('error.invalid') + getText('error.js.marriageregister.maleRace')}"/>
+<s:hidden id="errorFemaleRace" value="%{getText('error.invalid') + getText('error.js.marriageregister.femaleRace')}"/>
 
 <s:hidden id="errorSerialNumber"
-          value="%{getText('error.invalid') + getText('error_js_marriageregister_serialNumber')}"/>
+          value="%{getText('error.invalid') + getText('error.js.marriageregister.serialNumber')}"/>
 
 <s:hidden id="errorscannedImage"
-          value="%{getText('error.invalid') + getText('error_js_marriageregister_scannedImage')}"/>
+          value="%{getText('error.invalid') + getText('error.js.marriageregister.scannedImage')}"/>
 
 </div>
