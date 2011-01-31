@@ -16,13 +16,6 @@
     function validateMarriageDetails() {
 
         var errormsg = "";
-        //errormsg = validateEmptyField("marriageDatePicker", "errorMarriageDate", errormsg);
-        ////errormsg = isDate("marriageDatePicker", "errorMarriageDate", errormsg);
-        //validate registrar details
-        ////errormsg = validatePin("regPIN", "errorRegistrarPIN", errormsg);
-        ////errormsg = validateEmptyField("regPlaceInOfficialLang", "errorRegistrationPlace", errormsg);
-        ////errormsg = validateEmptyField("regNameInOfficialLang", "errorRegistrarName", errormsg);
-
         var mode = document.getElementById("mode").value;
         var editMode = document.getElementById("editMode").value;
 
@@ -35,12 +28,6 @@
         errormsg = validateSelectOption("raceMale", "errorMaleRace", errormsg);
         errormsg = validateSelectOption("raceFemale", "errorFemaleRace", errormsg);
 
-        //errormsg = validateEmptyField("malePIN", "errorMalePIN", errormsg);
-        //errormsg = validateEmptyField("femalePIN", "errorFemalePIN", errormsg);
-        //errormsg = validateEmptyField("dateOfBirthMaleDatePicker", "errorDateOfBirthMale", errormsg);
-        //errormsg = isDate("dateOfBirthMaleDatePicker", "errorDateOfBirthMale", errormsg);
-        //errormsg = validateEmptyField("dateOfBirthFemaleDatePicker", "errorDateOfBirthFemale", errormsg);
-        //errormsg = isDate("dateOfBirthFemaleDatePicker", "errorDateOfBirthFemale", errormsg);
         errormsg = validateEmptyField("ageMale", "errorAgeMale", errormsg);
         errormsg = validateEmptyField("ageFemale", "errorAgeFemale", errormsg);
         errormsg = validateEmptyField("nameOfficialMale", "errorNameOfficialMale", errormsg);
@@ -53,12 +40,10 @@
         if(editMode == "false") {
             errormsg = validateEmptyField("scannedImage", "errorscannedImage", errormsg);
         }
-        ////errormsg = isDate("registrationDatePicker", "errorRegistrationDate", errormsg);
         return printErrorMessages(errormsg);
     }
 
     function validateRegistrationDetails(errormsg) {
-        //errormsg = validateEmptyField("marriageDatePicker", "errorMarriageDate", errormsg);
         errormsg = isDate("marriageDatePick", "errorMarriageDate", errormsg);
         //validate registrar details
         errormsg = validatePin("regPIN", "errorRegistrarPIN", errormsg);
