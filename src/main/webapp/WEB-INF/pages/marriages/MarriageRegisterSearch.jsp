@@ -287,7 +287,8 @@
                             </s:if>
                             <s:else>
                                 <%-- print extract of marriage  --%>
-                                <s:if test="(state.ordinal()==9 || state.ordinal()==11)"> <%-- Registration approved or Extract Printed --%>
+                                <%-- if state is Registration approved/ Extract Printed/ divorced --%>
+                                <s:if test="(state.ordinal()==9 || state.ordinal()==11 || state.ordinal()==12)">
                                     <s:url id="printExtract" action="eprMarriageExtractInit.do">
                                         <s:param name="idUKey" value="idUKey"/>
                                         <s:param name="mode">print</s:param>

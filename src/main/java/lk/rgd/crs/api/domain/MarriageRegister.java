@@ -263,6 +263,8 @@ public class MarriageRegister implements Serializable, Cloneable {
     @Column(name = "REG_REJECT_COMMENT", nullable = true)
     private String registrationRejectComment;
 
+    private String divorceComment;
+
     /**
      * The user printing the license
      */
