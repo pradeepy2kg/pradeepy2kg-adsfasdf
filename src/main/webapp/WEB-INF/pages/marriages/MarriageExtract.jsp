@@ -29,11 +29,13 @@
     function initPage() {
     }
 
-    function validateMarriageDetails() {
+    function validateComments() {
         var errormsg = "";
         var mode = document.getElementById("mode").value;
-        errormsg = validateSerialNo("divorceComment", "errorComment", errormsg);
-        return printErrorMessages(errormsg);
+        if (mode == 'divorce') {
+            errormsg = validateEmptyField("divorceComment", "errorComment", errormsg);
+            return printErrorMessages(errormsg);
+        }
     }
 </script>
 
@@ -623,7 +625,8 @@
     </s:form>
 </s:if>
 <s:if test="mode=='divorce'">
-    <s:form method="post">
+    <s:form method="post" onsubmit="javascript:return validateComments()">
+        <s:hidden name="mode" id="mode"/>
         <s:hidden name="idUKey"/>
         <table border="1" style="margin-top:20px;width:100%;border:1px solid #000;border-collapse:collapse;"
                cellpadding="2px">
@@ -632,12 +635,13 @@
             <col>
             <tr>
                 <td class="font-8">
+                    <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
                     අදහස් දක්වන්න
                     <br>Comment in ta
                     <br>Comment
                 </td>
                 <td>
-                    <s:textarea name="comment" id="registrationRejectComment"
+                    <s:textarea name="comment" id="divorceComment"
                                 cssStyle="width:98.2%;" rows="15"/>
                 </td>
             </tr>
@@ -647,5 +651,7 @@
                       value="%{getText('button.marriageregister.divorced')}"/>
         </div>
     </s:form>
+    <s:hidden id="errorComment"
+          value="%{getText('error.invalid') + getText('error.js.marriageregister.comment')}"/>
 </s:if>
 </div>
