@@ -17,7 +17,7 @@
 </script>
 <s:actionerror cssStyle="color:red;font-size:10pt"/>
 <s:actionmessage cssStyle="color:blue;font-size:10pt"/>
-<s:form action="eprMarriageRegisterSearch.do" id="searchByIdUKey" method="POST"
+<s:form action="eprMarriageLicenseSearch.do" id="searchByIdUKey" method="POST"
         onsubmit="javascript:return validateMarriageIdUkey()">
     <table>
         <caption/>
