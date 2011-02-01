@@ -127,16 +127,15 @@ public class UserManagerImpl implements UserManager {
     }
 
     /**
-     *
-     * @param user                  New user object
-     * @param adminUser             Administrator
-     * @param userId                UserId of current user
-     * @param roleId                roleId
-     * @param assignedDistricts     assigned Districts
-     * @param assDivisions          assigned Divisions
-     * @param changePassword        changePassword (true/false)
-     * @param randomPassword        randomly generated password
-     * @return                      is new user
+     * @param user              New user object
+     * @param adminUser         Administrator
+     * @param userId            UserId of current user
+     * @param roleId            roleId
+     * @param assignedDistricts assigned Districts
+     * @param assDivisions      assigned Divisions
+     * @param changePassword    changePassword (true/false)
+     * @param randomPassword    randomly generated password
+     * @return is new user
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public boolean createUser(User user, User adminUser, String userId, String roleId, int[] assignedDistricts, int[] assDivisions, boolean changePassword, String randomPassword) {
@@ -212,8 +211,11 @@ public class UserManagerImpl implements UserManager {
                 }
                 if (changePassword) {
                     logger.debug("Change password {}", userDao.getUserByPK(userId).getUserName());
-                    /*randomPassword = getRandomPassword(randomPasswordLength);*/
                     updatedUser.setPasswordHash(hashPassword(randomPassword));
+
+                    java.util.GregorianCalendar gCal = new GregorianCalendar();
+                    gCal.add(Calendar.DATE, -1);
+                    updatedUser.setPasswordExpiry(gCal.getTime());
                 }
 
                 User existing = userDao.getUserByPK(userId);

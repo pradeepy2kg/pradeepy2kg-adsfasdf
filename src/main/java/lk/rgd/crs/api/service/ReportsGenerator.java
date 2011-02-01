@@ -42,15 +42,6 @@ public interface ReportsGenerator {
      * @param clearCache
      * @return
      */
-    public BirthIslandWideStatistics generate_2_5(int year, User user, boolean clearCache);
-
-    /**
-     *
-     * @param year
-     * @param user
-     * @param clearCache
-     * @return
-     */
     public BirthIslandWideStatistics generate_2_2a(int year, User user, boolean clearCache);
 
     /**

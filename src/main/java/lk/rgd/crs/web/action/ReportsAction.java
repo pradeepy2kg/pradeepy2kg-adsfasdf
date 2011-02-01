@@ -24,9 +24,13 @@ public class ReportsAction extends ActionSupport implements SessionAware {
     private final ReportsGenerator reportsService;
     private final StatisticsManager statisticsManager;
     private int year;
+    private int viewYear;
     private int chartType;
+    private int viewChartType;
     private List<Integer> yearList;
+    private List<Integer> viewYearList;
     private Map<Integer, String> chartList;
+    private Map<Integer, String> viewChartList;
     private Map session;
     private boolean clearCache;
 
@@ -38,13 +42,13 @@ public class ReportsAction extends ActionSupport implements SessionAware {
     public String loadPage() {
         populateLists();
         year = yearList.iterator().next();
+        viewYear = viewYearList.iterator().next();
         return SUCCESS;
     }
 
     /**
      * create a statistical report
-     *
-     * @return
+     * @return String
      */
     public String create() {
         // todo permission and security validations
@@ -109,6 +113,12 @@ public class ReportsAction extends ActionSupport implements SessionAware {
         return ActionSupport.SUCCESS;
     }
 
+    public String viewReport() {
+        logger.info("VIEW called");
+        populateLists();
+        return ActionSupport.SUCCESS;
+    }
+
     public String populateStatistics() {
         statisticsManager.deleteOldStatistics();
         statisticsManager.triggerScheduledStatJobs();
@@ -123,9 +133,12 @@ public class ReportsAction extends ActionSupport implements SessionAware {
         Calendar cal = Calendar.getInstance();
         int thisYear = cal.get(Calendar.YEAR);
         yearList.add(thisYear);
+        viewYearList = new ArrayList<Integer>();
+        viewYearList.add(thisYear);
         for (int i = 0; i < 5; i++) {
             cal.add(Calendar.YEAR, -1);
             yearList.add(cal.get(Calendar.YEAR));
+            viewYearList.add(cal.get(Calendar.YEAR));
         }
 
         chartList = new HashMap<Integer, String>();
@@ -140,6 +153,8 @@ public class ReportsAction extends ActionSupport implements SessionAware {
         chartList.put(8, "TABLE 2.11");
         chartList.put(9, "TABLE 2.10");
         chartList.put(10, "TABLE 2.12");
+
+        viewChartList = chartList;
     }
 
     public int getYear() {
@@ -186,6 +201,38 @@ public class ReportsAction extends ActionSupport implements SessionAware {
         this.clearCache = clearCache;
     }
 
+    public Map<Integer, String> getViewChartList() {
+        return viewChartList;
+    }
+
+    public void setViewChartList(Map<Integer, String> viewChartList) {
+        this.viewChartList = viewChartList;
+    }
+
+    public int getViewChartType() {
+        return viewChartType;
+    }
+
+    public void setViewChartType(int viewChartType) {
+        this.viewChartType = viewChartType;
+    }
+
+    public List<Integer> getViewYearList() {
+        return viewYearList;
+    }
+
+    public void setViewYearList(List<Integer> viewYearList) {
+        this.viewYearList = viewYearList;
+    }
+
+    public int getViewYear() {
+        return viewYear;
+    }
+
+    public void setViewYear(int viewYear) {
+        this.viewYear = viewYear;
+    }
+
     @Override
     public void setSession(Map<String, Object> session) {
         this.session = session;
@@ -206,7 +253,6 @@ public class ReportsAction extends ActionSupport implements SessionAware {
                 reportsService.generate_2_4(year, user, clearCache);
                 break;
             case ReportCodes.TABLE_2_7:
-                //reportsService.generate_2_5(year, user, clearCache);
                 reportsService.generate_2_7(year, user, clearCache);
                 break;
             case ReportCodes.TABLE_2_6:
