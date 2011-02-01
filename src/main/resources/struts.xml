@@ -1373,6 +1373,11 @@
     <package name="marriages" namespace="/marriages" extends="NG">
         <default-interceptor-ref name="default"/>
 
+        <action name="eprMarriageRegistrationHome" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
+                method="marriageRegistrationNoticeHome">
+            <result type="tiles" name="success">epr.marriageRegistraionNoticeHome</result>
+        </action>
+
         <action name="eprMarriageNoticeInit" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
                 method="marriageNoticeInit">
             <result type="tiles" name="pageLoad">epr.marriageNoticeInit</result>
