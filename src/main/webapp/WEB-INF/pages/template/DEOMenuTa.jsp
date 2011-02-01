@@ -229,7 +229,7 @@
     <s:else>
 <li>
     </s:else>
-    <a href="#">
+    <a href="/ecivil/marriages/eprMarriageRegistrationHome.do">
         விவாக பதிவு
     </a>
     <ul class="acitem">

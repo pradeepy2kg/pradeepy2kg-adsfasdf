@@ -137,6 +137,10 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         return "pageLoad";
     }
 
+    public String marriageRegistrationNoticeHome() {
+        return SUCCESS;
+    }
+
     /**
      * adding a new marriage notice     if serial number is not unique redirect to notice add page
      */
