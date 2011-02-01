@@ -55,7 +55,7 @@ import java.io.Serializable;
 
     @NamedQuery(name = "filter.by.unconfirmed.by.register.date", query = "SELECT bdf FROM BirthDeclaration bdf " +
         "WHERE bdf.register.status = 2 " +
-        "AND bdf.register.dateOfRegistration < :date"),
+        "AND bdf.register.confirmationPrintTimestamp < :date"),
 
     @NamedQuery(name = "filter.by.dsdivision.and.status", query = "SELECT bdf FROM BirthDeclaration bdf " +
         "WHERE bdf.register.birthDivision.dsDivision = :dsDivision AND bdf.register.status = :status " +
