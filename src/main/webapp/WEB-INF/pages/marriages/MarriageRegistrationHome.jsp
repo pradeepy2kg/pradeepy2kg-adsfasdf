@@ -23,10 +23,12 @@
         left: 200px;
         bottom: 50px;
     }
-    .label_parties_DS{
-        text-align:center;
-        position:relative;
-        
+
+    .label_parties_DS {
+        text-align: center;
+        position: relative;
+        right: 145px;
+        top:110px;
     }
 </style>
 
