@@ -568,6 +568,14 @@
         <put-attribute name="title" value="title.marriage.register.search"/>
     </definition>
 
+    <definition name="epr.marriageLicenseSearchInit" extends="epr.template">
+        <description>
+            marriage license search jsp page
+        </description>
+        <put-attribute name="body" value="/WEB-INF/pages/marriages/MarriageLicenseSearch.jsp"/>
+        <put-attribute name="title" value="title.marriagelicense.search"/>
+    </definition>
+
     <definition name="epr.marriageExtract" extends="epr.template">
         <description>
             Extract of Marriage Register
