@@ -1491,13 +1491,23 @@
 
         <action name="eprMarriageLicenseSearchInit"
                 class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
-                method="marriageRegisterSearchPageLoad">
+                method="marriageLicenseSearchPageLoad">
             <result type="tiles" name="success">epr.marriageLicenseSearchInit</result>
         </action>
 
         <action name="eprMarriageRegisterSearch" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
                 method="marriageRegisterSearchInit">
             <result type="tiles" name="success">epr.marriageRegisterSearchInit</result>
+        </action>
+
+        <action name="eprMarriageLicenseSearch" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
+                method="marriageLicenseSearchResult">
+            <result type="redirectAction" name="success">
+                <param name="actionName">eprMarriageRegistrationInit</param>
+                <param name="mode">%{#request.mode}</param>
+                <param name="idUKey">%{#request.idUKey}</param>                
+                <param name="namespace">../marriages</param>
+            </result>
         </action>
 
         <action name="eprSelectNoticeType" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"

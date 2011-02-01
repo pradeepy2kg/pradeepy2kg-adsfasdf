@@ -169,6 +169,13 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     }
 
     /**
+     * loading search  page for marriage license
+     */
+    public String marriageLicenseSearchPageLoad() {
+        return SUCCESS;
+    }
+
+    /**
      * Marriage Registration - Loding the extract of marriage register for print
      */
     public String marriageExtractInit() {
@@ -259,6 +266,19 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
             }
         }
         addActionMessage(getText("message.marriageregister.divorced"));
+        return SUCCESS;
+    }
+
+    /**
+     * loading search result for marriage license
+     */
+    public String marriageLicenseSearchResult() {
+        MarriageRegister marriageRegister = marriageRegistrationService.getMarriageRegisterByIdUKeyAndState
+            (marriageIdUKey, user, Permission.SEARCH_MARRIAGE);
+        if (marriageRegister != null) {
+           idUKey = marriageRegister.getIdUKey();
+        }            
+        mode = "register";
         return SUCCESS;
     }
 
