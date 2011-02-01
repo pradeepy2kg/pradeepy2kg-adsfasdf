@@ -102,3 +102,11 @@ Effective Date of Divorce/ දික්කසාදය බලපැවැත්�
 Divorce Certificate /  දික්කසාද සහතිකය
 
 Marriage License Search / විවාහ බලපත්‍රය සෙවීම
+
+Person Registration Management
+MARRIAGE REGISTRATION
+Marriage Notice
+Marriage Register Search
+Marriage License Search
+Marriage Registration
+Search Notice

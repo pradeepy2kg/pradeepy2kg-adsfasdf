@@ -278,7 +278,7 @@
     <s:else>
 <li>
     </s:else>
-   <a href="/ecivil/marriages/eprMarriageRegistrationHome.do">
+    <a href="/ecivil/marriages/eprMarriageRegistrationHome.do">
         விவாக பதிவு
     </a>
     <ul class="acitem">
@@ -290,6 +290,11 @@
         <li>
             <a id="menu.marriage.register.search" href="/ecivil/marriages/eprMarriageRegisterSearchInit.do">
                 Marriage Register Search in tamil
+            </a>
+        </li>
+        <li>
+            <a id="menu.marriagelicense.search" href="/ecivil/marriages/eprMarriageLicenseSearchInit.do">
+                Marriage License Search in ta
             </a>
         </li>
         <li>

@@ -294,7 +294,7 @@
         </li>
         <li>
             <a id="menu.marriagelicense.search" href="/ecivil/marriages/eprMarriageLicenseSearchInit.do">
-                Marriage Register Search
+                Marriage License Search
             </a>
         </li>
         <li>
