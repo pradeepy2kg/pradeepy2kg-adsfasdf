@@ -352,7 +352,7 @@
                                     </s:a>
                                 </s:if>
                                 <%-- View scanned marriage cert  --%>
-                                <s:if test="(scannedImagePath != null) && state.ordinal()!=10">
+                                <s:if test="(scannedImagePath != null)">
                                     <s:url id="printCert" action="eprDisplayScannedImage.do">
                                         <s:param name="idUKey" value="idUKey"/>
                                     </s:url>
