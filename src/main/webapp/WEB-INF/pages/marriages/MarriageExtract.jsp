@@ -604,7 +604,7 @@
             <td class="font-8">
                 දික්කසාදය සිදුකල දිනය<br>
                 in tamil <br>
-                Date of Issue
+                Date of Divorce
             </td>
             <td>
                 <s:label name="marriage.divorcedDate"/>

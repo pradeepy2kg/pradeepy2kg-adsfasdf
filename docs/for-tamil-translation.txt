@@ -78,3 +78,25 @@ normal death registration in ta
 late death registration in ta
 sudden death registration in ta
 missing death registration in ta
+
+Type of Marriage Place / විවාහ ස්ථානයේ ස්වභාවය
+Scanned Image of Marriage Certificate
+
+general marriage / සාමාන්‍ය
+Kandyan binna / උඩරට බින්න
+kandyan deega/ උඩරට දීග
+Muslim/ මුස්ලිම්
+
+Registrars Office/ රෙජිස්ට්‍රාර් කන්තෝරුව
+DS Office  / ප්‍රා. ලේ. කන්තෝරුවDS Office
+Church / දේවස්ථානය
+Other / වෙනත්
+
+Effective Date of Divorce / බලපැවැත්වෙන දිනය
+Comments / අදහස් දක්වන්න
+State/ තත්ත්වය
+දික්කසාදය සිදුකල නිලධාරියා
+Name, Signature and Designation of the officer
+Date of Divorce/ දික්කසාදය සිදුකල දිනය
+Effective Date of Divorce/ දික්කසාදය බලපැවැත්වෙන දිනය
+Divorce Certificate /  දික්කසාද සහතිකය
