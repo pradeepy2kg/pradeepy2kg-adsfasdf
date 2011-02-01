@@ -297,6 +297,11 @@
             </a>
         </li>
         <li>
+            <a id="menu.marriagelicense.search" href="/ecivil/marriages/eprMarriageLicenseSearchInit.do">
+                විවාහ බලපත්‍රය සෙවීම
+            </a>
+        </li>
+        <li>
             <a id="menu.marriage.registration" href="/ecivil/marriages/eprMarriageRegistrationInit.do">
                 විවාහ ලියාපදිංචිය
             </a>

@@ -69,7 +69,7 @@
         මරණ ලියාපදිංචිය
     </a>
     <ul class="acitem">
-          <li>
+        <li>
             <a id="death_registration.label" href="/ecivil/deaths/eprInitDeathDeclaration.do">
                 (1) සාමාන්‍ය මරණ ලියාපදිංචිය
             </a>
@@ -282,7 +282,7 @@
     <s:else>
 <li>
     </s:else>
-   <a href="/ecivil/marriages/eprMarriageRegistrationHome.do">
+    <a href="/ecivil/marriages/eprMarriageRegistrationHome.do">
         විවාහ ලියාපදිංචිය
     </a>
     <ul class="acitem">
@@ -294,6 +294,11 @@
         <li>
             <a id="menu.marriage.register.search" href="/ecivil/marriages/eprMarriageRegisterSearchInit.do">
                 විවාහ ලේකම් පොත සේවීම
+            </a>
+        </li>
+        <li>
+            <a id="menu.marriagelicense.search" href="/ecivil/marriages/eprMarriageLicenseSearchInit.do">
+                විවාහ බලපත්‍රය සෙවීම
             </a>
         </li>
         <li>

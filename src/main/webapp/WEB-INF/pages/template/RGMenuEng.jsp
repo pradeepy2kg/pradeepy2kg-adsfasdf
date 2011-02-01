@@ -282,7 +282,7 @@
     <s:else>
 <li>
     </s:else>
-   <a href="/ecivil/marriages/eprMarriageRegistrationHome.do">
+    <a href="/ecivil/marriages/eprMarriageRegistrationHome.do">
         MARRIAGE REGISTRATION
     </a>
     <ul class="acitem">
@@ -294,6 +294,11 @@
         <li>
             <a id="menu.marriage.register.search" href="/ecivil/marriages/eprMarriageRegisterSearchInit.do">
                 Marriage Register Search
+            </a>
+        </li>
+        <li>
+            <a id="menu.marriagelicense.search" href="/ecivil/marriages/eprMarriageLicenseSearchInit.do">
+                Marriage License Search
             </a>
         </li>
         <li>
