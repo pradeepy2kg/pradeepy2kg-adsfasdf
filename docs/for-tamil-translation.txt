@@ -100,3 +100,5 @@ Name, Signature and Designation of the officer
 Date of Divorce/ දික්කසාදය සිදුකල දිනය
 Effective Date of Divorce/ දික්කසාදය බලපැවැත්වෙන දිනය
 Divorce Certificate /  දික්කසාද සහතිකය
+
+Marriage License Search / විවාහ බලපත්‍රය සෙවීම

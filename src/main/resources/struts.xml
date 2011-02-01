@@ -1489,6 +1489,12 @@
             <result type="tiles" name="success">epr.marriageRegisterSearchInit</result>
         </action>
 
+        <action name="eprMarriageLicenseSearchInit"
+                class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
+                method="marriageRegisterSearchPageLoad">
+            <result type="tiles" name="success">epr.marriageRegisterSearchInit</result>
+        </action>
+
         <action name="eprMarriageRegisterSearch" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
                 method="marriageRegisterSearchInit">
             <result type="tiles" name="success">epr.marriageRegisterSearchInit</result>
