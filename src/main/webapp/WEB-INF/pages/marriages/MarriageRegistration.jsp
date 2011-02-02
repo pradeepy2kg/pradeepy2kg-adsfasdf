@@ -17,7 +17,6 @@
 
         var errormsg = "";
         var mode = document.getElementById("mode").value;
-        var editMode = document.getElementById("editMode").value;
 
         errormsg = validateRegistrationDetails(errormsg);
         if (mode == 'register') {
@@ -37,9 +36,6 @@
 
         errormsg = validateSerialNo("serialNumber", "errorSerialNumber", errormsg);
 
-        if(editMode == "false") {
-            errormsg = validateEmptyField("scannedImage", "errorscannedImage", errormsg);
-        }
         return printErrorMessages(errormsg);
     }
 
@@ -50,10 +46,16 @@
         errormsg = validateEmptyField("regPlaceInOfficialLang", "errorRegistrationPlace", errormsg);
         errormsg = validateEmptyField("regNameInOfficialLang", "errorRegistrarName", errormsg);
         errormsg = isDate("registrationDatePicker", "errorRegistrationDate", errormsg);
+
+        var editMode = document.getElementById("editMode").value;
+        if (editMode == "false") {
+            errormsg = validateEmptyField("scannedImage", "errorscannedImage", errormsg);
+        }
         return errormsg;
     }
 
-    function initPage(){}
+    function initPage() {
+    }
 
 </script>
 <s:actionerror cssStyle="color:red;font-size:10pt"/>
