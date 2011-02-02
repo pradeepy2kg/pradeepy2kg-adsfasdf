@@ -289,7 +289,7 @@
                             <s:else>
                                 <%-- print extract of marriage  --%>
                                 <%-- if state is Registration approved/ Extract Printed/ divorced --%>
-                                <s:if test="(state.ordinal()==9 || state.ordinal()==11 || state.ordinal()==12)">
+                                <s:if test="(state.ordinal()==9 || state.ordinal()==11 || state.ordinal()==12 || state.ordinal()==13)">
                                     <s:url id="printExtract" action="eprMarriageExtractInit.do">
                                         <s:param name="idUKey" value="idUKey"/>
                                         <s:param name="mode">print</s:param>
@@ -371,6 +371,15 @@
                                     <img src="<s:url value='/images/warning.png'/>" width="30" height="30"
                                          border="none"/>
                                 </s:a>
+                            </s:if>
+                            <s:if test="state.ordinal()==12 || state.ordinal()==13">
+                                    <s:url id="printDivorceExtract" action="eprDivorceExtractInit.do">
+                                        <s:param name="idUKey" value="idUKey"/>
+                                        <s:param name="mode">print</s:param>
+                                    </s:url>
+                                    <s:a href="%{printDivorceExtract}" title="%{getText('tooltip.divorceextract.print')}">
+                                        <img src="<s:url value='/images/print_icon.gif'/>" border="none" height="25"/>
+                                    </s:a>
                             </s:if>
                         </td>
                     </tr>

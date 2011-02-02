@@ -584,6 +584,14 @@
         <put-attribute name="title" value="title.marriageregister.extract"/>
     </definition>
 
+    <definition name="epr.divorceExtract" extends="epr.template">
+        <description>
+            Extract of Divorce Register
+        </description>
+        <put-attribute name="body" value="/WEB-INF/pages/marriages/DivorceExtract.jsp"/>
+        <put-attribute name="title" value="title.divorceregister.extract"/>
+    </definition>
+
     <definition name="epr.marriageNoticeWarn" extends="epr.template">
         <description>
             Extract of Marriage Register
