@@ -57,7 +57,17 @@ public interface MarriageRegistrationService {
     public MarriageRegister getMarriageRegisterByIdUKey(long idUKey, User user, int permission);
 
     /**
-     * get marriage register primary key and state.
+     * Returns marriage license filtered by primary key and state.
+     *
+     * @param idUKey primary key of the marriage register
+     * @param user user who performs the action
+     * @param permission permission level of the action
+     * @return
+     */
+    public MarriageRegister getMarriageLicenseByIdUKeyAndState(long idUKey, User user, int permission);
+
+    /**
+     * Returns marriage register filtered by primary key and state.
      *
      * @param idUKey     primary key of the record
      * @param user       user who performs the action
