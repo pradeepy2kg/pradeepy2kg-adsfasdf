@@ -281,7 +281,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
             addActionError(getText("error.marriageregister.norecords"));
             return ERROR;
         }
-        mode = "register";
+        mode = AppConstants.REGISTER;
         return SUCCESS;
     }
 

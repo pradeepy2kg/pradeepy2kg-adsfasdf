@@ -70,4 +70,9 @@ public class AppConstants {
      * All
      */
     public static final String ALL = "all";
+    /**
+     * Registration Mode of the Marriage Register
+     */
+    public static final String REGISTER = "register";
+
 }

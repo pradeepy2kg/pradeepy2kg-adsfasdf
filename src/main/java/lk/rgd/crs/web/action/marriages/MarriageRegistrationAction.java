@@ -519,21 +519,12 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         editMode = true;
         populateLists();
 
-       /* if ("register".equals(mode) && idUKey == 0) {
-            return ERROR;
-        }   */
-        
         if (idUKey != 0) {
-            //todo : enable edit mode if idukey available
             marriage = marriageRegistrationService.getByIdUKey(idUKey, user);
 
-            //todo : on register mode if state != MarriageRegister.State.LICENSE_PRINTED return error
-
-            if (marriage != null && marriage.getState() == MarriageRegister.State.LICENSE_PRINTED) {
-                //todo: set editmode false if marriage is on license printed (registration) state
+            if (AppConstants.REGISTER.equals(mode)) {
+                //set editmode false if marriage is on license printed (registration) state
                 editMode = false;
-            }
-            if ("register".equals(mode)) {
                 marriage.setTypeOfMarriagePlace(TypeOfMarriagePlace.REGISTRAR_OFFICE);
             }
         } else {
@@ -563,6 +554,9 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
                     break;
                 case ErrorCodes.DUPLICATE_SERIAL_NUMBER:
                     addActionError(getText("message.duplicate.serialNumber.found"));
+                    break;
+                case ErrorCodes.PERMISSION_DENIED:
+                    addActionError(getText("message.permissiondenied"));
                     break;
                 default:
                     addActionError(getText("error.marriageregister.registrationfailed"));
@@ -633,6 +627,9 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
                 case ErrorCodes.DUPLICATE_SERIAL_NUMBER:
                     addActionError(getText("message.duplicate.serialNumber.found"));
                     break;
+                case ErrorCodes.PERMISSION_DENIED:
+                    addActionError(getText("message.permissiondenied"));
+                    break;
                 default:
                     addActionError(getText("error.marriageregister.failedtoupdate"));
             }
@@ -690,6 +687,9 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
                     break;
                 case ErrorCodes.DUPLICATE_SERIAL_NUMBER:
                     addActionError(getText("message.duplicate.serialNumber.found"));
+                    break;
+                case ErrorCodes.PERMISSION_DENIED:
+                    addActionError(getText("message.permissiondenied"));
                     break;
                 default:
                     addActionError(getText("error.marriageregister.failedtoupdate"));
