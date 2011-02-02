@@ -1509,10 +1509,10 @@
             <result type="redirectAction" name="success">
                 <param name="actionName">eprMarriageRegistrationInit</param>
                 <param name="mode">%{#request.mode}</param>
-                <param name="idUKey">%{#request.idUKey}</param>                
+                <param name="idUKey">%{#request.idUKey}</param>
                 <param name="namespace">../marriages</param>
             </result>
-             <result type="tiles" name="error">epr.marriageLicenseSearchInit</result>
+            <result type="tiles" name="error">epr.marriageLicenseSearchInit</result>
         </action>
 
         <action name="eprSelectNoticeType" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
@@ -1531,6 +1531,12 @@
         <action name="eprMarriageExtractInit" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
                 method="marriageExtractInit">
             <result type="tiles" name="success">epr.marriageExtract</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
+        <action name="eprDivorceExtractInit" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
+                method="marriageExtractInit">
+            <result type="tiles" name="success">epr.divorceExtract</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
 

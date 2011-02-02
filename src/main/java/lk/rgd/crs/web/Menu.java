@@ -384,6 +384,7 @@ public class Menu {
         deoMarriageLink.put("eprMarriageRegisterSearchPrevious.do", new Link(null, "/ecivil/marriages/", "eprMarriageRegisterSearchPrevious.do", Permission.SEARCH_MARRIAGE));
         deoMarriageLink.put("eprMarriageRegistrationHome.do", new Link(null, "/ecivil/marriages/", "eprMarriageRegistrationHome.do", Permission.SEARCH_MARRIAGE));
         deoMarriageLink.put("eprMarriageLicenseSearch.do", new Link(null, "/ecivil/marriages/", "eprMarriageLicenseSearch.do", Permission.SEARCH_MARRIAGE));
+        deoMarriageLink.put("eprDivorceExtractInit.do", new Link(null, "/ecivil/marriages/", "eprDivorceExtractInit.do", Permission.PRINT_MARRIAGE_EXTRACT));
 
         // ADR marriage links
         adrMarriageLink.putAll(deoMarriageLink);
