@@ -59,8 +59,8 @@ public interface MarriageRegistrationService {
     /**
      * Returns marriage license filtered by primary key and state.
      *
-     * @param idUKey primary key of the marriage register
-     * @param user user who performs the action
+     * @param idUKey     primary key of the marriage register
+     * @param user       user who performs the action
      * @param permission permission level of the action
      * @return
      */
@@ -581,15 +581,25 @@ public interface MarriageRegistrationService {
      *
      * @param idUKey         idUKey of the marriage register
      * @param issuedLocation location where the Extract of Marriage is issued
-     * @param issuedUserId   the user who issued the Extract of Marriage
+     * @param issuedUser     the user who issued the Extract of Marriage
      * @param user           user who perform the action
      */
-    public void markMarriageExtractAsPrinted(long idUKey, Location issuedLocation, User issuedUserId, User user);
+    public void markMarriageExtractAsPrinted(long idUKey, Location issuedLocation, User issuedUser, User user);
+
+    /**
+     * Marking the Extract of Divorce as Printed
+     *
+     * @param idUKey         idUKey of the marriage register
+     * @param issuedLocation location where the Extract of Marriage is issued
+     * @param issuedUser     the user who issued the Extract of Marriage
+     * @param user           user who perform the action
+     */
+    public void markDivorceExtractAsPrinted(long idUKey, Location issuedLocation, User issuedUser, User user);
 
     /**
      * Returns all statistics information related to Deaths
      *
-     * @param user
+     * @param user user who perform the action
      * @return CommonStatistics object which encapsulated all the death statistics information
      */
     public CommonStatistics getCommonMarriageCertificateCount(String user);

@@ -76,7 +76,7 @@
                 <li><a href="#fragment-2"><span>Statuses, Gender and Citizenship</span></a></li>
                 <li><a href="#fragment-3"><span>Birth and Death</span></a></li>
                 <li><a href="#fragment-4"><span>Address and Contact</span></a></li>
-                <li><a href="#fragment-5"><span>Advanced</span></a></li>
+                <%--li><a href="#fragment-5"><span>Advanced</span></a></li--%>
             </ul>
             <div id="fragment-1">
                 <table>
@@ -133,12 +133,12 @@
                     <td><div id="searchEmail"><input type="text" id="queryEmail" name="queryEmail" style="text-transform:none;"/></div></td></tr>
                 </table>
             </div>
-            <div id="fragment-5">
+            <%--div id="fragment-5">
                 <div id="searchAdvanced">
                     <span>Advanced Search</span>
-                    <input type="text" id="queryAdvanced" name="queryAdvanced" size="117"  style="text-transform:none;"/>
+                    <input type="text" id="queryAdvanced" name="queryAdvanced" size="117"  style="text-transform:none;" value="*:*"/>
                 </div>
-            </div>
+            </div--%>
         </div>
 
         <ul id="selection"></ul>
