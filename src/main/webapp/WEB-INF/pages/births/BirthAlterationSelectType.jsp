@@ -95,8 +95,11 @@
                 counter++
             }
         }
-        if (counter != 1) {
+        if (counter > 1) {
             errormsg = errormsg + document.getElementById('oneMethodErr').value;
+        }
+        if (counter == 0) {
+            return false;
         }
 
         //validate   number fields

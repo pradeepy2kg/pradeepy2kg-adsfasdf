@@ -14,7 +14,6 @@
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 
 
-
 <script type="text/javascript">
 
     $(function() {
@@ -47,17 +46,17 @@
         var returnval = true;
 
         if (!check.checked) {
-            if (isFieldEmpty(pin)) {
-                isEmpty(pin,document.getElementById('emptry').value, "pin")
-            }
+            /*     if (isFieldEmpty(pin)) {
+             isEmpty(pin, document.getElementById('emptry').value, "pin")
+             }*/
             if (isFieldEmpty(nic)) {
-                isEmpty(nic,document.getElementById('emptry').value, "nic")
+                isEmpty(nic, document.getElementById('nic').value, 'emptry')
             }
             if (isFieldEmpty(phone)) {
-                isEmpty(phone,document.getElementById('emptry').value, "phone")
+                isEmpty(phone, document.getElementById('phone').value, 'emptry')
             }
             if (isFieldEmpty(email)) {
-                isEmpty(email,document.getElementById('emptry').value, "email")
+                isEmpty(email, document.getElementById('email').value, 'emptry')
             }
         }
         if (!isFieldEmpty(pin) && isInteger(pin)) {
@@ -88,15 +87,16 @@
             returnval = false;
         }
         errormsg = "";
-        return returnval;
+        return false;
     }
 
-    function initPage(){}
+    function initPage() {
+    }
 </script>
 <style type="text/css">
-    .add-registrar-body{
-        margin:10px;
-        padding:5px;
+    .add-registrar-body {
+        margin: 10px;
+        padding: 5px;
         border: #c3dcee 2px solid;
     }
 </style>
@@ -112,17 +112,20 @@
             <col width="1000px"/>
             <tbody>
             <tr>
-                <td align="left"><s:property value="%{getText('registrar.full.name.officelaLang')}"/><s:label value="*" cssStyle="color:red;font-size:14pt;"/></td>
+                <td align="left"><s:property value="%{getText('registrar.full.name.officelaLang')}"/><s:label value="*"
+                                                                                                              cssStyle="color:red;font-size:14pt;"/></td>
                 <td align="left"><s:textfield id="registrarNameInOfficelaLang" cssStyle="width:100%"
                                               name="registrar.fullNameInOfficialLanguage"/></td>
             </tr>
             <tr>
-                <td align="left"><s:property value="%{getText('registrar.full.name.english')}"/><s:label value="*" cssStyle="color:red;font-size:14pt;"/></td>
+                <td align="left"><s:property value="%{getText('registrar.full.name.english')}"/><s:label value="*"
+                                                                                                         cssStyle="color:red;font-size:14pt;"/></td>
                 <td align="left"><s:textfield id="registrarNameInEnglish" cssStyle="width:100%"
                                               name="registrar.fullNameInEnglishLanguage"/></td>
             </tr>
             <tr>
-                <td align="left"><s:property value="%{getText('registrar.pin')}"/><s:label value="*" cssStyle="color:red;font-size:14pt;"/></td>
+                <td align="left"><s:property value="%{getText('registrar.pin')}"/><s:label value="*"
+                                                                                           cssStyle="color:red;font-size:14pt;"/></td>
                 <td align="left"><s:textfield id="registrarPin" name="registrar.pin" maxLength="10"/></td>
             </tr>
             <tr>
@@ -137,10 +140,12 @@
             </tr>
             <tr>
                 <td align="left"><s:property value="%{getText('registrar.dateofbirth')}"/></td>
-                <td align="left"><s:textfield name="registrar.dateOfBirth" id="dateOfBirthDatePicker" maxLength="10"/></td>
+                <td align="left"><s:textfield name="registrar.dateOfBirth" id="dateOfBirthDatePicker"
+                                              maxLength="10"/></td>
             </tr>
             <tr>
-                <td align="left"><s:property value="%{getText('registrar.address')}"/><s:label value="*" cssStyle="color:red;font-size:14pt;"/></td>
+                <td align="left"><s:property value="%{getText('registrar.address')}"/><s:label value="*"
+                                                                                               cssStyle="color:red;font-size:14pt;"/></td>
                 <td align="left"><s:textarea id="registrarAddress" cssStyle="width:100%"
                                              name="registrar.currentAddress"/></td>
             </tr>
@@ -168,7 +173,8 @@
         <col width="1000px"/>
         <tbody>
         <tr>
-            <td><s:checkbox id="skipValidationId" name="skipValidationName"/><s:property value="%{getText('label.skip.validation')}"/></td>
+            <td><s:checkbox id="skipValidationId" name="skipValidationName"/><s:property
+                    value="%{getText('label.skip.validation')}"/></td>
             <td align="right">
                 <div id="addNew_button" class="button">
                     <s:submit name="refresh" value="%{getText('label.add.registrar')}"/>

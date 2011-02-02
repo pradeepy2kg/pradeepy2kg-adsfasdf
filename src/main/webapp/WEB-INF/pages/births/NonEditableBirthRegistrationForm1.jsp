@@ -334,13 +334,13 @@
     <s:if test="birthType.ordinal() == 1 || birthType.ordinal() == 3">
         <td width="300px;"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපත් බර<br>பிறப்பு நிறை<br>Birth
             Weight (kg)</label></td>
-        <td><s:label value="%{##request.child.childBirthWeight}"
+        <td><s:label value="%{#request.child.childBirthWeight}"
                      cssStyle="width:95%;"/></td>
     </s:if>
     <s:if test="birthType.ordinal() == 2">
         <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපත් බර (දන්නේ නමි)<br>பிறப்பு
             நிறை<br>Birth Weight, if known (kg)</label></td>
-        <td><s:label value="%{##request.child.childBirthWeight}"/></td>
+        <td><s:label value="%{#request.child.childBirthWeight}"/></td>
     </s:if>
     <s:elseif test="birthType.ordinal() == 0">
         <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) දරැවා මැරී උපදින විට ගර්භයට සති
@@ -475,7 +475,7 @@
             අංකය <br>
             அடையாள எண் <br>Identification Number</label></td>
         <td rowspan="2" width="200px" class="find-person"><s:label
-                value="%{#request.parent.fatherNICorPIN}"/>
+                value="%{#request.parent.motherNICorPIN}"/>
 
         </td>
         <td colspan="1" rowspan="2" width="200px"><label>විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If foreigner</label>

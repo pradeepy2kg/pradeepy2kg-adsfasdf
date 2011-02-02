@@ -538,27 +538,27 @@
     </td>
     <td>
         <s:if test="mode=='register'">
-            <s:textarea name="marriage.male.nameInEnglishMale" id="name_english_male" cssStyle="width:98.2%;"
+            <s:textarea name="marriage.male.nameInEnglishMale" id="name_english_Male" cssStyle="width:98.2%;"
                         rows="5" disabled="true"/>
         </s:if>
         <s:else>
-            <s:textarea name="marriage.male.nameInEnglishMale" id="name_english_male" cssStyle="width:98.2%;"
+            <s:textarea name="marriage.male.nameInEnglishMale" id="name_english_Male" cssStyle="width:98.2%;"
                         rows="5"/>
             <br>
             <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px;"
-                 id="maleName" onclick="transliterate('nameOfficialMale', 'name_english_male')">
+                 id="maleName" onclick="transliterate('nameOfficialMale', 'name_english_Male')">
         </s:else>
     </td>
     <td>
         <s:if test="mode=='register'">
-            <s:textarea name="marriage.female.nameInEnglishFemale" id="name_english_female" cssStyle="width:98.2%;"
+            <s:textarea name="marriage.female.nameInEnglishFemale" id="name_english_Female" cssStyle="width:98.2%;"
                         rows="5" disabled="true"/>
         </s:if>
         <s:else>
-            <s:textarea name="marriage.female.nameInEnglishFemale" id="name_english_female" cssStyle="width:98.2%;"
+            <s:textarea name="marriage.female.nameInEnglishFemale" id="name_english_Female" cssStyle="width:98.2%;"
                         rows="5"/>
             <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px;"
-                 id="femaleName" onclick="transliterate('nameOfficialFemale', 'name_english_female')">
+                 id="femaleName" onclick="transliterate('nameOfficialFemale', 'name_english_Female')">
         </s:else>
     </td>
 </tr>
