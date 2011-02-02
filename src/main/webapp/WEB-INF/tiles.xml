@@ -185,7 +185,7 @@
 
     <definition name="epr.BirthsAdvancedSearch" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/births/BirthsAdvancedSearch.jsp"/>
-        <put-attribute name="title" value="search.title"/>
+        <put-attribute name="title" value="search.adnavced.title"/>
     </definition>
 
     <definition name="epr.certificateSearch" extends="epr.template">

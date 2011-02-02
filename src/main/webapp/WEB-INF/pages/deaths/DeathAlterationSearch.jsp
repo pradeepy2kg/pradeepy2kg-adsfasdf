@@ -77,20 +77,23 @@
             }
         }
 
-        if (counter != 1) {
+        if (counter > 1) {
             errormsg = errormsg + document.getElementById('oneMethodErr').value;
+        }
+        if (counter == 0) {
+            return false;
         }
 
         //validate   number fields
         if (counter == 1) {
             if (!isFieldEmpty(certifcateNumber)) {
-                isNumeric(certifcateNumber.value, 'invalideDateErr', 'certificateNumberFi')
+                isNumeric(certifcateNumber.value, 'invalideDataErr', 'certificateNumberFi')
             }
             if (!isFieldEmpty(serial)) {
-                validateSerialNo(serial, 'invalideDateErr', 'serialNumnerFi')
+                validateSerialNo(serial, 'invalideDataErr', 'serialNumnerFi')
             }
             if (!isFieldEmpty(pin)) {
-                validatePINorNIC(pin, 'invalideDateErr', 'pinNumberFi')
+                validatePINorNIC(pin, 'invalideDataErr', 'pinNumberFi')
             }
         }
         if (errormsg != "") {
@@ -218,7 +221,7 @@
         <s:submit type="submit" value="%{getText('button.search')}" id="searchButton"/>
     </div>
     <s:hidden id="oneMethodErr" value="%{getText('err.use.one,method.to.search')}"/>
-    <s:hidden id="invalideDateErr" value="%{getText('err.invalide.data')}"/>
+    <s:hidden id="invalideDataErr" value="%{getText('err.invalide.data')}"/>
     <s:hidden id="serialNumnerFi" value="%{getText('field.serial.number')}"/>
     <s:hidden id="pinNumberFi" value="%{getText('field.pin.number')}"/>
     <s:hidden id="certificateNumberFi" value="%{getText('field.certificate.number')}"/>

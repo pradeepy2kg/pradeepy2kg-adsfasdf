@@ -223,6 +223,9 @@ public class UserManagerImpl implements UserManager {
                     handleException("Attempt to modify deleted account : " + existing.getUserId() +
                         " by : " + adminUser.getUserId() + " denied", ErrorCodes.AUTHORIZATION_FAILS_USER_MANAGEMENT);
                 }
+                java.util.GregorianCalendar gCal = new GregorianCalendar();
+                gCal.add(Calendar.DATE, -1);
+                updatedUser.setPasswordExpiry(gCal.getTime());
                 userDao.updateUser(updatedUser, adminUser);
 
             }

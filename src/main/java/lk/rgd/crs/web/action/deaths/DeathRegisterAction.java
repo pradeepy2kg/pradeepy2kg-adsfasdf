@@ -7,6 +7,7 @@ import lk.rgd.Permission;
 import lk.rgd.common.RGDRuntimeException;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.util.DateTimeUtils;
 import lk.rgd.common.util.GenderUtil;
 import lk.rgd.common.util.NameFormatUtil;
 import lk.rgd.crs.CRSRuntimeException;
@@ -335,8 +336,8 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                 deathApprovalAndPrintList = service.getByBDDivisionAndRegistrationDateRange(
                     bdDivisionDAO.getBDDivisionByPK(deathDivisionId), fromDate, endDate, pageNo, noOfRows, user);
             }
-            addActionMessage(getText("message.search.results.form.to", new String[]{fromDate.toString(),
-                endDate.toString()}));
+            addActionMessage(getText("message.search.results.form.to", new String[]
+                {DateTimeUtils.getISO8601FormattedString(fromDate), DateTimeUtils.getISO8601FormattedString(endDate)}));
 
         } else {
             if (currentStatus == 0) {

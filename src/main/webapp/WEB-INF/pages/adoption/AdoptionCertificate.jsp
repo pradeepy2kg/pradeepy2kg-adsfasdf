@@ -370,15 +370,15 @@ Mother's Identification No.
     <tr>
         <td colspan="2"><p></p></td>
     </tr>
-    <tr>
+<%--    <tr>
         <td>
             Printed On : <%= DateTimeUtils.getISO8601FormattedString(new Date()) %>
         </td>
 
         <td style="text-align:right;margin-left:auto;margin-right:0;">
-            <%--<%= DateTimeUtils.getISO8601FormattedString(new Date()) %>--%>
+            &lt;%&ndash;<%= DateTimeUtils.getISO8601FormattedString(new Date()) %>&ndash;%&gt;
         </td>
-    </tr>
+    </tr>--%>
     </tbody>
 </table>
 <hr style="border-style:dashed ; float:left;width:100% ;margin-top:30px;"/>
