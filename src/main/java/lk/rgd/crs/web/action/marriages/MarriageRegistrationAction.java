@@ -1,6 +1,7 @@
 package lk.rgd.crs.web.action.marriages;
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.AppConstants;
 import lk.rgd.ErrorCodes;
 import lk.rgd.common.api.dao.CountryDAO;
 import lk.rgd.common.api.dao.RaceDAO;
@@ -18,16 +19,11 @@ import lk.rgd.crs.web.util.CommonUtil;
 import lk.rgd.crs.web.util.MarriageType;
 import lk.rgd.crs.web.util.TypeOfMarriagePlace;
 import lk.rgd.prs.api.domain.Person;
-import lk.rgd.AppConstants;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.List;
 import java.io.File;
+import java.util.*;
 
 /**
  * @author amith
@@ -37,6 +33,7 @@ import java.io.File;
 public class MarriageRegistrationAction extends ActionSupport implements SessionAware {
 
     private static final Logger logger = org.slf4j.LoggerFactory.getLogger(MarriageRegistrationAction.class);
+    private static final String WARNING = "warning";
 
     private final MarriageRegistrationService marriageRegistrationService;
 
@@ -58,6 +55,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     private Map<Person.CivilStatus, String> civilStatusFemale;
 
     private List<UserWarning> userWarnings;
+    private List<UserWarning> warnings;
 
     private int marriageDistrictId;           //use for both male /female and both cases
     private int dsDivisionId;
@@ -75,6 +73,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     private boolean ignoreWarnings;
     private boolean malePartyNotFound;   //todo remove this is a temp for field errors
     private boolean femalePartyNotFound;
+    private boolean register;  // used to identify register and approve And update and approve
     private String mode;
 
     private String language;
@@ -155,8 +154,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             logger.debug("successfully added marriage notice serial number: {}");
             idUKey = marriage.getIdUKey();
             return SUCCESS;
-        }
-        catch (CRSRuntimeException e) {
+        } catch (CRSRuntimeException e) {
             switch (e.getErrorCode()) {
                 case ErrorCodes.INVALID_SERIAL_NUMBER:
                     addFieldError("duplicateSerialNumberError", getText("message.invalid.serialNumber.found"));
@@ -268,8 +266,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             try {
                 userWarnings = marriageRegistrationService.addSecondMarriageNotice(existingNotice, noticeType, ignoreWarnings,
                     false, user);
-            }
-            catch (CRSRuntimeException e) {
+            } catch (CRSRuntimeException e) {
                 switch (e.getErrorCode()) {
                     case ErrorCodes.POSSIBLE_MARRIAGE_NOTICE_SERIAL_NUMBER_DUPLICATION:
                         addFieldError("duplicateSerialNumber", getText("error.duplicate.serial.number"));
@@ -573,35 +570,47 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
      */
     public String registerAndApproveNewMarriage() {
         //TODO: implement a single mothod allowing access only for adr and higher
-        populateMuslimMarriageDetails();
-        try {
-            marriageRegistrationService.addMarriageRegister(marriage, user, scannedImage, scannedImageFileName);
-        } catch (CRSRuntimeException e) {
-            switch (e.getErrorCode()) {
-                case ErrorCodes.INVALID_SERIAL_NUMBER:
-                    addActionError(getText("message.invalid.serialNumber.found"));
-                    break;
-                case ErrorCodes.DUPLICATE_SERIAL_NUMBER:
-                    addActionError(getText("message.duplicate.serialNumber.found"));
-                    break;
-                case ErrorCodes.PERMISSION_DENIED:
-                    addActionError(getText("message.permissiondenied"));
-                    break;
-                default:
-                    addActionError(getText("error.marriageregister.registrationfailed"));
+        if (!ignoreWarnings) {
+            populateMuslimMarriageDetails();
+            try {
+                marriageRegistrationService.addMarriageRegister(marriage, user, scannedImage, scannedImageFileName);
+                idUKey = marriage.getIdUKey();
+            } catch (CRSRuntimeException e) {
+                switch (e.getErrorCode()) {
+                    case ErrorCodes.INVALID_SERIAL_NUMBER:
+                        addActionError(getText("message.invalid.serialNumber.found"));
+                        break;
+                    case ErrorCodes.DUPLICATE_SERIAL_NUMBER:
+                        addActionError(getText("message.duplicate.serialNumber.found"));
+                        break;
+                    case ErrorCodes.PERMISSION_DENIED:
+                        addActionError(getText("message.permissiondenied"));
+                        break;
+                    default:
+                        addActionError(getText("error.marriageregister.registrationfailed"));
+                }
+                populateLists();
+                return INPUT;
             }
-            populateLists();
-            return INPUT;
         }
         try {
-            marriageRegistrationService.approveMarriageRegister(marriage.getIdUKey(), user);
+            warnings = marriageRegistrationService.approveMarriageRegister(idUKey, user, ignoreWarnings);
         } catch (CRSRuntimeException e) {
             addActionError(getText("error.marriageregister.approvalfailed"));
             populateLists();
             return INPUT;
         }
-        addActionMessage(getText("message.marriageregister.registeredandapproved"));
-        return SUCCESS;
+
+        // returns warning list or move forward
+        if (warnings.isEmpty()) {
+            logger.debug("Approving marriage register with idUKey : {} approves successfully", idUKey);
+            addActionMessage(getText("message.marriageregister.registeredandapproved"));
+            return SUCCESS;
+        } else {
+            logger.debug("Approving marriage register with idUKey : {} gives warnings list of : {} items", idUKey,
+                warnings.size());
+            return WARNING;
+        }
     }
 
     /**
@@ -610,41 +619,53 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     public String updateAndApproveMuslimMarriage() {
         //TODO: implement a single mothod allowing access only for adr and higher
         MarriageRegister marriageRegister = marriageRegistrationService.getByIdUKey(idUKey, user);
-        if (marriageRegister == null) {
-            addActionError(getText("error.marriageregister.notfound"));
-            return ERROR;
-        }
-        long serialNumber = marriageRegister.getSerialNumber();
-        populateRegistrationDetails(marriageRegister);
-        populateMaleFemaleDetails(marriageRegister);
-        try {
-            marriageRegistrationService.updateMarriageRegister(marriageRegister, user, scannedImage, scannedImageFileName, serialNumber);
-        } catch (CRSRuntimeException e) {
-            switch (e.getErrorCode()) {
-                case ErrorCodes.INVALID_SERIAL_NUMBER:
-                    addActionError(getText("message.invalid.serialNumber.found"));
-                    break;
-                case ErrorCodes.DUPLICATE_SERIAL_NUMBER:
-                    addActionError(getText("message.duplicate.serialNumber.found"));
-                    break;
-                case ErrorCodes.PERMISSION_DENIED:
-                    addActionError(getText("message.permissiondenied"));
-                    break;
-                default:
-                    addActionError(getText("error.marriageregister.failedtoupdate"));
+        if (!ignoreWarnings) {
+            if (marriageRegister == null) {
+                addActionError(getText("error.marriageregister.notfound"));
+                return ERROR;
             }
-            populateLists();
-            return INPUT;
+            long serialNumber = marriageRegister.getSerialNumber();
+            populateRegistrationDetails(marriageRegister);
+            populateMaleFemaleDetails(marriageRegister);
+            try {
+                marriageRegistrationService.updateMarriageRegister(marriageRegister, user, scannedImage, scannedImageFileName, serialNumber);
+            } catch (CRSRuntimeException e) {
+                switch (e.getErrorCode()) {
+                    case ErrorCodes.INVALID_SERIAL_NUMBER:
+                        addActionError(getText("message.invalid.serialNumber.found"));
+                        break;
+                    case ErrorCodes.DUPLICATE_SERIAL_NUMBER:
+                        addActionError(getText("message.duplicate.serialNumber.found"));
+                        break;
+                    case ErrorCodes.PERMISSION_DENIED:
+                        addActionError(getText("message.permissiondenied"));
+                        break;
+                    default:
+                        addActionError(getText("error.marriageregister.failedtoupdate"));
+                }
+                populateLists();
+                return INPUT;
+            }
         }
         try {
-            marriageRegistrationService.approveMarriageRegister(marriageRegister.getIdUKey(), user);
+            warnings = marriageRegistrationService.approveMarriageRegister(idUKey, user, ignoreWarnings);
         } catch (CRSRuntimeException e) {
             addActionError(getText("error.marriageregister.approvalfailed"));
             populateLists();
             return INPUT;
         }
-        addActionMessage(getText("message.marriageregister.updatedandapproved"));
-        return SUCCESS;
+
+        // returns warning list or move forward
+        if (warnings.isEmpty()) {
+            logger.debug("Approving marriage register with idUKey : {} approves successfully", idUKey);
+            addActionMessage(getText("message.marriageregister.updatedandapproved"));
+            return SUCCESS;
+        } else {
+            logger.debug("Approving marriage register with idUKey : {} gives warnings list of : {} items", idUKey,
+                warnings.size());
+            return WARNING;
+        }
+
     }
 
     private void populateMuslimMarriageDetails() {
@@ -1017,6 +1038,14 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         this.userWarnings = userWarnings;
     }
 
+    public List<UserWarning> getWarnings() {
+        return warnings;
+    }
+
+    public void setWarnings(List<UserWarning> warnings) {
+        this.warnings = warnings;
+    }
+
     public boolean isIgnoreWarnings() {
         return ignoreWarnings;
     }
@@ -1071,6 +1100,14 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     public void setFemalePartyNotFound(boolean femalePartyNotFound) {
         this.femalePartyNotFound = femalePartyNotFound;
+    }
+
+    public boolean isRegister() {
+        return register;
+    }
+
+    public void setRegister(boolean register) {
+        this.register = register;
     }
 }
 

@@ -5,7 +5,8 @@
     <%--warning at approval--%>
     <s:form action="eprApproveMarriageNotice.do">
         <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;">
-            <table>
+        <legend><b><s:label value="%{getText('message.marriageNotice.warning.label')}"/></b></legend>
+            <table class="birth-declaration-approval-warning-table" style="margin-left:10px;margin-top:10px;">
                 <caption/>
                 <col/>
                 <col/>
@@ -37,7 +38,7 @@
         <td colspan="2" align="right">
         <div class="form-submit">
 
-        <s:submit cssStyle="width:150px" value="%{getText('button.ignoreWarnings')}"/>
+        <s:submit value="%{getText('button.ignoreWarnings')}"/>
         <s:hidden name="idUKey" value="%{#request.idUKey}"/>
         <s:hidden name="pageNo" value="%{#request.pageNo}"/>
         <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
@@ -55,7 +56,7 @@
 
     <div class="form-submit">
         <s:form action="eprMarriageNoticeSearchInit.do">
-            <s:submit cssStyle="width:150px" value="%{getText('button.cancel')}"/>
+            <s:submit value="%{getText('button.cancel')}"/>
         </s:form>
     </div>
     </td>
@@ -91,9 +92,9 @@
                 <td colspan="2">
                     <div class="form-submit">
                         <s:form action="eprRollBackNoticeToPreviousAndEditNotice.do">
-                            <s:submit cssStyle="width:150px" value="%{getText('button.roll.back')}"/>
+                            <s:submit value="%{getText('button.roll.back')}"/>
                             <%--            <s:hidden name="ignoreWarnings" value="true"/>
-                          <s:submit cssStyle="width:150px" value="%{getText('button.ignoreWarnings')}"/>--%>
+                          <s:submit value="%{getText('button.ignoreWarnings')}"/>--%>
                             <s:hidden name="idUKey" value="%{#request.idUKey}"/>
                             <s:hidden name="pageNo" value="%{#request.pageNo}"/>
                             <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
@@ -111,9 +112,9 @@
 
                     <div class="form-submit">
                         <s:form action="eprRollBackNoticeToPreviousAndEditNotice.do">
-                            <s:submit cssStyle="width:150px" value="%{getText('button.proceed')}"/>
+                            <s:submit value="%{getText('button.proceed')}"/>
                             <%--             <s:hidden name="ignoreWarnings" value="true"/>
-                          <s:submit cssStyle="width:150px" value="%{getText('button.ignoreWarnings')}"/>--%>
+                          <s:submit value="%{getText('button.ignoreWarnings')}"/>--%>
                             <s:hidden name="idUKey" value="%{#request.idUKey}"/>
                             <s:hidden name="pageNo" value="%{#request.pageNo}"/>
                             <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
@@ -145,7 +146,7 @@
                 <td colspan="2">
                     <div class="form-submit">
                         <s:form action="eprRollBackNoticeToPrevious.do">
-                            <s:submit cssStyle="width:150px" value="%{getText('button.roll.back')}"/>
+                            <s:submit value="%{getText('button.roll.back')}"/>
                             <s:hidden name="ignoreWarnings" value="true"/>
                             <s:hidden value="%{#request.idUKey}" name="idUKey"/>
                             <s:hidden value="%{#request.noticeType}" name="noticeType"/>
@@ -154,7 +155,7 @@
 
                     <div class="form-submit">
                         <s:form action="eprMarriageSecondNoticeAdd.do">
-                            <s:submit cssStyle="width:150px" value="%{getText('button.proceed')}"/>
+                            <s:submit value="%{getText('button.proceed')}"/>
                             <s:hidden name="ignoreWarnings" value="true"/>
                             <s:hidden value="%{#request.idUKey}" name="idUKey"/>
                             <s:hidden value="%{#request.noticeType}" name="noticeType"/>

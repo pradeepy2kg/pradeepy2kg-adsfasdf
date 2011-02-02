@@ -539,8 +539,9 @@ public interface MarriageRegistrationService {
      *
      * @param idUKey primary key of the marriage register
      * @param user   user who perform the action
+     * @param ignoreWarnings
      */
-    public void approveMarriageRegister(long idUKey, User user);
+    public List<UserWarning> approveMarriageRegister(long idUKey, User user, boolean ignoreWarnings);
 
     /**
      * Update the status of marriage register

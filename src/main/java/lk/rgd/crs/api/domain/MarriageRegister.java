@@ -262,8 +262,8 @@ public class MarriageRegister implements Serializable, Cloneable {
     @Column(name = "NOTICE_REJECT_COMMENT", nullable = true)
     private String noticeRejectionComment;
 
-    @Column(name = "REG_REJECT_COMMENT", nullable = true)
-    private String registrationRejectComment;
+    @Column(name = "REG_REJECT_COMMENT", nullable = true, length = 4096)
+    private String registrationComment;
 
     /**
      * Comments for divorce
@@ -622,12 +622,12 @@ public class MarriageRegister implements Serializable, Cloneable {
         this.noticeRejectionComment = WebUtils.filterBlanks(noticeRejectionComment);
     }
 
-    public String getRegistrationRejectComment() {
-        return registrationRejectComment;
+    public String getRegistrationComment() {
+        return registrationComment;
     }
 
-    public void setRegistrationRejectComment(String registrationRejectComment) {
-        this.registrationRejectComment = registrationRejectComment;
+    public void setRegistrationComment(String registrationComment) {
+        this.registrationComment = registrationComment;
     }
 
     public Date getLicensePrintTimestamp() {

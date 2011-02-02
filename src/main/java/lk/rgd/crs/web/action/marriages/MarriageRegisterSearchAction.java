@@ -11,8 +11,8 @@ import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.DateTimeUtils;
 import lk.rgd.common.util.NameFormatUtil;
-import lk.rgd.common.util.WebUtils;
 import lk.rgd.common.util.StateUtil;
+import lk.rgd.common.util.WebUtils;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.MRDivisionDAO;
@@ -36,6 +36,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
 
     private static final Logger logger = LoggerFactory.getLogger(MarriageRegisterSearchAction.class);
     private static final String MR_APPROVAL_ROWS_PER_PAGE = "crs.mr_approval_rows_per_page";
+    private static final String WARNING = "warning";
 
     // services and DAOs
     private final MarriageRegistrationService marriageRegistrationService;
@@ -103,6 +104,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
 
     private boolean ignoreWarnings;
     private boolean warningsAtApproval;//use to divide warning JSP page
+    private boolean listPage;
 
     private Map<Integer, String> stateList;
     private int state = -1;
@@ -141,8 +143,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
             showNoticeSearchResultSize();
             // by doing following previously user entered values will be removed in jsp page
             clearSearchingOptionValues();
-        }
-        catch (CRSRuntimeException e) {
+        } catch (CRSRuntimeException e) {
             logger.debug("exception while loading page");
             return ERROR;
         }
@@ -241,8 +242,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
                 //TODO : refactor rename licensePrintedLocationId and licenseIssuedUserId in order to user this attribute for both notice and Extract print
                 marriageRegistrationService.markMarriageExtractAsPrinted(idUKey, locationDAO.
                     getLocation(licensePrintedLocationId), userDAO.getUserByPK(licenseIssuedUserId), user);
-            }
-            catch (CRSRuntimeException e) {
+            } catch (CRSRuntimeException e) {
                 switch (e.getErrorCode()) {
                     case ErrorCodes.MARRIAGE_REGISTER_NOT_FOUND:
                         addActionError(getText("error.marriageregister.notfound"));
@@ -276,8 +276,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
                 //TODO : refactor rename licensePrintedLocationId and licenseIssuedUserId in order to user this attribute for both notice and Extract print
                 marriageRegistrationService.divorce(idUKey, user, Permission.DIVORCE,
                     comment, effectiveDateOfDivorce, MarriageRegister.State.DIVORCE);
-            }
-            catch (CRSRuntimeException e) {
+            } catch (CRSRuntimeException e) {
                 addActionError(getText("error.marriageregister.divorcefailed"));
                 return ERROR;
             }
@@ -366,12 +365,28 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
      */
     public String approveMarriageRegister() {
         try {
-            marriageRegistrationService.approveMarriageRegister(idUKey, user);
+            warnings = marriageRegistrationService.approveMarriageRegister(idUKey, user, ignoreWarnings);
         } catch (CRSRuntimeException e) {
             addActionError(getText("error.marriageregister.notapproved"));
             return marriageRegisterSearchInit();
         }
-        addActionMessage(getText("message.marriageregister.approved"));
+
+        if (warnings.isEmpty()) {
+            logger.debug("Approving marriage register with idUKey : {} approves successfully", idUKey);
+            addActionMessage(getText("message.marriageregister.approved"));
+            return marriageRegisterSearchInit();
+        } else {
+            logger.debug("Approving marriage register with idUKey : {} gives warnings list of : {} items", idUKey,
+                warnings.size());
+            return WARNING;
+        }
+    }
+
+    /**
+     * This method navigate back to marriage register search list page
+     */
+    public String backMarriageRegisterSearch() {
+        logger.debug("Returns back to marriage register search list page");
         return marriageRegisterSearchInit();
     }
 
@@ -430,8 +445,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
                 dsDivisionId, mrDivisionId, AppConstants.MARRIAGE, user, language);
             getApprovalPendingNotices();
             return "failed";
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             logger.debug("exception while approving marriage notice :idUKey ");
             return ERROR;
         }
@@ -452,8 +466,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         logger.debug("attempt to delete marriage notice : idUKey {} : notice type : {}", idUKey, noticeType);
         try {
             marriageRegistrationService.deleteMarriageNotice(idUKey, noticeType, user);
-        }
-        catch (CRSRuntimeException e) {
+        } catch (CRSRuntimeException e) {
             commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId,
                 dsDivisionId, mrDivisionId, AppConstants.MARRIAGE, user, language);
             getApprovalPendingNotices();
@@ -479,12 +492,11 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         try {
             marriageRegistrationService.rejectMarriageNotice(idUKey, noticeType, comment, user);
             marriage = marriageRegistrationService.getByIdUKey(idUKey, user);
-        }
-        catch (CRSRuntimeException e) {
+        } catch (CRSRuntimeException e) {
             logger.debug("failed to reject marriage notice idUKey : {} : notice type : {}  ", idUKey, noticeType);
             addActionError(getText("error.rejection.fail", new String[]{Long.
                 toString((noticeType == MarriageNotice.Type.FEMALE_NOTICE) ?
-                marriage.getSerialOfFemaleNotice() : marriage.getSerialOfMaleNotice())}));
+                    marriage.getSerialOfFemaleNotice() : marriage.getSerialOfMaleNotice())}));
             commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId,
                 dsDivisionId, mrDivisionId, AppConstants.MARRIAGE, user, language);
             getApprovalPendingNotices();
@@ -492,7 +504,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         }
         addActionMessage(getText("message.rejection.success", new String[]{Long.
             toString((noticeType == MarriageNotice.Type.FEMALE_NOTICE) ?
-            marriage.getSerialOfFemaleNotice() : marriage.getSerialOfMaleNotice())}));
+                marriage.getSerialOfFemaleNotice() : marriage.getSerialOfMaleNotice())}));
         commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId,
             dsDivisionId, mrDivisionId, AppConstants.MARRIAGE, user, language);
         getApprovalPendingNotices();
@@ -507,8 +519,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
             idUKey, noticeType);
         try {
             marriage = marriageRegistrationService.getMarriageNoticeForPrintLicense(idUKey, user);
-        }
-        catch (CRSRuntimeException e) {
+        } catch (CRSRuntimeException e) {
             switch (e.getErrorCode()) {
                 case ErrorCodes.INVALID_STATE_FOR_PRINT_LICENSE:
                     addActionError(getText("error.print.license.failed.invalid.state"));
@@ -536,8 +547,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
                 marriageRegistrationService.markLicenseToMarriageAsPrinted(idUKey, locationDAO.
                     getLocation(licensePrintedLocationId), userDAO.getUserByPK(licenseIssuedUserId), user);
                 logger.debug("success fully marked as printed marriage notice idUKey : {}", idUKey);
-            }
-            catch (CRSRuntimeException e) {
+            } catch (CRSRuntimeException e) {
                 logger.debug("failed to mark as print :idUKey : {} ", idUKey);
                 switch (e.getErrorCode()) {
                     case ErrorCodes.INVALID_STATE_FOR_PRINT_LICENSE:
@@ -748,7 +758,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
                             if (searchStartDate != null && searchEndDate != null) {
                                 searchList = WebUtils.populateNoticeList(marriageRegistrationService.
                                     getMarriageNoticeByDistrictAndDateRange(districtDAO.getDistrict(districtId),
-                                    searchStartDate, searchEndDate, pageNo, noOfRows, true, user));
+                                        searchStartDate, searchEndDate, pageNo, noOfRows, true, user));
                                 if (searchList.size() > 0) {
                                     addActionMessage(getText("message.result.to.from",
                                         new String[]{DateTimeUtils.getISO8601FormattedString(searchStartDate),
@@ -1188,6 +1198,14 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
 
     public void setWarningsAtApproval(boolean warningsAtApproval) {
         this.warningsAtApproval = warningsAtApproval;
+    }
+
+    public boolean isListPage() {
+        return listPage;
+    }
+
+    public void setListPage(boolean listPage) {
+        this.listPage = listPage;
     }
 
     public String getMode() {

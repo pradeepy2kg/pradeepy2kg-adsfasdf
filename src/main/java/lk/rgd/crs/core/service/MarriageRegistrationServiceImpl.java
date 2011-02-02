@@ -9,6 +9,7 @@ import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.UserLocationDAO;
 import lk.rgd.common.api.domain.*;
 import lk.rgd.common.api.service.UserManager;
+import lk.rgd.common.util.DateTimeUtils;
 import lk.rgd.common.util.StateUtil;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
@@ -600,33 +601,57 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void approveMarriageRegister(long idUKey, User user) {
+    public List<UserWarning> approveMarriageRegister(long idUKey, User user, boolean ignoreWarnings) {
 
         logger.debug("Attempt to approve marriage resister with idUKey : {}", idUKey);
         // check user permission for marriage register approval
         ValidationUtils.validateUserPermission(Permission.APPROVE_MARRIAGE, user);
-        MarriageRegister marriageRegister = marriageRegistrationDAO.getByIdUKey(idUKey);
+        MarriageRegister mr = marriageRegistrationDAO.getByIdUKey(idUKey);
         //TODO: to be removed if mr division validations not required
-        ValidationUtils.validateUserAccessToDSDivision(marriageRegister.getMrDivision().getDsDivision().getDsDivisionUKey(), user);
+        ValidationUtils.validateUserAccessToDSDivision(mr.getMrDivision().getDsDivision().getDsDivisionUKey(), user);
         // check all required fields are filled before approval
-        marriageRegistrationValidator.validateMinimalRequirementsOfMarriageRegister(marriageRegister);
+        marriageRegistrationValidator.validateMinimalRequirementsOfMarriageRegister(mr);
 
-        final MarriageRegister.State currentState = marriageRegister.getState();
+        final MarriageRegister.State currentState = mr.getState();
         if (currentState != MarriageRegister.State.REG_DATA_ENTRY) {
             handleException("Cannot approve marriage register with idUKey : " + idUKey + ", Illegal State : " +
                 currentState, ErrorCodes.INVALID_STATE_FOR_APPROVAL);
         }
 
-        // TODO need to store comments before approving ??
-        marriageRegister.setState(MarriageRegister.State.REGISTRATION_APPROVED);
-        marriageRegister.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
-        marriageRegister.getLifeCycleInfo().setApprovalOrRejectUser(user);
-        marriageRegistrationDAO.updateMarriageRegister(marriageRegister, user);
+        List<UserWarning> warnings = marriageRegistrationValidator.validateWarningsOfMarriageRegister(mr, user);
+        // capture warnings of marriage register approved by ignoring warnings
+        if (!warnings.isEmpty() && ignoreWarnings) {
+            StringBuilder sb = new StringBuilder();
+            if (mr.getRegistrationComment() != null) {
+                sb.append(mr.getRegistrationComment()).append("\n");
+            }
 
-        // TODO following is not complete and only temporary solution to update person if they already exist in PRS
-        updateExistingPRSRecords(marriageRegister, user);
+            sb.append(DateTimeUtils.getISO8601FormattedString(new Date())).
+                append(" - Approved Marriage Register ignore warnings. User : ").append(user.getUserId()).append("\n");
 
-        logger.debug("Approved marriage register with idUKey : {}", idUKey);
+            for (UserWarning w : warnings) {
+                sb.append(w.getSeverity());
+                sb.append("-");
+                sb.append(w.getMessage());
+            }
+            mr.setRegistrationComment(sb.toString());
+        }
+
+        if (warnings.isEmpty() || ignoreWarnings) {
+            mr.setState(MarriageRegister.State.REGISTRATION_APPROVED);
+            mr.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
+            mr.getLifeCycleInfo().setApprovalOrRejectUser(user);
+            marriageRegistrationDAO.updateMarriageRegister(mr, user);
+
+            // TODO following is not complete and only temporary solution to update person if they already exist in PRS
+            updateExistingPRSRecords(mr, user);
+
+            logger.debug("Approved marriage register with idUKey : {} Ignore warnings : {}", idUKey, ignoreWarnings);
+            return Collections.emptyList();
+        } else {
+            logger.debug("Approval of marriage register with idUKey : {} stopped due to warnings", idUKey);
+            return warnings;
+        }
     }
 
     private void updateExistingPRSRecords(MarriageRegister mr, User user) {
@@ -663,6 +688,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
             m.setPlaceOfMarriage(mr.getRegPlaceInEnglishLang());
             m.setState(Marriage.State.MARRIED);
             m.setPreferredLanguage(mr.getPreferredLanguage());
+            m.setTypeOfMarriage(mr.getTypeOfMarriage());
             groom.specifyMarriage(m);
             bride.specifyMarriage(m);
 
@@ -728,7 +754,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         ValidationUtils.validateUserAccessToDSDivision(marriageRegister.getMrDivision().getDsDivision().getDsDivisionUKey(), user);
         marriageRegister.setState(MarriageRegister.State.REGISTRATION_REJECTED);
         //TODO validate comment if needed
-        marriageRegister.setRegistrationRejectComment(comment);
+        marriageRegister.setRegistrationComment(comment);
         //marriageRegister.getLifeCycleInfo().setActiveRecord(false);
         marriageRegister.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
         marriageRegister.getLifeCycleInfo().setApprovalOrRejectUser(user);

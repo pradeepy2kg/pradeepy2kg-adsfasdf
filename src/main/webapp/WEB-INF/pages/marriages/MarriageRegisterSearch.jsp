@@ -321,6 +321,7 @@
                                     <s:if test="(!#session.user_bean.role.roleId.equals('DEO'))">
                                         <s:url id="approveSelected" action="eprApproveMarriageRegistration.do">
                                             <s:param name="idUKey" value="idUKey"/>
+                                            <s:param name="listPage" value="true"/>
                                         </s:url>
                                         <s:a href="%{approveSelected}" title="%{getText('approveToolTip.label')}">
                                             <img src="<s:url value='/images/approve.gif'/>" width="25" height="25"
