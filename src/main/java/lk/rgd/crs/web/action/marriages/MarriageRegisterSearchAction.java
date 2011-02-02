@@ -264,6 +264,48 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         return SUCCESS;
     }
 
+    public String markDivorceExtractAsPrinted() {
+        //TODO: action msg and errors have to be refactored
+        MarriageRegister marriageRegister = marriageRegistrationService.getMarriageRegisterByIdUKey(idUKey, user,
+            Permission.PRINT_MARRIAGE_EXTRACT);
+
+        if (marriageRegister != null && marriageRegister.getState() == MarriageRegister.State.DIVORCE_CERT_PRINTED) {
+            addActionMessage(getText("message.marriagerextract.alreadymarkedasprinted"));
+            return SUCCESS;
+        } else {
+            try {
+                //TODO : refactor rename licensePrintedLocationId and licenseIssuedUserId in order to user this attribute for both notice and Extract print
+                marriageRegistrationService.markDivorceExtractAsPrinted(idUKey, locationDAO.
+                    getLocation(licensePrintedLocationId), userDAO.getUserByPK(licenseIssuedUserId), user);
+            }
+            catch (CRSRuntimeException e) {
+                switch (e.getErrorCode()) {
+                    case ErrorCodes.MARRIAGE_REGISTER_NOT_FOUND:
+                        addActionError(getText("error.marriageregister.notfound"));
+                        break;
+                    case ErrorCodes.INVALID_STATE_OF_MARRIAGE_REGISTER:
+                        addActionError(getText("error.marriageregister.invalidstate"));
+                        break;
+                    case ErrorCodes.PERMISSION_DENIED:
+                        addActionError(getText("message.permissiondenied"));
+                        break;
+                    case ErrorCodes.INVALID_LOCATION_ON_ISSUING_MARRIAGE_EXTRACT:
+                        addActionError(getText("message.marriagerextract.markasprintedfailed"));
+                        break;
+                    case ErrorCodes.INVALID_USER_ON_CERTIFYING_MARRIAGE_EXTRACT:
+                        addActionError(getText("message.marriagerextract.markasprintedfailed"));
+                        break;
+                    default:
+                        addActionError(getText("message.marriagerextract.markasprintedfailed"));
+                        break;
+                }
+                return ERROR;
+            }
+        }
+        addActionMessage(getText("message.marriagerextract.markasprinted"));
+        return SUCCESS;
+    }
+
     public String divorce() {
         //todo : add action messages/errors
         MarriageRegister marriageRegister = marriageRegistrationService.getMarriageRegisterByIdUKey(idUKey, user,
