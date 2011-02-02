@@ -78,7 +78,7 @@
                     <s:submit value="%{getText('submit.label')}" cssStyle="float:right;width:120px"/>
                 </div>
                 </s:form>
-                <s:form action="eprBackChangePass.do" method="post">
+                <s:form action="/preferences/eprBackChangePass.do" method="post">
                     <div class="form-submit">
                         <s:submit action="eprBackChangePass" value="%{getText('cancel.button')}"
                                   cssStyle="margin-right:40px;width:120px"/>
