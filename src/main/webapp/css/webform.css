@@ -1,0 +1,2242 @@
+/*
+* @author Duminda Dharmakeerthi.
+* @author Tharanga Punchihewa.
+* ------------------------------
+* Styles fot the Web forms in the E-Population Register system is done by the styles defined in this code..
+* It includes styles for the,
+*       1. Birth Registration Form (4 pages)
+*       2. Birth Confirmation Form (3 pages)
+* To change the styles in those web forms, use the styles that are applied in this css.  form-submit
+* Styles for each page are done in a separate area of the css file.
+*/
+
+/* Common FONT-SIZES are defined here */
+.font-7 {
+    font-size: 7pt;
+    font-family: Bhashitha2, Bhashitha2San;
+}
+
+.font-8 {
+    font-size: 8pt;
+    font-family: Bhashitha2, Bhashitha2San;
+}
+
+.font-9 {
+    font-size: 9pt;
+    font-family: Bhashitha2, Bhashitha2San;
+}
+
+.font-10 {
+    font-size: 10pt;
+    font-family: Bhashitha2, Bhashitha2San;
+}
+
+.font-12 {
+    font-size: 12pt;
+    font-family: Bhashitha2, Bhashitha2San;
+}
+
+/*
+* Styles for the Birth Registration Form Begins here.
+* Styles for the Birth Registration Form apply according to the 4 pages in 4 seperate sections.
+*/
+
+.birth-registration-form-outer, #birth-confirmation-form-outer, .marriage-certificate-outer, .birth-confirmation-print-form-outer, .still-birth-registration-form-outer, #bdaw-outer, .birth-certificate-search-form-outer, .prs-existing-person-register-outer, .prs-person-report-outer, .alteration-print-letter-outer, .prs-certificate-outer, .marriage-notice-outer {
+    width: 1030px;
+    background: #ffffff;
+    padding: 10px;
+}
+
+#birth-declaration-approval-warning-outer {
+    width: 1030;
+    padding: 10px;
+}
+
+.birth-declaration-approval-warning-table {
+    margin-left: 50px;
+    font-size: 11pt;
+    color: red;
+}
+
+.birth-declaration-reject-outer {
+    width: 980px;
+    margin: 20px;
+}
+
+.birth-declaration-reject-outer textarea {
+    width: 500px;
+    height: 120px;
+}
+
+/* Styles for the header area of the Birth Registration Form */
+#birth-registration-form-header {
+    margin-bottom: 10px;
+}
+
+#birth-registration-form-header-logo {
+    text-align: center;
+}
+
+#birth-registration-form-header-title {
+    text-align: center;
+}
+
+#serial-no, #submit-date {
+    display: block;
+    border: 1px solid #000000;
+    margin: 5px 0 15px 730px;
+    height: 45px;
+}
+
+#serial-no {
+    margin-top: -120px;
+}
+
+#submit-date {
+    margin-bottom: 20px;
+}
+
+#serial-no label span, #submit-date label span {
+    float: left;
+    margin-left: 5px;
+}
+
+#serial-no label input {
+    margin: 10px;
+}
+
+#submitDatePicker {
+    float: right;
+    margin: 10px;
+}
+
+.form-sub-title {
+    font-size: 11pt;
+    text-align: center;
+    border: 1px solid #000000;
+}
+
+.form-submit {
+    float: right;
+    margin-top: 5px;
+}
+
+.next-previous {
+    float: left;
+    margin-top: 5px;
+}
+
+.print {
+    float: left;
+    margin-top: 5px;
+}
+
+#page_breake {
+    page-break-after: always;
+}
+
+/* Page one (Form 1 ) of the Birth Registration form */
+#child-dob, #child-pob, #child-name, #child-name-in-english, #birth-certificate-preferred-language {
+    display: block;
+    border: 1px solid #000;
+    border-top: none;
+    float: left;
+    width: 1023px;
+    padding-left: 5px;
+    background: white;
+}
+
+#child-dob label, #child-pob label, #child-name label, #child-name-in-english label, #child-gender label, #child-weight label, #child-birth-order-no label, #multiple-birth label, #birth-certificate-preferred-language label {
+    border-right: 1px solid #000;
+}
+
+#child-gender, #child-weight, #child-birth-order-no, #multiple-birth {
+    display: block;
+    border: 1px solid #000;
+    border-top: none;
+    float: left;
+    width: 508px;
+    padding-left: 5px;
+    background: white;
+}
+
+#child-weight, #multiple-birth {
+    border-left: none;
+    padding-left: 6px;
+}
+
+#child-dob label, #child-pob label, #child-name label, #child-name-in-english label, #child-gender label, #child-birth-order-no label, #birth-certificate-preferred-language label {
+    float: left;
+    width: 200px;
+}
+
+#child-weight label, #multiple-birth label {
+    float: left;
+    width: 225px;
+}
+
+#datePicker {
+    margin: 5px 10px;
+    float: right;
+}
+
+#child-pob label {
+    padding: 50px 0 51px 0;
+}
+
+#child-birth-order-no {
+    padding-bottom: 1px;
+}
+
+#child-pob-district, #child-pob-division, #child-pob-ds-division, #child-pob-place {
+    float: left;
+    border-bottom: 1px solid #000;
+    width: 822px;
+}
+
+#child-pob-place label, #child-pob-district label, #child-pob-division label, #child-pob-ds-division label, #child-pob-in-hospital label {
+    float: left;
+    width: 230px;
+    border-right: 1px solid #000;
+    padding: 6px 5px;
+}
+
+#child-pob-place input, #child-pob-district select, #child-pob-division select, #child-pob-ds-division select, #child-pob-in-hospital input {
+    float: left;
+    margin: 2px 7px;
+    width: 550px;
+}
+
+#child-pob-in-hospital label {
+    width: 250px;
+}
+
+#child-pob-in-hospital input {
+    width: 500px;
+}
+
+#child-pob-in-hospital div label {
+    width: 200px;
+    border-right: 1px solid #000;
+    padding: 6px;
+}
+
+#child-pob-in-hospital div div input {
+    margin: 7px 25px;
+}
+
+#child-pob-in-hospital div div label {
+    display: none;
+}
+
+#child-name textarea {
+    float: left;
+    margin: 25px 5px;
+    width: 800px;
+}
+
+#child-name-in-english textarea, #birth-certificate-preferred-language select {
+    float: left;
+    margin: 5px;
+    width: 800px;
+}
+
+#birth-certificate-preferred-language select {
+    margin-top: 20px;
+}
+
+#child-name-in-english label {
+    padding: 5px 0;
+}
+
+#child-gender select, #child-weight input {
+    float: left;
+    margin: 10px 5px;
+    width: 260px;
+}
+
+#child-birth-order-no input, #multiple-birth input {
+    float: left;
+    margin: 25px 5px;
+    width: 260px;
+}
+
+/* Page two (Form 2) of  the Birth Registration Form  */
+#birth-registration-form-father-info-sub-title {
+    margin-top: 0;
+}
+
+#father-nic, #foreign-father, #father-name, #father-dob, #father-pob, #father-race, #mother-nic, #foreign-mother, #mother-name, #mother-dob, #mother-pob, #mother-race, #mother-age, #hospital-admision-no, #hospital-admision-date, #mother-address, #mother-contact-details {
+    display: block;
+    border: 1px solid #000;
+    border-top: none;
+    float: left;
+    width: 1023px;
+    padding-left: 5px;
+}
+
+#father-nic, #father-dob, #mother-nic, #mother-dob, #mother-race, #hospital-admision-no {
+    border-right: none;
+    padding-right: 1px;
+}
+
+#father-nic, #mother-nic {
+    width: 400px;
+}
+
+#father-nic input, #mother-nic input {
+    width: 230px;
+    margin: 40px 5px;
+}
+
+#foreign-father, #foreign-mother {
+    width: 616px;
+}
+
+#father-dob, #father-pob, #mother-dob, #mother-pob, #mother-race, #mother-age, #hospital-admision-no, #hospital-admision-date {
+    width: 508px;
+}
+
+#father-nic label, #foreign-father label, #father-name label, #father-dob label, #father-pob label, #father-race label, #mother-nic .form-label, #foreign-mother .form-label, #mother-name .form-label, #mother-dob .form-label, #mother-pob .form-label, #mother-race .form-label, #mother-age .form-label, #hospital-admision-no .form-label, #hospital-admision-date .form-label, #mother-address .form-label, #mother-contact-details label {
+    float: left;
+    border-right: 1px solid #000;
+    width: 150px;
+}
+
+#mother-contact-details .form-label {
+    float: left;
+    width: 150px;
+    padding: 26px 5px;
+    border-right: 1px solid #000;
+}
+
+#mother-contact-details .form-label label {
+    border: none;
+}
+
+#mother-contact-details div input {
+    float: left;
+    width: 255px;
+    margin: 38px 5px;
+}
+
+#mother-email {
+    border-left: 1px solid #000;
+}
+
+#mother-age .form-label {
+    width: 350px;
+}
+
+#father-nic label, #mother-nic .form-label {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+#foreign-father label, #foreign-mother .form-label {
+    width: 140px;
+    padding: 28px 0 29px 0;
+}
+
+#father-country, #mother-country {
+    border-bottom: 1px solid #000;
+    margin-left: 140px;
+}
+
+#father-country label, #father-passport-no label, #mother-country .form-label, #mother-passport-no .form-label {
+    width: 150px;
+    float: left;
+    padding: 0 5px;
+}
+
+#father-country label, #mother-country .form-label {
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
+#father-passport-no label, #mother-passport-no .form-label {
+    padding: 1px 5px;
+}
+
+#father-country select, #father-passport-no input, #mother-country select, #mother-passport-no input {
+    width: 290px;
+    margin: 14px 5px;
+}
+
+#father-name label, #mother-name .form-label {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#father-name textarea, #mother-name textarea {
+    margin: 5px;
+    width: 850px;
+}
+
+#father-dob input, #father-pob input, #father-race select, #mother-dob input, #mother-pob input, #mother-race select, #mother-age input, #hospital-admision-no input {
+    margin: 12px 5px;
+    width: 335px;
+}
+
+#hospital-admision-no input, #hospital-admision-date select {
+    margin-top: 30px;
+}
+
+#mother-age input {
+    width: 135px;
+}
+
+#mother-address textarea {
+    margin: 15px 5px;
+    width: 850px;
+}
+
+#mother-address .form-label {
+    padding: 30px 0;
+}
+
+#birth-registration-form-mother-info-sub-title {
+    margin-top: 290px;
+}
+
+#mother-district, #mother-ds-division {
+    border-bottom: 1px solid #000;
+    width: 872px;
+    float: left;
+}
+
+#mother-district label, #mother-ds-division label {
+    float: left;
+    padding: 7px 5px;
+    border-right: 1px solid #000;
+    width: 250px;
+}
+
+#mother-district select, #mother-ds-division select {
+    float: left;
+    width: 590px;
+    margin: 2px 5px;
+}
+
+#fatherDatePicker, #motherDatePicker, #admitDatePicker {
+    float: right;
+    margin: 0 10px;
+}
+
+/* Page three (Form 3) of the Birth Registration Form */
+#birth-registration-form-marriage-info-sub-title {
+    margin-top: 0;
+}
+
+#parent-marital-status, #parent-not-married {
+    display: block;
+    border: 1px solid #000;
+    border-top: none;
+    float: left;
+    width: 1023px;
+    padding-left: 5px;
+}
+
+#parent-marital-status .form-label, #parent-not-married .form-label {
+    float: left;
+    border-right: 1px solid #000;
+    width: 150px;
+}
+
+#parent-not-married .form-label {
+    width: 522px;
+    padding-top: 1px;
+}
+
+#parent-marital-status .form-label {
+    padding: 43px 0;
+}
+
+#yes-no {
+    float: left;
+    padding: 10px 5px;
+    width: 150px;
+}
+
+#yes-no label {
+    width: 100px;
+}
+
+#yes-no div input {
+    float: right;
+    margin: -30px 10px 0 0;
+}
+
+#place-of-marriage, #date-of-marriage {
+    float: left;
+}
+
+#place-of-marriage, #date-of-marriage {
+    float: left;
+    width: 710px;
+    border: 1px solid #000;
+    border-top: none;
+    border-right: none;
+}
+
+#date-of-marriage {
+    border-bottom: none;
+}
+
+#place-of-marriage label, #date-of-marriage label {
+    float: left;
+    width: 200px;
+    padding: 17px 5px;
+    border-right: 1px solid #000;
+}
+
+#place-of-marriage input, #date-of-marriage input {
+    margin: 25px 5px;
+    width: 480px;
+}
+
+#mother-signature, #father-signature {
+    float: left;
+    width: 500px;
+}
+
+#mother-signature {
+    border-bottom: 1px solid #000;
+}
+
+#mother-signature div label, #father-signature div label {
+    float: left;
+    width: 400px;
+    padding: 0 5px;
+    border-right: 1px solid #000;
+}
+
+#mother-signature div input, #father-signature div input {
+    margin: 19px 30px;
+}
+
+#birth-registration-form-grand-father-info-sub-title {
+    margin-top: 300px;
+}
+
+#grand-father-in-sri-lanka, #great-grand-father-in-sri-lanka, #grand-father-info, #great-grand-father-info {
+    border: 1px solid #000;
+    border-top: none;
+}
+
+#great-grand-father-in-sri-lanka {
+    border-top: 1px solid #000;
+}
+
+#grand-father-info {
+    border-bottom: none;
+    height: 127px;
+}
+
+#great-grand-father-info {
+    height: 127px;
+}
+
+#grand-father-name, #grand-father-yob, #grand-father-pob, #great-grand-father-name, #great-grand-father-yob, #great-grand-father-pob {
+    float: left;
+    margin-left: 50px;
+    border: 1px solid #000;
+    border-top: none;
+    border-right: none;
+    width: 978px;
+}
+
+#grand-father-name textarea, #great-grand-father-name textarea {
+    margin: 5px 5px;
+    width: 790px;
+}
+
+#grand-father-yob, #grand-father-pob, #great-grand-father-yob, #great-grand-father-pob {
+    border-bottom: none;
+    width: 485px;
+}
+
+#grand-father-pob, #great-grand-father-pob {
+    margin-left: 0;
+}
+
+#grand-father-name label, #grand-father-yob label, #grand-father-pob label, #great-grand-father-name label, #great-grand-father-yob label, #great-grand-father-pob label {
+    float: left;
+    width: 150px;
+    border-right: 1px solid #000;
+    padding: 5px;
+}
+
+#grand-father-yob label, #grand-father-pob label, #great-grand-father-yob label, #great-grand-father-pob label {
+    padding: 6px 5px;
+}
+
+#grand-father-yob input, #grand-father-pob input, #great-grand-father-yob input, #great-grand-father-pob input {
+    margin: 20px 5px;
+    width: 300px;
+}
+
+#birth-registration-form-informant-info-sub-title {
+    margin-top: 20px;
+}
+
+#informant-person, #informant-name, #informant-nic, #informant-address {
+    float: left;
+    border: 1px solid #000;
+    border-top: none;
+    width: 1023px;
+    padding-left: 5px;
+}
+
+#informant-person .form-label, #informant-name label, #informant-nic label, #informant-address label {
+    float: left;
+    width: 239px;
+    border-right: 1px solid #000;
+    padding: 5px 0;
+}
+
+#informant-nic label {
+    width: 500px;
+}
+
+#informant-mother, #informant-father, #informant-gardian {
+    float: left;
+    width: 250px;
+    border-right: 1px solid #000;
+    padding: 5px;
+}
+
+#informant-gardian {
+    border-right: none;
+}
+
+#informant-mother label, #informant-father label, #informant-gardian label {
+    float: left;
+    width: 200px;
+}
+
+#informant-mother input, #informant-father input, #informant-gardian input {
+    margin: 19px 0;
+}
+
+#informant-name textarea, #informant-address textarea {
+    width: 760px;
+    margin: 5px;
+}
+
+#informant-nic input {
+    width: 500px;
+    margin: 18px 5px;
+}
+
+#informant-telephone, #informant-signature {
+    float: left;
+    width: 513px;
+    border: 1px solid #000;
+    border-top: none;
+    border-right: none;
+}
+
+#informant-telephone label, #informant-signature label, #informant-email label, #informed-date label {
+    float: left;
+    width: 150px;
+    border-right: 1px solid #000;
+    padding: 5px;
+}
+
+#informant-email, #informed-date {
+    float: left;
+    width: 513px;
+    border: 1px solid #000;
+    border-top: none;
+}
+
+#informant-telephone input, #informant-signature input, #informant-email input, #informed-date input {
+    margin: 18px 5px;
+    width: 330px;
+}
+
+#informant-signature input {
+    margin-left: 150px;
+}
+
+#marriageDatePicker, #informDatePicker {
+    float: right;
+    margin-right: 10px;
+}
+
+/* Page four (Form 4) of the Birth Registration Form */
+#birth-registration-form-notify-autority-sub-title {
+    margin-top: 0;
+}
+
+#notifier-nic, #notifier-name, #notifier-address {
+    float: left;
+    border: 1px solid #000;
+    border-top: none;
+    width: 1023px;
+    padding-left: 5px;
+}
+
+#notifier-nic label, #notifier-name label, #notifier-address label {
+    float: left;
+    width: 500px;
+    border-right: 1px solid #000;
+    padding: 5px 0;
+}
+
+#notifier-name label, #notifier-address label {
+    width: 150px;
+}
+
+#notifier-nic input {
+    margin: 15px 5px;
+    width: 500px;
+}
+
+#notifier-name textarea, #notifier-address textarea {
+    width: 850px;
+    margin: 5px;
+}
+
+#notifier-signature, #notified-date {
+    float: left;
+    border: 1px solid #000;
+    border-top: none;
+    width: 513px;
+}
+
+#notified-date {
+    border-left: none;
+    padding-left: 1px;
+}
+
+#notifier-signature label, #notified-date label {
+    float: left;
+    border-right: 1px solid #000;
+    min-width: 150px;
+    padding: 5px;
+}
+
+#notified-date label {
+    padding-top: 6px;
+}
+
+#notifier-signature input {
+    margin: 20px;
+}
+
+#notified-date input {
+    margin: 18px 5px;
+    width: 330px;
+}
+
+#breaker {
+    margin-top: 270px;
+    border: 2px dashed #000;
+}
+
+#birth-registration-form-recipt-sub-title {
+    margin-top: 20px;
+}
+
+#birth-form-serial-no, #recipt-child-name, #recipt-child-dob, #recipt-child-gender, #recipt-father-name, #recipt-mother-name, #notify-autority-name-and-signature {
+    float: left;
+    border: 1px solid #000;
+    border-top: none;
+    width: 1023px;
+    padding-left: 5px;
+}
+
+#birth-form-serial-no label, #recipt-child-name label, #recipt-child-dob label, #recipt-child-gender label, #recipt-father-name label, #recipt-mother-name label, #notify-autority-name-and-signature label {
+    float: left;
+    width: 250px;
+    border-right: 1px solid #000;
+    padding: 5px 0;
+}
+
+#recipt-child-name textarea, #recipt-father-name textarea, #recipt-mother-name textarea {
+    margin: 5px;
+    width: 750px;
+}
+
+#recipt-child-dob input, #recipt-child-gender input {
+    margin: 18px 5px;
+    width: 750px;
+}
+
+#birth-form-serial-no input, #notify-autority-name-and-signature input {
+    margin: 40px 5px;
+    width: 750px;
+}
+
+#modifiedDatePicker {
+    float: right;
+    margin-right: 10px;
+}
+
+/**
+* Styles for the Birth Confirmation Form begins here.
+*/
+
+.no {
+    float: left;
+    width: 20px;
+    padding: 20px 10px;
+}
+
+/*
+* Styles for the Birth Confirmation Form page 1 (Form 1) begins here.
+*/
+#birth-confirmation-form-header {
+    margin-bottom: 10px;
+}
+
+#birth-confirmation-form-header-logo {
+    text-align: center;
+}
+
+#birth-confirmation-form-header-title {
+    text-align: center;
+}
+
+#bcf-serial-no {
+    display: block;
+    border: 1px solid #000000;
+    margin: 5px 0 90px 730px;
+    height: 70px;
+}
+
+#bcf-serial-no {
+    margin-top: -130px;
+}
+
+#bcf-serial-no label span {
+    float: left;
+    margin-left: 5px;
+}
+
+#bcf-serial-no label input {
+    margin: 10px;
+}
+
+#bcf-search {
+    float: right;
+    margin-right: 10px;
+}
+
+#civil-confirmation-info-sub-title {
+    margin-top: 20px;
+}
+
+#title-head {
+    border: 1px solid #000;
+    border-top: none;
+    padding: 5px;
+    height: 52px;
+}
+
+#particulars label {
+    float: left;
+    width: 200px;
+    border-right: 1px solid #000;
+    padding: 5px;
+    margin-top: -5px;
+}
+
+#current-info label {
+    border-right: 1px solid #000;
+}
+
+#current-info label, #new-info label {
+    float: left;
+    width: 393px;
+    padding: 5px;
+    margin-top: -5px;
+}
+
+#brf-serial-no-and-date, #last-date {
+    border: 1px solid #000;
+    height: 79px;
+}
+
+#last-date {
+    border-top: none;
+    height: 60px;
+}
+
+#brf-serial-no-and-date label, #last-date label {
+    float: left;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+    width: 613px;
+    padding: 5px;
+}
+
+#brf-serial-no-and-date input, #last-date input {
+    margin: 7px 5px;
+    width: 340px;
+}
+
+#last-date input {
+    margin: 15px 5px;
+}
+
+.current input, .new input, .new select {
+    width: 380px;
+    margin: 15px 5px;
+}
+
+#bcf-dob, #bcf-gender, #bcf-district, #bcf-ds-division, #bcf-division, #bcf-place, #bcf-gncode, #bcf-father-pin, #bcf-father-race, #bcf-mother-pin, #bcf-mother-race, #bcf-marital-status {
+    border: 1px solid #000;
+    height: 57px;
+    border-top: none;
+}
+
+#bcf-father-pin, #bcf-mother-pin, #bcf-marital-status {
+    height: 75px;
+}
+
+#bcf-dob label, #bcf-gender label, #bcf-district label, #bcf-ds-division label, #bcf-division label, #bcf-place label, #bcf-gncode label, #bcf-father-pin label, #bcf-father-race label, #bcf-mother-pin label, #bcf-mother-race label, #bcf-marital-status label {
+    float: left;
+    width: 170px;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+    padding: 0 0 5px 4px;
+}
+
+#bcf-pob {
+    border: 1px solid #000;
+    border-top: none;
+    height: 26px;
+}
+
+#bcf-pob .no {
+    padding: 5px 10px;
+}
+
+#bcf-pob label {
+    padding: 10px 5px;
+    border-left: 1px solid #000;
+}
+
+.current {
+    float: left;
+    border-right: 1px solid #000;
+    width: 393px;
+    height: 50px;
+    padding: 4px 5px;
+}
+
+#bcf-father-pin .current, #bcf-mother-pin .current, #bcf-marital-status .current {
+    padding: 13px 5px;
+}
+
+#current-year label, #current-month label, #current-day label, #new-year label, #new-month label, #new-day label {
+    float: left;
+    width: 57px;
+    padding: 10px 0 9px 0;
+    margin: -5px 0 0 0;
+}
+
+#new-year label, #new-month label, #new-day label {
+    margin-top: 0;
+}
+
+#current-year label, #new-year label {
+    border-left: none;
+}
+
+#current-year input, #current-month input, #current-day input {
+    float: left;
+    width: 62px;
+    margin: 15px 2px;
+}
+
+#new-year select, #new-month select, #new-day select {
+    float: left;
+    width: 62px;
+    margin: 15px 2px;
+}
+
+#bcf-gender {
+    border-top: 1px solid #000;
+}
+
+#new-dob {
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+    margin-left: 620px;
+    height: 35px;
+}
+
+#bcf-marital-status .new label {
+    display: none;
+}
+
+#bcf-marital-status .new .label {
+    float: left;
+    display: block;
+    width: 100px;
+    padding: 12px 0;
+}
+
+#bcf-marital-status .new #yes {
+    border-left: none;
+}
+
+#bcf-marital-status .new input {
+    float: left;
+    width: 50px;
+    margin: 25px 10px;
+}
+
+.disable, #brf-serial-no-and-date input, #last-date input {
+    background: none;
+    border: none;
+}
+
+/*
+* Page 2 (Form 2) of the Birth Confirmation Form.
+*/
+#bcf-child-current-name, #bcf-child-new-name, #bcf-child-current-name-in-english, #bcf-child-new-name-in-english, #bcf-father-current-name, #bcf-father-new-name, #bcf-mother-current-name, #bcf-mother-new-name {
+    border: 1px solid #000;
+    border-top: none;
+    height: 61px;
+}
+
+#bcf-child-current-name {
+    height: 95px;
+}
+
+#bcf-child-current-name label, #bcf-child-new-name label, #bcf-child-current-name-in-english label, #bcf-child-new-name-in-english label, #bcf-father-current-name label, #bcf-father-new-name label, #bcf-mother-current-name label, #bcf-mother-new-name label {
+    float: left;
+    width: 200px;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+    padding: 5px;
+}
+
+#bcf-child-current-name textarea, #bcf-child-new-name textarea, #bcf-child-current-name-in-english textarea, #bcf-child-new-name-in-english textarea, #bcf-father-current-name textarea, #bcf-father-new-name textarea, #bcf-mother-current-name textarea, #bcf-mother-new-name textarea {
+    width: 750px;
+    margin: 5px;
+}
+
+#bcf-child-current-name textarea {
+    margin-top: 20px;
+}
+
+/*
+* Page 3 (Form 3) of the Birth Confirmation Form.
+*/
+#office-use-only {
+    margin-top: 20px;
+}
+
+#birth-confirmation-form-outer #breaker {
+    margin-top: 15px;
+}
+
+#bcf-confirm-person-nic, #bcf-confirm-person-name, #bcf-confirm-person-certify, #bcf-added-to-civil-registration {
+    border: 1px solid #000;
+    border-top: none;
+    height: 107px;
+}
+
+#bcf-confirm-person-nic {
+    height: 56px;
+}
+
+#bcf-confirm-person-nic label, #bcf-confirm-person-name label {
+    float: left;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+    width: 200px;
+    padding: 2px 5px;
+}
+
+#bcf-confirm-person-nic label {
+    width: 600px;
+}
+
+#bcf-confirm-person-nic input {
+    width: 350px;
+    margin: 15px 5px;
+}
+
+#bcf-confirm-person-name textarea {
+    width: 750px;
+    margin: 30px 5px;
+}
+
+#bcf-confirm-person-certify {
+    height: 126px;
+}
+
+#bcf-added-to-civil-registration {
+    height: 247px;
+}
+
+#bcf-confirm-person-certify label, #bcf-added-to-civil-registration label {
+    float: left;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+    width: 200px;
+    padding: 2px 5px;
+}
+
+#bcf-confirm-person-certify-date label, #bcf-confirm-person-certify-signature label, #bcf-added-to-civil-registration-date label {
+    border-left: none;
+    border-right: 1px solid #000;
+    width: 200px;
+    padding: 6px 5px 5px 5px;;
+}
+
+#bcf-confirm-person-certify-date, #bcf-added-to-civil-registration-date {
+    border-bottom: 1px solid #000;
+    margin-left: 252px;
+    height: 62px;
+}
+
+#bcf-added-to-civil-registration-signature label {
+    padding-bottom: 130px;
+    border-left: none;
+}
+
+#bcf-confirm-person-certify-date input, #bcf-added-to-civil-registration-date input, #bcf-confirm-person-certify-signature input, #bcf-added-to-civil-registration-signature input {
+    width: 540px;
+    margin: 15px 5px;
+}
+
+/*
+*css for birth confirmation print
+*/
+#current-info-print label {
+    border-right: 0px solid #000000;
+}
+
+.current-print {
+    border: none;
+}
+
+/* Styles for the BirthDeclarationApprovalWarnings. */
+#bdaw-outer {
+    background: none;
+}
+
+#bdaw-content {
+    text-align: justify;
+    color: red;
+}
+
+/* Styles for the User Creation web form begins here. */
+#create-user-outer {
+    width: 1080px;
+    padding: 10px;
+}
+
+#create-user-outer div {
+    width: 1060px;
+}
+
+#create-user-outer div label {
+    float: left;
+}
+
+#create-user-outer div input, #create-user-outer div select {
+    width: 400px;
+}
+
+/* Styles for the User Creation web form ends here. */
+
+/*styles for birth declaration forms*/
+.table_reg_page_01, .table_reg_page_05 {
+    width: 1030px;
+    border: 1px solid #000000;;
+    border-right: none;
+    border-bottom: none;
+    font-size: 9pt;
+}
+
+.table_reg_page_05 td {
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    padding: 3px;
+    padding-left: 5px;
+}
+
+.table_reg_page_01 td {
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+}
+
+.table_reg_page_01 input {
+    margin: 5px
+}
+
+.table_reg_header_01 {
+    width: 1030px;
+    border: none;
+}
+
+.table_reg_datePicker_page_01 {
+    width: 300px;
+    border: 1px solid #000000;
+    margin: 10px
+}
+
+;
+.table_reg_page_01 td {
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+}
+
+.table_reg_page_01 textarea {
+    float: left;
+    width: 670px;
+    margin: 5px
+}
+
+.table_reg_cell_01 {
+    border: none;
+}
+
+.table_reg_cell_01  select {
+    float: left;
+    width: 590px;
+    margin: 2px 5px;
+}
+
+.table_alt_letter td {
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    padding: 3px;
+    padding-left: 5px;
+}
+
+#no-bottom-border {
+    border: none;
+}
+
+#table_reg_cell_01 select {
+    width: 250px;
+}
+
+.table_reg_page_01 .no-bottom-border {
+    border: none;
+}
+
+#table_reg_cell_01 #birthDivisionId {
+    float: right;
+}
+
+#left-right-border {
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+}
+
+#left-right-border label {
+    margin: 0 5px;
+    line-height: 30px;
+    float: left;
+    vertical-align: top;
+}
+
+.table_reg_page_01 .no-bottom-border select {
+    float: right;
+}
+
+/*styles for birth declaration form 02*/
+.table_reg_page_02 {
+    width: 1030px;
+    border: 1px solid #000000;;
+    border-right: none;
+    border-bottom: none;
+    font-size: 9pt;
+}
+
+.table_reg_page_02 td {
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+}
+
+.table_reg_page_02 textarea {
+    float: left;
+    margin: 15px 5px;
+    width: 800px;
+}
+
+.table_reg_page_02 input {
+    margin: 5px;
+}
+
+.table_reg_cell_02 {
+    border: none;
+}
+
+.table_reg_page_02 select {
+    float: left;
+    width: 250px;
+    margin: 2px 5px;
+}
+
+.table_reg_cell_02  select {
+    float: left;
+    width: 550px;
+    margin: 2px 5px;
+}
+
+/*styles for birth declaration form 03*/
+
+.table_reg_page_03 {
+    width: 1030px;
+    border: 1px solid #000000;;
+    border-right: none;
+    border-bottom: none;
+    font-size: 9pt;
+    margin-top: 15px
+}
+
+.table_reg_page_03 input {
+    margin: 5px
+}
+
+.table_reg_page_03 td {
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+}
+
+.table_reg_page_03 textarea {
+    float: left;
+    margin: 15px 5px;
+    width: 800px;
+}
+
+.table_reg_cell_03 {
+    border: none;
+}
+
+.table_reg_page_03 select {
+    float: left;
+    width: 250px;
+    margin: 2px 5px;
+}
+
+.table_reg_cell_03  select {
+    float: left;
+    width: 590px;
+    margin: 2px 5px;
+}
+
+.sub_table {
+    border: none;
+}
+
+.sub_table td {
+    border: none;
+}
+
+/*styles for birth declaration form 04*/
+
+.table_reg_page_04 {
+    border: 1px solid #000000;;
+    border-right: none;
+    border-bottom: none;
+    font-size: 9pt;
+}
+
+.table_reg_page_04 td {
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+}
+
+.table_reg_page_04 textarea {
+    float: left;
+    width: 700px;
+    margin: 5px
+}
+
+.table_reg_page_04 input {
+    margin: 5px;
+}
+
+.table_reg_cell {
+    border: none;
+}
+
+.table_reg_page_04 select {
+    float: left;
+    width: 250px;
+    margin: 2px 5px;
+}
+
+.table_reg_cell_04  select {
+    float: left;
+    width: 590px;
+    margin: 2px 5px;
+}
+
+/*styles for birth confirmation form 01*/
+.birth-confirmation-print-form-outer1,
+{
+    width: 1030px;
+    background: #ffffff;
+    padding: 10px;
+
+}
+
+.table_con_page_01 {
+    border: 1px solid #000000;;
+    border-right: none;
+    border-bottom: none;
+    font-size: 9pt;
+}
+
+.table_con_page_01 td {
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    padding: 3px;
+}
+
+.table_con_page_01 select, .table_con_page_01 input {
+    width: 95%;
+    margin: 2px 5px;
+}
+
+.table_con_page_01 input {
+    width: 93%;
+}
+
+.table_con_header_01 {
+    width: 1030px;
+    border: none;
+    margin-bottom: 15px;
+}
+
+.cell_01 {
+    width: 40px;
+}
+
+.cell_02 {
+    width: 300px;
+}
+
+.cell_03 {
+    width: 50px
+}
+
+;
+.cell_04 {
+    width: 100px
+}
+
+/*styles for birth confirmation form 02*/
+
+.table_con_page_02 {
+    width: 100%;
+    border: 1px solid #000000;;
+    border-right: none;
+    border-bottom: none;
+    font-size: 9pt;
+}
+
+.cell_001 {
+    width: 30px;
+    height: 150px;
+    text-align: center;
+}
+
+.cell_011 {
+    height: 60px;
+    width: 30px;
+    text-align: center;
+}
+
+.cell_012 {
+    width: 40px;
+    height: 200px;
+    text-align: center;
+}
+
+.table_con_page_02 td {
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+}
+
+.table_con_page_02 textarea {
+    width: 750px;
+}
+
+/*styles for birth confirmation form 03*/
+
+.table_con_page_03 {
+    width: 100%;
+    border: 1px solid #000000;;
+    border-right: none;
+    border-bottom: none;
+    font-size: 9pt;
+}
+
+.table_con_page_03 td {
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+}
+
+.table_con_page_03 textarea {
+    width: 750px;
+}
+
+/*Styyle for the Birth Confirmation  Print form*/
+
+.table_con_page2_table {
+    width: 100%;
+    border: 1px solid #000000;;
+    border-right: none;
+    border-bottom: none;
+    font-size: 9pt;
+    margin-bottom: 30px;
+    float: left;
+}
+
+.table_con_page2_table td {
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+}
+
+.table_con_page2_table textarea {
+    width: 750px;
+}
+
+/* Styles for the Birth Certificate begins here. */
+#birth-certificate-outer {
+    width: 1030px;
+    height: auto;
+    padding: 10px;
+    background: #fff;
+    font-size: 9pt;
+    font-family: Bhashitha2, Bhashitha2San;
+}
+
+#alteration-print-letter-outer {
+    width: 1030px;
+    height: auto;
+    padding: 10px;
+    background: #fff;
+    font-size: 9pt;
+    font-family: Bhashitha2, Bhashitha2San;
+}
+
+#birth-certificate-outer table {
+    font-size: 10pt;
+    font-family: Bhashitha2, Bhashitha2San;
+    margin-bottom: 10px;
+}
+
+#alteration-print-letter-outer table {
+    font-size: 10pt;
+    font-family: Bhashitha2, Bhashitha2San;
+    margin-bottom: 10px;
+}
+
+#birth-certificate-outer p {
+    font-size: 8pt;
+    font-family: Bhashitha2, Bhashitha2San;
+    text-align: center;
+    margin-top: -3px;
+    margin-bottom: 0;
+}
+
+#alteration-print-letter-outer p {
+    font-size: 8pt;
+    font-family: Bhashitha2, Bhashitha2San;
+    text-align: center;
+    margin-top: -3px;
+    margin-bottom: 0;
+}
+
+.bc-name {
+    font-size: 12pt;
+    font-family: Bhashitha2, Bhashitha2San;
+}
+
+#birth-certificate-outer .table-with-border {
+    width: 100%;
+    border: 1px solid #000;
+    border-collapse: collapse;
+}
+
+#alteration-print-letter-outer .table-with-border {
+    width: 100%;
+    border: 1px solid #000;
+    border-collapse: collapse;
+}
+
+/*Styles for Adoption Re-registration*/
+#adoption-registration-form-outer {
+    width: 1030px;
+    height: auto;
+    padding: 10px;
+    background: #fff;
+    font-size: 9pt;
+    font-family: Bhashitha2, Bhashitha2San;
+}
+
+#adoption-registration-form-outer table {
+    font-size: 10pt;
+    font-family: Bhashitha2, Bhashitha2San;
+    margin-bottom: 10px;
+}
+
+#adoption-registration-form-outer p {
+    font-size: 8pt;
+    font-family: Bhashitha2, Bhashitha2San;
+    text-align: center;
+    margin-top: -3px;
+    margin-bottom: 0;
+}
+
+#adoption-registration-form-outer .table-with-border {
+    width: 100%;
+    border: 1px solid #000;
+    border-collapse: collapse;
+}
+
+/*Styles for Adoption Certificate*/
+#adoption-certificate-form-outer {
+    width: 1030px;
+    height: auto;
+    padding: 10px;
+    background: #fff;
+    font-size: 9pt;
+    font-family: Bhashitha2, Bhashitha2San;
+}
+
+#adoption-certificate-form-outer table {
+    font-size: 10pt;
+    font-family: Bhashitha2, Bhashitha2San;
+    margin-bottom: 10px;
+}
+
+#adoption-certificate-form-outer p {
+    font-size: 8pt;
+    font-family: Bhashitha2, Bhashitha2San;
+    text-align: center;
+    margin-top: -3px;
+    margin-bottom: 0;
+}
+
+#adoption-certificate-form-outer .table-with-border {
+    width: 100%;
+    border: 1px solid #000;
+    border-collapse: collapse;
+}
+
+/*Styles for Birth Confirmation Page*/
+#birth-confirmation-print-form-outer-page {
+    width: 1030px;
+    height: auto;
+    padding: 10px;
+    background: #fff;
+    font-size: 9pt;
+    font-family: Bhashitha2, Bhashitha2San;
+}
+
+#birth-confirmation-print-form-outer-page table {
+    font-size: 10pt;
+    font-family: Bhashitha2, Bhashitha2San;
+    margin-bottom: 10px;
+}
+
+#birth-confirmation-print-form-outer-page p {
+    font-size: 8pt;
+    font-family: Bhashitha2, Bhashitha2San;
+    text-align: center;
+    margin-top: -3px;
+    margin-bottom: 0;
+}
+
+#birth-confirmation-print-form-outer-page .table-with-border {
+    width: 100%;
+    border: 1px solid #000;
+    border-collapse: collapse;
+}
+
+/* Styles for the user preferences. */
+
+#user-preference-outer table tr td select {
+    float: right;
+    width: 300px;
+}
+
+#user-preference-outer table tr td input {
+    text-transform: capitalize;
+}
+
+#user-preference-outer table tr td input:hover, #user-preference-outer table tr td a:hover {
+    color: darkred;
+}
+
+#birth-registration-form-2-outer table {
+    margin: 10px 0;
+}
+
+#uer-create-outer {
+    background-color: #ffffff;
+    width: 60em;
+    float: left;
+}
+
+.user-create-table {
+    width: 37em;
+    margin: 2em;
+}
+
+.user-create-table input {
+    width: 20em;
+    margin: .5em;
+    margin-left: 1.5em;
+}
+
+.user-create-table textarea {
+    width: 22.5em;
+    margin: .5em;
+    margin-left: 1.5em;
+}
+
+.user-create-table select {
+    width: 20em;
+    margin: .5em;
+    margin-left: 1.5em;
+}
+
+.view-users-table {
+    width: 1030px;
+}
+
+.view-users-table td {
+    border: none;
+}
+
+.view-users-table select {
+    width: 250px;
+}
+
+.find-person img {
+    width: 20px;
+    height: 20px;
+}
+
+.find-person img:hover {
+    width: 25px;
+    height: 25px;
+}
+
+.search-option-table {
+    width: 1030px;
+
+}
+
+.search-option-table select {
+    width: 230px;
+}
+
+.search-option-table input {
+    width: 230px;
+}
+
+.next-table {
+    background-image: url("")
+}
+
+/* style used to hide print button text in printed document */
+@media print {
+    .form-submit a {
+        display: none;
+    }
+}
+
+.birth-registration-form-details-warning-table {
+    margin-left: 50px;
+    font-size:11pt;
+    color:red;
+}
+
+.birth-registration-form-details-button-table {
+
+}
+
+/*css style for adoption registration pages*/
+#adoption-registration-home-outer {
+    width: 1030px;
+    padding: 10px;
+}
+
+#adoption-registration-form-outer {
+    width: 1030px;
+    background: #ffffff;
+    padding: 10px;
+    font-size: 9pt;
+}
+
+#adoption-certificate-form-outer {
+    width: 1030px;
+    background: #ffffff;
+    padding: 10px;
+    font-size: 9pt;
+}
+
+.adoption-form-submit {
+    margin: 10px 0 10px 5px;
+    text-transform: capitalize;
+    width: 112px;
+    height: 31px;
+    border: none;
+    float: right;
+    text-align: center;
+}
+
+.adoption-form-submit a {
+    text-decoration: none;
+    line-height: 30px;
+    color: #000;
+}
+
+.adoption-reg-form-header-table {
+    width: 100%;
+    border-left: none;
+    font-size: 12pt;
+    text-align: center;
+    margin-bottom: 10px;
+    padding-left: 10px;
+}
+
+.adoption-reg-form-01-table01 {
+    width: 100%;
+    border-left: 1px solid #000;
+    border-top: 1px solid #000;
+    margin-bottom: 10px;
+}
+
+.adoption-reg-form-01-table01 td {
+    padding-left: 5px;
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+    margin-bottom: 10px;
+}
+
+.adoption-reg-form-01-table01 textarea {
+    margin: 5px;
+    width: 97%;
+    margin-left: 5px;
+}
+
+.adoption-reg-form-01-table01 input {
+    margin: 5px;
+    width: 96%;
+}
+
+.adoption-reg-form-02-table01 {
+    width: 100%;
+    border-left: 1px solid #000;
+    border-top: 1px solid #000;
+    margin-bottom: 10px;
+}
+
+.adoption-reg-form-02-table01 td {
+    padding-left: 5px;
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+    margin-bottom: 10px;
+}
+
+.adoption-reg-form-02-table01 textarea {
+    margin: 5px;
+    width: 94%;;
+    margin-left: 5px;
+}
+
+.adoption-reg-form-02-table01 input {
+    margin: 5px;
+    width: 94%;
+}
+
+.adoption-reg-form-03-table01 {
+    width: 100%;
+    border-left: 1px solid #000;
+    border-top: 1px solid #000;
+    margin-bottom: 10px;
+}
+
+.adoption-reg-form-03-table01 td {
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+    margin-bottom: 10px;
+}
+
+.adoption-reg-form-03-table01 textarea {
+    margin: 5px;
+    width: 94%;;
+    margin-left: 10px;
+}
+
+.adoption-reg-form-03-table01 input {
+    margin: 5px;
+    width: 94%;;
+    margin-left: 10px;
+}
+
+#adoption-applicant-info-form-outer {
+    padding: 10px;
+    background: white;
+}
+
+#adoption-applicant-info-form-outer table tr td {
+    padding: 2px 5px;
+}
+
+/* Styles for the Death forms */
+#death-certificate-outer, #death-declaration-form-1-outer, #death-declaration-form-2-outer, #death-declaration-form-3-outer {
+    width: 1030px;
+    background: white;
+    padding: 10px;
+}
+
+#death-certificate-outer table, #death-declaration-form-1-outer table, #death-declaration-form-2-outer table, #death-declaration-form-3-outer table {
+    margin-bottom: 15px;
+}
+
+#death-declaration-form-1-outer table tr td {
+    padding: 2px 5px;
+}
+
+#death-declaration-form-1-outer #deathDistrictId, #death-declaration-form-1-outer #deathDsDivisionId, #death-declaration-form-1-outer #deathDivisionId {
+    width: 560px;
+}
+
+/*css class for late death registration*/
+#late-death-registrations-outer {
+    width: 1030px;
+    background: #ffffff;
+    padding: 10px;
+    font-size: 9pt;
+}
+
+.death-reg-header-table {
+    width: 1030px;
+    border: none;
+    font-size: 12pt;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.death-reg-header-table-02 {
+    width: 1030px;
+    border: none;
+    font-size: 10pt;
+    margin-bottom: 10px;
+}
+
+.death-late-reg-table {
+    width: 1030px;
+    font-size: 10pt;
+    border-top: 1px solid #000;
+    border-left: 1px solid #000;
+}
+
+.death-late-reg-table td {
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+}
+
+.death-late-reg-table input {
+    width: 75px;
+    float: right;
+    margin-right: 10px;
+}
+
+.death-late-reg-table textarea {
+    width: 96%;
+    float: right;
+    margin-right: 10px;
+}
+
+#death-declaration-form-2-outer table tr td {
+    padding: 2px 5px;
+}
+
+#death-declaration-form-2-outer table tr td textarea {
+    width: 98%;
+}
+
+#add-inactive-divisions-outer, #adoption-certificate-existing-certificate-info {
+    width: 1030px;
+}
+
+.add-inactive-divisions-outer-table, .adoption-certificate-existing-certificate-info {
+    width: 95%;
+    border-top: 1px solid #000;
+    border-left: 1px solid #000;
+}
+
+.add-inactive-divisions-outer-table td, .adoption-certificate-existing-certificate-info td {
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+    padding-left: 5px;
+}
+
+.add-inactive-divisions-outer-table select, .adoption-certificate-existing-certificate-info select {
+    width: 80%;
+    margin: 5px;
+}
+
+.add-inactive-divisions-outer-table input, .adoption-certificate-existing-certificate-info input {
+    width: 80%;
+    margin: 5px;
+    margin-left: 10px
+}
+
+.add-inactive-divisions-outer-table label {
+    width: 80%;
+}
+
+.add-inactive-divisions-outer-table textarea {
+    width: 80%;
+    margin-left: 10px;
+}
+
+#birth-alteration-outer {
+    width: 1030px;
+    background-color: #fff;
+    padding: 10px;
+    font-size: 9pt;
+}
+
+#death-alteration-outer {
+    width: 1030px;
+    background-color: #fff;
+    padding: 10px;
+    font-size: 8pt;
+}
+
+.birth-alteration-table-style01 {
+    border: none;
+}
+
+.
+death-alteration-table-style01 td {
+    border: none;
+}
+
+.birth-alteration-table-style01 {
+    border: none;
+}
+
+.
+death-alteration-table-style01 td {
+    border: none;
+}
+
+.birth-alteration-table-style02 {;
+    border-top: 1px solid #000;
+    border-left: 1px solid #000;
+    margin-top: 10px;
+}
+
+.birth-alteration-table-style02 td {
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+    padding: 3px;
+}
+
+.birth-alteration-table-style02 textarea {
+    width: 95%;
+    margin: 10px;
+}
+
+.birth-alteration-table-style02 input {
+    width: 85%;
+    margin: 10px;
+}
+
+.birth-alteration-table-style02 select {
+    width: 95%;
+    margin: 10px;
+}
+
+.birth-alteration-table-style02 label {
+    width: 95%;
+}
+
+.death-alteration-table-style02 {;
+    border-top: 1px solid #000;
+    border-left: 1px solid #000;
+    margin-top: 10px;
+}
+
+.death-alteration-table-style02 td {
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+    padding: 3px;
+}
+
+.death-alteration-table-style02 textarea {
+    width: 95%;
+    margin: 10px;
+}
+
+.death-alteration-table-style02 input {
+    width: 85%;
+    margin: 10px;
+}
+
+.death-alteration-table-style02 select {
+    width: 95%;
+    margin: 10px;
+}
+
+.death-alteration-table-style02 label {
+    width: 95%;
+}
+
+.birth-alteration-minimize-icon {
+    float: right;
+    width: 35px;
+    height: 26px;
+    border: none;
+    font-size: 12pt;
+    cursor: n-resize
+}
+
+.birth-alteration-maximize-icon {
+    float: right;
+    width: 35px;
+    height: 26px;
+    border: none;
+    font-size: 12pt;
+    cursor: s-resize
+}
+
+#alteration-approval-list-outer {
+    width: 1030px;
+    background-color: #fff;
+    padding: 10px;
+    font-size: 9pt;
+}
+
+.alteration-approval-list-table {
+    width: 98%;
+    border-top: 1px solid #000;
+    border-left: 1px solid #000;
+}
+
+.alteration-approval-list-table td {
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+    height: 40px;
+}
+
+.alteration-approval-list-table textarea {
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+    width: 95%
+}
+
+#birth-alteration-result-outer {
+    width: 1030px;
+}
+
+#birth-alteration-result-outer table {
+    width: 80%;
+    margin-left: 100px;
+    margin-top: 25px;
+}
+
+#user-locaton-outer table {
+    width: 80%;
+    border-top: 1px solid #000;
+    border-left: 1px solid #000;
+    margin-top: 20px;
+    height: 200px;
+}
+
+#user-locaton-outer td {
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+    width: 30%;
+    padding-left: 5px;
+}
+
+#user-locaton-outer input {
+    margin: 5px;
+}
+
+#user-locaton-outer select {
+    width: 45%;
+}
+
+.table_non_editable_reg_page {
+    width: 1030px;
+    border-top: 1px solid #000000;
+    border-left: 1px solid #000;
+    font-size: 9pt;
+}
+
+.table_non_editable_reg_page td {
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    padding: 3px;
+}
+
+.search-alteration-option-table {
+    width: 1030px;
+}
+
+.search-alteration-option-table select {
+    width: 230px
+}
+
+.search-alteration-option-table input {
+    width: 230px;
+}
+
+/*css for alert box
+todo amith
+*/
+.custome_alert {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 500px;
+    margin-left: -200px;
+    margin-top: -75px;
+    text-align: left;
+    background-color: #addef5;
+    color: #000000;
+    padding: 10px 30px;
+
+    opacity: 0.9;
+
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+}
+
+.custome_alert h6 {
+    font-weight: normal;
+    font-size: 28px;
+    line-height: 28px;
+    margin: 1em;
+}
+
+.custome_alert p {
+    font-size: 14px;
+    line-height: 20px;
+}
+
+
+
+

@@ -1,0 +1,112 @@
+# include text for tamil translation here
+
+* (No, but since married Tamil) இல்லை, பின் விவாகமானவர்கள் 
+* (Unmarried) திருமணமாகாதவர் 
+* (Married) திருமணமானவர் 
+* (Unknown) தெரியாது 
+
+*(Preferred Language for)சான்றிதழ் வழங்கப்பட வேண்டிய மொழி  
+*(The serial number of the existing Birth Certificate)தற்போதைய பிறப்புச்சான்றிதழின் தொடர் இலக்கம் 
+*(Late Birth Registration) தாமதித்த பிறப்புப் பதிவு
+*(Belated Birth Registration)காலங் கடந்த பிறப்புப் பதிவு 
+*(Case File Number)கோவை இலக்கம் 
+*(Add Comments)கருத்தினை தெரிவிக்கவும் 
+*(Hospital Admission Number) வைத்தியசாலை அனுமதி இலக்கம் 
+*(Hospital Admission Date)வைத்தியசாலையில் அனுமதித்த திகதி 
+*(Preferred Language for Death Certificate) இறப்புச் சான்றிதழ் வழங்கப்பட வேண்டிய மொழி
+*(Declaranat Signed Date)பிரதிக்கினையாளர் கையொப்பமிட்ட திகதி 
+
+* (Select Option)
+* (Signing Officer) உறுதிப்படுத்தும் அலுவலலர் 
+* (Select Place) இடத்தினை தெரிவு செய்க 
+* (Select Officer) அலுவலரை தெரிவு செய்க 
+* (Language) மொழி 
+* Birth and Death Certificate Search Pages(solr) not translated
+
+* (Registration of a person in the Population Registry) குடிமதிப்பு ஆவணத்தில் நபரினை பதிவு செய்தல்  
+*Male ஆண் 
+*Female பெண் 
+*Unknown தெரியாது 
+
+*Married திருமணமானவர் 
+*Unmarried திருமணமாகாதவர் 
+
+
+*Alive உயிருடன் 
+*Dead இறப்பு 
+*Missing காணாமல்போன  
+*Non resident  வதிவற்றவர் 
+
+*(Preferred Language for Person Registration Certificate) நபரின் பதிவிற்கான சான்றிதழினை வழங்கப்படவேண்டிய மொழி 
+*(Marriages Details not available.) திருமணம் சம்மந்தமான விபரங்கள் அறிக்கையிடப்படவில்லை 
+*(Citizenships and Passport Details not available.) வேறு நாட்டினது பிரஜாவுரிமை சம்பந்தமான விபரங்கள் இல்லை 
+
+
+
+* (Preferred Language for Person Registration Certificate )நபரின் பதிவிற்கான சான்றிதழினை வழங்கப்படவேண்டிய மொழி 
+Late registration,Normal Death காலங்கடந்த பதிவு, இயற்கை மரணம் 
+Late registration,Sudden Death  காலங்கடந்த பதிவு, திடீர்  மரணம் 
+Death of missing person காணாமற் போன நபரின் இறப்பு
+
+කාලය ඉකුත් වූ මරණ(සාමාන්‍ය මරණ)  காலந் தாழ்த்திய இறப்பு ( சாதாரண மரணம்)
+කාලය ඉකුත් වූ මරණ(හදිසි මරණ )  காலந் தாழ்த்திய இறப்பு ( திடீர்  மரணம்)
+You can apply for a new death certificate with altered value தங்களால் புதிய மரணச்சான்றிதழினை மாற்றங்களுடன் பெற விண்ணப்பிக்க முடியும் 
+
+# following in LifeStatusUtil class
+* ජීවතුන් අතර ඇත (Alive) உயிருடன் உள்ளார் 
+* ජීවතුන් අතර නැත  (Dead) உயிருடன் இல்லை 
+* අතුරුදන්(Missing) காணாமற் போன 
+* පදිංචිව නැත (Non resident) வதிவற்றவர் 
+
+# following in DeathTypeUtil class
+* සාමාන්‍ය මරණ/Normal Death சாதாரண மரணம் 
+* හදිසි මරණ/Sudden Death திடீர் மரணம் 
+* කාලය ඉකුත් වූ සාමාන්‍ය මරණ /Late registration,Normal Death காலங்கடந்த சாதாரண மரணம் 
+* කාලය ඉකුත් වූ හදිසි මරණ/Late registration,Sudden Death காலங்கடந்த திடீர் மரணம் 
+* නැතිවුණු පුද්ගලයෙකුගේ මරණ/Death of missing person காணாமற் போன நபரின் மரணம் 
+
+# following in AssignmentUtil class
+* උපත්(Birth) பிறப்பு 
+* මරණ (Death) இறப்பு 
+* සාමාන්‍ය විවාහ(General Marriage) பொது விவாகம் 
+* උඩරට විවාහ (Kandyan Marriage) கண்டிய விவாகம் 
+* මුස්ලිම් විවාහ(Muslim Marriage) முஸ்லிம் விவாகம் 
+
+* උප්පැන්න සහතිකය නිකුත් කල යුතු භාෂාව (Preferred Language for Birth Certificate) பிறப்புச் சான்றிதழ் வழங்கப்பட வேண்டிய  மொழி 
+
+normal death registration சாதாரண இறப்புப்பதிவு 
+late death registration காலங்கடந்த இறப்புப்பதிவு 
+sudden death registration திடீர் இறப்புப் பதிவு 
+missing death registration காணாமற் போன நபரின் இறப்புப்பதிவு 
+
+Type of Marriage Place / திருமண நிகழ்விடத்தின் வகை 
+Scanned Image of Marriage Certificate
+
+general marriage / பொது 
+Kandyan binna / கண்டிய  பின்ன 
+kandyan deega/ கண்டிய தீக 
+Muslim/ முஸ்லிம்
+
+Registrars Office/ பதிவாளர் அலுவலகம் 
+DS Office  / பிரதேச செயலகம் 
+Church / தேவாலயம் 
+Other / வேறு 
+
+Effective Date of Divorce / விவாகரத்து செல்லுபடியகும் திகதி 
+Comments / கருத்து 
+State/ நிலவரம் 
+දික්කසාදය සිදුකල නිලධාරියා விவாகரத்தினை நடாத்திய அதிகாரி 
+Name, Signature and Designation of the officer விவாகரத்தினை நடாத்திய அதிகாரியின் பெயரும் முகவரியும்  
+Date of Divorce/ விவாகரத்தினை நடாத்திய திகதி 
+Effective Date of Divorce/ விவாகரத்து செல்லுபடியகும் திகதி
+Divorce Certificate /  விவாகரத்துச்சான்றிதழ் 
+
+Marriage License Search / திருமண  உத்தரவுப்பத்திரம் தேடுதல்.
+
+Person Registration Management
+MARRIAGE REGISTRATION
+Marriage Notice
+Marriage Register Search
+Marriage License Search
+Marriage Registration
+Search Notice
