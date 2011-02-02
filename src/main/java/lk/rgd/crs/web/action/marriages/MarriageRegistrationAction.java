@@ -518,9 +518,16 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     public String marriageRegistrationInit() {
         editMode = true;
         populateLists();
+
+       /* if ("register".equals(mode) && idUKey == 0) {
+            return ERROR;
+        }   */
+        
         if (idUKey != 0) {
             //todo : enable edit mode if idukey available
             marriage = marriageRegistrationService.getByIdUKey(idUKey, user);
+
+            //todo : on register mode if state != MarriageRegister.State.LICENSE_PRINTED return error
 
             if (marriage != null && marriage.getState() == MarriageRegister.State.LICENSE_PRINTED) {
                 //todo: set editmode false if marriage is on license printed (registration) state

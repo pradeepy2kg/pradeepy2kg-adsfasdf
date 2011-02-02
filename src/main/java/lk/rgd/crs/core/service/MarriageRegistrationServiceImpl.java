@@ -139,14 +139,27 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.SUPPORTS)
+    public MarriageRegister getMarriageLicenseByIdUKeyAndState(long idUKey, User user, int permission) {
+        ValidationUtils.validateUserPermission(permission, user);
+
+        EnumSet<MarriageRegister.State> stateList = StateUtil.getMarriageRegisterStateList(MarriageRegister.State.LICENSE_PRINTED);
+
+        MarriageRegister marriageRegister = marriageRegistrationDAO.getMarriageRegisterByIdUKeyAndState(idUKey, stateList);
+
+        return marriageRegister;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
     public MarriageRegister getMarriageRegisterByIdUKeyAndState(long idUKey, User user, int permission) {
         ValidationUtils.validateUserPermission(permission, user);
 
         EnumSet<MarriageRegister.State> stateList = StateUtil.getMarriageRegisterStateList(null);
-        stateList.add(MarriageRegister.State.LICENSE_PRINTED);
 
         MarriageRegister marriageRegister = marriageRegistrationDAO.getMarriageRegisterByIdUKeyAndState(idUKey, stateList);
-        if (marriageRegister != null && marriageRegister.getState() != MarriageRegister.State.LICENSE_PRINTED) {
+        if (marriageRegister != null) {
             ValidationUtils.validateUserAccessToDSDivision(marriageRegister.getMrDivision().getDsDivision().getDsDivisionUKey(), user);
         }
         return marriageRegister;
