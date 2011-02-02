@@ -1442,6 +1442,7 @@
                 method="updateAndApproveMuslimMarriage">
             <result type="tiles" name="success">epr.success</result>
             <result type="tiles" name="input">epr.marriageRegistration</result>
+            <result type="tiles" name="warning">epr.marriageRegisterWarnings</result>
         </action>
 
         <action name="eprRegisterNoticedMarriage" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
@@ -1594,13 +1595,22 @@
                 method="approveMarriageRegister">
             <result type="tiles" name="success">epr.marriageRegisterSearchInit</result>
             <result type="tiles" name="error">epr.marriageRegisterSearchInit</result>
+            <result type="tiles" name="warning">epr.marriageRegisterWarnings</result>
+        </action>
+
+        <action name="eprBackMarriageRegisterSearch"
+                class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
+                method="backMarriageRegisterSearch">
+            <result type="tiles" name="success">epr.marriageRegisterSearchInit</result>
         </action>
 
         <action name="eprRegisterAndApproveNewMarriage"
                 class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
                 method="registerAndApproveNewMarriage">
+            <param name="register">true</param>
             <result type="tiles" name="success">epr.success</result>
             <result type="tiles" name="input">epr.marriageRegistration</result>
+            <result type="tiles" name="warning">epr.marriageRegisterWarnings</result>
         </action>
 
         <action name="eprRejectMarriageRegistration"

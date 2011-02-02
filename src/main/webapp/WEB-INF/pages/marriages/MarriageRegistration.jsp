@@ -36,9 +36,12 @@
 
         errormsg = validateSerialNo("serialNumber", "errorSerialNumber", errormsg);
 
+        errormsg = validateRegisterAndMarriedDate(errormsg);
+
         return printErrorMessages(errormsg);
     }
 
+    // validate date of marriage and date of registration
     function validateRegistrationDetails(errormsg) {
         errormsg = isDate("marriageDatePick", "errorMarriageDate", errormsg);
         //validate registrar details
@@ -50,6 +53,17 @@
         var editMode = document.getElementById("editMode").value;
         if (editMode == "false") {
             errormsg = validateEmptyField("scannedImage", "errorscannedImage", errormsg);
+        }
+        return errormsg;
+    }
+
+    function validateRegisterAndMarriedDate(errormsg) {
+        var married = new Date(document.getElementById('marriageDatePick').value);
+        var register = new Date(document.getElementById('registrationDatePicker').value);
+
+        if(married.getTime() > register.getTime()) {
+        alert("AAAAAAAAAAAAAAA");
+            errormsg = errormsg + "\n" + document.getElementById('errorMarriedRegisterDate').value;
         }
         return errormsg;
     }
@@ -750,5 +764,6 @@
 
 <s:hidden id="errorscannedImage"
           value="%{getText('error.invalid') + getText('error.js.marriageregister.scannedImage')}"/>
+<s:hidden id="errorMarriedRegisterDate" value="%{getText('error.dateOfMarriage.with.registerDate')}"/>
 
 </div>

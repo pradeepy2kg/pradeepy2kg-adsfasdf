@@ -568,6 +568,14 @@
         <put-attribute name="title" value="title.marriage.register.search"/>
     </definition>
 
+    <definition name="epr.marriageRegisterWarnings" extends="epr.template">
+        <description>
+            warnings list page after approve marriage register with warnings
+        </description>
+        <put-attribute name="body" value="/WEB-INF/pages/marriages/MarriageRegisterWarnings.jsp"/>
+        <put-attribute name="title" value="title.marriage.register.warnings"/>
+    </definition>
+
     <definition name="epr.marriageLicenseSearchInit" extends="epr.template">
         <description>
             marriage license search jsp page

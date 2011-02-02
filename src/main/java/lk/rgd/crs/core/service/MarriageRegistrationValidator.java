@@ -7,10 +7,7 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.MarriageRegistrationDAO;
-import lk.rgd.crs.api.domain.MRDivision;
-import lk.rgd.crs.api.domain.MarriageNotice;
-import lk.rgd.crs.api.domain.MarriageRegister;
-import lk.rgd.crs.api.service.MarriageRegistrationService;
+import lk.rgd.crs.api.domain.*;
 import lk.rgd.prs.api.domain.Person;
 import lk.rgd.prs.api.service.PopulationRegistry;
 import org.slf4j.Logger;
@@ -110,14 +107,79 @@ public class MarriageRegistrationValidator {
     }
 
     /**
+     * Validate marriage register and return appropriate warnings list
+     *
+     * @param mr   the marriage register to be validated
+     * @param user the user performing the action
+     * @return a list of warnings issued against the marriage register
+     */
+    public List<UserWarning> validateWarningsOfMarriageRegister(MarriageRegister mr, User user) {
+        List<UserWarning> warnings = new ArrayList<UserWarning>();
+
+        // select locale for user
+        ResourceBundle rb = rb_en;
+        if (AppConstants.SINHALA.equals(user.getPrefLanguage())) {
+            rb = rb_si;
+        } else if (AppConstants.TAMIL.equals(user.getPrefLanguage())) {
+            rb = rb_ta;
+        }
+
+        // check pin or nic duplicates in marriage register
+        checkPinOrNicDuplicates(mr, warnings, rb);
+
+        return warnings;
+    }
+
+    /**
      * Validate minimum requirements of marriage register
      *
-     * @param marriageRegister the marriage register to be validated
+     * @param mr the marriage register to be validated
      */
-    public void validateMinimalRequirementsOfMarriageRegister(MarriageRegister marriageRegister) {
+    public void validateMinimalRequirementsOfMarriageRegister(MarriageRegister mr) {
         logger.debug("Validate marriage register for minimal requirements");
+        MaleParty male = mr.getMale();
+        FemaleParty female = mr.getFemale();
+        final boolean condition = mr.getDateOfMarriage() == null || mr.getRegistrarOrMinisterPIN() == null ||
+            mr.getTypeOfMarriagePlace() == null || mr.getMrDivision() == null || mr.getRegPlaceInOfficialLang() == null ||
+            mr.getRegNameInOfficialLang() == null || mr.getTypeOfMarriage() == null || male.getAgeAtLastBirthDayMale() == 0 ||
+            male.getMaleRace() == null || male.getCivilStatusMale() == null || male.getNameInOfficialLanguageMale() == null ||
+            male.getResidentAddressMaleInOfficialLang() == null || female.getAgeAtLastBirthDayFemale() == 0 ||
+            female.getFemaleRace() == null || female.getCivilStatusFemale() == null ||
+            female.getNameInOfficialLanguageFemale() == null || female.getResidentAddressFemaleInOfficialLang() == null ||
+            mr.getSerialNumber() == 0 || mr.getRegistrationDate() == null || mr.getScannedImagePath() == null;
 
-        // TODO  validate minimum requirements
+        if (condition) {
+            final long serialNo = mr.getSerialNumber();
+            if (serialNo >= 2010000001L && serialNo <= 2099199999L) {
+
+                String s = Long.toString(serialNo);
+                if (!s.matches(SERIAL_NUMBER_PATTERN)) {
+                    handleException("Marriage register being processed is invalid, Check serial number : " + s,
+                        ErrorCodes.INVALID_DATA);
+                }
+            } else {
+                handleException("Marriage register being processed is incomplete, Check required fields values of record : "
+                    + mr.getIdUKey(), ErrorCodes.INVALID_DATA);
+            }
+        }
+    }
+
+    private final void checkPinOrNicDuplicates(MarriageRegister mr, List<UserWarning> warnings, ResourceBundle rb) {
+        final String malePin = mr.getMale().getIdentificationNumberMale();
+        final String femalePin = mr.getFemale().getIdentificationNumberFemale();
+
+        checkDuplicatePinOrNic(malePin, femalePin, warnings, rb, "duplicate_male_female_pin");
+    }
+
+    private final void checkDuplicatePinOrNic(final String s1, final String s2, final List<UserWarning> warnings,
+        ResourceBundle rb, String key) {
+        try {
+            if (s1.equals(s2)) {
+                warnings.add(new UserWarning(MessageFormat.format(rb.getString(key), s1)));
+            }
+        } catch (NullPointerException expected) {
+            // since pin or nic(s1) can be null
+        }
     }
 
     private void validateSerialNumber(long serialNumber, MRDivision mrDivision) {
@@ -173,6 +235,7 @@ public class MarriageRegistrationValidator {
             rb = rb_ta;
         }
         validateAgeAtLastBirthDay(existing, type, warning, rb);
+        checkPinOrNicDuplicates(existing, warning, rb);
         return warning;
     }
 
