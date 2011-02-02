@@ -229,7 +229,11 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     public String markMarriageExtractAsPrinted() {
         MarriageRegister marriageRegister = marriageRegistrationService.getMarriageRegisterByIdUKey(idUKey, user,
             Permission.PRINT_MARRIAGE_EXTRACT);
-        if (marriageRegister != null && marriageRegister.getState() == MarriageRegister.State.EXTRACT_PRINTED) {
+
+        if (marriageRegister != null &&
+            (marriageRegister.getState() == MarriageRegister.State.EXTRACT_PRINTED ||
+                marriageRegister.getState() == MarriageRegister.State.DIVORCE ||
+                marriageRegister.getState() == MarriageRegister.State.DIVORCE_CERT_PRINTED)) {
             addActionMessage(getText("message.marriagerextract.alreadymarkedasprinted"));
             return SUCCESS;
         } else {
@@ -239,7 +243,20 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
                     getLocation(licensePrintedLocationId), userDAO.getUserByPK(licenseIssuedUserId), user);
             }
             catch (CRSRuntimeException e) {
-                addActionError(getText("message.marriagerextract.markasprintedfailed"));
+                switch (e.getErrorCode()) {
+                    case ErrorCodes.MARRIAGE_REGISTER_NOT_FOUND:
+                        addActionError(getText("error.marriageregister.notfound"));
+                        break;
+                    case ErrorCodes.INVALID_STATE_OF_MARRIAGE_REGISTER:
+                        addActionError(getText("error.marriageregister.invalidstate"));
+                        break;
+                    case ErrorCodes.PERMISSION_DENIED:
+                        addActionError(getText("message.permissiondenied"));
+                        break;
+
+                    default:
+                        addActionError(getText("message.marriagerextract.markasprintedfailed"));
+                }
                 return ERROR;
             }
         }
