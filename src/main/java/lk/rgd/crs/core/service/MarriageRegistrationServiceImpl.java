@@ -862,7 +862,29 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         } else {
             if (register.getState() == MarriageRegister.State.REGISTRATION_APPROVED) {
                 ValidationUtils.validateUserAccessToDSDivision(register.getMrDivision().getDsDivision().getDsDivisionUKey(), user);
-                setMarriageExtractPrintingDetails(register, issuedUser, issuedLocation);
+                setMarriageExtractPrintingDetails(register, issuedUser, issuedLocation, MarriageRegister.State.EXTRACT_PRINTED);
+                marriageRegistrationDAO.updateMarriageRegister(register, user);
+            } else {
+                handleException("Invalid state of marriage register - idUKey :" + idUKey + " Current State is " +
+                    register.getState(), ErrorCodes.INVALID_STATE_OF_MARRIAGE_REGISTER);
+            }
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void markDivorceExtractAsPrinted(long idUKey, Location issuedLocation, User issuedUser, User user) {
+        ValidationUtils.validateUserPermission(Permission.PRINT_MARRIAGE_EXTRACT, user);
+        MarriageRegister register = marriageRegistrationDAO.getByIdUKey(idUKey);
+        if (register == null) {
+            handleException("Marriage Register could not be found - idUKey : "
+                + idUKey, ErrorCodes.MARRIAGE_REGISTER_NOT_FOUND);
+        } else {
+            if (register.getState() == MarriageRegister.State.DIVORCE) {
+                ValidationUtils.validateUserAccessToDSDivision(register.getMrDivision().getDsDivision().getDsDivisionUKey(), user);
+                setMarriageExtractPrintingDetails(register, issuedUser, issuedLocation, MarriageRegister.State.DIVORCE_CERT_PRINTED);
                 marriageRegistrationDAO.updateMarriageRegister(register, user);
             } else {
                 handleException("Invalid state of marriage register - idUKey :" + idUKey + " Current State is " +
@@ -889,23 +911,24 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     /**
      * Adding certifying user and location to the extract of marriage
      *
-     * @param register
+     * @param marriageRegister
      * @param issuingUser
      * @param issuingLocation
      */
-    private void setMarriageExtractPrintingDetails(MarriageRegister register, User issuingUser, Location issuingLocation) {
+    private void setMarriageExtractPrintingDetails(MarriageRegister marriageRegister, User issuingUser,
+        Location issuingLocation, MarriageRegister.State state) {
         if (issuingLocation == null) {
             handleException("Invalid issuing location " + issuingLocation,
-                ErrorCodes.INVALID_USER_ON_CERTIFYING_MARRIAGE_EXTRACT);
+                ErrorCodes.INVALID_LOCATION_ON_ISSUING_MARRIAGE_EXTRACT);
         } else if (issuingUser == null) {
             handleException("Invalid certifying user " + issuingUser,
                 ErrorCodes.INVALID_USER_ON_CERTIFYING_MARRIAGE_EXTRACT);
         } else {
-            register.setState(MarriageRegister.State.EXTRACT_PRINTED);
+            marriageRegister.setState(state);
             checkUserPermissionForTheLocation(issuingUser, issuingLocation);
-            register.setExtractCertifiedUser(issuingUser);
-            register.setExtractIssuedLocation(issuingLocation);
-            register.setExtractPrintedTimestamp(new GregorianCalendar().getTime());
+            marriageRegister.setExtractCertifiedUser(issuingUser);
+            marriageRegister.setExtractIssuedLocation(issuingLocation);
+            marriageRegister.setExtractPrintedTimestamp(new GregorianCalendar().getTime());
         }
     }
 
