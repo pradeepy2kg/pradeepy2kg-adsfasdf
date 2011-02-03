@@ -472,4 +472,15 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
         q.setParameter("mrDivision", mrDivision);
         return q.getResultList();
     }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<MarriageRegister> getUnUsedMarriageNotices(Date date) {
+        Query q = em.createNamedQuery("filter.by.unused.marriage.notice.date");
+        q.setParameter("date", date);
+        q.setParameter("state", MarriageRegister.State.LICENSE_PRINTED);
+        return q.getResultList();
+    }
 }
