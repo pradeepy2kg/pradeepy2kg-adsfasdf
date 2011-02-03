@@ -250,6 +250,7 @@
                    style="font-size:10pt;">
                 <thead>
                 <tr>
+                    <th width="70px"><s:label value="%{getText('label.marriageregister.number')}"/></th>
                     <th width="70px"><s:label value="%{getText('serial.label')}"/></th>
                     <th><s:label value="%{getText('label.marriageregister.nameofmale')}"/></th>
                     <th><s:label value="%{getText('label.marriageregister.nameoffemale')}"/></th>
@@ -259,6 +260,9 @@
                 <tbody>
                 <s:iterator status="approvalStatus" value="marriageRegisterSearchList">
                     <tr>
+                        <td align="center">
+                                <s:property value="idUKey"/>
+                        </td>
                         <td align="center">
                             <s:if test="serialNumber==0">
                                 &nbsp;
@@ -374,13 +378,13 @@
                                 </s:a>
                             </s:if>
                             <s:if test="state.ordinal()==12 || state.ordinal()==13">
-                                    <s:url id="printDivorceExtract" action="eprDivorceExtractInit.do">
-                                        <s:param name="idUKey" value="idUKey"/>
-                                        <s:param name="mode">print</s:param>
-                                    </s:url>
-                                    <s:a href="%{printDivorceExtract}" title="%{getText('tooltip.divorceextract.print')}">
-                                        <img src="<s:url value='/images/print_icon_red.jpg'/>" border="none" height="25"/>
-                                    </s:a>
+                                <s:url id="printDivorceExtract" action="eprDivorceExtractInit.do">
+                                    <s:param name="idUKey" value="idUKey"/>
+                                    <s:param name="mode">print</s:param>
+                                </s:url>
+                                <s:a href="%{printDivorceExtract}" title="%{getText('tooltip.divorceextract.print')}">
+                                    <img src="<s:url value='/images/print_icon_red.jpg'/>" border="none" height="25"/>
+                                </s:a>
                             </s:if>
                         </td>
                     </tr>
