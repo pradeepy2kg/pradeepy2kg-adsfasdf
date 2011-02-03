@@ -230,8 +230,6 @@ public class MarriageRegister implements Serializable, Cloneable {
     @Column(name = "REG_MIN_PIN")
     private String registrarOrMinisterPIN;
 
-    //TODO: colum name - to be renamed to SERIAL_NUMBER
-    //TODO: convert to integer
     @Column(length = 10, name = "REG_SERIAL", nullable = true)
     private long serialNumber;
 

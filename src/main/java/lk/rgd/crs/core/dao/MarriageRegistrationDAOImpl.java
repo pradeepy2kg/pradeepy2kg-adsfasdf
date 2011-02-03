@@ -343,7 +343,7 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
         query.append("AND mr.lifeCycleInfo.activeRecord IS TRUE ORDER BY mr.idUKey DESC");
 
         Query q = em.createQuery(query.toString());
-        q.setParameter("serialNumber", Long.toString(serialNumber));
+        q.setParameter("serialNumber", serialNumber);
         q.setParameter("stateList", stateList);
         if (dsDivisionList != null) {
             q.setParameter("dsDivisionList", dsDivisionList);
