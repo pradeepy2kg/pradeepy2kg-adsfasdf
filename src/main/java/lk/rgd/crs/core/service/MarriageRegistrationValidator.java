@@ -125,7 +125,11 @@ public class MarriageRegistrationValidator {
         }
 
         // check pin or nic duplicates in marriage register
-        checkPinOrNicDuplicates(mr, warnings, rb);
+        final String malePin = mr.getMale().getIdentificationNumberMale();
+        final String femalePin = mr.getFemale().getIdentificationNumberFemale();
+        if (malePin != null && femalePin != null) {
+            checkDuplicatePinOrNic(malePin, femalePin, warnings, rb, "duplicate_male_female_pin");
+        }
 
         return warnings;
     }
@@ -164,11 +168,18 @@ public class MarriageRegistrationValidator {
         }
     }
 
-    private final void checkPinOrNicDuplicates(MarriageRegister mr, List<UserWarning> warnings, ResourceBundle rb) {
+    private final void checkPinOrNicDuplicatesOfMarriageNotice(MarriageRegister mr, List<UserWarning> warnings,
+        ResourceBundle rb) {
         final String malePin = mr.getMale().getIdentificationNumberMale();
         final String femalePin = mr.getFemale().getIdentificationNumberFemale();
+        final String fatherMalePin = mr.getMale().getFatherIdentificationNumberMale();
+        final String fatherFemalePin = mr.getFemale().getFatherIdentificationNumberFemale();
 
         checkDuplicatePinOrNic(malePin, femalePin, warnings, rb, "duplicate_male_female_pin");
+        checkDuplicatePinOrNic(malePin, fatherMalePin, warnings, rb, "duplicate_male_fatherMale_pin");
+        checkDuplicatePinOrNic(malePin, fatherFemalePin, warnings, rb, "duplicate_male_fatherFemale_pin");
+        checkDuplicatePinOrNic(femalePin, fatherMalePin, warnings, rb, "duplicate_female_fatherMale_pin");
+        checkDuplicatePinOrNic(femalePin, fatherFemalePin, warnings, rb, "duplicate_female_fatherFemale_pin");
     }
 
     private final void checkDuplicatePinOrNic(final String s1, final String s2, final List<UserWarning> warnings,
@@ -235,7 +246,7 @@ public class MarriageRegistrationValidator {
             rb = rb_ta;
         }
         validateAgeAtLastBirthDay(existing, type, warning, rb);
-        checkPinOrNicDuplicates(existing, warning, rb);
+        checkPinOrNicDuplicatesOfMarriageNotice(existing, warning, rb);
         return warning;
     }
 
