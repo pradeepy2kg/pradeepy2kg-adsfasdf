@@ -172,9 +172,9 @@
                 <col width="225px"/>
                 <col width="225px"/>
                 <tr>
-                    <td>අනුක්‍රමික අංකය <br>
-                        தொடர் இலக்கம் <br>
-                        Serial Number
+                    <td> ලියාපදිංචි අංකය<br>
+                        பெறப்பட்ட இலக்கம்<br>
+                        Registration Number
                     </td>
                     <td align="center">
                         <s:label id="serialNumber" value="%{marriage.idUKey}"/>
