@@ -51,7 +51,7 @@
         <col width="200px"/>
         <col/>
         <tbody>
-        <s:form action="eprMarkMarriageExtractAsPrinted.do" method="post">
+        <s:form action="eprMarkDivorceExtractAsPrinted.do" method="post">
        <%-- <s:if test="marriage.state.ordinal()!=12">  --%>
             <tr>
                 <td colspan="3">

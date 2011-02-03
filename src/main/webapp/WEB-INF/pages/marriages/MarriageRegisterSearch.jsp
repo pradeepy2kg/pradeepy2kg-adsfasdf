@@ -379,7 +379,7 @@
                                         <s:param name="mode">print</s:param>
                                     </s:url>
                                     <s:a href="%{printDivorceExtract}" title="%{getText('tooltip.divorceextract.print')}">
-                                        <img src="<s:url value='/images/print_icon.gif'/>" border="none" height="25"/>
+                                        <img src="<s:url value='/images/print_icon_red.jpg'/>" border="none" height="25"/>
                                     </s:a>
                             </s:if>
                         </td>
