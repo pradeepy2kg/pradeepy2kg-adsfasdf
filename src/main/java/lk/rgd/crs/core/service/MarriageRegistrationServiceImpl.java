@@ -404,7 +404,6 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
                     logger.debug("attempt to roll back notice : idUKey " + notice.getIdUKey() + "state to " +
                         "previous state : current state : " + notice.getState());
                 }
-                //todo is it more use full if this hardcoded remove ?? amith
                 notice.setState(MarriageRegister.State.DATA_ENTRY);
                 //updating the marriage register object
                 marriageRegistrationDAO.updateMarriageRegister(notice, user);
@@ -579,7 +578,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         //if current state is NOTICE_APPROVED that mean we approved single notice or we are approving second notice(license
         // collect party) when notice become NOTICE_APPROVE it eligible for printing License so we have to validate
         // that marriage in this evens as well
-        /*   if (existingNotice.getState() == MarriageRegister.State.NOTICE_APPROVED) {
+        /*    if (existingNotice.getState() == MarriageRegister.State.NOTICE_APPROVED) {
             warnings = marriageRegistrationValidator.checkUserWarningsForSecondNoticeApproval(existingNotice, user);
             return warnings;
         }*/

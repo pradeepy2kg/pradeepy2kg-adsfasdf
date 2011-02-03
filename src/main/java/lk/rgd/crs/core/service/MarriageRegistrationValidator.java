@@ -8,6 +8,7 @@ import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.MarriageRegistrationDAO;
 import lk.rgd.crs.api.domain.*;
+import lk.rgd.prs.api.domain.Marriage;
 import lk.rgd.prs.api.domain.Person;
 import lk.rgd.prs.api.service.PopulationRegistry;
 import org.slf4j.Logger;
@@ -259,7 +260,243 @@ public class MarriageRegistrationValidator {
             rb = rb_ta;
         }
         checkSamePinNumber(existing, warning, rb);
+        prohibitedRelationship(existing, warning, rb, user);
         return warning;
+    }
+
+    private void checkIllegalMarriage() {
+        //todo implement
+    }
+    //check age again
+    //check previouse marriages
+    //prohibited relationships
+
+    //todo One party is a grandchild of a sibling of the other party
+    // todo One party was the spouse of a deceased grandchild of the other party
+    //todo implement PRS method for find grand children
+
+    private boolean prohibitedRelationship(MarriageRegister register, List<UserWarning> userWarnings,
+        ResourceBundle rb, User user) {
+        final Person bride = populationRegistry.findPersonByPIN(Long.
+            parseLong(register.getFemale().getIdentificationNumberFemale()), user);
+        final Person groom = populationRegistry.findPersonByPIN(Long.
+            parseLong(register.getMale().getIdentificationNumberMale()), user);
+
+        final Person bridesFather = populationRegistry.findUniquePersonByPINorNIC(bride.getFatherPINorNIC(), user);
+        final Person bridesMother = populationRegistry.findUniquePersonByPINorNIC(bride.getMotherPINorNIC(), user);
+        final Person groomsFather = populationRegistry.findUniquePersonByPINorNIC(groom.getFatherPINorNIC(), user);
+        final Person groomsMother = populationRegistry.findUniquePersonByPINorNIC(groom.getFatherPINorNIC(), user);
+        final List<Person> groomsGrandFathers = populationRegistry.findGrandFather(groom, user);
+        final List<Person> bridesGrandMothers = populationRegistry.findGrandMother(bride, user);
+        final List<Person> bridesChildren = populationRegistry.findAllChildren(bride, user);
+        final List<Person> groomsChildren = populationRegistry.findAllChildren(groom, user);
+        boolean prohibited = false;
+
+        //One party is a child of the other party
+        //check is  bride is daughter of groom
+        //get all available children of the groom
+        List<Person> groomChildren = populationRegistry.findAllChildren(groom, user);
+        for (Person p : groomChildren) {
+            if ((Long.parseLong(register.getFemale().getIdentificationNumberFemale()) == p.getPin()) && p.getGender() == 1) {
+                //this means bride is a child of a groom
+                userWarnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.prohibited.relation.bride.is.daughter.of.groom"), bride.getPin(), p.getPin()),
+                    UserWarning.Severity.ERROR));
+                prohibited = true;
+                break;
+            }
+        }
+        logger.debug("check prohibited relationship :'bride is daughter of groom' :{}", prohibited);
+        //check is groom is sun of bride
+        List<Person> brideChildren = populationRegistry.findAllChildren(bride, user);
+        for (Person p : brideChildren) {
+            if ((Long.parseLong(register.getMale().getIdentificationNumberMale()) == p.getPin()) && (p.getGender() == 0)) {
+                userWarnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.prohibited.relation.groom.is.sun.of.bride"), groom.getPin(), p.getPin()),
+                    UserWarning.Severity.ERROR));
+                prohibited = true;
+                break;
+            }
+        }
+        logger.debug("check prohibited relationship :'groom is sun of bride' :{}", prohibited);
+        //One party is a grandchild of the other party (as a minimum, a parent‟s father or  mother)
+        //check bride and bride's grand father violations
+        List<Person> bridesGrandFathers = populationRegistry.findGrandFather(bride, user);
+        for (Person p : bridesGrandFathers) {
+            if (p.equals(groom)) {
+                userWarnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.prohibited.relation.groom.is.grand.father.bride"), groom.getPin(), bride.getPin()),
+                    UserWarning.Severity.ERROR));
+                prohibited = true;
+                break;
+            }
+        }
+        logger.debug("check prohibited relationship :'groom is grand father of bride' :{}", prohibited);
+
+        //check groom and groom's grand mother violations
+        List<Person> groomsGrandMothers = populationRegistry.findGrandMother(groom, user);
+        for (Person p : groomsGrandMothers) {
+            if (p.equals(bride)) {
+                userWarnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.prohibited.relation.bride.is.grand.mother.groom"), bride.getPin(), groom.getPin()),
+                    UserWarning.Severity.ERROR));
+                prohibited = true;
+                break;
+            }
+        }
+        logger.debug("check prohibited relationship :'bride is grand mother of groom' :{}", prohibited);
+
+        //One party is a sibling of the other party (Note: two parties are siblings if they have one or both parents in common)
+        List<Person> bridesSiblings = populationRegistry.findAllSiblings(bride, user);
+
+        //check groom is sibling of bride
+        if (bridesSiblings.contains(groom)) {
+            userWarnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.prohibited.relation.bride.groom.are.siblings"), bride.getPin(), groom.getPin()),
+                UserWarning.Severity.ERROR));
+            prohibited = true;
+        }
+        logger.debug("check prohibited relationship :'groom and bride are siblings' :{}", prohibited);
+
+        //no need to check bride is sibling of groom this is symmetric
+
+        //One party is a child of a sibling of the other party (i.e. one party is uncle or aunt of other
+        //get brides fathers male siblings
+        List<Person> bridesUncles = filterPersonSiblings(bridesFather, 0, user);
+        //add brides mother male siblings
+        bridesUncles.addAll(filterPersonSiblings(bridesMother, 0, user));
+        //check grooms is brides uncle
+        if (bridesUncles.contains(groom)) {
+            userWarnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.prohibited.relation.groom.is.bride.uncle"), groom.getPin(), bride.getPin()),
+                UserWarning.Severity.ERROR));
+            prohibited = true;
+        }
+        logger.debug("check prohibited relationship :'groom is bride's uncle' :{}", prohibited);
+
+        //get grooms father's female siblings
+        List<Person> groomsUnties = filterPersonSiblings(groomsFather, 1, user);
+        //get grooms mother's female siblings
+        groomsUnties.addAll(filterPersonSiblings(groomsMother, 1, user));
+        //check bride is aunt  of groom
+        if (groomsUnties.contains(bride)) {
+            userWarnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.prohibited.relation.bride.is.aunt.of.groom"), bride.getPin(), groom.getPin()),
+                UserWarning.Severity.ERROR));
+            prohibited = true;
+        }
+        logger.debug("check prohibited relationship :'bride is groom's aunt' :{}", prohibited);
+
+        //A parent of one party was the spouse of the other party
+        //One party was the spouse of a deceased parent of the other party    (both cases are handle by follow)
+
+        //that means if bride was previously married with grooms father  then relation ship between bride and groom is illegal
+        //and vise versa
+        //check brides previous marriages  vs grooms father
+        Set<Marriage> bridesPrevMarriages = bride.getMarriages();
+        for (Marriage m : bridesPrevMarriages) {
+            if (groomsFather != null) {
+                if (groomsFather.equals(m.getGroom())) {
+                    userWarnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.prohibited.relation.father.of.groom.was.spouse.of.bride"), groomsFather.getPin(), bride.getPin()),
+                        UserWarning.Severity.ERROR));
+                    prohibited = true;
+                    break;
+                }
+            }
+        }
+        logger.debug("check prohibited relationship :'father of groom was a spouse of bride' :{}", prohibited);
+
+        //check grooms prev marriages vs brides mother
+        Set<Marriage> groomsPrevMarriages = bride.getMarriages();
+        for (Marriage m : groomsPrevMarriages) {
+            if (bridesMother != null) {
+                if (bridesMother.equals(m.getGroom())) {
+                    userWarnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.prohibited.relation.mother.of.bride.was.spouse.of.groom"), bridesMother.getPin(), groom.getPin()),
+                        UserWarning.Severity.ERROR));
+                    prohibited = true;
+                    break;
+                }
+            }
+        }
+        logger.debug("check prohibited relationship :'mother of bride was a spouse of groom' :{}", prohibited);
+
+        //One party was the spouse of a deceased grandparent of the other party
+        //that means if bride was married with grooms grand father then there is a prohibited relationship between bride and groom
+        //bride's prev marriages vs groom's grand fathers
+        for (Marriage m : bridesPrevMarriages) {
+            for (Person p : groomsGrandFathers) {
+                if (p.equals(m.getGroom())) {
+                    userWarnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.prohibited.relation.grand.father.of.groom.was.spouse.of.bride"), p.getPin(), bride.getPin()),
+                        UserWarning.Severity.ERROR));
+                    prohibited = true;
+                    break;
+                }
+            }
+        }
+        logger.debug("check prohibited relationship :'grand father of groom was a spouse of bride' :{}", prohibited);
+
+        //cross check with previouse marriage persons vs grooms grand fathers
+        for (Marriage m : groomsPrevMarriages) {
+            for (Person p : bridesGrandMothers) {
+                if (p.equals(m.getBride())) {
+                    userWarnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.prohibited.relation.grand.mother.of.bride.was.spouse.of.groom"), p.getPin(), groom.getPin()),
+                        UserWarning.Severity.ERROR));
+                    prohibited = true;
+                    break;
+                }
+            }
+        }
+        logger.debug("check prohibited relationship :'grand mother of bride was a spouse of groom' :{}", prohibited);
+
+        //One party was the spouse of a deceased child of the other party
+        //that mean if groom and brides child was married before then groom and bride in prohibited relationship and vise versa
+        //brides prev marriages vs grooms children
+        for (Marriage m : bridesPrevMarriages) {
+            for (Person p : groomsChildren) {
+                if (p.equals(m.getGroom())) {
+                    userWarnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.prohibited.relation.child.of.groom.was.spouse.of.bride"), p.getPin(), bride.getPin()),
+                        UserWarning.Severity.ERROR));
+                    prohibited = true;
+                    break;
+                }
+            }
+        }
+        logger.debug("check prohibited relationship :'child of groom of a spouse of brides' :{}", prohibited);
+
+        //grooms prev marriages vs brides children
+        for (Marriage m : groomsPrevMarriages) {
+            for (Person p : bridesChildren) {
+                if (p.equals(m.getBride())) {
+                    userWarnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.prohibited.relation.child.of.bride.was.spouse.of.groom"), p.getPin(), groom.getPin()),
+                        UserWarning.Severity.ERROR));
+                    prohibited = true;
+                    break;
+                }
+            }
+        }
+        logger.debug("check prohibited relationship :'child of bride was a spouse of groom' :{}", prohibited);
+
+        return prohibited;
+
+    }
+
+    private List<Person> filterPersonSiblings(Person person, int gender, User user) {
+        List<Person> personSiblings = Collections.emptyList();
+        if (person != null) {
+            personSiblings = populationRegistry.findAllSiblings(person, user);
+            List<Person> toBeRemoved = Collections.emptyList();
+            if (gender == 0) {
+                for (Person p : personSiblings) {
+                    if (p.getGender() != 0) {
+                        //not male siblings
+                        toBeRemoved.add(p);
+                    }
+                }
+            } else if (gender == 1) {
+                for (Person p : personSiblings) {
+                    if (p.getGender() != 1) {
+                        //not female siblings
+                        toBeRemoved.add(p);
+                    }
+                }
+            }
+            //removing unnecessary siblings
+            personSiblings.removeAll(toBeRemoved);
+        }
+        return personSiblings;
     }
 
 
@@ -272,14 +509,18 @@ public class MarriageRegistrationValidator {
                 existing.getMale().getIdentificationNumberMale()), UserWarning.Severity.WARN));
         }
         //check booth father pin are same
-        if (existing.getFemale().getFatherIdentificationNumberFemale().equals(existing.getMale().getFatherIdentificationNumberMale())) {
-            warnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.both.father.same"),
-                existing.getFemale().getFatherIdentificationNumberFemale()), UserWarning.Severity.WARN));
+        if (existing.getFemale().getFatherIdentificationNumberFemale() != null && existing.getMale().getFatherIdentificationNumberMale() != null) {
+            if (existing.getFemale().getFatherIdentificationNumberFemale().equals(existing.getMale().getFatherIdentificationNumberMale())) {
+                warnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.both.father.same"),
+                    existing.getFemale().getFatherIdentificationNumberFemale()), UserWarning.Severity.WARN));
+            }
         }
         //check brides father and groom are same
-        if (existing.getFemale().getFatherIdentificationNumberFemale().equals(existing.getMale().getIdentificationNumberMale())) {
-            warnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.groom.and.bride.father.same"),
-                existing.getFemale().getFatherIdentificationNumberFemale()), UserWarning.Severity.WARN));
+        if (existing.getFemale().getFatherIdentificationNumberFemale() != null) {
+            if (existing.getFemale().getFatherIdentificationNumberFemale().equals(existing.getMale().getIdentificationNumberMale())) {
+                warnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.groom.and.bride.father.same"),
+                    existing.getFemale().getFatherIdentificationNumberFemale()), UserWarning.Severity.WARN));
+            }
         }
     }
 
@@ -305,16 +546,21 @@ public class MarriageRegistrationValidator {
     private void checkPreviouseActiveMarriages(MarriageRegister notice, List<UserWarning> userWarnings,
         ResourceBundle rb, User user) {
         //check male party is married before
-        Person person = null; //populationRegistry.findPersonByPIN(notice.getMale().getIdentificationNumberMale(), user);
-        if (!checkCivilState(person)) {
-            userWarnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.male.is.not.legal.for.marry"),
-                notice.getMale().getIdentificationNumberMale()), UserWarning.Severity.WARN));
+        Person person = null;
+        if (notice.getMale().getIdentificationNumberMale() != null) {
+            person = populationRegistry.findPersonByPIN(Long.parseLong(notice.getMale().getIdentificationNumberMale()), user);
+            if (!checkCivilState(person)) {
+                userWarnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.male.is.not.legal.for.marry"),
+                    notice.getMale().getIdentificationNumberMale()), UserWarning.Severity.WARN));
+            }
         }
         //check female party is married before
-        person = null; //populationRegistry.findPersonByPIN(notice.getFemale().getIdentificationNumberFemale(), user);
-        if (!checkCivilState(person)) {
-            userWarnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.female.is.not.legal.for.marry"),
-                notice.getFemale().getIdentificationNumberFemale()), UserWarning.Severity.WARN));
+        if (notice.getFemale().getIdentificationNumberFemale() != null) {
+            person = populationRegistry.findPersonByPIN(Long.parseLong(notice.getFemale().getIdentificationNumberFemale()), user);
+            if (!checkCivilState(person)) {
+                userWarnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.female.is.not.legal.for.marry"),
+                    notice.getFemale().getIdentificationNumberFemale()), UserWarning.Severity.WARN));
+            }
         }
     }
 

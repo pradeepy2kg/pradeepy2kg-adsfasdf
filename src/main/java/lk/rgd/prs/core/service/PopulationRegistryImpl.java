@@ -828,6 +828,60 @@ public class PopulationRegistryImpl implements PopulationRegistry {
     }
 
     /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<Person> findGrandMother(Person person, User user) {
+        logger.debug("get grand mother list for person , pin : {}", person.getPin());
+        List<Person> grandMother = Collections.emptyList();
+        //have maximum two grand mothers (fathers mother and mothers mother)
+        Person father = findPersonByPINorNIC(person.getFatherPINorNIC(), user);
+        Person mother = findPersonByPINorNIC(person.getMotherPINorNIC(), user);
+        //add father's mother as grand mother
+        if (father != null) {
+            Person fathersMother = findPersonByPINorNIC(father.getMotherPINorNIC(), user);
+            if (fathersMother != null) {
+                grandMother.add(fathersMother);
+            }
+        }
+        //add mother's mother as grand mother
+        if (mother != null) {
+            Person mothersMother = findPersonByPINorNIC(mother.getMotherPINorNIC(), user);
+            if (mothersMother != null) {
+                grandMother.add(mothersMother);
+            }
+        }
+        return grandMother;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<Person> findGrandFather(Person person, User user) {
+        logger.debug("get grand father list for person , pin : {}", person.getPin());
+        List<Person> grandFather = Collections.emptyList();
+        //have maximum two grand fathers (fathers father and mothers father)
+        Person father = findPersonByPINorNIC(person.getFatherPINorNIC(), user);
+        Person mother = findPersonByPINorNIC(person.getMotherPINorNIC(), user);
+        //add father's father as grand father
+        if (father != null) {
+            Person fathersFather = findPersonByPINorNIC(father.getFatherPINorNIC(), user);
+            if (fathersFather != null) {
+                grandFather.add(fathersFather);
+            }
+        }
+        //add mother's father as grand father
+        if (mother != null) {
+            Person mothersFather = findPersonByPINorNIC(mother.getFatherPINorNIC(), user);
+            if (mothersFather != null) {
+                grandFather.add(mothersFather);
+            }
+        }
+        return grandFather;
+    }
+
+    /**
      * Checks whether the given state is in data entry level, that is not approved yet
      *
      * @param currentState current status of the record
