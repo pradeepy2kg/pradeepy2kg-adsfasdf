@@ -336,9 +336,9 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
      * loading search result for marriage license
      */
     public String marriageLicenseSearchResult() {
-        MarriageRegister marriageRegister = marriageRegistrationService.getMarriageLicenseByIdUKeyAndState
-            (marriageIdUKey, user, Permission.SEARCH_MARRIAGE);
-        if (marriageRegister != null) {
+        MarriageRegister marriageRegister = marriageRegistrationService.getByIdUKey(marriageIdUKey, user);
+        if (marriageRegister != null && marriageRegister.getState() == MarriageRegister.State.LICENSE_PRINTED
+            && marriageRegister.getLifeCycleInfo().isActiveRecord()) {
             idUKey = marriageRegister.getIdUKey();
         } else {
             addActionError(getText("error.marriageregister.norecords"));
