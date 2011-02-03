@@ -52,41 +52,41 @@
         <col/>
         <tbody>
         <s:form action="eprMarkDivorceExtractAsPrinted.do" method="post">
-       <%-- <s:if test="marriage.state.ordinal()!=12">  --%>
-            <tr>
-                <td colspan="3">
-                    <div style="width:45%;float:left;margin-top:5px;" id="locationSignId">
-                        <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;">
-                            <legend><b><s:label value="%{getText('selectoption.label')}"/></b></legend>
-                            <table>
-                                <tr>
-                                    <td>
-                                        <s:label value="%{getText('placeOfIssue.label')}"/>
-                                    </td>
-                                    <td>
-                                        <s:select id="locationId" name="licensePrintedLocationId" list="locationList"
-                                                  cssStyle="width:300px;" onchange="populateCertifiedUserList()"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><s:label value="%{getText('signOfficer.label')}"/></td>
-                                    <td>
-                                        <s:select id="issueUserId" name="licenseIssuedUserId" list="userList"
-                                                  cssStyle="width:300px;" onchange="printCertifiedUser()"/>
-                                    </td>
-                                </tr>
-                            </table>
-                        </fieldset>
-                    </div>
-                </td>
-            </tr>
-        <%-- </s:if> --%>
+            <%-- <s:if test="marriage.state.ordinal()!=12">  --%>
+        <tr>
+            <td colspan="3">
+                <div style="width:45%;float:left;margin-top:5px;" id="locationSignId">
+                    <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;">
+                        <legend><b><s:label value="%{getText('selectoption.label')}"/></b></legend>
+                        <table>
+                            <tr>
+                                <td>
+                                    <s:label value="%{getText('placeOfIssue.label')}"/>
+                                </td>
+                                <td>
+                                    <s:select id="locationId" name="licensePrintedLocationId" list="locationList"
+                                              cssStyle="width:300px;" onchange="populateCertifiedUserList()"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><s:label value="%{getText('signOfficer.label')}"/></td>
+                                <td>
+                                    <s:select id="issueUserId" name="licenseIssuedUserId" list="userList"
+                                              cssStyle="width:300px;" onchange="printCertifiedUser()"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </fieldset>
+                </div>
+            </td>
+        </tr>
+            <%-- </s:if> --%>
         <tr>
             <td colspan="3" align="right">
                 <div class="form-submit" style="margin-top:0;">
-                    <%-- <s:if test="marriage.state.ordinal()!=12"> --%>
-                        <s:submit value="%{getText('mark_as_print.button')}"/>
-                   <%-- </s:if> --%>
+                        <%-- <s:if test="marriage.state.ordinal()!=12"> --%>
+                    <s:submit value="%{getText('mark_as_print.button')}"/>
+                        <%-- </s:if> --%>
                     <s:hidden name="idUKey" value="%{marriage.idUKey}"/>
                     </s:form>
                 </div>
@@ -494,7 +494,67 @@
     </tr>
     </tbody>
 </table>
-
+<%-- for divorced certificate --%>
+<table border="1" style="margin-top:10px;width:100%;border:1px solid #000;border-collapse:collapse;"
+       cellpadding="2px">
+    <caption/>
+    <col width="200px">
+    <col>
+    <tr>
+        <td class="font-8">
+            තත්ත්වය
+            <br>State in ta
+            <br>State
+        </td>
+        <td>
+            <s:label value="%{getText('button.marriageregister.divorce')}"/>
+        </td>
+    </tr>
+    <tr>
+        <td class="font-8">
+            අදහස්
+            <br>Comment in ta
+            <br>Comment
+        </td>
+        <td>
+            <s:label id="comments" name="marriage.divorceComment"/>
+        </td>
+    </tr>
+    <tr>
+        <td class="font-8">
+            දික්කසාදය සිදුකල නිලධාරියා <br>
+            in tamil <br>
+            Name, Signature and Designation of the officer
+        </td>
+        <td>
+            <s:if test="marriage.preferredLanguage=='si'">
+                <s:label name="marriage.divorcedByUser.sienSignatureText"/>
+            </s:if>
+            <s:if test="marriage.preferredLanguage=='ta'">
+                <s:label name="marriage.divorcedByUser.taenSignatureText"/>
+            </s:if>
+        </td>
+    </tr>
+    <tr>
+        <td class="font-8">
+            දික්කසාදය සිදුකල දිනය<br>
+            in tamil <br>
+            Date of Divorce
+        </td>
+        <td>
+            <s:label name="marriage.divorcedDate"/>
+        </td>
+    </tr>
+    <tr>
+        <td class="font-8">
+            දික්කසාදය බලපැවැත්වෙන දිනය
+            <br>in tamil<br>Effective Date of Divorce</span>
+        </td>
+        <td>
+            <s:label name="marriage.effectiveDateOfDivorce"/>
+        </td>
+    </tr>
+</table>
 <table border="1" style="margin-top:10px;width:100%;border:1px solid #000;border-collapse:collapse;"
        cellpadding="2px">
     <caption/>
@@ -557,65 +617,4 @@
         </td>
     </tr>
 </table>
-<%-- for divorced certificate --%>
-    <table border="1" style="margin-top:10px;width:100%;border:1px solid #000;border-collapse:collapse;"
-           cellpadding="2px">
-        <caption/>
-        <col width="200px">
-        <col>
-        <tr>
-            <td class="font-8">
-                තත්ත්වය
-                <br>State in ta
-                <br>State
-            </td>
-            <td>
-                <s:label value="%{getText('button.marriageregister.divorce')}"/>
-            </td>
-        </tr>
-        <tr>
-            <td class="font-8">
-                අදහස්
-                <br>Comment in ta
-                <br>Comment
-            </td>
-            <td>
-                <s:label id="comments" name="marriage.divorceComment"/>
-            </td>
-        </tr>
-        <tr>
-            <td class="font-8">
-                දික්කසාදය සිදුකල නිලධාරියා <br>
-                in tamil <br>
-                Name, Signature and Designation of the officer
-            </td>
-            <td>
-                <s:if test="marriage.preferredLanguage=='si'">
-                    <s:label name="marriage.divorcedByUser.sienSignatureText"/>
-                </s:if>
-                <s:if test="marriage.preferredLanguage=='ta'">
-                    <s:label name="marriage.divorcedByUser.taenSignatureText"/>
-                </s:if>
-            </td>
-        </tr>
-        <tr>
-            <td class="font-8">
-                දික්කසාදය සිදුකල දිනය<br>
-                in tamil <br>
-                Date of Divorce
-            </td>
-            <td>
-                <s:label name="marriage.divorcedDate"/>
-            </td>
-        </tr>
-        <tr>
-            <td class="font-8">
-                දික්කසාදය බලපැවැත්වෙන දිනය
-                <br>in tamil<br>Effective Date of Divorce</span>
-            </td>
-            <td>
-                <s:label name="marriage.effectiveDateOfDivorce"/>
-            </td>
-        </tr>
-    </table>
 </div>
