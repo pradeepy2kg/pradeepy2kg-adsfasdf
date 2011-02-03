@@ -293,4 +293,22 @@ public interface PopulationRegistry {
      * @return the matching list of persons(max size is one, since temporary PIN is unique)
      */
     public List<Person> getPersonByLocationAndTemporaryPIN(Location location, long tempPin, User user);
+
+    /**
+     * find list of  grand mother of given person
+     *
+     * @param person person
+     * @param user   user who perform the action
+     * @return list of persons
+     */
+    public List<Person> findGrandMother(Person person, User user);
+
+    /**
+     * find list of  grand father of given person
+     *
+     * @param person person
+     * @param user   user who perform the action
+     * @return list of persons
+     */
+    public List<Person> findGrandFather(Person person, User user);
 }
