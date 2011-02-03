@@ -151,9 +151,15 @@ public class MarriageRegistrationValidator {
             male.getResidentAddressMaleInOfficialLang() == null || female.getAgeAtLastBirthDayFemale() == 0 ||
             female.getFemaleRace() == null || female.getCivilStatusFemale() == null ||
             female.getNameInOfficialLanguageFemale() == null || female.getResidentAddressFemaleInOfficialLang() == null ||
-            mr.getSerialNumber() == 0 || mr.getRegistrationDate() == null || mr.getScannedImagePath() == null;
+            (mr.getSerialNumber() == 0 && mr.getSerialOfMaleNotice() == null && mr.getSerialOfFemaleNotice() == null) ||
+            mr.getRegistrationDate() == null || mr.getScannedImagePath() == null;
 
         if (condition) {
+            handleException("Marriage register being processed is incomplete, Check required fields values of record : "
+                + mr.getIdUKey(), ErrorCodes.INVALID_DATA);
+        }
+
+        if (mr.getSerialNumber() == 0 && (mr.getSerialOfMaleNotice() != null || mr.getSerialOfFemaleNotice() != null)) {
             final long serialNo = mr.getSerialNumber();
             if (serialNo >= 2010000001L && serialNo <= 2099199999L) {
 
@@ -162,9 +168,6 @@ public class MarriageRegistrationValidator {
                     handleException("Marriage register being processed is invalid, Check serial number : " + s,
                         ErrorCodes.INVALID_DATA);
                 }
-            } else {
-                handleException("Marriage register being processed is incomplete, Check required fields values of record : "
-                    + mr.getIdUKey(), ErrorCodes.INVALID_DATA);
             }
         }
     }
