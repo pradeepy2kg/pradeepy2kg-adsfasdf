@@ -606,7 +606,6 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         // check user permission for marriage register approval
         ValidationUtils.validateUserPermission(Permission.APPROVE_MARRIAGE, user);
         MarriageRegister mr = marriageRegistrationDAO.getByIdUKey(idUKey);
-        //TODO: to be removed if mr division validations not required
         ValidationUtils.validateUserAccessToDSDivision(mr.getMrDivision().getDsDivision().getDsDivisionUKey(), user);
         // check all required fields are filled before approval
         marriageRegistrationValidator.validateMinimalRequirementsOfMarriageRegister(mr);
