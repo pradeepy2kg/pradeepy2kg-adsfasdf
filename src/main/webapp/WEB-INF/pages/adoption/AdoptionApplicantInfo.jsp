@@ -48,9 +48,15 @@
 
         var returnval = true;
         var domObject;
-        domObject = document.getElementById("courtOrderNo");
-        if (isFieldEmpty(domObject)) {
-            isEmpty(domObject, "", 'error4');
+        //domObject = document.getElementById("courtOrderNo");
+        //if (isFieldEmpty(domObject)) {
+        //    isEmpty(domObject, "", 'error4');
+        //}
+        domObject = document.getElementsByName("certificateApplicantType")[0];
+        domObject1 = document.getElementsByName("certificateApplicantType")[1];
+        domObject2 = document.getElementsByName("certificateApplicantType")[2];
+        if (!(domObject.checked || domObject1.checked || domObject2.checked)) {
+            errormsg = errormsg + "\n" + document.getElementById("error3").value;
         }
         domObject = document.getElementById("certifcateApplicantPin");
         if (isFieldEmpty(domObject)) {
@@ -67,12 +73,6 @@
         if (isFieldEmpty(domObject)) {
             isEmpty(domObject, "", 'error2');
         }
-        domObject = document.getElementsByName("certificateApplicantType")[0];
-        domObject1 = document.getElementsByName("certificateApplicantType")[1];
-        domObject2 = document.getElementsByName("certificateApplicantType")[2];
-        if (!(domObject.checked || domObject1.checked || domObject2.checked)) {
-            errormsg = errormsg + "\n" + document.getElementById("error3").value;
-        }
         if (errormsg != "") {
             alert(errormsg);
             returnval = false;
@@ -86,6 +86,25 @@
         if (domObject.value.trim() == 0) {
             domObject.value = null;
         }
+        displaySave();
+    }
+
+    function disableButton(mode) {
+        if (mode) {
+            document.getElementById('adoptionSubmit').style.display = 'none';
+        }
+        else {
+            document.getElementById('adoptionSubmit').style.display = 'block';
+        }
+    }
+
+    function displaySave() {
+        var receive = document.getElementById('receivedDate').value;
+        if(receive.trim() == 0) {
+            disableButton(true);
+        } else {
+            disableButton(false);
+        }
     }
 
 </script>
@@ -98,7 +117,10 @@
             <td>
                 <s:label value="%{getText('adoption_order_serial.label')}"/>
             </td>
-            <td><s:textfield name="idUKey" id="idUKey"/></td>
+            <td>
+            <s:textfield name="idUKey" id="idUKey" onkeypress="return isNumberKey(event)"/>
+            <s:hidden id="receivedDate" value="%{#request.adoption.orderReceivedDate}"/>
+            </td>
         </tr>
     </table>
     <table style=" width:300px">
@@ -108,7 +130,7 @@
             <td width="200px"></td>
             <td align="right" class="button"><s:submit name="search"
                                                        value="%{getText('adoption_search_button.label')}"
-                                                       cssStyle="margin-right:10px;"/></td>
+                                                       cssStyle="margin-right:10px;" onclick="displaySave()"/></td>
         </tr>
         <tr>
         </tr>
@@ -232,7 +254,7 @@
         <tbody>
 
         <tr>
-            <td colspan="2">අයදුම්කරු <br/>
+            <td colspan="2">අයදුම්කරු <s:label value="*" cssStyle="color:red;font-size:10pt;"/><br/>
                 Applicant
             </td>
             <td>පියා   </br>
@@ -272,7 +294,7 @@
         </tr>
         <tr>
             <td colspan="6">
-                අයදුම්කරුගේ පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය
+                අයදුම්කරුගේ පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<s:label value="*" cssStyle="color:red;font-size:10pt;"/>
                 <br>
                 தாயின் தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை இலக்கம்
                 <br>
@@ -285,13 +307,13 @@
                 <img src="<s:url value="/images/alphabet-X.gif" />"
                      id="applicant_NIC_X" onclick="javascript:addXorV('certifcateApplicantPin','X','error6')">
                 <br>
-                <s:textfield id="certifcateApplicantPin" name="certificateApplicantPINorNIC"/> <img
+                <s:textfield id="certifcateApplicantPin" name="certificateApplicantPINorNIC" maxLength="10"/> <img
                     src="<s:url value="/images/search-father.png" />"
                     style="vertical-align:middle; margin-left:20px;" id="adoption_applicant_lookup">
             </td>
         </tr>
         <td colspan="2">
-            අයදුම්කරුගේ නම
+            අයදුම්කරුගේ නම<s:label value="*" cssStyle="color:red;font-size:10pt;"/>
             <br>
             Name of the Applicant
         </td>
@@ -302,7 +324,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                ලිපිනය
+                ලිපිනය<s:label value="*" cssStyle="color:red;font-size:10pt;"/>
                 <br>
                 Address
             </td>
@@ -315,7 +337,7 @@
     </table>
 
     <div class="button" align="right">
-        <s:submit value="%{getText('adoption.submit')}" cssStyle="margin-top:10px;"/>
+        <s:submit id="adoptionSubmit" value="%{getText('adoption.submit')}" cssStyle="margin-top:10px;"/>
     </div>
     <s:hidden id="error0" value="%{getText('er.label.applicantPINorNIC')}"/>
     <s:hidden id="error1" value="%{getText('er.label.applicantName')}"/>
