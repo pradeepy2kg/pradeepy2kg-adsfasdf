@@ -215,11 +215,20 @@
                     </td>
                     <td align="center">
                         <s:if test=" (status.ordinal() ==2 ||status.ordinal() ==1)  && allowEditAdoption">
-                            <s:a href="%{cetificatePrintUrl}"
-                                 title="%{getText('printAdoptionRegistrationTooltip.label')}">
-                                <img id="printImage" src="<s:url value='/images/print_icon.gif'/>"
-                                     border="none" width="25" height="25"/>
-                            </s:a>
+                            <s:if test="status.ordinal() ==2">
+                                <s:a href="%{cetificatePrintUrl}"
+                                     title="%{getText('reprintAdoptionRegistrationTooltip.label')}">
+                                    <img id="printImage" src="<s:url value='/images/print_icon.gif'/>"
+                                         border="none" width="25" height="25"/>
+                                </s:a>
+                            </s:if>
+                            <s:elseif test="status.ordinal() ==1">
+                                <s:a href="%{cetificatePrintUrl}"
+                                     title="%{getText('printAdoptionRegistrationTooltip.label')}">
+                                    <img id="printImage" src="<s:url value='/images/print_icon.gif'/>"
+                                         border="none" width="25" height="25"/>
+                                </s:a>
+                            </s:elseif>
                         </s:if>
                     </td>
                     <td align="center">
