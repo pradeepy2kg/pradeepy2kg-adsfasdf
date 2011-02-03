@@ -1627,6 +1627,13 @@
             <result name="error" type="tiles">epr.error</result>
         </action>
 
+        <action name="eprMarkDivorceExtractAsPrinted"
+                class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
+                method="markDivorceExtractAsPrinted">
+            <result name="success" type="tiles">epr.success</result>
+            <result name="error" type="tiles">epr.error</result>
+        </action>
+
         <action name="eprMarkLicenseAsPrinted" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
                 method="markLicenseAsPrinted">
             <result name="success" type="tiles">epr.marriageNoticeSearchHome</result>
