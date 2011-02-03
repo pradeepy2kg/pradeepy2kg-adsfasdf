@@ -537,8 +537,8 @@ public interface MarriageRegistrationService {
     /**
      * Approve muslim or noticed marriage registration
      *
-     * @param idUKey primary key of the marriage register
-     * @param user   user who perform the action
+     * @param idUKey         primary key of the marriage register
+     * @param user           user who perform the action
      * @param ignoreWarnings
      */
     public List<UserWarning> approveMarriageRegister(long idUKey, User user, boolean ignoreWarnings);
@@ -654,4 +654,10 @@ public interface MarriageRegistrationService {
      * @return the path within the content repository, or null if not stored
      */
     public String getImagePathByIdUKey(long idUKey, User user);
+
+    /**
+     * Entry point invoked by the scheduler to automate scheduled tasks related to marriage notice such
+     * as expiring marriage notice with in 90 days
+     */
+    public void triggerScheduledMarriageNoticeJobs();
 }

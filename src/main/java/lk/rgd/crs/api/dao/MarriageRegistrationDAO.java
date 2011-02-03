@@ -356,4 +356,13 @@ public interface MarriageRegistrationDAO {
      */
     public List<MarriageRegister> getMarriageRegisterBySerialAndMRDivision(long serialNumber,
         MRDivision mrDivision);
+
+    /**
+     * get marriage notices witch are not used until given date (witch are about to expired)
+     *
+     * @param date up to this date
+     * @return list of marriage notices
+     */
+    public List<MarriageRegister> getUnUsedMarriageNotices(Date date);
+
 }

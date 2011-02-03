@@ -43,12 +43,13 @@
                 counter++;
             }
         }
-        if (counter != 1 && counter != 0) {
+        if (counter > 1) {
             errormsg = errormsg + document.getElementById('msg_oneMechanism').value;
         }
         if (counter == 0) {
-            errormsg = errormsg + document.getElementById('no.data.entered').value;
+            return false;
         }
+
         if (pin.value != "") {
             validatePINorNIC(pin, "err_invalide_input_type", "filed_pin");
         }

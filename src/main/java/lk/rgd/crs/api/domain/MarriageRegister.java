@@ -165,7 +165,9 @@ import java.util.Date;
         "WHERE (mr.state <= 3 OR mr.state = 7) AND mr.lifeCycleInfo.activeRecord = :active " +
         "AND (mr.mrDivisionOfMaleNotice IN (SELECT m FROM MRDivision m WHERE (m.dsDivision.district = mr.mrDivisionOfMaleNotice.dsDivision.district AND mr.mrDivisionOfMaleNotice.dsDivision.district = :district ))" +
         "OR mr.mrDivisionOfFemaleNotice IN (SELECT m FROM MRDivision m WHERE (m.dsDivision.district = mr.mrDivisionOfFemaleNotice.dsDivision.district AND mr.mrDivisionOfFemaleNotice.dsDivision.district = :district ))) " +
-        "ORDER BY mr.idUKey DESC ")
+        "ORDER BY mr.idUKey DESC "),
+    @NamedQuery(name = "filter.by.unused.marriage.notice.date", query = "SELECT mr FROM MarriageRegister mr WHERE" +
+        " mr.state=:state AND mr.lifeCycleInfo.lastUpdatedTimestamp < :date")
 
 })
 public class MarriageRegister implements Serializable, Cloneable {
@@ -186,7 +188,8 @@ public class MarriageRegister implements Serializable, Cloneable {
         REGISTRATION_REJECTED, //10
         EXTRACT_PRINTED, //11
         DIVORCE, //12
-        DIVORCE_CERT_PRINTED //13
+        DIVORCE_CERT_PRINTED,//13
+        LICENSE_EXPIRED
     }
 
     public enum LicenseCollectType {
@@ -277,7 +280,7 @@ public class MarriageRegister implements Serializable, Cloneable {
     private User divorcedByUser;
 
     /**
-     * Date of the divorce  
+     * Date of the divorce
      */
     @Column(nullable = true)
     @Temporal(value = TemporalType.TIMESTAMP)

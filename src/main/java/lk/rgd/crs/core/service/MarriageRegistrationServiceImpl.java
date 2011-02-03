@@ -4,6 +4,7 @@ import lk.rgd.AppConstants;
 import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
 import lk.rgd.common.api.Auditable;
+import lk.rgd.common.api.dao.AppParametersDAO;
 import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.UserLocationDAO;
@@ -50,6 +51,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     private final MRDivisionDAO mrDivisionDAO;
     private final DSDivisionDAO dsDivisionDAO;
     private final DistrictDAO districtDAO;
+    private final AppParametersDAO appParametersDAO;
     //TODO: this is to be changed
     private ContentRepository contentRepository = null;
     private final PopulationRegistry eCivil;
@@ -57,7 +59,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     public MarriageRegistrationServiceImpl(MarriageRegistrationDAO marriageRegistrationDAO, UserManager userManager,
         MarriageRegistrationValidator marriageRegistrationValidator, UserLocationDAO userLocationDAO,
         String contentRoot, String contentType, MRDivisionDAO mrDivisionDAO, DSDivisionDAO dsDivisionDAO,
-        DistrictDAO districtDAO, PopulationRegistry eCivil) {
+        DistrictDAO districtDAO, PopulationRegistry eCivil, AppParametersDAO appParametersDAO) {
         this.marriageRegistrationDAO = marriageRegistrationDAO;
         this.marriageRegistrationValidator = marriageRegistrationValidator;
         //todo: to be removed
@@ -69,6 +71,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         this.dsDivisionDAO = dsDivisionDAO;
         this.districtDAO = districtDAO;
         this.eCivil = eCivil;
+        this.appParametersDAO = appParametersDAO;
 
         //TODO: to be changed
         contentRepository = new ContentRepositoryImpl(contentRoot);
@@ -1300,5 +1303,29 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
             return mr.getScannedImagePath();
         }
         return null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void triggerScheduledMarriageNoticeJobs() {
+        logger.info("Start executing marriage notice related scheduled tasks..");
+        Calendar cal = GregorianCalendar.getInstance();
+        cal.add(Calendar.DATE, -1 * appParametersDAO.getIntParameter(AppParameter.MARRIAGE_NOTICE_EXPIRE_DATE));
+        User systemUser = userManager.getSystemUser();
+        List<MarriageRegister> list = marriageRegistrationDAO.getUnUsedMarriageNotices(cal.getTime());
+        for (MarriageRegister m : list) {
+            try {
+                m.setState(MarriageRegister.State.LICENSE_EXPIRED);
+                m.getLifeCycleInfo().setActiveRecord(false);
+                //now updating
+                marriageRegistrationDAO.updateMarriageRegister(m, systemUser);
+            }
+            catch (Exception e) {
+                logger.error("Error while expiring marriage notice :idUKey {}", m.getIdUKey());
+            }
+        }
+        logger.info("Stopped executing marriage notice related scheduled tasks..");
     }
 }

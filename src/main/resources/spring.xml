@@ -68,6 +68,18 @@
         <property name="concurrent" value="false"/>
     </bean>
 
+    <bean id="scheduleMarriageNoticeJobs"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="marriageRegistrationService"/>
+        <property name="targetMethod" value="triggerScheduledMarriageNoticeJobs"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+
+    <bean id="cronTriggerMarriageNotice" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="scheduleMarriageNoticeJobs"/>
+        <property name="cronExpression" value="0 20 * ? * MON-FRI"/>
+    </bean>
+    <!--set trigger for marriage notice expiration-->
     <bean id="cronTriggerBirth" class="org.springframework.scheduling.quartz.CronTriggerBean">
         <property name="jobDetail" ref="scheduledBirthJobs"/>
         <property name="cronExpression" value="0 20 * ? * MON-FRI"/>
@@ -91,6 +103,7 @@
             <list>
                 <ref bean="cronTriggerBirth"/>
                 <ref bean="cronTriggerStat"/>
+                <ref bean="cronTriggerMarriageNotice"/>
             </list>
         </property>
     </bean>
@@ -234,6 +247,7 @@
         <constructor-arg ref="dsDivisionDAOImpl"/>
         <constructor-arg ref="districtDAOImpl"/>
         <constructor-arg ref="ecivilService"/>
+        <constructor-arg ref="appParametersDAOImpl"/>
     </bean>
 
     <bean id="masterDataManagementService" class="lk.rgd.crs.core.service.MasterDataManagementServiceImpl">
