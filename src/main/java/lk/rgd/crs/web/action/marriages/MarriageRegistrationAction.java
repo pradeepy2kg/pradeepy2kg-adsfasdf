@@ -519,7 +519,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
         if (idUKey != 0) {
             marriage = marriageRegistrationService.getByIdUKey(idUKey, user);
 
-            if (AppConstants.REGISTER.equals(mode)) {
+            if (AppConstants.REGISTER.equals(mode) && marriage.getState() == MarriageRegister.State.LICENSE_PRINTED) {
                 //set editmode false if marriage is on license printed (registration) state
                 editMode = false;
                 marriage.setTypeOfMarriagePlace(TypeOfMarriagePlace.REGISTRAR_OFFICE);
