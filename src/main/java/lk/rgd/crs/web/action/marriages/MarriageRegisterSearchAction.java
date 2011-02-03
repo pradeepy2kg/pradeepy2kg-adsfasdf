@@ -270,7 +270,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
             Permission.PRINT_MARRIAGE_EXTRACT);
 
         if (marriageRegister != null && marriageRegister.getState() == MarriageRegister.State.DIVORCE_CERT_PRINTED) {
-            addActionMessage(getText("message.marriagerextract.alreadymarkedasprinted"));
+            addActionMessage(getText("message.divorcerextract.alreadymarkedasprinted"));
             return SUCCESS;
         } else {
             try {
@@ -302,7 +302,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
                 return ERROR;
             }
         }
-        addActionMessage(getText("message.marriagerextract.markasprinted"));
+        addActionMessage(getText("message.divorceextract.markasprinted"));
         return SUCCESS;
     }
 
