@@ -602,7 +602,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     @Transactional(propagation = Propagation.REQUIRED)
     public List<UserWarning> approveMarriageRegister(long idUKey, User user, boolean ignoreWarnings) {
 
-        logger.debug("Attempt to approve marriage resister with idUKey : {}", idUKey);
+        logger.debug("Attempt to approve marriage register with idUKey : {}", idUKey);
         // check user permission for marriage register approval
         ValidationUtils.validateUserPermission(Permission.APPROVE_MARRIAGE, user);
         MarriageRegister mr = marriageRegistrationDAO.getByIdUKey(idUKey);
