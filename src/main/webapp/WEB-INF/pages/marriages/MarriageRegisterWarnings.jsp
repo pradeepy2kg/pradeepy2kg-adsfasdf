@@ -7,12 +7,7 @@
     }
 
     function disableButton(mode) {
-        if (mode) {
-            document.getElementById('approve').disabled = true;
-        }
-        else {
-            document.getElementById('approve').disabled = false;
-        }
+        document.getElementById('approve').disabled = mode;
     }
 
     function selectCheckbox() {
