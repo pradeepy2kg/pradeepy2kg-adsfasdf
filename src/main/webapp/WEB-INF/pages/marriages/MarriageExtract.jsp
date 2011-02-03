@@ -86,7 +86,7 @@
             <td colspan="3" align="right">
                 <div class="form-submit" style="margin-top:0;">
                         <%-- <s:if test="marriage.state.ordinal()!=12"> --%>
-                    <s:submit value="%{getText('mark_as_print.button')}"/>
+                    <s:submit value="%{getText('button.markasprinted')}"/>
                         <%-- </s:if> --%>
                     <s:hidden name="idUKey" value="%{marriage.idUKey}"/>
                     </s:form>
