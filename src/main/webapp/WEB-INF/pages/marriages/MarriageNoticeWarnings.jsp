@@ -19,8 +19,9 @@
                         </s:iterator>
                     </td>
                 </tr>
+                <tr></tr>
                 <tr>
-                    <td align="right"><s:label value="%{getText('label.apply.ignore.warnings')}"/></td>
+                    <td align="right"><s:label value="%{getText('label.apply.ignore.warnings')}" cssStyle="color:black;"/></td>
                     <td align="center">
                     <td><s:checkbox name="ignoreWarnings"/></td>
                     </td>
