@@ -156,6 +156,8 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     public String marriageRegisterSearchInit() {
         commonUtil.populateDynamicListsWithAllOption(districtList, dsDivisionList, mrDivisionList, user, language);
         stateList = StateUtil.getStateByLanguage(language);
+        dsDivisionList = dsDivisionDAO.getAllDSDivisionNames(districtId, language, user);
+        mrDivisionList = mrDivisionDAO.getMRDivisionNames(dsDivisionId, language, user);
         pageNo += 1;
         return marriageRegisterSearchResult();
     }
@@ -398,7 +400,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
 
             marriageRegisterSearchList = marriageRegistrationService.getMarriageRegisterList(divisionType, divisionId,
                 mrState, true, searchStartDate, searchEndDate, pageNo, noOfRows, user);
-            districtId = 0;
+            //  districtId = 0;
         }
 
         if (marriageRegisterSearchList.size() == 0) {
