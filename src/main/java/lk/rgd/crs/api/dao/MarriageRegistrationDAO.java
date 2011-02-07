@@ -365,4 +365,11 @@ public interface MarriageRegistrationDAO {
      */
     public List<MarriageRegister> getUnUsedMarriageNotices(Date date);
 
+    /**
+     * get existing active marriage license license printed
+     *
+     * @return list of marriage license
+     */
+    public List<MarriageRegister> getActiveMarriageLicense(String groomPIN, String bridePIN);
+
 }

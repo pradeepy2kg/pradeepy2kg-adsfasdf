@@ -156,8 +156,8 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     public String marriageRegisterSearchInit() {
         commonUtil.populateDynamicListsWithAllOption(districtList, dsDivisionList, mrDivisionList, user, language);
         stateList = StateUtil.getStateByLanguage(language);
-      //  dsDivisionList = dsDivisionDAO.getAllDSDivisionNames(districtId, language, user);
-       // mrDivisionList = mrDivisionDAO.getMRDivisionNames(dsDivisionId, language, user);
+        //  dsDivisionList = dsDivisionDAO.getAllDSDivisionNames(districtId, language, user);
+        // mrDivisionList = mrDivisionDAO.getMRDivisionNames(dsDivisionId, language, user);
         pageNo += 1;
         return marriageRegisterSearchResult();
     }
@@ -495,6 +495,9 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
                     break;
                 case ErrorCodes.GROOMS_FATHER_IN_PRS_IS_MISMATCHED_WITH_GIVEN_FATHER:
                     addActionError(getText("error.given.grooms.father.details.are.mismatched.with.prs"));
+                    break;
+                case ErrorCodes.MORE_THAN_ONE_ACTIVE_LICENSE:
+                    addActionError(getText("error.unable.to.approve.already.issued.license"));
                     break;
                 default:
                     addActionError(getText("error.approval.failed", actionMassageArray));

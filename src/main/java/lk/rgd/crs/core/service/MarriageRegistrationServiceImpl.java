@@ -536,6 +536,14 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         if (existingNotice == null) {
             handleException("cannot find record for approval idUKey :" + idUKey, ErrorCodes.CAN_NOT_FIND_MARRIAGE_NOTICE);
         }
+        //check existing issued license
+        List<MarriageRegister> existingIssueLicense = marriageRegistrationDAO.
+            getActiveMarriageLicense(existingNotice.getMale().getIdentificationNumberMale(),
+                existingNotice.getFemale().getIdentificationNumberFemale());
+        if (!existingIssueLicense.isEmpty()) {
+            handleException("unable to approve there is another issued active license for this couple", ErrorCodes.
+                MORE_THAN_ONE_ACTIVE_LICENSE);
+        }
         final MarriageRegister.State currentState = existingNotice.getState();
         //check is user has permission to deal with this marriage notice
         checkUserPermissionForDeleteApproveAndRejectNotice(existingNotice, type, user);

@@ -83,6 +83,28 @@ public class JSONPersonLookupService extends HttpServlet {
             untyped.put("placeOfBirth", person.getPlaceOfBirth());
             int raceId = (person.getRace() != null) ? person.getRace().getRaceId() : 0;
             untyped.put("race", raceId);
+            Person father = person.getFather();
+            Person mother = person.getMother();
+            if (father != null) {
+                untyped.put("fatherNameInOfficialLang", father.getFullNameInOfficialLanguage());
+                Long fatherPin = father.getPin();
+                String fatherNIC = father.getNic();
+                if (fatherPin != null) {
+                    untyped.put("fatherIdentificationNumber", fatherPin);
+                } else {
+                    untyped.put("fatherIdentificationNumber", fatherNIC);
+                }
+            }
+            if (mother != null) {
+                untyped.put("motherNameInOfficialLang", mother.getFullNameInOfficialLanguage());
+                Long motherPin = father.getPin();
+                String motherNIC = father.getNic();
+                if (motherPin != null) {
+                    untyped.put("motherIdentificationNumber", motherPin);
+                } else {
+                    untyped.put("motherIdentificationNumber", motherNIC);
+                }
+            }
 
             if (person.getLastAddress() != null && person.getLastAddress().isPermanent()) {
                 untyped.put("address", person.getLastAddress().getLine1());

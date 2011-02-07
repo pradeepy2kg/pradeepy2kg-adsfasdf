@@ -126,6 +126,7 @@ public class ErrorCodes {
     public static final int UNABLE_APPROVE_MARRIAGE_NOTICE_PROHIBITED_RELATIONSHIP = 6021;
     public static final int BRIDES_FATHER_IN_PRS_IS_MISMATCHED_WITH_GIVEN_FATHER = 6022;
     public static final int GROOMS_FATHER_IN_PRS_IS_MISMATCHED_WITH_GIVEN_FATHER = 6023;
+    public static final int MORE_THAN_ONE_ACTIVE_LICENSE = 6024;
 
     //birth alteration related error code 7001-7999
     public static final int INVALID_STATE_FOR_REJECT_BIRTH_ALTERATION = 7001;
