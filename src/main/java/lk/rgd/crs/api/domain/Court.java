@@ -1,5 +1,8 @@
 package lk.rgd.crs.api.domain;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -16,6 +19,7 @@ import java.io.Serializable;
         @NamedQuery(name = "get.court.by.code", query = "SELECT c FROM Court c " +
                 "WHERE c.courtId=:courtId")
 })
+@Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
 public class Court implements Serializable {
 
     /**

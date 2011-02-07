@@ -4,6 +4,7 @@
         <properties>
             <!--For second level JPA / Hibernate Caching-->
             <property name="hibernate.cache.provider_class" value="net.sf.ehcache.hibernate.SingletonEhCacheProvider"/>
+            <property name="hibernate.cache.region.factory_class" value="net.sf.ehcache.hibernate.SingletonEhCacheRegionFactory"/>
             <property name="hibernate.cache.provider_configuration" value="ehcache.xml"/>
             <property name="hibernate.cache.use_query_cache" value="true"/>
             <property name="hibernate.cache.use_second_level_cache" value="true"/>

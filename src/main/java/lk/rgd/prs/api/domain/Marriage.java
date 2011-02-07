@@ -2,6 +2,8 @@ package lk.rgd.prs.api.domain;
 
 import lk.rgd.common.util.WebUtils;
 import lk.rgd.crs.web.util.MarriageType;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,6 +14,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "MARRIAGE", schema = "PRS")
+@Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
 public class Marriage implements Serializable {
 
     /**

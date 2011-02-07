@@ -1,5 +1,8 @@
 package lk.rgd.common.api.domain;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -14,6 +17,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "RACES", schema = "COMMON")
+@Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
 public class Race implements Serializable {
 
     @Id

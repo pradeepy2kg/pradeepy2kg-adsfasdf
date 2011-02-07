@@ -2,6 +2,8 @@ package lk.rgd.crs.api.domain;
 
 import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.domain.User;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -52,11 +54,9 @@ import java.io.Serializable;
         " WHERE dr.lifeCycleInfo.createdUser =:user AND (dr.lifeCycleInfo.createdTimestamp BETWEEN :startDate AND :endDate)"),
     @NamedQuery(name = "get.all.by.death.division.time.frame", query = "SELECT dr FROM DeathRegister dr WHERE " +
         "(dr.death.deathDivision.bdDivisionUKey = :dsDivisionId AND dr.lifeCycleInfo.activeRecord =:active " +
-        "AND (dr.lifeCycleInfo.createdTimestamp BETWEEN :startDate AND :endDate)) "),
-
-    @NamedQuery(name = "get.by.division.register.date.state", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
-        "WHERE deathRegister.death.deathDivision.dsDivision = :deathDivision AND deathRegister.status = :status AND (deathRegister.death.dateOfRegistration BETWEEN :startDate AND :endDate) ")
+        "AND (dr.lifeCycleInfo.createdTimestamp BETWEEN :startDate AND :endDate)) ")
 })
+@Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
 public class DeathRegister implements Serializable, Cloneable {
 
     public enum State {

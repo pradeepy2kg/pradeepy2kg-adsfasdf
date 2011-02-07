@@ -2,6 +2,8 @@ package lk.rgd.prs.api.domain;
 
 import lk.rgd.common.api.domain.Country;
 import lk.rgd.common.util.WebUtils;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,6 +17,7 @@ import java.util.Date;
 @NamedQueries({
     @NamedQuery(name = "addresses.by.idukey", query = "SELECT a FROM Address a WHERE a.person.personUKey = :idUKey")
 })
+@Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
 public class Address implements Serializable {
 
     /**

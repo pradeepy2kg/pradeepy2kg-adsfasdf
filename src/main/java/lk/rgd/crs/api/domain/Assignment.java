@@ -1,6 +1,8 @@
 package lk.rgd.crs.api.domain;
 
 import lk.rgd.common.api.domain.BaseLifeCycleInfo;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -40,7 +42,7 @@ import java.util.Date;
                 "AND a.lifeCycleInfo.active = :active AND a.registrar.acting = :acting"),
         @NamedQuery(name = "get.all.assignments", query = "SELECT a FROM Assignment a WHERE a.lifeCycleInfo.active =:active")
 })
-@org.hibernate.annotations.Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
 public class Assignment implements Serializable {
 
     /**

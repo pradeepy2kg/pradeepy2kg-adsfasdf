@@ -3,6 +3,8 @@ package lk.rgd.crs.api.domain;
 import lk.rgd.AppConstants;
 import lk.rgd.common.api.domain.BaseLifeCycleInfo;
 import lk.rgd.common.util.NameFormatUtil;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -22,7 +24,7 @@ import java.util.Set;
 })
 @Entity
 @Table(name = "REGISTRAR", schema = "CRS")
-@org.hibernate.annotations.Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
 public class Registrar implements Serializable {
 
     @Id

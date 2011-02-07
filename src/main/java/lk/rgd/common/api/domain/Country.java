@@ -1,6 +1,8 @@
 package lk.rgd.common.api.domain;
 
 import lk.rgd.prs.api.domain.PersonCitizenship;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,6 +17,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "COUNTRIES", schema = "COMMON")
+@Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
 public class Country implements Serializable {
 
     @Id

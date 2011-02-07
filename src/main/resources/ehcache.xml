@@ -50,14 +50,8 @@
 
     <!-- See http://ehcache.sourceforge.net/documentation/#mozTocId258426 for how to configure caching for your objects -->
 
-    <cache name="lk.rgd.crs.api.domain.Registrar"
-           maxElementsInMemory="2000"
-           eternal="false"
-           timeToIdleSeconds="1800"
-           timeToLiveSeconds="3600"
-           overflowToDisk="false"
-            />
-    <cache name="lk.rgd.crs.api.domain.Assignment"
+    <!--COMMON-->
+    <cache name="lk.rgd.common.api.domain.Location"
            maxElementsInMemory="2000"
            eternal="false"
            timeToIdleSeconds="1800"
@@ -66,6 +60,144 @@
             />
     <cache name="lk.rgd.common.api.domain.UserLocation"
            maxElementsInMemory="2000"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="3600"
+           overflowToDisk="false"
+            />
+
+    <cache name="lk.rgd.common.api.domain.User"
+           maxElementsInMemory="2000"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="3600"
+           overflowToDisk="false"
+            />
+
+    <cache name="lk.rgd.common.api.domain.Country"
+           maxElementsInMemory="500"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="3600"
+           overflowToDisk="false"
+            />
+
+    <cache name="lk.rgd.common.api.domain.District"
+           maxElementsInMemory="50"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="3600"
+           overflowToDisk="false"
+            />
+
+    <cache name="lk.rgd.common.api.domain.DSDivision"
+           maxElementsInMemory="500"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="3600"
+           overflowToDisk="false"
+            />
+
+    <cache name="lk.rgd.common.api.domain.Race"
+           maxElementsInMemory="20"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="3600"
+           overflowToDisk="false"
+            />
+
+    <cache name="lk.rgd.common.api.domain.Role"
+           maxElementsInMemory="10"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="3600"
+           overflowToDisk="false"
+            />
+
+    <!--CRS-->
+    <cache name="lk.rgd.crs.api.domain.MRDivision"
+           maxElementsInMemory="2000"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="3600"
+           overflowToDisk="false"
+            />
+
+    <cache name="lk.rgd.crs.api.domain.BDDivision"
+           maxElementsInMemory="2000"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="3600"
+           overflowToDisk="false"
+            />
+
+    <cache name="lk.rgd.crs.api.domain.Registrar"
+           maxElementsInMemory="100"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="3600"
+           overflowToDisk="false"
+            />
+
+    <cache name="lk.rgd.crs.api.domain.Assignment"
+           maxElementsInMemory="2000"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="3600"
+           overflowToDisk="false"
+            />
+
+    <cache name="lk.rgd.crs.api.domain.BirthDeclaration"
+           maxElementsInMemory="100"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="3600"
+           overflowToDisk="false"
+            />
+
+    <cache name="lk.rgd.crs.api.domain.Court"
+           maxElementsInMemory="100"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="3600"
+           overflowToDisk="false"
+            />
+
+    <cache name="lk.rgd.crs.api.domain.DeathRegister"
+           maxElementsInMemory="100"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="3600"
+           overflowToDisk="false"
+            />
+
+    <cache name="lk.rgd.crs.api.domain.MarriageRegister"
+           maxElementsInMemory="100"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="3600"
+           overflowToDisk="false"
+            />
+
+    <!--PRS-->
+    <cache name="lk.rgd.prs.api.domain.Address"
+           maxElementsInMemory="100"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="3600"
+           overflowToDisk="false"
+            />
+
+    <cache name="lk.rgd.prs.api.domain.Marriage"
+           maxElementsInMemory="100"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="3600"
+           overflowToDisk="false"
+            />
+
+    <cache name="lk.rgd.prs.api.domain.Person"
+           maxElementsInMemory="100"
            eternal="false"
            timeToIdleSeconds="1800"
            timeToLiveSeconds="3600"
