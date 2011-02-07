@@ -25,7 +25,7 @@
     </p>
     <s:form action="%{previous}" method="get">
         <s:if test="listPage">
-            <s:hidden name="pageNo" value="%{#request.pageNo}"/>
+            <s:hidden name="pageNo" value="%{#request.pageNo-1}"/>
             <s:hidden name="districtId" value="%{#request.districtId}"/>
             <s:hidden name="dsDivisionId" value="%{#request.dsDivisionId}"/>
             <s:hidden name="mrDivisionId" value="%{#request.mrDivisionId}"/>
