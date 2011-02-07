@@ -41,11 +41,11 @@ function validateRadioSet(fieldName, messageId, errormsg) {
     return printValidationMessage(messageId, errormsg);
 }
 
-function validatePin(fieldId, messageId, invalidmsg, errormsg) {
+function validatePin(fieldId, emptymsg, invalidmsg, errormsg) {
     var domObject = document.getElementById(fieldId);
 
     if (isFieldEmpty(domObject)) {
-        return printValidationMessage(messageId, errormsg);
+        return printValidationMessage(emptymsg, errormsg);
     }
     //if (!isFieldEmpty(domObject)) {
     //validatePINNumber(domObject, messageId, errormsg);
@@ -57,11 +57,11 @@ function validatePin(fieldId, messageId, invalidmsg, errormsg) {
 
 }
 
-function validateIdUkey(fieldId, messageId, invalidmsg, errormsg) {
+function validateIdUkey(fieldId, emptymsg, invalidmsg, errormsg) {
     var domObject = document.getElementById(fieldId);
 
     if (isFieldEmpty(domObject)) {
-        return printValidationMessage(messageId, errormsg);
+        return printValidationMessage(emptymsg, errormsg);
     }
     if (!isNumeric(domObject.value)) {
         return printValidationMessage(invalidmsg, errormsg);
@@ -169,7 +169,7 @@ function isFutureDate(selectDate) {
 }
 
 // shan
-function isDate(fieldId, emptymsg, messageId, errormsg) {
+function isDate(fieldId, emptymsg, invalidmsg, errormsg) {
     var domObject = document.getElementById(fieldId);
     if (isFieldEmpty(domObject)) {
         return printValidationMessage(emptymsg, errormsg);
@@ -177,7 +177,7 @@ function isDate(fieldId, emptymsg, messageId, errormsg) {
         var txtDate = document.getElementById(fieldId).value;
 
         if (isFutureDate(txtDate)) {
-            return printValidationMessage(messageId, errormsg);
+            return printValidationMessage(invalidmsg, errormsg);
         } else {
 
             var day,      // day
@@ -185,11 +185,11 @@ function isDate(fieldId, emptymsg, messageId, errormsg) {
                     year;     // year
 
             if (txtDate.length !== 10) {
-                return printValidationMessage(messageId, errormsg);
+                return printValidationMessage(invalidmsg, errormsg);
             }
 
             if (txtDate.substring(4, 5) !== '-' || txtDate.substring(7, 8) !== '-') {
-                return printValidationMessage(messageId, errormsg);
+                return printValidationMessage(invalidmsg, errormsg);
             }
 
             month = txtDate.substring(5, 7);
@@ -197,27 +197,27 @@ function isDate(fieldId, emptymsg, messageId, errormsg) {
             year = txtDate.substring(0, 4) - 0;
 
             if (year < 1000 || year > 3000) {
-                return printValidationMessage(messageId, errormsg);
+                return printValidationMessage(invalidmsg, errormsg);
             }
 
             if (month > 0 || month < 13) {
                 if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {
                     if (day < 0 || day > 31) {
-                        return printValidationMessage(messageId, errormsg);
+                        return printValidationMessage(invalidmsg, errormsg);
                     }
                 } else {
                     if (month == 2) {
                         if (day < 0 || day > 29) {
-                            return printValidationMessage(messageId, errormsg);
+                            return printValidationMessage(invalidmsg, errormsg);
                         }
                     } else {
                         if (day < 0 || day > 30) {
-                            return printValidationMessage(messageId, errormsg);
+                            return printValidationMessage(invalidmsg, errormsg);
                         }
                     }
                 }
             } else {
-                return printValidationMessage(messageId, errormsg);
+                return printValidationMessage(invalidmsg, errormsg);
             }
 
             return errormsg;
