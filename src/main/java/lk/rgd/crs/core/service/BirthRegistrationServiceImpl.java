@@ -605,7 +605,7 @@ public class BirthRegistrationServiceImpl implements
         // does the user have access to the BDF being added (i.e. check district and DS division)
         validateAccessOfUser(user, birth);
         // check approve permission
-        if (!user.isAuthorized(Permission.APPROVE_BDF)) {
+        if (!user.isAuthorized(Permission.APPROVE_BDF_BELATED)) {
             handleException("User : " + user.getUserId() + " is not allowed to approve/reject birth declarations",
                 ErrorCodes.PERMISSION_DENIED);
         }
