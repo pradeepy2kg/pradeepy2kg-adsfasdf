@@ -87,22 +87,24 @@
             <tr>
                 <td><s:a href="%{mainUrl}"><s:label value="%{getText('goToMain_link.label')}"/></s:a></td>
                 <td>
-                    <s:if test="#request.allowApproveBDF">
-                        <s:if test="approved">
+                    <s:if test="!#session.user_bean.role.roleId.equals('DEO')">
+                        <s:if test="#request.allowApproveBDF">
+                            <s:if test="approved">
+                                <s:a href="%{printBirthCertificate}">
+                                    <s:label value="%{getText('printBirthCertificate_link.label')}"/></s:a>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                            </s:if>
+                            <s:else>
+                                <s:a href="%{approveConfirmation}"><s:label value="%{getText('approve_link.label')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
+                            </s:else>
+                        </s:if>
+                        <s:if test="skipConfirmationChages">
+                            <%--<s:if test="#request.allowPrintCertificate">--%>
                             <s:a href="%{printBirthCertificate}">
                                 <s:label value="%{getText('printBirthCertificate_link.label')}"/></s:a>
                             &nbsp;&nbsp;&nbsp;&nbsp;
+                            <%--</s:if>--%>
                         </s:if>
-                        <s:else>
-                            <s:a href="%{approveConfirmation}"><s:label value="%{getText('approve_link.label')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
-                        </s:else>
-                    </s:if>
-                    <s:if test="skipConfirmationChages">
-                        <%--<s:if test="#request.allowPrintCertificate">--%>
-                        <s:a href="%{printBirthCertificate}">
-                            <s:label value="%{getText('printBirthCertificate_link.label')}"/></s:a>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <%--</s:if>--%>
                     </s:if>
                 </td>
             </tr>
