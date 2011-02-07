@@ -595,8 +595,8 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                     DeathAlteration.AGE, lk.rgd.common.util.CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(DeathAlteration.AGE), preferedLan)));
             }
 
-            if (!(deathAlteration.getDeathPerson().getDeathPersonGender() == deathAlteration.getDeathPerson().getDeathPersonGender())) {
-                changesList.add(new FieldValue(GenderUtil.getGender(deathAlteration.getDeathPerson().getDeathPersonGender(),
+            if (!(deathRegister.getDeathPerson().getDeathPersonGender() == deathAlteration.getDeathPerson().getDeathPersonGender())) {
+                changesList.add(new FieldValue(GenderUtil.getGender(deathRegister.getDeathPerson().getDeathPersonGender(),
                     preferedLan), GenderUtil.getGender(deathAlteration.getDeathPerson().getDeathPersonGender(), preferedLan),
                     DeathAlteration.GENDER, lk.rgd.common.util.CommonUtil.getYesOrNo(deathAlteration.getApprovalStatuses().get(DeathAlteration.GENDER), preferedLan)));
             }
