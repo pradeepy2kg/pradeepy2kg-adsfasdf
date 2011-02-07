@@ -24,17 +24,18 @@
         }
 
         //validate Male/Female
-        errormsg = validateSelectOption("raceMale", "errorMaleRace", errormsg);
-        errormsg = validateSelectOption("raceFemale", "errorFemaleRace", errormsg);
+        errormsg = validateSelectOption("raceMale", "errorEmptyMaleRace", errormsg);
+        errormsg = validateSelectOption("raceFemale", "errorEmptyFemaleRace", errormsg);
 
-        errormsg = validateEmptyField("ageMale", "errorAgeMale", errormsg);
-        errormsg = validateEmptyField("ageFemale", "errorAgeFemale", errormsg);
-        errormsg = validateEmptyField("nameOfficialMale", "errorNameOfficialMale", errormsg);
-        errormsg = validateEmptyField("nameOfficialFemale", "errorNameOfficialFemale", errormsg);
-        errormsg = validateEmptyField("addressMale", "errorAddressMale", errormsg);
-        errormsg = validateEmptyField("addressFemale", "errorAddressFemale", errormsg);
+        errormsg = validateEmptyField("ageMale", "errorEmptyAgeMale", errormsg);
+        errormsg = validateEmptyField("ageFemale", "errorEmptyAgeFemale", errormsg);
 
-        errormsg = validateSerialNo("serialNumber", "errorSerialNumber", errormsg);
+        errormsg = validateEmptyField("nameOfficialMale", "errorEmptyNameOfficialMale", errormsg);
+        errormsg = validateEmptyField("nameOfficialFemale", "errorEmptyNameOfficialFemale", errormsg);
+        errormsg = validateEmptyField("addressMale", "errorEmptyAddressMale", errormsg);
+        errormsg = validateEmptyField("addressFemale", "errorEmptyAddressFemale", errormsg);
+
+        errormsg = validateSerialNo("serialNumber", "errorEmptySerialNumber", "errorInvalidSerialNumber", errormsg);
 
         errormsg = validateRegisterAndMarriedDate(errormsg);
 
@@ -43,16 +44,16 @@
 
     // validate date of marriage and date of registration
     function validateRegistrationDetails(errormsg) {
-        errormsg = isDate("marriageDatePick", "errorMarriageDate", errormsg);
+        errormsg = isDate("marriageDatePick", "errorEmptyMarriageDate", "errorInvalidMarriageDate", errormsg);
         //validate registrar details
-        errormsg = validatePin("regPIN", "errorRegistrarPIN", errormsg);
-        errormsg = validateEmptyField("regPlaceInOfficialLang", "errorRegistrationPlace", errormsg);
-        errormsg = validateEmptyField("regNameInOfficialLang", "errorRegistrarName", errormsg);
-        errormsg = isDate("registrationDatePicker", "errorRegistrationDate", errormsg);
+        errormsg = validatePin("regPIN", "errorEmptyRegistrarPIN", "errorInvalidRegistrarPIN", errormsg);
+        errormsg = validateEmptyField("regPlaceInOfficialLang", "errorEmptyRegistrationPlace", errormsg);
+        errormsg = validateEmptyField("regNameInOfficialLang", "errorEmptyRegistrarName", errormsg);
+        errormsg = isDate("registrationDatePicker", "errorEmptyRegistrationDate", "errorInvalidRegistrationDate", errormsg);
 
         var editMode = document.getElementById("editMode").value;
         if (editMode == "false") {
-            errormsg = validateEmptyField("scannedImage", "errorscannedImage", errormsg);
+            errormsg = validateEmptyField("scannedImage", "errorEmptyscannedImage", errormsg);
         }
         return errormsg;
     }
@@ -62,8 +63,7 @@
         var register = new Date(document.getElementById('registrationDatePicker').value);
 
         if(married.getTime() > register.getTime()) {
-        alert("AAAAAAAAAAAAAAA");
-            errormsg = errormsg + "\n" + document.getElementById('errorMarriedRegisterDate').value;
+            errormsg = errormsg + "\n" + document.getElementById('errorMarriageRegisterationDate').value;
         }
         return errormsg;
     }
@@ -725,16 +725,25 @@
 </s:form>
 <s:hidden id="errorOnXOrVOfPIN" value="%{getText('NIC.error.add.VX')}"/>
 
-<s:hidden id="errorMarriageDate"
+<s:hidden id="errorEmptyMarriageDate"
+          value="%{getText('error.js.marriageregister.marriagedate') + getText('message.cannotbeempty')}"/>
+<s:hidden id="errorInvalidMarriageDate"
           value="%{getText('error.invalid') + getText('error.js.marriageregister.marriagedate')}"/>
-<s:hidden id="errorRegistrationDate"
+
+<s:hidden id="errorEmptyRegistrationDate"
+          value="%{getText('error.js.marriageregister.registrationdate') + getText('message.cannotbeempty')}"/>
+<s:hidden id="errorInvalidRegistrationDate"
           value="%{getText('error.invalid') + getText('error.js.marriageregister.registrationdate')}"/>
-<s:hidden id="errorRegistrarPIN"
+
+<s:hidden id="errorEmptyRegistrarPIN"
+          value="%{getText('error.js.marriageregister.registrarPIN') + getText('message.cannotbeempty')}"/>
+<s:hidden id="errorInvalidRegistrarPIN"
           value="%{getText('error.invalid') + getText('error.js.marriageregister.registrarPIN')}"/>
-<s:hidden id="errorRegistrarName"
-          value="%{getText('error.invalid') + getText('error.js.marriageregister.registrarName')}"/>
-<s:hidden id="errorRegistrationPlace"
-          value="%{getText('error.invalid') + getText('error.js.marriageregister.registrationPlace')}"/>
+
+<s:hidden id="errorEmptyRegistrarName"
+          value="%{getText('error.js.marriageregister.registrarName') + getText('message.cannotbeempty')}"/>
+<s:hidden id="errorEmptyRegistrationPlace"
+          value="%{getText('error.js.marriageregister.registrationPlace') + getText('message.cannotbeempty')}"/>
 
 <%--
 <s:hidden id="errorMalePIN" value="%{getText('error.invalid') + getText('error.js.marriageregister.malePIN')}"/>
@@ -746,24 +755,25 @@
           value="%{getText('error.invalid') + getText('error.js.marriageregister.dateOfBirthFemale')}"/>
 
  --%>
-<s:hidden id="errorAgeMale" value="%{getText('error.invalid') + getText('error.js.marriageregister.ageMale')}"/>
-<s:hidden id="errorAgeFemale" value="%{getText('error.invalid') + getText('error.js.marriageregister.ageFemale')}"/>
-<s:hidden id="errorNameOfficialMale"
-          value="%{getText('error.invalid') + getText('error.js.marriageregister.nameOfficialMale')}"/>
-<s:hidden id="errorNameOfficialFemale"
-          value="%{getText('error.invalid') + getText('error.js.marriageregister.nameOfficialFemale')}"/>
-<s:hidden id="errorAddressMale" value="%{getText('error.invalid') + getText('error.js.marriageregister.addressMale')}"/>
-<s:hidden id="errorAddressFemale"
-          value="%{getText('error.invalid') + getText('error.js.marriageregister.addressFemale')}"/>
+<s:hidden id="errorEmptyAgeMale" value="%{getText('error.invalid') + getText('error.js.marriageregister.ageMale')}"/>
+<s:hidden id="errorEmptyAgeFemale" value="%{getText('error.invalid') + getText('error.js.marriageregister.ageFemale')}"/>
+<s:hidden id="errorEmptyNameOfficialMale"
+          value="%{getText('error.js.marriageregister.nameOfficialMale') + getText('message.cannotbeempty')}"/>
+<s:hidden id="errorEmptyNameOfficialFemale"
+          value="%{getText('error.js.marriageregister.nameOfficialFemale') + getText('message.cannotbeempty')}"/>
+<s:hidden id="errorEmptyAddressMale" value="%{getText('error.js.marriageregister.addressMale') + getText('message.cannotbeempty')}"/>
+<s:hidden id="errorEmptyAddressFemale"
+          value="%{getText('error.js.marriageregister.addressFemale') + getText('message.cannotbeempty')}"/>
 
-<s:hidden id="errorMaleRace" value="%{getText('error.invalid') + getText('error.js.marriageregister.maleRace')}"/>
-<s:hidden id="errorFemaleRace" value="%{getText('error.invalid') + getText('error.js.marriageregister.femaleRace')}"/>
+<s:hidden id="errorEmptyMaleRace" value="%{getText('error.js.marriageregister.maleRace') + getText('message.cannotbeempty')}"/>
+<s:hidden id="errorEmptyFemaleRace" value="%{getText('error.js.marriageregister.femaleRace') + getText('message.cannotbeempty')}"/>
 
-<s:hidden id="errorSerialNumber"
+<s:hidden id="errorEmptySerialNumber"
+          value="%{getText('error.js.marriageregister.serialNumber') + getText('message.cannotbeempty')}"/>
+<s:hidden id="errorInvalidSerialNumber"
           value="%{getText('error.invalid') + getText('error.js.marriageregister.serialNumber')}"/>
 
-<s:hidden id="errorscannedImage"
-          value="%{getText('error.invalid') + getText('error.js.marriageregister.scannedImage')}"/>
-<s:hidden id="errorMarriedRegisterDate" value="%{getText('error.dateOfMarriage.with.registerDate')}"/>
-
+<s:hidden id="errorEmptyscannedImage"
+          value="%{getText('error.js.marriageregister.scannedImage') + getText('message.cannotbeempty')}"/>
+<s:hidden id="errorMarriageRegisterationDate" value="%{getText('error.dateOfMarriage.with.registerDate')}"/>  
 </div>

@@ -36,13 +36,13 @@
     //TODO : following methods has to be generalized
     function validateSerial() {
         var errormsg = "";
-        errormsg = validateSerialNo("serialNumber", "errorSerialNumber", errormsg);
+        errormsg = validateSerialNo("serialNumber", "errorEmptySerialNumber", "errorInvalidSerialNumber", errormsg);
         return printErrorMessages(errormsg);
     }
 
     function validatePINNumber() {
         var errormsg = "";
-        errormsg = validatePin("pinOrNic", "errorRegistrarPIN", errormsg);
+        errormsg = validatePin("pinOrNic", "errorEmptyRegistrarPIN", "errorInvalidRegistrarPIN", errormsg);
         return printErrorMessages(errormsg);
     }
 
@@ -51,14 +51,14 @@
         //TODO: Validate for leap years
         //TODO: remove validation if both date fields are empty.
         var errormsg = "";
-        errormsg = isDate("searchStartDatePicker", "errorStartDate", errormsg);
-        errormsg = isDate("searchEndDatePicker", "errorEndDate", errormsg);
+        errormsg = isDate("searchStartDatePicker", "errorEmptyStartDate", "errorInvalidStartDate", errormsg);
+        errormsg = isDate("searchEndDatePicker", "errorEmptyEndDate", "errorInvalidEndDate", errormsg);
         return printErrorMessages(errormsg);
     }
 
     function validateMarriageIdUkey() {
         var errormsg = "";
-        errormsg = validateIdUkey("marriageIdUKey", "errorMarriageIdUKey", errormsg);
+        errormsg = validateIdUkey("marriageIdUKey", "errorEmptyMarriageIdUKey", "errorInvalidMarriageIdUKey", errormsg);
         return printErrorMessages(errormsg);
     }
 
@@ -425,13 +425,28 @@
         </s:if>
     </div>
 </fieldset>
-<s:hidden id="errorSerialNumber"
+<s:hidden id="errorEmptySerialNumber"
+          value="%{getText('label.marriageregister.serial') + getText('message.cannotbeempty')}"/>
+<s:hidden id="errorInvalidSerialNumber"
           value="%{getText('error.invalid') + getText('label.marriageregister.serial')}"/>
-<s:hidden id="errorRegistrarPIN"
+
+<s:hidden id="errorEmptyRegistrarPIN"
+          value="%{getText('label.marriageregister.pin') + getText('message.cannotbeempty')}"/>
+<s:hidden id="errorInvalidRegistrarPIN"
           value="%{getText('error.invalid') + getText('label.marriageregister.pin')}"/>
-<s:hidden id="errorStartDate"
+
+<s:hidden id="errorEmptyStartDate"
+          value="%{getText('date.from.label') + getText('message.cannotbeempty')}"/>
+<s:hidden id="errorInvalidStartDate"
           value="%{getText('error.invalid') + getText('date.from.label')}"/>
-<s:hidden id="errorEndDate"
+
+
+<s:hidden id="errorEmptyEndDate"
+          value="%{getText('date.to.label') + getText('message.cannotbeempty')}"/>
+<s:hidden id="errorInvalidEndDate"
           value="%{getText('error.invalid') + getText('date.to.label')}"/>
-<s:hidden id="errorMarriageIdUKey"
+
+<s:hidden id="errorEmptyMarriageIdUKey"
+          value="%{getText('label.marriageregister.number') + getText('message.cannotbeempty')}"/>
+<s:hidden id="errorInvalidMarriageIdUKey"
           value="%{getText('error.invalid') + getText('label.marriageregister.number')}"/>

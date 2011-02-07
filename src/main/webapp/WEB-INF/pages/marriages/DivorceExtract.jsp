@@ -33,15 +33,6 @@
 <script type="text/javascript">
     function initPage() {
     }
-
-    function validateComments() {
-        var errormsg = "";
-        var mode = document.getElementById("mode").value;
-        if (mode == 'divorce') {
-            errormsg = validateEmptyField("divorceComment", "errorComment", errormsg);
-            return printErrorMessages(errormsg);
-        }
-    }
 </script>
 <div id="birth-certificate-outer">
 <s:if test="mode=='print'">
@@ -83,7 +74,7 @@
             <%-- </s:if> --%>
         <tr>
             <td colspan="3" align="right">
-                <div class="form-submit" style="margin-top:0;">
+                <div class="form-submit-1" style="margin-top:0;">
                         <%-- <s:if test="marriage.state.ordinal()!=12"> --%>
                     <s:submit value="%{getText('button.markasprinted')}"/>
                         <%-- </s:if> --%>
