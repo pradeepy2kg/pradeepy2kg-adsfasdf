@@ -154,7 +154,9 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
 
         role = user.getRole().getRoleId();
 
-        statistics = statisticsDAO.getByUser(user.getUserId());
+        statistics = new Statistics();    //todo remove this after performance test
+
+        /*statistics = statisticsDAO.getByUser(user.getUserId());   //todo uncomment this after performance test
         if (statistics == null) {
             statistics = new Statistics();
         }
@@ -170,7 +172,7 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
                 dsDivisionDAO.getDSDivisionByPK(dsDivisionId), roleDAO.getRole(Role.ROLE_DEO));
         }
         deoUserId = 1;
-        userRole = role;
+        userRole = role;*/
 
         return SUCCESS;
     }
@@ -191,8 +193,8 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
 
         statistics = new Statistics();   // TODO: remove this line after the performance tests
 
-        districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
-        if (districtList.size() > 0) {
+        /*districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
+        if (districtList.size() > 0) {                                                                 // TODO: uncomment this after the performance tests
             districtId = districtList.keySet().iterator().next();
         }
         divisionList = dsDivisionDAO.getAllDSDivisionNames(districtId, user.getPrefLanguage(), user);
@@ -201,7 +203,7 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
             deoList = userDAO.getDEOsByDSDivision(user.getPrefLanguage(), user,
                 dsDivisionDAO.getDSDivisionByPK(dsDivisionId), roleDAO.getRole(Role.ROLE_DEO));
         }
-        deoUserId = 1;
+        deoUserId = 1;*/
         /*adrList = userDAO.getADRsByDistrictId(districtDAO.getDistrict(districtId), roleDAO.getRole(Role.ROLE_ADR));
         adrUserId = 1;*/
 
@@ -263,8 +265,8 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
 
             statistics = new Statistics();  // TODO: remove this line after the performance tests
 
-            districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
-            if (districtList.size() > 0) {
+            /*districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
+            if (districtList.size() > 0) {                                                                    TODO: remove this comments after the performance tests
                 districtId = districtList.keySet().iterator().next();
             }
             divisionList = dsDivisionDAO.getAllDSDivisionNames(districtId, user.getPrefLanguage(), user);
@@ -274,7 +276,7 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
                     dsDivisionDAO.getDSDivisionByPK(dsDivisionId), roleDAO.getRole(Role.ROLE_DEO));
             }
             deoUserId = 1;
-            userRole = uRole;
+            userRole = uRole;*/
 
             return SUCCESS + uRole;
 
@@ -301,9 +303,9 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
 
         statistics = new Statistics();    // TODO: remove this line after the performance tests
 
-        districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
+        /*districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
         if (districtList.size() > 0) {
-            districtId = districtList.keySet().iterator().next();
+            districtId = districtList.keySet().iterator().next();                              TODO: remove this comments after the performance tests
         }
         divisionList = dsDivisionDAO.getAllDSDivisionNames(districtId, user.getPrefLanguage(), user);
         if (divisionList.size() > 0) {
@@ -311,7 +313,7 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
             deoList = userDAO.getDEOsByDSDivision(user.getPrefLanguage(), user,
                 dsDivisionDAO.getDSDivisionByPK(dsDivisionId), roleDAO.getRole(Role.ROLE_DEO));
         }
-        deoUserId = 1;
+        deoUserId = 1;*/
         /*adrList = userDAO.getADRsByDistrictId(districtDAO.getDistrict(districtId), roleDAO.getRole(Role.ROLE_ADR));
         adrUserId = 1;*/
 
@@ -402,8 +404,8 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
 
         statistics = new Statistics();  // TODO: remove this line after the performance tests
 
-        districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
-        if (districtList.size() > 0) {
+        /*districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
+        if (districtList.size() > 0) {                                                             TODO: remove this comments after the performance tests
             districtId = birthDistrictId = districtList.keySet().iterator().next();
         }
         divisionList = dsDivisionDAO.getAllDSDivisionNames(districtId, user.getPrefLanguage(), user);
@@ -412,7 +414,7 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
             deoList = userDAO.getDEOsByDSDivision(user.getPrefLanguage(), user,
                 dsDivisionDAO.getDSDivisionByPK(dsDivisionId), roleDAO.getRole(Role.ROLE_DEO));
         }
-        deoUserId = 1;
+        deoUserId = 1;*/
         role = userRole = user.getRole().getRoleId();
         return SUCCESS;
     }

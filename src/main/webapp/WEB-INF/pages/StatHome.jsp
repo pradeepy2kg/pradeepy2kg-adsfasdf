@@ -213,7 +213,7 @@
 </s:if>
 <s:else>
 <s:if test="role != 'DEO'">
-<s:form action="eprShowStatistics.do" method="post">
+<%--<s:form action="eprShowStatistics.do" method="post">
     <div id="stat-preferences">
         <table border="0" width="100%" cellpadding="5" cellspacing="5">
             <tr bgcolor="#eeeeee">
@@ -267,7 +267,7 @@
             </tr>
         </table>
     </div>
-</s:form>
+</s:form>--%>
 </s:if>
 <s:if test="role == 'DEO' || role == 'ADR' || role == 'DR'">
     <div id="stat-charts">
