@@ -116,7 +116,7 @@
                     </td>
                     <td>
                         <s:select id="districtId" name="districtId" list="districtList"
-                                  value="districtId"
+                                  value="%{districtId}"
                                   cssStyle="width:98.5%; width:240px;"
                                   onchange="populateDSDivisions('districtId','dsDivisionId','mrDivisionId', 'Marriage', true)"/>
                     </td>
@@ -126,7 +126,7 @@
                     </td>
                     <td>
                         <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList"
-                                  value="dsDivisionId"
+                                  value="%{dsDivisionId}"
                                   cssStyle="width:98.5%; width:240px;"
                                   onchange="populateDivisions('dsDivisionId', 'mrDivisionId', 'Marriage', true)"/>
                     </td>
@@ -137,7 +137,7 @@
                     </td>
                     <td>
                         <s:select id="mrDivisionId" name="mrDivisionId" list="mrDivisionList"
-                                  value="mrDivisionId"
+                                  value="%{request.mrDivisionId}"
                                   cssStyle="width:98.5%; width:240px;"/>
                     </td>
                     <td colspan="3">
@@ -150,7 +150,7 @@
                     </td>
                     <td>
                         <s:select id="state" name="state" list="stateList" headerKey="-1"
-                                  cssStyle="width:98.5%; width:240px;"/>
+                                  cssStyle="width:98.5%; width:240px;" value="%{state}"/>
                     </td>
                     <td colspan="3">
                         <div class="form-submit">
@@ -435,5 +435,3 @@
           value="%{getText('error.invalid') + getText('date.to.label')}"/>
 <s:hidden id="errorMarriageIdUKey"
           value="%{getText('error.invalid') + getText('label.marriageregister.number')}"/>
-
-
