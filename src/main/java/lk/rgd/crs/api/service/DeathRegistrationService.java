@@ -274,4 +274,15 @@ public interface DeathRegistrationService {
      */
     public List<DeathRegister> getPaginatedDeathRegisterListByDeathDivisionAndRegistrationDateRange(int deathDivisionId,
         Date startDate, Date endDate, boolean active, User user);
+
+    /**
+     *
+     * @param dsDivision    death division id
+     * @param startDate     registrations from
+     * @param endDate       registrations to
+     * @param state         active record
+     * @param user
+     * @return
+     */
+    public List<DeathRegister> getByDSDivisionAndStatusAndRegistrationDateRange(DSDivision dsDivision, Date startDate, Date endDate, DeathRegister.State state, User user);
 }

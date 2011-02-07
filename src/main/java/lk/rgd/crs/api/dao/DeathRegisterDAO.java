@@ -169,6 +169,16 @@ public interface DeathRegisterDAO {
      */
     public List<DeathRegister> getPaginatedDeathRegisterListByDSDivisionAndRegistrationDateRange(int dsDivisionId,
         Date startDate, Date endDate, int pageNo, int numOfRows, boolean active);
+
+    /**
+     * 
+     * @param deathDivision
+     * @param status
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    public List<DeathRegister> getDeathRegisterByDivisionAndStatusAndDate(DSDivision deathDivision, DeathRegister.State status, Date startDate, Date endDate);
 }
 
 
