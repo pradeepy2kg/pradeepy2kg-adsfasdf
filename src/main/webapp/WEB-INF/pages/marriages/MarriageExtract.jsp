@@ -620,6 +620,6 @@
         </div>
     </s:form>
     <s:hidden id="errorComment"
-              value="%{getText('error.invalid') + getText('error.js.marriageregister.comment')}"/>
+              value="%{getText('error.js.marriageregister.comment') + getText('message.cannotbeempty')}"/>
 </s:if>
 </div>

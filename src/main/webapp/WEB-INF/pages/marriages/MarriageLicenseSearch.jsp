@@ -7,7 +7,7 @@
 <script type="text/javascript">
     function validateMarriageIdUkey() {
         var errormsg = "";
-        errormsg = validateIdUkey("marriageIdUKey", "errorMarriageIdUKey", errormsg);
+        errormsg = validateIdUkey("marriageIdUKey", "errorEmptyMarriageIdUKey", "errorInvalidMarriageIdUKey", errormsg);
         return printErrorMessages(errormsg);
     }
 
@@ -42,7 +42,9 @@
         </tbody>
     </table>
 </s:form>
-<s:hidden id="errorMarriageIdUKey"
+<s:hidden id="errorEmptyMarriageIdUKey"
+          value="%{getText('label.marriageregister.number') + getText('message.cannotbeempty')}"/>
+<s:hidden id="errorInvalidMarriageIdUKey"
           value="%{getText('error.invalid') + getText('label.marriageregister.number')}"/>
 
 

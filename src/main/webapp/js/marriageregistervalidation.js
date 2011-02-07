@@ -41,26 +41,30 @@ function validateRadioSet(fieldName, messageId, errormsg) {
     return printValidationMessage(messageId, errormsg);
 }
 
-function validatePin(fieldId, messageId, errormsg) {
+function validatePin(fieldId, messageId, invalidmsg, errormsg) {
     var domObject = document.getElementById(fieldId);
-    if (!isFieldEmpty(domObject)) {
-        //validatePINNumber(domObject, messageId, errormsg);
-        if (isValidPIN(domObject)) {
-            return errormsg;
-        }
+
+    if (isFieldEmpty(domObject)) {
+        return printValidationMessage(messageId, errormsg);
     }
-    return printValidationMessage(messageId, errormsg);
+    //if (!isFieldEmpty(domObject)) {
+    //validatePINNumber(domObject, messageId, errormsg);
+    if (isValidPIN(domObject)) {
+        return errormsg;
+    }
+    // }
+    return printValidationMessage(invalidmsg, errormsg);
 
 }
 
-function validateIdUkey(fieldId, messageId, errormsg) {
+function validateIdUkey(fieldId, messageId, invalidmsg, errormsg) {
     var domObject = document.getElementById(fieldId);
 
     if (isFieldEmpty(domObject)) {
         return printValidationMessage(messageId, errormsg);
     }
     if (!isNumeric(domObject.value)) {
-        return printValidationMessage(messageId, errormsg);
+        return printValidationMessage(invalidmsg, errormsg);
     }
     return errormsg;
 }
@@ -86,20 +90,20 @@ function isNumeric(strString) {
 }
 
 
-function validateSerialNo(fieldId, messageId, errormsg) {
+function validateSerialNo(fieldId, emptymsg, invalidmsg, errormsg) {
     var domObject = document.getElementById(fieldId);
 
     if (isFieldEmpty(domObject)) {
-        return printValidationMessage(messageId, errormsg);
+        return printValidationMessage(emptymsg, errormsg);
     }
     var reg = /^20([1-9][0-9])[0|1]([0-9]{5})$/;
     var notbe = /^20([1-9][0-9])[0|1]([0]{5})$/;
 
     if (notbe.test(domObject.value.trim()) == true) {
-        return printValidationMessage(messageId, errormsg);
+        return printValidationMessage(invalidmsg, errormsg);
     } else {
         if (reg.test(domObject.value.trim()) == false) {
-            return printValidationMessage(messageId, errormsg);
+            return printValidationMessage(invalidmsg, errormsg);
         }
     }
     return errormsg;
@@ -165,10 +169,10 @@ function isFutureDate(selectDate) {
 }
 
 // shan
-function isDate(fieldId, messageId, errormsg) {
+function isDate(fieldId, emptymsg, messageId, errormsg) {
     var domObject = document.getElementById(fieldId);
     if (isFieldEmpty(domObject)) {
-        return printValidationMessage(messageId, errormsg);
+        return printValidationMessage(emptymsg, errormsg);
     } else {
         var txtDate = document.getElementById(fieldId).value;
 
@@ -177,8 +181,8 @@ function isDate(fieldId, messageId, errormsg) {
         } else {
 
             var day,      // day
-                month,    // month
-                year;     // year
+                    month,    // month
+                    year;     // year
 
             if (txtDate.length !== 10) {
                 return printValidationMessage(messageId, errormsg);
@@ -188,7 +192,7 @@ function isDate(fieldId, messageId, errormsg) {
                 return printValidationMessage(messageId, errormsg);
             }
 
-            month = txtDate.substring(5, 7); 
+            month = txtDate.substring(5, 7);
             day = txtDate.substring(8, 10) - 0;
             year = txtDate.substring(0, 4) - 0;
 
