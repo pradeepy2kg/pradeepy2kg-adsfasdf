@@ -57,6 +57,9 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     private List<UserWarning> userWarnings;
     private List<UserWarning> warnings;
 
+    private int districtId;
+    private int pageNo;
+    private int printStart;
     private int marriageDistrictId;           //use for both male /female and both cases
     private int dsDivisionId;
     private int mrDivisionId;             //use for both male /female and both cases
@@ -877,6 +880,30 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     public void setMarriageDistrictId(int marriageDistrictId) {
         this.marriageDistrictId = marriageDistrictId;
+    }
+
+    public int getDistrictId() {
+        return districtId;
+    }
+
+    public void setDistrictId(int districtId) {
+        this.districtId = districtId;
+    }
+
+    public int getPageNo() {
+        return pageNo;
+    }
+
+    public void setPageNo(int pageNo) {
+        this.pageNo = pageNo;
+    }
+
+    public int getPrintStart() {
+        return printStart;
+    }
+
+    public void setPrintStart(int printStart) {
+        this.printStart = printStart;
     }
 
     public int getDsDivisionId() {
