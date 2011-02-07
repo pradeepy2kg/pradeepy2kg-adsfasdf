@@ -285,15 +285,27 @@ public class MarriageRegistrationValidator {
         final Person groom = populationRegistry.findPersonByPIN(Long.
             parseLong(register.getMale().getIdentificationNumberMale()), user);
 
-        final Person bridesFather = populationRegistry.findUniquePersonByPINorNIC(bride.getFatherPINorNIC(), user);
-        final Person bridesMother = populationRegistry.findUniquePersonByPINorNIC(bride.getMotherPINorNIC(), user);
-        final Person groomsFather = populationRegistry.findUniquePersonByPINorNIC(groom.getFatherPINorNIC(), user);
-        final Person groomsMother = populationRegistry.findUniquePersonByPINorNIC(groom.getFatherPINorNIC(), user);
+        final Person bridesFather = bride.getFather();
+        final Person bridesMother = bride.getMother();
+        final Person groomsFather = groom.getFather();
+        final Person groomsMother = groom.getMother();
         final List<Person> groomsGrandFathers = populationRegistry.findGrandFather(groom, user);
         final List<Person> bridesGrandMothers = populationRegistry.findGrandMother(bride, user);
         final List<Person> bridesChildren = populationRegistry.findAllChildren(bride, user);
         final List<Person> groomsChildren = populationRegistry.findAllChildren(groom, user);
         boolean prohibited = false;
+        //check father mismatched
+        if (bridesFather != null && !bridesFather.equals(populationRegistry.
+            findUniquePersonByPINorNIC(register.getFemale().getFatherIdentificationNumberFemale(), user))) {
+            handleException("given father information for bride is mismatched with PRS father information's for bride",
+                ErrorCodes.BRIDES_FATHER_IN_PRS_IS_MISMATCHED_WITH_GIVEN_FATHER);
+        }
+        if (groomsFather != null && !groomsFather.equals(populationRegistry.
+            findUniquePersonByPINorNIC(register.getMale().getFatherIdentificationNumberMale(), user))) {
+            handleException("given father information for groom is mismatched with PRS father information's for groom",
+                ErrorCodes.GROOMS_FATHER_IN_PRS_IS_MISMATCHED_WITH_GIVEN_FATHER);
+        }
+
 
         //One party is a child of the other party
         //check is  bride is daughter of groom

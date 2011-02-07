@@ -5,7 +5,7 @@
     <%--warning at approval--%>
     <s:form action="eprApproveMarriageNotice.do">
         <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;">
-        <legend><b><s:label value="%{getText('message.marriageNotice.warning.label')}"/></b></legend>
+            <legend><b><s:label value="%{getText('message.marriageNotice.warning.label')}"/></b></legend>
             <table class="birth-declaration-approval-warning-table" style="margin-left:10px;margin-top:10px;">
                 <caption/>
                 <col/>
@@ -21,7 +21,8 @@
                 </tr>
                 <tr></tr>
                 <tr>
-                    <td align="right"><s:label value="%{getText('label.apply.ignore.warnings')}" cssStyle="color:black;"/></td>
+                    <td align="right"><s:label value="%{getText('label.apply.ignore.warnings')}"
+                                               cssStyle="color:black;"/></td>
                     <td align="center">
                     <td><s:checkbox name="ignoreWarnings"/></td>
                     </td>
@@ -41,6 +42,7 @@
 
         <s:submit value="%{getText('button.ignoreWarnings')}"/>
         <s:hidden name="idUKey" value="%{#request.idUKey}"/>
+        <s:hidden name="ignoreWarnings" value="true"/>
         <s:hidden name="pageNo" value="%{#request.pageNo}"/>
         <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
         <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>

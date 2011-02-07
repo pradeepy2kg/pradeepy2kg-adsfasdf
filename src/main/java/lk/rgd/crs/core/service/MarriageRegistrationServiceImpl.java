@@ -536,6 +536,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         if (existingNotice == null) {
             handleException("cannot find record for approval idUKey :" + idUKey, ErrorCodes.CAN_NOT_FIND_MARRIAGE_NOTICE);
         }
+        final MarriageRegister.State currentState = existingNotice.getState();
         //check is user has permission to deal with this marriage notice
         checkUserPermissionForDeleteApproveAndRejectNotice(existingNotice, type, user);
         //check is pre request are full filled before approve
@@ -581,10 +582,18 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         //if current state is NOTICE_APPROVED that mean we approved single notice or we are approving second notice(license
         // collect party) when notice become NOTICE_APPROVE it eligible for printing License so we have to validate
         // that marriage in this evens as well
-        /*    if (existingNotice.getState() == MarriageRegister.State.NOTICE_APPROVED) {
+        if (existingNotice.getState() == MarriageRegister.State.NOTICE_APPROVED && !ignoreWarnings) {
             warnings = marriageRegistrationValidator.checkUserWarningsForSecondNoticeApproval(existingNotice, user);
-            return warnings;
-        }*/
+            if (warnings.size() > 0) {
+                if (user.getRole().getRoleId().equals("RG")) {
+                    //only RG is shown those warnings
+                    existingNotice.setState(currentState);
+                    return warnings;
+                } else {
+                    handleException(warnings.get(0).getMessage(), ErrorCodes.UNABLE_APPROVE_MARRIAGE_NOTICE_PROHIBITED_RELATIONSHIP);
+                }
+            }
+        }
         if (warnings.size() == 0 || ignoreWarnings) {
             //if we change notice state to NOTICE_APPROVED  we have to validate more
             marriageRegistrationDAO.updateMarriageRegister(existingNotice, user);

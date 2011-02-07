@@ -487,6 +487,15 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
                             (marriage.getSerialOfFemaleNotice() != null) ?
                                 Long.toString(marriage.getSerialOfFemaleNotice()) : getText("message.not.yet.add")}));
                     break;
+                case ErrorCodes.UNABLE_APPROVE_MARRIAGE_NOTICE_PROHIBITED_RELATIONSHIP:
+                    addActionError(getText("error.approval.failed", actionMassageArray) + " , " + e.getMessage());
+                    break;
+                case ErrorCodes.BRIDES_FATHER_IN_PRS_IS_MISMATCHED_WITH_GIVEN_FATHER:
+                    addActionError(getText("error.given.brides.father.details.are.mismatched.with.prs"));
+                    break;
+                case ErrorCodes.GROOMS_FATHER_IN_PRS_IS_MISMATCHED_WITH_GIVEN_FATHER:
+                    addActionError(getText("error.given.grooms.father.details.are.mismatched.with.prs"));
+                    break;
                 default:
                     addActionError(getText("error.approval.failed", actionMassageArray));
             }
