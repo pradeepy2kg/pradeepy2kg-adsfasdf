@@ -588,7 +588,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             compareStringValues(deathRegister.getDeathPerson().getDeathPersonPassportNo(),
                 deathAlteration.getDeathPerson().getDeathPersonPassportNo(), DeathAlteration.PASSPORT, preferedLan);
 
-            if (!(deathRegister.getDeathPerson().getDeathPersonAge() == deathAlteration.getDeathPerson().getDeathPersonAge())) {
+            if (!(deathRegister.getDeathPerson().getDeathPersonAge() .equals(deathAlteration.getDeathPerson().getDeathPersonAge()))) {
                 changesList.add(new FieldValue(
                     deathRegister.getDeathPerson().getDeathPersonAge() != null ? Integer.toString(deathRegister.getDeathPerson().getDeathPersonAge()) : null,
                     deathAlteration.getDeathPerson().getDeathPersonAge() != null ? Integer.toString(deathAlteration.getDeathPerson().getDeathPersonAge()) : null,
