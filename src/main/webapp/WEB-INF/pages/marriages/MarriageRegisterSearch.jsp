@@ -360,6 +360,7 @@
                                 <s:if test="(scannedImagePath != null)">
                                     <s:url id="printCert" action="eprDisplayScannedImage.do">
                                         <s:param name="idUKey" value="idUKey"/>
+                                        <s:param name="listPage" value="true"/>
                                     </s:url>
                                     <s:a href="%{printCert}" title="%{getText('tooltip.scannedmarriagecert.print')}">
                                         <img src="<s:url value='/images/print_image.jpeg'/>" width="30" height="30"

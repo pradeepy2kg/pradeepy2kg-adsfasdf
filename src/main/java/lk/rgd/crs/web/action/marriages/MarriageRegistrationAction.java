@@ -74,6 +74,7 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
     private boolean malePartyNotFound;   //todo remove this is a temp for field errors
     private boolean femalePartyNotFound;
     private boolean register;  // used to identify register and approve And update and approve
+    private boolean listPage;
     private String mode;
 
     private String language;
@@ -1108,6 +1109,14 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
 
     public void setRegister(boolean register) {
         this.register = register;
+    }
+
+    public boolean isListPage() {
+        return listPage;
+    }
+
+    public void setListPage(boolean listPage) {
+        this.listPage = listPage;
     }
 }
 

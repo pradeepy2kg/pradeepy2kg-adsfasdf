@@ -604,7 +604,14 @@
                 </td>
                 <td><s:property value="placeOfMarriage"/></td>
                 <s:if test="person.gender == 1">
-                    <td><s:property value="groom.pin"/></td>
+                    <td>
+                        <s:if test="groom.pin != null">
+                            <s:property value="groom.pin"/>
+                        </s:if>
+                        <s:else>
+                            <s:property value="groom.nic"/>
+                        </s:else>
+                    </td>
                     <td>
                         <s:if test="groom.dateOfBirth != null">
                             <s:property value="groom.dateOfBirth"/><br>
@@ -624,7 +631,14 @@
                     </td>
                 </s:if>
                 <s:elseif test="person.gender == 0">
-                    <td><s:property value="bride.pin"/></td>
+                    <td>
+                        <s:if test="bride.pin != null">
+                            <s:property value="bride.pin"/>
+                        </s:if>
+                        <s:else>
+                            <s:property value="bride.nic"/>
+                        </s:else>
+                    </td>
                     <td>
                         <s:if test="bride.dateOfBirth != null">
                             <s:property value="bride.dateOfBirth"/><br>
