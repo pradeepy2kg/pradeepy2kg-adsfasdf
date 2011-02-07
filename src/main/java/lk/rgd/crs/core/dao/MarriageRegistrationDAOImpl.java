@@ -483,4 +483,16 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
         q.setParameter("state", MarriageRegister.State.LICENSE_PRINTED);
         return q.getResultList();
     }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<MarriageRegister> getActiveMarriageLicense(String groomPIN, String bridePIN) {
+        Query q = em.createNamedQuery("get.active.marriage.license");
+        q.setParameter("bridePIN", bridePIN);
+        q.setParameter("groomPIN", groomPIN);
+        q.setParameter("state", MarriageRegister.State.LICENSE_PRINTED);
+        return q.getResultList();
+    }
 }

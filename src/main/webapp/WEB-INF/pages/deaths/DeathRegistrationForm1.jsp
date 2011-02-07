@@ -94,7 +94,11 @@ $(function() {
                     $("select#deathDivisionId").html(options);
                 });
     });
-
+    /**
+     *
+     fatherNameInOfficialLang fatherIdentificationNumber
+     motherNameInOfficialLang motherIdentificationNumber
+     */
     $('img#death_person_lookup').bind('click', function(evt3) {
         var id1 = $("input#deathPerson_PINorNIC").attr("value");
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
@@ -105,6 +109,10 @@ $(function() {
                     $("select#deathPersonGender").val(data1.gender);
                     $("select#deathPersonRace").val(data1.race);
                     $("textarea#deathPersonPermanentAddress").val(data1.address);
+                    $("input#deathPersonFather_PINorNIC").val(data1.fatherIdentificationNumber);
+                    $("textarea#deathPersonFatherFullName").val(data1.fatherNameInOfficialLang);
+                    $("input#deathPersonMother_PINorNIC").val(data1.motherIdentificationNumber);
+                    $("textarea#deathPersonMotherFullName").val(data1.motherNameInOfficialLang);
                 });
     });
     $('img#death_person_father_lookup').bind('click', function(evt4) {
@@ -766,7 +774,7 @@ function personAgeDeath() {
             <br>Date of Birth
         </td>
         <td><s:textfield maxLength="10" name="deathPerson.deathPersonDOB" id="deathPersonDOB"
-                         value="%{deathPerson.deathPersonDOB}"/></td>
+                         value="%{deathPerson.deathPersonDOB}" onchange="personAgeDeath();"/></td>
         <td>
             (<s:property value="#row"/><s:set name="row" value="#row+1"/>)
             වයස හෝ අනුමාන වයස

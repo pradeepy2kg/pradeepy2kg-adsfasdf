@@ -23,7 +23,7 @@ function transliterate(textInOfficialLang, textInEnglishLang) {
 
 function transliterateTextField(textInOfficialLang, textInEnglishLang) {
     textInEnglish = textInEnglishLang;
-    var id = $("textfield#" + textInOfficialLang).attr("value");
+    var id = $("input#" + textInOfficialLang).attr("value");
     var wsMethod = "transliterate";
     var soapNs = "http://translitwebservice.transliteration.icta.com/";
 
@@ -53,7 +53,7 @@ function processResponse1(respObj) {
 
 function processResponse2(respObj) {
     //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-    $("textfield#" + textInEnglish).val(respObj.Body[0].transliterateResponse[0].
+    $("input#" + textInEnglish).val(respObj.Body[0].transliterateResponse[0].
     return[0].Text
 )
     ;
