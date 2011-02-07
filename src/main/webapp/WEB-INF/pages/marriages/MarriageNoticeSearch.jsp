@@ -205,15 +205,17 @@
             </table>
         </div>
     </div>
-    <div style="float:left;">
-        <s:actionmessage cssStyle="color:black;"/>
-        <s:actionerror cssStyle="color:red;"/>
-    </div>
+
     <div class="form-submit">
         <s:submit value="%{getText('bdfSearch.button')}"/>
     </div>
+
 </s:form>
 
+    <div>
+        <s:actionmessage cssStyle="color:black;"/>
+        <s:actionerror cssStyle="color:red;"/>
+    </div>
 <div id="marriage-notice-search" style="margin-top:58px;">
 <s:if test="searchList.size > 0">
     <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;">
@@ -417,19 +419,19 @@
         <s:param name="mrDivisionId" value="#request.mrDivisionId"/>
         <s:param name="printStart" value="#request.printStart"/>
     </s:url>
-   <%--<s:if test="printStart!=0 & printStart>0">--%>
-        <s:if test="printStart!=0 & pageNo !=1">
-            <s:a href="%{previousUrl}">
-                <img src="<s:url value='/images/previous.gif'/>" border="none"/>
-            </s:a>
-            <s:label value="%{getText('previous.label')}"/>
-        </s:if>
-        <s:if test="searchList.size >=50">
-            <s:a href="%{nextUrl}">
-                <img src="<s:url value='/images/next.gif'/>" border="none"/>
-            </s:a>
-            <s:label value="%{getText('next.label')}"/>
-        </s:if>
+    <%--<s:if test="printStart!=0 & printStart>0">--%>
+    <s:if test="printStart!=0 & pageNo !=1">
+        <s:a href="%{previousUrl}">
+            <img src="<s:url value='/images/previous.gif'/>" border="none"/>
+        </s:a>
+        <s:label value="%{getText('previous.label')}"/>
+    </s:if>
+    <s:if test="searchList.size >=50">
+        <s:a href="%{nextUrl}">
+            <img src="<s:url value='/images/next.gif'/>" border="none"/>
+        </s:a>
+        <s:label value="%{getText('next.label')}"/>
+    </s:if>
 </div>
 </div>
 <s:hidden id="error1" value="%{getText('p1.invalide.inputType')}"/>
