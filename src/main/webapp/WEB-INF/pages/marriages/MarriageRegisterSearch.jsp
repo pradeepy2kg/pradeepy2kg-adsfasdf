@@ -361,6 +361,11 @@
                                     <s:url id="printCert" action="eprDisplayScannedImage.do">
                                         <s:param name="idUKey" value="idUKey"/>
                                         <s:param name="listPage" value="true"/>
+                                        <s:param name="pageNo" value="%{#request.pageNo}"/>
+                                        <s:param name="districtId" value="%{#request.districtId}"/>
+                                        <s:param name="dsDivisionId" value="%{#request.dsDivisionId}"/>
+                                        <s:param name="mrDivisionId" value="%{#request.mrDivisionId}"/>
+                                        <s:param name="printStart" value="%{#request.printStart}"/>
                                     </s:url>
                                     <s:a href="%{printCert}" title="%{getText('tooltip.scannedmarriagecert.print')}">
                                         <img src="<s:url value='/images/print_image.jpeg'/>" width="30" height="30"
