@@ -1,6 +1,8 @@
 package lk.rgd.common.api.domain;
 
 import lk.rgd.AppConstants;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -25,7 +27,7 @@ import java.util.Set;
         @NamedQuery(name = "get.location.by.dsDivisionId", query = "SELECT l FROM Location l " +
                 "WHERE l.dsDivisionId=:dsDivisionId")
 })
-
+@Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
 public class Location implements Serializable {
 
     /**

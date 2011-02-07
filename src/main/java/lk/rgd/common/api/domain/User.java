@@ -1,6 +1,8 @@
 package lk.rgd.common.api.domain;
 
 import lk.rgd.AppConstants;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,6 +47,7 @@ import java.util.*;
     @NamedQuery(name = "filter.adr.by.district", query = "SELECT u.userId FROM User u " +
         "WHERE u.role = :role AND :assignedBDDistricts MEMBER OF u.assignedBDDistricts")
 })
+@Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
 public class User implements Serializable {
 
     public enum State {

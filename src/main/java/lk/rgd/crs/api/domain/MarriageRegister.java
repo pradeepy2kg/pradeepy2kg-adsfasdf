@@ -5,6 +5,8 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.WebUtils;
 import lk.rgd.crs.web.util.MarriageType;
 import lk.rgd.crs.web.util.TypeOfMarriagePlace;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -167,12 +169,10 @@ import java.util.Date;
         "OR mr.mrDivisionOfFemaleNotice IN (SELECT m FROM MRDivision m WHERE (m.dsDivision.district = mr.mrDivisionOfFemaleNotice.dsDivision.district AND mr.mrDivisionOfFemaleNotice.dsDivision.district = :district ))) " +
         "ORDER BY mr.idUKey DESC "),
     @NamedQuery(name = "filter.by.unused.marriage.notice.date", query = "SELECT mr FROM MarriageRegister mr WHERE" +
-        " mr.state=:state AND mr.lifeCycleInfo.lastUpdatedTimestamp < :date"),
-    @NamedQuery(name = "get.active.marriage.license", query = "SELECT mr FROM MarriageRegister mr WHERE " +
-        "mr.female.identificationNumberFemale =:bridePIN AND mr.male.identificationNumberMale =:groomPIN " +
-        "AND mr.lifeCycleInfo.activeRecord IS TRUE AND mr.state =:state")
+        " mr.state=:state AND mr.lifeCycleInfo.lastUpdatedTimestamp < :date")
 
 })
+@Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
 public class MarriageRegister implements Serializable, Cloneable {
 
     //todo add divorce related col

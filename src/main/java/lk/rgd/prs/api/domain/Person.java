@@ -4,6 +4,8 @@ import lk.rgd.AppConstants;
 import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.domain.Race;
 import lk.rgd.common.util.WebUtils;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -32,6 +34,7 @@ import java.util.Set;
     @NamedQuery(name = "get.by.location.and.tempPin", query = "SELECT p FROM Person p WHERE p.submittedLocation = :location " +
         "AND p.temporaryPin = :tempPin AND p.status <= 2 AND p.lifeCycleInfo.activeRecord IS TRUE ORDER BY p.lifeCycleInfo.lastUpdatedTimestamp DESC ")
 })
+@Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
 public class Person implements Serializable {
 
     /**

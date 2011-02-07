@@ -2,6 +2,8 @@ package lk.rgd.crs.api.domain;
 
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.District;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -23,6 +25,7 @@ import java.io.Serializable;
         @NamedQuery(name = "get.mrDivision.by.code", query = "SELECT d FROM MRDivision d " +
                 "WHERE d.divisionId=:mrDivisionId AND d.dsDivision=:dsDivision")
 })
+@Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
 public class MRDivision implements Serializable {
 
     /**

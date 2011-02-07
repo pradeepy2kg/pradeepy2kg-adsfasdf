@@ -1,5 +1,8 @@
 package lk.rgd.common.api.domain;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.BitSet;
@@ -12,6 +15,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "ROLES", schema = "COMMON")
+@Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
 public class Role implements Serializable {
     /** The System Administrator */
     public static final String ROLE_ADMIN = "ADMIN";

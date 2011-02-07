@@ -1,5 +1,8 @@
 package lk.rgd.common.api.domain;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.io.Serializable;
@@ -24,7 +27,7 @@ import java.io.Serializable;
     @NamedQuery(name = "get.active.locations.by.userId", query = "SELECT ul FROM UserLocation ul " +
         "WHERE ul.lifeCycleInfo.active = :active AND ul.userId = :userId ORDER BY ul.location.enLocationName desc")
 })
-@org.hibernate.annotations.Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
 public class UserLocation implements Serializable {
     @Id
     private String userId;

@@ -1,5 +1,8 @@
 package lk.rgd.common.api.domain;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -18,7 +21,7 @@ import java.io.Serializable;
         @NamedQuery(name = "get.dsDivision.by.code", query = "SELECT d FROM DSDivision d" +
                 " WHERE d.divisionId = :dsDivisionId AND d.district=:district")}
 )
-
+@Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
 public class DSDivision implements Serializable {
 
     /**

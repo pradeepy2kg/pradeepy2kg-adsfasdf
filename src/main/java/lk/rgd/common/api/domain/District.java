@@ -2,6 +2,8 @@ package lk.rgd.common.api.domain;
 
 import lk.rgd.AppConstants;
 import lk.rgd.crs.api.domain.BDDivision;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -21,6 +23,7 @@ import java.util.Set;
 
         @NamedQuery(name = "get.district.by.code", query = "SELECT d FROM District d " + "WHERE d.districtId =:districtId")
 })
+@Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
 public class District implements Serializable {
 
     /**
