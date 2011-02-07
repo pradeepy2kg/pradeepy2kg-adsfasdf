@@ -406,7 +406,14 @@
             <br>தந்தை
             <br>Father
         </td>
-        <td><s:label value="%{person.father.pin}"/></td>
+        <td>
+            <s:if test="person.father.pin != null">
+                <s:label value="%{person.father.pin}"/>
+            </s:if>
+            <s:else>
+                <s:label value="%{person.father.nic}"/>
+            </s:else>
+            </td>
         <td>
             <s:if test="person.father.dateOfBirth != null">
                 <s:label value="%{person.father.dateOfBirth}"/><br>
@@ -429,7 +436,14 @@
             <br>தாயின்
             <br>Mother
         </td>
-        <td><s:label value="%{person.mother.pin}"/></td>
+        <td>
+            <s:if test="person.mother.pin != null">
+                <s:label value="%{person.mother.pin}"/>
+            </s:if>
+            <s:else>
+                <s:label value="%{person.mother.nic}"/>
+            </s:else>
+        </td>
         <td>
             <s:if test="person.mother.dateOfBirth != null">
                 <s:label value="%{person.mother.dateOfBirth}"/><br>
@@ -466,7 +480,14 @@
                     <br>Brother/Sister
                 </s:else>
             </td>
-            <td><s:property value="pin"/></td>
+            <td>
+                <s:if test="pin != null">
+                    <s:property value="pin"/>
+                </s:if>
+                <s:else>
+                    <s:property value="nic"/>
+                </s:else>
+            </td>
             <td>
                 <s:if test="dateOfBirth != null">
                     <s:property value="dateOfBirth"/><br>
@@ -506,7 +527,14 @@
                     <br>Son/Daughter
                 </s:else>
             </td>
-            <td><s:property value="pin"/></td>
+            <td>
+                <s:if test="pin != null">
+                    <s:property value="pin"/>
+                </s:if>
+                <s:else>
+                    <s:property value="nic"/>
+                </s:else>
+            </td>
             <td>
                 <s:if test="dateOfBirth != null">
                     <s:property value="dateOfBirth"/><br>
