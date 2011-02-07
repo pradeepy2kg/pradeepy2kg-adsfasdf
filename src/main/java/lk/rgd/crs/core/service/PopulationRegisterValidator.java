@@ -164,7 +164,7 @@ public class PopulationRegisterValidator {
     private void addDuplicateWarning(List<UserWarning> warnings, ResourceBundle rb, Person p) {
         warnings.add(
             new UserWarning(MessageFormat.format(rb.getString(POSSIBLE_DUPLICATE), p.getPersonUKey(),
-                DateTimeUtils.getISO8601FormattedString(p.getDateOfBirth()),
+                p.getDateOfBirth() != null ? DateTimeUtils.getISO8601FormattedString(p.getDateOfBirth()) : " Empty ",
                 NameFormatUtil.getDisplayName(p.getFullNameInOfficialLanguage(), 30), p.getStatus())));
     }
 
