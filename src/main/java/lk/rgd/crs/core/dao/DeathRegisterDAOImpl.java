@@ -207,4 +207,17 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
         return q.getResultList();
     }
 
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<DeathRegister> getDeathRegisterByDivisionAndStatusAndDate(DSDivision deathDivision, DeathRegister.State status, Date startDate, Date endDate) {
+        Query q = em.createNamedQuery("get.by.division.register.date.state");
+        q.setParameter("deathDivision", deathDivision);
+        q.setParameter("status", status);
+        q.setParameter("startDate", startDate);
+        q.setParameter("endDate", endDate);
+        return q.getResultList();
+    }
+
 }

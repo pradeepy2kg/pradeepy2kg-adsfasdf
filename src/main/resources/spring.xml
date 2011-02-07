@@ -318,6 +318,7 @@
 
     <bean id="reportsGeneratorService" class="lk.rgd.crs.core.service.ReportsGeneratorImpl">
         <constructor-arg ref="manageBirthService"/>
+        <constructor-arg ref="deathRegisterService"/>
         <constructor-arg ref="districtDAOImpl"/>
         <constructor-arg ref="dsDivisionDAOImpl"/>
         <constructor-arg ref="raceDAOImpl"/>

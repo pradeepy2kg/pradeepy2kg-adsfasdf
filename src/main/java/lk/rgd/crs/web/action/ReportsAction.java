@@ -100,6 +100,13 @@ public class ReportsAction extends ActionSupport implements SessionAware {
                 logger.debug("Chart Type {}", chartType);
                 generateReport(year, user, ReportCodes.TABLE_2_12);
                 reportsService.createReport(user, ReportCodes.TABLE_2_12);
+            } else if (chartType == 11) {
+                logger.debug("Chart Type {}", chartType);
+                generateReport(year, user, ReportCodes.DEATH_TABLE);
+                //reportsService.createReport(user, ReportCodes.DEATH_TABLE);
+            } else if (chartType == 12) {
+                logger.debug("Chart Type {}", chartType);
+                generateReport(year, user, ReportCodes.DEATH_TABLE2);
             }
 
         } catch (RGDRuntimeException error) {
@@ -153,6 +160,8 @@ public class ReportsAction extends ActionSupport implements SessionAware {
         chartList.put(8, "TABLE 2.11");
         chartList.put(9, "TABLE 2.10");
         chartList.put(10, "TABLE 2.12");
+        chartList.put(11, "DEATH REPORT(.xls)");
+        chartList.put(12, "DEATH REPORT 2(.xls)");
 
         viewChartList = chartList;
     }
@@ -272,6 +281,12 @@ public class ReportsAction extends ActionSupport implements SessionAware {
                 break;
             case ReportCodes.TABLE_2_12:
                 reportsService.generate_2_12(year, user, clearCache);
+                break;
+            case ReportCodes.DEATH_TABLE:
+                reportsService.generateDeathReport(year, user, clearCache);
+                break;
+            case ReportCodes.DEATH_TABLE2:
+                reportsService.generateDeathReport2(year, user, clearCache);
                 break;
         }
     }
