@@ -1065,7 +1065,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                     }
 
                     if (birthDate.after(beforeSevenDaysFromDeath)) {
-                        if(gender == 0) {
+                        if (gender == 0) {
                             array[districtId - 1][raceId - 1][DeathReport2Column.MALE_UNDER_1_WEEK.ordinal()] += 1;
                             array[districtId - 1][raceId - 1][DeathReport2Column.TOTAL_UNDER_1_WEEK.ordinal()] += 1;
 
@@ -1079,7 +1079,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                             array[districtId - 1][raceId - 1][DeathReport2Column.TOTAL_UNDER_1_MONTH.ordinal()] += 1;
                         }
                     } else if (birthDate.after(beforeOneMonthFromDeath)) {
-                        if(gender == 0) {
+                        if (gender == 0) {
                             array[districtId - 1][raceId - 1][DeathReport2Column.MALE_1_WEEK_UNDER_1_MONTH.ordinal()] += 1;
                             array[districtId - 1][raceId - 1][DeathReport2Column.TOTAL_1_WEEK_UNDER_1_MONTH.ordinal()] += 1;
 
@@ -1093,7 +1093,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                             array[districtId - 1][raceId - 1][DeathReport2Column.TOTAL_UNDER_1_MONTH.ordinal()] += 1;
                         }
                     } else if (birthDate.after(beforeThreeMonthFromDeath)) {
-                        if(gender == 0) {
+                        if (gender == 0) {
                             array[districtId - 1][raceId - 1][DeathReport2Column.MALE_UNDER_3_MONTH.ordinal()] += 1;
                             array[districtId - 1][raceId - 1][DeathReport2Column.TOTAL_UNDER_3_MONTH.ordinal()] += 1;
 
@@ -1107,7 +1107,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                             array[districtId - 1][raceId - 1][DeathReport2Column.TOTAL_UNDER_1_YEAR.ordinal()] += 1;
                         }
                     } else if (birthDate.after(beforeSixMonthFromDeath)) {
-                        if(gender == 0) {
+                        if (gender == 0) {
                             array[districtId - 1][raceId - 1][DeathReport2Column.MALE_UNDER_6_MONTH.ordinal()] += 1;
                             array[districtId - 1][raceId - 1][DeathReport2Column.TOTAL_UNDER_6_MONTH.ordinal()] += 1;
 
@@ -1121,7 +1121,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                             array[districtId - 1][raceId - 1][DeathReport2Column.TOTAL_UNDER_1_YEAR.ordinal()] += 1;
                         }
                     } else if (birthDate.after(beforeNineMonthFromDeath)) {
-                        if(gender == 0) {
+                        if (gender == 0) {
                             array[districtId - 1][raceId - 1][DeathReport2Column.MALE_UNDER_9_MONTH.ordinal()] += 1;
                             array[districtId - 1][raceId - 1][DeathReport2Column.TOTAL_UNDER_9_MONTH.ordinal()] += 1;
 
@@ -1135,7 +1135,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                             array[districtId - 1][raceId - 1][DeathReport2Column.TOTAL_UNDER_1_YEAR.ordinal()] += 1;
                         }
                     } else if (birthDate.after(beforeTwelveMonthFromDeath)) {
-                        if(gender == 0) {
+                        if (gender == 0) {
                             array[districtId - 1][raceId - 1][DeathReport2Column.MALE_UNDER_12_MONTH.ordinal()] += 1;
                             array[districtId - 1][raceId - 1][DeathReport2Column.TOTAL_UNDER_12_MONTH.ordinal()] += 1;
 
@@ -1168,7 +1168,43 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
             if (district != null) {
                 districtName = district.getEnDistrictName();
             }
-            csv.append(districtName + "\n");
+            csv.append(districtName + ",");
+            int arr[] = new int[DeathReport2Column.values().length];
+
+            for (int k = 0; k < BirthMonthlyStatistics.NO_OF_RACES; k++) {
+                arr[DeathReport2Column.TOTAL_UNDER_1_MONTH.ordinal()] += array[i][k][DeathReport2Column.TOTAL_UNDER_1_MONTH.ordinal()];
+
+                arr[DeathReport2Column.MALE_UNDER_1_MONTH.ordinal()] += array[i][k][DeathReport2Column.MALE_UNDER_1_MONTH.ordinal()];
+                arr[DeathReport2Column.FEMALE_UNDER_1_MONTH.ordinal()] += array[i][k][DeathReport2Column.FEMALE_UNDER_1_MONTH.ordinal()];
+                arr[DeathReport2Column.TOTAL_UNDER_1_WEEK.ordinal()] += array[i][k][DeathReport2Column.TOTAL_UNDER_1_WEEK.ordinal()];
+                arr[DeathReport2Column.MALE_UNDER_1_WEEK.ordinal()] += array[i][k][DeathReport2Column.MALE_UNDER_1_WEEK.ordinal()];
+                arr[DeathReport2Column.FEMALE_UNDER_1_WEEK.ordinal()] += array[i][k][DeathReport2Column.FEMALE_UNDER_1_WEEK.ordinal()];
+                arr[DeathReport2Column.TOTAL_1_WEEK_UNDER_1_MONTH.ordinal()] += array[i][k][DeathReport2Column.TOTAL_1_WEEK_UNDER_1_MONTH.ordinal()];
+                arr[DeathReport2Column.MALE_1_WEEK_UNDER_1_MONTH.ordinal()] += array[i][k][DeathReport2Column.MALE_1_WEEK_UNDER_1_MONTH.ordinal()];
+                arr[DeathReport2Column.FEMALE_1_WEEK_UNDER_1_MONTH.ordinal()] += array[i][k][DeathReport2Column.FEMALE_1_WEEK_UNDER_1_MONTH.ordinal()];
+
+                arr[DeathReport2Column.TOTAL_UNDER_1_YEAR.ordinal()] += array[i][k][DeathReport2Column.TOTAL_UNDER_1_YEAR.ordinal()];
+                arr[DeathReport2Column.MALE_UNDER_1_YEAR.ordinal()] += array[i][k][DeathReport2Column.MALE_UNDER_1_YEAR.ordinal()];
+                arr[DeathReport2Column.FEMALE_UNDER_1_YEAR.ordinal()] += array[i][k][DeathReport2Column.FEMALE_UNDER_1_YEAR.ordinal()];
+                arr[DeathReport2Column.TOTAL_UNDER_3_MONTH.ordinal()] += array[i][k][DeathReport2Column.TOTAL_UNDER_3_MONTH.ordinal()];
+                arr[DeathReport2Column.MALE_UNDER_3_MONTH.ordinal()] += array[i][k][DeathReport2Column.MALE_UNDER_3_MONTH.ordinal()];
+                arr[DeathReport2Column.FEMALE_UNDER_3_MONTH.ordinal()] += array[i][k][DeathReport2Column.FEMALE_UNDER_3_MONTH.ordinal()];
+                arr[DeathReport2Column.TOTAL_UNDER_6_MONTH.ordinal()] += array[i][k][DeathReport2Column.TOTAL_UNDER_6_MONTH.ordinal()];
+                arr[DeathReport2Column.MALE_UNDER_6_MONTH.ordinal()] += array[i][k][DeathReport2Column.MALE_UNDER_6_MONTH.ordinal()];
+                arr[DeathReport2Column.FEMALE_UNDER_6_MONTH.ordinal()] += array[i][k][DeathReport2Column.FEMALE_UNDER_6_MONTH.ordinal()];
+                arr[DeathReport2Column.TOTAL_UNDER_9_MONTH.ordinal()] += array[i][k][DeathReport2Column.TOTAL_UNDER_9_MONTH.ordinal()];
+                arr[DeathReport2Column.MALE_UNDER_9_MONTH.ordinal()] += array[i][k][DeathReport2Column.MALE_UNDER_9_MONTH.ordinal()];
+                arr[DeathReport2Column.FEMALE_UNDER_9_MONTH.ordinal()] += array[i][k][DeathReport2Column.FEMALE_UNDER_9_MONTH.ordinal()];
+                arr[DeathReport2Column.TOTAL_UNDER_12_MONTH.ordinal()] += array[i][k][DeathReport2Column.TOTAL_UNDER_12_MONTH.ordinal()];
+                arr[DeathReport2Column.MALE_UNDER_12_MONTH.ordinal()] += array[i][k][DeathReport2Column.MALE_UNDER_12_MONTH.ordinal()];
+                arr[DeathReport2Column.FEMALE_UNDER_12_MONTH.ordinal()] += array[i][k][DeathReport2Column.FEMALE_UNDER_12_MONTH.ordinal()];
+            }
+
+            for (int k = 0; k < DeathReport2Column.values().length; k++) {
+                csv.append(arr[k] + ",");
+            }
+
+            csv.append("\n");
 
             for (int j = 0; j < BirthMonthlyStatistics.NO_OF_RACES; j++) {
                 String raceName = "UNKNOWN RACE";
@@ -1178,29 +1214,29 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 }
                 csv.append(raceName + ",");
                 csv.append(array[i][j][DeathReport2Column.TOTAL_UNDER_1_MONTH.ordinal()] + "," +
-                        array[i][j][DeathReport2Column.MALE_UNDER_1_MONTH.ordinal()] + "," +
-                        array[i][j][DeathReport2Column.FEMALE_UNDER_1_MONTH.ordinal()] + "," +
-                        array[i][j][DeathReport2Column.TOTAL_UNDER_1_WEEK.ordinal()] + "," +
-                        array[i][j][DeathReport2Column.MALE_UNDER_1_WEEK.ordinal()] + "," +
-                        array[i][j][DeathReport2Column.FEMALE_UNDER_1_WEEK.ordinal()] + "," +
-                        array[i][j][DeathReport2Column.TOTAL_1_WEEK_UNDER_1_MONTH.ordinal()] + "," +
-                        array[i][j][DeathReport2Column.MALE_1_WEEK_UNDER_1_MONTH.ordinal()] + "," +
-                        array[i][j][DeathReport2Column.FEMALE_1_WEEK_UNDER_1_MONTH.ordinal()] + "," +
-                        array[i][j][DeathReport2Column.TOTAL_UNDER_1_YEAR.ordinal()] + "," +
-                        array[i][j][DeathReport2Column.MALE_UNDER_1_YEAR.ordinal()] + "," +
-                        array[i][j][DeathReport2Column.FEMALE_UNDER_1_YEAR.ordinal()] + "," +
-                        array[i][j][DeathReport2Column.TOTAL_UNDER_3_MONTH.ordinal()] + "," +
-                        array[i][j][DeathReport2Column.MALE_UNDER_3_MONTH.ordinal()] + "," +
-                        array[i][j][DeathReport2Column.FEMALE_UNDER_3_MONTH.ordinal()] + "," +
-                        array[i][j][DeathReport2Column.TOTAL_UNDER_6_MONTH.ordinal()] + "," +
-                        array[i][j][DeathReport2Column.MALE_UNDER_6_MONTH.ordinal()] + "," +
-                        array[i][j][DeathReport2Column.FEMALE_UNDER_6_MONTH.ordinal()] + "," +
-                        array[i][j][DeathReport2Column.TOTAL_UNDER_9_MONTH.ordinal()] + "," +
-                        array[i][j][DeathReport2Column.MALE_UNDER_9_MONTH.ordinal()] + "," +
-                        array[i][j][DeathReport2Column.FEMALE_UNDER_9_MONTH.ordinal()] + "," +
-                        array[i][j][DeathReport2Column.TOTAL_UNDER_12_MONTH.ordinal()] + "," +
-                        array[i][j][DeathReport2Column.MALE_UNDER_12_MONTH.ordinal()] + "," +
-                        array[i][j][DeathReport2Column.FEMALE_UNDER_12_MONTH.ordinal()] + ",\n" 
+                    array[i][j][DeathReport2Column.MALE_UNDER_1_MONTH.ordinal()] + "," +
+                    array[i][j][DeathReport2Column.FEMALE_UNDER_1_MONTH.ordinal()] + "," +
+                    array[i][j][DeathReport2Column.TOTAL_UNDER_1_WEEK.ordinal()] + "," +
+                    array[i][j][DeathReport2Column.MALE_UNDER_1_WEEK.ordinal()] + "," +
+                    array[i][j][DeathReport2Column.FEMALE_UNDER_1_WEEK.ordinal()] + "," +
+                    array[i][j][DeathReport2Column.TOTAL_1_WEEK_UNDER_1_MONTH.ordinal()] + "," +
+                    array[i][j][DeathReport2Column.MALE_1_WEEK_UNDER_1_MONTH.ordinal()] + "," +
+                    array[i][j][DeathReport2Column.FEMALE_1_WEEK_UNDER_1_MONTH.ordinal()] + "," +
+                    array[i][j][DeathReport2Column.TOTAL_UNDER_1_YEAR.ordinal()] + "," +
+                    array[i][j][DeathReport2Column.MALE_UNDER_1_YEAR.ordinal()] + "," +
+                    array[i][j][DeathReport2Column.FEMALE_UNDER_1_YEAR.ordinal()] + "," +
+                    array[i][j][DeathReport2Column.TOTAL_UNDER_3_MONTH.ordinal()] + "," +
+                    array[i][j][DeathReport2Column.MALE_UNDER_3_MONTH.ordinal()] + "," +
+                    array[i][j][DeathReport2Column.FEMALE_UNDER_3_MONTH.ordinal()] + "," +
+                    array[i][j][DeathReport2Column.TOTAL_UNDER_6_MONTH.ordinal()] + "," +
+                    array[i][j][DeathReport2Column.MALE_UNDER_6_MONTH.ordinal()] + "," +
+                    array[i][j][DeathReport2Column.FEMALE_UNDER_6_MONTH.ordinal()] + "," +
+                    array[i][j][DeathReport2Column.TOTAL_UNDER_9_MONTH.ordinal()] + "," +
+                    array[i][j][DeathReport2Column.MALE_UNDER_9_MONTH.ordinal()] + "," +
+                    array[i][j][DeathReport2Column.FEMALE_UNDER_9_MONTH.ordinal()] + "," +
+                    array[i][j][DeathReport2Column.TOTAL_UNDER_12_MONTH.ordinal()] + "," +
+                    array[i][j][DeathReport2Column.MALE_UNDER_12_MONTH.ordinal()] + "," +
+                    array[i][j][DeathReport2Column.FEMALE_UNDER_12_MONTH.ordinal()] + ",\n"
                 );
             }
         }
