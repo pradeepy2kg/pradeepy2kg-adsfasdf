@@ -135,6 +135,45 @@ public class MarriageRegistrationValidator {
         return warnings;
     }
 
+    public List<UserWarning> checkExistingMarriages(List<UserWarning> userWarnings, MarriageRegister register, User user) {
+        // select locale for user
+        ResourceBundle rb = rb_en;
+        if (AppConstants.SINHALA.equals(user.getPrefLanguage())) {
+            rb = rb_si;
+        } else if (AppConstants.TAMIL.equals(user.getPrefLanguage())) {
+            rb = rb_ta;
+        }
+
+        //check grooms existing marriages
+        //groom on PRS
+        final Person groom = populationRegistry.findUniquePersonByPINorNIC(register.getMale().getIdentificationNumberMale(), user);
+        final Person bride = populationRegistry.findUniquePersonByPINorNIC(register.getFemale().getIdentificationNumberFemale(), user);
+        if (groom != null) {
+            Set<Marriage> groomsMarriages = groom.getMarriages();
+            for (Marriage m : groomsMarriages) {
+                //check existing marriage with MARRIED
+                if (m.getState() == Marriage.State.MARRIED) {
+                    userWarnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.existing.marriage.found.for.groom"),
+                        (m.getBride().getPin() != null) ? m.getBride().getPin() : m.getBride().getNic()),
+                        UserWarning.Severity.WARN));
+                    break;
+                }
+            }
+        }
+        if (bride != null) {
+            Set<Marriage> bridesMarriages = bride.getMarriages();
+            for (Marriage m : bridesMarriages) {
+                if (m.getState() == Marriage.State.MARRIED) {
+                    userWarnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.existing.marriage.found.for.bride"),
+                        (m.getGroom().getPin() != null) ? m.getGroom().getPin() : m.getGroom().getNic()),
+                        UserWarning.Severity.WARN));
+                    break;
+                }
+            }
+        }
+        return userWarnings;
+    }
+
     /**
      * Validate minimum requirements of marriage register
      *
