@@ -17,12 +17,10 @@ import lk.rgd.crs.api.service.DeathRegistrationService;
 import lk.rgd.crs.api.service.ReportsGenerator;
 import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.web.ReportCodes;
-import lk.rgd.prs.api.domain.Marriage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Calendar;
 import java.util.Date;
@@ -1455,7 +1453,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         }
     }
 
-    public void createDeathReport(User user, int headerCode) {
+    public void createDeathReport_all(User user, int headerCode) {
         StringBuilder csv = new StringBuilder();
         String filename = ReportCodes.DEATH_TABLE_3_NAME + ".csv";
 
@@ -1488,6 +1486,106 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
 
             csv.append("\n");
 
+        }
+
+        String dirPath = "reports" + File.separator + year;
+        File dir = new File(dirPath);
+        dir.mkdirs();
+
+        String filePath = dirPath + File.separator + filename;
+        File file = new File(filePath);
+
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            out.write(csv.toString().getBytes());
+            out.close();
+        } catch (IOException e) {
+            logger.error("Error writing the CSV - {} {}", file.getPath() + file.getName(), e.getMessage());
+        }
+    }
+
+    public void createDeathReport_4_6(User user, int headerCode) {
+        StringBuilder csv = new StringBuilder();
+        String filename = "Death_table_4_6.csv";
+
+        csv.append("District,");
+        for (int f = 0; f < DeathMonthlyStatistics.NO_OF_RACES; f++) {
+            String raceName = "Unknown";
+            if (raceDAO.getRace(f) != null) {
+                raceName = raceDAO.getRace(f).getEnRaceName();
+            }
+            csv.append("," + raceName + ",,");
+        }
+        csv.append("\n,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,\n");
+
+        for (int i = 0; i < DeathIslandWideStatistics.NO_OF_DISTRICTS; i++) {
+            String districtName = "Unknown";
+            if (districtDAO.getDistrict(i) != null) {
+                districtName = districtDAO.getDistrict(i).getEnDistrictName();
+            }
+
+            csv.append(districtName + ",");
+
+            for (int j = 0; j < DeathMonthlyStatistics.NO_OF_RACES; j++) {
+                int male = 0, female = 0, total = 0;
+                for (int k = 0; k < DeathDistrictStatistics.NO_OF_MONTHS; k++) {
+                    total += deathIslandWideStatistics.districtStatisticsList[i].deathMonthlyStatistics[k].deathRaceStatistics[j].getRaceTotal();
+                    male += deathIslandWideStatistics.districtStatisticsList[i].deathMonthlyStatistics[k].deathRaceStatistics[j].getRaceMale();
+                    female += deathIslandWideStatistics.districtStatisticsList[i].deathMonthlyStatistics[k].deathRaceStatistics[j].getRaceFemale();
+                }
+                csv.append(total + "," + male + "," + female + ",");
+            }
+            csv.append("\n");
+        }
+
+        String dirPath = "reports" + File.separator + year;
+        File dir = new File(dirPath);
+        dir.mkdirs();
+
+        String filePath = dirPath + File.separator + filename;
+        File file = new File(filePath);
+
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            out.write(csv.toString().getBytes());
+            out.close();
+        } catch (IOException e) {
+            logger.error("Error writing the CSV - {} {}", file.getPath() + file.getName(), e.getMessage());
+        }
+    }
+
+    public void createDeathReport_4_4(User user, int headerCode) {
+        StringBuilder csv = new StringBuilder();
+        String filename = ReportCodes.DEATH_TABLE_4_4_NAME + ".csv";
+
+        csv.append("District,,Unknown,,,1,,,2,,,3,,,4,,,5-9,,,10-14,,,15-19,,,20-24,,,25-29,,,30-34,,,35-39,,,40-44,,,45-49,,,50-54,,,55-59,,,60-64,,,65-69,,,70-74,,,75-79,,,80-84,,,85 plus,,Total,Male,Female,\n");
+        csv.append(",T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,,,,\n");
+
+        for (int i = 0; i < DeathMonthlyStatistics.NO_OF_RACES; i++) {
+            int allMale = 0, allFemale = 0, allTotal = 0;
+
+            String raceName = "Unknown";
+            if(raceDAO.getRace(i) != null) {
+                raceName = raceDAO.getRace(i).getEnRaceName();
+            }
+            csv.append(raceName + ",");
+            for (int l = 0; l < DeathRaceStatistics.NO_OF_AGE_GROUPS; l++) {
+                int male = 0, female = 0, total = 0;
+                for (int j = 0; j < DeathIslandWideStatistics.NO_OF_DISTRICTS; j++) {
+                    for (int k = 0; k < DeathDistrictStatistics.NO_OF_MONTHS; k++) {
+                        total += deathIslandWideStatistics.districtStatisticsList[j].deathMonthlyStatistics[k].deathRaceStatistics[i].deathAgeGroupStatistics[l].getAgeGroupTotal();
+                        male += deathIslandWideStatistics.districtStatisticsList[j].deathMonthlyStatistics[k].deathRaceStatistics[i].deathAgeGroupStatistics[l].getAgeGroupMale();
+                        female += deathIslandWideStatistics.districtStatisticsList[j].deathMonthlyStatistics[k].deathRaceStatistics[i].deathAgeGroupStatistics[l].getAgeGroupFemale();
+                    }
+                }
+                allTotal += total;
+                allMale += male;
+                allFemale += female;
+                csv.append(total + "," + male + "," + female + ",");
+
+            }
+            csv.append(allTotal + "," + allMale + "," + allFemale + ",");
+            csv.append("\n");
         }
 
         String dirPath = "reports" + File.separator + year;
