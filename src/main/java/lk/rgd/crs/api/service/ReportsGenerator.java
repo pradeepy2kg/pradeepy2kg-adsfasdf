@@ -116,6 +116,14 @@ public interface ReportsGenerator {
     public void generateDeathReport2(int year, User user, boolean clearCache);
 
     /**
+     *
+     * @param year
+     * @param user
+     * @param clearCache
+     */
+    public void populateDeathStatistics(int year, User user, boolean clearCache);
+
+    /**
      * Creates a Standard CSV file from the generated IslandWide stats.
      * currently assumes. stats are already geneated.
      * // todo check if a CSV file already generated and avaialble for the given year.

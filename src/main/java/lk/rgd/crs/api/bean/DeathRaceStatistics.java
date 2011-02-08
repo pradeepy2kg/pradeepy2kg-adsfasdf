@@ -5,7 +5,8 @@ package lk.rgd.crs.api.bean;
  */
 public class DeathRaceStatistics {
 
-    public static final int NO_OF_AGE_GROUPS = 6;
+    public static final int NO_OF_AGE_GROUPS = 22;
+    public static final int UNKNOWN_AGE_GROUP_ID = 0;
 
     public DeathAgeGroupStatistics deathAgeGroupStatistics[];
 
