@@ -57,6 +57,6 @@ public class ReportCodes {
     public static final String TABLE_2_12_NAME = "TABLE_2_12";
     public static final String DEATH_TABLE_NAME = "INFANT_DEATH_TABLE";
     public static final String DEATH_TABLE2_NAME = "INFANT_DEATH_TABLE_2";
-    public static final String DEATH_TABLE_3_NAME = "DEATH_TABLE";
+    public static final String DEATH_TABLE_3_NAME = "DEATH_TABLE_3";
 
 }
