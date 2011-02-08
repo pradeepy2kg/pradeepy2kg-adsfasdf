@@ -55,7 +55,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
     private int year;
     private BirthDistrictYearStatistics[] districtYearStatisticsList;
     NumberFormat nf = NumberFormat.getInstance();
-    DeathIslandWideStatistics deathIslandWideStatistics = DeathIslandWideStatistics.getInstance();
+    static DeathIslandWideStatistics deathIslandWideStatistics = new DeathIslandWideStatistics();
 
     public enum DeathColumn {
         TOTAL,
@@ -1396,6 +1396,28 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                     );
                 }
             }
+        }
+    }
+
+    public void createDeathReport(User user, int headerCode) {
+        StringBuilder csv = new StringBuilder();
+        String filename = ReportCodes.DEATH_TABLE_3_NAME + ".csv";
+
+        // TODO
+
+        String dirPath = "reports" + File.separator + year;
+        File dir = new File(dirPath);
+        dir.mkdirs();
+
+        String filePath = dirPath + File.separator + filename;
+        File file = new File(filePath);
+
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            out.write(csv.toString().getBytes());
+            out.close();
+        } catch (IOException e) {
+            logger.error("Error writing the CSV - {} {}", file.getPath() + file.getName(), e.getMessage());
         }
     }
 

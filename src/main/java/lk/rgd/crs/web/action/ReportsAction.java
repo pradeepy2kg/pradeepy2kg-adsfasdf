@@ -109,7 +109,8 @@ public class ReportsAction extends ActionSupport implements SessionAware {
                 generateReport(year, user, ReportCodes.DEATH_TABLE2);
             } else if (chartType == 13) {
                 logger.debug("Chart Type {}", chartType);
-                generateReport(year, user, ReportCodes.POPULATE_DEATH_STAT);
+                generateReport(year, user, ReportCodes.DEATH_TABLE_3);
+                reportsService.createDeathReport(user, ReportCodes.DEATH_TABLE_3);
             }
 
         } catch (RGDRuntimeException error) {
@@ -292,7 +293,7 @@ public class ReportsAction extends ActionSupport implements SessionAware {
             case ReportCodes.DEATH_TABLE2:
                 reportsService.generateDeathReport2(year, user, clearCache);
                 break;
-            case ReportCodes.POPULATE_DEATH_STAT:
+            case ReportCodes.DEATH_TABLE_3:
                 reportsService.populateDeathStatistics(year, user, clearCache);
                 break;
         }
