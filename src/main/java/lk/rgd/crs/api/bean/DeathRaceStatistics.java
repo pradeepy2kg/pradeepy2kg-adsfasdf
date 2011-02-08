@@ -8,6 +8,10 @@ public class DeathRaceStatistics {
     public static final int NO_OF_AGE_GROUPS = 22;
     public static final int UNKNOWN_AGE_GROUP_ID = 0;
 
+    private int raceMale;
+    private int raceFemale;
+    private int raceTotal;
+
     public DeathAgeGroupStatistics deathAgeGroupStatistics[];
 
     DeathRaceStatistics() {
@@ -17,4 +21,27 @@ public class DeathRaceStatistics {
         }
     }
 
+    public int getRaceMale() {
+        return raceMale;
+    }
+
+    public void setRaceMale(int raceMale) {
+        this.raceMale = raceMale;
+    }
+
+    public int getRaceFemale() {
+        return raceFemale;
+    }
+
+    public void setRaceFemale(int raceFemale) {
+        this.raceFemale = raceFemale;
+    }
+
+    public int getRaceTotal() {
+        return raceTotal;
+    }
+
+    public void setRaceTotal(int raceTotal) {
+        this.raceTotal = raceTotal;
+    }
 }

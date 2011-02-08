@@ -1386,13 +1386,69 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                     deathIslandWideStatistics.districtStatisticsList[districtId].deathMonthlyStatistics[monthId].deathRaceStatistics[raceId].deathAgeGroupStatistics[ageId].setAgeGroupTotal(
                         deathIslandWideStatistics.districtStatisticsList[districtId].deathMonthlyStatistics[monthId].deathRaceStatistics[raceId].deathAgeGroupStatistics[ageId].getAgeGroupTotal() + 1
                     );
-                }
-                else if (gender == 1) {
+
+                    deathIslandWideStatistics.districtStatisticsList[districtId].deathMonthlyStatistics[monthId].deathRaceStatistics[raceId].setRaceMale(
+                        deathIslandWideStatistics.districtStatisticsList[districtId].deathMonthlyStatistics[monthId].deathRaceStatistics[raceId].getRaceMale() + 1
+                    );
+                    deathIslandWideStatistics.districtStatisticsList[districtId].deathMonthlyStatistics[monthId].deathRaceStatistics[raceId].setRaceTotal(
+                        deathIslandWideStatistics.districtStatisticsList[districtId].deathMonthlyStatistics[monthId].deathRaceStatistics[raceId].getRaceTotal() + 1
+                    );
+
+                    deathIslandWideStatistics.districtStatisticsList[districtId].deathMonthlyStatistics[monthId].setMonthMale(
+                        deathIslandWideStatistics.districtStatisticsList[districtId].deathMonthlyStatistics[monthId].getMonthMale() + 1
+                    );
+                    deathIslandWideStatistics.districtStatisticsList[districtId].deathMonthlyStatistics[monthId].setMonthTotal(
+                        deathIslandWideStatistics.districtStatisticsList[districtId].deathMonthlyStatistics[monthId].getMonthTotal() + 1
+                    );
+
+                    deathIslandWideStatistics.districtStatisticsList[districtId].setDistrictMale(
+                        deathIslandWideStatistics.districtStatisticsList[districtId].getDistrictMale() + 1
+                    );
+                    deathIslandWideStatistics.districtStatisticsList[districtId].setDistrictTotal(
+                        deathIslandWideStatistics.districtStatisticsList[districtId].getDistrictTotal() + 1
+                    );
+
+                    deathIslandWideStatistics.setIslandWideMale(
+                        deathIslandWideStatistics.getIslandWideMale() + 1
+                    );
+                    deathIslandWideStatistics.setIslandWideTotal(
+                        deathIslandWideStatistics.getIslandWideTotal() + 1
+                    );
+
+                } else if (gender == 1) {
                     deathIslandWideStatistics.districtStatisticsList[districtId].deathMonthlyStatistics[monthId].deathRaceStatistics[raceId].deathAgeGroupStatistics[ageId].setAgeGroupFemale(
                         deathIslandWideStatistics.districtStatisticsList[districtId].deathMonthlyStatistics[monthId].deathRaceStatistics[raceId].deathAgeGroupStatistics[ageId].getAgeGroupFemale() + 1
                     );
                     deathIslandWideStatistics.districtStatisticsList[districtId].deathMonthlyStatistics[monthId].deathRaceStatistics[raceId].deathAgeGroupStatistics[ageId].setAgeGroupTotal(
                         deathIslandWideStatistics.districtStatisticsList[districtId].deathMonthlyStatistics[monthId].deathRaceStatistics[raceId].deathAgeGroupStatistics[ageId].getAgeGroupTotal() + 1
+                    );
+
+                    deathIslandWideStatistics.districtStatisticsList[districtId].deathMonthlyStatistics[monthId].deathRaceStatistics[raceId].setRaceFemale(
+                        deathIslandWideStatistics.districtStatisticsList[districtId].deathMonthlyStatistics[monthId].deathRaceStatistics[raceId].getRaceFemale() + 1
+                    );
+                    deathIslandWideStatistics.districtStatisticsList[districtId].deathMonthlyStatistics[monthId].deathRaceStatistics[raceId].setRaceTotal(
+                        deathIslandWideStatistics.districtStatisticsList[districtId].deathMonthlyStatistics[monthId].deathRaceStatistics[raceId].getRaceTotal() + 1
+                    );
+
+                    deathIslandWideStatistics.districtStatisticsList[districtId].deathMonthlyStatistics[monthId].setMonthFemale(
+                        deathIslandWideStatistics.districtStatisticsList[districtId].deathMonthlyStatistics[monthId].getMonthFemale() + 1
+                    );
+                    deathIslandWideStatistics.districtStatisticsList[districtId].deathMonthlyStatistics[monthId].setMonthTotal(
+                        deathIslandWideStatistics.districtStatisticsList[districtId].deathMonthlyStatistics[monthId].getMonthTotal() + 1
+                    );
+
+                    deathIslandWideStatistics.districtStatisticsList[districtId].setDistrictFemale(
+                        deathIslandWideStatistics.districtStatisticsList[districtId].getDistrictFemale() + 1
+                    );
+                    deathIslandWideStatistics.districtStatisticsList[districtId].setDistrictTotal(
+                        deathIslandWideStatistics.districtStatisticsList[districtId].getDistrictTotal() + 1
+                    );
+
+                    deathIslandWideStatistics.setIslandWideFemale(
+                        deathIslandWideStatistics.getIslandWideFemale() + 1
+                    );
+                    deathIslandWideStatistics.setIslandWideTotal(
+                        deathIslandWideStatistics.getIslandWideTotal() + 1
                     );
                 }
             }
@@ -1403,7 +1459,36 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         StringBuilder csv = new StringBuilder();
         String filename = ReportCodes.DEATH_TABLE_3_NAME + ".csv";
 
+        csv.append("District,Total,Male,Female,,Unknown,,,1,,,2,,,3,,,4,,,5-9,,,10-14,,,15-19,,,20-24,,,25-29,,,30-34,,,35-39,,,40-44,,,45-49,,,50-54,,,55-59,,,60-64,,,65-69,,,70-74,,,75-79,,,80-84,,,85+,,\n");
+        csv.append(",,,,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,\n");
         // TODO
+        for (int i = 0; i < DeathIslandWideStatistics.NO_OF_DISTRICTS; i++) {
+            String districtName = "Unknown";
+            if (districtDAO.getDistrict(i) != null) {
+                districtName = districtDAO.getDistrict(i).getEnDistrictName();
+            }
+
+            csv.append(districtName + ",");
+
+            csv.append(deathIslandWideStatistics.districtStatisticsList[i].getDistrictTotal() + "," +
+                deathIslandWideStatistics.districtStatisticsList[i].getDistrictMale() + "," +
+                deathIslandWideStatistics.districtStatisticsList[i].getDistrictFemale() + ","
+            );
+            for (int l = 0; l < DeathRaceStatistics.NO_OF_AGE_GROUPS; l++) {
+                int male = 0, female = 0, total = 0;
+                for (int j = 0; j < DeathDistrictStatistics.NO_OF_MONTHS; j++) {
+                    for (int k = 0; k < DeathMonthlyStatistics.NO_OF_RACES; k++) {
+                        total += deathIslandWideStatistics.districtStatisticsList[i].deathMonthlyStatistics[j].deathRaceStatistics[k].deathAgeGroupStatistics[l].getAgeGroupTotal();
+                        male += deathIslandWideStatistics.districtStatisticsList[i].deathMonthlyStatistics[j].deathRaceStatistics[k].deathAgeGroupStatistics[l].getAgeGroupMale();
+                        female += deathIslandWideStatistics.districtStatisticsList[i].deathMonthlyStatistics[j].deathRaceStatistics[k].deathAgeGroupStatistics[l].getAgeGroupFemale();
+                    }
+                }
+                csv.append(total + "," + male + "," + female + ",");
+            }
+
+            csv.append("\n");
+
+        }
 
         String dirPath = "reports" + File.separator + year;
         File dir = new File(dirPath);
