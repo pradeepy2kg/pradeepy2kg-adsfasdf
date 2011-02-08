@@ -42,7 +42,7 @@ public class ReportCodes {
     public static final int TABLE_2_12 = 11;
     public static final int DEATH_TABLE = 12;
     public static final int DEATH_TABLE2 = 13;
-    public static final int POPULATE_DEATH_STAT = 100;
+    public static final int DEATH_TABLE_3 = 14;
 
     public static final String TABLE_2_2_NAME = "TABLE_2_2";
     public static final String TABLE_2_4_NAME = "TABLE_2_4";
@@ -55,7 +55,8 @@ public class ReportCodes {
     public static final String TABLE_2_11_NAME = "TABLE_2_11";
     public static final String TABLE_2_10_NAME = "TABLE_2_10";
     public static final String TABLE_2_12_NAME = "TABLE_2_12";
-    public static final String DEATH_TABLE_NAME = "DEATH_TABLE";
-    public static final String DEATH_TABLE2_NAME = "DEATH_TABLE_2";
+    public static final String DEATH_TABLE_NAME = "INFANT_DEATH_TABLE";
+    public static final String DEATH_TABLE2_NAME = "INFANT_DEATH_TABLE_2";
+    public static final String DEATH_TABLE_3_NAME = "DEATH_TABLE";
 
 }

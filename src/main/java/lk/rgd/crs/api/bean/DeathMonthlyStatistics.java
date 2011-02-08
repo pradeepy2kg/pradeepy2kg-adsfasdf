@@ -12,6 +12,9 @@ public class DeathMonthlyStatistics {
 
     DeathMonthlyStatistics() {
         deathRaceStatistics = new DeathRaceStatistics[NO_OF_RACES];
+        for(int i = 0; i < NO_OF_RACES; i++) {
+            deathRaceStatistics[i] = new DeathRaceStatistics();
+        }
     }
 
 }

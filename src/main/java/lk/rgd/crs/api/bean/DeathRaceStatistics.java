@@ -12,6 +12,9 @@ public class DeathRaceStatistics {
 
     DeathRaceStatistics() {
         deathAgeGroupStatistics = new DeathAgeGroupStatistics[NO_OF_AGE_GROUPS];
+        for(int i = 0; i < NO_OF_AGE_GROUPS; i++) {
+            deathAgeGroupStatistics[i] = new DeathAgeGroupStatistics();
+        }
     }
 
 }

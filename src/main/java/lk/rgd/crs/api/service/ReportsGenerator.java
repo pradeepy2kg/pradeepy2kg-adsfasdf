@@ -133,4 +133,12 @@ public interface ReportsGenerator {
      */
     public String createReport(User user, int headerCode);
 
+    /**
+     *
+     * @param user
+     * @param headerCode
+     * @return
+     */
+    public void createDeathReport(User user, int headerCode);
+
 }

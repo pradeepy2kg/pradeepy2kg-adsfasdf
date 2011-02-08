@@ -14,15 +14,10 @@ public class DeathIslandWideStatistics {
     public DeathDistrictStatistics districtStatisticsList[];
     private static DeathIslandWideStatistics deathIslandWideStatistics;
 
-    private DeathIslandWideStatistics() {
+    public DeathIslandWideStatistics() {
         districtStatisticsList = new DeathDistrictStatistics[NO_OF_DISTRICTS];
-    }
-
-    public static DeathIslandWideStatistics getInstance() {
-        if(deathIslandWideStatistics == null) {
-            deathIslandWideStatistics = new DeathIslandWideStatistics();
+        for (int i = 0; i < NO_OF_DISTRICTS; i++) {
+            districtStatisticsList[i] = new DeathDistrictStatistics();
         }
-        return deathIslandWideStatistics;
     }
-
 }
