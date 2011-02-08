@@ -213,7 +213,7 @@
     <s:hidden name="pageNumber" value="1"/>
 </s:form>
 <s:actionerror cssStyle="color:red;font-size:10pt"/>
-<s:actionmessage cssStyle="color:black;font-size:10pt"/>
+<s:actionmessage cssStyle="color:blue;;font-size:10pt"/>
 <div id="cc">
     <s:if test="approvalList.size()>0">
         <fieldset>

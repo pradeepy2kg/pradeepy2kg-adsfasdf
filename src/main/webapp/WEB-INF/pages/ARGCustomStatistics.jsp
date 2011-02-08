@@ -4,7 +4,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <s:actionerror cssStyle="color:red;font-size:10pt"/>
-<s:actionmessage/>
+<s:actionmessage cssStyle="color:blue;;font-size:10pt"/>
+
 
 <script type="text/javascript" src="/ecivil/lib/jquery/jquery.jqplot.js"></script>
 <script type="text/javascript" src="/ecivil/lib/jquery/jqplot.categoryAxisRenderer.js"></script>

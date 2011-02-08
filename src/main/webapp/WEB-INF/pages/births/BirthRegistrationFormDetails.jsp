@@ -4,12 +4,13 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script type="text/javascript">
-    function initPage(){}
+    function initPage() {
+    }
 </script>
 
 <div id="birth-register-approval">
     <div id="birth-register-approval-header">
-        <s:actionmessage/>
+        <s:actionmessage cssStyle="color:blue;;font-size:10pt"/>
         <s:actionerror cssStyle="color:red;font-size:10pt"/>
     </div>
 

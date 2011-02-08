@@ -74,7 +74,7 @@
                     });
         })
     });
-    
+
     var errormsg = "";
     function validate() {
         var domObject;
@@ -83,7 +83,7 @@
         // validate serial number
         domObject = document.getElementById('bdfSerialNoId');
         if (!isFieldEmpty(domObject))
-            validateSerialNo(domObject,'error1', 'error2');
+            validateSerialNo(domObject, 'error1', 'error2');
 
         // validate start and end date
         domObject = document.getElementById('searchStartDatePicker');
@@ -102,7 +102,8 @@
         return returnval;
     }
 
-    function initPage(){}
+    function initPage() {
+    }
 </script>
 
 <%@ taglib prefix="s" uri="/struts-tags" %>
@@ -164,7 +165,7 @@
     </table>
 </fieldset>
 </s:form>
-<s:actionmessage/>
+<s:actionmessage cssStyle="color:blue;;font-size:10pt"/>
 <s:if test="#request.warnings != null">
     <div id="birth-register-approval-message" class="font-9" align="center">
         <table width="100%" cellpadding="0" cellspacing="0">
@@ -237,7 +238,7 @@
                     </s:url>
                     <td align="center">
                         <s:a href="%{approveSelected}" title="%{getText('approveTooltip.label')}">
-                        <img src="<s:url value='/images/approve.gif'/>" width="25" height="25" border="none"/></s:a>
+                            <img src="<s:url value='/images/approve.gif'/>" width="25" height="25" border="none"/></s:a>
                     </td>
                 </s:if>
                 <s:if test="#request.allowApproveBDF">

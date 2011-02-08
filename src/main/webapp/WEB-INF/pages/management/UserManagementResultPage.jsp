@@ -16,8 +16,8 @@
         padding: 20px;
     }
 
-    form-submit{
-        background-image:url("../images/long_button_2.png");
+    form-submit {
+        background-image: url("../images/long_button_2.png");
     }
 </style>
 <div id="user-managment-outer">
@@ -25,7 +25,7 @@
         <s:if test="pageNo==2">
             <tr>
                 <td style="color:red;">
-                    <s:actionmessage/><br>
+                    <s:actionmessage cssStyle="color:blue;;font-size:10pt"/>
                     <s:label value="%{getText('assign.another.user')}"/>
                 </td>
             </tr>
@@ -33,7 +33,7 @@
         <s:else>
             <tr>
                 <td style="text-align:center;">
-                    <s:actionmessage/>
+                    <s:actionmessage cssStyle="color:blue;;font-size:10pt"/>
                 </td>
             </tr>
             <s:if test="pageNo==1 || changePassword">
@@ -70,7 +70,7 @@
             <td style="text-align:center;">
                 <s:form action="eprInitUserCreation">
                     <div class="form-submit" align="center">
-                        <s:submit value="%{getText('CreatUser.title')}" />
+                        <s:submit value="%{getText('CreatUser.title')}"/>
                     </div>
                 </s:form>
             </td>

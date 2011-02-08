@@ -68,7 +68,7 @@
 
 <div id="birth-register-approval">
     <div id="birth-register-approval-header">
-        <s:actionmessage/>
+        <s:actionmessage cssStyle="color:blue;;font-size:10pt"/>
         <s:actionerror cssStyle="color:red;font-size:10pt"/>
     </div>
 
@@ -95,7 +95,8 @@
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                             </s:if>
                             <s:else>
-                                <s:a href="%{approveConfirmation}"><s:label value="%{getText('approve_link.label')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <s:a href="%{approveConfirmation}"><s:label
+                                        value="%{getText('approve_link.label')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
                             </s:else>
                         </s:if>
                         <s:if test="skipConfirmationChages">

@@ -179,7 +179,7 @@
         </div>
     </div>
     <div style="float:left;">
-        <s:actionmessage/>
+        <s:actionmessage cssStyle="color:blue;;font-size:10pt"/>
         <s:actionerror cssStyle="color:red;"/>
     </div>
     <div class="form-submit" style="float:right;">
@@ -280,21 +280,21 @@
                                 </s:a>
                             </s:if>
                         </td>
-                        <%--Currently this list only holds approval pending items--%>
-                        <%--<td>
-                            <s:if test="status.ordinal() == 3">
-                                <s:url id="printSelected" action="eprPRSCertificate.do">
-                                    <s:param name="personUKey" value="personUKey"/>
-                                    <s:param name="pageNo" value="%{#request.pageNo}"/>
-                                    <s:param name="locationId" value="#request.locationId"/>
-                                    <s:param name="printStart" value="#request.printStart"/>
-                                </s:url>
-                                <s:a href="%{printSelected}" title="%{getText('print.label')}">
-                                    <img src="<s:url value='/images/print_icon.gif'/>" width="25" height="25"
-                                         border="none"/>
-                                </s:a>
-                            </s:if>
-                        </td>--%>
+                            <%--Currently this list only holds approval pending items--%>
+                            <%--<td>
+                                <s:if test="status.ordinal() == 3">
+                                    <s:url id="printSelected" action="eprPRSCertificate.do">
+                                        <s:param name="personUKey" value="personUKey"/>
+                                        <s:param name="pageNo" value="%{#request.pageNo}"/>
+                                        <s:param name="locationId" value="#request.locationId"/>
+                                        <s:param name="printStart" value="#request.printStart"/>
+                                    </s:url>
+                                    <s:a href="%{printSelected}" title="%{getText('print.label')}">
+                                        <img src="<s:url value='/images/print_icon.gif'/>" width="25" height="25"
+                                             border="none"/>
+                                    </s:a>
+                                </s:if>
+                            </td>--%>
                     </tr>
                 </s:iterator>
                 </tbody>

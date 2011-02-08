@@ -32,16 +32,16 @@
 
 <style type="text/css">
     #search-title {
-        width:100%;
-        text-align:center;
-        height:50px;
-        font-size:16px;
-        color:blue;
+        width: 100%;
+        text-align: center;
+        height: 50px;
+        font-size: 16px;
+        color: blue;
     }
 </style>
 
 <div id="view-users">
-    <s:actionmessage cssStyle="text-align:left;"/>
+    <s:actionmessage cssStyle="color:blue;;font-size:10pt"/>
 
     <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
         <legend>Search Options</legend>
@@ -79,9 +79,9 @@
             </s:form>
     </fieldset>
     <s:if test="#session.viewUsers!=null">
-            <div id="search-title">
-                 Search Results for : <s:property value="%{selectedRole}"/>
-            </div>
+        <div id="search-title">
+            Search Results for : <s:property value="%{selectedRole}"/>
+        </div>
         <fieldset style="border:none">
             <s:form name="users_print" action="" method="POST">
                 <table id="users-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
@@ -111,10 +111,10 @@
                             <s:url id="deleteSelected" action="eprInactiveUsers.do">
                                 <s:param name="userId" value="userId"/>
                             </s:url>
-                            <td align="center">                                
-                                    <s:a href="%{deleteSelected}"><img
-                                            src="<s:url value='/images/delete.gif'/>" width="25" height="25"
-                                            border="none"/></s:a>
+                            <td align="center">
+                                <s:a href="%{deleteSelected}"><img
+                                        src="<s:url value='/images/delete.gif'/>" width="25" height="25"
+                                        border="none"/></s:a>
                             </td>
                             <s:url id="activeSelected" action="eprActiveUsers.do">
                                 <s:param name="userId" value="userId"/>

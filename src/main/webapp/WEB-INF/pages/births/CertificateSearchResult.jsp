@@ -140,5 +140,5 @@
             </table>
         </fieldset>
     </s:if>
-    <s:actionmessage cssClass="alreadyPrinted"/>
+    <s:actionmessage cssClass="alreadyPrinted" cssStyle="color:blue;;font-size:10pt"/>
 </div>
