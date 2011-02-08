@@ -110,8 +110,16 @@ public class ReportsAction extends ActionSupport implements SessionAware {
             } else if (chartType == 13) {
                 logger.debug("Chart Type {}", chartType);
                 generateReport(year, user, ReportCodes.DEATH_TABLE_3);
-                reportsService.createDeathReport(user, ReportCodes.DEATH_TABLE_3);
-            }
+                reportsService.createDeathReport_all(user, ReportCodes.DEATH_TABLE_3);
+            } /*else if (chartType == 14) {
+                logger.debug("Chart Type {}", chartType);
+                //generateReport(year, user, ReportCodes.DEATH_TABLE_3);
+                reportsService.createDeathReport_4_6(user, ReportCodes.DEATH_TABLE_3);
+            } else if (chartType == 15) {
+                logger.debug("Chart Type {}", chartType);
+                //generateReport(year, user, ReportCodes.DEATH_TABLE_3);
+                reportsService.createDeathReport_4_4(user, ReportCodes.DEATH_TABLE_4_4);
+            }*/
 
         } catch (RGDRuntimeException error) {
             addActionError(getText("permission.denied"));
@@ -166,7 +174,9 @@ public class ReportsAction extends ActionSupport implements SessionAware {
         chartList.put(10, "TABLE 2.12");
         chartList.put(11, "INFANT DEATH REPORT");
         chartList.put(12, "INFANT DEATH REPORT 2");
-        chartList.put(13, "Populate Death Statistics");
+        chartList.put(13, "Populate Death Statistics/4.2/4.3/4.4/4.6");
+        //chartList.put(14, "DEATH TABLE 4.6");
+        //chartList.put(15, "DEATH TABLE 4.4");
 
         viewChartList = chartList;
     }
