@@ -9,6 +9,7 @@ import java.util.List;
 public class DeathIslandWideStatistics {
 
     public static final int NO_OF_DISTRICTS = 26;
+    public static final int UNKNOWN_DISTRICT_ID = 0;
 
     public DeathDistrictStatistics districtStatisticsList[];
     private static DeathIslandWideStatistics deathIslandWideStatistics;

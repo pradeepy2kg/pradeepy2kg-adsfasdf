@@ -55,6 +55,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
     private int year;
     private BirthDistrictYearStatistics[] districtYearStatisticsList;
     NumberFormat nf = NumberFormat.getInstance();
+    DeathIslandWideStatistics deathIslandWideStatistics = DeathIslandWideStatistics.getInstance();
 
     public enum DeathColumn {
         TOTAL,
@@ -120,6 +121,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         OTHER_FOREIGNERS_FEMALE,
         OTHER_SL_FEMALE,
         UNKNOWN_RACE_FEMALE,
+
         JANUARY_TOTAL,              //63
         FEBRUARY_TOTAL,
         MARCH_TOTAL,
@@ -186,6 +188,31 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         TOTAL_UNDER_12_MONTH,
         MALE_UNDER_12_MONTH,
         FEMALE_UNDER_12_MONTH,
+    }
+
+    public enum DeathAgeGroups {
+        UNKNOWN_AGE,
+        ONE_YEAR,
+        TWO_YEAR,
+        THREE_YEAR,
+        FOUR_YEAR,
+        BETWEEN_5_9,
+        BETWEEN_10_14,
+        BETWEEN_15_19,
+        BETWEEN_20_24,
+        BETWEEN_25_29,
+        BETWEEN_30_34,
+        BETWEEN_35_39,
+        BETWEEN_40_44,
+        BETWEEN_45_49,
+        BETWEEN_50_54,
+        BETWEEN_55_59,
+        BETWEEN_60_64,
+        BETWEEN_65_69,
+        BETWEEN_70_74,
+        BETWEEN_75_79,
+        BETWEEN_80_84,
+        BETWEEN_85_PLUS
     }
 
     public ReportsGeneratorImpl(BirthRegistrationService birthRegister, DeathRegistrationService deathRegister, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, RaceDAO raceDAO, UserManager service) {
@@ -1256,6 +1283,120 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
             logger.error("Error writing the CSV - {} {}", file.getPath() + file.getName(), e.getMessage());
         }
 
+    }
+
+    public void populateDeathStatistics(int year, User user, boolean clearCache) {
+        this.year = year;
+        if (!user.isAuthorized(Permission.GENERATE_REPORTS)) {
+            handleException(user.getUserId() + " doesn't have permission to generate the report",
+                ErrorCodes.PERMISSION_DENIED);
+        }
+
+        List<DSDivision> dsDivisionList = dsDivisionDAO.findAll();
+        User systemUser = userManagementService.getSystemUser();
+        List<DeathRegister> deathRecords;
+
+        Calendar cal = Calendar.getInstance();
+
+        /* January first of the year */
+        cal.set(year, 0, 1);
+        Date startDate = cal.getTime();
+
+        /* December 31st of the year */
+        cal.set(year, 11, 31);
+        Date endDate = cal.getTime();
+
+        for (DSDivision dsDivision : dsDivisionList) {
+            deathRecords = deathRegister.getByDSDivisionAndStatusAndRegistrationDateRange(
+                dsDivision, startDate, endDate, DeathRegister.State.ARCHIVED_CERT_GENERATED, user);
+            District district = dsDivision.getDistrict();
+
+            for (DeathRegister deathRegister : deathRecords) {
+                DeathInfo deathInfo = deathRegister.getDeath();
+                DeathPersonInfo deathPersonInfo = deathRegister.getDeathPerson();
+
+                int districtId = DeathIslandWideStatistics.UNKNOWN_DISTRICT_ID;
+                int monthId = DeathDistrictStatistics.UNKNOWN_MONTH_ID;
+                int raceId = DeathMonthlyStatistics.UNKNOWN_RACE_ID;
+                int ageId = DeathRaceStatistics.UNKNOWN_AGE_GROUP_ID;
+                int gender = deathPersonInfo.getDeathPersonGender();
+
+                if (district != null) {
+                    districtId = district.getDistrictUKey(); // 1 - 25
+                }
+                if (deathInfo != null) {
+                    if (deathInfo.getDateOfDeath() != null) {
+                        monthId = deathInfo.getDateOfDeath().getMonth() + 1;  // 1 - 12
+                    }
+                }
+                if (deathPersonInfo != null) {
+                    if (deathPersonInfo.getDeathPersonRace() != null) {
+                        raceId = deathPersonInfo.getDeathPersonRace().getRaceId(); // 1 - 13
+                    }
+                }
+                if (deathPersonInfo != null) {
+                    int age = deathPersonInfo.getDeathPersonAge();
+                    if (age <= 1) {
+                        ageId = DeathAgeGroups.ONE_YEAR.ordinal();
+                    } else if (age <= 2) {
+                        ageId = DeathAgeGroups.TWO_YEAR.ordinal();
+                    } else if (age <= 3) {
+                        ageId = DeathAgeGroups.THREE_YEAR.ordinal();
+                    } else if (age <= 4) {
+                        ageId = DeathAgeGroups.FOUR_YEAR.ordinal();
+                    } else if (age <= 9) {
+                        ageId = DeathAgeGroups.BETWEEN_5_9.ordinal();
+                    } else if (age <= 14) {
+                        ageId = DeathAgeGroups.BETWEEN_10_14.ordinal();
+                    } else if (age <= 19) {
+                        ageId = DeathAgeGroups.BETWEEN_15_19.ordinal();
+                    } else if (age <= 24) {
+                        ageId = DeathAgeGroups.BETWEEN_20_24.ordinal();
+                    } else if (age <= 29) {
+                        ageId = DeathAgeGroups.BETWEEN_25_29.ordinal();
+                    } else if (age <= 34) {
+                        ageId = DeathAgeGroups.BETWEEN_30_34.ordinal();
+                    } else if (age <= 39) {
+                        ageId = DeathAgeGroups.BETWEEN_35_39.ordinal();
+                    } else if (age <= 44) {
+                        ageId = DeathAgeGroups.BETWEEN_40_44.ordinal();
+                    } else if (age <= 49) {
+                        ageId = DeathAgeGroups.BETWEEN_45_49.ordinal();
+                    } else if (age <= 54) {
+                        ageId = DeathAgeGroups.BETWEEN_50_54.ordinal();
+                    } else if (age <= 59) {
+                        ageId = DeathAgeGroups.BETWEEN_55_59.ordinal();
+                    } else if (age <= 64) {
+                        ageId = DeathAgeGroups.BETWEEN_60_64.ordinal();
+                    } else if (age <= 69) {
+                        ageId = DeathAgeGroups.BETWEEN_65_69.ordinal();
+                    } else if (age <= 74) {
+                        ageId = DeathAgeGroups.BETWEEN_70_74.ordinal();
+                    } else if (age <= 79) {
+                        ageId = DeathAgeGroups.BETWEEN_80_84.ordinal();
+                    } else if (age > 84) {
+                        ageId = DeathAgeGroups.BETWEEN_85_PLUS.ordinal();
+                    }
+                }
+
+                if (gender == 0) {
+                    deathIslandWideStatistics.districtStatisticsList[districtId].deathMonthlyStatistics[monthId].deathRaceStatistics[raceId].deathAgeGroupStatistics[ageId].setAgeGroupMale(
+                        deathIslandWideStatistics.districtStatisticsList[districtId].deathMonthlyStatistics[monthId].deathRaceStatistics[raceId].deathAgeGroupStatistics[ageId].getAgeGroupMale() + 1
+                    );
+                    deathIslandWideStatistics.districtStatisticsList[districtId].deathMonthlyStatistics[monthId].deathRaceStatistics[raceId].deathAgeGroupStatistics[ageId].setAgeGroupTotal(
+                        deathIslandWideStatistics.districtStatisticsList[districtId].deathMonthlyStatistics[monthId].deathRaceStatistics[raceId].deathAgeGroupStatistics[ageId].getAgeGroupTotal() + 1
+                    );
+                }
+                else if (gender == 1) {
+                    deathIslandWideStatistics.districtStatisticsList[districtId].deathMonthlyStatistics[monthId].deathRaceStatistics[raceId].deathAgeGroupStatistics[ageId].setAgeGroupFemale(
+                        deathIslandWideStatistics.districtStatisticsList[districtId].deathMonthlyStatistics[monthId].deathRaceStatistics[raceId].deathAgeGroupStatistics[ageId].getAgeGroupFemale() + 1
+                    );
+                    deathIslandWideStatistics.districtStatisticsList[districtId].deathMonthlyStatistics[monthId].deathRaceStatistics[raceId].deathAgeGroupStatistics[ageId].setAgeGroupTotal(
+                        deathIslandWideStatistics.districtStatisticsList[districtId].deathMonthlyStatistics[monthId].deathRaceStatistics[raceId].deathAgeGroupStatistics[ageId].getAgeGroupTotal() + 1
+                    );
+                }
+            }
+        }
     }
 
     public void generateDeathReport(int year, User user, boolean clearCache) {
