@@ -1,5 +1,6 @@
 package lk.rgd.crs.core.service;
 
+import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 import lk.rgd.AppConstants;
 import lk.rgd.ErrorCodes;
 import lk.rgd.common.api.dao.AppParametersDAO;
@@ -174,6 +175,7 @@ public class MarriageRegistrationValidator {
         return userWarnings;
     }
 
+
     /**
      * Validate minimum requirements of marriage register
      *
@@ -306,8 +308,15 @@ public class MarriageRegistrationValidator {
         return warning;
     }
 
-    private void checkIllegalMarriage() {
-        //todo implement
+    public List<UserWarning> checkProhibitedRelationshipsForMarriageRegistration(MarriageRegister register, List<UserWarning> userWarnings, User user) {
+        ResourceBundle rb = rb_en;
+        if (AppConstants.SINHALA.equals(user.getPrefLanguage())) {
+            rb = rb_si;
+        } else if (AppConstants.TAMIL.equals(user.getPrefLanguage())) {
+            rb = rb_ta;
+        }
+        prohibitedRelationship(register, userWarnings, rb, user);
+        return userWarnings;
     }
     //check age again
     //check previouse marriages
@@ -334,13 +343,15 @@ public class MarriageRegistrationValidator {
         final List<Person> groomsChildren = populationRegistry.findAllChildren(groom, user);
         boolean prohibited = false;
         //check father mismatched
-        if (bridesFather != null && !bridesFather.equals(populationRegistry.
-            findUniquePersonByPINorNIC(register.getFemale().getFatherIdentificationNumberFemale(), user))) {
+        if (bridesFather != null && register.getFemale().getFatherIdentificationNumberFemale() != null &&
+            !bridesFather.equals(populationRegistry.
+                findUniquePersonByPINorNIC(register.getFemale().getFatherIdentificationNumberFemale(), user))) {
             handleException("given father information for bride is mismatched with PRS father information's for bride",
                 ErrorCodes.BRIDES_FATHER_IN_PRS_IS_MISMATCHED_WITH_GIVEN_FATHER);
         }
-        if (groomsFather != null && !groomsFather.equals(populationRegistry.
-            findUniquePersonByPINorNIC(register.getMale().getFatherIdentificationNumberMale(), user))) {
+        if (groomsFather != null && register.getMale().getFatherIdentificationNumberMale() != null &&
+            !groomsFather.equals(populationRegistry.
+                findUniquePersonByPINorNIC(register.getMale().getFatherIdentificationNumberMale(), user))) {
             handleException("given father information for groom is mismatched with PRS father information's for groom",
                 ErrorCodes.GROOMS_FATHER_IN_PRS_IS_MISMATCHED_WITH_GIVEN_FATHER);
         }
