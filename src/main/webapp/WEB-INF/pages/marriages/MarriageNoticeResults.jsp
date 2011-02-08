@@ -1,6 +1,6 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<s:actionmessage cssStyle="color:black;"/>
+<s:actionmessage cssStyle="color:blue;;font-size:10pt"/>
 <br>
 <s:actionerror cssErrorStyle="color:red;"/>
 

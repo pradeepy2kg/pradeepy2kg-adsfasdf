@@ -18,7 +18,8 @@
 <s:hidden id="error4" value="%{getText('searchEndDate.label')}"/>
 
 <script>
-    function initPage(){}
+    function initPage() {
+    }
 
     $(function() {
         $("#searchStartDatePicker").datepicker({
@@ -176,7 +177,7 @@
 </fieldset>
 </s:form>
 <%--<s:actionerror/>--%>
-<s:actionmessage/>
+<s:actionmessage cssStyle="color:blue;;font-size:10pt"/>
 <s:if test="#request.warnings != null">
     <div id="birth-confirm-approval-message" class="font-9" align="center">
         <table width="100%" cellpadding="0" cellspacing="0">

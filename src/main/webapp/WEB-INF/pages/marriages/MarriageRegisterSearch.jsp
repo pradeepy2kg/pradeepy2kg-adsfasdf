@@ -261,7 +261,7 @@
                 <s:iterator status="approvalStatus" value="marriageRegisterSearchList">
                     <tr>
                         <td align="center">
-                                <s:property value="idUKey"/>
+                            <s:property value="idUKey"/>
                         </td>
                         <td align="center">
                             <s:if test="serialNumber==0">
@@ -298,9 +298,20 @@
                                         <s:param name="idUKey" value="idUKey"/>
                                         <s:param name="mode">print</s:param>
                                     </s:url>
-                                    <s:a href="%{printExtract}" title="%{getText('tooltip.marriageextract.print')}">
-                                        <img src="<s:url value='/images/print_icon.gif'/>" border="none" height="25"/>
-                                    </s:a>
+                                    <s:if test="!(state.ordinal()==9)">
+                                        <s:a href="%{printExtract}"
+                                             title="%{getText('tooltip.marriageextract.reprint')}">
+                                            <img src="<s:url value='/images/print_icon.gif'/>" border="none"
+                                                 height="25"/>
+                                            
+                                        </s:a>
+                                    </s:if>
+                                    <s:else>
+                                        <s:a href="%{printExtract}" title="%{getText('tooltip.marriageextract.print')}">
+                                            <img src="<s:url value='/images/print_icon.gif'/>" border="none"
+                                                 height="25"/>
+                                        </s:a>
+                                    </s:else>
                                 </s:if>
                                 <s:elseif
                                         test="(state.ordinal()!=10 && state.ordinal()!=12)">   <%-- If Not rejected  --%>

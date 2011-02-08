@@ -52,34 +52,34 @@
         $('select#birthDistrictId').bind('change', function(evt1) {
             var id = $("select#birthDistrictId").attr("value");
             $.getJSON('/ecivil/crs/DivisionLookupService', {id:id},
-                     function(data) {
-                         var options1 = '';
-                         var ds = data.dsDivisionList;
-                         for (var i = 0; i < ds.length; i++) {
-                             options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
-                         }
-                         $("select#dsDivisionId").html(options1);
+                    function(data) {
+                        var options1 = '';
+                        var ds = data.dsDivisionList;
+                        for (var i = 0; i < ds.length; i++) {
+                            options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                        }
+                        $("select#dsDivisionId").html(options1);
 
-                         var options2 = '';
-                         var bd = data.bdDivisionList;
-                         for (var j = 0; j < bd.length; j++) {
-                             options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
-                         }
-                         $("select#birthDivisionId").html(options2);
-                     });
+                        var options2 = '';
+                        var bd = data.bdDivisionList;
+                        for (var j = 0; j < bd.length; j++) {
+                            options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
+                        }
+                        $("select#birthDivisionId").html(options2);
+                    });
         });
 
         $('select#dsDivisionId').bind('change', function(evt2) {
             var id = $("select#dsDivisionId").attr("value");
             $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:2},
-                     function(data) {
-                         var options = '';
-                         var bd = data.bdDivisionList;
-                         for (var i = 0; i < bd.length; i++) {
-                             options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
-                         }
-                         $("select#birthDivisionId").html(options);
-                     });
+                    function(data) {
+                        var options = '';
+                        var bd = data.bdDivisionList;
+                        for (var i = 0; i < bd.length; i++) {
+                            options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
+                        }
+                        $("select#birthDivisionId").html(options);
+                    });
         })
     });
     var errormsg = "";
@@ -218,7 +218,8 @@
             <legend>
                 <s:label value="%{getText('searchResult.label')}"/>
             </legend>
-            <table id="search-list-table" width="100%" cellpadding="0" cellspacing="0" class="display"  style="font-size:10pt;">
+            <table id="search-list-table" width="100%" cellpadding="0" cellspacing="0" class="display"
+                   style="font-size:10pt;">
                 <thead>
                 <tr>
                     <s:if test="searchResultList.size>0">

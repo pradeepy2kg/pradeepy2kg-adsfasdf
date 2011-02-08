@@ -17,7 +17,7 @@
             <tbody>
             <tr>
                 <td colspan="4">
-                    <s:actionmessage name="recordIndexOK" cssStyle="color:red;font-size:10pt"/>
+                    <s:actionmessage name="recordIndexOK" cssStyle="color:blue;font-size:10pt"/>
                 </td>
             </tr>
             <tr>

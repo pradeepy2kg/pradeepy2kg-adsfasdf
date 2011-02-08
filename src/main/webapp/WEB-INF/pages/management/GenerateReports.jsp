@@ -58,7 +58,7 @@
             <tr>
                 <td colspan="3">
                     <div id="message">
-                        <s:actionmessage cssStyle="color:blue;"/>
+                        <s:actionmessage cssStyle="color:blue;;font-size:10pt"/>
                     </div>
                 </td>
             </tr>
@@ -80,7 +80,8 @@
                 <tr>
                     <td width="20%" align="right"><s:label value="Select Chart"/></td>
                     <td width="50%">
-                        <s:select list="viewChartList" name="viewChartType" id="selectViewChart" cssStyle="width:300px;"/>
+                        <s:select list="viewChartList" name="viewChartType" id="selectViewChart"
+                                  cssStyle="width:300px;"/>
                     </td>
                     <td width="30%">&nbsp;</td>
                 </tr>

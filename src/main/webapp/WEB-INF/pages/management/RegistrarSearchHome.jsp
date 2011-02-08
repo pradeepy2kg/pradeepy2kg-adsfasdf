@@ -64,7 +64,7 @@
 
 </script>
 <s:actionerror cssStyle="color:red;font-size:10pt"/>
-<s:actionmessage/>
+<s:actionmessage cssStyle="color:blue;;font-size:10pt"/>
 <fieldset style="margin-bottom:0px;margin-top:5px;border:none;">
     <s:form method="post" action="eprFindRegistrar.do" onsubmit="javascript:return validatePage()">
         <div id="tabs">

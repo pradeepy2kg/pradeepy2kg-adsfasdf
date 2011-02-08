@@ -10,7 +10,7 @@
     User user = (User) session.getAttribute("user_bean");
 %>
 <div id="birth-alteration-result-outer">
-    <s:actionmessage/>
+    <s:actionmessage cssStyle="color:blue;;font-size:10pt"/>
     <s:actionerror cssStyle="color:red;"/>
     <table align="center">
 

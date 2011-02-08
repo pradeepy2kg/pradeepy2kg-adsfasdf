@@ -212,10 +212,10 @@
 
 </s:form>
 
-    <div>
-        <s:actionmessage cssStyle="color:black;"/>
-        <s:actionerror cssStyle="color:red;"/>
-    </div>
+<div>
+    <s:actionmessage cssStyle="color:blue;;font-size:10pt"/>
+    <s:actionerror cssStyle="color:red;"/>
+</div>
 <div id="marriage-notice-search" style="margin-top:58px;">
 <s:if test="searchList.size > 0">
     <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;">

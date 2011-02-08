@@ -116,7 +116,7 @@
 </script>
 
 <s:actionerror cssStyle="color:red;font-size:10pt"/>
-<s:actionmessage/>
+<s:actionmessage cssStyle="color:blue;;font-size:10pt"/>
 <s:form method="post" action="eprDeathAlterationPageLoad.do" onsubmit="javascript:return validateForm()">
     <%--section search by death certificate number--%>
     <div id="tabs" style="font-size:10pt;">

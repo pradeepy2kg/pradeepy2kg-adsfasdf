@@ -101,7 +101,7 @@
     }
 </style>
 <s:actionerror cssStyle="color:red;"/>
-<s:actionmessage cssStyle="color:blue;"/>
+<s:actionmessage cssStyle="color:blue;;font-size:10pt"/>
 
 <div class="add-registrar-body">
     <div class="block">

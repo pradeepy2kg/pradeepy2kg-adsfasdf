@@ -12,7 +12,8 @@
 <script type="text/javascript" src="<s:url value="/js/chartCreator.js"/>"></script>
 
 <s:actionerror cssStyle="color:red;font-size:10pt"/>
-<s:actionmessage/>
+<s:actionmessage cssStyle="color:blue;;font-size:10pt"/>
+
 
 <style type="text/css">
     .jqplot-target {
@@ -71,26 +72,26 @@
     #rg-birth, #rg-death, #rg-mrg {
         width: 100%;
         border: black 1px solid;
-        padding-bottom:20px;
+        padding-bottom: 20px;
     }
 
     #birth-pie, #death-pie, #mrg-pie {
-        width:300px;
-        height:300px;
-        padding:0px;
-        margin:0 auto;
+        width: 300px;
+        height: 300px;
+        padding: 0px;
+        margin: 0 auto;
         display: block;
-        clear:both;
-        float:none;
+        clear: both;
+        float: none;
     }
 
     #birth-bar, #death-bar, #mrg-bar {
-        width:90%;
-        height:200px;
-        float:none;
-        display:block;
-        float:none;
-        margin:0 auto;
+        width: 90%;
+        height: 200px;
+        float: none;
+        display: block;
+        float: none;
+        margin: 0 auto;
     }
 
 </style>
@@ -213,61 +214,61 @@
 </s:if>
 <s:else>
 <s:if test="role != 'DEO'">
-<%--<s:form action="eprShowStatistics.do" method="post">
-    <div id="stat-preferences">
-        <table border="0" width="100%" cellpadding="5" cellspacing="5">
-            <tr bgcolor="#eeeeee">
-                <th colspan="4" align="left">Custom Search</th>
-            </tr>
-            <tr>
-                <td width="20%" align="right">District</td>
-                <td width="30%" align="left">
-                    <s:select
-                            id="district"
-                            name="districtId"
-                            list="districtList"
-                            />
-                </td>
-                <td width="20%" align="right">DSDivision</td>
-                <td width="30%" align="left">
-                    <s:select
-                            id="dsDivision"
-                            name="dsDivisionId"
-                            list="divisionList"
-                            />
-                </td>
-            </tr>
-            <tr>
-                <td align="right">Start Date</td>
-                <td align="left">
-                    <s:textfield id="sdate" name="startDate" cssStyle="width:70%;"/>
-                </td>
-                <td align="right">End Date</td>
-                <td align="left">
-                    <s:textfield id="edate" name="endDate" cssStyle="width:70%;"/>
-                </td>
-            </tr>
-            <tr>
-                <s:if test="role == 'RG' || role == 'ARG'">
-                    <td align="right">&nbsp;</td>
-                    <td align="left">&nbsp;</td>
-                </s:if>
-                <s:else>
-                    <td align="right">DEO</td>
-                    <td align="left">
+    <%--<s:form action="eprShowStatistics.do" method="post">
+        <div id="stat-preferences">
+            <table border="0" width="100%" cellpadding="5" cellspacing="5">
+                <tr bgcolor="#eeeeee">
+                    <th colspan="4" align="left">Custom Search</th>
+                </tr>
+                <tr>
+                    <td width="20%" align="right">District</td>
+                    <td width="30%" align="left">
                         <s:select
-                                id="deoUser"
-                                name="deoUserId"
-                                list="deoList"
+                                id="district"
+                                name="districtId"
+                                list="districtList"
                                 />
                     </td>
-                </s:else>
-                <td>&nbsp;</td>
-                <td><s:submit align="right"/></td>
-            </tr>
-        </table>
-    </div>
-</s:form>--%>
+                    <td width="20%" align="right">DSDivision</td>
+                    <td width="30%" align="left">
+                        <s:select
+                                id="dsDivision"
+                                name="dsDivisionId"
+                                list="divisionList"
+                                />
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">Start Date</td>
+                    <td align="left">
+                        <s:textfield id="sdate" name="startDate" cssStyle="width:70%;"/>
+                    </td>
+                    <td align="right">End Date</td>
+                    <td align="left">
+                        <s:textfield id="edate" name="endDate" cssStyle="width:70%;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <s:if test="role == 'RG' || role == 'ARG'">
+                        <td align="right">&nbsp;</td>
+                        <td align="left">&nbsp;</td>
+                    </s:if>
+                    <s:else>
+                        <td align="right">DEO</td>
+                        <td align="left">
+                            <s:select
+                                    id="deoUser"
+                                    name="deoUserId"
+                                    list="deoList"
+                                    />
+                        </td>
+                    </s:else>
+                    <td>&nbsp;</td>
+                    <td><s:submit align="right"/></td>
+                </tr>
+            </table>
+        </div>
+    </s:form>--%>
 </s:if>
 <s:if test="role == 'DEO' || role == 'ADR' || role == 'DR'">
     <div id="stat-charts">

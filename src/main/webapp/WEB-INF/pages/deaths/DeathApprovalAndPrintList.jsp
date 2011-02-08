@@ -156,7 +156,7 @@
 <div id="birth-register-approval-body">
 
 <s:actionerror cssStyle="color:red;font-size:10pt"/>
-<s:actionmessage cssStyle="color:black;font-size:10pt"/>
+<s:actionmessage cssStyle="color:blue;;font-size:10pt"/>
 
 <fieldset style="margin-bottom:10px;margin-top:20px;border:none">
 <table id="approval-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">

@@ -48,36 +48,36 @@
         $('select#birthDistrictId').bind('change', function(evt1) {
             var id = $("select#birthDistrictId").attr("value");
             $.getJSON('/ecivil/crs/DivisionLookupService', {id:id},
-                     function(data) {
-                         var options1 = '';
-                         var ds = data.dsDivisionList;
-                         for (var i = 0; i < ds.length; i++) {
-                             options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
-                         }
-                         $("select#dsDivisionId").html(options1);
+                    function(data) {
+                        var options1 = '';
+                        var ds = data.dsDivisionList;
+                        for (var i = 0; i < ds.length; i++) {
+                            options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                        }
+                        $("select#dsDivisionId").html(options1);
 
-                         var options2 = '';
-                         var bd = data.bdDivisionList;
-                         options2 += '<option value="' + 0 + '">' + <s:label value="%{getText('all.divisions.label')}"/> + '</option>';
-                         for (var j = 0; j < bd.length; j++) {
-                             options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
-                         }
-                         $("select#birthDivisionId").html(options2);
-                     });
+                        var options2 = '';
+                        var bd = data.bdDivisionList;
+                        options2 += '<option value="' + 0 + '">' + <s:label value="%{getText('all.divisions.label')}"/> + '</option>';
+                        for (var j = 0; j < bd.length; j++) {
+                            options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
+                        }
+                        $("select#birthDivisionId").html(options2);
+                    });
         });
 
         $('select#dsDivisionId').bind('change', function(evt2) {
             var id = $("select#dsDivisionId").attr("value");
             $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:2},
-                     function(data) {
-                         var options = '';
-                         var bd = data.bdDivisionList;
-                         options += '<option value="' + 0 + '">' + <s:label value="%{getText('all.divisions.label')}"/>  + '</option>';
-                         for (var i = 0; i < bd.length; i++) {
-                             options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
-                         }
-                         $("select#birthDivisionId").html(options);
-                     });
+                    function(data) {
+                        var options = '';
+                        var bd = data.bdDivisionList;
+                        options += '<option value="' + 0 + '">' + <s:label value="%{getText('all.divisions.label')}"/>  + '</option>';
+                        for (var i = 0; i < bd.length; i++) {
+                            options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
+                        }
+                        $("select#birthDivisionId").html(options);
+                    });
         })
     });
 
@@ -229,7 +229,7 @@
     </table>
 </fieldset>
 </s:form>
-<s:actionmessage/>
+<s:actionmessage cssStyle="color:blue;;font-size:10pt"/>
 <s:if test="#request.warnings != null">
     <div id="birth-register-approval-message" class="font-9" align="center">
         <table width="100%" cellpadding="0" cellspacing="0">

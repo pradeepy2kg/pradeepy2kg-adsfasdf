@@ -6,7 +6,7 @@
 </script>
 <div id="death-alteration-result-outer">
     <s:url action="eprDeathAlterationSearchHome.do" id="addnew"></s:url>
-    <s:actionmessage/>
+    <s:actionmessage cssStyle="color:blue;;font-size:10pt"/>
     <s:if test="(#session.user_bean.role.roleId.equals('ARG')) || (#session.user_bean.role.roleId.equals('ARG'))">
         <div class="form-submit">
             <s:form method="post" action="eprApproveDeathAlterationsDirect.do">
