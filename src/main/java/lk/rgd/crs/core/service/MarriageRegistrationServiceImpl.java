@@ -639,6 +639,9 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         List<UserWarning> warnings = marriageRegistrationValidator.validateWarningsOfMarriageRegister(mr, user);
         //check existing marriage warnings
         warnings = marriageRegistrationValidator.checkExistingMarriages(warnings, mr, user);
+        //check prohibited relationships
+        marriageRegistrationValidator.checkProhibitedRelationshipsForMarriageRegistration(mr, warnings, user);
+
         // capture warnings of marriage register approved by ignoring warnings
         if (!warnings.isEmpty() && ignoreWarnings) {
             StringBuilder sb = new StringBuilder();

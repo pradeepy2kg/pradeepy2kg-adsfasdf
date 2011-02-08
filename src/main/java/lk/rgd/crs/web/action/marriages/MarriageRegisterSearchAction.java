@@ -416,7 +416,16 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         try {
             warnings = marriageRegistrationService.approveMarriageRegister(idUKey, user, ignoreWarnings);
         } catch (CRSRuntimeException e) {
-            addActionError(getText("error.marriageregister.notapproved"));
+            switch (e.getErrorCode()) {
+                case ErrorCodes.BRIDES_FATHER_IN_PRS_IS_MISMATCHED_WITH_GIVEN_FATHER:
+                    addActionError(getText("error.given.brides.father.details.are.mismatched.with.prs"));
+                    break;
+                case ErrorCodes.GROOMS_FATHER_IN_PRS_IS_MISMATCHED_WITH_GIVEN_FATHER:
+                    addActionError(getText("error.given.grooms.father.details.are.mismatched.with.prs"));
+                    break;
+                default:
+                    addActionError(getText("error.marriageregister.notapproved"));
+            }
             return marriageRegisterSearchInit();
         }
 
