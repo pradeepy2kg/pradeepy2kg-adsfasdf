@@ -303,7 +303,7 @@
                                              title="%{getText('tooltip.marriageextract.reprint')}">
                                             <img src="<s:url value='/images/print_icon.gif'/>" border="none"
                                                  height="25"/>
-                                            
+
                                         </s:a>
                                     </s:if>
                                     <s:else>
@@ -399,9 +399,20 @@
                                     <s:param name="idUKey" value="idUKey"/>
                                     <s:param name="mode">print</s:param>
                                 </s:url>
-                                <s:a href="%{printDivorceExtract}" title="%{getText('tooltip.divorceextract.print')}">
-                                    <img src="<s:url value='/images/print_icon_red.jpg'/>" border="none" height="25"/>
-                                </s:a>
+                                <s:if test="state.ordinal()==12">
+                                    <s:a href="%{printDivorceExtract}"
+                                         title="%{getText('tooltip.divorceextract.print')}">
+                                        <img src="<s:url value='/images/print_icon_red.jpg'/>" border="none"
+                                             height="25"/>
+                                    </s:a>
+                                </s:if>
+                                <s:else>
+                                    <s:a href="%{printDivorceExtract}"
+                                         title="%{getText('tooltip.divorceextract.reprint')}">
+                                        <img src="<s:url value='/images/print_icon_red.jpg'/>" border="none"
+                                             height="25"/>
+                                    </s:a>
+                                </s:else>
                             </s:if>
                         </td>
                     </tr>
