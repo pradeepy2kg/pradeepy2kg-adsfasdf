@@ -371,12 +371,22 @@ function personAgeDeath() {
     var person_bd = new Date(document.getElementById('deathPersonDOB').value);
     var date_of_death = new Date(document.getElementById('deathDatePicker').value);
     var death_person_age = date_of_death.getYear() - person_bd.getYear();
+    alert(death_person_age)
+    if (death_person_age < 2) {
+        var death_person_age_in_ms = date_of_death.getTime() - person_bd.getTime();
+    }
     if (!(dateOdBirthSubmitted && dateOfDeathSubmitted)) {
         if (isFieldEmpty(document.getElementById("deathPersonAge"))) {
             document.getElementById("deathPersonAge").value = 0;
         }
     }
     else {
+        if ((death_person_age == 0 || death_person_age == 1) && death_person_age_in_ms < 15768000000) {
+            death_person_age = 0;
+        }
+        else if ((death_person_age == 0 || death_person_age == 1 ) && death_person_age_in_ms > 15768000000) {
+            death_person_age = 1;
+        }
         document.getElementById("deathPersonAge").value = death_person_age;
     }
 
