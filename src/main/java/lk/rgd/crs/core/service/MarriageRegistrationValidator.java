@@ -133,6 +133,9 @@ public class MarriageRegistrationValidator {
             checkDuplicatePinOrNic(malePin, femalePin, warnings, rb, "duplicate_male_female_pin");
         }
 
+        // check prohibited relationships
+        // TODO
+
         return warnings;
     }
 
