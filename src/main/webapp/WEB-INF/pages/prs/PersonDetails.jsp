@@ -413,7 +413,7 @@
             <s:else>
                 <s:label value="%{person.father.nic}"/>
             </s:else>
-            </td>
+        </td>
         <td>
             <s:if test="person.father.dateOfBirth != null">
                 <s:label value="%{person.father.dateOfBirth}"/><br>
@@ -610,8 +610,8 @@
                 <br>Name
             </td>
         </tr>
-        <tr>
-            <s:iterator value="person.marriages">
+        <s:iterator value="person.marriages">
+            <tr>
                 <td height="60px">
                     <s:if test="dateOfMarriage != null">
                         <s:property value="dateOfMarriage"/><br>
@@ -685,8 +685,8 @@
                         </s:a>
                     </td>
                 </s:elseif>
-            </s:iterator>
-        </tr>
+            </tr>
+        </s:iterator>
         </tbody>
     </table>
     <br/>
