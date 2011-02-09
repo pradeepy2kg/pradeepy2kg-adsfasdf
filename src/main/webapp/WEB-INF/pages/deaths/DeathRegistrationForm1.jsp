@@ -205,6 +205,11 @@ function validate() {
         isNumeric(domObject.value, 'p1error1', 'invalidAgeAtDeath')
 
     }
+    var person_bd = new Date(document.getElementById('deathPersonDOB').value);
+    var date_of_death = new Date(document.getElementById('deathDatePicker').value);
+    if (date_of_death.getTime() < person_bd.getTime()) {
+        errormsg = errormsg + "\n" + document.getElementById('invalidDateRange').value;
+    }
     /*
      var pageType = document.getElementById("pageType").value;
      if (pageType == 0) {
@@ -235,11 +240,7 @@ function validate() {
         if (isFieldEmpty(domObject)) {
             errormsg = errormsg + "\n" + document.getElementById('error11').value;
         }
-        var person_bd = new Date(document.getElementById('deathPersonDOB').value);
-        var date_of_death = new Date(document.getElementById('deathDatePicker').value);
-        if (date_of_death.getTime() < person_bd.getTime()) {
-            errormsg = errormsg + "\n" + document.getElementById('invalidDateRange').value;
-        }
+
     }
     otherValidations();
     if (errormsg != "") {
@@ -371,7 +372,6 @@ function personAgeDeath() {
     var person_bd = new Date(document.getElementById('deathPersonDOB').value);
     var date_of_death = new Date(document.getElementById('deathDatePicker').value);
     var death_person_age = date_of_death.getYear() - person_bd.getYear();
-    alert(death_person_age)
     if (death_person_age < 2) {
         var death_person_age_in_ms = date_of_death.getTime() - person_bd.getTime();
     }
