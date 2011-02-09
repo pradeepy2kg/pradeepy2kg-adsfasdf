@@ -102,15 +102,17 @@ public class ReportsAction extends ActionSupport implements SessionAware {
                 reportsService.createReport(user, ReportCodes.TABLE_2_12);
             } else if (chartType == 11) {
                 logger.debug("Chart Type {}", chartType);
-                generateReport(year, user, ReportCodes.DEATH_TABLE);
-                //reportsService.createReport(user, ReportCodes.DEATH_TABLE);
+                generateReport(year, user, ReportCodes.INFANT_DEATH_TABLE_1);
+                //reportsService.createReport(user, ReportCodes.INFANT_DEATH_TABLE_1);
             } else if (chartType == 12) {
                 logger.debug("Chart Type {}", chartType);
-                generateReport(year, user, ReportCodes.DEATH_TABLE2);
+                generateReport(year, user, ReportCodes.INFANT_DEATH_TABLE_2);
             } else if (chartType == 13) {
                 logger.debug("Chart Type {}", chartType);
                 generateReport(year, user, ReportCodes.DEATH_TABLE_3);
                 reportsService.createDeathReport_all(user, ReportCodes.DEATH_TABLE_3);
+                reportsService.createDeathReport_4_6(user, ReportCodes.DEATH_TABLE_3);
+                reportsService.createDeathReport_4_4(user, ReportCodes.DEATH_TABLE_4_4);
             } /*else if (chartType == 14) {
                 logger.debug("Chart Type {}", chartType);
                 //generateReport(year, user, ReportCodes.DEATH_TABLE_3);
@@ -172,9 +174,9 @@ public class ReportsAction extends ActionSupport implements SessionAware {
         chartList.put(8, "TABLE 2.11");
         chartList.put(9, "TABLE 2.10");
         chartList.put(10, "TABLE 2.12");
-        chartList.put(11, "INFANT DEATH REPORT");
-        chartList.put(12, "INFANT DEATH REPORT 2");
-        chartList.put(13, "Populate Death Statistics/4.2/4.3/4.4/4.6");
+        chartList.put(11, "INFANT DEATH REPORT 3.2/3.3/3.4");
+        chartList.put(12, "INFANT DEATH REPORT 3.5a/3.5b");
+        chartList.put(13, "DEATH REPORTS 4.2/4.3/4.4/4.6");
         //chartList.put(14, "DEATH TABLE 4.6");
         //chartList.put(15, "DEATH TABLE 4.4");
 
@@ -297,10 +299,10 @@ public class ReportsAction extends ActionSupport implements SessionAware {
             case ReportCodes.TABLE_2_12:
                 reportsService.generate_2_12(year, user, clearCache);
                 break;
-            case ReportCodes.DEATH_TABLE:
+            case ReportCodes.INFANT_DEATH_TABLE_1:
                 reportsService.generateDeathReport(year, user, clearCache);
                 break;
-            case ReportCodes.DEATH_TABLE2:
+            case ReportCodes.INFANT_DEATH_TABLE_2:
                 reportsService.generateDeathReport2(year, user, clearCache);
                 break;
             case ReportCodes.DEATH_TABLE_3:
