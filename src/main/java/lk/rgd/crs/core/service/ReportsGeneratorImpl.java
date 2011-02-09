@@ -1051,7 +1051,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         Date endDate = cal.getTime();
 
         StringBuilder csv = new StringBuilder();
-        String filename = "DeathReports2.csv";
+        String filename = ReportCodes.INFANT_DEATH_TABLE_2_NAME + ".csv";
 
         for (DSDivision dsDivision : dsDivisionList) {
             deathRecords = deathRegister.getByDSDivisionAndStatusAndRegistrationDateRange(
@@ -1284,6 +1284,11 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
     }
 
     public void populateDeathStatistics(int year, User user, boolean clearCache) {
+
+        if(deathIslandWideStatistics != null) {
+            deathIslandWideStatistics = new DeathIslandWideStatistics();
+        }
+
         this.year = year;
         if (!user.isAuthorized(Permission.GENERATE_REPORTS)) {
             handleException(user.getUserId() + " doesn't have permission to generate the report",
@@ -1502,11 +1507,12 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         } catch (IOException e) {
             logger.error("Error writing the CSV - {} {}", file.getPath() + file.getName(), e.getMessage());
         }
+
     }
 
     public void createDeathReport_4_6(User user, int headerCode) {
         StringBuilder csv = new StringBuilder();
-        String filename = "Death_table_4_6.csv";
+        String filename = ReportCodes.DEATH_TABLE_4_6_NAME + ".csv";
 
         csv.append("District,");
         for (int f = 0; f < DeathMonthlyStatistics.NO_OF_RACES; f++) {
@@ -1627,7 +1633,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         Date endDate = cal.getTime();
 
         StringBuilder csv = new StringBuilder();
-        String filename = "DeathReports.csv";
+        String filename = ReportCodes.INFANT_DEATH_TABLE_1_NAME + ".csv";
         int array[][] = new int[BirthIslandWideStatistics.NO_OF_DISTRICTS][DeathColumn.values().length];
         csv.append("DISTRICT,TOTAL,MALE,FEMALE," +
             "TOTAL UNDER 1 YEAR,MALE UNDER 1 YEAR,FEMALE UNDER 1 YEAR," +
