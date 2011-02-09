@@ -492,7 +492,7 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
         Query q = em.createNamedQuery("get.active.marriage.license");
         q.setParameter("bridePIN", bridePIN);
         q.setParameter("groomPIN", groomPIN);
-        q.setParameter("state", MarriageRegister.State.LICENSE_PRINTED);
+        q.setParameter("state", MarriageRegister.State.NOTICE_APPROVED);
         return q.getResultList();
     }
 }
