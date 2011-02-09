@@ -171,7 +171,7 @@ import java.util.Date;
     @NamedQuery(name = "filter.by.unused.marriage.notice.date", query = "SELECT mr FROM MarriageRegister mr WHERE" +
         " mr.state=:state AND mr.lifeCycleInfo.lastUpdatedTimestamp < :date"),
     @NamedQuery(name = "get.active.marriage.license", query = "SELECT mr FROM MarriageRegister mr WHERE " +
-        "mr.female.identificationNumberFemale =:bridePIN AND mr.male.identificationNumberMale =:groomPIN AND mr.state =:state " +
+        "(mr.female.identificationNumberFemale =:bridePIN OR mr.male.identificationNumberMale =:groomPIN) AND mr.state =:state " +
         "AND mr.lifeCycleInfo.activeRecord IS TRUE ")
 
 })
