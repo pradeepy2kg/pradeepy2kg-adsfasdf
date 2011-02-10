@@ -235,6 +235,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 // all pages captured, proceed to persist after validations
                 // todo data validations, exception handling and error reporting
                 bdId = bdf.getIdUKey();
+                boolean noError = true;
 
                 if (bdId == 0) {
                     if (birthType == BirthDeclaration.BirthType.LIVE) {
@@ -268,17 +269,11 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                             service.editBelatedBirthDeclaration(bdf, true, user);
                         }
                         addActionMessage(getText("edit.Data.Save.Success.label"));
-                        // used to check user have approval authority and passed to BirthRegistrationFormDetails jsp
-                        if (BirthDeclaration.BirthType.BELATED != birthType) {
-                            allowApproveBDF = user.isAuthorized(Permission.APPROVE_BDF);
-                        } else {
-                            allowApproveBDF = user.isAuthorized(Permission.APPROVE_BDF_BELATED);
-                        }
-
                     } catch (CRSRuntimeException e) {
                         switch (e.getErrorCode()) {
                             case ErrorCodes.ILLEGAL_STATE:
                                 addActionError(getText("error.cannot.edit.approved"));
+                                noError = false;
                                 break;
                             default:
                                 logger.error("Unhandled exception");
@@ -290,6 +285,15 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 }
                 session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
                 session.remove(WebConstants.SESSION_OLD_BD_FOR_ADOPTION);
+
+                // used to check user have approval authority and passed to BirthRegistrationFormDetails jsp
+                if (noError) {
+                    if (BirthDeclaration.BirthType.BELATED != birthType) {
+                        allowApproveBDF = user.isAuthorized(Permission.APPROVE_BDF);
+                    } else {
+                        allowApproveBDF = user.isAuthorized(Permission.APPROVE_BDF_BELATED);
+                    }
+                }
         }
         if (!addNewMode && (pageNo != 4)) {
             session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
