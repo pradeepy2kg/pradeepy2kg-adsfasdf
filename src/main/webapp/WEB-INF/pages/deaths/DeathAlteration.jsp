@@ -6,6 +6,7 @@
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
 <script type="text/javascript" src="<s:url value="/js/timePicker.js"/>"></script>
+<script type="text/javascript" src="<s:url value="/js/transliteration.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 <script>
     //these inpute can not be null
@@ -495,7 +496,7 @@
                 <s:textfield name="deathAlteration.deathInfo.placeOfDeathInEnglish" id="placeOfDeathInEnglish"
                              cssStyle="width:99%;" value="%{deathAlteration.deathInfo.placeOfDeathInEnglish}"/>
                 <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px 0;"
-                     id="place">
+                     id="place" onclick="transliterateTextField('placeOfDeath', 'placeOfDeathInEnglish')">
             </td>
         </tr>
         <tr>
