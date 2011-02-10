@@ -1,8 +1,16 @@
+<%@ page import="lk.rgd.crs.web.WebConstants" %>
+<%@ page import="java.util.Locale" %>
+<%@ page import="lk.rgd.common.api.domain.User" %>
+<%@ page import="lk.rgd.AppConstants" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%
+    User user = (User) session.getAttribute("user_bean");
+    String preLang = ((Locale) session.getAttribute(WebConstants.SESSION_USER_LANG)).getLanguage();
+%>
 
 <html>
 <head>
@@ -70,7 +78,28 @@
             <br>
             <s:form action="/eprLogout.do" method="POST" name="eprLogout">
                 <div class="form-submit">
-                    <s:submit name="submit" value="%{getText('logout.label')}" id="logout-button"></s:submit>
+                    <%
+                        if (AppConstants.SINHALA.equals(preLang)) {
+                    %>
+                    <s:submit name="submit" value="ඉවත්වන්න" id="logout-button"></s:submit>
+                    <%
+                        }
+                    %>
+                    <%
+                        if (AppConstants.TAMIL.equals(preLang)) {
+                    %>
+                    <s:submit name="submit" value=" நீக்குக" id="logout-button"></s:submit>
+                    <%
+                        }
+                    %>
+                    <%
+                        if (AppConstants.ENGLISH.equals(preLang)) {
+                    %>
+                    <s:submit name="submit" value="logout" id="logout-button"></s:submit>
+                    <%
+                        }
+                    %>
+
                 </div>
             </s:form>
         </div>
