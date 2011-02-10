@@ -43,7 +43,7 @@ function transliterateTextField(textInOfficialLang, textInEnglishLang) {
 }
 
 function processResponse1(respObj) {
-    //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
+    //respObj is a JSON equivalent of SOAP Response XML (all name spaces are dropped)
     $("textarea#" + textInEnglish).val(respObj.Body[0].transliterateResponse[0].
     return[0].Text
 )
@@ -52,7 +52,7 @@ function processResponse1(respObj) {
 
 
 function processResponse2(respObj) {
-    //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
+    //respObj is a JSON equivalent of SOAP Response XML (all name spaces are dropped)
     $("input#" + textInEnglish).val(respObj.Body[0].transliterateResponse[0].
     return[0].Text
 )
