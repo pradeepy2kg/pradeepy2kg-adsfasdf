@@ -1152,7 +1152,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
     </tbody>
 </table>
 </s:if>
-<div class="form-submit">
+<div class="form-submit-long">
 
     <s:if test="editMode">
         <s:submit value="%{getText('button.edit.notice')}"/>
