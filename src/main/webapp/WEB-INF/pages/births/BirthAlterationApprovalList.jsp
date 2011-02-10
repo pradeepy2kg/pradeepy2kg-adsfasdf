@@ -250,7 +250,7 @@
 <fieldset style="margin-bottom:10px;margin-top:50px;border:none">
     <legend></legend>
     <s:if test="birthAlterationPendingApprovalList.size==0">
-        <s:label value="%{getText('no.items.found.lable')}" cssStyle="color:red;margin-left:30px;"/>
+        <s:label value="%{getText('no.items.found.lable')}" cssStyle="color:blue;margin-left:30px;"/>
     </s:if>
     <table id="approval-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
         <s:if test="birthAlterationPendingApprovalList.size>0">
