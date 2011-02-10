@@ -157,11 +157,14 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     @Transactional(propagation = Propagation.REQUIRED)
     //todo do validation warnings
     public List<UserWarning> approveDeathRegistration(long deathRegisterIdUKey, User user, boolean ignoreWarnings) {
-        //  logger.debug("attempt to approve death registration record : {} ", deathRegisterIdUKey);
-        //    no need to validate object gain :O  ??? todo check amith 
-        //    deathDeclarationValidator.validateMinimalRequirements(getById(deathRegisterIdUKey, user));
-        List<UserWarning> warnings = DeathDeclarationValidator.validateStandardRequirements(
-            deathRegisterDAO, getById(deathRegisterIdUKey, user), user);
+        logger.debug("attempt to approve death registration record : {} ", deathRegisterIdUKey);
+        DeathRegister dr = getById(deathRegisterIdUKey, user);
+        if (dr.getStatus() != DeathRegister.State.DATA_ENTRY) {
+            //state is not data entry so cannot update
+            handleException("unable to update death register idUKey :" + deathRegisterIdUKey + " invalid state :" +
+                dr.getStatus(), ErrorCodes.INVALID_STATE_FOR_APPROVE_DEATH_REGISTRATION);
+        }
+        List<UserWarning> warnings = DeathDeclarationValidator.validateStandardRequirements(deathRegisterDAO, dr, user);
         if (warnings.isEmpty() || ignoreWarnings) {
             setApprovalStatus(deathRegisterIdUKey, user, DeathRegister.State.APPROVED, null);
         }
@@ -600,7 +603,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         return data;
     }
 
-    public List<DeathRegister> getByDSDivisionAndStatusAndRegistrationDateRange(DSDivision dsDivision, Date startDate, Date endDate, DeathRegister.State state, User user){
+    public List<DeathRegister> getByDSDivisionAndStatusAndRegistrationDateRange(DSDivision dsDivision, Date startDate, Date endDate, DeathRegister.State state, User user) {
         //TODO check user permission
         return deathRegisterDAO.getDeathRegisterByDivisionAndStatusAndDate(dsDivision, state, startDate, endDate);
     }

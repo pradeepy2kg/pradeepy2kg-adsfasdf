@@ -67,8 +67,9 @@
                     <s:param name="idUKey" value="idUKey"/>
                     <s:param name="currentStatus" value="currentStatus"/>
                 </s:url>
-                <s:a href="%{approveDR}"><s:label value="%{getText('approveDR.label')}"/></s:a>
-
+                <s:if test="editMode!= true">
+                    <s:a href="%{approveDR}"><s:label value="%{getText('approveDR.label')}"/></s:a>
+                </s:if>
             </s:if>
             <s:if test="pageNo==3 || pageNo==4">
                 <s:url id="printDC" action="eprDeathCertificate.do">

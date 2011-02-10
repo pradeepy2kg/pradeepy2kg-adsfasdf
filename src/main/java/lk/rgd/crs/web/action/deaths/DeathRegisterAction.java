@@ -221,8 +221,22 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                         pageNo = 0;
                     }
                 } else {
-                    service.updateDeathRegistration(ddf, user);
-                    addActionMessage(getText("editDataSaveSuccess.label"));
+                    try {
+                        service.updateDeathRegistration(ddf, user);
+                        addActionMessage(getText("editDataSaveSuccess.label"));
+                    }
+                    catch (CRSRuntimeException e) {
+                        switch (e.getErrorCode()) {
+                            case ErrorCodes.ILLEGAL_STATE:
+                                addActionError(getText("error.invalid.state.for.edit"));
+                                editMode = true;
+                                break;
+                        }
+                    }
+                    catch (NullPointerException e) {
+                        addActionError(getText("error.invalid.state.for.edit"));
+                        editMode = true;
+                    }
                 }
         }
         populate(ddf);
@@ -484,6 +498,8 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                     final DeathRegister dr = service.getById(idUKey, user);
                     addActionError(getText("error.death.duplicateNic.fail",
                         new String[]{Long.toString(dr.getDeath().getDeathSerialNo()), dr.getDeathPerson().getDeathPersonPINorNIC()}));
+                    break;
+                case ErrorCodes.INVALID_STATE_FOR_APPROVE_DEATH_REGISTRATION:
                     break;
                 default:
                     addActionError(getText("error.death.registration.approval.fail", new String[]{Long.toString(idUKey)}));

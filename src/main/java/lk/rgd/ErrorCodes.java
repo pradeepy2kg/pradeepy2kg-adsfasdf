@@ -138,5 +138,6 @@ public class ErrorCodes {
     //death registration error code 8001-8999
     public static final int POSSIBLE_DEATH_REGISTER_SERIAL_NUMBER_DUPLICATION = 8001;
     public static final int INCOMPLETE_DECLERENT = 8002;
+    public static final int INVALID_STATE_FOR_APPROVE_DEATH_REGISTRATION = 8003;
 
 }
