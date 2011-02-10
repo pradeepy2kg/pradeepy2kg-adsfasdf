@@ -670,6 +670,7 @@
         <action name="eprDeathEditMode" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
                 method="deathDeclarationEditMode">
             <result type="tiles" name="success">epr.deathDeclaration_form1</result>
+            <result type="tiles" name="error">epr.error</result>
         </action>
 
         <action name="eprDeathCertificate" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"

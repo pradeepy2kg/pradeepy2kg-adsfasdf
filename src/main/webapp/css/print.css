@@ -48,6 +48,10 @@
         display: none
     }
 
+    .form-submit-long {
+        display: none
+    }
+
     .page-break {
         page-break-after: always
     }

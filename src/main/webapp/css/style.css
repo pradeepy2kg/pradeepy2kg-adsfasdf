@@ -49,8 +49,8 @@ input, textarea{text-transform:uppercase;}
 .form-submit input, .button input, .form-submit button{margin:10px 0 10px 5px; text-transform:capitalize; background:url(../images/button_bg_hover_1.png) no-repeat; width:120px; height:31px; border:none; }
 .form-submit input:hover, .form-submit button:hover, .button input:hover, .form-submit button:hover{color:darkred; background:url(../images/button_bg_hover_2.png)   no-repeat;}
 
-.form-submit-long input, .button input, .form-submit-long button{margin:10px 0 10px 5px; text-transform:capitalize; background:url(../images/button_bg_hover_1_long.png) no-repeat; width:169px; height:31px; border:none; }
-.form-submit-long input:hover, .form-submit-long button:hover, .button input:hover, .form-submit-long button:hover{color:darkred; background:url(../images/button_bg_hover_2_long.png)   no-repeat;}
+.form-submit-long input, .form-submit-long button{margin:10px 0 10px 5px; text-transform:capitalize; background:url(../images/button_bg_hover_1_long.png) no-repeat; width:169px; height:35px; border:none; }
+.form-submit-long input:hover, .form-submit-long button:hover, .form-submit-long button:hover{color:darkred; background:url(../images/button_bg_hover_2_long.png)   no-repeat;}
 
 .skip-validation{float:left; margin-top:15px; }
 .skip-validation label{float:right; line-height:20px;}
