@@ -67,7 +67,7 @@ public class PinAndNicUtils {
             int number = Integer.parseInt(nic.substring(5, 9));
             String letter = nic.substring(9, 10);
 
-            if ((day >= 367 && day <= 501) || (day >= 867)) {
+            if ((day >= 367 && day <= 500) || (day >= 867)) {
                 return false;
             }
             if (!"V".equals(letter) && !"X".equals(letter)) {
