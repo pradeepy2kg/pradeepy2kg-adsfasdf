@@ -427,7 +427,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         pageTypeGetter(deathType);
         beanPopulate(deathRegister);
         if (deathRegister.getStatus() != DeathRegister.State.DATA_ENTRY) {
-            addActionError("death.error.editNotAllowed");
+            addActionError(getText("death.error.editNotAllowed"));
             return ERROR;
         }
         session.put(WebConstants.SESSION_DEATH_DECLARATION_BEAN, deathRegister);
