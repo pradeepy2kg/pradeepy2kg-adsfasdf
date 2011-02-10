@@ -3,12 +3,14 @@ package lk.rgd.crs.web.action.births;
 
 import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.AppConstants;
+import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.*;
 import lk.rgd.common.util.GenderUtil;
 import lk.rgd.common.util.MarriedStatusUtil;
 import lk.rgd.common.util.NameFormatUtil;
+import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.AssignmentDAO;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
@@ -255,25 +257,39 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         addFieldError("duplicateSerialNumberError", getText("p1.duplicateSerialNumber.label"));
                         pageNo = 0;
                     }
-                    if (birthType == BirthDeclaration.BirthType.LIVE) {
-                        service.editLiveBirthDeclaration(bdf, true, user);
-                    } else if (birthType == BirthDeclaration.BirthType.STILL) {
-                        service.editStillBirthDeclaration(bdf, true, user);
-                    } else if (birthType == BirthDeclaration.BirthType.ADOPTION) {
-                        service.editAdoptionBirthDeclaration(bdf, true, user);
-                    } else if (birthType == BirthDeclaration.BirthType.BELATED) {
-                        service.editBelatedBirthDeclaration(bdf, true, user);
+                    try {
+                        if (birthType == BirthDeclaration.BirthType.LIVE) {
+                            service.editLiveBirthDeclaration(bdf, true, user);
+                        } else if (birthType == BirthDeclaration.BirthType.STILL) {
+                            service.editStillBirthDeclaration(bdf, true, user);
+                        } else if (birthType == BirthDeclaration.BirthType.ADOPTION) {
+                            service.editAdoptionBirthDeclaration(bdf, true, user);
+                        } else if (birthType == BirthDeclaration.BirthType.BELATED) {
+                            service.editBelatedBirthDeclaration(bdf, true, user);
+                        }
+                        addActionMessage(getText("edit.Data.Save.Success.label"));
+                        // used to check user have approval authority and passed to BirthRegistrationFormDetails jsp
+                        if (BirthDeclaration.BirthType.BELATED != birthType) {
+                            allowApproveBDF = user.isAuthorized(Permission.APPROVE_BDF);
+                        } else {
+                            allowApproveBDF = user.isAuthorized(Permission.APPROVE_BDF_BELATED);
+                        }
+
+                    } catch (CRSRuntimeException e) {
+                        switch (e.getErrorCode()) {
+                            case ErrorCodes.ILLEGAL_STATE:
+                                addActionError(getText("error.cannot.edit.approved"));
+                                break;
+                            default:
+                                logger.error("Unhandled exception");
+                                return ERROR;
+                        }
+                    } catch (NullPointerException e) {
+                        addActionError(getText("error.cannot.edit.deleted"));
                     }
-                    addActionMessage(getText("edit.Data.Save.Success.label"));
                 }
                 session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
                 session.remove(WebConstants.SESSION_OLD_BD_FOR_ADOPTION);
-                // used to check user have approval authority and passed to BirthRegistrationFormDetails jsp
-                if (BirthDeclaration.BirthType.BELATED != birthType) {
-                    allowApproveBDF = user.isAuthorized(Permission.APPROVE_BDF);
-                } else {
-                    allowApproveBDF = user.isAuthorized(Permission.APPROVE_BDF_BELATED);
-                }
         }
         if (!addNewMode && (pageNo != 4)) {
             session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
