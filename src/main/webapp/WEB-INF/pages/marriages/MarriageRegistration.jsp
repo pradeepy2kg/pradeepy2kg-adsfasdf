@@ -697,7 +697,7 @@
         </tr>
     </s:if>
 </table>
-<div class="form-submit">
+<div class="form-submit-long">
     <s:if test="idUKey==0">
         <s:submit action="eprRegisterNewMarriage" value="%{getText('button.marriageregister.register')}"/>
         <s:if test="!#session.user_bean.role.roleId.equals('DEO')">
