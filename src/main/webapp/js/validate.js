@@ -151,7 +151,10 @@ function validatePIN(domElement, errorText, errorCode) {
 function isNumberKey(evt) {
     var charCode = (evt.which) ? evt.which : event.keyCode
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-        return false;
+        // can enter only "V", this is to use Paste shortcut key (Ctrl+V)
+        if(charCode != 118) {
+            return false;
+        }
     }
     return true;
 }
