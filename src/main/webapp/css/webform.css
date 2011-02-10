@@ -121,6 +121,11 @@
     margin-top: 5px;
 }
 
+.form-submit-long {
+    float: right;
+    margin-top: 5px;
+}
+
 .next-previous {
     float: left;
     margin-top: 5px;
@@ -1753,12 +1758,16 @@
     .form-submit a {
         display: none;
     }
+
+    .form-submit-long a {
+        display: none;
+    }
 }
 
 .birth-registration-form-details-warning-table {
     margin-left: 50px;
-    font-size:11pt;
-    color:red;
+    font-size: 11pt;
+    color: red;
 }
 
 .birth-registration-form-details-button-table {
