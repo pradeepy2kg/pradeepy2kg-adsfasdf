@@ -1,6 +1,8 @@
 package lk.rgd.crs.api.domain;
 
 import lk.rgd.common.api.domain.Country;
+import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.Race;
 import lk.rgd.common.util.WebUtils;
 
@@ -66,6 +68,38 @@ public class DeathPersonInfo implements Serializable, Cloneable {
     @Column(nullable = true)
     @Temporal(value = TemporalType.DATE)
     private Date deathPersonDOB;
+
+    @Column(nullable = true)
+    private District districtOfPermanentAddress;
+
+    @Column(nullable = true)
+    private DSDivision dsDivisionOfPermanentAddress;
+
+    @Column(nullable = true)
+    private String lastAddressOfMissingPerson;
+
+    @Column(nullable = true)
+    private String rankOrProfession;
+
+    @Column(nullable = true)
+    private boolean pensioner;
+
+    //following columns are for female who below age 49
+
+    @Column(nullable = true)
+    private boolean pregnantAtTimeOfDeath;
+
+    @Column(nullable = true)
+    private boolean givenABirthWithInPreviouse6Weeks;
+
+    @Column(nullable = true)
+    private boolean anAbortionTakenPlace;
+
+    @Column(nullable = true)
+    private int daysBeforeAbortionOrBirth;
+
+    @Column(nullable = true)
+    private boolean personIdentified;
 
     public String getDeathPersonPINorNIC() {
         return deathPersonPINorNIC;
@@ -177,6 +211,86 @@ public class DeathPersonInfo implements Serializable, Cloneable {
 
     public void setDeathPersonDOB(Date deathPersonDOB) {
         this.deathPersonDOB = deathPersonDOB;
+    }
+
+    public District getDistrictOfPermanentAddress() {
+        return districtOfPermanentAddress;
+    }
+
+    public void setDistrictOfPermanentAddress(District districtOfPermanentAddress) {
+        this.districtOfPermanentAddress = districtOfPermanentAddress;
+    }
+
+    public DSDivision getDsDivisionOfPermanentAddress() {
+        return dsDivisionOfPermanentAddress;
+    }
+
+    public void setDsDivisionOfPermanentAddress(DSDivision dsDivisionOfPermanentAddress) {
+        this.dsDivisionOfPermanentAddress = dsDivisionOfPermanentAddress;
+    }
+
+    public String getLastAddressOfMissingPerson() {
+        return lastAddressOfMissingPerson;
+    }
+
+    public void setLastAddressOfMissingPerson(String lastAddressOfMissingPerson) {
+        this.lastAddressOfMissingPerson = WebUtils.filterBlanksAndToUpper(lastAddressOfMissingPerson);
+    }
+
+    public String getRankOrProfession() {
+        return rankOrProfession;
+    }
+
+    public void setRankOrProfession(String rankOrProfession) {
+        this.rankOrProfession = WebUtils.filterBlanksAndToUpper(rankOrProfession);
+    }
+
+    public boolean isPensioner() {
+        return pensioner;
+    }
+
+    public void setPensioner(boolean pensioner) {
+        this.pensioner = pensioner;
+    }
+
+    public boolean isPregnantAtTimeOfDeath() {
+        return pregnantAtTimeOfDeath;
+    }
+
+    public void setPregnantAtTimeOfDeath(boolean pregnantAtTimeOfDeath) {
+        this.pregnantAtTimeOfDeath = pregnantAtTimeOfDeath;
+    }
+
+    public boolean isGivenABirthWithInPreviouse6Weeks() {
+        return givenABirthWithInPreviouse6Weeks;
+    }
+
+    public void setGivenABirthWithInPreviouse6Weeks(boolean givenABirthWithInPreviouse6Weeks) {
+        this.givenABirthWithInPreviouse6Weeks = givenABirthWithInPreviouse6Weeks;
+    }
+
+    public boolean isAnAbortionTakenPlace() {
+        return anAbortionTakenPlace;
+    }
+
+    public void setAnAbortionTakenPlace(boolean anAbortionTakenPlace) {
+        this.anAbortionTakenPlace = anAbortionTakenPlace;
+    }
+
+    public int getDaysBeforeAbortionOrBirth() {
+        return daysBeforeAbortionOrBirth;
+    }
+
+    public void setDaysBeforeAbortionOrBirth(int daysBeforeAbortionOrBirth) {
+        this.daysBeforeAbortionOrBirth = daysBeforeAbortionOrBirth;
+    }
+
+    public boolean isPersonIdentified() {
+        return personIdentified;
+    }
+
+    public void setPersonIdentified(boolean personIdentified) {
+        this.personIdentified = personIdentified;
     }
 
     /**

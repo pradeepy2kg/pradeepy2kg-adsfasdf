@@ -635,12 +635,18 @@ function personAgeDeath() {
         <br> ஆம்
         <br>Yes
     </td>
-    <td colspan="1" align="center">dsa</td>
+    <td colspan="1" align="center">
+        <s:radio name="death.deathOccurAtaHospital"
+                 list="#@java.util.HashMap@{'true':''}"/>
+    </td>
     <td colspan="1">
         නැත <br>
         இல்லை <br> No
     </td>
-    <td colspan="1" align="center">dsa</td>
+    <td colspan="1" align="center">
+        <s:radio name="death.deathOccurAtaHospital"
+                 list="#@java.util.HashMap@{'false':''}"/>
+    </td>
 </tr>
 <tr>
     <td colspan="5">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
@@ -756,12 +762,15 @@ function personAgeDeath() {
             <br> ஆம்
             <br>Yes
         </td>
-        <td>dffs</td>
+        <td>
+            <s:radio name="deathPerson.personIdentified"
+                     list="#@java.util.HashMap@{'true':''}"/></td>
         <td>
             නැත <br>
             இல்லை <br> No
         </td>
-        <td>dffs</td>
+        <td><s:radio name="deathPerson.personIdentified"
+                     list="#@java.util.HashMap@{'false':''}"/></td>
     </tr>
     </tbody>
 </table>
@@ -956,7 +965,10 @@ function personAgeDeath() {
                 கடைசியாக குடியிருந்த இடம் <br>
                 Last address
             </td>
-            <td colspan="6"></td>
+            <td colspan="6">
+                <s:textarea name="deathPerson.rankOrProfession" id="lastAddressOfMissingPerson"
+                            cssStyle="width:98%;"/>
+            </td>
         </tr>
     </s:if>
     <tr>
@@ -966,7 +978,8 @@ function personAgeDeath() {
             Rank or Profession
         </td>
         <td width="400px">
-            test area
+            <s:textarea name="deathPerson.rankOrProfession" id="deathPersonRank"
+                        cssStyle="width:98%;"/>
         </td>
         <td width="200px">විශ්‍රාම වැටුප් ලාභියෙකුද? <br>
             இளைப்பாற்று ஊதியம் பெறுபவரா? <br>
@@ -977,13 +990,19 @@ function personAgeDeath() {
             ஆம் <br>
             Yes
         </td>
-        <td>d</td>
+        <td align="center">
+            <s:radio name="deathPerson.pensioner"
+                     list="#@java.util.HashMap@{'true':''}"/>
+        </td>
         <td width="50px">
             නැත <br>
             இல்லை <br>
             No
         </td>
-        <td>d</td>
+        <td align="center">
+            <s:radio name="deathPerson.pensioner"
+                     list="#@java.util.HashMap@{'false':''}"/>
+        </td>
     </tr>
     </tbody>
 </table>
@@ -1082,8 +1101,14 @@ function personAgeDeath() {
             இறப்பு நிகழ்த பொழுது அவர் பிள்ளை பிறசவிக்க (கர்ப்பிணி) இருந்தாரா? <br>
             Was she pregnant at time of death?
         </td>
-        <td align="center"></td>
-        <td align="center"></td>
+        <td align="center">
+            <s:radio name="deathPerson.pregnantAtTimeOfDeath"
+                     list="#@java.util.HashMap@{'true':''}"/>
+        </td>
+        <td align="center">
+            <s:radio name="deathPerson.pregnantAtTimeOfDeath"
+                     list="#@java.util.HashMap@{'false':''}"/>
+        </td>
     </tr>
     <tr>
         <td style="background:#cccccc;"></td>
@@ -1092,8 +1117,14 @@ function personAgeDeath() {
             இறப்பிற்கு முன் 6 கிழமைகளுக்குள் (42 நாட்களுக்கிடையில் ) அவர் மூலம் பிள்ளை பிரசவிக்கப்பட்டதா?<br>
             Has she given birth in the previous 6 weeks (42 days) ?
         </td>
-        <td align="center"></td>
-        <td align="center"></td>
+        <td align="center">
+            <s:radio name="deathPerson.givenABirthWithInPreviouse6Weeks"
+                     list="#@java.util.HashMap@{'true':''}"/>
+        </td>
+        <td align="center">
+            <s:radio name="deathPerson.givenABirthWithInPreviouse6Weeks"
+                     list="#@java.util.HashMap@{'false':''}"/>
+        </td>
     </tr>
     <tr>
         <td style="background:#cccccc;"></td>
@@ -1102,8 +1133,14 @@ function personAgeDeath() {
             அல்லது கருக்கலைப்பு நடைப்பெற்றிருந்ததா?<br>
             Has an abortion taken place?
         </td>
-        <td align="center"></td>
-        <td align="center"></td>
+        <td align="center">
+            <s:radio name="deathPerson.anAbortionTakenPlace"
+                     list="#@java.util.HashMap@{'true':''}"/>
+        </td>
+        <td align="center">
+            <s:radio name="deathPerson.anAbortionTakenPlace"
+                     list="#@java.util.HashMap@{'false':''}"/>
+        </td>
     </tr>
     <tr>
         <td style="background:#cccccc;"></td>
@@ -1112,7 +1149,10 @@ function personAgeDeath() {
             பிரசவம் அல்லது கருக்கலைப்பு நடைப்பெற்றது இறப்பு நடைப்பெறுவதற்கு எத்தனை நாட்களுக்கு முன்?<br>
             If a birth or abortion took place, how many days before the death has it occured?
         </td>
-        <td colspan="2"></td>
+        <td colspan="2" align="left">
+            <s:textfield name="deathPerson.daysBeforeAbortionOrBirth" id="days_before_abortion_or_birth"
+                         cssStyle="float:left;" maxLength="3"/>
+        </td>
     </tr>
 
     </tbody>
