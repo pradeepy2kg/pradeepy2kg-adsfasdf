@@ -79,6 +79,9 @@ public class DeathInfo implements Serializable, Cloneable {
     @Column(nullable = true)
     private String anyOtherInformation;
 
+    @Column(nullable = true)
+    private boolean deathOccurAtaHospital;
+
     public String getAnyOtherInformation() {
         return anyOtherInformation;
     }
@@ -209,6 +212,14 @@ public class DeathInfo implements Serializable, Cloneable {
 
     public District getDeathDistrict() {
         return deathDivision.getDistrict();
+    }
+
+    public boolean isDeathOccurAtaHospital() {
+        return deathOccurAtaHospital;
+    }
+
+    public void setDeathOccurAtaHospital(boolean deathOccurAtaHospital) {
+        this.deathOccurAtaHospital = deathOccurAtaHospital;
     }
 
     @Override
