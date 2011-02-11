@@ -935,7 +935,30 @@ function personAgeDeath() {
 <table class="font-9" id="special" border="1"
        style="border:1px solid #000;margin-bottom:0;width: 100%;border-top:none;border-bottom:none;border-collapse:collapse;">
     <caption/>
+    <col/>
+    <col/>
+    <col/>
+    <col/>
+    <col/>
+    <col/>
+    <col/>
     <tbody>
+    <s:if test="pageType==3">
+        <tr>
+            <td colspan="7" height="35px">
+                (<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+                නැතිවූ පුද්ගලයෙකුගේ මරණයක් නම් / காணாமற் போன நபரின் இறப்பாயின் / If the death is for a Missing Person
+            </td>
+        </tr>
+        <tr>
+            <td colspan="1">
+                අවසන් වරට පදිංචි ලිපිනය <br>
+                கடைசியாக குடியிருந்த இடம் <br>
+                Last address
+            </td>
+            <td colspan="6"></td>
+        </tr>
+    </s:if>
     <tr>
         <td width="121px">
             (<s:property value="#row"/><s:set name="row" value="#row+1"/>) තත්වය නොහොත් වෘත්තීය <br>
