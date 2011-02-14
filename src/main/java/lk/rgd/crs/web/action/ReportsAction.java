@@ -127,6 +127,10 @@ public class ReportsAction extends ActionSupport implements SessionAware {
                 logger.debug("Chart Type {}", chartType);
                 generateReport(year, user, ReportCodes.BIRTH_RAW_DATA);
             }
+            else if (chartType == 17) {
+                logger.debug("Chart Type {}", chartType);
+                generateReport(year, user, ReportCodes.DEATH_RAW_DATA);
+            }
 
         } catch (RGDRuntimeException error) {
             addActionError(getText("permission.denied"));
@@ -185,6 +189,7 @@ public class ReportsAction extends ActionSupport implements SessionAware {
         //chartList.put(14, "DEATH TABLE 4.6");
         //chartList.put(15, "DEATH TABLE 4.4");
         chartList.put(16, "BIRTH RAW DATA");
+        chartList.put(17, "DEATH RAW DATA");
 
         viewChartList = chartList;
     }
@@ -316,6 +321,9 @@ public class ReportsAction extends ActionSupport implements SessionAware {
                 break;
             case ReportCodes.BIRTH_RAW_DATA:
                 reportsService.createBirthRawDataTable(year, user, clearCache);
+                break;
+            case ReportCodes.DEATH_RAW_DATA:
+                reportsService.createDeathRawDataTable(year, user, clearCache);
                 break;
         }
     }

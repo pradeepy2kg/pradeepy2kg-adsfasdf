@@ -170,4 +170,12 @@ public interface ReportsGenerator {
      */
     public void createBirthRawDataTable(int year, User user, boolean clearCache);
 
+    /**
+     *
+     * @param year
+     * @param user
+     * @param clearCache
+     */
+    public void createDeathRawDataTable(int year, User user, boolean clearCache);
+
 }
