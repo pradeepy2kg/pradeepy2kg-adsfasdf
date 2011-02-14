@@ -48,7 +48,8 @@ public class ReportCodes {
     public static final int DEATH_TABLE_4_3 = 14;
     public static final int DEATH_TABLE_4_4 = 15;
     public static final int DEATH_TABLE_4_2 = 16;
-    public static final int BIRTH_RAW_DATA= 16;
+    public static final int BIRTH_RAW_DATA= 17;
+    public static final int DEATH_RAW_DATA= 18;
 
     public static final String TABLE_2_2_NAME = "TABLE_2_2";
     public static final String TABLE_2_4_NAME = "TABLE_2_4";
@@ -74,4 +75,5 @@ public class ReportCodes {
     public static final String INFANT_DEATH_TABLE_3_4_NAME = "INFANT_DEATH_TABLE_3_4";
 
     public static final String BIRTH_RAW_DATA_NAME= "BIRTH_RAW_DATA";
+    public static final String DEATH_RAW_DATA_NAME= "DEATH_RAW_DATA";
 }

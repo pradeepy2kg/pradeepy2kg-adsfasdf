@@ -1347,20 +1347,20 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                     array[i][j][DeathReport2Column.MALE_1_WEEK_UNDER_1_MONTH.ordinal()] + "," +
                     array[i][j][DeathReport2Column.FEMALE_1_WEEK_UNDER_1_MONTH.ordinal()] + ",\n"*/
                     array[i][j][DeathReport2Column.TOTAL_UNDER_1_YEAR.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.MALE_UNDER_1_YEAR.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.FEMALE_UNDER_1_YEAR.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.TOTAL_UNDER_3_MONTH.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.MALE_UNDER_3_MONTH.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.FEMALE_UNDER_3_MONTH.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.TOTAL_UNDER_6_MONTH.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.MALE_UNDER_6_MONTH.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.FEMALE_UNDER_6_MONTH.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.TOTAL_UNDER_9_MONTH.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.MALE_UNDER_9_MONTH.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.FEMALE_UNDER_9_MONTH.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.TOTAL_UNDER_12_MONTH.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.MALE_UNDER_12_MONTH.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.FEMALE_UNDER_12_MONTH.ordinal()] + ",\n"
+                        array[i][j][DeathReport2Column.MALE_UNDER_1_YEAR.ordinal()] + "," +
+                        array[i][j][DeathReport2Column.FEMALE_UNDER_1_YEAR.ordinal()] + "," +
+                        array[i][j][DeathReport2Column.TOTAL_UNDER_3_MONTH.ordinal()] + "," +
+                        array[i][j][DeathReport2Column.MALE_UNDER_3_MONTH.ordinal()] + "," +
+                        array[i][j][DeathReport2Column.FEMALE_UNDER_3_MONTH.ordinal()] + "," +
+                        array[i][j][DeathReport2Column.TOTAL_UNDER_6_MONTH.ordinal()] + "," +
+                        array[i][j][DeathReport2Column.MALE_UNDER_6_MONTH.ordinal()] + "," +
+                        array[i][j][DeathReport2Column.FEMALE_UNDER_6_MONTH.ordinal()] + "," +
+                        array[i][j][DeathReport2Column.TOTAL_UNDER_9_MONTH.ordinal()] + "," +
+                        array[i][j][DeathReport2Column.MALE_UNDER_9_MONTH.ordinal()] + "," +
+                        array[i][j][DeathReport2Column.FEMALE_UNDER_9_MONTH.ordinal()] + "," +
+                        array[i][j][DeathReport2Column.TOTAL_UNDER_12_MONTH.ordinal()] + "," +
+                        array[i][j][DeathReport2Column.MALE_UNDER_12_MONTH.ordinal()] + "," +
+                        array[i][j][DeathReport2Column.FEMALE_UNDER_12_MONTH.ordinal()] + ",\n"
                 );
             }
 
@@ -2023,7 +2023,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 "," + array[i][DeathColumn.PAKISTAN_TOTAL.ordinal()] + "," + array[i][DeathColumn.PAKISTAN_MALE.ordinal()] + "," + array[i][DeathColumn.PAKISTAN_FEMALE.ordinal()] +
                 "," + array[i][DeathColumn.OTHER_FOREIGNERS_TOTAL.ordinal()] + "," + array[i][DeathColumn.OTHER_FOREIGNERS_MALE.ordinal()] + "," + array[i][DeathColumn.OTHER_FOREIGNERS_FEMALE.ordinal()] +
                 "," + array[i][DeathColumn.OTHER_SL_TOTAL.ordinal()] + "," + array[i][DeathColumn.OTHER_SL_MALE.ordinal()] + "," + array[i][DeathColumn.OTHER_SL_FEMALE.ordinal()] +
-                "," + array[i][DeathColumn.UNKNOWN_RACE_TOTAL.ordinal()] + "," + array[i][DeathColumn.UNKNOWN_RACE_MALE.ordinal()] + "," + array[i][DeathColumn.UNKNOWN_RACE_FEMALE.ordinal()] + "\n" );
+                "," + array[i][DeathColumn.UNKNOWN_RACE_TOTAL.ordinal()] + "," + array[i][DeathColumn.UNKNOWN_RACE_MALE.ordinal()] + "," + array[i][DeathColumn.UNKNOWN_RACE_FEMALE.ordinal()] + "\n");
         }
 
         String dirPath3_3 = "reports" + File.separator + year;
@@ -2101,7 +2101,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
     /**
      * @inheritDoc
      */
-    public void createBirthRawDataTable(int year, User user, boolean clearCache){
+    public void createBirthRawDataTable(int year, User user, boolean clearCache) {
         this.year = year;
 
         if (!user.isAuthorized(Permission.GENERATE_REPORTS)) {
@@ -2127,70 +2127,71 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         String filename = ReportCodes.BIRTH_RAW_DATA_NAME + ".csv";
         csv.append(
             "DIVISION_NAME," +
-            "BIRTH_AT_HOSPITAL," +
-            "CHILD_BIRTH_WEIGHT," +
-            "CHILD_GENDER," +
-            "CHILD_RANK," +
-            "DATE_OF_BIRTH," +
-            "NUMBER_OF_CHILDREN_BORN," +
-            "PIN," +
-            "PLACE_OF_BIRTH," +
-            "WEEKS_PREGNANT," +
-            "CONFIRMANT_NIC_OR_PIN," +
-            "CONFIRMATION_PROCESSED_TIMESTAMP," +
-            "LAST_DATE_FOR_CONFIRMATION," +
-            "GRANDFATHER_BIRTH_PLACE," +
-            "GRANDFATHER_BIRTH_YEAR," +
-            "GRANDFATHER_NIC_OR_PIN," +
-            "GREAT_GRAND_FATHER_BIRTH_PLACE," +
-            "GREAT_GRAND_FATHER_BIRTH_YEAR," +
-            "GREAT_GRAND_FATHER_NIC_OR_PIN," +
-            "INFORMANT_EMAIL," +
-            "INFORMANT_NIC_OR_PIN," +
-            "INFORMANT_PHONE_NO," +
-            "INFORMANT_SIGN_DATE," +
-            "INFORMANT_TYPE," +
-            "DATE_OF_MARRIAGE," +
-            "FATHER_SIGNED," +
-            "MOTHER_SIGNED," +
-            "PARENTS_MARRIED," +
-            "PLACE_OF_MARRIAGE," +
-            "NOTIFYING_AUTHORITY_PIN," +
-            "NOTIFYING_AUTHORITY_SIGN_DATE," +
-            "FATHER_DOB," +
-            "FATHER_NIC_OR_PIN," +
-            "FATHER_PASSPORT_NO," +
-            "FATHER_PLACE_OF_BIRTH," +
-            "MOTHER_ADMISSION_DATE," +
-            "MOTHER_ADMISSION_NO," +
-            "MOTHER_AGE_AT_BIRTH," +
-            "MOTHER_DOB," +
-            "MOTHER_EMAIL," +
-            "MOTHER_NIC_OR_PIN," +
-            "MOTHER_PASSPORT_NO," +
-            "MOTHER_PHONE_NO," +
-            "MOTHER_PLACE_OF_BIRTH," +
-            "BDF_SERIAL_NO," +
-            "BIRTH_TYPE," +
-            "CASE_FILE_NUMBER," +
-            "DATE_OF_REGISTRATION," +
-            "CONFIRMATION_PROCESSED_USERID," +
-            "APPROVAL_OR_REJECT_USERID," +
-            "CERTIFICATE_GENERATED_USERID," +
-            "CREATED_USERID," +
-            "FATHER_COUNTRY_ID," +
-            "FATHER_RACE," +
-            "MOTHER_COUNTRY_ID," +
-            "MOTHER_DSDIVISION_UKEY," +
-            "MOTHER_RACE," +
-            "BDDIVISION_UKEY," +
-            "ORIGINAL_BC_ISSUE_USERID," +
-            "ORIGINAL_BCP_ISSUE_LOCATIONID\n");
+                "BIRTH_AT_HOSPITAL," +
+                "CHILD_BIRTH_WEIGHT," +
+                "CHILD_GENDER," +
+                "CHILD_RANK," +
+                "DATE_OF_BIRTH," +
+                "NUMBER_OF_CHILDREN_BORN," +
+                "PIN," +
+                "PLACE_OF_BIRTH," +
+                "WEEKS_PREGNANT," +
+                "CONFIRMANT_NIC_OR_PIN," +
+                "CONFIRMATION_PROCESSED_TIMESTAMP," +
+                "LAST_DATE_FOR_CONFIRMATION," +
+                "GRANDFATHER_BIRTH_PLACE," +
+                "GRANDFATHER_BIRTH_YEAR," +
+                "GRANDFATHER_NIC_OR_PIN," +
+                "GREAT_GRAND_FATHER_BIRTH_PLACE," +
+                "GREAT_GRAND_FATHER_BIRTH_YEAR," +
+                "GREAT_GRAND_FATHER_NIC_OR_PIN," +
+                "INFORMANT_EMAIL," +
+                "INFORMANT_NIC_OR_PIN," +
+                "INFORMANT_PHONE_NO," +
+                "INFORMANT_SIGN_DATE," +
+                "INFORMANT_TYPE," +
+                "DATE_OF_MARRIAGE," +
+                "FATHER_SIGNED," +
+                "MOTHER_SIGNED," +
+                "PARENTS_MARRIED," +
+                "PLACE_OF_MARRIAGE," +
+                "NOTIFYING_AUTHORITY_PIN," +
+                "NOTIFYING_AUTHORITY_SIGN_DATE," +
+                "FATHER_DOB," +
+                "FATHER_NIC_OR_PIN," +
+                "FATHER_PASSPORT_NO," +
+                "FATHER_PLACE_OF_BIRTH," +
+                "MOTHER_ADMISSION_DATE," +
+                "MOTHER_ADMISSION_NO," +
+                "MOTHER_AGE_AT_BIRTH," +
+                "MOTHER_DOB," +
+                "MOTHER_EMAIL," +
+                "MOTHER_NIC_OR_PIN," +
+                "MOTHER_PASSPORT_NO," +
+                "MOTHER_PHONE_NO," +
+                "MOTHER_PLACE_OF_BIRTH," +
+                "BDF_SERIAL_NO," +
+                "BIRTH_TYPE," +
+                "CASE_FILE_NUMBER," +
+                "DATE_OF_REGISTRATION," +
+                "CONFIRMATION_PROCESSED_USERID," +
+                "APPROVAL_OR_REJECT_USERID," +
+                "CERTIFICATE_GENERATED_USERID," +
+                "CREATED_USERID," +
+                "FATHER_COUNTRY_ID," +
+                "FATHER_RACE," +
+                "MOTHER_COUNTRY_ID," +
+                "MOTHER_DSDIVISION_UKEY," +
+                "MOTHER_RACE," +
+                "BDDIVISION_UKEY," +
+                "ORIGINAL_BC_ISSUE_USERID," +
+                "ORIGINAL_BCP_ISSUE_LOCATIONID\n");
 
         for (DSDivision dsDivision : dsDivisions) {
             birthRecords = birthRegister.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
                 BirthDeclaration.State.ARCHIVED_CERT_PRINTED, systemUser);
             String divisionName = dsDivision.getEnDivisionName();
+            csv.append(dsDivision.getEnDivisionName() + ",");
 
             for (BirthDeclaration bd : birthRecords) {
                 ChildInfo child = bd.getChild();
@@ -2205,7 +2206,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
 
                 csv.append(divisionName + "," +
                     child.getBirthAtHospital() + "," +
-                    child.getChildBirthWeight() + "," + 
+                    child.getChildBirthWeight() + "," +
                     child.getChildGender() + "," +
                     child.getChildRank() + "," +
                     child.getDateOfBirth() + "," +
@@ -2259,9 +2260,11 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                     birth.getBirthDivision().getDivisionId() + "," +
                     birth.getOriginalBCIssueUser().getUserId() + "," +
                     birth.getOriginalBCPlaceOfIssue().getLocationCode()
-                    +"\n"
+                    + "\n"
                 );
             }
+
+            csv.append("\n");
         }
 
         String dirPath = "reports" + File.separator + year + File.separator + "RawData";
@@ -2280,6 +2283,144 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         }
     }
 
+
+    public void createDeathRawDataTable(int year, User user, boolean clearCache) {
+        this.year = year;
+
+        if (!user.isAuthorized(Permission.GENERATE_REPORTS)) {
+            handleException(user.getUserId() + " doesn't have permission to generate the report",
+                ErrorCodes.PERMISSION_DENIED);
+        }
+
+        List<DSDivision> dsDivisionList = dsDivisionDAO.findAll();
+        User systemUser = userManagementService.getSystemUser();
+        List<DeathRegister> deathRecords;
+
+        Calendar cal = Calendar.getInstance();
+
+        /* January first of the year */
+        cal.set(year, 0, 1);
+        Date startDate = cal.getTime();
+
+        /* December 31st of the year */
+        cal.set(year, 11, 31);
+        Date endDate = cal.getTime();
+
+        StringBuilder csv = new StringBuilder();
+        String filename = ReportCodes.DEATH_RAW_DATA_NAME + ".csv";
+
+        csv.append(
+            "DIVISION_NAME" + "," +
+                "CAUSE_OF_DEATH," +
+                "CAUSE_OF_DEATH_ESTABLISHED," +
+                "DATE_OF_DEATH," +
+                "DATE_OF_REGISTRATION," +
+                "DEATH_SERIALNO," +
+                "ICD_CODE_OF_CAUSE," +
+                "INFANT_LESS_THAN_30_DAYS," +
+                "PLACE_OF_BURIAL," +
+                "PLACE_OF_DEATH_IN_ENGLISH" +
+                "PLACE_OF_ISSUE," +
+                "TIME_OF_DEATH," +
+                "DEATH_PERSON_AGE," +
+                "DEATH_PERSON_DOB," +
+                "DEATH_PERSON_FATHER_PIN_OR_NIC," +
+                "DEATH_PERSON_GENDER," +
+                "DEATH_PERSON_MOTHER_PIN_OR_NIC," +
+                "DEATH_PERSON_PIN_OR_NIC," +
+                "DEATH_PERSON_PASSPORT_NO," +
+                "DEATH_TYPE," +
+                "DECLARANT_EMAIL," +
+                "DECLARANT_NIC_OR_PIN," +
+                "DECLARANT_PHONE," +
+                "DECLARANT_TYPE," +
+                "APPROVAL_OR_REJECT_TIMESTAMP," +
+                "CERTIFICATE_GENERATED_TIMESTAMP," +
+                "CREATED_TIMESTAMP," +
+                "NOTIFYING_AUTHORITY_PIN," +
+                "NOTIFYING_AUTHORITY_SIGNDATE," +
+                "STATUS," +
+                "BDDIVISION_UKEY," +
+                "DEATH_PERSON_COUNTRYID," +
+                "DEATH_PERSON_RACE," +
+                "APPROVAL_OR_REJECT_USERID," +
+                "CERTIFICATE_GENERATED_USERID," +
+                "CREATED_USERID," +
+                "ORIGINAL_DC_ISSUE_USERID," +
+                "ORIGINAL_DCP_ISSUE_LOCATIONID\n");
+
+        for (DSDivision dsDivision : dsDivisionList) {
+            deathRecords = deathRegister.getByDSDivisionAndStatusAndRegistrationDateRange(
+                dsDivision, startDate, endDate, DeathRegister.State.ARCHIVED_CERT_GENERATED, systemUser);
+            csv.append(dsDivision.getEnDivisionName() + ",");
+
+            for (DeathRegister deathRegister : deathRecords) {
+                DeathPersonInfo person = deathRegister.getDeathPerson();
+                DeathInfo info = deathRegister.getDeath();
+                DeclarantInfo decl = deathRegister.getDeclarant();
+                CRSLifeCycleInfo life = deathRegister.getLifeCycleInfo();
+                NotifyingAuthorityInfo notify = deathRegister.getNotifyingAuthority();
+
+                csv.append(info.getCauseOfDeath() + "," +
+                    info.isCauseOfDeathEstablished() + "," +
+                    info.getDateOfDeath() + "," +
+                    info.getDateOfRegistration() + "," +
+                    info.getDeathSerialNo() + "," +
+                    info.getIcdCodeOfCause() + "," +
+                    info.isInfantLessThan30Days() + "," +
+                    info.getPlaceOfBurial() + "," +
+                    info.getPlaceOfDeath() + "," +
+                    info.getPlaceOfIssue() + "," +
+                    info.getTimeOfDeath() + "," +
+                    person.getDeathPersonAge() + "," +
+                    person.getDeathPersonDOB() + "," +
+                    person.getDeathPersonFatherPINorNIC() + "," +
+                    person.getDeathPersonGender() + "," +
+                    person.getDeathPersonMotherPINorNIC() + "," +
+                    person.getDeathPersonPINorNIC() + "," +
+                    person.getDeathPersonPassportNo() +
+                    deathRegister.getDeathType() + "," +
+                    decl.getDeclarantEMail() + "," +
+                    decl.getDeclarantNICorPIN() + "," +
+                    decl.getDeclarantPhone() + "," +
+                    decl.getDeclarantType() + "," +
+                    life.getApprovalOrRejectTimestamp() + "," +
+                    life.getCertificateGeneratedTimestamp() + "," +
+                    life.getCreatedTimestamp() + "," +
+                    notify.getNotifyingAuthorityPIN() + "," +
+                    notify.getNotifyingAuthoritySignDate() + "," +
+                    deathRegister.getStatus() + "," +
+                    info.getDeathDivision().getDivisionId() + "," +
+                    person.getDeathPersonCountry().getCountryId() + "," +
+                    person.getDeathPersonRace() + "," +
+                    life.getApprovalOrRejectUser().getUserId() + "," +
+                    life.getCertificateGeneratedUser().getUserId() + "," +
+                    life.getCreatedUser().getUserId() + "," +
+                    deathRegister.getOriginalDCIssueUser().getUserId() + "," +
+                    deathRegister.getOriginalDCPlaceOfIssue().getLocationCode()
+                    + "\n"
+                );
+
+            }
+            csv.append("\n");
+        }
+
+
+        String dirPath = "reports" + File.separator + year + File.separator + "RawData";
+        File dir = new File(dirPath);
+        dir.mkdirs();
+
+        String filePath = dirPath + File.separator + filename;
+        File file = new File(filePath);
+
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            out.write(csv.toString().getBytes());
+            out.close();
+        } catch (IOException e) {
+            logger.error("Error writing the CSV - {} {}", file.getPath() + file.getName(), e.getMessage());
+        }
+    }
 
 
     /**
