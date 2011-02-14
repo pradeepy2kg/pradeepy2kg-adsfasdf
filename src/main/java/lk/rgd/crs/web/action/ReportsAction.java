@@ -106,20 +106,21 @@ public class ReportsAction extends ActionSupport implements SessionAware {
                 //reportsService.createReport(user, ReportCodes.INFANT_DEATH_TABLE_1);
             } else if (chartType == 12) {
                 logger.debug("Chart Type {}", chartType);
-                generateReport(year, user, ReportCodes.INFANT_DEATH_TABLE_2);
+                generateReport(year, user, ReportCodes.INFANT_DEATH_TABLE_3_5a);
             } else if (chartType == 13) {
                 logger.debug("Chart Type {}", chartType);
-                generateReport(year, user, ReportCodes.DEATH_TABLE_3);
-                reportsService.createDeathReport_all(user, ReportCodes.DEATH_TABLE_3);
-                reportsService.createDeathReport_4_6(user, ReportCodes.DEATH_TABLE_3);
+                generateReport(year, user, ReportCodes.DEATH_TABLE_4_3);
+                reportsService.createDeathReport_all(user, ReportCodes.DEATH_TABLE_4_3);
+                reportsService.createDeathReport_4_6(user, ReportCodes.DEATH_TABLE_4_3);
                 reportsService.createDeathReport_4_4(user, ReportCodes.DEATH_TABLE_4_4);
+                reportsService.createDeathReport_4_2(user, ReportCodes.DEATH_TABLE_4_2);
             } /*else if (chartType == 14) {
                 logger.debug("Chart Type {}", chartType);
-                //generateReport(year, user, ReportCodes.DEATH_TABLE_3);
-                reportsService.createDeathReport_4_6(user, ReportCodes.DEATH_TABLE_3);
+                //generateReport(year, user, ReportCodes.DEATH_TABLE_4_3);
+                reportsService.createDeathReport_4_6(user, ReportCodes.DEATH_TABLE_4_3);
             } else if (chartType == 15) {
                 logger.debug("Chart Type {}", chartType);
-                //generateReport(year, user, ReportCodes.DEATH_TABLE_3);
+                //generateReport(year, user, ReportCodes.DEATH_TABLE_4_3);
                 reportsService.createDeathReport_4_4(user, ReportCodes.DEATH_TABLE_4_4);
             }*/
 
@@ -302,10 +303,10 @@ public class ReportsAction extends ActionSupport implements SessionAware {
             case ReportCodes.INFANT_DEATH_TABLE_1:
                 reportsService.generateDeathReport(year, user, clearCache);
                 break;
-            case ReportCodes.INFANT_DEATH_TABLE_2:
+            case ReportCodes.INFANT_DEATH_TABLE_3_5a:
                 reportsService.generateDeathReport2(year, user, clearCache);
                 break;
-            case ReportCodes.DEATH_TABLE_3:
+            case ReportCodes.DEATH_TABLE_4_3:
                 reportsService.populateDeathStatistics(year, user, clearCache);
                 break;
         }
