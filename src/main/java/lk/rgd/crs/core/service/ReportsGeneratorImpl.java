@@ -2098,6 +2098,188 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
 
     }
 
+    /**
+     * @inheritDoc
+     */
+    public void createBirthRawDataTable(int year, User user, boolean clearCache){
+        this.year = year;
+
+        if (!user.isAuthorized(Permission.GENERATE_REPORTS)) {
+            handleException(user.getUserId() + " doesn't have permission to generate the report",
+                ErrorCodes.PERMISSION_DENIED);
+        }
+
+        List<DSDivision> dsDivisions = dsDivisionDAO.findAll();
+        User systemUser = userManagementService.getSystemUser();
+        List<BirthDeclaration> birthRecords;
+
+        Calendar cal = Calendar.getInstance();
+
+        /* January first of the year */
+        cal.set(year, 0, 1);
+        Date startDate = cal.getTime();
+
+        /* December 31st of the year */
+        cal.set(year, 11, 31);
+        Date endDate = cal.getTime();
+
+        StringBuilder csv = new StringBuilder();
+        String filename = ReportCodes.BIRTH_RAW_DATA_NAME + ".csv";
+        csv.append(
+            "DIVISION_NAME," +
+            "BIRTH_AT_HOSPITAL," +
+            "CHILD_BIRTH_WEIGHT," +
+            "CHILD_GENDER," +
+            "CHILD_RANK," +
+            "DATE_OF_BIRTH," +
+            "NUMBER_OF_CHILDREN_BORN," +
+            "PIN," +
+            "PLACE_OF_BIRTH," +
+            "WEEKS_PREGNANT," +
+            "CONFIRMANT_NIC_OR_PIN," +
+            "CONFIRMATION_PROCESSED_TIMESTAMP," +
+            "LAST_DATE_FOR_CONFIRMATION," +
+            "GRANDFATHER_BIRTH_PLACE," +
+            "GRANDFATHER_BIRTH_YEAR," +
+            "GRANDFATHER_NIC_OR_PIN," +
+            "GREAT_GRAND_FATHER_BIRTH_PLACE," +
+            "GREAT_GRAND_FATHER_BIRTH_YEAR," +
+            "GREAT_GRAND_FATHER_NIC_OR_PIN," +
+            "INFORMANT_EMAIL," +
+            "INFORMANT_NIC_OR_PIN," +
+            "INFORMANT_PHONE_NO," +
+            "INFORMANT_SIGN_DATE," +
+            "INFORMANT_TYPE," +
+            "DATE_OF_MARRIAGE," +
+            "FATHER_SIGNED," +
+            "MOTHER_SIGNED," +
+            "PARENTS_MARRIED," +
+            "PLACE_OF_MARRIAGE," +
+            "NOTIFYING_AUTHORITY_PIN," +
+            "NOTIFYING_AUTHORITY_SIGN_DATE," +
+            "FATHER_DOB," +
+            "FATHER_NIC_OR_PIN," +
+            "FATHER_PASSPORT_NO," +
+            "FATHER_PLACE_OF_BIRTH," +
+            "MOTHER_ADMISSION_DATE," +
+            "MOTHER_ADMISSION_NO," +
+            "MOTHER_AGE_AT_BIRTH," +
+            "MOTHER_DOB," +
+            "MOTHER_EMAIL," +
+            "MOTHER_NIC_OR_PIN," +
+            "MOTHER_PASSPORT_NO," +
+            "MOTHER_PHONE_NO," +
+            "MOTHER_PLACE_OF_BIRTH," +
+            "BDF_SERIAL_NO," +
+            "BIRTH_TYPE," +
+            "CASE_FILE_NUMBER," +
+            "DATE_OF_REGISTRATION," +
+            "CONFIRMATION_PROCESSED_USERID," +
+            "APPROVAL_OR_REJECT_USERID," +
+            "CERTIFICATE_GENERATED_USERID," +
+            "CREATED_USERID," +
+            "FATHER_COUNTRY_ID," +
+            "FATHER_RACE," +
+            "MOTHER_COUNTRY_ID," +
+            "MOTHER_DSDIVISION_UKEY," +
+            "MOTHER_RACE," +
+            "BDDIVISION_UKEY," +
+            "ORIGINAL_BC_ISSUE_USERID," +
+            "ORIGINAL_BCP_ISSUE_LOCATIONID\n");
+
+        for (DSDivision dsDivision : dsDivisions) {
+            birthRecords = birthRegister.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
+                BirthDeclaration.State.ARCHIVED_CERT_PRINTED, systemUser);
+            String divisionName = dsDivision.getEnDivisionName();
+
+            for (BirthDeclaration bd : birthRecords) {
+                ChildInfo child = bd.getChild();
+                MarriageInfo marriage = bd.getMarriage();
+                ParentInfo parent = bd.getParent();
+                ConfirmantInfo confirm = bd.getConfirmant();
+                GrandFatherInfo grandFather = bd.getGrandFather();
+                InformantInfo inform = bd.getInformant();
+                CRSLifeCycleInfo life = bd.getLifeCycleInfo();
+                NotifyingAuthorityInfo notify = bd.getNotifyingAuthority();
+                BirthRegisterInfo birth = bd.getRegister();
+
+                csv.append(divisionName + "," +
+                    child.getBirthAtHospital() + "," +
+                    child.getChildBirthWeight() + "," + 
+                    child.getChildGender() + "," +
+                    child.getChildRank() + "," +
+                    child.getDateOfBirth() + "," +
+                    child.getNumberOfChildrenBorn() + "," +
+                    child.getPin() + "," +
+                    child.getPlaceOfBirth() + "," +
+                    child.getWeeksPregnant() + "," +
+                    confirm.getConfirmantNICorPIN() + "," +
+                    confirm.getConfirmationProcessedTimestamp() + "," +
+                    confirm.getLastDateForConfirmation() + "," +
+                    grandFather.getGrandFatherBirthPlace() + "," +
+                    grandFather.getGrandFatherBirthYear() + "," +
+                    grandFather.getGrandFatherNICorPIN() + "," +
+                    inform.getInformantEmail() + "," +
+                    inform.getInformantNICorPIN() + "," +
+                    inform.getInformantPhoneNo() + "," +
+                    inform.getInformantType() + "," +
+                    marriage.getDateOfMarriage() +
+                    marriage.isFatherSigned() + "," +
+                    marriage.isMotherSigned() + "," +
+                    marriage.getParentsMarried() + "," +
+                    marriage.getPlaceOfMarriage() + "," +
+                    notify.getNotifyingAuthorityPIN() + "," +
+                    notify.getNotifyingAuthoritySignDate() + "," +
+                    parent.getFatherDOB() + "," +
+                    parent.getFatherNICorPIN() + "," +
+                    parent.getFatherPassportNo() + "," +
+                    parent.getFatherPlaceOfBirth() + "," +
+                    parent.getMotherAdmissionDate() + "," +
+                    parent.getMotherAdmissionNo() + "," +
+                    parent.getMotherAgeAtBirth() + "," +
+                    parent.getMotherDOB() + "," +
+                    parent.getMotherEmail() + "," +
+                    parent.getMotherNICorPIN() + "," +
+                    parent.getMotherPassportNo() + "" +
+                    parent.getMotherPhoneNo() + "," +
+                    parent.getMotherPlaceOfBirth() + "," +
+                    birth.getBdfSerialNo() + "," +
+                    birth.getBirthType() + "," +
+                    birth.getCaseFileNumber() + "," +
+                    birth.getDateOfRegistration() + "," +
+                    confirm.getConfirmationProcessedUser().getUserId() + "," +
+                    life.getApprovalOrRejectUser().getUserId() + "," +
+                    life.getCertificateGeneratedUser().getUserId() + "," +
+                    life.getCreatedUser().getUserId() + "," +
+                    parent.getFatherCountry().getCountryId() + "," +
+                    parent.getFatherRace() + "," +
+                    parent.getMotherCountry().getCountryId() + "," +
+                    parent.getMotherDSDivision().getDsDivisionUKey() +
+                    parent.getMotherRace() + "," +
+                    birth.getBirthDivision().getDivisionId() + "," +
+                    birth.getOriginalBCIssueUser().getUserId() + "," +
+                    birth.getOriginalBCPlaceOfIssue().getLocationCode()
+                    +"\n"
+                );
+            }
+        }
+
+        String dirPath = "reports" + File.separator + year + File.separator + "RawData";
+        File dir = new File(dirPath);
+        dir.mkdirs();
+
+        String filePath = dirPath + File.separator + filename;
+        File file = new File(filePath);
+
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            out.write(csv.toString().getBytes());
+            out.close();
+        } catch (IOException e) {
+            logger.error("Error writing the CSV - {} {}", file.getPath() + file.getName(), e.getMessage());
+        }
+    }
+
 
 
     /**
