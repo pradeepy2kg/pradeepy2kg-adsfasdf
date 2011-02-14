@@ -154,6 +154,13 @@ public interface ReportsGenerator {
      * @param user
      * @param headerCode
      */
+    public void createDeathReport_4_2(User user, int headerCode);
+
+    /**
+     *
+     * @param user
+     * @param headerCode
+     */
     public void createDeathReport_4_4(User user, int headerCode);
 
 }
