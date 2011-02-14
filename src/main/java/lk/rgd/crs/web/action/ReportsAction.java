@@ -123,6 +123,10 @@ public class ReportsAction extends ActionSupport implements SessionAware {
                 //generateReport(year, user, ReportCodes.DEATH_TABLE_4_3);
                 reportsService.createDeathReport_4_4(user, ReportCodes.DEATH_TABLE_4_4);
             }*/
+            else if (chartType == 16) {
+                logger.debug("Chart Type {}", chartType);
+                generateReport(year, user, ReportCodes.BIRTH_RAW_DATA);
+            }
 
         } catch (RGDRuntimeException error) {
             addActionError(getText("permission.denied"));
@@ -180,6 +184,7 @@ public class ReportsAction extends ActionSupport implements SessionAware {
         chartList.put(13, "DEATH REPORTS 4.2/4.3/4.4/4.6");
         //chartList.put(14, "DEATH TABLE 4.6");
         //chartList.put(15, "DEATH TABLE 4.4");
+        chartList.put(16, "BIRTH RAW DATA");
 
         viewChartList = chartList;
     }
@@ -308,6 +313,9 @@ public class ReportsAction extends ActionSupport implements SessionAware {
                 break;
             case ReportCodes.DEATH_TABLE_4_3:
                 reportsService.populateDeathStatistics(year, user, clearCache);
+                break;
+            case ReportCodes.BIRTH_RAW_DATA:
+                reportsService.createBirthRawDataTable(year, user, clearCache);
                 break;
         }
     }
