@@ -226,7 +226,7 @@ body{
                             <tr>
                                 <td align="right" class="right_align">වැන්දඹු<br>விதவை <br>Widowed</td>
                                 <td><s:radio name="person.civilStatus_c" list="#@java.util.HashMap@{'WIDOWED':''}"/></td>
-                                <td align="right" class="right_align">නිෂ්ප්‍රභාකර ඇත <br>தள்ளிவைத்தல் <br>Annulled</td>
+                                <td align="right" class="right_align">ශුන්‍ය කර ඇත<br>தள்ளிவைத்தல் <br>Annulled</td>
                                 <td><s:radio name="person.civilStatus_c" list="#@java.util.HashMap@{'ANNULLED':''}"/></td>
                                 <td align="right" class="right_align">වෙන් වී ඇත<br>பிரிந்திருத்தல் <br>Separated</td>
                                 <td><s:radio name="person.civilStatus_c" list="#@java.util.HashMap@{'SEPARATED':''}"/></td>

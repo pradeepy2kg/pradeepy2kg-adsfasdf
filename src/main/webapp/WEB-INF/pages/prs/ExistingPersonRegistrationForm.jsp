@@ -599,7 +599,7 @@
                 <tr>
                     <td align="right">වැන්දඹු<br>விதவை <br>Widowed</td>
                     <td><s:radio name="person.civilStatus" list="#@java.util.HashMap@{'WIDOWED':''}"/></td>
-                    <td align="right">නිෂ්ප්‍රභාකර ඇත <br>தள்ளிவைத்தல் <br>Annulled</td>
+                    <td align="right">ශුන්‍ය කර ඇත<br>தள்ளிவைத்தல் <br>Annulled</td>
                     <td><s:radio name="person.civilStatus" list="#@java.util.HashMap@{'ANNULLED':''}"/></td>
                     <td align="right">වෙන් වී ඇත<br>பிரிந்திருத்தல் <br>Separated</td>
                     <td><s:radio name="person.civilStatus" list="#@java.util.HashMap@{'SEPARATED':''}"/></td>

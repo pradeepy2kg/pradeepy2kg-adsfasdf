@@ -816,7 +816,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
                      value="%{marriage.male.civilStatusMale}"/>
         </td>
         <td>
-            නිෂ්ප්‍රභාකර ඇත <br>
+            ශුන්‍ය කර ඇත<br>
             தள்ளிவைத்தல் <br>
             Anulled
         </td>
@@ -1101,7 +1101,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
                      value="%{marriage.female.civilStatusFemale}"/>
         </td>
         <td>
-            නිෂ්ප්‍රභාකර ඇත <br>
+            ශුන්‍ය කර ඇත<br>
             தள்ளிவைத்தல் <br>
             Anulled
         </td>
