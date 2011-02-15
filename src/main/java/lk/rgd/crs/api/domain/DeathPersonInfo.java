@@ -69,10 +69,8 @@ public class DeathPersonInfo implements Serializable, Cloneable {
     @Temporal(value = TemporalType.DATE)
     private Date deathPersonDOB;
 
-    @Column(nullable = true)
-    private District districtOfPermanentAddress;
-
-    @Column(nullable = true)
+    @ManyToOne
+    @JoinColumn(nullable = true)
     private DSDivision dsDivisionOfPermanentAddress;
 
     @Column(nullable = true)
@@ -87,16 +85,16 @@ public class DeathPersonInfo implements Serializable, Cloneable {
     //following columns are for female who below age 49
 
     @Column(nullable = true)
-    private boolean pregnantAtTimeOfDeath;
+    private Boolean pregnantAtTimeOfDeath = null;
 
     @Column(nullable = true)
-    private boolean givenABirthWithInPreviouse6Weeks;
+    private Boolean givenABirthWithInPreviouse6Weeks = null;
 
     @Column(nullable = true)
-    private boolean anAbortionTakenPlace;
+    private Boolean anAbortionTakenPlace = null;
 
     @Column(nullable = true)
-    private int daysBeforeAbortionOrBirth;
+    private Integer daysBeforeAbortionOrBirth;
 
     @Column(nullable = true)
     private boolean personIdentified;
@@ -213,14 +211,6 @@ public class DeathPersonInfo implements Serializable, Cloneable {
         this.deathPersonDOB = deathPersonDOB;
     }
 
-    public District getDistrictOfPermanentAddress() {
-        return districtOfPermanentAddress;
-    }
-
-    public void setDistrictOfPermanentAddress(District districtOfPermanentAddress) {
-        this.districtOfPermanentAddress = districtOfPermanentAddress;
-    }
-
     public DSDivision getDsDivisionOfPermanentAddress() {
         return dsDivisionOfPermanentAddress;
     }
@@ -253,35 +243,35 @@ public class DeathPersonInfo implements Serializable, Cloneable {
         this.pensioner = pensioner;
     }
 
-    public boolean isPregnantAtTimeOfDeath() {
+    public Boolean isPregnantAtTimeOfDeath() {
         return pregnantAtTimeOfDeath;
     }
 
-    public void setPregnantAtTimeOfDeath(boolean pregnantAtTimeOfDeath) {
+    public void setPregnantAtTimeOfDeath(Boolean pregnantAtTimeOfDeath) {
         this.pregnantAtTimeOfDeath = pregnantAtTimeOfDeath;
     }
 
-    public boolean isGivenABirthWithInPreviouse6Weeks() {
+    public Boolean isGivenABirthWithInPreviouse6Weeks() {
         return givenABirthWithInPreviouse6Weeks;
     }
 
-    public void setGivenABirthWithInPreviouse6Weeks(boolean givenABirthWithInPreviouse6Weeks) {
+    public void setGivenABirthWithInPreviouse6Weeks(Boolean givenABirthWithInPreviouse6Weeks) {
         this.givenABirthWithInPreviouse6Weeks = givenABirthWithInPreviouse6Weeks;
     }
 
-    public boolean isAnAbortionTakenPlace() {
+    public Boolean isAnAbortionTakenPlace() {
         return anAbortionTakenPlace;
     }
 
-    public void setAnAbortionTakenPlace(boolean anAbortionTakenPlace) {
+    public void setAnAbortionTakenPlace(Boolean anAbortionTakenPlace) {
         this.anAbortionTakenPlace = anAbortionTakenPlace;
     }
 
-    public int getDaysBeforeAbortionOrBirth() {
+    public Integer getDaysBeforeAbortionOrBirth() {
         return daysBeforeAbortionOrBirth;
     }
 
-    public void setDaysBeforeAbortionOrBirth(int daysBeforeAbortionOrBirth) {
+    public void setDaysBeforeAbortionOrBirth(Integer daysBeforeAbortionOrBirth) {
         this.daysBeforeAbortionOrBirth = daysBeforeAbortionOrBirth;
     }
 

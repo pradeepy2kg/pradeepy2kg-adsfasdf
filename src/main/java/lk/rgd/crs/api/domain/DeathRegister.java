@@ -10,6 +10,7 @@ import java.io.Serializable;
 
 /**
  * @author Indunil Moremada
+ * @author amith jayasekara
  *         An instance represents information submitted for a death
  */
 @Entity
@@ -59,7 +60,7 @@ import java.io.Serializable;
         "WHERE deathRegister.death.deathDivision.dsDivision = :deathDivision AND deathRegister.status = :status " +
         "AND (deathRegister.death.dateOfRegistration BETWEEN :startDate AND :endDate) ")
 })
-@Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class DeathRegister implements Serializable, Cloneable {
 
     public enum State {

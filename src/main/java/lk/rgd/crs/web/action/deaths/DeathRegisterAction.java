@@ -6,6 +6,8 @@ import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
 import lk.rgd.common.RGDRuntimeException;
 import lk.rgd.common.api.dao.*;
+import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.DateTimeUtils;
 import lk.rgd.common.util.GenderUtil;
@@ -48,6 +50,8 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private int deathPersonRace;
     private int locationId;
     private int printStart;
+    private int deathPersonPermenentAddressDistrictId;
+    private int deathPersonPermenentAddressDSDivisionId;
 
     private final DistrictDAO districtDAO;
     private final BDDivisionDAO bdDivisionDAO;
@@ -71,6 +75,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> countryList;
     private Map<Integer, String> locationList;
     private Map<String, String> userList;
+    private Map<Integer, String> permenantAddressDsDivisionList;
 
     private List<DeathRegister> deathApprovalAndPrintList;
     private List<DeathRegister> archivedEntryList;
@@ -113,6 +118,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private String nameOfOfficer;
     private String placeOfIssue;
     private String issueUserId;
+    private String language;
 
     private Date fromDate;
     private Date endDate;
@@ -162,6 +168,12 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         // ddf.setDeathType(deathType);   bug 2139
         session.put(WebConstants.SESSION_DEATH_DECLARATION_BEAN, ddf);
         populate(ddf);
+        //populate district list and ds division list
+        districtList = districtDAO.getAllDistrictNames(language, user);
+        Set<Integer> districtKey = districtList.keySet();
+        //set first key for loading DS Divisions
+        dsDivisionList = dsDivisionDAO.getDSDivisionNames(districtKey.iterator().next(), language, user);
+        permenantAddressDsDivisionList = dsDivisionList;
         return SUCCESS;
     }
 
@@ -170,6 +182,12 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         DeathRegister ddf;
         if (back) {
             populate((DeathRegister) session.get(WebConstants.SESSION_DEATH_DECLARATION_BEAN));
+            if (deathPersonPermenentAddressDistrictId != 0) {
+                permenantAddressDsDivisionList = dsDivisionDAO.getAllDSDivisionNames(deathPersonPermenentAddressDistrictId, language, user);
+            } else {
+                permenantAddressDsDivisionList = dsDivisionDAO.getAllDSDivisionNames(districtList.keySet().iterator().next(),
+                    language, user);
+            }
             return "form" + pageNo;
         }
         ddf = (DeathRegister) session.get(WebConstants.SESSION_DEATH_DECLARATION_BEAN);
@@ -283,7 +301,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
             }
 
             //display user locations
-            String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
+
             locationList = commonUtil.populateActiveUserLocations(user, language);
             if (!locationList.isEmpty()) {
                 int selectedLocationId = locationList.keySet().iterator().next();
@@ -440,6 +458,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         idUKey = deathRegister.getIdUKey();
         pageTypeGetter(deathType);
         beanPopulate(deathRegister);
+        selectDropDownListForEditMode(deathRegister);
         if (deathRegister.getStatus() != DeathRegister.State.DATA_ENTRY) {
             addActionError(getText("death.error.editNotAllowed"));
             return ERROR;
@@ -447,6 +466,19 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         session.put(WebConstants.SESSION_DEATH_DECLARATION_BEAN, deathRegister);
         populate();
         return SUCCESS;
+    }
+
+    private void selectDropDownListForEditMode(DeathRegister deathRegister) {
+        BDDivision bddivision = deathRegister.getDeath().getDeathDivision();
+        dsDivisionId = bddivision.getDsDivision().getDsDivisionUKey();
+        deathDivisionId = bddivision.getBdDivisionUKey();
+        deathDistrictId = bddivision.getDistrict().getDistrictUKey();
+        DSDivision dsDivisionPermanentAddress = deathRegister.getDeathPerson().getDsDivisionOfPermanentAddress();
+        deathPersonPermenentAddressDistrictId = (dsDivisionPermanentAddress != null) ?
+            dsDivisionPermanentAddress.getDistrict().getDistrictUKey() : 0;
+        deathPersonPermenentAddressDSDivisionId = (dsDivisionPermanentAddress != null) ?
+            deathRegister.getDeathPerson().getDsDivisionOfPermanentAddress().getDsDivisionUKey() : 0;
+        permenantAddressDsDivisionList = dsDivisionDAO.getAllDSDivisionNames(deathPersonPermenentAddressDistrictId, language, user);
     }
 
     private void pageTypeGetter(DeathRegister.Type type) {
@@ -872,6 +904,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     public void setSession(Map map) {
         this.session = map;
         user = (User) session.get(WebConstants.SESSION_USER_BEAN);
+        language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         logger.debug("setting User: {}", user.getUserName());
     }
 
@@ -1462,5 +1495,46 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public void setPrintStart(int printStart) {
         this.printStart = printStart;
+    }
+
+    public int getDeathPersonPermenentAddressDSDivisionId() {
+        return deathPersonPermenentAddressDSDivisionId;
+    }
+
+    public void setDeathPersonPermenentAddressDSDivisionId(int deathPersonPermenentAddressDSDivisionId) {
+        this.deathPersonPermenentAddressDSDivisionId = deathPersonPermenentAddressDSDivisionId;
+        //setting death with this value for death permanent address
+    }
+
+    public int getDeathPersonPermenentAddressDistrictId() {
+        return deathPersonPermenentAddressDistrictId;
+    }
+
+    public Map<Integer, String> getPermenantAddressDsDivisionList() {
+        return permenantAddressDsDivisionList;
+    }
+
+    public void setPermenantAddressDsDivisionList(Map<Integer, String> permenantAddressDsDivisionList) {
+        this.permenantAddressDsDivisionList = permenantAddressDsDivisionList;
+    }
+
+    public void setDeathPersonPermenentAddressDistrictId(int deathPersonPermenentAddressDistrictId) {
+        this.deathPersonPermenentAddressDistrictId = deathPersonPermenentAddressDistrictId;
+        //setting death with this value for death permanent address
+        populateDistrictAndDSOfPermanentAddress();
+    }
+
+    private void populateDistrictAndDSOfPermanentAddress() {
+        if (deathPerson != null && deathPersonPermenentAddressDistrictId != 0 && deathPersonPermenentAddressDSDivisionId != 0) {
+            deathPerson.setDsDivisionOfPermanentAddress(dsDivisionDAO.getDSDivisionByPK(deathPersonPermenentAddressDSDivisionId));
+        }
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 }

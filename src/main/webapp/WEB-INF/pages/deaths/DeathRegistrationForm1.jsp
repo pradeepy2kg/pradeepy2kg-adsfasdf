@@ -81,6 +81,19 @@ $(function() {
                 });
     });
 
+    $('select#deathPersonPermenentAddressDistrictId').bind('change', function(evt1) {
+        var id = $("select#deathPersonPermenentAddressDistrictId").attr("value");
+        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id},
+                function(data) {
+                    var options1 = '';
+                    var ds = data.dsDivisionList;
+                    for (var i = 0; i < ds.length; i++) {
+                        options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                    }
+                    $("select#deathPersonPermenentAddressDSDivisionId").html(options1);
+                });
+    });
+
     $('select#deathDsDivisionId').bind('change', function(evt2) {
         var id = $("select#deathDsDivisionId").attr("value");
         $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:2},
@@ -204,6 +217,7 @@ function validate() {
         isNumeric(domObject.value, 'p1error1', 'invalidAgeAtDeath')
 
     }
+
     /*
      var pageType = document.getElementById("pageType").value;
      if (pageType == 0) {
@@ -215,7 +229,11 @@ function validate() {
      document.getElementsByName('deathType')[1].checked));
      }*/
 
-
+    var person_bd = new Date(document.getElementById('deathPersonDOB').value);
+    var date_of_death = new Date(document.getElementById('deathDatePicker').value);
+    if (date_of_death.getTime() < person_bd.getTime()) {
+        errormsg = errormsg + "\n" + document.getElementById('invalidDateRange').value;
+    }
     // validations that can skip
     if (!check.checked) {
         domObject = document.getElementById('deathPerson_PINorNIC');
@@ -234,13 +252,10 @@ function validate() {
         if (isFieldEmpty(domObject)) {
             errormsg = errormsg + "\n" + document.getElementById('error11').value;
         }
-        var person_bd = new Date(document.getElementById('deathPersonDOB').value);
-        var date_of_death = new Date(document.getElementById('deathDatePicker').value);
-        if (date_of_death.getTime() < person_bd.getTime()) {
-            errormsg = errormsg + "\n" + document.getElementById('invalidDateRange').value;
-        }
     }
-    otherValidations();
+    domObject = document.getElementById('days_before_abortion_or_birth');
+    isNumeric(domObject.value, 'p1error1', 'daysBeforeAbortionOrBirth')
+    //  otherValidations();
     if (errormsg != "") {
         alert(errormsg);
         returnval = false;
@@ -931,13 +946,21 @@ function personAgeDeath() {
             மாவட்டம் <br>
             District
         </td>
-        <td width="150px">fds</td>
+        <td width="150px">
+            <s:select id="deathPersonPermenentAddressDistrictId" name="deathPersonPermenentAddressDistrictId"
+                      list="districtList" value="%{deathPersonPermenentAddressDistrictId}"
+                      cssStyle="float:left;  width:240px;" headerValue="%{getText('district.select')}" headerKey="0"/>
+        </td>
         <td width="150px">
             ප්‍රාදේශීය ලේකම් කොට්ඨාශය <br>
             பிரதேச செயளாளர் பிரிவு <br>
             Divisional Secretariat
         </td>
-        <td width="150px">fds</td>
+        <td width="150px">
+            <s:select id="deathPersonPermenentAddressDSDivisionId" name="deathPersonPermenentAddressDSDivisionId"
+                      list="permenantAddressDsDivisionList" value="%{deathPersonPermenentAddressDSDivisionId}"
+                      cssStyle="float:left;  width:240px;" headerValue="%{getText('dsDivision.select')}" headerKey="0"/>
+        </td>
         <td style="background:#cccccc"></td>
     </tr>
 </table>
@@ -966,7 +989,7 @@ function personAgeDeath() {
                 Last address
             </td>
             <td colspan="6">
-                <s:textarea name="deathPerson.rankOrProfession" id="lastAddressOfMissingPerson"
+                <s:textarea name="deathPerson.lastAddressOfMissingPerson" id="lastAddressOfMissingPerson"
                             cssStyle="width:98%;"/>
             </td>
         </tr>
@@ -1183,6 +1206,7 @@ function personAgeDeath() {
 <s:hidden id="invalidDateRange" value="%{getText('error.dod.mst.lt.dob')}"/>
 <s:hidden id="invalidDataAge" value="%{getText('error.if.bellow30.age.must.0')}"/>
 <s:hidden id="mustFillType" value="%{getText('error.must.fill.type')}"/>
+<s:hidden id="daysBeforeAbortionOrBirth" value="%{getText('error.days.before.abortion.or.birth')}"/>
 
 
 <div class="skip-validation">
