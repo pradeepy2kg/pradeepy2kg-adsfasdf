@@ -76,7 +76,7 @@ public class CivilStatusUtil {
                 case MARRIED:
                     return "විවාහක";
                 case ANNULLED:
-                    return "නිෂ්ප්‍රභාකර ඇත";
+                    return "ශුන්‍ය කර ඇත";
                 case SEPARATED:
                     return "වෙන්වී ඇත ";
                 case DIVORCED:
