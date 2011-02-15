@@ -127,6 +127,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
                 || adoption.getWifePINorNIC() != null) {
                 addActionError(getText("er.if.applicant.type.mother.wife.detail.null"));
                 basicLists();
+                populate();
+                populateAllDSDivisionList();
                 return "invalidBirthCertificateNumber";
             }
         }
@@ -141,6 +143,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
                 if (bdf == null) {
                     addActionError(getText("er.invalid.birth.certificate.number"));
                     populate();
+                    populateAllDSDivisionList();
                     return "invalidBirthCertificateNumber";
                 }
             }
@@ -180,9 +183,9 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 //populating by default disabled fields other wise data already entered to them getting lost due to method use
 //  to edit adoption
         adoption.setLifeCycleInfo(existingOrder.getLifeCycleInfo());
-        adoption.setBirthCertificateNumber((adoption.getBirthCertificateNumber() != 0) ?
+        adoption.setBirthCertificateNumber((adoption.getBirthCertificateNumber() == 0) ?
             adoption.getBirthCertificateNumber() : existingOrder.getBirthCertificateNumber());
-        adoption.setBirthRegistrationSerial((adoption.getBirthRegistrationSerial() != 0) ?
+        adoption.setBirthRegistrationSerial((adoption.getBirthRegistrationSerial() == 0) ?
             adoption.getBirthRegistrationSerial() : existingOrder.getBirthRegistrationSerial());
         if (birthDivisionId == 0) {
             adoption.setBirthDivisionId(existingOrder.getBirthDivisionId());
