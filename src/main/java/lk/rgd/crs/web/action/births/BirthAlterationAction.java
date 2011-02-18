@@ -151,7 +151,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         }
         if (bdf == null) {
             logger.debug("unable to found birth record for alteration ");
-            addActionError(getText("cp1.error.entryNotAvailable"));
+            addActionMessage(getText("cp1.error.entryNotAvailable"));
             populateBasicLists();
             return ERROR;
         } else if (!bdf.getLifeCycleInfo().isActiveRecord()) {
@@ -460,7 +460,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
 
             }
         } catch (Exception CRSRuntimeException) {
-            addActionError(getText("cp1.error.entryNotAvailable"));
+            addActionMessage(getText("cp1.error.entryNotAvailable"));
             logger.debug("User {} can not filter birth alteration with idUKey :{}", user.getUserId(), idUKey);
         }
 
