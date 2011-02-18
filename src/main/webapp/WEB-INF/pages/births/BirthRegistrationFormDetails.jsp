@@ -5,6 +5,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script type="text/javascript">
     function initPage() {
+        document.getElementById('approveButtonId').disabled = true;
+    }
+    function enableApproval() {
+        var clicked = document.getElementById('ignoreWarningsId').checked
+        if (clicked) {
+            document.getElementById('approveButtonId').disabled = false;
+        }
+        else {
+            document.getElementById('approveButtonId').disabled = true;
+        }
     }
 </script>
 
@@ -50,11 +60,12 @@
                         <table align="center">
                             <tr>
                                 <td><s:label value="%{getText('ignoreWorning.label')}" name="ignoreWorning"/></td>
-                                <td><s:checkbox name="ignoreWarning"/></td>
+                                <td><s:checkbox name="ignoreWarning" id="ignoreWarningsId"
+                                                onclick="enableApproval()"/></td>
                                 <s:hidden value="%{#request.bdId}" name="bdId"/>
                                 <s:hidden value="true" name="directApprovalFlag"/>
                                 <td class="button" align="left">
-                                    <s:submit name="approve" value="%{getText('approve.label')}"/>
+                                    <s:submit name="approve" id="approveButtonId" value="%{getText('approve.label')}"/>
                                 </td>
                             </tr>
                         </table>
