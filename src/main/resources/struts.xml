@@ -585,8 +585,19 @@
                 method="searchBDFBySerialNumber">
             <result type="tiles" name="success">epr.BDFSearch</result>
         </action>
+        <!--search category-->
+        <action name="eprSearchBDFBySerialNo" class="lk.rgd.crs.web.action.births.SearchAction"
+                method="searchBDFBySerialNumber">
+            <result type="tiles" name="success">epr.BDFSearch</result>
+        </action>
 
         <action name="eprBDFSearchByIdUKey" class="lk.rgd.crs.web.action.births.SearchAction"
+                method="searchBDFByIdUKey">
+            <result type="tiles" name="success">epr.BDFSearch</result>
+        </action>
+
+        <!--search category-->
+        <action name="eprSearchBDFByIdUKey" class="lk.rgd.crs.web.action.births.SearchAction"
                 method="searchBDFByIdUKey">
             <result type="tiles" name="success">epr.BDFSearch</result>
         </action>

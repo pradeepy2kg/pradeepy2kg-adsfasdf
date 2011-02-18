@@ -136,7 +136,7 @@
         <li><a href="#fragment-2"><span><s:label name="confirmationSearch"
                                                  value="%{getText('confirmationSearchTab.label')}"/></span></a></li>
     </ul>
-    <s:form action="eprBDFSearchBySerialNo.do" name="birthConfirmationSearchForm" id="search-bdf-form"
+    <s:form action="eprSearchBDFBySerialNo.do" name="birthConfirmationSearchForm" id="search-bdf-form"
             onsubmit="javascript:return validateForm()" method="post">
 
 
@@ -188,7 +188,7 @@
     </div>
     <%--   <br/>--%>
     <div id="fragment-2">
-        <s:form action="eprBDFSearchByIdUKey.do" method="post" onsubmit="javascript:return validateForm()">
+        <s:form action="eprSearchBDFByIdUKey.do" method="post" onsubmit="javascript:return validateForm()">
             <table class="search-option-table">
 
                 <tr>
