@@ -35,10 +35,10 @@
         $('img#notifier_lookup').bind('click', function(evt1) {
             var id1 = $("input#notifyingAuthorityPIN").attr("value");
             $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
-                     function(data1) {
-                         $("textarea#notifyingAuthorityName").val(data1.fullNameInOfficialLanguage);
-                         $("textarea#notifyingAuthorityAddress").val(data1.lastAddress);
-                     });
+                    function(data1) {
+                        $("textarea#notifyingAuthorityName").val(data1.fullNameInOfficialLanguage);
+                        $("textarea#notifyingAuthorityAddress").val(data1.lastAddress);
+                    });
         });
         //        $('#notifying_authority_NIC_V').bind('click', function() {
         //            if ($('#notifyingAuthorityPIN').val().length == 9) {
@@ -248,7 +248,12 @@
             </s:if>
         </s:if>
         <div class="form-submit">
-            <s:submit value="%{getText('next.label')}"/>
+            <s:if test="%{#session.birthRegister.idUKey==0}">
+                <s:submit value="%{getText('add.label')}"/>
+            </s:if>
+            <s:else>
+                <s:submit value="%{getText('save.label')}"/>
+            </s:else>
         </div>
         <div class="next-previous">
             <s:url id="backUrl" action="eprBirthRegistration">

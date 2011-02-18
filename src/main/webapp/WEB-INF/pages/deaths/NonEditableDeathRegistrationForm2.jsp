@@ -136,7 +136,7 @@
 
         <div class="form-submit">
             <s:hidden name="pageNo" value="2"/>
-            <s:submit value="%{getText('next.label')}" cssStyle="margin-top:10px;"/>
+            <s:submit value="%{getText('data.table.label')}" cssStyle="margin-top:10px;"/>
         </div>
         <div class="next-previous">
             <s:url id="backUrl" action="eprDeathViewMode.do">

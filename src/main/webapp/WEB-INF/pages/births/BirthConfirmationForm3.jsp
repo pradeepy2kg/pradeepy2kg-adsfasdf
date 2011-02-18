@@ -197,7 +197,7 @@
         <s:hidden name="pageNo" value="3"/>
 
         <div class="form-submit">
-            <s:submit value="%{getText('next.label')}"/>
+            <s:submit value="%{getText('save.label')}"/>
         </div>
         <s:hidden name="skipConfirmationChages" value="%{#request.skipConfirmationChages}"/>
     </s:form>
