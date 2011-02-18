@@ -45,22 +45,22 @@
     .label_validate_approve {
         text-align: center;
         position: absolute;
-        right: 560px;
-        top: 425px;
+        right: 590px;
+        top: 430px;
     }
 
     .label_capture_objections {
         text-align: center;
         position: absolute;
-        right: 465px;
+        right: 485px;
         top: 500px;
     }
 
     .label_objection_validate_approve {
         text-align: center;
         position: absolute;
-        right: 460px;
-        top: 560px;
+        right: 470px;
+        top: 570px;
     }
 
     .label_print_license {
@@ -87,7 +87,7 @@
     .label_objection {
         text-align: center;
         position: absolute;
-        right: 180px;
+        right: 170px;
         top: 500px;
     }
 
