@@ -68,7 +68,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
 
         // generate a PIN for a verified record
         if (person.getStatus() == Person.Status.VERIFIED) {
-            pin = pinGenerator.generatePINNumber(person.getDateOfBirth(), person.getGender() == 0);
+            pin = pinGenerator.generatePINNumber(person.getDateOfBirth(), person.getGender() == 0, person.getNic());
             person.setPin(pin);
         } else if (person.getStatus() == Person.Status.SEMI_VERIFIED) {
             // adds a semi-verified record
@@ -137,7 +137,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             person.setLifeStatus(Person.LifeStatus.ALIVE);
             person.setSubmittedLocation(user.getPrimaryLocation());
             // generate a PIN for existing person
-            pin = pinGenerator.generatePINNumber(person.getDateOfBirth(), person.getGender() == 0);
+            pin = pinGenerator.generatePINNumber(person.getDateOfBirth(), person.getGender() == 0, person.getNic());
             person.setPin(pin);
 
             personDao.addPerson(person, user);
@@ -374,7 +374,8 @@ public class PopulationRegistryImpl implements PopulationRegistry {
 
             // if approving person does not have a pin generate pin
             if (existing.getPin() == null) {
-                final long pin = pinGenerator.generatePINNumber(existing.getDateOfBirth(), existing.getGender() == 0);
+                final long pin = pinGenerator.generatePINNumber(
+                    existing.getDateOfBirth(), existing.getGender() == 0, existing.getNic());
                 existing.setPin(pin);
             }
 

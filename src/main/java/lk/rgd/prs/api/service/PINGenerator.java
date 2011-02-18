@@ -34,9 +34,10 @@ public interface PINGenerator {
      *
      * @param dateOfBirth the date of birth
      * @param male true if the PIN is generated for a male, false for a female
+     * @param  nic current NIC number - if any
      * @return the generated 10 digit PIN number
      */
-    public long generatePINNumber(Date dateOfBirth,  boolean male);
+    public long generatePINNumber(Date dateOfBirth,  boolean male, String nic);
 
     /**
      * Generate a temporary PIN number for the given date by changing the DOB = DOB + 600

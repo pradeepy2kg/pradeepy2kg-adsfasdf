@@ -5,7 +5,7 @@ INSERT INTO PRS.PERSON(civilStatus, dateOfBirth, dateOfDeath, fullNameInEnglishL
 INSERT INTO PRS.PERSON(civilStatus, dateOfBirth, dateOfDeath, fullNameInEnglishLanguage, fullNameInOfficialLanguage, gender, lifeStatus, nic, pin, placeOfBirth, preferredLanguage, lastAddressUKey, lastMarriageUKey)
   VALUES(NULL, '1971-02-01', NULL, 'KARUPPAIYA  LOGAMMAL', 'කරැප්පයියා ෙලාගමිමාල්', 1, NULL, '715322366V', NULL, NULL, 'si', NULL, NULL);
 INSERT INTO PRS.PERSON(civilStatus, dateOfBirth, dateOfDeath, fullNameInEnglishLanguage, fullNameInOfficialLanguage, gender, lifeStatus, nic, pin, placeOfBirth, preferredLanguage, lastAddressUKey, lastMarriageUKey)
-  VALUES(NULL, '1978-01-17', NULL, 'NADARAJA  THAMIL SELVAM', 'නඩරාජා තමිල් ෙසල්වමි', 1, NULL, '785170903V', NULL, NULL, 'si', NULL, NULL);
+  VALUES(NULL, '1978-01-17', NULL, 'NADARAJA  THAMIL SELVAM', 'නඩරාජා තමිල් ෙසල්වමි', 1, NULL, '785170903V', 197851700903, NULL, 'si', NULL, NULL);
 INSERT INTO PRS.PERSON(civilStatus, dateOfBirth, dateOfDeath, fullNameInEnglishLanguage, fullNameInOfficialLanguage, gender, lifeStatus, nic, pin, placeOfBirth, preferredLanguage, lastAddressUKey, lastMarriageUKey)
   VALUES(NULL, '2004-02-17', NULL, 'NADARAJA  SEETHA', 'නඩරාජා  සිතා', 0, NULL, '000000000V', NULL, NULL, 'si', NULL, NULL);
 INSERT INTO PRS.PERSON(civilStatus, dateOfBirth, dateOfDeath, fullNameInEnglishLanguage, fullNameInOfficialLanguage, gender, lifeStatus, nic, pin, placeOfBirth, preferredLanguage, lastAddressUKey, lastMarriageUKey)
