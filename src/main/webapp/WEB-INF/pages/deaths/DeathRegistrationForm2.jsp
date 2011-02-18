@@ -420,8 +420,14 @@
 
 <div class="form-submit">
     <s:hidden name="pageNo" value="2"/>
-    <s:submit value="%{getText('next.label')}" cssStyle="margin-top:10px;"/>
+    <s:if test="%{#session.deathRegister.idUKey==0}">
+        <s:submit value="%{getText('add.label')}" cssStyle="margin-top:10px;"/>
+    </s:if>
+    <s:else>
+        <s:submit value="%{getText('save.label')}" cssStyle="margin-top:10px;"/>
+    </s:else>
 </div>
+
 <div class="next-previous">
     <s:url id="backUrl" action="eprDeathDeclaration.do">
         <s:param name="back" value="true"/>
