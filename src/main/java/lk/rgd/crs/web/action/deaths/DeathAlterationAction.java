@@ -154,7 +154,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         findDeathCertificateForDeathAlteration();
         if (deathRegister == null) {
             logger.debug("can not find a death registrations for alterations :serial {} or :idUKey : {}", serialNumber, idUKey);
-            addActionError(getText("error.cannot.find.death.registration"));
+            addActionMessage(getText("error.cannot.find.death.registration"));
             populatePrimaryLists(districtUKey, dsDivisionId, language, user);
             return SUCCESS;
         } else {
@@ -372,7 +372,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             }
             if (approvalList.size() < 1) {
                 logger.debug("no pending list found ");
-                addActionError(getText("no.pending.alterations"));
+                addActionMessage(getText("no.pending.alterations"));
                 populatePrimaryLists(districtUKey, dsDivisionId, language, user);
                 userLocations = commonUtil.populateActiveUserLocations(user, language);
                 locationUKey = 0;
