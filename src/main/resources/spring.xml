@@ -283,6 +283,9 @@
 
     <bean id="pinGeneratorService" class="lk.rgd.prs.core.service.PINGeneratorImpl">
         <constructor-arg ref="pinNumberDAOImpl"/>
+        <constructor-arg ref="personDAOImpl"/>
+        <constructor-arg value="1994-01-01"/>
+        <constructor-arg value="2000"/>
     </bean>
 
     <!--Solr index manager-->
