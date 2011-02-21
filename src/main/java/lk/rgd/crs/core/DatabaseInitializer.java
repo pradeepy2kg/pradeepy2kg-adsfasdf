@@ -1,9 +1,12 @@
 package lk.rgd.crs.core;
 
+import lk.rgd.common.api.dao.UserDAO;
 import lk.rgd.common.api.domain.*;
 import lk.rgd.common.core.dao.PreloadableDAO;
 import lk.rgd.common.util.RolePermissionUtils;
+import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.*;
+import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.prs.api.domain.*;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
@@ -121,6 +124,16 @@ public class DatabaseInitializer implements ApplicationContextAware {
             dao.preload();
         }
         logger.info("Pre-loaded master tables ... Application initialized!");
+
+        /*UserDAO userDAO = (UserDAO) ctx.getBean("userDAOImpl", UserDAO.class);                   // this is for births sample data population
+        BirthRegistrationService service = (BirthRegistrationService) ctx.getBean("manageBirthService", BirthRegistrationService.class);
+        User sysUser = userDAO.getUserByPK("rg");
+
+        for (int i = 0; i < 500; i++) {
+            BirthDeclaration birth = createSampleBDF(ctx, i);
+            service.addLiveBirthDeclaration(birth, true, sysUser);
+        }*/
+
 
 //        BirthRecordsIndexer birthIndexer = (BirthRecordsIndexer) ctx.getBean("birthRecordsIndexer");
 //        birthIndexer.indexAll();
@@ -264,5 +277,55 @@ public class DatabaseInitializer implements ApplicationContextAware {
         public String getDialectClass() {
             return dialectClass;
         }
+    }
+
+    private BirthDeclaration createSampleBDF(ApplicationContext ctx, int serialNo) {
+        BirthDeclaration bdf = new BirthDeclaration();
+        Random random = new Random();
+        int ranNumber = random.nextInt(100);
+        int dsRandom = random.nextInt(1000);
+        BDDivisionDAO bd = (BDDivisionDAO) ctx.getBean("bdDivisionDAOImpl", BDDivisionDAO.class);
+        BDDivision birthDivision = bd.getBDDivisionByPK(dsRandom);
+        int rank = ranNumber % 10;
+        if (rank == 0) {
+            rank = 1;
+        }
+        java.util.GregorianCalendar gCal = new GregorianCalendar();
+        gCal.add(Calendar.MONTH, -rank);
+        int motherAge = 0;
+        if (rank < 2) {
+            motherAge = 20 + rank;
+        } else if (2 < rank && rank < 5) {
+            motherAge = 30 + rank;
+        } else if (5 < rank && rank < 8) {
+            motherAge = 40 + rank;
+        } else {
+            motherAge = 50 + rank;
+        }
+        long serial = 2010012345 + (long) (serialNo * rank);
+        bdf.getRegister().setBdfSerialNo(serial);
+        bdf.getRegister().setDateOfRegistration(new Date());
+        bdf.getRegister().setBirthDivision(birthDivision);
+        bdf.getChild().setDateOfBirth(gCal.getTime());
+        bdf.getChild().setPlaceOfBirth("Place of birth for child " + serial);
+        bdf.getChild().setChildRank(rank);
+        bdf.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CERT_PRINTED);
+
+        bdf.getParent().setMotherAgeAtBirth(motherAge);
+
+        bdf.getChild().setChildGender(random.nextInt(2));
+        bdf.getChild().setChildFullNameOfficialLang("සිංහලෙන් ළමයාගේ නම  " + "nama");
+        bdf.getChild().setChildFullNameEnglish("CHILDS NAME IN ENGLISH " + "Name");
+
+        bdf.getInformant().setInformantName("Name of Informant for Child : " + "Any");
+        bdf.getInformant().setInformantAddress("Address of Informant for Child : " + "Any");
+        bdf.getInformant().setInformantSignDate(new Date());
+        bdf.getInformant().setInformantType(InformantInfo.InformantType.FATHER);
+
+        bdf.getNotifyingAuthority().setNotifyingAuthorityAddress("The address of the Birth registrar");
+        bdf.getNotifyingAuthority().setNotifyingAuthoritySignDate(new Date());
+        bdf.getNotifyingAuthority().setNotifyingAuthorityName("Name of the Notifying Authority");
+        bdf.getNotifyingAuthority().setNotifyingAuthorityPIN("750010001");
+        return bdf;
     }
 }
