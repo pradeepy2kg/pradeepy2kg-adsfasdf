@@ -23,7 +23,7 @@ public class GrandFatherInfo implements Serializable, Cloneable {
     @Column(nullable = true, length = 60)
     private String grandFatherBirthPlace;
 
-    @Column(nullable = true, length = 10)
+    @Column(nullable = true, length = 12)
     private String grandFatherNICorPIN;
 
     // If the father was not born in Sri Lanka and if great grandfather born in Sri Lanka great grand father's details
@@ -36,7 +36,7 @@ public class GrandFatherInfo implements Serializable, Cloneable {
     @Column(nullable = true, length = 60)
     private String greatGrandFatherBirthPlace;
 
-    @Column(nullable = true, length = 10)
+    @Column(nullable = true, length = 12)
     private String greatGrandFatherNICorPIN;
 
     public String getGrandFatherFullName() {

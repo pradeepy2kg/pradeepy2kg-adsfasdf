@@ -83,7 +83,7 @@ public class AdoptionOrder implements Serializable {
     @Column(nullable = false)
     private String applicantAddress;
 
-    @Column(nullable = true)
+    @Column(nullable = true, length = 12)
     private String applicantPINorNIC;
 
     @Column(nullable = true)
@@ -98,7 +98,7 @@ public class AdoptionOrder implements Serializable {
     @Column(nullable = true)
     private String wifeName; // applies only if applicantMother is false (father)
 
-    @Column(nullable = true)
+    @Column(nullable = true, length = 12)
     private String wifePINorNIC;
 
     @Column(nullable = true)
@@ -150,7 +150,7 @@ public class AdoptionOrder implements Serializable {
     @Column(nullable = true)
     private ApplicantType certificateApplicantType;
 
-    @Column(nullable = true)
+    @Column(nullable = true, length = 12)
     private String certificateApplicantPINorNIC;
 
     @Column(columnDefinition = "char(2) default 'si'", nullable = false)

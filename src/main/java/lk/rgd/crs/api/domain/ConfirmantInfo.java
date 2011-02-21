@@ -33,7 +33,7 @@ public class ConfirmantInfo implements Serializable, Cloneable {
     /**
      * PIN or NIC of person confirming BDF details
      */
-    @Column(nullable = true, length = 10)
+    @Column(nullable = true, length = 12)
     private String confirmantNICorPIN;
 
     /**

@@ -16,7 +16,7 @@ public class MotherInfo {
     /**
      * NIC or PIN of mother
      */
-    @Column(nullable = true, length = 10)
+    @Column(nullable = true, length = 12)
     private String motherNICorPIN;
 
     /**

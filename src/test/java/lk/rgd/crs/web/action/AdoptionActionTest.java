@@ -1,28 +1,27 @@
 package lk.rgd.crs.web.action;
 
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionProxy;
 import junit.extensions.TestSetup;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import lk.rgd.UnitTestManager;
 import lk.rgd.common.CustomStrutsTestCase;
-import lk.rgd.common.core.AuthorizationException;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.service.UserManager;
-import lk.rgd.crs.web.action.births.AdoptionAction;
-import lk.rgd.crs.api.domain.AdoptionOrder;
-import lk.rgd.crs.api.domain.Court;
+import lk.rgd.common.core.AuthorizationException;
 import lk.rgd.crs.api.dao.AdoptionOrderDAO;
 import lk.rgd.crs.api.dao.CourtDAO;
+import lk.rgd.crs.api.domain.AdoptionOrder;
+import lk.rgd.crs.api.domain.Court;
 import lk.rgd.crs.api.service.AdoptionOrderService;
-import lk.rgd.UnitTestManager;
+import lk.rgd.crs.web.action.births.AdoptionAction;
+import org.apache.struts2.dispatcher.mapper.ActionMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
 
 import java.util.*;
-
-import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionProxy;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
-import org.springframework.context.ApplicationContext;
-import org.apache.struts2.dispatcher.mapper.ActionMapping;
 
 
 public class AdoptionActionTest extends CustomStrutsTestCase {
@@ -37,14 +36,14 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
     protected final static AdoptionOrderService adoptionOrderService = (AdoptionOrderService) ctx.getBean("adoptionOrderService", AdoptionOrderService.class);
     protected final static AdoptionOrderDAO adoptionOrderDAO = (AdoptionOrderDAO) ctx.getBean("adoptionOrderDAOImpl", AdoptionOrderDAO.class);
     protected final static UserManager userManager = (UserManager) ctx.getBean("userManagerService", UserManager.class);
-   protected final static CourtDAO courtDAO = (CourtDAO) ctx.getBean("courtDAOImpl", CourtDAO.class);
+    protected final static CourtDAO courtDAO = (CourtDAO) ctx.getBean("courtDAOImpl", CourtDAO.class);
 
 
     public static Test suite() {
         TestSetup setup = new TestSetup(new TestSuite(AdoptionActionTest.class)) {
             protected void setUp() throws Exception {
                 logger.info("setup called");
-                AvissawellaCourt=courtDAO.getCourt(44);
+                AvissawellaCourt = courtDAO.getCourt(44);
                 List adop = persistAdoption();
                 User sampleUser = loginSampleUser();
                 for (int i = 0; i < adop.size(); i++) {
@@ -79,7 +78,7 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
 
         Map session = UserLogin("ashoka", "ashoka");
 
-        initAndExucute("/adoption/eprAdoptionRegistrationAction.do", session);
+        initAndExecute("/adoption/eprAdoptionRegistrationAction.do", session);
         session = adoptionAction.getSession();
 
 /*        assertNotNull("Dsdivision list", adoptionAction.getDsDivisionList());
@@ -117,7 +116,7 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
         request.setParameter("dsDivisionId", "1");
         request.setParameter("pageNo", "1");
         request.setParameter("idUKey", "0");
-        initAndExucute("/adoption/eprAdoptionAction.do", session);
+        initAndExecute("/adoption/eprAdoptionAction.do", session);
         session = adoptionAction.getSession();
 
         //assertNotNull("Court ", adoptionAction.getAdoption().getCourt());
@@ -131,7 +130,7 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
     public void testAdoptionEdit() throws Exception {
         Map session = UserLogin("ashoka", "ashoka");
         request.setParameter("idUKey", "1");
-        initAndExucute("/adoption/eprAdoptionEditMode.do", session);
+        initAndExecute("/adoption/eprAdoptionEditMode.do", session);
         session = adoptionAction.getSession();
         assertEquals("Action errors for Adoption Declaration ", 0, adoptionAction.getActionErrors().size());
         assertNotNull("adoption object", adoptionAction.getAdoption());
@@ -166,7 +165,7 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
         request.setParameter("dojo.adoption.orderIssuedDate", "2010-08-17");
         request.setParameter("dojo.adoption.orderReceivedDate", "2010-08-10");
         request.setParameter("dsDivisionId", "1");
-        initAndExucute("/adoption/eprAdoptionAction.do", session);
+        initAndExecute("/adoption/eprAdoptionAction.do", session);
         session = adoptionAction.getSession();
 
         assertNotNull("Court order Number ", adoptionAction.getAdoption().getCourtOrderNumber());
@@ -177,7 +176,7 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
     }
 
     public void testAdoptionCertificate() throws Exception {
-        //set idUKey 5 to CERTIFCATE_REQUEST_CAPTURED state
+        //set idUKey 5 to CERTIFICATE_REQUEST_CAPTURED state
         User user = loginSampleUser();
         long idUKey = 5;
         //set state to approve
@@ -185,15 +184,15 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
         adoptionOrderService.approveAdoptionOrder(idUKey, user);
         //set to notice letter printed
         adoptionOrderService.setStatusToPrintedNotice(idUKey, user);
-        //set appllicant info
+        //set applicant info
         adoption = adoptionOrderService.getById(idUKey, user);
         adoption.setApplicantName("applicant name");
         adoption.setApplicantAddress("applicant address");
         adoption.setApplicantCountryId(3);
-        adoption.setApplicantPINorNIC("applicant pin");
-        adoption.setApplicantPassport("applocant passport");
+        adoption.setApplicantPINorNIC("198623610029");
+        adoption.setApplicantPassport("applicant passport");
         adoption.setApplicantMother(false);
-        //set state to APLICANT_INFO_CAPTURED
+        //set state to APPLICANT_INFO_CAPTURED
         adoptionOrderService.setApplicantInfo(adoption, user);
 
         Map session = UserLogin("ashoka", "ashoka");
@@ -201,7 +200,7 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
         request.setParameter("pageNo", "1");
         request.setParameter("nextFlag", "false");
         request.setParameter("previousFlag", "false");
-        initAndExucute("/adoption/eprPrintAdoptionCertificate.do", session);
+        initAndExecute("/adoption/eprPrintAdoptionCertificate.do", session);
         session = adoptionAction.getSession();
         assertEquals("Action errors for Adoption Declaration ", 0, adoptionAction.getActionErrors().size());
 
@@ -219,15 +218,15 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
 
         Map session = UserLogin("ashoka", "ashoka");
         request.setParameter("idUKey", "4");
-        initAndExucute("/adoption/eprApproveAdoption.do", session);
+        initAndExecute("/adoption/eprApproveAdoption.do", session);
         session = adoptionAction.getSession();
         assertEquals("Action errors for Adoption Declaration ", 1, adoptionAction.getActionErrors().size());
         logger.debug("Successfully approved : {} ", adoptionAction.getIdUKey());
     }
 
     public void testAdoptionApplicantInfo() throws Exception {
-        //to capture applicant infor adoption must be in NOTICE_LETTER_PRINTED state
-        //idUkey 3 currently in DATA_ENTRY mode
+        //to capture applicant info adoption must be in NOTICE_LETTER_PRINTED state
+        //idUKey 3 currently in DATA_ENTRY mode
         //and court order number is   gampaha1232
         User user = loginSampleUser();
         long idUKey = 3;
@@ -237,17 +236,17 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
         adoptionOrderService.setStatusToPrintedNotice(idUKey, user);
 
         Map session = UserLogin("rg", "password");
-        initAndExucute("/adoption/eprAdoptionApplicantInfo.do", session);
+        initAndExecute("/adoption/eprAdoptionApplicantInfo.do", session);
         session = adoptionAction.getSession();
-        assertEquals("Action erros for Adoption Declaration ", 0, adoptionAction.getActionErrors().size());
+        assertEquals("Action errors for Adoption Declaration ", 0, adoptionAction.getActionErrors().size());
 
         request.setParameter("idUKey", "3");
         request.setParameter("search", "සොයන්න");
-        initAndExucute("/adoption/eprAdoptionFind.do", session);
+        initAndExecute("/adoption/eprAdoptionFind.do", session);
         session = adoptionAction.getSession();
         assertEquals("Action errors for Adoption Declaration ", 0, adoptionAction.getActionErrors().size());
         //assertNotNull("court ", adoptionAction.getAdoption().getCourt());
-        assertNotNull("court ordernumber ", adoptionAction.getAdoption().getCourtOrderNumber());
+        assertNotNull("court order number ", adoptionAction.getAdoption().getCourtOrderNumber());
         assertNotNull("child given name ", adoptionAction.getAdoption().getChildNewName());
         assertNotNull("child new name ", adoptionAction.getAdoption().getChildNewName());
 
@@ -257,16 +256,16 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
         request.setParameter("certificateApplicantType", "OTHER");
         request.setParameter("pageNo", "1");
 
-        initAndExucute("/adoption/eprAdoptionApplicantInfo.do", session);
+        initAndExecute("/adoption/eprAdoptionApplicantInfo.do", session);
         session = adoptionAction.getSession();
         assertEquals("Action errors for Adoption Declaration ", 0, adoptionAction.getActionErrors().size());
         //todo check follow
-/*        assertNotNull("ertificate Applicant Address", adoptionAction.getAdoption().getCertificateApplicantAddress());
+/*        assertNotNull("certificate Applicant Address", adoptionAction.getAdoption().getCertificateApplicantAddress());
         assertNotNull("certificate Applicant Name", adoptionAction.getAdoption().getCertificateApplicantName());*/
     }
 
     public void testAdoptionApprovalAndPrint() throws Exception {
-        //set idUKey 2 to CERTIFCATE_PRINTED state
+        //set idUKey 2 to CERTIFICATE_PRINTED state
         User user = loginSampleUser();
         long idUKey = 2;
         //set state to approve
@@ -274,41 +273,41 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
         adoptionOrderService.approveAdoptionOrder(idUKey, user);
         //set to notice letter printed
         adoptionOrderService.setStatusToPrintedNotice(idUKey, user);
-        //set appllicant info
+        //set applicant info
         adoption = adoptionOrderService.getById(idUKey, user);
         adoption.setApplicantName("applicant name");
         adoption.setApplicantAddress("applicant address");
         adoption.setApplicantCountryId(3);
-        adoption.setApplicantPINorNIC("applicant pin");
+        adoption.setApplicantPINorNIC("197621562569");
         adoption.setApplicantPassport("applocant passport");
         adoption.setApplicantMother(false);
-        //set state to APLICANT_INFO_CAPTURED
+        //set state to APPLICANT_INFO_CAPTURED
         adoptionOrderService.setApplicantInfo(adoption, user);
         adoptionOrderService.setStatusToPrintedCertificate(idUKey, user);
 
         Map session = UserLogin("rg", "password");
-        initAndExucute("/adoption/eprAdoptionApprovalAndPrint.do", session);
+        initAndExecute("/adoption/eprAdoptionApprovalAndPrint.do", session);
         session = adoptionAction.getSession();
 
-        assertNotNull("Dsdivision list", adoptionAction.getDsDivisionList());
+        assertNotNull("DSDivision list", adoptionAction.getDsDivisionList());
         assertNotNull("District list", adoptionAction.getDistrictList());
 
         request.setParameter("idUKey", "2");
         request.setParameter("pageNo", "1");
         request.setParameter("nextFlag", "false");
         request.setParameter("previousFlag", "false");
-        initAndExucute("/adoption/eprPrintAdoptionNotice.do", session);
+        initAndExecute("/adoption/eprPrintAdoptionNotice.do", session);
         session = adoptionAction.getSession();
         assertEquals("Action errors for Adoption Declaration ", 1, adoptionAction.getActionErrors().size());
 
-       // assertNotNull("Court ", adoptionAction.getAdoption().getCourt());
+        // assertNotNull("Court ", adoptionAction.getAdoption().getCourt());
         assertNotNull("Court order Number ", adoptionAction.getAdoption().getCourtOrderNumber());
         assertNotNull("Child Age Year ", adoptionAction.getAdoption().getChildAgeYears());
         assertNotNull("Child New name ", adoptionAction.getAdoption().getChildNewName());
     }
 
 
-    private void initAndExucute(String mapping, Map session) {
+    private void initAndExecute(String mapping, Map session) {
         proxy = getActionProxy(mapping);
         adoptionAction = (AdoptionAction) proxy.getAction();
         assertNotNull(adoptionAction);
@@ -322,7 +321,7 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
     }
 
     private Map UserLogin(String username, String passwd) throws Exception {
-        request.setParameter("javaScript","true");
+        request.setParameter("javaScript", "true");
         request.setParameter("userName", username);
         request.setParameter("password", passwd);
         ActionProxy proxy = getActionProxy("/eprLogin.do");
@@ -336,9 +335,8 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
         User rg = null;
         try {
             rg = userManager.authenticateUser("rg", "password");
-        }
-        catch (AuthorizationException e) {
-            logger.debug("exception when autharizing a user :'rg' ");
+        } catch (AuthorizationException e) {
+            logger.debug("exception when authorizing a user :'rg' ");
         }
         return rg;
     }
@@ -355,14 +353,14 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
             adoption.setJudgeName("judge name");
             adoption.setApplicantName("applicant name" + i);
             adoption.setApplicantAddress("applicant address" + i);
-            adoption.setApplicantPINorNIC("pin or NIC" + i);
+            adoption.setApplicantPINorNIC("19862361002" + i);
             //set applicant is mother
             adoption.setApplicantMother(true);
             adoption.setWifeName("wife name" + i);
-            adoption.setWifePINorNIC("wife pin or NIC" + i);
+            adoption.setWifePINorNIC("19782361002" + i);
             adoption.setWifeCountryId(3);
             adoption.setWifePassport("wife passport" + i);
-            //court given name so exsisting name can be null
+            //court given name so existing name can be null
             adoption.setChildNewName("child new name" + i);
             adoption.setChildAgeYears(10);
             adoption.setChildGender(0);

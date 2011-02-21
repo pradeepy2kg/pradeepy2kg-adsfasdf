@@ -75,7 +75,7 @@ public class SearchInfo implements Serializable {
      * This is the PIN or NIC of whose certificate being searched - e.g. for births - child PIN, for deaths - NIC or PIN
      * of the dead person
      */
-    @Column(nullable = true, length = 10)
+    @Column(nullable = true, length = 12)
     private String searchPINorNIC;
 
     /**
