@@ -552,10 +552,12 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
 
             for (BirthDeclaration bd : birthRecords) {
                 int age = 0;
-                int race = 0;
+                int race = 12; // MAX address for unknown race
                 if (bd.getParent() != null) {
                     age = bd.getParent().getMotherAgeAtBirth();
-                    race = bd.getParent().getFatherRace().getRaceId();
+                    if (bd.getParent().getFatherRace() != null) {
+                        race = bd.getParent().getFatherRace().getRaceId();
+                    }
                 }
                 age = age / 5;
                 if (age < 3) {
@@ -2126,7 +2128,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         StringBuilder csv = new StringBuilder();
         String filename = ReportCodes.BIRTH_RAW_DATA_NAME + ".csv";
         csv.append(
-            "DIVISION_NAME," +
+            "DSDIVISION_NAME," +
                 "BIRTH_AT_HOSPITAL," +
                 "CHILD_BIRTH_WEIGHT," +
                 "CHILD_GENDER," +
@@ -2190,10 +2192,13 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         for (DSDivision dsDivision : dsDivisions) {
             birthRecords = birthRegister.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
                 BirthDeclaration.State.ARCHIVED_CERT_PRINTED, systemUser);
-            String divisionName = dsDivision.getEnDivisionName();
             csv.append(dsDivision.getEnDivisionName() + ",");
 
+            boolean noRecords = true;
+            int count = 0;
+
             for (BirthDeclaration bd : birthRecords) {
+                noRecords = false;
                 ChildInfo child = bd.getChild();
                 MarriageInfo marriage = bd.getMarriage();
                 ParentInfo parent = bd.getParent();
@@ -2203,68 +2208,163 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 CRSLifeCycleInfo life = bd.getLifeCycleInfo();
                 NotifyingAuthorityInfo notify = bd.getNotifyingAuthority();
                 BirthRegisterInfo birth = bd.getRegister();
+                if (count > 0) {
+                    csv.append(dsDivision.getEnDivisionName() + ",");
+                }
 
-                csv.append(divisionName + "," +
-                    child.getBirthAtHospital() + "," +
-                    child.getChildBirthWeight() + "," +
-                    child.getChildGender() + "," +
-                    child.getChildRank() + "," +
-                    child.getDateOfBirth() + "," +
-                    child.getNumberOfChildrenBorn() + "," +
-                    child.getPin() + "," +
-                    child.getPlaceOfBirth() + "," +
-                    child.getWeeksPregnant() + "," +
-                    confirm.getConfirmantNICorPIN() + "," +
-                    confirm.getConfirmationProcessedTimestamp() + "," +
-                    confirm.getLastDateForConfirmation() + "," +
-                    grandFather.getGrandFatherBirthPlace() + "," +
-                    grandFather.getGrandFatherBirthYear() + "," +
-                    grandFather.getGrandFatherNICorPIN() + "," +
-                    inform.getInformantEmail() + "," +
-                    inform.getInformantNICorPIN() + "," +
-                    inform.getInformantPhoneNo() + "," +
-                    inform.getInformantType() + "," +
-                    marriage.getDateOfMarriage() +
-                    marriage.isFatherSigned() + "," +
-                    marriage.isMotherSigned() + "," +
-                    marriage.getParentsMarried() + "," +
-                    marriage.getPlaceOfMarriage() + "," +
-                    notify.getNotifyingAuthorityPIN() + "," +
-                    notify.getNotifyingAuthoritySignDate() + "," +
-                    parent.getFatherDOB() + "," +
-                    parent.getFatherNICorPIN() + "," +
-                    parent.getFatherPassportNo() + "," +
-                    parent.getFatherPlaceOfBirth() + "," +
-                    parent.getMotherAdmissionDate() + "," +
-                    parent.getMotherAdmissionNo() + "," +
-                    parent.getMotherAgeAtBirth() + "," +
-                    parent.getMotherDOB() + "," +
-                    parent.getMotherEmail() + "," +
-                    parent.getMotherNICorPIN() + "," +
-                    parent.getMotherPassportNo() + "" +
-                    parent.getMotherPhoneNo() + "," +
-                    parent.getMotherPlaceOfBirth() + "," +
-                    birth.getBdfSerialNo() + "," +
-                    birth.getBirthType() + "," +
-                    birth.getCaseFileNumber() + "," +
-                    birth.getDateOfRegistration() + "," +
-                    confirm.getConfirmationProcessedUser().getUserId() + "," +
-                    life.getApprovalOrRejectUser().getUserId() + "," +
-                    life.getCertificateGeneratedUser().getUserId() + "," +
-                    life.getCreatedUser().getUserId() + "," +
-                    parent.getFatherCountry().getCountryId() + "," +
-                    parent.getFatherRace() + "," +
-                    parent.getMotherCountry().getCountryId() + "," +
-                    parent.getMotherDSDivision().getDsDivisionUKey() +
-                    parent.getMotherRace() + "," +
-                    birth.getBirthDivision().getDivisionId() + "," +
-                    birth.getOriginalBCIssueUser().getUserId() + "," +
-                    birth.getOriginalBCPlaceOfIssue().getLocationCode()
-                    + "\n"
-                );
+                if (child != null) {
+                    csv.append(
+                        child.getBirthAtHospital() + "," +
+                            child.getChildBirthWeight() + "," +
+                            child.getChildGender() + "," +
+                            child.getChildRank() + "," +
+                            child.getDateOfBirth() + "," +
+                            child.getNumberOfChildrenBorn() + "," +
+                            child.getPin() + "," +
+                            child.getPlaceOfBirth() + "," +
+                            child.getWeeksPregnant() + ",");
+                } else {
+                    csv.append(",,,,,,,,,");
+                }
+
+                if (confirm != null) {
+                    csv.append(confirm.getConfirmantNICorPIN() + "," +
+                        confirm.getConfirmationProcessedTimestamp() + "," +
+                        confirm.getLastDateForConfirmation() + ",");
+                } else {
+                    csv.append(",,,");
+                }
+                if (grandFather != null) {
+                    csv.append(grandFather.getGrandFatherBirthPlace() + "," +
+                        grandFather.getGrandFatherBirthYear() + "," +
+                        grandFather.getGrandFatherNICorPIN() + ",");
+                } else {
+                    csv.append(",,,");
+                }
+                if (inform != null) {
+                    csv.append(inform.getInformantEmail() + "," +
+                        inform.getInformantNICorPIN() + "," +
+                        inform.getInformantPhoneNo() + "," +
+                        inform.getInformantType() + ",");
+                } else {
+                    csv.append(",,,,");
+                }
+                if (marriage != null) {
+                    csv.append(marriage.getDateOfMarriage() + "," +
+                        marriage.isFatherSigned() + "," +
+                        marriage.isMotherSigned() + "," +
+                        marriage.getParentsMarried() + "," +
+                        marriage.getPlaceOfMarriage() + ",");
+                } else {
+                    csv.append(",,,,,");
+                }
+                if (notify != null) {
+                    csv.append(notify.getNotifyingAuthorityPIN() + "," +
+                        notify.getNotifyingAuthoritySignDate() + ",");
+                } else {
+                    csv.append(",,");
+                }
+
+                if (parent != null) {
+                    csv.append(parent.getFatherDOB() + "," +
+                        parent.getFatherNICorPIN() + "," +
+                        parent.getFatherPassportNo() + "," +
+                        parent.getFatherPlaceOfBirth() + "," +
+                        parent.getMotherAdmissionDate() + "," +
+                        parent.getMotherAdmissionNo() + "," +
+                        parent.getMotherAgeAtBirth() + "," +
+                        parent.getMotherDOB() + "," +
+                        parent.getMotherEmail() + "," +
+                        parent.getMotherNICorPIN() + "," +
+                        parent.getMotherPassportNo() + "," +
+                        parent.getMotherPhoneNo() + "," +
+                        parent.getMotherPlaceOfBirth() + ",");
+                } else {
+                    csv.append(",,,,,,,,,,,,,");
+                }
+                if (birth != null) {
+                    csv.append(birth.getBdfSerialNo() + "," +
+                        birth.getBirthType() + "," +
+                        birth.getCaseFileNumber() + "," +
+                        birth.getDateOfRegistration() + ",");
+                } else {
+                    csv.append(",,,,");
+                }
+                if (confirm != null) {
+                    if (confirm.getConfirmationProcessedUser() != null) {
+                        csv.append(confirm.getConfirmationProcessedUser().getUserId() + ",");
+                    } else {
+                        csv.append(",");
+                    }
+                } else {
+                    csv.append(",");
+                }
+                if (life != null) {
+                    if (life.getApprovalOrRejectUser() != null) {
+                        csv.append(life.getApprovalOrRejectUser().getUserId() + ",");
+                    } else {
+                        csv.append(",");
+                    }
+                    if (life.getCertificateGeneratedUser() != null) {
+                        csv.append(life.getCertificateGeneratedUser().getUserId() + ",");
+                    } else {
+                        csv.append(",");
+                    }
+                    if (life.getCreatedUser() != null) {
+                        //csv.append(life.getCreatedUser().getUserId() + ",");
+                        csv.append(",");
+                    } else {
+                        csv.append(",");
+                    }
+                } else {
+                    csv.append(",,,");
+                }
+                if (parent != null) {
+                    if (parent.getFatherCountry() != null) {
+                        csv.append(parent.getFatherCountry().getCountryId() + ",");
+                    } else {
+                        csv.append(",");
+                    }
+                    csv.append(parent.getFatherRace() + ",");
+                    if (parent.getMotherCountry() != null) {
+                        csv.append(parent.getMotherCountry().getCountryId() + ",");
+                    } else {
+                        csv.append(",");
+                    }
+                    if (parent.getMotherDSDivision() != null) {
+                        csv.append(parent.getMotherDSDivision().getDsDivisionUKey() + ",");
+                    } else {
+                        csv.append(",");
+                    }
+                    csv.append(parent.getMotherRace() + ",");
+                } else {
+                    csv.append(",,,,,");
+                }
+                if (birth != null) {
+                    if (birth.getBirthDivision() != null) {
+                        csv.append(birth.getBirthDivision().getDivisionId() + ",");
+                    } else {
+                        csv.append(",");
+                    }
+                    if (birth.getOriginalBCIssueUser() != null) {
+                        csv.append(birth.getOriginalBCIssueUser().getUserId() + ",");
+                    } else {
+                        csv.append(",");
+                    }
+                    if (birth.getOriginalBCPlaceOfIssue() != null) {
+                        csv.append(birth.getOriginalBCPlaceOfIssue().getLocationCode() + ",");
+                    } else {
+                        csv.append(",");
+                    }
+                } else {
+                    csv.append(",,,");
+                }
+                csv.append("\n");
+                count++;
             }
-
-            csv.append("\n");
+            if (noRecords) {
+                csv.append("\n");
+            }
         }
 
         String dirPath = "reports" + File.separator + year + File.separator + "RawData";
@@ -2354,55 +2454,133 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 dsDivision, startDate, endDate, DeathRegister.State.ARCHIVED_CERT_GENERATED, systemUser);
             csv.append(dsDivision.getEnDivisionName() + ",");
 
+            boolean noRecords = true;
+            int count = 0;
+
             for (DeathRegister deathRegister : deathRecords) {
+                noRecords = false;
                 DeathPersonInfo person = deathRegister.getDeathPerson();
                 DeathInfo info = deathRegister.getDeath();
                 DeclarantInfo decl = deathRegister.getDeclarant();
                 CRSLifeCycleInfo life = deathRegister.getLifeCycleInfo();
                 NotifyingAuthorityInfo notify = deathRegister.getNotifyingAuthority();
 
-                csv.append(info.getCauseOfDeath() + "," +
-                    info.isCauseOfDeathEstablished() + "," +
-                    info.getDateOfDeath() + "," +
-                    info.getDateOfRegistration() + "," +
-                    info.getDeathSerialNo() + "," +
-                    info.getIcdCodeOfCause() + "," +
-                    info.isInfantLessThan30Days() + "," +
-                    info.getPlaceOfBurial() + "," +
-                    info.getPlaceOfDeath() + "," +
-                    info.getPlaceOfIssue() + "," +
-                    info.getTimeOfDeath() + "," +
-                    person.getDeathPersonAge() + "," +
-                    person.getDeathPersonDOB() + "," +
-                    person.getDeathPersonFatherPINorNIC() + "," +
-                    person.getDeathPersonGender() + "," +
-                    person.getDeathPersonMotherPINorNIC() + "," +
-                    person.getDeathPersonPINorNIC() + "," +
-                    person.getDeathPersonPassportNo() +
-                    deathRegister.getDeathType() + "," +
-                    decl.getDeclarantEMail() + "," +
-                    decl.getDeclarantNICorPIN() + "," +
-                    decl.getDeclarantPhone() + "," +
-                    decl.getDeclarantType() + "," +
-                    life.getApprovalOrRejectTimestamp() + "," +
-                    life.getCertificateGeneratedTimestamp() + "," +
-                    life.getCreatedTimestamp() + "," +
-                    notify.getNotifyingAuthorityPIN() + "," +
-                    notify.getNotifyingAuthoritySignDate() + "," +
-                    deathRegister.getStatus() + "," +
-                    info.getDeathDivision().getDivisionId() + "," +
-                    person.getDeathPersonCountry().getCountryId() + "," +
-                    person.getDeathPersonRace() + "," +
-                    life.getApprovalOrRejectUser().getUserId() + "," +
-                    life.getCertificateGeneratedUser().getUserId() + "," +
-                    life.getCreatedUser().getUserId() + "," +
-                    deathRegister.getOriginalDCIssueUser().getUserId() + "," +
-                    deathRegister.getOriginalDCPlaceOfIssue().getLocationCode()
-                    + "\n"
-                );
+                if (count > 0) {
+                    csv.append(dsDivision.getEnDivisionName() + ",");
+                }
 
+                if (info != null) {
+                    csv.append(
+                        info.getCauseOfDeath() + "," +
+                            info.isCauseOfDeathEstablished() + "," +
+                            info.getDateOfDeath() + "," +
+                            info.getDateOfRegistration() + "," +
+                            info.getDeathSerialNo() + "," +
+                            info.getIcdCodeOfCause() + "," +
+                            info.isInfantLessThan30Days() + "," +
+                            info.getPlaceOfBurial() + "," +
+                            info.getPlaceOfDeath() + "," +
+                            info.getPlaceOfIssue() + "," +
+                            info.getTimeOfDeath() + ","
+                    );
+                } else {
+                    csv.append(",,,,,,,,,,,");
+                }
+                if (person != null) {
+                    csv.append(
+                        person.getDeathPersonAge() + "," +
+                            person.getDeathPersonDOB() + "," +
+                            person.getDeathPersonFatherPINorNIC() + "," +
+                            person.getDeathPersonGender() + "," +
+                            person.getDeathPersonMotherPINorNIC() + "," +
+                            person.getDeathPersonPINorNIC() + "," +
+                            person.getDeathPersonPassportNo()
+                    );
+                } else {
+                    csv.append(",,,,,,,");
+                }
+                if (deathRegister != null) {
+                    csv.append(
+                        deathRegister.getDeathType() + ","
+                    );
+                } else {
+                    csv.append(",");
+                }
+                if (decl != null) {
+                    csv.append(
+                        decl.getDeclarantEMail() + "," +
+                            decl.getDeclarantNICorPIN() + "," +
+                            decl.getDeclarantPhone() + "," +
+                            decl.getDeclarantType() + ","
+                    );
+                } else {
+                    csv.append(",,,,");
+                }
+                if (life != null) {
+                    csv.append(
+                        life.getApprovalOrRejectTimestamp() + "," +
+                            life.getCertificateGeneratedTimestamp() + "," +
+                            life.getCreatedTimestamp() + ","
+                    );
+                } else {
+                    csv.append(",,,");
+                }
+                if (notify != null) {
+                    csv.append(
+                        notify.getNotifyingAuthorityPIN() + "," +
+                            notify.getNotifyingAuthoritySignDate() + ","
+                    );
+                } else {
+                    csv.append(",,");
+                }
+                if (deathRegister != null) {
+                    csv.append(deathRegister.getStatus() + ",");
+                } else {
+                    csv.append(",");
+                }
+                if (info != null) {
+                    if (info.getDeathDivision() != null) {
+                        csv.append(info.getDeathDivision().getDivisionId() + ",");
+                    } else {
+                        csv.append(",");
+                    }
+                } else {
+                    csv.append(",");
+                }
+                if (person != null) {
+                    if (person.getDeathPersonCountry() != null) {
+                        csv.append(person.getDeathPersonCountry().getCountryId() + ",");
+                    } else {
+                        csv.append(",");
+                    }
+                    csv.append(person.getDeathPersonRace() + ",");
+                } else {
+                    csv.append(",,");
+                }
+                if (life != null) {
+                    csv.append(
+                        life.getApprovalOrRejectUser().getUserId() + "," +
+                            life.getCertificateGeneratedUser().getUserId() + "," +
+                            life.getCreatedUser().getUserId() + ","
+                    );
+                } else {
+                    csv.append(",,,");
+                }
+                if (deathRegister != null) {
+                    csv.append(
+                        deathRegister.getOriginalDCIssueUser().getUserId() + "," +
+                            deathRegister.getOriginalDCPlaceOfIssue().getLocationCode()
+                    );
+                } else {
+                    csv.append(",,");
+                }
+                csv.append("\n");
+                count++;
             }
-            csv.append("\n");
+
+            if (noRecords) {
+                csv.append("\n");
+            }
         }
 
 
