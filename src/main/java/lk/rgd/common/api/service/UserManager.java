@@ -129,7 +129,7 @@ public interface UserManager {
 
     /**
      * Create a new user
-     * 
+     *
      * @param user
      * @param userId
      * @param roleId
@@ -199,5 +199,13 @@ public interface UserManager {
      * @param adminUser  user performing the action
      */
     public void inactiveUserLocation(String userId, int locationId, User adminUser);
+
+    /**
+     * get users by user id or user name "wild card matching"
+     *
+     * @param name name or user id
+     * @return list of users
+     */
+    public List<User> getUserByIdOrName(String name);
 
 }

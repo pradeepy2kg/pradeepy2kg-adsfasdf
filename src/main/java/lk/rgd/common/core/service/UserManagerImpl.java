@@ -294,6 +294,12 @@ public class UserManagerImpl implements UserManager {
         logger.debug("Inactive user location of location id {} of user id :{}", locationId, userId);
     }
 
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<User> getUserByIdOrName(String name) {
+        logger.debug("attempt to get user by user name or user id : {}", name);
+        return userDao.getUserByUserIdOrName(name);
+    }
+
     /**
      * @inheritDoc
      */

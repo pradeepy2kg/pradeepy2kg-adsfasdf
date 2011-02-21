@@ -100,7 +100,7 @@ public class UserDAOImpl extends BaseDAO implements UserDAO {
     }
 
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<String> getDEOsByDSDivision(String language, User user, DSDivision dsDivision, Role role){
+    public List<String> getDEOsByDSDivision(String language, User user, DSDivision dsDivision, Role role) {
         Query q = em.createNamedQuery("filter.deo.by.dsdivision");
         q.setParameter("assignedBDDSDivisions", dsDivision);
         q.setParameter("role", role);
@@ -108,10 +108,17 @@ public class UserDAOImpl extends BaseDAO implements UserDAO {
     }
 
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<String> getADRsByDistrictId(District district, Role role){
+    public List<String> getADRsByDistrictId(District district, Role role) {
         Query q = em.createNamedQuery("filter.adr.by.district");
         q.setParameter("assignedBDDistricts", district);
         q.setParameter("role", role);
+        return q.getResultList();
+    }
+
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<User> getUserByUserIdOrName(String name) {
+        Query q = em.createNamedQuery("get.user.by.name.id");
+        q.setParameter("name", "%" + name + "%");
         return q.getResultList();
     }
 }
