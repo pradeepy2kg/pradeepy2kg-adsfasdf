@@ -87,7 +87,7 @@
             returnval = false;
         }
         errormsg = "";
-        return false;
+        return returnval;
     }
 
     function initPage() {
