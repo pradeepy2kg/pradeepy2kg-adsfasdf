@@ -45,9 +45,11 @@ import java.util.*;
     @NamedQuery(name = "filter.deo.by.dsdivision", query = "SELECT u.userId FROM User u " +
         "WHERE u.role = :role AND :assignedBDDSDivisions MEMBER OF u.assignedBDDSDivisions"),
     @NamedQuery(name = "filter.adr.by.district", query = "SELECT u.userId FROM User u " +
-        "WHERE u.role = :role AND :assignedBDDistricts MEMBER OF u.assignedBDDistricts")
+        "WHERE u.role = :role AND :assignedBDDistricts MEMBER OF u.assignedBDDistricts"),
+    @NamedQuery(name = "get.user.by.name.id", query = "SELECT u FROM User u WHERE u.status !=3 " +
+        "AND (u.userName LIKE :name OR u.userId LIKE :name )")
 })
-@Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class User implements Serializable {
 
     public enum State {

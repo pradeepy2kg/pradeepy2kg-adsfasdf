@@ -96,7 +96,7 @@
         </tr>
         </tbody>
     </table>--%>
-    <div class="form-submit">
+    <div class="form-submit-long">
         <s:submit name="submit" value="%{getText('lable.update')}"/>
         <s:hidden name="idUKey" value="%{birthAlteration.idUKey}"/>
     </div>

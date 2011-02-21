@@ -179,7 +179,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     }
 
     /**
-     *  delete icon clicked
+     * delete icon clicked
      */
     public String inactiveUser() {
         populate();
@@ -192,7 +192,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         return SUCCESS;
     }
 
-    public String doInactiveUser() { 
+    public String doInactiveUser() {
         populate();
         user = service.getUserByID(userId);
         user.getLifeCycleInfo().setActive(false);
@@ -610,7 +610,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     public String selectUsers() {
         selectedRole = roleId;
         String keepRole = roleId;
-        usersList = service.getUsersByRole("");
+        usersList = Collections.emptyList();
 
         if (userDistrictId == 0 /*ALL*/ && selectedRole.equals("ALL")/*ALL*/ && nameOfUser.length() == 0 /*No Name*/) {
             usersList = service.getAllUsers();
@@ -619,22 +619,22 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
             if (userDistrictId == 0 && nameOfUser.length() == 0) {
                 usersList = service.getUsersByRole(selectedRole);
             } else if (userDistrictId == 0 && selectedRole.equals("ALL")) {
-                usersList = service.getUsersByIDMatch(nameOfUser);
+                usersList = service.getUserByIdOrName(nameOfUser);
                 selectedRole = nameOfUser;
             } else if (nameOfUser.length() == 0 && selectedRole.equals("ALL")) {
                 District district = districtDAO.getDistrict(userDistrictId);
                 usersList = service.getUsersByAssignedBDDistrict(district);
                 selectedRole = district.getEnDistrictName();
-            } else if(!selectedRole.equals("ALL") && userDistrictId != 0 && nameOfUser.length() == 0) {
+            } else if (!selectedRole.equals("ALL") && userDistrictId != 0 && nameOfUser.length() == 0) {
                 District district = districtDAO.getDistrict(userDistrictId);
                 usersList = service.getUsersByRoleAndAssignedBDDistrict(roleDAO.getRole(selectedRole), district);
                 selectedRole = selectedRole + " AND " + district.getEnDistrictName();
-            } else if(!selectedRole.equals("ALL") && nameOfUser.length() != 0 && userDistrictId == 0) {
+            } else if (!selectedRole.equals("ALL") && nameOfUser.length() != 0 && userDistrictId == 0) {
                 List<User> tempRole = service.getUsersByRole(selectedRole);
                 List<User> tempName = service.getUsersByIDMatch(nameOfUser);
-                for(User userN : tempName) {
-                    for(User userR : tempRole) {
-                        if(userN.getUserId().equals(userR.getUserId())){
+                for (User userN : tempName) {
+                    for (User userR : tempRole) {
+                        if (userN.getUserId().equals(userR.getUserId())) {
                             usersList.add(userR);
                         }
                     }

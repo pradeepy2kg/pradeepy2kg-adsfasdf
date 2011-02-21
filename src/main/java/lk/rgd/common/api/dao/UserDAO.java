@@ -107,22 +107,30 @@ public interface UserDAO {
 
     /**
      * Get a DEOs list who belongs to given dsDivision
-     * 
-     * @param language      Preferred language
-     * @param user          Current user
-     * @param dsDivision    the DS Division
-     * @param role          wanted User role
+     *
+     * @param language   Preferred language
+     * @param user       Current user
+     * @param dsDivision the DS Division
+     * @param role       wanted User role
      * @return a List of filtered users
      */
     public List<String> getDEOsByDSDivision(String language, User user, DSDivision dsDivision, Role role);
 
     /**
      * Get a ADRs list who belongs to given District
-     * 
-     * @param district      ths District
-     * @param role          wanted User role
+     *
+     * @param district ths District
+     * @param role     wanted User role
      * @returna List of filtered users
      */
     public List<String> getADRsByDistrictId(District district, Role role);
+
+    /**
+     * get user by user id or name "wild card matching"
+     *
+     * @param name user name or user id
+     * @return list of users
+     */
+    public List<User> getUserByUserIdOrName(String name);
 
 }
