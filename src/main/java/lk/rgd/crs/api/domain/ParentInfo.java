@@ -17,7 +17,7 @@ public class ParentInfo implements Serializable, Cloneable {
     /**
      * NIC or PIN of father
      */
-    @Column(nullable = true, length = 10)
+    @Column(nullable = true, length = 12)
     private String fatherNICorPIN;
 
     /**
@@ -74,7 +74,7 @@ public class ParentInfo implements Serializable, Cloneable {
     /**
      * NIC or PIN of mother
      */
-    @Column(nullable = true, length = 10)
+    @Column(nullable = true, length = 12)
     private String motherNICorPIN;
 
     /**

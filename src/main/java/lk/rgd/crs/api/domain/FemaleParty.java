@@ -62,7 +62,7 @@ public class FemaleParty {
     @Column(name = "F_CIVIL_STATE", nullable = true)
     private Person.CivilStatus civilStatusFemale;
 
-    @Column(name = "F_IDENTIFICATION_FATHER", length = 10, nullable = true)
+    @Column(name = "F_IDENTIFICATION_FATHER", length = 12, nullable = true)
     private String fatherIdentificationNumberFemale;
 
     @Column(name = "F_FULL_NAME_FATHER_OFFICIAL", length = 600, nullable = true)

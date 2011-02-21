@@ -16,7 +16,7 @@ public class FatherInfo {
     /**
      * NIC or PIN of father
      */
-    @Column(nullable = true, length = 10)
+    @Column(nullable = true, length = 12)
     private String fatherNICorPIN;
 
     /**

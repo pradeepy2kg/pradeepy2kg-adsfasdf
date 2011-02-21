@@ -185,12 +185,12 @@ public class Person implements Serializable {
     /**
      * Registering persons mothers PIN or NIC
      */
-    @Column(nullable = true, length = 10)
+    @Column(nullable = true, length = 12)
     private String motherPINorNIC;
     /**
      * Registering persons fathers PIN or NIC
      */
-    @Column(nullable = true, length = 10)
+    @Column(nullable = true, length = 12)
     private String fatherPINorNIC;
     /**
      * Status comment - e.g. reason for deletion or rejection

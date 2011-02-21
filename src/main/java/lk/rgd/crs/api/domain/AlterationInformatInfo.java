@@ -19,7 +19,7 @@ public class AlterationInformatInfo {
     @Column(nullable = true, length = 600)
     private String informantName;
 
-    @Column(nullable = true, length = 10)
+    @Column(nullable = true, length = 12)
     private String informantNICorPIN;
 
     @Column(nullable = true, length = 255)

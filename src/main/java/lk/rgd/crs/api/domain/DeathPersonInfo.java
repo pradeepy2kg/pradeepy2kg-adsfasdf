@@ -18,7 +18,7 @@ import java.util.Date;
 @Embeddable
 public class DeathPersonInfo implements Serializable, Cloneable {
 
-    @Column(nullable = true)
+    @Column(nullable = true, length = 12)
     private String deathPersonPINorNIC;
 
     @ManyToOne
@@ -53,13 +53,13 @@ public class DeathPersonInfo implements Serializable, Cloneable {
     @Column(nullable = true, length = 255)
     private String deathPersonPermanentAddress;
 
-    @Column(nullable = true)
+    @Column(nullable = true, length = 12)
     private String deathPersonFatherPINorNIC;
 
     @Column(nullable = true)
     private String deathPersonFatherFullName;
 
-    @Column(nullable = true)
+    @Column(nullable = true, length = 12)
     private String deathPersonMotherPINorNIC;
 
     @Column(nullable = true)

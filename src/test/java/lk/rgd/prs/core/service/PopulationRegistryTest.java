@@ -40,7 +40,7 @@ public class PopulationRegistryTest extends TestCase {
 
         PINNumberDAO pinNumberDAO = (PINNumberDAO) ctx.getBean("pinNumberDAOImpl", PINNumberDAO.class);
         try {
-            pinNumberDAO.deleteLastPINNumber(pinNumberDAO.getLastPINNumber(75210));
+            pinNumberDAO.deleteLastPINNumber(pinNumberDAO.getLastPINNumber(75211));
         } catch (Exception ignore) {
         }
     }
@@ -78,7 +78,7 @@ public class PopulationRegistryTest extends TestCase {
         if (duplicates.size() > 0) {
             fail("Cannot exist duplicate entries in the PRS");
         }
-        assertEquals("Wrong PIN generated", 752100001, p1.getPin().longValue());
+        assertEquals("Wrong PIN generated", 197521120040L, p1.getPin().longValue());
 
         // test negambo DEO adding duplicate record with same NIC
         Person p2 = getMinimalPerson(1001, cal.getTime(), "756985623V", null);
@@ -94,7 +94,7 @@ public class PopulationRegistryTest extends TestCase {
         if (duplicates.size() > 0) {
             fail("Cannot exist duplicate entries in the PRS");
         }
-        assertEquals("Wrong PIN generated", 752100002, p2.getPin().longValue());
+        assertEquals("Wrong PIN generated", 197521120058L, p2.getPin().longValue());
 
         // colombo DEO cannot approve
         try {

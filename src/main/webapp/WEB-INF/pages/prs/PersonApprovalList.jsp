@@ -325,7 +325,7 @@
             </s:a>
             <s:label value="%{getText('next.label')}"/>
         </s:if>
-    </div>
+    </div><br><br>
 </div>
 </div>
 </div>
