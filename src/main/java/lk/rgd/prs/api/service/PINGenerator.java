@@ -9,7 +9,7 @@ import java.util.Date;
  * For PIN valid range of years 1700-2200. For Temporary PIN valid range of years 6700-7200.
  * i.e Temporary PIN Year = Year + 5000
  * <p/>
- * 2. NNN - Birth 'day of the year'.
+ * 2. NNN - Birth day
  * For males 1-366 ( Birth day ) For females 501 - 866 ( Birth day + 500 )
  * <p/>
  * 3. NNNN - Serial number
