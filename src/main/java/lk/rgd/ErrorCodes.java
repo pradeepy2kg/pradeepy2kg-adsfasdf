@@ -139,5 +139,6 @@ public class ErrorCodes {
     public static final int POSSIBLE_DEATH_REGISTER_SERIAL_NUMBER_DUPLICATION = 8001;
     public static final int INCOMPLETE_DECLERENT = 8002;
     public static final int INVALID_STATE_FOR_APPROVE_DEATH_REGISTRATION = 8003;
+    public static final int UNABLE_TO_APPROVE_LATE_DEATH_REGISTRATION_NEED_HIGHER_APPROVAL_THAN_DR = 8004;
 
 }

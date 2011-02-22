@@ -5,8 +5,10 @@ import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
 import lk.rgd.common.api.domain.CommonStatistics;
 import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.api.domain.Role;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.service.UserManager;
+import lk.rgd.common.util.DateTimeUtils;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.DeathRegisterDAO;
@@ -23,10 +25,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Indunil Moremada
@@ -164,11 +163,45 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
             handleException("unable to update death register idUKey :" + deathRegisterIdUKey + " invalid state :" +
                 dr.getStatus(), ErrorCodes.INVALID_STATE_FOR_APPROVE_DEATH_REGISTRATION);
         }
+        //check user permission to approve death registration
+        ValidationUtils.validateAccessToBDDivision(user, dr.getDeath().getDeathDivision());
+        //check user permission to approve death registration TODO
+
+        //there are special user access validation is required to approve late death registration
+        if (dr.getDeathType() == DeathRegister.Type.LATE) {
+            checkUSerPermissionToApproveLateDeathRegistration(dr, user);
+        }
+
         List<UserWarning> warnings = DeathDeclarationValidator.validateStandardRequirements(deathRegisterDAO, dr, user);
         if (warnings.isEmpty() || ignoreWarnings) {
             setApprovalStatus(deathRegisterIdUKey, user, DeathRegister.State.APPROVED, null);
         }
         return warnings;
+    }
+
+    private void checkUSerPermissionToApproveLateDeathRegistration(DeathRegister dr, User user) {
+        /**
+         * on section 36 ADR/DR/ARG/RG allows to approve
+
+         if(with in  12 months)
+         ADR/DR can approve
+
+         then
+         only the ARG and RG has power to approve
+
+         */
+        java.util.GregorianCalendar gCal = new GregorianCalendar();
+        gCal.setTime(dr.getDeath().getDateOfRegistration());
+        gCal.add(Calendar.MONTH, -12);
+        Date dateOfRegistration = gCal.getTime();
+        Date dateOfDeath = dr.getDeath().getDateOfDeath();
+        //check is data of registration -12 month is less than date of death that mean needs ARG /  RG approval
+        if (dateOfDeath.before(dateOfRegistration) && (!(user.getRole().getRoleId().equalsIgnoreCase(Role.ROLE_RG) ||
+            user.getRole().getRoleId().equalsIgnoreCase(Role.ROLE_ARG)))) {
+            handleException("User :" + user.getUserId() + " does not have permission to approve late death registration idUKey :" +
+                dr.getIdUKey() + " , registration is over 12 months so need higher approval",
+                ErrorCodes.UNABLE_TO_APPROVE_LATE_DEATH_REGISTRATION_NEED_HIGHER_APPROVAL_THAN_DR);
+        }
     }
 
     /**

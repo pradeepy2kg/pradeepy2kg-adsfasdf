@@ -533,6 +533,9 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                     break;
                 case ErrorCodes.INVALID_STATE_FOR_APPROVE_DEATH_REGISTRATION:
                     break;
+                case ErrorCodes.UNABLE_TO_APPROVE_LATE_DEATH_REGISTRATION_NEED_HIGHER_APPROVAL_THAN_DR:
+                    addActionError(getText("error.death.registration.approval.fail.need.higher.approval", new String[]{Long.toString(idUKey)}));
+                    break;
                 default:
                     addActionError(getText("error.death.registration.approval.fail", new String[]{Long.toString(idUKey)}));
             }
@@ -755,6 +758,9 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                 final DeathRegister dr = service.getById(idUKey, user);
                 addActionError(getText("error.death.duplicateNic.fail",
                     new String[]{Long.toString(dr.getDeath().getDeathSerialNo()), dr.getDeathPerson().getDeathPersonPINorNIC()}));
+                break;
+            case ErrorCodes.UNABLE_TO_APPROVE_LATE_DEATH_REGISTRATION_NEED_HIGHER_APPROVAL_THAN_DR:
+                addActionError(getText("error.death.registration.approval.fail.need.higher.approval", new String[]{Long.toString(idUKey)}));
                 break;
             default:
                 addActionError(getText("error.death.registration.approval.fail", new String[]{Long.toString(idUKey)}));
