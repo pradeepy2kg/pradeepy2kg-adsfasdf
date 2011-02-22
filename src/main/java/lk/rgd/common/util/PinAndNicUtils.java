@@ -16,7 +16,7 @@ public class PinAndNicUtils {
 
     /**
      * Check if a valid PIN or NIC
-     * PIN - <year> <date+gender> <serial-number> <check-digit> e.g. 1975 211 014 3
+     * PIN - <year> <date> <serial-number> <check-digit> e.g. 1975 211 2014 3
      * NIC - <year> <day> <number-4-digits> <letter-V-X> e.g. 75 211 1111 V
      *
      * @param pinOrNic the PIN or NIC as a String
@@ -86,6 +86,17 @@ public class PinAndNicUtils {
         }
     }
 
+    /**
+     * Check if a valid PIN - <year> <date> <serial-number> <check-digit> e.g. 1975 210 2005 4
+     * <p/>
+     * <b>year</b> - year of date of birth. valid pin range is 1700 - 2200 and valid temporary pin range is 6700 - 7200<br>
+     * <b>date</b> - date of date of birth. valid male date range is 1 - 366 and valid female date range is 501 - 866<br>
+     * <b>serial number</b> - serial number. for dates before 1994-01-01 serial number starts from 2000<br>
+     * <b>check digit</b> - check digit calculated using <i>11-(N1*8+N2*4+N3*3+N4*2+N5*7+N6*6+N7*5+N8*7+N9*4+N10*3+N11*2)%11</i>
+     *
+     * @param pin PIN to validate
+     * @return true if pin is valid
+     */
     public static boolean isValidPIN(String pin) {
         if (pin == null) {
             return false;
