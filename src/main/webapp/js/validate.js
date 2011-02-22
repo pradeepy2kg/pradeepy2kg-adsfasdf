@@ -153,7 +153,9 @@ function checkInvalidPIN(pin, isPin) {
     var date = pin.substring(4, 7);
     var serial = pin.substring(7, 11);
     var check = pin.substring(11, 12);
+    var number = pin.substring(0, 11);
 
+    // validate year range
     if (isPin) {
         if ((year < 1700) || (year > 2200)) {
             return true;
@@ -163,21 +165,35 @@ function checkInvalidPIN(pin, isPin) {
             return true;
         }
     }
-
+    // validate date range
     if ((date >= 367 && date <= 500) || (date >= 867)) {
         return true;
     }
+    // validate serial number range
     if (year >= 1994 && serial >= 2000) {
         return true;
     }
-    // TODO validate check digit
+    // validate check digit
+    if (check != calculateCheckDigit(number)) {
+        return true;
+    }
     return false;
 }
 
-// TODO
-// validate check digit of pin
+// calculate check digit of given pin
 function calculateCheckDigit(number) {
+    var N = new Array(11);
+    for (var i = 0; i < N.length; i++) {
+        N[i] = number.substring(i, i + 1);
+    }
 
+    var check = 11 - ((N[0] * 8 + N[1] * 4 + N[2] * 3 + N[3] * 2 + N[4] * 7 + N[5] * 6 + N[6] * 5 + N[7] * 7 + N[8] * 4 + N[9] * 3 + N[10] * 2) % 11);
+
+    if (check > 9) {
+        return check - 10;
+    } else {
+        return check;
+    }
 }
 
 // only allows to enter numbers to any field calls this method
