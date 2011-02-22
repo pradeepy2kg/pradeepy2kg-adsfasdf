@@ -253,7 +253,7 @@
             <img src="<s:url value="/images/alphabet-X.gif" />"
                  id="declarant_NIC_X" onclick="javascript:addXorV('declarant_pinOrNic','X','error12')">
             <br>
-            <s:textfield id="declarant_pinOrNic" name="declarant.declarantNICorPIN" maxLength="10"/><img
+            <s:textfield id="declarant_pinOrNic" name="declarant.declarantNICorPIN" maxLength="12"/><img
                 src="<s:url value="/images/search-father.png"/>"
                 style="vertical-align:middle; margin-left:20px;" id="declarant_lookup"></td>
     </tr>
@@ -353,7 +353,7 @@
                  onclick="javascript:addXorV('notifying_authority_NICorPIN','X','error12')">
             <br>
             <s:textfield id="notifying_authority_NICorPIN" name="notifyingAuthority.notifyingAuthorityPIN"
-                         maxLength="10"> </s:textfield>
+                         maxLength="12"> </s:textfield>
             <img src="<s:url value="/images/search-father.png" />"
                  style="vertical-align:middle; margin-left:20px;" id="notifying_authority_lookup"></td>
         </td>

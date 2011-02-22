@@ -307,7 +307,7 @@
                 <img src="<s:url value="/images/alphabet-X.gif" />"
                      id="applicant_NIC_X" onclick="javascript:addXorV('certifcateApplicantPin','X','error6')">
                 <br>
-                <s:textfield id="certifcateApplicantPin" name="certificateApplicantPINorNIC" maxLength="10"/> <img
+                <s:textfield id="certifcateApplicantPin" name="certificateApplicantPINorNIC" maxLength="12"/> <img
                     src="<s:url value="/images/search-father.png" />"
                     style="vertical-align:middle; margin-left:20px;" id="adoption_applicant_lookup">
             </td>

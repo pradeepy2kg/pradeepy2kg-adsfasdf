@@ -86,7 +86,7 @@
                             <s:label value="%{getText('registrar.pin')}"/>
                         </td>
                         <td align="left">
-                            <s:textfield name="registrarPin" id="registrarPin" value="" maxLength="10"/>
+                            <s:textfield name="registrarPin" id="registrarPin" value="" maxLength="12"/>
                         </td>
                     </tr>
                     </tbody>

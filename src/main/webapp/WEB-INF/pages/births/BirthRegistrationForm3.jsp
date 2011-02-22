@@ -564,7 +564,7 @@ function showSignRequired(mode) {
                 <img src="<s:url value="/images/alphabet-X.gif" />"
                      id="grandFather_NIC_X" onclick="javascript:addXorV('grandFatherNICorPIN','X','error20')">
                 <br>
-                <s:textfield id="grandFatherNICorPIN" name="grandFather.grandFatherNICorPIN" maxLength="10"/>
+                <s:textfield id="grandFatherNICorPIN" name="grandFather.grandFatherNICorPIN" maxLength="12"/>
                 <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
                      id="grandFather_lookup"/>
             </td>
@@ -607,7 +607,7 @@ function showSignRequired(mode) {
                 <img src="<s:url value="/images/alphabet-X.gif" />"
                      id="greatGrandFather_NIC_X" onclick="javascript:addXorV('greatGrandFatherNICorPIN','X','error20')">
                 <br>
-                <s:textfield id="greatGrandFatherNICorPIN" name="grandFather.greatGrandFatherNICorPIN" maxLength="10"/>
+                <s:textfield id="greatGrandFatherNICorPIN" name="grandFather.greatGrandFatherNICorPIN" maxLength="12"/>
                 <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
                      id="greatGrandFather_lookup"/>
             </td>
@@ -704,7 +704,7 @@ function showSignRequired(mode) {
             <img src="<s:url value="/images/alphabet-X.gif" />"
                  id="informant_NIC_X" onclick="javascript:addXorV('informantNICorPIN','X','error20')">
             <br>
-            <s:textfield name="informant.informantNICorPIN" id="informantNICorPIN" maxLength="10"/>
+            <s:textfield name="informant.informantNICorPIN" id="informantNICorPIN" maxLength="12"/>
             <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
                  id="informant_lookup"/>
         </td>

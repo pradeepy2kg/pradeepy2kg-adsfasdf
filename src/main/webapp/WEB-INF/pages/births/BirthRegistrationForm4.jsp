@@ -167,7 +167,7 @@
                          onclick="javascript:addXorV('notifyingAuthorityPIN','X','error5')">
                     <br>
                     <s:textfield name="notifyingAuthority.notifyingAuthorityPIN" id="notifyingAuthorityPIN"
-                                 maxLength="10"/>
+                                 maxLength="12"/>
                     <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
                          id="notifier_lookup"/>
                         <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>--%>

@@ -70,11 +70,11 @@
                 <table>
                     <tr>
                         <td><span>Search PIN Number</span></td>
-                        <td><div id="searchPIN"><input type="text" id="queryPIN" name="queryPIN" maxlength="10"/></div></td>
+                        <td><div id="searchPIN"><input type="text" id="queryPIN" name="queryPIN" maxlength="12"/></div></td>
                     </tr>
                     <tr>
                         <td><span>Search by Mothers NIC or PIN</span></td>
-                        <td><div id="searchMothersNICorPIN"><input type="text" id="queryMothersNICorPIN" name="queryMothersNICorPIN" maxlength="10"/></div></td>
+                        <td><div id="searchMothersNICorPIN"><input type="text" id="queryMothersNICorPIN" name="queryMothersNICorPIN" maxlength="12"/></div></td>
                     </tr>
                 </table>
             </div>

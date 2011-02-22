@@ -814,7 +814,7 @@ function personAgeDeath() {
                  id="death_person_NIC_X" onclick="javascript:addXorV('deathPerson_PINorNIC','X','error12')">
             <br>
             <s:textfield name="deathPerson.deathPersonPINorNIC" id="deathPerson_PINorNIC"
-                         cssStyle="float:left;" maxLength="10"/>
+                         cssStyle="float:left;" maxLength="12"/>
             <img src="<s:url value="/images/search-father.png" />"
                  style="vertical-align:middle; margin-left:20px;" id="death_person_lookup">
 
@@ -1047,7 +1047,7 @@ function personAgeDeath() {
                  onclick="javascript:addXorV('deathPersonFather_PINorNIC','X','error12')">
             <br>
             <s:textfield name="deathPerson.deathPersonFatherPINorNIC" id="deathPersonFather_PINorNIC"
-                         cssStyle="float:left;" maxLength="10"/>
+                         cssStyle="float:left;" maxLength="12"/>
 
             <img src="<s:url value="/images/search-father.png" />"
                  style="vertical-align:middle; margin-left:20px;" id="death_person_father_lookup">
@@ -1080,7 +1080,7 @@ function personAgeDeath() {
                  onclick="javascript:addXorV('deathPersonMother_PINorNIC','X','error12')">
             <br>
             <s:textfield name="deathPerson.deathPersonMotherPINorNIC" id="deathPersonMother_PINorNIC"
-                         cssStyle="float:left;" maxLength="10"/>
+                         cssStyle="float:left;" maxLength="12"/>
             <img src="<s:url value="/images/search-mother.png" />"
                  style="vertical-align:middle; margin-left:20px;" id="death_person_mother_lookup"></td>
     </tr>

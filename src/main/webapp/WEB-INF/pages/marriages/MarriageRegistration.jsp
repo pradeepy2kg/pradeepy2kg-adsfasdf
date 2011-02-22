@@ -111,10 +111,10 @@
                  id="NIC_X" onclick="javascript:addXorV('regPIN','X','errorOnXOrVOfPIN');">
             <br>
             <s:if test="marriage.registrarOrMinisterPIN==0">
-                <s:textfield name="marriage.registrarOrMinisterPIN" id="regPIN" maxLength="10" value=""/>
+                <s:textfield name="marriage.registrarOrMinisterPIN" id="regPIN" maxLength="12" value=""/>
             </s:if>
             <s:else>
-                <s:textfield name="marriage.registrarOrMinisterPIN" id="regPIN" maxLength="10"/>
+                <s:textfield name="marriage.registrarOrMinisterPIN" id="regPIN" maxLength="12"/>
             </s:else>
             <img src="<s:url value='/images/search-father.png' />"
                  style="vertical-align:middle;" id="registrar_lookup"
@@ -333,7 +333,7 @@
     </td>
     <td colspan="1" align="left">
         <s:if test="mode=='register'">
-            <s:textfield name="marriage.male.identificationNumberMale" id="malePIN" maxLength="10" disabled="true"/>
+            <s:textfield name="marriage.male.identificationNumberMale" id="malePIN" maxLength="12" disabled="true"/>
         </s:if>
         <s:else>
             <img src="<s:url value="/images/alphabet-V.gif" />"
@@ -341,14 +341,14 @@
             <img src="<s:url value="/images/alphabet-X.gif" />"
                  id="NIC_X" onclick="javascript:addXorV('malePIN','X','errorOnXOrVOfPIN');">
             <br>
-            <s:textfield name="marriage.male.identificationNumberMale" id="malePIN" maxLength="10"/>
+            <s:textfield name="marriage.male.identificationNumberMale" id="malePIN" maxLength="12"/>
             <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="male_lookup"
                  onclick="personLookup('malePIN', 'Male');">
         </s:else>
     </td>
     <td colspan="1" align="left">
         <s:if test="mode=='register'">
-            <s:textfield name="marriage.female.identificationNumberFemale" id="femalePIN" maxLength="10"
+            <s:textfield name="marriage.female.identificationNumberFemale" id="femalePIN" maxLength="12"
                          disabled="true"/>
         </s:if>
         <s:else>
@@ -357,7 +357,7 @@
             <img src="<s:url value="/images/alphabet-X.gif" />"
                  id="NIC_X" onclick="javascript:addXorV('femalePIN','X','errorOnXOrVOfPIN');">
             <br>
-            <s:textfield name="marriage.female.identificationNumberFemale" id="femalePIN" maxLength="10"/>
+            <s:textfield name="marriage.female.identificationNumberFemale" id="femalePIN" maxLength="12"/>
             <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="female_lookup"
                  onclick="personLookup('femalePIN', 'Female');">
         </s:else>
