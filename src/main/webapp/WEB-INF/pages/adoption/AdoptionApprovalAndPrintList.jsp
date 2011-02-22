@@ -241,11 +241,21 @@
                             <s:param name="previousFlag" value="%{#request.previousFlag}"/>
                         </s:url>
                         <s:if test="status.ordinal() >3 && allowEditAdoption">
-                            <s:a href="%{cetificatePrintUrl}"
-                                 title="%{getText('printAdoptionCertificateToolTip.label')}">
-                                <img src="<s:url value='/images/print_icon.gif'/>" border="none" width="25"
-                                     height="25"/>
-                            </s:a>
+                            <s:if test="status.ordinal() ==5">
+                                <s:a href="%{cetificatePrintUrl}"
+                                     title="%{getText('reprintAdoptionCertificateToolTip.label')}">
+                                    <img src="<s:url value='/images/print_icon.gif'/>" border="none" width="25"
+                                         height="25"/>
+                                </s:a>
+                            </s:if>
+                            <s:else>
+                                <s:a href="%{cetificatePrintUrl}"
+                                     title="%{getText('printAdoptionCertificateToolTip.label')}">
+                                    <img src="<s:url value='/images/print_icon.gif'/>" border="none" width="25"
+                                         height="25"/>
+                                </s:a>
+                            </s:else>
+
                         </s:if>
                     </td>
                     <td align="center">

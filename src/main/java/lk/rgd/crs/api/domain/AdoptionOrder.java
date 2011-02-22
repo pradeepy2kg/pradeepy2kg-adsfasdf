@@ -37,9 +37,9 @@ public class AdoptionOrder implements Serializable {
 
         REJECTED,  // 3 - An Adoption rejected by the ARG
 
-        CERTIFICATE_ISSUE_REQUEST_CAPTURED, //4 Acertifcate is requested
+        CERTIFICATE_ISSUE_REQUEST_CAPTURED, //4 A certificate is requested
 
-        ADOPTION_CERTIFICATE_PRINTED, //5 Acertifcate is requested
+        ADOPTION_CERTIFICATE_PRINTED, //5 A certificate is requested
         RE_REGISTRATION_REQUESTED,// 6 requesting an adoption re registration
         RE_REGISTERED // 7 re registered
     }
