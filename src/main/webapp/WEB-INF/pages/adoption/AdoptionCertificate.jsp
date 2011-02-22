@@ -23,7 +23,8 @@
 </style>
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
 <script type="text/javascript">
-    function initPage(){}
+    function initPage() {
+    }
 </script>
 
 <s:url id="print" action="eprMarkAdoptionCertificateAsPrinted.do">
@@ -70,7 +71,7 @@
                     <td>සහතික පත්‍රයේ අංකය <br>சான்றிதழ் இல <br>Certificate Number</td>
                 </tr>
                 <tr height="40px">
-                   <td><s:label value="%{adoption.idUKey}"/></td>
+                    <td><s:label value="%{adoption.idUKey}"/></td>
                 </tr>
             </table>
         </td>
@@ -350,12 +351,12 @@ Mother's Identification No.
     </tr>
     <tr>
         <td>
-            <s:label name="informant.informantName" cssStyle="width:600px;font-size:12pt;"/>
+            <s:label value="%{adoption.certificateApplicantName}" cssStyle="width:600px;font-size:12pt;"/>
         </td>
     </tr>
     <tr>
         <td>
-            <s:label name="informant.informantAddress" cssStyle="width:600px;font-size:12pt;"/>
+            <s:label value="%{adoption.certificateApplicantAddress}" cssStyle="width:600px;font-size:12pt;"/>
         </td>
     </tr>
     <tr>
@@ -370,7 +371,7 @@ Mother's Identification No.
     <tr>
         <td colspan="2"><p></p></td>
     </tr>
-<%--    <tr>
+    <%--    <tr>
         <td>
             Printed On : <%= DateTimeUtils.getISO8601FormattedString(new Date()) %>
         </td>
