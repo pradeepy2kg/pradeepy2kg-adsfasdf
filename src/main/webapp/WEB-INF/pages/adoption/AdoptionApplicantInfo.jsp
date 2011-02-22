@@ -118,7 +118,7 @@
                 <s:label value="%{getText('adoption_order_serial.label')}"/>
             </td>
             <td>
-            <s:textfield name="idUKey" id="idUKey" onkeypress="return isNumberKey(event)"/>
+            <s:textfield name="idUKey" id="idUKey" onkeypress="return isNumberKey(event)" maxLength="10"/>
             <s:hidden id="receivedDate" value="%{#request.adoption.orderReceivedDate}"/>
             </td>
         </tr>
