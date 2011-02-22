@@ -126,7 +126,7 @@
             <tr>
                 <td align="left"><s:property value="%{getText('registrar.pin')}"/><s:label value="*"
                                                                                            cssStyle="color:red;font-size:14pt;"/></td>
-                <td align="left"><s:textfield id="registrarPin" name="registrar.pin" maxLength="10"/></td>
+                <td align="left"><s:textfield id="registrarPin" name="registrar.pin" maxLength="12"/></td>
             </tr>
             <tr>
                 <td align="left"><s:property value="%{getText('registrar.nic')}"/></td>

@@ -380,7 +380,7 @@
     <td><label>පියාගේ අනන්‍යතා අංකය <br>தந்நையின் தனிநபர் அடையாள எண்<br>Father's PIN</label></td>
     <td colspan="6"><s:textfield name="#session.birthConfirmation_db.parent.fatherNICorPIN" cssClass="disable"
                                  disabled="true"/></td>
-    <td colspan="6"><s:textfield name="parent.fatherNICorPIN" size="35" id="fatherNICorPIN" maxLength="10"/></td>
+    <td colspan="6"><s:textfield name="parent.fatherNICorPIN" size="35" id="fatherNICorPIN" maxLength="12"/></td>
 </tr>
 <tr>
     <td>7</td>
@@ -399,7 +399,7 @@
     <td><label>ම‌වගේ අනන්‍යතා අංකය <br>தாயின் தனிநபர் அடையாள எண<br>Mother's PIN</label></td>
     <td colspan="6"><s:textfield name="#session.birthConfirmation_db.parent.motherNICorPIN" cssClass="disable"
                                  disabled="true"/></td>
-    <td colspan="6"><s:textfield name="parent.motherNICorPIN" size="35" id="motherNICorPIN" maxLength="10"/></td>
+    <td colspan="6"><s:textfield name="parent.motherNICorPIN" size="35" id="motherNICorPIN" maxLength="12"/></td>
 </tr>
 <tr>
     <td>9</td>

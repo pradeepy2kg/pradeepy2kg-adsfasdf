@@ -126,25 +126,58 @@ function validateNIC(domElement, errorText, errorCode) {
     }
 }
 
-// TODO not complete
 // validate Temporary PIN
 function validateTemPIN(domElement, errorText, errorCode) {
     with (domElement) {
-        var reg = /^([0-9]{10})$/;
-        if (reg.test(value.trim()) == false) {
+        var pin = value.trim();
+        if (pin.length != 12 || checkInvalidPIN(pin, false)) {
             printMessage(errorText, errorCode);
         }
     }
 }
 
-// TODO not complete
+// validate PIN
 function validatePIN(domElement, errorText, errorCode) {
     with (domElement) {
-        var reg = /^([0-9]{10})$/;
-        if (reg.test(value.trim()) == false) {
+        var pin = value.trim();
+        if (pin.length != 12 || checkInvalidPIN(pin, true)) {
             printMessage(errorText, errorCode);
         }
     }
+}
+
+// used to validate temporary pin and pin
+function checkInvalidPIN(pin, isPin) {
+    var invalid = false;
+    var year = pin.substring(0, 4);
+    var date = pin.substring(4, 7);
+    var serial = pin.substring(7, 11);
+    var check = pin.substring(11, 12);
+
+    if (isPin) {
+        if ((year < 1700) || (year > 2200)) {
+            return true;
+        }
+    } else {
+        if ((year < 6700) || (year > 7200)) {
+            return true;
+        }
+    }
+
+    if ((date >= 367 && date <= 500) || (date >= 867)) {
+        return true;
+    }
+    if (year >= 1994 && serial >= 2000) {
+        return true;
+    }
+    // TODO validate check digit
+    return false;
+}
+
+// TODO
+// validate check digit of pin
+function calculateCheckDigit(number) {
+
 }
 
 // only allows to enter numbers to any field calls this method
@@ -152,7 +185,7 @@ function isNumberKey(evt) {
     var charCode = (evt.which) ? evt.which : event.keyCode
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
         // can enter only "V", this is to use Paste shortcut key (Ctrl+V)
-        if(charCode != 118) {
+        if (charCode != 118) {
             return false;
         }
     }

@@ -1296,7 +1296,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 <br>Identification Number (if available)
             </td>
             <td><s:textfield id="grandFather_pinOrNic" name="birthAlteration.alt27A.grandFather.grandFatherNICorPIN"
-                             maxLength="10"/></td>
+                             maxLength="12"/></td>
             <td>ඔහුගේ උපන් වර්ෂය<br>
                 அவர் பிறந்த வருடம்<br>
                 His Year of Birth
@@ -1335,7 +1335,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
             </td>
             <td><s:textfield id="grandGrandFather_pinOrNic"
                              name="birthAlteration.alt27A.grandFather.greatGrandFatherNICorPIN"
-                             maxLength="10"/></td>
+                             maxLength="12"/></td>
             <td>ඔහුගේ උපන් වර්ෂය<br>
                 அவர் பிறந்த வருடம்<br>
                 His Year of Birth
@@ -1489,7 +1489,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
             <br>Identification Number
         </td>
         <td colspan="2"><s:textfield id="Declarant_pinOrNic" name="birthAlteration.declarant.declarantNICorPIN"
-                                     maxLength="10"/>
+                                     maxLength="12"/>
         </td>
     </tr>
     <tr>

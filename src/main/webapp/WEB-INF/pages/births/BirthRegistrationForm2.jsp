@@ -374,7 +374,7 @@ function commonTags() {
             <img src="<s:url value="/images/alphabet-X.gif" />"
                  id="father_NIC_X" onclick="javascript:addXorV('father_pinOrNic','X','error9')">
             <br>
-            <s:textfield id="father_pinOrNic" name="parent.fatherNICorPIN" maxLength="10"/>
+            <s:textfield id="father_pinOrNic" name="parent.fatherNICorPIN" maxLength="12"/>
             <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="father_lookup">
         </td>
         <td colspan="2" rowspan="2" width="120px"><label>විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If foreigner</label>
@@ -464,7 +464,7 @@ function commonTags() {
             <img src="<s:url value="/images/alphabet-X.gif" />"
                  id="mother_NIC_X" onclick="javascript:addXorV('mother_pinOrNic','X','error9')">
             <br>
-            <s:textfield id="mother_pinOrNic" name="parent.motherNICorPIN" maxLength="10"/>
+            <s:textfield id="mother_pinOrNic" name="parent.motherNICorPIN" maxLength="12"/>
             <img src="<s:url value="/images/search-mother.png"/>" style="vertical-align:middle;" id="mother_lookup">
         </td>
         <td colspan="2" rowspan="2" width="120px"><label>විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If foreigner</label>

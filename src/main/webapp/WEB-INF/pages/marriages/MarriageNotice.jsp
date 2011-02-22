@@ -618,7 +618,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
             Identification number(PIN)
         </td>
         <td colspan="2">
-            <s:textfield name="marriage.male.identificationNumberMale" id="identification_male" maxLength="10"/>
+            <s:textfield name="marriage.male.identificationNumberMale" id="identification_male" maxLength="12"/>
             <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="male_lookup"
                  onclick="malePersonLookUp('identification_male');">
             <br>
@@ -833,7 +833,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
         </td>
         <td colspan="8">
             <s:textfield name="marriage.male.fatherIdentificationNumberMale" id="father_pin_or_nic_male"
-                         cssStyle="width:240px;" maxLength="10"/>
+                         cssStyle="width:240px;" maxLength="12"/>
             <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="male_lookup"
                  onclick="malePartyFather('father_pin_or_nic_male');">
         </td>
@@ -901,7 +901,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
             Identification number(PIN)
         </td>
         <td colspan="2">
-            <s:textfield name="marriage.female.identificationNumberFemale" id="identification_female" maxLength="10"/>
+            <s:textfield name="marriage.female.identificationNumberFemale" id="identification_female" maxLength="12"/>
             <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="male_lookup"
                  onclick="femalePersonLookUp('identification_female');">
             <br>
@@ -1118,7 +1118,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
         </td>
         <td colspan="8">
             <s:textfield name="marriage.female.fatherIdentificationNumberFemale" id="father_pin_or_nic_female"
-                         cssStyle="width:240px;" maxLength="10"/>
+                         cssStyle="width:240px;" maxLength="12"/>
             <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="male_lookup"
                  onclick="femalePartyFather('father_pin_or_nic_female');">
         </td>

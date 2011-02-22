@@ -898,7 +898,7 @@
             Identification Number
         </td>
         <td colspan="6" align="left">
-            <s:textfield id="declarant_pinOrNic" name="deathAlteration.declarant.declarantNICorPIN" maxLength="10"
+            <s:textfield id="declarant_pinOrNic" name="deathAlteration.declarant.declarantNICorPIN" maxLength="12"
                          value="%{deathAlteration.declarant.declarantNICorPIN}"/>
         </td>
     </tr>

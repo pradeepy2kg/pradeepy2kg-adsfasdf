@@ -391,7 +391,7 @@ function enableSerialNumber(mode) {
             <br>
             <s:textfield name="adoption.applicantPINorNIC"
                          id="applicantPin"
-                         cssStyle="float:left;width:200px;" maxLength="10"/>
+                         cssStyle="float:left;width:200px;" maxLength="12"/>
             <img src="<s:url value="/images/search-father.png" />"
                  style="vertical-align:middle; margin-left:10px;" id="adoption_applicant_lookup"></td>
     </tr>
@@ -468,7 +468,7 @@ function enableSerialNumber(mode) {
                  id="wife_NIC_X" onclick="javascript:addXorV('wifePINorNIC','X','error21')">
             <br>
             <s:textfield name="adoption.wifePINorNIC" id="wifePINorNIC"
-                         cssStyle="float:left;width:200px;" maxLength="10"/>
+                         cssStyle="float:left;width:200px;" maxLength="12"/>
             <img src="<s:url value="/images/search-mother.png" />"
                  style="vertical-align:middle; margin-left:10px;" id="mother_lookup"></td>
     </tr>

@@ -193,7 +193,7 @@
                 <tr>
                     <td><s:label value="%{getText('label.death.person.pin')}"/></td>
                     <td align="left">
-                        <s:textfield name="pin" maxLength="10" value=""/>
+                        <s:textfield name="pin" maxLength="12" value=""/>
                     </td>
                     <td>
 

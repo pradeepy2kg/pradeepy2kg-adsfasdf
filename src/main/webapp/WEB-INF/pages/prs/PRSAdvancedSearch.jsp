@@ -83,7 +83,7 @@
                     <tr><td><span>Search full name in English</span></td>
                     <td><div id="searchEnglish"><input type="text" id="searchEnglish" name="searchEnglish"/></div></td>
                     <td><span>PIN</span></td>
-                    <td><div id="searchPIN"><input type="text" id="searchPIN" name="searchPIN" maxlength="10"/></div></td></tr>
+                    <td><div id="searchPIN"><input type="text" id="searchPIN" name="searchPIN" maxlength="12"/></div></td></tr>
 
                     <tr><td><span>Search full name in Official Language</span></td>
                     <td><div id="searchOfficial"><input type="text" id="searchOfficial" name="searchOfficial"/></div></td>

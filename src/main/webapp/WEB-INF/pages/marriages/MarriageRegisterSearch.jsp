@@ -177,7 +177,7 @@
                     <td>
                         <s:label value="%{getText('label.marriageregister.pin')}"/>
                     </td>
-                    <td><s:textfield name="pinOrNic" id="pinOrNic" maxLength="10"/></td>
+                    <td><s:textfield name="pinOrNic" id="pinOrNic" maxLength="12"/></td>
                     <td>
                         <div class="form-submit">
                             <s:submit value="%{getText('bdfSearch.button')}"/>

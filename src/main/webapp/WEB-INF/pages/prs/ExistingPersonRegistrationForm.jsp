@@ -508,7 +508,7 @@
             <br>Temporary Identification number
         </td>
         <td colspan="2">
-            <s:textfield name="person.temporaryPin" id="temporaryPIN" maxLength="10"
+            <s:textfield name="person.temporaryPin" id="temporaryPIN" maxLength="12"
                          onkeypress="return isNumberKey(event)"/>
         </td>
     </tr>
@@ -614,7 +614,7 @@
             <br>Mothers Identification Number (PIN) or NIC
         </td>
         <td colspan="2">
-            <s:textfield name="person.motherPINorNIC" id="motherPINorNIC" maxLength="10"/>
+            <s:textfield name="person.motherPINorNIC" id="motherPINorNIC" maxLength="12"/>
         </td>
         <td colspan="3">
             (12) පියාගේ අනන්‍යතා අංකය හෝ ජාතික හැඳුනුම්පත් අංකය
@@ -622,7 +622,7 @@
             <br>Fathers Identification Number (PIN) or NIC
         </td>
         <td colspan="2">
-            <s:textfield name="person.fatherPINorNIC" id="fatherPINorNIC" maxLength="10"/>
+            <s:textfield name="person.fatherPINorNIC" id="fatherPINorNIC" maxLength="12"/>
         </td>
     </tr>
     </tbody>

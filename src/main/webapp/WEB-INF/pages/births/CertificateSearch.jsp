@@ -441,7 +441,7 @@
         <td class="font-9"><label>
             (8) අනන්‍යතා අංකය <br>அடையாள எண் <br>Identification Number</label>
         </td>
-        <td colspan="3"><s:textfield name="certSearch.search.searchPIN" maxLength="10"/></td>
+        <td colspan="3"><s:textfield name="certSearch.search.searchPIN" maxLength="12"/></td>
     </tr>
     <tr>
         <td class="font-9"><label>
