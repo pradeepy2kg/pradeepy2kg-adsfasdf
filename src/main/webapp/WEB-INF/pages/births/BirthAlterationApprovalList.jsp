@@ -279,7 +279,9 @@
                         <s:param name="idUKey" value="idUKey"/>
                     </s:url>
                     <s:set name="birthDivision" value="birthRecordDivision"/>
-                    <s:if test="status.ordinal()==0 & (#session.user_bean.role.roleId.equals('ARG') | #session.user_bean.role.roleId.equals('RG'))">
+                    <s:if test="status.ordinal()==0 & (#session.user_bean.role.roleId.equals('ARG') |
+                     #session.user_bean.role.roleId.equals('RG') | (!(#session.user_bean.role.roleId.equals('DEO')) &
+                      type.ordinal()== 0))">
                         <%
                             BDDivision deathDivision = (BDDivision) pageContext.getAttribute("birthDivision");
                             int deathDSDivsion = deathDivision.getDsDivision().getDsDivisionUKey();
@@ -293,12 +295,13 @@
                     </s:if>
                 </td>
                 <td align="center">
-
                     <s:url id="rejectSelected" action="eprRejectBirthAlterationInit.do">
                         <s:param name="idUKey" value="idUKey"/>
                     </s:url>
                     <s:set name="birthDivision" value="birthRecordDivision"/>
-                    <s:if test="status.ordinal()==0 & (#session.user_bean.role.roleId.equals('ARG') | #session.user_bean.role.roleId.equals('RG'))">
+                    <s:if test="status.ordinal()==0 & (#session.user_bean.role.roleId.equals('ARG') |
+                     #session.user_bean.role.roleId.equals('RG') | (!(#session.user_bean.role.roleId.equals('DEO')) &
+                      type.ordinal()== 0))">
                         <%
                             BDDivision deathDivision = (BDDivision) pageContext.getAttribute("birthDivision");
                             int deathDSDivsion = deathDivision.getDsDivision().getDsDivisionUKey();
@@ -310,7 +313,8 @@
                                  border="none"/>
                         </s:a>
                         <%}%>
-                    </s:if></td>
+                    </s:if>
+                </td>
                 <td align="center">
                     <s:if test="(status.ordinal()==0)">
                         <s:url id="editSelected" action="eprEditBirthAlterationInit.do">

@@ -69,7 +69,8 @@ public class Location implements Serializable {
     private List<UserLocation> users = new ArrayList<UserLocation>();
 
     /*
-        New field for DSDivisionUKey foreign key  TODO: this should be Foreign key of DSDivision. ->shan
+        New field for DSDivisionUKey this should not be a foreign key because there can be locations that no DSDivisions
+        ex mobile locations
      */
     @Column(nullable = false, updatable = false)
     private int dsDivisionId;
