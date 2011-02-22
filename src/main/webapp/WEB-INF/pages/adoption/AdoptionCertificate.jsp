@@ -41,16 +41,17 @@
     <s:param name="pageNo" value="%{#request.pageNo}"/>
 </s:url>
 <div id="adoption-certificate-form-outer">
+<div cl="controls">
+    <div id="adoption-page-a" class="form-submit" style="margin:15px 0 0 10px;">
+        <s:a href="%{print}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>
+    </div>
+    <div class="form-submit">
+        <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
+    </div>
 
-<div class="form-submit">
-    <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
-</div>
-
-<div id="adoption-page" class="form-submit" style="margin:15px 0 0 10px; ">
-    <s:a href="%{print}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>
-</div>
-<div id="adoption-page" class="form-submit" style="margin:15px 0 0 10px; ">
-    <s:a href="%{cancel}"><s:label value="%{getText('cancel.button')}"/></s:a>
+    <div id="adoption-page-b" class="form-submit" style="margin:15px 0 0 10px; ">
+        <s:a href="%{cancel}"><s:label value="%{getText('cancel.button')}"/></s:a>
+    </div>
 </div>
 
 <table style=" width:
@@ -122,6 +123,8 @@
         </td>
         <td width="250px" colspan="2">
             <s:label value="%{adoption.orderIssuedDate}"/>
+            <br>
+            <s:label value="YYYY-MM-DD" cssStyle="font-size:8pt;"/>
         </td>
 
         <td>
@@ -152,9 +155,11 @@
         <%--(PIN)--%>
         <%--</td>--%>
         <%--<td width="250px"><s:label name="" value="%{adoption.childPIN}"/></td>--%>
-        <td>උපන් දිනය <br>பிறந்த திகதி <br>Date of birth <br>YYYY-MM-DD
+        <td>උපන් දිනය <br>பிறந்த திகதி <br>Date of birth
+        <td colspan="2"><s:label name="" value="%{adoption.childBirthDate}"/>
+            <br>
+            <s:label value="YYYY-MM-DD" cssStyle="font-size:8pt;"/>
         </td>
-        <td colspan="2"><s:label name="" value="%{adoption.childBirthDate}"/></td>
         <td width="150px">ස්ත්‍රී පුරුෂ භාවය<br>பால் <br>Gender
         </td>
         <td width="150px" colspan="2">
@@ -235,7 +240,10 @@ Mother's Identification No.
             <br/> பதிவு செய்யப்பட்ட திகதி
             <br/> Date of Registration
         </td>
-        <td width="150px"><s:label name="" value="%{adoption.lifeCycleInfo.approvalOrRejectTimestamp}"/></td>
+        <td width="150px"><s:label name="" value="%{adoption.lifeCycleInfo.approvalOrRejectTimestamp}"/>
+            <br>
+            <s:label value="YYYY-MM-DD" cssStyle="font-size:8pt;"/>
+        </td>
     </tr>
     <tr>
         <td width="250px" height="120px">
@@ -271,6 +279,8 @@ Mother's Identification No.
             <br/>Date of Issue
         </td>
         <td width="150px"><s:label name="" value="%{adoption.lifeCycleInfo.lastUpdatedTimestamp}"/>
+            <br>
+            <s:label value="YYYY-MM-DD" cssStyle="font-size:8pt;"/>
         </td>
     </tr>
     </tbody>
@@ -376,7 +386,7 @@ Mother's Identification No.
             Printed On : <%= DateTimeUtils.getISO8601FormattedString(new Date()) %>
         </td>
 
-        <td style="text-align:right;margin-left:auto;margin-right:0;">
+        <td style="text-align:right;margin-left:auto;margin-right:0;">        style="margin:15px 0 0 10px; "
             &lt;%&ndash;<%= DateTimeUtils.getISO8601FormattedString(new Date()) %>&ndash;%&gt;
         </td>
     </tr>--%>
@@ -385,15 +395,17 @@ Mother's Identification No.
 <hr style="border-style:dashed ; float:left;width:100% ;margin-top:30px;"/>
 <br><br>
 
-<div class="form-submit">
-    <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
-</div>
+<div cl="controls">
+    <div id="adoption-page1" class="form-submit" style="margin:15px 0 0 10px;">
+        <s:a href="%{print}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>
+    </div>
+    <div class="form-submit">
+        <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
+    </div>
 
-<div id="adoption-page" class="form-submit" style="margin:15px 0 0 10px; ">
-    <s:a href="%{print}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>
-</div>
-<div id="adoption-page" class="form-submit" style="margin:15px 0 0 10px; ">
-    <s:a href="%{cancel}"><s:label value="%{getText('cancel.button')}"/></s:a>
+    <div id="adoption-page2" class="form-submit" style="margin:15px 0 0 10px; ">
+        <s:a href="%{cancel}"><s:label value="%{getText('cancel.button')}"/></s:a>
+    </div>
 </div>
 </div>
 
