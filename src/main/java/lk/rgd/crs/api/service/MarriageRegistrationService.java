@@ -16,8 +16,6 @@ import java.io.File;
  */
 public interface MarriageRegistrationService {
 
-    //TODO return warnings
-
     /**
      * add a new marriage notice
      *

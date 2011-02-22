@@ -178,8 +178,6 @@ import java.util.Date;
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class MarriageRegister implements Serializable, Cloneable {
 
-    //todo add divorce related col
-
     public enum State {
         DATA_ENTRY,    //0
         MALE_NOTICE_APPROVED,  // 1 approve only male notice   still able to edit female notice  (only single notice false)

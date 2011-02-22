@@ -54,8 +54,8 @@ public class BirthAlteration {
      * j - Reconstruction of damaged records [Will not occur in the computerized system]
      */
     public enum AlterationType {
-        TYPE_27,
-        TYPE_27A,
+        TYPE_27, //0
+        TYPE_27A,   //1
         TYPE_52_1_A,
         TYPE_52_1_B,
         TYPE_52_1_D,

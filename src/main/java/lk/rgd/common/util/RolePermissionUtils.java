@@ -10,7 +10,7 @@ import org.springframework.context.ApplicationContext;
 import java.util.BitSet;
 
 /**
- * utill class for permission settings and related methods
+ * util class for permission settings and related methods
  *
  * @authar amith jayasekara
  */
@@ -68,27 +68,23 @@ public class RolePermissionUtils {
         adrBitSet.set(Permission.PRS_REJECT_PERSON);
         adrBitSet.set(Permission.PRS_MARK_CERT_PRINTED);
         adrBitSet.set(Permission.PRS_EDIT_PERSON_AFTER_APPROVE);
-        //todo : to be removed
         adrBitSet.set(Permission.PRINT_MARRIAGE_CERTIFICATE);
         adrBitSet.set(Permission.APPROVE_MARRIAGE);
         adrBitSet.set(Permission.DIVORCE);
-
+        adrBitSet.set(Permission.APPROVE_BIRTH_ALTERATION);
         // DR
         drBitSet = new BitSet();
         drBitSet.or(adrBitSet);
 
         // ARG
-        // TODO add any ARG specific permissions
         argBitSet = new BitSet();
         argBitSet.or(adrBitSet);
         argBitSet.set(Permission.APPROVE_ADOPTION);
         argBitSet.set(Permission.APPROVE_BDF_BELATED);
-        argBitSet.set(Permission.APPROVE_BIRTH_ALTERATION);
 
         // RG
         rgBitSet = new BitSet();
         rgBitSet.or(argBitSet);
-        // TODO add any RG specific permissions
 
         // ADMIN
         adminBitSet = new BitSet();
@@ -140,45 +136,5 @@ public class RolePermissionUtils {
             logger.error("Error initializing role permissions on the database");
             throw new IllegalStateException("Error initializing role permissions. See log for details", e);
         }
-    }
-
-    /**
-     * 1: only for deo
-     * 2:only for adr
-     * 3:only for dr
-     * 4:only for arg
-     * 5:only for rg
-     * 6:only  for admin
-     *
-     * @param role          users role
-     * @param permissionBit permission bit of the link
-     * @return int
-     */
-    public static int checkLinkRole(Role role, int permissionBit) {
-        //todo change ret value of ADR permissions are not same as DR  so on
-        if (role.getRoleId().equals("ADR") || role.getRoleId().equals("DR")) {
-            BitSet onlyADR = adrBitSet;
-            BitSet onlyDeo = deoBitSet;
-            onlyADR.andNot(onlyDeo);
-            if (isContain(permissionBit, onlyADR)) {
-                return 2;
-            }
-        }
-
-        if (role.getRoleId().equals("ARG") || role.getRoleId().equals("RG")) {
-            BitSet onlyARG = argBitSet;
-            BitSet onlyDR = drBitSet;
-            onlyARG.andNot(onlyDR);
-            if (isContain(permissionBit, onlyARG)) {
-                return 4;
-            }
-        }
-        return 7;
-    }
-
-    private static boolean isContain(int permissionbit, BitSet b) {
-        boolean ret = false;
-        ret = b.get(permissionbit);
-        return ret;
     }
 }

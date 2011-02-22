@@ -57,7 +57,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
         //todo amith call to adding validator (check must fill fields)
         //validate can be added a BA for this BC by state
         logger.debug("Adding new birth alteration record on request of : {}", ba.getDeclarant().getDeclarantFullName());
-  //      birthAlterationValidator.checkOnGoingAlterationOnThisSection(ba.getBdfIDUKey(), ba.getType(), user);
+        //      birthAlterationValidator.checkOnGoingAlterationOnThisSection(ba.getBdfIDUKey(), ba.getType(), user);
         ba.setSubmittedLocation(user.getPrimaryLocation());
         ba.setStatus(BirthAlteration.State.DATA_ENTRY);
         // any user (DEO, ADR of any DS office or BD division etc) can add a birth alteration request
@@ -424,6 +424,8 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
     /**
      * Checks if the user can approve the birth alteration entry. Only an ARG level user, in charge of the BDF under
      * consideration can approve an alteration
+     * <p/>
+     * note :if the section is 27 ADR also can approve the record
      *
      * @param ba   the birth alteration entry
      * @param user the user attempting to approve
@@ -431,14 +433,15 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
     private void validateAccessOfUserForApproval(BirthAlteration ba, User user) {
         if (Role.ROLE_RG.equals(user.getRole().getRoleId())) {
             // RG can approve any record
-            //todo if ba==null then this throw NPE and it is not throws here amith ???
-        } else if (Role.ROLE_ARG.equals(user.getRole().getRoleId())) {
+        } else if ((Role.ROLE_ARG.equals(user.getRole().getRoleId())) ||
+            (!(Role.ROLE_DEO.equals(user.getRole().getRoleId())) &&
+                (ba.getType() == BirthAlteration.AlterationType.TYPE_27))) {
             ValidationUtils.validateAccessToBDDivision(user,
                 birthDeclarationDAO.getById(ba.getBdfIDUKey()).getRegister().getBirthDivision());
 
             if (!user.isAuthorized(Permission.APPROVE_BIRTH_ALTERATION)) {
-                handleException("User : " + user.getUserId() + " is not allowed to approve/reject birth alteration",
-                    ErrorCodes.PERMISSION_DENIED);
+                handleException("User : " + user.getUserId() + " is not allowed to approve/reject birth alteration , " +
+                    "alteration type : " + ba.getType().name(), ErrorCodes.PERMISSION_DENIED);
             }
         } else {
             handleException("User : " + user.getUserId() + " is not an ARG for alteration approval",
