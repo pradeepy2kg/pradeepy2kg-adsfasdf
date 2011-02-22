@@ -2,6 +2,7 @@ package lk.rgd.crs.core.service;
 
 import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
+import lk.rgd.common.RGDException;
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.Role;
 import lk.rgd.common.api.domain.User;
@@ -177,7 +178,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
                     birthDeclarationDAO.updateBirthDeclaration(bdf, user);
                     logger.debug("Alteration of type : {} is a cancellation of the existing record : {}",
                         existing.getType().ordinal(), bdf.getIdUKey());
-
+                    removeOtherAlterations(bdf.getIdUKey(), existing.getIdUKey());
                     // cancel any person on the PRS related to this same PIN
                     Person person = personDAO.findPersonByPIN(bdf.getChild().getPin());
                     if (person != null) {
@@ -194,6 +195,27 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
         birthAlterationDAO.updateBirthAlteration(existing, user);
 
         logger.debug("Updated birth alteration : {}", existing.getIdUKey());
+    }
+
+    /**
+     * if a alteration approved by 52_1 A, B,D,E then original certificate is no longer active one so the existing
+     * DE alterations are no longer valid for that certificate
+     */
+    private void removeOtherAlterations(long certificateNumber, long currentAlterationId) {
+        List<BirthAlteration> birthAlterations = birthAlterationDAO.getBirthAlterationByBirthCertificateNumber(certificateNumber);
+        for (BirthAlteration ba : birthAlterations) {
+            if (ba.getIdUKey() != currentAlterationId && (ba.getStatus() != BirthAlteration.State.FULLY_APPROVED ||
+                ba.getStatus() != BirthAlteration.State.PRINTED)) {
+                try {
+                    birthAlterationDAO.deleteBirthAlteration(ba.getIdUKey());
+                }
+                catch (Exception e) {
+                    logger.debug("unable to delete birth alteration while cleaning existing birth alteration when an " +
+                        "there is a approval for 52_1 A,B,D,E idUKey : {}", ba.getIdUKey());
+                    continue;
+                }
+            }
+        }
     }
 
     private void syncFKOfOtherActiveAlterationsAfterApproval(long newFK, long oldFK, User user) {
