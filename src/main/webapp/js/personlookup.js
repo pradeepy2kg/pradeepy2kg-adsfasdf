@@ -14,26 +14,63 @@ function personLookup(pin, type) {
                     $("input#age" + type).val(personAge);
                 }
                 $("select#race" + type).val(data1.race);
+                setCivilState(type,data1.civilState);
             });
 }
 
+function setCivilState(type, ordinal) {
+    if (type == 'Female') {
+        switch (ordinal) {
+            case 0:
+                document.getElementsByName('marriage.female.civilStatusFemale')[0].checked = true;
+                break;
+            case 4:
+                document.getElementsByName('marriage.female.civilStatusFemale')[1].checked = true;
+                break;
+            case 5:
+                document.getElementsByName('marriage.female.civilStatusFemale')[2].checked = true;
+                break;
+            case 2:
+                document.getElementsByName('marriage.female.civilStatusFemale')[3].checked = true;
+                break;
+        }
+    }
+    else {
+        switch (ordinal) {
+            case 0:
+                document.getElementsByName('marriage.male.civilStatusMale')[0].checked = true;
+                break;
+            case 4:
+                document.getElementsByName('marriage.male.civilStatusMale')[1].checked = true;
+                break;
+            case 5:
+                document.getElementsByName('marriage.male.civilStatusMale')[2].checked = true;
+                break;
+            case 2:
+                document.getElementsByName('marriage.male.civilStatusMale')[3].checked = true;
+                break;
+        }
+    }
+}
 // calculate age at last birth day for given date of birth
 function calAgeAtLastBirthday(personDOB) {
     var personAge;
     var today = new Date();
     var dob = new Date(personDOB);
-          
+
     if (today.getMonth() > dob.getMonth()) {
         personAge = today.getYear() - dob.getYear();
 
-    } else if(today.getMonth() == dob.getMonth()) {
-        if (today.getDate() >= dob.getDate()) {
-            personAge = today.getYear() - dob.getYear();
+    } else {
+        if (today.getMonth() == dob.getMonth()) {
+            if (today.getDate() >= dob.getDate()) {
+                personAge = today.getYear() - dob.getYear();
+            } else {
+                personAge = (today.getYear() - 1) - dob.getYear();
+            }
         } else {
             personAge = (today.getYear() - 1) - dob.getYear();
         }
-    }  else {
-        personAge = (today.getYear() - 1) - dob.getYear();
     }
 
     return personAge;

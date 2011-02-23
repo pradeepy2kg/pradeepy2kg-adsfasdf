@@ -62,7 +62,7 @@
         var married = new Date(document.getElementById('marriageDatePick').value);
         var register = new Date(document.getElementById('registrationDatePicker').value);
 
-        if(married.getTime() > register.getTime()) {
+        if (married.getTime() > register.getTime()) {
             errormsg = errormsg + "\n" + document.getElementById('errorMarriageRegisterationDate').value;
         }
         return errormsg;
@@ -486,7 +486,8 @@
                                  disabled="true"/>
                     </s:if>
                     <s:else>
-                        <s:radio name="marriage.male.civilStatusMale" list="civilStatusMale" theme="horizontal"/>
+                        <s:radio name="marriage.male.civilStatusMale" list="civilStatusMale" theme="horizontal"
+                                 id="civilStateMale"/>
                     </s:else>
                     <br>
                 </td>
@@ -504,10 +505,11 @@
                 <td>
                     <s:if test="mode=='register'">
                         <s:radio name="marriage.female.civilStatusFemale" list="civilStatusFemale" theme="horizontal"
-                                 disabled="true"/>
+                                 disabled="true" id="civilStatusFemale"/>
                     </s:if>
                     <s:else>
-                        <s:radio name="marriage.female.civilStatusFemale" list="civilStatusFemale" theme="horizontal"/>
+                        <s:radio name="marriage.female.civilStatusFemale" list="civilStatusFemale" theme="horizontal"
+                                 id="civilStateFemale"/>
                     </s:else>
 
                 </td>
@@ -756,17 +758,21 @@
 
  --%>
 <s:hidden id="errorEmptyAgeMale" value="%{getText('error.invalid') + getText('error.js.marriageregister.ageMale')}"/>
-<s:hidden id="errorEmptyAgeFemale" value="%{getText('error.invalid') + getText('error.js.marriageregister.ageFemale')}"/>
+<s:hidden id="errorEmptyAgeFemale"
+          value="%{getText('error.invalid') + getText('error.js.marriageregister.ageFemale')}"/>
 <s:hidden id="errorEmptyNameOfficialMale"
           value="%{getText('error.js.marriageregister.nameOfficialMale') + getText('message.cannotbeempty')}"/>
 <s:hidden id="errorEmptyNameOfficialFemale"
           value="%{getText('error.js.marriageregister.nameOfficialFemale') + getText('message.cannotbeempty')}"/>
-<s:hidden id="errorEmptyAddressMale" value="%{getText('error.js.marriageregister.addressMale') + getText('message.cannotbeempty')}"/>
+<s:hidden id="errorEmptyAddressMale"
+          value="%{getText('error.js.marriageregister.addressMale') + getText('message.cannotbeempty')}"/>
 <s:hidden id="errorEmptyAddressFemale"
           value="%{getText('error.js.marriageregister.addressFemale') + getText('message.cannotbeempty')}"/>
 
-<s:hidden id="errorEmptyMaleRace" value="%{getText('error.js.marriageregister.maleRace') + getText('message.cannotbeempty')}"/>
-<s:hidden id="errorEmptyFemaleRace" value="%{getText('error.js.marriageregister.femaleRace') + getText('message.cannotbeempty')}"/>
+<s:hidden id="errorEmptyMaleRace"
+          value="%{getText('error.js.marriageregister.maleRace') + getText('message.cannotbeempty')}"/>
+<s:hidden id="errorEmptyFemaleRace"
+          value="%{getText('error.js.marriageregister.femaleRace') + getText('message.cannotbeempty')}"/>
 
 <s:hidden id="errorEmptySerialNumber"
           value="%{getText('error.js.marriageregister.serialNumber') + getText('message.cannotbeempty')}"/>
@@ -775,5 +781,5 @@
 
 <s:hidden id="errorEmptyscannedImage"
           value="%{getText('error.js.marriageregister.scannedImage') + getText('message.cannotbeempty')}"/>
-<s:hidden id="errorMarriageRegisterationDate" value="%{getText('error.dateOfMarriage.with.registerDate')}"/>  
+<s:hidden id="errorMarriageRegisterationDate" value="%{getText('error.dateOfMarriage.with.registerDate')}"/>
 </div>

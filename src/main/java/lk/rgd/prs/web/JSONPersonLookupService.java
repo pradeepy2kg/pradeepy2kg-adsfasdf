@@ -114,7 +114,9 @@ public class JSONPersonLookupService extends HttpServlet {
             } else {
                 untyped.put("lastAddress", "");
             }
-
+            if (person.getCivilStatus() != null) {
+                untyped.put("civilState", person.getCivilStatus().ordinal());
+            }
             mapper.writeValue(out, untyped);
             out.flush();
         }
