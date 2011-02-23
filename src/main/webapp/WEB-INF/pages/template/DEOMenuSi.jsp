@@ -27,6 +27,11 @@
             </a>
         </li>
         <li>
+            <a id="birth_register_approval.label" href="/ecivil/births/eprBirthRegisterApproval.do">
+                (2) උපත් ලියාපදිංචි අනුමතය
+            </a>
+        </li>
+        <li>
             <a id="birth_confirmation_print.label" href="/ecivil/births/eprBirthConfirmationPrintList.do">
                 (3) උපත් තහවුරු කිරීම් මුද්‍රණය
             </a>

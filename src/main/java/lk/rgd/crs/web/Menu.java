@@ -194,14 +194,14 @@ public class Menu {
         deoBirthLink.put("eprCertificatePrintPrevious.do", new Link(null, "/ecivil/births/", "eprCertificatePrintPrevious.do", Permission.SEARCH_BDF));
         deoBirthLink.put("eprStillBirthCertificatePrint.do", new Link(null, "/ecivil/births/", "eprStillBirthCertificatePrint.do", Permission.PRINT_BDF));
         deoBirthLink.put("eprDirectPrintStillBirthCertificate.do", new Link(null, "/ecivil/births/", "eprDirectPrintStillBirthCertificate.do", Permission.PRINT_BDF));
+        deoBirthLink.put("eprBirthRegisterApproval.do", new Link("birth_register_approval.label", "/ecivil/births/", "eprBirthRegisterApproval.do", Permission.EDIT_BDF));
+        deoBirthLink.put("eprApprovalRefresh.do", new Link(null, "/ecivil/births/", "eprApprovalRefresh.do", Permission.EDIT_BDF));
 
 
         // Birth for ADR
         adrBirthLink.putAll(deoBirthLink);
-        adrBirthLink.put("eprBirthRegisterApproval.do", new Link("birth_register_approval.label", "/ecivil/births/", "eprBirthRegisterApproval.do", Permission.APPROVE_BDF));
         adrBirthLink.put("eprBirthConfirmationApproval.do", new Link("birth_confirmation_approval.label", "/ecivil/births/", "eprBirthConfirmationApproval.do", Permission.APPROVE_BDF_CONFIRMATION));
 
-        adrBirthLink.put("eprApprovalRefresh.do", new Link(null, "/ecivil/births/", "eprApprovalRefresh.do", Permission.APPROVE_BDF));
         adrBirthLink.put("eprConfirmationApprovalRefresh.do", new Link(null, "/ecivil/births/", "eprConfirmationApprovalRefresh.do", Permission.APPROVE_BDF_CONFIRMATION));
         adrBirthLink.put("eprConfirmationApprovalNext.do", new Link(null, "/ecivil/births/", "eprConfirmationApprovalNext.do", Permission.APPROVE_BDF_CONFIRMATION));
         adrBirthLink.put("eprConfirmationApprovalPrevious.do", new Link(null, "/ecivil/births/", "eprConfirmationApprovalPrevious.do", Permission.APPROVE_BDF_CONFIRMATION));
