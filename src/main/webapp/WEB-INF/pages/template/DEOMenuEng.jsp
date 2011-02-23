@@ -27,6 +27,11 @@
             </a>
         </li>
         <li>
+            <a id="birth_register_approval.label" href="/ecivil/births/eprBirthRegisterApproval.do">
+                (2) Birth Registration Approval
+            </a>
+        </li>
+        <li>
             <a id="birth_confirmation_print.label" href="/ecivil/births/eprBirthConfirmationPrintList.do">
                 (3) Birth Confirmation Print
             </a>

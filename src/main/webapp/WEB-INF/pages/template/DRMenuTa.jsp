@@ -26,8 +26,7 @@
             </a>
         </li>
         <li>
-            <a id="birth_register_approval.label" href="/ecivil/births/eprBirthRegisterApproval.do"
-               style="color:red">
+            <a id="birth_register_approval.label" href="/ecivil/births/eprBirthRegisterApproval.do">
                 (2) பிறப்பு பதிவிற்கான அனுமதி
             </a>
         </li>

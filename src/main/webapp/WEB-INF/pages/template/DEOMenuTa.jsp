@@ -27,6 +27,11 @@
             </a>
         </li>
         <li>
+            <a id="birth_register_approval.label" href="/ecivil/births/eprBirthRegisterApproval.do">
+                (2) பிறப்பு பதிவிற்கான அனுமதி
+            </a>
+        </li>
+        <li>
             <a id="birth_confirmation_print.label" href="/ecivil/births/eprBirthConfirmationPrintList.do">
                 (3) பிறப்பு உறுதிபடித்தும் அச்சு
             </a>
