@@ -93,6 +93,59 @@
         });
     });
 
+    var errormsg = "";
+    var counter = 0;
+
+    function validateForm() {
+
+        var bdDivision = document.getElementById('divisionId');
+        var locationId = document.getElementById('locationId');
+        var pinNumberX = document.getElementById('pinNumber');
+
+        var locationIdValue = "";
+        if (locationId.value != 0) {
+            locationIdValue = locationId.value
+        }
+
+
+        var valueArray = new Array(pinNumberX.value, locationIdValue, bdDivision.value);
+
+        for (var i = 0; i < valueArray.length; i++) {
+            var c = valueArray[i];
+            if (c != "") {
+                counter++
+            }
+        }
+        alert(counter)
+        if (counter > 2) {
+            errormsg = errormsg + document.getElementById('oneMethodErr').value;
+        }
+        if (counter == 1) {
+            return false;
+        }
+
+        //validate   number fields
+        if (counter == 2) {
+            if (!isFieldEmpty(pinNumberX)) {
+                validatePINorNIC(pinNumberX, 'invalideDataErr', 'pinNumberFi');
+            }
+        }
+        if (errormsg != "") {
+            alert(errormsg)
+            errormsg = "";
+            counter = 0;
+            return false;
+        }
+        else {
+            rrormsg = "";
+            counter = 0;
+            return true;
+        }
+        errormsg = "";
+        counter = 0;
+        return false;
+    }
+
     function initPage() {
     }
 
@@ -100,7 +153,7 @@
 <%
     User user = (User) session.getAttribute("user_bean");
 %>
-<s:form method="post" action="eprApproveDeathAlterations.do">
+<s:form method="post" action="eprApproveDeathAlterations.do" onsubmit="javascript:return validateForm()">
 
     <div id="tabs" style="font-size:10pt;">
         <ul>
@@ -168,7 +221,7 @@
                     <td><s:label value="%{getText('label.location')}"/></td>
                     <td align="left">
                         <s:select list="userLocations" name="locationUKey" value="%{locationUKey}" headerKey="0"
-                                  headerValue="%{getText('select.location')}"/>
+                                  headerValue="%{getText('select.location')}" id="locationId"/>
                     </td>
                     <td>
 
@@ -193,7 +246,7 @@
                 <tr>
                     <td><s:label value="%{getText('label.death.person.pin')}"/></td>
                     <td align="left">
-                        <s:textfield name="pin" maxLength="12" value=""/>
+                        <s:textfield name="pin" maxLength="12" value="" id="pinNumber"/>
                     </td>
                     <td>
 
@@ -302,7 +355,7 @@
                                     <% BDDivision deathDivision = (BDDivision) pageContext.getAttribute("deathDivision");
                                         int deathDSDivsion = deathDivision.getDsDivision().getDsDivisionUKey();
                                         boolean approveRights = user.isAllowedAccessToBDDSDivision(deathDSDivsion);
-                                        if (true) {
+                                        if (approveRights) {
                                     %>
                                     <s:a href="%{approveSelected}" title="%{getText('approveTooltip.label')}">
                                         <img src="<s:url value='/images/approve.gif'/>" width="25" height="25"
@@ -330,3 +383,7 @@
         </fieldset>
     </s:if>
 </div>
+
+<s:hidden id="oneMethodErr" value="%{getText('err.use.one,method.to.search')}"/>
+<s:hidden id="invalideDataErr" value="%{getText('err.invalide.data')}"/>
+<s:hidden id="pinNumberFi" value="%{getText('field.pin.number')}"/>
