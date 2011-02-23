@@ -93,17 +93,25 @@ function validatePhoneNo(domElement, errorText, errorCode) {
 // validate PIN or NIC
 function validatePINorNIC(domElement, errorText, errorCode) {
     with (domElement) {
-        var reg = /^(([0-9]{10})|([0-9]{9}[X|x|V|v]))$/;
-        if (reg.test(value.trim()) == false) {
-            printMessage(errorText, errorCode);
-        } else {
+        var pinOrNic = value.trim();
+
+        if (pinOrNic.length == 12) {
+            if (checkInvalidPIN(pinOrNic, true, false)) {
+                printMessage(errorText, errorCode);
+            }
+        } else if (pinOrNic.length == 10) {
             var regNIC = /^([0-9]{9}[X|x|V|v])$/;
-            if (domElement.value.search(regNIC) == 0) {
+
+            if (regNIC.test(pinOrNic)) {
                 var day = domElement.value.substring(2, 5);
                 if ((day >= 367 && day <= 500) || (day >= 867)) {
                     printMessage(errorText, errorCode);
                 }
+            } else {
+                printMessage(errorText, errorCode);
             }
+        } else {
+            printMessage(errorText, errorCode);
         }
     }
 }
@@ -130,7 +138,7 @@ function validateNIC(domElement, errorText, errorCode) {
 function validateTemPIN(domElement, errorText, errorCode) {
     with (domElement) {
         var pin = value.trim();
-        if (pin.length != 12 || checkInvalidPIN(pin, false)) {
+        if (pin.length != 12 || checkInvalidPIN(pin, false, false)) {
             printMessage(errorText, errorCode);
         }
     }
@@ -140,14 +148,19 @@ function validateTemPIN(domElement, errorText, errorCode) {
 function validatePIN(domElement, errorText, errorCode) {
     with (domElement) {
         var pin = value.trim();
-        if (pin.length != 12 || checkInvalidPIN(pin, true)) {
+        if (pin.length != 12 || checkInvalidPIN(pin, false, true)) {
             printMessage(errorText, errorCode);
         }
     }
 }
 
 // used to validate temporary pin and pin
-function checkInvalidPIN(pin, isPin) {
+// * both = true for fields enable to enter PIN and Temporary PIN both, * both = false for only PIN or Temporary PIN
+// * isPin=true for PIN, * isPin=false for Temporary PIN
+// both = true                  - to check both PIN or Temporary PIN invalid
+// both = false, isPin = true   - to check PIN invalid
+// both = false, isPin = false  - to check Temporary PIN invalid
+function checkInvalidPIN(pin, both, isPin) {
     var invalid = false;
     var year = pin.substring(0, 4);
     var date = pin.substring(4, 7);
@@ -156,13 +169,19 @@ function checkInvalidPIN(pin, isPin) {
     var number = pin.substring(0, 11);
 
     // validate year range
-    if (isPin) {
-        if ((year < 1700) || (year > 2200)) {
+    if (both) {
+        if ((year < 1700) || (year > 2200 && year < 6700) || (year > 7200)) {
             return true;
         }
     } else {
-        if ((year < 6700) || (year > 7200)) {
-            return true;
+        if (isPin) {
+            if ((year < 1700) || (year > 2200)) {
+                return true;
+            }
+        } else {
+            if ((year < 6700) || (year > 7200)) {
+                return true;
+            }
         }
     }
     // validate date range
@@ -170,7 +189,7 @@ function checkInvalidPIN(pin, isPin) {
         return true;
     }
     // validate serial number range
-    if (year >= 1994 && serial >= 2000) {
+    if (serial < 1 || serial > 9999) {
         return true;
     }
     // validate check digit

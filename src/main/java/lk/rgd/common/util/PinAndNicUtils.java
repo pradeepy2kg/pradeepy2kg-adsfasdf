@@ -115,7 +115,7 @@ public class PinAndNicUtils {
             if ((date >= 367 && date <= 500) || (date >= 867)) {
                 return false;
             }
-            if (year >= 1994 && serial >= 2000) {
+            if (serial < 1 || serial > 9999) {
                 return false;
             }
             if (check != computeCheckDigit(num)) {
