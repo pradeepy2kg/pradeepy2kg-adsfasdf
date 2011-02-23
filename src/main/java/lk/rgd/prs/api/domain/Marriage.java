@@ -1,6 +1,7 @@
 package lk.rgd.prs.api.domain;
 
 import lk.rgd.common.util.WebUtils;
+import lk.rgd.crs.api.domain.MarriageRegister;
 import lk.rgd.crs.web.util.MarriageType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -14,7 +15,10 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "MARRIAGE", schema = "PRS")
-@Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
+@NamedQueries({
+    @NamedQuery(name = "getMarriageByMarriageRegister", query = "SELECT mr FROM Marriage mr WHERE mr.marriageRegister.idUKey = :mrUKey")
+})
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Marriage implements Serializable {
 
     /**
@@ -76,6 +80,12 @@ public class Marriage implements Serializable {
     @OneToOne
     @JoinColumn(name = "brideUKey")
     private Person bride;
+    /**
+     * The Marriage Register
+     */
+    @OneToOne
+    @JoinColumn(name = "marriageRegisterUKey", unique = true)
+    private MarriageRegister marriageRegister;
 
     public long getMarriageUKey() {
         return marriageUKey;
@@ -143,6 +153,14 @@ public class Marriage implements Serializable {
 
     public void setBride(Person bride) {
         this.bride = bride;
+    }
+
+    public MarriageRegister getMarriageRegister() {
+        return marriageRegister;
+    }
+
+    public void setMarriageRegister(MarriageRegister marriageRegister) {
+        this.marriageRegister = marriageRegister;
     }
 
     @Override
