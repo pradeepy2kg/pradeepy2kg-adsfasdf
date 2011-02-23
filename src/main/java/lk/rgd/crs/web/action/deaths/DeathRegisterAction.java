@@ -194,7 +194,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         switch (pageNo) {
             case 1:
                 DeathRegister dd = service.getByBDDivisionAndDeathSerialNo(death.getDeathDivision(), death.getDeathSerialNo(), user);
-                if (dd != null && idUKey == 0) {
+                if (dd != null && dd.getIdUKey() != ddf.getIdUKey()) {
                     addFieldError("duplicateSerialNumberError", getText("p1.duplicateSerialNumber.label"));
                     pageNo = 0;
                 }

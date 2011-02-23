@@ -165,7 +165,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      * very first form page) is used to decide which state of the process we are in. at the last step
      * only we do a persistence, until then all data will be in the session. This is a design decision
      * to limit DB writes. Masterdata population will be done before displaying every page.
-     * This will have no performance impact as they will be cached in the backend.
+     * This will have no performance impact as they will be cached in the back end.
      */
     public String birthDeclaration() {
         logger.debug("Step {} of 4 ", pageNo);
@@ -184,13 +184,11 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         switch (pageNo) {
             case 1:
                 // checking serial number is already used and skip this in edit mode
-                if (bdf.getIdUKey() == 0) {
-                    BirthDeclaration bd = service.getActiveRecordByBDDivisionAndSerialNo(register.getBirthDivision(),
-                        register.getBdfSerialNo(), user);
-                    if (bd != null) {
-                        addFieldError("duplicateSerialNumberError", getText("p1.duplicateSerialNumber.label"));
-                        pageNo = 0;
-                    }
+                BirthDeclaration bd = service.getActiveRecordByBDDivisionAndSerialNo(register.getBirthDivision(),
+                    register.getBdfSerialNo(), user);
+                if (bd != null && bd.getIdUKey() != bdf.getIdUKey()) {
+                    addFieldError("duplicateSerialNumberError", getText("p1.duplicateSerialNumber.label"));
+                    pageNo = 0;
                 }
                 populateRegistrars(bdf);
 
