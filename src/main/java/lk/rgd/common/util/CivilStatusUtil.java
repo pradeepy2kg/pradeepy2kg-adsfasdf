@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import lk.rgd.AppConstants;
 import lk.rgd.prs.api.domain.Person;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -130,7 +131,7 @@ public class CivilStatusUtil {
      * Populate civil status (Except MARRIED status) list with its values in all languages
      */
     public static Map<Person.CivilStatus, String> populateCivilStatus() {
-        Map<Person.CivilStatus, String> civilStatus = new HashMap<Person.CivilStatus, String>();
+        Map<Person.CivilStatus, String> civilStatus = new LinkedHashMap<Person.CivilStatus, String>();
         civilStatus.put(Person.CivilStatus.NEVER_MARRIED, CivilStatusUtil.getCivilStatusInAllLanguages(Person.CivilStatus.NEVER_MARRIED));
         civilStatus.put(Person.CivilStatus.DIVORCED, CivilStatusUtil.getCivilStatusInAllLanguages(Person.CivilStatus.DIVORCED));
         civilStatus.put(Person.CivilStatus.WIDOWED, CivilStatusUtil.getCivilStatusInAllLanguages(Person.CivilStatus.WIDOWED));
