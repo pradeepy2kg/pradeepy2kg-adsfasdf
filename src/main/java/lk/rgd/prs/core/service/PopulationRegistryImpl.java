@@ -620,7 +620,20 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             handleException("User : " + user.getUserId() + " is not allowed to update marriages to the PRS",
                 ErrorCodes.PRS_ADD_RECORD_DENIED);
         }
-        personDao.addMarriage(marriage);
+        personDao.updateMarriage(marriage);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Auditable
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public Marriage findMarriageByMRUKey(long mrUKey, User user) {
+        if (!user.isAuthorized(Permission.PRS_LOOKUP_PERSON_BY_KEYS)) {
+            handleException("User : " + user.getUserId() + " is not allowed to lookup entries from the PRS",
+                ErrorCodes.PRS_LOOKUP_BY_KEYS_DENIED);
+        }
+        return personDao.findMarriageByMRUKey(mrUKey);
     }
 
     /**

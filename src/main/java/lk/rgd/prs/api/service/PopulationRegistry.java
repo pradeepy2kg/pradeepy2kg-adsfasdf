@@ -151,6 +151,15 @@ public interface PopulationRegistry {
     public void updateMarriage(Marriage m, User user);
 
     /**
+     * Return the Marriage object for the given marriageRegisterUKey of the CRS
+     *
+     * @param mrUKey the unique Marriage Register identification number
+     * @param user   the user performing the action
+     * @return the matching marriage
+     */
+    public Marriage findMarriageByMRUKey(long mrUKey, User user);
+
+    /**
      * Add an Address to the PRS
      *
      * @param a    the Address to be added
