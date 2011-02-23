@@ -139,6 +139,22 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<DeathRegister> getByBDDivisionAndRegistrationDateRangeAndState(BDDivision deathDivision,
+        Date startDate, Date endDate, int pageNo, int noOfRows, DeathRegister.State state) {
+
+        Query q = em.createNamedQuery("get.by.division.register.date.state").
+            setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+        q.setParameter("deathDivision", deathDivision);
+        q.setParameter("startDate", startDate);
+        q.setParameter("endDate", endDate);
+        q.setParameter("state", state);
+        return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<DeathRegister> getPaginatedListForStateByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, DeathRegister.State status) {
         Query q = em.createNamedQuery("death.register.filter.by.and.dsDivision.status.paginated").
             setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
@@ -204,6 +220,22 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
         q.setParameter("startDate", startDate);
         q.setParameter("endDate", endDate);
         q.setParameter("active", active);
+        return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<DeathRegister> getPaginatedDeathRegisterListByDSDivisionAndRegistrationDateRangeAndState(int dsDivisionId,
+        Date startDate, Date endDate, int pageNo, int numOfRows, boolean active, DeathRegister.State state) {
+        Query q = em.createNamedQuery("get.all.by.death.division.time.frame.state").setFirstResult((pageNo - 1)
+            * numOfRows).setMaxResults(numOfRows);
+        q.setParameter("dsDivisionId", dsDivisionId);
+        q.setParameter("startDate", startDate);
+        q.setParameter("endDate", endDate);
+        q.setParameter("active", active);
+        q.setParameter("state", state);
         return q.getResultList();
     }
 

@@ -397,6 +397,20 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<DeathRegister> getByBDDivisionAndRegistrationDateRangeAndState(BDDivision deathDivision,
+        Date startDate, Date endDate, int pageNo, int noOfRows, DeathRegister.State state, User user) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("attempt to get paginated list of death records by bdDivision :" + deathDivision +
+                " and date range :" + startDate + "-" + endDate + " and state :" + state);
+        }
+        ValidationUtils.validateAccessToBDDivision(user, deathDivision);
+        return deathRegisterDAO.getByBDDivisionAndRegistrationDateRangeAndState(deathDivision, startDate, endDate, pageNo, noOfRows, state);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<DeathRegister> getPaginatedListForAll(BDDivision deathDivision, int pageNo, int noOfRows, User user) {
         logger.debug("Get all death registrations   Page : {}  with number of rows per page : {} ", pageNo, noOfRows);
         ValidationUtils.validateAccessToBDDivision(user, deathDivision);
@@ -550,6 +564,20 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         }
         return deathRegisterDAO.getPaginatedDeathRegisterListByDSDivisionAndRegistrationDateRange(dsDivisionId, startDate,
             endDate, pageNo, numOfRows, active);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<DeathRegister> getPaginatedDeathRegisterListByDSDivisionAndRegistrationDateRangeAndState(int dsDivisionId,
+        Date startDate, Date endDate, boolean active, int pageNo, int numOfRows, DeathRegister.State status, User user) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("attempt to get list of death register objects by dsDivision idUKey :" + dsDivisionId +
+                " and from :" + startDate + " to : " + endDate + "and active :" + active + "and state :" + status);
+        }
+        return deathRegisterDAO.getPaginatedDeathRegisterListByDSDivisionAndRegistrationDateRangeAndState(dsDivisionId, startDate,
+            endDate, pageNo, numOfRows, active, status);
     }
 
     /**

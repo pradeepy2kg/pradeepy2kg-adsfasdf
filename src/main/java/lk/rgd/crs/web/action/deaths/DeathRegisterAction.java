@@ -355,18 +355,24 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
         if (searchByDate) {
             //search by date in given division deathDivisions and all the status
-            if (deathDistrictId == 0) {
-                //todo for all districts that allowed
-            }
-            if (dsDivisionId == 0) {
-            }
-            if (deathDivisionId == 0) {
-                //for all death divisions
-                deathApprovalAndPrintList = service.getPaginatedDeathRegisterListByDSDivisionAndRegistrationDateRange(
-                    dsDivisionId, fromDate, endDate, true, pageNo, noOfRows, user);
+            if (currentStatus == 0) {
+                if (deathDivisionId == 0) {
+                    //for all death divisions
+                    deathApprovalAndPrintList = service.getPaginatedDeathRegisterListByDSDivisionAndRegistrationDateRange(
+                        dsDivisionId, fromDate, endDate, true, pageNo, noOfRows, user);
+                } else {
+                    deathApprovalAndPrintList = service.getByBDDivisionAndRegistrationDateRange(
+                        bdDivisionDAO.getBDDivisionByPK(deathDivisionId), fromDate, endDate, pageNo, noOfRows, user);
+                }
             } else {
-                deathApprovalAndPrintList = service.getByBDDivisionAndRegistrationDateRange(
-                    bdDivisionDAO.getBDDivisionByPK(deathDivisionId), fromDate, endDate, pageNo, noOfRows, user);
+                if (deathDivisionId == 0) {
+                    //for all death divisions
+                    deathApprovalAndPrintList = service.getPaginatedDeathRegisterListByDSDivisionAndRegistrationDateRangeAndState(
+                        dsDivisionId, fromDate, endDate, true, pageNo, noOfRows, state, user);
+                } else {
+                    deathApprovalAndPrintList = service.getByBDDivisionAndRegistrationDateRangeAndState(
+                        bdDivisionDAO.getBDDivisionByPK(deathDivisionId), fromDate, endDate, pageNo, noOfRows, state, user);
+                }
             }
             addActionMessage(getText("message.search.results.form.to", new String[]
                 {DateTimeUtils.getISO8601FormattedString(fromDate), DateTimeUtils.getISO8601FormattedString(endDate)}));
