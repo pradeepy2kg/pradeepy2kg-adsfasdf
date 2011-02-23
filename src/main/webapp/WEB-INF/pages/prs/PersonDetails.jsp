@@ -1,5 +1,10 @@
 <%@ page import="lk.rgd.common.util.PersonStatusUtil" %>
 <%@ page import="lk.rgd.prs.api.domain.Person" %>
+<%@ page import="lk.rgd.common.util.MarriageStateUtil" %>
+<%@ page import="lk.rgd.prs.api.domain.Marriage" %>
+<%@ page import="java.util.Locale" %>
+<%@ page import="lk.rgd.crs.web.WebConstants" %>
+<%@ page import="lk.rgd.crs.web.util.MarriageType" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
@@ -558,6 +563,9 @@
 </table>
 <br/>
 
+<%
+String lang = ((Locale) session.getAttribute("WW_TRANS_I18N_LOCALE")).getLanguage();
+%>
 <s:if test="person.marriages.size() != 0">
     <table style="width:100%; border:none; border-collapse:collapse;">
         <tr>
@@ -571,12 +579,13 @@
 
     <table class="table_reg_page_05" cellspacing="0" cellpadding="0"
            style="margin-bottom:20px;margin-top:10px;font-size:10pt;">
-        <col width="130px">
+        <col width="100px">
         <col width="100px">
         <col width="150px">
-        <col width="150px">
-        <col width="130px">
+        <col width="110px">
+        <col width="100px">
         <col>
+        <col width="90px">
         <tbody>
         <tr>
             <td>
@@ -609,26 +618,33 @@
                 <br>பெயர்
                 <br>Name
             </td>
+            <td>
+                Status
+                <br>*Tamil
+                <br>තත්ත්වය
+            </td>
         </tr>
         <s:iterator value="person.marriages">
             <tr>
                 <td height="60px">
-                    <s:if test="dateOfMarriage != null">
+                    <s:if test="dateOfMarriage != null && state.ordinal() == 0">
                         <s:property value="dateOfMarriage"/><br>
                         <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
                     </s:if>
+                    <s:elseif test="dateOfDissolution != null">
+                        <s:property value="dateOfDissolution"/><br>
+                        <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
+                    </s:elseif>
                     <s:else>&nbsp;</s:else>
                 </td>
                 <td>
-                    <s:if test="preferredLanguage == 'si'">
+                    <% if(lang.equals("si")) {%>
                         <s:property value="typeOfMarriage.siType"/>
-                    </s:if>
-                    <s:elseif test="preferredLanguage == 'en'">
-                        <s:property value="typeOfMarriage.enType"/>
-                    </s:elseif>
-                    <s:elseif test="preferredLanguage == 'ta'">
+                    <% } else if(lang.equals("ta")) { %>
                         <s:property value="typeOfMarriage.taType"/>
-                    </s:elseif>
+                    <% } else { %>
+                        <s:property value="typeOfMarriage.enType"/>
+                    <%}%>
                 </td>
                 <td><s:property value="placeOfMarriage"/></td>
                 <s:if test="person.gender == 1">
@@ -685,6 +701,10 @@
                         </s:a>
                     </td>
                 </s:elseif>
+                <td>
+                    <%= MarriageStateUtil.getCivilStatus((Marriage.State) request.getAttribute("state"),
+                            ((Locale) session.getAttribute(WebConstants.SESSION_USER_LANG)).getLanguage())%>
+                </td>
             </tr>
         </s:iterator>
         </tbody>
