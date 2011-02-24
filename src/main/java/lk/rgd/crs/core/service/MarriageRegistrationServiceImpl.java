@@ -709,7 +709,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
                 m.setGroom(groom);
                 m.setBride(bride);
                 m.setDateOfMarriage(mr.getDateOfMarriage());
-                m.setPlaceOfMarriage(mr.getRegPlaceInEnglishLang());
+                m.setPlaceOfMarriage(mr.getRegPlaceInOfficialLang());
                 m.setState(Marriage.State.MARRIED);
                 m.setPreferredLanguage(mr.getPreferredLanguage());
                 m.setTypeOfMarriage(mr.getTypeOfMarriage());

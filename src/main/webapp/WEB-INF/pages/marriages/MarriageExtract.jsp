@@ -39,6 +39,7 @@
         var mode = document.getElementById("mode").value;
         if (mode == 'divorce') {
             errormsg = validateEmptyField("divorceComment", "errorComment", errormsg);
+            errormsg = validateEmptyField("effectiveDateDatePicker", "errorCommentDate", errormsg);
             return printErrorMessages(errormsg);
         }
     }
@@ -604,7 +605,7 @@
                 <td>
                     <label>
                     <span class="font-8">බලපැවැත්වෙන දිනය
-                        <br>in tamil<br>Effective Date of Divorce</span>
+                         <s:label value="*" cssStyle="color:red;font-size:10pt;"/> <br>in tamil<br>Effective Date of Divorce</span>
                     </label>
                 </td>
                 <td>
@@ -621,5 +622,7 @@
     </s:form>
     <s:hidden id="errorComment"
               value="%{getText('error.js.marriageregister.comment') + getText('message.cannotbeempty')}"/>
+    <s:hidden id="errorCommentDate"
+              value="%{getText('error.js.marriageregister.date') + getText('message.cannotbeempty')}"/>
 </s:if>
 </div>

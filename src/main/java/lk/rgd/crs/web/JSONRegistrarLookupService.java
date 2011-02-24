@@ -72,7 +72,6 @@ public class JSONRegistrarLookupService extends HttpServlet {
                 untyped.put("fullNameInOfficialLanguage", registrar.getFullNameInOfficialLanguage());
                 untyped.put("fullNameInEnglishLanguage", registrar.getFullNameInEnglishLanguage());
                 untyped.put("address", registrar.getCurrentAddress());
-
             }
         }
         catch (NumberFormatException e) {
