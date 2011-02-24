@@ -113,6 +113,7 @@ function isValidPIN(domElement) {
     return true;
 }
 
+
 function isFieldEmpty(domElement) {
     with (domElement) {
         return (value == null || value.trim() == "") ? true : false;

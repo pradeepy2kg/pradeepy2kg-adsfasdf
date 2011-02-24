@@ -38,6 +38,14 @@
         errormsg = validateSerialNo("serialNumber", "errorEmptySerialNumber", "errorInvalidSerialNumber", errormsg);
 
         errormsg = validateRegisterAndMarriedDate(errormsg);
+        var domObject = document.getElementById('malePIN');
+        if (!isFieldEmpty(domObject) && !isValidPIN(domObject)) {
+            errormsg = errormsg + "\n" + document.getElementById('text_id_male').value + document.getElementById('text_invalid_data').value
+        }
+        domObject = document.getElementById('femalePIN');
+        if (!isFieldEmpty(domObject) && !isValidPIN(domObject)) {
+            errormsg = errormsg + "\n" + document.getElementById('text_id_female').value + document.getElementById('text_invalid_data').value
+        }
 
         return printErrorMessages(errormsg);
     }
@@ -782,4 +790,8 @@
 <s:hidden id="errorEmptyscannedImage"
           value="%{getText('error.js.marriageregister.scannedImage') + getText('message.cannotbeempty')}"/>
 <s:hidden id="errorMarriageRegisterationDate" value="%{getText('error.dateOfMarriage.with.registerDate')}"/>
+<s:hidden id="text_id_male" value="%{getText('field.id.number.male')}"/>
+<s:hidden id="text_invalid_data" value="%{getText('error.invalid.data')}"/>
+<s:hidden id="text_id_female" value="%{getText('field.id.number.female')}"/>
+<s:hidden id="text_must_fill" value="%{getText('error.must.fill.data')}"/>
 </div>
