@@ -143,22 +143,8 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.SUPPORTS)
-    public MarriageRegister getMarriageLicenseByIdUKeyAndState(long idUKey, User user, int permission) {
-        ValidationUtils.validateUserPermission(permission, user);
-
-        EnumSet<MarriageRegister.State> stateList = StateUtil.getMarriageRegisterStateList(MarriageRegister.State.LICENSE_PRINTED);
-
-        MarriageRegister marriageRegister = marriageRegistrationDAO.getMarriageRegisterByIdUKeyAndState(idUKey, stateList);
-
-        return marriageRegister;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    @Transactional(propagation = Propagation.SUPPORTS)
-    public MarriageRegister getMarriageRegisterByIdUKeyAndState(long idUKey, User user, int permission) {
-        ValidationUtils.validateUserPermission(permission, user);
+    public MarriageRegister getMarriageRegisterByIdUKeyAndState(long idUKey, User user) {
+        ValidationUtils.validateUserPermission(Permission.SEARCH_MARRIAGE, user);
 
         EnumSet<MarriageRegister.State> stateList = StateUtil.getMarriageRegisterStateList(null);
 
@@ -173,8 +159,8 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.SUPPORTS)
-    public List<MarriageRegister> getMarriageRegisterBySerialNumber(long serialNumber, User user, int permission) {
-        ValidationUtils.validateUserPermission(permission, user);
+    public List<MarriageRegister> getMarriageRegisterBySerialNumber(long serialNumber, User user) {
+        ValidationUtils.validateUserPermission(Permission.SEARCH_MARRIAGE, user);
         EnumSet<MarriageRegister.State> stateList = StateUtil.getMarriageRegisterStateList(null);
         Set<DSDivision> dsDivisionList = null;
         if (!Role.ROLE_RG.equals(user.getRole().getRoleId())) {
@@ -745,7 +731,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      * @return matching person result if exist or null
      */
     private Person findGroomOrBride(String nicOrPin, User user) {
-        logger.debug("Location PRS entry using NIC or PIN : {}", nicOrPin);
+        logger.debug("Locating PRS entry using NIC or PIN : {}", nicOrPin);
         Person person = null;
         if (nicOrPin != null) {
             try {
@@ -767,10 +753,10 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void divorce(long idUKey, User user, int permission, String comment, Date effectiveDateOfDivorce,
-        MarriageRegister.State state) {
+    public void divorce(long idUKey, String comment, Date effectiveDateOfDivorce, MarriageRegister.State state,
+        User user) {
         //todo: to be renamed this method to divorce
-        ValidationUtils.validateUserPermission(permission, user);
+        ValidationUtils.validateUserPermission(Permission.DIVORCE, user);
         MarriageRegister marriageRegister = marriageRegistrationDAO.getByIdUKey(idUKey);
         ValidationUtils.validateUserAccessToDSDivision(marriageRegister.getMrDivision().getDsDivision().getDsDivisionUKey(), user);
         marriageRegister.setState(state);

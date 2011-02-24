@@ -55,34 +55,24 @@ public interface MarriageRegistrationService {
     public MarriageRegister getMarriageRegisterByIdUKey(long idUKey, User user, int permission);
 
     /**
-     * Returns marriage license filtered by primary key and state.
-     *
-     * @param idUKey     primary key of the marriage register
-     * @param user       user who performs the action
-     * @param permission permission level of the action
-     * @return
-     */
-    public MarriageRegister getMarriageLicenseByIdUKeyAndState(long idUKey, User user, int permission);
-
-    /**
      * Returns marriage register filtered by primary key and state.
+     *
      *
      * @param idUKey     primary key of the record
      * @param user       user who performs the action
-     * @param permission permission level of the action
      * @return
      */
-    public MarriageRegister getMarriageRegisterByIdUKeyAndState(long idUKey, User user, int permission);
+    public MarriageRegister getMarriageRegisterByIdUKeyAndState(long idUKey, User user);
 
     /**
      * Returns a Marriage register filtered by serial number
      *
+     *
      * @param serialNumber Serial Number of the marriage register
      * @param user         user who performs the action
-     * @param permission   permission level of the action
      * @return
      */
-    public List<MarriageRegister> getMarriageRegisterBySerialNumber(long serialNumber, User user, int permission);
+    public List<MarriageRegister> getMarriageRegisterBySerialNumber(long serialNumber, User user);
 
     /**
      * Returns a paginated list of Marriage Notices based on the specified District
@@ -545,14 +535,12 @@ public interface MarriageRegistrationService {
      * Update the status of marriage register
      *
      * @param idUKey                 primary key of the marriage register
-     * @param user                   user who perform the action
-     * @param permission             permission level of the action
      * @param comment                divorce comments
      * @param effectiveDateOfDivorce effective date of the divorce
      * @param state                  state of the marriage register
+     * @param user                   user who perform the action
      */
-    public void divorce(long idUKey, User user, int permission,
-        String comment, Date effectiveDateOfDivorce, MarriageRegister.State state);
+    public void divorce(long idUKey, String comment, Date effectiveDateOfDivorce, MarriageRegister.State state, User user);
 
     /**
      * reject muslim or noticed marriage registration
