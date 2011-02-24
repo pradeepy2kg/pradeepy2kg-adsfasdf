@@ -26,7 +26,7 @@ public class BirthAlterationServiceTest extends TestCase {
 
     protected final ApplicationContext ctx = UnitTestManager.ctx;
     protected final BirthRegistrationService birthRegSvc;
-    protected final BirthAlterationService   birthAltSvc;
+    protected final BirthAlterationService birthAltSvc;
     protected final PopulationRegistry eCivil;
     protected final BDDivisionDAO bdDivisionDAO;
     protected final CountryDAO countryDAO;
@@ -60,7 +60,7 @@ public class BirthAlterationServiceTest extends TestCase {
             deoGampahaNegambo = userManager.authenticateUser("deo-gampaha-negambo", "password");
             adrGampahaNegambo = userManager.authenticateUser("adr-gampaha-negambo", "password");
             argNorthWesternProvince = userManager.authenticateUser("arg-north-western", "password");
-            argWesternProvince      = userManager.authenticateUser("arg-western", "password");
+            argWesternProvince = userManager.authenticateUser("arg-western", "password");
         } catch (AuthorizationException e) {
             throw new IllegalArgumentException("Cannot authenticate sample users");
         }
@@ -81,7 +81,7 @@ public class BirthAlterationServiceTest extends TestCase {
         ba.setAlt27(alt27);
         ba.getDeclarant().setDeclarantFullName("Declarant name");
         ba.getDeclarant().setDeclarantAddress("Declarant address");
-       ba.getDeclarant().setDeclarantType(DeclarantInfo.DeclarantType.FATHER);
+        ba.getDeclarant().setDeclarantType(DeclarantInfo.DeclarantType.FATHER);
         ba.setBirthRecordDivision(colomboBDDivision);
         ba.setDateReceived(new Date());
         ba.setBdfIDUKey(bdfIdUKey);
@@ -111,14 +111,15 @@ public class BirthAlterationServiceTest extends TestCase {
         try {
             birthAltSvc.approveBirthAlteration(ba, fieldsToBeApproved, argNorthWesternProvince);
             fail("The north western province ARG should not be able to approve birth alteration for western province");
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
 
         // arg for western province can approve
         birthAltSvc.approveBirthAlteration(ba, fieldsToBeApproved, argWesternProvince);
 
         // save BDF serial number
         long regNumber = birthDeclarationDAO.getById(ba.getBdfIDUKey()).getRegister().getBdfSerialNo();
-        
+
         // birth record must be updated
         BirthDeclaration bdf = birthRegSvc.getActiveRecordByBDDivisionAndSerialNo(
             ba.getBirthRecordDivision(), regNumber, argWesternProvince);
@@ -165,7 +166,9 @@ public class BirthAlterationServiceTest extends TestCase {
         bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
 
         // DEO prints BC - mark BC as printed
-        birthRegSvc.markLiveBirthCertificateAsPrinted(bdf1, deoColomboColombo);
+        bdf1.getRegister().setOriginalBCIssueUser(adrColomboColombo);
+        bdf1.getRegister().setOriginalBCPlaceOfIssue(adrColomboColombo.getPrimaryLocation());
+        birthRegSvc.markLiveBirthCertificateAsPrinted(bdf1, adrColomboColombo);
         // reload again and check for update
         bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
         Assert.assertEquals(BirthDeclaration.State.ARCHIVED_CERT_PRINTED, bdf1.getRegister().getStatus());

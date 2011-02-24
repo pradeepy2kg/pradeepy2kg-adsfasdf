@@ -254,7 +254,7 @@
     </td>
     <td>
         <s:textfield name="user.pin" id="userPin" cssStyle="text-transform:none;width:90%;margin-left:0;"
-                     maxLength="10"/>
+                     maxLength="12"/>
     </td>
     <td></td>
 </tr>
