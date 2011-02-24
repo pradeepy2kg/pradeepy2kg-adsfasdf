@@ -8,8 +8,10 @@ import junit.framework.TestSuite;
 import lk.rgd.UnitTestManager;
 import lk.rgd.common.CustomStrutsTestCase;
 import lk.rgd.common.api.dao.CountryDAO;
+import lk.rgd.common.api.dao.LocationDAO;
 import lk.rgd.common.api.dao.RaceDAO;
 import lk.rgd.common.api.domain.Country;
+import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.domain.Race;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.service.UserManager;
@@ -37,6 +39,8 @@ public class BirthAlterationTest extends CustomStrutsTestCase {
     BirthRegisterAction registerAction;
     private LoginAction loginAction;
     protected static BDDivision colomboBDDivision;
+    protected static User adrColomboColombo;
+    protected static Location adrLocation;
     protected static Country sriLanka;
     protected static Race sinhalese;
     private BirthDeclaration bd;
@@ -55,6 +59,8 @@ public class BirthAlterationTest extends CustomStrutsTestCase {
                 colomboBDDivision = bdDivisionDAO.getBDDivisionByPK(1);
                 sriLanka = countryDAO.getCountry(1);
                 sinhalese = raceDOA.getRace(1);
+                adrColomboColombo = userManager.authenticateUser("adr-colombo-colombo", "password");
+                adrLocation = adrColomboColombo.getPrimaryLocation();
 
                 List birth = sampleBirths();
                 User sampleUser = loginSampleUser();
@@ -105,8 +111,7 @@ public class BirthAlterationTest extends CustomStrutsTestCase {
         User rg = null;
         try {
             rg = userManager.authenticateUser("rg", "password");
-        }
-        catch (AuthorizationException e) {
+        } catch (AuthorizationException e) {
             logger.debug("exception when authorizing a user :'rg' ");
         }
         return rg;
@@ -206,6 +211,9 @@ public class BirthAlterationTest extends CustomStrutsTestCase {
             informant.setInformantSignDate(gCal.getTime());
 
             ConfirmantInfo confirmant = new ConfirmantInfo();
+            // birth certificate issue user and issu location added
+            register.setOriginalBCIssueUser(adrColomboColombo);
+            register.setOriginalBCPlaceOfIssue(adrLocation);
 
             bd.setChild(child);
             bd.setRegister(register);
@@ -285,7 +293,7 @@ public class BirthAlterationTest extends CustomStrutsTestCase {
         //check death register is populated
         //check basic list are populated if success
 
-      //  otherLists(birthAlterationAction);
+        //  otherLists(birthAlterationAction);
     }
 
     private void otherLists(BirthAlterationAction birthAlterationAction) {

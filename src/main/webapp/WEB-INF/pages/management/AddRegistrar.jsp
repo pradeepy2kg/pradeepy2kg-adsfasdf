@@ -155,7 +155,7 @@
             </tr>
             <tr>
                 <td align="left"><s:property value="%{getText('registrar.email')}"/></td>
-                <td align="left"><s:textfield id="registrarEmail" name="registrar.emailAddress"/></td>
+                <td align="left"><s:textfield id="registrarEmail" name="registrar.emailAddress" cssStyle="text-transform:none;"/></td>
             </tr>
             <tr>
                 <td align="left"><s:property value="%{getText('registrar.prefLang')}"/></td>

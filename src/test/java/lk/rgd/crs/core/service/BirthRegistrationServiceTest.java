@@ -302,7 +302,9 @@ public class BirthRegistrationServiceTest extends TestCase {
         Assert.assertTrue("confirmed record must now show up for BC printing", found);
 
         // DEO prints BC - mark BC as printed
-        birthRegSvc.markLiveBirthCertificateAsPrinted(bdf1, deoColomboColombo);
+        bdf1.getRegister().setOriginalBCIssueUser(adrColomboColombo);
+        bdf1.getRegister().setOriginalBCPlaceOfIssue(adrColomboColombo.getPrimaryLocation());
+        birthRegSvc.markLiveBirthCertificateAsPrinted(bdf1, adrColomboColombo);
         // reload again and check for update
         bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
         Assert.assertEquals(BirthDeclaration.State.ARCHIVED_CERT_PRINTED, bdf1.getRegister().getStatus());
@@ -394,7 +396,9 @@ public class BirthRegistrationServiceTest extends TestCase {
         birthDeclarationDAO.updateBirthDeclaration(bdf1, deoColomboColombo);
 
         // DEO prints BC - mark BC as printed
-        birthRegSvc.markLiveBirthCertificateAsPrinted(bdf1, deoColomboColombo);
+        bdf1.getRegister().setOriginalBCIssueUser(adrColomboColombo);
+        bdf1.getRegister().setOriginalBCPlaceOfIssue(adrColomboColombo.getPrimaryLocation());
+        birthRegSvc.markLiveBirthCertificateAsPrinted(bdf1, adrColomboColombo);
         // reload again and check for update
         bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
         Assert.assertEquals(BirthDeclaration.State.ARCHIVED_CERT_PRINTED, bdf1.getRegister().getStatus());
@@ -790,7 +794,7 @@ public class BirthRegistrationServiceTest extends TestCase {
         // asankha some temp code to check if 2nd level caching works
         EntityManagerFactoryInfo emfi = (EntityManagerFactoryInfo) ctx.getBean("entityManagerFactory");
         EntityManagerFactory emf = emfi.getNativeEntityManagerFactory();
-        EntityManagerFactoryImpl empImpl = (EntityManagerFactoryImpl)emf;
+        EntityManagerFactoryImpl empImpl = (EntityManagerFactoryImpl) emf;
         System.out.println(empImpl.getSessionFactory().getStatistics());
     }
 }
