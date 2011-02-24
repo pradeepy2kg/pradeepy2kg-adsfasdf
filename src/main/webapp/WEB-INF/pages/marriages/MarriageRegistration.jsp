@@ -784,8 +784,4 @@
 <s:hidden id="errorEmptyscannedImage"
           value="%{getText('error.js.marriageregister.scannedImage') + getText('message.cannotbeempty')}"/>
 <s:hidden id="errorMarriageRegistrationDate" value="%{getText('error.dateOfMarriage.with.registerDate')}"/>
-<s:hidden id="text_id_male" value="%{getText('field.id.number.male')}"/>
-<s:hidden id="text_invalid_data" value="%{getText('error.invalid.data')}"/>
-<s:hidden id="text_id_female" value="%{getText('field.id.number.female')}"/>
-<s:hidden id="text_must_fill" value="%{getText('error.must.fill.data')}"/>
 </div>
