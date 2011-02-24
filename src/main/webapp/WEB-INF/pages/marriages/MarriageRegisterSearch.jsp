@@ -44,7 +44,7 @@
 
     function validatePINNumber() {
         var errormsg = "";
-        errormsg = validatePin("pinOrNic", "errorEmptyRegistrarPIN", "errorInvalidRegistrarPIN", errormsg);
+        errormsg = validatePinOrNic("pinOrNic", "errorEmptyRegistrarPIN", "errorInvalidRegistrarPIN", errormsg);
         return printErrorMessages(errormsg);
     }
 
