@@ -7,8 +7,10 @@ import lk.rgd.common.api.dao.AppParametersDAO;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
+import lk.rgd.crs.api.dao.AssignmentDAO;
 import lk.rgd.crs.api.dao.MarriageRegistrationDAO;
 import lk.rgd.crs.api.domain.*;
+import lk.rgd.crs.api.service.RegistrarManagementService;
 import lk.rgd.prs.api.domain.Marriage;
 import lk.rgd.prs.api.domain.Person;
 import lk.rgd.prs.api.service.PopulationRegistry;
@@ -36,11 +38,15 @@ public class MarriageRegistrationValidator {
     private final MarriageRegistrationDAO marriageRegistrationDAO;
     private final AppParametersDAO appParametersDAO;
     private final PopulationRegistry populationRegistry;
+    private final RegistrarManagementService registrarManagementService;
+    private final AssignmentDAO assignmentDAO;
 
-    public MarriageRegistrationValidator(MarriageRegistrationDAO marriageRegistrationDAO, AppParametersDAO appParametersDAO, PopulationRegistry populationRegistry) {
+    public MarriageRegistrationValidator(MarriageRegistrationDAO marriageRegistrationDAO, AppParametersDAO appParametersDAO, PopulationRegistry populationRegistry, RegistrarManagementService registrarManagementService, AssignmentDAO assignmentDAO) {
         this.marriageRegistrationDAO = marriageRegistrationDAO;
         this.appParametersDAO = appParametersDAO;
         this.populationRegistry = populationRegistry;
+        this.registrarManagementService = registrarManagementService;
+        this.assignmentDAO = assignmentDAO;
     }
 
     /**
@@ -133,9 +139,64 @@ public class MarriageRegistrationValidator {
             checkDuplicatePinOrNic(malePin, femalePin, warnings, rb, "duplicate_male_female_pin");
         }
 
-        // check prohibited relationships
-        // TODO
+        //check is registrar is assign to this job
+        //we cannot validate this with minister so we only look at registrars
+        //following warning only issue when it is come by a notice
+        if (mr.getSerialOfMaleNotice() != null || mr.getSerialOfFemaleNotice() != null) {
+            try {
+                Registrar registrar = registrarManagementService.getRegistrarByPin(Long.parseLong(mr.getRegistrarOrMinisterPIN()), user);
+                //assign type
+                Assignment.Type assignmentType = null;
+                boolean isRegistrarHasPermission = false;
+                switch (mr.getTypeOfMarriage()) {
+                    case GENERAL:
+                        assignmentType = Assignment.Type.GENERAL_MARRIAGE;
+                        break;
+                    case MUSLIM:
+                        assignmentType = Assignment.Type.MUSLIM_MARRIAGE;
+                        break;
+                    case KANDYAN_BINNA:
+                    case KANDYAN_DEEGA:
+                        assignmentType = Assignment.Type.KANDYAN_MARRIAGE;
+                        break;
+                }
+                if (registrar != null && registrar.getLifeCycleInfo().isActive()) {
+                    Set<Assignment> registrarsAssignments = registrar.getAssignments();
+                    //check is registrar is assign to do marriages with give type
+                    for (Assignment assignment : registrarsAssignments) {
+                        if (assignment.getLifeCycleInfo().isActive() == true && assignment.getType() == assignmentType) {
+                            logger.debug("registrar : {} ,is assigned to register : {} , marriages ",
+                                registrar.getPin(), assignmentType);
+                            //check only active assignments
+                            //check is registrar is terminated from the job
+                            if (assignment.getTerminationDate() != null &&
+                                assignment.getTerminationDate().before(mr.getDateOfMarriage())) {
+                                if (logger.isDebugEnabled()) {
+                                    logger.debug("registrar : " + registrar.getPin() +
+                                        " is terminated form the task registering : " + assignmentType +
+                                        " marriages from : " + assignment.getTerminationDate());
+                                }
+                                //that mean this registrar is terminated by this day
+                                warnings.add(new UserWarning(MessageFormat.
+                                    format(rb.getString("warn.registrar.terminate.by.date.of.marriage"), Long.toString(registrar.getPin())),
+                                    UserWarning.Severity.WARN));
+                            }
+                            isRegistrarHasPermission = true;
+                            break;
+                        }
+                    }
+                    if (!isRegistrarHasPermission) {
+                        warnings.add(new UserWarning(MessageFormat.
+                            format(rb.getString("warn.registrar.does.not.have.permission.to.do.marriage"), assignmentType, Long.toString(registrar.getPin())),
+                            UserWarning.Severity.WARN));
+                    }
 
+                }                 //check
+            }
+            catch (NumberFormatException e) {
+                //do nothing this is happen try to find a registrar by PIN
+            }
+        }
         return warnings;
     }
 

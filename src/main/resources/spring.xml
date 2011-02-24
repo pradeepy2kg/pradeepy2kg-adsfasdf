@@ -154,6 +154,8 @@
         <constructor-arg ref="marriageRegistrationDAOImpl"/>
         <constructor-arg ref="appParametersDAOImpl"/>
         <constructor-arg ref="ecivilService"/>
+        <constructor-arg ref="registrarManagementService"/>
+        <constructor-arg ref="assignmentDAOImpl"/>
     </bean>
 
     <bean id="populationRegisterValidator" class="lk.rgd.crs.core.service.PopulationRegisterValidator">

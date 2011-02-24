@@ -126,7 +126,7 @@
             </s:else>
             <img src="<s:url value='/images/search-father.png' />"
                  style="vertical-align:middle;" id="registrar_lookup"
-                 onmouseover="registrarLookup('regPIN')">
+                 onclick="registrarLookup('regPIN')">
         </td>
     </tr>
     <tr>
