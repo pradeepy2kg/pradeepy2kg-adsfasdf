@@ -284,8 +284,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
                 //TODO : refactor rename licensePrintedLocationId and licenseIssuedUserId in order to user this attribute for both notice and Extract print
                 marriageRegistrationService.markDivorceExtractAsPrinted(idUKey, locationDAO.
                     getLocation(licensePrintedLocationId), userDAO.getUserByPK(licenseIssuedUserId), user);
-            }
-            catch (CRSRuntimeException e) {
+            } catch (CRSRuntimeException e) {
                 switch (e.getErrorCode()) {
                     case ErrorCodes.MARRIAGE_REGISTER_NOT_FOUND:
                         addActionError(getText("error.marriageregister.notfound"));
@@ -323,8 +322,8 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         } else {
             try {
                 //TODO : refactor rename licensePrintedLocationId and licenseIssuedUserId in order to user this attribute for both notice and Extract print
-                marriageRegistrationService.divorce(idUKey, user, Permission.DIVORCE,
-                    comment, effectiveDateOfDivorce, MarriageRegister.State.DIVORCE);
+                marriageRegistrationService.divorce(idUKey, comment, effectiveDateOfDivorce,
+                    MarriageRegister.State.DIVORCE, user);
             } catch (CRSRuntimeException e) {
                 addActionError(getText("error.marriageregister.divorcefailed"));
                 return ERROR;
@@ -366,10 +365,9 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         //Search by marriage registration number - IDukey
         if (marriageIdUKey != 0) {
             marriageRegisterSearchList = new ArrayList<MarriageRegister>();
-            MarriageRegister marriageRegister = marriageRegistrationService.getMarriageRegisterByIdUKeyAndState
-                (marriageIdUKey, user, Permission.SEARCH_MARRIAGE);
-            if (marriageRegister != null) {
-                marriageRegisterSearchList.add(marriageRegister);
+            MarriageRegister mr = marriageRegistrationService.getMarriageRegisterByIdUKeyAndState(marriageIdUKey, user);
+            if (mr != null) {
+                marriageRegisterSearchList.add(mr);
             }
         } else if (pinOrNic != null) {
             //search by male/female/registrar identification number
@@ -377,8 +375,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
 
         } else if (noticeSerialNo != null) {
             //search by marriage serial number.
-            marriageRegisterSearchList = marriageRegistrationService.getMarriageRegisterBySerialNumber(noticeSerialNo,
-                user, Permission.SEARCH_MARRIAGE);
+            marriageRegisterSearchList = marriageRegistrationService.getMarriageRegisterBySerialNumber(noticeSerialNo, user);
 
         } else {
             if (districtId != 0 & dsDivisionId != 0 & mrDivisionId != 0) { // all selected
@@ -566,7 +563,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
             logger.debug("failed to reject marriage notice idUKey : {} : notice type : {}  ", idUKey, noticeType);
             addActionError(getText("error.rejection.fail", new String[]{Long.
                 toString((noticeType == MarriageNotice.Type.FEMALE_NOTICE) ?
-                marriage.getSerialOfFemaleNotice() : marriage.getSerialOfMaleNotice())}));
+                    marriage.getSerialOfFemaleNotice() : marriage.getSerialOfMaleNotice())}));
             commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId,
                 dsDivisionId, mrDivisionId, AppConstants.MARRIAGE, user, language);
             getApprovalPendingNotices();
@@ -574,7 +571,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         }
         addActionMessage(getText("message.rejection.success", new String[]{Long.
             toString((noticeType == MarriageNotice.Type.FEMALE_NOTICE) ?
-            marriage.getSerialOfFemaleNotice() : marriage.getSerialOfMaleNotice())}));
+                marriage.getSerialOfFemaleNotice() : marriage.getSerialOfMaleNotice())}));
         commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId,
             dsDivisionId, mrDivisionId, AppConstants.MARRIAGE, user, language);
         getApprovalPendingNotices();
@@ -828,7 +825,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
                             if (searchStartDate != null && searchEndDate != null) {
                                 searchList = WebUtils.populateNoticeList(marriageRegistrationService.
                                     getMarriageNoticeByDistrictAndDateRange(districtDAO.getDistrict(districtId),
-                                    searchStartDate, searchEndDate, pageNo, noOfRows, true, user));
+                                        searchStartDate, searchEndDate, pageNo, noOfRows, true, user));
                                 if (searchList.size() > 0) {
                                     addActionMessage(getText("message.result.to.from",
                                         new String[]{DateTimeUtils.getISO8601FormattedString(searchStartDate),
