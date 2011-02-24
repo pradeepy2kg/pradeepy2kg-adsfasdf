@@ -1,10 +1,7 @@
 package lk.rgd.crs.core;
 
 import lk.rgd.ErrorCodes;
-import lk.rgd.common.api.domain.DSDivision;
-import lk.rgd.common.api.domain.District;
-import lk.rgd.common.api.domain.Role;
-import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.*;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.MRDivision;
@@ -27,6 +24,23 @@ public class ValidationUtils {
         )) {
             handleException("User : " + user.getUserId() + " is not allowed access to the District : " +
                 district.getDistrictUKey(), ErrorCodes.PERMISSION_DENIED);
+        }
+    }
+
+    public static void validateAccessToLocation(Location location, User user) {
+        if (location != null && user != null) {
+            if (!(User.State.ACTIVE == user.getStatus()
+                &&
+                (Role.ROLE_RG.equals(user.getRole().getRoleId())
+                    ||
+                    user.isAllowedAccessToLocation(location.getLocationUKey())
+                )
+            )) {
+                handleException("User : " + user.getUserId() + " is not allowed access to the Location : " +
+                    location.getLocationUKey(), ErrorCodes.PERMISSION_DENIED);
+            }
+        } else {
+            handleException("Person or User performing the action not complete", ErrorCodes.INVALID_DATA);
         }
     }
 
