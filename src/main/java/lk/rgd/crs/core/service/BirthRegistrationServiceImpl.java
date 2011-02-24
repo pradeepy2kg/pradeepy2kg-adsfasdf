@@ -868,9 +868,16 @@ public class BirthRegistrationServiceImpl implements
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void markLiveBirthCertificateAsPrinted(BirthDeclaration bdf, User user) {
-        // TODO validate access to location
-        validateBirthType(bdf, BirthDeclaration.BirthType.LIVE);
+
         logger.debug("Request to mark as Birth certificate printed for record : {}", bdf.getIdUKey());
+        validateBirthType(bdf, BirthDeclaration.BirthType.LIVE);
+        if (!user.isAuthorized(Permission.MARK_BIRTH_CERT_PRINTED)) {
+            handleException("User : " + user.getUserId() + " is not allowed to mark Live Birth Certificate as printed",
+                ErrorCodes.PERMISSION_DENIED);
+        }
+        // validate access for certificate issue user to the certificate issuing location
+        ValidationUtils.validateAccessToLocation(bdf.getRegister().getOriginalBCPlaceOfIssue(),
+            bdf.getRegister().getOriginalBCIssueUser());
 
         // load the existing record
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
@@ -884,8 +891,6 @@ public class BirthRegistrationServiceImpl implements
         existing.getRegister().setOriginalBCPlaceOfIssue(bdf.getRegister().getOriginalBCPlaceOfIssue());
         existing.getRegister().setOriginalBCIssueUser(bdf.getRegister().getOriginalBCIssueUser());
         existing.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CERT_PRINTED);
-        final Date originalBCDateOfIssue = new Date();
-        // TODO existing.getRegister().setOriginalBCPlaceOfIssue();
         birthDeclarationDAO.updateBirthDeclaration(existing, user);
 
         logger.debug("Marked as Birth certificate printed for record : {}", bdf.getIdUKey());
@@ -897,8 +902,15 @@ public class BirthRegistrationServiceImpl implements
     @Transactional(propagation = Propagation.REQUIRED)
     public void markStillBirthCertificateAsPrinted(BirthDeclaration bdf, User user) {
 
-        validateBirthType(bdf, BirthDeclaration.BirthType.STILL);
         logger.debug("Request to mark as Still Birth certificate printed for record : {}", bdf.getIdUKey());
+        validateBirthType(bdf, BirthDeclaration.BirthType.STILL);
+        if (!user.isAuthorized(Permission.MARK_BIRTH_CERT_PRINTED)) {
+            handleException("User : " + user.getUserId() + " is not allowed to mark Still Birth Certificate as printed",
+                ErrorCodes.PERMISSION_DENIED);
+        }
+        // validate access for certificate issue user to the certificate issuing location
+        ValidationUtils.validateAccessToLocation(bdf.getRegister().getOriginalBCPlaceOfIssue(),
+            bdf.getRegister().getOriginalBCIssueUser());
 
         // load the existing record
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
@@ -912,8 +924,6 @@ public class BirthRegistrationServiceImpl implements
         existing.getRegister().setOriginalBCPlaceOfIssue(bdf.getRegister().getOriginalBCPlaceOfIssue());
         existing.getRegister().setOriginalBCIssueUser(bdf.getRegister().getOriginalBCIssueUser());
         existing.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CERT_PRINTED);
-        final Date originalBCDateOfIssue = new Date();
-        // TODO existing.getRegister().setOriginalBCPlaceOfIssue();
         birthDeclarationDAO.updateBirthDeclaration(existing, user);
 
         logger.debug("Marked as Still Birth certificate printed for record : {}", bdf.getIdUKey());
@@ -925,8 +935,15 @@ public class BirthRegistrationServiceImpl implements
     @Transactional(propagation = Propagation.REQUIRED)
     public void markBelatedBirthCertificateAsPrinted(BirthDeclaration bdf, User user) {
 
-        validateBirthType(bdf, BirthDeclaration.BirthType.BELATED);
         logger.debug("Request to mark as Birth certificate printed for belated record : {}", bdf.getIdUKey());
+        validateBirthType(bdf, BirthDeclaration.BirthType.BELATED);
+        if (!user.isAuthorized(Permission.MARK_BIRTH_CERT_PRINTED)) {
+            handleException("User : " + user.getUserId() + " is not allowed to mark Belated Birth Certificate as printed",
+                ErrorCodes.PERMISSION_DENIED);
+        }
+        // validate access for certificate issue user to the certificate issuing location
+        ValidationUtils.validateAccessToLocation(bdf.getRegister().getOriginalBCPlaceOfIssue(),
+            bdf.getRegister().getOriginalBCIssueUser());
 
         // load the existing record
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
@@ -940,8 +957,6 @@ public class BirthRegistrationServiceImpl implements
         existing.getRegister().setOriginalBCPlaceOfIssue(bdf.getRegister().getOriginalBCPlaceOfIssue());
         existing.getRegister().setOriginalBCIssueUser(bdf.getRegister().getOriginalBCIssueUser());
         existing.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CERT_PRINTED);
-        final Date originalBCDateOfIssue = new Date();
-        // TODO existing.getRegister().setOriginalBCPlaceOfIssue();
         birthDeclarationDAO.updateBirthDeclaration(existing, user);
 
         logger.debug("Marked as Birth certificate printed for belated record : {}", bdf.getIdUKey());
@@ -953,8 +968,15 @@ public class BirthRegistrationServiceImpl implements
     @Transactional(propagation = Propagation.REQUIRED)
     public void markAdoptionBirthCertificateAsPrinted(BirthDeclaration bdf, User user) {
 
-        validateBirthType(bdf, BirthDeclaration.BirthType.ADOPTION);
         logger.debug("Request to mark as Adoption Birth certificate printed for record : {}", bdf.getIdUKey());
+        validateBirthType(bdf, BirthDeclaration.BirthType.ADOPTION);
+        if (!user.isAuthorized(Permission.MARK_BIRTH_CERT_PRINTED)) {
+            handleException("User : " + user.getUserId() + " is not allowed to mark Adoption Birth Certificate as printed",
+                ErrorCodes.PERMISSION_DENIED);
+        }
+        // validate access for certificate issue user to the certificate issuing location
+        ValidationUtils.validateAccessToLocation(bdf.getRegister().getOriginalBCPlaceOfIssue(),
+            bdf.getRegister().getOriginalBCIssueUser());
 
         // load the existing record
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
@@ -968,8 +990,6 @@ public class BirthRegistrationServiceImpl implements
         existing.getRegister().setOriginalBCPlaceOfIssue(bdf.getRegister().getOriginalBCPlaceOfIssue());
         existing.getRegister().setOriginalBCIssueUser(bdf.getRegister().getOriginalBCIssueUser());
         existing.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CERT_PRINTED);
-        final Date originalBCDateOfIssue = new Date();
-        // TODO existing.getRegister().setOriginalBCPlaceOfIssue();
         birthDeclarationDAO.updateBirthDeclaration(existing, user);
 
         logger.debug("Marked as Adoption Birth certificate printed for record : {}", bdf.getIdUKey());
@@ -1129,8 +1149,7 @@ public class BirthRegistrationServiceImpl implements
                 AdoptionOrder adoptionOrder = adoptionOrderService.getById(birthDeclaration.getRegister().getAdoptionUKey(), user);
                 adoptionOrder.setStatus(AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED);
                 adoptionOrderService.updateAdoptionOrder(adoptionOrder, user);
-            }
-            catch (CRSRuntimeException e) {
+            } catch (CRSRuntimeException e) {
                 handleException("Cannot update adoption order idUKey : " +
                     birthDeclaration.getRegister().getAdoptionUKey() + " birth record idUKey :" +
                     birthDeclaration.getIdUKey(), ErrorCodes.UNABLE_TO_UPDATE_ADOPTION_ORDER);

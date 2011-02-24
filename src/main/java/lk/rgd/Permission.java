@@ -42,6 +42,7 @@ public final class Permission {
     public static final int SEARCH_REGISTRAR = 36;
     public static final int VIEW_MARRIAGE_REGISTER = 37;
     public static final int DIVORCE = 38;
+    public static final int MARK_BIRTH_CERT_PRINTED = 39;
 
     // permission for PRS
     public static final int PRS_ADD_PERSON = 50;

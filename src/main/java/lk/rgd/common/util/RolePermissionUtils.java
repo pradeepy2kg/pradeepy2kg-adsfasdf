@@ -53,8 +53,8 @@ public class RolePermissionUtils {
         deoBitSet.set(Permission.VIEW_MARRIAGE_REGISTER);
         deoBitSet.set(Permission.SEARCH_MARRIAGE);
         deoBitSet.set(Permission.VIEW_SCANNED_MARRIAGE_CERT);
-        // ADR
 
+        // ADR
         adrBitSet = new BitSet();
         adrBitSet.or(deoBitSet);
         adrBitSet.set(Permission.APPROVE_BDF);
@@ -72,6 +72,8 @@ public class RolePermissionUtils {
         adrBitSet.set(Permission.APPROVE_MARRIAGE);
         adrBitSet.set(Permission.DIVORCE);
         adrBitSet.set(Permission.APPROVE_BIRTH_ALTERATION);
+        adrBitSet.set(Permission.MARK_BIRTH_CERT_PRINTED);
+
         // DR
         drBitSet = new BitSet();
         drBitSet.or(adrBitSet);
