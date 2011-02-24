@@ -287,8 +287,8 @@
             </a>
         </li>
         <li>
-            <a id="menu.marriage.register.search" href="/ecivil/marriages/eprMarriageRegisterSearchInit.do">
-                විවාහ ලේකම් පොත සේවීම
+            <a id="menu.marriage.notice.search" href="/ecivil/marriages/eprMarriageNoticeSearchInit.do">
+                විවාහ දැන්වීම් සෙවීම
             </a>
         </li>
         <li>
@@ -302,8 +302,8 @@
             </a>
         </li>
         <li>
-            <a id="menu.marriage.notice.search" href="/ecivil/marriages/eprMarriageNoticeSearchInit.do">
-                විවාහ දැන්වීම් සෙවීම
+            <a id="menu.marriage.register.search" href="/ecivil/marriages/eprMarriageRegisterSearchInit.do">
+                විවාහ ලේකම් පොත සේවීම
             </a>
         </li>
     </ul>

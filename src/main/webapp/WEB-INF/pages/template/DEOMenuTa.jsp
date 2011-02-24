@@ -244,13 +244,13 @@
             </a>
         </li>
         <li>
-            <a id="menu.marriage.register.search" href="/ecivil/marriages/eprMarriageRegisterSearchInit.do">
-                Marriage Register Search in tamil
+            <a id="menu.marriage.notice.search" href="/ecivil/marriages/eprMarriageNoticeSearchInit.do">
+                Marriage Notice Search in ta
             </a>
         </li>
         <li>
             <a id="menu.marriagelicense.search" href="/ecivil/marriages/eprMarriageLicenseSearchInit.do">
-                Marriage License Search in tamil
+                Marriage License Search in ta
             </a>
         </li>
         <li>
@@ -259,8 +259,8 @@
             </a>
         </li>
         <li>
-            <a id="menu.marriage.notice.search" href="/ecivil/marriages/eprMarriageNoticeSearchInit.do">
-                Search Notice in ta
+            <a id="menu.marriage.register.search" href="/ecivil/marriages/eprMarriageRegisterSearchInit.do">
+                Marriage Register Search in tamil
             </a>
         </li>
     </ul>
