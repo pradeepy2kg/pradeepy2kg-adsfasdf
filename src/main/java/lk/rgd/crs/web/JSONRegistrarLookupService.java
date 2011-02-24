@@ -1,5 +1,7 @@
 package lk.rgd.crs.web;
 
+import lk.rgd.prs.api.domain.Person;
+import lk.rgd.prs.api.service.PopulationRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -23,19 +25,22 @@ import java.util.HashMap;
 
 /**
  * @author Mahesha
+ * @author amith jayasekara
  */
 public class JSONRegistrarLookupService extends HttpServlet {
     private static final Logger logger = LoggerFactory.getLogger(JSONRegistrarLookupService.class);
 
     private final ObjectMapper mapper = new ObjectMapper();
     private RegistrarManagementService registrarManager;
+    private PopulationRegistry populationRegistry;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         WebApplicationContext context =
             WebApplicationContextUtils.getRequiredWebApplicationContext(config.getServletContext());
-        registrarManager = (RegistrarManagementService)context.getBean("registrarManagementService");
+        registrarManager = (RegistrarManagementService) context.getBean("registrarManagementService");
+        populationRegistry = (PopulationRegistry) context.getBean("ecivilService");
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -46,7 +51,7 @@ public class JSONRegistrarLookupService extends HttpServlet {
 
         String pinOrNic = request.getParameter(WebConstants.REQUEST_PIN_NIC);
         logger.debug("Received Pin/NIC : " + pinOrNic);
-
+        HashMap<String, Object> untyped = new HashMap<String, Object>();
         User user;
         HttpSession session = request.getSession(false);
         if (session == null || session.isNew()) {
@@ -60,18 +65,31 @@ public class JSONRegistrarLookupService extends HttpServlet {
             }
         }
 
-        Registrar registrar = registrarManager.getRegistrarByPin(Long.parseLong(pinOrNic), user);
-        if (registrar != null) {
-            response.setContentType("application/json; charset=utf-8");
-            PrintWriter out = response.getWriter();
-            HashMap<String, Object> untyped = new HashMap<String, Object>();
+        try {
+            Registrar registrar = registrarManager.getRegistrarByPin(Long.parseLong(pinOrNic), user);
+            if (registrar != null) {
+                logger.debug("registrar found for pin or nic :{}", pinOrNic);
+                untyped.put("fullNameInOfficialLanguage", registrar.getFullNameInOfficialLanguage());
+                untyped.put("fullNameInEnglishLanguage", registrar.getFullNameInEnglishLanguage());
+                untyped.put("address", registrar.getCurrentAddress());
 
-            untyped.put("fullNameInOfficialLanguage", registrar.getFullNameInOfficialLanguage());
-            untyped.put("fullNameInEnglishLanguage", registrar.getFullNameInEnglishLanguage());
-            untyped.put("address", registrar.getCurrentAddress());
-
-            mapper.writeValue(out, untyped);
-            out.flush();
+            }
         }
+        catch (NumberFormatException e) {
+            //find minister in PRS there is no way to validate given person is a minister
+            Person minister = populationRegistry.findUniquePersonByPINorNIC(pinOrNic, user);
+            if (minister != null) {
+                logger.debug("person found as a minister , pin or nic : {}", pinOrNic);
+                untyped.put("fullNameInOfficialLanguage", minister.getFullNameInOfficialLanguage());
+                untyped.put("fullNameInEnglishLanguage", minister.getFullNameInEnglishLanguage());
+                untyped.put("address", minister.getCurrentAddress());
+            }
+        }
+
+        response.setContentType("application/json; charset=utf-8");
+        PrintWriter out = response.getWriter();
+        mapper.writeValue(out, untyped);
+        out.flush();
+
     }
 }
