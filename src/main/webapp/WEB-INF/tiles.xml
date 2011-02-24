@@ -576,6 +576,14 @@
         <put-attribute name="title" value="title.marriage.register.warnings"/>
     </definition>
 
+    <definition name="epr.marriageRegistrationSuccess" extends="epr.template">
+        <description>
+            success page for marriage registration
+        </description>
+        <put-attribute name="body" value="/WEB-INF/pages/marriages/MarriageRegistrationResults.jsp"/>
+        <put-attribute name="title" value="title.marriage.registration.results"/>
+    </definition>
+
     <definition name="epr.marriageLicenseSearchInit" extends="epr.template">
         <description>
             marriage license search jsp page

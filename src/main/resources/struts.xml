@@ -1432,27 +1432,27 @@
 
         <action name="eprRegisterNewMarriage" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
                 method="registerNewMarriage">
-            <result type="tiles" name="success">epr.success</result>
+            <result type="tiles" name="success">epr.marriageRegistrationSuccess</result>
             <result type="tiles" name="input">epr.marriageRegistration</result>
         </action>
 
         <action name="eprUpdateMarriage" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
                 method="updateMarriageDetails">
-            <result type="tiles" name="success">epr.success</result>
+            <result type="tiles" name="success">epr.marriageRegistrationSuccess</result>
             <result type="tiles" name="input">epr.marriageRegistration</result>
         </action>
 
         <action name="eprUpdateAndApproveMuslimMarriage"
                 class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
                 method="updateAndApproveMuslimMarriage">
-            <result type="tiles" name="success">epr.success</result>
+            <result type="tiles" name="success">epr.marriageRegistrationSuccess</result>
             <result type="tiles" name="input">epr.marriageRegistration</result>
             <result type="tiles" name="warning">epr.marriageRegisterWarnings</result>
         </action>
 
         <action name="eprRegisterNoticedMarriage" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
                 method="registerNoticedMarriage">
-            <result type="tiles" name="success">epr.success</result>
+            <result type="tiles" name="success">epr.marriageRegistrationSuccess</result>
             <result type="tiles" name="input">epr.marriageRegistration</result>
         </action>
 
@@ -1610,7 +1610,7 @@
                 class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
                 method="registerAndApproveNewMarriage">
             <param name="register">true</param>
-            <result type="tiles" name="success">epr.success</result>
+            <result type="tiles" name="success">epr.marriageRegistrationSuccess</result>
             <result type="tiles" name="input">epr.marriageRegistration</result>
             <result type="tiles" name="warning">epr.marriageRegisterWarnings</result>
         </action>
@@ -1625,14 +1625,14 @@
         <action name="eprMarkMarriageExtractAsPrinted"
                 class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
                 method="markMarriageExtractAsPrinted">
-            <result name="success" type="tiles">epr.success</result>
+            <result name="success" type="tiles">epr.marriageRegistrationSuccess</result>
             <result name="error" type="tiles">epr.error</result>
         </action>
 
         <action name="eprMarkDivorceExtractAsPrinted"
                 class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
                 method="markDivorceExtractAsPrinted">
-            <result name="success" type="tiles">epr.success</result>
+            <result name="success" type="tiles">epr.marriageRegistrationSuccess</result>
             <result name="error" type="tiles">epr.error</result>
         </action>
 
@@ -1644,7 +1644,7 @@
 
         <action name="eprDivorce" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
                 method="divorce">
-            <result name="success" type="tiles">epr.success</result>
+            <result name="success" type="tiles">epr.marriageRegistrationSuccess</result>
             <result name="error" type="tiles">epr.error</result>
         </action>
 
