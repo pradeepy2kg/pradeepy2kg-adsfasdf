@@ -292,8 +292,8 @@
             </a>
         </li>
         <li>
-            <a id="menu.marriage.register.search" href="/ecivil/marriages/eprMarriageRegisterSearchInit.do">
-                Marriage Register Search
+            <a id="menu.marriage.notice.search" href="/ecivil/marriages/eprMarriageNoticeSearchInit.do">
+                Marriage Notice Search
             </a>
         </li>
         <li>
@@ -307,8 +307,8 @@
             </a>
         </li>
         <li>
-            <a id="menu.marriage.notice.search" href="/ecivil/marriages/eprMarriageNoticeSearchInit.do">
-                Search Notice
+            <a id="menu.marriage.register.search" href="/ecivil/marriages/eprMarriageRegisterSearchInit.do">
+                Marriage Register Search
             </a>
         </li>
     </ul>
