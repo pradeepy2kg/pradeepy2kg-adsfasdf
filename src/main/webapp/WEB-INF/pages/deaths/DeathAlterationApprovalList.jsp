@@ -72,6 +72,8 @@
 
                         var options2 = '';
                         var bd = data.bdDivisionList;
+                        var allText = document.getElementById('all').value;
+                        options2 += '<option value="0">' + allText + '</option>';
                         for (var j = 0; j < bd.length; j++) {
                             options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
                         }
@@ -85,6 +87,8 @@
                     function(data) {
                         var options = '';
                         var bd = data.bdDivisionList;
+                        var allText = document.getElementById('all').value;
+                        options += '<option value="0">' + allText + '</option>';
                         for (var i = 0; i < bd.length; i++) {
                             options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
                         }
@@ -97,7 +101,6 @@
     var counter = 0;
 
     function validateForm() {
-
         var bdDivision = document.getElementById('divisionId');
         var locationId = document.getElementById('locationId');
         var pinNumberX = document.getElementById('pinNumber');
@@ -116,7 +119,6 @@
                 counter++
             }
         }
-        alert(counter)
         if (counter > 2) {
             errormsg = errormsg + document.getElementById('oneMethodErr').value;
         }
@@ -187,7 +189,7 @@
                         <s:label value="%{getText('label.dsDivision')}"/>
                     </td>
                     <td align="left">
-                        <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{divisionUKey}"
+                        <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
                                   cssStyle="float:left;  width:240px;"/>
                     </td>
                 </tr>
@@ -198,7 +200,8 @@
                     <td>
                         <s:select id="divisionId" name="divisionUKey" value="%{divisionUKey}"
                                   list="bdDivisionList"
-                                  cssStyle="float:left;  width:240px;"/>
+                                  cssStyle="float:left;  width:240px;" headerKey="0"
+                                  headerValue="%{getText('all.text')}"/>
                     </td>
                     <td></td>
                     <td></td>
@@ -387,3 +390,4 @@
 <s:hidden id="oneMethodErr" value="%{getText('err.use.one,method.to.search')}"/>
 <s:hidden id="invalideDataErr" value="%{getText('err.invalide.data')}"/>
 <s:hidden id="pinNumberFi" value="%{getText('field.pin.number')}"/>
+<s:hidden id="all" value="%{getText('all.text')}"/>
