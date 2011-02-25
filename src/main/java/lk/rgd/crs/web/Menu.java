@@ -379,6 +379,7 @@ public class Menu {
         deoMarriageLink.put("eprDisplayScannedImage.do", new Link(null, "/ecivil/marriages/", "eprDisplayScannedImage.do", Permission.VIEW_SCANNED_MARRIAGE_CERT));
         deoMarriageLink.put("eprViewMarriageRegister.do", new Link(null, "/ecivil/marriages/", " eprViewMarriageRegister.do", Permission.VIEW_MARRIAGE_REGISTER));
         deoMarriageLink.put("eprMarriageNoticeSearchInit.do", new Link("menu.marriage.notice.search", "/ecivil/marriages/", "eprMarriageNoticeSearchInit.do", Permission.SEARCH_MARRIAGE));
+        deoMarriageLink.put("eprMarriageNoticeSearchHome.do", new Link("menu.marriage.notice.search", "/ecivil/marriages/", "eprMarriageNoticeSearchHome.do", Permission.SEARCH_MARRIAGE));
         deoMarriageLink.put("eprMarriageRegisterSearch.do", new Link(null, "/ecivil/marriages/", "eprMarriageRegisterSearch.do", Permission.SEARCH_MARRIAGE));
         deoMarriageLink.put("eprMarriageNoticeSearchNext.do", new Link(null, "/ecivil/marriages/", "eprMarriageNoticeSearchNext.do", Permission.SEARCH_MARRIAGE));
         deoMarriageLink.put("eprMarriageRegisterSearchNext.do", new Link(null, "/ecivil/marriages/", "eprMarriageRegisterSearchNext.do", Permission.SEARCH_MARRIAGE));
