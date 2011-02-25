@@ -101,16 +101,19 @@
                 <table>
                     <tr><td><span>Search full name in English</span></td>
                     <td><div id="searchEnglish"><input type="text" id="searchEnglish" name="searchEnglish"/></div></td>
+                    <td width="50px;"></td>
                     <td><span>PIN</span></td>
                     <td><div id="searchPIN"><input type="text" id="searchPIN" name="searchPIN" maxlength="12"/></div></td></tr>
 
                     <tr><td><span>Search full name in Official Language</span></td>
                     <td><div id="searchOfficial"><input type="text" id="searchOfficial" name="searchOfficial"/></div></td>
+                    <td width="50px;"></td>
                     <td><span>NIC</span></td>
                     <td><div id="searchNIC"><input type="text" id="searchNic" name="searchNic" maxlength="10" style="text-transform:uppercase;"/></div></td></tr>
 
                     <tr><td><span>Search for name</span></td>
                     <td><div id="searchAllNames"><input type="text" id="searchAllNames" name="searchAllNames"/></div></td>
+                    <td width="50px;"></td>
                     <td><span>Passport No</span></td>
                     <td><div id="searchPassport"><input type="text" id="searchPassport" name="searchPassport" maxlength="15" style="text-transform:uppercase;"/></div></td></tr>
                 </table>
@@ -127,29 +130,46 @@
             </div>
             <div id="fragment-3">
                 <table>
-                    <tr><td><span>Date of Birth</span></td>
-                    <td><div id="searchDOB"><input type="text" id="queryDOB" name="queryDOB" maxlength="10"/></div></td>
+                    <tr>
                         <td><span>Date of Birth Range</span></td>
-                    <td><div id="searchDOBRange"><input type="text" id="queryDOBRange" name="queryDOBRange"/></div></td></tr>
-                    <tr><td><span>Place of Birth</span></td>
-                    <td><div id="searchPOB"><input type="text" id="queryPOB" name="queryPOB"/></div></td><td></td></tr>
+                        <td><div id="searchDOBRange"><input type="text" id="queryDOBRange" name="queryDOBRange"/></div></td>
+                        <td width="50px;"></td>
+                        <td><span>Date of Birth</span></td>
+                        <td><div id="searchDOB"><input type="text" id="queryDOB" name="queryDOB" maxlength="10"/></div></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><span>Place of Birth</span></td>
+                        <td><div id="searchPOB"><input type="text" id="queryPOB" name="queryPOB"/></div></td><td></td>
+                    </tr>
                     <tr></tr>
-                    <tr><td><span>Date of Death</span></td>
-                    <td><div id="searchDOD"><input type="text" id="queryDOD" name="queryDOD" maxlength="10"/></div></td>
+                    <tr>
                         <td><span>Date of Death Range</span></td>
-                    <td><div id="searchDODRange"><input type="text" id="queryDODRange" name="queryDODRange"/></div></td></tr>
+                        <td><div id="searchDODRange"><input type="text" id="queryDODRange" name="queryDODRange"/></div></td>
+                        <td></td>
+                        <td><span>Date of Death</span></td>
+                        <td><div id="searchDOD"><input type="text" id="queryDOD" name="queryDOD" maxlength="10"/></div></td>
+                    </tr>
                 </table>
             </div>
             <div id="fragment-4">
                 <table>
-                    <tr><td><span>Current Address</span></td>
-                    <td><div id="searchLastAddress"><input type="text" id="queryLastAddress" name="queryLastAddress"/></div></td>
+                    <tr>
+                        <td><span>Current Address</span></td>
+                        <td><div id="searchLastAddress"><input type="text" id="queryLastAddress" name="queryLastAddress"/></div></td>
+                        <td width="50px;"></td>
                         <td><span>All Addresses</span></td>
-                    <td><div id="searchAllAddresses"><input type="text" id="queryAllAddresses" name="queryAllAddresses"/></div></td></tr>
-                    <tr><td><span>Phone</span></td>
-                    <td><div id="searchPhone"><input type="text" id="queryPhone" name="queryPhone" maxlength="15"/></div></td>
+                        <td><div id="searchAllAddresses"><input type="text" id="queryAllAddresses" name="queryAllAddresses"/></div></td>
+                    </tr>
+                    <tr>
+                        <td><span>Phone</span></td>
+                        <td><div id="searchPhone"><input type="text" id="queryPhone" name="queryPhone" maxlength="15"/></div></td>
+                        <td width="50px;"></td>
                         <td><span>Email</span></td>
-                    <td><div id="searchEmail"><input type="text" id="queryEmail" name="queryEmail" style="text-transform:none;"/></div></td></tr>
+                        <td><div id="searchEmail"><input type="text" id="queryEmail" name="queryEmail" style="text-transform:none;"/></div></td>
+                    </tr>
                 </table>
             </div>
             <%--div id="fragment-5">
