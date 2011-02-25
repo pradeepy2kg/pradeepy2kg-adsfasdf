@@ -113,3 +113,27 @@ Search Notice
 
 Status / තත්ත්වය
 DIVORCED TAMIL / දික්කසාද
+
+
+//tamil translations for adoptions
+
+serial number in ta
+Received Date in ta
+Court in ta
+order Issued Date in ta
+Court order number in ta
+Name of the Judge in ta
+Date of birth in ta
+Gender in ta
+Age in ta
+Years in ta
+Months in ta
+Existing Name in ta
+(if already given) in ta
+ New name given in ta
+Applicant in ta
+Father in ta
+Mother in ta
+ Other in ta
+  Name of the Applicant in ta
+  Address in ta
