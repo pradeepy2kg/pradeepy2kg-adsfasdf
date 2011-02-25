@@ -86,6 +86,17 @@ public interface DeathAlterationService {
     public List<DeathAlteration> getAlterationApprovalListByDeathDivision(int pageNo, int numRows, int divisionId, User user);
 
     /**
+     * get death alteration approval list by DSDivision
+     *
+     * @param pageNo       current page
+     * @param numRows      number of rows
+     * @param dsDivisionId dsDivision idUKey
+     * @param user         user who performs the action
+     * @return list of death alterations
+     */
+    public List<DeathAlteration> getAlterationApprovalListByDeathDSDivision(int pageNo, int numRows, int dsDivisionId, User user);
+
+    /**
      * get list of death alterations by location key
      *
      * @param locationUKey location primary key
