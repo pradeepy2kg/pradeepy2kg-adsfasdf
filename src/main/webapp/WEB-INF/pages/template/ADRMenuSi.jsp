@@ -287,7 +287,7 @@
             </a>
         </li>
         <li>
-            <a id="menu.marriage.notice.search" href="/ecivil/marriages/eprMarriageNoticeSearchInit.do">
+            <a id="menu.marriage.notice.search" href="/ecivil/marriages/eprMarriageNoticeSearchHome.do">
                 විවාහ දැන්වීම් සෙවීම
             </a>
         </li>

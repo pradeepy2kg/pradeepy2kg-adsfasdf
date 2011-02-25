@@ -115,6 +115,8 @@ public class UserManagerImpl implements UserManager {
 
             // adding new default password
             User user = userDao.getUserByPK(userToCreate.getUserId());
+
+
             if (user != null) {
                 handleException("User Name is already assigned", ErrorCodes.ENTITY_ALREADY_EXIST);
                 logger.debug("User already assigned");
@@ -175,8 +177,13 @@ public class UserManagerImpl implements UserManager {
                 user.setAssignedMRDistricts(assDistrict);
                 user.setAssignedBDDSDivisions(assDSDivision);
                 user.setAssignedMRDSDivisions(assDSDivision);
+                //set default BDDistrict , MRDistrict and BDDSDivision
+                if (assDistrict != null && !assDistrict.isEmpty() && assDSDivision != null && !assDSDivision.isEmpty()) {
+                    user.setPrefBDDistrict(assDistrict.iterator().next());
+                    user.setPrefMRDistrict(assDistrict.iterator().next());
+                    user.setPrefBDDSDivision(assDSDivision.iterator().next());
+                }
                 user.setRole(roleDao.getRole(roleId));
-
                 java.util.GregorianCalendar gCal = new GregorianCalendar();
                 gCal.add(Calendar.DATE, -1);
                 user.setPasswordExpiry(gCal.getTime());

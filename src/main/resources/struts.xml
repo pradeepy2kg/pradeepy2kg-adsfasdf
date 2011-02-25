@@ -1404,6 +1404,12 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
+            <action name="eprMarriageNoticeSearchHome" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
+                method="marriageNoticeSearchHome">
+            <result type="tiles" name="success">epr.marriageNoticeSearchHome</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
         <action name="eprMarriageNoticeSearchNext" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
                 method="nextNoticesPage">
             <result type="tiles" name="success">epr.marriageNoticeSearchHome</result>

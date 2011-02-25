@@ -150,11 +150,37 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         return SUCCESS;
     }
 
+    public String marriageNoticeSearchHome() {
+        logger.debug("Marriage notice search page loaded");
+//        commonUtil.populateDynamicListsWithAllOption(districtList, dsDivisionList, mrDivisionList, user, language);
+        try {
+            //load search page with preferred district
+            dsDivisionId = (user.getPrefBDDSDivision() != null) ? user.getPrefBDDSDivision().getDsDivisionUKey() :
+                dsDivisionDAO.getAllDSDivisionByDistrictKey(districtDAO.getAllDistrictNames(language, user).keySet().
+                    iterator().next()).iterator().next().getDsDivisionUKey();
+            DSDivision prefDSDivision = dsDivisionDAO.getDSDivisionByPK(dsDivisionId);
+            districtId = prefDSDivision.getDistrict().getDistrictUKey();
+
+            populateBasicLists();
+            pageNo += 1;
+            getApprovalPendingNotices();
+            showNoticeSearchResultSize();
+            // by doing following previously user entered values will be removed in jsp page
+            clearSearchingOptionValues();
+        } catch (CRSRuntimeException e) {
+            logger.debug("exception while loading page");
+            return ERROR;
+        }
+        return SUCCESS;
+    }
+
+
     /**
      * loading search result page for marriage register
      */
     public String marriageRegisterSearchInit() {
-        commonUtil.populateDynamicListsWithAllOption(districtList, dsDivisionList, mrDivisionList, user, language);
+        // commonUtil.populateDynamicListsWithAllOption(districtList, dsDivisionList, mrDivisionList, user, language);
+        populateBasicLists();
         stateList = StateUtil.getStateByLanguage(language);
         //  dsDivisionList = dsDivisionDAO.getAllDSDivisionNames(districtId, language, user);
         // mrDivisionList = mrDivisionDAO.getMRDivisionNames(dsDivisionId, language, user);
@@ -166,7 +192,8 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
      * loading search  page for marriage register
      */
     public String marriageRegisterSearchPageLoad() {
-        commonUtil.populateDynamicListsWithAllOption(districtList, dsDivisionList, mrDivisionList, user, language);
+        //   commonUtil.populateDynamicListsWithAllOption(districtList, dsDivisionList, mrDivisionList, user, language);
+        populateBasicLists();
         stateList = StateUtil.getStateByLanguage(language);
         return SUCCESS;
     }
@@ -563,7 +590,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
             logger.debug("failed to reject marriage notice idUKey : {} : notice type : {}  ", idUKey, noticeType);
             addActionError(getText("error.rejection.fail", new String[]{Long.
                 toString((noticeType == MarriageNotice.Type.FEMALE_NOTICE) ?
-                    marriage.getSerialOfFemaleNotice() : marriage.getSerialOfMaleNotice())}));
+                marriage.getSerialOfFemaleNotice() : marriage.getSerialOfMaleNotice())}));
             commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId,
                 dsDivisionId, mrDivisionId, AppConstants.MARRIAGE, user, language);
             getApprovalPendingNotices();
@@ -571,7 +598,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         }
         addActionMessage(getText("message.rejection.success", new String[]{Long.
             toString((noticeType == MarriageNotice.Type.FEMALE_NOTICE) ?
-                marriage.getSerialOfFemaleNotice() : marriage.getSerialOfMaleNotice())}));
+            marriage.getSerialOfFemaleNotice() : marriage.getSerialOfMaleNotice())}));
         commonUtil.populateDynamicLists(districtList, dsDivisionList, mrDivisionList, districtId,
             dsDivisionId, mrDivisionId, AppConstants.MARRIAGE, user, language);
         getApprovalPendingNotices();
@@ -672,7 +699,8 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         pageNo = printStart / noOfRows;
         marriageRegisterSearchResult();
         printStart -= noOfRows;
-        commonUtil.populateDynamicListsWithAllOption(districtList, dsDivisionList, mrDivisionList, user, language);
+        // commonUtil.populateDynamicListsWithAllOption(districtList, dsDivisionList, mrDivisionList, user, language);
+        populateBasicLists();
         stateList = StateUtil.getStateByLanguage(language);
         return SUCCESS;
     }
@@ -686,7 +714,8 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         pageNo = ((printStart + noOfRows) / noOfRows) + 1;
         marriageRegisterSearchResult();
         printStart += noOfRows;
-        commonUtil.populateDynamicListsWithAllOption(districtList, dsDivisionList, mrDivisionList, user, language);
+        // commonUtil.populateDynamicListsWithAllOption(districtList, dsDivisionList, mrDivisionList, user, language);
+        populateBasicLists();
         stateList = StateUtil.getStateByLanguage(language);
         return SUCCESS;
     }
@@ -818,6 +847,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
                         if (districtId == 0) {
                             // Search by All available Districts
                             // TODO chathuranga not implemented yet
+                            searchList = Collections.emptyList();
                         } else {
                             // Search by All DSDivisions
                             searchList = WebUtils.populateNoticeList(marriageRegistrationService.
@@ -825,7 +855,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
                             if (searchStartDate != null && searchEndDate != null) {
                                 searchList = WebUtils.populateNoticeList(marriageRegistrationService.
                                     getMarriageNoticeByDistrictAndDateRange(districtDAO.getDistrict(districtId),
-                                        searchStartDate, searchEndDate, pageNo, noOfRows, true, user));
+                                    searchStartDate, searchEndDate, pageNo, noOfRows, true, user));
                                 if (searchList.size() > 0) {
                                     addActionMessage(getText("message.result.to.from",
                                         new String[]{DateTimeUtils.getISO8601FormattedString(searchStartDate),
@@ -913,16 +943,16 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
         // TODO chathuranga change following
         districtList = districtDAO.getDistrictNames(language, user);
         // TODO chathuranga when search by all district option
-        if (districtId == 0) {
+        /*     if (districtId == 0) {
             if (!districtList.isEmpty()) {
                 districtId = districtList.keySet().iterator().next();
                 logger.debug("first allowed district in the list {} was set", districtId);
             }
-        }
+        }*/
         dsDivisionList = dsDivisionDAO.getDSDivisionNames(districtId, language, user);
-
         mrDivisionList = mrDivisionDAO.getMRDivisionNames(dsDivisionId, language, user);
     }
+
 
     private boolean isEmpty(String s) {
         return s == null || s.trim().length() != 10;
