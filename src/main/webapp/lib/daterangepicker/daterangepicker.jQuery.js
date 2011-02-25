@@ -249,7 +249,7 @@ jQuery.fn.daterangepicker = function(settings){
 	
 
 	//picker divs
-	var rpPickers = jQuery('<div class="ranges ui-widget-header ui-corner-all ui-helper-clearfix"><div class="range-start"><span class="title-start">Start Date</span></div><div class="range-end"><span class="title-end">End Date</span></div></div>').appendTo(rp);
+	var rpPickers = jQuery('<div class="ranges ui-widget-header ui-corner-all ui-helper-clearfix" style="height:206px;"><div class="range-start"><span class="title-start">Start Date</span></div><div class="range-end"><span class="title-end">End Date</span></div></div>').appendTo(rp);
 	rpPickers.find('.range-start, .range-end').datepicker(options.datepickerOptions);
 	rpPickers.find('.range-start').datepicker('setDate', inputDateA);
 	rpPickers.find('.range-end').datepicker('setDate', inputDateB);
