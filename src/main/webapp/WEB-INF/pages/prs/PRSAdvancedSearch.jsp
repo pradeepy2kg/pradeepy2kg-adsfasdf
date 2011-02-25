@@ -44,21 +44,40 @@
 <script>
   $(document).ready(function() {
     $("#tabs").tabs();
-    $('#queryDOBRange').daterangepicker({arrows:true});
-    $('#queryDODRange').daterangepicker({arrows:true});
+    $('#queryDOBRange').daterangepicker({
+        arrows:true,
+        onClose: function() {
+            $('#queryDOBRange').focus();
+        }
+    });
+
+    $('#queryDODRange').daterangepicker({
+        arrows:true,
+        onClose: function() {
+            $('#queryDODRange').focus();
+        }
+    });
+
     $('#queryDOB').datepicker({
         changeYear: true,
         yearRange: '1960:2020',
         dateFormat:'yy-mm-dd',
         startDate:'2000-01-01',
-        endDate:'2040-12-31'
+        endDate:'2040-12-31',
+        onSelect: function() {
+            $(this).focus();
+        }
     });
+
     $('#queryDOD').datepicker({
         changeYear: true,
         yearRange: '1960:2020',
         dateFormat:'yy-mm-dd',
         startDate:'2000-01-01',
-        endDate:'2040-12-31'
+        endDate:'2040-12-31',
+        onSelect: function() {
+            $(this).focus();
+        }
     });
   });
 
