@@ -43,7 +43,12 @@
 <script>
     $(document).ready(function() {
         $("#tabs").tabs();
-        $('#queryDOBRange').daterangepicker({arrows:true});
+        $('#queryDOBRange').daterangepicker({
+            arrows:true,
+            onClose: function() {
+            $('#queryDOBRange').focus();
+        }
+        });
     });
 
     function initPage() {
@@ -64,7 +69,6 @@
                 <li><a href="#fragment-4"><span>District</span></a></li>
                 <li><a href="#fragment-5"><span>Division</span></a></li>
                 <li><a href="#fragment-6"><span>Date</span></a></li>
-                <li><a href="#fragment-7"><span>Advanced Search</span></a></li>
             </ul>
             <div id="fragment-1">
                 <table>
@@ -121,10 +125,6 @@
                         <td><div id="searchDOBRange"><input type="text" id="queryDOBRange" name="queryDOBRange"/></div></td>
                     </tr>
                 </table>
-            </div>
-            <div id="fragment-7">
-                <span>Advanced Search</span>
-                <div id="searchAdvanced"><input type="text" id="queryAdvanced" name="queryAdvanced" size="117" style="text-transform:none;"/></div>
             </div>
         </div>
 
