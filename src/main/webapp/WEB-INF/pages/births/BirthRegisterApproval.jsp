@@ -51,6 +51,7 @@
                     function(data) {
                         var options1 = '';
                         var ds = data.dsDivisionList;
+                        options1 += '<option value="' + 0 + '">' +  <s:label value="%{getText('all.divisions.label')}"/>+ '</option>';
                         for (var i = 0; i < ds.length; i++) {
                             options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
                         }
@@ -194,6 +195,7 @@
             <td><s:label name="division" value="%{getText('select_DS_division.label')}"/></td>
             <td>
                 <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
+                          headerValue="%{getText('all.divisions.label')}" headerKey="0"
                           cssStyle="float:left;  width:240px;"/>
             </td>
         </tr>
@@ -437,6 +439,7 @@
     <s:hidden id="error3" value="%{getText('searchStartDate.label')}"/>
     <s:hidden id="error4" value="%{getText('searchEndDate.label')}"/>
     <s:hidden id="warning" value="%{getText('birthDelete.warning.label')}"/>
+    <s:hidden id="all" value="%{getText('all.dsdivisions.label')}"/>
 </div>
 </div>
 <%-- Styling Completed --%>

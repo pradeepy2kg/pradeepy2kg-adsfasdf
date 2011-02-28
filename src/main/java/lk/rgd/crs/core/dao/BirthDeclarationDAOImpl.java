@@ -1,5 +1,6 @@
 package lk.rgd.crs.core.dao;
 
+import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.core.dao.BaseDAO;
@@ -254,6 +255,20 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
             setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("dsDivision", dsDivision);
         q.setParameter("status", status);
+        return q.getResultList();
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<BirthDeclaration> getPaginatedListForStateByDistrict(District district, int pageNo, int noOfRows,
+        BirthDeclaration.State state) {
+        Query q = em.createNamedQuery("filter.by.district.and.status").
+            setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+        q.setParameter("district", district);
+        q.setParameter("status", BirthDeclaration.State.DATA_ENTRY);
         return q.getResultList();
     }
 

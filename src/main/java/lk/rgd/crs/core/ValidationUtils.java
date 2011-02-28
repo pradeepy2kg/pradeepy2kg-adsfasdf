@@ -27,6 +27,17 @@ public class ValidationUtils {
         }
     }
 
+    public static void validateAccessToBDDistrict(User user, District district) {
+        if (!(User.State.ACTIVE == user.getStatus() &&
+            (Role.ROLE_RG.equals(user.getRole().getRoleId())
+                || (user.isAllowedAccessToBDDistrict(district.getDistrictUKey()))
+            )
+        )) {
+            handleException("User : " + user.getUserId() + " is not allowed access to the District : " +
+                district.getDistrictUKey(), ErrorCodes.PERMISSION_DENIED);
+        }
+    }
+
     public static void validateAccessToLocation(Location location, User user) {
         if (location != null && user != null) {
             if (!(User.State.ACTIVE == user.getStatus()
