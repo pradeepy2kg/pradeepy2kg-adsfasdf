@@ -1860,6 +1860,16 @@ public class BirthRegistrationServiceImpl implements
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<BirthDeclaration> getDeclarationApprovalPendingByDistrictId(District district, int pageNo, int noOfRows, User user) {
+        ValidationUtils.validateAccessToBDDistrict(user, district);
+        return birthDeclarationDAO.getPaginatedListForStateByDistrict(district, pageNo, noOfRows,
+            BirthDeclaration.State.DATA_ENTRY);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getBelatedDeclarationApprovalPendingByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, User user) {
         ValidationUtils.validateAccessToDSDivision(dsDivision, user);
         return birthDeclarationDAO.getPaginatedListForStateAndBirthTypeByDSDivision(dsDivision, pageNo, noOfRows,

@@ -64,6 +64,10 @@ import java.io.Serializable;
         "WHERE bdf.register.birthDivision.dsDivision = :dsDivision AND bdf.register.status = :status " +
         "ORDER BY bdf.register.dateOfRegistration desc"),
 
+    @NamedQuery(name = "filter.by.district.and.status", query = "SELECT bdf FROM BirthDeclaration bdf " +
+        "WHERE bdf.register.birthDivision.dsDivision.district = :district AND bdf.register.status = :status " +
+        "ORDER BY bdf.register.dateOfRegistration desc"),
+
     @NamedQuery(name = "get.by.dsdivision.and.status", query = "SELECT bdf FROM BirthDeclaration bdf " +
         "WHERE bdf.register.birthDivision.dsDivision = :dsDivision AND bdf.register.status = :status " +
         "AND bdf.child.dateOfBirth BETWEEN :start AND :end"),
@@ -109,7 +113,7 @@ import java.io.Serializable;
     @NamedQuery(name = "get.bdf.by.mother", query = "SELECT bdf FROM BirthDeclaration bdf WHERE " +
         "(bdf.parent.motherNICorPIN =:mother AND bdf.register.birthType =:type AND bdf.lifeCycleInfo.activeRecord IS TRUE) ")
 })
-@Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class BirthDeclaration implements Serializable, Cloneable {
 
     /**
