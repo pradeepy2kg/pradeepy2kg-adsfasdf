@@ -117,6 +117,10 @@ public class JSONPersonLookupService extends HttpServlet {
             if (person.getCivilStatus() != null) {
                 untyped.put("civilState", person.getCivilStatus().ordinal());
             }
+            untyped.put("phoneNumber", person.getPersonPhoneNo());
+            untyped.put("email", person.getPersonEmail());
+            untyped.put("nic", person.getNic());
+
             mapper.writeValue(out, untyped);
             out.flush();
         }
