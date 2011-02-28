@@ -378,12 +378,27 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         }
                     }
                 } else {
-                    service.captureLiveBirthConfirmationChanges(bdf, user);
-                    logger.debug("Mother name : {} ", bdf.getParent().getMotherFullName());
-                    //setting permission for BirthConfirmationDetails page
-                    allowApproveBDF = user.isAuthorized(Permission.APPROVE_BDF_CONFIRMATION);
-                    addActionMessage(getText("cp3.confirmation.changes.success"));
+                    try {
+                        service.captureLiveBirthConfirmationChanges(bdf, user);
+                        logger.debug("Mother name : {} ", bdf.getParent().getMotherFullName());
+                        //setting permission for BirthConfirmationDetails page
+                        allowApproveBDF = user.isAuthorized(Permission.APPROVE_BDF_CONFIRMATION);
+                        addActionMessage(getText("cp3.confirmation.changes.success"));
+                    } catch (CRSRuntimeException e) {
+                        switch (e.getErrorCode()) {
+                            case ErrorCodes.INVALID_STATE_FOR_CONFIRMATION_CHANGES:
+                                logger.debug("invalid state for capture confirmation changes for " +
+                                    "birth record idUKey : {}", bdf.getIdUKey());
+                                addActionError(getText("error.invalid.state.for.capture.changes", new String[]{Long.toString(bdf.getIdUKey())}));
+                                break;
+                            default:
+                                logger.debug("unable to capture confirmation changes for " +
+                                    "birth record idUKey : {}", bdf.getIdUKey());
+                                addActionError(getText("error.unable.to.capture.changes", new String[]{Long.toString(bdf.getIdUKey())}));
+                        }
+                    }
                 }
+
                 //jpa gives the newly added entries bdId instead of archived entry
                 bdId = bdf.getIdUKey();
                 session.remove(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
