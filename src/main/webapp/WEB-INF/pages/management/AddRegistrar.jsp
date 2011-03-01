@@ -92,11 +92,7 @@
 
     function initPage() {
     }
-    /*
-
-
-     */
-
+   
     $(function() {
         $('img#registrar_lookup').bind('click', function(evt1) {
             var id1 = $("input#registrarPin").attr("value");

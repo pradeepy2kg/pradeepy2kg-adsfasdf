@@ -37,6 +37,12 @@ public class BirthRegisterInfo implements Serializable, Cloneable {
     private BDDivision birthDivision;
 
     /**
+     * The GN  division where the birth is registered (Includes District)
+     */
+    @ManyToOne
+    @JoinColumn(name = "gnDivisionUKey", nullable = false)
+    private GNDivision gnDivision;
+    /**
      * The name of the Birth/Death registration division in the preferred language
      */
     @Transient
@@ -319,5 +325,13 @@ public class BirthRegisterInfo implements Serializable, Cloneable {
     @Override
     protected BirthRegisterInfo clone() throws CloneNotSupportedException {
         return (BirthRegisterInfo) super.clone();
+    }
+
+    public GNDivision getGnDivision() {
+        return gnDivision;
+    }
+
+    public void setGnDivision(GNDivision gnDivision) {
+        this.gnDivision = gnDivision;
     }
 }

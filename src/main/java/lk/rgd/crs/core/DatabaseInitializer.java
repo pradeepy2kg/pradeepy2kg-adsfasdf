@@ -74,6 +74,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
         entityClasses.add(MarriageObjection.class);
 
         entityClasses.add(Statistics.class);
+        entityClasses.add(GNDivision.class);
     }
 
     public void setDataSource(DataSource dataSource) {
