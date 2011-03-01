@@ -2,7 +2,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <s:set value="1" name="row"/>
 <script type="text/javascript">
-    function initPage(){}
+    function initPage() {
+    }
 </script>
 
 <style type="text/css">
@@ -24,31 +25,31 @@
 <div id="birth-certificate-outer">
 
 <s:if test="#request.archivedEntryList.size>0">
-<fieldset style="border:2px inset red; width:400px;">
-    <legend style="color:red;"><s:label value="%{getText('ArchivedData.label')}"/></legend>
-    <table>
-        <th></th>
-        <th><s:label name="statuslbl" value="%{getText('status.label')}"/></th>
-        <th><s:label value="%{getText('lastupdate.time.label')}"/></th>
-        <th><s:label name="viewlbl" value="%{getText('view.label')}"/></th>
-        <s:iterator status="archivedStatus" value="archivedEntryList" id="searchId">
-            <tr class="<s:if test="#archivedStatus.odd == true">odd</s:if><s:else>even</s:else>">
-                <td class="table-row-index"><s:property value="%{#archivedStatus.count}"/></td>
-                <s:set value="getRegister().getStatus()" name="status"/>
-                <td><s:label value="%{getText(#status)}"/></td>
-                <td><s:property value="getLifeCycleInfo().getLastUpdatedTimestamp()"/></td>
-                <s:set name="abc" value="getLifeCycleInfo().getLastUpdatedTimestamp()"/>
+    <fieldset style="border:2px inset red; width:400px;">
+        <legend style="color:red;"><s:label value="%{getText('ArchivedData.label')}"/></legend>
+        <table>
+            <th></th>
+            <th><s:label name="statuslbl" value="%{getText('status.label')}"/></th>
+            <th><s:label value="%{getText('lastupdate.time.label')}"/></th>
+            <th><s:label name="viewlbl" value="%{getText('view.label')}"/></th>
+            <s:iterator status="archivedStatus" value="archivedEntryList" id="searchId">
+                <tr class="<s:if test="#archivedStatus.odd == true">odd</s:if><s:else>even</s:else>">
+                    <td class="table-row-index"><s:property value="%{#archivedStatus.count}"/></td>
+                    <s:set value="getRegister().getStatus()" name="status"/>
+                    <td><s:label value="%{getText(#status)}"/></td>
+                    <td><s:property value="getLifeCycleInfo().getLastUpdatedTimestamp()"/></td>
+                    <s:set name="abc" value="getLifeCycleInfo().getLastUpdatedTimestamp()"/>
 
-                <s:url id="viewSelected" action="eprViewBDFInNonEditableMode.do">
-                    <s:param name="bdId" value="idUKey"/>
-                    <s:param name="advanceSearch" value="%{#request.advanceSearch}"/>
-                </s:url>
-                <td><s:a href="%{viewSelected}" title="%{getText('view.label')}">
-                    <img src="<s:url value='/images/view_1.gif'/>" width="25" height="25" border="none"/></s:a></td>
-            </tr>
-        </s:iterator>
-    </table>
-</fieldset>
+                    <s:url id="viewSelected" action="eprViewBDFInNonEditableMode.do">
+                        <s:param name="bdId" value="idUKey"/>
+                        <s:param name="advanceSearch" value="%{#request.advanceSearch}"/>
+                    </s:url>
+                    <td><s:a href="%{viewSelected}" title="%{getText('view.label')}">
+                        <img src="<s:url value='/images/view_1.gif'/>" width="25" height="25" border="none"/></s:a></td>
+                </tr>
+            </s:iterator>
+        </table>
+    </fieldset>
 </s:if>
 <s:set value="%{#session.WW_TRANS_I18N_LOCALE.language}" name="userPreferedLang"/>
 <table class="table_reg_header_01" style="font-size:9pt">
@@ -198,6 +199,16 @@
         </label></td>
         <td colspan="6" class="table_reg_cell_01">
             <s:label value="%{#request.oldBDInfo.bdDivisionName}"/>
+        </td>
+    </tr>
+    <tr>
+        <td><label>
+            ග්‍රාම නිළධාරී කොටිඨාශය /<br/>
+            Grama Niladhari Division in ta/<br/>
+            Grama Niladhari Division</label>
+        </td>
+        <td colspan="6" class="table_reg_cell_01">
+            <s:label value="%{#request.oldBDInfo.gnDivisionName}"/>
         </td>
     </tr>
     <tr>
@@ -621,126 +632,126 @@
 <%--pageNo 3--%>
 
 <s:if test="#request.register.birthType.ordinal() != 0">
-<table class="table_non_editable_reg_page" cellspacing="0" style="margin-top:20px;font-size:9pt;">
-    <caption></caption>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <tbody>
-    <tr>
-        <td colspan="5" style="text-align:center;font-size:11pt">විවාහයේ විස්තර
-            <br>திருமணத்தின் விபரங்கள்
-            <br>Details of the Marriage
-        </td>
-    </tr>
-    <tr>
-        <td rowspan="2" width="250px;"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මව්පියන්
-            විවාහකද? <br>பெற்றோர்கள்
-            மணம் முடித்தவர்களா? <br>Were Parent's
-            Married?</label></td>
-        <td rowspan="2" width="150px">
+    <table class="table_non_editable_reg_page" cellspacing="0" style="margin-top:20px;font-size:9pt;">
+        <caption></caption>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <tbody>
+        <tr>
+            <td colspan="5" style="text-align:center;font-size:11pt">විවාහයේ විස්තර
+                <br>திருமணத்தின் விபரங்கள்
+                <br>Details of the Marriage
+            </td>
+        </tr>
+        <tr>
+            <td rowspan="2" width="250px;"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මව්පියන්
+                විවාහකද? <br>பெற்றோர்கள்
+                மணம் முடித்தவர்களா? <br>Were Parent's
+                Married?</label></td>
+            <td rowspan="2" width="150px">
 
-            <s:if test="#request.marriage.parentsMarried.ordinal() == 0">
-                <s:label value="%{getText('radio_married_unknown.label')}"/>
-            </s:if>
-            <s:if test="#request.marriage.parentsMarried.ordinal() == 1">
-                <s:label value="%{getText('radio_married_yes.label')}"/>
-            </s:if>
-            <s:if test="#request.marriage.parentsMarried.ordinal() == 2">
-                <s:label value="%{getText('radio_married_no.label')}"/>
-            </s:if>
-            <s:if test="#request.marriage.parentsMarried.ordinal() == 3">
-                <s:label value="%{getText('radio_married_since.label')}"/>
-            </s:if>
-        </td>
-        </td>
-        <td width="250px"><label>විවාහ වු ස්ථානය<br>விவாகம் இடம்பெற்ற இடம் <br>Place of Marriage</label></td>
-        <td colspan="2"><s:label value="%{#request.marriage.placeOfMarriage}"/></td>
-    </tr>
-    <tr>
-        <td><label>විවාහ වු දිනය<br>விவாகம் இடம்பெற்ற திகதி <br>Date of Marriage</label></td>
-        <td colspan="2"><s:label value="%{#request.marriage.dateOfMarriage}"/></td>
-    </tr>
-    <tr>
-        <td colspan="3" rowspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මව්පියන්
-            විවාහ වි නොමැති නම් පියාගේ තොරතුරු ඇතුලත් කර ගැනිම සදහා මව
-            සහ
-            පියාගේ අත්සන් <br>பெற்றோர்
-            மணம் செய்யாதிருப்பின், தகப்பனின் தகவல்கள் பதிவு செய்ய வேண்டுமெனின் பெற்றோரின் கையொப்பம்<br>If
-            parents are not married, signatures of mother and father to include father's particulars</label></td>
-        <td><label>මවගේ අත්සන <br> தாயின் ஒப்பம் <br>Mother’s Signature</label></td>
-        <td align="center"><s:if test="#request.marriage.motherSigned==true"> <s:label
-                value="%{getText('yes.label')}"/></s:if>
-            <s:else><s:label value="%{getText('no.label')}"/></s:else></td>
-    </tr>
-    <tr>
-        <td><label>පියාගේ අත්සන <br>தகப்பனின் ஒப்பம் <br>Father’s Signature</label></td>
-        <td align="center"><s:if test="#request.marriage.fatherSigned==true"> <s:label
-                value="%{getText('yes.label')}"/></s:if>
-            <s:else><s:label value="%{getText('no.label')}"/></s:else></td>
-    </tr>
-    </tbody>
-</table>
+                <s:if test="#request.marriage.parentsMarried.ordinal() == 0">
+                    <s:label value="%{getText('radio_married_unknown.label')}"/>
+                </s:if>
+                <s:if test="#request.marriage.parentsMarried.ordinal() == 1">
+                    <s:label value="%{getText('radio_married_yes.label')}"/>
+                </s:if>
+                <s:if test="#request.marriage.parentsMarried.ordinal() == 2">
+                    <s:label value="%{getText('radio_married_no.label')}"/>
+                </s:if>
+                <s:if test="#request.marriage.parentsMarried.ordinal() == 3">
+                    <s:label value="%{getText('radio_married_since.label')}"/>
+                </s:if>
+            </td>
+            </td>
+            <td width="250px"><label>විවාහ වු ස්ථානය<br>விவாகம் இடம்பெற்ற இடம் <br>Place of Marriage</label></td>
+            <td colspan="2"><s:label value="%{#request.marriage.placeOfMarriage}"/></td>
+        </tr>
+        <tr>
+            <td><label>විවාහ වු දිනය<br>விவாகம் இடம்பெற்ற திகதி <br>Date of Marriage</label></td>
+            <td colspan="2"><s:label value="%{#request.marriage.dateOfMarriage}"/></td>
+        </tr>
+        <tr>
+            <td colspan="3" rowspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මව්පියන්
+                විවාහ වි නොමැති නම් පියාගේ තොරතුරු ඇතුලත් කර ගැනිම සදහා මව
+                සහ
+                පියාගේ අත්සන් <br>பெற்றோர்
+                மணம் செய்யாதிருப்பின், தகப்பனின் தகவல்கள் பதிவு செய்ய வேண்டுமெனின் பெற்றோரின் கையொப்பம்<br>If
+                parents are not married, signatures of mother and father to include father's particulars</label></td>
+            <td><label>මවගේ අත්සන <br> தாயின் ஒப்பம் <br>Mother’s Signature</label></td>
+            <td align="center"><s:if test="#request.marriage.motherSigned==true"> <s:label
+                    value="%{getText('yes.label')}"/></s:if>
+                <s:else><s:label value="%{getText('no.label')}"/></s:else></td>
+        </tr>
+        <tr>
+            <td><label>පියාගේ අත්සන <br>தகப்பனின் ஒப்பம் <br>Father’s Signature</label></td>
+            <td align="center"><s:if test="#request.marriage.fatherSigned==true"> <s:label
+                    value="%{getText('yes.label')}"/></s:if>
+                <s:else><s:label value="%{getText('no.label')}"/></s:else></td>
+        </tr>
+        </tbody>
+    </table>
 
 
-<table class="table_non_editable_reg_page" cellspacing="0" cellpadding="0" style="margin-top:20px;font-size:9pt;">
-    <caption></caption>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <tbody>
-    <tr>
-        <td colspan="5" style="text-align:center;font-size:11pt">සීයාගේ / මී මුත්තා ගේ විස්තර
-            <br>தாத்தாவின் / பாட்டனின் விபரங்கள்
-            <br>Details of the Grand Father / Great Grand Father
-        </td>
-    </tr>
-    <tr>
-        <td colspan="5"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ළමයාගේ මුත්තා ශ්‍රී
-            ලංකාවේ උපන්නේ නම් <br>பிள்ளையின் பாட்டனார் இலங்கையில்
-            பிறந்திருந்தால் <br>If
-            grandfather of the child born in Sri Lanka</label></td>
-    </tr>
-    <tr>
-        <td rowspan="2" style="width:55px">&nbsp;</td>
-        <td width="200px"><label>ඔහුගේ සම්පුර්ණ නම<br>அவரின் முழுப் பேயர் <br>His Full Name</label></td>
-        <td colspan="4"><s:label value="%{#request.grandFather.grandFatherFullName}"
-                                 cssStyle="width:98%;"/></td>
-    </tr>
-    <tr>
-        <td><label>ඔහුගේ උපන් වර්ෂය <br>அவர் பிறந்த வருடம் <br>His Year of Birth</label></td>
-        <td width="150px"><s:label value="%{#request.grandFather.grandFatherBirthYear}"/></td>
-        <td width="150px"><label>උපන් ස්ථානය <br>அவர் பிறந்த இடம் <br>Place Of Birth</label></td>
-        <td><s:label value="%{#request.grandFather.grandFatherBirthPlace}"/></td>
-    </tr>
-    <tr>
-        <td colspan="5"><label> (<s:property value="#row"/><s:set name="row" value="#row+1"/>)ළමයාගේ පියා ශ්‍රී
-            ලංකාවේ නොඉපිද මීමුත්තා ලංකාවේ උපන්නේ නම් මී මුත්තාගේ <br>பிள்ளையின்
-            தந்தை
-            இலங்கையில் பிறக்காமல் பூட்டன் இலங்கையில் பிறந்திருந்தால் பூட்டனாரின் தகவல்கள
-            ்<br>If the father was not
-            born in Sri Lanka and if great grandfather born in Sri Lanka great grand father's</label></td>
-    </tr>
-    <tr>
-        <td rowspan="2">&nbsp;</td>
-        <td><label>සම්පුර්ණ නම <br>முழுப் பெயர் <br>Full Name</label></td>
-        <td colspan="3"><s:label value="%{#request.grandFather.greatGrandFatherFullName}"
-                                 cssStyle="width:98%;"/></td>
-    </tr>
-    <tr>
-        <td><label>උපන් වර්ෂය <br>பிறந்த வருடம் <br>Year of Birth</label></td>
-        <td><s:label value="%{#request.grandFather.greatGrandFatherBirthYear}"
-                     cssStyle="width:95%;"/></td>
-        <td><label>උපන් ස්ථානය <br>அவர் பிறந்த இடம் <br>Place Of Birth</label></td>
-        <td><s:label value="%{#request.grandFather.greatGrandFatherBirthPlace}"
-                     cssStyle="width:95%;"/></td>
-    </tr>
-    </tbody>
-</table>
+    <table class="table_non_editable_reg_page" cellspacing="0" cellpadding="0" style="margin-top:20px;font-size:9pt;">
+        <caption></caption>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <tbody>
+        <tr>
+            <td colspan="5" style="text-align:center;font-size:11pt">සීයාගේ / මී මුත්තා ගේ විස්තර
+                <br>தாத்தாவின் / பாட்டனின் விபரங்கள்
+                <br>Details of the Grand Father / Great Grand Father
+            </td>
+        </tr>
+        <tr>
+            <td colspan="5"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ළමයාගේ මුත්තා ශ්‍රී
+                ලංකාවේ උපන්නේ නම් <br>பிள்ளையின் பாட்டனார் இலங்கையில்
+                பிறந்திருந்தால் <br>If
+                grandfather of the child born in Sri Lanka</label></td>
+        </tr>
+        <tr>
+            <td rowspan="2" style="width:55px">&nbsp;</td>
+            <td width="200px"><label>ඔහුගේ සම්පුර්ණ නම<br>அவரின் முழுப் பேயர் <br>His Full Name</label></td>
+            <td colspan="4"><s:label value="%{#request.grandFather.grandFatherFullName}"
+                                     cssStyle="width:98%;"/></td>
+        </tr>
+        <tr>
+            <td><label>ඔහුගේ උපන් වර්ෂය <br>அவர் பிறந்த வருடம் <br>His Year of Birth</label></td>
+            <td width="150px"><s:label value="%{#request.grandFather.grandFatherBirthYear}"/></td>
+            <td width="150px"><label>උපන් ස්ථානය <br>அவர் பிறந்த இடம் <br>Place Of Birth</label></td>
+            <td><s:label value="%{#request.grandFather.grandFatherBirthPlace}"/></td>
+        </tr>
+        <tr>
+            <td colspan="5"><label> (<s:property value="#row"/><s:set name="row" value="#row+1"/>)ළමයාගේ පියා ශ්‍රී
+                ලංකාවේ නොඉපිද මීමුත්තා ලංකාවේ උපන්නේ නම් මී මුත්තාගේ <br>பிள்ளையின்
+                தந்தை
+                இலங்கையில் பிறக்காமல் பூட்டன் இலங்கையில் பிறந்திருந்தால் பூட்டனாரின் தகவல்கள
+                ்<br>If the father was not
+                born in Sri Lanka and if great grandfather born in Sri Lanka great grand father's</label></td>
+        </tr>
+        <tr>
+            <td rowspan="2">&nbsp;</td>
+            <td><label>සම්පුර්ණ නම <br>முழுப் பெயர் <br>Full Name</label></td>
+            <td colspan="3"><s:label value="%{#request.grandFather.greatGrandFatherFullName}"
+                                     cssStyle="width:98%;"/></td>
+        </tr>
+        <tr>
+            <td><label>උපන් වර්ෂය <br>பிறந்த வருடம் <br>Year of Birth</label></td>
+            <td><s:label value="%{#request.grandFather.greatGrandFatherBirthYear}"
+                         cssStyle="width:95%;"/></td>
+            <td><label>උපන් ස්ථානය <br>அவர் பிறந்த இடம் <br>Place Of Birth</label></td>
+            <td><s:label value="%{#request.grandFather.greatGrandFatherBirthPlace}"
+                         cssStyle="width:95%;"/></td>
+        </tr>
+        </tbody>
+    </table>
 </s:if>
 
 <div style="page-break-after:always;"></div>
@@ -892,38 +903,38 @@
     </tbody>
 </table>
 <s:if test="request.register.birthType.ordinal() == 1 || request.register.birthType.ordinal() == 3">
-<s:if test="bdfLateOrBelated ==1 || bdfLateOrBelated==2">
-<div id="late-belated-registration" class="font-9">
-    <div id="late-belated-registration-title" class="font-12">
-        <s:if test="bdfLateOrBelated==1">Late Registration</s:if>
-        <s:else>Belated Registration</s:else>
-    </div>
-    <div id="late-belated-case-file-num">
-        <label>ලිපිගොනු අංකය<br>கோவை இலக்கம் <br>Case File Number</label>
-        <s:label name="caseFileNumber"/>
-    </div>
-    <div id="late-belated-prev-comments">
-        <label>අදහස් දක්වන්න<br>கருத்தினை தெரிவிக்கவும் <br>Comments </label>
-        <s:label name="%{#request.register.comments}"/>
-    </div>
-</div>
-</s:if>
+    <s:if test="bdfLateOrBelated ==1 || bdfLateOrBelated==2">
+        <div id="late-belated-registration" class="font-9">
+            <div id="late-belated-registration-title" class="font-12">
+                <s:if test="bdfLateOrBelated==1">Late Registration</s:if>
+                <s:else>Belated Registration</s:else>
+            </div>
+            <div id="late-belated-case-file-num">
+                <label>ලිපිගොනු අංකය<br>கோவை இலக்கம் <br>Case File Number</label>
+                <s:label name="caseFileNumber"/>
+            </div>
+            <div id="late-belated-prev-comments">
+                <label>අදහස් දක්වන්න<br>கருத்தினை தெரிவிக்கவும் <br>Comments </label>
+                <s:label name="%{#request.register.comments}"/>
+            </div>
+        </div>
+    </s:if>
 </s:if>
 </div>
 <div class="form-submit">
     <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
 </div>
 <s:if test="advanceSearch">
-<s:form action="eprBirthsAdvancedSearch.do">
-<div class="form-submit">
-    <s:submit value="%{getText('search_record.label')}" cssStyle="margin-top:10px;"/>
-</div>
-</s:form>
+    <s:form action="eprBirthsAdvancedSearch.do">
+        <div class="form-submit">
+            <s:submit value="%{getText('search_record.label')}" cssStyle="margin-top:10px;"/>
+        </div>
+    </s:form>
 </s:if>
 <s:else>
-<s:form action="eprSearchPageLoad.do">
-<div class="form-submit">
-    <s:submit value="%{getText('previous.label')}" cssStyle="margin-top:10px;"/>
-</div>
-</s:form>    
+    <s:form action="eprSearchPageLoad.do">
+        <div class="form-submit">
+            <s:submit value="%{getText('previous.label')}" cssStyle="margin-top:10px;"/>
+        </div>
+    </s:form>
 </s:else>

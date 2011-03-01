@@ -49,34 +49,34 @@ $(function() {
     $('select#districtId').bind('change', function(evt1) {
         var id = $("select#districtId").attr("value");
         $.getJSON('/ecivil/crs/DivisionLookupService', {id:id},
-                 function(data) {
-                     var options1 = '';
-                     var ds = data.dsDivisionList;
-                     for (var i = 0; i < ds.length; i++) {
-                         options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
-                     }
-                     $("select#dsDivisionId").html(options1);
+                function(data) {
+                    var options1 = '';
+                    var ds = data.dsDivisionList;
+                    for (var i = 0; i < ds.length; i++) {
+                        options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                    }
+                    $("select#dsDivisionId").html(options1);
 
-                     var options2 = '';
-                     var bd = data.bdDivisionList;
-                     for (var j = 0; j < bd.length; j++) {
-                         options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
-                     }
-                     $("select#birthDivisionId").html(options2);
-                 });
+                    var options2 = '';
+                    var bd = data.bdDivisionList;
+                    for (var j = 0; j < bd.length; j++) {
+                        options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
+                    }
+                    $("select#birthDivisionId").html(options2);
+                });
     });
 
     $('select#dsDivisionId').bind('change', function(evt2) {
         var id = $("select#dsDivisionId").attr("value");
         $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:2},
-                 function(data) {
-                     var options = '';
-                     var bd = data.bdDivisionList;
-                     for (var i = 0; i < bd.length; i++) {
-                         options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
-                     }
-                     $("select#birthDivisionId").html(options);
-                 });
+                function(data) {
+                    var options = '';
+                    var bd = data.bdDivisionList;
+                    for (var i = 0; i < bd.length; i++) {
+                        options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
+                    }
+                    $("select#birthDivisionId").html(options);
+                });
     });
 
 
@@ -102,8 +102,13 @@ $(function() {
 
     function processResponse1(respObj) {
         //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
-    };
+        $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].
+        return[0].Text
+    )
+        ;
+    }
+
+    ;
 
     $('img#place').bind('click', function(evt4) {
         var id = $("input#placeOfBirth").attr("value");
@@ -486,6 +491,13 @@ function initPage() {
                 value="%{#session.oldBdfForAdoption.bdDivisionName}"/></td>
     </tr>
     <tr>
+        <td><label>
+            ග්‍රාම නිළධාරී කොටිඨාශය 
+            <br>Grama Niladhari Division in ta<br>Grama Niladhari Division</label></td>
+        <td colspan="6" class="table_reg_cell_01"><s:label
+                value="%{#session.oldBdfForAdoption.bdDivisionName}"/></td>
+    </tr>
+    <tr>
         <td><label>අනුක්‍රමික අංකය/ தொடர் இலக்கம்<br>Serial Number</label></td>
         <td colspan="6"><s:label value="%{#session.oldBdfForAdoption.serialNumber}"/></td>
     </tr>
@@ -530,6 +542,17 @@ function initPage() {
     </td>
     <td colspan="6">
         <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}" list="bdDivisionList"
+                  cssStyle="float:left;  width:240px; margin:2px 5px;"/>
+    </td>
+</tr>
+<tr>
+    <td><label>
+       ග්‍රාම නිළධාරී කොටිඨාශය /<br/>
+        Grama Niladhari Division in ta/<br/>
+        Grama Niladhari Division</label>
+    </td>
+    <td colspan="6">
+        <s:select id="gnDivisionId" name="gnDivisionId" value="%{gnDivisionId}" list="gnDivisionList"
                   cssStyle="float:left;  width:240px; margin:2px 5px;"/>
     </td>
 </tr>

@@ -116,6 +116,7 @@
     <bean id="courtDAOImpl" class="lk.rgd.crs.core.dao.CourtDAOImpl"/>
     <bean id="raceDAOImpl" class="lk.rgd.common.core.dao.RaceDAOImpl"/>
     <bean id="bdDivisionDAOImpl" class="lk.rgd.crs.core.dao.BDDivisionDAOImpl"/>
+    <bean id="gnDivisionDAOImpl" class="lk.rgd.crs.core.dao.GNDivisionDAOImpl"/>
     <bean id="mrDivisionDAOImpl" class="lk.rgd.crs.core.dao.MRDivisionDAOImpl"/>
     <bean id="userDAOImpl" class="lk.rgd.common.core.dao.UserDAOImpl"/>
     <bean id="roleDAOImpl" class="lk.rgd.common.core.dao.RoleDAOImpl"/>
@@ -345,6 +346,7 @@
         <constructor-arg ref="assignmentDAOImpl"/>
         <constructor-arg ref="birthAlterationService"/>
         <constructor-arg ref="commonUtil"/>
+        <constructor-arg ref="gnDivisionDAOImpl"/>
     </bean>
 
     <bean id="birthAlterationAction" scope="prototype" class="lk.rgd.crs.web.action.births.BirthAlterationAction">

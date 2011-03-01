@@ -14,6 +14,7 @@ import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.AssignmentDAO;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
+import lk.rgd.crs.api.dao.GNDivisionDAO;
 import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.AdoptionOrderService;
 import lk.rgd.crs.api.service.BirthAlterationService;
@@ -48,10 +49,12 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private final UserLocationDAO userLocationDAO;
     private final LocationDAO locationDAO;
     private final AssignmentDAO assignmentDAO;
+    private final GNDivisionDAO gnDivisionDAO;
 
     private Map<Integer, String> districtList;
     private Map<Integer, String> countryList;
     private Map<Integer, String> dsDivisionList;
+    private Map<Integer, String> gnDivisionList;
     private Map<Integer, String> raceList;
     private Map<Integer, String> bdDivisionList;
     private Map<Integer, String> allDistrictList;
@@ -89,6 +92,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     /* helper fields to capture input from pages, they will then be processed before populating the bean */
     private int birthDistrictId;
     private int birthDivisionId;
+    private int gnDivisionId;
     private int fatherCountry;
     private int motherCountry;
     private int fatherRace;
@@ -140,7 +144,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     public BirthRegisterAction(BirthRegistrationService service, AdoptionOrderService adoptionService, DistrictDAO districtDAO,
         CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO,
         AppParametersDAO appParametersDAO, UserLocationDAO userLocationDAO, LocationDAO locationDAO,
-        AssignmentDAO assignmentDAO, BirthAlterationService birthAlterationService, CommonUtil commonUtil) {
+        AssignmentDAO assignmentDAO, BirthAlterationService birthAlterationService, CommonUtil commonUtil, GNDivisionDAO gnDivisionDAO) {
         this.service = service;
         this.adoptionService = adoptionService;
         this.districtDAO = districtDAO;
@@ -154,6 +158,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.assignmentDAO = assignmentDAO;
         this.birthAlterationService = birthAlterationService;
         this.commonUtil = commonUtil;
+        this.gnDivisionDAO = gnDivisionDAO;
 
         dsDivisionList = new HashMap<Integer, String>();
         bdDivisionList = new HashMap<Integer, String>();
@@ -620,6 +625,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         oldBDInfo.setBdDivisionName(bdDivisionDAO.getNameByPK(existBdDivision.getBdDivisionUKey(), language));
         oldBDInfo.setDistrictName(districtDAO.getNameByPK(existBdDivision.getDistrict().getDistrictUKey(), language));
         oldBDInfo.setDsDivisionName(dsDivisionDAO.getNameByPK(existBdDivision.getDsDivision().getDsDivisionUKey(), language));
+        oldBDInfo.setGnDivisionName(gnDivisionDAO.getNameByPK(existingBD.getRegister().getGnDivision().getGnDivisionUKey(), language));
     }
 
     /**
@@ -1012,12 +1018,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         countryList = countryDAO.getCountries(language);
         districtList = districtDAO.getDistrictNames(language, user);
         raceList = raceDAO.getRaces(language);
-
+        //todo change  amith :))
         /** getting full district list and DS list for mother info on page 4 */
         allDistrictList = districtDAO.getAllDistrictNames(language, user);
         if (!allDistrictList.isEmpty()) {
             int selectedDistrictId = allDistrictList.keySet().iterator().next();
             allDSDivisionList = dsDivisionDAO.getAllDSDivisionNames(selectedDistrictId, language, user);
+            gnDivisionList = gnDivisionDAO.getGNDivisionNames(selectedDistrictId, language, user);
         }
     }
 
@@ -1622,5 +1629,26 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setChangedFields(BitSet changedFields) {
         this.changedFields = changedFields;
+    }
+
+    public Map<Integer, String> getGnDivisionList() {
+        return gnDivisionList;
+    }
+
+    public void setGnDivisionList(Map<Integer, String> gnDivisionList) {
+        this.gnDivisionList = gnDivisionList;
+    }
+
+    public int getGnDivisionId() {
+        return gnDivisionId;
+    }
+
+    public void setGnDivisionId(int gnDivisionId) {
+        this.gnDivisionId = gnDivisionId;
+        if (register == null) {
+            register = new BirthRegisterInfo();
+        }
+        register.setGnDivision(gnDivisionDAO.getGNDivisionByPK(gnDivisionId));
+        logger.debug("setting GNDivision: {}", register.getGnDivision().getEnGNDivisionName());
     }
 }
