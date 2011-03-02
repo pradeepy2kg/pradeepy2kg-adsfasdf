@@ -15,6 +15,7 @@ import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.AdoptionOrderDAO;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.dao.BirthDeclarationDAO;
+import lk.rgd.crs.api.dao.GNDivisionDAO;
 import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.AdoptionOrderService;
 import lk.rgd.crs.api.service.BirthRegistrationService;
@@ -51,12 +52,13 @@ public class BirthRegistrationServiceImpl implements
     private final AdoptionOrderDAO adoptionOrderDAO;
     private final BirthDeclarationValidator birthDeclarationValidator;
     private final AdoptionOrderService adoptionOrderService;
+    private final GNDivisionDAO gnDivisionDAO;
 
     public BirthRegistrationServiceImpl(
         BirthDeclarationDAO birthDeclarationDAO, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
         BDDivisionDAO bdDivisionDAO, CountryDAO countryDAO, RaceDAO raceDAO, PopulationRegistry ecivil,
         AppParametersDAO appParametersDAO, UserManager userManager, BirthRecordsIndexer birthRecordsIndexer,
-        AdoptionOrderDAO adoptionOrderDAO, BirthDeclarationValidator birthDeclarationValidator, AdoptionOrderService adoptionOrderService) {
+        AdoptionOrderDAO adoptionOrderDAO, BirthDeclarationValidator birthDeclarationValidator, AdoptionOrderService adoptionOrderService, GNDivisionDAO gnDivisionDAO) {
         this.birthDeclarationDAO = birthDeclarationDAO;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
@@ -70,6 +72,7 @@ public class BirthRegistrationServiceImpl implements
         this.adoptionOrderDAO = adoptionOrderDAO;
         this.birthDeclarationValidator = birthDeclarationValidator;
         this.adoptionOrderService = adoptionOrderService;
+        this.gnDivisionDAO = gnDivisionDAO;
     }
 
     /**
@@ -1381,7 +1384,7 @@ public class BirthRegistrationServiceImpl implements
             brInfo.setDistrictPrint(districtDAO.getNameByPK(brInfo.getBirthDistrict().getDistrictUKey(), prefLanguage));
             brInfo.setDsDivisionPrint(dsDivisionDAO.getNameByPK(brInfo.getDsDivision().getDsDivisionUKey(), prefLanguage));
             brInfo.setBdDivisionPrint(bdDivisionDAO.getNameByPK(brInfo.getBirthDivision().getBdDivisionUKey(), prefLanguage));
-
+            brInfo.setGnDivisionPrint(gnDivisionDAO.getNameByPK(brInfo.getGnDivision().getGnDivisionUKey(), prefLanguage));
         }
 
         ParentInfo parent = bdf.getParent();

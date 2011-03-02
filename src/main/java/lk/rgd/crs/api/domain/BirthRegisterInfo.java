@@ -48,6 +48,9 @@ public class BirthRegisterInfo implements Serializable, Cloneable {
     @Transient
     private String bdDivisionPrint;
 
+    @Transient
+    private String gnDivisionPrint;
+
     /**
      * The name of the DS division in the preferred language
      */
@@ -333,5 +336,13 @@ public class BirthRegisterInfo implements Serializable, Cloneable {
 
     public void setGnDivision(GNDivision gnDivision) {
         this.gnDivision = gnDivision;
+    }
+
+    public String getGnDivisionPrint() {
+        return gnDivisionPrint;
+    }
+
+    public void setGnDivisionPrint(String gnDivisionPrint) {
+        this.gnDivisionPrint = gnDivisionPrint;
     }
 }
