@@ -161,7 +161,7 @@ public class User implements Serializable {
     /**
      * @see State
      */
-    @Column(nullable = false, name = "STATUS", columnDefinition = "smallint not null default 1")
+    @Column(nullable = false, columnDefinition = "smallint not null default 1")
     private State status;
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
@@ -187,7 +187,7 @@ public class User implements Serializable {
     @Column
     private String taenSignatureText;
 
-    @Column(name = "loginAttempts", columnDefinition = "smallint not null default 1")
+    @Column(columnDefinition = "smallint not null default 1")
     private int loginAttempts;
 
     public User() {

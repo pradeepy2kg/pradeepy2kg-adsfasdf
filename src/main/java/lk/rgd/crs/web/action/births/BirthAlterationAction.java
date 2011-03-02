@@ -239,7 +239,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         if (birthDivisionId > 0) {
             birthAlteration.setBirthRecordDivision(bdDivisionDAO.getBDDivisionByPK(birthDivisionId));
         }
-        birthAlteration.setBdfIDUKey(bdId);
+        birthAlteration.setBdfIdUKey(bdId);
         try {
             alterationService.addBirthAlteration(birthAlteration, user);
         } catch (CRSRuntimeException e) {
@@ -263,7 +263,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         logger.debug("attempt to load edit page for  birth alteration idUKey : {}", idUKey);
         birthAlteration = alterationService.getByIDUKey(idUKey, user);
         if (birthAlteration != null) {
-            BirthDeclaration bdf = service.getById(birthAlteration.getBdfIDUKey());
+            BirthDeclaration bdf = service.getById(birthAlteration.getBdfIdUKey());
             getBirthCertificateInfo(bdf);
             switch (birthAlteration.getType()) {
                 case TYPE_27A:
@@ -483,7 +483,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         if (birthAlteration != null) {
             logger.debug("attempt to compare alteration with alteration type : {} ", birthAlteration.getType());
             //find original birth record for the alteration
-            bdf = service.getById(birthAlteration.getBdfIDUKey());
+            bdf = service.getById(birthAlteration.getBdfIdUKey());
             String language = bdf.getRegister().getPreferredLanguage();
             switch (birthAlteration.getType()) {
                 case TYPE_27:
@@ -523,7 +523,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         birthAlteration = alterationService.getByIDUKey(idUKey, user);
         BirthDeclaration birthRegister;
         if (birthAlteration != null) {
-            birthRegister = service.getById(birthAlteration.getBdfIDUKey());
+            birthRegister = service.getById(birthAlteration.getBdfIdUKey());
             String preferedLan = birthRegister.getRegister().getPreferredLanguage();
             switch (birthAlteration.getType()) {
                 case TYPE_27:
@@ -597,7 +597,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         if (idUKey != 0) {
             birthAlteration = alterationService.getByIDUKey(idUKey, user);
             if (birthAlteration != null) {
-                originalName = service.getById(birthAlteration.getBdfIDUKey(), user).
+                originalName = service.getById(birthAlteration.getBdfIdUKey(), user).
                     getChild().getChildFullNameOfficialLang();
                 return "pageLoad";
             }
@@ -670,7 +670,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
     }
 
     private void populateBirthAlterationNotice(BirthAlteration birthAlteration) {
-        birthDeclaration = service.getById(birthAlteration.getBdfIDUKey(), user);
+        birthDeclaration = service.getById(birthAlteration.getBdfIdUKey(), user);
         BDDivision bdDivision = birthDeclaration.getRegister().getBirthDivision();
         DSDivision dsDivision = birthDeclaration.getRegister().getDsDivision();
         if (AppConstants.SINHALA.equals(birthDeclaration.getRegister().getPreferredLanguage())) {
@@ -789,7 +789,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
                     child.getChildGender() != 0 ? Integer.toString(child.getChildGender()) : null,
                     alt52_1.getChildGender() != 0 ? Integer.toString(alt52_1.getChildGender()) : null,
                     Alteration52_1.GENDER, lk.rgd.common.util.CommonUtil.
-                        getYesOrNo(birthAlteration.getApprovalStatuses().get(Alteration52_1.GENDER), language)));
+                    getYesOrNo(birthAlteration.getApprovalStatuses().get(Alteration52_1.GENDER), language)));
             }
         }
         FieldValue fv = compareBDDivision(register.getBirthDivision(), alt52_1.getBirthDivision(),
@@ -816,7 +816,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
                     parent.getMotherAgeAtBirth() != null ? Integer.toString(parent.getMotherAgeAtBirth()) : null,
                     mother.getMotherAgeAtBirth() != null ? Integer.toString(mother.getMotherAgeAtBirth()) : null,
                     Alteration52_1.MOTHER_AGE_AT_BIRTH, lk.rgd.common.util.CommonUtil.
-                        getYesOrNo(birthAlteration.getApprovalStatuses().get(Alteration52_1.MOTHER_AGE_AT_BIRTH), language)));
+                    getYesOrNo(birthAlteration.getApprovalStatuses().get(Alteration52_1.MOTHER_AGE_AT_BIRTH), language)));
             }
 
             compareStringValues(parent.getMotherAddress(), mother.getMotherAddress(),

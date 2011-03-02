@@ -271,7 +271,7 @@
         <s:iterator status="approvalStatus" value="birthAlterationPendingApprovalList" id="approvalList">
             <%--todo has to be completed--%>
             <tr>
-                <td align="center"><s:property value="bdfIDUKey"/></td>
+                <td align="center"><s:property value="bdfIdUKey"/></td>
                 <td align="center"><s:property value="type"/></td>
                 <td><s:property value="childNameInOfficialLanguage"/></td>
                 <td align="center">
