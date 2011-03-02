@@ -324,27 +324,27 @@
         </td>
         <td align="left">
             <s:if test="marriage.preferredLanguage=='si'">
-                <s:label value="%{marriage.male.country.siCountryName}"/>
+                <s:label value="%{marriage.male.maleCountry.siCountryName}"/>
             </s:if><s:else>
-            <s:label value="%{marriage.male.country.taCountryName}"/>
+            <s:label value="%{marriage.male.maleCountry.taCountryName}"/>
         </s:else>
             <br>
-            <s:label value="%{marriage.male.country.enCountryName}"/>
+            <s:label value="%{marriage.male.maleCountry.enCountryName}"/>
         </td>
         <td align="center">
-            <s:label value="%{marriage.male.passport}"/>
+            <s:label value="%{marriage.male.malePassport}"/>
         </td>
         <td align="left">
             <s:if test="marriage.preferredLanguage=='si'">
-                <s:label value="%{marriage.female.country.siCountryName}"/>
+                <s:label value="%{marriage.female.femaleCountry.siCountryName}"/>
             </s:if><s:else>
-            <s:label value="%{marriage.female.country.taCountryName}"/>
+            <s:label value="%{marriage.female.femaleCountry.taCountryName}"/>
         </s:else>
             <br>
-            <s:label value="%{marriage.female.country.enCountryName}"/>
+            <s:label value="%{marriage.female.femaleCountry.enCountryName}"/>
         </td>
         <td align="center">
-            <s:label value="%{marriage.female.passport}"/>
+            <s:label value="%{marriage.female.femalePassport}"/>
         </td>
     </tr>
     <tr style="height:100px">

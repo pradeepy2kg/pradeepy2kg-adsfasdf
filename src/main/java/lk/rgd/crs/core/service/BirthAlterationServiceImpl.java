@@ -2,8 +2,6 @@ package lk.rgd.crs.core.service;
 
 import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
-import lk.rgd.common.RGDException;
-import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.Role;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.CRSRuntimeException;
@@ -12,7 +10,6 @@ import lk.rgd.crs.api.dao.BirthDeclarationDAO;
 import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.BirthAlterationService;
 import lk.rgd.crs.core.ValidationUtils;
-import lk.rgd.crs.web.WebConstants;
 import lk.rgd.prs.api.dao.PersonDAO;
 import lk.rgd.prs.api.domain.Person;
 import lk.rgd.prs.api.service.PopulationRegistry;
@@ -58,7 +55,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
         //todo amith call to adding validator (check must fill fields)
         //validate can be added a BA for this BC by state
         logger.debug("Adding new birth alteration record on request of : {}", ba.getDeclarant().getDeclarantFullName());
-        //      birthAlterationValidator.checkOnGoingAlterationOnThisSection(ba.getBdfIDUKey(), ba.getType(), user);
+  //      birthAlterationValidator.checkOnGoingAlterationOnThisSection(ba.getBdfIdUKey(), ba.getType(), user);
         ba.setSubmittedLocation(user.getPrimaryLocation());
         ba.setStatus(BirthAlteration.State.DATA_ENTRY);
         // any user (DEO, ADR of any DS office or BD division etc) can add a birth alteration request
@@ -139,7 +136,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
             existing.setStatus(BirthAlteration.State.FULLY_APPROVED);
 
             // We've saved the alteration record, now lets modify the birth record
-            BirthDeclaration bdf = birthDeclarationDAO.getById(existing.getBdfIDUKey());
+            BirthDeclaration bdf = birthDeclarationDAO.getById(existing.getBdfIdUKey());
             switch (existing.getType()) {
 
                 case TYPE_27:
@@ -224,7 +221,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
         for (BirthAlteration ba : birthAlterations) {
             if (ba.getStatus() == BirthAlteration.State.DATA_ENTRY && ba.getLifeCycleInfo().isActiveRecord()) {
                 //updating BA with new FK
-                ba.setBdfIDUKey(newFK);
+                ba.setBdfIdUKey(newFK);
                 birthAlterationDAO.updateBirthAlteration(ba, user);
                 logger.debug("successfully sync FK of birth alteration idUKey : {} ", ba.getIdUKey());
             }
@@ -357,7 +354,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
 
     private List<BirthAlteration> populateTransientNameOfficialLanguage(List<BirthAlteration> birthAlterations) {
         for (BirthAlteration birthAlteration : birthAlterations) {
-            birthAlteration.setChildNameInOfficialLanguage(birthDeclarationDAO.getById(birthAlteration.getBdfIDUKey()).
+            birthAlteration.setChildNameInOfficialLanguage(birthDeclarationDAO.getById(birthAlteration.getBdfIdUKey()).
                 getChild().getChildFullNameOfficialLang());
         }
         return birthAlterations;
@@ -440,7 +437,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
         }
 
         ValidationUtils.validateAccessToBDDivision(user,
-            birthDeclarationDAO.getById(ba.getBdfIDUKey()).getRegister().getBirthDivision());
+            birthDeclarationDAO.getById(ba.getBdfIdUKey()).getRegister().getBirthDivision());
     }
 
     /**
@@ -459,7 +456,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
             (!(Role.ROLE_DEO.equals(user.getRole().getRoleId())) &&
                 (ba.getType() == BirthAlteration.AlterationType.TYPE_27))) {
             ValidationUtils.validateAccessToBDDivision(user,
-                birthDeclarationDAO.getById(ba.getBdfIDUKey()).getRegister().getBirthDivision());
+                birthDeclarationDAO.getById(ba.getBdfIdUKey()).getRegister().getBirthDivision());
 
             if (!user.isAuthorized(Permission.APPROVE_BIRTH_ALTERATION)) {
                 handleException("User : " + user.getUserId() + " is not allowed to approve/reject birth alteration , " +

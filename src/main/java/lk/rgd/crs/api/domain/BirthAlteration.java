@@ -2,7 +2,6 @@ package lk.rgd.crs.api.domain;
 
 import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.util.WebUtils;
-import lk.rgd.crs.web.WebConstants;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -21,16 +20,16 @@ import java.util.BitSet;
         "WHERE ba.idUKey =:idUKey AND (ba.lifeCycleInfo.activeRecord IS TRUE) " +
         "AND ba.status <=:state ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
     @NamedQuery(name = "filter.alteration.by.bddivision", query = "SELECT ba " +
-        "FROM BirthAlteration ba,BirthDeclaration bdf WHERE ba.bdfIDUKey =bdf.idUKey " +
+        "FROM BirthAlteration ba,BirthDeclaration bdf WHERE ba.bdfIdUKey =bdf.idUKey " +
         "AND (ba.lifeCycleInfo.activeRecord IS TRUE) AND bdf.register.birthDivision = :bdDivision  AND " +
         "ba.status <=:state ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
     @NamedQuery(name = "filter.alteration.by.user.location", query = "SELECT ba FROM BirthAlteration ba " +
         "WHERE ba.submittedLocation.locationUKey= :locationUKey AND (ba.lifeCycleInfo.activeRecord IS TRUE)" +
         " AND ba.status <=:state ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
     @NamedQuery(name = "get.alterations.by.birth.idUKey", query = "SELECT ba FROM BirthAlteration ba " +
-        "WHERE ba.bdfIDUKey =:idUKey"),
+        "WHERE ba.bdfIdUKey =:idUKey"),
     @NamedQuery(name = "filter.birth.alteration.by.birth.certificate.number", query = "SELECT ba " +
-        "FROM BirthAlteration ba WHERE( ba.bdfIDUKey=:certificateNumber AND ba.lifeCycleInfo.activeRecord IS TRUE )")
+        "FROM BirthAlteration ba WHERE( ba.bdfIdUKey=:certificateNumber AND ba.lifeCycleInfo.activeRecord IS TRUE )")
 })
 
 public class BirthAlteration {
@@ -97,7 +96,6 @@ public class BirthAlteration {
     @Column(nullable = true)
     private BitSet approvalStatuses = new BitSet();
 
-
     /**
      * Contains the change bit set for each field.
      */
@@ -107,12 +105,11 @@ public class BirthAlteration {
     @Id
     // This is an auto generated unique row identifier
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "IDUKEY")
     private long idUKey;
 
-    @Column(nullable = false, name = "BD_IDUKEY")
+    @Column(nullable = false)
     // the ID points to Birth Declarations idUKey
-    private long bdfIDUKey;
+    private long bdfIdUKey;
 
     @ManyToOne
     @JoinColumn(name = "submitedLocationUKey", nullable = false)
@@ -239,12 +236,12 @@ public class BirthAlteration {
         this.stampFee = stampFee;
     }
 
-    public long getBdfIDUKey() {
-        return bdfIDUKey;
+    public long getBdfIdUKey() {
+        return bdfIdUKey;
     }
 
-    public void setBdfIDUKey(long bdfIDUKey) {
-        this.bdfIDUKey = bdfIDUKey;
+    public void setBdfIdUKey(long bdfIdUKey) {
+        this.bdfIdUKey = bdfIdUKey;
     }
 
     public Date getDateReceived() {
