@@ -63,12 +63,19 @@ $(function() {
                         options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
                     }
                     $("select#birthDivisionId").html(options2);
+
+                    var options3 = '';
+                    var gn = data.gnDivisionList;
+                    for (var k = 0; k < gn.length; k++) {
+                        options3 += '<option value="' + gn[k].optionValue + '">' + gn[k].optionDisplay + '</option>';
+                    }
+                    $("select#gnDivisionId").html(options3);
                 });
     });
 
     $('select#dsDivisionId').bind('change', function(evt2) {
         var id = $("select#dsDivisionId").attr("value");
-        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:2},
+        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:2},
                 function(data) {
                     var options = '';
                     var bd = data.bdDivisionList;
@@ -76,6 +83,13 @@ $(function() {
                         options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
                     }
                     $("select#birthDivisionId").html(options);
+
+                    var options4 = '';
+                    var gn = data.gnDivisionList;
+                    for (var k = 0; k < gn.length; k++) {
+                        options4 += '<option value="' + gn[k].optionValue + '">' + gn[k].optionDisplay + '</option>';
+                    }
+                    $("select#gnDivisionId").html(options4);
                 });
     });
 
@@ -145,6 +159,7 @@ $(function() {
 });
 
 var errormsg = "";
+
 function validate() {
     //skipping low priority data validations
     var check = document.getElementById('skipjs');
@@ -281,6 +296,7 @@ function liveBirthCommonTags(check) {
         }
     }
 }
+
 // validate birth weight of the child
 function validateBirthWeight(domElement, errorText, errorCode) {
     with (domElement) {
@@ -319,6 +335,7 @@ function dateRange() {
         }
     }
 }
+
 function initSerialNumber() {
     var domobject = document.getElementById('bdfSerialNo');
     if (isFieldEmpty(domobject)) {
@@ -492,7 +509,7 @@ function initPage() {
     </tr>
     <tr>
         <td><label>
-            ග්‍රාම නිළධාරී කොටිඨාශය 
+            ග්‍රාම නිළධාරී කොටිඨාශය
             <br>Grama Niladhari Division in ta<br>Grama Niladhari Division</label></td>
         <td colspan="6" class="table_reg_cell_01"><s:label
                 value="%{#session.oldBdfForAdoption.bdDivisionName}"/></td>
@@ -547,7 +564,7 @@ function initPage() {
 </tr>
 <tr>
     <td><label>
-       ග්‍රාම නිළධාරී කොටිඨාශය /<br/>
+        ග්‍රාම නිළධාරී කොටිඨාශය /<br/>
         Grama Niladhari Division in ta/<br/>
         Grama Niladhari Division</label>
     </td>

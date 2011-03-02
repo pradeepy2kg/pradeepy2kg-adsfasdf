@@ -212,6 +212,7 @@
         <constructor-arg ref="adoptionOrderDAOImpl"/>
         <constructor-arg ref="birthDeclarationValidator"/>
         <constructor-arg ref="adoptionOrderService"/>
+        <constructor-arg ref="gnDivisionDAOImpl"/>
     </bean>
 
 

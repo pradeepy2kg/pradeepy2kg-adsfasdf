@@ -929,6 +929,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 birthDistrictId = register.getBirthDistrict().getDistrictUKey();
                 birthDivisionId = register.getBirthDivision().getBdDivisionUKey();
                 dsDivisionId = register.getDsDivision().getDsDivisionUKey();
+                gnDivisionId = register.getGnDivision().getGnDivisionUKey();
                 idsPopulated = true;
             }
             logger.debug("Districts, DS and BD divisions set from RegisterInfo : {} {}", birthDistrictId, dsDivisionId);
