@@ -15,6 +15,7 @@ import lk.rgd.common.util.NameFormatUtil;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
+import lk.rgd.crs.api.dao.GNDivisionDAO;
 import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.DeathAlterationService;
 import lk.rgd.crs.api.service.DeathRegistrationService;
@@ -65,12 +66,14 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private final DeathAlterationService deathAlterationService;
     private final RaceDAO raceDAO;
     private final CommonUtil commonUtil;
+    private final GNDivisionDAO gnDivisionDAO;
 
     private BitSet changedFields;
 
     private Map<Integer, String> districtList;
     private Map<Integer, String> dsDivisionList;
     private Map<Integer, String> bdDivisionList;
+    private Map<Integer, String> gnDivisionList;
     private Map<Integer, String> raceList;
     private Map<Integer, String> countryList;
     private Map<Integer, String> locationList;
@@ -87,6 +90,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private int currentStatus;
     private int rowNumber;
     private int pageType;
+    private int gnDivisionId;
 
     private long idUKey;
     private long oldIdUKey;
@@ -135,7 +139,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     public DeathRegisterAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
         CountryDAO countryDAO, DeathRegistrationService deathRegistrationService, AppParametersDAO appParametersDAO,
         RaceDAO raceDAO, DeathAlterationService deathAlterationService, UserLocationDAO userLocationDAO, UserDAO userDAO,
-        LocationDAO locationDAO, CommonUtil commonUtil) {
+        LocationDAO locationDAO, CommonUtil commonUtil, GNDivisionDAO gnDivisionDAO) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
@@ -148,6 +152,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         this.userDAO = userDAO;
         this.locationDAO = locationDAO;
         this.commonUtil = commonUtil;
+        this.gnDivisionDAO = gnDivisionDAO;
     }
 
 
@@ -895,6 +900,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         }
 
         bdDivisionList = bdDivisionDAO.getBDDivisionNames(getDsDivisionId(), language, user);
+        gnDivisionList = gnDivisionDAO.getGNDivisionNames(dsDivisionId, language, user);
         /*if (getDeathDivisionId() == 0) {
             setDeathDivisionId(bdDivisionList.keySet().iterator().next());
             logger.debug("first allowed BD Div in the list {} was set", getDeathDivisionId());
@@ -1548,5 +1554,26 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public void setLanguage(String language) {
         this.language = language;
+    }
+
+    public Map<Integer, String> getGnDivisionList() {
+        return gnDivisionList;
+    }
+
+    public void setGnDivisionList(Map<Integer, String> gnDivisionList) {
+        this.gnDivisionList = gnDivisionList;
+    }
+
+    public int getGnDivisionId() {
+        return gnDivisionId;
+    }
+
+    public void setGnDivisionId(int gnDivisionId) {
+        this.gnDivisionId = gnDivisionId;
+        if (death == null) {
+            death = new DeathInfo();
+        }
+        death.setGnDivision(gnDivisionDAO.getGNDivisionByPK(gnDivisionId));
+        logger.debug("setting Death GN Division: {}", death.getGnDivision().getEnGNDivisionName());
     }
 }

@@ -586,7 +586,7 @@ function personAgeDeath() {
     </td>
 </tr>
 <tr>
-    <td rowspan="6">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+    <td rowspan="7">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
         මරණය සිදු වූ ස්ථානය<s:label value="*" cssStyle="color:red;font-size:10pt"/>
         <br>இறப்பு நிகழந்த இடம்
         <br>Place of Death
@@ -611,6 +611,17 @@ function personAgeDeath() {
     </td>
     <td colspan="5"><s:select id="deathDivisionId" name="deathDivisionId" list="bdDivisionList"
                               cssStyle="float:left;"/></td>
+</tr>
+<tr>
+    <td colspan="3"><label>
+        ග්‍රාම නිළධාරී කොටිඨාශය /<br/>
+        Grama Niladhari Division in ta/<br/>
+        Grama Niladhari Division</label>
+    </td>
+    <td colspan="5">
+        <s:select id="gnDivisionId" name="gnDivisionId" value="%{gnDivisionId}" list="gnDivisionList"
+                  cssStyle="float:left; width:99%"/>
+    </td>
 </tr>
 
 <tr>
