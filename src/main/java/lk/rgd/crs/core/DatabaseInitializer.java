@@ -33,6 +33,7 @@ import java.util.*;
 public class DatabaseInitializer implements ApplicationContextAware {
 
     public static final String USE_NW_DERBY = "nwderby";
+    public static final String INSERT_GN_DIVISIONS = "allGn";
     private static final Logger logger = LoggerFactory.getLogger(DatabaseInitializer.class);
 
     private DataSource dataSource;
@@ -223,6 +224,17 @@ public class DatabaseInitializer implements ApplicationContextAware {
             SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
                 new ClassPathResource("database/populate_sample_prs.sql"), false);
             logger.info("Populated the tables with sample data from : populate_sample_prs.sql");
+
+            //populate sample GN Divisions
+            if (mysql || Boolean.getBoolean(INSERT_GN_DIVISIONS)) {
+                SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource)
+                    , new ClassPathResource("database/populate_sample_gn_division.sql"), false);
+                logger.debug("populated GN divisions with sample data form populate_sample_gn_division.sql");
+            } else if (mysql || !Boolean.getBoolean(INSERT_GN_DIVISIONS)) {
+                SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource)
+                    , new ClassPathResource("database/populate_sample_gn_division_limited.sql"), false);
+                logger.debug("populated limited  GN divisions with sample data form populate_sample_gn_division_limited.sql");
+            }
 
         } catch (Exception e) {
             logger.error("Error populating the database with initial data from : populate_sample_data/crs/prs.sql", e);
