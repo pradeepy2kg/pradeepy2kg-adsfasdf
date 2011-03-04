@@ -78,6 +78,15 @@ $(function() {
                         options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
                     }
                     $("select#deathDivisionId").html(options2);
+
+
+                    var options3 = '';
+                    var gn = data.gnDivisionList;
+                    for (var k = 0; k < gn.length; k++) {
+                        options3 += '<option value="' + gn[k].optionValue + '">' + gn[k].optionDisplay + '</option>';
+                    }
+                    $("select#gnDivisionId").html(options3);
+
                 });
     });
 
@@ -104,6 +113,14 @@ $(function() {
                         options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
                     }
                     $("select#deathDivisionId").html(options);
+
+                    var options4 = '';
+                    var gn = data.gnDivisionList;
+                    for (var k = 0; k < gn.length; k++) {
+                        options4 += '<option value="' + gn[k].optionValue + '">' + gn[k].optionDisplay + '</option>';
+                    }
+                    $("select#gnDivisionId").html(options4);
+
                 });
     });
     /**
