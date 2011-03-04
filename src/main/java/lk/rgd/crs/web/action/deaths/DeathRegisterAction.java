@@ -484,6 +484,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         dsDivisionId = bddivision.getDsDivision().getDsDivisionUKey();
         deathDivisionId = bddivision.getBdDivisionUKey();
         deathDistrictId = bddivision.getDistrict().getDistrictUKey();
+        gnDivisionId = deathRegister.getDeath().getGnDivision().getGnDivisionUKey();
         DSDivision dsDivisionPermanentAddress = deathRegister.getDeathPerson().getDsDivisionOfPermanentAddress();
         deathPersonPermenentAddressDistrictId = (dsDivisionPermanentAddress != null) ?
             dsDivisionPermanentAddress.getDistrict().getDistrictUKey() : 0;
