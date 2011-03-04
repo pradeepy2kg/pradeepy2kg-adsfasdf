@@ -39,8 +39,9 @@ public class BirthRegisterInfo implements Serializable, Cloneable {
     /**
      * The GN  division where the birth is registered (Includes District)
      */
+    //todo remove nullable to false when we have all the data 
     @ManyToOne
-    @JoinColumn(name = "gnDivisionUKey", nullable = false)
+    @JoinColumn(name = "gnDivisionUKey", nullable = true)
     private GNDivision gnDivision;
     /**
      * The name of the Birth/Death registration division in the preferred language
