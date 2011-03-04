@@ -166,7 +166,7 @@
         <td colspan="3"><s:label value="%{#session.deathRegister.death.timeOfDeath}"/></td>
     </tr>
     <tr>
-        <td rowspan="5">මරණය සිදු වූ ස්ථානය<br>பிறந்த இடம்<br>Place of Death</td>
+        <td rowspan="6">මරණය සිදු වූ ස්ථානය<br>பிறந்த இடம்<br>Place of Death</td>
         <td colspan="3">දිස්ත්‍රික්කය /<br> மாவட்டம் / <br>District</td>
         <td colspan="5">
             <s:if test="#userPreferedLang == 'si'">
@@ -207,6 +207,23 @@
             </s:elseif>
             <s:else>
                 <s:label value="%{#session.deathRegister.death.deathDivision.taDivisionName}"/>
+            </s:else>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3"><label>
+            ග්‍රාම නිළධාරී කොටිඨාශය
+            / <br>Grama Niladhari Division in ta/<br>Grama Niladhari Division/</label></td>
+        <td colspan="5">
+            <s:if test="#userPreferedLang == 'si'">
+                <s:label
+                        value="%{#session.deathRegister.death.gnDivision.siGNDivisionName}"/>
+            </s:if>
+            <s:elseif test="#userPreferedLang == 'en'">
+                <s:label value="%{#session.deathRegister.death.gnDivision.enGNDivisionName}"/>
+            </s:elseif>
+            <s:else>
+                <s:label value="%{#session.deathRegister.death.gnDivision.taGNDivisionName}"/>
             </s:else>
         </td>
     </tr>
