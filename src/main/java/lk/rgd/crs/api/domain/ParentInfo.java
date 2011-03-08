@@ -308,7 +308,7 @@ public class ParentInfo implements Serializable, Cloneable {
         this.motherFullName = WebUtils.filterBlanksAndToUpper(motherFullName);
     }
 
-    public void setMotherFullNameInEnglish(String enMotherFullName) {
+    public void setMotherFullNameInEnglish(String motherFullNameInEnglish) {
         this.motherFullNameInEnglish = WebUtils.filterBlanksAndToUpper(motherFullNameInEnglish);
     }
 
