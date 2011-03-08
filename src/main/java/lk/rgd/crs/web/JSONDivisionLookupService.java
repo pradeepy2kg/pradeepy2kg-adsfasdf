@@ -1,5 +1,6 @@
 package lk.rgd.crs.web;
 
+import lk.rgd.common.RGDRuntimeException;
 import lk.rgd.common.api.dao.RoleDAO;
 import lk.rgd.common.api.dao.UserDAO;
 import lk.rgd.common.api.domain.User;
@@ -7,6 +8,7 @@ import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.util.LocaleUtil;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
+import lk.rgd.crs.api.dao.GNDivisionDAO;
 import lk.rgd.crs.api.dao.MRDivisionDAO;
 import lk.rgd.AppConstants;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -37,6 +39,7 @@ public class JSONDivisionLookupService extends HttpServlet {
     private BDDivisionDAO bdDivisionDAO;
     private DistrictDAO districtDAO;
     private MRDivisionDAO mrDivisionDAO;
+    private GNDivisionDAO gnDivisionDAO;
     private UserDAO userDAO;
     private RoleDAO roleDAO;
 
@@ -50,6 +53,7 @@ public class JSONDivisionLookupService extends HttpServlet {
         mrDivisionDAO = (MRDivisionDAO) context.getBean("mrDivisionDAOImpl");
         userDAO = (UserDAO) context.getBean("userDAOImpl");
         roleDAO = (RoleDAO) context.getBean("roleDAOImpl");
+        gnDivisionDAO = (GNDivisionDAO) context.getBean("gnDivisionDAOImpl");
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -87,6 +91,7 @@ public class JSONDivisionLookupService extends HttpServlet {
                 //TODO: to be removed safely. generalized 9
                 // passing dsDivisionId, return the BD list
                 optionLists.put("bdDivisionList", getBDDivisions(lang, divisionId, user));
+                optionLists.put("gnDivisionList", getGNDivisions(lang, divisionId, user));
             } else if ("3".equals(mode)) {
                 // passing districtId, return all DSDivision list.
                 optionLists.put("dsDivisionList", getAllDSDivisions(lang, divisionId, user));
@@ -193,8 +198,10 @@ public class JSONDivisionLookupService extends HttpServlet {
                 List ds = getDSDivisions(lang, divisionId, user);
                 int dsDivisionId = Integer.parseInt(((SelectOption) ds.get(0)).getOptionValue());
                 List bd = getBDDivisions(lang, dsDivisionId, user);
+                List gn = getGNDivisions(lang, dsDivisionId, user);
                 optionLists.put("dsDivisionList", ds);
                 optionLists.put("bdDivisionList", bd);
+                optionLists.put("gnDivisionList", gn);
             }
         } catch (Exception e) {
             logger.error("Fatal Error : {}", e);
@@ -209,6 +216,7 @@ public class JSONDivisionLookupService extends HttpServlet {
     }
 
     //TODO : tobe removed
+
     private List getBDDivisions(String language, int dsDivisionId, User user) {
         Map<Integer, String> bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
         logger.debug("Loaded BD list : {}", bdDivisionList);
@@ -216,7 +224,20 @@ public class JSONDivisionLookupService extends HttpServlet {
         return getList(bdDivisionList);
     }
 
+    private List getGNDivisions(String language, int dsDivisionId, User user) {
+        Map<Integer, String> gnDivisionList = null;
+        try {
+            gnDivisionList = gnDivisionDAO.getGNDivisionNames(dsDivisionId, language, user);
+            logger.debug("Loaded GN list : {}", gnDivisionList);
+        }
+        catch (RGDRuntimeException e) {
+            gnDivisionList = Collections.emptyMap();
+        }
+        return getList(gnDivisionList);
+    }
+
     //TODO : tobe removed
+
     private List getMRDivision(String language, int dsDivision, User user) {
         Map<Integer, String> bdDivisionList = mrDivisionDAO.getMRDivisionNames(dsDivision, language, user);
         logger.debug("Loaded MR list : {}", bdDivisionList);
@@ -225,6 +246,7 @@ public class JSONDivisionLookupService extends HttpServlet {
     }
 
     //todo:  to be removed
+
     private List getAllDSDivisions(String language, int BDId, User user) {
         Map<Integer, String> dsDivisionList = dsDivisionDAO.getAllDSDivisionNames(BDId, language, user);
         logger.debug("Loaded DS list : {}", dsDivisionList);
@@ -238,6 +260,7 @@ public class JSONDivisionLookupService extends HttpServlet {
     }
 
     //TODO : tobe removed
+
     private List getDSDivisions(String language, int BDId, User user) {
         Map<Integer, String> dsDivisionList = dsDivisionDAO.getDSDivisionNames(BDId, language, user);
         logger.debug("Loaded DS list : {}", dsDivisionList);
@@ -286,6 +309,7 @@ public class JSONDivisionLookupService extends HttpServlet {
     }
 
     //TODO : tobe removed
+
     private List getList(Map<Integer, String> map) {
         List<SelectOption> ds = new ArrayList<SelectOption>();
 

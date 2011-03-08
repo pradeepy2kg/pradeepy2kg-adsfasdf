@@ -677,16 +677,16 @@ $('select#dsDivisionId').bind('change', function(evt2) {
             Passport No.
         </td>
         <td>
-            <s:textfield name="marriage.male.passport" id="passport_male" maxLength="15"
-                         cssStyle="width:120px" value="%{marriage.male.passport}"/>
+            <s:textfield name="marriage.male.malePassport" id="passport_male" maxLength="15"
+                         cssStyle="width:120px" value="%{marriage.male.malePassport}"/>
         </td>
         <td>ලංකාවට පැමිණි දිනය <br>
             in tamil <br>
             Date of Arrival
         </td>
         <td>
-            <s:textfield name="marriage.male.dateOfArrival" id="date_arrival_male" maxLength="10"
-                         cssStyle="width:80px" value="%{marriage.male.dateOfArrival}"/>
+            <s:textfield name="marriage.male.maleDateOfArrival" id="date_arrival_male" maxLength="10"
+                         cssStyle="width:80px" value="%{marriage.male.maleDateOfArrival}"/>
         </td>
     </tr>
     <tr>
@@ -961,16 +961,16 @@ $('select#dsDivisionId').bind('change', function(evt2) {
             Passport No.
         </td>
         <td>
-            <s:textfield name="marriage.female.passport" id="passport_female" maxLength="15"
-                         cssStyle="width:120px" value="%{marriage.female.passport}"/>
+            <s:textfield name="marriage.female.femalePassport" id="passport_female" maxLength="15"
+                         cssStyle="width:120px" value="%{marriage.female.femalePassport}"/>
         </td>
         <td>ලංකාවට පැමිණි දිනය <br>
             in tamil <br>
             Date of Arrival
         </td>
         <td>
-            <s:textfield name="marriage.female.dateOfArrival" id="date_arrival_female" maxLength="10"
-                         cssStyle="width:80px" value="%{marriage.female.dateOfArrival}"/>
+            <s:textfield name="marriage.female.femaleDateOfArrival" id="date_arrival_female" maxLength="10"
+                         cssStyle="width:80px" value="%{marriage.female.femaleDateOfArrival}"/>
         </td>
     </tr>
     <tr>

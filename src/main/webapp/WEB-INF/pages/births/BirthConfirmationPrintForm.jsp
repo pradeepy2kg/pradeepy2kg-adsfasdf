@@ -298,7 +298,7 @@
     </tr>
 
     <tr>
-        <td rowspan="4" style="text-align:center;"> 6</td>
+        <td rowspan="5" style="text-align:center;"> 6</td>
         <td height="40px"><label>උපන් දිස්ත්‍රික්කය<br>மாவட்டம் <br>District of Birth</label></td>
         <td colspan="6" style="font-size:12pt;">
             <s:label value="%{register.districtPrint}"/>
@@ -322,6 +322,18 @@
             Registration Division</label></td>
         <td colspan="6" style="font-size:12pt;">
             <s:label value="%{register.bdDivisionPrint}"/>
+        </td>
+        <td colspan="11">&nbsp;</td>
+    </tr>
+
+    <tr>
+        <td><label>
+            ග්‍රාම නිළධාරී කොටිඨාශය <br/>
+            Grama Niladhari Division in ta<br/>
+            Grama Niladhari Division</label>
+        </td>
+        <td colspan="6" style="font-size:12pt;">
+            <s:label value="%{register.gnDivisionPrint}"/>
         </td>
         <td colspan="11">&nbsp;</td>
     </tr>
@@ -701,9 +713,14 @@
             <p></p>
             <label>
                 ඉහත සදහන් තොරතුරු සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියට ඇතුලත් කරන ලදී.
+                /மேற்குறிப்பிட்ட விபரங்கள் ‘சிவில் பதிவு முறையில்’ உள்ளடக்கப்பட்டன (மாவட்டப் பதிவாளர் / மேலதிக
+                மாவட்டப் பதிவாளர்)
+                /Above information has been entered into the Civil Registration System.
+
+       <%--         ඉහත සදහන් තොරතුරු සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියට ඇතුලත් කරන ලදී.
                 <br>மேற்குறிப்பிட்ட விபரங்கள் ‘சிவில் பதிவு முறையில்’ உள்ளடக்கப்பட்டன (மாவட்டப் பதிவாளர் / மேலதிக
                 மாவட்டப் பதிவாளர்)
-                <br>Above information has been entered into the Civil Registration System.
+                <br>Above information has been entered into the Civil Registration System.--%>
             </label>
 
             <p></p>
@@ -758,7 +775,7 @@
     <tr>
         <td colspan="2"><p></p></td>
     </tr>
-<%--    <tr>
+    <%--    <tr>
         <td>
             Printed On : <%= DateTimeUtils.getISO8601FormattedString(new Date()) %>
         </td>

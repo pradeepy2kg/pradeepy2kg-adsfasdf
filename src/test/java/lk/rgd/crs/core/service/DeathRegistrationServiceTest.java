@@ -2,6 +2,8 @@ package lk.rgd.crs.core.service;
 
 import junit.framework.TestCase;
 import lk.rgd.common.api.service.UserManager;
+import lk.rgd.crs.api.dao.GNDivisionDAO;
+import lk.rgd.crs.api.domain.GNDivision;
 import org.springframework.context.ApplicationContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,30 +32,17 @@ public class DeathRegistrationServiceTest extends TestCase {
     protected final ApplicationContext ctx = UnitTestManager.ctx;
     protected final DeathRegistrationService deathRegService;
     protected final BDDivisionDAO bdDivisionDAO;
+    protected final GNDivisionDAO gnDivisionDAO;
     protected final UserManager userManager;
     protected final BDDivision colomboBDDivision;
     protected final BDDivision negamboBDDivision;
+    protected final GNDivision sammantranapuraGNDivision;
     protected DeathRegisterDAO deathRegisterDAO;
     protected User deoColomboColombo;
     protected User deoGampahaNegambo;
     protected User adrColomboColombo;
     protected User adrGampahaNegambo;
 
-
-/*    public static Test suite() {
-        TestSetup setup = new TestSetup(new TestSuite(DeathRegistrationServiceTest.class)) {
-            protected void setUp() throws Exception {
-                logger.debug("=> show this once for class - setup");
-                super.setUp();
-            }
-
-            protected void tearDown() throws Exception {
-                logger.debug("=> show this once for class - tear");
-                super.tearDown();
-            }
-        };
-        return setup;
-    }*/
 
     @Override
     protected void setUp() throws Exception {
@@ -65,6 +54,7 @@ public class DeathRegistrationServiceTest extends TestCase {
         deathRegService = (DeathRegistrationService) ctx.getBean("deathRegisterService", DeathRegistrationService.class);
         bdDivisionDAO = (BDDivisionDAO) ctx.getBean("bdDivisionDAOImpl", BDDivisionDAO.class);
         userManager = (UserManager) ctx.getBean("userManagerService", UserManager.class);
+        gnDivisionDAO = (GNDivisionDAO) ctx.getBean("gnDivisionDAOImpl", GNDivisionDAO.class);
 
         try {
             deoColomboColombo = userManager.authenticateUser("deo-colombo-colombo", "password");
@@ -77,6 +67,7 @@ public class DeathRegistrationServiceTest extends TestCase {
 
         colomboBDDivision = bdDivisionDAO.getBDDivisionByPK(1);
         negamboBDDivision = bdDivisionDAO.getBDDivisionByPK(9);
+        sammantranapuraGNDivision = gnDivisionDAO.getGNDivisionByPK(1);
     }
 
     public void testAddMinimalNormalDDF() {
@@ -85,12 +76,12 @@ public class DeathRegistrationServiceTest extends TestCase {
         dob.add(Calendar.DATE, -3);
 
         // test colombo deo adding for colombo
-        DeathRegister ddf1 = getMinimalDDF(2010101001, dob.getTime(), colomboBDDivision);
+        DeathRegister ddf1 = getMinimalDDF(2010101001, dob.getTime(), colomboBDDivision,sammantranapuraGNDivision);
         ddf1.setDeathType(deathType);
         deathRegService.addNormalDeathRegistration(ddf1, deoColomboColombo);
 
         // try adding a duplicate
-        DeathRegister ddf2 = getMinimalDDF(2010101001, dob.getTime(), colomboBDDivision);
+        DeathRegister ddf2 = getMinimalDDF(2010101001, dob.getTime(), colomboBDDivision,sammantranapuraGNDivision);
         ddf2.setDeathType(deathType);
         try {
             deathRegService.addNormalDeathRegistration(ddf2, deoColomboColombo);
@@ -99,7 +90,7 @@ public class DeathRegistrationServiceTest extends TestCase {
         }
 
         // try adding a late death
-        DeathRegister ddf3 = getMinimalDDF(20101010, dob.getTime(), colomboBDDivision);
+        DeathRegister ddf3 = getMinimalDDF(20101010, dob.getTime(), colomboBDDivision,sammantranapuraGNDivision);
         ddf3.setDeathType(DeathRegister.Type.LATE);
         try {
             deathRegService.addNormalDeathRegistration(ddf3, deoColomboColombo);
@@ -140,13 +131,14 @@ Assert.assertTrue("A minimal DDF must trigger warnings that data is incomplete",
 
     }
 
-    protected DeathRegister getMinimalDDF(long serial, Date dod, BDDivision deathDivision) {
+    protected DeathRegister getMinimalDDF(long serial, Date dod, BDDivision deathDivision, GNDivision gnDivision) {
 
         Date today = new Date();
         DeathRegister ddf = new DeathRegister();
         ddf.getDeath().setDeathSerialNo(serial);
         ddf.getDeath().setDateOfRegistration(today);
         ddf.getDeath().setDeathDivision(deathDivision);
+        ddf.getDeath().setGnDivision(gnDivision);
         ddf.getDeath().setDateOfDeath(dod);
         ddf.getDeath().setPlaceOfDeath("Place of death person " + serial);
         ddf.getDeath().setPlaceOfBurial("Place of burial " + serial);

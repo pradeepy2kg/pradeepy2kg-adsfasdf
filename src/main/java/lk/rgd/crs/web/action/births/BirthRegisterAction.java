@@ -334,6 +334,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             case 1:
                 logger.debug("Step {} of 3 ", pageNo);
                 bdf.getRegister().setBirthDivision(register.getBirthDivision());
+                bdf.getRegister().setGnDivision(register.getGnDivision());
                 bdf.getChild().setDateOfBirth(child.getDateOfBirth());
                 bdf.getChild().setChildGender(child.getChildGender());
                 bdf.getRegister().setPreferredLanguage(register.getPreferredLanguage());
@@ -929,6 +930,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 birthDistrictId = register.getBirthDistrict().getDistrictUKey();
                 birthDivisionId = register.getBirthDivision().getBdDivisionUKey();
                 dsDivisionId = register.getDsDivision().getDsDivisionUKey();
+                gnDivisionId = register.getGnDivision().getGnDivisionUKey();
                 idsPopulated = true;
             }
             logger.debug("Districts, DS and BD divisions set from RegisterInfo : {} {}", birthDistrictId, dsDivisionId);

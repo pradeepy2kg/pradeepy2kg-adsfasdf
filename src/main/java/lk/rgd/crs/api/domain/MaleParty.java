@@ -1,7 +1,6 @@
 package lk.rgd.crs.api.domain;
 
 import lk.rgd.common.api.domain.Country;
-import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.Race;
 import lk.rgd.common.util.WebUtils;
 import lk.rgd.prs.api.domain.Person;
@@ -15,60 +14,60 @@ import java.util.Date;
 @Embeddable
 public class MaleParty {
 
-    @Column(name = "M_IDENTIFICATION_NUMBER", nullable = true)
+    @Column(nullable = true)
     //pin only
     private String identificationNumberMale;
 
-    @Column(name = "M_DOB", nullable = true)
+    @Column(nullable = true)
     @Temporal(value = TemporalType.DATE)
     private Date dateOfBirthMale;
 
     @ManyToOne
-    @JoinColumn(name = "M_RACE_IDUKEY", nullable = true)
+    @JoinColumn(name = "maleRaceId", nullable = true)
     private Race maleRace;
 
-    @Column(name = "M_AGE_LAST_BD", nullable = true)
+    @Column(nullable = true)
     private int ageAtLastBirthDayMale;
 
     @ManyToOne
-    @JoinColumn(name = "M_COUNTRY_IDUKEY", nullable = true)
-    private Country country;
+    @JoinColumn(name = "maleCountryId", nullable = true)
+    private Country maleCountry;
 
-    @Column(name = "M_PASSPORT", nullable = true)
-    private String passport;
+    @Column(nullable = true)
+    private String malePassport;
 
-    @Column(name = "M_DATE_ARRIVAL", nullable = true)
+    @Column(nullable = true)
     @Temporal(value = TemporalType.DATE)
-    private Date dateOfArrival;
+    private Date maleDateOfArrival;
 
-    @Column(name = "M_NAME_OFFICIAL", nullable = true, length = 600)
+    @Column(nullable = true, length = 600)
     private String nameInOfficialLanguageMale;
 
-    @Column(name = "M_NAME_ENGLISH", nullable = true, length = 600)
+    @Column(nullable = true, length = 600)
     private String nameInEnglishMale;
 
-    @Column(name = "M_ADDRESS_OFFICIAL", nullable = true, length = 255)
+    @Column(nullable = true, length = 255)
     private String residentAddressMaleInOfficialLang;
 
-    @Column(name = "M_ADDRESS_ENGLISH", nullable = true, length = 255)
+    @Column(nullable = true, length = 255)
     private String residentAddressMaleInEnglish;
 
-    @Column(name = "M_RANK_PROFESSION_OFFICIAL", nullable = true, length = 255)
+    @Column(nullable = true, length = 255)
     private String rankOrProfessionMaleInOfficialLang;
 
-    @Column(name = "M_RANK_PROFESSION_ENGLISh", nullable = true, length = 255)
+    @Column(nullable = true, length = 255)
     private String rankOrProfessionMaleInEnglish;
 
-    @Column(name = "M_CIVIL_STATE", nullable = true)
+    @Column(nullable = true)
     private Person.CivilStatus civilStatusMale;
 
-    @Column(name = "M_IDENTIFICATION_FATHER", length = 12, nullable = true)
+    @Column(length = 12, nullable = true)
     private String fatherIdentificationNumberMale;
 
-    @Column(name = "M_FULL_NAME_FATHER_OFFICIAL", length = 600, nullable = true)
+    @Column(length = 600, nullable = true)
     private String fatherFullNameMaleInOfficialLang;
 
-    @Column(name = "M_FULL_NAME_FATHER_ENGLISH", length = 600, nullable = true)
+    @Column(length = 600, nullable = true)
     private String fatherFullNameMaleInEnglish;
 
     public String getIdentificationNumberMale() {
@@ -111,28 +110,28 @@ public class MaleParty {
         this.ageAtLastBirthDayMale = ageAtLastBirthDayMale;
     }
 
-    public Country getCountry() {
-        return country;
+    public Country getMaleCountry() {
+        return maleCountry;
     }
 
-    public void setCountry(Country country) {
-        this.country = country;
+    public void setMaleCountry(Country maleCountry) {
+        this.maleCountry = maleCountry;
     }
 
-    public String getPassport() {
-        return passport;
+    public String getMalePassport() {
+        return malePassport;
     }
 
-    public void setPassport(String passport) {
-        this.passport = WebUtils.filterBlanks(passport);
+    public void setMalePassport(String malePassport) {
+        this.malePassport = malePassport;
     }
 
-    public Date getDateOfArrival() {
-        return dateOfArrival;
+    public Date getMaleDateOfArrival() {
+        return maleDateOfArrival;
     }
 
-    public void setDateOfArrival(Date dateOfArrival) {
-        this.dateOfArrival = dateOfArrival;
+    public void setMaleDateOfArrival(Date maleDateOfArrival) {
+        this.maleDateOfArrival = maleDateOfArrival;
     }
 
     public String getNameInOfficialLanguageMale() {

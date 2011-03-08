@@ -11,10 +11,10 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * @author amith jayasekara
- *         Entity class for Grama Niladhari Division with in D.S Division
+ *         Entity class for Grama Niladhari Division (G.N) with in D.S Division
  */
 @Entity
-@Table(name = "GN_DIVISIONS", schema = "CRS", uniqueConstraints = {
+@Table(name = "GN_DIVISIONS", schema = "COMMON", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"dsDivisionUKey", "gnDivisionUKey"})
 })
 
