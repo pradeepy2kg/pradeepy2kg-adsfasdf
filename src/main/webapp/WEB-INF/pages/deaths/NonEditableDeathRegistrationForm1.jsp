@@ -166,7 +166,7 @@
         <td colspan="3"><s:label value="%{#session.deathRegister.death.timeOfDeath}"/></td>
     </tr>
     <tr>
-        <td rowspan="6">මරණය සිදු වූ ස්ථානය<br>பிறந்த இடம்<br>Place of Death</td>
+        <td rowspan="5">මරණය සිදු වූ ස්ථානය<br>பிறந்த இடம்<br>Place of Death</td>
         <td colspan="3">දිස්ත්‍රික්කය /<br> மாவட்டம் / <br>District</td>
         <td colspan="5">
             <s:if test="#userPreferedLang == 'si'">
@@ -210,23 +210,23 @@
             </s:else>
         </td>
     </tr>
-    <tr>
-        <td colspan="3"><label>
-            ග්‍රාම නිළධාරී කොටිඨාශය
-            / <br>Grama Niladhari Division in ta/<br>Grama Niladhari Division/</label></td>
-        <td colspan="5">
-            <s:if test="#userPreferedLang == 'si'">
-                <s:label
-                        value="%{#session.deathRegister.death.gnDivision.siGNDivisionName}"/>
-            </s:if>
-            <s:elseif test="#userPreferedLang == 'en'">
-                <s:label value="%{#session.deathRegister.death.gnDivision.enGNDivisionName}"/>
-            </s:elseif>
-            <s:else>
-                <s:label value="%{#session.deathRegister.death.gnDivision.taGNDivisionName}"/>
-            </s:else>
-        </td>
-    </tr>
+        <%--    <tr>
+            <td colspan="3"><label>
+                ග්‍රාම නිළධාරී කොටිඨාශය
+                / <br>Grama Niladhari Division in ta/<br>Grama Niladhari Division/</label></td>
+            <td colspan="5">
+                <s:if test="#userPreferedLang == 'si'">
+                    <s:label
+                            value="%{#session.deathRegister.death.gnDivision.siGNDivisionName}"/>
+                </s:if>
+                <s:elseif test="#userPreferedLang == 'en'">
+                    <s:label value="%{#session.deathRegister.death.gnDivision.enGNDivisionName}"/>
+                </s:elseif>
+                <s:else>
+                    <s:label value="%{#session.deathRegister.death.gnDivision.taGNDivisionName}"/>
+                </s:else>
+            </td>
+        </tr>--%>
     <tr>
         <td rowspan="2" colspan="1">ස්ථානය <br>பிறந்த <br>Place</td>
         <td colspan="2">සිංහල හෝ දෙමළ භාෂාවෙන්<br>சிங்களம் தமிழ்<br>In Sinhala or Tamil</td>
@@ -376,55 +376,113 @@
         <td colspan="1">නම ඉංග්‍රීසි භාෂාවෙන්<br>பிறப்பு அத்தாட்சி …..<br>Name in English</td>
         <td colspan="6"><s:label value="%{#session.deathRegister.deathPerson.deathPersonNameInEnglish}"/></td>
     </tr>
-    <tr>
-        <td colspan="1">ස්ථිර ලිපිනය<br>தாயின் நிரந்தர வதிவிட முகவரி<br>Permanent Address</td>
-        <td colspan="6"><s:label value="%{#session.deathRegister.deathPerson.deathPersonPermanentAddress}"/></td>
-    </tr>
-    <tr>
-        <td colspan="1">
-            පියාගේ අනන්‍යතා අංකය
-            <br>தந்தையின் அடையாள எண்
-            <br>Fathers Identification No.
-        </td>
-        <td colspan="6"><s:label value="%{#session.deathRegister.deathPerson.deathPersonFatherPINorNIC}"/></td>
-    </tr>
-    <tr>
-        <td colspan="1">
-            පියාගේ සම්පුර්ණ නම
-            <br>தந்தையின் முழுப் பெயர்
-            <br>Fathers full name
-        </td>
-        <td colspan="6"><s:label value="%{#session.deathRegister.deathPerson.deathPersonFatherFullName}"/></td>
-    </tr>
-    <tr>
-        <td colspan="1">
-            මවගේ අනන්‍යතා අංකය
-            <br>தாயின் அடையாள எண்
-            <br>Mothers Identification No.
-        </td>
-        <td colspan="6"><s:label value="%{#session.deathRegister.deathPerson.deathPersonMotherPINorNIC}"/></td>
-    </tr>
-    <tr>
-        <td colspan="1">
-            මවගේ සම්පුර්ණ නම
-            <br>தாயின் முழுப் பெயர்
-            <br>Mothers full name
-        </td>
-        <td colspan="6"><s:label value="%{#session.deathRegister.deathPerson.deathPersonMotherFullName}"/></td>
-    </tr>
     </tbody>
 </table>
+<table border="1"
+       style="width: 100%; border:1px solid #000; border-collapse:collapse;border-bottom:none;border-top:none; margin-bottom:0;"
+       class="font-9">
+    <caption/>
+    <col width="150px"/>
+    <col width="200px"/>
+    <col width="237px"/>
+    <col width="200px"/>
+    <col width="237px"/>
+    <tbody>
+    <tr>
+        <td colspan="1" rowspan="2">ස්ථිර ලිපිනය<br>தாயின் நிரந்தர வதிவிட முகவரி<br>Permanent Address</td>
+        <td height="50px" colspan="4"><s:label
+                value="%{#session.deathRegister.deathPerson.deathPersonPermanentAddress}"/>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="1">ප්‍රාදේශීය ලේකම් කොට්ඨාශය <br>பிரிவு <br>Divisional Secretariat</td>
+        <td colspan="1" height="50px">
+            <s:if test="#userPreferedLang == 'si'">
+                <s:label
+                        value="%{#session.deathRegister.deathPerson.dsDivisionOfPermanentAddress.siDivisionName}"/>
+            </s:if>
+            <s:elseif test="#userPreferedLang == 'en'">
+                <s:label value="%{#session.deathRegister.deathPerson.dsDivisionOfPermanentAddress.enDivisionName}"/>
+            </s:elseif>
+            <s:else>
+                <s:label value="%{#session.deathRegister.deathPerson.dsDivisionOfPermanentAddress.taDivisionName}"/>
+            </s:else>
+        </td>
+        <td colspan="1">
+            ග්‍රාම නිළධාරී කොටිඨාශය <br/>
+            Grama Niladhari Division in ta<br/>
+            Grama Niladhari Division
+        </td>
+        <td colspan="1" height="50px">
+            <s:if test="#userPreferedLang == 'si'">
+                <s:label
+                        value="%{#session.deathRegister.deathPerson.gnDivision.siGNDivisionName}"/>
+            </s:if>
+            <s:elseif test="#userPreferedLang == 'en'">
+                <s:label value="%{#session.deathRegister.deathPerson.gnDivision.enGNDivisionName}"/>
+            </s:elseif>
+            <s:else>
+                <s:label value="%{#session.deathRegister.deathPerson.gnDivision.taGNDivisionName}"/>
+            </s:else>
+        </td>
+    </tr>
+    </tbody>
 
-<div class="form-submit">
-    <s:hidden name="pageNo" value="1"/>
-    <s:submit value="%{getText('next.label')}" cssStyle="margin-top:10px;"/>
-</div>
-</s:form>
-<script type="text/javascript">
-    function setTime() {
-        var list = document.getElementById("time");
-        var array = new Array('1', '2', '3');
-        list.list = array;
-    }
-</script>
+    <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin-bottom:0;"
+           class="font-9">
+        <col width="99px"/>
+        <col width="100px"/>
+        <col width="100px"/>
+        <col width="100px"/>
+        <col width="150px"/>
+        <col width="130px"/>
+        <col/>
+        <tbody>
+        <tr>
+            <td colspan="1">
+                පියාගේ අනන්‍යතා අංකය
+                <br>தந்தையின் அடையாள எண்
+                <br>Fathers Identification No.
+            </td>
+            <td colspan="6"><s:label value="%{#session.deathRegister.deathPerson.deathPersonFatherPINorNIC}"/></td>
+        </tr>
+        <tr>
+            <td colspan="1">
+                පියාගේ සම්පුර්ණ නම
+                <br>தந்தையின் முழுப் பெயர்
+                <br>Fathers full name
+            </td>
+            <td colspan="6"><s:label value="%{#session.deathRegister.deathPerson.deathPersonFatherFullName}"/></td>
+        </tr>
+        <tr>
+            <td colspan="1">
+                මවගේ අනන්‍යතා අංකය
+                <br>தாயின் அடையாள எண்
+                <br>Mothers Identification No.
+            </td>
+            <td colspan="6"><s:label value="%{#session.deathRegister.deathPerson.deathPersonMotherPINorNIC}"/></td>
+        </tr>
+        <tr>
+            <td colspan="1">
+                මවගේ සම්පුර්ණ නම
+                <br>தாயின் முழுப் பெயர்
+                <br>Mothers full name
+            </td>
+            <td colspan="6"><s:label value="%{#session.deathRegister.deathPerson.deathPersonMotherFullName}"/></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="form-submit">
+        <s:hidden name="pageNo" value="1"/>
+        <s:submit value="%{getText('next.label')}" cssStyle="margin-top:10px;"/>
+    </div>
+    </s:form>
+    <script type="text/javascript">
+        function setTime() {
+            var list = document.getElementById("time");
+            var array = new Array('1', '2', '3');
+            list.list = array;
+        }
+    </script>
 </div>

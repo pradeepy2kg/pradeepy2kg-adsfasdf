@@ -334,7 +334,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             case 1:
                 logger.debug("Step {} of 3 ", pageNo);
                 bdf.getRegister().setBirthDivision(register.getBirthDivision());
-                bdf.getRegister().setGnDivision(register.getGnDivision());
                 bdf.getChild().setDateOfBirth(child.getDateOfBirth());
                 bdf.getChild().setChildGender(child.getChildGender());
                 bdf.getRegister().setPreferredLanguage(register.getPreferredLanguage());
@@ -354,6 +353,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
                 bdf.getParent().setFatherFullName(parent.getFatherFullName());
                 bdf.getParent().setMotherFullName(parent.getMotherFullName());
+                bdf.getParent().setMotherGNDivision(parent.getMotherGNDivision());
                 break;
             case 3:
                 logger.debug("Step {} of 3 ", pageNo);
@@ -626,7 +626,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         oldBDInfo.setBdDivisionName(bdDivisionDAO.getNameByPK(existBdDivision.getBdDivisionUKey(), language));
         oldBDInfo.setDistrictName(districtDAO.getNameByPK(existBdDivision.getDistrict().getDistrictUKey(), language));
         oldBDInfo.setDsDivisionName(dsDivisionDAO.getNameByPK(existBdDivision.getDsDivision().getDsDivisionUKey(), language));
-        oldBDInfo.setGnDivisionName(gnDivisionDAO.getNameByPK(existingBD.getRegister().getGnDivision().getGnDivisionUKey(), language));
     }
 
     /**
@@ -930,7 +929,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 birthDistrictId = register.getBirthDistrict().getDistrictUKey();
                 birthDivisionId = register.getBirthDivision().getBdDivisionUKey();
                 dsDivisionId = register.getDsDivision().getDsDivisionUKey();
-                gnDivisionId = register.getGnDivision().getGnDivisionUKey();
+
                 idsPopulated = true;
             }
             logger.debug("Districts, DS and BD divisions set from RegisterInfo : {} {}", birthDistrictId, dsDivisionId);
@@ -978,6 +977,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 motherDSDivisionId = ds.getDsDivisionUKey();
                 motherDistrictId = ds.getDistrict().getDistrictUKey();
             }
+            gnDivisionId = (parent.getMotherGNDivision() != null) ? parent.getMotherGNDivision().getGnDivisionUKey() : 0;
         }
     }
 
@@ -1647,10 +1647,10 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setGnDivisionId(int gnDivisionId) {
         this.gnDivisionId = gnDivisionId;
-        if (register == null) {
+        if (parent == null) {
             register = new BirthRegisterInfo();
         }
-        register.setGnDivision(gnDivisionDAO.getGNDivisionByPK(gnDivisionId));
-        logger.debug("setting GNDivision: {}", register.getGnDivision().getEnGNDivisionName());
+        parent.setMotherGNDivision(gnDivisionDAO.getGNDivisionByPK(gnDivisionId));
+        logger.debug("setting GNDivision fom mother : {}", parent.getMotherGNDivision().getEnGNDivisionName());
     }
 }

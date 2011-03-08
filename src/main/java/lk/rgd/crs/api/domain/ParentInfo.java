@@ -184,6 +184,18 @@ public class ParentInfo implements Serializable, Cloneable {
     @Temporal(value = TemporalType.DATE)
     private Date motherAdmissionDate;
 
+    /**
+     * The GN  division where the birth is registered (Includes District)
+     */
+    //todo remove nullable to false when we have all the data
+    @ManyToOne
+    @JoinColumn(name = "motherGNDivisionUKey", nullable = true)
+    private GNDivision motherGNDivision;
+
+
+    @Transient
+    private String motherGNDivisionPrint;
+
     public String getFatherNICorPIN() {
         return fatherNICorPIN;
     }
@@ -400,8 +412,24 @@ public class ParentInfo implements Serializable, Cloneable {
         this.motherDistrictPrint = motherDistrictPrint;
     }
 
+    public GNDivision getMotherGNDivision() {
+        return motherGNDivision;
+    }
+
+    public void setMotherGNDivision(GNDivision motherGNDivision) {
+        this.motherGNDivision = motherGNDivision;
+    }
+
     @Override
     protected ParentInfo clone() throws CloneNotSupportedException {
         return (ParentInfo) super.clone();
+    }
+
+    public String getMotherGNDivisionPrint() {
+        return motherGNDivisionPrint;
+    }
+
+    public void setMotherGNDivisionPrint(String motherGNDivisionPrint) {
+        this.motherGNDivisionPrint = motherGNDivisionPrint;
     }
 }

@@ -332,7 +332,7 @@
     </td>
 </tr>
 <tr>
-    <td rowspan="6"></td>
+    <td rowspan="5"></td>
     <td><label>දිස්ත්‍රික්කය <br>மாவட்டம் <br>District</label></td>
     <td colspan="6">
         <s:if test="bdId != 0">
@@ -360,7 +360,7 @@
     <td colspan="6"><s:select name="birthDivisionId" list="bdDivisionList"/></td>
 </tr>
 
-<tr>
+<%--<tr>
     <td><label> ග්‍රාම නිළධාරී කොටිඨාශය <br> Grama Niladhari Division in ta<br>Grama Niladhari Division</label></td>
     <td colspan="6">
         <s:if test="bdId != 0">
@@ -368,19 +368,7 @@
         </s:if>
     </td>
     <td colspan="6"><s:select name="gnDivisionId" list="gnDivisionList"/></td>
-</tr>
-
-    <%--
-    <tr>
-        <td><label>      ග්‍රාම නිළධාරී කොටිඨාශය <br>  Grama Niladhari Division in ta<br>Grama Niladhari Division</label></td>
-        <td colspan="6">
-            <s:if test="bdId != 0">
-                <s:textfield value="%{getBdDivisionList().get(birthDivisionId)}" cssClass="disable" disabled="true"/>
-            </s:if>
-        </td>
-        <td colspan="6"><s:select name="birthDivisionId" list="bdDivisionList"/></td>
-    </tr>
-    --%>
+</tr>--%>
 
 <tr>
     <td><label>ස්ථානය <br>பிறந்த இடம் <br>Place</label></td>

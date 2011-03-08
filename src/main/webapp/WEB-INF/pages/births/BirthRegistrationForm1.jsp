@@ -490,7 +490,7 @@ function initPage() {
         <td colspan="7"><s:label value="%{#session.birthRegister.register.adoptionUKey}"/></td>
     </tr>
     <tr>
-        <td rowspan="5"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+        <td rowspan="4"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
             ළමයාගේ උපත කලින්
             ලියාපදිංචි කර තිබුනේනමි<br>பிள்ளையின் பிறப்பு பதிவு செய்யப்பட்டிருந்தால்<br>If the birth was
             previously registered</label></td>
@@ -507,13 +507,13 @@ function initPage() {
         <td colspan="6" class="table_reg_cell_01"><s:label
                 value="%{#session.oldBdfForAdoption.bdDivisionName}"/></td>
     </tr>
-    <tr>
+    <%--<tr>
         <td><label>
             ග්‍රාම නිළධාරී කොටිඨාශය
             <br>Grama Niladhari Division in ta<br>Grama Niladhari Division</label></td>
         <td colspan="6" class="table_reg_cell_01"><s:label
                 value="%{#session.oldBdfForAdoption.bdDivisionName}"/></td>
-    </tr>
+    </tr>--%>
     <tr>
         <td><label>අනුක්‍රමික අංකය/ தொடர் இலக்கம்<br>Serial Number</label></td>
         <td colspan="6"><s:label value="%{#session.oldBdfForAdoption.serialNumber}"/></td>
@@ -534,7 +534,7 @@ function initPage() {
     </td>
 </tr>
 <tr>
-    <td rowspan="6"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපන්
+    <td rowspan="5"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපන්
         ස්ථානය <s:label value="*" cssStyle="color:red;font-size:14pt;"/>
         <br>பிறந்த இடம்
         <br> Place of Birth</label></td>
@@ -559,17 +559,6 @@ function initPage() {
     </td>
     <td colspan="6">
         <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}" list="bdDivisionList"
-                  cssStyle="float:left;  width:240px; margin:2px 5px;"/>
-    </td>
-</tr>
-<tr>
-    <td><label>
-        ග්‍රාම නිළධාරී කොටිඨාශය /<br/>
-        Grama Niladhari Division in ta/<br/>
-        Grama Niladhari Division</label>
-    </td>
-    <td colspan="6">
-        <s:select id="gnDivisionId" name="gnDivisionId" value="%{gnDivisionId}" list="gnDivisionList"
                   cssStyle="float:left;  width:240px; margin:2px 5px;"/>
     </td>
 </tr>

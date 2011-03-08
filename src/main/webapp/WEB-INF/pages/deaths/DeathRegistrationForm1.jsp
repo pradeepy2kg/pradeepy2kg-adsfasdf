@@ -96,12 +96,25 @@ $(function() {
                 function(data) {
                     var options1 = '';
                     var ds = data.dsDivisionList;
+                    var dsDivisionsSelect = document.getElementById('selectDSDivision').value;
+                    options1 += '<option value="' + 0 + '">' + dsDivisionsSelect + '</option>';
                     for (var i = 0; i < ds.length; i++) {
                         options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
                     }
                     $("select#deathPersonPermenentAddressDSDivisionId").html(options1);
+
+
+                    var options3 = '';
+                    var gn = data.gnDivisionList;
+                    var gnDivisionsSelect = document.getElementById('selectGNDivision').value;
+                    options3 += '<option value="' + 0 + '">' + gnDivisionsSelect + '</option>';
+                    for (var k = 0; k < gn.length; k++) {
+                        options3 += '<option value="' + gn[k].optionValue + '">' + gn[k].optionDisplay + '</option>';
+                    }
+                    $("select#deathPersonPermanentAddressGNDivision").html(options3);
                 });
     });
+
 
     $('select#deathDsDivisionId').bind('change', function(evt2) {
         var id = $("select#deathDsDivisionId").attr("value");
@@ -113,13 +126,22 @@ $(function() {
                         options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
                     }
                     $("select#deathDivisionId").html(options);
+                });
+    });
+
+    $('select#deathPersonPermenentAddressDSDivisionId').bind('change', function(evt2) {
+        var id = $("select#deathPersonPermenentAddressDSDivisionId").attr("value");
+        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:2},
+                function(data) {
 
                     var options4 = '';
                     var gn = data.gnDivisionList;
+                    var dsDivisionsSelect = document.getElementById('selectGNDivision').value;
+                    options4 += '<option value="' + 0 + '">' + dsDivisionsSelect + '</option>';
                     for (var k = 0; k < gn.length; k++) {
                         options4 += '<option value="' + gn[k].optionValue + '">' + gn[k].optionDisplay + '</option>';
                     }
-                    $("select#gnDivisionId").html(options4);
+                    $("select#deathPersonPermanentAddressGNDivision").html(options4);
 
                 });
     });
@@ -603,7 +625,7 @@ function personAgeDeath() {
     </td>
 </tr>
 <tr>
-    <td rowspan="7">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+    <td rowspan="6">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
         මරණය සිදු වූ ස්ථානය<s:label value="*" cssStyle="color:red;font-size:10pt"/>
         <br>இறப்பு நிகழந்த இடம்
         <br>Place of Death
@@ -629,17 +651,17 @@ function personAgeDeath() {
     <td colspan="5"><s:select id="deathDivisionId" name="deathDivisionId" list="bdDivisionList"
                               cssStyle="float:left;"/></td>
 </tr>
-<tr>
-    <td colspan="3"><label>
-        ග්‍රාම නිළධාරී කොටිඨාශය /<br/>
-        Grama Niladhari Division in ta/<br/>
-        Grama Niladhari Division</label>
-    </td>
-    <td colspan="5">
-        <s:select id="gnDivisionId" name="gnDivisionId" value="%{gnDivisionId}" list="gnDivisionList"
-                  cssStyle="float:left; width:99%"/>
-    </td>
-</tr>
+    <%--<tr>
+        <td colspan="3"><label>
+            ග්‍රාම නිළධාරී කොටිඨාශය /<br/>
+            Grama Niladhari Division in ta/<br/>
+            Grama Niladhari Division</label>
+        </td>
+        <td colspan="5">
+            <s:select id="gnDivisionId" name="gnDivisionId" value="%{gnDivisionId}" list="gnDivisionList"
+                      cssStyle="float:left; width:99%"/>
+        </td>
+    </tr>--%>
 
 <tr>
     <td rowspan="2" colspan="1">
@@ -969,27 +991,36 @@ function personAgeDeath() {
         </td>
     </tr>
     <tr>
-        <td width="150px">
+        <td width="100px">
             දිස්ත්‍රික්කය <br>
             மாவட்டம் <br>
             District
         </td>
-        <td width="150px">
+        <td width="100px">
             <s:select id="deathPersonPermenentAddressDistrictId" name="deathPersonPermenentAddressDistrictId"
                       list="districtList" value="%{deathPersonPermenentAddressDistrictId}"
-                      cssStyle="float:left;  width:240px;" headerValue="%{getText('district.select')}" headerKey="0"/>
+                      cssStyle="float:left;  width:98%;" headerValue="%{getText('district.label')}" headerKey="0"/>
         </td>
-        <td width="150px">
+        <td width="98px">
             ප්‍රාදේශීය ලේකම් කොට්ඨාශය <br>
             பிரதேச செயளாளர் பிரிவு <br>
             Divisional Secretariat
         </td>
-        <td width="150px">
+        <td width="100px">
             <s:select id="deathPersonPermenentAddressDSDivisionId" name="deathPersonPermenentAddressDSDivisionId"
                       list="permenantAddressDsDivisionList" value="%{deathPersonPermenentAddressDSDivisionId}"
-                      cssStyle="float:left;  width:240px;" headerValue="%{getText('dsDivision.select')}" headerKey="0"/>
+                      cssStyle="float:left;  width:98%;" headerValue="%{getText('dsDivision.label')}" headerKey="0"/>
         </td>
-        <td style="background:#cccccc"></td>
+        <td width="102px"><label>
+            ග්‍රාම නිළධාරී කොටිඨාශය /<br/>
+            Grama Niladhari Division in ta/<br/>
+            Grama Niladhari Division</label>
+        </td>
+        <td width="100px">
+            <s:select id="deathPersonPermanentAddressGNDivision" name="gnDivisionId" value="%{gnDivisionId}"
+                      list="gnDivisionList"
+                      cssStyle="float:left; width:99%" headerKey="0" headerValue="%{getText('gnDivisions.label')}"/>
+        </td>
     </tr>
 </table>
 <table class="font-9" id="special" border="1"
@@ -1256,6 +1287,8 @@ function personAgeDeath() {
 --%>
 <s:hidden id="error13" value="%{getText('enter.reasonForLate.label')}"/>
 <s:hidden id="reasonForLateDefaultText" value="%{getText('text.default.reason')}"/>
+<s:hidden id="selectDSDivision" value="%{getText('dsDivision.label')}"/>
+<s:hidden id="selectGNDivision" value="%{getText('gnDivisions.label')}"/>
 </div>
 
 
