@@ -122,7 +122,7 @@
 }
 
 .form-submit-long {
-    float: right;
+    float:right;
     margin-top: 5px;
 }
 
@@ -1760,7 +1760,7 @@
     }
 
     .form-submit-long a {
-        display: none;
+        display: none; 
     }
 }
 

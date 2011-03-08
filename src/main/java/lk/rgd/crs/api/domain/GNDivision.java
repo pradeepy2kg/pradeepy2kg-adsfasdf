@@ -1,9 +1,13 @@
 package lk.rgd.crs.api.domain;
 
 import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.api.domain.User;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import java.io.Serializable;              n
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * @author amith jayasekara
@@ -12,6 +16,11 @@ import java.io.Serializable;
 @Entity
 @Table(name = "GN_DIVISIONS", schema = "CRS", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"dsDivisionUKey", "gnDivisionUKey"})
+})
+
+@NamedQueries({
+        @NamedQuery(name = "get.gnDivisions.by.code",query ="SELECT gn FROM GNDivision gn WHERE " +
+                "(gn.gnDivisionId =:gnDivisionCode AND gn.dsDivision =:dsDivision)")
 })
 //todo add cache control amith :))
 public class GNDivision implements Serializable {
@@ -135,5 +144,8 @@ public class GNDivision implements Serializable {
     @Override
     public int hashCode() {
         return gnDivisionUKey;
+    }
+
+    public void add(GNDivision gnDivision, User user) {
     }
 }

@@ -7,6 +7,7 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.domain.Court;
+import lk.rgd.crs.api.domain.GNDivision;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +25,7 @@ public interface MasterDataManagementService {
      * @param user       the user invoking the action
      */
     void addBDDivision(BDDivision bdDivision, User user);
+
 
     /**
      * Mark a BD Division as active
@@ -114,5 +116,23 @@ public interface MasterDataManagementService {
      * @param user      user invoking the action
      */
     public void activateOrInactivateCourt(int courtUKey, boolean activate, User user);
+
+
+    /**
+     * Add a new GN Division
+     *
+     * @param gnDivision the GN Division to be added
+     * @param user       the user invoking the action
+     */
+    void addGNDivision(GNDivision gnDivision, User user);
+
+     /**
+     * Mark a GN Division as active
+     *
+     * @param gnDivisionUKey the BD Division to be updated
+     * @param active         check active or inactive bdDivision
+     * @param user           the user invoking the action
+     */
+    void activateOrInactiveGNDivision(int gnDivisionUKey, boolean active, User user);
 }
 

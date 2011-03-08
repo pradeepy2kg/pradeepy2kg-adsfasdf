@@ -260,6 +260,7 @@
         <constructor-arg ref="districtDAOImpl"/>
         <constructor-arg ref="locationDAOImpl"/>
         <constructor-arg ref="courtDAOImpl"/>
+        <constructor-arg ref="gnDivisionDAOImpl"/>
     </bean>
 
     <bean id="certificateSearchService" class="lk.rgd.crs.core.service.CertificateSearchServiceImpl">
@@ -438,6 +439,7 @@
         <constructor-arg ref="birthRecordsIndexer"/>
         <constructor-arg ref="deathRecordsIndexer"/>
         <constructor-arg ref="prsRecordsIndexer"/>
+        <constructor-arg ref="gnDivisionDAOImpl"/>
     </bean>
 
     <bean id="registrarsManagmentAction" class="lk.rgd.crs.web.action.RegistrarManagementAction">

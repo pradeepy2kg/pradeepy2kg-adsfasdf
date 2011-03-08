@@ -74,7 +74,20 @@
         });
 
 
+       $('select#addGnDivisionDistrictId').bind('change', function(evt1) {
+            var id = $("select#addGnDivisionDistrictId").attr("value");
+            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:3},
+                    function(data) {
+                        var options1 = '';
+                        var ds = data.dsDivisionList;
+                        for (var i = 0; i < ds.length; i++) {
+                            options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                        }
+                        $("select#addGnDivisionDsDivisionId").html(options1);
+                    });
+        });
     });
+   
     function validate() {
         var errormsg = "";
         var domObject;
@@ -85,6 +98,7 @@
         if (pageType == 2)  pageName = "Ds Division";
         if (pageType == 3)  pageName = "Division";
         if (pageType == 4)  pageName = "MR Division";
+        if (pageType == 7)  pageName = "GN Division";
         domObject = document.getElementById("id");
         if (isFieldEmpty(domObject)) {
             errormsg = errormsg + "Plese Enter The  Id of " + pageName + " \n";
@@ -120,7 +134,7 @@
 </script>
 
 <div id="add-inactive-divisions-outer">
-<s:if test="!(pageType == 1 || pageType==2 || pageType == 3 || pageType==4 || pageType==5 || pageType==6)">
+<s:if test="!(pageType == 1 || pageType==2 || pageType == 3 || pageType==4 || pageType==5 || pageType==6||pageType==7)">
 <table style="border:1px;width:100%">
 <tr>
     <td style="width:50%">
@@ -395,6 +409,77 @@
     </td>
 
 </tr>
+
+
+
+
+<tr>
+    <td>
+        <fieldset style="border:2px solid #c3dcee;float:left;width:96%;">
+            <table style="border:none;margin-top:15px;text-align:center;margin-bottom:10px;" align="center">
+                <col style="width:25%"/>
+                <col style="width:25%"/>
+                <col style="width:25%"/>
+                <col style="width:25%"/>
+                <col/>
+                <tbody>
+                <tr>
+                    <td style="font-size:13pt;" colspan="4">Grama Niladhari List</td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <s:form name="editDivisions" action="eprInitDivisionList.do" method="POST">
+                        <table class="add-inactive-divisions-outer-table" align="center" cellspacing="0">
+                            <col style="width:30%"/>
+                            <col style="width:70%"/>
+                            <col/>
+                            <tbody>
+                            <tr>
+
+                                <td>District</td>
+                                <td><s:select id="addGnDivisionDistrictId" name="userDistrictId"
+                                              list="districtList"/></td>
+                            </tr>
+                            <tr>
+                                <td>Divisional Secretariat</td>
+                                <td><s:select id="addGnDivisionDsDivisionId" name="dsDivisionId"
+                                              list="dsDivisionList"/></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="font-size:10pt;text-align:left;padding-left:25px;" colspan="3">
+                        * Add New GN <br>
+                        * Active GN <br>
+                        * Inactive GN
+                    </td>
+                    <td>
+                        <div class="form-submit">
+                            <s:hidden name="pageType" value="7"/>
+                            <s:submit value="GN Division List" cssStyle="margin-top:10px;" name="button"/>
+                        </div>
+                    </td>
+                </tr>
+                </s:form>
+                </tbody>
+            </table>
+        </fieldset>
+    </td>
+
+   
+</tr>
+
+
+
+
+
+
+
+
+
+
 </table>
 </s:if>
 <s:if test="!(pageType == 0)">
@@ -410,18 +495,19 @@
         <table class="add-inactive-divisions-outer-table" cellspacing="0" align="center" style="margin-top:15px;">
             <s:if test="!((pageType==1) ||(pageType==5) )">   <%--||(pageType==6)--%>
                 <tr style="height:35px;">
-                    <td colspan="2">District</td>
+                    <td colspan="2">District</td>     
                     <s:textfield name="userDistrictId" cssStyle="visibility:hidden;"/>
                     <td><s:label name="" value="%{districtEn}" cssStyle=" margin-left:15px;"/></td>
                 </tr>
             </s:if>
-            <s:if test="pageType==3 ||pageType==4 || pageType==6">   <%-- Shan added page 6--%>
+            <s:if test="pageType==3 ||pageType==4 || pageType==6|| pageType==7">   <%-- Shan added page 6--%>
                 <tr style="height:35px;">
                     <s:textfield name="dsDivisionId" cssStyle="visibility:hidden;"/>
                     <td colspan="2">Divisional Secretariat</td>
                     <td><s:label name="" value="%{dsDivisionEn}" cssStyle=" margin-left:15px;"/></td>
                 </tr>
             </s:if>
+            <s:if test="pageType!=7">
             <tr>
                 <td colspan="2">Id</td>
                 <td>
@@ -439,6 +525,16 @@
                                                           onkeypress="return isNumberKey(event)"/></s:if>
                 </td>
             </tr>
+            </s:if>
+            <s:if test="pageType==7">
+             <tr>
+                <td colspan="2">GN Division Id</td>
+                <td>
+                    <s:textfield name="gnDivision.gnDivisionId" id="id"
+                                                          onkeypress="return isNumberKey(event)"/>
+                </td>
+            </tr>
+            </s:if>
             <tr>
                 <td rowspan="3">
                     <s:if test="pageType==1">District</s:if>
@@ -447,6 +543,7 @@
                     <s:if test="pageType==4">Marriage Division</s:if>
                     <s:if test="pageType==5">Court</s:if>
                     <s:if test="pageType==6">Location</s:if>
+                    <s:if test="pageType==7">GN Division</s:if>
                 </td>
                 <td>Name in English</td>
                 <td>
@@ -456,6 +553,7 @@
                     <s:if test="pageType==4"><s:textfield name="mrDivision.enDivisionName" id="enName"/></s:if>
                     <s:if test="pageType==5"><s:textfield name="court.enCourtName" id="enName"/></s:if>
                     <s:if test="pageType==6"><s:textfield name="location.enLocationName" id="enName"/></s:if>
+                    <s:if test="pageType==7"><s:textfield name="gnDivision.enGNDivisionName" id="enName" value=""/></s:if>
                 </td>
             </tr>
             <tr>
@@ -467,6 +565,7 @@
                     <s:if test="pageType==4"><s:textfield name="mrDivision.siDivisionName" id="siName"/></s:if>
                     <s:if test="pageType==5"><s:textfield name="court.siCourtName" id="siName"/></s:if>
                     <s:if test="pageType==6"><s:textfield name="location.siLocationName" id="siName"/></s:if>
+                    <s:if test="pageType==7"><s:textfield name="gnDivision.siGNDivisionName" id="siName" value=""/></s:if>
                 </td>
             </tr>
             <tr>
@@ -478,6 +577,7 @@
                     <s:if test="pageType==4"><s:textfield name="mrDivision.taDivisionName" id="taName"/></s:if>
                     <s:if test="pageType==5"><s:textfield name="court.taCourtName" id="taName"/></s:if>
                     <s:if test="pageType==6"><s:textfield name="location.taLocationName" id="taName"/></s:if>
+                    <s:if test="pageType==7"><s:textfield name="gnDivision.taGNDivisionName" id="taName" value=""/></s:if>
                 </td>
             </tr>
             <s:if test="pageType==6">
@@ -513,6 +613,7 @@
         <s:if test="pageType==4"><s:hidden name="pageType" value="4"/><s:hidden id="checkPage" value="4"/></s:if>
         <s:if test="pageType==5"><s:hidden name="pageType" value="5"/><s:hidden id="checkPage" value="5"/></s:if>
         <s:if test="pageType==6"><s:hidden name="pageType" value="6"/><s:hidden id="checkPage" value="6"/></s:if>
+        <s:if test="pageType==7"><s:hidden name="pageType" value="7"/><s:hidden id="checkPage" value="7"/></s:if>
         <div class="form-submit">
             <s:submit value="ADD" cssStyle="margin-top:10px;" name="button"/>
         </div>
@@ -545,6 +646,7 @@
             <s:if test="pageType==4"> <s:set name="List" value="mrDivisionNameList"/></s:if>
             <s:if test="pageType==5"> <s:set name="List" value="courtNameList"/></s:if>
             <s:if test="pageType==6"> <s:set name="List" value="locationNameList"/></s:if>
+            <s:if test="pageType==7"> <s:set name="List" value="gnDivisionNameList"/></s:if>
             <s:iterator status="divisionListStatus" value="List">
                 <tr>
                     <td><s:property value="%{#divisionListStatus.count}"/></td>
@@ -554,6 +656,7 @@
                                 value="enDivisionName"/></s:if>
                         <s:if test="(pageType==5)"><s:property value="enCourtName"/></s:if>
                         <s:if test="(pageType==6)"><s:property value="enLocationName"/></s:if>
+                        <s:if test="(pageType==7)"><s:property value="enGNDivisionName"/></s:if>
                     </td>
                     <s:if test="pageType==1">
                         <s:url id="inactiveSelected" action="eprActivateOrInactivateDivisionsAndDsDivisions.do">
@@ -636,6 +739,22 @@
                         <s:url id="activeSelected" action="eprActivateOrInactivateDivisionsAndDsDivisions.do">
                             <s:param name="pageType" value="pageType"/>
                             <s:param name="locationId" value="locationUKey"/>
+                            <s:param name="userDistrictId" value="userDistrictId"/>
+                            <s:param name="dsDivisionId" value="dsDivisionId"/>
+                            <s:param name="activate" value="true"/>
+                        </s:url>
+                    </s:if>
+                    <s:if test="pageType==7">
+                        <s:url id="inactiveSelected" action="eprActivateOrInactivateDivisionsAndDsDivisions.do">
+                           <s:param name="pageType" value="pageType"/>
+                           <s:param name="divisionId" value="gnDivisionUKey"/>
+                           <s:param name="userDistrictId" value="userDistrictId"/>
+                           <s:param name="dsDivisionId" value="dsDivisionId"/>
+                           <s:param name="activate" value="false"/>
+                        </s:url>
+                        <s:url id="activeSelected" action="eprActivateOrInactivateDivisionsAndDsDivisions.do">
+                             <s:param name="pageType" value="pageType"/>
+                            <s:param name="divisionId" value="gnDivisionUKey"/>
                             <s:param name="userDistrictId" value="userDistrictId"/>
                             <s:param name="dsDivisionId" value="dsDivisionId"/>
                             <s:param name="activate" value="true"/>

@@ -2,6 +2,7 @@ package lk.rgd.crs.web.action;
 
 import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.ErrorCodes;
+import lk.rgd.AppConstants;
 import lk.rgd.common.RGDRuntimeException;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.*;
@@ -10,14 +11,17 @@ import lk.rgd.common.util.HashUtil;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.dao.CourtDAO;
 import lk.rgd.crs.api.dao.MRDivisionDAO;
+import lk.rgd.crs.api.dao.GNDivisionDAO;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.Court;
 import lk.rgd.crs.api.domain.MRDivision;
+import lk.rgd.crs.api.domain.GNDivision;
 import lk.rgd.crs.api.service.MasterDataManagementService;
 import lk.rgd.crs.api.service.PRSRecordsIndexer;
 import lk.rgd.crs.core.service.BirthRecordsIndexer;
 import lk.rgd.crs.core.service.DeathRecordsIndexer;
 import lk.rgd.crs.web.WebConstants;
+import lk.rgd.crs.CRSRuntimeException;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,6 +56,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     private List<Court> courtNameList;
     private List<Location> locationNameList;
     private List<UserLocation> userLocationNameList;
+    private List<GNDivision> gnDivisionNameList;
     private String nameOfUser;
     private String userId;
 
@@ -64,6 +69,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     private int mrdivisionId;
     private int courtId;
     private int locationId;
+    private int gnDivisionId;
     private boolean nextFlag;
     private boolean previousFlag;
     private int noOfRows;
@@ -83,6 +89,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     private MRDivision mrDivision;
     private Court court;
     private UserLocation userLocation;
+    private GNDivision gnDivision;
     private boolean newUser;
 
     private Location location;
@@ -97,6 +104,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     private final MRDivisionDAO mrDivisionDAO;
     private final CourtDAO courtDAO;
     private final LocationDAO locationDAO;
+    private final GNDivisionDAO gnDivisionDAO;
     private final UserDAO userDAO;
     private final UserLocationDAO userLocationDAO;
     private final AppParametersDAO appParametersDAO;
@@ -127,7 +135,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     public UserManagementAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, RoleDAO roleDAO, UserManager service, CourtDAO courtDAO,
         BDDivisionDAO bdDivisionDAO, MasterDataManagementService dataManagementService, MRDivisionDAO mrDivisionDAO, LocationDAO locationDAO,
         AppParametersDAO appParametersDAO, UserLocationDAO userLocationDAO, UserDAO userDAO,
-        BirthRecordsIndexer birthRecordsIndexer, DeathRecordsIndexer deathRecordsIndexer, PRSRecordsIndexer prsRecordsIndexer) {
+        BirthRecordsIndexer birthRecordsIndexer, DeathRecordsIndexer deathRecordsIndexer, PRSRecordsIndexer prsRecordsIndexer,GNDivisionDAO gnDivisionDAO) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.roleDAO = roleDAO;
@@ -143,6 +151,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         this.birthRecordsIndexer = birthRecordsIndexer;
         this.deathRecordsIndexer = deathRecordsIndexer;
         this.prsRecordsIndexer = prsRecordsIndexer;
+        this.gnDivisionDAO = gnDivisionDAO;
     }
 
     public String createUser() {
@@ -437,7 +446,16 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                     location = null;
                 }
                 break;
-
+             case 7:
+                districtEn = districtDAO.getNameByPK(userDistrictId, AppConstants.ENGLISH);
+                dsDivisionEn = dsDivisionDAO.getNameByPK(dsDivisionId, AppConstants.ENGLISH);
+/*
+                                     gnDivisionNameList=gnDivisionDAO.getAllGNDivisions();
+*/
+                 if (setNull) {
+                    gnDivision = null;
+                }
+                break;  
 
         }
     }
@@ -461,6 +479,9 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 break;
             case 6:
                 dataManagementService.activateOrInactivateLocation(locationId, activate, currentUser);
+                break;
+            case 7:
+                dataManagementService.activateOrInactivateLocation(gnDivisionId, activate, currentUser);
                 break;
 
         }
@@ -594,6 +615,33 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                         msg = getText("new.location.add") + " : " + location.getEnLocationName();
                     } else if (language.equals("ta")) {
                         msg = getText("new.location.add") + " : " + location.getTaLocationName();
+                    }
+                }
+                break;
+             case 7:
+                GNDivision checkGNDivision = gnDivisionDAO.getGNDivisionByCode(gnDivision.getGnDivisionId(),dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
+                
+                if (checkGNDivision != null) {
+                    addFieldError("duplicateIdNumberError", "GNDivision Id Number Already Used. Please Insert Another Number");
+                    logger.debug("Duplicate District code number is :", checkGNDivision.getGnDivisionId());
+                    checkDuplicate++;
+                }
+                if (checkDuplicate == 0) {
+                    gnDivision.setDsDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
+                    gnDivision.setActive(true);
+                    try{
+                         dataManagementService.addGNDivision(gnDivision, currentUser);
+                    }catch(CRSRuntimeException e){
+                        logger.error("GN division adding error :{gnDivisionId}",10);
+                        addActionError(getText("new.gnDivision.add"));
+                    }
+                    logger.debug("New Id of New Division {} is   :{}", gnDivision.getEnGNDivisionName(), gnDivision.getGnDivisionId());
+                    if (language.equals("si")) {
+                        msg = getText("new.gnDivision.add") + " : " + gnDivision.getSiGNDivisionName();
+                    } else if (language.equals("en")) {
+                        msg = getText("new.gnDivision.add") + " : " + gnDivision.getEnGNDivisionName();
+                    } else if (language.equals("ta")) {
+                        msg = getText("new.gnDivision.add") + " : " + gnDivision.getTaGNDivisionName();
                     }
                 }
 
@@ -1276,5 +1324,29 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
 
     public void setSelectedRole(String selectedRole) {
         this.selectedRole = selectedRole;
+    }
+
+    public GNDivision getGnDivision() {
+        return gnDivision;
+    }
+
+    public void setGnDivision(GNDivision gnDivision) {
+        this.gnDivision = gnDivision;
+    }
+
+    public int getGnDivisionId() {
+        return gnDivisionId;
+    }
+
+    public void setGnDivisionId(int gnDivisionId) {
+        this.gnDivisionId = gnDivisionId;
+    }
+
+     public List<GNDivision> getGnDivisionNameList() {
+        return gnDivisionNameList;
+    }
+
+    public void setGnDivisionNameList(List<GNDivision> gnDivisionNameList) {
+        this.gnDivisionNameList = gnDivisionNameList;
     }
 }

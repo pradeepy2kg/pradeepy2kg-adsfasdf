@@ -13,9 +13,11 @@ import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.dao.MRDivisionDAO;
 import lk.rgd.crs.api.dao.CourtDAO;
+import lk.rgd.crs.api.dao.GNDivisionDAO;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.domain.Court;
+import lk.rgd.crs.api.domain.GNDivision;
 import lk.rgd.crs.api.service.MasterDataManagementService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,15 +39,17 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
     private final DistrictDAO districtDAO;
     private final LocationDAO locationDAO;
     private final CourtDAO courtDAO;
+    private final GNDivisionDAO gnDivisionDAO;
 
     public MasterDataManagementServiceImpl(BDDivisionDAO bdDivisionDAO, MRDivisionDAO mrDivisionDAO,
-                                           DSDivisionDAO dsDivisionDAO, DistrictDAO districtDAO, LocationDAO locationDAO, CourtDAO courtDAO) {
+                                           DSDivisionDAO dsDivisionDAO, DistrictDAO districtDAO, LocationDAO locationDAO, CourtDAO courtDAO,GNDivisionDAO gnDivisionDAO) {
         this.bdDivisionDAO = bdDivisionDAO;
         this.mrDivisionDAO = mrDivisionDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.districtDAO = districtDAO;
         this.locationDAO = locationDAO;
         this.courtDAO = courtDAO;
+        this.gnDivisionDAO = gnDivisionDAO;
     }
 
     /**
@@ -72,6 +76,52 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
                     " was not allowed to add a new BD Division : " + bdDivision.getEnDivisionName());
         }
     }
+@Transactional(propagation = Propagation.REQUIRED)
+    public void addGNDivision(GNDivision gnDivision, User user) {
+           if (isEmptyString(gnDivision.getEnGNDivisionName()) ||
+                isEmptyString(gnDivision.getEnGNDivisionName()) ||
+                isEmptyString(gnDivision.getEnGNDivisionName())) {
+            throw new CRSRuntimeException(
+                    "One or more names of the BD Division is invalid - check all languages", ErrorCodes.INVALID_DATA);
+        }
+
+        if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
+            try {
+                logger.debug("successfully added GNDivision with code number : {}",gnDivision.getGnDivisionId());
+               gnDivisionDAO.add(gnDivision, user);
+            } catch (Exception e) {
+                logger.error("Attempt to add BD Division : " + gnDivision.getEnGNDivisionName() + " failed", e);
+            }
+        } else {
+            logger.error("User : " + user.getUserId() +
+                    " was not allowed to add a new BD Division : " + gnDivision.getEnGNDivisionName());
+        }
+    }
+
+    @Override
+    public void activateOrInactiveGNDivision(int gnDivisionUKey, boolean active, User user) {
+         updateGNActivation(gnDivisionUKey, active, user);
+    }
+
+     private void updateGNActivation(int gnDivisionUKey, boolean activate, User user) {
+
+        if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
+            try {
+                GNDivision existing = gnDivisionDAO.getGNDivisionByPK(gnDivisionUKey);
+                if (existing != null) {
+                    existing.setActive(activate);
+                    gnDivisionDAO.update(existing, user);
+                    logger.info("GN Division : {} inactivated by : {}", existing.getEnGNDivisionName(), user.getUserId());
+                }
+            } catch (Exception e) {
+                logger.error("Attempt to inactivate BD Division with key : " + gnDivisionUKey + " failed", e);
+            }
+        } else {
+            logger.error("User : " + user.getUserId() +
+                    " was not allowed to activate/inactivate BD Division with key : " + gnDivisionUKey);
+        }
+    }
+
     @Transactional(propagation = Propagation.REQUIRED)
     public void activateOrInactiveBDDivision(int bdDivisionUKey, boolean active, User user) {
         updateBDActivation(bdDivisionUKey, active, user);
