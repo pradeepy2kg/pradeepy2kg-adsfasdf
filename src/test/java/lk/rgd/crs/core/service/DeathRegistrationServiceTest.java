@@ -138,7 +138,6 @@ Assert.assertTrue("A minimal DDF must trigger warnings that data is incomplete",
         ddf.getDeath().setDeathSerialNo(serial);
         ddf.getDeath().setDateOfRegistration(today);
         ddf.getDeath().setDeathDivision(deathDivision);
-        ddf.getDeath().setGnDivision(gnDivision);
         ddf.getDeath().setDateOfDeath(dod);
         ddf.getDeath().setPlaceOfDeath("Place of death person " + serial);
         ddf.getDeath().setPlaceOfBurial("Place of burial " + serial);
@@ -149,6 +148,7 @@ Assert.assertTrue("A minimal DDF must trigger warnings that data is incomplete",
         ddf.getDeclarant().setDeclarantEMail("declarant email");
         ddf.getDeclarant().setDeclarantFullName("declarant full name ");
         ddf.getDeclarant().setDeclarantNICorPIN("" + 123456789);
+        ddf.getDeathPerson().setGnDivision(gnDivision);
 
         ddf.getNotifyingAuthority().setNotifyingAuthorityPIN("750010001");
         ddf.getNotifyingAuthority().setNotifyingAuthorityName("Name of the Notifying Authority");
