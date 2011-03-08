@@ -4,7 +4,7 @@ import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
 
 import javax.persistence.*;
-import java.io.Serializable;              n
+import java.io.Serializable;              
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
