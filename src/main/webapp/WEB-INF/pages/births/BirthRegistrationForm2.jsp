@@ -430,6 +430,14 @@ function commonTags() {
     </tr>
     <tr>
         <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i"
+                                                                                                     value="#i+1"/>)සම්පුර්ණ නම ඉංග්‍රීසි  භාෂාවෙන් (කැපිටල් අකුරෙන්)
+            <br>முழுப் பெயர்்<br>Full Name in English (In block letters)</label></td>
+        <td colspan="8">
+            <s:textarea name="parent.fatherFullNameInEnglish" id="fatherFullNameInEnglish" cssStyle="width:98%;"/>
+        </td>
+    </tr>
+    <tr>
+        <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i"
                                                                                                      value="#i+1"/>)උපන්
             දිනය <br>பிறந்த
             திகதி <br>Date of Birth</label></td>
@@ -517,6 +525,14 @@ function commonTags() {
             முழு பெயர்<br>Full Name</label></td>
         <td colspan="8">
             <s:textarea name="parent.motherFullName" id="motherFullName" cssStyle="width:98%;"/>
+        </td>
+    </tr>
+    <tr>
+        <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i"
+                                                                                                     value="#i+1"/>)සම්පුර්ණ නම ඉංග්‍රීසි  භාෂාවෙන් (කැපිටල් අකුරෙන්)
+            <br>முழுப் பெயர்்<br>Full Name in English (In block letters)</label></td>
+        <td colspan="8">
+            <s:textarea name="parent.motherFullNameInEnglish" id="motherFullNameInEnglish" cssStyle="width:98%;"/>
         </td>
     </tr>
     <tr>

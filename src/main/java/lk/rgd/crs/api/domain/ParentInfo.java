@@ -46,6 +46,12 @@ public class ParentInfo implements Serializable, Cloneable {
     private String fatherFullName;
 
     /**
+     * Name of father in English
+     */
+    @Column(nullable = true, length = 600)
+    private String fatherFullNameInEnglish;
+
+    /**
      * DOB of father
      */
     @Column(nullable = true)
@@ -101,6 +107,12 @@ public class ParentInfo implements Serializable, Cloneable {
      */
     @Column(nullable = true, length = 600)
     private String motherFullName;
+
+     /**
+     * Full name of mother in English
+     */
+    @Column(nullable = true, length = 600)
+    private String motherFullNameInEnglish;
 
     /**
      * DOB of mother
@@ -224,8 +236,16 @@ public class ParentInfo implements Serializable, Cloneable {
         return fatherFullName;
     }
 
+    public String getFatherFullNameInEnglish() {
+        return fatherFullNameInEnglish;
+    }
+
     public void setFatherFullName(String fatherFullName) {
         this.fatherFullName = WebUtils.filterBlanksAndToUpper(fatherFullName);
+    }
+
+     public void setFatherFullNameInEnglish(String fatherFullNameInEnglish) {
+        this.fatherFullNameInEnglish = WebUtils.filterBlanksAndToUpper(fatherFullNameInEnglish);
     }
 
     public Date getFatherDOB() {
@@ -280,9 +300,18 @@ public class ParentInfo implements Serializable, Cloneable {
         return motherFullName;
     }
 
+    public String getMotherFullNameInEnglish() {
+        return motherFullNameInEnglish;
+    }
+
     public void setMotherFullName(String motherFullName) {
         this.motherFullName = WebUtils.filterBlanksAndToUpper(motherFullName);
     }
+
+    public void setMotherFullNameInEnglish(String enMotherFullName) {
+        this.motherFullNameInEnglish = WebUtils.filterBlanksAndToUpper(motherFullNameInEnglish);
+    }
+
 
     public Date getMotherDOB() {
         return motherDOB;
