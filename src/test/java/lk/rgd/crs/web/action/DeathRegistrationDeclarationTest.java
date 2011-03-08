@@ -1,5 +1,6 @@
 package lk.rgd.crs.web.action;
 
+import lk.rgd.crs.api.dao.GNDivisionDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -39,6 +40,7 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
 
     protected static BDDivision colomboBDDivision;
     protected static BDDivision negamboBDDivision;
+    protected static GNDivision samantranapuraGNDivision;
     protected static Country sriLanka;
     protected static Race sinhalese;
 
@@ -49,6 +51,7 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
     protected final static CountryDAO countryDAO = (CountryDAO) ctx.getBean("countryDAOImpl", CountryDAO.class);
     protected final static RaceDAO raceDOA = (RaceDAO) ctx.getBean("raceDAOImpl", RaceDAO.class);
     protected final static DeathRegistrationService deathRegistrationService = (DeathRegistrationService) ctx.getBean("deathRegisterService", DeathRegistrationService.class);
+    protected final static GNDivisionDAO gnDivisionDAO = (GNDivisionDAO) ctx.getBean("gnDivisionDAOImpl", GNDivisionDAO.class);
 
     public static Test suite() {
         TestSetup setup = new TestSetup(new TestSuite(DeathRegistrationDeclarationTest.class)) {
@@ -58,6 +61,7 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
                 negamboBDDivision = bdDivisionDAO.getBDDivisionByPK(9);
                 sriLanka = countryDAO.getCountry(1);
                 sinhalese = raceDOA.getRace(1);
+                samantranapuraGNDivision = gnDivisionDAO.getGNDivisionByPK(1);
 
                 List deaths = sampleDeaths();
                 User sampleUser = loginSampleUser();
@@ -104,6 +108,7 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
             death.setDateOfRegistration(gCal.getTime());
             death.setPreferredLanguage("si");
             death.setDeathDivision(colomboBDDivision);
+            death.setGnDivision(samantranapuraGNDivision);
             death.setPlaceOfBurial("place of burial : " + i);
 
             //death person info
@@ -350,7 +355,7 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
         initAndExucute("/deaths/eprDeathEditMode.do", session);
         //check user object is retrieved properly
         assertNotNull("User object ", deathAction.getUser());
-        //there shoud be an action error
+        //there should be an action error
         assertEquals("Action Error", 1, deathAction.getActionErrors().size());
         logger.info("testing death edit mode  completed");
     }

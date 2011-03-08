@@ -34,7 +34,7 @@ public class Role implements Serializable {
     @Column(updatable = false)
     private String roleId;
     /** Is the role status? - 0 : active, 1 - inactive */
-    @Column(nullable = false, name="STATUS", columnDefinition="smallint not null default 1")
+    @Column(nullable = false, columnDefinition="smallint not null default 1")
     private int status;
     /** Role name */
     @Column(nullable = false, length = 60, unique = true)

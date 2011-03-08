@@ -103,37 +103,37 @@ Divorce Certificate /  விவாகரத்துச்சான்றித
 
 Marriage License Search / திருமண  உத்தரவுப்பத்திரம் தேடுதல்.
 
-Person Registration Management
-MARRIAGE REGISTRATION
-Marriage Notice
-Marriage Register Search
-Marriage License Search
-Marriage Registration
-Search Notice
+Person Registration Management நபர் பதிவு முகாமைத்துவம் 
+MARRIAGE REGISTRATION திருமணப்பதிவு 
+Marriage Notice திருமண அறிவித்தல் 
+Marriage Register Search திருமணச்சான்றிதழ் தேடுதல் 
+Marriage License Search திருமண உத்தரவுப்பத்திரம் தேடுதல்  
+Marriage Registration திருமணப்பதிவு 
+Search Notice தேடுதல் அறிவித்தல் 
 
-Status / තත්ත්වය
-DIVORCED TAMIL / දික්කසාද
+Status / තත්ත්වය நிலைமை 
+DIVORCED TAMIL / දික්කසාද விவாகரத்து 
 
 
 //tamil translations for adoptions
 
-serial number in ta
-Received Date in ta
-Court in ta
-order Issued Date in ta
-Court order number in ta
-Name of the Judge in ta
-Date of birth in ta
-Gender in ta
-Age in ta
-Years in ta
-Months in ta
-Existing Name in ta
-(if already given) in ta
- New name given in ta
-Applicant in ta
-Father in ta
-Mother in ta
- Other in ta
-  Name of the Applicant in ta
-  Address in ta
+serial number தொடர் இலக்கம் 
+Received Date ஏற்றுக்கொள்ளப்பட்ட திகதி 
+Court நீதிமன்றம்
+order Issued Date கட்டளை  வழங்கப்பட்ட் திகதி 
+Court order number நீதிமன்ற கட்டளை இலக்கம் 
+Name of the Judge நீதிபதியின் பெயர் 
+Date of birth பிறந்த திகதி
+Gender பால் 
+Age வயது 
+Years வருடங்கள் 
+Months மாதங்கள் 
+Existing Name தற்போதைய பெயர் 
+(if already given) (ஏலவே வழங்கப்பட்டிருந்தால்) 
+ New name given வழங்கப்பட்ட புதிய பெயர் 
+Applicant விண்ணப்பதாரர் 
+Father தந்தை 
+Mother தாய் 
+ Other வேறு 
+  Name of the Applicant விண்ணப்பதாரரின் பெயர் 
+  Address முகவரி 

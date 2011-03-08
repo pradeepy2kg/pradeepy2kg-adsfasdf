@@ -228,7 +228,11 @@
     <td rowspan="5" width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපන් ස්ථානය<br>பிறந்த
         இடம்<br>
         Place of Birth</label></td>
-    <td><label>දිස්ත්‍රික්කය மாவட்டம் District</label></td>
+    <td><label>දිස්ත්‍රික්කය
+        <br>
+        மாவட்டம்
+        <br>
+        District</label></td>
     <td colspan="6" class="table_reg_cell_01">
         <s:if test="#userPreferedLang == 'si'">
             <s:label
@@ -243,7 +247,10 @@
         </s:else></td>
 </tr>
 <tr height="35px">
-    <td width="200px"><label>D.S.කොට්ඨාශය பிரிவு D.S. Division</label></td>
+    <td width="200px"><label>D.S.කොට්ඨාශය <br>
+        பிரிவு
+        <br>
+        D.S. Division</label></td>
     <td colspan="6" class="table_reg_cell_01" id="table_reg_cell_01"><s:if
             test="#userPreferedLang == 'si'">
         <s:label
@@ -262,7 +269,7 @@
     </td>
 </tr>
 <tr>
-    <td><label>ලියාපදිංචි කිරීමේ කොටිඨාශය/<br>பதிவுப் பிரிவு / /<br>Registration Division</label></td>
+    <td><label>ලියාපදිංචි කිරීමේ කොටිඨාශය<br>பதிவுப் பிரிவு <br>Registration Division</label></td>
     <td colspan="6" class="table_reg_cell_01">
         <s:if test="#userPreferedLang == 'si'">
             <s:label value="%{#request.register.birthDivision.siDivisionName}"/>
@@ -275,8 +282,27 @@
         </s:else>
     </td>
 </tr>
+<tr>
+    <td><label>
+        ග්‍රාම නිළධාරී කොටිඨාශය <br/>
+        Grama Niladhari Division in ta<br/>
+        Grama Niladhari Division</label>
+    </td>
+    <td colspan="6" class="table_reg_cell_01">
+        <s:if test="#userPreferedLang == 'si'">
+            <s:label value="%{#request.register.gnDivision.siGNDivisionName}"/>
+        </s:if>
+        <s:elseif test="#userPreferedLang == 'en'">
+            <s:label value="%{#request.register.gnDivision.enGNDivisionName}"/>
+        </s:elseif>
+        <s:else>
+            <s:label value="%{#request.register.gnDivision.taGNDivisionName}"/>
+        </s:else>
+    </td>
+</tr>
 <tr height="35px">
-    <td><label>ස්ථානය பிறந்த இடம் Place</label></td>
+    <td><label>ස්ථානය <br>
+        பிறந்த இடம் <br>Place</label></td>
     <td colspan="6"><s:label value="%{#request.child.placeOfBirth}" id="placeOfBirth"
                              cssStyle="width:97.6%;"/></td>
 </tr>

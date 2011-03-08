@@ -123,7 +123,7 @@ public class DeathRegister implements Serializable, Cloneable {
     private Type deathType;
 
     // comment for rejecting death declaration
-    @Column(nullable = true, length = 100, name = "COMMENT")
+    @Column(nullable = true, length = 100)
     private String comment;
 
     /**

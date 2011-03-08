@@ -84,7 +84,7 @@ public class BirthAlterationServiceTest extends TestCase {
         ba.getDeclarant().setDeclarantType(DeclarantInfo.DeclarantType.FATHER);
         ba.setBirthRecordDivision(colomboBDDivision);
         ba.setDateReceived(new Date());
-        ba.setBdfIDUKey(bdfIdUKey);
+        ba.setBdfIdUKey(bdfIdUKey);
         ba.setType(BirthAlteration.AlterationType.TYPE_27);
         ba.setStatus(BirthAlteration.State.DATA_ENTRY);
         birthAltSvc.addBirthAlteration(ba, deoGampahaNegambo);
@@ -118,7 +118,7 @@ public class BirthAlterationServiceTest extends TestCase {
         birthAltSvc.approveBirthAlteration(ba, fieldsToBeApproved, argWesternProvince);
 
         // save BDF serial number
-        long regNumber = birthDeclarationDAO.getById(ba.getBdfIDUKey()).getRegister().getBdfSerialNo();
+        long regNumber = birthDeclarationDAO.getById(ba.getBdfIdUKey()).getRegister().getBdfSerialNo();
 
         // birth record must be updated
         BirthDeclaration bdf = birthRegSvc.getActiveRecordByBDDivisionAndSerialNo(

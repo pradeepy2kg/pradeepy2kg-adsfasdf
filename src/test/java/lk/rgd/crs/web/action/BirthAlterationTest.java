@@ -265,7 +265,7 @@ public class BirthAlterationTest extends CustomStrutsTestCase {
         request.setParameter("birthAlteration.alt27A.marriage.dateOfMarriage", "2009-09-21");
 
         //altering father infomation
-        request.setParameter("birthAlteration.bdfIDUKey", "1");
+        request.setParameter("birthAlteration.bdfIdUKey", "1");
         request.setParameter("birthAlteration.alt27A.father.fatherNICorPIN", "530232026V");
         request.setParameter("birthAlteration.alt27A.father.fatherFullName", "Anuradha Silva");
         request.setParameter("birthAlteration.alt27A.father.fatherPlaceOfBirth", "Colombo");

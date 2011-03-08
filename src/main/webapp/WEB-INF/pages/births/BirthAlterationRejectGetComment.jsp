@@ -21,7 +21,7 @@
         <tr>
             <td width="180px"><s:label name="serial" value="%{getText('original.bd.certificate.number.label')}"/></td>
             <td width="800px">
-                <s:label value="%{birthAlteration.bdfIDUKey}"/>
+                <s:label value="%{birthAlteration.bdfIdUKey}"/>
         <tr>
             <td><s:label name="name" value="%{getText('name.label')}"/></td>
             <td>

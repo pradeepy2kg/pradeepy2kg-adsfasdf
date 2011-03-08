@@ -42,6 +42,10 @@ public class DeathInfo implements Serializable, Cloneable {
     @ManyToOne
     @JoinColumn(name = "bdDivisionUKey", nullable = false)
     private BDDivision deathDivision;
+    //todo change nullable to false when we have all the data
+    @ManyToOne
+    @JoinColumn(name = "gnDivisionUKey", nullable = true)
+    private GNDivision gnDivision;
 
     @Column(nullable = true, length = 255)
     private String placeOfDeathInEnglish;
@@ -225,5 +229,13 @@ public class DeathInfo implements Serializable, Cloneable {
     @Override
     protected DeathInfo clone() throws CloneNotSupportedException {
         return (DeathInfo) super.clone();
+    }
+
+    public GNDivision getGnDivision() {
+        return gnDivision;
+    }
+
+    public void setGnDivision(GNDivision gnDivision) {
+        this.gnDivision = gnDivision;
     }
 }

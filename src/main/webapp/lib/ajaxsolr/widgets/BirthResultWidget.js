@@ -29,9 +29,22 @@
         afterRequest: function () {
             $(this.target).empty();
 
-            var table = '<table cellpadding="0" cellspacing="0" border="0" class="display" id="table"><thead>' +
-            '<tr><th>IDUKey</th><th>PIN</th><th>DOB</th><th>Gender</th><th>Name in English</th><th>Name in Official Language</th>' +
-            '<th>Division</th><th>District</th></tr></thead>';
+            if (lang == "si") {
+                var table = '<table cellpadding="0" cellspacing="0" border="0" class="display" id="table"><thead>' +
+                    '<tr><th>අංකය</th><th>PIN</th><th>උපන් දිනය</th><th>ස්ත්‍රී පුරුෂ භාවය</th><th>නම ඉංග්‍රීසි භාෂාවෙන්</th><th>නම රාජ්‍ය භාෂාවෙන්</th>' +
+                    '<th>කොට්ඨාශය</th><th>දිස්ත්‍රික්කය</th></tr></thead>';
+
+            } else if (lang == "ta") {
+                var table = '<table cellpadding="0" cellspacing="0" border="0" class="display" id="table"><thead>' +
+                    '<tr><th>IDUKey</th><th>PIN</th><th>பிறந்த திகதி</th><th>பால்</th><th>பெயா் ஆங்கில மொழியில்</th><th>பெயா் அரச கரும மொழியில்</th>' +
+                    '<th>பிரிவு</th><th>மாவட்டம்</th></tr></thead>';
+
+            } else {
+                var table = '<table cellpadding="0" cellspacing="0" border="0" class="display" id="table"><thead>' +
+                    '<tr><th>IDUKey</th><th>PIN</th><th>DOB</th><th>Gender</th><th>Name in English</th><th>Name in Official Language</th>' +
+                    '<th>Division</th><th>District</th></tr></thead>';
+
+            }
 
             for (var i = 0, l = this.manager.response.response.docs.length; i < l; i++) {
                 var doc = this.manager.response.response.docs[i];
@@ -72,3 +85,8 @@
     });
 
 })(jQuery);
+
+var lang;
+function setPrefLanguage(lang1) {
+    lang=lang1;
+}
