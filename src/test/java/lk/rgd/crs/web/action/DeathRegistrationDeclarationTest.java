@@ -108,7 +108,6 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
             death.setDateOfRegistration(gCal.getTime());
             death.setPreferredLanguage("si");
             death.setDeathDivision(colomboBDDivision);
-            death.setGnDivision(samantranapuraGNDivision);
             death.setPlaceOfBurial("place of burial : " + i);
 
             //death person info
@@ -123,7 +122,7 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
             person.setDeathPersonMotherPINorNIC("1234567890");
             person.setDeathPersonNameInEnglish("name in english" + i);
             person.setDeathPersonPermanentAddress("address" + i);
-
+            person.setGnDivision(samantranapuraGNDivision);
             //notifying authority info
             NotifyingAuthorityInfo notify = new NotifyingAuthorityInfo();
             notify.setNotifyingAuthorityName("notify name :" + i);
