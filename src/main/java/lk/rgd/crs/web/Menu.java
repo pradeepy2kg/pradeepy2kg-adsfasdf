@@ -132,6 +132,7 @@ public class Menu {
         // PRS links for ADR
         adrPRSLink.putAll(deoPRSLink);
         adrPRSLink.put("eprEditPerson.do", new Link(null, "/ecivil/prs/", "eprEditPerson.do", Permission.PRS_EDIT_PERSON));
+        adrPRSLink.put("eprUpdatePersonDetail.do", new Link(null, "/ecivil/prs/", "eprUpdatePersonDetail.do", Permission.PRS_EDIT_PERSON));
         adrPRSLink.put("eprPRSAdvancedSearch.do", new Link("prs.advanceSearch.label", "/ecivil/prs/", "eprPRSAdvancedSearch.do", Permission.SEARCH_PRS));
         adrPRSLink.put("eprPersonApproval.do", new Link("prs.personApproval.label", "/ecivil/prs/", "eprPersonApproval.do", Permission.SEARCH_PRS));
         adrPRSLink.put("eprApprovePerson.do", new Link(null, "/ecivil/prs/", "eprApprovePerson.do", Permission.PRS_APPROVE_PERSON));

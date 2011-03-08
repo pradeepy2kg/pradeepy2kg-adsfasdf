@@ -1,10 +1,9 @@
-<%@ page import="lk.rgd.common.util.PersonStatusUtil" %>
-<%@ page import="lk.rgd.prs.api.domain.Person" %>
 <%@ page import="lk.rgd.common.util.MarriageStateUtil" %>
-<%@ page import="lk.rgd.prs.api.domain.Marriage" %>
-<%@ page import="java.util.Locale" %>
+<%@ page import="lk.rgd.common.util.PersonStatusUtil" %>
 <%@ page import="lk.rgd.crs.web.WebConstants" %>
-<%@ page import="lk.rgd.crs.web.util.MarriageType" %>
+<%@ page import="lk.rgd.prs.api.domain.Marriage" %>
+<%@ page import="lk.rgd.prs.api.domain.Person" %>
+<%@ page import="java.util.Locale" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
@@ -18,6 +17,9 @@
 <s:url id="print" action="eprPRSCertificate.do">
     <s:param name="personUKey" value="%{person.personUKey}"/>
 </s:url>
+<s:url id="edit" action="eprUpdatePersonDetail.do">
+    <s:param name="personUKey" value="%{person.personUKey}"/>
+</s:url>
 <s:url id="advanceSearch" action="eprPRSAdvancedSearch.do"/>
 
 <div class="form-submit" style="margin-right:5px;margin-top:5px;">
@@ -26,8 +28,11 @@
 <div class="form-submit" style="margin:5px 0 0 5px;margin-right:5px;">
     <s:a href="%{printPage}" onclick="printPage()"><s:label value="%{getText('print.button')}"/></s:a>
 </div>
-<div class="form-submit" style="margin-top:5px;">
+<div class="form-submit" style="margin:5px 0 0 5px;margin-right:5px;">
     <s:a href="%{advanceSearch}"><s:label value="%{getText('search_record.label')}"/></s:a>
+</div>
+<div class="form-submit" style="margin-top:5px;">
+    <s:a href="%{edit}"><s:label value="%{getText('label.edit')}"/></s:a>
 </div>
 
 <table style="width:100%; border:none; border-collapse:collapse;">
@@ -836,8 +841,11 @@ String lang = ((Locale) session.getAttribute("WW_TRANS_I18N_LOCALE")).getLanguag
 <div class="form-submit" style="margin:5px 0 0 5px;margin-right:5px;">
     <s:a href="%{printPage}" onclick="printPage()"><s:label value="%{getText('print.button')}"/></s:a>
 </div>
-<div class="form-submit" style="margin-top:5px;">
+<div class="form-submit" style="margin:5px 0 0 5px;margin-right:5px;">
     <s:a href="%{advanceSearch}"><s:label value="%{getText('search_record.label')}"/></s:a>
+</div>
+<div class="form-submit" style="margin-top:5px;">
+    <s:a href="%{edit}"><s:label value="%{getText('label.edit')}"/></s:a>
 </div>
 <br><br>
 </div>

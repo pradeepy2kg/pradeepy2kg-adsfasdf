@@ -511,6 +511,11 @@
         <put-attribute name="title" value="person_approval_warning.title"/>
     </definition>
 
+    <definition name="epr.UpdatePersonDetail" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/prs/PersonDetailUpdateForm.jsp"/>
+        <put-attribute name="title" value="person_detail_update.title"/>
+    </definition>
+
     <!--marriages related tiles definitions-->
     <definition name="epr.marriageNoticeInit" extends="epr.template">
         <description>
