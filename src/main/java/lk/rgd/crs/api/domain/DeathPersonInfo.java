@@ -99,6 +99,11 @@ public class DeathPersonInfo implements Serializable, Cloneable {
     @Column(nullable = true)
     private boolean personIdentified;
 
+    //todo change nullable to false when we have all the data
+    @ManyToOne
+    @JoinColumn(name = "gnDivisionUKey", nullable = true)
+    private GNDivision gnDivision;
+
     public String getDeathPersonPINorNIC() {
         return deathPersonPINorNIC;
     }
@@ -300,5 +305,13 @@ public class DeathPersonInfo implements Serializable, Cloneable {
     @Override
     protected DeathPersonInfo clone() throws CloneNotSupportedException {
         return (DeathPersonInfo) super.clone();
+    }
+
+    public GNDivision getGnDivision() {
+        return gnDivision;
+    }
+
+    public void setGnDivision(GNDivision gnDivision) {
+        this.gnDivision = gnDivision;
     }
 }

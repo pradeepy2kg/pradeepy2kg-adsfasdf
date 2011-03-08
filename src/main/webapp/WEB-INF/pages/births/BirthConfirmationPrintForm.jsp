@@ -298,7 +298,7 @@
     </tr>
 
     <tr>
-        <td rowspan="5" style="text-align:center;"> 6</td>
+        <td rowspan="4" style="text-align:center;"> 6</td>
         <td height="40px"><label>උපන් දිස්ත්‍රික්කය<br>மாவட்டம் <br>District of Birth</label></td>
         <td colspan="6" style="font-size:12pt;">
             <s:label value="%{register.districtPrint}"/>
@@ -326,6 +326,7 @@
         <td colspan="11">&nbsp;</td>
     </tr>
 
+<%--
     <tr>
         <td><label>
             ග්‍රාම නිළධාරී කොටිඨාශය <br/>
@@ -337,6 +338,7 @@
         </td>
         <td colspan="11">&nbsp;</td>
     </tr>
+--%>
 
     <tr height="40px">
         <td><label>උපන් ස්ථානය

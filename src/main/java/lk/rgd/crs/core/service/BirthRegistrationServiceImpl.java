@@ -1384,7 +1384,7 @@ public class BirthRegistrationServiceImpl implements
             brInfo.setDistrictPrint(districtDAO.getNameByPK(brInfo.getBirthDistrict().getDistrictUKey(), prefLanguage));
             brInfo.setDsDivisionPrint(dsDivisionDAO.getNameByPK(brInfo.getDsDivision().getDsDivisionUKey(), prefLanguage));
             brInfo.setBdDivisionPrint(bdDivisionDAO.getNameByPK(brInfo.getBirthDivision().getBdDivisionUKey(), prefLanguage));
-            brInfo.setGnDivisionPrint(gnDivisionDAO.getNameByPK(brInfo.getGnDivision().getGnDivisionUKey(), prefLanguage));
+
         }
 
         ParentInfo parent = bdf.getParent();
@@ -1411,6 +1411,10 @@ public class BirthRegistrationServiceImpl implements
                     districtDAO.getNameByPK(parent.getMotherDSDivision().getDistrict().getDistrictUKey(), prefLanguage));
                 parent.setMotherDsDivisionPrint(
                     dsDivisionDAO.getNameByPK(parent.getMotherDSDivision().getDsDivisionUKey(), prefLanguage));
+            }
+            if (parent.getMotherGNDivision() != null) {
+                parent.setMotherGNDivisionPrint(gnDivisionDAO.
+                    getNameByPK(parent.getMotherGNDivision().getGnDivisionUKey(), prefLanguage));
             }
         }
 

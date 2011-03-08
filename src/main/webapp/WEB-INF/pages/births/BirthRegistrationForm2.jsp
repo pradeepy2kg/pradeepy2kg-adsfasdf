@@ -93,15 +93,15 @@ $(function() {
         var error = document.getElementById('error10').value;
         calculateBirthDay(id1, datePicker, error);
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
-                 function(data1) {
-                     $("textarea#fatherFullName").val(data1.fullNameInOfficialLanguage);
-                     $("input#fatherPlaceOfBirth").val(data1.placeOfBirth);
-                     $("select#fatherRaceId").val(data1.race);
-                     var fatherDOB = data1.dateOfBirth;
-                     if (fatherDOB != null) {
-                         $("input#fatherDatePicker").val(fatherDOB);
-                     }
-                 });
+                function(data1) {
+                    $("textarea#fatherFullName").val(data1.fullNameInOfficialLanguage);
+                    $("input#fatherPlaceOfBirth").val(data1.placeOfBirth);
+                    $("select#fatherRaceId").val(data1.race);
+                    var fatherDOB = data1.dateOfBirth;
+                    if (fatherDOB != null) {
+                        $("input#fatherDatePicker").val(fatherDOB);
+                    }
+                });
     });
 
     $('img#mother_lookup').bind('click', function(evt2) {
@@ -110,16 +110,16 @@ $(function() {
         var error = document.getElementById('error11').value;
         calculateBirthDay(id2, datePicker, error);
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id2},
-                 function(data2) {
-                     $("textarea#motherFullName").val(data2.fullNameInOfficialLanguage);
-                     $("input#motherPlaceOfBirth").val(data2.placeOfBirth);
-                     $("textarea#motherAddress").val(data2.lastAddress);
-                     $("select#motherRaceId").val(data2.race);
-                     var motherDOB = data2.dateOfBirth;
-                     if (motherDOB != null) {
-                         $("input#motherDatePicker").val(motherDOB);
-                     }
-                 });
+                function(data2) {
+                    $("textarea#motherFullName").val(data2.fullNameInOfficialLanguage);
+                    $("input#motherPlaceOfBirth").val(data2.placeOfBirth);
+                    $("textarea#motherAddress").val(data2.lastAddress);
+                    $("select#motherRaceId").val(data2.race);
+                    var motherDOB = data2.dateOfBirth;
+                    if (motherDOB != null) {
+                        $("input#motherDatePicker").val(motherDOB);
+                    }
+                });
     });
 
     function calculateBirthDay(id, datePicker, error) {
@@ -162,17 +162,44 @@ $(function() {
     $('select#motherDistrictId').bind('change', function(evt3) {
         var id = $("select#motherDistrictId").attr("value");
         var label = $("input#dsDivisionLabel").attr("value");
-        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:3},
-                 function(data) {
-                     var options = '';
-                     var ds = data.dsDivisionList;
-                     options += '<option value="-1">' + label + '</option>';
-                     for (var i = 0; i < ds.length; i++) {
-                         options += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
-                     }
-                     $("select#motherDSDivisionId").html(options);
-                 });
+        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id},
+                function(data) {
+                    var options = '';
+                    var ds = data.dsDivisionList;
+                    options += '<option value="-1">' + label + '</option>';
+                    for (var i = 0; i < ds.length; i++) {
+                        options += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                    }
+                    $("select#motherDSDivisionId").html(options);
+
+
+                    var options3 = '';
+                    var gn = data.gnDivisionList;
+                    var select = document.getElementById('selectGNDivision').value;
+                    options3 += '<option value="' + 0 + '">' + select + '</option>';
+                    for (var k = 0; k < gn.length; k++) {
+                        options3 += '<option value="' + gn[k].optionValue + '">' + gn[k].optionDisplay + '</option>';
+                    }
+                    $("select#gnDivisionId").html(options3);
+                });
     });
+
+
+    $('select#motherDSDivisionId').bind('change', function(evt2) {
+        var id = $("select#motherDSDivisionId").attr("value");
+        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:2},
+                function(data) {
+                    var options4 = '';
+                    var gn = data.gnDivisionList;
+                    var select = document.getElementById('selectGNDivision').value;
+                    options4 += '<option value="' + 0 + '">' + select + '</option>';
+                    for (var k = 0; k < gn.length; k++) {
+                        options4 += '<option value="' + gn[k].optionValue + '">' + gn[k].optionDisplay + '</option>';
+                    }
+                    $("select#gnDivisionId").html(options4);
+                });
+    });
+
 })
 
 //javascript for form validation
@@ -539,8 +566,8 @@ function commonTags() {
     <tbody>
     <tr>
         <td width="200px" style="border-top:none; border-bottom:none;"></td>
-        <td colspan="2" class="table_reg_cell_02" style="border-top:1px solid #000;"><label>දිස්ත්‍රික්කය /மாவட்டம்
-            /District</label></td>
+        <td colspan="2" class="table_reg_cell_02" style="border-top:1px solid #000;"><label>දිස්ත්‍රික්කය /<br>மாவட்டம்
+            /<br>District</label></td>
         <td colspan="6" class="table_reg_cell_02" style="border-top:1px solid #000;">
             <s:if test="#parent.motherDSDivision.district.districtUKey >0">
             <s:select id="motherDistrictId" name="motherDistrictId" list="allDistrictList" cssStyle="width:99%;"/></td>
@@ -551,7 +578,7 @@ function commonTags() {
         </s:else>
     </tr>
     <tr>
-        <td width="200px" style="border-top:none;"></td>
+        <td width="200px" style="border-top:none;border-bottom:none"></td>
         <td colspan="2"><label>ප්‍රාදේශීය ලේකම් කොට්ඨාශය /<br>பிரதேச செயளாளா் பிரிவு/<br>Divisional Secretariat</label>
         </td>
         <td colspan="6" class="table_reg_cell_02">
@@ -564,6 +591,19 @@ function commonTags() {
                           headerKey="0" headerValue="%{getText('select_ds_division.label')}" cssStyle="width:99%;"/>
             </s:else>
             <s:textfield id="dsDivisionLabel" value="%{getText('select_ds_division.label')}" cssStyle="display:none;"/>
+        </td>
+    </tr>
+    <tr>
+        <td width="200px" style="border-top:none"/>
+        <td colspan="2">
+            ග්‍රාම නිළධාරී කොටිඨාශය /<br/>
+            Grama Niladhari Division in ta/<br/>
+            Grama Niladhari Division
+        </td>
+        <td colspan="6">
+            <s:select id="gnDivisionId" name="gnDivisionId" value="%{gnDivisionId}" list="gnDivisionList"
+                      cssStyle="float:left;  width:99%; margin:2px 5px;" headerKey="0"
+                      headerValue="%{getText('select.gn.division')}"/>
         </td>
     </tr>
     <tr>
@@ -656,6 +696,7 @@ function commonTags() {
 <s:hidden id="error15" value="%{getText('enter.motherPassportNo.label')}"/>
 <s:hidden id="error16" value="%{getText('enter.fatherCountry.label')}"/>
 <s:hidden id="error17" value="%{getText('enter.motherCountry.label')}"/>
+<s:hidden id="selectGNDivision" value="%{getText('select.gn.division')}"/>
 
 
 </div>

@@ -36,21 +36,13 @@ public class BirthRegisterInfo implements Serializable, Cloneable {
     @JoinColumn(name = "bdDivisionUKey", nullable = false)
     private BDDivision birthDivision;
 
-    /**
-     * The GN  division where the birth is registered (Includes District)
-     */
-    //todo remove nullable to false when we have all the data 
-    @ManyToOne
-    @JoinColumn(name = "gnDivisionUKey", nullable = true)
-    private GNDivision gnDivision;
+
     /**
      * The name of the Birth/Death registration division in the preferred language
      */
     @Transient
     private String bdDivisionPrint;
 
-    @Transient
-    private String gnDivisionPrint;
 
     /**
      * The name of the DS division in the preferred language
@@ -329,21 +321,5 @@ public class BirthRegisterInfo implements Serializable, Cloneable {
     @Override
     protected BirthRegisterInfo clone() throws CloneNotSupportedException {
         return (BirthRegisterInfo) super.clone();
-    }
-
-    public GNDivision getGnDivision() {
-        return gnDivision;
-    }
-
-    public void setGnDivision(GNDivision gnDivision) {
-        this.gnDivision = gnDivision;
-    }
-
-    public String getGnDivisionPrint() {
-        return gnDivisionPrint;
-    }
-
-    public void setGnDivisionPrint(String gnDivisionPrint) {
-        this.gnDivisionPrint = gnDivisionPrint;
     }
 }

@@ -484,7 +484,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         dsDivisionId = bddivision.getDsDivision().getDsDivisionUKey();
         deathDivisionId = bddivision.getBdDivisionUKey();
         deathDistrictId = bddivision.getDistrict().getDistrictUKey();
-        gnDivisionId = deathRegister.getDeath().getGnDivision().getGnDivisionUKey();
+        gnDivisionId = deathRegister.getDeathPerson().getGnDivision().getGnDivisionUKey();
         DSDivision dsDivisionPermanentAddress = deathRegister.getDeathPerson().getDsDivisionOfPermanentAddress();
         deathPersonPermenentAddressDistrictId = (dsDivisionPermanentAddress != null) ?
             dsDivisionPermanentAddress.getDistrict().getDistrictUKey() : 0;
@@ -1571,10 +1571,10 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public void setGnDivisionId(int gnDivisionId) {
         this.gnDivisionId = gnDivisionId;
-        if (death == null) {
-            death = new DeathInfo();
+        if (deathPerson == null) {
+            deathPerson = new DeathPersonInfo();
         }
-        death.setGnDivision(gnDivisionDAO.getGNDivisionByPK(gnDivisionId));
-        logger.debug("setting Death GN Division: {}", death.getGnDivision().getEnGNDivisionName());
+        deathPerson.setGnDivision(gnDivisionDAO.getGNDivisionByPK(gnDivisionId));
+        logger.debug("setting Death Person GN Division: {}", deathPerson.getGnDivision().getEnGNDivisionName());
     }
 }
