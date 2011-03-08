@@ -127,7 +127,12 @@
         </action>
 
         <action name="eprEditPerson" class="lk.rgd.prs.web.action.PersonRegisterAction" method="personEditInit">
-            <result type="tiles" name="success">epr.existingPersonRegistration</result>
+                    <result type="tiles" name="success">epr.existingPersonRegistration</result>
+        </action>
+
+        <action name="eprUpdatePersonDetail" class="lk.rgd.prs.web.action.PersonRegisterAction" method="personEditInit">
+            <!--param name="personUKey">true</param-->
+            <result type="tiles" name="success">epr.UpdatePersonDetail</result>
         </action>
 
         <action name="eprDirectEditPerson" class="lk.rgd.prs.web.action.PersonRegisterAction" method="personEditInit">

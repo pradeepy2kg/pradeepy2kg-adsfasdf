@@ -171,7 +171,7 @@
                     <tr><s:actionerror cssStyle="color:red;font-size:10pt"/></tr>
                     <tr>
                         <td><label><span class="font-8">අනුක්‍රමික අංකය<s:label value="*"
-                                                                                cssStyle="color:red;font-size:10pt"/><br>தொடர் இலக்கம்<br>Serial Number</span></label>
+                                                                                cssStyle="color:red;font-size:20pt"/><br>தொடர் இலக்கம்<br>Serial Number</span></label>
                         </td>
                         <td><s:textfield name="bdId" id="SerialNo" value="%{bdId}"/>
                             <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>--%>
