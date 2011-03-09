@@ -8,146 +8,224 @@
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 <script>
 
-    function disableNext(mode) {
-        if (mode) {
-            document.getElementById('next').style.display = 'none';
-        }
-        else {
-            document.getElementById('next').style.display = 'block';
-        }
-    }
 
-    function disableOk(mode) {
-        if (mode) {
-            document.getElementById('searchOk').style.display = 'none';
-        }
-        else {
-            document.getElementById('searchOk').style.display = 'block';
-        }
-    }
+// mode 1 = passing District, will return DS list
+// mode 2 = passing DsDivision, will return BD list
+// any other = passing district, will return DS list and the BD list for the first DS
+$(function() {
+    $('select#districtId').bind('change', function(evt1) {
+        var id = $("select#districtId").attr("value");
+        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id},
+                function(data) {
+                    var options1 = '';
+                    var ds = data.dsDivisionList;
+                    for (var i = 0; i < ds.length; i++) {
+                        options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                    }
+                    $("select#dsDivisionId").html(options1);
 
-    function okCheck() {
-        var ok = document.getElementById('skipChangesCBox');
-        if (ok.checked) {
-            disableNext(true)
-            disableOk(false)
-        } else {
-            disableOk(true)
-            disableNext(false)
-        }
-    }
-
-    $(function() {
-        $("#submitDatePicker").datepicker({
-            changeYear: true,
-            dateFormat:'yy-mm-dd',
-            startDate:'2000-01-01',
-            endDate:'2020-12-31'
-        });
+                    var options2 = '';
+                    var bd = data.bdDivisionList;
+                    for (var j = 0; j < bd.length; j++) {
+                        options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
+                    }
+                    $("select#bdDivisionId").html(options2);
+                });
     });
-    $(function() {
-        $('img#place').bind('click', function(evt) {
-            var id = $("input#placeOfBirth").attr("value");
-            var wsMethod = "transliterate";
-            var soapNs = "http://translitwebservice.transliteration.icta.com/";
 
-            var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
-            soapBody.attr("xmlns:trans", soapNs);
-            soapBody.appendChild(new SOAPObject('InputName')).val(id);
-            soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
-            soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
-            //soapBody.appendChild(new SOAPObject('Gender')).val('U');
+    $('select#dsDivisionId').bind('change', function(evt2) {
+        var id = $("select#dsDivisionId").attr("value");
+        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:2},
+                function(data) {
+                    var options = '';
+                    var bd = data.bdDivisionList;
+                    for (var i = 0; i < bd.length; i++) {
+                        options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
+                    }
+                    $("select#bdDivisionId").html(options);
+                });
+    });
+});
 
-            //added by shan [ NOT Tested ] -> start
-            var genderVal = $("select#genderList").attr("value");
-            soapBody.appendChild(new SOAPObject('Gender')).val(genderVal);
-            //-> end
+// mode 1 = passing District, will return DS list
+// mode 2 = passing DsDivision, will return BD list
+// any other = passing district, will return DS list and the BD list for the first DS
+$(function() {
+    $('select#motherDistrictId').bind('change', function(evt1) {
+        var id = $("select#motherDistrictId").attr("value");
+        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id},
+                function(data) {
+                    var options1 = '';
+                    var ds = data.dsDivisionList;
+                    for (var i = 0; i < ds.length; i++) {
+                        options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                    }
+                    $("select#motherDSDivisionId").html(options1);
 
-            //Create a new SOAP Request
-            var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
+                    var options3 = '';
+                    var gn = data.gnDivisionList;
+                    for (var k = 0; k < gn.length; k++) {
+                        options3 += '<option value="' + gn[k].optionValue + '">' + gn[k].optionDisplay + '</option>';
+                    }
+                    $("select#motherGNDivisionId").html(options3);
+                });
+    });
 
-            //Lets send it
-            SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
-            SOAPClient.SendRequest(sr, processResponse); //Send request to server and assign a callback
-        });
+    $('select#motherDSDivisionId').bind('change', function(evt2) {
+        var id = $("select#motherDSDivisionId").attr("value");
+        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:2},
+                function(data) {
+                    var options4 = '';
+                    var gn = data.gnDivisionList;
+                    for (var k = 0; k < gn.length; k++) {
+                        options4 += '<option value="' + gn[k].optionValue + '">' + gn[k].optionDisplay + '</option>';
+                    }
+                    $("select#motherGNDivisionId").html(options4);
+                });
+    });
+});
 
-        function processResponse(respObj) {
-            //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-            $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].
-            return[0].Text
-        )
-            ;
-        }
-    })
-
-    var errormsg = "";
-    function validate() {
-        var domObject;
-        var returnval = true;
-
-        // validate serial number
-        domObject = document.getElementById('SerialNo');
-        if (isFieldEmpty(domObject)) {
-            //            errormsg = errormsg + "\n" + document.getElementById('error2').value;
-        } else {
-            isNumeric(domObject.value, 'error1', 'error2');
-        }
-
-        // validate date of birth
-        domObject = document.getElementById('submitDatePicker');
-        if (isFieldEmpty(domObject))
-            isEmpty(domObject, "", 'p1error3')
-        else
-            isDate(domObject.value, "error1", "error4");
-
-        domObject = document.getElementById('placeOfBirth');
-        if (isFieldEmpty(domObject)) {
-            isEmpty(domObject, "", "error3");
-        }
-
-        domObject = document.getElementById('fatherNICorPIN');
-        if (!isFieldEmpty(domObject))
-            validatePINorNIC(domObject, 'error1', 'error6');
-
-        domObject = document.getElementById('motherNICorPIN');
-        if (!isFieldEmpty(domObject))
-            validatePINorNIC(domObject, 'error1', 'error6');
-
-        if (errormsg != "") {
-            alert(errormsg);
-            returnval = false;
-        }
-        errormsg = "";
-        return returnval;
+function disableNext(mode) {
+    if (mode) {
+        document.getElementById('next').style.display = 'none';
     }
-
-    function validateSearch() {
-        var domObject;
-        var returnval = true;
-
-        // validate serial number
-        domObject = document.getElementById('SerialNo');
-        if (isFieldEmpty(domObject)) {
-            errormsg = errormsg + "\n" + document.getElementById('error2').value;
-        } else {
-            isNumeric(domObject.value, 'error1', 'error2');
-        }
-
-        if (errormsg != "") {
-            alert(errormsg);
-            returnval = false;
-        }
-        errormsg = "";
-        return returnval;
+    else {
+        document.getElementById('next').style.display = 'block';
     }
+}
 
-    function initPage() {
-        var domObject = document.getElementById('SerialNo');
-        if (domObject.value.trim() == 0) {
-            domObject.value = null;
-        }
+function disableOk(mode) {
+    if (mode) {
         document.getElementById('searchOk').style.display = 'none';
     }
+    else {
+        document.getElementById('searchOk').style.display = 'block';
+    }
+}
+
+function okCheck() {
+    var ok = document.getElementById('skipChangesCBox');
+    if (ok.checked) {
+        disableNext(true)
+        disableOk(false)
+    } else {
+        disableOk(true)
+        disableNext(false)
+    }
+}
+
+$(function() {
+    $("#submitDatePicker").datepicker({
+        changeYear: true,
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2020-12-31'
+    });
+});
+$(function() {
+    $('img#place').bind('click', function(evt) {
+        var id = $("input#placeOfBirth").attr("value");
+        var wsMethod = "transliterate";
+        var soapNs = "http://translitwebservice.transliteration.icta.com/";
+
+        var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
+        soapBody.attr("xmlns:trans", soapNs);
+        soapBody.appendChild(new SOAPObject('InputName')).val(id);
+        soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
+        soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
+        //soapBody.appendChild(new SOAPObject('Gender')).val('U');
+
+        //added by shan [ NOT Tested ] -> start
+        var genderVal = $("select#genderList").attr("value");
+        soapBody.appendChild(new SOAPObject('Gender')).val(genderVal);
+        //-> end
+
+        //Create a new SOAP Request
+        var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
+
+        //Lets send it
+        SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
+        SOAPClient.SendRequest(sr, processResponse); //Send request to server and assign a callback
+    });
+
+    function processResponse(respObj) {
+        //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
+        $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].
+        return[0].Text
+    )
+        ;
+    }
+})
+
+var errormsg = "";
+
+function validate() {
+    var domObject;
+    var returnval = true;
+
+    // validate serial number
+    domObject = document.getElementById('SerialNo');
+    if (isFieldEmpty(domObject)) {
+        //            errormsg = errormsg + "\n" + document.getElementById('error2').value;
+    } else {
+        isNumeric(domObject.value, 'error1', 'error2');
+    }
+
+    // validate date of birth
+    domObject = document.getElementById('submitDatePicker');
+    if (isFieldEmpty(domObject))
+        isEmpty(domObject, "", 'p1error3')
+    else
+        isDate(domObject.value, "error1", "error4");
+
+    domObject = document.getElementById('placeOfBirth');
+    if (isFieldEmpty(domObject)) {
+        isEmpty(domObject, "", "error3");
+    }
+
+    domObject = document.getElementById('fatherNICorPIN');
+    if (!isFieldEmpty(domObject))
+        validatePINorNIC(domObject, 'error1', 'error6');
+
+    domObject = document.getElementById('motherNICorPIN');
+    if (!isFieldEmpty(domObject))
+        validatePINorNIC(domObject, 'error1', 'error6');
+
+    if (errormsg != "") {
+        alert(errormsg);
+        returnval = false;
+    }
+    errormsg = "";
+    return returnval;
+}
+
+function validateSearch() {
+    var domObject;
+    var returnval = true;
+
+    // validate serial number
+    domObject = document.getElementById('SerialNo');
+    if (isFieldEmpty(domObject)) {
+        errormsg = errormsg + "\n" + document.getElementById('error2').value;
+    } else {
+        isNumeric(domObject.value, 'error1', 'error2');
+    }
+
+    if (errormsg != "") {
+        alert(errormsg);
+        returnval = false;
+    }
+    errormsg = "";
+    return returnval;
+}
+
+function initPage() {
+    var domObject = document.getElementById('SerialNo');
+    if (domObject.value.trim() == 0) {
+        domObject.value = null;
+    }
+    document.getElementById('searchOk').style.display = 'none';
+}
 </script>
 
 <div id="birth-confirmation-form-outer">
@@ -339,7 +417,7 @@
             <s:textfield value="%{getDistrictList().get(birthDistrictId)}" cssClass="disable" disabled="true"/>
         </s:if>
     </td>
-    <td colspan="6"><s:select list="districtList" name="birthDistrictId"/></td>
+    <td colspan="6"><s:select list="districtList" name="birthDistrictId" id="districtId"/></td>
 </tr>
 <tr>
     <td><label>D.S.කොට්ඨාශය<br>பிரிவு <br>D.S. Division</label></td>
@@ -348,7 +426,7 @@
             <s:textfield value="%{getDsDivisionList().get(dsDivisionId)}" cssClass="disable" disabled="true"/>
         </s:if>
     </td>
-    <td colspan="6"><s:select list="dsDivisionList" name="dsDivisionId"/></td>
+    <td colspan="6"><s:select list="dsDivisionList" name="dsDivisionId" id="dsDivisionId"/></td>
 </tr>
 <tr>
     <td><label>කොට්ඨාශය<br>பிரிவு <br>Registration Division</label></td>
@@ -357,18 +435,18 @@
             <s:textfield value="%{getBdDivisionList().get(birthDivisionId)}" cssClass="disable" disabled="true"/>
         </s:if>
     </td>
-    <td colspan="6"><s:select name="birthDivisionId" list="bdDivisionList"/></td>
+    <td colspan="6"><s:select name="birthDivisionId" list="bdDivisionList" id="bdDivisionId"/></td>
 </tr>
 
-<%--<tr>
-    <td><label> ග්‍රාම නිළධාරී කොටිඨාශය <br> Grama Niladhari Division in ta<br>Grama Niladhari Division</label></td>
-    <td colspan="6">
-        <s:if test="bdId != 0">
-            <s:textfield value="%{getGnDivisionList().get(gnDivisionId)}" cssClass="disable" disabled="true"/>
-        </s:if>
-    </td>
-    <td colspan="6"><s:select name="gnDivisionId" list="gnDivisionList"/></td>
-</tr>--%>
+    <%--<tr>
+        <td><label> ග්‍රාම නිළධාරී කොටිඨාශය <br> Grama Niladhari Division in ta<br>Grama Niladhari Division</label></td>
+        <td colspan="6">
+            <s:if test="bdId != 0">
+                <s:textfield value="%{getGnDivisionList().get(gnDivisionId)}" cssClass="disable" disabled="true"/>
+            </s:if>
+        </td>
+        <td colspan="6"><s:select name="gnDivisionId" list="gnDivisionList"/></td>
+    </tr>--%>
 
 <tr>
     <td><label>ස්ථානය <br>பிறந்த இடம் <br>Place</label></td>
@@ -468,6 +546,55 @@
         </table>
     </td>
 </tr>
+
+<tr>
+    <td></td>
+    <td>
+        මව පදිංචි දිස්ත්‍රික්කය <br>
+        Mother's district <br>
+        mother's district in ta
+    </td>
+    <td colspan="6">
+    </td>
+    <td>
+        <s:select list="allDistrictList" name="motherDistrictId" headerValue="%{getText('select_district.label')}"
+                  headerKey="0" id="motherDistrictId"/>
+    </td>
+
+</tr>
+<tr>
+    <td>11</td>
+    <td><label>මව පදිංචි ප්‍රාදේශීය ලේකම් කොට්ටාශය <br>
+        Mother's D.S.Division in ta<br>Mother's D.S.Division</label></td>
+    <td colspan="6">
+        <s:if test="bdId != 0">
+            <s:textfield name="#session.birthConfirmation_db.parent.motherDsDivisionPrint" cssClass="disable"
+                         disabled="true"/>
+        </s:if>
+    </td>
+    <td>
+        <s:select list="allDSDivisionList" name="motherDSDivisionId"
+                  headerValue="%{getText('select_DS_division1.label')}"
+                  headerKey="0" id="motherDSDivisionId"/>
+    </td>
+</tr>
+<tr>
+    <td>12</td>
+    <td><label>මව පදිංචි ග්‍රාම නිලධරී කොට්ටාශය<br>
+        Mother's G.N. Division in ta<br>Mother's G.N. Division</label></td>
+    <td colspan="6">
+        <s:if test="bdId != 0">
+            <s:textfield name="#session.birthConfirmation_db.parent.motherGNDivisionPrint" cssClass="disable"
+                         disabled="true"/>
+        </s:if>
+    </td>
+    <td>
+        <s:select list="gnDivisionList" name="motherGNDivisionId" headerKey="0"
+                  headerValue="%{getText('select.gn.division')}" id="motherGNDivisionId"/>
+    </td>
+</tr>
+
+
 </tbody>
 </table>
 
