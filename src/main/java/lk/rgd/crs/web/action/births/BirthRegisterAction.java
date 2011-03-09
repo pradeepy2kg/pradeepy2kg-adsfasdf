@@ -100,6 +100,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private int dsDivisionId;
     private int motherDistrictId;
     private int motherDSDivisionId;
+    private int motherGNDivisionId;
     private int bdfLateOrBelated;
     private String caseFileNumber;
     private String newComment;
@@ -345,6 +346,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 bdf.getParent().setFatherRace(parent.getFatherRace());
                 bdf.getParent().setMotherNICorPIN(parent.getMotherNICorPIN());
                 bdf.getParent().setMotherRace(parent.getMotherRace());
+                bdf.getParent().setMotherGNDivision(parent.getMotherGNDivision());
+                bdf.getParent().setMotherDSDivision(parent.getMotherDSDivision());
                 bdf.getMarriage().setParentsMarried(marriage.getParentsMarried());
                 break;
             case 2:
@@ -357,7 +360,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
                 bdf.getParent().setFatherFullNameInEnglish(parent.getFatherFullNameInEnglish());
                 bdf.getParent().setMotherFullNameInEnglish(parent.getMotherFullNameInEnglish());
-                bdf.getParent().setMotherGNDivision(parent.getMotherGNDivision());
                 break;
             case 3:
                 logger.debug("Step {} of 3 ", pageNo);
@@ -723,9 +725,39 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             bcf = new BirthDeclaration();
         }
         session.put(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN, bdf);
+        populateGNDivisionName(bcf);
         session.put(WebConstants.SESSION_BIRTH_CONFIRMATION_DB_BEAN, bcf);
         populate(bdf);
         return "form0";
+    }
+
+    private void populateGNDivisionName(BirthDeclaration birthDeclaration) {
+        DSDivision motherDS = birthDeclaration.getParent().getMotherDSDivision();
+        if (motherDS != null) {
+            GNDivision motherGN = gnDivisionDAO.getGNDivisionByPK(birthDeclaration.getParent().getMotherGNDivision().getGnDivisionUKey());
+            String gnPrint = "";
+            String dsPrint = "";
+            if (language.equals(AppConstants.SINHALA)) {
+                gnPrint = motherGN.getSiGNDivisionName();
+                dsPrint = motherDS.getSiDivisionName();
+            } else if (language.equals(AppConstants.TAMIL)) {
+                gnPrint = motherGN.getTaGNDivisionName();
+                dsPrint = motherDS.getTaDivisionName();
+            } else {
+                gnPrint = motherGN.getEnGNDivisionName();
+                dsPrint = motherDS.getEnDivisionName();
+            }
+            birthDeclaration.getParent().setMotherGNDivisionPrint(gnPrint);
+            birthDeclaration.getParent().setMotherDsDivisionPrint(dsPrint);
+            motherDistrictId = motherDS.getDistrict().getDistrictUKey();
+            motherDSDivisionId = motherDS.getDsDivisionUKey();
+            motherGNDivisionId = motherGN.getGnDivisionUKey();
+            //populate lists
+            allDistrictList = districtDAO.getAllDistrictNames(language, user);
+            allDSDivisionList = dsDivisionDAO.getAllDSDivisionNames(motherDistrictId, language, user);
+            gnDivisionList = gnDivisionDAO.getGNDivisionNames(motherDSDivisionId, language, user);
+        }
+
     }
 
     /**
@@ -1657,5 +1689,18 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         }
         parent.setMotherGNDivision(gnDivisionDAO.getGNDivisionByPK(gnDivisionId));
         logger.debug("setting GNDivision: {}", parent.getMotherGNDivision().getEnGNDivisionName());
+    }
+
+    public int getMotherGNDivisionId() {
+        return motherGNDivisionId;
+    }
+
+    public void setMotherGNDivisionId(int motherGNDivisionId) {
+        this.motherGNDivisionId = motherGNDivisionId;
+        if (parent == null) {
+            parent = new ParentInfo();
+        }
+        parent.setMotherGNDivision(gnDivisionDAO.getGNDivisionByPK(motherGNDivisionId));
+        logger.debug("setting Mother GNDivision: {}", parent.getMotherGNDivision().getEnGNDivisionName());
     }
 }

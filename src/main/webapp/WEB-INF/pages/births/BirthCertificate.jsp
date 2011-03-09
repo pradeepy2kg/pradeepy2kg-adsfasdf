@@ -366,7 +366,7 @@
                     **
                 </s:if>
             </div>
-            <br>                                                                                                        
+            <br>
             <s:label name="placeOfBirthEnglish" value="%{#request.child.placeOfBirthEnglish}"
                      cssStyle="font-size:12pt;"/>
             <div class="changes-done">
@@ -452,8 +452,12 @@
 <tr height="100px">
     <td>පියාගේ සම්පුර්ණ නම<br>தந்தையின்முழுப் பெயர்<br> Father's Full Name
     </td>
-    <td colspan="6" class="bc-name" style="font-size:14pt">
-        <s:label name="" value="%{#request.parent.fatherFullName}"/>
+    <td colspan="6" class="bc-name">
+        <span style="padding-right:5px"><s:label cssStyle="font-size:14pt" name=""
+                                                 value="%{#request.parent.fatherFullName}"/> </span>
+        | <span style="padding-left:5px"><s:label cssStyle="font-size:8pt" name=""
+                                                  value="%{#request.parent.fatherFullNameInEnglish}"/> </span>
+
         <div class="changes-done">
             <s:if test="changedFields.get(10)">
                 **
@@ -491,7 +495,11 @@
         <br> Mother's Full Name
     </td>
     <td colspan="6" class="bc-name" style="font-size:14pt">
-        <s:label name="" value="%{#request.parent.motherFullName}"/>
+        <span style="padding-right:5px"><s:label cssStyle="font-size:14pt" name=""
+                                                 value="%{#request.parent.motherFullName}"/> </span>
+        | <span style="padding-left:5px"><s:label cssStyle="font-size:8pt" name=""
+                                                  value="%{#request.parent.motherFullNameInEnglish}"/> </span>
+
         <div class="changes-done">
             <s:if test="changedFields.get(26)">
                 **
@@ -615,14 +623,14 @@
     <tr>
         <td colspan="2"><p></p></td>
     </tr>
-<%--    <tr>
-        <td>
-            Printed On : <%= DateTimeUtils.getISO8601FormattedString(new Date()) %>
-        </td>
+        <%--    <tr>
+            <td>
+                Printed On : <%= DateTimeUtils.getISO8601FormattedString(new Date()) %>
+            </td>
 
-        <td style="text-align:right;margin-left:auto;margin-right:0;">
-        </td>
-    </tr>--%>
+            <td style="text-align:right;margin-left:auto;margin-right:0;">
+            </td>
+        </tr>--%>
     </tbody>
 </table>
 <hr style="border-style:dashed ; float:left;width:100% ;margin-top:30px;"/>

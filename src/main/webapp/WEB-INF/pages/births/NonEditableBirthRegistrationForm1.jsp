@@ -597,7 +597,7 @@
             </s:else></td>
     </tr>
     <tr>
-        <td style="border-top:none;">&nbsp;</td>
+        <td style="border-top:none;border-bottom:none">&nbsp;</td>
         <td colspan="1"><s:label value="ප්‍රාදේශීය ලේකම් කොට්ඨාශය /"/><br>
             <s:label value="பிரதேச செயளாளா் பிரிவு/"/><br>
             <s:label value="Divisional Secretariat"/><br></td>
@@ -612,6 +612,25 @@
             </s:elseif>
             <s:else>
                 <s:label value="%{#request.parent.motherDSDivision.taDivisionName}"/>
+            </s:else>
+        </td>
+    </tr>
+    <tr>
+        <td style="border-top:none;">&nbsp;</td>
+        <td colspan="1"><s:label value="ප්‍රාදේශීය ලේකම් කොට්ඨාශය /"/><br>
+            <s:label value="பிரதேச செயளாளா் பிரிவு/"/><br>
+            <s:label value="Divisional Secretariat"/><br></td>
+        <td colspan="4" class="table_reg_cell_02">
+            <s:if
+                    test="#userPreferedLang == 'si'">
+                <s:label value="%{#request.parent.motherGNDivision.siGNDivisionName}"/>
+            </s:if>
+            <s:elseif test="#userPreferedLang == 'en'">
+                <s:label value="%{#request.parent.motherGNDivision.enGNDivisionName}"/>
+
+            </s:elseif>
+            <s:else>
+                <s:label value="%{#request.parent.motherGNDivision.taGNDivisionName}"/>
             </s:else>
         </td>
     </tr>
