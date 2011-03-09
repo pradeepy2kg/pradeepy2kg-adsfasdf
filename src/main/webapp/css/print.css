@@ -1,0 +1,74 @@
+/* Main-Layout for the print */
+@media print {
+    body {
+        background-color: white !important;
+        font-family: BhashitaComplex, verdana, arial, sans-serif; /*font-size: 10pt;        */
+    }
+
+    * {
+        background: none;
+    }
+
+    select, input, textarea {
+        border: none;
+        background: none;
+    }
+
+    .button {
+        display: none;
+    }
+
+    #layout-header, #body-content-title, #layout-footer {
+        display: none;
+    }
+
+    .button_print {
+        display: none;
+    }
+
+    #body-sidebar {
+        display: none;
+    }
+
+    #body-content {
+        float: left;
+        position: static;
+        top: 0;
+        left: 0;
+        margin: 0;
+        margin-top: 0;
+    }
+
+    textarea {
+        color: black;
+        font-size: 10pt;
+    }
+
+    .form-submit {
+        display: none
+    }
+
+    .form-submit-long {
+        display: none
+    }
+
+    .page-break {
+        page-break-after: always
+    }
+}
+
+#confermationRetAddress {
+    display: none;
+}
+
+/*@media print {*/
+
+/*div.header {*/
+/*display: none;*/
+/*}*/
+
+/*div.birth-confirmation-form-1-body {*/
+/*page-break-inside: avoid;*/
+/*page-break-after: always;*/
+/*}*/
+/*}*/
