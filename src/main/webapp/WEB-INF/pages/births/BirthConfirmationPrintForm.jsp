@@ -45,6 +45,7 @@
     });
 
     function initPage() {
+
     }
 </script>
 
@@ -140,7 +141,7 @@
     </tbody>
 </table>
 
-<table style="width:100%;float:left;">
+<table style="width:100%;float:left;margin-bottom:2px">
     <col/>
     <tbody>
     <tr>
@@ -226,7 +227,7 @@
     </tr>
     </tbody>
 </table>
-<table border="0" style="width:100%;margin-top:5px;">
+<table border="0" style="width:100%;margin-top:2px;">
     <col/>
     <tbody>
     <tr>
@@ -269,7 +270,7 @@
     </tr>
     <tr>
         <td class="cell_011">4</td>
-        <td class="cell_04"><label>උපන් දිනය<br>பிறந்த திகதி<br>Date of birth</label></td>
+        <td class="cell_04"><label>උපන් දිනය<br>பிறந்த திகதி/Date of birth</label></td>
         <td><label>වර්ෂය<br>வருடம்<br>Year</label></td>
         <td>
             <s:textfield value="%{child.dateOfBirth.year+1900}" cssClass="disable" disabled="true" size="4"/>
@@ -290,7 +291,7 @@
     </tr>
     <tr>
         <td class="cell_011">5</td>
-        <td><label>ස්ත්‍රී පුරුෂ භාවය <br>பால்<br>Gender</label></td>
+        <td><label>ස්ත්‍රී පුරුෂ භාවය <br>பால்/Gender</label></td>
         <td colspan="6" style="font-size:12pt;">
             <s:label value="%{child.childGenderPrint}"/>
         </td>
@@ -299,7 +300,7 @@
 
     <tr>
         <td rowspan="4" style="text-align:center;"> 6</td>
-        <td height="40px"><label>උපන් දිස්ත්‍රික්කය<br>மாவட்டம் <br>District of Birth</label></td>
+        <td height="40px"><label>උපන් දිස්ත්‍රික්කය<br>மாவட்டம் /District of Birth</label></td>
         <td colspan="6" style="font-size:12pt;">
             <s:label value="%{register.districtPrint}"/>
         </td>
@@ -326,26 +327,26 @@
         <td colspan="11">&nbsp;</td>
     </tr>
 
-<%--
-    <tr>
-        <td><label>
-            ග්‍රාම නිළධාරී කොටිඨාශය <br/>
-            Grama Niladhari Division in ta<br/>
-            Grama Niladhari Division</label>
-        </td>
-        <td colspan="6" style="font-size:12pt;">
-            <s:label value="%{register.gnDivisionPrint}"/>
-        </td>
-        <td colspan="11">&nbsp;</td>
-    </tr>
---%>
+    <%--
+        <tr>
+            <td><label>
+                ග්‍රාම නිළධාරී කොටිඨාශය <br/>
+                Grama Niladhari Division in ta<br/>
+                Grama Niladhari Division</label>
+            </td>
+            <td colspan="6" style="font-size:12pt;">
+                <s:label value="%{register.gnDivisionPrint}"/>
+            </td>
+            <td colspan="11">&nbsp;</td>
+        </tr>
+    --%>
 
-    <tr height="40px">
+    <tr height="35px">
         <td><label>උපන් ස්ථානය
             <br>பிறந்த இடம்
             <br>Place of Birth</label></td>
         <td colspan="6">
-            <s:label name="child.placeOfBirth" cssStyle="font-size:12pt;"/><br>
+            <s:label name="child.placeOfBirth" cssStyle="font-size:10pt;"/><br>
             <s:label name="child.placeOfBirthEnglish"/>
         </td>
         <td colspan="11">&nbsp;</td>
@@ -360,7 +361,7 @@
     </tr>
     <tr>
         <td class="cell_011">8</td>
-        <td><label>පියාගේ ජාතිය <br>தந்தையின் இனம்<br>Father's Race</label></td>
+        <td><label>පියාගේ ජාතිය <br>தந்தையின் இனம்/Father's Race</label></td>
         <td colspan="6" style="font-size:12pt;">
             <s:label value="%{parent.fatherRacePrint}"/>
         </td>
@@ -376,7 +377,7 @@
     </tr>
     <tr>
         <td class="cell_011">10</td>
-        <td><label>මවගේ ජාතිය <br>தாயின் இனம்<br>Mother's Race</label></td>
+        <td><label>මවගේ ජාතිය <br>தாயின் இனம்/Mother's Race</label></td>
         <td colspan="6" style="font-size:12pt;">
             <s:label value="%{parent.motherRacePrint}"/>
         </td>
@@ -391,9 +392,28 @@
         </td>
         <td colspan="11">&nbsp;</td>
     </tr>
+    <tr>
+        <td class="cell_011">12</td>
+        <td><label>මව පදිංචි ග්‍රාම නිලධරී කොට්ටාශය<br>
+            Mother's G.N. Division in ta<br>Mother's G.N. Division</label></td>
+        <td colspan="6" style="font-size:12pt;">
+            <s:label value="%{parent.motherGNDivisionPrint}"/>
+        </td>
+        <td colspan="11">&nbsp;</td>
+    </tr>
+        <tr>
+        <td class="cell_011">13</td>
+        <td><label>මව පදිංචි ප්‍රාදේශීය ලේකම්  කොට්ටාශය <br>
+       Mother's D.S.Division in ta<br>Mother's D.S.Division</label></td>
+        <td colspan="6" style="font-size:12pt;">
+            <s:label value="%{parent.motherDsDivisionPrint}"/>
+        </td>
+        <td colspan="11">&nbsp;</td>
+    </tr>
     </tbody>
 </table>
 </div>
+
 
 <table border="0" style="width:100%;float:left;">
     <caption></caption>
@@ -415,7 +435,7 @@
     <col/>
     <tbody>
     <tr>
-        <td class="cell_001">12</td>
+        <td class="cell_001">14</td>
         <td width="200px"><p></p><label>ළම‌යාගේ නම රාජ්‍ය භාෂාවෙන්
             (සිංහල / දෙමළ)
             <br>குழந்தையின் பெயர் அரசகரும மொழிகளில்
@@ -456,7 +476,7 @@
     <col/>
     <tbody>
     <tr>
-        <td class="cell_001">13</td>
+        <td class="cell_001">15</td>
         <td width="200px"><p></p>
             <label>ළම‌යාගේ නම ඉංග්‍රීසි භාෂාවෙන්
                 <br>குழந்தையின் பெயர் ஆங்கிலத்தில்
@@ -499,7 +519,7 @@
     <col/>
     <tbody>
     <tr>
-        <td class="cell_001">14</td>
+        <td class="cell_001">16</td>
         <td width="200px"><p></p><label>පියාගේ සම්පුර්ණ නම
             <br>தந்தையின் முழுப் பெயர்
             <br>Father's Full Name</label>
@@ -531,7 +551,7 @@
     </tr>
     </tbody>
 </table>
-
+<%--father full name in english --%>
 <table class="table_con_page2_table" cellspacing="0" width="100%">
     <caption></caption>
     <col/>
@@ -539,7 +559,49 @@
     <col/>
     <tbody>
     <tr>
-        <td class="cell_001">15</td>
+        <td class="cell_001">17</td>
+        <td width="200px"><p></p><label>පියාගේ සම්පුර්ණ නම ඉංග්‍රීසි භාෂාවෙන් (කැපිටල් අකුරෙන්)</label>
+            <br>முழுப் பெயர்
+            <br>Father's Full Name in English (in block letters)</label>
+
+            <p></p>
+        </td>
+        <td><s:label name="parent.fatherFullNameInEnglish" cssStyle="font-size:12pt;"/></td>
+    </tr>
+    <tr>
+        <td rowspan="5" class="cell_012">&nbsp;</td>
+        <td rowspan="5"><p></p><label>පියාගේ නම වෙනස් විය යුතු අයුරු
+            <br>திருத்தப்பட்ட பெயர்
+            <br>Father's corrected name</label>
+
+            <p></p></td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+    </tr>
+    </tbody>
+</table>
+
+<%--mother full name in official language--%>
+<br class="page-break">
+<table class="table_con_page2_table" cellspacing="0" width="100%">
+    <caption></caption>
+    <col/>
+    <col/>
+    <col/>
+    <tbody>
+    <tr>
+        <td class="cell_001">18</td>
         <td width="200px"><p></p><label>මවගේ සම්පූර්ණ නම
             <br>தாயின் முழுப் பெயர்
             <br>Mother's Full Name</label>
@@ -572,7 +634,49 @@
     </tbody>
 </table>
 
-<br class="page-break">
+<%--mother full name in english--%>
+
+<table class="table_con_page2_table" cellspacing="0" width="100%">
+    <caption></caption>
+    <col/>
+    <col/>
+    <col/>
+    <tbody>
+    <tr>
+        <td class="cell_001">19</td>
+        <td width="200px"><p></p><label>මවගේ සම්පුර්ණ නම ඉංග්‍රීසි භාෂාවෙන් (කැපිටල් අකුරෙන්)
+            <br>முழுப் பெயர்
+            <br>Mother's Full Name in English (in block letters)</label>
+
+            <p></p>
+        </td>
+        <td><s:label name="parent.motherFullNameInEnglish" cssStyle="font-size:12pt;"/></td>
+    </tr>
+    <tr>
+        <td rowspan="5" class="cell_012">&nbsp;</td>
+        <td rowspan="5"><p></p><label>මවගේ නම වෙනස් විය යුතු අයුරු
+            <br>திருத்தப்பட்ட பெயர்
+            <br>mother's corrected name</label>
+
+            <p></p></td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+    </tr>
+    </tbody>
+</table>
+
+
 
 <div id="page3">
     <table border="0" style="width:100%;float:left;">
@@ -607,7 +711,7 @@
         <tbody>
 
         <tr>
-            <td height="80px" style="text-align:center">16</td>
+            <td height="80px" style="text-align:center">20</td>
             <td>උපත තහවුරු කරන්නේ කවුරුන් විසින්ද?<br>
                 பிறப்பினை உறுதிப்படுத்துவது யாரால்?<br>
                 Person confirming the details
@@ -620,7 +724,7 @@
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td height="80px" style="text-align:center">17</td>
+            <td height="80px" style="text-align:center">21</td>
             <td>
                 <p></p>
                 <label>
@@ -635,7 +739,7 @@
         </tr>
 
         <tr>
-            <td rowspan="5" class="cell_012">18</td>
+            <td rowspan="5" class="cell_012">22</td>
             <td rowspan="5">
                 <p></p>
                 <label>
@@ -663,7 +767,7 @@
         </tr>
 
         <tr>
-            <td rowspan="2" class="cell_001">19</td>
+            <td rowspan="2" class="cell_001">23</td>
             <td rowspan="2">
                 <label> ඉහත සදහන් තොරතුරු නිවැරදි බව සහතික කරමි /
                     <br>மேற்குறிப்பிட்ட விபரங்கள் சரியானவை என இத்தால் உறுதிப்படுத்துகிறேன். /
@@ -682,8 +786,9 @@
         </tbody>
     </table>
 </div>
-
 <hr style="border-style:dashed ; float:left;width:100% ;margin-bottom:30px;margin-top:30px;">
+  <br class="page-break">
+
 <table style="width:100%;">
     <caption></caption>
     <col/>
@@ -710,7 +815,7 @@
     <tbody>
 
     <tr>
-        <td rowspan="2" class="cell_001">20</td>
+        <td rowspan="2" class="cell_001">24</td>
         <td colspan="2" rowspan="2">
             <p></p>
             <label>
@@ -719,10 +824,10 @@
                 மாவட்டப் பதிவாளர்)
                 /Above information has been entered into the Civil Registration System.
 
-       <%--         ඉහත සදහන් තොරතුරු සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියට ඇතුලත් කරන ලදී.
-                <br>மேற்குறிப்பிட்ட விபரங்கள் ‘சிவில் பதிவு முறையில்’ உள்ளடக்கப்பட்டன (மாவட்டப் பதிவாளர் / மேலதிக
-                மாவட்டப் பதிவாளர்)
-                <br>Above information has been entered into the Civil Registration System.--%>
+                <%--         ඉහත සදහන් තොරතුරු සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියට ඇතුලත් කරන ලදී.
+       <br>மேற்குறிப்பிட்ட விபரங்கள் ‘சிவில் பதிவு முறையில்’ உள்ளடக்கப்பட்டன (மாவட்டப் பதிவாளர் / மேலதிக
+       மாவட்டப் பதிவாளர்)
+       <br>Above information has been entered into the Civil Registration System.--%>
             </label>
 
             <p></p>
