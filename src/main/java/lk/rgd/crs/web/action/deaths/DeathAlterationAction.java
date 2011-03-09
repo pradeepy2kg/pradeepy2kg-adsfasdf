@@ -509,7 +509,6 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         logger.debug("begin generating changes list");
 
         if (deathAlteration.getDeathInfo() != null && deathRegister.getDeath() != null) {
-            //todo check sudden death
             String dateEx = null;
             String dateAlt = null;
             if (deathRegister.getDeath().getDateOfDeath() != null) {
@@ -597,7 +596,8 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             compareStringValues(deathRegister.getDeathPerson().getDeathPersonPassportNo(),
                 deathAlteration.getDeathPerson().getDeathPersonPassportNo(), DeathAlteration.PASSPORT, preferedLan);
 
-            if (!(deathRegister.getDeathPerson().getDeathPersonAge().equals(deathAlteration.getDeathPerson().getDeathPersonAge()))) {
+            if ((deathRegister.getDeathPerson().getDeathPersonAge() != null) &&
+                !(deathRegister.getDeathPerson().getDeathPersonAge().equals(deathAlteration.getDeathPerson().getDeathPersonAge()))) {
                 changesList.add(new FieldValue(
                     deathRegister.getDeathPerson().getDeathPersonAge() != null ? Integer.toString(deathRegister.getDeathPerson().getDeathPersonAge()) : null,
                     deathAlteration.getDeathPerson().getDeathPersonAge() != null ? Integer.toString(deathAlteration.getDeathPerson().getDeathPersonAge()) : null,
