@@ -49,6 +49,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     /**
      * @inheritDoc
      */
+    // todo remove no usage found for that method so we trow Unsupported operation exception until we remove this function
     @Transactional(propagation = Propagation.REQUIRED)
     public void addLateDeathRegistration(DeathRegister deathRegistration, User user) {
         logger.debug("adding late/missing death registration");
@@ -62,24 +63,26 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         }
         addDeathRegistration(deathRegistration, user);
         logger.debug("added a late/missing registration with idUKey : {} ", deathRegistration.getIdUKey());
+        throw new UnsupportedOperationException("this method  {addLateDeathRegistration} does not have a usage if any " +
+            "usage found  remove this exception throw ");
     }
 
     /**
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void addNormalDeathRegistration(DeathRegister deathRegistration, User user) {
-        logger.debug("adding normal/sudden death registration");
+    public void addNewDeathRegistration(DeathRegister deathRegistration, User user) {
         //validate access of the user  to Death division
         ValidationUtils.validateAccessToBDDivision(user, deathRegistration.getDeath().getDeathDivision());
         deathDeclarationValidator.validateMinimalRequirements(deathRegistration);
         addDeathRegistration(deathRegistration, user);
-        logger.debug("added a normal/sudden registration with idUKey : {} ", deathRegistration.getIdUKey());
+        logger.debug("added a death  registration with idUKey : {}  and type of death : {}",
+            deathRegistration.getIdUKey(), deathRegistration.getDeathType());
     }
 
     private void addDeathRegistration(DeathRegister deathRegistration, User user) {
         validateAccessOfUser(user, deathRegistration);
-        //validate minimul requirments
+        //validate minimal requirements
         deathDeclarationValidator.validateMinimalRequirements(deathRegistration);
         // has this serial number been used already?
         DeathRegister existing = deathRegisterDAO.getActiveRecordByBDDivisionAndDeathSerialNo(deathRegistration.getDeath().getDeathDivision(),

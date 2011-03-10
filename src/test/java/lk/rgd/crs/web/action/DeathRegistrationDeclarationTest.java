@@ -66,7 +66,7 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
                 List deaths = sampleDeaths();
                 User sampleUser = loginSampleUser();
                 for (int i = 0; i < deaths.size(); i++) {
-                    deathRegistrationService.addNormalDeathRegistration((DeathRegister) deaths.get(i), sampleUser);
+                    deathRegistrationService.addNewDeathRegistration((DeathRegister) deaths.get(i), sampleUser);
                 }
 
                 //setting serial number 2010012349 colombo to APPROVED

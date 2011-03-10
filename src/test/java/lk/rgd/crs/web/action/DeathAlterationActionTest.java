@@ -67,7 +67,7 @@ public class DeathAlterationActionTest extends CustomStrutsTestCase {
                 List deaths = sampleDeaths();
 
                 for (int i = 0; i < deaths.size(); i++) {
-                    deathRegistrationService.addNormalDeathRegistration((DeathRegister) deaths.get(i), sampleUser);
+                    deathRegistrationService.addNewDeathRegistration((DeathRegister) deaths.get(i), sampleUser);
                 }
                 //change state to certificate printed otherwise cannot add alterations
                 DeathRegister dr;
