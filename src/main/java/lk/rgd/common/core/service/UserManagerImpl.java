@@ -129,15 +129,7 @@ public class UserManagerImpl implements UserManager {
     }
 
     /**
-     * @param user              New user object
-     * @param adminUser         Administrator
-     * @param userId            UserId of current user
-     * @param roleId            roleId
-     * @param assignedDistricts assigned Districts
-     * @param assDivisions      assigned Divisions
-     * @param changePassword    changePassword (true/false)
-     * @param randomPassword    randomly generated password
-     * @return is new user
+     * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public boolean createUser(User user, User adminUser, String userId, String roleId, int[] assignedDistricts, int[] assDivisions, boolean changePassword, String randomPassword) {
@@ -170,6 +162,8 @@ public class UserManagerImpl implements UserManager {
             user.setStatus(User.State.INACTIVE);
 
             if (userId == null) {
+                //validate user object
+                validateUserForAdd(user);
                 isNewUser = true;
                 /*randomPassword = getRandomPassword(randomPasswordLength);*/
                 user.setPasswordHash(hashPassword(randomPassword));
@@ -239,6 +233,13 @@ public class UserManagerImpl implements UserManager {
         }
         return isNewUser;
 
+    }
+
+    private void validateUserForAdd(User user) {
+        if (user.getUserName() == null || user.getPrefLanguage() == null ||
+            user.getStatus() == null || user.getPin() == 0 || user.getUserId() == null) {
+            handleException("incomplete user object for create user :" + user.getUserId(), ErrorCodes.INCOMPLETE_USER_OBJECT);
+        }
     }
 
     /**
