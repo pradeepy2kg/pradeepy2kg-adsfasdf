@@ -26,7 +26,7 @@ public interface DeathRegistrationService {
      * @throws lk.rgd.crs.CRSRuntimeException for un-authorized
      *                                        operations and invalid data
      */
-    public void addNormalDeathRegistration(DeathRegister deathRegistration, User user);
+    public void addNewDeathRegistration(DeathRegister deathRegistration, User user);
 
     /**
      * Adds a late or sudden death registration to the system. This is a Data Entry operation,

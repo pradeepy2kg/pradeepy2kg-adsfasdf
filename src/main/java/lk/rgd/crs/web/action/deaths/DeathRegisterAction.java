@@ -7,7 +7,6 @@ import lk.rgd.Permission;
 import lk.rgd.common.RGDRuntimeException;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.DSDivision;
-import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.DateTimeUtils;
 import lk.rgd.common.util.GenderUtil;
@@ -229,7 +228,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                 idUKey = ddf.getIdUKey();
                 if (idUKey == 0) {
                     try {
-                        service.addNormalDeathRegistration(ddf, user);
+                        service.addNewDeathRegistration(ddf, user);
                         idUKey = ddf.getIdUKey();
                         addActionMessage(getText("saveSuccess.label"));
                     } catch (CRSRuntimeException e) {

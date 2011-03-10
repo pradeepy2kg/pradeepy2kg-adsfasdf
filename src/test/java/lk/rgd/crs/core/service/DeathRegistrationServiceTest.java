@@ -1,7 +1,10 @@
 package lk.rgd.crs.core.service;
 
 import junit.framework.TestCase;
+import lk.rgd.ErrorCodes;
+import lk.rgd.common.RGDRuntimeException;
 import lk.rgd.common.api.service.UserManager;
+import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.GNDivisionDAO;
 import lk.rgd.crs.api.domain.GNDivision;
 import org.springframework.context.ApplicationContext;
@@ -20,10 +23,11 @@ import lk.rgd.crs.CRSRuntimeException;
 
 import java.util.Date;
 import java.util.Calendar;
+import java.util.List;
 
 /**
- * @author Chathuranga Withana
  * @author amith jayasekara
+ * @author Chathuranga Withana
  */
 public class DeathRegistrationServiceTest extends TestCase {
 
@@ -76,24 +80,24 @@ public class DeathRegistrationServiceTest extends TestCase {
         dob.add(Calendar.DATE, -3);
 
         // test colombo deo adding for colombo
-        DeathRegister ddf1 = getMinimalDDF(2010101001, dob.getTime(), colomboBDDivision,sammantranapuraGNDivision);
+        DeathRegister ddf1 = getMinimalDDF(2010101001, dob.getTime(), colomboBDDivision, sammantranapuraGNDivision);
         ddf1.setDeathType(deathType);
-        deathRegService.addNormalDeathRegistration(ddf1, deoColomboColombo);
+        deathRegService.addNewDeathRegistration(ddf1, deoColomboColombo);
 
         // try adding a duplicate
-        DeathRegister ddf2 = getMinimalDDF(2010101001, dob.getTime(), colomboBDDivision,sammantranapuraGNDivision);
+        DeathRegister ddf2 = getMinimalDDF(2010101001, dob.getTime(), colomboBDDivision, sammantranapuraGNDivision);
         ddf2.setDeathType(deathType);
         try {
-            deathRegService.addNormalDeathRegistration(ddf2, deoColomboColombo);
+            deathRegService.addNewDeathRegistration(ddf2, deoColomboColombo);
             fail("Should not allow addition of duplicate records");
         } catch (Exception expected) {
         }
 
         // try adding a late death
-        DeathRegister ddf3 = getMinimalDDF(20101010, dob.getTime(), colomboBDDivision,sammantranapuraGNDivision);
+        DeathRegister ddf3 = getMinimalDDF(20101010, dob.getTime(), colomboBDDivision, sammantranapuraGNDivision);
         ddf3.setDeathType(DeathRegister.Type.LATE);
         try {
-            deathRegService.addNormalDeathRegistration(ddf3, deoColomboColombo);
+            deathRegService.addNewDeathRegistration(ddf3, deoColomboColombo);
             fail("Should not allow addition of illegal death type records");
         } catch (CRSRuntimeException expected) {
         }
@@ -129,6 +133,108 @@ Assert.assertTrue("A minimal DDF must trigger warnings that data is incomplete",
         // ignore warnings should allow approval
         deathRegService.approveDeathRegistration(ddf1.getIdUKey(), adrColomboColombo, true);
 
+    }
+
+    public void testAddDeathRegistration() {
+        logger.debug("attempt to test death registration");
+        DeathRegister normalDeathRegistration = getMinimalDDF(2011012345l, new Date(), colomboBDDivision, sammantranapuraGNDivision);
+        normalDeathRegistration.setDeathType(DeathRegister.Type.NORMAL);
+        // this is death happens at colombo ds division
+        // we add this record as deo-gampaha-negombo  and this user does not have permission to add this death and expecting exception
+        try {
+            deathRegService.addNewDeathRegistration(normalDeathRegistration, deoGampahaNegambo);
+        }
+        catch (RGDRuntimeException e) {
+            //we expecting permission deny for that even
+            switch (e.getErrorCode()) {
+                case ErrorCodes.PERMISSION_DENIED:
+                    // we only expecting permission deny exception
+                    logger.debug("permission deny for user : {}  while adding death registration happens on BDdivision :" +
+                        " {}", deoGampahaNegambo.getUserId(), normalDeathRegistration.getDeath().getDeathDivision());
+                    break;
+                default:
+                    fail("we only expecting permission deny exception");
+            }
+        }
+        //now deo-colombo-colombo try to add same registration and he must not get any exception if that user is active
+        try {
+            deathRegService.addNewDeathRegistration(normalDeathRegistration, deoColomboColombo);
+            logger.debug("successfully tested adding death registration happens at colombo bd division and is" +
+                " being added by deo-colmbo-colombo");
+        }
+        catch (RGDRuntimeException e) {
+            // we are not expecting any exceptions while adding this record by this user
+            fail("not expecting any exception while adding death registration happen is colombo bd by deo-colombo-colombo");
+        }
+
+        //now we successfully added the registration and now check for serial number duplication
+        DeathRegister normalDRWithDuplicateSerial = getMinimalDDF(2011012345l, new Date(), colomboBDDivision, sammantranapuraGNDivision);
+        normalDRWithDuplicateSerial.setDeathType(DeathRegister.Type.NORMAL);
+        //expecting exception while adding this record because we are having same serial number for the same BD division
+        try {
+            deathRegService.addNewDeathRegistration(normalDRWithDuplicateSerial, deoColomboColombo);
+            //if it is success it is an error
+            fail("expecting a exception while adding duplicate serial number for same bd division");
+        }
+        catch (RGDRuntimeException e) {
+            logger.debug("exception expected while adding duplicate serial number for same bd division");
+        }
+
+    }
+
+    public void testDeathRegistrationApprove() {
+        //adding a new death registration
+        DeathRegister ddr = getMinimalDDF(2011145678l, new Date(), colomboBDDivision, sammantranapuraGNDivision);
+        ddr.setDeathType(DeathRegister.Type.NORMAL);
+        deathRegService.addNewDeathRegistration(ddr, deoColomboColombo);
+        ddr = deathRegService.getByBDDivisionAndDeathSerialNo(colomboBDDivision, 2011145678l, deoColomboColombo);
+        //deo colombo colombo must not be able to approve the death registration
+        try {
+            deathRegService.approveDeathRegistration(ddr.getIdUKey(), deoColomboColombo, true);
+            fail("expecting a exception while approving a normal death registration by deo role");
+        } catch (RGDRuntimeException e) {
+            switch (e.getErrorCode()) {
+                case ErrorCodes.PERMISSION_DENIED:
+                    logger.debug("got an expected exception while approving death registration by deo user ");
+                    break;
+                default:
+                    fail("only expected permission deny exception");
+            }
+        }
+        // now we try to approve this record with a ADR but that ADR does not have permission to BDDivision
+        try {
+            deathRegService.approveDeathRegistration(ddr.getIdUKey(), adrGampahaNegambo, true);
+            fail("expecting exception while approving death registration by a ADR user who does mot have permission for the BD division");
+        }
+        catch (RGDRuntimeException e) {
+            switch (e.getErrorCode()) {
+                case ErrorCodes.PERMISSION_DENIED:
+                    logger.debug("Got expected exception while approving by ADR user who does not have permission for the BD division");
+                    break;
+                default:
+                    fail("only expected permission deny exception");
+            }
+        }
+        try {
+            //testing warnings while approving death registration
+            ddr.getDeathPerson().setDeathPersonFatherPINorNIC("862583692V");
+            ddr.getDeathPerson().setDeathPersonMotherPINorNIC("862583692V");
+            deathRegService.updateDeathRegistration(ddr, adrColomboColombo);
+            List<UserWarning> userWarnings = deathRegService.approveDeathRegistration(ddr.getIdUKey(), adrColomboColombo, false);
+            //expecting user 1 warning
+            if (!userWarnings.isEmpty() && userWarnings.size() == 1) {
+                logger.debug("got expected list of user warnings while approving death registration");
+            } else {
+                fail("expecting user warning for approving the death register record");
+            }
+
+            //try to approve and this time we are not expecting any exceptions
+            deathRegService.approveDeathRegistration(ddr.getIdUKey(), adrColomboColombo, true);
+            logger.debug("successfully approved death registration by adr-colombo-colombo user");
+        }
+        catch (RGDRuntimeException e) {
+            fail("not expecting any kind of exception while approving death register");
+        }
     }
 
     protected DeathRegister getMinimalDDF(long serial, Date dod, BDDivision deathDivision, GNDivision gnDivision) {

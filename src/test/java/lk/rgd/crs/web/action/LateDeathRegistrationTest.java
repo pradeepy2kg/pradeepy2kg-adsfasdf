@@ -24,7 +24,6 @@ import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.UnitTestManager;
 
 import java.util.*;
-import java.text.DateFormat;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -62,7 +61,7 @@ public class LateDeathRegistrationTest extends CustomStrutsTestCase {
                 List deaths = sampleDeaths();
                 User sampleUser = loginSampleUser();
                 for (int i = 0; i < deaths.size(); i++) {
-                    deathRegistrationService.addNormalDeathRegistration((DeathRegister) deaths.get(i), sampleUser);
+                    deathRegistrationService.addNewDeathRegistration((DeathRegister) deaths.get(i), sampleUser);
                 }
 
                 //setting serial number 2010012349 colombo to APPROVED

@@ -144,7 +144,7 @@ public class DeathAlterationServiceTest extends TestCase {
 
         DeathRegister ddf = getMinimalDDF(serial, dod.getTime(), colomboBDDivision);
         ddf.setDeathType(deathType);
-        deathRegSvc.addNormalDeathRegistration(ddf, deoColomboColombo);
+        deathRegSvc.addNewDeathRegistration(ddf, deoColomboColombo);
         deathRegSvc.approveDeathRegistration(ddf.getIdUKey(), adrColomboColombo, true);
         return ddf.getIdUKey();
     }
