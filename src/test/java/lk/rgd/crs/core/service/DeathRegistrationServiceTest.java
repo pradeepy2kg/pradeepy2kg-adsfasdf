@@ -23,11 +23,11 @@ import lk.rgd.crs.CRSRuntimeException;
 
 import java.util.Date;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
  * @author amith jayasekara
- * @author Chathuranga Withana
  */
 public class DeathRegistrationServiceTest extends TestCase {
 
@@ -46,6 +46,7 @@ public class DeathRegistrationServiceTest extends TestCase {
     protected User deoGampahaNegambo;
     protected User adrColomboColombo;
     protected User adrGampahaNegambo;
+    protected User argWestern;
 
 
     @Override
@@ -65,6 +66,7 @@ public class DeathRegistrationServiceTest extends TestCase {
             adrColomboColombo = userManager.authenticateUser("adr-colombo-colombo", "password");
             deoGampahaNegambo = userManager.authenticateUser("deo-gampaha-negambo", "password");
             adrGampahaNegambo = userManager.authenticateUser("adr-gampaha-negambo", "password");
+            argWestern = userManager.authenticateUser("arg-western", "password");
         } catch (AuthorizationException e) {
             throw new IllegalArgumentException("Cannot authenticate sample users");
         }
@@ -72,67 +74,6 @@ public class DeathRegistrationServiceTest extends TestCase {
         colomboBDDivision = bdDivisionDAO.getBDDivisionByPK(1);
         negamboBDDivision = bdDivisionDAO.getBDDivisionByPK(9);
         sammantranapuraGNDivision = gnDivisionDAO.getGNDivisionByPK(1);
-    }
-
-    public void testAddMinimalNormalDDF() {
-        final DeathRegister.Type deathType = DeathRegister.Type.NORMAL;
-        Calendar dob = Calendar.getInstance();
-        dob.add(Calendar.DATE, -3);
-
-        // test colombo deo adding for colombo
-        DeathRegister ddf1 = getMinimalDDF(2010101001, dob.getTime(), colomboBDDivision, sammantranapuraGNDivision);
-        ddf1.setDeathType(deathType);
-        deathRegService.addNewDeathRegistration(ddf1, deoColomboColombo);
-
-        // try adding a duplicate
-        DeathRegister ddf2 = getMinimalDDF(2010101001, dob.getTime(), colomboBDDivision, sammantranapuraGNDivision);
-        ddf2.setDeathType(deathType);
-        try {
-            deathRegService.addNewDeathRegistration(ddf2, deoColomboColombo);
-            fail("Should not allow addition of duplicate records");
-        } catch (Exception expected) {
-        }
-
-        // try adding a late death
-        DeathRegister ddf3 = getMinimalDDF(20101010, dob.getTime(), colomboBDDivision, sammantranapuraGNDivision);
-        ddf3.setDeathType(DeathRegister.Type.LATE);
-        try {
-            deathRegService.addNewDeathRegistration(ddf3, deoColomboColombo);
-            fail("Should not allow addition of illegal death type records");
-        } catch (CRSRuntimeException expected) {
-        }
-
-        // reload again to fill all fields as we still only have IDUkey of new record
-        ddf1 = deathRegService.getById(ddf1.getIdUKey(), deoColomboColombo);
-        assertEquals(2010101001, ddf1.getDeath().getDeathSerialNo());
-
-        // colombo deo cannot approve
-        try {
-            deathRegService.approveDeathRegistration(ddf1.getIdUKey(), deoColomboColombo, false);
-            fail("DEO cannot approve DDFs");
-        } catch (CRSRuntimeException expected) {
-        }
-        // negambo deo cannot approve either
-        try {
-            deathRegService.approveDeathRegistration(ddf1.getIdUKey(), deoGampahaNegambo, false);
-            fail("Negambo DEO cannot approve DDFs of Colombo BD division");
-        } catch (CRSRuntimeException expected) {
-        }
-        // negambo adr cannot approve either
-        try {
-            deathRegService.approveDeathRegistration(ddf1.getIdUKey(), adrGampahaNegambo, false);
-            fail("Negambo ADR cannot approve DDFs of Colombo BD division");
-        } catch (CRSRuntimeException expected) {
-        }
-
-        // TODO still implementing Death validater doesnt give much warnings uncomment this section after completing DeathValidater
-        /*   // colombo ADR approves - should raise warnings
-List<UserWarning> warnings = deathRegService.approveDeathRegistration(ddf1.getIdUKey(), adrColomboColombo, false);
-Assert.assertTrue("A minimal DDF must trigger warnings that data is incomplete", !warnings.isEmpty());*/
-
-        // ignore warnings should allow approval
-        deathRegService.approveDeathRegistration(ddf1.getIdUKey(), adrColomboColombo, true);
-
     }
 
     public void testAddDeathRegistration() {
@@ -234,6 +175,35 @@ Assert.assertTrue("A minimal DDF must trigger warnings that data is incomplete",
         }
         catch (RGDRuntimeException e) {
             fail("not expecting any kind of exception while approving death register");
+        }
+        //approving late death declaration
+        java.util.GregorianCalendar gCal = new GregorianCalendar();
+        gCal.add(Calendar.YEAR, -2);
+        //this is death that late over two years  so ADR user can not approve this scenario
+        DeathRegister lateDeath = getMinimalDDF(2011145782l, gCal.getTime(), colomboBDDivision, sammantranapuraGNDivision);
+        lateDeath.setDeathType(DeathRegister.Type.LATE);
+        deathRegService.addNewDeathRegistration(lateDeath, adrColomboColombo);
+        try {
+            deathRegService.approveDeathRegistration(lateDeath.getIdUKey(), adrColomboColombo, true);
+            fail("expecting exception while approve 2 years late death by a ADR");
+        }
+        catch (RGDRuntimeException e) {
+            switch (e.getErrorCode()) {
+                case ErrorCodes.UNABLE_TO_APPROVE_LATE_DEATH_REGISTRATION_NEED_HIGHER_APPROVAL_THAN_DR:
+                    logger.debug("got expected exception while approve 2 years late death registration by ADR ");
+                    break;
+                default:
+                    fail("only expected UNABLE_TO_APPROVE_LATE_DEATH_REGISTRATION_NEED_HIGHER_APPROVAL_THAN_DR exception");
+                    break;
+            }
+        }
+        //now we try to approve it with arg login
+        try {
+            deathRegService.approveDeathRegistration(lateDeath.getIdUKey(), argWestern, true);
+            logger.debug("successfully approved two year late death by arg-western");
+        }
+        catch (RGDRuntimeException e) {
+            fail("not expecting any exception while approve 2 year late death registration by arg-western user");
         }
     }
 
