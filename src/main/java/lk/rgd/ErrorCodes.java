@@ -141,4 +141,6 @@ public class ErrorCodes {
     public static final int INVALID_STATE_FOR_APPROVE_DEATH_REGISTRATION = 8003;
     public static final int UNABLE_TO_APPROVE_LATE_DEATH_REGISTRATION_NEED_HIGHER_APPROVAL_THAN_DR = 8004;
 
+    //admin task related errors
+    public static final int INCOMPLETE_USER_OBJECT = 9001;
 }
