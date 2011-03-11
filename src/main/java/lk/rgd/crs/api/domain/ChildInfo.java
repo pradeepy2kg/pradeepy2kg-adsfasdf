@@ -70,7 +70,7 @@ public class ChildInfo implements Serializable, Cloneable {
 
     /**
      * Weight in kilogrammes
-     */
+     */                                                                          
     @Column(nullable = true)
     private Float childBirthWeight;
 

@@ -212,7 +212,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
         logger.debug("Logged User's Role : {}", user.getRole());
         role = user.getRole().getRoleId();
 
-        /*statistics = statisticsManager.getStatisticsForUser(user);       TODO: remove comment after the performance tests
+        statistics = statisticsManager.getStatisticsForUser(user);       
         if (statistics != null) {
             if (!statisticsManager.existsStatisticsForUser(user)) {
                 statisticsManager.addStatistics(user, statistics);
@@ -225,12 +225,12 @@ public class LoginAction extends ActionSupport implements SessionAware {
             }
         } else {
             statistics = new Statistics();
-        }*/
+        }
 
-        statistics = new Statistics();      // todo: remove this after the performance tests
+        //statistics = new Statistics();      // todo: remove this after the performance tests
 
-       /* Set<District> districtSet = user.getAssignedBDDistricts();
-        districtList = new HashMap<Integer, String>();                               TODO: remove comment after the performance tests
+        Set<District> districtSet = user.getAssignedBDDistricts();
+        districtList = new HashMap<Integer, String>();
         for (District district : districtSet) {
             if (user.getPrefLanguage().equals("en")) {
                 districtList.put(district.getDistrictUKey(), district.getEnDistrictName());
@@ -254,7 +254,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
             deoList = userDAO.getDEOsByDSDivision(user.getPrefLanguage(), user,
                 dsDivisionDAO.getDSDivisionByPK(dsDivisionId), roleDAO.getRole(Role.ROLE_DEO));
         }
-        deoUserId = 1;*/
+        deoUserId = 1;
 
         return SUCCESS;
     }
