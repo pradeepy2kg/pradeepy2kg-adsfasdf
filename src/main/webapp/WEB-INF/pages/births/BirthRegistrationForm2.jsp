@@ -660,7 +660,7 @@ function commonTags() {
             <br>தாயினை தொடர்பு கொள்ளக்கூடிய தகவல்கள்
             <br>Contact Details </label></td>
         <td colspan="1"><label>දුරකතනය <br> தொலைபேசி இலக்கம் <br> Telephone</label></td>
-        <td colspan="1"><s:textfield id="motherPhoneNo" name="parent.motherPhoneNo" maxLength="15"/></td>
+        <td colspan="1"><s:textfield id="motherPhoneNo" name="parent.motherPhoneNo" maxLength="10"/></td>
         <td colspan="2"><label>ඉ – තැපැල් <br> மின்னஞ்சல்<br>Email</label></td>
         <td colspan="3" class="passport"><s:textfield name="parent.motherEmail" id="motherEmail"
                                                       cssStyle="text-transform:none;"/></td>
