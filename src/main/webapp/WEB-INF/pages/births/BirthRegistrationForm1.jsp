@@ -332,7 +332,7 @@ function dateRange() {
         }
         else {
             document.getElementById('belatedError').innerHTML = '';
-        }
+        } 
     }
 }
 

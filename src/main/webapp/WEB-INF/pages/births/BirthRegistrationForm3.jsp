@@ -734,7 +734,7 @@ function showSignRequired(mode) {
         </td>
         <td><label>දුරකතනය<br>தொலைபேசி இலக்கம் <br>Telephone</label></td>
         <td><s:textfield name="informant.informantPhoneNo" id="informantPhoneNo"
-                         cssStyle="width:95%;" maxLength="15"/></td>
+                         cssStyle="width:95%;" maxLength="10"/></td>
         <td><label>ඉ -තැපැල <br>மின்னஞ்சல் <br>Email</label></td>
         <td><s:textfield name="informant.informantEmail" id="informantEmail"
                          cssStyle="width:95%;text-transform:none;"/></td>
