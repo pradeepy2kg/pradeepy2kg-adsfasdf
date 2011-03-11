@@ -207,6 +207,109 @@ public class DeathRegistrationServiceTest extends TestCase {
         }
     }
 
+    public void testUpdateDeathRegister() {
+        logger.debug("attempt to test update death register");
+        DeathRegister updateTest = getMinimalDDF(2011078945l, new Date(), colomboBDDivision, sammantranapuraGNDivision);
+        updateTest.setDeathType(DeathRegister.Type.NORMAL);
+        deathRegService.addNewDeathRegistration(updateTest, deoColomboColombo);
+        //now this record is in DE mode so it can be edit with out any error
+        updateTest = deathRegService.getById(updateTest.getIdUKey(), deoColomboColombo);
+        //now we change death person name to new value
+        updateTest.getDeathPerson().setDeathPersonNameInEnglish("new name for death person");
+        //now we try to update this record by deoGampahaNegombo but he must not given chance to edit this data
+        try {
+            deathRegService.updateDeathRegistration(updateTest, deoGampahaNegambo);
+            fail("expecting a permission deny exception for editing this colombo record by negombo deo");
+        }
+        catch (RGDRuntimeException e) {
+            switch (e.getErrorCode()) {
+                case ErrorCodes.PERMISSION_DENIED:
+                    logger.debug("expected permission deny exception while editing colombo record by negombo deo ");
+                    break;
+                default:
+                    fail("only expect permission deny exception for negombo deo for editing colombo death record");
+            }
+        }
+        //now we try to edit this record by colombo and he must not get any kind of exceptions
+        try {
+            deathRegService.updateDeathRegistration(updateTest, deoColomboColombo);
+            logger.debug("not expecting any exception while editing colombo death record by a colombo deo");
+        }
+        catch (RGDRuntimeException e) {
+            fail("not expecting any exception while editing colombo record by colombo ");
+        }
+
+        //next case is try to edit already approved record
+        //approving record
+        deathRegService.approveDeathRegistration(updateTest.getIdUKey(), adrColomboColombo, true);
+        //now try to edit
+        updateTest = deathRegService.getById(updateTest.getIdUKey(), adrColomboColombo);
+        try {
+            deathRegService.updateDeathRegistration(updateTest, adrColomboColombo);
+            fail("expecting exception while editing already approve record");
+        }
+        catch (RGDRuntimeException e) {
+            logger.debug("exception expected while editing already approved record ");
+        }
+/*todo not working amith :(        
+ DeathRegister testMultiAccess = getMinimalDDF(2011085236, new Date(), colomboBDDivision, sammantranapuraGNDivision);
+        testMultiAccess.setDeathType(DeathRegister.Type.NORMAL);
+        deathRegService.addNewDeathRegistration(testMultiAccess, adrColomboColombo);
+        Thread A = new Thread(new Worker(0, testMultiAccess.getIdUKey()));
+        A.start();
+        A = new Thread(new Worker(1, testMultiAccess.getIdUKey()));
+        A.start();*/
+    }
+
+    //inner class user to check multiple access to the same record and try to change the same record
+
+    public class Worker implements Runnable {
+        private int action;
+        private long record;
+
+        public Worker(int action, long record) {
+            this.action = action;
+            this.record = record;
+        }
+
+        public void run() {
+            DeathRegister register = null;
+            if (action == 0) {
+                try {
+                    //this mean this tread has to performs edit and
+                    register = deathRegService.getById(record);
+                    this.wait(10000000);
+                    deathRegService.updateDeathRegistration(register, adrColomboColombo);
+                }
+                catch (InterruptedException e) {
+                    //do nothing
+                }
+                catch (IllegalMonitorStateException ee) {
+                    ee.printStackTrace();
+                }
+            } else {
+                register = deathRegService.getById(record);
+                deathRegService.approveDeathRegistration(register.getIdUKey(), adrColomboColombo, true);
+            }
+        }
+
+        public int getAction() {
+            return action;
+        }
+
+        public void setAction(int action) {
+            this.action = action;
+        }
+
+        public long getRecord() {
+            return record;
+        }
+
+        public void setRecord(long record) {
+            this.record = record;
+        }
+    }
+
     protected DeathRegister getMinimalDDF(long serial, Date dod, BDDivision deathDivision, GNDivision gnDivision) {
 
         Date today = new Date();
