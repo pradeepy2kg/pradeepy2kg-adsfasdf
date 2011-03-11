@@ -434,13 +434,13 @@ function personAgeDeath() {
     }
 
 }
-function maxLengthCalculate(id, max, text) {
+function maxLengthCalculate(id, max, divId) {
     var dom = document.getElementById(id).value;
-    alert('max leangth ....:' + max);
-    alert('text ....:' + text)
-    alert('leangth : ' + dom.length)
     if (dom.length > max) {
-        alert(text + " " + "has exceeded limitation of maximum charaters " + max)
+        document.getElementById(divId).innerHTML = document.getElementById('maxLengthError').value + " : " + max
+    }
+    else {
+        document.getElementById(divId).innerHTML = "";
     }
 }
 </script>
@@ -693,9 +693,11 @@ function maxLengthCalculate(id, max, text) {
         <br>In English
     </td>
     <td colspan="5">
-            <%--onblur="maxLengthCalculate('placeOfDeathInEnglish','10','text,,,,');"--%>
+
         <s:textfield name="death.placeOfDeathInEnglish" id="placeOfDeathInEnglish" cssStyle="width:555px;"
-                     maxLength="240"/>
+                     maxLength="240"
+                     onblur="maxLengthCalculate('placeOfDeathInEnglish','10','placeOfDeathInEnglish_div');"/>
+        <div id="placeOfDeathInEnglish_div" style="color:red;font-size:8pt"></div>
         <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px 0;"
              id="place">
     </td>
@@ -1299,6 +1301,7 @@ function maxLengthCalculate(id, max, text) {
 <s:hidden id="reasonForLateDefaultText" value="%{getText('text.default.reason')}"/>
 <s:hidden id="selectDSDivision" value="%{getText('dsDivision.label')}"/>
 <s:hidden id="selectGNDivision" value="%{getText('gnDivisions.label')}"/>
+<s:hidden id="maxLengthError" value="%{getText('error.max.length')}"/>
 </div>
 
 
