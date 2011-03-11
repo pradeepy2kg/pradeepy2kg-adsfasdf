@@ -434,6 +434,15 @@ function personAgeDeath() {
     }
 
 }
+function maxLengthCalculate(id, max, text) {
+    var dom = document.getElementById(id).value;
+    alert('max leangth ....:' + max);
+    alert('text ....:' + text)
+    alert('leangth : ' + dom.length)
+    if (dom.length > max) {
+        alert(text + " " + "has exceeded limitation of maximum charaters " + max)
+    }
+}
 </script>
 
 
@@ -684,9 +693,9 @@ function personAgeDeath() {
         <br>In English
     </td>
     <td colspan="5">
-        <%--onblur="maxLengthCalculate('placeOfDeathInEnglish','10','text,,,,');"--%>
+            <%--onblur="maxLengthCalculate('placeOfDeathInEnglish','10','text,,,,');"--%>
         <s:textfield name="death.placeOfDeathInEnglish" id="placeOfDeathInEnglish" cssStyle="width:555px;"
-                     maxLength="240" />
+                     maxLength="240"/>
         <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px 0;"
              id="place">
     </td>
