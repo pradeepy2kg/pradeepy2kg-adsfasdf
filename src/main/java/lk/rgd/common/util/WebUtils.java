@@ -114,6 +114,28 @@ public class WebUtils {
     }
 
     /**
+     * filter blanks to null <br>
+     * substring 0 to maximumAllows if size of original length is exceed the maximum
+     * <br> convert string to upper case
+     *
+     * @param originalString original string that need to filter
+     * @param maximumAllows  number of characters allows
+     * @return filtered string
+     */
+    public static String filterBlanksAndToUpperAndTrim(String originalString, int maximumAllows) {
+        if ((originalString == null) || originalString.length() == 0) {
+            return null;
+        }
+        originalString = originalString.trim();
+        if (originalString.length() != 0 && originalString.length() > maximumAllows) {
+            originalString = originalString.substring(0, maximumAllows - 1);
+            logger.debug("size of original string : {} is greater than maximum allowed size : {}",
+                originalString.length(), maximumAllows);
+        }
+        return originalString.toUpperCase();
+    }
+
+    /**
      * get populated mock notice objects for given marriage register object list(only for displaying purposes)
      *
      * @param marriageRegisterList list of marriage register
