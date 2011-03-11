@@ -684,8 +684,9 @@ function personAgeDeath() {
         <br>In English
     </td>
     <td colspan="5">
+        <%--onblur="maxLengthCalculate('placeOfDeathInEnglish','10','text,,,,');"--%>
         <s:textfield name="death.placeOfDeathInEnglish" id="placeOfDeathInEnglish" cssStyle="width:555px;"
-                     maxLength="240"/>
+                     maxLength="240" />
         <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px 0;"
              id="place">
     </td>
