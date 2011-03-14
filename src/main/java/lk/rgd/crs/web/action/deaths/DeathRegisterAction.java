@@ -201,6 +201,16 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                 if (dd != null && dd.getIdUKey() != ddf.getIdUKey()) {
                     addFieldError("duplicateSerialNumberError", getText("p1.duplicateSerialNumber.label"));
                     pageNo = 0;
+
+                    // ddf.setDeathType(deathType);   bug 2139
+        session.put(WebConstants.SESSION_DEATH_DECLARATION_BEAN, ddf);
+        //populate(ddf);
+        //populate district list and ds division list
+        districtList = districtDAO.getAllDistrictNames(language, user);
+        Set<Integer> districtKey = districtList.keySet();
+        //set first key for loading DS Divisions
+        dsDivisionList = dsDivisionDAO.getDSDivisionNames(districtKey.iterator().next(), language, user);
+        permenantAddressDsDivisionList = dsDivisionList;
                 }
                 switch (pageType) {
                     case 0:
