@@ -120,19 +120,17 @@ public class WebUtils {
      *
      * @param originalString original string that need to filter
      * @param maximumAllows  number of characters allows
+     * @param fieldName      name of the field
      * @return filtered string
      */
-    public static String filterBlanksAndToUpperAndTrim(String originalString, int maximumAllows,String originalStringName) {
+    public static String filterBlanksAndToUpperAndTrim(String originalString, int maximumAllows, String fieldName) {
         if ((originalString == null) || originalString.length() == 0) {
             return null;
         }
         originalString = originalString.trim();
         if (originalString.length() != 0 && originalString.length() > maximumAllows) {
             originalString = originalString.substring(0, maximumAllows - 1);
-            if(logger.isDebugEnabled()){
-                logger.debug("size of original string "+originalStringName+" is greater than maximum allowed size :"+maximumAllows);
-            }
-
+            logger.debug("size of original string : {} is greater than maximum allowed size : {}", fieldName, maximumAllows);
         }
         return originalString.toUpperCase();
     }
