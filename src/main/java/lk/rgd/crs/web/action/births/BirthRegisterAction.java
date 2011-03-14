@@ -700,9 +700,20 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
         session.remove(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
         if (bdId != 0) {
+            //edit mode of confirmation
             try {
                 bdf = service.getById(bdId, user);
-                bcf = service.getById(bdId, user);
+                //get most recently archived record
+                //on this stage of BD there cant be more than 1 archived record the only archive add when changes captured
+                List<BirthDeclaration> archivedRecords = service.getArchivedCorrectedEntriesForGivenSerialNo(bdf.getRegister().
+                    getBirthDivision(), bdf.getRegister().getBdfSerialNo(), user);
+                if (archivedRecords.isEmpty()) {
+                    //fist time capturing
+                    bcf = bdf;
+                } else {
+                    //editing captured record
+                    bcf = archivedRecords.get(0);
+                }
                 logger.debug("bdId is {} ", bdId);
                 logger.debug("value of the status of bdf is :{}", bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED);
                 if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
