@@ -1,0 +1,208 @@
+<ehcache>
+
+    <!-- Sets the path to the directory where cache .data files are created.
+
+         If the path is a Java System Property it is replaced by
+         its value in the running VM.
+
+         The following properties are translated:
+         user.home - User's home directory
+         user.dir - User's current working directory
+         java.io.tmpdir - Default temp file path -->
+    <diskStore path="java.io.tmpdir"/>
+
+
+    <!--Default Cache configuration. These will applied to caches programmatically created through the CacheManager.
+
+        The following attributes are required:
+
+        maxElementsInMemory            - Sets the maximum number of objects that will be created in memory
+        eternal                        - Sets whether elements are eternal. If eternal,  timeouts are ignored and the
+                                         element is never expired.
+        overflowToDisk                 - Sets whether elements can overflow to disk when the in-memory cache
+                                         has reached the maxInMemory limit.
+
+        The following attributes are optional:
+        timeToIdleSeconds              - Sets the time to idle for an element before it expires.
+                                         i.e. The maximum amount of time between accesses before an element expires
+                                         Is only used if the element is not eternal.
+                                         Optional attribute. A value of 0 means that an Element can idle for infinity.
+                                         The default value is 0.
+        timeToLiveSeconds              - Sets the time to live for an element before it expires.
+                                         i.e. The maximum time between creation time and when an element expires.
+                                         Is only used if the element is not eternal.
+                                         Optional attribute. A value of 0 means that and Element can live for infinity.
+                                         The default value is 0.
+        diskPersistent                 - Whether the disk store persists between restarts of the Virtual Machine.
+                                         The default value is false.
+        diskExpiryThreadIntervalSeconds- The number of seconds between runs of the disk expiry thread. The default value
+                                         is 120 seconds.
+        -->
+
+    <defaultCache
+           maxElementsInMemory="10000"
+           eternal="false"
+           overflowToDisk="true"
+           timeToIdleSeconds="120"
+           timeToLiveSeconds="120"
+           diskPersistent="false"
+           diskExpiryThreadIntervalSeconds="120"/>
+
+    <!-- See http://ehcache.sourceforge.net/documentation/#mozTocId258426 for how to configure caching for your objects -->
+
+    <!--COMMON-->
+    <cache name="lk.rgd.common.api.domain.Location"
+           maxElementsInMemory="2000"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="3600"
+           overflowToDisk="false"
+            />
+    <cache name="lk.rgd.common.api.domain.UserLocation"
+           maxElementsInMemory="2000"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="3600"
+           overflowToDisk="false"
+            />
+
+    <cache name="lk.rgd.common.api.domain.User"
+           maxElementsInMemory="2000"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="3600"
+           overflowToDisk="false"
+            />
+
+    <cache name="lk.rgd.common.api.domain.Country"
+           maxElementsInMemory="500"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="3600"
+           overflowToDisk="false"
+            />
+
+    <cache name="lk.rgd.common.api.domain.District"
+           maxElementsInMemory="50"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="3600"
+           overflowToDisk="false"
+            />
+
+    <cache name="lk.rgd.common.api.domain.DSDivision"
+           maxElementsInMemory="500"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="3600"
+           overflowToDisk="false"
+            />
+
+    <cache name="lk.rgd.common.api.domain.Race"
+           maxElementsInMemory="20"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="3600"
+           overflowToDisk="false"
+            />
+
+    <cache name="lk.rgd.common.api.domain.Role"
+           maxElementsInMemory="10"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="3600"
+           overflowToDisk="false"
+            />
+
+    <!--CRS-->
+    <cache name="lk.rgd.crs.api.domain.MRDivision"
+           maxElementsInMemory="2000"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="3600"
+           overflowToDisk="false"
+            />
+
+    <cache name="lk.rgd.crs.api.domain.BDDivision"
+           maxElementsInMemory="2000"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="3600"
+           overflowToDisk="false"
+            />
+
+    <cache name="lk.rgd.crs.api.domain.Registrar"
+           maxElementsInMemory="100"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="3600"
+           overflowToDisk="false"
+            />
+
+    <cache name="lk.rgd.crs.api.domain.Assignment"
+           maxElementsInMemory="2000"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="3600"
+           overflowToDisk="false"
+            />
+
+    <cache name="lk.rgd.crs.api.domain.BirthDeclaration"
+           maxElementsInMemory="100"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="3600"
+           overflowToDisk="false"
+            />
+
+    <cache name="lk.rgd.crs.api.domain.Court"
+           maxElementsInMemory="100"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="3600"
+           overflowToDisk="false"
+            />
+
+    <cache name="lk.rgd.crs.api.domain.DeathRegister"
+           maxElementsInMemory="100"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="3600"
+           overflowToDisk="false"
+            />
+
+    <cache name="lk.rgd.crs.api.domain.MarriageRegister"
+           maxElementsInMemory="100"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="3600"
+           overflowToDisk="false"
+            />
+
+    <!--PRS-->
+    <cache name="lk.rgd.prs.api.domain.Address"
+           maxElementsInMemory="100"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="3600"
+           overflowToDisk="false"
+            />
+
+    <cache name="lk.rgd.prs.api.domain.Marriage"
+           maxElementsInMemory="100"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="3600"
+           overflowToDisk="false"
+            />
+
+    <cache name="lk.rgd.prs.api.domain.Person"
+           maxElementsInMemory="100"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="3600"
+           overflowToDisk="false"
+            />
+
+</ehcache>
+
