@@ -11,6 +11,7 @@ import java.util.Date;
 
 /**
  * Java bean instance to contain notifying authority information enterd by page 4 of birth declaration form
+ * If the database column sizes are modified the setter methods must be modified 
  */
 @Embeddable
 public class NotifyingAuthorityInfo implements Serializable, Cloneable {

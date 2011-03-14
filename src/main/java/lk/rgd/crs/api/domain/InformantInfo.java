@@ -8,7 +8,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.Date;
-
+/**
+ * If the database column sizes are modified the setter methods must be modified 
+ */
 @Embeddable
 public class InformantInfo implements Serializable, Cloneable {
     public enum InformantType {
@@ -61,7 +63,7 @@ public class InformantInfo implements Serializable, Cloneable {
     }
 
     public void setInformantNICorPIN(String informantNICorPIN) {
-        this.informantNICorPIN = WebUtils.filterBlanksAndToUpper(informantNICorPIN);
+        this.informantNICorPIN = WebUtils.filterBlanksAndToUpperAndTrim(informantNICorPIN,12,"informantNICorPIN");
     }
 
     public String getInformantAddress() {
