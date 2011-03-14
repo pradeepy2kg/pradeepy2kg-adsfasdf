@@ -52,7 +52,7 @@ public class NotifyingAuthorityInfo implements Serializable, Cloneable {
     }
 
     public void setNotifyingAuthorityName(String notifyingAuthorityName) {
-        this.notifyingAuthorityName = WebUtils.filterBlanksAndToUpper(notifyingAuthorityName);
+        this.notifyingAuthorityName = WebUtils.filterBlanksAndToUpperAndTrim(notifyingAuthorityName,120,"notifyingAuthorityName");
     }
 
     public String getNotifyingAuthorityAddress() {
@@ -60,7 +60,7 @@ public class NotifyingAuthorityInfo implements Serializable, Cloneable {
     }
 
     public void setNotifyingAuthorityAddress(String notifyingAuthorityAddress) {
-        this.notifyingAuthorityAddress = WebUtils.filterBlanksAndToUpper(notifyingAuthorityAddress);
+        this.notifyingAuthorityAddress = WebUtils.filterBlanksAndToUpperAndTrim(notifyingAuthorityAddress,255,"notifyingAuthorityAddress");
     }
 
     public Date getNotifyingAuthoritySignDate() {

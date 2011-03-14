@@ -241,11 +241,11 @@ public class ParentInfo implements Serializable, Cloneable {
     }
 
     public void setFatherFullName(String fatherFullName) {
-        this.fatherFullName = WebUtils.filterBlanksAndToUpper(fatherFullName);
+        this.fatherFullName = WebUtils.filterBlanksAndToUpperAndTrim(fatherFullName,600,"fatherFullName");
     }
 
      public void setFatherFullNameInEnglish(String fatherFullNameInEnglish) {
-        this.fatherFullNameInEnglish = WebUtils.filterBlanksAndToUpper(fatherFullNameInEnglish);
+        this.fatherFullNameInEnglish = WebUtils.filterBlanksAndToUpperAndTrim(fatherFullNameInEnglish,600,"fatherFullNameInEnglish");
     }
 
     public Date getFatherDOB() {
@@ -305,11 +305,11 @@ public class ParentInfo implements Serializable, Cloneable {
     }
 
     public void setMotherFullName(String motherFullName) {
-        this.motherFullName = WebUtils.filterBlanksAndToUpper(motherFullName);
+        this.motherFullName = WebUtils.filterBlanksAndToUpperAndTrim(motherFullName,600,"motherFullName");
     }
 
     public void setMotherFullNameInEnglish(String motherFullNameInEnglish) {
-        this.motherFullNameInEnglish = WebUtils.filterBlanksAndToUpper(motherFullNameInEnglish);
+        this.motherFullNameInEnglish = WebUtils.filterBlanksAndToUpperAndTrim(motherFullNameInEnglish,600,"motherFullNameInEnglish");
     }
 
 
@@ -350,7 +350,7 @@ public class ParentInfo implements Serializable, Cloneable {
     }
 
     public void setMotherAddress(String motherAddress) {
-        this.motherAddress = WebUtils.filterBlanksAndToUpper(motherAddress);
+        this.motherAddress = WebUtils.filterBlanksAndToUpperAndTrim(motherAddress,255,"motherAddress");
     }
 
     public String getMotherPhoneNo() {

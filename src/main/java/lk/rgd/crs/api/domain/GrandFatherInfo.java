@@ -44,7 +44,7 @@ public class GrandFatherInfo implements Serializable, Cloneable {
     }
 
     public void setGrandFatherFullName(String grandFatherFullName) {
-        this.grandFatherFullName = WebUtils.filterBlanksAndToUpper(grandFatherFullName);
+        this.grandFatherFullName = WebUtils.filterBlanksAndToUpperAndTrim(grandFatherFullName,600,"grandFatherFullName");
     }
 
     public Integer getGrandFatherBirthYear() {
@@ -68,7 +68,7 @@ public class GrandFatherInfo implements Serializable, Cloneable {
     }
 
     public void setGreatGrandFatherFullName(String greatGrandFatherFullName) {
-        this.greatGrandFatherFullName = WebUtils.filterBlanksAndToUpper(greatGrandFatherFullName);
+        this.greatGrandFatherFullName = WebUtils.filterBlanksAndToUpperAndTrim(greatGrandFatherFullName,600,"greatGrandFatherFullName");
     }
 
     public Integer getGreatGrandFatherBirthYear() {

@@ -53,7 +53,7 @@ public class InformantInfo implements Serializable, Cloneable {
     }
 
     public void setInformantName(String informantName) {
-        this.informantName = WebUtils.filterBlanksAndToUpper(informantName);
+        this.informantName = WebUtils.filterBlanksAndToUpperAndTrim(informantName,600,"informantName");
     }
 
     public String getInformantNICorPIN() {
@@ -69,7 +69,7 @@ public class InformantInfo implements Serializable, Cloneable {
     }
 
     public void setInformantAddress(String informantAddress) {
-        this.informantAddress = WebUtils.filterBlanksAndToUpper(informantAddress);
+        this.informantAddress = WebUtils.filterBlanksAndToUpperAndTrim(informantAddress,255,"informantAddress");
     }
 
     public String getInformantPhoneNo() {

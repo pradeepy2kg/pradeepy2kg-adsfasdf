@@ -299,7 +299,7 @@ public class BirthRegisterInfo implements Serializable, Cloneable {
     }
 
     public void setOriginalBCPlaceOfIssueSignPrint(String originalBCPlaceOfIssueSignPrint) {
-        this.originalBCPlaceOfIssueSignPrint = originalBCPlaceOfIssueSignPrint;
+        this.originalBCPlaceOfIssueSignPrint =originalBCPlaceOfIssueSignPrint;
     }
 
     public User getOriginalBCIssueUser() {
