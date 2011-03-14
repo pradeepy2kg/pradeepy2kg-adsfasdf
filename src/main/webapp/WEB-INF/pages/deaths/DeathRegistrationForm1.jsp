@@ -434,6 +434,7 @@ function personAgeDeath() {
     }
 
 }
+
 function maxLengthCalculate(id, max, divId) {
     var dom = document.getElementById(id).value;
     if (dom.length > max) {
@@ -554,8 +555,14 @@ function maxLengthCalculate(id, max, divId) {
                 <br>இறப்பினை பதிவதற்கு தாமதித்ததற்கான காரணம்
                 <br>Reason for the late registration of the death
             </td>
-            <td><s:textarea id="resonForLateRegistration" name="death.reasonForLateRegistration"
-                            cssStyle="width:880px;"/></td>
+            <td>
+                <%--<s:textarea id="resonForLateRegistration" name="death.reasonForLateRegistration"
+                            cssStyle="width:880px;"/>--%>
+                <s:textarea name="death.reasonForLateRegistration" id="resonForLateRegistration" cssStyle="width:880px;"
+                    onblur="maxLengthCalculate('resonForLateRegistration','255','resonForLateRegistration_div');"/>
+        <div id="resonForLateRegistration_div" style="color:red;font-size:8pt"></div>
+
+            </td>
         </tr>
     </table>
 </s:if>
@@ -683,8 +690,11 @@ function maxLengthCalculate(id, max, divId) {
         <br>சிங்களம்அல்லது தமிழ் மொழியில்
         <br>In Sinhala or Tamil
     </td>
-    <td colspan="5"><s:textfield name="death.placeOfDeath" cssStyle="width:555px;" id="placeOfDeath"
-                                 maxLength="240"/></td>
+    <td colspan="5">
+        <s:textarea name="death.placeOfDeath" id="placeOfDeath" cssStyle="width:555px;"
+                    onblur="maxLengthCalculate('placeOfDeath','255','placeOfDeath_div');"/>
+        <div id="placeOfDeath_div" style="color:red;font-size:8pt"></div>
+    </td>
 </tr>
 <tr>
     <td colspan="2">
@@ -695,9 +705,8 @@ function maxLengthCalculate(id, max, divId) {
     <td colspan="5">
 
         <s:textfield name="death.placeOfDeathInEnglish" id="placeOfDeathInEnglish" cssStyle="width:555px;"
-                     maxLength="240"
-                     onblur="maxLengthCalculate('placeOfDeathInEnglish','10','placeOfDeathInEnglish_div');"/>
-        <div id="placeOfDeathInEnglish_div" style="color:red;font-size:8pt"></div>
+                     maxLength="240"/>
+
         <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px 0;"
              id="place">
     </td>
@@ -770,8 +779,14 @@ function maxLengthCalculate(id, max, divId) {
         මරණයට හේතුව
         <br>இறப்பிற்கான காரணம்
         <br>Cause of death
+
+
     </td>
-    <td colspan="4"><s:textarea name="death.causeOfDeath" cssStyle="width:420px; "/></td>
+    <td colspan="4">
+        <s:textarea name="death.causeOfDeath" id="causeOfDeath" cssStyle="width:420px;"
+                    onblur="maxLengthCalculate('causeOfDeath','600','causeOfDeath_div');"/>
+        <div id="causeOfDeath_div" style="color:red;font-size:8pt"></div>
+    </td>
     <td colspan="2">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
         ේතුවේ ICD කේත අංකය
         <br>காரணத்திற்கான ICD குறியீட்டு இலக்கம்
@@ -785,7 +800,11 @@ function maxLengthCalculate(id, max, divId) {
         <br>அடக்கம் செய்த அல்லது தகனஞ் செய்த இடம்
         <br>Place of burial or cremation
     </td>
-    <td colspan="8"><s:textarea name="death.placeOfBurial" id="placeOfBurial" cssStyle="width:880px;"/></td>
+    <td colspan="8">
+        <s:textarea name="death.placeOfBurial" id="placeOfBurial" cssStyle="width:880px;"
+                    onblur="maxLengthCalculate('placeOfBurial','255','placeOfBurial_div');"/>
+        <div id="placeOfBurial_div" style="color:red;font-size:8pt"></div>
+    </td>
 </tr>
 <tr>
     <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
@@ -793,8 +812,11 @@ function maxLengthCalculate(id, max, divId) {
         <br>வேறுத்தகவல்கள்
         <br>Any other information
     </td>
-    <td colspan="8"><s:textarea name="death.anyOtherInformation" id="anyOtherInfo"
-                                cssStyle="width:880px;"/></td>
+    <td colspan="8">
+        <s:textarea name="death.anyOtherInformation" id="anyOtherInfo" cssStyle="width:880px;"
+                    onblur="maxLengthCalculate('anyOtherInfo','255','anyOtherInfo_div');"/>
+        <div id="anyOtherInfo_div" style="color:red;font-size:8pt"></div>
+    </td>
 </tr>
 <tr>
     <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
@@ -974,8 +996,11 @@ function maxLengthCalculate(id, max, divId) {
             <br>பெயா் அரச கரும மொழியில் (சிங்களம் / தமிழ்)
             <br>Name in either of the official languages (Sinhala / Tamil)
         </td>
-        <td colspan="6"><s:textarea name="deathPerson.deathPersonNameOfficialLang" id="deathPersonNameOfficialLang"
-                                    cssStyle="width:880px;"/>
+        <td colspan="6">
+
+            <s:textarea name="deathPerson.deathPersonNameOfficialLang" id="deathPersonNameOfficialLang" cssStyle="width:880px;"
+                    onblur="maxLengthCalculate('deathPersonNameOfficialLang','600','deathPersonNameOfficialLang_div');"/>
+        <div id="deathPersonNameOfficialLang_div" style="color:red;font-size:8pt"></div>
         </td>
     </tr>
     <tr>
@@ -986,7 +1011,9 @@ function maxLengthCalculate(id, max, divId) {
         </td>
         <td colspan="6">
             <s:textarea name="deathPerson.deathPersonNameInEnglish" id="deathPersonNameInEnglish"
-                        cssStyle="width:880px;"/>
+                        cssStyle="width:880px;"
+                        onblur="maxLengthCalculate('deathPersonNameInEnglish','600','deathPersonNameInEnglish_div');"/>
+            <div id="deathPersonNameInEnglish_div" style="color:red;font-size:8pt"></div>
             <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px 0;"
                  id="deathName">
         </td>
@@ -997,9 +1024,11 @@ function maxLengthCalculate(id, max, divId) {
             <br>நிரந்தர வதிவிட முகவரி
             <br>Permanent Address
         </td>
-        <td colspan="6">
+        <td colspan="6">     
             <s:textarea name="deathPerson.deathPersonPermanentAddress" id="deathPersonPermanentAddress"
-                        cssStyle="width:880px;"/>
+                        cssStyle="width:880px;"
+                        onblur="maxLengthCalculate('deathPersonPermanentAddress','255','deathPersonPermanentAddress_div');"/>
+            <div id="deathPersonPermanentAddress_div" style="color:red;font-size:8pt"></div>
         </td>
     </tr>
     <tr>
@@ -1060,8 +1089,12 @@ function maxLengthCalculate(id, max, divId) {
                 Last address
             </td>
             <td colspan="6">
+                <%--<s:textarea name="deathPerson.lastAddressOfMissingPerson" id="lastAddressOfMissingPerson"
+                            cssStyle="width:98%;"/>--%>
                 <s:textarea name="deathPerson.lastAddressOfMissingPerson" id="lastAddressOfMissingPerson"
-                            cssStyle="width:98%;"/>
+                        cssStyle="width:98%;"
+                        onblur="maxLengthCalculate('lastAddressOfMissingPerson','255','lastAddressOfMissingPerson_div');"/>
+            <div id="lastAddressOfMissingPerson_div" style="color:red;font-size:8pt"></div>
             </td>
         </tr>
     </s:if>
@@ -1072,8 +1105,11 @@ function maxLengthCalculate(id, max, divId) {
             Rank or Profession
         </td>
         <td width="400px">
+           
             <s:textarea name="deathPerson.rankOrProfession" id="deathPersonRank"
-                        cssStyle="width:98%;"/>
+                        cssStyle="width:98%;"
+                        onblur="maxLengthCalculate('deathPersonRank','255','deathPersonRank_div');"/>
+            <div id="deathPersonRank_div" style="color:red;font-size:8pt"></div>
         </td>
         <td width="200px">විශ්‍රාම වැටුප් ලාභියෙකුද? <br>
             இளைப்பாற்று ஊதியம் பெறுபவரா? <br>
@@ -1132,8 +1168,11 @@ function maxLengthCalculate(id, max, divId) {
             <br>Fathers full name
         </td>
         <td colspan="6">
+
             <s:textarea name="deathPerson.deathPersonFatherFullName" id="deathPersonFatherFullName"
-                        cssStyle="width:880px;"/>
+                        cssStyle="width:880px;"
+                        onblur="maxLengthCalculate('deathPersonFatherFullName','255','deathPersonFatherFullName_div');"/>
+            <div id="deathPersonFatherFullName_div" style="color:red;font-size:8pt"></div>
         </td>
     </tr>
     <tr>
@@ -1162,8 +1201,11 @@ function maxLengthCalculate(id, max, divId) {
             <br>Mothers full name
         </td>
         <td colspan="6">
-            <s:textarea name="deathPerson.deathPersonMotherFullName" id="deathPersonMotherFullName"
-                        cssStyle="width:880px;"/>
+            
+             <s:textarea name="deathPerson.deathPersonMotherFullName" id="deathPersonMotherFullName"
+                        cssStyle="width:880px;"
+                        onblur="maxLengthCalculate('deathPersonMotherFullName','255','deathPersonMotherFullName_div');"/>
+            <div id="deathPersonMotherFullName_div" style="color:red;font-size:8pt"></div>
         </td>
     </tr>
     </tbody>
@@ -1303,5 +1345,3 @@ function maxLengthCalculate(id, max, divId) {
 <s:hidden id="selectGNDivision" value="%{getText('gnDivisions.label')}"/>
 <s:hidden id="maxLengthError" value="%{getText('error.max.length')}"/>
 </div>
-
-

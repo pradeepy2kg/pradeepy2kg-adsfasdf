@@ -168,6 +168,15 @@
     function initPage() {
     }
 
+    function maxLengthCalculate(id, max, divId) {
+    var dom = document.getElementById(id).value;
+    if (dom.length > max) {
+        document.getElementById(divId).innerHTML = document.getElementById('maxLengthError').value + " : " + max
+    }
+    else {
+        document.getElementById(divId).innerHTML = "";
+    }
+}
 </script>
 
 <div id="death-declaration-form-2-outer">
@@ -263,8 +272,14 @@
             <br>பெயர்
             <br>Name
         </td>
-        <td colspan="6"><s:textarea id="declarantFullName" name="declarant.declarantFullName"
-                                    cssStyle="width:880px;"/></td>
+        <td colspan="6">
+            <%--<s:textarea id="declarantFullName" name="declarant.declarantFullName"
+                                    cssStyle="width:880px;"/>--%>
+            <s:textarea name="declarant.declarantFullName" id="declarantFullName"
+                        cssStyle="width:880px;"
+                        onblur="maxLengthCalculate('declarantFullName','255','declarantFullName_div');"/>
+            <div id="declarantFullName_div" style="color:red;font-size:8pt"></div>
+        </td>
     </tr>
     <tr>
         <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
@@ -272,8 +287,14 @@
             <br>தபால் முகவரி
             <br>Postal Address
         </td>
-        <td colspan="6"><s:textarea id="declarantAddress" name="declarant.declarantAddress"
-                                    cssStyle="width:880px;"/></td>
+        <td colspan="6">
+            <%--<s:textarea id="declarantAddress" name="declarant.declarantAddress"
+                                    cssStyle="width:880px;"/>--%>
+            <s:textarea name="declarant.declarantAddress" id="declarantAddress"
+                        cssStyle="width:880px;"
+                        onblur="maxLengthCalculate('declarantAddress','255','declarantAddress_div');"/>
+            <div id="declarantAddress_div" style="color:red;font-size:8pt"></div>
+        </td>
     </tr>
     <tr>
         <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
@@ -293,7 +314,7 @@
             <br>Email
         </td>
         <td colspan="2">
-            <s:textfield id="declarantEMail" name="declarant.declarantEMail" cssStyle="text-transform:none;"
+            <s:textfield id="declarantEMail" name="declarant.declarantEMail" cssStyle="text-transform:lowercase;"
                          maxLength="240"/>
         </td>
     </tr>
@@ -364,9 +385,15 @@
             <br>பெயர்
             <br>Name
         </td>
-        <td colspan="3"><s:textarea id="notifyingAuthorityName"
+        <td colspan="3">
+            <%--<s:textarea id="notifyingAuthorityName"
                                     name="notifyingAuthority.notifyingAuthorityName"
-                                    cssStyle="width:880px;"/></td>
+                                    cssStyle="width:880px;"/>--%>
+             <s:textarea name="notifyingAuthority.notifyingAuthorityName" id="notifyingAuthorityName"
+                        cssStyle="width:880px;"
+                        onblur="maxLengthCalculate('notifyingAuthorityName','120','notifyingAuthorityName_div');"/>
+            <div id="notifyingAuthorityName_div" style="color:red;font-size:8pt"></div>
+        </td>
     </tr>
     <tr>
         <td colspan="1">
@@ -374,9 +401,15 @@
             <br>தபால் முகவரி
             <br>Postal Address
         </td>
-        <td colspan="3"><s:textarea id="notifyingAuthorityAddress"
+        <td colspan="3">
+            <%--<s:textarea id="notifyingAuthorityAddress"
                                     name="notifyingAuthority.notifyingAuthorityAddress"
-                                    cssStyle="width:880px;"/></td>
+                                    cssStyle="width:880px;"/>--%>
+            <s:textarea name="notifyingAuthority.notifyingAuthorityAddress" id="notifyingAuthorityAddress"
+                        cssStyle="width:880px;"
+                        onblur="maxLengthCalculate('notifyingAuthorityAddress','255','notifyingAuthorityAddress_div');"/>
+            <div id="notifyingAuthorityAddress_div" style="color:red;font-size:8pt"></div>
+        </td>
     </tr>
     <tr>
         <td colspan="1">
@@ -416,7 +449,7 @@
 <s:hidden id="error13" value="%{getText('error.declerent.name.empty')}"/>
 <s:hidden id="error14" value="%{getText('error.declerent.pin.empty')}"/>
 <s:hidden id="error15" value="%{getText('error.declerent.address.empty')}"/>
-
+<s:hidden id="maxLengthError" value="%{getText('error.max.length')}"/>
 
 <div class="form-submit">
     <s:hidden name="pageNo" value="2"/>
