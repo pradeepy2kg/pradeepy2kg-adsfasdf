@@ -131,7 +131,7 @@ public class ChildInfo implements Serializable, Cloneable {
     }
 
     public void setChildFullNameOfficialLang(String childFullNameOfficialLang) {
-        this.childFullNameOfficialLang = WebUtils.filterBlanksAndToUpper(childFullNameOfficialLang);
+        this.childFullNameOfficialLang = WebUtils.filterBlanksAndToUpperAndTrim(childFullNameOfficialLang,600,"childFullNameOfficialLang");
     }
 
     public String getChildFullNameEnglish() {
@@ -152,7 +152,7 @@ public class ChildInfo implements Serializable, Cloneable {
     }
 
     public void setChildFullNameEnglish(String childFullNameEnglish) {
-        this.childFullNameEnglish = WebUtils.filterBlanksAndToUpper(childFullNameEnglish);
+        this.childFullNameEnglish = WebUtils.filterBlanksAndToUpperAndTrim(childFullNameEnglish,600,"childFullNameEnglish");
     }
 
     public int getChildGender() {
