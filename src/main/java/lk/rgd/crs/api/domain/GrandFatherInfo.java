@@ -61,7 +61,7 @@ public class GrandFatherInfo implements Serializable, Cloneable {
     }
 
     public void setGrandFatherBirthPlace(String grandFatherBirthPlace) {
-        this.grandFatherBirthPlace = WebUtils.filterBlanksAndToUpper(grandFatherBirthPlace);
+        this.grandFatherBirthPlace = WebUtils.filterBlanksAndToUpperAndTrim(grandFatherBirthPlace,60,"grandFatherBirthPlace");
     }
 
     public String getGreatGrandFatherFullName() {
@@ -85,7 +85,7 @@ public class GrandFatherInfo implements Serializable, Cloneable {
     }
 
     public void setGreatGrandFatherBirthPlace(String greatGrandFatherBirthPlace) {
-        this.greatGrandFatherBirthPlace = WebUtils.filterBlanksAndToUpper(greatGrandFatherBirthPlace);
+        this.greatGrandFatherBirthPlace = WebUtils.filterBlanksAndToUpperAndTrim(greatGrandFatherBirthPlace,60,"greatGrandFatherBirthPlace");
     }
 
     public String getGrandFatherNICorPIN() {

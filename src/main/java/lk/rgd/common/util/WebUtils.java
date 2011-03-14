@@ -130,7 +130,7 @@ public class WebUtils {
         originalString = originalString.trim();
         if (originalString.length() != 0 && originalString.length() > maximumAllows) {
             originalString = originalString.substring(0, maximumAllows - 1);
-            logger.debug("size of original string : {} is greater than maximum allowed size : {}", fieldName, maximumAllows);
+            logger.debug("size of original string  {} is greater than maximum allowed size : {}", fieldName, maximumAllows);
         }
         return originalString.toUpperCase();
     }
