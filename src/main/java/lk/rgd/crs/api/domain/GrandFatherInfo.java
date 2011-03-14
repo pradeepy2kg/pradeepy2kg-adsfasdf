@@ -9,6 +9,7 @@ import java.io.Serializable;
 /**
  * Java bean instance to capture Other information such as Marriage, GrandFather/Great Grand Father  and the Informant
  * as entered by page 3 of the birth declaration form
+ * If the database column sizes are modified the setter methods must be modified 
  */
 @Embeddable
 public class GrandFatherInfo implements Serializable, Cloneable {
@@ -92,7 +93,7 @@ public class GrandFatherInfo implements Serializable, Cloneable {
     }
 
     public void setGrandFatherNICorPIN(String grandFatherNICorPIN) {
-        this.grandFatherNICorPIN = WebUtils.filterBlanksAndToUpper(grandFatherNICorPIN);
+        this.grandFatherNICorPIN = WebUtils.filterBlanksAndToUpperAndTrim(grandFatherNICorPIN,12,"grandFatherNICorPIN");
     }
 
     public String getGreatGrandFatherNICorPIN() {
@@ -100,7 +101,7 @@ public class GrandFatherInfo implements Serializable, Cloneable {
     }
 
     public void setGreatGrandFatherNICorPIN(String greatGrandFatherNICorPIN) {
-        this.greatGrandFatherNICorPIN = WebUtils.filterBlanksAndToUpper(greatGrandFatherNICorPIN);
+        this.greatGrandFatherNICorPIN = WebUtils.filterBlanksAndToUpperAndTrim(greatGrandFatherNICorPIN,12,"greatGrandFatherNICorPI");
     }
 
     @Override

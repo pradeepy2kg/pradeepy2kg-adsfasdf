@@ -11,6 +11,7 @@ import java.util.Date;
 
 /**
  * Java bean instance to capture parent information as given by page 2 of birth declaration form
+ * If the database column sizes are modified the setter methods must be modified 
  */
 @Embeddable
 public class ParentInfo implements Serializable, Cloneable {
@@ -213,7 +214,7 @@ public class ParentInfo implements Serializable, Cloneable {
     }
 
     public void setFatherNICorPIN(String fatherNICorPIN) {
-        this.fatherNICorPIN = WebUtils.filterBlanksAndToUpper(fatherNICorPIN);
+        this.fatherNICorPIN = WebUtils.filterBlanksAndToUpperAndTrim(fatherNICorPIN,12,"fatherNICorPIN");
     }
 
     public String getFatherPassportNo() {
@@ -277,7 +278,7 @@ public class ParentInfo implements Serializable, Cloneable {
     }
 
     public void setMotherNICorPIN(String motherNICorPIN) {
-        this.motherNICorPIN = WebUtils.filterBlanksAndToUpper(motherNICorPIN);
+        this.motherNICorPIN = WebUtils.filterBlanksAndToUpperAndTrim(motherNICorPIN,12,"motherNICorPIN");
     }
 
     public String getMotherPassportNo() {

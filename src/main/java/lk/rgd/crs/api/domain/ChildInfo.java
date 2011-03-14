@@ -9,6 +9,7 @@ import java.util.Date;
 
 /**
  * An instance representing child information submitted for the declaration of a birth (page 1 of the form)
+ * If the database column sizes are modified the setter methods must be modified 
  */
 @Embeddable
 public class ChildInfo implements Serializable, Cloneable {
