@@ -127,12 +127,20 @@
         </action>
 
         <action name="eprEditPerson" class="lk.rgd.prs.web.action.PersonRegisterAction" method="personEditInit">
-                    <result type="tiles" name="success">epr.existingPersonRegistration</result>
+            <result type="tiles" name="success">epr.existingPersonRegistration</result>
         </action>
 
-        <action name="eprUpdatePersonDetail" class="lk.rgd.prs.web.action.PersonRegisterAction" method="personEditInit">
+        <action name="eprEditPersonDetails" class="lk.rgd.prs.web.action.PersonRegisterAction" method="personEditInit">
             <!--param name="personUKey">true</param-->
-            <result type="tiles" name="success">epr.UpdatePersonDetail</result>
+            <result type="tiles" name="success">epr.editPersonDetails</result>
+        </action>
+
+        <action name="eprUpdatePersonDetails" class="lk.rgd.prs.web.action.PersonRegisterAction"
+                method="updatePersonDetails">
+            <result type="redirectAction" name="success">
+                <param name="actionName">eprPersonDetails</param>
+                <param name="personUKey">${personUKey}</param>
+            </result>
         </action>
 
         <action name="eprDirectEditPerson" class="lk.rgd.prs.web.action.PersonRegisterAction" method="personEditInit">
@@ -1409,7 +1417,7 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
-            <action name="eprMarriageNoticeSearchHome" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
+        <action name="eprMarriageNoticeSearchHome" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
                 method="marriageNoticeSearchHome">
             <result type="tiles" name="success">epr.marriageNoticeSearchHome</result>
             <result type="tiles" name="error">epr.error</result>

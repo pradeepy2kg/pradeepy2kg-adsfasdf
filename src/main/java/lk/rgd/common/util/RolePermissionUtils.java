@@ -63,6 +63,7 @@ public class RolePermissionUtils {
         adrBitSet.set(Permission.PRINT_DEATH_CERTIFICATE);
         adrBitSet.set(Permission.REGISTRAR_MANAGEMENT);
         adrBitSet.set(Permission.PRS_EDIT_PERSON);
+        adrBitSet.set(Permission.PRS_APPROVE_EDIT_PERSON);
         adrBitSet.set(Permission.PRS_APPROVE_PERSON);
         adrBitSet.set(Permission.PRS_DELETE_PERSON);
         adrBitSet.set(Permission.PRS_REJECT_PERSON);

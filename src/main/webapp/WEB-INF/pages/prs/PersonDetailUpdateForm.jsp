@@ -407,6 +407,21 @@
 <col/>
 <tbody>
 <!-- header information [ table ]   -->
+  &nbsp;
+<s:form action="eprUpdatePersonDetails.do" method="POST" onsubmit="javascript:return validate()">
+    <s:hidden name="personUKey" value="%{#request.personUKey}"/>
+    <div class="form-submit">
+        <s:submit value="%{getText('save.label')}" cssStyle="margin-top:-5px;"/>
+    </div>
+</s:form>
+
+
+<s:form action="eprPersonDetails.do" method="get">
+    <s:hidden name="personUKey" value="%{#request.personUKey}"/>
+    <div class="form-submit">
+        <s:submit value="%{getText('previous.label')}" cssStyle="margin-top:-5px;"/>
+    </div>
+</s:form>
 
 <tr>
     <td>
@@ -421,12 +436,13 @@
 
             </tr>
             <tr>
-                <td>ඉල්ලුම්පතේ තත්වය<br/>
+                <td>ඉල්ලුම්පතේ තත්ත්වය<br/>
                     விண்ணப்பத்தின் நிலைமை <br/>
                     Status of Application
                 </td>
                 <td>
-                    <s:textfield name="serialNo" id="serial" maxLength="10"/>
+                    <s:textfield name="person.status" id="serial" maxLength="10" disabled="true"/>
+                    <%--<%= PersonStatusUtil.getPersonStatusString((Person.Status) request.getAttribute("person.status"))%>--%>
                 </td>
             </tr>
 
@@ -512,7 +528,8 @@
                 Identification number
             </td>
             <td width="25%" colspan="2">
-                <s:textfield id="pin" name="person.pin" maxLength="10"/>
+
+               <s:textfield id="pin" name="person.pin" maxLength="10" readonly="true"/>
             </td>
             <td width="25%" colspan="2">
                 (2) ජාතික හැඳුනුම්පත් අංකය <br/>
@@ -614,7 +631,7 @@
                 Email
             </td>
             <td width="30%">
-                <s:textfield name="person.personEmail" id="personEmail"/>
+                <s:textfield name="person.personEmail" id="personEmail" cssStyle="text-transform:lowercase;"/>
             </td>
 
         </tr>
@@ -629,13 +646,7 @@
     </td>
 </tr>
 
-
-</tbody>
-
-</table>
-
-
-<fieldset style="margin-bottom:5px;border:1px solid #000;width:97.9%;">
+   <fieldset style="margin-bottom:5px;border:1px solid #000;width:97.9%;">
     <table class="table_reg_page_05" style="border:none;margin-bottom:5px;margin-top:5px;width:100%;">
         <tr>
             <td align="center" style="font-size:11pt;border:none">
@@ -704,8 +715,8 @@
         </table>
     </div>
 </fieldset>
-
-<s:form action="eprPersonDetails.do" method="POST" onsubmit="javascript:return validate()">
+&nbsp;
+<s:form action="eprUpdatePersonDetails.do" method="POST" onsubmit="javascript:return validate()">
     <s:hidden name="personUKey" value="%{#request.personUKey}"/>
     <div class="form-submit">
         <s:submit value="%{getText('save.label')}" cssStyle="margin-top:-5px;"/>
@@ -719,6 +730,13 @@
         <s:submit value="%{getText('previous.label')}" cssStyle="margin-top:-5px;"/>
     </div>
 </s:form>
+
+</tbody>
+
+
+</table>
+
+
 
 
 <s:hidden id="error0" value="%{getText('er.invalid.inputType')}"/>

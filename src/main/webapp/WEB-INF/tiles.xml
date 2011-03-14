@@ -511,7 +511,7 @@
         <put-attribute name="title" value="person_approval_warning.title"/>
     </definition>
 
-    <definition name="epr.UpdatePersonDetail" extends="epr.template">
+    <definition name="epr.editPersonDetails" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/prs/PersonDetailUpdateForm.jsp"/>
         <put-attribute name="title" value="person_detail_update.title"/>
     </definition>

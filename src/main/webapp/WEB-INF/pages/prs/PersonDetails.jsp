@@ -17,7 +17,7 @@
 <s:url id="print" action="eprPRSCertificate.do">
     <s:param name="personUKey" value="%{person.personUKey}"/>
 </s:url>
-<s:url id="edit" action="eprUpdatePersonDetail.do">
+<s:url id="edit" action="eprEditPersonDetails.do">
     <s:param name="personUKey" value="%{person.personUKey}"/>
 </s:url>
 <s:url id="advanceSearch" action="eprPRSAdvancedSearch.do"/>
