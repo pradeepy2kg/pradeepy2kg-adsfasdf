@@ -110,7 +110,7 @@ public class ChildInfo implements Serializable, Cloneable {
     }
 
     public void setPlaceOfBirth(String placeOfBirth) {
-        this.placeOfBirth = WebUtils.filterBlanksAndToUpper(placeOfBirth);
+        this.placeOfBirth = WebUtils.filterBlanksAndToUpperAndTrim(placeOfBirth,255,"placeOfBirth");
     }
 
     public String getChildFullNameOfficialLang() {
@@ -225,7 +225,7 @@ public class ChildInfo implements Serializable, Cloneable {
     }
 
     public void setPlaceOfBirthEnglish(String placeOfBirthEnglish) {
-        this.placeOfBirthEnglish = WebUtils.filterBlanksAndToUpper(placeOfBirthEnglish);
+        this.placeOfBirthEnglish = WebUtils.filterBlanksAndToUpperAndTrim(placeOfBirthEnglish,255,"placeOfBirthEnglish");
     }
 
     @Override

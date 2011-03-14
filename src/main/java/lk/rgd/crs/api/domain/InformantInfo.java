@@ -79,7 +79,7 @@ public class InformantInfo implements Serializable, Cloneable {
     }
 
     public void setInformantPhoneNo(String informantPhoneNo) {
-        this.informantPhoneNo = WebUtils.filterBlanks(informantPhoneNo);
+        this.informantPhoneNo = WebUtils.filterBlanksAndToUpperAndTrim(informantPhoneNo,30,"informantPhoneNo");
     }
 
     public String getInformantEmail() {
@@ -87,7 +87,7 @@ public class InformantInfo implements Serializable, Cloneable {
     }
 
     public void setInformantEmail(String informantEmail) {
-        this.informantEmail = WebUtils.filterBlanks(informantEmail);
+        this.informantEmail = WebUtils.filterBlanksAndToUpperAndTrim(informantEmail,30,"informantEmail");
     }
 
     public Date getInformantSignDate() {
