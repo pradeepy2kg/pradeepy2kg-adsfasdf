@@ -662,6 +662,30 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
             return warnings;
         }
     }
+    //extract bride information's form the marriage register object
+
+    private Person getBrideForProcessToPRS(MarriageRegister register,Person.CivilStatus civilStatus) {
+        Person bride = new Person();
+        bride.setCivilStatus(civilStatus);
+        bride.setRace(register.getFemale().getFemaleRace());
+        bride.setDateOfBirth(register.getFemale().getDateOfBirthFemale());
+        bride.setCurrentAddress(register.getFemale().getResidentAddressFemaleInOfficialLang());
+        bride.setFullNameInEnglishLanguage(register.getFemale().getNameInEnglishFemale());
+        bride.setFullNameInOfficialLanguage(register.getFemale().getNameInOfficialLanguageFemale());
+        return bride;
+    }
+    //extract groom's information's form the marriage register object 
+
+    private Person getGroomForProcessToPRS(MarriageRegister register, Person.CivilStatus civilStatus) {
+        Person groom = new Person();
+        groom.setCivilStatus(civilStatus);
+        groom.setRace(register.getMale().getMaleRace());
+        groom.setDateOfBirth(register.getMale().getDateOfBirthMale());
+        groom.setCurrentAddress(register.getMale().getResidentAddressMaleInOfficialLang());
+        groom.setFullNameInEnglishLanguage(register.getMale().getNameInEnglishMale());
+        groom.setFullNameInOfficialLanguage(register.getMale().getNameInOfficialLanguageMale());
+        return groom;
+    }
 
     private void updateExistingPRSRecords(MarriageRegister mr, Person.CivilStatus civilStatus, User user) {
 
@@ -676,6 +700,11 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
             if (groom != null) {
                 groom.setCivilStatus(civilStatus);
                 eCivil.updatePerson(groom, user);
+            } else {
+                //adding non existing groom to PRS as semi verified
+                groom = getGroomForProcessToPRS(mr, civilStatus);
+                groom.setStatus(Person.Status.SEMI_VERIFIED);
+                eCivil.addPerson(groom, user);
             }
         }
 
@@ -685,6 +714,11 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
             if (bride != null) {
                 bride.setCivilStatus(civilStatus);
                 eCivil.updatePerson(bride, user);
+            } else {
+                //adding non existing bride to PRS as semi verified
+                bride = getBrideForProcessToPRS(mr, civilStatus);
+                bride.setStatus(Person.Status.SEMI_VERIFIED);
+                eCivil.addPerson(bride, user);
             }
         }
 
@@ -702,7 +736,6 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
                 m.setMarriageRegister(mr);
                 groom.specifyMarriage(m);
                 bride.specifyMarriage(m);
-
                 // add marriage to the PRS
                 eCivil.addMarriage(m, user);
                 eCivil.updatePerson(groom, user);

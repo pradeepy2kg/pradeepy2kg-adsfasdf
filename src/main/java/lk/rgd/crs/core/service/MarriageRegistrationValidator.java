@@ -392,15 +392,13 @@ public class MarriageRegistrationValidator {
 
     private boolean prohibitedRelationship(MarriageRegister register, List<UserWarning> userWarnings,
         ResourceBundle rb, User user) {
-        final Person bride = populationRegistry.findPersonByPIN(Long.
-            parseLong(register.getFemale().getIdentificationNumberFemale()), user);
-        final Person groom = populationRegistry.findPersonByPIN(Long.
-            parseLong(register.getMale().getIdentificationNumberMale()), user);
+        final Person bride = populationRegistry.findPersonByPINorNIC(register.getFemale().getIdentificationNumberFemale(), user);
+        final Person groom = populationRegistry.findPersonByPINorNIC(register.getMale().getIdentificationNumberMale(), user);
 
-        final Person bridesFather = bride.getFather();
-        final Person bridesMother = bride.getMother();
-        final Person groomsFather = groom.getFather();
-        final Person groomsMother = groom.getMother();
+        final Person bridesFather = (bride != null) ? bride.getFather() : null;
+        final Person bridesMother = (bride != null) ? bride.getMother() : null;
+        final Person groomsFather = (groom != null) ? groom.getFather() : null;
+        final Person groomsMother = (groom != null) ? groom.getMother() : null;
         final List<Person> groomsGrandFathers = populationRegistry.findGrandFather(groom, user);
         final List<Person> bridesGrandMothers = populationRegistry.findGrandMother(bride, user);
         final List<Person> bridesChildren = populationRegistry.findAllChildren(bride, user);
@@ -472,7 +470,7 @@ public class MarriageRegistrationValidator {
         logger.debug("check prohibited relationship :'bride is grand mother of groom' :{}", prohibited);
 
         //One party is a sibling of the other party (Note: two parties are siblings if they have one or both parents in common)
-        List<Person> bridesSiblings = populationRegistry.findAllSiblings(bride, user);
+        List<Person> bridesSiblings = (bride != null) ? populationRegistry.findAllSiblings(bride, user) : Collections.<Person>emptyList();
 
         //check groom is sibling of bride
         if (bridesSiblings.contains(groom)) {
@@ -515,7 +513,7 @@ public class MarriageRegistrationValidator {
         //that means if bride was previously married with grooms father  then relation ship between bride and groom is illegal
         //and vise versa
         //check brides previous marriages  vs grooms father
-        Set<Marriage> bridesPrevMarriages = bride.getMarriages();
+        Set<Marriage> bridesPrevMarriages = (bride != null) ? bride.getMarriages() : Collections.<Marriage>emptySet();
         for (Marriage m : bridesPrevMarriages) {
             if (groomsFather != null) {
                 if (groomsFather.equals(m.getGroom())) {
@@ -529,7 +527,7 @@ public class MarriageRegistrationValidator {
         logger.debug("check prohibited relationship :'father of groom was a spouse of bride' :{}", prohibited);
 
         //check grooms prev marriages vs brides mother
-        Set<Marriage> groomsPrevMarriages = bride.getMarriages();
+        Set<Marriage> groomsPrevMarriages = (bride != null) ? bride.getMarriages() : Collections.<Marriage>emptySet();
         for (Marriage m : groomsPrevMarriages) {
             if (bridesMother != null) {
                 if (bridesMother.equals(m.getGroom())) {
