@@ -88,7 +88,7 @@ public class DeathInfo implements Serializable, Cloneable {
     }
 
     public void setAnyOtherInformation(String anyOtherInformation) {
-        this.anyOtherInformation = WebUtils.filterBlanks(anyOtherInformation);
+        this.anyOtherInformation = WebUtils.filterBlanksAndToUpperAndTrim(anyOtherInformation,255,"anyOtherInformation");
     }
 
     public long getDeathSerialNo() {
@@ -104,7 +104,7 @@ public class DeathInfo implements Serializable, Cloneable {
     }
 
     public void setPlaceOfDeath(String placeOfDeath) {
-        this.placeOfDeath = WebUtils.filterBlanksAndToUpper(placeOfDeath);
+        this.placeOfDeath = WebUtils.filterBlanksAndToUpperAndTrim(placeOfDeath,255,"placeOfDeath");
     }
 
     public Date getDateOfDeath() {
@@ -128,7 +128,7 @@ public class DeathInfo implements Serializable, Cloneable {
     }
 
     public void setPlaceOfIssue(String placeOfIssue) {
-        this.placeOfIssue = WebUtils.filterBlanksAndToUpper(placeOfIssue);
+        this.placeOfIssue = WebUtils.filterBlanksAndToUpperAndTrim(placeOfIssue,255,"placeOfIssue");
     }
 
     public String getTimeOfDeath() {
@@ -136,7 +136,7 @@ public class DeathInfo implements Serializable, Cloneable {
     }
 
     public void setTimeOfDeath(String timeOfDeath) {
-        this.timeOfDeath = WebUtils.filterBlanks(timeOfDeath);
+        this.timeOfDeath = WebUtils.filterBlanksAndToUpperAndTrim(timeOfDeath,255,"timeOfDeath");
     }
 
     public String getPlaceOfDeathInEnglish() {
@@ -144,7 +144,7 @@ public class DeathInfo implements Serializable, Cloneable {
     }
 
     public void setPlaceOfDeathInEnglish(String placeOfDeathInEnglish) {
-        this.placeOfDeathInEnglish = WebUtils.filterBlanksAndToUpper(placeOfDeathInEnglish);
+        this.placeOfDeathInEnglish = WebUtils.filterBlanksAndToUpperAndTrim(placeOfDeathInEnglish,255,"placeOfDeathInEnglish");
     }
 
     public boolean isCauseOfDeathEstablished() {
@@ -168,7 +168,7 @@ public class DeathInfo implements Serializable, Cloneable {
     }
 
     public void setCauseOfDeath(String causeOfDeath) {
-        this.causeOfDeath = WebUtils.filterBlanksAndToUpper(causeOfDeath);
+        this.causeOfDeath = WebUtils.filterBlanksAndToUpperAndTrim(causeOfDeath,600,"causeOfDeath");
     }
 
     public String getIcdCodeOfCause() {
@@ -184,7 +184,7 @@ public class DeathInfo implements Serializable, Cloneable {
     }
 
     public void setPlaceOfBurial(String placeOfBurial) {
-        this.placeOfBurial = WebUtils.filterBlanksAndToUpper(placeOfBurial);
+        this.placeOfBurial = WebUtils.filterBlanksAndToUpperAndTrim(placeOfBurial,255,"placeOfBurial");
     }
 
     public BDDivision getDeathDivision() {
@@ -208,7 +208,7 @@ public class DeathInfo implements Serializable, Cloneable {
     }
 
     public void setReasonForLateRegistration(String reasonForLateRegistration) {
-        this.reasonForLateRegistration = WebUtils.filterBlanks(reasonForLateRegistration);
+        this.reasonForLateRegistration = WebUtils.filterBlanksAndToUpperAndTrim(reasonForLateRegistration,255,"reasonForLateRegistration");
     }
 
     public District getDeathDistrict() {
