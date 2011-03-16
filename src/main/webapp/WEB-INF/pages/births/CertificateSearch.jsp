@@ -407,7 +407,7 @@
                 <label>උපත් ප්‍රකාශනයේ අනුක්‍රමික අංකය<br>பிறப்பு பிரதிக்கினையின் தொடர் இலக்கம்<br>Birth Declaration Serial Number</label>
             </s:if>
             <s:elseif test="certificateType.ordinal() == 1">
-                <label>මරණ ප්‍රකාශනයේ අනුක්‍රමික අංකය<br>இறப்பு பிரதிக்கினையின் தொடர் இலக்கம்<br>Birth Declaration Serial Number</label>
+                <label>මරණ ප්‍රකාශනයේ අනුක්‍රමික අංකය<br>இறப்பு பிரதிக்கினையின் தொடர் இலக்கம்<br>Death Declaration Serial Number</label>
             </s:elseif>
         </td>
         <td><s:textfield name="certSearch.search.searchSerialNo" id="searchSerialNo" maxLength="10"/></td>
@@ -425,7 +425,7 @@
                 <label>(7) උප්පැන්න සහතිකයේ අංකය<br>பிறப்புச் சான்றிதழின் இலக்கம் <br>Birth Certificate Number</label>
             </s:if>
             <s:elseif test="certificateType.ordinal() == 1">
-                <label>(7) මරණ සහතිකයේ අංකය<br>இறப்புச் சான்றிதழின் இலக்கம் <br>Birth Certificate Number</label>
+                <label>(7) මරණ සහතිකයේ අංකය<br>இறப்புச் சான்றிதழின் இலக்கம் <br>Death Certificate Number</label>
             </s:elseif>
         </td>
         <td><s:textfield name="certSearch.search.certificateNo" id="certificateNo"/></td>
