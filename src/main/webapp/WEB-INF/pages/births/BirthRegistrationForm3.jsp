@@ -437,6 +437,16 @@ function showSignRequired(mode) {
     }
 }
 
+function maxLengthCalculate(id, max, divId) {
+    var dom = document.getElementById(id).value;
+    if (dom.length > max) {
+        document.getElementById(divId).innerHTML = document.getElementById('maxLengthError').value + " : " + max
+    }
+    else {
+        document.getElementById(divId).innerHTML = "";
+    }
+}
+
 </script>
 
 <div class="birth-registration-form-outer" id="birth-registration-form-3-outer">
@@ -571,8 +581,13 @@ function showSignRequired(mode) {
         </tr>
         <tr>
             <td colspan="1"><label>ඔහුගේ සම්පුර්ණ නම<br>அவரின் முழுப் பேயர் <br>His Full Name</label></td>
-            <td colspan="5"><s:textarea name="grandFather.grandFatherFullName"
-                                        id="grandFatherFullName" cssStyle="width:97%;"/></td>
+            <td colspan="5">
+                <%--<s:textarea name="grandFather.grandFatherFullName"
+                                        id="grandFatherFullName" cssStyle="width:97%;"/>--%>
+                <s:textarea name="grandFather.grandFatherFullName" id="grandFatherFullName" cssStyle="width:97%;"
+                            onblur="maxLengthCalculate('grandFatherFullName','600','grandFatherFullName_div');"/>
+                <div id="grandFatherFullName_div" style="color:red;font-size:8pt"></div>
+            </td>
         </tr>
         <tr>
             <td><label>ඔහුගේ උපන් වර්ෂය
@@ -614,8 +629,13 @@ function showSignRequired(mode) {
         </tr>
         <tr>
             <td colspan="1"><label>සම්පුර්ණ නම <br>முழுப் பெயர் <br>Full Name</label></td>
-            <td colspan="5"><s:textarea name="grandFather.greatGrandFatherFullName"
-                                        id="greatGrandFatherFullName" cssStyle="width:97%;"/></td>
+            <td colspan="5">
+                <%--<s:textarea name="grandFather.greatGrandFatherFullName"
+                                        id="greatGrandFatherFullName" cssStyle="width:97%;"/>--%>
+                <s:textarea name="grandFather.greatGrandFatherFullName" id="greatGrandFatherFullName" cssStyle="width:97%;"
+                            onblur="maxLengthCalculate('greatGrandFatherFullName','600','greatGrandFatherFullName_div');"/>
+                <div id="greatGrandFatherFullName_div" style="color:red;font-size:8pt"></div>
+            </td>
         </tr>
         <tr>
 
@@ -715,17 +735,25 @@ function showSignRequired(mode) {
                                                                                                           cssStyle="color:red;font-size:14pt;"/><br>கொடுப்பவரின்
             பெயர்
             <br>Name</label></td>
-        <td colspan="4"><s:textarea name="informant.informantName" id="informantName" cssStyle="width:95%;"/>
-                <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>--%>
+        <td colspan="4">
+            <%--<s:textarea name="informant.informantName" id="informantName" cssStyle="width:95%;"/>
+                &lt;%&ndash;<s:label value="*" cssStyle="color:red;font-size:15pt"/>&ndash;%&gt;--%>
+            <s:textarea name="informant.informantName" id="informantName" cssStyle="width:95%;"
+                            onblur="maxLengthCalculate('informantName','600','informantName_div');"/>
+                <div id="informantName_div" style="color:red;font-size:8pt"></div>
         </td>
     </tr>
     <tr>
         <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)තැපැල් ලිපිනය<s:label
                 value="*" cssStyle="color:red;font-size:14pt;"/><br>தபால்
             முகவரி <br>Postal Address</label></td>
-        <td colspan="4"><s:textarea name="informant.informantAddress" id="informantAddress"
+        <td colspan="4">
+           <%-- <s:textarea name="informant.informantAddress" id="informantAddress"
                                     cssStyle="width:95%;"/>
-                <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>--%>
+                &lt;%&ndash;<s:label value="*" cssStyle="color:red;font-size:15pt"/>&ndash;%&gt;--%>
+            <s:textarea name="informant.informantAddress" id="informantAddress" cssStyle="width:95%;"
+                            onblur="maxLengthCalculate('informantAddress','255','informantAddress_div');"/>
+                <div id="informantAddress_div" style="color:red;font-size:8pt"></div>
         </td>
     </tr>
     <tr>
@@ -812,7 +840,7 @@ function showSignRequired(mode) {
 <s:hidden id="motherAddressLable" value="%{parent.motherAddress}"/>
 <s:hidden id="motherPhoneNoLable" value="%{parent.motherPhoneNo}"/>
 <s:hidden id="motherEmailLable" value="%{parent.motherEmail}"/>
-
+<s:hidden id="maxLengthError" value="%{getText('error.max.length')}"/>
 
 </div>
 

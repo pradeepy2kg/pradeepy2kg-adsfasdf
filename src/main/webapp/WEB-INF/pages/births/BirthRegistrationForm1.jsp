@@ -332,7 +332,7 @@ function dateRange() {
         }
         else {
             document.getElementById('belatedError').innerHTML = '';
-        } 
+        }
     }
 }
 
@@ -347,6 +347,17 @@ function initPage() {
     dateRange();
     initSerialNumber();
 }
+
+function maxLengthCalculate(id, max, divId) {
+    var dom = document.getElementById(id).value;
+    if (dom.length > max) {
+        document.getElementById(divId).innerHTML = document.getElementById('maxLengthError').value + " : " + max
+    }
+    else {
+        document.getElementById(divId).innerHTML = "";
+    }
+}
+
 </script>
 
 <s:form action="eprBirthRegistration.do" name="birthRegistrationForm1" id="birth-registration-form-1" method="POST"
@@ -564,8 +575,9 @@ function initPage() {
 </tr>
 <tr>
     <td><label>සිංහල හෝ දෙමළ භාෂාවෙන් <br>சிங்களம்அல்லது தமிழ் மொழியில்<br>In Sinhala or Tamil</label></td>
-    <td colspan="6"><s:textfield name="child.placeOfBirth" id="placeOfBirth" cssStyle="width:95%;"
-                                 maxLength="255"/>
+    <td colspan="6">
+        <s:textfield name="child.placeOfBirth" id="placeOfBirth" cssStyle="width:95%;"
+                     maxLength="255"/>
             <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>          --%>
     </td>
 </tr>
@@ -594,8 +606,11 @@ function initPage() {
             <br>Name in any of the official languages (Sinhala / Tamil)</label>
         </td>
         <td colspan="7">
-            <s:textarea name="child.childFullNameOfficialLang" id="childFullNameOfficialLang"
-                        cssStyle="width:98.2%;"/>
+                <%-- <s:textarea name="child.childFullNameOfficialLang" id="childFullNameOfficialLang"
+                cssStyle="width:98.2%;"/>--%>
+            <s:textarea name="child.childFullNameOfficialLang" id="childFullNameOfficialLang" cssStyle="width:880px;"
+                        onblur="maxLengthCalculate('childFullNameOfficialLang','600','childFullNameOfficialLang_div');"/>
+            <div id="childFullNameOfficialLang_div" style="color:red;font-size:8pt"></div>
         </td>
     </tr>
     <tr>
@@ -603,8 +618,11 @@ function initPage() {
             නම ඉංග්‍රීසි භාෂාවෙන් <br>பெயா் ஆங்கில மொழியில்<br>Name in English
         </label></td>
         <td colspan="7">
-            <s:textarea name="child.childFullNameEnglish" id="childFullNameEnglish"
-                        cssStyle="width:98.2%;text-transform: uppercase;"/>
+                <%--<s:textarea name="child.childFullNameEnglish" id="childFullNameEnglish"
+               cssStyle="width:98.2%;text-transform: uppercase;"/>--%>
+            <s:textarea name="child.childFullNameEnglish" id="childFullNameEnglish" cssStyle="width:880px;"
+                        onblur="maxLengthCalculate('childFullNameEnglish','600','childFullNameEnglish_div');"/>
+            <div id="childFullNameEnglish_div" style="color:red;font-size:8pt"></div>
             <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px;"
                  id="childName">
         </td>
@@ -733,5 +751,6 @@ function initPage() {
 <s:hidden id="submitDate" value="%{getText('p1.submit.date')}"/>
 <s:hidden id="numChildGTOne" value="%{getText('p1.num.child.gt.one')}"/>
 <s:hidden id="childRankGTZero" value="%{getText('p1.child.rank.gt.zero')}"/>
+<s:hidden id="maxLengthError" value="%{getText('error.max.length')}"/>
 
 </div>

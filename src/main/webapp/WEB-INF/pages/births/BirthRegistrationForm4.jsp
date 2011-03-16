@@ -133,6 +133,17 @@
     function initPage() {
         // TODO 
     }
+
+    function maxLengthCalculate(id, max, divId) {
+        var dom = document.getElementById(id).value;
+        if (dom.length > max) {
+            document.getElementById(divId).innerHTML = document.getElementById('maxLengthError').value + " : " + max
+        }
+        else {
+            document.getElementById(divId).innerHTML = "";
+        }
+    }
+    
 </script>
 
 <div class="birth-registration-form-outer" id="birth-registration-form-4-outer">
@@ -178,19 +189,26 @@
                     නම<s:label value="*" cssStyle="color:red;font-size:14pt;"/><br>கொடுப்பவரின் பெயர் <br>Name</label>
                 </td>
                 <td colspan="4">
-                    <s:textarea name="notifyingAuthority.notifyingAuthorityName" id="notifyingAuthorityName"
+                    <%--<s:textarea name="notifyingAuthority.notifyingAuthorityName" id="notifyingAuthorityName"
                                 cssStyle="width:95%;"/>
-                        <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>--%>
+                        &lt;%&ndash;<s:label value="*" cssStyle="color:red;font-size:15pt"/>&ndash;%&gt;--%>
+                    <s:textarea name="notifyingAuthority.notifyingAuthorityName" id="notifyingAuthorityName" cssStyle="width:95%;"
+                            onblur="maxLengthCalculate('notifyingAuthorityName','120','notifyingAuthorityName_div');"/>
+                <div id="notifyingAuthorityName_div" style="color:red;font-size:8pt"></div>
                 </td>
             </tr>
             <tr>
                 <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)තැපැල්
                     ලිපිනය<s:label value="*" cssStyle="color:red;font-size:14pt;"/><br>தபால்
                     முகவரி <br>Postal Address</label></td>
-                <td colspan="4"><s:textarea name="notifyingAuthority.notifyingAuthorityAddress"
+                <td colspan="4">
+                    <%--<s:textarea name="notifyingAuthority.notifyingAuthorityAddress"
                                             id="notifyingAuthorityAddress"
                                             cssStyle="width:95%;"/>
-                        <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>--%>
+                        &lt;%&ndash;<s:label value="*" cssStyle="color:red;font-size:15pt"/>&ndash;%&gt;--%>
+                    <s:textarea name="notifyingAuthority.notifyingAuthorityAddress" id="notifyingAuthorityAddress" cssStyle="width:95%;"
+                            onblur="maxLengthCalculate('notifyingAuthorityAddress','255','notifyingAuthorityAddress_div');"/>
+                <div id="notifyingAuthorityAddress_div" style="color:red;font-size:8pt"></div>
                 </td>
             </tr>
             <tr>
@@ -280,4 +298,6 @@
     <s:hidden id="error5" value="%{getText('NIC.error.add.VX')}"/>
     <s:hidden id="error6" value="%{getText('notifyDate.and.birthDate')}"/>
     <s:hidden id="error7" value="%{getText('notifyDate.and.informDate')}"/>
+    <s:hidden id="maxLengthError" value="%{getText('error.max.length')}"/>
+
 </div>

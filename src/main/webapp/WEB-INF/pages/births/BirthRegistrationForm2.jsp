@@ -366,6 +366,16 @@ function commonTags() {
     }
 }
 
+function maxLengthCalculate(id, max, divId) {
+    var dom = document.getElementById(id).value;
+    if (dom.length > max) {
+        document.getElementById(divId).innerHTML = document.getElementById('maxLengthError').value + " : " + max
+    }
+    else {
+        document.getElementById(divId).innerHTML = "";
+    }
+}
+
 </script>
 
 <div class="birth-registration-form-outer" id="birth-registration-form-2-outer">
@@ -425,15 +435,22 @@ function commonTags() {
                                                                                                      value="#i+1"/>)සම්පුර්ණ
             නම<br>தந்தையின் முழு பெயர்<br>Full Name</label></td>
         <td colspan="8">
-            <s:textarea name="parent.fatherFullName" id="fatherFullName" cssStyle="width:98%;"/>
+                <%--<s:textarea name="parent.fatherFullName" id="fatherFullName" cssStyle="width:98%;"/>--%>
+            <s:textarea name="parent.fatherFullName" id="fatherFullName" cssStyle="width:98%;"
+                        onblur="maxLengthCalculate('fatherFullName','600','fatherFullName_div');"/>
+            <div id="fatherFullName_div" style="color:red;font-size:8pt"></div>
         </td>
     </tr>
     <tr>
         <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i"
-                                                                                                     value="#i+1"/>)සම්පුර්ණ නම ඉංග්‍රීසි  භාෂාවෙන් (කැපිටල් අකුරෙන්)
+                                                                                                     value="#i+1"/>)සම්පුර්ණ
+            නම ඉංග්‍රීසි භාෂාවෙන් (කැපිටල් අකුරෙන්)
             <br>முழுப் பெயர்்<br>Full Name in English (In block letters)</label></td>
         <td colspan="8">
-            <s:textarea name="parent.fatherFullNameInEnglish" id="fatherFullNameInEnglish" cssStyle="width:98%;"/>
+                <%--<s:textarea name="parent.fatherFullNameInEnglish" id="fatherFullNameInEnglish" cssStyle="width:98%;"/>--%>
+            <s:textarea name="parent.fatherFullNameInEnglish" id="fatherFullNameInEnglish" cssStyle="width:98%;"
+                        onblur="maxLengthCalculate('fatherFullNameInEnglish','600','fatherFullNameInEnglish_div');"/>
+            <div id="fatherFullNameInEnglish_div" style="color:red;font-size:8pt"></div>
         </td>
     </tr>
     <tr>
@@ -524,15 +541,22 @@ function commonTags() {
             නම<br>தந்தையின்
             முழு பெயர்<br>Full Name</label></td>
         <td colspan="8">
-            <s:textarea name="parent.motherFullName" id="motherFullName" cssStyle="width:98%;"/>
+                <%--<s:textarea name="parent.motherFullName" id="motherFullName" cssStyle="width:98%;"/>--%>
+            <s:textarea name="parent.motherFullName" id="motherFullName" cssStyle="width:98%;"
+                        onblur="maxLengthCalculate('motherFullName','600','motherFullName_div');"/>
+            <div id="motherFullName_div" style="color:red;font-size:8pt"></div>
         </td>
     </tr>
     <tr>
         <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i"
-                                                                                                     value="#i+1"/>)සම්පුර්ණ නම ඉංග්‍රීසි  භාෂාවෙන් (කැපිටල් අකුරෙන්)
+                                                                                                     value="#i+1"/>)සම්පුර්ණ
+            නම ඉංග්‍රීසි භාෂාවෙන් (කැපිටල් අකුරෙන්)
             <br>முழுப் பெயர்்<br>Full Name in English (In block letters)</label></td>
         <td colspan="8">
-            <s:textarea name="parent.motherFullNameInEnglish" id="motherFullNameInEnglish" cssStyle="width:98%;"/>
+                <%--<s:textarea name="parent.motherFullNameInEnglish" id="motherFullNameInEnglish" cssStyle="width:98%;"/>--%>
+            <s:textarea name="parent.motherFullNameInEnglish" id="motherFullNameInEnglish" cssStyle="width:98%;"
+                        onblur="maxLengthCalculate('motherFullNameInEnglish','600','motherFullNameInEnglish_div');"/>
+            <div id="motherFullNameInEnglish_div" style="color:red;font-size:8pt"></div>
         </td>
     </tr>
     <tr>
@@ -544,7 +568,7 @@ function commonTags() {
         <td colspan="3">
                 <s:label value="YYYY-MM-DD" cssStyle="margin-left:140px;font-size:10px"/><br>
                 <s:textfield name="parent.motherDOB" id="motherDatePicker" maxLength="10"/>
-        <td colspan="3" width="100px"><label>
+        <td colspan="3" width="100px" ><label>
             <s:if test="%{#session.birthRegister.register.birthType.ordinal() != 0}">
                 (<s:property value="#row"/><s:set name="row"
                                                   value="#row+1"/><s:set name="i"
@@ -566,13 +590,63 @@ function commonTags() {
         </td>
 
     </tr>
-    <tr style="border-bottom:none;">
-        <td style="border-bottom:none;"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set
-                name="i" value="#i+1"/>)ස්ථිර ලිපිනය<br>தாயின் நிரந்தர வதிவிட முகவரி<br>Permanent Address</label>
-        </td>
-        <td colspan="8" style="border-bottom:none;">
-            <s:textarea id="motherAddress" name="parent.motherAddress" cssStyle="width:98%;"/>
-        </td>
+    <td style="border-top:none;">
+        <tr style="border-bottom:none; border-top:none;">
+            <td style="border-bottom:none; border-top:none;"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set
+                    name="i" value="#i+1"/>)ස්ථිර ලිපිනය<br>தாயின் நிரந்தர வதிவிட முகவரி<br>Permanent Address</label>
+            </td>
+            <td colspan="8" style="border-bottom:none;">
+                    <%--<s:textarea id="motherAddress" name="parent.motherAddress" cssStyle="width:98%;"/>--%>
+                <s:textarea name="parent.motherAddress" id="motherAddress" cssStyle="width:98%;"
+                            onblur="maxLengthCalculate('motherAddress','255','motherAddress_div');"/>
+                <div id="motherAddress_div" style="color:red;font-size:8pt"></div>
+            </td>
+        <tr>
+            <td width="200px" style="border-top:none; border-bottom:none;"></td>
+            <td colspan="2" class="table_reg_cell_02" style="border-top:1px solid #000;"><label>දිස්ත්‍රික්කය /<br>மாவட்டம்
+                /<br>District</label></td>
+            <td colspan="6" class="table_reg_cell_02" style="border-top:1px solid #000;">
+                <s:if test="#parent.motherDSDivision.district.districtUKey >0">
+                <s:select id="motherDistrictId" name="motherDistrictId" list="allDistrictList"
+                          cssStyle="width:99%;"/></td>
+            </s:if>
+            <s:else>
+                <s:select id="motherDistrictId" name="motherDistrictId" list="allDistrictList" headerKey="0"
+                          headerValue="%{getText('select_district.label')}" cssStyle="width:99%;"/></td>
+            </s:else>
+        </tr>
+        <tr>
+            <td width="200px" style="border-top:none;border-bottom:none"></td>
+            <td colspan="2"><label>ප්‍රාදේශීය ලේකම් කොට්ඨාශය /<br>பிரதேச செயளாளா் பிரிவு/<br>Divisional
+                Secretariat</label>
+            </td>
+            <td colspan="6" class="table_reg_cell_02">
+                <s:if test="#parent.motherDSDivision.dsDivisionUKey > 0">
+                    <s:select id="motherDSDivisionId" name="motherDSDivisionId" list="allDSDivisionList"
+                              headerKey="#parent.motherDSDivision.dsDivisionUKey" cssStyle="width:99%;"/>
+                </s:if>
+                <s:else>
+                    <s:select id="motherDSDivisionId" name="motherDSDivisionId" list="allDSDivisionList"
+                              headerKey="0" headerValue="%{getText('select_ds_division.label')}" cssStyle="width:99%;"/>
+                </s:else>
+                <s:textfield id="dsDivisionLabel" value="%{getText('select_ds_division.label')}"
+                             cssStyle="display:none;"/>
+            </td>
+        </tr>
+        <tr>
+            <td width="200px" style="border-top:none"/>
+            <td colspan="2">
+                ග්‍රාම නිළධාරී කොටිඨාශය /<br/>
+                Grama Niladhari Division in ta/<br/>
+                Grama Niladhari Division
+            </td>
+            <td colspan="6">
+                <s:select id="gnDivisionId" name="gnDivisionId" value="%{gnDivisionId}" list="gnDivisionList"
+                          cssStyle="float:left;  width:99%; margin:2px 5px;" headerKey="0"
+                          headerValue="%{getText('select.gn.division')}"/>
+            </td>
+        </tr>
+    </td>
     </tr>
 
     </tbody>
@@ -580,48 +654,48 @@ function commonTags() {
 
 <table class="table_reg_page_02" cellspacing="0" style="margin:0; border-top:none;">
     <tbody>
-    <tr>
-        <td width="200px" style="border-top:none; border-bottom:none;"></td>
-        <td colspan="2" class="table_reg_cell_02" style="border-top:1px solid #000;"><label>දිස්ත්‍රික්කය /<br>மாவட்டம்
-            /<br>District</label></td>
-        <td colspan="6" class="table_reg_cell_02" style="border-top:1px solid #000;">
-            <s:if test="#parent.motherDSDivision.district.districtUKey >0">
-            <s:select id="motherDistrictId" name="motherDistrictId" list="allDistrictList" cssStyle="width:99%;"/></td>
-        </s:if>
-        <s:else>
-            <s:select id="motherDistrictId" name="motherDistrictId" list="allDistrictList" headerKey="0"
-                      headerValue="%{getText('select_district.label')}" cssStyle="width:99%;"/></td>
-        </s:else>
-    </tr>
-    <tr>
-        <td width="200px" style="border-top:none;border-bottom:none"></td>
-        <td colspan="2"><label>ප්‍රාදේශීය ලේකම් කොට්ඨාශය /<br>பிரதேச செயளாளா் பிரிவு/<br>Divisional Secretariat</label>
-        </td>
-        <td colspan="6" class="table_reg_cell_02">
-            <s:if test="#parent.motherDSDivision.dsDivisionUKey > 0">
-                <s:select id="motherDSDivisionId" name="motherDSDivisionId" list="allDSDivisionList"
-                          headerKey="#parent.motherDSDivision.dsDivisionUKey" cssStyle="width:99%;"/>
+        <%--<tr>
+            <td width="200px" style="border-top:none; border-bottom:none;"></td>
+            <td colspan="2" class="table_reg_cell_02" style="border-top:1px solid #000;"><label>දිස්ත්‍රික්කය /<br>மாவட்டம்
+                /<br>District</label></td>
+            <td colspan="6" class="table_reg_cell_02" style="border-top:1px solid #000;">
+                <s:if test="#parent.motherDSDivision.district.districtUKey >0">
+                <s:select id="motherDistrictId" name="motherDistrictId" list="allDistrictList" cssStyle="width:99%;"/></td>
             </s:if>
             <s:else>
-                <s:select id="motherDSDivisionId" name="motherDSDivisionId" list="allDSDivisionList"
-                          headerKey="0" headerValue="%{getText('select_ds_division.label')}" cssStyle="width:99%;"/>
+                <s:select id="motherDistrictId" name="motherDistrictId" list="allDistrictList" headerKey="0"
+                          headerValue="%{getText('select_district.label')}" cssStyle="width:99%;"/></td>
             </s:else>
-            <s:textfield id="dsDivisionLabel" value="%{getText('select_ds_division.label')}" cssStyle="display:none;"/>
-        </td>
-    </tr>
-    <tr>
-        <td width="200px" style="border-top:none"/>
-        <td colspan="2">
-            ග්‍රාම නිළධාරී කොටිඨාශය /<br/>
-            Grama Niladhari Division in ta/<br/>
-            Grama Niladhari Division
-        </td>
-        <td colspan="6">
-            <s:select id="gnDivisionId" name="gnDivisionId" value="%{gnDivisionId}" list="gnDivisionList"
-                      cssStyle="float:left;  width:99%; margin:2px 5px;" headerKey="0"
-                      headerValue="%{getText('select.gn.division')}"/>
-        </td>
-    </tr>
+        </tr>
+        <tr>
+            <td width="200px" style="border-top:none;border-bottom:none"></td>
+            <td colspan="2"><label>ප්‍රාදේශීය ලේකම් කොට්ඨාශය /<br>பிரதேச செயளாளா் பிரிவு/<br>Divisional Secretariat</label>
+            </td>
+            <td colspan="6" class="table_reg_cell_02">
+                <s:if test="#parent.motherDSDivision.dsDivisionUKey > 0">
+                    <s:select id="motherDSDivisionId" name="motherDSDivisionId" list="allDSDivisionList"
+                              headerKey="#parent.motherDSDivision.dsDivisionUKey" cssStyle="width:99%;"/>
+                </s:if>
+                <s:else>
+                    <s:select id="motherDSDivisionId" name="motherDSDivisionId" list="allDSDivisionList"
+                              headerKey="0" headerValue="%{getText('select_ds_division.label')}" cssStyle="width:99%;"/>
+                </s:else>
+                <s:textfield id="dsDivisionLabel" value="%{getText('select_ds_division.label')}" cssStyle="display:none;"/>
+            </td>
+        </tr>
+        <tr>
+            <td width="200px" style="border-top:none"/>
+            <td colspan="2">
+                ග්‍රාම නිළධාරී කොටිඨාශය /<br/>
+                Grama Niladhari Division in ta/<br/>
+                Grama Niladhari Division
+            </td>
+            <td colspan="6">
+                <s:select id="gnDivisionId" name="gnDivisionId" value="%{gnDivisionId}" list="gnDivisionList"
+                          cssStyle="float:left;  width:99%; margin:2px 5px;" headerKey="0"
+                          headerValue="%{getText('select.gn.division')}"/>
+            </td>
+        </tr>--%>
     <tr>
         <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i"
                                                                                                      value="#i+1"/>
@@ -713,7 +787,7 @@ function commonTags() {
 <s:hidden id="error16" value="%{getText('enter.fatherCountry.label')}"/>
 <s:hidden id="error17" value="%{getText('enter.motherCountry.label')}"/>
 <s:hidden id="selectGNDivision" value="%{getText('select.gn.division')}"/>
-
+<s:hidden id="maxLengthError" value="%{getText('error.max.length')}"/>
 
 </div>
 <%-- Styling Completed --%>
