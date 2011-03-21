@@ -87,7 +87,7 @@ $(function() {
 $(function() {
     var currentYear = new Date().getFullYear();
 
-    $('img#father_ilp').bind('click', function(evt1) {
+    $('img#father_lookup').bind('click', function(evt1) {
         var id1 = $("input#father_pinOrNic").attr("value");
         var datePicker = $('#fatherDatePicker');
         var error = document.getElementById('error10').value;
