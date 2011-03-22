@@ -106,7 +106,8 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      *
      * @return
      */
-    public String initBirthDeclarationApproval() {
+    public String
+    initBirthDeclarationApproval() {
         birthRegisterApproval();
         return SUCCESS;
     }
