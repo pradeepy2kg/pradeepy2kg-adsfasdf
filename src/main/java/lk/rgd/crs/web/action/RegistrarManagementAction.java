@@ -351,6 +351,7 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
         } else {
             districtList = districtDAO.getDistrictNames(language, user);
             dsDivisionList = dsDivisionDAO.getDSDivisionNames(districtId, language, user);
+
         }
         switch (assignmentType) {
             //requesting death /birth division list
