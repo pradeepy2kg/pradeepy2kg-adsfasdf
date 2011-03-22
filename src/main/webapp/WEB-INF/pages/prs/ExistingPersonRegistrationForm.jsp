@@ -19,6 +19,7 @@
     function validate() {
         var returnVal = true;
         var domObject;
+        var domObject1;
 
         domObject = document.getElementById("submitDatePicker");
         if (isFieldEmpty(domObject)) {
@@ -60,12 +61,22 @@
             }
         }
 
+        domObject1 = document.getElementById("submitDatePicker");
         domObject = document.getElementById("birthDatePicker");
         if (isFieldEmpty(domObject)) {
             isEmpty(domObject, "", 'error4');
         } else {
             isDate(domObject.value, 'error0', 'error4');
         }
+       //
+        if(!isFieldEmpty(domObject) && !isFieldEmpty(domObject1)){
+            if(domObject.value>domObject1.value){
+                  errormsg = errormsg + "\n" + document.getElementById('error18').value;
+            }
+        }
+
+
+
 
         domObject = document.getElementById("placeOfBirth");
         if (isFieldEmpty(domObject)) {
@@ -789,4 +800,5 @@
 <s:hidden id="error15" value="%{getText('er.label.fatherPINorNIC')}"/>
 <s:hidden id="error16" value="%{getText('er.label.personRace')}"/>
 <s:hidden id="error17" value="%{getText('er.label.civilStatus')}"/>
+<s:hidden id="error18" value="%{getText('er.label.birthAcceptDate')}"/>
 </div>
