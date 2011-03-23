@@ -211,6 +211,10 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
     public String marriageExtractInit() {
         marriage = marriageRegistrationService.getMarriageRegisterByIdUKey(idUKey, user, Permission.PRINT_MARRIAGE_EXTRACT);
         populateLocationList(marriage);
+        if (locationList == null || locationList.isEmpty() || userList == null || userList.isEmpty()) {
+            addActionError(getText("error.nolocations.or.noassigned.user"));
+            return ERROR;
+        }
         populateMarriageExtract(marriage);
         return SUCCESS;
     }
@@ -251,7 +255,7 @@ public class MarriageRegisterSearchAction extends ActionSupport implements Sessi
                 }
             }
         }
-        if (userList != null) {
+        if (userList != null && !userList.isEmpty()) {
             register.setExtractCertifiedUser(userDAO.getUserByPK(userList.keySet().iterator().next()));
         }
     }
