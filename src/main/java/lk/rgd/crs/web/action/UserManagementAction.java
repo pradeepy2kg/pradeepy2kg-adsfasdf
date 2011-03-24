@@ -133,9 +133,9 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     }
 
     public UserManagementAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, RoleDAO roleDAO, UserManager service, CourtDAO courtDAO,
-        BDDivisionDAO bdDivisionDAO, MasterDataManagementService dataManagementService, MRDivisionDAO mrDivisionDAO, LocationDAO locationDAO,
-        AppParametersDAO appParametersDAO, UserLocationDAO userLocationDAO, UserDAO userDAO,
-        BirthRecordsIndexer birthRecordsIndexer, DeathRecordsIndexer deathRecordsIndexer, PRSRecordsIndexer prsRecordsIndexer,GNDivisionDAO gnDivisionDAO) {
+                                BDDivisionDAO bdDivisionDAO, MasterDataManagementService dataManagementService, MRDivisionDAO mrDivisionDAO, LocationDAO locationDAO,
+                                AppParametersDAO appParametersDAO, UserLocationDAO userLocationDAO, UserDAO userDAO,
+                                BirthRecordsIndexer birthRecordsIndexer, DeathRecordsIndexer deathRecordsIndexer, PRSRecordsIndexer prsRecordsIndexer, GNDivisionDAO gnDivisionDAO) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.roleDAO = roleDAO;
@@ -446,16 +446,16 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                     location = null;
                 }
                 break;
-             case 7:
+            case 7:
                 districtEn = districtDAO.getNameByPK(userDistrictId, AppConstants.ENGLISH);
                 dsDivisionEn = dsDivisionDAO.getNameByPK(dsDivisionId, AppConstants.ENGLISH);
 /*
                                      gnDivisionNameList=gnDivisionDAO.getAllGNDivisions();
 */
-                 if (setNull) {
+                if (setNull) {
                     gnDivision = null;
                 }
-                break;  
+                break;
 
         }
     }
@@ -516,7 +516,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 break;
             case 2:
                 DSDivision checkDSDivision = dsDivisionDAO.getDSDivisionByCode(dsDivision.getDivisionId(),
-                    districtDAO.getDistrict(userDistrictId));
+                        districtDAO.getDistrict(userDistrictId));
                 if (checkDSDivision != null) {
                     addFieldError("duplicateIdNumberError", "DS Division Id Number Already Used. Please Insert Another Number");
                     logger.debug("Duplicate District code number is :", checkDSDivision.getDivisionId());
@@ -599,10 +599,10 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 }
                 break;
             case 6:
-                Location checkLocation = locationDAO.getLocationByCodeAndByDSDivisionID(location.getLocationCode(), dsDivisionId);
+                Location checkLocation = locationDAO.getLocationByCode(location.getLocationCode());
                 if (checkLocation != null) {
-                    addFieldError("duplicateIdNumberError", "Location Code and DSDivision ID Already Used. Please check again");
-                    logger.debug("Duplicate Location code number is :", checkLocation.getLocationCode());
+                    addFieldError("duplicateIdNumberError", "Location Code Already Used. Please check again");
+                    logger.debug("Duplicate Location code number is : {} : duplicated", checkLocation.getLocationCode());
                     checkDuplicate++;
                 }
                 if (checkDuplicate == 0) {
@@ -618,9 +618,9 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                     }
                 }
                 break;
-             case 7:
-                GNDivision checkGNDivision = gnDivisionDAO.getGNDivisionByCode(gnDivision.getGnDivisionId(),dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
-                
+            case 7:
+                GNDivision checkGNDivision = gnDivisionDAO.getGNDivisionByCode(gnDivision.getGnDivisionId(), dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
+
                 if (checkGNDivision != null) {
                     addFieldError("duplicateIdNumberError", "GNDivision Id Number Already Used. Please Insert Another Number");
                     logger.debug("Duplicate District code number is :", checkGNDivision.getGnDivisionId());
@@ -629,10 +629,10 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 if (checkDuplicate == 0) {
                     gnDivision.setDsDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
                     gnDivision.setActive(true);
-                    try{
-                         dataManagementService.addGNDivision(gnDivision, currentUser);
-                    }catch(CRSRuntimeException e){
-                        logger.error("GN division adding error :{gnDivisionId}",10);
+                    try {
+                        dataManagementService.addGNDivision(gnDivision, currentUser);
+                    } catch (CRSRuntimeException e) {
+                        logger.error("GN division adding error :{gnDivisionId}", 10);
                         addActionError(getText("new.gnDivision.add"));
                     }
                     logger.debug("New Id of New Division {} is   :{}", gnDivision.getEnGNDivisionName(), gnDivision.getGnDivisionId());
@@ -848,9 +848,9 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         StringBuffer buffer = new StringBuffer();
         Random random = new Random();
         char[] charArray = new char[]{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
-            'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G',
-            'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7',
-            '8', '9'};
+                'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G',
+                'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7',
+                '8', '9'};
         for (int i = 0; i < length; i++) {
             buffer.append(charArray[random.nextInt(charArray.length)]);
         }
@@ -1342,7 +1342,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         this.gnDivisionId = gnDivisionId;
     }
 
-     public List<GNDivision> getGnDivisionNameList() {
+    public List<GNDivision> getGnDivisionNameList() {
         return gnDivisionNameList;
     }
 
