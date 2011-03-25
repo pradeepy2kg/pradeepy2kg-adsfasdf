@@ -75,7 +75,7 @@ public class DeathRegister implements Serializable, Cloneable {
 
         REJECTED,  // 2 - An death registration rejected by the ADR
 
-        ARCHIVED_CERT_GENERATED, // 3 A certificate is printed
+        ARCHIVED_CERT_GENERATED, // 3 A certificate is printed   (Mark as printed)
 
         ARCHIVED_ALTERED,// 4 record is archived after an alteration
 
