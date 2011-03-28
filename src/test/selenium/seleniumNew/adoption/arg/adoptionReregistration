@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>adoptionReregistration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">adoptionReregistration</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/ecivil/adoption/eprAdoptionRegistrationHome.do</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>adoption_re_registration.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>idUKey</td>
+	<td>4</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprAdoptionReRegistrationFindEntry_search</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>bdfSerialNo</td>
+	<td>2011000019</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>submitDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>submitDatePicker</td>
+	<td>2011-03-22</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>dsDivisionId</td>
+	<td>label=6 : Kolonnawa</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//select[@id='dsDivisionId']/option[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>placeOfBirth</td>
+	<td>රෝහලේදී</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>placeOfBirthEnglish</td>
+	<td>In hospital</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>childFullNameEnglish</td>
+	<td>saman</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>childRank</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>childBirthWeight</td>
+	<td>2.6</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-registration-form-1_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>father_pinOrNic</td>
+	<td>821511291V</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>fatherFullNameInEnglish</td>
+	<td>amal</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>fatherDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>fatherDatePicker</td>
+	<td>1982-12-23</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>fatherRaceId</td>
+	<td>label=1 : Sinhalese</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>fatherPlaceOfBirth</td>
+	<td>kolonna</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>mother_pinOrNic</td>
+	<td>860000000V</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherFullName</td>
+	<td>අනුලා</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherFullNameInEnglish</td>
+	<td>anula</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>motherDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherDatePicker</td>
+	<td>1986-03-18</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherAgeAtBirth</td>
+	<td>25</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherAddress</td>
+	<td>no.5 , kolonna</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>motherDistrictId</td>
+	<td>label=11 : Colombo</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//select[@id='motherDistrictId']/option[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>motherDSDivisionId</td>
+	<td>label=6 : Kolonnawa</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//select[@id='motherDSDivisionId']/option[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>gnDivisionId</td>
+	<td>label=10 : Sedawatta</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>motherRaceId</td>
+	<td>label=1 : Sinhalese</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>birth-registration-form-2_parent_motherAdmissionNo</td>
+	<td>145</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>admitDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>admitDatePicker</td>
+	<td>2</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>admitDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>admitDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>admitDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>birth-registration-form-2_parent_motherAdmissionNo</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherPhoneNo</td>
+	<td>0772897132</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherEmail</td>
+	<td>evrv@gmail.com</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-registration-form-2_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>placeOfMarriage</td>
+	<td>kolonna</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>marriageDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>marriageDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>marriageDatePicker</td>
+	<td>2009-05-05</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>grandFatherNICorPIN</td>
+	<td>420111321V</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>grandFatherFullName</td>
+	<td>ranasimgha</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>grandFatherBirthPlace</td>
+	<td>kaduwela</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>informantTypeFATHER</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>informantPhoneNo</td>
+	<td>071234987</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>informantEmail</td>
+	<td>bgfb@yahoo.com</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>informDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>informDatePicker</td>
+	<td>2011-03-22</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-registration-form-3_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>notifyingAuthorityPIN</td>
+	<td>707433191V</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>notifyingAuthorityName</td>
+	<td>kasun</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>notifyingAuthorityAddress</td>
+	<td>n0.5 , kolonna</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>modifiedDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>modifiedDatePicker</td>
+	<td>2011-03-22</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-registration-form-4_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='birth-register-approval-footer']/a[3]/label</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
