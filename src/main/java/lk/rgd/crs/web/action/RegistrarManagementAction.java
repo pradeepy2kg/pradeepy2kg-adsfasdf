@@ -162,7 +162,7 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
         }
         districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
         dsDivisionList = dsDivisionDAO.getAllDSDivisionNames(districtId, user.getPrefLanguage(), user);
-        dsDivisionId = -1;
+       dsDivisionId = -1;
 
         return SUCCESS;
     }
