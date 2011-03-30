@@ -4,12 +4,12 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="" />
-<title>deathRegistrationFull</title>
+<title>deathRegistration</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">deathRegistrationFull</td></tr>
+<tr><td rowspan="1" colspan="3">deathRegistration</td></tr>
 </thead><tbody>
 <tr>
 	<td>clickAndWait</td>
@@ -24,7 +24,7 @@
 <tr>
 	<td>type</td>
 	<td>eprLogin_userName</td>
-	<td>adr-kalutara-panadura</td>
+	<td>deo-colombo-colombo</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -50,7 +50,7 @@
 <tr>
 	<td>type</td>
 	<td>deathSerialNo</td>
-	<td>2011000011</td>
+	<td>2011000019</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -80,22 +80,7 @@
 <tr>
 	<td>type</td>
 	<td>timePicker</td>
-	<td>12:55</td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>deathDistrictId</td>
-	<td>label=22 : Matale</td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>deathDistrictId</td>
-	<td>label=13 : Kalutara</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//option[@value='3']</td>
-	<td></td>
+	<td>23:23</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -115,12 +100,12 @@
 <tr>
 	<td>type</td>
 	<td>causeOfDeath</td>
-	<td>unknown</td>
+	<td>carpenter</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>placeOfBurial</td>
-	<td>pandura cemetry</td>
+	<td>moratuewa cemetry</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -134,18 +119,8 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>deathPersonNameOfficialLang</td>
-	<td>සමන්</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>deathPersonNameInEnglish</td>
-	<td>saman</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>deathPersonDOB</td>
-	<td></td>
+	<td>deathPerson_PINorNIC</td>
+	<td>860283614v</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -155,7 +130,7 @@
 <tr>
 	<td>type</td>
 	<td>deathPerson_PINorNIC</td>
-	<td>860283614v</td>
+	<td>860283615v</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -174,13 +149,63 @@
 </tr>
 <tr>
 	<td>type</td>
+	<td>deathPersonNameOfficialLang</td>
+	<td>කමල්</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>deathPersonNameInEnglish</td>
+	<td>kamal</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>deathPersonNameOfficialLang</td>
+	<td>කමල්</td>
+</tr>
+<tr>
+	<td>type</td>
 	<td>deathPersonPermanentAddress</td>
-	<td>no.16, kaluthara</td>
+	<td>n0.32 , moratuwa</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>deathPersonPermenentAddressDistrictId</td>
+	<td>label=11 : Colombo</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//select[@id='deathPersonPermenentAddressDistrictId']/option[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>deathPersonPermenentAddressDSDivisionId</td>
+	<td>label=3 : Colombo</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//select[@id='deathPersonPermenentAddressDSDivisionId']/option[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>deathPersonPermanentAddressGNDivision</td>
+	<td>label=15 : Modara</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>causeOfDeath</td>
+	<td></td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>deathPersonRank</td>
-	<td>farmer</td>
+	<td>carpenter</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>causeOfDeath</td>
+	<td>unknown</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -190,7 +215,7 @@
 <tr>
 	<td>type</td>
 	<td>deathPersonFatherFullName</td>
-	<td>wickaramanayaka</td>
+	<td>ranathunga</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -200,7 +225,7 @@
 <tr>
 	<td>type</td>
 	<td>deathPersonMotherFullName</td>
-	<td>deepika</td>
+	<td>asilin</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -214,28 +239,28 @@
 </tr>
 <tr>
 	<td>type</td>
+	<td>declarantFullName</td>
+	<td>ranathunga</td>
+</tr>
+<tr>
+	<td>type</td>
 	<td>declarant_pinOrNic</td>
 	<td>420683049V</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>declarantFullName</td>
-	<td>wickramanayaka</td>
-</tr>
-<tr>
-	<td>type</td>
 	<td>declarantAddress</td>
-	<td>no.4 , beruwala</td>
+	<td>no.12, modara</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>declarantPhone</td>
-	<td>0712934761</td>
+	<td>0712837162</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>declarantEMail</td>
-	<td>fgg@gmail.com</td>
+	<td>cde@gmail.com</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -255,17 +280,17 @@
 <tr>
 	<td>type</td>
 	<td>notifying_authority_NICorPIN</td>
-	<td>707433191V</td>
+	<td>821347192v</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>notifyingAuthorityName</td>
-	<td>amara</td>
+	<td>kasun</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>notifyingAuthorityAddress</td>
-	<td>no. 15 , panadura</td>
+	<td>no.15, grandpass</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -274,13 +299,13 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>link=8</td>
+	<td>submitDatePicker</td>
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>link=22</td>
-	<td></td>
+	<td>type</td>
+	<td>submitDatePicker</td>
+	<td>2011-03-22</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -289,17 +314,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=Approve</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='death-registration-details-footer']/div/a[1]/label</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>eprPrintDeathCertificate_2</td>
+	<td>//div[@id='death-registration-details-footer']/div/a/label</td>
 	<td></td>
 </tr>
 

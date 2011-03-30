@@ -50,7 +50,7 @@
 <tr>
 	<td>type</td>
 	<td>bdfSerialNo</td>
-	<td>2011000013</td>
+	<td>2011000001</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -75,17 +75,17 @@
 <tr>
 	<td>select</td>
 	<td>birthDivisionId</td>
-	<td>label=5 : Modara (Medical)</td>
+	<td>label=1 : Panadura (Medical)</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>placeOfBirth</td>
-	<td>ඔඑසිස් පෞද්ගලික රෝහල, මග්ගොන</td>
+	<td>රෝහලේදී</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>placeOfBirthEnglish</td>
-	<td>Oesis Private Rohala, Maggona</td>
+	<td>In hospital</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -95,12 +95,12 @@
 <tr>
 	<td>type</td>
 	<td>childFullNameEnglish</td>
-	<td>hashan Samantha</td>
+	<td>hashan samantha</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>childBirthWeight</td>
-	<td>1.8</td>
+	<td>2.6</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -115,7 +115,17 @@
 <tr>
 	<td>type</td>
 	<td>father_pinOrNic</td>
+	<td>821511291V</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>father_pinOrNic</td>
 	<td>752022100V</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>fatherFullName</td>
+	<td>hirantha</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -128,11 +138,6 @@
 	<td>rathnayaka mudiyanselage hirantha oshada</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>fatherPlaceOfBirth</td>
-	<td>1975-07-19</td>
-</tr>
-<tr>
 	<td>click</td>
 	<td>fatherDatePicker</td>
 	<td></td>
@@ -143,14 +148,14 @@
 	<td>1975-07-19</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>fatherPlaceOfBirth</td>
-	<td>ragama</td>
-</tr>
-<tr>
 	<td>select</td>
 	<td>fatherRaceId</td>
 	<td>label=1 : Sinhalese</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>fatherPlaceOfBirth</td>
+	<td>kaluthara</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -185,22 +190,17 @@
 <tr>
 	<td>type</td>
 	<td>motherAddress</td>
-	<td>3A temple road, maggona<br /></td>
+	<td>45/1 pinwaththa mawatha , beruwala<br /></td>
 </tr>
 <tr>
 	<td>select</td>
 	<td>motherDistrictId</td>
-	<td>label=11 : Colombo</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//select[@id='motherDistrictId']/option[2]</td>
-	<td></td>
+	<td>label=13 : Kalutara</td>
 </tr>
 <tr>
 	<td>select</td>
 	<td>motherDSDivisionId</td>
-	<td>label=3 : Colombo</td>
+	<td>label=3 : Panadura</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -210,12 +210,37 @@
 <tr>
 	<td>select</td>
 	<td>gnDivisionId</td>
-	<td>label=15 : Modara</td>
+	<td>label=90 : Wellawatta South</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>birth-registration-form-2_parent_motherAdmissionNo</td>
-	<td>124</td>
+	<td>123</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherPhoneNo</td>
+	<td>0772897132</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherEmail</td>
+	<td>asd@gmail.com</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherPlaceOfBirth</td>
+	<td>බේරුවල</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>motherRaceId</td>
+	<td>label=1 : Sinhalese</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>admitDatePicker</td>
+	<td></td>
 </tr>
 <tr>
 	<td>click</td>
@@ -225,17 +250,7 @@
 <tr>
 	<td>type</td>
 	<td>admitDatePicker</td>
-	<td>2011-03-12</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>motherPhoneNo</td>
-	<td>0112873452</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>motherEmail</td>
-	<td>dffd@gmail.com</td>
+	<td>2011-03-13</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -245,7 +260,7 @@
 <tr>
 	<td>type</td>
 	<td>placeOfMarriage</td>
-	<td>maggona</td>
+	<td>panadura</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -255,57 +270,37 @@
 <tr>
 	<td>type</td>
 	<td>marriageDatePicker</td>
-	<td>2009-01-02</td>
+	<td>2009-05-05</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>grandFatherNICorPIN</td>
-	<td>420683049V</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>grandFatherBirthYear</td>
-	<td></td>
+	<td>420111321V</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>grandFatherFullName</td>
-	<td>චන්දා ඩයස් වික්‍රමනායක<br />chandra dias wickramanayaka</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>grandFatherFullName</td>
-	<td>chandra dias wickramanayaka</td>
+	<td>wickramanayaka</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>grandFatherBirthPlace</td>
-	<td>maggona</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>greatGrandFatherFullName</td>
-	<td>හේරත් බණ්ඩාර මුදියන්සේලාගේ ජයසෝම බණ්ඩාරනායක<br /></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>greatGrandFatherBirthYear</td>
-	<td>1904</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>greatGrandFatherBirthPlace</td>
-	<td>beruwala</td>
+	<td>ragama</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>informantTypeMOTHER</td>
+	<td>informantTypeFATHER</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>informantName</td>
-	<td>lankeshwara chitha dharmawathi</td>
+	<td>informantPhoneNo</td>
+	<td>0112912834</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>informantEmail</td>
+	<td>DFFD@GMAIL.COM</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -325,22 +320,12 @@
 <tr>
 	<td>type</td>
 	<td>notifyingAuthorityPIN</td>
-	<td>760860689V</td>
+	<td>707433191V</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>notifyingAuthorityName</td>
-	<td>සේවිඩවාඩි සිත්ති රහුමා බිබි<br />sewidawadi siththi rahuma bibi</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>notifyingAuthorityName</td>
-	<td>sewidawadi siththi rahuma bibi</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>notifyingAuthorityAddress</td>
-	<td>&quot;babi&quot; waththa pahala, beruwala</td>
+	<td>kasun</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -363,28 +348,33 @@
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>ignoreWarningsId</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>approveButtonId</td>
-	<td></td>
-</tr>
-<tr>
 	<td>clickAndWait</td>
 	<td>//div[@id='birth-register-approval-footer']/a[2]/label</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@id='birth-confirmation-print-form-outer-page']/div[7]/a</td>
+	<td>//div[@id='birth-confirmation-print-form-outer-page']/div[7]/a/label</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>link=Go To Main</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth_confirmation_print.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>birth-confirmation-print-form_printedtrue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-confirmation-print-form_0</td>
 	<td></td>
 </tr>
 <tr>
@@ -395,7 +385,7 @@
 <tr>
 	<td>type</td>
 	<td>SerialNo</td>
-	<td>43</td>
+	<td>1</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -403,24 +393,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>skipChangesCBox</td>
+	<td>clickAndWait</td>
+	<td>next</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>searchOk</td>
+	<td>birth-confirmation-form-2_0</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
 	<td>birth-confirmation-form3_confirmant_confirmantTypeFATHER</td>
 	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>confirmantFullName</td>
-	<td>Rathnayaka mudiyanselage hirantha oshada</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -443,6 +428,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>click</td>
+	<td>ignoreWarning</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>approve</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='birth-register-approval-footer']/table/tbody/tr/td[2]/a/label</td>
+	<td></td>
+</tr>
+<tr>
 	<td>clickAndWait</td>
 	<td>eprDirectPrintBirthCertificate_2</td>
 	<td></td>
@@ -450,6 +450,21 @@
 <tr>
 	<td>clickAndWait</td>
 	<td>//div[@id='birth-register-approval-footer']/table/tbody/tr/td[1]/a/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>print_birthcertificate.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>birth-certificate-print-form_printedtrue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-certificate-print-form_0</td>
 	<td></td>
 </tr>
 

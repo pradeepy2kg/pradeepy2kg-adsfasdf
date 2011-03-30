@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>marriageRegDeo</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">marriageRegDeo</td></tr>
+</thead><tbody>
+<tr>
+	<td>clickAndWait</td>
+	<td>logout-button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/ecivil/</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>type</td>
+	<td>eprLogin_userName</td>
+	<td>deo-colombo-colombo</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_password</td>
+	<td>password</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprLogin_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=MARRIAGE REGISTRATION</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>menu.marriage.registration</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>marriageDatePick</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>marriageDatePick</td>
+	<td>2011-03-24</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>regPIN</td>
+	<td>763421976v</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>regPlaceInOfficialLang</td>
+	<td>රෙජිස්ට්‍රාර් කන්තෝරුව</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>regPlaceInEnglishLang</td>
+	<td>Registrars Office</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>regNameInOfficialLang</td>
+	<td>සමන්</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>regNameInEnglishLang</td>
+	<td>saman</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>malePIN</td>
+	<td>752022100V</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>dateOfBirthMale</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>dateOfBirthMale</td>
+	<td>1975-07-19</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>ageMale</td>
+	<td>35</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>ageMale</td>
+	<td>35</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>femalePIN</td>
+	<td>898261416V</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>dateOfBirthFemale</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>dateOfBirthFemale</td>
+	<td>1989-11-20</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>ageFemale</td>
+	<td>21</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>raceMale</td>
+	<td>label=1 : Sinhalese</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>raceFemale</td>
+	<td>label=1 : Sinhalese</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>nameOfficialMale</td>
+	<td>හිරන්ත ඹිෂධ<br /></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name_english_Male</td>
+	<td>hirantha oshada</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>nameOfficialFemale</td>
+	<td>චිතා ධර්මවතී<br /></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name_english_Female</td>
+	<td>chitha dharmawathi</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>addressMale</td>
+	<td>no.23 , maradana</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>addressFemale</td>
+	<td>no.4, kirulapana</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>serialNumber</td>
+	<td>2011000051</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>registrationDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>registrationDatePicker</td>
+	<td>2011-03-26</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>scannedImage</td>
+	<td>/home/tharanga/Desktop/death_sin/death_sin.png</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprMarriageRegistrationInit_eprRegisterNewMarriage</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

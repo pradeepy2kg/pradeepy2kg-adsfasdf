@@ -12,6 +12,32 @@
 <tr><td rowspan="1" colspan="3">adoptionReregistration</td></tr>
 </thead><tbody>
 <tr>
+	<td>clickAndWait</td>
+	<td>logout-button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/ecivil/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_userName</td>
+	<td>arg-western</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_password</td>
+	<td>password</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprLogin_0</td>
+	<td></td>
+</tr>
+
+<tr>
 	<td>open</td>
 	<td>/ecivil/adoption/eprAdoptionRegistrationHome.do</td>
 	<td></td>

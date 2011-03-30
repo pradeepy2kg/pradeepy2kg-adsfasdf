@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>birthAlteration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">birthAlteration</td></tr>
+</thead><tbody>
+<tr>
+	<td>clickAndWait</td>
+	<td>logout-button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/ecivil/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_userName</td>
+	<td>adr-kalutara-panadura</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_password</td>
+	<td>password</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprLogin_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=ALTERATION</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth_alteration.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>bdfSerialNoIdSearch</td>
+	<td>2</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprBirthAlterationSearch_search</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>acceptanceDate</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>acceptanceDate</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>acceptanceDate</td>
+	<td>2011-03-27</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>informant-info-max</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>informant-info-min</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>errors-info-max</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>errors-info-min</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>mother-info-max</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>mother-info-check</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherPlaceOfBirthId</td>
+	<td>beruwala</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprBirthAlteration_birthAlteration_comments</td>
+	<td>forgot to add some data</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>eprBirthAlteration_birthAlteration_bcOfMother</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>declarantTypeFATHER</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>declarantTypeMOTHER</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Declarant_pinOrNic</td>
+	<td>898261416V</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>declarantName</td>
+	<td>Lankeshwara Dharmawathi</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>declarantAddress</td>
+	<td>45/1 PINWATHTHA MAWATHA , BERUWALA</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprBirthAlteration_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth_alteration_pending_approval.title</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

@@ -4,12 +4,12 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="" />
-<title>birthRegistrationDeo</title>
+<title>birthRegistrationParts</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">birthRegistrationDeo</td></tr>
+<tr><td rowspan="1" colspan="3">birthRegistrationParts</td></tr>
 </thead><tbody>
 <tr>
 	<td>clickAndWait</td>
@@ -17,9 +17,14 @@
 	<td></td>
 </tr>
 <tr>
+	<td>open</td>
+	<td>/ecivil/</td>
+	<td></td>
+</tr>
+<tr>
 	<td>type</td>
 	<td>eprLogin_userName</td>
-	<td>deo-colombo-colombo</td>
+	<td>adr-kalutara-panadura</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -39,18 +44,13 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=BIRTH REGISTRATION</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
 	<td>birth_registration.label</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>bdfSerialNo</td>
-	<td>2011000003</td>
+	<td>2011000002</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -75,7 +75,7 @@
 <tr>
 	<td>select</td>
 	<td>birthDivisionId</td>
-	<td>label=7 : Maradana (Medical)</td>
+	<td>label=1 : Panadura (Medical)</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -90,12 +90,17 @@
 <tr>
 	<td>type</td>
 	<td>childFullNameOfficialLang</td>
-	<td>මොහොමඩ් මුස්තරී&nbsp;&nbsp;රාජාබිඩින්<br /></td>
+	<td>සමන් ප්‍රියශාන් යෝෂි<br /></td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>childFullNameEnglish</td>
-	<td>mohomad musthari rajabidin</td>
+	<td>saman priyashan yoshi</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>childBirthWeight</td>
+	<td>2.8</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -103,64 +108,94 @@
 	<td>1</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>childBirthWeight</td>
-	<td>2.3</td>
-</tr>
-<tr>
 	<td>clickAndWait</td>
 	<td>birth-registration-form-1_0</td>
 	<td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>fatherFullName</td>
-	<td>අල්හාජ් මොහොමඩ් නිජාබිඩින් මොහොමඩ් රාජාබිඩින්<br /></td>
+	<td>select</td>
+	<td>fatherCountryId</td>
+	<td>label=JP : Japan</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>father_pinOrNic</td>
-	<td>663541501V</td>
+	<td>fatherPassportNo</td>
+	<td>D1266723</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>fatherFullName</td>
+	<td>ෂින් ක්වාන් යෝෂි<br /></td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>fatherFullNameInEnglish</td>
-	<td>alhaj mohomad nijabidin mohomad rajabidin</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>fatherDatePicker</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>fatherDatePicker</td>
-	<td>1966-12-23</td>
+	<td>shin kwan yoshi</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>fatherPlaceOfBirth</td>
-	<td>beruwala</td>
+	<td>1982-12-23</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>fatherDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>fatherDatePicker</td>
+	<td>1982-12-23</td>
 </tr>
 <tr>
 	<td>select</td>
 	<td>fatherRaceId</td>
-	<td>label=4 : Sri Lankan Moor</td>
+	<td>label=11 : Other - Foreigners</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>fatherPlaceOfBirth</td>
+	<td>යොකොහාමා ජපානය&nbsp; &nbsp; </td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>motherCountryId</td>
+	<td>label=SV : El Salvador</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherPassportNo</td>
+	<td>M1602232</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>motherCountryId</td>
+	<td>label=SK : Slovakia</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherPassportNo</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>motherCountryId</td>
+	<td>label=Select Country</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>mother_pinOrNic</td>
-	<td>566394189V</td>
+	<td>875968555V</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>motherFullName</td>
-	<td>මොහොමඩ් රජාබිඩින් ෆාතිමා රෂීදු රාජාබිඩින්<br /></td>
+	<td>වේඩික්කාරගේ සුමනාවතී<br /></td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>motherFullNameInEnglish</td>
-	<td>mohomad rajabidin fathima rashidu rajabidin</td>
+	<td>wedikkarage sumanawathi</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -170,27 +205,32 @@
 <tr>
 	<td>type</td>
 	<td>motherDatePicker</td>
-	<td>1956-05-17</td>
+	<td>1987-03-01</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>motherAgeAtBirth</td>
-	<td>44</td>
+	<td>24</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherAddress</td>
+	<td>23, temple Garden road , rahulagama<br /></td>
 </tr>
 <tr>
 	<td>select</td>
 	<td>motherDistrictId</td>
-	<td>label=11 : Colombo</td>
+	<td>label=13 : Kalutara</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//select[@id='motherDistrictId']/option[2]</td>
+	<td>//select[@id='motherDistrictId']/option[4]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>select</td>
 	<td>motherDSDivisionId</td>
-	<td>label=3 : Colombo</td>
+	<td>label=3 : Panadura</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -200,32 +240,32 @@
 <tr>
 	<td>select</td>
 	<td>gnDivisionId</td>
-	<td>label=165 : Maradana</td>
+	<td>label=5 : Kollupitiya</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>motherRaceId</td>
+	<td>label=1 : Sinhalese</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherPlaceOfBirth</td>
+	<td>kaluthara</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>birth-registration-form-2_parent_motherAdmissionNo</td>
-	<td>125</td>
+	<td>124</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>motherPhoneNo</td>
-	<td>0772897132</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>admitDatePicker</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>admitDatePicker</td>
-	<td>2011-03-13</td>
+	<td>0112756123</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>motherEmail</td>
-	<td>ASDac@GMAIL.COM</td>
+	<td>sddfa@gmail.com</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -235,7 +275,7 @@
 <tr>
 	<td>type</td>
 	<td>placeOfMarriage</td>
-	<td>maradana</td>
+	<td>nugegoda</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -250,27 +290,27 @@
 <tr>
 	<td>type</td>
 	<td>marriageDatePicker</td>
-	<td>2009-05-05</td>
+	<td>2009-03-02</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>grandFatherNICorPIN</td>
+	<td>411112345X</td>
 </tr>
 <tr>
 	<td>click</td>
 	<td>grandFatherBirthYear</td>
 	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>grandFatherBirthYear</td>
-	<td>1921</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>grandFatherFullName</td>
-	<td>mohomad rajabidin<br /></td>
+	<td>ranasinghe</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>grandFatherBirthPlace</td>
-	<td>beruwala</td>
+	<td>rahulagama</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -279,23 +319,13 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>informantAddress</td>
-	<td>no.16 , maradana</td>
-</tr>
-<tr>
-	<td>type</td>
 	<td>informantPhoneNo</td>
-	<td>0112938264</td>
+	<td>0112873452</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>informantEmail</td>
-	<td>hhu@kkk.aom</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>informDatePicker</td>
-	<td></td>
+	<td>qwe@gmail.com</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -314,18 +344,13 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>notifyingAuthorityPIN</td>
-	<td>656582541v</td>
-</tr>
-<tr>
-	<td>type</td>
 	<td>notifyingAuthorityName</td>
 	<td>amal</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>notifyingAuthorityAddress</td>
-	<td>no.14, beruwala</td>
+	<td>notifyingAuthorityPIN</td>
+	<td>656582541v</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -344,7 +369,87 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@id='birth-register-approval-footer']/a[2]/label</td>
+	<td>link=Go To Main</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth_register_approval.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//a[@id='eprApproveBulk_']/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-registration-form-1_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-registration-form-2_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-registration-form-3_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>notifyingAuthorityName</td>
+	<td>kAMAL</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-registration-form-4_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='birth-register-approval-footer']/a[3]/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth_confirmation_print.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-confirmation-print-form_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth_register_approval.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//td[8]/a/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth_confirmation_print.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//a[@id='eprBirthConfirmationBulkPrint_']/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='birth-confirmation-print-form-outer-page']/div[7]/a/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth_confirmation.label</td>
 	<td></td>
 </tr>
 

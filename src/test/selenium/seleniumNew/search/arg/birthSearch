@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>birthSearch</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">birthSearch</td></tr>
+</thead><tbody>
+<tr>
+	<td>clickAndWait</td>
+	<td>logout-button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/ecivil/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_userName</td>
+	<td>arg-western</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_password</td>
+	<td>password</td>
+</tr>
+
+<tr>
+	<td>clickAndWait</td>
+	<td>eprLogin_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=SEARCH RECORDS</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth_certificate_search.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>applicationNo</td>
+	<td>001</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>dateOfSubmission</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>dateOfSubmission</td>
+	<td>2011-03-25</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>applicantFullName</td>
+	<td>kamal thushara</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>applicantAddress</td>
+	<td>no.7 , panadura</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>searchFullNameOfficialLang</td>
+	<td>හෂාන් සමන්ත<br /></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>searchFullNameEnglish</td>
+	<td>HASHAN SAMANTHA</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>birth-certificate-search-form-1_certSearch_search_gender</td>
+	<td>label=Male</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>noOfCopies</td>
+	<td>4</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>fatherFullName</td>
+	<td>rathnayaka mudiyanselage hirantha oshada</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherFullName</td>
+	<td>lankeshwara chitha dharmawathi</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>dateOdEvent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>dateOdEvent</td>
+	<td>2011-03-20</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>placeOfEvent</td>
+	<td>in hospital</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>districtId</td>
+	<td>label=13 : Kalutara</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//option[@value='3']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>birthDivisionId</td>
+	<td>label=1 : Panadura (Medical)</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>searchSerialNo</td>
+	<td>2011000001</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>stampCharges</td>
+	<td>15</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>birth-certificate-search-form-1_certSearch_search_searchPIN</td>
+	<td>201107900011</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-certificate-search-form-1_0</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
