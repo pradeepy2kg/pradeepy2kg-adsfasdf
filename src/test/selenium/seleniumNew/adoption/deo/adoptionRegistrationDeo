@@ -4,12 +4,12 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="" />
-<title>adoptionRegistrationParts</title>
+<title>adoptionRegistration</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">adoptionRegistrationParts</td></tr>
+<tr><td rowspan="1" colspan="3">adoptionRegistration</td></tr>
 </thead><tbody>
 <tr>
 	<td>clickAndWait</td>
@@ -24,7 +24,7 @@
 <tr>
 	<td>type</td>
 	<td>eprLogin_userName</td>
-	<td>arg-western</td>
+	<td>deo-colombo-colombo</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -55,7 +55,7 @@
 <tr>
 	<td>type</td>
 	<td>receivedDatePicker</td>
-	<td>2011-03-17</td>
+	<td>2011-03-16</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -70,12 +70,12 @@
 <tr>
 	<td>type</td>
 	<td>courtOrderNumber</td>
-	<td>127</td>
+	<td>123</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>judgeName</td>
-	<td>ranaweera</td>
+	<td>Wickramanayaka</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -85,12 +85,12 @@
 <tr>
 	<td>type</td>
 	<td>applicantName</td>
-	<td>soysa</td>
+	<td>saman perera</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>applicantAddress</td>
-	<td>no.16 , nugegoda</td>
+	<td>no.8 , kirulapana</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -100,7 +100,7 @@
 <tr>
 	<td>type</td>
 	<td>wifeName</td>
-	<td>samanmalee</td>
+	<td>kamala</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -110,7 +110,7 @@
 <tr>
 	<td>type</td>
 	<td>bdayDatePicker</td>
-	<td>2011-02-16</td>
+	<td>2010-08-04</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -125,12 +125,17 @@
 <tr>
 	<td>type</td>
 	<td>childAgeMonths</td>
-	<td>1</td>
+	<td>7</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>childExistingName</td>
+	<td>amila</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>childNewName</td>
-	<td>namal</td>
+	<td>දමිත්</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -140,56 +145,6 @@
 <tr>
 	<td>clickAndWait</td>
 	<td>//div[@id='adoption-page']/table/tbody/tr/td[1]/a/label</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>adoption_approval_and_print.lable</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>approveImage</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>printImage</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[6]/a[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>adoption_applicant.label</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>idUKey</td>
-	<td>7</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>search</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>certificateApplicantTypeMOTHER</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>certificateApplicantTypeFATHER</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>adoptionSubmit</td>
 	<td></td>
 </tr>
 
