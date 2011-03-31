@@ -4,27 +4,24 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="" />
-<title>userPreference</title>
+<title>addDSdivision</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">userPreference</td></tr>
+<tr><td rowspan="1" colspan="3">addDSdivision</td></tr>
 </thead><tbody>
+
 <tr>
 	<td>clickAndWait</td>
 	<td>logout-button</td>
 	<td></td>
 </tr>
-<tr>
-	<td>open</td>
-	<td>/ecivil/</td>
-	<td></td>
-</tr>
+
 <tr>
 	<td>type</td>
 	<td>eprLogin_userName</td>
-	<td>adr-kalutara-panadura</td>
+	<td>admin</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -38,52 +35,67 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>link=USER PREFERENCE</td>
+	<td>link=ADMIN TASK</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>userPreference.label</td>
-	<td></td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>user_preference_prefLanguage</td>
-	<td>label=සිංහල</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>user_preference_0</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>userPreference.label</td>
+	<td>addDivision.label</td>
 	<td></td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>user_preference_prefLanguage</td>
-	<td>label=தமிழ்</td>
+	<td>addDsDivisionDistrictId</td>
+	<td>label=12 : Gampaha</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>user_preference_0</td>
+	<td>//input[@id='eprInitDivisionList_0' and @value='DsDivision List']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>userPreference.label</td>
+	<td>click</td>
+	<td>//div[@id='users-list-table_paginate']/span[3]/span[2]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>user_preference_prefLanguage</td>
-	<td>label=English</td>
+	<td>click</td>
+	<td>//div[@id='users-list-table_paginate']/span[3]/span[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id</td>
+	<td>20</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id</td>
+	<td>200</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>enName</td>
+	<td>k</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>enName</td>
+	<td>kiribathgoda</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>siName</td>
+	<td>kiribathgoda in sinhala</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>taName</td>
+	<td>kiribathgoda in tamil</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>user_preference_0</td>
+	<td>eprAddDivisionsAndDsDivisions_button</td>
 	<td></td>
 </tr>
 

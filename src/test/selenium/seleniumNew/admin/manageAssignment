@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>manageAssignment</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">manageAssignment</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/ecivil/eprLogin.do</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_userName</td>
+	<td>admin</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprLogin_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=ADMIN TASK</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>registrars.managment</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprRegistrarsFilter_refresh</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>dsDivisionId</td>
+	<td>label=21 : Maharagama</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprRegistrarsFilter_refresh</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>districtId</td>
+	<td>label=13 : Kalutara</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//option[@value='3']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprRegistrarsFilter_refresh</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>eprRegistrarsFilter_assignmentType</td>
+	<td>label=ALL TYPES</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprRegistrarsFilter_refresh</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Mrs. D. S. Senanayake</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//table[@id='registrars-list-table']/tbody/tr[1]/td[6]/a/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>dateOfPermenentDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>dateOfPermenentDatePicker</td>
+	<td>2011-03-25</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>dateOfTerminationDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>dateOfTerminationDatePicker</td>
+	<td>2012-05-07</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprAssignmentAdd_assignMentEdit</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
