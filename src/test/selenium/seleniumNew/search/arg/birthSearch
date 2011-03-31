@@ -38,6 +38,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAndWait</td>
+	<td>userPreference.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>user_preference_prefLanguage</td>
+	<td>label=English</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>user_preference_0</td>
+	<td></td>
+</tr>
+<tr>
 	<td>click</td>
 	<td>link=SEARCH RECORDS</td>
 	<td></td>
