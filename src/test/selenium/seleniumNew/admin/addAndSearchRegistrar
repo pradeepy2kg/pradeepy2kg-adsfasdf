@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>addAndSearchRegistrar</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">addAndSearchRegistrar</td></tr>
+</thead><tbody>
+
+<tr>
+	<td>clickAndWait</td>
+	<td>logout-button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_userName</td>
+	<td>admin</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_password</td>
+	<td>password</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprLogin_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=ADMIN TASK</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>registrar.add</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>registrarNameInOfficelaLang</td>
+	<td>කසුන්</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>registrarNameInEnglish</td>
+	<td>kasun</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>registrarPin</td>
+	<td>198114287127</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>registrarNIC</td>
+	<td>815424172v</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>dateOfBirthDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>dateOfBirthDatePicker</td>
+	<td>1981-03-06</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>registrarAddress</td>
+	<td>no.14 , pamankada</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>registrarPhone</td>
+	<td>0772172731</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>registrarEmail</td>
+	<td>favgfd@gmail.com</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>eprRegistrarsAdd_registrar_preferredLanguage</td>
+	<td>label=සිංහල</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprRegistrarsAdd_refresh</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>addText</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>dsDivisionId</td>
+	<td>label=6 : Kolonnawa</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//select[@id='dsDivisionId']/option[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>type</td>
+	<td>label=BIRTH</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>dateOfAppoinmentDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>dateOfAppoinmentDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>dateOfAppoinmentDatePicker</td>
+	<td>2011-03-05</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>dateOfPermenentDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>dateOfPermenentDatePicker</td>
+	<td>2011-03-28</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>dateOfTerminationDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>dateOfTerminationDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>dateOfTerminationDatePicker</td>
+	<td>2012-02-07</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprAssignmentAdd_assignMentSubmit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=New Assignment (Marriage)</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>dsDivisionId</td>
+	<td>label=12 : Homagama</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//select[@id='dsDivisionId']/option[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>divisionId</td>
+	<td>label=260 : Salpiti Koralai</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>mrgType-2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>dateOfAppoinmentDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>dateOfAppoinmentDatePicker</td>
+	<td>2011-03-04</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>dateOfPermenentDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>dateOfPermenentDatePicker</td>
+	<td>2011-03-27</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>dateOfTerminationDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>dateOfTerminationDatePicker</td>
+	<td>2011-12-31</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprAssignmentAdd_assignMentSubmit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>search.registrar</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>registrarPin</td>
+	<td>198114287127</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>searchButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='tabs']/ul/li[2]/a/span/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>registrarName</td>
+	<td>kasun</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>searchButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//table[@id='registrars-list-table']/tbody/tr/td[1]/a/label</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

@@ -4,12 +4,12 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="" />
-<title>userPreference</title>
+<title>addMRdivision</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">userPreference</td></tr>
+<tr><td rowspan="1" colspan="3">addMRdivision</td></tr>
 </thead><tbody>
 <tr>
 	<td>clickAndWait</td>
@@ -17,14 +17,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>open</td>
-	<td>/ecivil/</td>
-	<td></td>
-</tr>
-<tr>
 	<td>type</td>
 	<td>eprLogin_userName</td>
-	<td>adr-kalutara-panadura</td>
+	<td>admin</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -38,52 +33,68 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>link=USER PREFERENCE</td>
+	<td>link=ADMIN TASK</td>
 	<td></td>
 </tr>
+
 <tr>
 	<td>clickAndWait</td>
-	<td>userPreference.label</td>
-	<td></td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>user_preference_prefLanguage</td>
-	<td>label=සිංහල</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>user_preference_0</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>userPreference.label</td>
+	<td>addDivision.label</td>
 	<td></td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>user_preference_prefLanguage</td>
-	<td>label=தமிழ்</td>
+	<td>addMrDivisionDistrictId</td>
+	<td>label=13 : Kalutara</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>user_preference_0</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>userPreference.label</td>
+	<td>click</td>
+	<td>//select[@id='addMrDivisionDistrictId']/option[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>user_preference_prefLanguage</td>
-	<td>label=English</td>
+	<td>addMrDivisionDsDivisionId</td>
+	<td>label=6 : Bandaragama</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>user_preference_0</td>
+	<td>//input[@id='eprInitDivisionList_button' and @name='button' and @value='MRDivision List']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id</td>
+	<td>205</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>enName</td>
+	<td>nugegoda</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>siName</td>
+	<td>nugegoda in sinhala</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>taName</td>
+	<td>nugegoda in tamil</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprAddDivisionsAndDsDivisions_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='users-list-table_paginate']/span[3]/span[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>users-list-table_last</td>
 	<td></td>
 </tr>
 

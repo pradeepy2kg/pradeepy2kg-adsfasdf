@@ -104,8 +104,10 @@ public class PersonRegisterAction extends ActionSupport implements SessionAware 
     }
 
     public String updatePersonDetails() {
-           /*logger.debug("Editing of exiting person to PRS");
-        //validateExistingPersonRegistration();
+        /* logger.debug("Editing of exiting person in PRS");
+        if (person.getDateOfRegistration() == null ||person.getCivilStatus() == null || person.getPermanentAddress() == null) {
+            addFieldError("requiredFieldsEmpty", getText("er.label.requiredFields"));
+        }
 
         citizenshipList = new ArrayList<PersonCitizenship>();
         getCitizenshipList(citizenshipList);
@@ -120,26 +122,16 @@ public class PersonRegisterAction extends ActionSupport implements SessionAware 
             }
         } else {
             logger.debug("Editing existing person in PRS with personUKey : {}", personUKey);
-            // TODO service.editExistingPersonAfterApproval(person, user);
+            service.editExistingPersonBeforeApproval(person, citizenshipList, user);
             personList = Collections.emptyList();
             addActionMessage(getText("person_edit_success.message"));
-        }*/
+        }
 
-        /*if (personList.isEmpty()) {
-            // personUKey used to redirect to PRS certificate page
-            personUKey = person.getPersonUKey();
-            if (logger.isDebugEnabled()) {
-                logger.debug("Person with name : " + NameFormatUtil.getDisplayName(person.getFullNameInEnglishLanguage(), 30)
-                    + " and dateOfBirth : " + DateTimeUtils.getISO8601FormattedString(person.getDateOfBirth())
-                    + " added to the PRS with PersonUKey : " + person.getPersonUKey());
-            }
-            initPermissions();
-            return SUCCESS;
-        } else {
-            populate();
-            initPermissions();
-            return "form";
-        }*/
+        initPermissions();
+
+
+            // TODO service.editExistingPersonAfterApproval(person, user);*/
+          
         return SUCCESS;
     }
     /**

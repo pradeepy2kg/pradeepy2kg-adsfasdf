@@ -504,7 +504,7 @@
         <table class="table_reg_datePicker_page_01" style="width:90%;margin-right:0;margin-top:0px;">
             <tr>
 
-                <td>භාරගත් දිනය <br/>
+                <td>භාරගත් දිනය <s:label value="*" cssStyle="color:red;font-size:10pt"/><br/>
                     பெறப்பட்ட திகதி <br/>
                     Date of Acceptance
                 </td>
@@ -542,7 +542,7 @@
         </tr>
         <tr>
             <td rowspan="2" colspan="2">
-                (3) සිවිල් තත්වය <br/>
+                (3) සිවිල් තත්වය <s:label value="*" cssStyle="color:red;font-size:10pt"/><br/>
                 சிவில் நிலைமை <br/>
                 Civil Status
             </td>
@@ -572,7 +572,7 @@
     <table class="table_reg_page_05" cellspacing="0" cellpadding="0" style="margin-bottom:0;margin-top:20px;">
         <tr>
             <td width="15%">
-                (4) ස්ථිර ලිපිනය<br/>
+                (4) ස්ථිර ලිපිනය<s:label value="*" cssStyle="color:red;font-size:10pt"/><br/>
                 நிரந்தர வதிவிட முகவரி <br/>
                 Permanent Address
             </td>
