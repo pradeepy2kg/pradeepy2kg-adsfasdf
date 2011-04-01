@@ -1027,6 +1027,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 motherDistrictId = ds.getDistrict().getDistrictUKey();
             }
             gnDivisionId = (parent.getMotherGNDivision() != null) ? parent.getMotherGNDivision().getGnDivisionUKey() : 0;
+            //todo remove this assignment both gnDivisionId and motherGNDivision id is used for same purposes so duplicate variable
+            motherGNDivisionId = gnDivisionId;
         }
     }
 
