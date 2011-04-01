@@ -745,24 +745,25 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private void populateGNDivisionName(BirthDeclaration birthDeclaration) {
         DSDivision motherDS = birthDeclaration.getParent().getMotherDSDivision();
         if (motherDS != null) {
-            GNDivision motherGN = gnDivisionDAO.getGNDivisionByPK(birthDeclaration.getParent().getMotherGNDivision().getGnDivisionUKey());
+            GNDivision motherGN = (birthDeclaration.getParent().getMotherGNDivision() != null) ?
+                gnDivisionDAO.getGNDivisionByPK(birthDeclaration.getParent().getMotherGNDivision().getGnDivisionUKey()) : null;
             String gnPrint = "";
             String dsPrint = "";
             if (language.equals(AppConstants.SINHALA)) {
-                gnPrint = motherGN.getSiGNDivisionName();
+                gnPrint = (motherGN != null) ? motherGN.getSiGNDivisionName() : "";
                 dsPrint = motherDS.getSiDivisionName();
             } else if (language.equals(AppConstants.TAMIL)) {
-                gnPrint = motherGN.getTaGNDivisionName();
+                gnPrint = (motherGN != null) ? motherGN.getTaGNDivisionName() : "";
                 dsPrint = motherDS.getTaDivisionName();
             } else {
-                gnPrint = motherGN.getEnGNDivisionName();
+                gnPrint = (motherGN != null) ? motherGN.getEnGNDivisionName() : "";
                 dsPrint = motherDS.getEnDivisionName();
             }
             birthDeclaration.getParent().setMotherGNDivisionPrint(gnPrint);
             birthDeclaration.getParent().setMotherDsDivisionPrint(dsPrint);
             motherDistrictId = motherDS.getDistrict().getDistrictUKey();
             motherDSDivisionId = motherDS.getDsDivisionUKey();
-            motherGNDivisionId = motherGN.getGnDivisionUKey();
+            motherGNDivisionId = (motherGN != null) ? motherGN.getGnDivisionUKey() : 0;
             //populate lists
             allDistrictList = districtDAO.getAllDistrictNames(language, user);
             allDSDivisionList = dsDivisionDAO.getAllDSDivisionNames(motherDistrictId, language, user);
