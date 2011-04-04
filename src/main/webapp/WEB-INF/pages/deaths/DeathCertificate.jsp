@@ -218,14 +218,14 @@
                  style="display: block; text-align: center;" width="80" height="100">
         </td>
         <td class="font-9" height="60px">
-            <table border="1" style="width:100%;border:1px solid #000;border-collapse:collapse;">
+            <table border="1" style="width:100%;border:1px solid #000;border-collapse:collapse;float:right;">
                 <tr height="60px">
-                    <td>ලියාපදිංචි කිරීමේ අංකය<br>பதிவு இலக்கம்<br>Registration Number</td>
+                        <%--     <td>ලියාපදිංචි කිරීමේ අංකය<br>பதிவு இலக்கம்<br>Registration Number</td>--%>
                     <td>සහතික පත්‍රයේ අංකය<br>சான்றிதழ் இல<br>Certificate Number</td>
                 </tr>
                 <tr height="40px">
-                    <td align="center"><s:label value="%{deathRegister.death.deathSerialNo}"
-                                                cssStyle="font-size:11pt;"/></td>
+                <%--    <td align="center"><s:label value="%{deathRegister.death.deathSerialNo}"
+                                                cssStyle="font-size:11pt;"/></td>--%>
                     <td align="center"><s:label name="idUKey" cssStyle="font-size:11pt;" id="certificateId"/></td>
                 </tr>
             </table>
