@@ -220,15 +220,18 @@
                  style="display: block; text-align: center;" width="100" height="120">
         </td>
         <td>
-            <table border="1" style="width:100%;border:1px solid #000;border-collapse:collapse;">
+            <table border="1" style="width:50%;border:1px solid #000;border-collapse:collapse;float:right;">
                 <tr height="60px">
-                    <td>ලියාපදිංචි කිරීමේ අංකය<br>பதிவு இலக்கம்<br>Registration Number</td>
-                    <td>සහතික පත්‍රයේ අංකය<br>சான்றிதழ் இல<br>Certificate Number</td>
+<%--
+                   <td>ලියාපදිංචි කිරීමේ අංකය<br>பதிவு இலக்கம்<br>Registration Number</td>
+--%>
+             
+                    <td width="100%">සහතික පත්‍රයේ අංකය<br>சான்றிதழ் இல<br>Certificate Number</td>
                 </tr>
                 <tr height="40px">
-                    <td align="center"><s:property value="%{#page.location}"/>
+                <%--            <td align="center"><s:property value="%{#page.location}"/>
                         <s:label name="register.bdfSerialNo" cssStyle="font-size:11pt;"/>
-                    </td>
+                    </td>--%>
                     <td align="center"><s:label id="certificateId" name="bdId" cssStyle="font-size:11pt;"/></td>
                 </tr>
             </table>
