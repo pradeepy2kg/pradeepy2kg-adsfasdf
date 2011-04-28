@@ -324,6 +324,9 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
      * searching death alterations for approvals/rejection/delete and edit
      */
     private void findDeathAlterationForApproval() {
+        if (pageNo == 0) {
+            pageNo = 1;
+        }
         //search by pin
         rowNo = appParametersDAO.getIntParameter(DA_APPROVAL_ROWS_PER_PAGE);
         if (pin != null) {
