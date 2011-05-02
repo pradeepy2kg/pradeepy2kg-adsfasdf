@@ -160,7 +160,7 @@
     }
 
     // TODO for dob calculation for person, how to add??
-    /*function calculateBirthDay(id, datePicker, error) {
+    /*function calculateBirthDay(id, error) {
      var reg = /^([0-9]{9}[X|x|V|v])$/;
      var day = id.substring(2, 5);
      var year = 19 + id.substring(0, 2);
