@@ -385,3 +385,31 @@ function customAlert(text) {
     nInfo.innerHTML = "<h6>Warnings</h6>" + text;
     window.document.body.appendChild(nInfo);
 }
+
+function calculateBirthDay(id, error) {
+    var regNIC = /^([0-9]{9}[X|x|V|v])$/;
+    var day = id.substring(2, 5);
+    var BirthYear = 19 + id.substring(0, 2);
+    var D = new Date(BirthYear);
+    if ((id.search(regNIC) == 0) && (day >= 501 && day <= 866)) {
+        if ((day > 559) && ((D.getFullYear() % 4) != 0 )) {
+            day = id.substring(2, 5) - 2;
+            D.setDate(D.getDate() + day - 500);
+        } else {
+            D.setDate(D.getDate() + day - 1500);
+        }
+        return   new Date(D.getYear(), D.getMonth(), D.getDate());
+
+    } else if ((id.search(regNIC) == 0) && (day > 0 && day <= 366)) {
+        if ((day > 59) && ((D.getFullYear() % 4) != 0 )) {
+            day = id.substring(2, 5) - 2;
+            D.setDate(D.getDate() + day);
+        } else {
+            D.setDate(D.getDate() + day - 1000);
+        }
+        return new Date(D.getYear(), D.getMonth(), D.getDate());
+
+    } else if ((id.search(regNIC) == 0) && ((day >= 367 && day <= 501)) | (day > 867)) {
+        alert(error);
+    }
+}
