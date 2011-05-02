@@ -113,10 +113,6 @@
         </init-param>
         <load-on-startup>2</load-on-startup>
     </servlet>
-    <servlet>
-        <servlet-name>JSONStatisticsLookupService</servlet-name>
-        <servlet-class>lk.rgd.crs.web.JSONStatisticsLookupService</servlet-class>
-    </servlet>
 
     <listener>
         <listener-class>org.apache.tiles.web.startup.TilesListener</listener-class>
