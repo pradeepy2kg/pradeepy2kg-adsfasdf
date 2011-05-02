@@ -91,7 +91,8 @@ $(function() {
         var id1 = $("input#father_pinOrNic").attr("value");
         var datePicker = $('#fatherDatePicker');
         var error = document.getElementById('error10').value;
-        calculateBirthDay(id1, datePicker, error);
+        datePicker.datepicker('setDate', calculateBirthDay(id1, error));
+
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
                 function(data1) {
                     $("textarea#fatherFullName").val(data1.fullNameInOfficialLanguage);
@@ -108,7 +109,8 @@ $(function() {
         var id2 = $("input#mother_pinOrNic").attr("value");
         var datePicker = $('#motherDatePicker');
         var error = document.getElementById('error11').value;
-        calculateBirthDay(id2, datePicker, error);
+        datePicker.datepicker('setDate', calculateBirthDay(id2, error));
+
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id2},
                 function(data2) {
                     $("textarea#motherFullName").val(data2.fullNameInOfficialLanguage);
@@ -121,33 +123,6 @@ $(function() {
                     }
                 });
     });
-
-    function calculateBirthDay(id, datePicker, error) {
-        var regNIC = /^([0-9]{9}[X|x|V|v])$/;
-        var day = id.substring(2, 5);
-        var BirthYear = 19 + id.substring(0, 2);
-        var D = new Date(BirthYear);
-        if ((id.search(regNIC) == 0) && (day >= 501 && day <= 866)) {
-            if ((day > 559) && ((D.getFullYear() % 4) != 0 )) {
-                day = id.substring(2, 5) - 2;
-                D.setDate(D.getDate() + day - 500);
-            } else {
-                D.setDate(D.getDate() + day - 1500);
-            }
-            datePicker.datepicker('setDate', new Date(D.getYear(), D.getMonth(), D.getDate()));
-        } else if ((id.search(regNIC) == 0) && (day > 0 && day <= 366)) {
-            if ((day > 59) && ((D.getFullYear() % 4) != 0 )) {
-                day = id.substring(2, 5) - 2;
-                D.setDate(D.getDate() + day);
-            } else {
-                D.setDate(D.getDate() + day - 1000);
-            }
-
-            datePicker.datepicker('setDate', new Date(D.getYear(), D.getMonth(), D.getDate()));
-        } else if ((id.search(regNIC) == 0) && ((day >= 367 && day <= 501)) | (day > 867)) {
-            alert(error);
-        }
-    }
 
     $('#mother_lookup').click(function() {
         var child_bday = new Date(document.getElementById('childDateOfBirth').value);
@@ -568,7 +543,7 @@ function maxLengthCalculate(id, max, divId) {
         <td colspan="3">
                 <s:label value="YYYY-MM-DD" cssStyle="margin-left:140px;font-size:10px"/><br>
                 <s:textfield name="parent.motherDOB" id="motherDatePicker" maxLength="10"/>
-        <td colspan="3" width="100px" ><label>
+        <td colspan="3" width="100px"><label>
             <s:if test="%{#session.birthRegister.register.birthType.ordinal() != 0}">
                 (<s:property value="#row"/><s:set name="row"
                                                   value="#row+1"/><s:set name="i"
@@ -592,7 +567,8 @@ function maxLengthCalculate(id, max, divId) {
     </tr>
     <td style="border-top:none;">
         <tr style="border-bottom:none; border-top:none;">
-            <td style="border-bottom:none; border-top:none;"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set
+            <td style="border-bottom:none; border-top:none;"><label>(<s:property value="#row"/><s:set name="row"
+                                                                                                      value="#row+1"/><s:set
                     name="i" value="#i+1"/>)ස්ථිර ලිපිනය<br>தாயின் நிரந்தர வதிவிட முகவரி<br>Permanent Address</label>
             </td>
             <td colspan="8" style="border-bottom:none;">
