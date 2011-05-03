@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>adoptionRegistration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">adoptionRegistration</td></tr>
+</thead><tbody>
+<tr>
+	<td>clickAndWait</td>
+	<td>logout-button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/ecivil/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_userName</td>
+	<td>deo-colombo-colombo</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_password</td>
+	<td>password</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprLogin_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>userPreference.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>user_preference_prefLanguage</td>
+	<td>label=English</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>user_preference_0</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>open</td>
+	<td>/ecivil/adoption/eprAdoptionRegistrationHome.do</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>adoption_registration.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>receivedDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>receivedDatePicker</td>
+	<td>2011-03-16</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>orderIssuedDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>orderIssuedDatePicker</td>
+	<td>2011-03-12</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>courtOrderNumber</td>
+	<td>123</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>judgeName</td>
+	<td>Wickramanayaka</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>applicantPin</td>
+	<td>852790393v</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>applicantName</td>
+	<td>saman perera</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>applicantAddress</td>
+	<td>no.8 , kirulapana</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>wifePINorNIC</td>
+	<td>898261416V</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>wifeName</td>
+	<td>kamala</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>bdayDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>bdayDatePicker</td>
+	<td>2010-08-04</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>childAgeYears</td>
+	<td>0</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>childAgeMonths</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>childAgeMonths</td>
+	<td>7</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>childExistingName</td>
+	<td>amila</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>childNewName</td>
+	<td>දමිත්</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='adoption-page']/table/tbody/tr/td[1]/a/label</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

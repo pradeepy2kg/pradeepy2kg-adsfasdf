@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>marriageRegisAdr</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">marriageRegisAdr</td></tr>
+</thead><tbody>
+<tr>
+	<td>clickAndWait</td>
+	<td>logout-button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/ecivil/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_userName</td>
+	<td>adr-kalutara-panadura</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_password</td>
+	<td>password</td>
+</tr>
+
+<tr>
+	<td>clickAndWait</td>
+	<td>eprLogin_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>userPreference.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>user_preference_prefLanguage</td>
+	<td>label=English</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>user_preference_0</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>clickAndWait</td>
+	<td>link=MARRIAGE REGISTRATION</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>menu.marriage.registration</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>marriageDatePick</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>marriageDatePick</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>marriageDatePick</td>
+	<td>2011-03-23</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>regPIN</td>
+	<td>763421976v</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>mrDivisionId</td>
+	<td>label=650 : Kalutatara &amp; Panadura Totamuna</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>regPlaceInOfficialLang</td>
+	<td> රෙජිස්ට්‍රාර් කන්තෝරුව </td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>regPlaceInEnglishLang</td>
+	<td>Registrars Office </td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>regNameInOfficialLang</td>
+	<td>වෙඩික්කාරගේ චන්දන රණසිංහ<br /></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>regNameInOfficialLang</td>
+	<td>චන්දන රණසිංහ<br /></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>regNameInEnglishLang</td>
+	<td>chandana ranasinghe</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>malePIN</td>
+	<td>663541501V</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>dateOfBirthMale</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>dateOfBirthMale</td>
+	<td>1966-12-23</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>ageMale</td>
+	<td>44</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>raceMale</td>
+	<td>label=4 : Sri Lankan Moor</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>dateOfBirthFemale</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>dateOfBirthFemale</td>
+	<td>1956-05-17</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>femalePIN</td>
+	<td>566394189V</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>ageFemale</td>
+	<td>54</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>raceFemale</td>
+	<td>label=4 : Sri Lankan Moor</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>nameOfficialMale</td>
+	<td>අල්හාජ් මොහොමඩ් නිජාබිඩින් මොහොමඩ් රාජාබිඩින්<br /></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>nameOfficialFemale</td>
+	<td>මොහොමඩ් රජාබිඩින් ෆාතිමා රෂීදු<br /></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>nameOfficialMale</td>
+	<td>මොහොමඩ් රාජාබිඩින්<br /></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>nameOfficialFemale</td>
+	<td>ෆාතිමා රෂීදු<br /></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name_english_Male</td>
+	<td>mohomad rajabidin</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name_english_Female</td>
+	<td>fathima rashidu</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>addressMale</td>
+	<td>no.16 , beruwala</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>addressFemale</td>
+	<td>no.5 , maradana</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>serialNumber</td>
+	<td>2011000052</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>registrationDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>registrationDatePicker</td>
+	<td>2011-03-26</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>scannedImage</td>
+	<td>/home/tharanga/Desktop/death_sin/general_death/general_death_success_sin.png</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprMarriageRegistrationInit_eprRegisterNewMarriage</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

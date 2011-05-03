@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>adoptionRegistration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">adoptionRegistration</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/ecivil/births/eprBirthRegistrationHome.do</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>logout-button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_userName</td>
+	<td>arg-western</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_password</td>
+	<td>password</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprLogin_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=ADOPTION REGISTRATION</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>adoption_registration.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>receivedDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>receivedDatePicker</td>
+	<td>2011-03-16</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>orderIssuedDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>orderIssuedDatePicker</td>
+	<td>2011-03-08</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>courtOrderNumber</td>
+	<td>124</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>applicantName</td>
+	<td>amila</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>applicantAddress</td>
+	<td>no.7 , nugegoda</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>bdayDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>bdayDatePicker</td>
+	<td>2010-02-16</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>childAgeYears</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>childAgeMonths</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>childAgeMonths</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>childAgeMonths</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>childExistingName</td>
+	<td>tharidu</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>childNewName</td>
+	<td>නන්දලාල්</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Go To Main</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>adoption_approval_and_print.lable</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
