@@ -792,7 +792,7 @@ function maxLengthCalculate(id, max, divId) {
         <div id="causeOfDeath_div" style="color:red;font-size:8pt"></div>
     </td>
     <td colspan="2">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-        ේතුවේ ICD කේත අංකය
+        හේතුවේ ICD කේත අංකය
         <br>காரணத்திற்கான ICD குறியீட்டு இலக்கம்
         <br>ICD Code of cause
     </td>
