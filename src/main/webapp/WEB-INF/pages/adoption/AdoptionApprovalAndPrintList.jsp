@@ -70,7 +70,7 @@
         <tr>
             <td><s:label value="%{getText('select.status.label')}"/></td>
             <td>
-                <s:select list="#@java.util.HashMap@{'1':getText('data.entry.label'),'2':getText('Approved.label'),'3':getText('notice.printed.label'),
+                <s:select list="#@java.util.HashMap@{'1':getText('data.entry'),'2':getText('Approved.label'),'3':getText('notice.printed.label'),
         '4':getText('rejected.label'),'5':getText('certificate.issual.request.captured.label'),'6':getText('adoption.certificate.printed.label')}"
                           name="currentStatus" value="%{#request.currentStatus}" headerKey="0"
                           headerValue="%{getText('select.status.label')}"
