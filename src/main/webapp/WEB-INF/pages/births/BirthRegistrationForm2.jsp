@@ -326,7 +326,7 @@ function motherAgeBirth() {
     var mother_bday = new Date(document.getElementById('motherDatePicker').value);
     var mother_age = child_bday.getYear() - mother_bday.getYear();
     document.getElementById("motherAgeAtBirth").value = mother_age;
-    if (mother_age <= 0) {
+    if (mother_age <= 0 || isNaN(mother_bday)) {
         document.getElementById("motherAgeAtBirth").value = 0;
     }
 }
