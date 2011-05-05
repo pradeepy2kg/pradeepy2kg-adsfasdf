@@ -1,3 +1,5 @@
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
 <%-- @author Duminda Dharmakeerthi --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
@@ -880,17 +882,17 @@ function maxLengthCalculate(id, max, divId) {
 <table border="1" style="width: 100%;border-top:none;border-bottom:none; border-collapse:collapse; margin-bottom:0;"
        class="font-9">
 
-    <col width="220px"/>
+    <col width="200px"/>
     <col width="100px"/>
     <col width="100px"/>
     <col width="100px"/>
-    <col width="150px"/>
-    <col width="130px"/>
-    <col/>
+    <col width="100px"/>
+    <col width="145px"/>
+    <col width="285px"/>
     <tbody>
 
     <tr>
-        <td rowspan="2" colspan="2">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+        <td rowspan="2" colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
             අනන්‍යතා අංකය
             <br>அடையாள எண்
             <br>Identification No.
@@ -907,7 +909,7 @@ function maxLengthCalculate(id, max, divId) {
                  style="vertical-align:middle; margin-left:20px;" id="death_person_lookup">
 
         </td>
-        <td rowspan="2">
+        <td rowspan="2" colspan="2">
             විදේශිකය‍කු නම්
             <br>வெளிநாட்டவர் எனின்
             <br>If a foreigner
@@ -933,11 +935,17 @@ function maxLengthCalculate(id, max, divId) {
 </table>
 <table border="1" style="width: 100%;border-bottom:none; border-collapse:collapse; margin-bottom:0;"
        class="font-9">
-    <caption/>
-    <col width="320px"/>
     <col width="200px"/>
-    <col width="280px"/>
-    <col/>
+    <col width="100px"/>
+    <col width="100px"/>
+    <col width="100px"/>
+    <col width="100px"/>
+    <col width="75px"/>
+    <col width="70px"/>
+    <col width="73px"/>
+    <col width="72px"/>
+    <col width="70px"/>
+    <col width="70px"/>
     <tbody>
     <tr>
         <td>
@@ -946,16 +954,27 @@ function maxLengthCalculate(id, max, divId) {
             <br>பிறந்த திகதி
             <br>Date of Birth
         </td>
-        <td><s:textfield maxLength="10" name="deathPerson.deathPersonDOB" id="deathPersonDOB"
-                         value="%{deathPerson.deathPersonDOB}" onchange="personAgeDeath();"/></td>
-        <td>
+        <td colspan="2"><s:textfield maxLength="10" name="deathPerson.deathPersonDOB" id="deathPersonDOB"
+                                     value="%{deathPerson.deathPersonDOB}" onchange="personAgeDeath();"/></td>
+        <td colspan="2">
             (<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-            වයස හෝ අනුමාන වයස
-            <br>வயது அல்லது அனுமான வயது
-            <br>Age or probable Age
+            වයස
+            <br>வயது
+            <br>Age
         </td>
-        <td><s:textfield name="deathPerson.deathPersonAge" id="deathPersonAge" onfocus="personAgeDeath();"
-                         maxLength="3"/></td>
+        <td>අවුරුදු<br/>வருடங்கள் <br/>Years</td>
+        <td><s:textfield id="deathPersonAge" name="deathPerson.deathPersonAge" cssStyle="width:50px;"
+                         maxlength="3"/></td>
+        <td>මාස<br/>மாதங்கள்<br/>Months</td>
+        <td>
+            <s:select list="months" id="deathPersonAgeMonth"
+                      name="deathPerson.deathPersonAgeMonth" headerKey="0" headerValue=" --- " cssStyle="width:60px;"/>
+        </td>
+        <td>දින<br/>திகதி<br/>Days</td>
+        <td>
+            <s:select list="days" id="deathPersonAgeDate" name="deathPerson.deathPersonAgeDate" headerKey="0"
+                      headerValue=" --- " cssStyle="width:60px;"/>
+        </td>
     </tr>
     <tr>
         <td>
@@ -964,18 +983,18 @@ function maxLengthCalculate(id, max, divId) {
             <br>பால்
             <br>Gender
         </td>
-        <td>
+        <td colspan="2">
             <s:select
                     list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
                     name="deathPerson.deathPersonGender" headerKey="0" headerValue="%{getText('select_gender.label')}"
                     id="deathPersonGender" cssStyle="width:185px;"/>
         </td>
-        <td>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+        <td colspan="2">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
             ජාතිය
             <br>இனம்
             <br>Race
         </td>
-        <td>
+        <td colspan="6">
             <s:select list="raceList" name="deathPersonRace" headerKey="0" headerValue="%{getText('select_race.label')}"
                       cssStyle="width:190px;" id="deathPersonRace"/>
         </td>
