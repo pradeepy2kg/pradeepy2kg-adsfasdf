@@ -1,6 +1,7 @@
 package lk.rgd.crs.web.action.deaths;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.sun.org.apache.bcel.internal.generic.INEG;
 import lk.rgd.AppConstants;
 import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
@@ -82,7 +83,8 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private List<DeathRegister> deathApprovalAndPrintList;
     private List<DeathRegister> archivedEntryList;
     private List<UserWarning> warnings;
-
+    private List<Integer> months;
+    private List<Integer> days;
 
     private int pageNo;
     private int noOfRows;
@@ -258,16 +260,14 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                     try {
                         service.updateDeathRegistration(ddf, user);
                         addActionMessage(getText("editDataSaveSuccess.label"));
-                    }
-                    catch (CRSRuntimeException e) {
+                    } catch (CRSRuntimeException e) {
                         switch (e.getErrorCode()) {
                             case ErrorCodes.ILLEGAL_STATE:
                                 addActionError(getText("error.invalid.state.for.edit"));
                                 editMode = true;
                                 break;
                         }
-                    }
-                    catch (NullPointerException e) {
+                    } catch (NullPointerException e) {
                         addActionError(getText("error.invalid.state.for.edit"));
                         editMode = true;
                     }
@@ -876,6 +876,20 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         notifyingAuthority = ddf.getNotifyingAuthority();
         declarant = ddf.getDeclarant();
         setLifeCycleInfo(ddf.getLifeCycleInfo());
+
+        populateDayMonthList();
+    }
+
+    private void populateDayMonthList() {
+        days = new ArrayList<Integer>(30);
+        for (int i = 1; i <= 30; i++) {
+            days.add(i);
+        }
+
+        months = new ArrayList<Integer>(12);
+        for (int i = 1; i <= 12; i++) {
+            months.add(i);
+        }
     }
 
     private void handleErrors(Exception e) {
@@ -1367,6 +1381,22 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public void setWarnings(List<UserWarning> warnings) {
         this.warnings = warnings;
+    }
+
+    public List<Integer> getMonths() {
+        return months;
+    }
+
+    public void setMonths(List<Integer> months) {
+        this.months = months;
+    }
+
+    public List<Integer> getDays() {
+        return days;
+    }
+
+    public void setDays(List<Integer> days) {
+        this.days = days;
     }
 
     public boolean isDirectApprove() {
