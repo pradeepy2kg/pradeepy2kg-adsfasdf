@@ -42,6 +42,11 @@
             errormsg = validateEmptyField("effectiveDateDatePicker", "errorCommentDate", errormsg);
             return printErrorMessages(errormsg);
         }
+        else if (mode == 'reject') {
+            errormsg = validateEmptyField("registrationRejectComment", "errorComment", errormsg);
+            return printErrorMessages(errormsg);
+        }
+        return false;
     }
 </script>
 
@@ -555,7 +560,8 @@
     </tr>
 </table>
 <s:if test="mode=='reject'">
-    <s:form method="post">
+    <s:form method="post" onsubmit="javascript:return validateComments()">
+        <s:hidden name="mode" id="mode"/>
         <s:hidden name="idUKey"/>
         <table border="1" style="margin-top:10px;width:100%;border:1px solid #000;border-collapse:collapse;"
                cellpadding="2px">
@@ -620,9 +626,9 @@
                       value="%{getText('button.marriageregister.divorced')}"/>
         </div>
     </s:form>
-    <s:hidden id="errorComment"
-              value="%{getText('error.js.marriageregister.comment') + getText('message.cannotbeempty')}"/>
-    <s:hidden id="errorCommentDate"
-              value="%{getText('error.js.marriageregister.date') + getText('message.cannotbeempty')}"/>
 </s:if>
+<s:hidden id="errorComment"
+          value="%{getText('error.js.marriageregister.comment') + getText('message.cannotbeempty')}"/>
+<s:hidden id="errorCommentDate"
+          value="%{getText('error.js.marriageregister.date') + getText('message.cannotbeempty')}"/>
 </div>
