@@ -31,6 +31,12 @@ public class DeathPersonInfo implements Serializable, Cloneable {
     @Column(nullable = true)
     private Integer deathPersonAge;
 
+    @Column(nullable = true)
+    private Integer deathPersonAgeMonth;
+
+    @Column(nullable = true)
+    private Integer deathPersonAgeDate;
+
     /**
      * Gender 0 - male, 1 - female, 2 - unknown
      */
@@ -109,7 +115,7 @@ public class DeathPersonInfo implements Serializable, Cloneable {
     }
 
     public void setDeathPersonPINorNIC(String deathPersonPINorNIC) {
-        this.deathPersonPINorNIC = WebUtils.filterBlanksAndToUpperAndTrim(deathPersonPINorNIC,12,"deathPersonPINorNIC");
+        this.deathPersonPINorNIC = WebUtils.filterBlanksAndToUpperAndTrim(deathPersonPINorNIC, 12, "deathPersonPINorNIC");
     }
 
     public Country getDeathPersonCountry() {
@@ -125,7 +131,7 @@ public class DeathPersonInfo implements Serializable, Cloneable {
     }
 
     public void setDeathPersonPassportNo(String deathPersonPassportNo) {
-        this.deathPersonPassportNo = WebUtils.filterBlanksAndToUpperAndTrim(deathPersonPassportNo,255,"deathPersonPassportNo");
+        this.deathPersonPassportNo = WebUtils.filterBlanksAndToUpperAndTrim(deathPersonPassportNo, 255, "deathPersonPassportNo");
     }
 
     public Integer getDeathPersonAge() {
@@ -134,6 +140,22 @@ public class DeathPersonInfo implements Serializable, Cloneable {
 
     public void setDeathPersonAge(Integer deathPersonAge) {
         this.deathPersonAge = deathPersonAge;
+    }
+
+    public Integer getDeathPersonAgeMonth() {
+        return deathPersonAgeMonth;
+    }
+
+    public void setDeathPersonAgeMonth(Integer deathPersonAgeMonth) {
+        this.deathPersonAgeMonth = deathPersonAgeMonth;
+    }
+
+    public Integer getDeathPersonAgeDate() {
+        return deathPersonAgeDate;
+    }
+
+    public void setDeathPersonAgeDate(Integer deathPersonAgeDate) {
+        this.deathPersonAgeDate = deathPersonAgeDate;
     }
 
     public int getDeathPersonGender() {
@@ -157,7 +179,7 @@ public class DeathPersonInfo implements Serializable, Cloneable {
     }
 
     public void setDeathPersonNameOfficialLang(String deathPersonNameOfficialLang) {
-        this.deathPersonNameOfficialLang = WebUtils.filterBlanksAndToUpperAndTrim(deathPersonNameOfficialLang,600,"deathPersonNameOfficialLang");
+        this.deathPersonNameOfficialLang = WebUtils.filterBlanksAndToUpperAndTrim(deathPersonNameOfficialLang, 600, "deathPersonNameOfficialLang");
     }
 
     public String getDeathPersonNameInEnglish() {
@@ -165,7 +187,7 @@ public class DeathPersonInfo implements Serializable, Cloneable {
     }
 
     public void setDeathPersonNameInEnglish(String deathPersonNameInEnglish) {
-        this.deathPersonNameInEnglish = WebUtils.filterBlanksAndToUpperAndTrim(deathPersonNameInEnglish,600,"deathPersonNameInEnglish");
+        this.deathPersonNameInEnglish = WebUtils.filterBlanksAndToUpperAndTrim(deathPersonNameInEnglish, 600, "deathPersonNameInEnglish");
     }
 
     public String getDeathPersonPermanentAddress() {
@@ -173,7 +195,7 @@ public class DeathPersonInfo implements Serializable, Cloneable {
     }
 
     public void setDeathPersonPermanentAddress(String deathPersonPermanentAddress) {
-        this.deathPersonPermanentAddress = WebUtils.filterBlanksAndToUpperAndTrim(deathPersonPermanentAddress,255,"deathPersonPermanentAddress");
+        this.deathPersonPermanentAddress = WebUtils.filterBlanksAndToUpperAndTrim(deathPersonPermanentAddress, 255, "deathPersonPermanentAddress");
     }
 
     public String getDeathPersonFatherPINorNIC() {
@@ -181,7 +203,7 @@ public class DeathPersonInfo implements Serializable, Cloneable {
     }
 
     public void setDeathPersonFatherPINorNIC(String deathPersonFatherPINorNIC) {
-        this.deathPersonFatherPINorNIC = WebUtils.filterBlanksAndToUpperAndTrim(deathPersonFatherPINorNIC,12,"deathPersonFatherPINorNIC");
+        this.deathPersonFatherPINorNIC = WebUtils.filterBlanksAndToUpperAndTrim(deathPersonFatherPINorNIC, 12, "deathPersonFatherPINorNIC");
     }
 
     public String getDeathPersonFatherFullName() {
@@ -189,7 +211,7 @@ public class DeathPersonInfo implements Serializable, Cloneable {
     }
 
     public void setDeathPersonFatherFullName(String deathPersonFatherFullName) {
-        this.deathPersonFatherFullName = WebUtils.filterBlanksAndToUpperAndTrim(deathPersonFatherFullName,255,"deathPersonFatherFullName");
+        this.deathPersonFatherFullName = WebUtils.filterBlanksAndToUpperAndTrim(deathPersonFatherFullName, 255, "deathPersonFatherFullName");
     }
 
     public String getDeathPersonMotherPINorNIC() {
@@ -197,7 +219,7 @@ public class DeathPersonInfo implements Serializable, Cloneable {
     }
 
     public void setDeathPersonMotherPINorNIC(String deathPersonMotherPINorNIC) {
-        this.deathPersonMotherPINorNIC = WebUtils.filterBlanksAndToUpperAndTrim(deathPersonMotherPINorNIC,12,"deathPersonMotherPINorNIC");
+        this.deathPersonMotherPINorNIC = WebUtils.filterBlanksAndToUpperAndTrim(deathPersonMotherPINorNIC, 12, "deathPersonMotherPINorNIC");
     }
 
     public String getDeathPersonMotherFullName() {
@@ -205,7 +227,7 @@ public class DeathPersonInfo implements Serializable, Cloneable {
     }
 
     public void setDeathPersonMotherFullName(String deathPersonMotherFullName) {
-        this.deathPersonMotherFullName = WebUtils.filterBlanksAndToUpperAndTrim(deathPersonMotherFullName,255,"deathPersonMotherFullName");
+        this.deathPersonMotherFullName = WebUtils.filterBlanksAndToUpperAndTrim(deathPersonMotherFullName, 255, "deathPersonMotherFullName");
     }
 
     public Date getDeathPersonDOB() {
@@ -229,7 +251,7 @@ public class DeathPersonInfo implements Serializable, Cloneable {
     }
 
     public void setLastAddressOfMissingPerson(String lastAddressOfMissingPerson) {
-        this.lastAddressOfMissingPerson = WebUtils.filterBlanksAndToUpperAndTrim(lastAddressOfMissingPerson,255,"lastAddressOfMissingPerson");
+        this.lastAddressOfMissingPerson = WebUtils.filterBlanksAndToUpperAndTrim(lastAddressOfMissingPerson, 255, "lastAddressOfMissingPerson");
     }
 
     public String getRankOrProfession() {
@@ -237,7 +259,7 @@ public class DeathPersonInfo implements Serializable, Cloneable {
     }
 
     public void setRankOrProfession(String rankOrProfession) {
-        this.rankOrProfession = WebUtils.filterBlanksAndToUpperAndTrim(rankOrProfession,255,"rankOrProfession");
+        this.rankOrProfession = WebUtils.filterBlanksAndToUpperAndTrim(rankOrProfession, 255, "rankOrProfession");
     }
 
     public boolean isPensioner() {
