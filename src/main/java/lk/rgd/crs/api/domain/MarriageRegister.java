@@ -15,7 +15,6 @@ import java.util.Date;
 /**
  * @author amith jayasekara
  *         entity class for marriage notice
- *         note:this class is not complete
  */
 @Entity
 @Table(name = "MARRIAGE_REGISTER", schema = "CRS")
