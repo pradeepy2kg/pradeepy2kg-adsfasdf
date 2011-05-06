@@ -221,6 +221,7 @@
         <constructor-arg ref="userManagerService"/>
         <constructor-arg ref="ecivilService"/>
         <constructor-arg ref="deathDeclarationValidator"/>
+        <constructor-arg ref="appParametersDAOImpl"/>
     </bean>
 
     <bean id="adoptionOrderService" class="lk.rgd.crs.core.service.AdoptionOrderServiceImpl">

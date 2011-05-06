@@ -2,7 +2,6 @@ package lk.rgd.crs.api.domain;
 
 import lk.rgd.common.api.domain.Country;
 import lk.rgd.common.api.domain.DSDivision;
-import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.Race;
 import lk.rgd.common.util.WebUtils;
 
@@ -147,7 +146,7 @@ public class DeathPersonInfo implements Serializable, Cloneable {
     }
 
     public void setDeathPersonAgeMonth(Integer deathPersonAgeMonth) {
-        this.deathPersonAgeMonth = deathPersonAgeMonth;
+        this.deathPersonAgeMonth = deathPersonAgeMonth == 0 ? null : deathPersonAgeMonth;
     }
 
     public Integer getDeathPersonAgeDate() {
@@ -155,7 +154,7 @@ public class DeathPersonInfo implements Serializable, Cloneable {
     }
 
     public void setDeathPersonAgeDate(Integer deathPersonAgeDate) {
-        this.deathPersonAgeDate = deathPersonAgeDate;
+        this.deathPersonAgeDate = deathPersonAgeDate == 0 ? null : deathPersonAgeDate;
     }
 
     public int getDeathPersonGender() {

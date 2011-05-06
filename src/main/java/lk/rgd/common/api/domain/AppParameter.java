@@ -40,10 +40,18 @@ public class AppParameter implements Serializable {
      * The parameter key that holds the number of days until a password expires
      */
     public static final String PASSWORD_EXPIRY_DAYS = "rgd.password_expiry_days";
-    /*The parameter key that holds the max number of log attempts*/
+    /**
+     * The parameter key that holds the max number of log attempts
+     */
     public static final String MAX_NUMBER_OF_LOGIN_ATTEMPTS = "rgd.max.number.of.login.attempts";
-    /*number of days for expiring marriage notice*/
+    /**
+     * Number of days for expiring marriage notice
+     */
     public static final String MARRIAGE_NOTICE_EXPIRE_DATE = "crs.notice.expire.days";
+    /**
+     * The parameter key that holds the number of days after birth who fall in to infant category
+     */
+    public static final String CRS_DEATH_INFANT_DAYS = "crs.death.infant.days";
 
     @Id
     @Column(length = 100)
