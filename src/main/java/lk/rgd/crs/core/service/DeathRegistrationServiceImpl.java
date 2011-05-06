@@ -3,19 +3,18 @@ package lk.rgd.crs.core.service;
 import lk.rgd.AppConstants;
 import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
-import lk.rgd.common.api.domain.CommonStatistics;
-import lk.rgd.common.api.domain.DSDivision;
-import lk.rgd.common.api.domain.Role;
-import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.dao.AppParametersDAO;
+import lk.rgd.common.api.domain.*;
 import lk.rgd.common.api.service.UserManager;
-import lk.rgd.common.util.DateTimeUtils;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.DeathRegisterDAO;
 import lk.rgd.crs.api.domain.BDDivision;
+import lk.rgd.crs.api.domain.DeathPersonInfo;
 import lk.rgd.crs.api.domain.DeathRegister;
 import lk.rgd.crs.api.service.DeathRegistrationService;
 import lk.rgd.crs.core.ValidationUtils;
+import lk.rgd.crs.web.WebConstants;
 import lk.rgd.prs.api.domain.Address;
 import lk.rgd.prs.api.domain.Marriage;
 import lk.rgd.prs.api.domain.Person;
@@ -35,15 +34,18 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
 
     private static final Logger logger = LoggerFactory.getLogger(DeathRegistrationService.class);
     private final DeathRegisterDAO deathRegisterDAO;
+    private final AppParametersDAO appParametersDAO;
     private final PopulationRegistry ecivil;
     private final UserManager userManager;
     private final DeathDeclarationValidator deathDeclarationValidator;
 
-    DeathRegistrationServiceImpl(DeathRegisterDAO deathRegisterDAO, UserManager userManager, PopulationRegistry ecivil, DeathDeclarationValidator deathDeclarationValidator) {
+    DeathRegistrationServiceImpl(DeathRegisterDAO deathRegisterDAO, UserManager userManager, PopulationRegistry ecivil,
+        DeathDeclarationValidator deathDeclarationValidator, AppParametersDAO appParametersDAO) {
         this.deathRegisterDAO = deathRegisterDAO;
         this.userManager = userManager;
         this.ecivil = ecivil;
         this.deathDeclarationValidator = deathDeclarationValidator;
+        this.appParametersDAO = appParametersDAO;
     }
 
     /**
@@ -72,12 +74,45 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void addNewDeathRegistration(DeathRegister deathRegistration, User user) {
+        // checks age and set it as a death of infant less than 30 days
+        if (checkDeathPersonInfant(deathRegistration)) {
+            deathRegistration.getDeath().setInfantLessThan30Days(true);
+        }
+
         //validate access of the user  to Death division
         ValidationUtils.validateAccessToBDDivision(user, deathRegistration.getDeath().getDeathDivision());
         deathDeclarationValidator.validateMinimalRequirements(deathRegistration);
         addDeathRegistration(deathRegistration, user);
         logger.debug("added a death  registration with idUKey : {}  and type of death : {}",
             deathRegistration.getIdUKey(), deathRegistration.getDeathType());
+    }
+
+    /**
+     * Checks whether the given death register belongs to a infant
+     *
+     * @param deathRegister the death register bean
+     * @return if infant true else false
+     */
+    private boolean checkDeathPersonInfant(DeathRegister deathRegister) {
+        Date dob = deathRegister.getDeathPerson().getDeathPersonDOB();
+        Date dod = deathRegister.getDeath().getDateOfDeath();
+        int infantDays = appParametersDAO.getIntParameter(AppParameter.CRS_DEATH_INFANT_DAYS);
+
+        if (dob != null && dod != null) {
+            long dobMilli = dob.getTime();
+            long dodMilli = dod.getTime();
+
+            long days = (dodMilli - dobMilli) / WebConstants.DAY_IN_MILLISECONDS;
+            return days <= infantDays;
+        }
+
+        DeathPersonInfo dp = deathRegister.getDeathPerson();
+        if ((dp.getDeathPersonAge() == null || dp.getDeathPersonAge() == 0) && dp.getDeathPersonAgeMonth() == null &&
+            dp.getDeathPersonAgeDate() != null && dp.getDeathPersonAgeDate() <= infantDays) {
+            return true;
+        }
+
+        return false;
     }
 
     private void addDeathRegistration(DeathRegister deathRegistration, User user) {
