@@ -1,7 +1,6 @@
 package lk.rgd.crs.web.action.deaths;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.sun.org.apache.bcel.internal.generic.INEG;
 import lk.rgd.AppConstants;
 import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
@@ -495,7 +494,8 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         dsDivisionId = bddivision.getDsDivision().getDsDivisionUKey();
         deathDivisionId = bddivision.getBdDivisionUKey();
         deathDistrictId = bddivision.getDistrict().getDistrictUKey();
-        gnDivisionId = deathRegister.getDeathPerson().getGnDivision().getGnDivisionUKey();
+        gnDivisionId = deathRegister.getDeathPerson().getGnDivision() != null ?
+            deathRegister.getDeathPerson().getGnDivision().getGnDivisionUKey() : 0;
         DSDivision dsDivisionPermanentAddress = deathRegister.getDeathPerson().getDsDivisionOfPermanentAddress();
         deathPersonPermenentAddressDistrictId = (dsDivisionPermanentAddress != null) ?
             dsDivisionPermanentAddress.getDistrict().getDistrictUKey() : 0;
