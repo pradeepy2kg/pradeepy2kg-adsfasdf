@@ -3,22 +3,19 @@ package lk.rgd.crs.core.service;
 import lk.rgd.AppConstants;
 import lk.rgd.ErrorCodes;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.util.DateTimeUtils;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
+import lk.rgd.crs.api.dao.BirthDeclarationDAO;
 import lk.rgd.crs.api.dao.DeathRegisterDAO;
-import lk.rgd.crs.api.domain.BDDivision;
-import lk.rgd.crs.api.domain.DeathRegister;
-import lk.rgd.crs.api.domain.DeclarantInfo;
+import lk.rgd.crs.api.domain.*;
 import lk.rgd.prs.api.domain.Person;
 import lk.rgd.prs.api.service.PopulationRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * a class to do validations in death declarations
@@ -32,6 +29,7 @@ public class DeathDeclarationValidator {
     private static final String SERIAL_NUMBER_PATTERN = "20([1-9][0-9])[0|1]([0-9]{5})";
 
     private final DeathRegisterDAO deathRegisterDAO;
+    private final BirthDeclarationDAO birthDeclarationDAO;
     private static PopulationRegistry populationRegistry;
 
     private static final ResourceBundle rb_si =
@@ -41,9 +39,11 @@ public class DeathDeclarationValidator {
     private static final ResourceBundle rb_en =
         ResourceBundle.getBundle("messages/death_validation_messages", AppConstants.LK_EN);
 
-    public DeathDeclarationValidator(DeathRegisterDAO deathRegisterDAO, PopulationRegistry populationRegistry) {
+    public DeathDeclarationValidator(DeathRegisterDAO deathRegisterDAO, PopulationRegistry populationRegistry,
+        BirthDeclarationDAO birthDeclarationDAO) {
         this.deathRegisterDAO = deathRegisterDAO;
         this.populationRegistry = populationRegistry;
+        this.birthDeclarationDAO = birthDeclarationDAO;
     }
 
     /**
@@ -69,7 +69,7 @@ public class DeathDeclarationValidator {
                 handleException("Death declaration record ID : " + deathRegister.getIdUKey() + " is not complete. " +
                     "Check required field values", ErrorCodes.INVALID_DATA);
             } else if (deathRegister.getDeath().getDeathSerialNo() > 0) {
-                //todo needd of this  ????
+                //todo need of this  ????
                 handleException("Death declaration record with serial number : " + deathRegister.getDeath().getDeathSerialNo() +
                     " is not complete. Check required field values", ErrorCodes.INVALID_DATA);
             } else {
@@ -81,15 +81,15 @@ public class DeathDeclarationValidator {
     }
 
     /**
-     * validate standeard requrimnets such as
+     * validate standard requirements such as
      * inserting same death persons PIN or NIC in two unique entries,
      *
      * @param deathRegisterDAO the DeathRegisterDAO
-     * @param deathRegister    the death deaclaration form to validate
+     * @param deathRegister    the death declaration form to validate
      * @param user             the user initiating the validation.
      * @return a list of warnings issued against the death declaration
      */
-    public static List<UserWarning> validateStandardRequirements(
+    public List<UserWarning> validateStandardRequirements(
         DeathRegisterDAO deathRegisterDAO, DeathRegister deathRegister, User user) {
         // create a holder to capture any warnings
         List<UserWarning> warnings = new ArrayList<UserWarning>();
@@ -112,7 +112,8 @@ public class DeathDeclarationValidator {
             }
         }
         if (deList.size() > 0) {
-            UserWarning w = new UserWarning(MessageFormat.format(rb.getString("same_death_person_pin_found_in_previous_recode"), deathPersonPinOrNIC));
+            UserWarning w = new UserWarning(MessageFormat.format(
+                rb.getString("same_death_person_pin_found_in_previous_recode"), deathPersonPinOrNIC));
             w.setSeverity(UserWarning.Severity.WARN);
             warnings.add(w);
         }
@@ -137,7 +138,8 @@ public class DeathDeclarationValidator {
             }
         }
         if (fatherPINorNIC != null && fatherPINorNIC.equals(motherPINorNIC)) {
-            warnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.father.nic.equals.mother.nic"),fatherPINorNIC)));
+            warnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.father.nic.equals.mother.nic"),
+                fatherPINorNIC)));
         }
 
         //check PRS record of this person                      
@@ -153,7 +155,41 @@ public class DeathDeclarationValidator {
                 }
             }
         }
+        // TODO validate given data using PIN
+
+        // checks whether the death person age is 30 days of less
+        if (deathRegister.getDeath().isInfantLessThan30Days()) {
+            // see whether birth is already registered if not give warnings
+            checkInfantWarnings(deathRegister, warnings, rb);
+        }
+
         return warnings;
+    }
+
+    private void checkInfantWarnings(DeathRegister dr, List<UserWarning> warnings, ResourceBundle rb) {
+
+        DeathPersonInfo dp = dr.getDeathPerson();
+        if (dp != null && dp.getDeathPersonDOB() != null && dp.getDeathPersonMotherPINorNIC() != null) {
+            Calendar start = Calendar.getInstance();
+            start.setTime(dp.getDeathPersonDOB());
+
+            List<BirthDeclaration> existingRecords = birthDeclarationDAO.getByDOBRangeandMotherNICorPIN(
+                start.getTime(), start.getTime(), dp.getDeathPersonMotherPINorNIC());
+
+            if (existingRecords.isEmpty()) {
+                warnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.birthDeclaration.not.exist"),
+                    DateTimeUtils.getISO8601FormattedString(dp.getDeathPersonDOB()),
+                    dp.getDeathPersonMotherPINorNIC())));
+            } else {
+                for (BirthDeclaration b : existingRecords) {
+                    if (b.getRegister().getStatus() == BirthDeclaration.State.DATA_ENTRY) {
+                        warnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.birthDeclaration.not.approved"),
+                            DateTimeUtils.getISO8601FormattedString(dp.getDeathPersonDOB()),
+                            dp.getDeathPersonMotherPINorNIC(), b.getIdUKey())));
+                    }
+                }
+            }
+        }
     }
 
     private static void handleException(String msg, int errorCode) {
