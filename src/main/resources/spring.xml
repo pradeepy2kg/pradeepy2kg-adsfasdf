@@ -145,6 +145,7 @@
     <bean id="deathDeclarationValidator" class="lk.rgd.crs.core.service.DeathDeclarationValidator">
         <constructor-arg ref="deathRegisterDAOImpl"/>
         <constructor-arg ref="ecivilService"/>
+        <constructor-arg ref="birthDeclarationDAOImpl"/>
     </bean>
 
     <bean id="birthAlterationValidator" class="lk.rgd.crs.core.service.BirthAlterationValidator">
