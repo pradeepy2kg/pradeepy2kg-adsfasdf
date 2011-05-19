@@ -136,6 +136,9 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     @Transactional(propagation = Propagation.REQUIRED)
     public void updateDeathRegistration(DeathRegister deathRegistration, User user) {
         businessValidations(deathRegistration, user);
+        if (checkDeathPersonInfant(deathRegistration)) {
+            deathRegistration.getDeath().setInfantLessThan30Days(true);
+        }
         DeathRegister dr = deathRegisterDAO.getById(deathRegistration.getIdUKey());
         if (DeathRegister.State.DATA_ENTRY != dr.getStatus()) {
             handleException("Cannot update death registration " + deathRegistration.getIdUKey() +
@@ -210,7 +213,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
             checkUSerPermissionToApproveLateDeathRegistration(dr, user);
         }
 
-        List<UserWarning> warnings = DeathDeclarationValidator.validateStandardRequirements(deathRegisterDAO, dr, user);
+        List<UserWarning> warnings = deathDeclarationValidator.validateStandardRequirements(deathRegisterDAO, dr, user);
         if (warnings.isEmpty() || ignoreWarnings) {
             setApprovalStatus(deathRegisterIdUKey, user, DeathRegister.State.APPROVED, null);
         }

@@ -2,27 +2,26 @@ package lk.rgd.crs.core.service;
 
 import junit.framework.TestCase;
 import lk.rgd.ErrorCodes;
+import lk.rgd.UnitTestManager;
 import lk.rgd.common.RGDRuntimeException;
+import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.service.UserManager;
+import lk.rgd.common.core.AuthorizationException;
 import lk.rgd.crs.api.bean.UserWarning;
+import lk.rgd.crs.api.dao.BDDivisionDAO;
+import lk.rgd.crs.api.dao.DeathRegisterDAO;
 import lk.rgd.crs.api.dao.GNDivisionDAO;
+import lk.rgd.crs.api.domain.BDDivision;
+import lk.rgd.crs.api.domain.DeathRegister;
+import lk.rgd.crs.api.domain.DeclarantInfo;
 import lk.rgd.crs.api.domain.GNDivision;
-import org.springframework.context.ApplicationContext;
+import lk.rgd.crs.api.service.DeathRegistrationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import lk.rgd.UnitTestManager;
-import lk.rgd.common.core.AuthorizationException;
-import lk.rgd.common.api.domain.User;
-import lk.rgd.crs.api.dao.DeathRegisterDAO;
-import lk.rgd.crs.api.dao.BDDivisionDAO;
-import lk.rgd.crs.api.service.DeathRegistrationService;
-import lk.rgd.crs.api.domain.DeathRegister;
-import lk.rgd.crs.api.domain.BDDivision;
-import lk.rgd.crs.api.domain.DeclarantInfo;
-import lk.rgd.crs.CRSRuntimeException;
+import org.springframework.context.ApplicationContext;
 
-import java.util.Date;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -47,7 +46,6 @@ public class DeathRegistrationServiceTest extends TestCase {
     protected User adrColomboColombo;
     protected User adrGampahaNegambo;
     protected User argWestern;
-
 
     @Override
     protected void setUp() throws Exception {
@@ -84,8 +82,7 @@ public class DeathRegistrationServiceTest extends TestCase {
         // we add this record as deo-gampaha-negombo  and this user does not have permission to add this death and expecting exception
         try {
             deathRegService.addNewDeathRegistration(normalDeathRegistration, deoGampahaNegambo);
-        }
-        catch (RGDRuntimeException e) {
+        } catch (RGDRuntimeException e) {
             //we expecting permission deny for that even
             switch (e.getErrorCode()) {
                 case ErrorCodes.PERMISSION_DENIED:
@@ -101,9 +98,8 @@ public class DeathRegistrationServiceTest extends TestCase {
         try {
             deathRegService.addNewDeathRegistration(normalDeathRegistration, deoColomboColombo);
             logger.debug("successfully tested adding death registration happens at colombo bd division and is" +
-                " being added by deo-colmbo-colombo");
-        }
-        catch (RGDRuntimeException e) {
+                " being added by deo-colombo-colombo");
+        } catch (RGDRuntimeException e) {
             // we are not expecting any exceptions while adding this record by this user
             fail("not expecting any exception while adding death registration happen is colombo bd by deo-colombo-colombo");
         }
@@ -116,8 +112,7 @@ public class DeathRegistrationServiceTest extends TestCase {
             deathRegService.addNewDeathRegistration(normalDRWithDuplicateSerial, deoColomboColombo);
             //if it is success it is an error
             fail("expecting a exception while adding duplicate serial number for same bd division");
-        }
-        catch (RGDRuntimeException e) {
+        } catch (RGDRuntimeException e) {
             logger.debug("exception expected while adding duplicate serial number for same bd division");
         }
 
@@ -146,8 +141,7 @@ public class DeathRegistrationServiceTest extends TestCase {
         try {
             deathRegService.approveDeathRegistration(ddr.getIdUKey(), adrGampahaNegambo, true);
             fail("expecting exception while approving death registration by a ADR user who does mot have permission for the BD division");
-        }
-        catch (RGDRuntimeException e) {
+        } catch (RGDRuntimeException e) {
             switch (e.getErrorCode()) {
                 case ErrorCodes.PERMISSION_DENIED:
                     logger.debug("Got expected exception while approving by ADR user who does not have permission for the BD division");
@@ -172,8 +166,7 @@ public class DeathRegistrationServiceTest extends TestCase {
             //try to approve and this time we are not expecting any exceptions
             deathRegService.approveDeathRegistration(ddr.getIdUKey(), adrColomboColombo, true);
             logger.debug("successfully approved death registration by adr-colombo-colombo user");
-        }
-        catch (RGDRuntimeException e) {
+        } catch (RGDRuntimeException e) {
             fail("not expecting any kind of exception while approving death register");
         }
         //approving late death declaration
@@ -186,8 +179,7 @@ public class DeathRegistrationServiceTest extends TestCase {
         try {
             deathRegService.approveDeathRegistration(lateDeath.getIdUKey(), adrColomboColombo, true);
             fail("expecting exception while approve 2 years late death by a ADR");
-        }
-        catch (RGDRuntimeException e) {
+        } catch (RGDRuntimeException e) {
             switch (e.getErrorCode()) {
                 case ErrorCodes.UNABLE_TO_APPROVE_LATE_DEATH_REGISTRATION_NEED_HIGHER_APPROVAL_THAN_DR:
                     logger.debug("got expected exception while approve 2 years late death registration by ADR ");
@@ -201,8 +193,7 @@ public class DeathRegistrationServiceTest extends TestCase {
         try {
             deathRegService.approveDeathRegistration(lateDeath.getIdUKey(), argWestern, true);
             logger.debug("successfully approved two year late death by arg-western");
-        }
-        catch (RGDRuntimeException e) {
+        } catch (RGDRuntimeException e) {
             fail("not expecting any exception while approve 2 year late death registration by arg-western user");
         }
     }
@@ -220,8 +211,7 @@ public class DeathRegistrationServiceTest extends TestCase {
         try {
             deathRegService.updateDeathRegistration(updateTest, deoGampahaNegambo);
             fail("expecting a permission deny exception for editing this colombo record by negombo deo");
-        }
-        catch (RGDRuntimeException e) {
+        } catch (RGDRuntimeException e) {
             switch (e.getErrorCode()) {
                 case ErrorCodes.PERMISSION_DENIED:
                     logger.debug("expected permission deny exception while editing colombo record by negombo deo ");
@@ -234,8 +224,7 @@ public class DeathRegistrationServiceTest extends TestCase {
         try {
             deathRegService.updateDeathRegistration(updateTest, deoColomboColombo);
             logger.debug("not expecting any exception while editing colombo death record by a colombo deo");
-        }
-        catch (RGDRuntimeException e) {
+        } catch (RGDRuntimeException e) {
             fail("not expecting any exception while editing colombo record by colombo ");
         }
 
@@ -247,8 +236,7 @@ public class DeathRegistrationServiceTest extends TestCase {
         try {
             deathRegService.updateDeathRegistration(updateTest, adrColomboColombo);
             fail("expecting exception while editing already approve record");
-        }
-        catch (RGDRuntimeException e) {
+        } catch (RGDRuntimeException e) {
             logger.debug("exception expected while editing already approved record ");
         }
 /*todo not working amith :(        
@@ -280,11 +268,9 @@ public class DeathRegistrationServiceTest extends TestCase {
                     register = deathRegService.getById(record);
                     this.wait(10000000);
                     deathRegService.updateDeathRegistration(register, adrColomboColombo);
-                }
-                catch (InterruptedException e) {
+                } catch (InterruptedException e) {
                     //do nothing
-                }
-                catch (IllegalMonitorStateException ee) {
+                } catch (IllegalMonitorStateException ee) {
                     ee.printStackTrace();
                 }
             } else {

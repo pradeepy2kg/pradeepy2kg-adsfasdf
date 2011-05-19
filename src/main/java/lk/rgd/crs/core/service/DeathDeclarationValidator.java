@@ -167,24 +167,40 @@ public class DeathDeclarationValidator {
     }
 
     private void checkInfantWarnings(DeathRegister dr, List<UserWarning> warnings, ResourceBundle rb) {
-
         DeathPersonInfo dp = dr.getDeathPerson();
-        if (dp != null && dp.getDeathPersonDOB() != null && dp.getDeathPersonMotherPINorNIC() != null) {
+        if (dp != null && (dp.getDeathPersonDOB() != null || dp.getDeathPersonAgeDate() != null) &&
+            dp.getDeathPersonMotherPINorNIC() != null) {
+
             Calendar start = Calendar.getInstance();
-            start.setTime(dp.getDeathPersonDOB());
+            Calendar end = Calendar.getInstance();
+            Calendar cal = Calendar.getInstance();
+
+            if (dp.getDeathPersonDOB() != null) {
+                start.setTime(dp.getDeathPersonDOB());
+                end.setTime(dp.getDeathPersonDOB());
+            } else {
+                cal.setTime(dr.getDeath().getDateOfDeath());
+                cal.add(Calendar.DATE, -dp.getDeathPersonAgeDate());
+
+                start.setTime(cal.getTime());
+                end.setTime(cal.getTime());
+            }
+            start.add(Calendar.DATE, -10);
+            end.add(Calendar.DATE, 10);
 
             List<BirthDeclaration> existingRecords = birthDeclarationDAO.getByDOBRangeandMotherNICorPIN(
-                start.getTime(), start.getTime(), dp.getDeathPersonMotherPINorNIC());
+                start.getTime(), end.getTime(), dp.getDeathPersonMotherPINorNIC());
 
+            Date date = dp.getDeathPersonDOB() != null ? dp.getDeathPersonDOB() : cal.getTime();
             if (existingRecords.isEmpty()) {
                 warnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.birthDeclaration.not.exist"),
-                    DateTimeUtils.getISO8601FormattedString(dp.getDeathPersonDOB()),
+                    DateTimeUtils.getISO8601FormattedString(date),
                     dp.getDeathPersonMotherPINorNIC())));
             } else {
                 for (BirthDeclaration b : existingRecords) {
                     if (b.getRegister().getStatus() == BirthDeclaration.State.DATA_ENTRY) {
                         warnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.birthDeclaration.not.approved"),
-                            DateTimeUtils.getISO8601FormattedString(dp.getDeathPersonDOB()),
+                            DateTimeUtils.getISO8601FormattedString(date),
                             dp.getDeathPersonMotherPINorNIC(), b.getIdUKey())));
                     }
                 }
