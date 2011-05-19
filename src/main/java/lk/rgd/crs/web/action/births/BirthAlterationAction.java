@@ -65,6 +65,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
     private BirthDeclaration birthDeclaration;
     private Date alterationRecivedDate;
     private BirthAlteration.AlterationType alterationType;
+    private ParentInfo parent;
 
     private int pageNo;
     private int noOfRows;
@@ -160,7 +161,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             populateBasicLists();
             return ERROR;
         } else {
-
+            parent =bdf.getParent();
             try {
                 birthAlterationValidator.checkOnGoingAlterationOnThisSection(bdf.getIdUKey(), alterationType, user);
             } catch (CRSRuntimeException e) {
@@ -1678,5 +1679,13 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
 
     public void setBirthDistrictId(int birthDistrictId) {
         this.birthDistrictId = birthDistrictId;
+    }
+
+    public ParentInfo getParent() {
+        return parent;
+    }
+
+    public void setParent(ParentInfo parent) {
+        this.parent = parent;
     }
 }

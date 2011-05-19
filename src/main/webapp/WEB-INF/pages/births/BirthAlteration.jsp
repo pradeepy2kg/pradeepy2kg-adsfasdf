@@ -503,10 +503,32 @@ function validateBirthYear(domElement, errorText, errorCode) {
             NICorPIN = "";
             address = "";
         }
-
         document.getElementById("Declarant_pinOrNic").value = NICorPIN;
         document.getElementById("declarantName").value = name;
         document.getElementById("declarantAddress").value = address;
+    }
+    function setDetailsOfInformation(id) {
+        var NICorPIN;
+        var name;
+        var address;
+        if (id == 1) {
+            NICorPIN = document.getElementById("motherNICorPIN").value;
+            name = document.getElementById("motherName").value;
+            address = document.getElementById("motherAddress").value;
+        }
+        if (id == 2) {
+            NICorPIN = document.getElementById("fatherNICorPIN").value;
+            name = document.getElementById("fatherName").value;
+            address = "";
+        }
+        if (id == 3) {
+            NICorPIN = "";
+            name = "";
+            address = "";
+        }
+        document.getElementById("informent_pinOrNic").value = NICorPIN;
+        document.getElementById("informentName").value = name;
+        document.getElementById("informentAddress").value = address;
     }
     function initSerialNumber() {
         var domobject = document.getElementById('bdfSerialNo');
@@ -965,7 +987,8 @@ function validateBirthYear(domElement, errorText, errorCode) {
                         </td>
                         <td style="width:25%;border:none;">
                             <s:radio id="informantType" name="birthAlteration.alt52_1.informant.informantType"
-                                     list="#@java.util.HashMap@{'MOTHER':''}"/></td>
+                                     list="#@java.util.HashMap@{'MOTHER':''}"
+                                     onchange="javascript:setDetailsOfInformation(1)"/></td>
                 </table>
             </td>
             <td>
@@ -975,7 +998,8 @@ function validateBirthYear(domElement, errorText, errorCode) {
                         </td>
                         <td style="width:25%;border:none;">
                             <s:radio id="informantType" name="birthAlteration.alt52_1.informant.informantType"
-                                     list="#@java.util.HashMap@{'FATHER':''}"/></td>
+                                     list="#@java.util.HashMap@{'FATHER':''}"
+                                     onchange="javascript:setDetailsOfInformation(2)"/></td>
                 </table>
 
             </td>
@@ -986,7 +1010,8 @@ function validateBirthYear(domElement, errorText, errorCode) {
                         </td>
                         <td style="width:25%;border:none;">
                             <s:radio id="informantType" name="birthAlteration.alt52_1.informant.informantType"
-                                     list="#@java.util.HashMap@{'GUARDIAN':''}"/></td>
+                                     list="#@java.util.HashMap@{'GUARDIAN':''}"
+                                     onchange="javascript:setDetailsOfInformation(3)"/></td>
                 </table>
             </td>
         </tr>
