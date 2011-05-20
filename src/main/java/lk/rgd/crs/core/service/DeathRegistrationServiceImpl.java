@@ -75,9 +75,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     @Transactional(propagation = Propagation.REQUIRED)
     public void addNewDeathRegistration(DeathRegister deathRegistration, User user) {
         // checks age and set it as a death of infant less than 30 days
-        if (checkDeathPersonInfant(deathRegistration)) {
-            deathRegistration.getDeath().setInfantLessThan30Days(true);
-        }
+        deathRegistration.getDeath().setInfantLessThan30Days(checkDeathPersonInfant(deathRegistration));
 
         //validate access of the user  to Death division
         ValidationUtils.validateAccessToBDDivision(user, deathRegistration.getDeath().getDeathDivision());
@@ -136,9 +134,8 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     @Transactional(propagation = Propagation.REQUIRED)
     public void updateDeathRegistration(DeathRegister deathRegistration, User user) {
         businessValidations(deathRegistration, user);
-        if (checkDeathPersonInfant(deathRegistration)) {
-            deathRegistration.getDeath().setInfantLessThan30Days(true);
-        }
+        deathRegistration.getDeath().setInfantLessThan30Days(checkDeathPersonInfant(deathRegistration));
+
         DeathRegister dr = deathRegisterDAO.getById(deathRegistration.getIdUKey());
         if (DeathRegister.State.DATA_ENTRY != dr.getStatus()) {
             handleException("Cannot update death registration " + deathRegistration.getIdUKey() +
