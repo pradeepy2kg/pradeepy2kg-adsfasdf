@@ -17,6 +17,8 @@ import org.slf4j.LoggerFactory;
 import java.text.MessageFormat;
 import java.util.*;
 
+import static lk.rgd.crs.api.domain.BirthDeclaration.State.*;
+
 /**
  * a class to do validations in death declarations
  *
@@ -198,10 +200,18 @@ public class DeathDeclarationValidator {
                     dp.getDeathPersonMotherPINorNIC())));
             } else {
                 for (BirthDeclaration b : existingRecords) {
-                    if (b.getRegister().getStatus() == BirthDeclaration.State.DATA_ENTRY) {
-                        warnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.birthDeclaration.not.approved"),
-                            DateTimeUtils.getISO8601FormattedString(date),
-                            dp.getDeathPersonMotherPINorNIC(), b.getIdUKey())));
+                    switch (b.getRegister().getStatus()) {
+                        case DATA_ENTRY:
+                            warnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.birthDeclaration.not.approved"),
+                                DateTimeUtils.getISO8601FormattedString(date),
+                                dp.getDeathPersonMotherPINorNIC(), b.getIdUKey())));
+                            break;
+                        case ARCHIVED_CANCELLED:
+                        case ARCHIVED_REJECTED:
+                            warnings.add(new UserWarning(MessageFormat.format(rb.getString("warn.birthDeclaration.not.exist"),
+                                DateTimeUtils.getISO8601FormattedString(date),
+                                dp.getDeathPersonMotherPINorNIC())));
+                            break;
                     }
                 }
             }
