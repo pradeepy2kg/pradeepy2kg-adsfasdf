@@ -8,8 +8,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.Date;
+
 /**
- * If the database column sizes are modified the setter methods must be modified 
+ * If the database column sizes are modified the setter methods must be modified
  */
 @Embeddable
 public class InformantInfo implements Serializable, Cloneable {
@@ -55,7 +56,7 @@ public class InformantInfo implements Serializable, Cloneable {
     }
 
     public void setInformantName(String informantName) {
-        this.informantName = WebUtils.filterBlanksAndToUpperAndTrim(informantName,600,"informantName");
+        this.informantName = WebUtils.filterBlanksAndToUpperAndTrim(informantName, 600, "informantName");
     }
 
     public String getInformantNICorPIN() {
@@ -63,7 +64,7 @@ public class InformantInfo implements Serializable, Cloneable {
     }
 
     public void setInformantNICorPIN(String informantNICorPIN) {
-        this.informantNICorPIN = WebUtils.filterBlanksAndToUpperAndTrim(informantNICorPIN,12,"informantNICorPIN");
+        this.informantNICorPIN = WebUtils.filterBlanksAndToUpperAndTrim(informantNICorPIN, 12, "informantNICorPIN");
     }
 
     public String getInformantAddress() {
@@ -71,7 +72,7 @@ public class InformantInfo implements Serializable, Cloneable {
     }
 
     public void setInformantAddress(String informantAddress) {
-        this.informantAddress = WebUtils.filterBlanksAndToUpperAndTrim(informantAddress,255,"informantAddress");
+        this.informantAddress = WebUtils.filterBlanksAndToUpperAndTrim(informantAddress, 255, "informantAddress");
     }
 
     public String getInformantPhoneNo() {
@@ -79,7 +80,7 @@ public class InformantInfo implements Serializable, Cloneable {
     }
 
     public void setInformantPhoneNo(String informantPhoneNo) {
-        this.informantPhoneNo = WebUtils.filterBlanksAndToUpperAndTrim(informantPhoneNo,30,"informantPhoneNo");
+        this.informantPhoneNo = WebUtils.filterBlanksAndToUpperAndTrim(informantPhoneNo, 30, "informantPhoneNo");
     }
 
     public String getInformantEmail() {
@@ -87,7 +88,7 @@ public class InformantInfo implements Serializable, Cloneable {
     }
 
     public void setInformantEmail(String informantEmail) {
-        this.informantEmail = WebUtils.filterBlanksAndToUpperAndTrim(informantEmail,30,"informantEmail");
+        this.informantEmail = WebUtils.filterBlanks(informantEmail);
     }
 
     public Date getInformantSignDate() {

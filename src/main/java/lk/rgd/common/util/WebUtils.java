@@ -9,7 +9,6 @@ import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -124,12 +123,11 @@ public class WebUtils {
      * @return filtered string
      */
     public static String filterBlanksAndToUpperAndTrim(String originalString, int maximumAllows, String fieldName) {
-        if ((originalString == null) || originalString.length() == 0) {
+        if ((originalString == null) || (originalString = originalString.trim()).length() == 0) {
             return null;
         }
-        originalString = originalString.trim();
-        if (originalString.length() != 0 && originalString.length() > maximumAllows) {
-            originalString = originalString.substring(0, maximumAllows - 1);
+        if (originalString.length() > maximumAllows) {
+            originalString = originalString.substring(0, maximumAllows);
             logger.debug("size of original string  {} is greater than maximum allowed size : {}", fieldName, maximumAllows);
         }
         return originalString.toUpperCase();
