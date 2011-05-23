@@ -3,6 +3,7 @@ package lk.rgd.crs.api.domain;
 import lk.rgd.AppConstants;
 import lk.rgd.common.api.domain.BaseLifeCycleInfo;
 import lk.rgd.common.util.NameFormatUtil;
+import lk.rgd.common.util.WebUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -24,7 +25,7 @@ import java.util.Set;
 })
 @Entity
 @Table(name = "REGISTRAR", schema = "CRS")
-@Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Registrar implements Serializable {
 
     @Id
@@ -155,7 +156,7 @@ public class Registrar implements Serializable {
     }
 
     public void setNic(String nic) {
-        this.nic = nic;
+        this.nic = WebUtils.filterBlanksAndToUpper(nic);
     }
 
     public int getGender() {
@@ -179,7 +180,7 @@ public class Registrar implements Serializable {
     }
 
     public void setFullNameInOfficialLanguage(String fullNameInOfficialLanguage) {
-        this.fullNameInOfficialLanguage = fullNameInOfficialLanguage;
+        this.fullNameInOfficialLanguage = WebUtils.filterBlanksAndToUpper(fullNameInOfficialLanguage);
     }
 
     public String getFullNameInEnglishLanguage() {
@@ -187,7 +188,7 @@ public class Registrar implements Serializable {
     }
 
     public void setFullNameInEnglishLanguage(String fullNameInEnglishLanguage) {
-        this.fullNameInEnglishLanguage = fullNameInEnglishLanguage;
+        this.fullNameInEnglishLanguage = WebUtils.filterBlanksAndToUpper(fullNameInEnglishLanguage);
     }
 
     public String getCurrentAddress() {
@@ -195,7 +196,7 @@ public class Registrar implements Serializable {
     }
 
     public void setCurrentAddress(String currentAddress) {
-        this.currentAddress = currentAddress;
+        this.currentAddress = WebUtils.filterBlanksAndToUpper(currentAddress);
     }
 
     public String getPreferredLanguage() {
@@ -231,7 +232,7 @@ public class Registrar implements Serializable {
     }
 
     public void setPhoneNo(String phoneNo) {
-        this.phoneNo = phoneNo;
+        this.phoneNo = WebUtils.filterBlanks(phoneNo);
     }
 
     public String getEmailAddress() {
@@ -239,7 +240,7 @@ public class Registrar implements Serializable {
     }
 
     public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
+        this.emailAddress = WebUtils.filterBlanks(emailAddress);
     }
 
     public String getShortName() {
