@@ -11,7 +11,7 @@ import java.util.Date;
 
 /**
  * Java bean instance to capture parent information as given by page 2 of birth declaration form
- * If the database column sizes are modified the setter methods must be modified 
+ * If the database column sizes are modified the setter methods must be modified
  */
 @Embeddable
 public class ParentInfo implements Serializable, Cloneable {
@@ -109,7 +109,7 @@ public class ParentInfo implements Serializable, Cloneable {
     @Column(nullable = true, length = 600)
     private String motherFullName;
 
-     /**
+    /**
      * Full name of mother in English
      */
     @Column(nullable = true, length = 600)
@@ -191,7 +191,7 @@ public class ParentInfo implements Serializable, Cloneable {
     private String motherAdmissionNo;
 
     /**
-     * Date the mother admitted that she was pregnant. -- just kidding, the date she got addmitted to the hospital of course. -- 
+     * Date the mother admitted that she was pregnant. -- just kidding, the date she got addmitted to the hospital of course. --
      */
     @Column(nullable = true)
     @Temporal(value = TemporalType.DATE)
@@ -214,7 +214,7 @@ public class ParentInfo implements Serializable, Cloneable {
     }
 
     public void setFatherNICorPIN(String fatherNICorPIN) {
-        this.fatherNICorPIN = WebUtils.filterBlanksAndToUpperAndTrim(fatherNICorPIN,12,"fatherNICorPIN");
+        this.fatherNICorPIN = WebUtils.filterBlanksAndToUpperAndTrim(fatherNICorPIN, 12, "fatherNICorPIN");
     }
 
     public String getFatherPassportNo() {
@@ -222,7 +222,7 @@ public class ParentInfo implements Serializable, Cloneable {
     }
 
     public void setFatherPassportNo(String fatherPassportNo) {
-        this.fatherPassportNo = WebUtils.filterBlanksAndToUpperAndTrim(fatherPassportNo,15,"fatherPassportNo");
+        this.fatherPassportNo = WebUtils.filterBlanksAndToUpperAndTrim(fatherPassportNo, 15, "fatherPassportNo");
     }
 
     public Country getFatherCountry() {
@@ -242,11 +242,11 @@ public class ParentInfo implements Serializable, Cloneable {
     }
 
     public void setFatherFullName(String fatherFullName) {
-        this.fatherFullName = WebUtils.filterBlanksAndToUpperAndTrim(fatherFullName,600,"fatherFullName");
+        this.fatherFullName = WebUtils.filterBlanksAndToUpperAndTrim(fatherFullName, 600, "fatherFullName");
     }
 
-     public void setFatherFullNameInEnglish(String fatherFullNameInEnglish) {
-        this.fatherFullNameInEnglish = WebUtils.filterBlanksAndToUpperAndTrim(fatherFullNameInEnglish,600,"fatherFullNameInEnglish");
+    public void setFatherFullNameInEnglish(String fatherFullNameInEnglish) {
+        this.fatherFullNameInEnglish = WebUtils.filterBlanksAndToUpperAndTrim(fatherFullNameInEnglish, 600, "fatherFullNameInEnglish");
     }
 
     public Date getFatherDOB() {
@@ -262,7 +262,7 @@ public class ParentInfo implements Serializable, Cloneable {
     }
 
     public void setFatherPlaceOfBirth(String fatherPlaceOfBirth) {
-        this.fatherPlaceOfBirth = WebUtils.filterBlanksAndToUpperAndTrim(fatherPlaceOfBirth,60,"fatherPlaceOfBirth");
+        this.fatherPlaceOfBirth = WebUtils.filterBlanksAndToUpperAndTrim(fatherPlaceOfBirth, 60, "fatherPlaceOfBirth");
     }
 
     public Race getFatherRace() {
@@ -278,7 +278,7 @@ public class ParentInfo implements Serializable, Cloneable {
     }
 
     public void setMotherNICorPIN(String motherNICorPIN) {
-        this.motherNICorPIN = WebUtils.filterBlanksAndToUpperAndTrim(motherNICorPIN,12,"motherNICorPIN");
+        this.motherNICorPIN = WebUtils.filterBlanksAndToUpperAndTrim(motherNICorPIN, 12, "motherNICorPIN");
     }
 
     public String getMotherPassportNo() {
@@ -286,7 +286,7 @@ public class ParentInfo implements Serializable, Cloneable {
     }
 
     public void setMotherPassportNo(String motherPassportNo) {
-        this.motherPassportNo = WebUtils.filterBlanksAndToUpperAndTrim(motherPassportNo,15,"motherPassportNo");
+        this.motherPassportNo = WebUtils.filterBlanksAndToUpperAndTrim(motherPassportNo, 15, "motherPassportNo");
     }
 
     public Country getMotherCountry() {
@@ -306,11 +306,11 @@ public class ParentInfo implements Serializable, Cloneable {
     }
 
     public void setMotherFullName(String motherFullName) {
-        this.motherFullName = WebUtils.filterBlanksAndToUpperAndTrim(motherFullName,600,"motherFullName");
+        this.motherFullName = WebUtils.filterBlanksAndToUpperAndTrim(motherFullName, 600, "motherFullName");
     }
 
     public void setMotherFullNameInEnglish(String motherFullNameInEnglish) {
-        this.motherFullNameInEnglish = WebUtils.filterBlanksAndToUpperAndTrim(motherFullNameInEnglish,600,"motherFullNameInEnglish");
+        this.motherFullNameInEnglish = WebUtils.filterBlanksAndToUpperAndTrim(motherFullNameInEnglish, 600, "motherFullNameInEnglish");
     }
 
 
@@ -327,7 +327,7 @@ public class ParentInfo implements Serializable, Cloneable {
     }
 
     public void setMotherPlaceOfBirth(String motherPlaceOfBirth) {
-        this.motherPlaceOfBirth = WebUtils.filterBlanksAndToUpperAndTrim(motherPlaceOfBirth,60,"motherPlaceOfBirth");
+        this.motherPlaceOfBirth = WebUtils.filterBlanksAndToUpperAndTrim(motherPlaceOfBirth, 60, "motherPlaceOfBirth");
     }
 
     public Race getMotherRace() {
@@ -351,7 +351,7 @@ public class ParentInfo implements Serializable, Cloneable {
     }
 
     public void setMotherAddress(String motherAddress) {
-        this.motherAddress = WebUtils.filterBlanksAndToUpperAndTrim(motherAddress,255,"motherAddress");
+        this.motherAddress = WebUtils.filterBlanksAndToUpperAndTrim(motherAddress, 255, "motherAddress");
     }
 
     public String getMotherPhoneNo() {
@@ -359,7 +359,7 @@ public class ParentInfo implements Serializable, Cloneable {
     }
 
     public void setMotherPhoneNo(String motherPhoneNo) {
-        this.motherPhoneNo = WebUtils.filterBlanksAndToUpperAndTrim(motherPhoneNo,30,"motherPhoneNo");
+        this.motherPhoneNo = WebUtils.filterBlanksAndToUpperAndTrim(motherPhoneNo, 30, "motherPhoneNo");
     }
 
     public String getMotherEmail() {
@@ -367,7 +367,7 @@ public class ParentInfo implements Serializable, Cloneable {
     }
 
     public void setMotherEmail(String motherEmail) {
-        this.motherEmail = WebUtils.filterBlanksAndToUpperAndTrim(motherEmail,30,"motherEmail");
+        this.motherEmail = WebUtils.filterBlanks(motherEmail);
     }
 
     public String getMotherAdmissionNo() {
@@ -375,7 +375,7 @@ public class ParentInfo implements Serializable, Cloneable {
     }
 
     public void setMotherAdmissionNo(String motherAdmissionNo) {
-        this.motherAdmissionNo = WebUtils.filterBlanksAndToUpperAndTrim(motherAdmissionNo,15,"motherAdmissionNo");
+        this.motherAdmissionNo = WebUtils.filterBlanksAndToUpperAndTrim(motherAdmissionNo, 15, "motherAdmissionNo");
     }
 
     public Date getMotherAdmissionDate() {
