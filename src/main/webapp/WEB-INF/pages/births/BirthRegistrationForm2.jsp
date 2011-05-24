@@ -5,15 +5,15 @@
 
 <s:if test="birthType.ordinal()==0">
     <%--still birth--%>
-    <s:set name="row" value="8"/>
+    <s:set name="row" value="7"/>
 </s:if>
 <s:elseif test="birthType.ordinal()==1">
     <%--live birth--%>
-    <s:set name="row" value="10"/>
+    <s:set name="row" value="9"/>
 </s:elseif>
 <s:elseif test="birthType.ordinal()==2">
     <%--adoption--%>
-    <s:set name="row" value="12"/>
+    <s:set name="row" value="11"/>
 </s:elseif>
 
 <script src="/ecivil/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
@@ -129,18 +129,12 @@ $('img#name_english_father').bind('click', function(evt4) {
 
 function processResponse1(respObj) {
     //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-    $("input#motherFullNameInEnglish").val(respObj.Body[0].transliterateResponse[0].
-    return[0].Text
-)
-    ;
+    $("input#motherFullNameInEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
 }
 
 function processResponse2(respObj) {
     //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-    $("input#fatherFullNameInEnglish").val(respObj.Body[0].transliterateResponse[0].
-    return[0].Text
-)
-    ;
+    $("input#fatherFullNameInEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
 }
 
 /*end java scripts for transiterators*/
@@ -460,7 +454,9 @@ function maxLengthCalculate(id, max, divId) {
             <s:textfield id="father_pinOrNic" name="parent.fatherNICorPIN" maxLength="12"/>
             <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="father_lookup">
         </td>
-        <td colspan="2" rowspan="2" width="120px"><label>විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If foreigner</label>
+        <td colspan="2" rowspan="2" width="120px"><label>
+            (<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>)
+            විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If foreigner</label>
         </td>
         <td colspan="2"><label>රට<br>நாடு<br>Country</label></td>
         <td colspan="2">
@@ -568,7 +564,9 @@ function maxLengthCalculate(id, max, divId) {
             <s:textfield id="mother_pinOrNic" name="parent.motherNICorPIN" maxLength="12"/>
             <img src="<s:url value="/images/search-mother.png"/>" style="vertical-align:middle;" id="mother_lookup">
         </td>
-        <td colspan="2" rowspan="2" width="120px"><label>විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If foreigner</label>
+        <td colspan="2" rowspan="2" width="120px"><label>
+            (<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>)
+            විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If foreigner</label>
         </td>
         <td colspan="2"><label>රට<br>நாடு <br>Country</label></td>
         <td colspan="2"><s:select id="motherCountryId" name="motherCountry" list="countryList" headerKey="0"
@@ -669,8 +667,10 @@ function maxLengthCalculate(id, max, divId) {
         </tr>
         <tr>
             <td width="200px" style="border-top:none;border-bottom:none"></td>
-            <td colspan="2"><label>ප්‍රාදේශීය ලේකම් කොට්ඨාශය /<br>பிரதேச செயளாளா் பிரிவு/<br>Divisional
-                Secretariat</label>
+            <td colspan="2"><label>ප්‍රාදේශීය ලේකම් කොට්ඨාශය /<br>
+                பிரதேச செயளாளர் பிரிவு <br/>
+                Divisional Secretary Division
+            </label>
             </td>
             <td colspan="6" class="table_reg_cell_02">
                 <s:if test="#parent.motherDSDivision.dsDivisionUKey > 0">

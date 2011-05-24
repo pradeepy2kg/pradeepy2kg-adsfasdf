@@ -534,7 +534,7 @@ function enableSerialNumber(mode) {
         <td>
             උපන් දිනය
             <br>பிறந்த திகதி
-            <br>Date of birth
+            <br>Date of Birth
         </td>
         <td colspan="2">
             <s:label value="YYYY-MM-DD" cssStyle="margin-left:10px;font-size:10px"/><br>

@@ -660,19 +660,19 @@ function validateBirthYear(domElement, errorText, errorCode) {
         </tr>
         <tr>
             <td>දිස්ත්‍රික්කය <br>
-                மாவட்டம் <br>
+                மாவட்டம்<br>
                 District
             </td>
             <td><s:label value="%{#request.districtName}"/></td>
             <td>ප්‍රාදේශීය ලේකම් කොට්ඨාශය <br>
-                பிரதேச செயலாளர் பிரிவு<br>
-                Divisional Secretariat
+                பிரதேச செயளாளர் பிரிவு <br/>
+                Divisional Secretary Division
             </td>
             <td colspan="2"><s:label value="%{#request.dsDivisionName}"/></td>
         </tr>
         <tr>
-            <td>ලියාපදිංචි කිරීමේ කොට්ඨාශය <br>
-                பதிவுப் பிரிவு<br>
+            <td>ලියාපදිංචි කිරීමේ කොට්ඨාශය<br/>
+                பதிவுப் பிரிவு<br/>
                 Registration Division
             </td>
             <td><s:label value="%{#request.bdDivisionName}"/></td>
@@ -730,7 +730,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
         <td style="width:25%;border-right:none;"></td>
         <td style="font-size:11pt;text-align:center;width:50%;border-right:none" colspan="6">
             ළම‌යාගේ විස්තර <br>
-            பிள்ளை பற்றிய தகவல் <br>
+            பிள்ளை பற்றிய தகவல்<br>
             Child's Information
         </td>
         <td style="width:20%;text-align:right;border-right:none">
@@ -782,8 +782,8 @@ function validateBirthYear(domElement, errorText, errorCode) {
         </tr>
         <tr>
             <td colspan="2"><s:label value="ප්‍රාදේශීය ලේකම් කොට්ඨාශය /"/> <br>
-                <s:label value="பிரதேச செயலாளர் பிரிவு/"/> <br>
-                <s:label value="Divisional Secretariat"/>
+                <s:label value="பிரதேச செயளாளர் பிரிவு/"/> <br>
+                <s:label value="Divisional Secretary Division"/>
             </td>
             <td colspan="4"><s:select id="childDsDivisionId" name="dsDivisionId" list="allDsDivisionList"
                                       value="%{dsDivisionId}"
@@ -792,7 +792,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
         <tr>
             <td colspan="2"><s:label value=" ලියාපදිංචි කිරීමේ කොට්ඨාශය /"/> <br>
                 <s:label value="பதிவுப் பிரிவு/"/> <br>
-                <s:label value=" Registration Division"/>
+                <s:label value="Registration Division"/>
             </td>
             <td colspan="4"><s:select id="childBirthDivisionId" name="divisionAltaration"
                                       list="allBdDivisionList"

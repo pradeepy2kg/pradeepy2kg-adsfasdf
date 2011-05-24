@@ -453,7 +453,7 @@
         <td>
             උපන් දිනය
             <br>பிறந்த திகதி
-            <br>Date of birth
+            <br>Date of Birth
         </td>
         <td height="40px"><s:label name="" value="%{adoption.childBirthDate}"/></td>
         <td height="40px" width="250px">

@@ -270,8 +270,8 @@
             <s:label name="" value="%{childDistrictEn}"/>
         </td>
         <td>ප්‍රාදේශීය ලේකම් කොට්ඨාශය
-            <br> பிரதேச செயளாளா் பிரிவு
-            <br> Divisional Secretariat
+            <br/>பிரதேச செயளாளர் பிரிவு
+            <br/>Divisional Secretary Division
         </td>
         <td colspan="2">
             <s:label name="" value="%{childDsDivision}" cssStyle="font-size:11pt;"/><br/>
@@ -338,7 +338,7 @@
     <tr height="70px">
         <td>අනන්‍යතා අංකය<br>தனிநபர்அடையாள எண் <br>Identification Number</td>
         <td align="center" style="font-size:14pt;"><s:label name="" value="%{#request.child.pin}"/></td>
-        <td>උපන් දිනය <br>பிறந்த திகதி<br>Date of birth</td>
+        <td>උපන් දිනය <br>பிறந்த திகதி<br>Date of Birth</td>
         <td>
             <s:label name="" value="%{#request.child.childDateOfBirthForPrint}" cssStyle="font-size:12pt;"/><br>
             <s:label value="YYYY-MM-DD" cssStyle="font-size:8pt;"/>
@@ -393,7 +393,7 @@
 </s:if>
 <s:else>
     <tr height="60px">
-        <td>උපන් දිනය <br>பிறந்த திகதி<br>Date of birth</td>
+        <td>උපන් දිනය <br>பிறந்த திகதி<br>Date of Birth</td>
         <td>
             <s:label name="" value="%{#request.child.childDateOfBirthForPrint}" cssStyle="font-size:12pt;"/><br>
             <s:label value="YYYY-MM-DD" cssStyle="font-size:8pt;"/>

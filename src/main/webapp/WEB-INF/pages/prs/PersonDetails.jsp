@@ -102,7 +102,7 @@
         <td>
             උපන් දිනය
             <br>பிறந்த திகதி
-            <br>Date of birth
+            <br>Date of Birth
         </td>
         <td>
             <s:if test="person.dateOfBirth != null">
@@ -402,7 +402,7 @@
         <td>
             උපන් දිනය
             <br>பிறந்த திகதி
-            <br>Date of birth
+            <br>Date of Birth
         </td>
         <td>
             නම
@@ -616,7 +616,7 @@ String lang = ((Locale) session.getAttribute("WW_TRANS_I18N_LOCALE")).getLanguag
             <td>
                 උපන් දිනය
                 <br>பிறந்த திகதி
-                <br>Date of birth
+                <br>Date of Birth
             </td>
             <td>
                 නම

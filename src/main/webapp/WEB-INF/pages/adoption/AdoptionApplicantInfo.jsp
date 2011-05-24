@@ -191,8 +191,8 @@
     <tbody>
     <tr>
         <td>උපන් දිනය<br/>
-            Date of birth in ta<br>
-            Date of birth
+            பிறந்த திகதி<br>
+            Date of Birth
         </td>
         <td colspan="2" style="text-align:center;">
             <s:label value="%{#request.adoption.childBirthDate}"/>

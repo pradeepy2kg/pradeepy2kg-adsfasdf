@@ -132,7 +132,7 @@
         <td>
             උපන් දිනය
             <br>பிறந்த திகதி
-            <br>Date of birth
+            <br>Date of Birth
         </td>
         <td colspan="2" style="font-size:12pt">
             <s:label value="%{person.dateOfBirth}"/><br>

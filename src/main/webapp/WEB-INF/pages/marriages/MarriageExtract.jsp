@@ -151,8 +151,9 @@
             <s:label name="marriage.mrDivision.dsDivision.district.enDistrictName"/><br/>
         </td>
         <td><label><span class="font-8">
-            ප්‍රාදේශීය ලේකම් කොට්ඨාශය
-                <br>பிரதேச செயளாளர் பிரிவு <br>Divisional Secretariat</span>
+            ප්‍රාදේශීය ලේකම් කොට්ඨාශය<br/>
+            பிரதேச செயளாளர் பிரிவு <br/>
+            Divisional Secretary Division</span>
         </label>
         </td>
         <td align="center">
@@ -169,7 +170,7 @@
     <tr>
         <td><label><span class="font-8">
             ලියාපදිංචි කිරීමේ කොට්ඨාශය
-                        <br>பதிவுப் பிரிவு  <br>Registration Division</span>
+                        <br>பதிவுப் பிரிவு<br>Registration Division</span>
         </label>
         </td>
         <td colspan="3">

@@ -64,7 +64,7 @@
             <s:if test="birthType.ordinal() != 0">
                 <label>
                     උපතක් ලියාපදිංචි කිරීම සඳහා විස්තර
-                    <br>ஒரு பிறப்பைப் பதிவு செய்வதற்கான விபரங்கள்
+                    <br>பிறப்பொன்றை  பதிவு செய்வதற்கான  விபரங்கள்
                     <br>Particulars for Registration of a Birth</label>
             </s:if>
             <s:else>
@@ -101,15 +101,13 @@
         <td colspan="3" class="font-8">
             <br>
             <s:if test="birthType.ordinal() == 1 || birthType.ordinal() == 3">
-                දැනුම් දෙන්නා (දෙමවිපියන් / භාරකරු) විසින් සම්පුර්ණ කර තොරතුරු වාර්තා කරන නිලධාරි වෙත භාර දිය
-                යුතුය. මෙම
-                තොරතුරු මත සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ උපත ලියාපදිංචි කරනු ලැබේ.
-                <br>தகவல் தருபவரால் (பெற்றோர்/பொறுப்பாளர்) பூா்த்தி செய்யப்பட்டு தகவல் சேகரிக்கும் அதிகாரியிடம்
-                சமா்ப்பித்தல் வேண்டும். இத்தகவலின்படி சிவில் பதிவு அமைப்பில் பிறப்பு பதிவு செய்யப்படும்
+                දැනුම් දෙන්නා (දෙමවිපියන් / භාරකරු) විසින් සම්පුර්ණ කර තොරතුරු වාර්තා කරන නිලධාරියා
+                / රෙජිස්ට්‍රාර් වෙත භාර දිය යුතුය. මෙම තොරතුරු මත සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ උපත ලියාපදිංචි කරනු ලැබේ.
+                <br>தகவல் தருபவரால் (பெற்றோர்/பாதுகாவலர் ) பூர்த்தி செய்யப்பட்டு தகவல் சேகரிக்கும் அதிகாரியிடம்
+                /பதிவாளரிடம் சமர்ப்பிக்கப்படல் வேண்டும். இத்தகவலின்படி சிவில் முறையில் பிறப்பு பதிவு செய்யப்படும்.
                 <br>Should be perfected by the informant (Parent / Guardian) and the duly completed form should be
-                forwarded
-                to the Notifying Authority. The birth will be registered in the Civil Registration System based on the
-                information provided in this form.
+                forwarded to the Officer / Registrar. The birth will be registered in the Civil Registration System
+                based on the information provided in this form.
             </s:if>
             <s:elseif test="birthType.ordinal() == 0">
                 දැනුම් දෙන්නා (දෙමවිපියන් / භාරකරු) විසින් සම්පුර්ණ කර තොරතුරු වාර්තා කරන නිලධාරි වෙත භාර දිය
@@ -185,8 +183,8 @@
     </tr>
     <tr>
         <td><label>ප්‍රාදේශීය ලේකම් කොට්ඨාශය /
-            <br>பிரதேச செயளாளா் பிரிவு /
-            <br>Divisional Secretariat</label></td>
+            <br>பிரதேச செயளாளர் பிரிவு <br/>
+            Divisional Secretary Division</label></td>
         <td colspan="6" class="table_reg_cell_01">
             <s:label value="%{#request.oldBDInfo.dsDivisionName}"/>
         </td>
@@ -599,8 +597,8 @@
     <tr>
         <td style="border-top:none;border-bottom:none">&nbsp;</td>
         <td colspan="1"><s:label value="ප්‍රාදේශීය ලේකම් කොට්ඨාශය /"/><br>
-            <s:label value="பிரதேச செயளாளா் பிரிவு/"/><br>
-            <s:label value="Divisional Secretariat"/><br></td>
+            <s:label value="பிரதேச செயளாளர் பிரிவு/"/><br>
+            <s:label value="Divisional Secretary Division"/><br></td>
         <td colspan="4" class="table_reg_cell_02">
             <s:if
                     test="#userPreferedLang == 'si'">
@@ -618,8 +616,8 @@
     <tr>
         <td style="border-top:none;">&nbsp;</td>
         <td colspan="1"><s:label value="ප්‍රාදේශීය ලේකම් කොට්ඨාශය /"/><br>
-            <s:label value="பிரதேச செயளாளா் பிரிவு/"/><br>
-            <s:label value="Divisional Secretariat"/><br></td>
+            <s:label value="பிரதேச செயளாளர் பிரிவு/"/><br>
+            <s:label value="Divisional Secretary Division"/><br></td>
         <td colspan="4" class="table_reg_cell_02">
             <s:if
                     test="#userPreferedLang == 'si'">

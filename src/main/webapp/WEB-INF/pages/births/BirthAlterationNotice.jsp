@@ -107,14 +107,14 @@
         </td>
         <td style="width:30%"><s:label name="districtName"/></td>
         <td style="width:20%">ප්‍රාදේශීය ලේකම් කොට්ඨාශය <br>
-            பிரதேச செயளாளார் பிரிவு <br>
-            Divisional Secretariat
+            பிரதேச செயளாளர் பிரிவு <br/>
+            Divisional Secretary Division
         </td>
         <td style="width:30%"><s:label name="dsDivisionName"/></td>
     </tr>
     <tr>
         <td>ලියාපදිංචි කිරීමේ කොට්ඨාශය <br>
-            பதிவுப் பிரிவு <br>
+            பதிவுப் பிரிவு<br>
             Registration Division
         </td>
         <td><s:label name="bdDivisionName"/></td>
@@ -270,8 +270,8 @@
         </td>
         <td style="width:30%"><s:label name="districtName"/></td>
         <td style="width:20%">ප්‍රාදේශීය ලේකම් කොට්ඨාශය <br>
-            பிரதேச செயளாளார் பிரிவு <br>
-            Divisional Secretariat
+            பிரதேச செயளாளர் பிரிவு <br/>
+            Divisional Secretary Division
         </td>
         <td style="width:30%"><s:label name="dsDivisionName"/></td>
     </tr>
