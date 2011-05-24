@@ -17,8 +17,6 @@ import org.slf4j.LoggerFactory;
 import java.text.MessageFormat;
 import java.util.*;
 
-import static lk.rgd.crs.api.domain.BirthDeclaration.State.*;
-
 /**
  * a class to do validations in death declarations
  *
@@ -29,6 +27,7 @@ public class DeathDeclarationValidator {
 
     private static final Logger logger = LoggerFactory.getLogger(DeathDeclarationValidator.class);
     private static final String SERIAL_NUMBER_PATTERN = "20([1-9][0-9])[0|1]([0-9]{5})";
+    private static final int APPROXIMATE_DAYS = 10;
 
     private final DeathRegisterDAO deathRegisterDAO;
     private final BirthDeclarationDAO birthDeclarationDAO;
@@ -49,7 +48,7 @@ public class DeathDeclarationValidator {
     }
 
     /**
-     * validate minimul requirement against the filled date in the death declaration form
+     * validate minimal requirement against the filled date in the death declaration form
      *
      * @param deathRegister the death declaration form
      */
@@ -159,7 +158,7 @@ public class DeathDeclarationValidator {
         }
         // TODO validate given data using PIN
 
-        // checks whether the death person age is 30 days of less
+        // checks whether the death person is a infant(30 days less than from birth)
         if (deathRegister.getDeath().isInfantLessThan30Days()) {
             // see whether birth is already registered if not give warnings
             checkInfantWarnings(deathRegister, warnings, rb);
@@ -187,8 +186,8 @@ public class DeathDeclarationValidator {
                 start.setTime(cal.getTime());
                 end.setTime(cal.getTime());
             }
-            start.add(Calendar.DATE, -10);
-            end.add(Calendar.DATE, 10);
+            start.add(Calendar.DATE, -APPROXIMATE_DAYS);
+            end.add(Calendar.DATE, APPROXIMATE_DAYS);
 
             List<BirthDeclaration> existingRecords = birthDeclarationDAO.getByDOBRangeandMotherNICorPIN(
                 start.getTime(), end.getTime(), dp.getDeathPersonMotherPINorNIC());

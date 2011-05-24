@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -209,6 +210,21 @@ public class BirthRecordsIndexer {
         } catch (SolrServerException e) {
             handleException("Error performing search for birth records", ErrorCodes.INDEX_SEARCH_FAILURE, e);
         }
+        return bdfList;
+    }
+
+    public List<BirthDeclaration> searchBirthRecordsOfDeathDeclarations(DeathRegister dr) {
+        SolrQuery query = new SolrQuery();
+        StringBuilder sb = new StringBuilder(128).append("(");
+
+        logger.debug("Solr query : {}", sb.toString());
+
+        Date dod = dr.getDeath().getDateOfDeath();
+        // TODO continue here
+//        if(dr.getDeathPerson().getDeathPersonDOB())
+
+        List<BirthDeclaration> bdfList = new ArrayList<BirthDeclaration>();
+
         return bdfList;
     }
 
