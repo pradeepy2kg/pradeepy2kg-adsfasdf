@@ -3,11 +3,11 @@
 <s:set value="rowNumber" name="row"/>
 <s:if test="birthType.ordinal()==0">
     <%--still birth--%>
-    <s:set name="row" value="22"/>
+    <s:set name="row" value="25"/>
 </s:if>
 <s:elseif test="birthType.ordinal()==1 || birthType.ordinal()==3">
     <%--live birth--%>
-    <s:set name="row" value="24"/>
+    <s:set name="row" value="27"/>
 </s:elseif>
 <s:elseif test="birthType.ordinal()==27">
     <%--adoption--%>
@@ -456,7 +456,7 @@ function maxLengthCalculate(id, max, divId) {
 <s:if test="birthType.ordinal() != 0">
     <table class="table_reg_page_03" cellspacing="0" style="margin-top:5px">
         <caption></caption>
-        <col/>
+        <col width="450px"/>
         <col/>
         <col/>
         <col/>
@@ -469,13 +469,15 @@ function maxLengthCalculate(id, max, divId) {
             </td>
         </tr>
         <tr>
-            <td rowspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මව්පියන් විවාහකද?
+            <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) මව්පියන් විවාහකද?
                 <br>பெற்றோர்கள் திருமணம் முடித்தவர்களா?
                 <br>Were Parent's Married?</label></td>
-            <td rowspan="2">
+            <td colspan="4">
                 <table class="sub_table" width="100%">
-                    <col width="60px"/>
-                    <col width="20px" align="right"/>
+                    <col width="30%"/>
+                    <col width="20%" align="right"/>
+                    <col width="30%"/>
+                    <col width="20%" align="right"/>
                     <tbody>
                     <tr>
                         <td><label>ඔව්<br>ஆம்<br>Yes</label></td>
@@ -483,22 +485,22 @@ function maxLengthCalculate(id, max, divId) {
                                      onclick="disableMarriage(false);disableSigns(true);showMarriageRequired(true);showSignRequired(false);"
                                      id="marriedId1"/>
                         </td>
-                    </tr>
-                    <tr>
+                    <%--</tr>--%>
+                    <%--<tr>--%>
                         <td><label>නැත<br>இல்லை<br>No</label></td>
                         <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'UNMARRIED':''}"
                                      onclick="disableMarriage(true);disableSigns(false);showMarriageRequired(false);"/>
                         </td>
                     </tr>
                     <tr>
-                        <td><label>නැත - පසුව විවාහවී ඇත<br>இல்லை, பின் விவாகமாணவா்கள்<br>No but since married</label>
+                        <td><label>නැත, නමුත් පසුව විවාහවී ඇත<br>இல்லை, பின் விவாகமாணவா்கள்<br>No, but since married</label>
                         </td>
                         <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'NO_SINCE_MARRIED':''}"
                                      id="marriedId3"
                                      onclick="disableMarriage(false);disableSigns(true);showMarriageRequired(true);showSignRequired(false);"/>
                         </td>
-                    </tr>
-                    <tr>
+                    <%--</tr>--%>
+                    <%--<tr>--%>
                         <td><label>නොදනී<br>தெரியாது<br>Unknown</label></td>
                         <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'UNKNOWN':''}"
                                      onclick="disableMarriage(true);disableSigns(true);showMarriageRequired(false);showSignRequired(false);"
@@ -508,37 +510,54 @@ function maxLengthCalculate(id, max, divId) {
                     </tbody>
                 </table>
             </td>
-            <td><label>විවාහ වු ස්ථානය<s:label id="placeStar" value="*"
-                                               cssStyle="width:10px;color:red;font-size:14pt;"/>
-                <br>விவாகம் இடம்பெற்ற இடம் <br>Place of Marriage</label></td>
-            <td colspan="2"><s:textfield name="marriage.placeOfMarriage" id="placeOfMarriage"
+            <%--<td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) විවාහ වු ස්ථානය<s:label id="placeStar" value="*"--%>
+                                               <%--cssStyle="width:10px;color:red;font-size:14pt;"/>--%>
+                <%--<br>விவாகம் இடம்பெற்ற இடம் <br>Place of Marriage</label></td>--%>
+            <%--<td colspan="2"><s:textfield name="marriage.placeOfMarriage" id="placeOfMarriage"--%>
+                                         <%--cssStyle="float:left;"/></td>--%>
+        </tr>
+        <%--//TODO remove--%>
+        <%--<tr>--%>
+            <%--<td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) විවාහ වු දිනය<s:label id="dateStar" value="*" cssStyle="color:red;font-size:14pt;"/>--%>
+                <%--<br>விவாகம் இடம்பெற்ற திகதி <br>Date of Marriage</label></td>--%>
+            <%--<td colspan="2">--%>
+                    <%--<s:label value="YYYY-MM-DD" cssStyle="margin-left:5px;font-size:10px"/><br>--%>
+                    <%--<s:textfield name="marriage.dateOfMarriage" id="marriageDatePicker"--%>
+                                 <%--cssStyle="float:left;margin-left:5px;" maxLength="10"/>--%>
+        <%--</tr>--%>
+
+        <tr>
+           <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+               විවාහ වු ස්ථානය / விவாகம் இடம்பெற்ற இடம்  / Place of Marriage <s:label id="placeStar" value="*" cssStyle="width:10px;color:red;font-size:14pt;"/>
+           </label></td>
+            <td colspan="4"><s:textfield name="marriage.placeOfMarriage" id="placeOfMarriage"
                                          cssStyle="float:left;"/></td>
         </tr>
         <tr>
-            <td><label>විවාහ වු දිනය<s:label id="dateStar" value="*" cssStyle="color:red;font-size:14pt;"/>
-                <br>விவாகம் இடம்பெற்ற திகதி <br>Date of Marriage</label></td>
-            <td colspan="2">
+            <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+                විවාහ වු දිනය / விவாகம் இடம்பெற்ற திகதி  / Date of Marriage <s:label id="dateStar" value="*" cssStyle="color:red;font-size:14pt;"/>
+            </label></td>
+            <td colspan="4">
                     <s:label value="YYYY-MM-DD" cssStyle="margin-left:5px;font-size:10px"/><br>
                     <s:textfield name="marriage.dateOfMarriage" id="marriageDatePicker"
                                  cssStyle="float:left;margin-left:5px;" maxLength="10"/>
         </tr>
         <tr id="motherFatherSign">
-            <td colspan="3" rowspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+            <td colspan="5"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
                 මව්පියන් විවාහ වි නොමැති නම් පියාගේ තොරතුරු ඇතුලත් කර ගැනිම සදහා මව සහ පියාගේ අත්සන්
                 <s:label id="signatureStars" value="*" cssStyle="color:red;font-size:14pt;"/>
                 <br>பெற்றோர்  விவாகம் செய்யாதிருப்பின், தகப்பனின் தகவல்கள் பதிவு செய்ய வேண்டுமெனின் பெற்றோரின் கையொப்பம்
                 <br>If parents are not married, signatures of mother and father to include father's particulars</label>
             </td>
-            <td><label>මවගේ අත්සන <br> தாயின் ஒப்பம் <br>Mother’s Signature</label></td>
-            <td align="center"><s:checkbox name="marriage.motherSigned" id="motherSigned"/></td>
         </tr>
         <tr>
+            <td><label>මවගේ අත්සන <br> தாயின் ஒப்பம் <br>Mother’s Signature</label></td>
+            <td align="center"><s:checkbox name="marriage.motherSigned" id="motherSigned"/></td>
             <td><label>පියාගේ අත්සන <br>தகப்பனின் ஒப்பம் <br>Father’s Signature</label></td>
             <td align="center"><s:checkbox name="marriage.fatherSigned" id="fatherSigned"/></td>
         </tr>
         </tbody>
     </table>
-
 
     <table class="table_reg_page_03" cellspacing="0">
         <col/>
@@ -557,7 +576,7 @@ function maxLengthCalculate(id, max, divId) {
             </td>
         </tr>
         <tr>
-            <td colspan="7"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ළමයාගේ මුත්තා ශ්‍රී
+            <td colspan="7"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) ළමයාගේ මුත්තා ශ්‍රී
                 ලංකාවේ උපන්නේ නම්
                 <br>பிள்ளையின் பாட்டனார் இலங்கையில் பிறந்திருந்தால்
                 <br>If grandfather of the child born in Sri Lanka</label>
@@ -583,8 +602,6 @@ function maxLengthCalculate(id, max, divId) {
         <tr>
             <td colspan="1"><label>ඔහුගේ සම්පුර්ණ නම<br>அவரின் முழுப் பேயர் <br>His Full Name</label></td>
             <td colspan="5">
-                <%--<s:textarea name="grandFather.grandFatherFullName"
-                                        id="grandFatherFullName" cssStyle="width:97%;"/>--%>
                 <s:textarea name="grandFather.grandFatherFullName" id="grandFatherFullName" cssStyle="width:97%;"
                             onblur="maxLengthCalculate('grandFatherFullName','600','grandFatherFullName_div');"/>
                 <div id="grandFatherFullName_div" style="color:red;font-size:8pt"></div>
@@ -630,15 +647,12 @@ function maxLengthCalculate(id, max, divId) {
         <tr>
             <td colspan="1"><label>සම්පුර්ණ නම <br>முழுப் பெயர் <br>Full Name</label></td>
             <td colspan="5">
-                <%--<s:textarea name="grandFather.greatGrandFatherFullName"
-                                        id="greatGrandFatherFullName" cssStyle="width:97%;"/>--%>
                 <s:textarea name="grandFather.greatGrandFatherFullName" id="greatGrandFatherFullName" cssStyle="width:97%;"
                             onblur="maxLengthCalculate('greatGrandFatherFullName','600','greatGrandFatherFullName_div');"/>
                 <div id="greatGrandFatherFullName_div" style="color:red;font-size:8pt"></div>
             </td>
         </tr>
         <tr>
-
             <td><label>ඔහුගේ උපන් වර්ෂය
                 <br>அவர் பிறந்த வருடம்
                 <br>His Year of Birth</label></td>
@@ -669,7 +683,7 @@ function maxLengthCalculate(id, max, divId) {
     </tr>
 
     <tr>
-        <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)දැනුම් දෙන්නේ කවුරුන්
+        <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) දැනුම් දෙන්නේ කවුරුන්
             විසින් ද? <s:label value="*" cssStyle="color:red;font-size:14pt;"/><br>யாரால் தகவல் தரப்படுகின்றது?<br>Person Giving
             Information</label></td>
         <td>
@@ -713,7 +727,6 @@ function maxLengthCalculate(id, max, divId) {
             </table>
         </td>
     </tr>
-
     <tr>
         <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
             <br>අනන්‍යතා අංකය
@@ -730,36 +743,30 @@ function maxLengthCalculate(id, max, divId) {
                  id="informant_lookup"/>
         </td>
     </tr>
-
     <tr>
         <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) නම <s:label value="*"
                                                                                                           cssStyle="color:red;font-size:14pt;"/><br>கொடுப்பவரின்
             பெயர்
             <br>Name</label></td>
         <td colspan="4">
-            <%--<s:textarea name="informant.informantName" id="informantName" cssStyle="width:95%;"/>
-                &lt;%&ndash;<s:label value="*" cssStyle="color:red;font-size:15pt"/>&ndash;%&gt;--%>
             <s:textarea name="informant.informantName" id="informantName" cssStyle="width:95%;"
                             onblur="maxLengthCalculate('informantName','600','informantName_div');"/>
                 <div id="informantName_div" style="color:red;font-size:8pt"></div>
         </td>
     </tr>
     <tr>
-        <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)තැපැල් ලිපිනය<s:label
+        <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) තැපැල් ලිපිනය<s:label
                 value="*" cssStyle="color:red;font-size:14pt;"/>
             <br>அஞ்சல் முகவரி
             <br>Postal Address</label></td>
         <td colspan="4">
-           <%-- <s:textarea name="informant.informantAddress" id="informantAddress"
-                                    cssStyle="width:95%;"/>
-                &lt;%&ndash;<s:label value="*" cssStyle="color:red;font-size:15pt"/>&ndash;%&gt;--%>
             <s:textarea name="informant.informantAddress" id="informantAddress" cssStyle="width:95%;"
                             onblur="maxLengthCalculate('informantAddress','255','informantAddress_div');"/>
                 <div id="informantAddress_div" style="color:red;font-size:8pt"></div>
         </td>
     </tr>
     <tr>
-        <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ඇමතුම් විස්තර
+        <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) ඇමතුම් විස්තර
             <br>தொடர்பு விபரம்<br>Contact Details</label>
         </td>
         <td><label>දුරකතනය<br>தொலைபேசி இலக்கம் <br>Telephone</label></td>
@@ -768,17 +775,15 @@ function maxLengthCalculate(id, max, divId) {
         <td><label>ඉ -තැපැල <br>மின்னஞ்சல் <br>Email</label></td>
         <td><s:textfield name="informant.informantEmail" id="informantEmail"
                          cssStyle="width:95%;text-transform:none;"/></td>
-
     </tr>
     <tr>
-        <td colspan="1"><label>දිනය <s:label value="*" cssStyle="color:red;font-size:14pt;"/><br>திகதி<br>Date</label>
+        <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) දිනය <s:label value="*" cssStyle="color:red;font-size:14pt;"/><br>திகதி<br>Date</label>
         </td>
         <td colspan="4">
                 <s:label value="YYYY-MM-DD" cssStyle="float:left;margin-right:190px;font-size:10px"/><br>
                 <s:textfield name="informant.informantSignDate" id="informDatePicker"
                              cssStyle="float:left;margin-right:70px;"
                              maxLength="10"/>
-                <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>--%>
     </tr>
     </tbody>
 </table>

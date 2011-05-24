@@ -387,17 +387,11 @@ function maxLengthCalculate(id, max, divId) {
                     <s:fielderror name="duplicateSerialNumberError" cssStyle="color:red;font-size:9pt;"/>
                 </tr>
                 <tr>
-                    <td><label><span class="font-8">අනුක්‍රමික අංකය<s:label value="*"
-                                                                            cssStyle="color:red;font-size:10pt;"/> <br>தொடர் இலக்கம்<br>Serial Number</span></label>
+                    <td><label><span class="font-8">අනුක්‍රමික අංකය<s:label value="*" cssStyle="color:red;font-size:10pt;"/>
+                        <br>தொடர் இலக்கம்<br>Serial Number</span></label>
                     </td>
                     <td>
-                            <%--                        <s:if test="editMode">
-                                <s:textfield name="register.bdfSerialNo" id="bdfSerialNo" readonly="true"/>
-                            </s:if>
-                            <s:else>--%>
                         <s:textfield name="register.bdfSerialNo" id="bdfSerialNo" maxLength="10"/>
-                            <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>         --%>
-                            <%--    </s:else>--%>
                     </td>
                 </tr>
             </table>
@@ -413,8 +407,10 @@ function maxLengthCalculate(id, max, divId) {
                 <tr>
                     <td>
                         <label>
-                            <span class="font-8">භාරගත්  දිනය<s:label value="*"
-                                                                      cssStyle="color:red;font-size:10pt;"/> <br>பிறப்பைப் பதிவு திகதி <br>Submitted Date</span>
+                            <span class="font-8">
+                                භාරගත්  දිනය<s:label value="*" cssStyle="color:red;font-size:10pt;"/>
+                                <br>பெறப்பட்ட திகதி <br>Date of Acceptance
+                            </span>
                         </label>
                     </td>
                     <td><s:label value="YYYY-MM-DD" cssStyle="margin-left:20px;font-size:10px"/><br>
@@ -485,7 +481,7 @@ function maxLengthCalculate(id, max, divId) {
     <%--TODO style not added--%>
 <s:if test="birthType.ordinal() == 2">
     <tr style="border-left:1px solid #000000;">
-        <td width="150px" colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)දරුකමට
+        <td width="150px" colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) දරුකමට
             ගැනීම පිළිබඳ සහතික පත්‍රයේ අංකය<br> மகவேற்புச் செய்யப்பட்டது சம்பற்தமான சான்றிதழின் இலக்கம்<br>Serial
             Number of the Certificate of Adoption</label></td>
         <td colspan="7"><s:label value="%{#session.birthRegister.register.adoptionUKey}"/></td>
@@ -508,13 +504,6 @@ function maxLengthCalculate(id, max, divId) {
         <td colspan="6" class="table_reg_cell_01"><s:label
                 value="%{#session.oldBdfForAdoption.bdDivisionName}"/></td>
     </tr>
-    <%--<tr>
-        <td><label>
-            ග්‍රාම නිළධාරී කොටිඨාශය
-            <br>Grama Niladhari Division in ta<br>Grama Niladhari Division</label></td>
-        <td colspan="6" class="table_reg_cell_01"><s:label
-                value="%{#session.oldBdfForAdoption.bdDivisionName}"/></td>
-    </tr>--%>
     <tr>
         <td><label>අනුක්‍රමික අංකය/ தொடர் இலக்கம்<br>Serial Number</label></td>
         <td colspan="6"><s:label value="%{#session.oldBdfForAdoption.serialNumber}"/></td>
@@ -522,7 +511,7 @@ function maxLengthCalculate(id, max, divId) {
 </s:if>
 <tr></tr>
 <tr style="border-left:1px solid #000000;">
-    <td width="150px" align="left"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)උපන් දිනය
+    <td width="150px" align="left"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපන් දිනය
         <s:label value="*" cssStyle="color:red;font-size:14pt;"/><br>
         பிறந்த திகதி<br>Date of Birth</label></td>
     <td colspan="3" style="border-right:none;">
@@ -535,10 +524,10 @@ function maxLengthCalculate(id, max, divId) {
     </td>
 </tr>
 <tr>
-    <td rowspan="6"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපන්
-        ස්ථානය <s:label value="*" cssStyle="color:red;font-size:14pt;"/>
-        <br>பிறந்த இடம்
-        <br> Place of Birth</label></td>
+    <td rowspan="6"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+        උපන් ස්ථානය පිළිබඳ විස්තර<s:label value="*" cssStyle="color:red;font-size:14pt;"/>
+        <br>பிறந்த இடம் பற்றிய விபரம்
+        <br>Particulars of Place of Birth</label></td>
     <td><label>දිස්ත්‍රික්කය மாவட்டம் District</label></td>
     <td colspan="6" class="table_reg_cell_01">
         <s:select id="districtId" name="birthDistrictId" list="districtList" value="birthDistrictId"
@@ -564,11 +553,11 @@ function maxLengthCalculate(id, max, divId) {
     </td>
 </tr>
 <tr>
+    <td rowspan="2">උපන් ස්ථානය<br/>பிறந்த இடம்<br/>Place of Birth</td>
     <td><label>සිංහල හෝ දෙමළ භාෂාවෙන් <br>சிங்களம்அல்லது தமிழ் மொழியில்<br>In Sinhala or Tamil</label></td>
     <td colspan="6">
         <s:textfield name="child.placeOfBirth" id="placeOfBirth" cssStyle="width:95%;"
                      maxLength="255"/>
-            <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>          --%>
     </td>
 </tr>
 <tr>
@@ -596,8 +585,6 @@ function maxLengthCalculate(id, max, divId) {
             <br>Name in any of the official languages (Sinhala / Tamil)</label>
         </td>
         <td colspan="7">
-                <%-- <s:textarea name="child.childFullNameOfficialLang" id="childFullNameOfficialLang"
-                cssStyle="width:98.2%;"/>--%>
             <s:textarea name="child.childFullNameOfficialLang" id="childFullNameOfficialLang" cssStyle="width:880px;"
                         onblur="maxLengthCalculate('childFullNameOfficialLang','600','childFullNameOfficialLang_div');"/>
             <div id="childFullNameOfficialLang_div" style="color:red;font-size:8pt"></div>
@@ -608,8 +595,6 @@ function maxLengthCalculate(id, max, divId) {
             නම ඉංග්‍රීසි භාෂාවෙන් <br>பெயா் ஆங்கில மொழியில்<br>Name in English
         </label></td>
         <td colspan="7">
-                <%--<s:textarea name="child.childFullNameEnglish" id="childFullNameEnglish"
-               cssStyle="width:98.2%;text-transform: uppercase;"/>--%>
             <s:textarea name="child.childFullNameEnglish" id="childFullNameEnglish" cssStyle="width:880px;"
                         onblur="maxLengthCalculate('childFullNameEnglish','600','childFullNameEnglish_div');"/>
             <div id="childFullNameEnglish_div" style="color:red;font-size:8pt"></div>
@@ -629,7 +614,7 @@ function maxLengthCalculate(id, max, divId) {
 </tr>
 <tr>
     <td class="font-9">
-        <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ස්ත්‍රී
+        <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) ස්ත්‍රී
             පුරුෂ භාවය<br>பால் <br>Gender
             of the child</label>
     </td>
@@ -654,7 +639,7 @@ function maxLengthCalculate(id, max, divId) {
             </td>
         </s:if>
         <td colspan="2"><s:textfield name="child.childBirthWeight" id="childBirthWeight"
-                                     cssStyle="width:95%;" maxLength="5"/></td>
+                                     cssStyle="width:94%;" maxLength="5"/></td>
     </s:if>
     <s:elseif test="birthType.ordinal() == 0">
         <td colspan="2">
@@ -668,7 +653,7 @@ function maxLengthCalculate(id, max, divId) {
     </s:elseif>
 </tr>
 <tr>
-    <td class="font-9">
+    <td class="font-9" colspan="4">
         <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
             <s:if test="birthType.ordinal() != 0">
                 සජිවි උපත් අනුපිළි‍‍වල අනුව කීවෙනි ළමයා
@@ -683,16 +668,16 @@ function maxLengthCalculate(id, max, divId) {
             </s:else>
         </label>
     </td>
-    <td colspan="3" class="font-9"><s:textfield name="child.childRank" id="childRank" maxLength="2"/></td>
-    <td colspan="2" class="font-9">
-        <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)නිවුන්
+    <td colspan="4" class="font-9"><s:textfield name="child.childRank" id="childRank" maxLength="2"/></td>
+</tr>
+<tr>
+    <td colspan="4" class="font-9">
+        <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) නිවුන්
             දරු උපතක් නම්, දරුවන් ගණන
-            <br>ஓரே சுழலில் ஒன்றுக்கு மேற்பட்ட பிள்ளை
-            <br>பிறந்திருந்தால் , பிள்ளைகளின் எண்ணிக்கை
+            <br>ஓரே சுழலில் ஒன்றுக்கு மேற்பட்ட பிள்ளை பிறந்திருந்தால் , பிள்ளைகளின் எண்ணிக்கை
             <br>If multiple births, number of children</label>
     </td>
-    <td colspan="2"><s:textfield name="child.numberOfChildrenBorn" id="numberOfChildrenBorn"
-                                 cssStyle="width:95%;" maxLength="2"/></td>
+    <td colspan="4"><s:textfield name="child.numberOfChildrenBorn" id="numberOfChildrenBorn" maxLength="2"/></td>
 </tr>
 </tbody>
 </table>
