@@ -159,9 +159,10 @@
             <col/>
             <tbody>
             <tr>
-                <td colspan="5" style="text-align:center;font-size:12pt"> තොරතුරු වාර්තා කරන පාර්ශවය
-                    <br>அதிகாரியிடம் தெரிவித்தல்
-                    <br>Notifying Authority
+                <td colspan="5" style="text-align:center;font-size:12pt">
+                    තොරතුරු වාර්තා කරන නිලධාරියාගේ / රෙජිස්ට්‍රාර්ගේ විස්තර
+                    <br>அறிக்கையிடும் அதிகாரி/பதிவாளர் பற்றிய விபரங்கள்
+                    <br>Details of the Notifying Officer / Registrar
                 </td>
             </tr>
             <tr>
@@ -199,8 +200,8 @@
             </tr>
             <tr>
                 <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)තැපැල්
-                    ලිපිනය<s:label value="*" cssStyle="color:red;font-size:14pt;"/><br>தபால்
-                    முகவரி <br>Postal Address</label></td>
+                    ලිපිනය<s:label value="*" cssStyle="color:red;font-size:14pt;"/>
+                    <br>தபால் முகவரி<br>Postal Address</label></td>
                 <td colspan="4">
                     <%--<s:textarea name="notifyingAuthority.notifyingAuthorityAddress"
                                             id="notifyingAuthorityAddress"

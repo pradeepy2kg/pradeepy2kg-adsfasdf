@@ -642,7 +642,7 @@
                 <s:textfield name="person.personPhoneNo" id="personPhoneNo" maxLength="15"/>
             </td>
             <td width="20%">
-                (7) ඉ – තැපැල් <br/>
+                (7) ඉ – තැපැල <br/>
                 மின்னஞ்சல் <br/>
                 Email
             </td>

@@ -665,7 +665,7 @@
             Mother</label></td>
         <td colspan="1"><label>දුරකතනය <br> தொலைபேசி இலக்கம் <br> Telephone</label></td>
         <td colspan="1"><s:label value="%{#request.parent.motherPhoneNo}"/></td>
-        <td colspan="1"><label>ඉ – තැපැල් <br> மின்னஞ்சல்<br>Email</label></td>
+        <td colspan="1"><label>ඉ – තැපැල <br> மின்னஞ்சல்<br>Email</label></td>
         <td colspan="2" class="passport"><s:label value="%{#request.parent.motherEmail}"/></td>
     </tr>
     </tbody>
@@ -814,7 +814,7 @@
     <tr>
         <td colspan="1" width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)දැනුම් දෙන්නේ
             කවුරුන්
-            විසින් ද? <br>தகவல் வழங்குபவா் <br>Person Giving
+            විසින් ද? <br>யாரால் தகவல் தரப்படுகின்றது?<br>Person Giving
             Information</label></td>
         <td colspan="4">
             <s:if test="#request.informant.informantType.ordinal() == 1">
@@ -875,8 +875,9 @@
         <td colspan="4"><s:label value="%{#request.informant.informantName}" cssStyle="width:98%;"/></td>
     </tr>
     <tr>
-        <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)තැපැල් ලිපිනය<br>தபால்
-            முகவரி <br>Postal Address</label></td>
+        <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)තැපැල් ලිපිනය
+            <br>அஞ்சல் முகவரி
+            <br>Postal Address</label></td>
         <td colspan="4"><s:label value="%{#request.informant.informantAddress}"
                                  cssStyle="width:98%;"/></td>
     </tr>
@@ -912,9 +913,10 @@
     <col/>
     <tbody>
     <tr>
-        <td colspan="5" style="text-align:center;font-size:11pt"> තොරතුරු වාර්තා කරන පාර්ශවය
-            <br>அதிகாரியிடம் தெரிவித்தல்
-            <br>Notifying Authority
+        <td colspan="5" style="text-align:center;font-size:11pt">
+            තොරතුරු වාර්තා කරන නිලධාරියාගේ / රෙජිස්ට්‍රාර්ගේ විස්තර
+            <br>அறிக்கையிடும் அதிகாரி/பதிவாளர் பற்றிய விபரங்கள்
+            <br>Details of the Notifying Officer / Registrar
         </td>
     </tr>
     <tr>
@@ -933,8 +935,9 @@
         </td>
     </tr>
     <tr>
-        <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)තැපැල් ලිපිනය<br>தபால்
-            முகவரி <br>Postal Address</label></td>
+        <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)තැපැල් ලිපිනය
+            <br>தபால் முகவரி
+            <br>Postal Address</label></td>
         <td colspan="4"><s:label value="%{#request.notifyingAuthority.notifyingAuthorityAddress}"
                                  cssStyle="width:98%;"/></td>
     </tr>
