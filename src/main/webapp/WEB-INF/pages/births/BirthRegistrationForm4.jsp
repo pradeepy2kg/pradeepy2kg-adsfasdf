@@ -4,15 +4,15 @@
 <s:set value="rowNumber" name="row"/>
 <s:if test="birthType.ordinal()==0">
     <%--still birth--%>
-    <s:set name="row" value="28"/>
+    <s:set name="row" value="31"/>
 </s:if>
 <s:elseif test="birthType.ordinal()==1 || birthType.ordinal()==3">
     <%--live birth--%>
-    <s:set name="row" value="33"/>
+    <s:set name="row" value="39"/>
 </s:elseif>
 <s:elseif test="birthType.ordinal()==2">
     <%--adoption--%>
-    <s:set name="row" value="35"/>
+    <s:set name="row" value="38"/>
 </s:elseif>
 
 <script src="/ecivil/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
@@ -199,7 +199,7 @@
                 </td>
             </tr>
             <tr>
-                <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)තැපැල්
+                <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) තැපැල්
                     ලිපිනය<s:label value="*" cssStyle="color:red;font-size:14pt;"/>
                     <br>தபால் முகவரி<br>Postal Address</label></td>
                 <td colspan="4">

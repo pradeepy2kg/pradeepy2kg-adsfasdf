@@ -88,8 +88,7 @@
                 <tr>
                     <td style="width:60%">
                         <label><span class="font-9">භාරගත් දිනය
-                            <br>பெறப்பட்ட திகதி
-                            <br>Submitted Date</span></label>
+                            <br>பெறப்பட்ட திகதி <br>Date of Acceptance </span></label>
                     </td>
                     <td><s:label value="%{#request.register.dateOfRegistration}"/>
                     </td>
