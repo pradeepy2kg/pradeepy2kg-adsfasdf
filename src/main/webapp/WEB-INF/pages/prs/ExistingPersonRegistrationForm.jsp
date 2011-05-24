@@ -678,7 +678,7 @@
             <s:textfield name="person.personPhoneNo" id="personPhoneNo" maxLength="15"
                          onkeypress="return isNumberKey(event)"/>
         </td>
-        <td>(16) ඉ – තැපැල් <br>மின்னஞ்சல்<br>Email</td>
+        <td>(16) ඉ – තැපැල <br>மின்னஞ்சல்<br>Email</td>
         <td colspan="4">
             <s:textfield name="person.personEmail" id="personEmail" cssStyle="text-transform:none;" maxLength="30"/>
         </td>

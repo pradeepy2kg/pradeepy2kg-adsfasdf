@@ -456,7 +456,7 @@ function maxLengthCalculate(id, max, divId) {
         </td>
         <td colspan="2" rowspan="2" width="120px"><label>
             (<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>)
-            විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If foreigner</label>
+            විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If a foreigner</label>
         </td>
         <td colspan="2"><label>රට<br>நாடு<br>Country</label></td>
         <td colspan="2">
@@ -465,7 +465,7 @@ function maxLengthCalculate(id, max, divId) {
         </td>
     </tr>
     <tr>
-        <td colspan="2"><label>ගමන් බලපත්‍ර අංකය <br>கடவுச் சீட்டு இல.<br>Passport No.</label></td>
+        <td colspan="2"><label>ගමන් බලපත්‍ර අංකය <br>கடவுச் சீட்டு இல.<br>Passport Number</label></td>
         <td class="passport"><s:textfield name="parent.fatherPassportNo" id="fatherPassportNo" maxLength="15"/></td>
     </tr>
     </tbody>
@@ -566,14 +566,14 @@ function maxLengthCalculate(id, max, divId) {
         </td>
         <td colspan="2" rowspan="2" width="120px"><label>
             (<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>)
-            විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If foreigner</label>
+            විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If a foreigner</label>
         </td>
         <td colspan="2"><label>රට<br>நாடு <br>Country</label></td>
         <td colspan="2"><s:select id="motherCountryId" name="motherCountry" list="countryList" headerKey="0"
                                   headerValue="%{getText('select_country.label')}"/></td>
     </tr>
     <tr>
-        <td colspan="2"><label>ගමන් බලපත්‍ර අංකය <br>கடவுச் சீட்டு இல.<br>Passport No.</label></td>
+        <td colspan="2"><label>ගමන් බලපත්‍ර අංකය <br>கடவுச் சீட்டு இல.<br>Passport Number</label></td>
         <td colspan="2" class="passport"><s:textfield name="parent.motherPassportNo" id="motherPassportNo"
                                                       maxLength="15"/></td>
     </tr>
@@ -619,10 +619,10 @@ function maxLengthCalculate(id, max, divId) {
                 <s:textfield name="parent.motherDOB" id="motherDatePicker" maxLength="10"/>
         <td colspan="3" width="100px"><label>
             <s:if test="%{#session.birthRegister.register.birthType.ordinal() != 0}">
-                (<s:property value="#row"/><s:set name="row"
-                                                  value="#row+1"/><s:set name="i"
-                                                                         value="#i+1"/>) ළමයාගේ උපන් දිනට මවගේ වයස
-                <br>பிள்ளை பிறந்த திகதியில் மாதாவின் வயது <br>Mother's Age as at the date of birth of child
+                (<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>)
+                ළමයාගේ උපන් දිනට වයස
+                <br>பிள்ளை பிறந்த திகதியில் மாதாவின் வயது
+                <br>Age as at the date of birth of child
             </s:if>
             <s:else>
                 (<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>)
@@ -688,8 +688,8 @@ function maxLengthCalculate(id, max, divId) {
         <tr>
             <td width="200px" style="border-top:none"/>
             <td colspan="2">
-                ග්‍රාම නිළධාරී කොටිඨාශය /<br/>
-                Grama Niladhari Division in ta/<br/>
+                ග්‍රාම නිලධාරී  කොට්ඨාශය/<br/>
+                கிராம சேவையாளர் பிரிவு/<br/>
                 Grama Niladhari Division
             </td>
             <td colspan="6">
@@ -783,11 +783,11 @@ function maxLengthCalculate(id, max, divId) {
     <tr>
         <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/> <s:set name="i" value="#i+1"/>)
             සම්බන්ධ කල හැකි තොරතුරු
-            <br>தாயினை தொடர்பு கொள்ளக்கூடிய தகவல்கள்
+            <br>தொடர்பு கொள்ளக்கூடிய தகவல்கள்
             <br>Contact Details </label></td>
-        <td colspan="1"><label>දුරකතනය <br> தொலைபேசி இலக்கம் <br> Telephone</label></td>
+        <td colspan="1"><label>දුරකතනය <br>தொலைபேசி இலக்கம் <br> Telephone</label></td>
         <td colspan="1"><s:textfield id="motherPhoneNo" name="parent.motherPhoneNo" maxLength="10"/></td>
-        <td colspan="2"><label>ඉ – තැපැල් <br> மின்னஞ்சல்<br>Email</label></td>
+        <td colspan="2"><label>ඉ – තැපැල                                                      <br> மின்னஞ்சல்<br>Email</label></td>
         <td colspan="3" class="passport"><s:textfield name="parent.motherEmail" id="motherEmail"
                                                       cssStyle="text-transform:none;"/></td>
     </tr>

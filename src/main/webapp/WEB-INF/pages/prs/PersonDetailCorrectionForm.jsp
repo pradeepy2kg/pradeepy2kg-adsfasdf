@@ -314,7 +314,7 @@ body{
                                     <s:textfield></s:textfield>
                                 </td>
                                 <td width="15%">
-                                    (15) ඉ – තැපැල්  <br/>
+                                    (15) ඉ – තැපැල <br/>
                                     மின்னஞ்சல்  <br/>
                                     Email
                                 </td>

@@ -471,8 +471,7 @@ function maxLengthCalculate(id, max, divId) {
         <tr>
             <td rowspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මව්පියන් විවාහකද?
                 <br>பெற்றோர்கள் திருமணம் முடித்தவர்களா?
-                <br>Were Parent's
-                Married?</label></td>
+                <br>Were Parent's Married?</label></td>
             <td rowspan="2">
                 <table class="sub_table" width="100%">
                     <col width="60px"/>
@@ -527,8 +526,8 @@ function maxLengthCalculate(id, max, divId) {
             <td colspan="3" rowspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
                 මව්පියන් විවාහ වි නොමැති නම් පියාගේ තොරතුරු ඇතුලත් කර ගැනිම සදහා මව සහ පියාගේ අත්සන්
                 <s:label id="signatureStars" value="*" cssStyle="color:red;font-size:14pt;"/>
-                <br>பெற்றோர் மணம் செய்யாதிருப்பின், தகப்பனின் தகவல்கள் பதிவு செய்ய வேண்டுமெனின் பெற்றோரின் கையொப்பம்
-                <br> If parents are not married, signatures of mother and father to include father's particulars</label>
+                <br>பெற்றோர்  விவாகம் செய்யாதிருப்பின், தகப்பனின் தகவல்கள் பதிவு செய்ய வேண்டுமெனின் பெற்றோரின் கையொப்பம்
+                <br>If parents are not married, signatures of mother and father to include father's particulars</label>
             </td>
             <td><label>මවගේ අත්සන <br> தாயின் ஒப்பம் <br>Mother’s Signature</label></td>
             <td align="center"><s:checkbox name="marriage.motherSigned" id="motherSigned"/></td>
@@ -551,16 +550,18 @@ function maxLengthCalculate(id, max, divId) {
         <col/>
         <tbody>
         <tr>
-            <td colspan="7" style="text-align:center;font-size:12pt">මුත්තා/ මී මුත්තා ගේ විස්තර
-                <br>தாத்தாவின் / பாட்டனின் விபரங்கள்
+            <td colspan="7" style="text-align:center;font-size:12pt">
+                මුත්තා / මී මුත්තා ගේ  විස්තර
+                <br>பாட்டன் /பூட்டனின்  விபரங்கள்
                 <br>Details of the Grand Father / Great Grand Father
             </td>
         </tr>
         <tr>
             <td colspan="7"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ළමයාගේ මුත්තා ශ්‍රී
-                ලංකාවේ උපන්නේ නම් <br>பிள்ளையின் பாட்டனார் இலங்கையில்
-                பிறந்திருந்தால் <br>If
-                grandfather of the child born in Sri Lanka</label></td>
+                ලංකාවේ උපන්නේ නම්
+                <br>பிள்ளையின் பாட்டனார் இலங்கையில் பிறந்திருந்தால்
+                <br>If grandfather of the child born in Sri Lanka</label>
+            </td>
         </tr>
         <tr>
             <td rowspan="3" style="width:75px" colspan="1"></td>
@@ -603,12 +604,11 @@ function maxLengthCalculate(id, max, divId) {
                                          id="grandFatherBirthPlace" cssStyle="width:93%;"/></td>
         </tr>
         <tr>
-            <td colspan="7"><label> (<s:property value="#row"/><s:set name="row" value="#row+1"/>)ළමයාගේ පියා ශ්‍රී
-                ලංකාවේ නොඉපිද මීමුත්තා ලංකාවේ උපන්නේ නම් මී මුත්තාගේ <br>பிள்ளையின்
-                தந்தை
-                இலங்கையில் பிறக்காமல் பூட்டன் இலங்கையில் பிறந்திருந்தால் பூட்டனாரின் தகவல்கள
-                ்<br>If the father was not
-                born in Sri Lanka and if great grandfather born in Sri Lanka great grand father's</label></td>
+            <td colspan="7"><label> (<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+                ළමයාගේ පියා ශ්‍රී ලංකාවේ නොඉපිද මීමුත්තා ලංකාවේ උපන්නේ නම් මී මුත්තාගේ
+                <br>பிள்ளையின் தந்தை இலங்கையில் பிறக்காமல் பூட்டன் இலங்கையில் பிறந்திருந்தால் பூட்டனாரின் தகவல்கள்
+                <br>If the father was not born in Sri Lanka and if great grand father born in Sri Lanka, great grand father's</label>
+            </td>
         </tr>
         <tr>
             <td rowspan="3" colspan="1"></td>
@@ -662,19 +662,20 @@ function maxLengthCalculate(id, max, divId) {
     <col/>
     <tbody>
     <tr>
-        <td colspan="6" style="text-align:center;font-size:12pt">දැනුම් දෙන්නාගේ විස්තර<br>அறிவிப்பு கொடுப்பவரின்
-            தகவல்கள் <br>Details of the Informant
+        <td colspan="6" style="text-align:center;font-size:12pt">දැනුම් දෙන්නාගේ විස්තර
+            <br>தகவல் தருபவரின் விபரங்கள்
+            <br>Details of the Informant
         </td>
     </tr>
 
     <tr>
         <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)දැනුම් දෙන්නේ කවුරුන්
-            විසින් ද? <s:label value="*" cssStyle="color:red;font-size:14pt;"/><br>தகவல் வழங்குபவா் <br>Person Giving
+            විසින් ද? <s:label value="*" cssStyle="color:red;font-size:14pt;"/><br>யாரால் தகவல் தரப்படுகின்றது?<br>Person Giving
             Information</label></td>
         <td>
             <table class="sub_table">
                 <tr>
-                    <td><label>මව <br>மாதா <br>Mother</label></td>
+                    <td><label>මව <br>தாய் <br>Mother</label></td>
                     <td align="center" width="150px"><s:radio id="informantType" name="informant.informantType"
                                                               list="#@java.util.HashMap@{'MOTHER':''}"
                                                               onchange="javascript:setInformPerson(1)"/></td>
@@ -684,7 +685,7 @@ function maxLengthCalculate(id, max, divId) {
         <td colspan="2" style="width:180px">
             <table class="sub_table">
                 <tr>
-                    <td><label>පියා<br> பிதா <br>Father</label></td>
+                    <td><label>පියා<br> தந்தை <br>Father</label></td>
                     <td align="center" width="150px"><s:radio id="informantType" name="informant.informantType"
                                                               list="#@java.util.HashMap@{'FATHER':''}"
                                                               onchange="javascript:setInformPerson(2)"/></td>
@@ -745,8 +746,9 @@ function maxLengthCalculate(id, max, divId) {
     </tr>
     <tr>
         <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)තැපැල් ලිපිනය<s:label
-                value="*" cssStyle="color:red;font-size:14pt;"/><br>தபால்
-            முகவரி <br>Postal Address</label></td>
+                value="*" cssStyle="color:red;font-size:14pt;"/>
+            <br>அஞ்சல் முகவரி
+            <br>Postal Address</label></td>
         <td colspan="4">
            <%-- <s:textarea name="informant.informantAddress" id="informantAddress"
                                     cssStyle="width:95%;"/>
@@ -758,7 +760,7 @@ function maxLengthCalculate(id, max, divId) {
     </tr>
     <tr>
         <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ඇමතුම් විස්තර
-            <br>தொடா்பு விபரம்<br>Contact Details</label>
+            <br>தொடர்பு விபரம்<br>Contact Details</label>
         </td>
         <td><label>දුරකතනය<br>தொலைபேசி இலக்கம் <br>Telephone</label></td>
         <td><s:textfield name="informant.informantPhoneNo" id="informantPhoneNo"
