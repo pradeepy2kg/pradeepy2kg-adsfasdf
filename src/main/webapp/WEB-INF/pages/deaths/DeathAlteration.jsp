@@ -358,14 +358,14 @@
             <s:property value="district"/>
         </td>
         <td>(4)ප්‍රාදේශීය ලේකම් කොට්ඨාශය <br>
-            பிரிவு <br>
-            Divisional Secretariat
+            பிரதேச செயளாளர் பிரிவு <br/>
+            Divisional Secretary Division
         </td>
         <td colspan="2"><s:property value="dsDivision"/></td>
     </tr>
     <tr>
         <td>(5)ලියාපදිංචි කිරීමේ කොට්ඨාශය <br>
-            பிரிவு <br>
+            பதிவுப் பிரிவு<br>
             Registration Division
         </td>
         <td>

@@ -262,8 +262,8 @@
             <s:label name="" value="%{deathPersonDistrictEn}"/></td>
         <td>
             ප්‍රාදේශීය ලේකම් කොට්ඨාශය
-            <br>பிரதேச செயலாளர் பிரிவு
-            <br>Divisional Secretariat
+            <br/>பிரதேச செயளாளர் பிரிவு
+            <br/>Divisional Secretary Division
         </td>
         <td><s:label name="" value="%{deathPersondsDivision}"/><br>
             <s:label name="" value="%{deathPersondsDivisionEn}"/>

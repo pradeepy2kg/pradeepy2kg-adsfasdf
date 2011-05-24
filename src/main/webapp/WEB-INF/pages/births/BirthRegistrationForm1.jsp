@@ -366,7 +366,7 @@ function maxLengthCalculate(id, max, divId) {
                                                                     alt=""/><br>
             <s:if test="birthType.ordinal() == 1 || birthType.ordinal() == 3">
                 <label>උපතක් ලියාපදිංචි කිරීම සඳහා විස්තර
-                    <br>ஒரு பிறப்பைப் பதிவு செய்வதற்கான விபரங்கள்
+                    <br>பிறப்பொன்றை  பதிவு செய்வதற்கான  விபரங்கள்
                     <br>Particulars for Registration of a Birth</label>
             </s:if>
             <s:elseif test="birthType.ordinal() == 0">
@@ -428,15 +428,13 @@ function maxLengthCalculate(id, max, divId) {
     <tr>
         <td colspan="3">
             <s:if test="birthType.ordinal() == 1 || birthType.ordinal() == 3">
-                දැනුම් දෙන්නා (දෙමවිපියන් / භාරකරු) විසින් සම්පුර්ණ කර තොරතුරු වාර්තා කරන නිලධාරි වෙත භාර දිය
-                යුතුය. මෙම
-                තොරතුරු මත සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ උපත ලියාපදිංචි කරනු ලැබේ.
-                <br>தகவல் தருபவரால் (பெற்றோர்/பொறுப்பாளர்) பூா்த்தி செய்யப்பட்டு தகவல் சேகரிக்கும் அதிகாரியிடம்
-                சமா்ப்பித்தல் வேண்டும். இத்தகவலின்படி சிவில் பதிவு அமைப்பில் பிறப்பு பதிவு செய்யப்படும்
+                දැනුම් දෙන්නා (දෙමවිපියන් / භාරකරු) විසින් සම්පුර්ණ කර තොරතුරු වාර්තා කරන නිලධාරියා
+                / රෙජිස්ට්‍රාර් වෙත භාර දිය යුතුය. මෙම තොරතුරු මත සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ උපත ලියාපදිංචි කරනු ලැබේ.
+                <br>தகவல் தருபவரால் (பெற்றோர்/பாதுகாவலர் ) பூர்த்தி செய்யப்பட்டு தகவல் சேகரிக்கும் அதிகாரியிடம்
+                /பதிவாளரிடம் சமர்ப்பிக்கப்படல் வேண்டும். இத்தகவலின்படி சிவில் முறையில் பிறப்பு பதிவு செய்யப்படும்.
                 <br>Should be perfected by the informant (Parent / Guardian) and the duly completed form should be
-                forwarded
-                to the Notifying Authority. The birth will be registered in the Civil Registration System based on the
-                information provided in this form.
+                forwarded to the Officer / Registrar. The birth will be registered in the Civil Registration System
+                based on the information provided in this form.
             </s:if>
             <s:elseif test="birthType.ordinal() == 0">
                 දැනුම් දෙන්නා (දෙමවිපියන් / නෑයන්) විසින් සම්පුර්ණ කර තොරතුරු වාර්තා කරන නිලධාරි වෙත භාර දිය යුතුය.
@@ -501,7 +499,7 @@ function maxLengthCalculate(id, max, divId) {
         <td colspan="6" class="table_reg_cell_01"><s:label value="%{#session.oldBdfForAdoption.districtName}"/></td>
     </tr>
     <tr>
-        <td><label>ප්‍රාදේශීය ලේකමි කොටිඨාශය<br>பிரதேச செயளாளா் பிரிவு <br>Divisional Secretariat</label></td>
+        <td><label>ප්‍රාදේශීය ලේකමි කොටිඨාශය<br>பிரதேச செயளாளர் பிரிவு <br>Divisional Secretariat</label></td>
         <td colspan="6" class="table_reg_cell_01"><s:label
                 value="%{#session.oldBdfForAdoption.dsDivisionName}"/></td>
     </tr>
@@ -537,7 +535,7 @@ function maxLengthCalculate(id, max, divId) {
     </td>
 </tr>
 <tr>
-    <td rowspan="5"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපන්
+    <td rowspan="6"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපන්
         ස්ථානය <s:label value="*" cssStyle="color:red;font-size:14pt;"/>
         <br>பிறந்த இடம்
         <br> Place of Birth</label></td>
@@ -582,7 +580,7 @@ function maxLengthCalculate(id, max, divId) {
     </td>
 </tr>
 <tr>
-    <td colspan="3"><label>උපත සිදුවුයේ රෝහලකද? <br>பிறப்பு நிகழ்ந்தது வைத்திய சாலையிலா?<br>Did the birth occur at a
+    <td colspan="3"><label>උපත සිදුවුයේ රෝහලකද? <br>பிறப்பு நிகழ்ந்தது வைத்தியசாலையிலா?<br>Did the birth occur at a
         hospital?</label></td>
     <td colspan="1"><label>ඔව් / ஆம் / Yes </label></td>
     <td align="center"><s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'true':''}"
@@ -621,8 +619,8 @@ function maxLengthCalculate(id, max, divId) {
     </tr>
 </s:if>
 <tr>
-    <td class="font-9" colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උප්පැන්න
-        සහතිකය නිකුත් කල යුතු භාෂාව <br>பிறப்பு அத்தாட்சி ….. <br>Preferred Language for Birth Certificate </label>
+    <td class="font-9" colspan="2"><label> උප්පැන්න
+        සහතිකය නිකුත් කල යුතු භාෂාව <br>பிறப்புச் சான்றிதழ் வழங்கப்பட வேண்டிய  மொழி<br>Preferred Language for Birth Certificate </label>
     </td>
     <td colspan="6">
         <s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'தமிழ்'}" name="register.preferredLanguage"
@@ -644,7 +642,7 @@ function maxLengthCalculate(id, max, divId) {
         <s:if test="birthType.ordinal() == 1 || birthType.ordinal() == 3">
             <td colspan="2">
                 <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපත්
-                    බර<br>பிறப்பு நிறை<br>Birth
+                    බර<br>பிறப்பு  நிறை <br>Birth
                     Weight (kg)</label>
             </td>
         </s:if>
@@ -689,8 +687,8 @@ function maxLengthCalculate(id, max, divId) {
     <td colspan="2" class="font-9">
         <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)නිවුන්
             දරු උපතක් නම්, දරුවන් ගණන
-            <br>பல்வகைத்தன்மை (இரட்டையர்கள் எனின்),
-            <br> பிள்னளகளின் எண்ணிக்கை
+            <br>ஓரே சுழலில் ஒன்றுக்கு மேற்பட்ட பிள்ளை
+            <br>பிறந்திருந்தால் , பிள்ளைகளின் எண்ணிக்கை
             <br>If multiple births, number of children</label>
     </td>
     <td colspan="2"><s:textfield name="child.numberOfChildrenBorn" id="numberOfChildrenBorn"

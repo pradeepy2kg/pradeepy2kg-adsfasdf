@@ -270,7 +270,7 @@
     </tr>
     <tr>
         <td class="cell_011">4</td>
-        <td class="cell_04"><label>උපන් දිනය<br>பிறந்த திகதி/Date of birth</label></td>
+        <td class="cell_04"><label>උපන් දිනය<br>பிறந்த திகதி/Date of Birth</label></td>
         <td><label>වර්ෂය<br>வருடம்<br>Year</label></td>
         <td>
             <s:textfield value="%{child.dateOfBirth.year+1900}" cssClass="disable" disabled="true" size="4"/>
@@ -309,8 +309,8 @@
 
     <tr>
         <td height="40px"><label>ප්‍රාදේශීය ලේකම් කොට්ඨාශය <br>
-            பிரதேச செயலாளர் பிரிவு <br>
-            Divisional Secretariat</label></td>
+            பிரதேச செயளாளர் பிரிவு <br/>
+            Divisional Secretary Division</label></td>
         <td colspan="6" style="font-size:12pt;">
             <s:label value="%{register.dsDivisionPrint}"/>
         </td>

@@ -658,8 +658,8 @@ function maxLengthCalculate(id, max, divId) {
 <tr>
     <td colspan="3">
         ප්‍රාදේශීය ලේකම් කොට්ඨාශය /
-        <br>பிரதேச செயளாளா் பிரிவு /
-        <br>Divisional Secretariat
+        <br/>பிரதேச செயளாளர் பிரிவு
+        <br/>Divisional Secretary Division
     </td>
     <td colspan="5"><s:select id="deathDsDivisionId" name="dsDivisionId" list="dsDivisionList"
                               cssStyle="float:left; "/></td>
@@ -1068,8 +1068,8 @@ function maxLengthCalculate(id, max, divId) {
         </td>
         <td width="98px">
             ප්‍රාදේශීය ලේකම් කොට්ඨාශය <br>
-            பிரதேச செயளாளர் பிரிவு <br>
-            Divisional Secretariat
+            பிரதேச செயளாளர் பிரிவு <br/>
+            Divisional Secretary Division
         </td>
         <td width="100px">
             <s:select id="deathPersonPermenentAddressDSDivisionId" name="deathPersonPermenentAddressDSDivisionId"

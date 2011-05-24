@@ -204,7 +204,7 @@
     <tbody>
     <tr>
         <td>උපන් දිනය<br/>
-            Date of birth
+            Date of Birth
         </td>
         <td colspan="2" style="text-align:left;"><s:label value="%{#request.adoption.childBirthDate}"/></td>
         <td>ස්ත්‍රී පුරුෂ භාවය<br/>

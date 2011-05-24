@@ -3,11 +3,11 @@
 <s:set value="rowNumber" name="row"/>
 <s:if test="birthType.ordinal()==0">
     <%--still birth--%>
-    <s:set name="row" value="23"/>
+    <s:set name="row" value="22"/>
 </s:if>
 <s:elseif test="birthType.ordinal()==1 || birthType.ordinal()==3">
     <%--live birth--%>
-    <s:set name="row" value="25"/>
+    <s:set name="row" value="24"/>
 </s:elseif>
 <s:elseif test="birthType.ordinal()==27">
     <%--adoption--%>

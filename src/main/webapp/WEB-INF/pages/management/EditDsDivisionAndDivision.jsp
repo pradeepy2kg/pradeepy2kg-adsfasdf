@@ -66,7 +66,7 @@
                 <td><s:select id="districtId" name="districtId" list="districtList"/></td>
             </tr>
             <tr>
-                <td>ප්‍රාදේශීය ලේකම් කොට්ඨාශය / <br>பிரிவு / <br>Divisional Secretariat</td>
+                <td>ප්‍රාදේශීය ලේකම් කොට්ඨාශය / <br>பிரதேச செயளாளர் பிரிவு/ <br>Divisional Secretary Division</td>
                 <td><s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList"
                               cssStyle="float:left; "/></td>
             </tr>
@@ -123,7 +123,7 @@
                 </s:if>
             </tr>
             <tr>
-                <td rowspan="3">ප්‍රාදේශීය ලේකම් කොට්ඨාශය / <br>பிரிவு / <br>Divisional Secretariat</td>
+                <td rowspan="3">ප්‍රාදේශීය ලේකම් කොට්ඨාශය / <br>பிரதேச செயளாளர் பிரிவு/ <br>Divisional Secretary Division</td>
                 <td>Divisional Secretariat in English</td>
                 <s:if test="pageNo == 1">
                     <td><s:label value=""/></td>

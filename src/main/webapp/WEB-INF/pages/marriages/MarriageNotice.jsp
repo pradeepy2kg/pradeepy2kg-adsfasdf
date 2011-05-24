@@ -464,9 +464,9 @@ $('select#dsDivisionId').bind('change', function(evt2) {
                 </tr>
                 <tr>
                     <td>
-                        ප්‍රාදේශීය ලේකම් කොට්ඨාශය <br>
-                        பிரதேச செயளாளர் பிரிவு <br>
-                        Divisional Secretariat <br>
+                        ප්‍රාදේශීය ලේකම් කොට්ඨාශය<br/>
+                        பிரதேச செயளாளர் பிரிவு <br/>
+                        Divisional Secretary Division
                     </td>
                     <td>
                         <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="dsDivisionId"

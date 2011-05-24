@@ -473,9 +473,9 @@
             <s:label id="districtInEn" value="%{licenseIssueDistrictInEN}"/>
         </td>
         <td colspan="1">
-            ප්‍රාදේශීය ලේකම් කොට්ඨාශය <br>
-            பிரதேச செயளாளர் பிரிவு <br>
-            Divisional Secretariat <br>
+            ප්‍රාදේශීය ලේකම් කොට්ඨාශය<br/>
+            பிரதேச செயளாளர் பிரிவு <br/>
+            Divisional Secretary Division
         </td>
         <td colspan="2">
             <s:label id="dsDivisionInOL" value="%{licenseIssueDivisionInOL}"/>

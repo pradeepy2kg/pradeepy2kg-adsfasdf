@@ -152,8 +152,9 @@
         </td>
         <td><label><span class="font-8">
             ප්‍රාදේශීය ලේකම් කොට්ඨාශය
-                <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-                <br>பிரதேச செயளாளர் பிரிவு <br>Divisional Secretariat</span>
+                <s:label value="*" cssStyle="color:red;font-size:10pt;"/><br/>
+                பிரதேச செயளாளர் பிரிவு <br/>
+                Divisional Secretary Division</span>
         </label>
         </td>
         <td>
@@ -166,7 +167,7 @@
         <td><label><span class="font-8">
         ලියාපදිංචි කිරීමේ කොට්ඨාශය
                <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-                    <br>பதிவுப் பிரிவு  <br>Registration Division</span>
+                    <br>பதிவுப் பிரிவு<br>Registration Division</span>
         </label>
         </td>
         <td colspan="3">

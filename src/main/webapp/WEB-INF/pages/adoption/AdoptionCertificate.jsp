@@ -155,7 +155,7 @@
         <%--(PIN)--%>
         <%--</td>--%>
         <%--<td width="250px"><s:label name="" value="%{adoption.childPIN}"/></td>--%>
-        <td>උපන් දිනය <br>பிறந்த திகதி <br>Date of birth
+        <td>උපන් දිනය <br>பிறந்த திகதி <br>Date of Birth
         <td colspan="2"><s:label name="" value="%{adoption.childBirthDate}"/>
             <br>
             <s:label value="YYYY-MM-DD" cssStyle="font-size:8pt;"/>
@@ -304,14 +304,15 @@ Mother's Identification No.
             </td>
             <td width="25%"><s:label name="" value="%{birthDistrictName}"/></td>
             <td width="25%">ප්‍රාදේශීය ලේකම් කොට්ඨාශය<br/>
-                பிரிவு <br/>
-                Divisional Secretariat
+                பிரதேச செயளாளர் பிரிவு <br/>
+                Divisional Secretary Division
             </td>
             <td width="25%"><s:label name="" value="%{dsDivisionName}"/></td>
         </tr>
         <tr>
-            <td width="25%">ලියාපදිංචි කිරීමේ කොට්ඨාශය<br/>
-                பிரிவு <br/>
+            <td width="25%">
+                ලියාපදිංචි කිරීමේ කොට්ඨාශය<br/>
+                பதிவுப் பிரிவு<br/>
                 Registration Division
             </td>
             <td width="25%"><s:label name="" value="%{birthDivisionName}"/></td>

@@ -4,15 +4,15 @@
 <s:set value="rowNumber" name="row"/>
 <s:if test="birthType.ordinal()==0">
     <%--still birth--%>
-    <s:set name="row" value="29"/>
+    <s:set name="row" value="28"/>
 </s:if>
 <s:elseif test="birthType.ordinal()==1 || birthType.ordinal()==3">
     <%--live birth--%>
-    <s:set name="row" value="34"/>
+    <s:set name="row" value="33"/>
 </s:elseif>
 <s:elseif test="birthType.ordinal()==2">
     <%--adoption--%>
-    <s:set name="row" value="36"/>
+    <s:set name="row" value="35"/>
 </s:elseif>
 
 <script src="/ecivil/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>

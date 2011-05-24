@@ -181,7 +181,10 @@
         </td>
     </tr>
     <tr>
-        <td colspan="3">ප්‍රාදේශීය ලේකම් කොට්ඨාශය / <br>பிரிவு / <br>Divisional Secretariat</td>
+        <td colspan="3">ප්‍රාදේශීය ලේකම් කොට්ඨාශය /
+            <br/>பிரதேச செயளாளர் பிரிவு
+            <br/>Divisional Secretary Division
+        </td>
         <td colspan="5">
                 <%--TODO--%>
             <s:if test="#userPreferedLang == 'si'">
@@ -196,7 +199,7 @@
         </td>
     </tr>
     <tr>
-        <td colspan="3">ලියාපදිංචි කිරීමේ කොට්ඨාශය / <br>பிரிவு / <br>Registration Division</td>
+        <td colspan="3">ලියාපදිංචි කිරීමේ කොට්ඨාශය / <br>பதிவுப் பிரிவு/ <br>Registration Division</td>
         <td colspan="5">
             <s:if test="#userPreferedLang == 'si'">
                 <s:label
@@ -395,7 +398,9 @@
         </td>
     </tr>
     <tr>
-        <td colspan="1">ප්‍රාදේශීය ලේකම් කොට්ඨාශය <br>பிரிவு <br>Divisional Secretariat</td>
+        <td colspan="1">ප්‍රාදේශීය ලේකම් කොට්ඨාශය /
+            <br/>பிரதேச செயளாளர் பிரிவு
+            <br/>Divisional Secretary Division</td>
         <td colspan="1" height="50px">
             <s:if test="#userPreferedLang == 'si'">
                 <s:label
