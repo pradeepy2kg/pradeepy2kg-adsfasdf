@@ -85,10 +85,23 @@
             $(this).focus();
         }
     });
+
+//      TODO to capture enter key press
+//    $('#tabs input').bind('keypress', function(e) {
+//        if(e.keyCode == 13 || e.which == 13){
+//            alert("Enter Pressed");
+//            validate();
+//        }
+//    });
   });
 
   function initPage(){
       setUserPrefLang();
+  }
+
+  function validate(){
+//      alert("Inside ");
+      return false;
   }
 </script>
 

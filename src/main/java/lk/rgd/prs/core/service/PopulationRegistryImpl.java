@@ -312,19 +312,19 @@ public class PopulationRegistryImpl implements PopulationRegistry {
 
         Person existing = personDao.getByUKey(personUKey);
 
-        // validate existing person
-        validatePersonState(existing, Person.Status.VERIFIED);
-        validateAccessToLocation(existing.getSubmittedLocation(), user);
+        if (existing != null) {
+            // validate existing person
+            validatePersonState(existing, Person.Status.VERIFIED);
+            validateAccessToLocation(existing.getSubmittedLocation(), user);
 
-        // TODO if birth exist can not edit , throw exception (use alteration process)
-        // TODO is this applicable after approval not for before approval
+            // TODO if birth exist can not edit , throw exception (use alteration process)
+            // TODO is this applicable after approval not for before approval
 
-        // TODO from here
-        // only Approved person record exist now
-
-
-        // TODO chathuranga
-        throw new UnsupportedOperationException("Edit person after approval operation not implemented yet...");
+            // TODO from here
+            // only Approved person record exist now
+        } else {
+            logger.debug("");
+        }
     }
 
     /**
