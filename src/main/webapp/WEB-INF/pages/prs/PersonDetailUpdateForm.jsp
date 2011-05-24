@@ -77,7 +77,7 @@
 
 
     // TODO for dob calculation for person, how to add??
-    /*function calculateBirthDay(id, datePicker, error) {
+    /*function calculateBirthDay(id, error) {
      var reg = /^([0-9]{9}[X|x|V|v])$/;
      var day = id.substring(2, 5);
      var year = 19 + id.substring(0, 2);
@@ -398,6 +398,22 @@
 
     </style>
 
+&nbsp;
+
+<s:form action="eprPersonDetails.do" method="POST" onsubmit="javascript:return validate()">
+    <s:hidden name="personUKey" value="%{#request.personUKey}"/>
+    <div class="form-submit">
+        <s:submit value="%{getText('save.label')}" cssStyle="margin-top:-5px;"/>
+    </div>
+</s:form>
+
+
+<s:form action="eprPersonDetails.do" method="get">
+    <s:hidden name="personUKey" value="%{#request.personUKey}"/>
+    <div class="form-submit">
+        <s:submit value="%{getText('previous.label')}" cssStyle="margin-top:-5px;"/>
+    </div>
+</s:form>
 
 <div class="prs-existing-person-register-outer">
 
