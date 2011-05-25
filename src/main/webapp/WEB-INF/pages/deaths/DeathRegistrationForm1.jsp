@@ -360,10 +360,7 @@ $(function() {
 
     function processResponse1(respObj) {
         //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("input#placeOfDeathInEnglish").val(respObj.Body[0].transliterateResponse[0].
-        return[0].Text
-    )
-        ;
+        $("input#placeOfDeathInEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
     }
 
     $('img#deathName').bind('click', function(evt7) {
@@ -393,10 +390,7 @@ $(function() {
 
     function processResponse2(respObj) {
         //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("textarea#deathPersonNameInEnglish").val(respObj.Body[0].transliterateResponse[0].
-        return[0].Text
-    )
-        ;
+        $("textarea#deathPersonNameInEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
     }
 });
 
@@ -592,56 +586,37 @@ function maxLengthCalculate(id, max, divId) {
         <br>Information about the Death
     </td>
 </tr>
-    <%--<s:if test="pageType ==0">
-        <tr>
-            <td>
-                (1)හදිසි මරණයක්ද ? <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-                <br>திடீா் மரணமா?
-                <br>Sudden death?
-            </td>
-            <td colspan="3">ඔව් xx Yes</td>
-            <td align="center"><s:radio name="deathType" list="#@java.util.HashMap@{'SUDDEN':''}"
-                                        value="%{deathType}"/></td>
-            <td colspan="3">නැත xx No</td>
-            <td align="center"><s:radio name="deathType" list="#@java.util.HashMap@{'NORMAL':''}"
-                                        value="%{deathType}"/></td>
-        </tr>
-    </s:if>
-    <s:elseif test="pageType==1">
-        <tr>
-            <td colspan="4">
-                (2)නැතිවුණු පුද්ගලයෙකුගේ මරණයක්ද ? <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-                <br>காணாமற்போன நபரது மரணமா?
-                <br>Is the death of a missing person?
-            </td>
-            <td align="center">
-                 <s:radio name="deathType" list="#@java.util.HashMap@{'MISSING':''}" value="%{deathType}"/>
-            </td>
-            <td colspan="3">
-                කාලය ඉකුත් වූ මරණ <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-                <br>in ta
-                <br>Late registration
-            </td>
-            <td align="center">
-                <s:radio name="deathType" list="#@java.util.HashMap@{'LATE_NORMAL':''}" value="%{deathType}"/>
-            </td>
-        </tr>
-    </s:elseif>--%>
-<tr>
-    <td colspan="4">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-        මරණයේ ස්වභාවය?  /  மரணத்தின் வகை?   / Type of death? <br/>&nbsp;
-    </td>
-    <td colspan="5">
-
-    </td>
-</tr>
+<s:if test="pageType == 0">
+    <tr>
+        <td colspan="4">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+            මරණයේ ස්වභාවය?
+            <br/>மரணத்தின் வகை?   <br/>
+            Type of death?
+        </td>
+        <td colspan="5">
+            සාමාන්‍ය  මරණයකි / சாதாரண மரணம் / Normal Death
+        </td>
+    </tr>
+</s:if>
+<s:elseif test="pageType == 2">
+    <tr>
+        <td colspan="4">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+            මරණයේ ස්වභාවය?
+            <br/>மரணத்தின் வகை?   <br/>
+            Type of death?
+        </td>
+        <td colspan="5">
+            හදිසි මරණයකි / திடீர் மரணம் / Sudden Death
+        </td>
+    </tr>
+</s:elseif>
 <tr>
     <td>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
         මරණය සිදු වූ දිනය <s:label value="*" cssStyle="color:red;font-size:10pt"/>
         <br>இறந்த திகதி
         <br>Date of Death
     </td>
-    <td colspan="4">
+    <td colspan="3">
         <s:label value="YYYY-MM-DD" cssStyle="font-size:10px"/><br>
         <s:textfield id="deathDatePicker" name="death.dateOfDeath" maxLength="10"/>
     </td>
@@ -650,7 +625,7 @@ function maxLengthCalculate(id, max, divId) {
         <br>நேரம்
         <br>Time
     </td>
-    <td colspan="3">
+    <td colspan="4">
         <s:textfield name="death.timeOfDeath" id="timePicker"/>
     </td>
 </tr>
@@ -681,18 +656,6 @@ function maxLengthCalculate(id, max, divId) {
     <td colspan="5"><s:select id="deathDivisionId" name="deathDivisionId" list="bdDivisionList"
                               cssStyle="float:left;"/></td>
 </tr>
-    <%--<tr>
-        <td colspan="3"><label>
-            ග්‍රාම නිළධාරී කොටිඨාශය /<br/>
-            Grama Niladhari Division in ta/<br/>
-            Grama Niladhari Division</label>
-        </td>
-        <td colspan="5">
-            <s:select id="gnDivisionId" name="gnDivisionId" value="%{gnDivisionId}" list="gnDivisionList"
-                      cssStyle="float:left; width:99%"/>
-        </td>
-    </tr>--%>
-
 <tr>
     <td rowspan="2" colspan="1">
         ස්ථානය
@@ -771,30 +734,12 @@ function maxLengthCalculate(id, max, divId) {
         <s:radio name="death.causeOfDeathEstablished"
                  list="#@java.util.HashMap@{'false':''}"/>
     </td>
-        <%--    <td rowspan="2" colspan="3">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-මරණය දින 30 කට අඩු ළදරුවෙකුගේද?
-<br>இறப்பு 30 நாட்களுக்கு குறைவான சிசுவினதா?
-<br>Is the death of an infant less than 30 days?
-</td>
-<td colspan="1">නැත / இல்லை / No</td>
-<td colspan="1" align="center"><s:radio name="death.infantLessThan30Days"
-        list="#@java.util.HashMap@{'false':''}"/></td>--%>
 </tr>
-    <%--<tr>
-        <td colspan="1">ඔව් / ஆம் /Yes</td>
-        <td colspan="2" align="center"><s:radio name="death.causeOfDeathEstablished"
-                                                list="#@java.util.HashMap@{'true':''}"/></td>
-        <td colspan="1">ඔව් / ஆம் /Yes</td>
-        <td colspan="1" align="center"><s:radio name="death.infantLessThan30Days"
-                                                list="#@java.util.HashMap@{'true':''}"/></td>
-    </tr>--%>
 <tr>
     <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
         මරණයට හේතුව
         <br>இறப்பிற்கான காரணம்
         <br>Cause of death
-
-
     </td>
     <td colspan="4">
         <s:textarea name="death.causeOfDeath" id="causeOfDeath" cssStyle="width:420px;"
@@ -821,19 +766,7 @@ function maxLengthCalculate(id, max, divId) {
     </td>
 </tr>
 <tr>
-    <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-        වෙනත් තොරතුරු
-        <br>வேறுத்தகவல்கள்
-        <br>Any other information
-    </td>
-    <td colspan="8">
-        <s:textarea name="death.anyOtherInformation" id="anyOtherInfo" cssStyle="width:880px;"
-                    onblur="maxLengthCalculate('anyOtherInfo','255','anyOtherInfo_div');"/>
-        <div id="anyOtherInfo_div" style="color:red;font-size:8pt"></div>
-    </td>
-</tr>
-<tr>
-    <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+    <td colspan="2"><label>
         මරණ
         සහතිකය නිකුත් කල යුතු භාෂාව
         <br>சான்றிதழ் வழங்கப்பட வேண்டிய மொழி

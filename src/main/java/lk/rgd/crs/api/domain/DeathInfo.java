@@ -78,18 +78,7 @@ public class DeathInfo implements Serializable, Cloneable {
     private String reasonForLateRegistration;
 
     @Column(nullable = true)
-    private String anyOtherInformation;
-
-    @Column(nullable = true)
     private boolean deathOccurAtaHospital;
-
-    public String getAnyOtherInformation() {
-        return anyOtherInformation;
-    }
-
-    public void setAnyOtherInformation(String anyOtherInformation) {
-        this.anyOtherInformation = WebUtils.filterBlanksAndToUpperAndTrim(anyOtherInformation,255,"anyOtherInformation");
-    }
 
     public long getDeathSerialNo() {
         return deathSerialNo;
