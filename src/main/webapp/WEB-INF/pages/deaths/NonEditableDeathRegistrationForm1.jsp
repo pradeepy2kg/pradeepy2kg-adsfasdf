@@ -356,7 +356,9 @@
                 <s:label name="" value="%{getText('unknown.label')}"/>
             </s:elseif>
         </td>
-        <td colspan="1">ජාතිය<br>பிறப்<br>Race</td>
+        <td colspan="1">ජන වර්ගය<br/>
+            இனம்<br/>
+            Ethnic Group</td>
         <td colspan="2">
             <s:if test="#userPreferedLang == 'si'">
                 <s:label value="%{#session.deathRegister.deathPerson.deathPersonRace.siRaceName}"/>

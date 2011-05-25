@@ -998,9 +998,9 @@ function maxLengthCalculate(id, max, divId) {
                     id="deathPersonGender" cssStyle="width:185px;"/>
         </td>
         <td colspan="2">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-            ජාතිය
-            <br>இனம்
-            <br>Race
+            ජන වර්ගය<br/>
+            இனம்<br/>
+            Ethnic Group
         </td>
         <td colspan="6">
             <s:select list="raceList" name="deathPersonRace" headerKey="0" headerValue="%{getText('select_race.label')}"

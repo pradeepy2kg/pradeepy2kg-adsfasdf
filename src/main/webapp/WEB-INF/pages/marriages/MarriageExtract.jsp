@@ -383,9 +383,9 @@
     </tr>
     <tr>
         <td>
-            ජාතිය <br>
-            Race <br>
-
+            ජන වර්ගය<br/>
+            இனம்<br/>
+            Ethnic Group
         </td>
         <td>
             <s:if test="marriage.preferredLanguage=='si'">

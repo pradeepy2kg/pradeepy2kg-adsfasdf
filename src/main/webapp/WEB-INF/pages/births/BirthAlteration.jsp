@@ -911,9 +911,9 @@ function validateBirthYear(domElement, errorText, errorCode) {
             </td>
             <td colspan="2"><s:textfield cssStyle="margin-right:10px;width:80%" id="motherAgeAtBirth"
                                          name="birthAlteration.alt52_1.mother.motherAgeAtBirth"/></td>
-            <td colspan="2"><s:label value="ජාතිය"/><br>
+            <td colspan="2"><s:label value="ජන වර්ගය"/><br>
                 <s:label value="இனம்"/><br>
-                <s:label value="Race     "/>
+                <s:label value="Ethnic Group"/>
             </td>
             <td colspan="2"><s:select list="raceList" name="motherRaceId" headerKey="0" id="motherRaceId"
                                       headerValue="%{getText('select_race.label')}"
@@ -1119,9 +1119,9 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 Date of Birth
             </td>
             <td><s:textfield id="fatherDadeOfbirth" name="birthAlteration.alt27A.father.fatherDOB"/></td>
-            <td colspan="2">ජාතිය<br>
-                இனம்<br>
-                Race
+            <td colspan="2">ජන වර්ගය<br/>
+                இனம்<br/>
+                Ethnic Group
             </td>
             <td><s:select list="raceList" name="fatherRaceId" headerKey="0" id="fatherRaceId"
                           headerValue="%{getText('select_race.label')}"

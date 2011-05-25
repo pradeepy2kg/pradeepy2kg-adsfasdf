@@ -438,10 +438,9 @@
 </tr>
 <tr>
     <td>
-        ජාතිය
-        <s:label value="*" cssStyle="color:red;font-size:10pt;"/><br>
-        Race <br>
-
+        ජන වර්ගය <s:label value="*" cssStyle="color:red;font-size:10pt"/><br/>
+        இனம்<br/>
+        Ethnic Group
     </td>
     <td>
         <s:if test="mode=='register'">

@@ -139,3 +139,13 @@ Mother தாய்
   Address முகவரி 
 
 சான்றிதழ் அச்சிடல,  සහතික මුද්‍රණය  ்//write in short
+
+
+Select Ethnic Group/ ජන වර්ගය තෝරන්න
+Select Grama Niladhari Division/ ග්‍රාම නිලධාරී කොට්ඨාශය තෝරන්න
+Father's Ethnic Group/ පියාගේ ජන වර්ගය
+Mother's Ethnic Group/  මවගේ ජන වර්ගය
+Civil Status & Ethnic Group/ සිවිල් තත්වය සහ ජන වර්ගය
+Bride's Ethnic Group/ මනමාලියාගේ ජන වර්ගය
+Groom's Ethnic Group/ මනමාලයාගේ ජන වර්ගය
+Please Select Ethnis Group/ කරුණාකර ජන වර්ගය ඇතුලත් කරන්න

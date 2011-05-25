@@ -525,7 +525,7 @@
     </tr>
     <tr>
         <td>
-            (3) ජාතිය<s:label value="*" cssStyle="color:red;font-size:14pt"/><br>இனம்<br>Race
+            (3) ජන වර්ගය<s:label value="*" cssStyle="color:red;font-size:14pt"/><br>இனம்<br>Ethnic Group
         </td>
         <td colspan="2">
             <s:select id="personRaceId" name="personRaceId" list="raceList" headerKey="0"
