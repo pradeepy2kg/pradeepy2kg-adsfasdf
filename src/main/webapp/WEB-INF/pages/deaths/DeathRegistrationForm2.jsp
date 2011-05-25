@@ -33,8 +33,10 @@
             var id1 = $("input#declarant_pinOrNic").attr("value");
             $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
                     function(data1) {
-                        $("textarea#declarantFullName").val(data1.fullNameInOfficialLanguage);
-                        $("textarea#declarantAddress").val(data1.lastAddress);
+                        if (data1 != null) {
+                            $("textarea#declarantFullName").val(data1.fullNameInOfficialLanguage);
+                            $("textarea#declarantAddress").val(data1.lastAddress);
+                        }
                     });
         });
 
@@ -60,8 +62,10 @@
             var id4 = $("input#notifying_authority_NICorPIN").attr("value");
             $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id4},
                     function(data4) {
-                        $("textarea#notifyingAuthorityName").val(data4.fullNameInOfficialLanguage);
-                        $("textarea#notifyingAuthorityAddress").val(data4.lastAddress);
+                        if (data4 != null) {
+                            $("textarea#notifyingAuthorityName").val(data4.fullNameInOfficialLanguage);
+                            $("textarea#notifyingAuthorityAddress").val(data4.lastAddress);
+                        }
                     });
         });
 
@@ -169,14 +173,14 @@
     }
 
     function maxLengthCalculate(id, max, divId) {
-    var dom = document.getElementById(id).value;
-    if (dom.length > max) {
-        document.getElementById(divId).innerHTML = document.getElementById('maxLengthError').value + " : " + max
+        var dom = document.getElementById(id).value;
+        if (dom.length > max) {
+            document.getElementById(divId).innerHTML = document.getElementById('maxLengthError').value + " : " + max
+        }
+        else {
+            document.getElementById(divId).innerHTML = "";
+        }
     }
-    else {
-        document.getElementById(divId).innerHTML = "";
-    }
-}
 </script>
 
 <div id="death-declaration-form-2-outer">
@@ -184,25 +188,25 @@
         onsubmit="javascript:return validate()">
 <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse;"
        class="font-9">
-    <col width="150px"/>
-    <col width="130px"/>
-    <col width="120px"/>
-    <col width="130px"/>
-    <col width="130px"/>
-    <col width="130px"/>
-    <col/>
+    <col width="22%"/>
+    <col width="16%"/>
+    <col width="10%"/>
+    <col width="16%"/>
+    <col width="10%"/>
+    <col width="16%"/>
+    <col width="10%"/>
     <tbody>
     <tr class="form-sub-title">
         <td colspan="7">
-            ප්‍රකාශකයාගේ විස්තර
+            දැනුම් දෙන්නාගේ විස්තර
             <br>அறிவிப்பு கொடுப்பவரின் தகவல்கள்
-            <br>Details of the Declarant
+            <br>Details of the Informant
         </td>
     </tr>
     <tr>
         <td rowspan="2" colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-            දැනුම් දෙන්නේ කවරකු වශයෙන්ද <s:label value="*" cssStyle="color:red;font-size:10pt"/>
-            <br>தகவல் வழங்குபவா்
+            දැනුම් දෙන්නේ කවරකු වශයෙන්ද
+            <br>யாரால் தகவல் தரப்படுகின்றது? <s:label value="*" cssStyle="color:red;font-size:10pt"/>
             <br>Capacity for giving information
         </td>
         <td colspan="1">
@@ -237,7 +241,7 @@
                                                 list="#@java.util.HashMap@{'SON_OR_DAUGHTER':''}"/></td>
         <td colspan="1">
             නෑයන්
-            <br>உறவினா்
+            <br>உறவினர்
             <br>Relative
         </td>
         <td colspan="1" align="center"><s:radio id="declarantType" name="declarant.declarantType"
@@ -273,10 +277,8 @@
             <br>Name
         </td>
         <td colspan="6">
-            <%--<s:textarea id="declarantFullName" name="declarant.declarantFullName"
-                                    cssStyle="width:880px;"/>--%>
             <s:textarea name="declarant.declarantFullName" id="declarantFullName"
-                        cssStyle="width:880px;"
+                        cssStyle="width:99%;"
                         onblur="maxLengthCalculate('declarantFullName','255','declarantFullName_div');"/>
             <div id="declarantFullName_div" style="color:red;font-size:8pt"></div>
         </td>
@@ -288,10 +290,8 @@
             <br>Postal Address
         </td>
         <td colspan="6">
-            <%--<s:textarea id="declarantAddress" name="declarant.declarantAddress"
-                                    cssStyle="width:880px;"/>--%>
             <s:textarea name="declarant.declarantAddress" id="declarantAddress"
-                        cssStyle="width:880px;"
+                        cssStyle="width:99%;"
                         onblur="maxLengthCalculate('declarantAddress','255','declarantAddress_div');"/>
             <div id="declarantAddress_div" style="color:red;font-size:8pt"></div>
         </td>
@@ -320,7 +320,8 @@
     </tr>
     <tr>
         <td colspan="2">ප්‍රකාශකයා අත්සන්කල දිනය <s:label value="*" cssStyle="color:red;font-size:10pt"/>
-            <br>பிரதிக்கினையாளர் கையொப்பமிட்ட திகதி <br>Declaranat Signed Date</td>
+            <br>பிரதிக்கினையாளர் கையொப்பமிட்ட திகதி <br>Declaranat Signed Date
+        </td>
         <td colspan="5">
             <s:label value="YYYY-MM-DD" cssStyle="font-size:10px"/><br>
             <s:textfield id="declarantDatePicker" name="declarant.declarantSignDate" maxLength="10"/>
@@ -337,20 +338,22 @@
     <col/>
     <tbody>
     <tr class="form-sub-title">
-        <td colspan="4"><s:if test="pageType==0">
-            තොරතුරු වාර්තා කරන පාර්ශවය / මරණ පරීක්ෂක හෝ අධිකරණ වෛද්‍ය නිලධාරී
-            <br>தகவல் அறிக்கையிடும் திறத்தார்/ மரண பரிசோதகா் அல்லது வைத்திய அதிகாரி
-            <br>Notifying Authority / Inquirer into deaths or Judicial Medical Officer </s:if>
+        <td colspan="4">
+            <s:if test="pageType==0">
+                තොරතුරු වාර්තා කරන නිලධාරියාගේ / රෙජිස්ට්‍රාර්ගේ විස්තර
+                <br>அறிக்கையிடும் அதிகாரி/பதிவாளர் பற்றிய விபரங்கள்
+                <br>Details of the Notifying Officer / Registrar
+                <s:set name="row" value="32"/>
+            </s:if>
             <s:elseif test="pageType == 1">
                 දිස්ත්‍රික් රෙජිස්ට්‍රාර් / රෙජිස්ට්‍රාර් ජෙනරාල්
                 <br>மாவட்ட பதிவாளா்/ பதிவாளா் நாயகம்
                 <br>District Registrar / Registrar General
             </s:elseif>
             <s:elseif test="pageType == 2">
-                sudden <br>
-                තොරතුරු වාර්තා කරන පාර්ශවය / මරණ පරීක්ෂක හෝ අධිකරණ වෛද්‍ය නිලධාරී
-                <br>தகவல் அறிக்கையிடும் திறத்தார்/ மரண பரிசோதகா் அல்லது வைத்திய அதிகாரி
-                <br>Notifying Authority / Inquirer into deaths or Judicial Medical Officer
+                මරණ පරීක්ෂක හෝ අධිකරණ වෛද්‍ය නිලධාරී ගේ විස්තර
+                <br>மரண பரிசோதகர் அல்லது வைத்திய அதிகாரியின் விபரம்
+                <br>Particulars of the Inquirer into deaths or Judicial Medical Officer
             </s:elseif>
             <s:elseif test="pageType == 3">
                 missing <br>
@@ -362,9 +365,8 @@
     </tr>
     <tr>
         <td colspan="2">
-            අනන්‍යතා අංකය <s:label value="*" cssStyle="color:red;font-size:10pt"/>
-            <br>அடையாள எண்
-            <br>PIN
+            (<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+            අනන්‍යතා අංකය / அடையாள எண் / Identification Number <s:label value="*" cssStyle="color:red;font-size:10pt"/>
         </td>
         <td colspan="2" class="find-person">
             <img src="<s:url value="/images/alphabet-V.gif" />"
@@ -381,50 +383,38 @@
         </td>
     </tr>
     <tr>
-        <td colspan="1">
+        <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
             නම <s:label value="*" cssStyle="color:red;font-size:10pt"/>
             <br>பெயர்
             <br>Name
         </td>
         <td colspan="3">
-            <%--<s:textarea id="notifyingAuthorityName"
-                                    name="notifyingAuthority.notifyingAuthorityName"
-                                    cssStyle="width:880px;"/>--%>
-             <s:textarea name="notifyingAuthority.notifyingAuthorityName" id="notifyingAuthorityName"
-                        cssStyle="width:880px;"
+            <s:textarea name="notifyingAuthority.notifyingAuthorityName" id="notifyingAuthorityName"
+                        cssStyle="width:99%;"
                         onblur="maxLengthCalculate('notifyingAuthorityName','120','notifyingAuthorityName_div');"/>
             <div id="notifyingAuthorityName_div" style="color:red;font-size:8pt"></div>
         </td>
     </tr>
     <tr>
-        <td colspan="1">
+        <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
             තැපැල් ලිපිනය <s:label value="*" cssStyle="color:red;font-size:10pt"/>
             <br>தபால் முகவரி
             <br>Postal Address
         </td>
         <td colspan="3">
-            <%--<s:textarea id="notifyingAuthorityAddress"
-                                    name="notifyingAuthority.notifyingAuthorityAddress"
-                                    cssStyle="width:880px;"/>--%>
             <s:textarea name="notifyingAuthority.notifyingAuthorityAddress" id="notifyingAuthorityAddress"
-                        cssStyle="width:880px;"
+                        cssStyle="width:99%;"
                         onblur="maxLengthCalculate('notifyingAuthorityAddress','255','notifyingAuthorityAddress_div');"/>
             <div id="notifyingAuthorityAddress_div" style="color:red;font-size:8pt"></div>
         </td>
     </tr>
     <tr>
         <td colspan="1">
-            අත්සන හා නිල මුද්‍රාව
-            <br>கையொப்பமும் அதிகார முத்திரையும்
-            <br>Signature and Official Seal of the Notifying Authority
-        </td>
-        <td colspan="1"></td>
-        <td colspan="1">
             දිනය<s:label value="*" cssStyle="color:red;font-size:10pt"/>
             <br>திகதி
             <br>Date
         </td>
-        <td colspan="1">
+        <td colspan="3">
             <s:label value="YYYY-MM-DD" cssStyle="margin-left:2%;font-size:10px"/><br>
             <s:textfield id="submitDatePicker" cssStyle="float:left;"
                          name="notifyingAuthority.notifyingAuthoritySignDate" maxLength="10"/></td>
