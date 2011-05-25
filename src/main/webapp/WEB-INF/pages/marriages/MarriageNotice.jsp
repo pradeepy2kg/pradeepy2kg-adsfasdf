@@ -673,7 +673,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
         </td>
         <td>
             ගමන් බලපත්‍ර අංකය <br>
-            கடவுச் சீட்டு இல. <br>
+            கடவுச் சீட்டு இல.<br>
             Passport No.
         </td>
         <td>

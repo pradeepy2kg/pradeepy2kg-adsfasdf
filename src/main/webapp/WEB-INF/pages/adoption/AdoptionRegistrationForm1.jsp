@@ -412,7 +412,7 @@ function enableSerialNumber(mode) {
         </td>
         <td>
             ගමන් බලපත්‍ර අංකය
-            <br>கடவுச் சீட்டு
+            <br>கடவுச் சீட்டு இல.
             <br>Passport No.
         </td>
         <td><s:textfield name="adoption.applicantPassport" id="applcantPassportNumber" cssStyle="width:90%"
@@ -486,7 +486,7 @@ function enableSerialNumber(mode) {
                       headerValue="%{getText('adoption.select_country.label')}" cssStyle="width:90%"/>
         </td>
         <td>ගමන් බලපත්‍ර අංකය <br/>
-            கடவுச் சீட்டு <br/>
+            கடவுச் சீட்டு இல. <br/>
             Passport No.
         </td>
         <td>
