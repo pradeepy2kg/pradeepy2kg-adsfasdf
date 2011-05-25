@@ -526,9 +526,10 @@ function maxLengthCalculate(id, max, divId) {
     <tr>
         <td colspan="3">
             <s:if test="pageType == 0 ">
-                ප්‍රකාශකයා විසින් මරණය සිදු වූ කොට්ටාශයේ මරණ රෙජිස්ට්‍රාර් තැන වෙත ලබා දිය යුතුය. මෙම තොරතුරු මත සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ මරණය ලියාපදිංචි කරනු ලැබේ.
-                <br>தகவல் தருபவரால் இறப்பு நிகழ்ந்த பிரிவின் இறப்பு பதிவாளாரிடம் சமா்ப்பித்தல் வேண்டும். இத்தகவலின்படி சிவில் பதிவு அமைப்பில் பிறப்பு பதிவு செய்யப்படும்
-                <br>Should be perfected by the declarant and the duly completed form should be forwarded to the Registrar of Deaths of the division where the death has occurred. The death will be registered in the Civil Registration System based on the information provided in this form.
+                දැනුම් දෙන්නා විසින් සම්පුර්ණ කර තොරතුරු වාර්තා කරන නිලධාරියා / රෙජිස්ට්‍රාර් වෙත භාර දිය යුතුය. මෙම තොරතුරු මත සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ මරණය ලියාපදිංචි කරනු ලැබේ.
+                <br>தகவல் தருபவரால் இறப்பு நிகழ்ந்த பிரிவின் அறிக்கையிடும் அதிகாரியிடம் /இறப்பு பதிவாளாரிடம் சமர்ப்பித்தல் வேண்டும். இத்தகவலின்படி சிவில் பதிவு முறையில் இறப்பு பதிவு செய்யப்படும்.
+                <br>Should be perfected by the informant and the duly completed form should be forwarded to the Officer / Registrar.
+                The death will be registered in the Civil Registration System based on the information provided in this form.
             </s:if>
             <s:elseif test="pageType== 1">
                 ලියාපදිංචි නොකරන ලද මරණයක් සම්බන්ධයෙන් මෙහි පහත ප්‍රකාශ කරනු ලබන විස්තර මගේ දැනීමේ හා විශ්වාසයේ ප්‍රකාර සැබෑ බව හා නිවැරදි බවද, මරණය සිදුවී, නැතහොත් ගෘහයක් හෝ ගොඩනැගිල්ලක් නොවන ස්ථානයක තිබී මෘතශරීරය සම්බවී, මාස තුඅනක් ඇතුලත දී මරණය ලියාපදිංචි කිරීමට නොහැකි වුයේ මෙහි පහත සඳහන් කාරණය හේතු කොටගෙන බවද, ..... පදිංචි .... වන මම ගාම්භීරතා පුර්වකාවද, අවංක ලෙසද, සැබෑ ලෙසද, මෙයින් ප්‍රකාශ කරමි.
@@ -536,11 +537,10 @@ function maxLengthCalculate(id, max, divId) {
                 <br>I …. of …. solemnly, sincerely, and truly declare that the particulars stated below relating to an unregistered death, are true and correct to the best of my knowledge and belief, and that the death has not been registered within three months from its occurrence or from the finding of the corpse in a place other than a house or a building, for this reason.
             </s:elseif>
             <s:elseif test="pageType== 2">
-                sudden death <br>
-                ප්‍රකාශකයා විසින් මරණය සිදු වූ කොට්ටාශයේ මරණ රෙජිස්ට්‍රාර් තැන වෙත ලබා දිය යුතුය. මෙම තොරතුරු මත සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ මරණය ලියාපදිංචි කරනු ලැබේ.
-                <br>தகவல் தருபவரால் இறப்பு நிகழ்ந்த பிரிவின் இறப்பு பதிவாளாரிடம் சமா்ப்பித்தல் வேண்டும். இத்தகவலின்படி சிவில் பதிவு அமைப்பில் பிறப்பு பதிவு செய்யப்படும்
-                <br>Should be perfected by the declarant and the duly completed form should be forwarded to the Registrar of Deaths of the division where the death has occurred. The death will be registered in the Civil Registration System based on the information provided in this form.
-
+                දැනුම් දෙන්නා විසින් සම්පුර්ණ කර තොරතුරු වාර්තා කරන නිලධාරියා / රෙජිස්ට්‍රාර් වෙත භාර දිය යුතුය. මෙම තොරතුරු මත සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ මරණය ලියාපදිංචි කරනු ලැබේ.
+                <br>தகவல் தருபவரால் இறப்பு நிகழ்ந்த பிரிவின் அறிக்கையிடும் அதிகாரியிடம் /இறப்பு பதிவாளாரிடம் சமர்ப்பித்தல் வேண்டும். இத்தகவலின்படி சிவில் பதிவு முறையில் இறப்பு பதிவு செய்யப்படும்.
+                <br>Should be perfected by the informant and the duly completed form should be forwarded to the Officer / Registrar.
+                The death will be registered in the Civil Registration System based on the information provided in this form.
             </s:elseif>
             <s:elseif test="pageType== 3">
                 missing person <br>
@@ -627,6 +627,14 @@ function maxLengthCalculate(id, max, divId) {
             </td>
         </tr>
     </s:elseif>--%>
+<tr>
+    <td colspan="4">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+        මරණයේ ස්වභාවය?  /  மரணத்தின் வகை?   / Type of death? <br/>&nbsp;
+    </td>
+    <td colspan="5">
+
+    </td>
+</tr>
 <tr>
     <td>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
         මරණය සිදු වූ දිනය <s:label value="*" cssStyle="color:red;font-size:10pt"/>
@@ -1078,7 +1086,7 @@ function maxLengthCalculate(id, max, divId) {
         </td>
         <td width="102px"><label>
             ග්‍රාම නිළධාරී කොටිඨාශය /<br/>
-            Grama Niladhari Division in ta/<br/>
+            கிராம சேவையாளர் பிரிவு/<br/>
             Grama Niladhari Division</label>
         </td>
         <td width="100px">

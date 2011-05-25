@@ -415,7 +415,7 @@
         </td>
         <td colspan="1">
             ග්‍රාම නිළධාරී කොටිඨාශය <br/>
-            Grama Niladhari Division in ta<br/>
+            கிராம சேவையாளர் பிரிவு<br/>
             Grama Niladhari Division
         </td>
         <td colspan="1" height="50px">

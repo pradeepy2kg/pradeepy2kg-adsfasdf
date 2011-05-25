@@ -201,7 +201,7 @@
     <tr>
         <td><label>
             ග්‍රාම නිළධාරී කොටිඨාශය /<br/>
-            Grama Niladhari Division in ta/<br/>
+            கிராம சேவையாளர் பிரிவு/<br/>
             Grama Niladhari Division</label>
         </td>
         <td colspan="6" class="table_reg_cell_01">
@@ -282,7 +282,7 @@
 <tr>
     <td><label>
         ග්‍රාම නිළධාරී කොටිඨාශය <br/>
-        Grama Niladhari Division in ta<br/>
+        கிராம சேவையாளர் பிரிவு<br/>
         Grama Niladhari Division</label>
     </td>
     <td colspan="6" class="table_reg_cell_01">
