@@ -473,8 +473,10 @@ function maxLengthCalculate(id, max, divId) {
         <td colspan="5" class="passport"><s:textfield name="parent.fatherPassportNo" id="fatherPassportNo" maxLength="15"/></td>
     </tr>
     <tr>
-        <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>) සම්පුර්ණ
-            නම<br>தந்தையின் முழு பெயர்<br>Full Name</label></td>
+        <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>)
+            සම්පුර්ණ නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)
+            <br>முழுப் பெயர் அரச கரும மொழியில்  (சிங்களம் / தமிழ்)
+            <br>Full Name in any of the official languages (Sinhala / Tamil)</label></td>
         <td colspan="7">
             <s:textarea name="parent.fatherFullName" id="fatherFullName" cssStyle="width:98%;"
                         onblur="maxLengthCalculate('fatherFullName','600','fatherFullName_div');"/>
@@ -484,7 +486,7 @@ function maxLengthCalculate(id, max, divId) {
     <tr>
         <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>) සම්පුර්ණ
             නම ඉංග්‍රීසි භාෂාවෙන් (කැපිටල් අකුරෙන්)
-            <br>முழுப் பெயர்்<br>Full Name in English (In block letters)</label></td>
+            <br>முழுப் பெயர் ஆங்கில மொழியில்(பெரிய எழுத்துக்களில்)<br>Full Name in English (In block letters)</label></td>
         <td colspan="7">
             <s:textarea name="parent.fatherFullNameInEnglish" id="fatherFullNameInEnglish" cssStyle="width:98%;"
                         onblur="maxLengthCalculate('fatherFullNameInEnglish','600','fatherFullNameInEnglish_div');"/>
@@ -572,10 +574,10 @@ function maxLengthCalculate(id, max, divId) {
                                                       maxLength="15"/></td>
     </tr>
     <tr>
-        <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i"
-                                                                                                     value="#i+1"/>) සම්පුර්ණ
-            නම<br>தந்தையின்
-            முழு பெயர்<br>Full Name</label></td>
+        <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>)
+            සම්පුර්ණ නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)
+            <br>முழுப் பெயர் அரச கரும மொழியில்  (சிங்களம் / தமிழ்)
+            <br>Full Name in any of the official languages (Sinhala / Tamil)</label></td>
         <td colspan="7">
             <s:textarea name="parent.motherFullName" id="motherFullName" cssStyle="width:98%;"
                         onblur="maxLengthCalculate('motherFullName','600','motherFullName_div');"/>
@@ -583,10 +585,9 @@ function maxLengthCalculate(id, max, divId) {
         </td>
     </tr>
     <tr>
-        <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i"
-                                                                                                     value="#i+1"/>) සම්පුර්ණ
+        <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>) සම්පුර්ණ
             නම ඉංග්‍රීසි භාෂාවෙන් (කැපිටල් අකුරෙන්)
-            <br>முழுப் பெயர்்<br>Full Name in English (In block letters)</label></td>
+            <br>முழுப் பெயர் ஆங்கில மொழியில்(பெரிய எழுத்துக்களில்)<br>Full Name in English (In block letters)</label></td>
         <td colspan="7">
             <s:textarea name="parent.motherFullNameInEnglish" id="motherFullNameInEnglish" cssStyle="width:98%;"
                         onblur="maxLengthCalculate('motherFullNameInEnglish','600','motherFullNameInEnglish_div');"/>
@@ -601,10 +602,10 @@ function maxLengthCalculate(id, max, divId) {
             උපන් දිනය
             <br>பிறந்த திகதி
             <br>Date of Birth</label></td>
-        <td colspan="2">
+        <td colspan="1">
                 <s:label value="YYYY-MM-DD" cssStyle="margin-left:5px;font-size:10px"/><br>
                 <s:textfield name="parent.motherDOB" id="motherDatePicker" cssStyle="float:left;margin-left:5px;" maxLength="10" />
-        <td colspan="2" width="100px"><label>
+        <td colspan="3" width="100px"><label>
             <s:if test="%{#session.birthRegister.register.birthType.ordinal() != 0}">
                 (<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>)
                 ළමයාගේ උපන් දිනට වයස
@@ -627,8 +628,9 @@ function maxLengthCalculate(id, max, divId) {
     </tr>
     <tr>
         <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>)
-            ම‌වගේ ජාතිය<br>இனம்<br>
-            Mother's Race</label></td>
+            ජන වර්ගය <br/>
+            இனம்<br/>
+            Ethnic Group</label></td>
         <td colspan="2"><s:select id="motherRaceId" list="raceList" name="motherRace" headerKey="0"
                                   headerValue="%{getText('select_race.label')}"/></td>
 
