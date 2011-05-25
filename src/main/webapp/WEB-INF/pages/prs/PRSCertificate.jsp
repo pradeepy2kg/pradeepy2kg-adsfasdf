@@ -150,9 +150,9 @@
             <s:label name="" value="%{genderEn}"/>
         </td>
         <td>
-            ජාතිය
-            <br>இனம்
-            <br>Race
+            ජන වර්ගය<br/>
+            இனம்<br/>
+            Ethnic Group
         </td>
         <td colspan="2" style="font-size:12pt">
             <s:label value="%{race}"/> <br>

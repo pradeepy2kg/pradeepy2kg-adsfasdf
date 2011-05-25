@@ -144,9 +144,9 @@
     </tr>
     <tr>
         <td>
-            ජාතිය
-            <br>இனம்
-            <br>Race
+            ජන වර්ගය<br/>
+            இனம்<br/>
+            Ethnic Group
         </td>
         <td>
             <s:label value="%{race}"/>

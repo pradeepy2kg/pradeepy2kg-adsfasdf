@@ -659,9 +659,9 @@
                         id="deathPersonGender" cssStyle="width:190px; margin-left:5px;"/>
             </td>
             <td>
-                (21)ජාතිය <br>
-                பிறப் <br>
-                Race
+                (21) ජන වර්ගය<br/>
+                    இனம்<br/>
+                    Ethnic Group
             </td>
             <td colspan="2" align="center">
                 <s:select list="raceList" name="deathPersonRace" headerKey="0" value="%{deathRaceId}"

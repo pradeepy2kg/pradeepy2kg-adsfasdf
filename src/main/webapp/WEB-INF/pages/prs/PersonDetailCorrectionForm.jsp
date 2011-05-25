@@ -155,9 +155,9 @@ body{
                 </tr>
                 <tr>
                     <td>
-                        (3) ජාතිය<br/>
-                        இனம்  <br/>
-                        Race
+                        (3) ජන වර්ගය<br/>
+                        இனம்<br/>
+                        Ethnic Group
                     </td>
                     <td>
                         <s:textfield></s:textfield>

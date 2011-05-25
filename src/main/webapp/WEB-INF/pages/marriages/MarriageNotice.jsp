@@ -637,9 +637,9 @@ $('select#dsDivisionId').bind('change', function(evt2) {
     </tr>
     <tr>
         <td colspan="1">
-            ජාතිය <s:label value="*" cssStyle="color:red;font-size:10pt"/><br>
-            in tamil <br>
-            Race
+            ජන වර්ගය <s:label value="*" cssStyle="color:red;font-size:10pt"/><br/>
+            இனம்<br/>
+            Ethnic Group
         </td>
         <td colspan="2">
             <s:select list="raceList" name="raceIdMale" headerKey="0" headerValue="%{getText('select_race.label')}"
@@ -920,9 +920,9 @@ $('select#dsDivisionId').bind('change', function(evt2) {
     </tr>
     <tr>
         <td colspan="1">
-            ජාතිය <s:label value="*" cssStyle="color:red;font-size:10pt"/><br>
-            in tamil <br>
-            Race
+            ජන වර්ගය <s:label value="*" cssStyle="color:red;font-size:10pt"/><br/>
+            இனம்<br/>
+            Ethnic Group
         </td>
         <td colspan="2">
             <s:select list="raceList" id="raceFemaleId" name="raceIdFemale" headerKey="0"
