@@ -630,7 +630,7 @@
         <tr>
             <td style="border-top:20px">
                 ගමන් බලපත්‍ර අංකය <br>
-                கடவுச் சீட்டு <br>
+                கடவுச் சீட்டு இல.<br>
                 Passport No.
             </td>
             <td>

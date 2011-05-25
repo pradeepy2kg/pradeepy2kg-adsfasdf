@@ -124,7 +124,7 @@
             <s:label value="%{#request.applicantCountryName}"/>
         </td>
         <td>ගමන් බලපත්‍ර අංකය <br/>
-            கடவுச் சீட்டு <br/>
+            கடவுச் சீட்டு இல. <br/>
             Passport No.
         </td>
         <td><s:label value="%{#request.adoption.applicantPassport}"/></td>
@@ -172,7 +172,7 @@
             <s:label value="%{#request.wifeCountryName}"/>
         </td>
         <td width="175px">ගමන් බලපත්‍ර අංකය <br/>
-            கடவுச் சீட்டு <br/>
+            கடவுச் சீட்டு இல. <br/>
             Passport No.
         </td>
         <td width="175px">

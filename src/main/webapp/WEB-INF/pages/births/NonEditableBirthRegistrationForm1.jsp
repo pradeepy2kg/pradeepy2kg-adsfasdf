@@ -445,7 +445,7 @@
         </td>
     </tr>
     <tr>
-        <td colspan="2"><label>ගමන් බලපත්‍ර අංකය <br>கடவுச் சீட்டு <br>Passport No.</label></td>
+        <td colspan="2"><label>ගමන් බලපත්‍ර අංකය <br>கடவுச் சீட்டு இல.<br>Passport No.</label></td>
         <td class="passport"><s:label value="%{#request.parent.fatherPassportNo}"/></td>
     </tr>
     </tbody>
@@ -532,7 +532,7 @@
         </td>
     </tr>
     <tr>
-        <td colspan="2"><label>ගමන් බලපත්‍ර අංකය <br>கடவுச் சீட்டு <br>Passport No.</label></td>
+        <td colspan="2"><label>ගමන් බලපත්‍ර අංකය <br>கடவுச் சீட்டு இல.<br>Passport No.</label></td>
         <td class="passport"><s:label value="%{#request.parent.motherPassportNo}"/></td>
     </tr>
     <tr>

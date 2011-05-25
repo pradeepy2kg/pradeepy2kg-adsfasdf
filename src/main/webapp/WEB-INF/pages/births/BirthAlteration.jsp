@@ -885,7 +885,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                                       headerValue="%{getText('select_country.label')}" cssStyle="width:80%;"/></td>
         </tr>
         <tr>
-            <td colspan="2"><s:label value="ගමන් බලපත්‍ර අංකය "/><br><s:label value="கடவுச் சீட்டு "/><br><s:label
+            <td colspan="2"><s:label value="ගමන් බලපත්‍ර අංකය "/><br><s:label value="கடவுச் சீட்டு இல."/><br><s:label
                     value="Passport No."/></label></td>
             <td colspan="2" class="passport"><s:textfield name="birthAlteration.alt52_1.mother.motherPassportNo"
                                                           id="motherPassportNoId"/></td>
