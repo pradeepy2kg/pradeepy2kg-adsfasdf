@@ -36,8 +36,10 @@
             var id1 = $("input#notifyingAuthorityPIN").attr("value");
             $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
                     function(data1) {
-                        $("textarea#notifyingAuthorityName").val(data1.fullNameInOfficialLanguage);
-                        $("textarea#notifyingAuthorityAddress").val(data1.lastAddress);
+                        if (data1 != null) {
+                            $("textarea#notifyingAuthorityName").val(data1.fullNameInOfficialLanguage);
+                            $("textarea#notifyingAuthorityAddress").val(data1.lastAddress);
+                        }
                     });
         });
         //        $('#notifying_authority_NIC_V').bind('click', function() {
@@ -143,7 +145,7 @@
             document.getElementById(divId).innerHTML = "";
         }
     }
-    
+
 </script>
 
 <div class="birth-registration-form-outer" id="birth-registration-form-4-outer">
@@ -190,12 +192,13 @@
                     නම<s:label value="*" cssStyle="color:red;font-size:14pt;"/><br>கொடுப்பவரின் பெயர் <br>Name</label>
                 </td>
                 <td colspan="4">
-                    <%--<s:textarea name="notifyingAuthority.notifyingAuthorityName" id="notifyingAuthorityName"
-                                cssStyle="width:95%;"/>
-                        &lt;%&ndash;<s:label value="*" cssStyle="color:red;font-size:15pt"/>&ndash;%&gt;--%>
-                    <s:textarea name="notifyingAuthority.notifyingAuthorityName" id="notifyingAuthorityName" cssStyle="width:95%;"
-                            onblur="maxLengthCalculate('notifyingAuthorityName','120','notifyingAuthorityName_div');"/>
-                <div id="notifyingAuthorityName_div" style="color:red;font-size:8pt"></div>
+                        <%--<s:textarea name="notifyingAuthority.notifyingAuthorityName" id="notifyingAuthorityName"
+                              cssStyle="width:95%;"/>
+                      &lt;%&ndash;<s:label value="*" cssStyle="color:red;font-size:15pt"/>&ndash;%&gt;--%>
+                    <s:textarea name="notifyingAuthority.notifyingAuthorityName" id="notifyingAuthorityName"
+                                cssStyle="width:95%;"
+                                onblur="maxLengthCalculate('notifyingAuthorityName','120','notifyingAuthorityName_div');"/>
+                    <div id="notifyingAuthorityName_div" style="color:red;font-size:8pt"></div>
                 </td>
             </tr>
             <tr>
@@ -203,13 +206,14 @@
                     ලිපිනය<s:label value="*" cssStyle="color:red;font-size:14pt;"/>
                     <br>தபால் முகவரி<br>Postal Address</label></td>
                 <td colspan="4">
-                    <%--<s:textarea name="notifyingAuthority.notifyingAuthorityAddress"
-                                            id="notifyingAuthorityAddress"
-                                            cssStyle="width:95%;"/>
-                        &lt;%&ndash;<s:label value="*" cssStyle="color:red;font-size:15pt"/>&ndash;%&gt;--%>
-                    <s:textarea name="notifyingAuthority.notifyingAuthorityAddress" id="notifyingAuthorityAddress" cssStyle="width:95%;"
-                            onblur="maxLengthCalculate('notifyingAuthorityAddress','255','notifyingAuthorityAddress_div');"/>
-                <div id="notifyingAuthorityAddress_div" style="color:red;font-size:8pt"></div>
+                        <%--<s:textarea name="notifyingAuthority.notifyingAuthorityAddress"
+                                          id="notifyingAuthorityAddress"
+                                          cssStyle="width:95%;"/>
+                      &lt;%&ndash;<s:label value="*" cssStyle="color:red;font-size:15pt"/>&ndash;%&gt;--%>
+                    <s:textarea name="notifyingAuthority.notifyingAuthorityAddress" id="notifyingAuthorityAddress"
+                                cssStyle="width:95%;"
+                                onblur="maxLengthCalculate('notifyingAuthorityAddress','255','notifyingAuthorityAddress_div');"/>
+                    <div id="notifyingAuthorityAddress_div" style="color:red;font-size:8pt"></div>
                 </td>
             </tr>
             <tr>
