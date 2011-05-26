@@ -81,15 +81,15 @@ public class LifeStatusUtil {
         } else if (AppConstants.TAMIL.equals(language)) {
             switch (state) {
                 case UNKNOWN:
-                    return "UNKNOWN IN TA";
+                    return "தெரியாது";
                 case ALIVE:
-                    return "ALIVE IN TA";
+                    return "உயிருடன்";
                 case DEAD:
-                    return "DEAD IN TA";
+                    return "இறப்பு";
                 case MISSING:
-                    return "MISSING IN TA";
+                    return "காணாமல்போன";
                 case NON_RESIDENT:
-                    return "NON RESIDENT IN TA";
+                    return "வதிவற்றவர்";
             }
         } else if (AppConstants.ENGLISH.equals(language)) {
             switch (state) {

@@ -164,6 +164,9 @@ public class DeathDeclarationValidator {
             checkInfantWarnings(deathRegister, warnings, rb);
         }
 
+        // checks whether the death person is a women bellow 49 years
+
+
         return warnings;
     }
 
