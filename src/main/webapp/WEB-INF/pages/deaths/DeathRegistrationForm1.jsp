@@ -407,7 +407,9 @@ function initSerialNumber() {
 
 function initPage() {
     initSerialNumber();
-    document.getElementById('resonForLateRegistration').value = document.getElementById('reasonForLateDefaultText').value;
+    <s:if test="pageType==1">
+        document.getElementById('resonForLateRegistration').value = document.getElementById('reasonForLateDefaultText').value;
+    </s:if>
 }
 
 function personAgeDeath() {
@@ -556,8 +558,6 @@ function maxLengthCalculate(id, max, divId) {
                 <br>Reason for the late registration of the death
             </td>
             <td>
-                    <%--<s:textarea id="resonForLateRegistration" name="death.reasonForLateRegistration"
-                    cssStyle="width:880px;"/>--%>
                 <s:textarea name="death.reasonForLateRegistration" id="resonForLateRegistration" cssStyle="width:880px;"
                             onblur="maxLengthCalculate('resonForLateRegistration','255','resonForLateRegistration_div');"/>
                 <div id="resonForLateRegistration_div" style="color:red;font-size:8pt"></div>
