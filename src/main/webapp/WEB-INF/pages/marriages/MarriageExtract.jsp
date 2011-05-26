@@ -230,8 +230,9 @@
     </tr>
     <tr>
         <td>
-            විවාහ ස්ථානයේ ස්වභාවය<br>
-            Type of Marriage Place<br>
+            විවාහ ස්ථානයේ ස්වභාවය<br/>
+            திருமண நிகழ்விடத்தின் வகை<br/>
+            Type of Marriage Place
         </td>
         <td colspan="8">
             <s:if test="marriage.preferredLanguage=='si'">
@@ -572,8 +573,8 @@
             <tr>
                 <td class="font-8">
                     අදහස් දක්වන්න
-                    <br>Comment in ta
-                    <br>Comment
+                    <br>கருத்தினை தெரிவிக்கவும்
+                    <br>Add Comments
                 </td>
                 <td>
                     <s:textarea name="comment" id="registrationRejectComment"
@@ -600,8 +601,8 @@
                 <td class="font-8">
                     අදහස් දක්වන්න
                     <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-                    <br>Comment in ta
-                    <br>Comment
+                    <br>கருத்தினை தெரிவிக்கவும்
+                    <br>Add Comments
                 </td>
                 <td>
                     <s:textarea name="comment" id="divorceComment"
@@ -612,7 +613,8 @@
                 <td>
                     <label>
                     <span class="font-8">බලපැවැත්වෙන දිනය
-                         <s:label value="*" cssStyle="color:red;font-size:10pt;"/> <br>in tamil<br>Effective Date of Divorce</span>
+                         <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
+                        <br>விவாகரத்து செல்லுபடியகும் திகதி<br>Effective Date of Divorce</span>
                     </label>
                 </td>
                 <td>

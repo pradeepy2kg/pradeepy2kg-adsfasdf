@@ -219,8 +219,9 @@
     </tr>
     <tr>
         <td>
-            විවාහ ස්ථානයේ ස්වභාවය<br>
-            Type of Marriage Place<br>
+            විවාහ ස්ථානයේ ස්වභාවය<br/>
+            திருமண நிகழ்விடத்தின் வகை<br/>
+            Type of Marriage Place
         </td>
         <td colspan="8">
             <s:if test="marriage.preferredLanguage=='si'">
@@ -540,7 +541,7 @@
     <tr>
         <td class="font-8">
             දික්කසාදය බලපැවැත්වෙන දිනය
-            <br>in tamil<br>Effective Date of Divorce</span>
+            <br>விவாகரத்து செல்லுபடியகும் திகதி<br>Effective Date of Divorce</span>
         </td>
         <td>
             <s:label name="marriage.effectiveDateOfDivorce"/>

@@ -625,7 +625,7 @@ String lang = ((Locale) session.getAttribute("WW_TRANS_I18N_LOCALE")).getLanguag
             </td>
             <td>
                 Status
-                <br>*Tamil
+                <br>நிலைமை
                 <br>තත්ත්වය
             </td>
         </tr>
