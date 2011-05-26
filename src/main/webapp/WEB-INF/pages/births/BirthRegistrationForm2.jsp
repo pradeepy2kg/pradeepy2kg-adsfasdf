@@ -73,72 +73,58 @@ $(function() {
         var mother_age = child_bday.getYear() - motherbday.getYear();
         $("input#motherAgeAtBirth").val(mother_age);
     }
+
+    /*trans iterators for father and mothers name*/
+    $('img#name_english_father').bind('click', function(evt4) {
+        var id = $("input#fatherFullName").attr("value");
+        var wsMethod = "transliterate";
+        var soapNs = "http://translitwebservice.transliteration.icta.com/";
+
+        var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
+        soapBody.attr("xmlns:trans", soapNs);
+        soapBody.appendChild(new SOAPObject('InputName')).val(id);
+        soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
+        soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
+        soapBody.appendChild(new SOAPObject('Gender')).val('M');
+
+        //Create a new SOAP Request
+        var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
+
+        //Lets send it
+        SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
+        SOAPClient.SendRequest(sr, processResponse2); //Send request to server and assign a callback
+    });
+
+    $('img#name_english_mother').bind('click', function(evt4) {
+        var id = $("input#motherFullName").attr("value");
+        var wsMethod = "transliterate";
+        var soapNs = "http://translitwebservice.transliteration.icta.com/";
+
+        var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
+        soapBody.attr("xmlns:trans", soapNs);
+        soapBody.appendChild(new SOAPObject('InputName')).val(id);
+        soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
+        soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
+        soapBody.appendChild(new SOAPObject('Gender')).val('F');
+
+        //Create a new SOAP Request
+        var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
+
+        //Lets send it
+        SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
+        SOAPClient.SendRequest(sr, processResponse1); //Send request to server and assign a callback
+    });
+
+    function processResponse1(respObj) {
+        //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
+        $("input#motherFullNameInEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
+    }
+
+    function processResponse2(respObj) {
+        //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
+        $("input#fatherFullNameInEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
+    }
 });
-
-/*trans iterators for father and mothers name*/
-
-$('img#name_english_mother').bind('click', function(evt4) {
-    var id = $("input#motherFullName").attr("value");
-    var wsMethod = "transliterate";
-    var soapNs = "http://translitwebservice.transliteration.icta.com/";
-
-    var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
-    soapBody.attr("xmlns:trans", soapNs);
-    soapBody.appendChild(new SOAPObject('InputName')).val(id);
-    soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
-    soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
-    //soapBody.appendChild(new SOAPObject('Gender')).val('U');
-
-    //added by shan [ NOT Tested ] -> start
-    var genderVal = $("select#genderList").attr("value");
-    soapBody.appendChild(new SOAPObject('Gender')).val(genderVal);
-    //-> end
-
-    //Create a new SOAP Request
-    var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
-
-    //Lets send it
-    SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
-    SOAPClient.SendRequest(sr, processResponse1); //Send request to server and assign a callback
-});
-
-$('img#name_english_father').bind('click', function(evt4) {
-    var id = $("input#fatherFullName").attr("value");
-    var wsMethod = "transliterate";
-    var soapNs = "http://translitwebservice.transliteration.icta.com/";
-
-    var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
-    soapBody.attr("xmlns:trans", soapNs);
-    soapBody.appendChild(new SOAPObject('InputName')).val(id);
-    soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
-    soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
-    //soapBody.appendChild(new SOAPObject('Gender')).val('U');
-
-    //added by shan [ NOT Tested ] -> start
-    var genderVal = $("select#genderList").attr("value");
-    soapBody.appendChild(new SOAPObject('Gender')).val(genderVal);
-    //-> end
-
-    //Create a new SOAP Request
-    var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
-
-    //Lets send it
-    SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
-    SOAPClient.SendRequest(sr, processResponse2); //Send request to server and assign a callback
-});
-
-function processResponse1(respObj) {
-    //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-    $("input#motherFullNameInEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
-}
-
-function processResponse2(respObj) {
-    //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-    $("input#fatherFullNameInEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
-}
-
-/*end java scripts for transiterators*/
-
 
 $(function() {
     $("#admitDatePicker").datepicker({
