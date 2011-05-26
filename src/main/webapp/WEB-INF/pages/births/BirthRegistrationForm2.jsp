@@ -76,7 +76,7 @@ $(function() {
 
     /*trans iterators for father and mothers name*/
     $('img#name_english_father').bind('click', function(evt4) {
-        var id = $("input#fatherFullName").attr("value");
+        var id = $("textarea#fatherFullName").attr("value");
         var wsMethod = "transliterate";
         var soapNs = "http://translitwebservice.transliteration.icta.com/";
 
@@ -96,7 +96,7 @@ $(function() {
     });
 
     $('img#name_english_mother').bind('click', function(evt4) {
-        var id = $("input#motherFullName").attr("value");
+        var id = $("textarea#motherFullName").attr("value");
         var wsMethod = "transliterate";
         var soapNs = "http://translitwebservice.transliteration.icta.com/";
 
@@ -117,12 +117,12 @@ $(function() {
 
     function processResponse1(respObj) {
         //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("input#motherFullNameInEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
+        $("textarea#motherFullNameInEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
     }
 
     function processResponse2(respObj) {
         //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("input#fatherFullNameInEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
+        $("textarea#fatherFullNameInEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
     }
 });
 
