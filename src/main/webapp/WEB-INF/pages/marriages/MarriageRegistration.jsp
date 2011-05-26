@@ -127,7 +127,7 @@
         <td>
             විවාහ ස්ථානයේ ස්වභාවය
             <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-            <br>in tamil
+            <br>திருமண நிகழ்விடத்தின் வகை
             <br>Type of Marriage Place
         </td>
         <td colspan="3">
@@ -691,8 +691,8 @@
         <tr>
             <td class="font-8">
                 අදහස් දක්වන්න
-                <br>Comment in ta
-                <br>Comment
+                <br>கருத்தினை தெரிவிக்கவும்
+                <br>Add Comments
             </td>
             <td colspan="3">
                 <s:textarea name="comment" id="registrationRejectComment"
