@@ -355,6 +355,7 @@
             <s:label name="marriage.female.identificationNumberFemale"/>
         </td>
     </tr>
+    <s:if test="mode !='divorce'">
     <tr>
         <td>
             උපන් දිනය <br>
@@ -373,7 +374,6 @@
             පසුවූ උපන් දිනයට වයස <br>
             in tamil <br>
             Age at last Birthday
-
         </td>
         <td>
             <s:label name="marriage.male.ageAtLastBirthDayMale"/>
@@ -382,6 +382,7 @@
             <s:label name="marriage.female.ageAtLastBirthDayFemale"/>
         </td>
     </tr>
+    </s:if>
     <tr>
         <td>
             ජන වර්ගය<br/>
