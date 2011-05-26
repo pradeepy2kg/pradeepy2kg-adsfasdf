@@ -346,33 +346,6 @@
     </tr>
     <tr>
         <td>
-            උපන් දිනය <br>
-            பிறந்த திகதி <br>
-            Date of Birth
-        </td>
-        <td>
-            <s:label name="marriage.male.dateOfBirthMale"/>
-        </td>
-        <td>
-            <s:label name="marriage.female.dateOfBirthFemale"/>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            පසුවූ උපන් දිනයට වයස <br>
-            in tamil <br>
-            Age at last Birthday
-
-        </td>
-        <td>
-            <s:label name="marriage.male.ageAtLastBirthDayMale"/>
-        </td>
-        <td>
-            <s:label name="marriage.female.ageAtLastBirthDayFemale"/>
-        </td>
-    </tr>
-    <tr>
-        <td>
             ජන වර්ගය<br/>
             இனம்<br/>
             Ethnic Group
