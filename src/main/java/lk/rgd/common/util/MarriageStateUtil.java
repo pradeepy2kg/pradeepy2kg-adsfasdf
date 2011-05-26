@@ -36,11 +36,11 @@ public class MarriageStateUtil {
         } else if (AppConstants.TAMIL.equals(language)) {
             switch (state) {
                 case MARRIED:
-                    return "திருமணமாணவர் ";
+                    return "திருமணமானவர்";
                 case ANNULLED:
                     return "தள்ளிவைத்தல்";
                 case DIVORCED:
-                    return "DIVORCED TAMIL";
+                    return "விவாகரத்து";
             }
         } else if (AppConstants.ENGLISH.equals(language)) {
             switch (state) {
