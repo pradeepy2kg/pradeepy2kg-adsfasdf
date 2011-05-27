@@ -146,12 +146,14 @@ $(function() {
 
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
                 function(data1) {
-                    $("textarea#fatherFullName").val(data1.fullNameInOfficialLanguage);
-                    $("input#fatherPlaceOfBirth").val(data1.placeOfBirth);
-                    $("select#fatherRaceId").val(data1.race);
-                    var fatherDOB = data1.dateOfBirth;
-                    if (fatherDOB != null) {
-                        $("input#fatherDatePicker").val(fatherDOB);
+                    if(data1 != null){
+                        $("textarea#fatherFullName").val(data1.fullNameInOfficialLanguage);
+                        $("input#fatherPlaceOfBirth").val(data1.placeOfBirth);
+                        $("select#fatherRaceId").val(data1.race);
+                        var fatherDOB = data1.dateOfBirth;
+                        if (fatherDOB != null) {
+                            $("input#fatherDatePicker").val(fatherDOB);
+                        }
                     }
                 });
     });
@@ -164,13 +166,15 @@ $(function() {
 
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id2},
                 function(data2) {
-                    $("textarea#motherFullName").val(data2.fullNameInOfficialLanguage);
-                    $("input#motherPlaceOfBirth").val(data2.placeOfBirth);
-                    $("textarea#motherAddress").val(data2.lastAddress);
-                    $("select#motherRaceId").val(data2.race);
-                    var motherDOB = data2.dateOfBirth;
-                    if (motherDOB != null) {
-                        $("input#motherDatePicker").val(motherDOB);
+                    if(data2 != null) {
+                        $("textarea#motherFullName").val(data2.fullNameInOfficialLanguage);
+                        $("input#motherPlaceOfBirth").val(data2.placeOfBirth);
+                        $("textarea#motherAddress").val(data2.lastAddress);
+                        $("select#motherRaceId").val(data2.race);
+                        var motherDOB = data2.dateOfBirth;
+                        if (motherDOB != null) {
+                            $("input#motherDatePicker").val(motherDOB);
+                        }
                     }
                 });
     });
@@ -225,7 +229,6 @@ $(function() {
                     $("select#gnDivisionId").html(options4);
                 });
     });
-
 })
 
 //javascript for form validation

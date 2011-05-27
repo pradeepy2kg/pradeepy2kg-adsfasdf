@@ -123,7 +123,11 @@
                 </s:if>
             </tr>
             <tr>
-                <td rowspan="3">ප්‍රාදේශීය ලේකම් කොට්ඨාශය / <br>பிரதேச செயளாளர் பிரிவு/ <br>Divisional Secretary Division</td>
+                <td rowspan="3">
+                    ප්‍රාදේශීය ලේකම් කොට්ඨාශය
+                    <br/>பிரதேச செயளாளர் பிரிவு
+                    <br/>Divisional Secretary Division
+                </td>
                 <td>Divisional Secretariat in English</td>
                 <s:if test="pageNo == 1">
                     <td><s:label value=""/></td>

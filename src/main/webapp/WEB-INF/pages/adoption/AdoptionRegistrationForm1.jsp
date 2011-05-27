@@ -682,9 +682,9 @@ function enableSerialNumber(mode) {
     </tr>
     <tr>
         <td colspan="1">
-            ප්‍රාදේශීය ලේකම් කොට්ටාශය
-            <br>பிரதேச செயலாளா் பிரிவு
-            <br>Divisional Secretariat
+            ප්‍රාදේශීය ලේකම් කොට්ඨාශය
+            <br/>பிரதேச செயளாளர் பிரிவு
+            <br/>Divisional Secretary Division
         </td>
         <td colspan="5">
             <s:select id="dsDivisionId" name="dsDivisionId" list="allDSDivisionList" value="%{dsDivisionId}"

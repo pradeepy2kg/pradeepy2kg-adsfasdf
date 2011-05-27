@@ -294,8 +294,8 @@
         </td>
     </tr>
     <tr>
-        <td>ප්‍රාදේශීය ලේකම් කොට්ටාශය <br/>
-            Divisional Secretariat
+        <td>ප්‍රාදේශීය ලේකම් කොට්ඨාශය
+            <br/>Divisional Secretary Division
         </td>
         <td>
             <s:label value="%{#request.dsDivisionName}" cssStyle="float:left;  width:240px;"/>
