@@ -25,7 +25,8 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="3">දැනුම් දෙන්නේ කවරකු වශයෙන්ද / யாரால் தகவல் தரப்படுகின்றது? <br>Capacity for giving information
+                <td colspan="3">දැනුම් දෙන්නේ කවරකු වශයෙන්ද / யாரால் தகவல் தரப்படுகின்றது? <br>Capacity for giving
+                    information
                 </td>
                 <td colspan="3">
                     <s:if test="session.deathRegister.declarant.declarantType.ordinal() == 0">
@@ -73,8 +74,14 @@
                 <td>ඉ -තැපැල<br>மின்னஞ்சல்<br>Email</td>
                 <td><s:label value="%{#session.deathRegister.declarant.declarantEMail}"/></td>
             </tr>
-                <%--TODO--%>
-
+            <tr>
+                <td colspan="2">දැනුම් දෙන්නා අත්සන්කල දිනය<s:label value="*" cssStyle="color:red;font-size:10pt"/>
+                    <br>Informant Signed Date Tamil<br>Informant Signed Date
+                </td>
+                <td colspan="5">
+                    <s:label value="%{#session.deathRegister.declarant.declarantSignDate}"/>
+                </td>
+            </tr>
             </tbody>
         </table>
 

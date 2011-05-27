@@ -141,6 +141,9 @@ Mother தாய்
 சான்றிதழ் அச்சிடல,  සහතික මුද්‍රණය  ்//write in short
 
 ----------------------------------------------------------------------------------------------------
+Informant Signed Date/ දැනුම් දෙන්නා අත්සන්කල දිනය
+Enter informant name/ දැනුම් දෙන්නාගේ නම ඇතුල් කරන්න
+Enter informant address/දැනුම් දෙන්නාගේ ලිපිනය ඇතුල් කරන්න
 
 Select Ethnic Group/ ජන වර්ගය තෝරන්න
 Select Grama Niladhari Division/ ග්‍රාම නිලධාරී කොට්ඨාශය තෝරන්න
