@@ -184,7 +184,6 @@
                                  maxLength="12"/>
                     <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
                          id="notifier_lookup"/>
-                        <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>--%>
                 </td>
             </tr>
             <tr>
@@ -192,9 +191,6 @@
                     නම<s:label value="*" cssStyle="color:red;font-size:14pt;"/><br>கொடுப்பவரின் பெயர் <br>Name</label>
                 </td>
                 <td colspan="4">
-                        <%--<s:textarea name="notifyingAuthority.notifyingAuthorityName" id="notifyingAuthorityName"
-                              cssStyle="width:95%;"/>
-                      &lt;%&ndash;<s:label value="*" cssStyle="color:red;font-size:15pt"/>&ndash;%&gt;--%>
                     <s:textarea name="notifyingAuthority.notifyingAuthorityName" id="notifyingAuthorityName"
                                 cssStyle="width:95%;"
                                 onblur="maxLengthCalculate('notifyingAuthorityName','120','notifyingAuthorityName_div');"/>
@@ -206,10 +202,6 @@
                     ලිපිනය<s:label value="*" cssStyle="color:red;font-size:14pt;"/>
                     <br>தபால் முகவரி<br>Postal Address</label></td>
                 <td colspan="4">
-                        <%--<s:textarea name="notifyingAuthority.notifyingAuthorityAddress"
-                                          id="notifyingAuthorityAddress"
-                                          cssStyle="width:95%;"/>
-                      &lt;%&ndash;<s:label value="*" cssStyle="color:red;font-size:15pt"/>&ndash;%&gt;--%>
                     <s:textarea name="notifyingAuthority.notifyingAuthorityAddress" id="notifyingAuthorityAddress"
                                 cssStyle="width:95%;"
                                 onblur="maxLengthCalculate('notifyingAuthorityAddress','255','notifyingAuthorityAddress_div');"/>
@@ -223,7 +215,6 @@
                     <s:label value="YYYY-MM-DD" cssStyle="float:left;margin-left:1%;font-size:10px"/><br>
                     <s:textfield name="notifyingAuthority.notifyingAuthoritySignDate" id="modifiedDatePicker"
                                  cssStyle="float:left;margin-right:60px;" maxLength="10"/>
-                        <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>--%>
                 </td>
             </tr>
             </tbody>

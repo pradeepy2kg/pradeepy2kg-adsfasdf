@@ -650,6 +650,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             bdf = service.getById(bdId, user);
             if (bdf != null) {
                 birthType = bdf.getRegister().getBirthType();
+                bdfLateOrBelated = checkDateLateOrBelated(bdf);
                 if (bdf.getRegister().getStatus().ordinal() == 5) {
                     logger.debug("searching revisions for bdId {} ", bdId);
                     archivedEntryList = service.getArchivedCorrectedEntriesForGivenSerialNo(
@@ -679,10 +680,10 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             addActionError(getText("p1.invalid.Entry"));
             return ERROR;
         }
-        if (pageNo == 3) {
+        /*if (pageNo == 3) {
             bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
             bdfLateOrBelated = checkDateLateOrBelated(bdf);
-        }
+        }*/
         return SUCCESS;
     }
 
