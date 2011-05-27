@@ -64,7 +64,7 @@
             <s:if test="birthType.ordinal() != 0">
                 <label>
                     උපතක් ලියාපදිංචි කිරීම සඳහා විස්තර
-                    <br>பிறப்பொன்றை  பதிவு செய்வதற்கான  விபரங்கள்
+                    <br>பிறப்பொன்றை பதிவு செய்வதற்கான விபரங்கள்
                     <br>Particulars for Registration of a Birth</label>
             </s:if>
             <s:else>
@@ -221,7 +221,7 @@
     </td>
 </tr>
 <tr height="35px">
-    <td rowspan="5" width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+    <td rowspan="7" width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
         උපන් ස්ථානය පිළිබඳ විස්තර<br>பிறந்த இடம் பற்றிய விபரம்<br>
         Particulars of Place of Birth</label></td>
     <td><label>දිස්ත්‍රික්කය/ மாவட்டம் District</label></td>
@@ -294,9 +294,9 @@
     </td>
 </tr>
 <tr height="35px">
-    <td><label>ස්ථානය <br>
-        பிறந்த இடம் <br>Place</label></td>
-    <td colspan="6"><s:label value="%{#request.child.placeOfBirth}" id="placeOfBirth"
+    <td rowspan="2"><label>උපන් ස්ථානය<br/>பிறந்த இடம்<br/>Place of Birth</label></td>
+    <td><label>සිංහල හෝ දෙමළ භාෂාවෙන් <br>சிங்களம்அல்லது தமிழ் மொழியில்<br>In Sinhala or Tamil</label></td>
+    <td colspan="5"><s:label value="%{#request.child.placeOfBirth}" id="placeOfBirth"
                              cssStyle="width:97.6%;"/></td>
 </tr>
 <tr>
@@ -339,7 +339,7 @@
     </tr>
 </s:if>
 <tr>
-    <td class="font-9" colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උප්පැන්න
+    <td class="font-9" colspan="2"><label>
         සහතිකය නිකුත් කල යුතු භාෂාව <br>பிறப்பு அத்தாட்சி …..
         <br>Preferred
         Language for
@@ -381,24 +381,28 @@
     </s:elseif>
 </tr>
 <tr>
-    <td class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)සජිවි උපත් අනුපිළි‍‍වල
-        අනුව කීවෙනි ළමයා ද? <br>பிறப்பு ஒழுங்கு <br>According
-        to Live Birth Order,
-        rank of the child?</label></td>
+    <td class="font-9" colspan="3"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+        සජිවි උපත් අනුපිළි‍‍වල අනුව කීවෙනි ළමයා
+        ද?
+        <br>பிறப்பு ஒழுங்கு
+        <br>According to Live Birth Order, rank of the child?</label></td>
     <td class="font-9"><s:label value="%{#request.child.childRank}"/></td>
-    <td class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)නිවුන් දරු උපතක් නම්,
-        දරුවන් ගනන<br>பல்வகைத்தன்மை (இரட்டையர்கள்
-        எனின்),<br> பிள்னளகளின் எண்ணிக்கை<br>If
+</tr>
+<tr>
+    <td class="font-9" colspan="3"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)නිවුන් දරු උපතක්
+        නම්,
+        දරුවන් ගනන<br>ஓரே சுழலில் ஒன்றுக்கு மேற்பட்ட பிள்ளை பிறந்திருந்தால் , பிள்ளைகளின் எண்ணிக்கை
+        <br>If
         multiple births, number of children</label></td>
-    <td><s:label value="%{#request.child.numberOfChildrenBorn}"
-                 cssStyle="width:95%;"/></td>
+    <td><s:label value="%{#request.child.numberOfChildrenBorn}" cssStyle="width:95%;"/></td>
 </tr>
 </tbody>
 </table>
+
+<div style="page-break-after:always;"></div>
 <table class="table_non_editable_reg_page" cellspacing="0" style="margin-top:20px;font-size:9pt;">
     <caption></caption>
-    <col/>
-    <col/>
+    <col width="200px"/>
     <col/>
     <col/>
     <col/>
@@ -414,17 +418,24 @@
         </td>
     </tr>
     <tr>
-        <td rowspan="2" width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+        <td>
+            (<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+            ශ්‍රී ලාංකිකයෙකු නම්<br/>இலங்கையராயின் <br/>If Sri Lankan
+        </td>
+        <td colspan="2"><label>
             අනන්‍යතා අංකය <br>
             அடையாள எண் <br>Identification Number</label></td>
-        <td rowspan="2" width="200px" class="find-person"><s:label
+        <td colspan="5"><s:label
                 value="%{#request.parent.fatherNICorPIN}"/>
 
         </td>
-        <td colspan="1" rowspan="2" width="200px"><label>විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If foreigner</label>
+    </tr>
+    <tr>
+        <td colspan="1" rowspan="2" width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+            විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If foreigner</label>
         </td>
-        <td width="200px"><label>රට<br>நாடு <br>Country</label></td>
-        <td colspan="2"><s:if test="#userPreferedLang == 'si'">
+        <td colspan="2"><label>රට<br>நாடு <br>Country</label></td>
+        <td colspan="5"><s:if test="#userPreferedLang == 'si'">
             <s:label
                     value="%{#request.parent.fatherCountry.siCountryName}"
                     cssStyle="width:97%;"/></s:if>
@@ -442,15 +453,26 @@
     </tr>
     <tr>
         <td colspan="2"><label>ගමන් බලපත්‍ර අංකය <br>கடவுச் சீட்டு இல.<br>Passport No.</label></td>
-        <td class="passport"><s:label value="%{#request.parent.fatherPassportNo}"/></td>
+        <td colspan="5"><s:label value="%{#request.parent.fatherPassportNo}"/></td>
     </tr>
     </tbody>
 
     <tr>
-        <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)සම්පුර්ණ නම<br>தந்தையின்
-            முழு பெயர்<br>Full Name</label></td>
-        <td colspan="8">
+        <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+            සම්පුර්ණ නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)
+            <br>முழுப் பெயர் அரச கரும மொழியில் (சிங்களம் / தமிழ்)
+            <br>Full Name in any of the official languages (Sinhala / Tamil)</label></td>
+        <td colspan="7">
             <s:label value="%{#request.parent.fatherFullName}" cssStyle="width:98%;"/>
+        </td>
+    </tr>
+    <tr>
+        <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>) සම්පුර්ණ
+            නම ඉංග්‍රීසි භාෂාවෙන් (කැපිටල් අකුරෙන්)
+            <br>முழுப் பெயர் ஆங்கில மொழியில்(பெரிய எழுத்துக்களில்)<br>Full Name in English (In block letters)</label>
+        </td>
+        <td colspan="7">
+            <s:label value="%{#request.parent.fatherFullNameInEnglish}" cssStyle="width:98%;"/>
         </td>
     </tr>
     <tr>
@@ -459,15 +481,10 @@
         <td>
             <s:label value="%{#request.parent.fatherDOB}"/>
         </td>
-        <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)උපන් ස්ථානය <br>பிறந்த
-            இடம் <br>Place of Birth</label></td>
-        <td colspan="3"><s:label value="%{#request.parent.fatherPlaceOfBirth}"
-                                 cssStyle="width:95%;"/></td>
-    </tr>
-    <tr>
-        <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)පියාගේ ජාතිය<br>இனம்<br>
-            Father's Race</label></td>
-        <td colspan="6" class="table_reg_cell_02"><s:if test="#userPreferedLang == 'si'">
+        <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+            ජන වර්ගය <br/>இனம்<br/>Ethnic Group</label>
+        </td>
+        <td colspan="2" class="table_reg_cell_02"><s:if test="#userPreferedLang == 'si'">
             <s:label
                     value="%{#request.parent.fatherRace.siRaceName}" cssStyle="width:200px;"/></s:if>
             <s:elseif test="#userPreferedLang == 'en'">
@@ -480,199 +497,229 @@
             </s:else>
         </td>
     </tr>
+    <tr>
+        <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)උපන් ස්ථානය <br>பிறந்த
+            இடம் <br>Place of Birth</label></td>
+        <td colspan="7"><s:label value="%{#request.parent.fatherPlaceOfBirth}"
+                                 cssStyle="width:95%;"/></td>
+    </tr>
 </table>
 
-<div style="page-break-after:always;"></div>
 <table class="table_non_editable_reg_page" cellspacing="0" style="margin-top:20px;font-size:9pt;">
-    <caption></caption>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <tbody>
-    <tr>
-        <td colspan="9" style="text-align:center;font-size:11pt"> මවගේ විස්තර <br>தாய் பற்றிய தகவல் <br>Details of the
-            Mother
-        </td>
-    </tr>
-    <tr>
-        <td rowspan="2" width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) අනන්‍යතා
-            අංකය <br>
-            அடையாள எண் <br>Identification Number</label></td>
-        <td rowspan="2" width="200px" class="find-person"><s:label
-                value="%{#request.parent.motherNICorPIN}"/>
-
-        </td>
-        <td colspan="1" rowspan="2" width="200px"><label>විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If foreigner</label>
-        </td>
-        <td width="200px"><label>රට<br>நாடு <br>Country</label></td>
-        <td colspan="2" width="120px"><s:if test="#userPreferedLang == 'si'">
+<caption></caption>
+<col width="200px"/>
+<col width="150px"/>
+<col width="150px"/>
+<col/>
+<col/>
+<col/>
+<col/>
+<col width="200px"/>
+<tbody>
+<tr>
+    <td colspan="9" style="text-align:center;font-size:11pt"> මවගේ විස්තර <br>தாய் பற்றிய தகவல்<br>Details of the
+        Mother
+    </td>
+</tr>
+<tr>
+    <td>
+        (<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>)
+        ශ්‍රී ලාංකිකයෙකු නම්<br/>இலங்கையராயின் <br/>If Sri Lankan
+    </td>
+    <td colspan="2"><label>අනන්‍යතා
+        අංකය <br>
+        அடையாள எண் <br>Identification Number</label></td>
+    <td colspan="5"><s:label value="%{#request.parent.motherNICorPIN}"/></td>
+</tr>
+<tr>
+    <td rowspan="2" width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+        විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If foreigner</label>
+    </td>
+    <td colspan="2"><label>රට / நாடு / Country</label></td>
+    <td colspan="5" width="120px"><s:if test="#userPreferedLang == 'si'">
+        <s:label
+                value="%{#request.parent.motherCountry.siCountryName}"
+                cssStyle="width:97%;"/></s:if>
+        <s:elseif test="#userPreferedLang == 'en'">
             <s:label
-                    value="%{#request.parent.motherCountry.siCountryName}"
-                    cssStyle="width:97%;"/></s:if>
-            <s:elseif test="#userPreferedLang == 'en'">
-                <s:label
-                        value="%{#request.parent.motherCountry.enCountryName}"
-                        cssStyle="width:97%;"/>
-            </s:elseif>
-            <s:else>
-                <s:label
-                        value="%{#request.parent.motherCountry.taCountryName}"
-                        cssStyle="width:97%;"/>
-            </s:else>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="2"><label>ගමන් බලපත්‍ර අංකය <br>கடவுச் சீட்டு இல.<br>Passport No.</label></td>
-        <td class="passport"><s:label value="%{#request.parent.motherPassportNo}"/></td>
-    </tr>
-    <tr>
-        <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)සම්පුර්ණ නම<br>தந்தையின்
-            முழு பெயர்<br>Full Name</label></td>
-        <td colspan="8">
-            <s:label value="%{#request.parent.motherFullName}" cssStyle="width:98%;"/>
-        </td>
-    </tr>
-    <tr>
-        <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)උපන් දිනය <br>பிறந்த
-            திகதி <br>Date of Birth</label></td>
-        <td><s:label value="%{#request.parent.motherDOB}" cssStyle="width:50%;"/></td>
-        <td><label>
-            <s:if test="#request.register.birthType.ordinal() != 0">
-                (<s:property value="#row"/><s:set name="row"
-                                                  value="#row+1"/>) ළමයාගේ උපන් දිනට මවගේ වයස<br> பிள்ளை பிறந்த திகதியில் மாதாவின் வயது<br>Mother's Age
-                as at
-                the date of birth of child
-            </s:if>
-            <s:else>
-                (<s:property value="#row"/><s:set name="row"
-                                                  value="#row+1"/>) ළමයාගේ මළ උපන් දිනට මවගේ වයස<br> பிள்ளை பிறந்த திகதியில் மாதாவின் வயது<br>Mother's Age
-                as at the date of still-birth of child
-            </s:else>
-        </label>
-        </td>
-        <td class="passport" colspan="3"><s:label value="%{#request.parent.motherAgeAtBirth}"/></td>
-    </tr>
-    <tr style="border-bottom:none;">
-        <td style="border-bottom:none;"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මවගේ ස්ථිර
-            ලිපිනය<br>தாயின் நிரந்தர வதிவிட முகவரி<br>Permanent
-            Address of the Mother</label>
-        </td>
-        <td colspan="8" style="border-bottom:none;"><s:label value="%{#request.parent.motherAddress}"
-                                                             cssStyle="width:98%;"/></td>
-    </tr>
+                    value="%{#request.parent.motherCountry.enCountryName}"
+                    cssStyle="width:97%;"/>
+        </s:elseif>
+        <s:else>
+            <s:label
+                    value="%{#request.parent.motherCountry.taCountryName}"
+                    cssStyle="width:97%;"/>
+        </s:else>
+    </td>
+</tr>
+<tr>
+    <td colspan="2"><label>ගමන් බලපත්‍ර අංකය <br>கடவுச் சீட்டு இல.<br>Passport No.</label></td>
+    <td colspan="5"><s:label value="%{#request.parent.motherPassportNo}"/></td>
+</tr>
+<tr>
+    <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+        සම්පුර්ණ නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)
+        <br>முழுப் பெயர் அரச கரும மொழியில் (சிங்களம் / தமிழ்)
+        <br>Full Name in any of the official languages (Sinhala / Tamil)</label></td>
+    <td colspan="8">
+        <s:label value="%{#request.parent.motherFullName}" cssStyle="width:98%;"/>
+    </td>
+</tr>
+<tr>
+    <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>) සම්පුර්ණ
+        නම ඉංග්‍රීසි භාෂාවෙන් (කැපිටල් අකුරෙන්)
+        <br>முழுப் பெயர் ஆங்கில மொழியில்(பெரிய எழுத்துக்களில்)<br>Full Name in English (In block letters)</label></td>
+    <td colspan="7">
+        <s:label value="%{#request.parent.motherFullNameInEnglish}" cssStyle="width:98%;"/>
+    </td>
+</tr>
+<tr>
+    <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)උපන් දිනය <br>பிறந்த
+        திகதி <br>Date of Birth</label></td>
+    <td colspan="2"><s:label value="%{#request.parent.motherDOB}" cssStyle="width:50%;"/></td>
+    <td colspan="2"><label>
+        <s:if test="#request.register.birthType.ordinal() != 0">
+            (<s:property value="#row"/><s:set name="row"
+                                              value="#row+1"/>) ළමයාගේ උපන් දිනට මවගේ වයස<br> பிள்ளை பிறந்த திகதியில் மாதாவின் வயது<br>Mother's Age
+            as at
+            the date of birth of child
+        </s:if>
+        <s:else>
+            (<s:property value="#row"/><s:set name="row"
+                                              value="#row+1"/>) ළමයාගේ මළ උපන් දිනට මවගේ වයස<br> பிள்ளை பிறந்த திகதியில் மாதாவின் வயது<br>Mother's Age
+            as at the date of still-birth of child
+        </s:else>
+    </label>
+    </td>
+    <td colspan="3"><s:label value="%{#request.parent.motherAgeAtBirth}"/></td>
+</tr>
+<tr>
+    <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>)
+        ජන වර්ගය <br/>
+        இனம்<br/>
+        Ethnic Group</label></td>
+    <td colspan="2">
+        <s:if test="#userPreferedLang == 'si'">
+            <s:label value="%{#request.parent.motherRace.siRaceName}"/>
+        </s:if>
+        <s:elseif test="#userPreferedLang == 'en'">
+            <s:label value="%{#request.parent.motherRace.enRaceName}"/>
+        </s:elseif>
+        <s:else>
+            <s:label value="%{#request.parent.motherRace.taRaceName}"/>
+        </s:else>
+    </td>
 
-    <tr>
-        <td style="border-top:none; border-bottom:none;">&nbsp;</td>
-        <td colspan="1" class="table_reg_cell_02" style="border-top:1px solid #000;">
-            <s:label value="දිස්ත්‍රික්කය /மாவட்டம் /District"/>
-        </td>
-        <td colspan="4" class="table_reg_cell_02" style="border-top:1px solid #000;">
+    <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i"
+                                                                                               value="#i+1"/>
+        ) උපන් ස්ථානය <br>பிறந்த இடம்
+        <br>Place of Birth</label></td>
+    <td colspan="3">
+        <s:label value="%{#request.parent.motherPlaceOfBirth}"/>
+    </td>
+</tr>
+<tr>
+    <td rowspan="4"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මවගේ ස්ථිර
+        ලිපිනය<br>தாயின் நிரந்தர வதிவிட முகவரி<br>Permanent
+        Address of the Mother</label>
+    </td>
+    <td colspan="7" style="border-bottom:none;" height="50px"><s:label value="%{#request.parent.motherAddress}"
+                                                                       cssStyle="width:98%;"/></td>
+</tr>
+<tr>
+    <td colspan="2" class="table_reg_cell_02" style="border-top:1px solid #000;">
+        <s:label value="දිස්ත්‍රික්කය /மாவட்டம் /District"/>
+    </td>
+    <td colspan="5" class="table_reg_cell_02" style="border-top:1px solid #000;">
 
-            <s:if
-                    test="#userPreferedLang == 'si'">
-                <s:label value="%{#request.parent.motherDSDivision.district.siDistrictName}"
-                         cssStyle="width:99%;"/>
-            </s:if>
-            <s:elseif test="#userPreferedLang == 'en'">
-                <s:label value="%{#request.parent.motherDSDivision.district.enDistrictName}"
-                         cssStyle="width:99%;"/>
+        <s:if
+                test="#userPreferedLang == 'si'">
+            <s:label value="%{#request.parent.motherDSDivision.district.siDistrictName}"
+                     cssStyle="width:99%;"/>
+        </s:if>
+        <s:elseif test="#userPreferedLang == 'en'">
+            <s:label value="%{#request.parent.motherDSDivision.district.enDistrictName}"
+                     cssStyle="width:99%;"/>
 
-            </s:elseif>
-            <s:else>
-                <s:label value="%{#request.parent.motherDSDivision.district.taDistrictName}"
-                         cssStyle="width:99%;"/>
-            </s:else></td>
-    </tr>
-    <tr>
-        <td style="border-top:none;border-bottom:none">&nbsp;</td>
-        <td colspan="1"><s:label value="ප්‍රාදේශීය ලේකම් කොට්ඨාශය /"/><br>
-            <s:label value="பிரதேச செயளாளர் பிரிவு/"/><br>
-            <s:label value="Divisional Secretary Division"/><br></td>
-        <td colspan="4" class="table_reg_cell_02">
-            <s:if
-                    test="#userPreferedLang == 'si'">
-                <s:label value="%{#request.parent.motherDSDivision.siDivisionName}"/>
-            </s:if>
-            <s:elseif test="#userPreferedLang == 'en'">
-                <s:label value="%{#request.parent.motherDSDivision.enDivisionName}"/>
+        </s:elseif>
+        <s:else>
+            <s:label value="%{#request.parent.motherDSDivision.district.taDistrictName}"
+                     cssStyle="width:99%;"/>
+        </s:else></td>
+</tr>
+<tr>
+    <td colspan="2"><s:label value="ප්‍රාදේශීය ලේකම් කොට්ඨාශය /"/><br>
+        <s:label value="பிரதேச செயளாளர் பிரிவு/"/><br>
+        <s:label value="Divisional Secretary Division"/><br></td>
+    <td colspan="5" class="table_reg_cell_02">
+        <s:if
+                test="#userPreferedLang == 'si'">
+            <s:label value="%{#request.parent.motherDSDivision.siDivisionName}"/>
+        </s:if>
+        <s:elseif test="#userPreferedLang == 'en'">
+            <s:label value="%{#request.parent.motherDSDivision.enDivisionName}"/>
 
-            </s:elseif>
-            <s:else>
-                <s:label value="%{#request.parent.motherDSDivision.taDivisionName}"/>
-            </s:else>
-        </td>
-    </tr>
-    <tr>
-        <td style="border-top:none;">&nbsp;</td>
-        <td colspan="1"><s:label value="ප්‍රාදේශීය ලේකම් කොට්ඨාශය /"/><br>
-            <s:label value="பிரதேச செயளாளர் பிரிவு/"/><br>
-            <s:label value="Divisional Secretary Division"/><br></td>
-        <td colspan="4" class="table_reg_cell_02">
-            <s:if
-                    test="#userPreferedLang == 'si'">
-                <s:label value="%{#request.parent.motherGNDivision.siGNDivisionName}"/>
-            </s:if>
-            <s:elseif test="#userPreferedLang == 'en'">
-                <s:label value="%{#request.parent.motherGNDivision.enGNDivisionName}"/>
+        </s:elseif>
+        <s:else>
+            <s:label value="%{#request.parent.motherDSDivision.taDivisionName}"/>
+        </s:else>
+    </td>
+</tr>
+<tr>
+    <td colspan="2">
+        ග්‍රාම නිලධාරී කොට්ඨාශය/<br/>
+        கிராம சேவையாளர் பிரிவு/<br/>
+        Grama Niladhari Division
+    </td>
+    <td colspan="5" class="table_reg_cell_02">
+        <s:if
+                test="#userPreferedLang == 'si'">
+            <s:label value="%{#request.parent.motherGNDivision.siGNDivisionName}"/>
+        </s:if>
+        <s:elseif test="#userPreferedLang == 'en'">
+            <s:label value="%{#request.parent.motherGNDivision.enGNDivisionName}"/>
 
-            </s:elseif>
-            <s:else>
-                <s:label value="%{#request.parent.motherGNDivision.taGNDivisionName}"/>
-            </s:else>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="1" width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ම‌වගේ
-            ජාතිය<br>இனம்<br> Mother's Race</label></td>
-        <td colspan="1">
-            <s:if
-                    test="#userPreferedLang == 'si'">
-                <s:label value="%{#request.parent.motherRace.siRaceName}"/>
-            </s:if>
-            <s:elseif test="#userPreferedLang == 'en'">
-                <s:label value="%{#request.parent.motherRace.enRaceName}"/>
-            </s:elseif>
-            <s:else>
-                <s:label value="%{#request.parent.motherRace.taRaceName}"/>
-            </s:else></td>
-
-        <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)උපන් ස්ථානය <br>பிறந்த இடம்
-            <br>Place of Birth</label></td>
-        <td colspan="3" class="passport"><s:label value="%{#request.parent.motherPlaceOfBirth}"/></td>
-    </tr>
-    <tr>
-        <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)රෝහලට ඇතුලත් කිරිමේ
-            අංකය<br>வைத்தியசாலை அனுமதி இலக்கம் <br>Hospital Admission Number</label></td>
-        <td colspan="1" class="passport"><s:label value="%{#request.parent.motherAdmissionNo}"/></td>
-        <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)රෝහලට ඇතුලත් කිරිමේ
-            දිනය<br>வைத்தியசாலையில் அனுமதித்த திகதி <br>Hospital Admission Date</label></td>
-        <td colspan="3"><s:label value="%{#request.parent.motherAdmissionDate}"/></td>
-    </tr>
-    <tr>
-        <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ම‌ව සම්බන්ධ කල හැකි තොරතුරු
-            <br>தாயின் தொடர்பு இலக்க தகவல் <br>Contact Details of the
-            Mother</label></td>
-        <td colspan="1"><label>දුරකතනය <br> தொலைபேசி இலக்கம் <br> Telephone</label></td>
-        <td colspan="1"><s:label value="%{#request.parent.motherPhoneNo}"/></td>
-        <td colspan="1"><label>ඉ – තැපැල <br> மின்னஞ்சல்<br>Email</label></td>
-        <td colspan="2" class="passport"><s:label value="%{#request.parent.motherEmail}"/></td>
-    </tr>
-    </tbody>
+        </s:elseif>
+        <s:else>
+            <s:label value="%{#request.parent.motherGNDivision.taGNDivisionName}"/>
+        </s:else>
+    </td>
+</tr>
+<tr>
+    <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/> <s:set name="i" value="#i+1"/>)
+        සම්බන්ධ කල හැකි තොරතුරු
+        <br>தொடர்பு கொள்ளக்கூடிய தகவல்கள்
+        <br>Contact Details </label></td>
+    <td colspan="1"><label>දුරකතනය <br>தொலைபேசி இலக்கம் <br> Telephone</label></td>
+    <td colspan="1"><s:label value="%{#request.parent.motherPhoneNo}"/></td>
+    <td colspan="2"><label>ඉ – තැපැල<br> மின்னஞ்சல்<br>Email</label></td>
+    <td colspan="3" class="passport"><s:label value="%{#request.parent.motherEmail}"/></td>
+</tr>
+<tr>
+    <td colspan="3" rowspan="2">(<s:property value="#row"/><s:set name="row" value="#row+1"/> <s:set name="i"
+                                                                                                     value="#i+1"/>)
+        රෝහලට ඇතුලත් කිරිමේ තොරතුරු (ඔබ සතුව පවතී නම්)<br/>
+        வைத்தியசாலை அனுமதி இலக்கமும் திகதியும் (இருந்தால்)<br/>
+        Hospital Admission Details (if available)
+    </td>
+    <td colspan="2"><label>අංකය / இலக்கம் / Number </label></td>
+    <td colspan="4" class="passport"><s:label value="%{#request.parent.motherAdmissionNo}"/></td>
+</tr>
+<tr>
+    <td colspan="2"><span>දිනය/ திகதி / Date</span>
+    <td colspan="3">
+        <s:label value="%{#request.parent.motherAdmissionDate}"/>
+    </td>
+</tr>
+</tbody>
 </table>
-
 
 <%--pageNo 3--%>
-
+<div style="page-break-after:always;"></div>
 <s:if test="#request.register.birthType.ordinal() != 0">
     <table class="table_non_editable_reg_page" cellspacing="0" style="margin-top:20px;font-size:9pt;">
         <caption></caption>
-        <col/>
+        <col width="450px"/>
         <col/>
         <col/>
         <col/>
@@ -685,12 +732,10 @@
             </td>
         </tr>
         <tr>
-            <td rowspan="2" width="250px;"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මව්පියන්
-                විවාහකද? <br>பெற்றோர்கள்
-                மணம் முடித்தவர்களா? <br>Were Parent's
-                Married?</label></td>
-            <td rowspan="2" width="150px">
-
+            <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) මව්පියන් විවාහකද?
+                <br>பெற்றோர்கள் திருமணம் முடித்தவர்களா?
+                <br>Were Parent's Married?</label></td>
+            <td colspan="4">
                 <s:if test="#request.marriage.parentsMarried.ordinal() == 0">
                     <s:label value="%{getText('radio_married_unknown.label')}"/>
                 </s:if>
@@ -704,89 +749,126 @@
                     <s:label value="%{getText('radio_married_since.label')}"/>
                 </s:if>
             </td>
+        </tr>
+        <tr>
+            <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+                විවාහ වු ස්ථානය / விவாகம் இடம்பெற்ற இடம் <br/> Place of Marriage
+            </label></td>
+            <td colspan="4"><s:label value="%{#request.marriage.placeOfMarriage}"/></td>
+        </tr>
+        <tr>
+            <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+                විවාහ වු දිනය / விவாகம் இடம்பெற்ற திகதி <br/> Date of Marriage
+            </label></td>
+            <td colspan="4">
+                <s:label value="%{#request.marriage.dateOfMarriage}"/>
             </td>
-            <td width="250px"><label>විවාහ වු ස්ථානය<br>விவாகம் இடம்பெற்ற இடம் <br>Place of Marriage</label></td>
-            <td colspan="2"><s:label value="%{#request.marriage.placeOfMarriage}"/></td>
+        </tr>
+        <tr id="motherFatherSign">
+            <td colspan="5"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+                මව්පියන් විවාහ වි නොමැති නම් පියාගේ තොරතුරු ඇතුලත් කර ගැනිම සදහා මව සහ පියාගේ අත්සන්
+                <br>பெற்றோர் விவாகம் செய்யாதிருப்பின், தகப்பனின் தகவல்கள் பதிவு செய்ய வேண்டுமெனின் பெற்றோரின் கையொப்பம்
+                <br>If parents are not married, signatures of mother and father to include father's particulars</label>
+            </td>
         </tr>
         <tr>
-            <td><label>විවාහ වු දිනය<br>விவாகம் இடம்பெற்ற திகதி <br>Date of Marriage</label></td>
-            <td colspan="2"><s:label value="%{#request.marriage.dateOfMarriage}"/></td>
-        </tr>
-        <tr>
-            <td colspan="3" rowspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මව්පියන්
-                විවාහ වි නොමැති නම් පියාගේ තොරතුරු ඇතුලත් කර ගැනිම සදහා මව
-                සහ
-                පියාගේ අත්සන් <br>பெற்றோர்
-                மணம் செய்யாதிருப்பின், தகப்பனின் தகவல்கள் பதிவு செய்ய வேண்டுமெனின் பெற்றோரின் கையொப்பம்<br>If
-                parents are not married, signatures of mother and father to include father's particulars</label></td>
             <td><label>මවගේ අත්සන <br> தாயின் ஒப்பம் <br>Mother’s Signature</label></td>
-            <td align="center"><s:if test="#request.marriage.motherSigned==true"> <s:label
-                    value="%{getText('yes.label')}"/></s:if>
-                <s:else><s:label value="%{getText('no.label')}"/></s:else></td>
-        </tr>
-        <tr>
+            <td align="center">
+                <s:if test="#request.marriage.motherSigned==true">
+                    <s:label value="%{getText('yes.label')}"/>
+                </s:if>
+                <s:else><s:label value="%{getText('no.label')}"/></s:else>
+            </td>
             <td><label>පියාගේ අත්සන <br>தகப்பனின் ஒப்பம் <br>Father’s Signature</label></td>
-            <td align="center"><s:if test="#request.marriage.fatherSigned==true"> <s:label
-                    value="%{getText('yes.label')}"/></s:if>
-                <s:else><s:label value="%{getText('no.label')}"/></s:else></td>
+            <td align="center">
+                <s:if test="#request.marriage.fatherSigned==true">
+                    <s:label value="%{getText('yes.label')}"/></s:if>
+                <s:else><s:label value="%{getText('no.label')}"/></s:else>
+            </td>
         </tr>
         </tbody>
     </table>
 
-
     <table class="table_non_editable_reg_page" cellspacing="0" cellpadding="0" style="margin-top:20px;font-size:9pt;">
-        <caption></caption>
+        <col/>
+        <col width="250px"/>
+        <col width="150px"/>
         <col/>
         <col/>
         <col/>
-        <col/>
-        <col/>
+        <col width="350px"/>
         <tbody>
         <tr>
-            <td colspan="5" style="text-align:center;font-size:11pt">සීයාගේ / මී මුත්තා ගේ විස්තර
-                <br>தாத்தாவின் / பாட்டனின் விபரங்கள்
+            <td colspan="7" style="text-align:center;font-size:12pt">
+                මුත්තා / මී මුත්තා ගේ විස්තර
+                <br>பாட்டன் /பூட்டனின் விபரங்கள்
                 <br>Details of the Grand Father / Great Grand Father
             </td>
         </tr>
         <tr>
-            <td colspan="5"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ළමයාගේ මුත්තා ශ්‍රී
-                ලංකාවේ උපන්නේ නම් <br>பிள்ளையின் பாட்டனார் இலங்கையில்
-                பிறந்திருந்தால் <br>If
-                grandfather of the child born in Sri Lanka</label></td>
+            <td colspan="7"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) ළමයාගේ මුත්තා ශ්‍රී
+                ලංකාවේ උපන්නේ නම්
+                / பிள்ளையின் பாட்டனார் இலங்கையில் பிறந்திருந்தால்
+                / If grandfather of the child born in Sri Lanka</label>
+            </td>
         </tr>
         <tr>
-            <td rowspan="2" style="width:55px">&nbsp;</td>
-            <td width="200px"><label>ඔහුගේ සම්පුර්ණ නම<br>அவரின் முழுப் பேயர் <br>His Full Name</label></td>
-            <td colspan="4"><s:label value="%{#request.grandFather.grandFatherFullName}"
-                                     cssStyle="width:98%;"/></td>
+            <td rowspan="3" style="width:75px" colspan="1">&nbsp;</td>
+            <td>අනන්‍යතා අංකය (තිබේ නම්)
+                <br>அடையாள எண் (இருக்குமாயின்)
+                <br>Identification Number (if available)
+            </td>
+            <td colspan="5">
+                <s:label value="%{#request.grandFather.grandFatherNICorPIN}" cssStyle="width:98%;"/>
+            </td>
         </tr>
         <tr>
-            <td><label>ඔහුගේ උපන් වර්ෂය <br>அவர் பிறந்த வருடம் <br>His Year of Birth</label></td>
-            <td width="150px"><s:label value="%{#request.grandFather.grandFatherBirthYear}"/></td>
-            <td width="150px"><label>උපන් ස්ථානය <br>அவர் பிறந்த இடம் <br>Place Of Birth</label></td>
-            <td><s:label value="%{#request.grandFather.grandFatherBirthPlace}"/></td>
+            <td colspan="1"><label>ඔහුගේ සම්පුර්ණ නම<br>அவரின் முழுப் பேயர் <br>His Full Name</label></td>
+            <td colspan="5">
+                <s:label value="%{#request.grandFather.grandFatherFullName}" cssStyle="width:98%;"/>
+            </td>
         </tr>
         <tr>
-            <td colspan="5"><label> (<s:property value="#row"/><s:set name="row" value="#row+1"/>)ළමයාගේ පියා ශ්‍රී
-                ලංකාවේ නොඉපිද මීමුත්තා ලංකාවේ උපන්නේ නම් මී මුත්තාගේ <br>பிள்ளையின்
-                தந்தை
-                இலங்கையில் பிறக்காமல் பூட்டன் இலங்கையில் பிறந்திருந்தால் பூட்டனாரின் தகவல்கள
-                ்<br>If the father was not
-                born in Sri Lanka and if great grandfather born in Sri Lanka great grand father's</label></td>
-        </tr>
-        <tr>
-            <td rowspan="2">&nbsp;</td>
-            <td><label>සම්පුර්ණ නම <br>முழுப் பெயர் <br>Full Name</label></td>
-            <td colspan="3"><s:label value="%{#request.grandFather.greatGrandFatherFullName}"
-                                     cssStyle="width:98%;"/></td>
-        </tr>
-        <tr>
-            <td><label>උපන් වර්ෂය <br>பிறந்த வருடம் <br>Year of Birth</label></td>
-            <td><s:label value="%{#request.grandFather.greatGrandFatherBirthYear}"
-                         cssStyle="width:95%;"/></td>
+            <td><label>ඔහුගේ උපන් වර්ෂය
+                <br>அவர் பிறந்த வருடம்
+                <br>His Year of Birth</label></td>
+            <td colspan="2"><s:label value="%{#request.grandFather.grandFatherBirthYear}"/></td>
             <td><label>උපන් ස්ථානය <br>அவர் பிறந்த இடம் <br>Place Of Birth</label></td>
-            <td><s:label value="%{#request.grandFather.greatGrandFatherBirthPlace}"
-                         cssStyle="width:95%;"/></td>
+            <td colspan="2"><s:label value="%{#request.grandFather.grandFatherBirthPlace}"/></td>
+        </tr>
+        <tr>
+            <td colspan="7"><label> (<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+                ළමයාගේ පියා ශ්‍රී ලංකාවේ නොඉපිද මීමුත්තා ලංකාවේ උපන්නේ නම් මී මුත්තාගේ
+                <br>பிள்ளையின் தந்தை இலங்கையில் பிறக்காமல் பூட்டன் இலங்கையில் பிறந்திருந்தால் பூட்டனாரின் தகவல்கள்
+                <br>If the father was not born in Sri Lanka and if great grand father born in Sri Lanka, great grand
+                father's</label>
+            </td>
+        </tr>
+        <tr>
+            <td rowspan="3" colspan="1">&nbsp;</td>
+            <td>අනන්‍යතා අංකය (තිබේ නම්)
+                <br>அடையாள எண் (இருக்குமாயின்)
+                <br>Identification Number (if available)
+            </td>
+            <td colspan="5">
+                <s:label value="%{#request.grandFather.greatGrandFatherNICorPIN}" cssStyle="width:95%;"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="1"><label>සම්පුර්ණ නම <br>முழுப் பெயர் <br>Full Name</label></td>
+            <td colspan="5">
+                <s:label value="%{#request.grandFather.greatGrandFatherFullName}" cssStyle="width:98%;"/>
+            </td>
+        </tr>
+        <tr>
+            <td><label>ඔහුගේ උපන් වර්ෂය
+                <br>அவர் பிறந்த வருடம்
+                <br>His Year of Birth</label></td>
+            <td colspan="2"><s:label value="%{#request.grandFather.greatGrandFatherBirthYear}"
+                                     cssStyle="width:95%;"/></td>
+            <td><label>උපන් ස්ථානය <br>அவர் பிறந்த இடம் <br>Place Of Birth</label></td>
+            <td colspan="3"><s:label value="%{#request.grandFather.greatGrandFatherBirthPlace}"
+                                     cssStyle="width:95%;"/></td>
         </tr>
         </tbody>
     </table>
@@ -795,19 +877,18 @@
 <div style="page-break-after:always;"></div>
 <table class="table_non_editable_reg_page" cellspacing="0" cellpadding="0" style="margin-top:20px;font-size:9pt;">
     <caption></caption>
-    <col width="200px"/>
+    <col width="250px"/>
     <col width="100px"/>
     <col width="100px"/>
-    <col width="100px"/>
-
+    <col/>
     <tbody>
     <tr>
-        <td colspan="5" style="text-align:center;font-size:11pt">දැනුම් දෙන්නාගේ විස්තර<br>அறிவிப்பு கொடுப்பவரின்
-            தகவல்கள் <br>Details of the Informant
+        <td colspan="5" style="text-align:center;font-size:11pt">දැනුම් දෙන්නාගේ විස්තර<br>தகவல் தருபவரின் விபரங்கள்<br>Details
+            of the Informant
         </td>
     </tr>
     <tr>
-        <td colspan="1" width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)දැනුම් දෙන්නේ
+        <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)දැනුම් දෙන්නේ
             කවුරුන්
             විසින් ද? <br>யாரால் தகவல் தரப்படுகின்றது?<br>Person Giving
             Information</label></td>
@@ -878,9 +959,7 @@
     </tr>
     <tr>
         <td>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-            තැපැල් ලිපිනය <br>
-            தபால் முகவரி <br>
-            Postal Address
+            ඇමතුම් විස්තර<br>தொடர்பு விபரம்<br>Contact Details
         </td>
         <td colspan="1" width="200px"><label>දුරකතනය<br>தொலைபேசி இலக்கம் <br>Telephone</label></td>
         <td colspan="1" width="200px"><s:label value="%{#request.informant.informantPhoneNo}"
@@ -891,7 +970,8 @@
 
     </tr>
     <tr>
-        <td colspan="1"><label>දිනය <br>திகதி <br>Date</label></td>
+        <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)<label>දිනය <br>திகதி
+            <br>Date</label></td>
         <td colspan="4"><s:label value="%{#request.informant.informantSignDate}"/></td>
     </tr>
     </tbody>
@@ -901,7 +981,7 @@
 
 <table class="table_non_editable_reg_page" cellspacing="0" cellpadding="0" style="margin-top:20px;font-size:9pt;">
     <caption></caption>
-    <col/>
+    <col width="250px"/>
     <col/>
     <col/>
     <col/>
@@ -943,25 +1023,45 @@
     </tr>
     </tbody>
 </table>
-<s:if test="request.register.birthType.ordinal() == 1 || request.register.birthType.ordinal() == 3">
-    <s:if test="bdfLateOrBelated ==1 || bdfLateOrBelated==2">
-        <div id="late-belated-registration" class="font-9">
-            <div id="late-belated-registration-title" class="font-12">
-                <s:if test="bdfLateOrBelated==1">Late Registration</s:if>
-                <s:else>Belated Registration</s:else>
-            </div>
-            <div id="late-belated-case-file-num">
-                <label>ලිපිගොනු අංකය<br>கோவை இலக்கம் <br>Case File Number</label>
-                <s:label name="caseFileNumber"/>
-            </div>
-            <div id="late-belated-prev-comments">
-                <label>අදහස් දක්වන්න<br>கருத்தினை தெரிவிக்கவும் <br>Comments </label>
-                <s:label name="%{#request.register.comments}"/>
-            </div>
-        </div>
+
+<s:if test="#request.register.birthType.ordinal() == 1 || #request.register.birthType.ordinal() == 3">
+    <s:if test="#request.bdfLateOrBelated ==1 || #request.bdfLateOrBelated==2">
+        <table class="table_reg_page_04" width="100%" cellspacing="0" style="margin-top:20px;">
+            <caption></caption>
+            <col width="250px"/>
+            <col/>
+            <col/>
+            <col/>
+            <col/>
+            <tbody>
+            <tr>
+                <td colspan="5" style="text-align:center;font-size:12pt">
+                    <s:if test="bdfLateOrBelated==1">
+                        පමා වූ උපත් ලියාපදිංචිය
+                        <br>தாமதித்த பிறப்புப் பதிவு
+                        <br>Late Birth Registration
+                    </s:if>
+                    <s:else>
+                        කල් පසු වූ උපත් ලියාපදිංචිය
+                        <br>காலங் கடந்த பிறப்புப் பதிவு
+                        <br>Belated Birth Registration
+                    </s:else>
+                </td>
+            </tr>
+            <tr>
+                <td width="200px"><label>ලිපිගොනු අංකය<br>கோவை இலக்கம் <br>Case File Number</label></td>
+                <td colspan="2"><s:label value="%{#request.register.caseFileNumber}"/></td>
+            </tr>
+            <tr>
+                <td><label>අදහස් දක්වන්න <br>கருத்தினை தெரிவிக்கவும் <br>Add Comments </label></td>
+                <td><s:label value="%{#request.register.comments}"/></td>
+            </tr>
+            </tbody>
+        </table>
     </s:if>
 </s:if>
 </div>
+
 <div class="form-submit">
     <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
 </div>
