@@ -18,37 +18,16 @@
             <col width="130px"/>
             <tbody>
             <tr class="form-sub-title">
-                <td colspan="6">ප්‍රකාශකයාගේ විස්තර<br>அறிவிப்பு கொடுப்பவரின் தகவல்கள்<br>Details of the Declarant</td>
-            </tr>
-            <tr>
-                <td>
-                    අනන්‍යතා අංකය
-                    <br>அடையாள எண்
-                    <br>Identification Number
+                <td colspan="6">
+                    දැනුම් දෙන්නාගේ විස්තර
+                    <br>அறிவிப்பு கொடுப்பவரின் தகவல்கள்
+                    <br>Details of the Informant
                 </td>
-                <td colspan="5" class="find-person"><s:label
-                        value="%{#session.deathRegister.declarant.declarantNICorPIN}"/></td>
             </tr>
             <tr>
-                <td>නම<br>கொடுப்பவரின் பெயர்<br>Name</td>
-                <td colspan="5"><s:label value="%{#session.deathRegister.declarant.declarantFullName}"/></td>
-            </tr>
-            <tr>
-                <td>තැපැල් ලිපිනය<br>தபால் முகவரி<br>Postal Address</td>
-                <td colspan="5"><s:label value="%{#session.deathRegister.declarant.declarantAddress}"/></td>
-            </tr>
-            <tr>
-                <td>ඇමතුම් විස්තර<br>இலக்க வகை <br>Contact Details</td>
-                <td>දුරකතනය<br>தொலைபேசி இலக்கம் <br>Telephone</td>
-                <td colspan="2"><s:label value="%{#session.deathRegister.declarant.declarantPhone}"/></td>
-                <td>ඉ -තැපැල<br>மின்னஞ்சல்<br>Email</td>
-                <td><s:label value="%{#session.deathRegister.declarant.declarantEMail}"/></td>
-            </tr>
-                <%--TODO--%>
-            <tr>
-                <td colspan="2">දැනුම් දෙන්නේ කවරකු වශයෙන්ද<br>தகவல் வழங்குபவர் <br>Capacity for giving information
+                <td colspan="3">දැනුම් දෙන්නේ කවරකු වශයෙන්ද / யாரால் தகவல் தரப்படுகின்றது? <br>Capacity for giving information
                 </td>
-                <td colspan="4">
+                <td colspan="3">
                     <s:if test="session.deathRegister.declarant.declarantType.ordinal() == 0">
                         <s:label value="%{getText('death.declarant.father.label')}"/>
                     </s:if>
@@ -72,6 +51,30 @@
                     </s:elseif>
                 </td>
             </tr>
+            <tr>
+                <td colspan="3">
+                    අනන්‍යතා අංකය / அடையாள எண் / Identification Number
+                </td>
+                <td colspan="3" class="find-person"><s:label
+                        value="%{#session.deathRegister.declarant.declarantNICorPIN}"/></td>
+            </tr>
+            <tr>
+                <td>නම<br>கொடுப்பவரின் பெயர்<br>Name</td>
+                <td colspan="5"><s:label value="%{#session.deathRegister.declarant.declarantFullName}"/></td>
+            </tr>
+            <tr>
+                <td>තැපැල් ලිපිනය<br>தபால் முகவரி<br>Postal Address</td>
+                <td colspan="5"><s:label value="%{#session.deathRegister.declarant.declarantAddress}"/></td>
+            </tr>
+            <tr>
+                <td>ඇමතුම් විස්තර<br>இலக்க வகை <br>Contact Details</td>
+                <td>දුරකතනය<br>தொலைபேசி இலக்கம் <br>Telephone</td>
+                <td colspan="2"><s:label value="%{#session.deathRegister.declarant.declarantPhone}"/></td>
+                <td>ඉ -තැපැල<br>மின்னஞ்சல்<br>Email</td>
+                <td><s:label value="%{#session.deathRegister.declarant.declarantEMail}"/></td>
+            </tr>
+                <%--TODO--%>
+
             </tbody>
         </table>
 
@@ -84,27 +87,29 @@
             <tbody>
             <tr class="form-sub-title">
                 <td colspan="4">
-                    <s:if test="#session.deathRegister.deathType.ordinal() == 0">
-                    තොරතුරු වාර්තා කරන පාර්ශවය<br>அதிகாரியிடம் தெரிவித்தல்<br>Notifying Authority
+                    <s:if test="pageType==0">
+                        තොරතුරු වාර්තා කරන නිලධාරියාගේ / රෙජිස්ට්‍රාර්ගේ විස්තර
+                        <br>அறிக்கையிடும் அதிகாரி/பதிவாளர் பற்றிய விபரங்கள்
+                        <br>Details of the Notifying Officer / Registrar
+                        <s:set name="row" value="32"/>
+                    </s:if>
+                    <s:elseif test="pageType == 1">
+                        දිස්ත්‍රික් රෙජිස්ට්‍රාර් / රෙජිස්ට්‍රාර් ජෙනරාල්
+                        <br>மாவட்ட பதிவாளா்/ பதிவாளா் நாயகம்
+                        <br>District Registrar / Registrar General
+                    </s:elseif>
+                    <s:elseif test="pageType == 2">
+                        මරණ පරීක්ෂක හෝ අධිකරණ වෛද්‍ය නිලධාරී ගේ විස්තර
+                        <br>மரண பரிசோதகர் அல்லது வைத்திய அதிகாரியின் விபரம்
+                        <br>Particulars of the Inquirer into deaths or Judicial Medical Officer
+                    </s:elseif>
+                    <s:elseif test="pageType == 3">
+                        missing <br>
+                        දිස්ත්‍රික් රෙජිස්ට්‍රාර් / රෙජිස්ට්‍රාර් ජෙනරාල්
+                        <br>மாவட்ட பதிவாளா்/ பதிவாளா் நாயகம்
+                        <br>District Registrar / Registrar General
+                    </s:elseif>
                 </td>
-                </s:if>
-                <s:elseif
-                        test="#session.deathRegister.deathType.ordinal() == 2">
-                    තොරතුරු වාර්තා කරන පාර්ශවය<br>அதிகாரியிடம் தெரிவித்தல்<br>Notifying Authority
-                    </td>
-                </s:elseif>
-                <s:elseif
-                        test="#session.deathRegister.deathType.ordinal() == 1">
-                    දිස්ත්‍රික් රෙජිස්ට්‍රාර් / රෙජිස්ට්‍රාර් ජෙනරාල් <br/>
-                    அதிகாரியிடம் தெரிவித்தல் <br/>
-                    District Registrar / Registrar General
-                </s:elseif>
-                <s:elseif
-                        test="#session.deathRegister.deathType.ordinal() == 3">
-                    දිස්ත්‍රික් රෙජිස්ට්‍රාර් / රෙජිස්ට්‍රාර් ජෙනරාල් <br/>
-                    அதிகாரியிடம் தெரிவித்தல் <br/>
-                    District Registrar / Registrar General
-                </s:elseif>
             </tr>
             <tr>
                 <td>
