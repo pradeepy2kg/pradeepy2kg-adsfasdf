@@ -322,17 +322,17 @@
 </tr>
 <s:if test="birthType.ordinal() != 0">
     <tr>
-        <td class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) නම රාජ්‍ය භාෂාවෙන්
-            (සිංහල / දෙමළ)<br>பிறப்பு அத்தாட்சி பாத்த.... (சிங்களம்
-            / தமிழ்) <br>Name in
-            any of the official languages (Sinhala / Tamil)</label></td>
+        <td class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+            නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)
+            <br>பெயா் அரச கரும மொழியில் (சிங்களம் / தமிழ்)
+            <br>Name in any of the official languages (Sinhala / Tamil)</label></td>
         <td colspan="7"><s:label value="%{#request.child.childFullNameOfficialLang}"
                                  cssStyle="width:98.2%;"/></td>
     </tr>
 
     <tr>
-        <td class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) නම ඉංග්‍රීසි
-            භාෂාවෙන් <br>பிறப்பு அத்தாட்சி ….. <br>Name in English
+        <td class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+            නම ඉංග්‍රීසි භාෂාවෙන් <br>பெயா் ஆங்கில மொழியில்<br>Name in English
         </label></td>
         <td colspan="7">
             <s:label value="%{#request.child.childFullNameEnglish}" cssStyle="width:98.2%;"/></td>
@@ -340,10 +340,7 @@
 </s:if>
 <tr>
     <td class="font-9" colspan="2"><label>
-        සහතිකය නිකුත් කල යුතු භාෂාව <br>பிறப்பு அத்தாட்சி …..
-        <br>Preferred
-        Language for
-        Birth Certificate </label></td>
+        සහතිකය නිකුත් කල යුතු භාෂාව <br>பிறப்புச் சான்றிதழ் வழங்கப்பட வேண்டிய  மொழி<br>Preferred Language for Birth Certificate </label></td>
     <s:set name="lang" value="%{#request.register.preferredLanguage}"/>
     <td colspan="6"><s:label value="%{getText(#lang)}" cssStyle="float:left;  width:240px;"/></td>
 </tr>

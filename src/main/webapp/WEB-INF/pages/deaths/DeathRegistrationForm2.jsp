@@ -83,26 +83,6 @@
         var returnval;
         var signdate = new Date(document.getElementById('submitDatePicker').value);
 
-        // notifier PIN or NIC
-        domObject = document.getElementById('notifying_authority_NICorPIN');
-        if (isFieldEmpty(domObject)) {
-            errormsg = errormsg + "\n" + document.getElementById('p2error1').value;
-        } else {
-            validatePINorNIC(domObject, 'error1', 'p2error5');
-        }
-
-        // notifier name
-        domObject = document.getElementById('notifyingAuthorityName');
-        if (isFieldEmpty(domObject)) {
-            errormsg = errormsg + "\n" + document.getElementById('p2error2').value;
-        }
-
-        // notifier adderss
-        domObject = document.getElementById('notifyingAuthorityAddress');
-        if (isFieldEmpty(domObject)) {
-            errormsg = errormsg + "\n" + document.getElementById('p2error4').value;
-        }
-
         //Validate Declarant Type
         var i,error = false;
         for (i = 0; i < 6; i++) {
@@ -116,13 +96,6 @@
             errormsg = errormsg + "\n" + document.getElementById('p2error8').value;
         }
 
-        /*date related validations*/
-        domObject = document.getElementById('submitDatePicker');
-        if (isFieldEmpty(domObject)) {
-            errormsg = errormsg + "\n" + document.getElementById('p2error3').value;
-        } else {
-            isDate(domObject.value, 'error1', 'p2error6');
-        }
         // validate declarant phone number
         domObject = document.getElementById('declarantPhone');
         if (!isFieldEmpty(domObject)) {
@@ -155,6 +128,33 @@
         domObject = document.getElementById('declarantDatePicker');
         if (!isFieldEmpty(domObject))
             isDate(domObject.value, 'error1', 'p2error7');
+
+        // notifier PIN or NIC
+        domObject = document.getElementById('notifying_authority_NICorPIN');
+        if (isFieldEmpty(domObject)) {
+            errormsg = errormsg + "\n" + document.getElementById('p2error1').value;
+        } else {
+            validatePINorNIC(domObject, 'error1', 'p2error5');
+        }
+
+        // notifier name
+        domObject = document.getElementById('notifyingAuthorityName');
+        if (isFieldEmpty(domObject)) {
+            errormsg = errormsg + "\n" + document.getElementById('p2error2').value;
+        }
+
+        // notifier adderss
+        domObject = document.getElementById('notifyingAuthorityAddress');
+        if (isFieldEmpty(domObject)) {
+            errormsg = errormsg + "\n" + document.getElementById('p2error4').value;
+        }
+        /*date related validations*/
+        domObject = document.getElementById('submitDatePicker');
+        if (isFieldEmpty(domObject)) {
+            errormsg = errormsg + "\n" + document.getElementById('p2error3').value;
+        } else {
+            isDate(domObject.value, 'error1', 'p2error6');
+        }
 
         if (notify < declarant) {
             errormsg = errormsg + "\n" + document.getElementById("error5").value;
@@ -319,8 +319,8 @@
         </td>
     </tr>
     <tr>
-        <td colspan="2">ප්‍රකාශකයා අත්සන්කල දිනය <s:label value="*" cssStyle="color:red;font-size:10pt"/>
-            <br>பிரதிக்கினையாளர் கையொப்பமிட்ட திகதி <br>Declaranat Signed Date
+        <td colspan="2">දැනුම් දෙන්නා අත්සන්කල දිනය<s:label value="*" cssStyle="color:red;font-size:10pt"/>
+            <br>Informant Signed Date Tamil<br>Informant Signed Date
         </td>
         <td colspan="5">
             <s:label value="YYYY-MM-DD" cssStyle="font-size:10px"/><br>

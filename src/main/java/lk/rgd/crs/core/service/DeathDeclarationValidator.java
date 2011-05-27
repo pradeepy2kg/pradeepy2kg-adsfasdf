@@ -165,9 +165,15 @@ public class DeathDeclarationValidator {
         }
 
         // checks whether the death person is a women bellow 49 years
+        if (checkWomanBellow49()) {
 
+        }
 
         return warnings;
+    }
+
+    private boolean checkWomanBellow49() {
+        return false;
     }
 
     private void checkInfantWarnings(DeathRegister dr, List<UserWarning> warnings, ResourceBundle rb) {
