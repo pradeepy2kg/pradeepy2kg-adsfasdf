@@ -395,7 +395,11 @@
         </td>
     </tr>
     <tr>
-        <td><label>ප්‍රාදේශීය ලේකමි කොටිඨාශය<br>பிரதேச செயலாளர் பிரிவு <br>Divisional Secretariat</label></td>
+        <td><label>
+            ප්‍රාදේශීය ලේකම් කොට්ඨාශය
+            <br/>பிரதேச செயளாளர் பிரிவு
+            <br/>Divisional Secretary Division
+        </label></td>
         <td colspan="6" class="table_reg_cell_01" id="table_reg_cell_01">
             <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
                       cssStyle="width:98.5%;"/>

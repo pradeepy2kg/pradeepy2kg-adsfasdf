@@ -242,7 +242,7 @@
                                               list="districtList"/></td>
                             </tr>
                             <tr>
-                                <td>Divisional Secretariat</td>
+                                <td>Divisional Secretary Division</td>
                                 <td><s:select id="adddivisionDsDivisionId" name="dsDivisionId"
                                               list="dsDivisionList"/></td>
                             </tr>
@@ -295,7 +295,7 @@
                                               list="districtList"/></td>
                             </tr>
                             <tr>
-                                <td>Divisional Secretariat</td>
+                                <td>Divisional Secretary Division</td>
                                 <td><s:select id="addMrDivisionDsDivisionId" name="dsDivisionId"
                                               list="dsDivisionList"/></td>
                             </tr>
@@ -382,7 +382,7 @@
                                                   list="districtList"/></td>
                                 </tr>
                                 <tr>
-                                    <td>Divisional Secretariat</td>
+                                    <td>Divisional Secretary Division</td>
                                     <td><s:select id="addLocDivisionDsDivisionId" name="dsDivisionId"
                                                   list="dsDivisionList"/></td>
                                 </tr>
@@ -441,7 +441,7 @@
                                               list="districtList"/></td>
                             </tr>
                             <tr>
-                                <td>Divisional Secretariat</td>
+                                <td>Divisional Secretary Division</td>
                                 <td><s:select id="addGnDivisionDsDivisionId" name="dsDivisionId"
                                               list="dsDivisionList"/></td>
                             </tr>
@@ -503,7 +503,7 @@
             <s:if test="pageType==3 ||pageType==4 || pageType==6|| pageType==7">   <%-- Shan added page 6--%>
                 <tr style="height:35px;">
                     <s:textfield name="dsDivisionId" cssStyle="visibility:hidden;"/>
-                    <td colspan="2">Divisional Secretariat</td>
+                    <td colspan="2">Divisional Secretary Division</td>
                     <td><s:label name="" value="%{dsDivisionEn}" cssStyle=" margin-left:15px;"/></td>
                 </tr>
             </s:if>
@@ -538,7 +538,7 @@
             <tr>
                 <td rowspan="3">
                     <s:if test="pageType==1">District</s:if>
-                    <s:if test="pageType==2">Divisional Secretariat</s:if>
+                    <s:if test="pageType==2">Divisional Secretary Division</s:if>
                     <s:if test="pageType==3">Registration Division</s:if>
                     <s:if test="pageType==4">Marriage Division</s:if>
                     <s:if test="pageType==5">Court</s:if>

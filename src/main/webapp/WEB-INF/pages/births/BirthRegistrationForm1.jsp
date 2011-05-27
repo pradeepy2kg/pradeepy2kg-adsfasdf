@@ -495,7 +495,11 @@ function maxLengthCalculate(id, max, divId) {
         <td colspan="6" class="table_reg_cell_01"><s:label value="%{#session.oldBdfForAdoption.districtName}"/></td>
     </tr>
     <tr>
-        <td><label>ප්‍රාදේශීය ලේකමි කොටිඨාශය<br>பிரதேச செயளாளர் பிரிவு <br>Divisional Secretariat</label></td>
+        <td><label>
+            ප්‍රාදේශීය ලේකම් කොට්ඨාශය
+            <br/>பிரதேச செயளாளர் பிரிவு
+            <br/>Divisional Secretary Division
+        </label></td>
         <td colspan="6" class="table_reg_cell_01"><s:label
                 value="%{#session.oldBdfForAdoption.dsDivisionName}"/></td>
     </tr>
@@ -528,14 +532,18 @@ function maxLengthCalculate(id, max, divId) {
         උපන් ස්ථානය පිළිබඳ විස්තර<s:label value="*" cssStyle="color:red;font-size:14pt;"/>
         <br>பிறந்த இடம் பற்றிய விபரம்
         <br>Particulars of Place of Birth</label></td>
-    <td><label>දිස්ත්‍රික්කය மாவட்டம் District</label></td>
+    <td><label>දිස්ත්‍රික්කය/  மாவட்டம் / District</label></td>
     <td colspan="6" class="table_reg_cell_01">
         <s:select id="districtId" name="birthDistrictId" list="districtList" value="birthDistrictId"
                   cssStyle="width:98.5%; width:240px;"/>
     </td>
 </tr>
 <tr>
-    <td><label>ප්‍රාදේශීය ලේකමි කොටිඨාශය/<br/>பிரதேச செயளாளா் பிரிவு/ <br/>Divisional Secretariat</label></td>
+    <td><label>
+        ප්‍රාදේශීය ලේකම් කොට්ඨාශය
+        <br/>பிரதேச செயளாளர் பிரிவு
+        <br/>Divisional Secretary Division
+    </label></td>
     <td colspan="6" class="table_reg_cell_01" id="table_reg_cell_01">
         <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
                   cssStyle="float:left;  width:240px;"/>

@@ -79,7 +79,6 @@
                 <tr>
                     <td style="width:60%"><label><span class="font-9">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span></label>
                     </td>
-                    <%--<td><s:label value="%{#request.register.bdfSerialNo}"/></td>--%>
                     <td><s:label name="bdId"/></td>
                 </tr>
             </table>
@@ -222,14 +221,10 @@
     </td>
 </tr>
 <tr height="35px">
-    <td rowspan="5" width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපන් ස්ථානය<br>பிறந்த
-        இடம்<br>
-        Place of Birth</label></td>
-    <td><label>දිස්ත්‍රික්කය
-        <br>
-        மாவட்டம்
-        <br>
-        District</label></td>
+    <td rowspan="5" width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+        උපන් ස්ථානය පිළිබඳ විස්තර<br>பிறந்த இடம் பற்றிய விபரம்<br>
+        Particulars of Place of Birth</label></td>
+    <td><label>දිස්ත්‍රික්කය/ மாவட்டம் District</label></td>
     <td colspan="6" class="table_reg_cell_01">
         <s:if test="#userPreferedLang == 'si'">
             <s:label
@@ -244,10 +239,11 @@
         </s:else></td>
 </tr>
 <tr height="35px">
-    <td width="200px"><label>D.S.කොට්ඨාශය <br>
-        பிரிவு
-        <br>
-        D.S. Division</label></td>
+    <td width="200px"><label>
+        ප්‍රාදේශීය ලේකම් කොට්ඨාශය
+        <br/>பிரதேச செயளாளர் பிரிவு
+        <br/>Divisional Secretary Division
+    </label></td>
     <td colspan="6" class="table_reg_cell_01" id="table_reg_cell_01"><s:if
             test="#userPreferedLang == 'si'">
         <s:label
