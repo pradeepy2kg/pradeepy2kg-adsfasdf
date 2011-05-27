@@ -680,10 +680,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             addActionError(getText("p1.invalid.Entry"));
             return ERROR;
         }
-        /*if (pageNo == 3) {
-            bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
-            bdfLateOrBelated = checkDateLateOrBelated(bdf);
-        }*/
         return SUCCESS;
     }
 

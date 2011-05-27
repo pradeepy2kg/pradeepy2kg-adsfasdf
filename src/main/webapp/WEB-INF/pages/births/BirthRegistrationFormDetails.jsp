@@ -5,7 +5,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script type="text/javascript">
     function initPage() {
-        document.getElementById('approveButtonId').disabled = true;
+        if (document.getElementById('approveButtonId') != null) {
+            document.getElementById('approveButtonId').disabled = true;
+        }
     }
     function enableApproval() {
         var clicked = document.getElementById('ignoreWarningsId').checked
