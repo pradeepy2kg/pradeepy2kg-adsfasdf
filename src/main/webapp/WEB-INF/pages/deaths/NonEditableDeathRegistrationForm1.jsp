@@ -337,8 +337,7 @@
         ශ්‍රී ලාංකිකයෙකු නම්<br/>இலங்கையராயின் <br/>If Sri Lankan
     </td>
     <td colspan="3">
-        අනන්‍යතා අංකය
-        <br>அடையாள எண்
+        අනන්‍යතා අංකය / அடையாள எண்
         <br>Identification Number
     </td>
     <td colspan="7" class="find-person">
@@ -597,6 +596,89 @@
     </td>
 </tr>
 </tbody>
+</table>
+
+<div class="font-9">
+    මියගියේ වයස අවු. 49ට අඩු කාන්තාවක් නම් පමණක් මෙම කොටස සම්පුර්ණ කල යුතුය
+    <br>இறந்த நபர் 49வயதிற்கு குறைந்த பெண்ணாயிருந்தால் மடடும் இப்பகுதி பூரணப்படுத்தப்படல்வேண்டும்
+    <br>Fill this section only If the departed is a woman below 49 years
+</div>
+
+<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin-bottom:10; margin-top:10;"
+       class="font-9">
+    <caption/>
+    <col width="4%"/>
+    <col width="66%"/>
+    <col width="15%"/>
+    <col width="15%"/>
+    <tbody>
+    <tr>
+        <td colspan="2">
+            මරණය සිදුවනවිට ඇය දරුවකු ලැබීමට (ගර්භනීව) සිටියේද? <br>
+            இறப்பு நிகழ்த பொழுது அவர் பிள்ளை பிறசவிக்க (கர்ப்பிணி) இருந்தாரா? <br>
+            Was she pregnant at time of death?
+        </td>
+        <td align="center" colspan="2">
+            <s:if test="session.deathRegister.deathPerson.pregnantAtTimeOfDeath == null">
+                ----
+            </s:if>
+            <s:elseif test="session.deathRegister.deathPerson.pregnantAtTimeOfDeath ==true">
+                <s:label value="%{getText('yes.label')}"/>
+            </s:elseif>
+            <s:else>
+                <s:label value="%{getText('no.label')}"/>
+            </s:else>
+        </td>
+    </tr>
+    <tr>
+        <td style="background:#cccccc;"></td>
+        <td>
+            මරණයට පෙර සති 6ක් (දින 42ක්) ඇතුලත දී ඇය විසින් දරුවකු ප්‍රසුත කරනු ලැබුවාද? <br>
+            இறப்பிற்கு முன் 6 கிழமைகளுக்குள் (42 நாட்களுக்கிடையில் ) அவர் மூலம் பிள்ளை பிரசவிக்கப்பட்டதா?<br>
+            Has she given birth in the previous 6 weeks (42 days) ?
+        </td>
+        <td align="center" colspan="2">
+            <s:if test="session.deathRegister.deathPerson.givenABirthWithInPreviouse6Weeks == null">
+                ----
+            </s:if>
+            <s:elseif test="session.deathRegister.deathPerson.givenABirthWithInPreviouse6Weeks ==true">
+                <s:label value="%{getText('yes.label')}"/>
+            </s:elseif>
+            <s:else>
+                <s:label value="%{getText('no.label')}"/>
+            </s:else>
+        </td>
+    </tr>
+    <tr>
+        <td style="background:#cccccc;"></td>
+        <td>
+            නැතහොත් ගබ්සාවක් සිදුවී තිබේද? / அல்லது கருக்கலைப்பு நடைப்பெற்றிருந்ததா?<br>
+            Has an abortion taken place?
+        </td>
+        <td align="center" colspan="2">
+            <s:if test="session.deathRegister.deathPerson.anAbortionTakenPlace == null">
+                ----
+            </s:if>
+            <s:elseif test="session.deathRegister.deathPerson.anAbortionTakenPlace ==true">
+                <s:label value="%{getText('yes.label')}"/>
+            </s:elseif>
+            <s:else>
+                <s:label value="%{getText('no.label')}"/>
+            </s:else>
+        </td>
+    </tr>
+    <tr>
+        <td style="background:#cccccc;"></td>
+        <td>
+            දරු ප්‍රසුතිය හෝ ගබ්සාව සිදුවුයේ මරණය සිදුවීමට දින කීයකට පෙරද?
+            <br>பிரசவம் அல்லது கருக்கலைப்பு நடைப்பெற்றது இறப்பு நடைப்பெறுவதற்கு எத்தனை நாட்களுக்கு முன்?
+            <br>If a birth or abortion took place, how many days before the death has it occurred?
+        </td>
+        <td colspan="2" align="left">
+            <s:label value="%{#session.deathRegister.deathPerson.daysBeforeAbortionOrBirth}"/>
+        </td>
+    </tr>
+    </tbody>
 </table>
 
 
