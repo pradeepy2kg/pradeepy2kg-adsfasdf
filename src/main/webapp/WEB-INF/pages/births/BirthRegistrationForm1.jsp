@@ -6,6 +6,7 @@
 <script src="/ecivil/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
+<script type="text/javascript" src="<s:url value="/js/transliterate.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 <s:if test="birthType.ordinal()==0">
     <%--still birth--%>
@@ -95,29 +96,37 @@ $(function() {
 
 
     $('img#childName').bind('click', function(evt3) {
-        var id = $("textarea#childFullNameOfficialLang").attr("value");
-        var wsMethod = "transliterate";
-        var soapNs = "http://translitwebservice.transliteration.icta.com/";
+        var text = $("textarea#childFullNameOfficialLang").attr("value");
+//        var wsMethod = "transliterate";
+//        var soapNs = "http://translitwebservice.transliteration.icta.com/";
+//
+//        var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
+//        soapBody.attr("xmlns:trans", soapNs);
+//        soapBody.appendChild(new SOAPObject('InputName')).val(id);
+//        soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
+//        soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
+//        soapBody.appendChild(new SOAPObject('Gender')).val('U');
+//
+//        //Create a new SOAP Request
+//        var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
+//
+//        //Lets send it
+//        SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
+//        SOAPClient.SendRequest(sr, processResponse1); //Send request to server and assign a callback
 
-        var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
-        soapBody.attr("xmlns:trans", soapNs);
-        soapBody.appendChild(new SOAPObject('InputName')).val(id);
-        soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
-        soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
-        soapBody.appendChild(new SOAPObject('Gender')).val('U');
 
-        //Create a new SOAP Request
-        var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
-
-        //Lets send it
-        SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
-        SOAPClient.SendRequest(sr, processResponse1); //Send request to server and assign a callback
+        $("textarea#childFullNameEnglish").val(translate(text, 'M'));
     });
 
-    function processResponse1(respObj) {
+    /*function processResponse1(respObj) {
         //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
-    };
+        $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].
+        return[0].Text
+    )
+        ;
+    }
+
+    ;*/
 
     $('img#place').bind('click', function(evt4) {
         var id = $("input#placeOfBirth").attr("value");
@@ -146,7 +155,10 @@ $(function() {
 
     function processResponse2(respObj) {
         //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
+        $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].
+        return[0].Text
+    )
+        ;
     }
 });
 
@@ -366,7 +378,7 @@ function maxLengthCalculate(id, max, divId) {
                                                                     alt=""/><br>
             <s:if test="birthType.ordinal() == 1 || birthType.ordinal() == 3">
                 <label>උපතක් ලියාපදිංචි කිරීම සඳහා විස්තර
-                    <br>பிறப்பொன்றை  பதிவு செய்வதற்கான  விபரங்கள்
+                    <br>பிறப்பொன்றை பதிவு செய்வதற்கான விபரங்கள்
                     <br>Particulars for Registration of a Birth</label>
             </s:if>
             <s:elseif test="birthType.ordinal() == 0">
@@ -387,7 +399,8 @@ function maxLengthCalculate(id, max, divId) {
                     <s:fielderror name="duplicateSerialNumberError" cssStyle="color:red;font-size:9pt;"/>
                 </tr>
                 <tr>
-                    <td><label><span class="font-8">අනුක්‍රමික අංකය<s:label value="*" cssStyle="color:red;font-size:10pt;"/>
+                    <td><label><span class="font-8">අනුක්‍රමික අංකය<s:label value="*"
+                                                                            cssStyle="color:red;font-size:10pt;"/>
                         <br>தொடர் இலக்கம்<br>Serial Number</span></label>
                     </td>
                     <td>
@@ -532,7 +545,7 @@ function maxLengthCalculate(id, max, divId) {
         උපන් ස්ථානය පිළිබඳ විස්තර<s:label value="*" cssStyle="color:red;font-size:14pt;"/>
         <br>பிறந்த இடம் பற்றிய விபரம்
         <br>Particulars of Place of Birth</label></td>
-    <td><label>දිස්ත්‍රික්කය/  மாவட்டம் / District</label></td>
+    <td><label>දිස්ත්‍රික්කය/ மாவட்டம் / District</label></td>
     <td colspan="6" class="table_reg_cell_01">
         <s:select id="districtId" name="birthDistrictId" list="districtList" value="birthDistrictId"
                   cssStyle="width:98.5%; width:240px;"/>
@@ -613,7 +626,8 @@ function maxLengthCalculate(id, max, divId) {
 </s:if>
 <tr>
     <td class="font-9" colspan="2"><label> උප්පැන්න
-        සහතිකය නිකුත් කල යුතු භාෂාව <br>பிறப்புச் சான்றிதழ் வழங்கப்பட வேண்டிய  மொழி<br>Preferred Language for Birth Certificate </label>
+        සහතිකය නිකුත් කල යුතු භාෂාව <br>பிறப்புச் சான்றிதழ் வழங்கப்பட வேண்டிய மொழி<br>Preferred Language for Birth
+        Certificate </label>
     </td>
     <td colspan="6">
         <s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'தமிழ்'}" name="register.preferredLanguage"
@@ -635,7 +649,7 @@ function maxLengthCalculate(id, max, divId) {
         <s:if test="birthType.ordinal() == 1 || birthType.ordinal() == 3">
             <td colspan="2">
                 <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපත්
-                    බර<br>பிறப்பு  நிறை <br>Birth
+                    බර<br>பிறப்பு நிறை <br>Birth
                     Weight (kg)</label>
             </td>
         </s:if>
