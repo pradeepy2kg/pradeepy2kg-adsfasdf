@@ -7,27 +7,27 @@ import java.util.*;
 
 /**
  * A better Transliterator for use in Sri Lanka
- *
+ * <p/>
  * Copyright (c) 2010 Asankha Perera (http://adroitlogic.org). All Rights Reserved.
- *
+ * <p/>
  * GNU Affero General Public License Usage
- *
+ * <p/>
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General
  * Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option)
  * any later version.
- *
+ * <p/>
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
  * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for
  * more details.
- *
+ * <p/>
  * You should have received a copy of the GNU Affero General Public License along with this program
  * If not, see http://www.gnu.org/licenses/agpl-3.0.html
  *
  * @author asankha perera (asankha AT gmail DOT com)
  * @since 6th November 2010
- *
- * Reuses rules from the ICTA transliterator which had severe code/architectural
- * issues making it unsuitable for any real work
+ *        <p/>
+ *        Reuses rules from the ICTA transliterator which had severe code/architectural
+ *        issues making it unsuitable for any real work
  */
 public class Transliterate {
 
@@ -36,14 +36,14 @@ public class Transliterate {
 
     public static final int ENGLISH = 0;
     public static final int SINHALA = 1;
-    public static final int TAMIL   = 2;
+    public static final int TAMIL = 2;
 
     public static final int UNKNOWN = 0;
     public static final int MALE = 1;
     public static final int FEMALE = 2;
 
-    private static final String END_VOVELS   = ".aeiou#";
-    private static final String START_VOVELS = ".aeiou"; 
+    private static final String END_VOVELS = ".aeiou#";
+    private static final String START_VOVELS = ".aeiou";
 
     private static final Map<String, String> engToSinNames = new HashMap<String, String>();
     private static final Map<String, String> engToSinOther = new HashMap<String, String>();
@@ -112,20 +112,20 @@ public class Transliterate {
 
         System.out.println("java -jar transliterate.jar [-s si|ta|en] [-t si|ta|en] [-g m|f|u]");
 
-        for (int i=0; i<args.length; i++) {
+        for (int i = 0; i < args.length; i++) {
             if (args[i].equals("-s")) {
-                if (i+1 < args.length) {
-                    src = "si".equals(args[i+1]) ? SINHALA : "ta".equals(args[i+1]) ? TAMIL : ENGLISH;
+                if (i + 1 < args.length) {
+                    src = "si".equals(args[i + 1]) ? SINHALA : "ta".equals(args[i + 1]) ? TAMIL : ENGLISH;
                 }
             }
             if (args[i].equals("-t")) {
-                if (i+1 < args.length) {
-                    dst = "si".equals(args[i+1]) ? SINHALA : "ta".equals(args[i+1]) ? TAMIL : ENGLISH;
+                if (i + 1 < args.length) {
+                    dst = "si".equals(args[i + 1]) ? SINHALA : "ta".equals(args[i + 1]) ? TAMIL : ENGLISH;
                 }
             }
             if (args[i].equals("-g")) {
-                if (i+1 < args.length) {
-                    gender = "m".equals(args[i+1]) ? MALE : "f".equals(args[i+1]) ? FEMALE : UNKNOWN;
+                if (i + 1 < args.length) {
+                    gender = "m".equals(args[i + 1]) ? MALE : "f".equals(args[i + 1]) ? FEMALE : UNKNOWN;
                 }
             }
         }
@@ -136,7 +136,8 @@ public class Transliterate {
             while ((s = sc.nextLine()) != null) {
                 System.out.println(translateLine(s, src, dst, gender));
             }
-        } catch (NoSuchElementException ignore) {}
+        } catch (NoSuchElementException ignore) {
+        }
     }
 
     private static lk.transliterate.LangToPhonetic[] loadLangToPhoneticFile(String filename) throws Exception {
@@ -195,13 +196,16 @@ public class Transliterate {
             }
         }
         in.close();
+
+        String si = "චතුරංග ගිහාන් චන්දිමාල් විතාන";
+        System.out.println(translateLine(si, SINHALA, ENGLISH, MALE));
     }
 
     //----------------------------- translate a phrase from one language to another ------------------------------------
     public static String translateLine(String s, int src, int dst, int gender) {
 
         if (DEBUG) {
-            System.out.println("Src : " + src + " Target : " + dst + " Gender : " + gender);    
+            System.out.println("Src : " + src + " Target : " + dst + " Gender : " + gender);
         }
 
         StringTokenizer st = new StringTokenizer(s.toLowerCase(), " ,\\[]#'\"()", true);
@@ -287,14 +291,14 @@ public class Transliterate {
             System.out.println("Invalid language pair");
             return null;
         }
-        
+
         String result = null;
         if (gender == UNKNOWN) {
             result = otherMap.get(s);
         } else {
             result = namesMap.get(s);
         }
-        
+
         if (result != null) {
             return result;
         } else {
@@ -378,10 +382,10 @@ public class Transliterate {
     private static void appendPhoneticWithCorrection(StringBuilder out, String ph) {
         final int len = out.length();
         if (len > 0) {
-            String lastChar = out.substring(len-1);
+            String lastChar = out.substring(len - 1);
             if (END_VOVELS.indexOf(lastChar) == -1) {   // not a vowel
                 if (ph.length() > 0) {
-                    if (START_VOVELS.indexOf(ph.substring(0,1)) == -1) { // not a vowel
+                    if (START_VOVELS.indexOf(ph.substring(0, 1)) == -1) { // not a vowel
                         out.append(".a");
                     }
                 } else {

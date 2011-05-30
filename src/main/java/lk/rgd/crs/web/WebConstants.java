@@ -1,7 +1,5 @@
 package lk.rgd.crs.web;
 
-import java.util.List;
-
 /**
  * This class defines all constants used in the Web modules
  *
@@ -83,5 +81,7 @@ public class WebConstants {
     public static final String STAT_DEATH = "death";
     public static final String STAT_MARRIAGE = "marriage";
 
-
+    public static final String TEXT_TO_TRANS = "text";
+    public static final String GENDER = "gender";
+    public static final String TEXT_TRANSLATED = "translated";
 }
