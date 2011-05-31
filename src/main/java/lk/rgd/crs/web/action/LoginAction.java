@@ -186,7 +186,6 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
             /* check if password is expired */
             String result = checkUserExpiry(user);
-
             if (result.equals(SUCCESS)) {
                 if ((result + userRole).equals("successRG") || (result + userRole).equals("successARG")) {
                     populateLists(user, WebConstants.USER_ARG);

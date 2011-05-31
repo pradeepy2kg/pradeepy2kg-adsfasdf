@@ -160,6 +160,7 @@ public class UserManagerImpl implements UserManager {
             }
 
             user.setStatus(User.State.INACTIVE);
+            user.getLifeCycleInfo().setActive(false);
 
             if (userId == null) {
                 //validate user object

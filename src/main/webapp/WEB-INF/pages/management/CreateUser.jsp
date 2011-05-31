@@ -388,7 +388,7 @@
                 <tr>
                     <td style="width:75%">
                         <div>
-                            <s:label value="Change User Password"/>
+                            <s:label value="Generate and assign random password"/>
                             <s:checkbox name="changePassword"/>
                         </div>
                     </td>

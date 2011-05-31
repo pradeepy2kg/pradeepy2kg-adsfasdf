@@ -88,6 +88,7 @@
                     <thead>
                     <tr>
                         <th><s:label name="name" value="    "/></th>
+                        <th><s:label name="name" value="User Id"/></th>
                         <th><s:label name="name" value="Name"/></th>
                         <th><s:label name="edit" value="Edit User"/></th>
                         <th><s:label name="edit" value="Delete User"/></th>
@@ -98,51 +99,54 @@
                     </thead>
                     <tbody>
                     <s:iterator status="userListStatus" value="#session.viewUsers">
-                        <tr>
-                            <td><s:property value="%{#userListStatus.count}"/></td>
-                            <td><s:property value="userName"/></td>
-                            <s:url id="editSelected" action="eprInitUserCreation.do">
-                                <s:param name="userId" value="userId"/>
-                            </s:url>
-                            <td align="center"><s:a href="%{editSelected}"><img
-                                    src="<s:url value='/images/edit.png'/>" width="25" height="25"
-                                    border="none"/></s:a>
-                            </td>
-                            <s:url id="deleteSelected" action="eprInactiveUsers.do">
-                                <s:param name="userId" value="userId"/>
-                            </s:url>
-                            <td align="center">
-                                <s:a href="%{deleteSelected}"><img
-                                        src="<s:url value='/images/delete.gif'/>" width="25" height="25"
+                        <s:if test="userId !='system'">
+                            <tr>
+                                <td><s:property value="%{#userListStatus.count}"/></td>
+                                <td><s:property value="userId"/></td>
+                                <td><s:property value="userName"/></td>
+                                <s:url id="editSelected" action="eprInitUserCreation.do">
+                                    <s:param name="userId" value="userId"/>
+                                </s:url>
+                                <td align="center"><s:a href="%{editSelected}"><img
+                                        src="<s:url value='/images/edit.png'/>" width="25" height="25"
                                         border="none"/></s:a>
-                            </td>
-                            <s:url id="activeSelected" action="eprActiveUsers.do">
-                                <s:param name="userId" value="userId"/>
-                            </s:url>
-                            <s:url id="inactiveSelected" action="eprDoInactiveUsers.do">
-                                <s:param name="userId" value="userId"/>
-                            </s:url>
-                            <td align="center">
-                                <s:if test="!(lifeCycleInfo.active)">
-                                    <s:a href="%{activeSelected}">
-                                        <img src="<s:url value='/images/approve.gif'/>" width="25" height="25"
-                                             border="none"/></s:a>
-                                </s:if>
-                                <s:if test="(lifeCycleInfo.active)">
-                                    <s:a href="%{inactiveSelected}">
-                                        <img src="<s:url value='/images/reject.gif'/>" width="25" height="25"
-                                             border="none"/></s:a>
-                                </s:if>
-                            </td>
+                                </td>
+                                <s:url id="deleteSelected" action="eprInactiveUsers.do">
+                                    <s:param name="userId" value="userId"/>
+                                </s:url>
+                                <td align="center">
+                                    <s:a href="%{deleteSelected}"><img
+                                            src="<s:url value='/images/delete.gif'/>" width="25" height="25"
+                                            border="none"/></s:a>
+                                </td>
+                                <s:url id="activeSelected" action="eprActiveUsers.do">
+                                    <s:param name="userId" value="userId"/>
+                                </s:url>
+                                <s:url id="inactiveSelected" action="eprDoInactiveUsers.do">
+                                    <s:param name="userId" value="userId"/>
+                                </s:url>
+                                <td align="center">
+                                    <s:if test="!(lifeCycleInfo.active)">
+                                        <s:a href="%{activeSelected}">
+                                            <img src="<s:url value='/images/reject.gif'/>" width="25" height="25"
+                                                 border="none"/> </s:a>
+                                    </s:if>
+                                    <s:if test="(lifeCycleInfo.active)">
+                                        <s:a href="%{inactiveSelected}">
+                                            <img src="<s:url value='/images/approve.gif'/>" width="25" height="25"
+                                                 border="none"/></s:a>
+                                    </s:if>
+                                </td>
 
-                            <s:url id="assignedUserLocation" action="eprInitAssignedUserLocation.do">
-                                <s:param name="userId" value="userId"/>
-                            </s:url>
-                            <td align="center"><s:a href="%{assignedUserLocation}"><img
-                                    src="<s:url value='/images/edit.png'/>" width="25" height="25"
-                                    border="none"/></s:a>
-                            </td>
-                        </tr>
+                                <s:url id="assignedUserLocation" action="eprInitAssignedUserLocation.do">
+                                    <s:param name="userId" value="userId"/>
+                                </s:url>
+                                <td align="center"><s:a href="%{assignedUserLocation}"><img
+                                        src="<s:url value='/images/edit.png'/>" width="25" height="25"
+                                        border="none"/></s:a>
+                                </td>
+                            </tr>
+                        </s:if>
                     </s:iterator>
                     </tbody>
                 </table>
