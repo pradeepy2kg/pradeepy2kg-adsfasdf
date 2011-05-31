@@ -68,7 +68,7 @@
     <s:form action="eprAssignedUserLocation.do">
         <table cellpadding="0" cellspacing="0" style="" align="center" id="">
             <tr>
-                <td colspan="1" style="height:30px;"><s:label value="userId" cssClass="user-locaton-outer-lable"/></td>
+                <td colspan="1" style="height:30px;"><s:label value="UserId" cssClass="user-locaton-outer-lable"/></td>
                 <td colspan="2"><s:label name="userId" cssClass="user-locaton-outer-lable"/></td>
             </tr>
             <tr>
@@ -84,7 +84,7 @@
                 </td>
             </tr>
             <tr>
-                <td rowspan="2"><s:label value="sign" cssClass="user-locaton-outer-lable"/></td>
+                <td rowspan="2"><s:label value="Sign" cssClass="user-locaton-outer-lable"/></td>
                 <td><s:label value="Birth Certificate" cssClass="user-locaton-outer-lable"/><s:checkbox
                         name="userLocation.signBirthCert"
                         cssStyle="float:right;"/></td>
@@ -190,31 +190,31 @@
                                 </s:url>
                                 <td align="center">
                                     <s:if test="primaryLocation==location.locationUKey">
-                                        <s:a href="%{editPLocation}"><img
+                                        <s:a href="%{editPLocation}" ><img
                                                 src="<s:url value='/images/red_key.png'/>" width="25" height="25"
                                                 border="none"/></s:a>
                                     </s:if>
                                     <s:else>
-                                        <s:a href="%{editPLocation}"><img
+                                        <s:a href="%{editPLocation}" title="Make Primary Location"><img
                                                 src="<s:url value='/images/yellow_key.png'/>" width="25" height="25"
                                                 border="none"/></s:a>
                                     </s:else>
                                 </td>
                                 <td align="center">
                                     <s:if test="lifeCycleInfo.active">
-                                        <s:a href="%{inactiveSelected}"><img
-                                                src="<s:url value='/images/reject.gif'/>" width="25" height="25"
+                                        <s:a href="%{inactiveSelected}" title="Make  Inactive"><img
+                                                src="<s:url value='/images/approve.gif'/>" width="25" height="25"
                                                 border="none"/></s:a>
                                     </s:if>
                                     <s:else>
-                                        <s:a href="%{activeSelected}"><img
-                                                src="<s:url value='/images/approve.gif'/>" width="25" height="25"
+                                        <s:a href="%{activeSelected}" title="Make  Active"><img
+                                                src="<s:url value='/images/reject.gif'/>" width="25" height="25"
                                                 border="none"/></s:a>
                                     </s:else>
                                 </td>
                                 <td align="center">
                                     <s:if test="lifeCycleInfo.active">
-                                        <s:a href="%{editSelected}"><img
+                                        <s:a href="%{editSelected}" title="Edit"><img
                                                 src="<s:url value='/images/edit.png'/>" width="25" height="25"
                                                 border="none"/></s:a>
                                     </s:if>
