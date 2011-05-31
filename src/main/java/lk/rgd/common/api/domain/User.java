@@ -161,7 +161,7 @@ public class User implements Serializable {
     /**
      * @see State
      */
-    @Column(nullable = false)
+   @Column(nullable = false, columnDefinition = "smallint not null default 1")
     private State status;
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
