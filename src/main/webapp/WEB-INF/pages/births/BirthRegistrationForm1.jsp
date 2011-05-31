@@ -6,7 +6,6 @@
 <script src="/ecivil/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
-<script type="text/javascript" src="<s:url value="/js/transliterate.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 <s:if test="birthType.ordinal()==0">
     <%--still birth--%>
@@ -97,69 +96,27 @@ $(function() {
 
     $('img#childName').bind('click', function(evt3) {
         var text = $("textarea#childFullNameOfficialLang").attr("value");
-//        var wsMethod = "transliterate";
-//        var soapNs = "http://translitwebservice.transliteration.icta.com/";
-//
-//        var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
-//        soapBody.attr("xmlns:trans", soapNs);
-//        soapBody.appendChild(new SOAPObject('InputName')).val(id);
-//        soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
-//        soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
-//        soapBody.appendChild(new SOAPObject('Gender')).val('U');
-//
-//        //Create a new SOAP Request
-//        var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
-//
-//        //Lets send it
-//        SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
-//        SOAPClient.SendRequest(sr, processResponse1); //Send request to server and assign a callback
 
-
-        $("textarea#childFullNameEnglish").val(translate(text, 'M'));
+        $.post('/ecivil/TransliterationService', {text:text,gender:'M'},
+                function(data) {
+                    if (data != null) {
+                        var s = data.translated;
+                        $("textarea#childFullNameEnglish").val(s);
+                    }
+                });
     });
-
-    /*function processResponse1(respObj) {
-        //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].
-        return[0].Text
-    )
-        ;
-    }
-
-    ;*/
 
     $('img#place').bind('click', function(evt4) {
-        var id = $("input#placeOfBirth").attr("value");
-        var wsMethod = "transliterate";
-        var soapNs = "http://translitwebservice.transliteration.icta.com/";
+        var text = $("input#placeOfBirth").attr("value");
 
-        var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
-        soapBody.attr("xmlns:trans", soapNs);
-        soapBody.appendChild(new SOAPObject('InputName')).val(id);
-        soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
-        soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
-        //soapBody.appendChild(new SOAPObject('Gender')).val('U');
-
-        //added by shan [ NOT Tested ] -> start
-        var genderVal = $("select#genderList").attr("value");
-        soapBody.appendChild(new SOAPObject('Gender')).val(genderVal);
-        //-> end
-
-        //Create a new SOAP Request
-        var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
-
-        //Lets send it
-        SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
-        SOAPClient.SendRequest(sr, processResponse2); //Send request to server and assign a callback
+        $.post('/ecivil/TransliterationService', {text:text,gender:'U'},
+                function(data) {
+                    if (data != null) {
+                        var s = data.translated;
+                        $("input#placeOfBirthEnglish").val(s);
+                    }
+                });
     });
-
-    function processResponse2(respObj) {
-        //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].
-        return[0].Text
-    )
-        ;
-    }
 });
 
 var errormsg = "";

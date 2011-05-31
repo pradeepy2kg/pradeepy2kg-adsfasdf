@@ -7,27 +7,27 @@ import java.util.*;
 
 /**
  * A better Transliterator for use in Sri Lanka
- * <p/>
+ *
  * Copyright (c) 2010 Asankha Perera (http://adroitlogic.org). All Rights Reserved.
- * <p/>
+ *
  * GNU Affero General Public License Usage
- * <p/>
+ *
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General
  * Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option)
  * any later version.
- * <p/>
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
  * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for
  * more details.
- * <p/>
+ *
  * You should have received a copy of the GNU Affero General Public License along with this program
  * If not, see http://www.gnu.org/licenses/agpl-3.0.html
  *
  * @author asankha perera (asankha AT gmail DOT com)
  * @since 6th November 2010
- *        <p/>
- *        Reuses rules from the ICTA transliterator which had severe code/architectural
- *        issues making it unsuitable for any real work
+ *
+ * Reuses rules from the ICTA transliterator which had severe code/architectural
+ * issues making it unsuitable for any real work
  */
 public class Transliterate {
 
@@ -36,13 +36,13 @@ public class Transliterate {
 
     public static final int ENGLISH = 0;
     public static final int SINHALA = 1;
-    public static final int TAMIL = 2;
+    public static final int TAMIL   = 2;
 
     public static final int UNKNOWN = 0;
     public static final int MALE = 1;
     public static final int FEMALE = 2;
 
-    private static final String END_VOVELS = ".aeiou#";
+    private static final String END_VOVELS   = ".aeiou#";
     private static final String START_VOVELS = ".aeiou";
 
     private static final Map<String, String> engToSinNames = new HashMap<String, String>();
@@ -196,9 +196,6 @@ public class Transliterate {
             }
         }
         in.close();
-
-        String si = "චතුරංග ගිහාන් චන්දිමාල් විතාන";
-        System.out.println(translateLine(si, SINHALA, ENGLISH, MALE));
     }
 
     //----------------------------- translate a phrase from one language to another ------------------------------------

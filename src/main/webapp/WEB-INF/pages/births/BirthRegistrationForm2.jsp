@@ -76,54 +76,28 @@ $(function() {
 
     /*trans iterators for father and mothers name*/
     $('img#name_english_father').bind('click', function(evt4) {
-        var id = $("textarea#fatherFullName").attr("value");
-        var wsMethod = "transliterate";
-        var soapNs = "http://translitwebservice.transliteration.icta.com/";
+        var text = $("textarea#fatherFullName").attr("value");
 
-        var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
-        soapBody.attr("xmlns:trans", soapNs);
-        soapBody.appendChild(new SOAPObject('InputName')).val(id);
-        soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
-        soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
-        soapBody.appendChild(new SOAPObject('Gender')).val('M');
-
-        //Create a new SOAP Request
-        var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
-
-        //Lets send it
-        SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
-        SOAPClient.SendRequest(sr, processResponse2); //Send request to server and assign a callback
+        $.post('/ecivil/TransliterationService', {text:text,gender:'M'},
+                function(data) {
+                    if (data != null) {
+                        var s = data.translated;
+                        $("textarea#fatherFullNameInEnglish").val(s);
+                    }
+                });
     });
 
     $('img#name_english_mother').bind('click', function(evt4) {
-        var id = $("textarea#motherFullName").attr("value");
-        var wsMethod = "transliterate";
-        var soapNs = "http://translitwebservice.transliteration.icta.com/";
+        var text = $("textarea#motherFullName").attr("value");
 
-        var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
-        soapBody.attr("xmlns:trans", soapNs);
-        soapBody.appendChild(new SOAPObject('InputName')).val(id);
-        soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
-        soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
-        soapBody.appendChild(new SOAPObject('Gender')).val('F');
-
-        //Create a new SOAP Request
-        var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
-
-        //Lets send it
-        SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
-        SOAPClient.SendRequest(sr, processResponse1); //Send request to server and assign a callback
+        $.post('/ecivil/TransliterationService', {text:text,gender:'F'},
+                function(data) {
+                    if (data != null) {
+                        var s = data.translated;
+                        $("textarea#motherFullNameInEnglish").val(s);
+                    }
+                });
     });
-
-    function processResponse1(respObj) {
-        //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("textarea#motherFullNameInEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
-    }
-
-    function processResponse2(respObj) {
-        //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("textarea#fatherFullNameInEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
-    }
 });
 
 $(function() {
