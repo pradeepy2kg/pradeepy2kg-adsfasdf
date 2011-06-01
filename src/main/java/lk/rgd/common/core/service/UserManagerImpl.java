@@ -132,7 +132,8 @@ public class UserManagerImpl implements UserManager {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public boolean createUser(User user, User adminUser, String userId, String roleId, int[] assignedDistricts, int[] assDivisions, boolean changePassword, String randomPassword) {
+    public boolean createUser(User user, User adminUser, String userId, String roleId, int[] assignedDistricts,
+        int[] assDivisions, boolean changePassword, String randomPassword) {
 
         boolean isNewUser = false;
 

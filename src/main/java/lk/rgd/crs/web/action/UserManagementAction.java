@@ -259,6 +259,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
             primaryLocation = prmLocation.getLocationUKey();
         }
         populateLocationListOnly(user);
+        roleId = user.getRole().getName();
         //populate();                                                                                                     // todo shan
         return SUCCESS;
     }
@@ -449,9 +450,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
             case 7:
                 districtEn = districtDAO.getNameByPK(userDistrictId, AppConstants.ENGLISH);
                 dsDivisionEn = dsDivisionDAO.getNameByPK(dsDivisionId, AppConstants.ENGLISH);
-/*
-                                     gnDivisionNameList=gnDivisionDAO.getAllGNDivisions();
-*/
+                gnDivisionNameList = gnDivisionDAO.getAllGNDivisionByDsDivisionKey(dsDivisionId);
                 if (setNull) {
                     gnDivision = null;
                 }
@@ -481,6 +480,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 dataManagementService.activateOrInactivateLocation(locationId, activate, currentUser);
                 break;
             case 7:
+                // TODO
                 dataManagementService.activateOrInactivateLocation(gnDivisionId, activate, currentUser);
                 break;
 

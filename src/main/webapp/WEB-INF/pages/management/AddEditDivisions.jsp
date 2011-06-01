@@ -632,10 +632,9 @@
         <table id="users-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
             <thead>
             <tr>
-                <th style="width:2%"><s:label name="name" value="    "/></th>
+                <th style="width:5%"><s:label name="name" value="    "/></th>
                 <th style="width:70%"><s:label name="name" value="Name"/></th>
-                <th style="width:10%"><s:label name="inactive" value=""/></th>
-                <th style="width:10%"><s:label name="active" value=""/></th>
+                <th style="width:10%"><s:label name="inactive" value="Active"/></th>
                 <s:set name="allowEdit" value="true"/>
             </tr>
             </thead>
@@ -762,15 +761,15 @@
                     </s:if>
                     <td align="center">
                         <s:if test="active || lifeCycleInfo.active">
-                            <s:a href="%{inactiveSelected}"><img
-                                    src="<s:url value='/images/reject.gif'/>" width="25" height="25"
+                            <s:a href="%{inactiveSelected}" title="Inactivate"><img
+                                    src="<s:url value='/images/approve.gif'/>" width="25" height="25"
                                     border="none"/></s:a>
                         </s:if>
-                    </td>
-                    <td align="center"><s:else>
-                        <s:a href="%{activeSelected}"><img
-                                src="<s:url value='/images/approve.gif'/>" width="25" height="25"
-                                border="none"/></s:a> </s:else>
+                        <s:else>
+                            <s:a href="%{activeSelected}" title="Activate"><img
+                                    src="<s:url value='/images/reject.gif'/>" width="25" height="25"
+                                    border="none"/></s:a>
+                        </s:else>
                     </td>
                 </tr>
             </s:iterator>
