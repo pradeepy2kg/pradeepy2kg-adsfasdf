@@ -113,7 +113,7 @@ public class BDDivisionDAOImpl extends BaseDAO implements BDDivisionDAO, Preload
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
-    public List<BDDivision> getAllDSDivisionByDsDivisionKey(int dsDivisionId) {
+    public List<BDDivision> getAllBDDivisionByDsDivisionKey(int dsDivisionId) {
         Query q = em.createNamedQuery("get.all.divisions.by.dsDivisionId");
         q.setParameter("dsDivisionId",dsDivisionId);                                 
         return q.getResultList();

@@ -56,4 +56,11 @@ public interface MRDivisionDAO {
     public List<MRDivision> findAll();
 
     public MRDivision getMRDivisionByCode(int mrDivisionId, DSDivision dsDivision);
+
+    /**
+     * Return all MRDivisions under the specified DSDivision
+     * @param dsDivisionId
+     * @return all MRDivisions under the specified DSDivision
+     */
+    public List<MRDivision> getAllMRDivisionsByDSDivisionKey(int dsDivisionId);
 }

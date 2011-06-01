@@ -87,4 +87,12 @@ public interface LocationDAO {
      * @return Map<Integer, String> of locations that have given DSDivision ID
      */
     public Map<Integer, String> getLocationByDSDivisionID(int dsDivisionId, String lang);
+
+    /**
+     * Return all Locations in specified DSDivision
+     *
+     * @param dsDivisionId
+     * @return all Locations in DSDivision
+     */
+    public List<Location> getAllLocationsByDSDivisionKey(int dsDivisionId);
 }

@@ -174,7 +174,7 @@
                 <col/>
                 <tbody>
                 <tr style="height:15px;">
-                    <td style="font-size:13pt;" colspan="4">DS Division List</td>
+                    <td style="font-size:13pt;" colspan="4">Divisional Secretary Division List</td>
 
                 </tr>
                 <s:form name="editDsDivisions" action="eprInitDivisionList.do" method="POST">
@@ -225,7 +225,7 @@
                 <col/>
                 <tbody>
                 <tr>
-                    <td style="font-size:13pt;" colspan="4">Division List</td>
+                    <td style="font-size:13pt;" colspan="4">Birth Death Registration Division List</td>
                 </tr>
                 <tr>
                     <td colspan="4">
@@ -278,7 +278,7 @@
                 <col/>
                 <tbody>
                 <tr>
-                    <td style="font-size:13pt;" colspan="4">MRDivision List</td>
+                    <td style="font-size:13pt;" colspan="4">Marriage Registration Division List</td>
                 </tr>
                 <tr>
                     <td colspan="4">
@@ -424,7 +424,7 @@
                 <col/>
                 <tbody>
                 <tr>
-                    <td style="font-size:13pt;" colspan="4">Grama Niladhari List</td>
+                    <td style="font-size:13pt;" colspan="4">Grama Niladhari Division List</td>
                 </tr>
                 <tr>
                     <td colspan="4">

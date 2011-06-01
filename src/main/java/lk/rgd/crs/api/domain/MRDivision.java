@@ -23,7 +23,9 @@ import java.io.Serializable;
 @NamedQueries({
         @NamedQuery(name = "findAllMRDivisions", query = "SELECT d FROM MRDivision d"),
         @NamedQuery(name = "get.mrDivision.by.code", query = "SELECT d FROM MRDivision d " +
-                "WHERE d.divisionId=:mrDivisionId AND d.dsDivision=:dsDivision")
+                "WHERE d.divisionId=:mrDivisionId AND d.dsDivision=:dsDivision"),
+        @NamedQuery(name = "get.all.mrDivisions.by.dsDivisionId", query = "SELECT d FROM MRDivision d " +
+                "WHERE d.dsDivision.dsDivisionUKey =:dsDivisionId ")
 })
 @Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
 public class MRDivision implements Serializable {

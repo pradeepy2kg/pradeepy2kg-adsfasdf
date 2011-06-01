@@ -418,7 +418,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
             case 3:
                 districtEn = districtDAO.getNameByPK(userDistrictId, "en");
                 dsDivisionEn = dsDivisionDAO.getNameByPK(dsDivisionId, "en");
-                bdDivisionNameList = bdDivisionDAO.getAllDSDivisionByDsDivisionKey(dsDivisionId);
+                bdDivisionNameList = bdDivisionDAO.getAllBDDivisionByDsDivisionKey(dsDivisionId);
                 if (setNull) {
                     bdDivision = null;
                 }
@@ -426,7 +426,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
             case 4:
                 districtEn = districtDAO.getNameByPK(userDistrictId, "en");
                 dsDivisionEn = dsDivisionDAO.getNameByPK(dsDivisionId, "en");
-                mrDivisionNameList = mrDivisionDAO.findAll();
+                mrDivisionNameList = mrDivisionDAO.getAllMRDivisionsByDSDivisionKey(dsDivisionId);
                 if (setNull) {
                     mrDivision = null;
                 }
@@ -441,7 +441,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
             case 6:
                 districtEn = districtDAO.getNameByPK(userDistrictId, "en");
                 dsDivisionEn = dsDivisionDAO.getNameByPK(dsDivisionId, "en");
-                locationNameList = locationDAO.getAllLocations();
+                locationNameList = locationDAO.getAllLocationsByDSDivisionKey(dsDivisionId);
                 logger.debug("Size of the loaded Lacation List is :{}", locationNameList.size());
                 if (setNull) {
                     location = null;
