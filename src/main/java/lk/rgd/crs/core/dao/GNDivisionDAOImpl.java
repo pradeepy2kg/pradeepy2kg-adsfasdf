@@ -2,19 +2,21 @@ package lk.rgd.crs.core.dao;
 
 import lk.rgd.AppConstants;
 import lk.rgd.ErrorCodes;
-import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.api.domain.User;
 import lk.rgd.common.core.dao.BaseDAO;
 import lk.rgd.common.core.dao.PreloadableDAO;
 import lk.rgd.crs.api.dao.GNDivisionDAO;
 import lk.rgd.crs.api.domain.GNDivision;
-import lk.rgd.crs.api.domain.BDDivision;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.Query;
 import javax.persistence.NoResultException;
-import java.util.*;
+import javax.persistence.Query;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * @author amith jayasekara
@@ -28,7 +30,7 @@ public class GNDivisionDAOImpl extends BaseDAO implements GNDivisionDAO, Preload
     private final Map<Integer, Map<Integer, String>> enGNDivisions = new HashMap<Integer, Map<Integer, String>>();
     private final Map<Integer, Map<Integer, String>> taGNDivisions = new HashMap<Integer, Map<Integer, String>>();
 
-    private String enGNDivisionName,siGNDivisionName,taGNDivisionName;
+    private String enGNDivisionName, siGNDivisionName, taGNDivisionName;
 
     /**
      * @inheritDoc
@@ -50,7 +52,7 @@ public class GNDivisionDAOImpl extends BaseDAO implements GNDivisionDAO, Preload
         return result;
     }
 
-    @Transactional(propagation = Propagation.SUPPORTS)
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public GNDivision getGNDivisionByPK(int gnDivisionUKey) {
         return em.find(GNDivision.class, gnDivisionUKey);
     }
@@ -68,10 +70,10 @@ public class GNDivisionDAOImpl extends BaseDAO implements GNDivisionDAO, Preload
         return AppConstants.EMPTY_STRING;
     }
 
-   @Transactional(propagation = Propagation.MANDATORY)
-    public void add(GNDivision gnDivision,User user) {
-           em.persist(gnDivision);
-           updateCache(gnDivision);
+    @Transactional(propagation = Propagation.MANDATORY)
+    public void add(GNDivision gnDivision, User user) {
+        em.persist(gnDivision);
+        updateCache(gnDivision);
     }
 
     public GNDivision getGNDivisionByCode(int gnDivisionId, DSDivision dsDivision) {
@@ -80,8 +82,7 @@ public class GNDivisionDAOImpl extends BaseDAO implements GNDivisionDAO, Preload
         q.setParameter("dsDivision", dsDivision);
         try {
             return (GNDivision) q.getSingleResult();
-        }
-        catch (NoResultException e) {
+        } catch (NoResultException e) {
             logger.debug("No id duplication of id :{}", gnDivisionId);
             return null;
         }
@@ -95,6 +96,7 @@ public class GNDivisionDAOImpl extends BaseDAO implements GNDivisionDAO, Preload
         em.merge(gnDivision);
         updateCache(gnDivision);
     }
+
     /**
      * Loads all values from the database table into a cache
      */
@@ -114,7 +116,7 @@ public class GNDivisionDAOImpl extends BaseDAO implements GNDivisionDAO, Preload
     @Transactional(propagation = Propagation.SUPPORTS)
     public List<GNDivision> getAllGNDivisionByDsDivisionKey(int dsDivisionId) {
         Query q = em.createNamedQuery("get.all.gnDivisions.by.dsDivisionId");
-        q.setParameter("dsDivisionId",dsDivisionId);
+        q.setParameter("dsDivisionId", dsDivisionId);
         return q.getResultList();
     }
 
