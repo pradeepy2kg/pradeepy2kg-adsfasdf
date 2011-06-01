@@ -6,7 +6,6 @@ import lk.rgd.common.api.domain.*;
 import lk.rgd.common.api.service.StatisticsManager;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.core.AuthorizationException;
-import lk.rgd.crs.web.Link;
 import lk.rgd.crs.web.Menu;
 import lk.rgd.crs.web.WebConstants;
 import org.apache.struts2.interceptor.SessionAware;
@@ -211,7 +210,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
         logger.debug("Logged User's Role : {}", user.getRole());
         role = user.getRole().getRoleId();
 
-        statistics = statisticsManager.getStatisticsForUser(user);       
+        statistics = statisticsManager.getStatisticsForUser(user);
         if (statistics != null) {
             if (!statisticsManager.existsStatisticsForUser(user)) {
                 statisticsManager.addStatistics(user, statistics);
@@ -339,7 +338,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
         User checkUser = userManager.getUserByID(user.getUserId());
         if (checkUser.getStatus().equals(User.State.INACTIVE) || checkUser.getStatus().equals(User.State.DELETED) || checkUser.getStatus().equals(User.State.LOCKEDOUT)) {
-            logger.warn("User Status is  INACTIVE for user :{}", user.getUserName());
+            logger.warn("User Status is : {} for user :{}", user.getStatus(), user.getUserName());
             return ERROR;
         }
 

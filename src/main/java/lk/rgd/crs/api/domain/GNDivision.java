@@ -4,10 +4,7 @@ import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
 
 import javax.persistence.*;
-import java.io.Serializable;            
-
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
+import java.io.Serializable;
 
 /**
  * @author amith jayasekara
@@ -19,8 +16,10 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 })
 
 @NamedQueries({
-        @NamedQuery(name = "get.gnDivisions.by.code",query ="SELECT gn FROM GNDivision gn WHERE " +
-                "(gn.gnDivisionId =:gnDivisionCode AND gn.dsDivision =:dsDivision)")
+    @NamedQuery(name = "get.gnDivisions.by.code", query = "SELECT gn FROM GNDivision gn WHERE " +
+        "(gn.gnDivisionId =:gnDivisionCode AND gn.dsDivision =:dsDivision)"),
+    @NamedQuery(name = "get.all.gnDivisions.by.dsDivisionId", query = "SELECT gn FROM GNDivision gn WHERE " +
+        "gn.dsDivision.dsDivisionUKey = :dsDivisionId")
 })
 //todo add cache control amith :))
 public class GNDivision implements Serializable {

@@ -113,7 +113,7 @@ public class GNDivisionDAOImpl extends BaseDAO implements GNDivisionDAO, Preload
 
     @Transactional(propagation = Propagation.SUPPORTS)
     public List<GNDivision> getAllGNDivisionByDsDivisionKey(int dsDivisionId) {
-        Query q = em.createNamedQuery("get.all.divisions.by.dsDivisionId");
+        Query q = em.createNamedQuery("get.all.gnDivisions.by.dsDivisionId");
         q.setParameter("dsDivisionId",dsDivisionId);
         return q.getResultList();
     }
