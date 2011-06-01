@@ -103,8 +103,7 @@ public class LocationDAOImpl extends BaseDAO implements LocationDAO, Preloadable
         q.setParameter("locationCode", locationCode);
         try {
             return (Location) q.getSingleResult();
-        }
-        catch (NoResultException e) {
+        } catch (NoResultException e) {
             return null;
         }
     }
@@ -116,8 +115,7 @@ public class LocationDAOImpl extends BaseDAO implements LocationDAO, Preloadable
         q.setParameter("dsDivisionId", dsDivisionId);
         try {
             return (Location) q.getSingleResult();
-        }
-        catch (NoResultException e) {
+        } catch (NoResultException e) {
             return null;
         }
     }
@@ -136,6 +134,13 @@ public class LocationDAOImpl extends BaseDAO implements LocationDAO, Preloadable
 
     public Map<Integer, Location> getPreLoadedLocations() {
         return locationsByPK;
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<Location> getAllLocationsByDSDivisionKey(int dsDivisionId) {
+        Query q = em.createNamedQuery("get.location.by.dsDivisionId");
+        q.setParameter("dsDivisionId", dsDivisionId);
+        return q.getResultList();
     }
 
     @Transactional(propagation = Propagation.NEVER, readOnly = true)

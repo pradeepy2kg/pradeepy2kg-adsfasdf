@@ -2,8 +2,8 @@ package lk.rgd.crs.core.dao;
 
 import lk.rgd.AppConstants;
 import lk.rgd.ErrorCodes;
-import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.api.domain.User;
 import lk.rgd.common.core.dao.BaseDAO;
 import lk.rgd.common.core.dao.PreloadableDAO;
 import lk.rgd.crs.api.dao.MRDivisionDAO;
@@ -11,8 +11,8 @@ import lk.rgd.crs.api.domain.MRDivision;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.Query;
 import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -99,16 +99,22 @@ public class MRDivisionDAOImpl extends BaseDAO implements MRDivisionDAO, Preload
 
     @Override
     public MRDivision getMRDivisionByCode(int mrDivisionId, DSDivision dsDivision) {
-       Query q = em.createNamedQuery("get.mrDivision.by.code");
-        q.setParameter("mrDivisionId",mrDivisionId);
+        Query q = em.createNamedQuery("get.mrDivision.by.code");
+        q.setParameter("mrDivisionId", mrDivisionId);
         q.setParameter("dsDivision", dsDivision);
         try {
             return (MRDivision) q.getSingleResult();
-        }
-        catch (NoResultException e) {
-            logger.debug("No id duplication of id :{}",mrDivisionId);
+        } catch (NoResultException e) {
+            logger.debug("No id duplication of id :{}", mrDivisionId);
             return null;
         }
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<MRDivision> getAllMRDivisionsByDSDivisionKey(int dsDivisionId) {
+        Query q = em.createNamedQuery("get.all.mrDivisions.by.dsDivisionId");
+        q.setParameter("dsDivisionId", dsDivisionId);
+        return q.getResultList();
     }
 
     /**
@@ -129,7 +135,7 @@ public class MRDivisionDAOImpl extends BaseDAO implements MRDivisionDAO, Preload
 
     private void updateCache(MRDivision r) {
         final int dsDivisionUKey = r.getDsDivision().getDsDivisionUKey();
-        final int mrDivisionId   = r.getDivisionId();
+        final int mrDivisionId = r.getDivisionId();
         final int mrDivisionUKey = r.getMrDivisionUKey();
 
         mrDivisionsByPK.put(mrDivisionUKey, r);
