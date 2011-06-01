@@ -11,13 +11,13 @@ import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
-import lk.rgd.crs.api.dao.MRDivisionDAO;
 import lk.rgd.crs.api.dao.CourtDAO;
 import lk.rgd.crs.api.dao.GNDivisionDAO;
+import lk.rgd.crs.api.dao.MRDivisionDAO;
 import lk.rgd.crs.api.domain.BDDivision;
-import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.domain.Court;
 import lk.rgd.crs.api.domain.GNDivision;
+import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.service.MasterDataManagementService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +42,7 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
     private final GNDivisionDAO gnDivisionDAO;
 
     public MasterDataManagementServiceImpl(BDDivisionDAO bdDivisionDAO, MRDivisionDAO mrDivisionDAO,
-                                           DSDivisionDAO dsDivisionDAO, DistrictDAO districtDAO, LocationDAO locationDAO, CourtDAO courtDAO,GNDivisionDAO gnDivisionDAO) {
+        DSDivisionDAO dsDivisionDAO, DistrictDAO districtDAO, LocationDAO locationDAO, CourtDAO courtDAO, GNDivisionDAO gnDivisionDAO) {
         this.bdDivisionDAO = bdDivisionDAO;
         this.mrDivisionDAO = mrDivisionDAO;
         this.dsDivisionDAO = dsDivisionDAO;
@@ -59,10 +59,10 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
     public void addBDDivision(BDDivision bdDivision, User user) {
 
         if (isEmptyString(bdDivision.getEnDivisionName()) ||
-                isEmptyString(bdDivision.getEnDivisionName()) ||
-                isEmptyString(bdDivision.getEnDivisionName())) {
+            isEmptyString(bdDivision.getEnDivisionName()) ||
+            isEmptyString(bdDivision.getEnDivisionName())) {
             throw new CRSRuntimeException(
-                    "One or more names of the BD Division is invalid - check all languages", ErrorCodes.INVALID_DATA);
+                "One or more names of the BD Division is invalid - check all languages", ErrorCodes.INVALID_DATA);
         }
 
         if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
@@ -73,37 +73,38 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
             }
         } else {
             logger.error("User : " + user.getUserId() +
-                    " was not allowed to add a new BD Division : " + bdDivision.getEnDivisionName());
+                " was not allowed to add a new BD Division : " + bdDivision.getEnDivisionName());
         }
     }
-@Transactional(propagation = Propagation.REQUIRED)
+
+    @Transactional(propagation = Propagation.REQUIRED)
     public void addGNDivision(GNDivision gnDivision, User user) {
-           if (isEmptyString(gnDivision.getEnGNDivisionName()) ||
-                isEmptyString(gnDivision.getEnGNDivisionName()) ||
-                isEmptyString(gnDivision.getEnGNDivisionName())) {
+        if (isEmptyString(gnDivision.getEnGNDivisionName()) ||
+            isEmptyString(gnDivision.getEnGNDivisionName()) ||
+            isEmptyString(gnDivision.getEnGNDivisionName())) {
             throw new CRSRuntimeException(
-                    "One or more names of the BD Division is invalid - check all languages", ErrorCodes.INVALID_DATA);
+                "One or more names of the BD Division is invalid - check all languages", ErrorCodes.INVALID_DATA);
         }
 
         if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
             try {
-                logger.debug("successfully added GNDivision with code number : {}",gnDivision.getGnDivisionId());
-               gnDivisionDAO.add(gnDivision, user);
+                logger.debug("successfully added GNDivision with code number : {}", gnDivision.getGnDivisionId());
+                gnDivisionDAO.add(gnDivision, user);
             } catch (Exception e) {
                 logger.error("Attempt to add BD Division : " + gnDivision.getEnGNDivisionName() + " failed", e);
             }
         } else {
             logger.error("User : " + user.getUserId() +
-                    " was not allowed to add a new BD Division : " + gnDivision.getEnGNDivisionName());
+                " was not allowed to add a new BD Division : " + gnDivision.getEnGNDivisionName());
         }
     }
 
-    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public void activateOrInactiveGNDivision(int gnDivisionUKey, boolean active, User user) {
-         updateGNActivation(gnDivisionUKey, active, user);
+        updateGNActivation(gnDivisionUKey, active, user);
     }
 
-     private void updateGNActivation(int gnDivisionUKey, boolean activate, User user) {
+    private void updateGNActivation(int gnDivisionUKey, boolean activate, User user) {
 
         if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
             try {
@@ -111,14 +112,14 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
                 if (existing != null) {
                     existing.setActive(activate);
                     gnDivisionDAO.update(existing, user);
-                    logger.info("GN Division : {} inactivated by : {}", existing.getEnGNDivisionName(), user.getUserId());
+                    logger.info("GN Division : {} " + (activate ? "" : "in-") + "activated by : {}", existing.getEnGNDivisionName(), user.getUserId());
                 }
             } catch (Exception e) {
-                logger.error("Attempt to inactivate BD Division with key : " + gnDivisionUKey + " failed", e);
+                logger.error("Attempt to " + (activate ? "" : "in-") + "activate GN Division with key : " + gnDivisionUKey + " failed", e);
             }
         } else {
             logger.error("User : " + user.getUserId() +
-                    " was not allowed to activate/inactivate BD Division with key : " + gnDivisionUKey);
+                " was not allowed to activate/inactivate BD Division with key : " + gnDivisionUKey);
         }
     }
 
@@ -142,7 +143,7 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
             }
         } else {
             logger.error("User : " + user.getUserId() +
-                    " was not allowed to activate/inactivate BD Division with key : " + bdDivisionUKey);
+                " was not allowed to activate/inactivate BD Division with key : " + bdDivisionUKey);
         }
     }
 
@@ -153,10 +154,10 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
     public void addMRDivision(MRDivision mrDivision, User user) {
 
         if (isEmptyString(mrDivision.getEnDivisionName()) ||
-                isEmptyString(mrDivision.getEnDivisionName()) ||
-                isEmptyString(mrDivision.getEnDivisionName())) {
+            isEmptyString(mrDivision.getEnDivisionName()) ||
+            isEmptyString(mrDivision.getEnDivisionName())) {
             throw new CRSRuntimeException(
-                    "One or more names of the MR Division is invalid - check all languages", ErrorCodes.INVALID_DATA);
+                "One or more names of the MR Division is invalid - check all languages", ErrorCodes.INVALID_DATA);
         }
 
         if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
@@ -167,7 +168,7 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
             }
         } else {
             logger.error("User : " + user.getUserId() +
-                    " was not allowed to add a new MR Division : " + mrDivision.getEnDivisionName());
+                " was not allowed to add a new MR Division : " + mrDivision.getEnDivisionName());
         }
     }
 
@@ -193,7 +194,7 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
             }
         } else {
             logger.error("User : " + user.getUserId() +
-                    " was not allowed to activate/inactivate MR Division with key : " + mrDivisionUKey);
+                " was not allowed to activate/inactivate MR Division with key : " + mrDivisionUKey);
         }
     }
 
@@ -204,10 +205,10 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
     public void addDSDivision(DSDivision dsDivision, User user) {
 
         if (isEmptyString(dsDivision.getEnDivisionName()) ||
-                isEmptyString(dsDivision.getEnDivisionName()) ||
-                isEmptyString(dsDivision.getEnDivisionName())) {
+            isEmptyString(dsDivision.getEnDivisionName()) ||
+            isEmptyString(dsDivision.getEnDivisionName())) {
             throw new CRSRuntimeException(
-                    "One or more names of the DS Division is invalid - check all languages", ErrorCodes.INVALID_DATA);
+                "One or more names of the DS Division is invalid - check all languages", ErrorCodes.INVALID_DATA);
         }
 
         if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
@@ -218,7 +219,7 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
             }
         } else {
             logger.error("User : " + user.getUserId() +
-                    " was not allowed to add a new DS Division : " + dsDivision.getEnDivisionName());
+                " was not allowed to add a new DS Division : " + dsDivision.getEnDivisionName());
         }
     }
 
@@ -226,6 +227,7 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
     public void activateOrInactivateDSDivision(int dsDivisionUKey, boolean active, User user) {
         updateDSActivation(dsDivisionUKey, active, user);
     }
+
     private void updateDSActivation(int dsDivisionUKey, boolean activate, User user) {
 
         if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
@@ -235,15 +237,15 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
                     existing.setActive(activate);
                     dsDivisionDAO.update(existing, user);
                     logger.info("DS Division : {} " + (activate ? "" : "in-") + "activated by : {}",
-                            existing.getEnDivisionName(), user.getUserId());
+                        existing.getEnDivisionName(), user.getUserId());
                 }
             } catch (Exception e) {
                 logger.error("Attempt to " + (activate ? "" : "in-") + "activate DS Division with key : "
-                        + dsDivisionUKey + " failed", e);
+                    + dsDivisionUKey + " failed", e);
             }
         } else {
             logger.error("User : " + user.getUserId() +
-                    " was not allowed to activate/inactivate DS Division with key : " + dsDivisionUKey);
+                " was not allowed to activate/inactivate DS Division with key : " + dsDivisionUKey);
         }
     }
 
@@ -254,10 +256,10 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
     public void addDistrict(District district, User user) {
 
         if (isEmptyString(district.getEnDistrictName()) ||
-                isEmptyString(district.getSiDistrictName()) ||
-                isEmptyString(district.getTaDistrictName())) {
+            isEmptyString(district.getSiDistrictName()) ||
+            isEmptyString(district.getTaDistrictName())) {
             throw new CRSRuntimeException(
-                    "One or more names of the District is invalid - check all languages", ErrorCodes.INVALID_DATA);
+                "One or more names of the District is invalid - check all languages", ErrorCodes.INVALID_DATA);
         }
 
         if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
@@ -268,7 +270,7 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
             }
         } else {
             logger.error("User : " + user.getUserId() +
-                    " was not allowed to add a new District : " + district.getEnDistrictName());
+                " was not allowed to add a new District : " + district.getEnDistrictName());
         }
     }
 
@@ -276,6 +278,7 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
     public void activateOrInactivateDistrict(int districtUKey, boolean active, User user) {
         updateDistrictActivation(districtUKey, active, user);
     }
+
     private void updateDistrictActivation(int districtUKey, boolean activate, User user) {
 
         if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
@@ -291,7 +294,7 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
             }
         } else {
             logger.error("User : " + user.getUserId() +
-                    " was not allowed to activate/inactivate District with key : " + districtUKey);
+                " was not allowed to activate/inactivate District with key : " + districtUKey);
         }
     }
 
@@ -301,10 +304,10 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
     @Transactional(propagation = Propagation.REQUIRED)
     public void addLocation(Location location, User user) {
         if (isEmptyString(location.getEnLocationName()) ||
-                isEmptyString(location.getSiLocationName()) ||
-                isEmptyString(location.getTaLocationName())) {
+            isEmptyString(location.getSiLocationName()) ||
+            isEmptyString(location.getTaLocationName())) {
             throw new CRSRuntimeException(
-                    "One or more names of the Location names is invalid - check all languages", ErrorCodes.INVALID_DATA);
+                "One or more names of the Location names is invalid - check all languages", ErrorCodes.INVALID_DATA);
         }
 
         if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
@@ -315,7 +318,7 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
             }
         } else {
             logger.error("User : " + user.getUserId() +
-                    " was not allowed to add a new Location : " + location.getEnLocationName());
+                " was not allowed to add a new Location : " + location.getEnLocationName());
         }
     }
 
@@ -333,15 +336,15 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
                     existing.getLifeCycleInfo().setActive(activate);
                     locationDAO.update(existing, user);
                     logger.info("Location : {} " + (activate ? "" : "in-") + "activated by : {}",
-                            existing.getEnLocationName(), user.getUserId());
+                        existing.getEnLocationName(), user.getUserId());
                 }
             } catch (Exception e) {
                 logger.error("Attempt to " + (activate ? "" : "in-") + "activate Location with key : "
-                        + locationUKey + " failed", e);
+                    + locationUKey + " failed", e);
             }
         } else {
             logger.error("User : " + user.getUserId() +
-                    " was not allowed to activate/inactivate Location with key : " + locationUKey);
+                " was not allowed to activate/inactivate Location with key : " + locationUKey);
         }
     }
 
@@ -352,10 +355,10 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
     @Transactional(propagation = Propagation.REQUIRED)
     public void addCourt(Court court, User user) {
         if (isEmptyString(court.getEnCourtName()) ||
-                isEmptyString(court.getSiCourtName()) ||
-                isEmptyString(court.getTaCourtName())) {
+            isEmptyString(court.getSiCourtName()) ||
+            isEmptyString(court.getTaCourtName())) {
             throw new CRSRuntimeException(
-                    "One or more names of the Court names is invalid - check all languages", ErrorCodes.INVALID_DATA);
+                "One or more names of the Court names is invalid - check all languages", ErrorCodes.INVALID_DATA);
         }
 
         if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
@@ -366,7 +369,7 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
             }
         } else {
             logger.error("User : " + user.getUserId() +
-                    " was not allowed to add a new Location : " + court.getEnCourtName());
+                " was not allowed to add a new Location : " + court.getEnCourtName());
         }
     }
 
@@ -383,15 +386,15 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
                     existing.setActive(activate);
                     courtDAO.update(existing, user);
                     logger.info("Court : {} " + (activate ? "" : "in-") + "activated by : {}",
-                            existing.getEnCourtName(), user.getUserId());
+                        existing.getEnCourtName(), user.getUserId());
                 }
             } catch (Exception e) {
                 logger.error("Attempt to " + (activate ? "" : "in-") + "activate court with key : "
-                        + courtUKey + " failed", e);
+                    + courtUKey + " failed", e);
             }
         } else {
             logger.error("User : " + user.getUserId() +
-                    " was not allowed to activate/inactivate Location with key : " + courtUKey);
+                " was not allowed to activate/inactivate Location with key : " + courtUKey);
         }
     }
 

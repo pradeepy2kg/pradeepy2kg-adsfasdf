@@ -746,14 +746,14 @@
                     <s:if test="pageType==7">
                         <s:url id="inactiveSelected" action="eprActivateOrInactivateDivisionsAndDsDivisions.do">
                            <s:param name="pageType" value="pageType"/>
-                           <s:param name="divisionId" value="gnDivisionUKey"/>
+                           <s:param name="gnDivisionId" value="gnDivisionUKey"/>
                            <s:param name="userDistrictId" value="userDistrictId"/>
                            <s:param name="dsDivisionId" value="dsDivisionId"/>
                            <s:param name="activate" value="false"/>
                         </s:url>
                         <s:url id="activeSelected" action="eprActivateOrInactivateDivisionsAndDsDivisions.do">
                              <s:param name="pageType" value="pageType"/>
-                            <s:param name="divisionId" value="gnDivisionUKey"/>
+                            <s:param name="gnDivisionId" value="gnDivisionUKey"/>
                             <s:param name="userDistrictId" value="userDistrictId"/>
                             <s:param name="dsDivisionId" value="dsDivisionId"/>
                             <s:param name="activate" value="true"/>

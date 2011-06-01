@@ -480,8 +480,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 dataManagementService.activateOrInactivateLocation(locationId, activate, currentUser);
                 break;
             case 7:
-                // TODO
-                dataManagementService.activateOrInactivateLocation(gnDivisionId, activate, currentUser);
+                dataManagementService.activateOrInactiveGNDivision(gnDivisionId, activate, currentUser);
                 break;
 
         }
