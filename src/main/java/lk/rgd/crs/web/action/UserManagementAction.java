@@ -1,27 +1,27 @@
 package lk.rgd.crs.web.action;
 
 import com.opensymphony.xwork2.ActionSupport;
-import lk.rgd.ErrorCodes;
 import lk.rgd.AppConstants;
+import lk.rgd.ErrorCodes;
 import lk.rgd.common.RGDRuntimeException;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.*;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.util.HashUtil;
+import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.dao.CourtDAO;
-import lk.rgd.crs.api.dao.MRDivisionDAO;
 import lk.rgd.crs.api.dao.GNDivisionDAO;
+import lk.rgd.crs.api.dao.MRDivisionDAO;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.Court;
-import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.domain.GNDivision;
+import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.service.MasterDataManagementService;
 import lk.rgd.crs.api.service.PRSRecordsIndexer;
 import lk.rgd.crs.core.service.BirthRecordsIndexer;
 import lk.rgd.crs.core.service.DeathRecordsIndexer;
 import lk.rgd.crs.web.WebConstants;
-import lk.rgd.crs.CRSRuntimeException;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -133,9 +133,9 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     }
 
     public UserManagementAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, RoleDAO roleDAO, UserManager service, CourtDAO courtDAO,
-                                BDDivisionDAO bdDivisionDAO, MasterDataManagementService dataManagementService, MRDivisionDAO mrDivisionDAO, LocationDAO locationDAO,
-                                AppParametersDAO appParametersDAO, UserLocationDAO userLocationDAO, UserDAO userDAO,
-                                BirthRecordsIndexer birthRecordsIndexer, DeathRecordsIndexer deathRecordsIndexer, PRSRecordsIndexer prsRecordsIndexer, GNDivisionDAO gnDivisionDAO) {
+        BDDivisionDAO bdDivisionDAO, MasterDataManagementService dataManagementService, MRDivisionDAO mrDivisionDAO, LocationDAO locationDAO,
+        AppParametersDAO appParametersDAO, UserLocationDAO userLocationDAO, UserDAO userDAO,
+        BirthRecordsIndexer birthRecordsIndexer, DeathRecordsIndexer deathRecordsIndexer, PRSRecordsIndexer prsRecordsIndexer, GNDivisionDAO gnDivisionDAO) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.roleDAO = roleDAO;
@@ -516,7 +516,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 break;
             case 2:
                 DSDivision checkDSDivision = dsDivisionDAO.getDSDivisionByCode(dsDivision.getDivisionId(),
-                        districtDAO.getDistrict(userDistrictId));
+                    districtDAO.getDistrict(userDistrictId));
                 if (checkDSDivision != null) {
                     addFieldError("duplicateIdNumberError", "DS Division Id Number Already Used. Please Insert Another Number");
                     logger.debug("Duplicate District code number is :", checkDSDivision.getDivisionId());
@@ -680,6 +680,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
             } else if (!selectedRole.equals("ALL") && nameOfUser.length() != 0 && userDistrictId == 0) {
                 List<User> tempRole = service.getUsersByRole(selectedRole);
                 List<User> tempName = service.getUsersByIDMatch(nameOfUser);
+                usersList = new ArrayList<User>();
                 for (User userN : tempName) {
                     for (User userR : tempRole) {
                         if (userN.getUserId().equals(userR.getUserId())) {
@@ -848,9 +849,9 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         StringBuffer buffer = new StringBuffer();
         Random random = new Random();
         char[] charArray = new char[]{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
-                'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G',
-                'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7',
-                '8', '9'};
+            'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G',
+            'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7',
+            '8', '9'};
         for (int i = 0; i < length; i++) {
             buffer.append(charArray[random.nextInt(charArray.length)]);
         }
