@@ -1,24 +1,25 @@
 package lk.rgd.crs.web.action;
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.common.api.dao.DSDivisionDAO;
+import lk.rgd.common.api.dao.DistrictDAO;
+import lk.rgd.common.api.domain.BaseLifeCycleInfo;
+import lk.rgd.common.api.domain.Role;
+import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.WebUtils;
+import lk.rgd.crs.api.dao.BDDivisionDAO;
+import lk.rgd.crs.api.dao.MRDivisionDAO;
+import lk.rgd.crs.api.domain.Assignment;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.MRDivision;
+import lk.rgd.crs.api.domain.Registrar;
+import lk.rgd.crs.api.service.RegistrarManagementService;
+import lk.rgd.crs.web.WebConstants;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
-
-import lk.rgd.common.api.dao.DistrictDAO;
-import lk.rgd.common.api.dao.DSDivisionDAO;
-import lk.rgd.common.api.domain.*;
-import lk.rgd.crs.api.dao.BDDivisionDAO;
-import lk.rgd.crs.api.dao.MRDivisionDAO;
-import lk.rgd.crs.api.domain.Assignment;
-import lk.rgd.crs.api.domain.Registrar;
-import lk.rgd.crs.api.service.RegistrarManagementService;
-import lk.rgd.crs.web.WebConstants;
 
 /**
  * action class for managing registrars    and their assignments
@@ -96,7 +97,7 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
         String usrRole = user.getRole().getRoleId();
         districtId = 1;
         dsDivisionId = 0;
-   
+
         districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
         if (districtList != null) {
             districtId = districtList.keySet().iterator().next();
@@ -162,7 +163,7 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
         }
         districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
         dsDivisionList = dsDivisionDAO.getAllDSDivisionNames(districtId, user.getPrefLanguage(), user);
-       dsDivisionId = -1;
+        dsDivisionId = -1;
 
         return SUCCESS;
     }
@@ -319,6 +320,8 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
     }
 
     public String findRegistrar() {
+        removeExistingRegistrars();
+
         if (page > 0) {
             logger.debug("attempt to search a registrar");
             if (registrarPin > 0) {
@@ -339,6 +342,13 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
         }
         logger.debug("attempt to load find registrar home page");
         return "pageLoad";
+    }
+
+    private void removeExistingRegistrars() {
+        Object o = session.get(WebConstants.SESSION_EXSISTING_REGISTRAR);
+        if (o != null) {
+            session.remove(WebConstants.SESSION_EXSISTING_REGISTRAR);
+        }
     }
 
     //loads basic lists for separate types

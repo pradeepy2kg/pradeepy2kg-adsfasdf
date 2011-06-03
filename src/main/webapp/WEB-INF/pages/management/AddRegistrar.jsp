@@ -45,6 +45,13 @@
         var check = document.getElementById('skipValidationId');
         var returnval = true;
 
+        /*todo validate compulsory fields*/
+        isMandatoryFieldsEmpty(nameOfficialLang, document.getElementById('nameOfficialError').value, "cannotNull")
+        isMandatoryFieldsEmpty(nameEnglish, document.getElementById('nameEnglishError').value, "cannotNull")
+        isMandatoryFieldsEmpty(pin, document.getElementById('pin').value, "cannotNull")
+        isMandatoryFieldsEmpty(dob, "Date of Birth ", "cannotNull")
+        isMandatoryFieldsEmpty(address, document.getElementById('addressError').value, "cannotNull")
+
         if (!check.checked) {
             /*     if (isFieldEmpty(pin)) {
              isEmpty(pin, document.getElementById('emptry').value, "pin")
@@ -76,11 +83,6 @@
         }
         /*        //validate date of birth
          isDate(dob, "invalideData", "email")*/
-        /*todo validate compulsory fields*/
-        isMandatoryFieldsEmpty(nameOfficialLang, document.getElementById('nameOfficialError').value, "cannotNull")
-        isMandatoryFieldsEmpty(nameEnglish, document.getElementById('nameEnglishError').value, "cannotNull")
-        isMandatoryFieldsEmpty(address, document.getElementById('addressError').value, "cannotNull")
-        isMandatoryFieldsEmpty(pin, document.getElementById('pin').value, "cannotNull")
 
         if (errormsg != "") {
             alert(errormsg);
@@ -159,7 +161,9 @@
                         name="registrar.gender" cssStyle="width:190px;" id="registrarGender"/></td>
             </tr>
             <tr>
-                <td align="left"><s:property value="%{getText('registrar.dateofbirth')}"/></td>
+                <td align="left">
+                    <s:property value="%{getText('registrar.dateofbirth')}"/> <s:label value="*" cssStyle="color:red;font-size:14pt;"/>
+                </td>
                 <td align="left"><s:textfield name="registrar.dateOfBirth" id="dateOfBirthDatePicker"
                                               maxLength="10"/></td>
             </tr>
