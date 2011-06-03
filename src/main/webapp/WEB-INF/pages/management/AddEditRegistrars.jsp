@@ -245,17 +245,23 @@
             <col width="1000px"/>
             <tbody>
             <tr>
-                <td align="left"><s:property value="%{getText('registrar.full.name.officelaLang')}"/></td>
+                <td align="left">
+                    <s:property value="%{getText('registrar.full.name.officelaLang')}"/> <s:label value="*" cssStyle="color:red;font-size:14pt;"/>
+                </td>
                 <td align="left"><s:textfield id="registrarNameInOfficelaLang" cssStyle="width:100%"
                                               name="registrar.fullNameInOfficialLanguage"/></td>
             </tr>
             <tr>
-                <td align="left"><s:property value="%{getText('registrar.full.name.english')}"/></td>
+                <td align="left">
+                    <s:property value="%{getText('registrar.full.name.english')}"/> <s:label value="*" cssStyle="color:red;font-size:14pt;"/>
+                </td>
                 <td align="left"><s:textfield id="registrarNameInEnglish" cssStyle="width:100%"
                                               name="registrar.fullNameInEnglishLanguage"/></td>
             </tr>
             <tr>
-                <td align="left"><s:property value="%{getText('registrar.pin')}"/></td>
+                <td align="left">
+                    <s:property value="%{getText('registrar.pin')}"/> <s:label value="*" cssStyle="color:red;font-size:14pt;"/>
+                </td>
                 <td align="left"><s:textfield id="registrarPin" name="registrar.pin" maxLength="12"/></td>
             </tr>
             <tr>
@@ -269,11 +275,15 @@
                         name="registrar.gender" cssStyle="width:190px;" id="registrarGender"/></td>
             </tr>
             <tr>
-                <td align="left"><s:property value="%{getText('registrar.dateofbirth')}"/></td>
+                <td align="left">
+                    <s:property value="%{getText('registrar.dateofbirth')}"/> <s:label value="*" cssStyle="color:red;font-size:14pt;"/>
+                </td>
                 <td align="left"><s:textfield name="registrar.dateOfBirth" id="dateOfBirthDatePicker"/></td>
             </tr>
             <tr>
-                <td align="left"><s:property value="%{getText('registrar.address')}"/></td>
+                <td align="left">
+                    <s:property value="%{getText('registrar.address')}"/> <s:label value="*" cssStyle="color:red;font-size:14pt;"/>
+                </td>
                 <td align="left"><s:textarea id="registrarAddress" cssStyle="width:100%"
                                              name="registrar.currentAddress"/></td>
             </tr>
@@ -283,7 +293,7 @@
             </tr>
             <tr>
                 <td align="left"><s:property value="%{getText('registrar.email')}"/></td>
-                <td align="left"><s:textfield id="registrarEmail" name="registrar.emailAddress"/></td>
+                <td align="left"><s:textfield id="registrarEmail" name="registrar.emailAddress" cssStyle="text-transform:none;"/></td>
             </tr>
             <tr>
                 <td align="left"><s:property value="%{getText('registrar.prefLang')}"/></td>
@@ -320,11 +330,11 @@
         <thead>
         <tr class="table-title">
             <th width="200px"><s:label value="%{getText('label.bdDivision')}"/></th>
-            <th width="100px"><s:label value="%{getText('label.active')}"/></th>
+            <th width="50px"><s:label value="%{getText('label.active')}"/></th>
             <th width="100px"><s:label value="%{getText('label.type')}"/></th>
             <th width="100px"><s:label value="%{getText('label.startDate')}"/></th>
             <th width="100px"><s:label value="%{getText('label.endDate')}"/></th>
-            <th width="100px"><s:label value="%{getText('label.edit')}"/></th>
+            <th width="20px"></th>
         </tr>
         </thead>
         <s:if test="assignmentList.size>0">

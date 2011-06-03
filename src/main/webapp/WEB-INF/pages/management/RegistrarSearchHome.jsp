@@ -62,12 +62,11 @@
         return true;
     }
 
+    function initPage(){}
 </script>
-<s:actionerror cssStyle="color:red;font-size:10pt"/>
-<s:actionmessage cssStyle="color:blue;;font-size:10pt"/>
 <fieldset style="margin-bottom:0px;margin-top:5px;border:none;">
     <s:form method="post" action="eprFindRegistrar.do" onsubmit="javascript:return validatePage()">
-        <div id="tabs">
+        <div id="tabs" style="font-size:10pt;">
             <ul>
                 <li><a href="#fragment-1"><span> <s:label
                         value="%{getText('label.tab.search.by.registrar.pin')}"/></span></a></li>
@@ -86,7 +85,8 @@
                             <s:label value="%{getText('registrar.pin')}"/>
                         </td>
                         <td align="left">
-                            <s:textfield name="registrarPin" id="registrarPin" value="" maxLength="12"/>
+                            <s:textfield name="registrarPin" id="registrarPin" value="" maxLength="12"
+                                    onkeypress="return isNumberKey(event)"/>
                         </td>
                     </tr>
                     </tbody>
@@ -104,7 +104,7 @@
                             <s:label value="%{getText('label.person.name')}"/>
                         </td>
                         <td align="left">
-                            <s:textfield name="registrarName" id="registrarName" maxLength="10" value=""/>
+                            <s:textfield name="registrarName" id="registrarName" maxLength="20" value=""/>
                         </td>
                     </tr>
                     </tbody>
@@ -119,6 +119,9 @@
         <s:hidden name="page" value="1"/>
     </s:form>
 </fieldset>
+<s:actionerror cssStyle="color:red;font-size:10pt"/>
+<s:actionmessage cssStyle="color:blue;;font-size:10pt"/>
+
 <s:if test="%{registrarList.size()>0}">
     <fieldset style="margin-bottom:0px;margin-top:5px;border:none;">
         <table id="registrars-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
