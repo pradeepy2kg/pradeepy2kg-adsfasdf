@@ -733,7 +733,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 deathRecordsIndexer.indexAll();
                 prsRecordsIndexer.indexAll();
                 addActionMessage("All Records Re-Index Completed");
-                logger.debug("All REcords Re-indexed Successfully");
+                logger.debug("All Records Re-indexed Successfully");
         }
 
         return SUCCESS;
