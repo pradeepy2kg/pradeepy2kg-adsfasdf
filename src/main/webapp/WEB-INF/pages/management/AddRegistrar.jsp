@@ -48,22 +48,26 @@
         /*todo validate compulsory fields*/
         isMandatoryFieldsEmpty(nameOfficialLang, document.getElementById('nameOfficialError').value, "cannotNull")
         isMandatoryFieldsEmpty(nameEnglish, document.getElementById('nameEnglishError').value, "cannotNull")
-        isMandatoryFieldsEmpty(pin, document.getElementById('pin').value, "cannotNull")
-        isMandatoryFieldsEmpty(dob, "Date of Birth ", "cannotNull")
+
+        if (!check.checked) {
+            if (isFieldEmpty(pin)) {
+                isEmpty(pin, document.getElementById('pin').value, "empty")
+            }
+        }
+
+        isMandatoryFieldsEmpty(nic, document.getElementById('nic').value, "cannotNull")
+        isMandatoryFieldsEmpty(dob, document.getElementById('dob').value, "cannotNull")
         isMandatoryFieldsEmpty(address, document.getElementById('addressError').value, "cannotNull")
 
         if (!check.checked) {
-            /*     if (isFieldEmpty(pin)) {
-             isEmpty(pin, document.getElementById('emptry').value, "pin")
+            /*if (isFieldEmpty(nic)) {
+             isEmpty(nic, document.getElementById('nic').value, 'empty')
              }*/
-            if (isFieldEmpty(nic)) {
-                isEmpty(nic, document.getElementById('nic').value, 'emptry')
-            }
             if (isFieldEmpty(phone)) {
-                isEmpty(phone, document.getElementById('phone').value, 'emptry')
+                isEmpty(phone, document.getElementById('phone').value, 'empty')
             }
             if (isFieldEmpty(email)) {
-                isEmpty(email, document.getElementById('email').value, 'emptry')
+                isEmpty(email, document.getElementById('email').value, 'empty')
             }
         }
         if (!isFieldEmpty(pin) && isInteger(pin)) {
@@ -81,8 +85,10 @@
             //validate email
             validateEmail(email, "email", "invalideData")
         }
-        /*        //validate date of birth
-         isDate(dob, "invalideData", "email")*/
+        //validate date of birth
+        if (!isFieldEmpty(dob)) {
+            isDate(dob.value, "Invalid ", "invalideData")
+        }
 
         if (errormsg != "") {
             alert(errormsg);
@@ -94,7 +100,7 @@
 
     function initPage() {
     }
-   
+
     $(function() {
         $('img#registrar_lookup').bind('click', function(evt1) {
             var id1 = $("input#registrarPin").attr("value");
@@ -143,15 +149,15 @@
                                               name="registrar.fullNameInEnglishLanguage"/></td>
             </tr>
             <tr>
-                <td align="left"><s:property value="%{getText('registrar.pin')}"/><s:label value="*"
-                                                                                           cssStyle="color:red;font-size:14pt;"/></td>
+                <td align="left"><s:property value="%{getText('registrar.pin')}"/></td>
                 <td align="left"><s:textfield id="registrarPin" name="registrar.pin" maxLength="12"/>
                     <img src="<s:url value='/images/search-father.png' />"
                          style="vertical-align:middle;" id="registrar_lookup"/>
                 </td>
             </tr>
             <tr>
-                <td align="left"><s:property value="%{getText('registrar.nic')}"/></td>
+                <td align="left"><s:property value="%{getText('registrar.nic')}"/><s:label value="*"
+                                                                                           cssStyle="color:red;font-size:14pt;"/></td>
                 <td align="left"><s:textfield id="registrarNIC" name="registrar.nic" maxLength="10"/></td>
             </tr>
             <tr>
@@ -162,7 +168,8 @@
             </tr>
             <tr>
                 <td align="left">
-                    <s:property value="%{getText('registrar.dateofbirth')}"/> <s:label value="*" cssStyle="color:red;font-size:14pt;"/>
+                    <s:property value="%{getText('registrar.dateofbirth')}"/> <s:label value="*"
+                                                                                       cssStyle="color:red;font-size:14pt;"/>
                 </td>
                 <td align="left"><s:textfield name="registrar.dateOfBirth" id="dateOfBirthDatePicker"
                                               maxLength="10"/></td>
@@ -222,4 +229,4 @@
 <s:hidden id="email" value="%{getText('registrar.email')}"/>
 <s:hidden id="nameOfficialError" value="%{getText('registrar.full.name.officelaLang')}"/>
 <s:hidden id="nameEnglishError" value="%{getText('registrar.full.name.english')}"/>
-<s:hidden id="emptry" value="%{getText('field.emptry')}"/>
+<s:hidden id="empty" value="%{getText('field.emptry')}"/>

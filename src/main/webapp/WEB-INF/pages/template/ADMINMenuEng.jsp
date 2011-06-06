@@ -31,13 +31,18 @@
                     </a>
                 </li>
                 <li>
-                    <a id="registrars.managment" href="/ecivil/management/eprRegistrarsManagment.do">
-                        Manage Assignments
+                    <a id="registrar.add" href="/ecivil/management/eprRegistrarsAdd.do">
+                        Add Registrar
                     </a>
                 </li>
                 <li>
-                    <a id="registrar.add" href="/ecivil/management/eprRegistrarsAdd.do">
-                        Add Registrar
+                    <a id="search.registrar" href="/ecivil/management/eprFindRegistrar.do">
+                        Search Registrar
+                    </a>
+                </li>
+                <li>
+                    <a id="registrars.managment" href="/ecivil/management/eprRegistrarsManagment.do">
+                        Manage Registrars
                     </a>
                 </li>
                 <li>
@@ -48,11 +53,6 @@
                 <li>
                     <a id="indexRecords.label" href="/ecivil/management/eprIndexRecords.do">
                         Index Records
-                    </a>
-                </li>
-                <li>
-                    <a id="search.registrar" href="/ecivil/management/eprFindRegistrar.do">
-                        Search Registrar
                     </a>
                 </li>
                 <li>
