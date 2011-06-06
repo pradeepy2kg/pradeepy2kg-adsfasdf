@@ -2,16 +2,19 @@ package lk.rgd.crs.core.service;
 
 import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
-import lk.rgd.common.api.domain.User;
-import lk.rgd.common.api.domain.DSDivision;
-import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.DSDivisionDAO;
+import lk.rgd.common.api.dao.DistrictDAO;
+import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.api.domain.User;
+import lk.rgd.common.util.IdentificationNumberUtil;
+import lk.rgd.common.util.PinAndNicUtils;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.dao.AssignmentDAO;
 import lk.rgd.crs.api.dao.RegistrarDAO;
 import lk.rgd.crs.api.domain.Assignment;
 import lk.rgd.crs.api.domain.Registrar;
 import lk.rgd.crs.api.service.RegistrarManagementService;
+import lk.rgd.prs.api.domain.Person;
 import lk.rgd.prs.api.service.PopulationRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,8 +22,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Manage Registrars and Registration Assignments
@@ -38,7 +41,7 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
     private DSDivisionDAO dsDivisionDAO;
 
     public RegistrarManagementServiceImpl(RegistrarDAO registrarDao, AssignmentDAO assignmentDao,
-                                          PopulationRegistry ecivil, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO) {
+        PopulationRegistry ecivil, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO) {
         this.registrarDao = registrarDao;
         this.assignmentDao = assignmentDao;
         this.ecivil = ecivil;
@@ -57,10 +60,9 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
                 " is not authorized to manage registrars", ErrorCodes.PERMISSION_DENIED);
         }
 
+        validateMinimalRequirements(registrar);
         final String shortName = registrar.getShortName();
         logger.debug("Request to add a new Registrar : {} by : {}", shortName, user.getUserId());
-        validateRegistrar(registrar, shortName);
-
         registrarDao.addRegistrar(registrar, user);
     }
 
@@ -75,11 +77,25 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
                 " is not authorized to manage registrars", ErrorCodes.PERMISSION_DENIED);
         }
 
+        validateMinimalRequirements(registrar);
         final String shortName = registrar.getShortName();
         logger.debug("Request to update Registrar : {} by : {}", shortName, user.getUserId());
-        validateRegistrar(registrar, shortName);
 
         registrarDao.updateRegistrar(registrar, user);
+    }
+
+    private Person processRegistrarToPRS(Registrar registrar, User user) {
+        Person person = null;
+        if (IdentificationNumberUtil.isValidNIC(registrar.getNic())) {
+
+        }
+        return person;
+    }
+
+    private Person findRegistrarFromPRS(String nic) {
+        Person person = null;
+//        PinAndNicUtils.isValidPINorNIC()
+        return person;
     }
 
     /**
@@ -332,15 +348,15 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
         return assignmentDao.getById(assignmentUKey);
     }
 
-    private void validateRegistrar(Registrar registrar, String shortName) {
-        if (isEmptyString(registrar.getFullNameInEnglishLanguage())) {
-            handleException("Registrar name in English is null", ErrorCodes.INVALID_DATA);
+    private void validateMinimalRequirements(Registrar registrar) {
+        if (registrar.getFullNameInEnglishLanguage() == null || registrar.getFullNameInOfficialLanguage() == null ||
+            registrar.getNic() == null || registrar.getDateOfBirth() == null || registrar.getCurrentAddress() == null) {
+            handleException("Registrar record being processed is incomplete. Check required field values",
+                ErrorCodes.INVALID_DATA);
         }
-        if (isEmptyString(registrar.getFullNameInOfficialLanguage())) {
-            handleException("Registrar name in Official Language is null", ErrorCodes.INVALID_DATA);
-        }
-        if (isEmptyString(registrar.getCurrentAddress())) {
-            handleException("Registrar : " + shortName + " address is null", ErrorCodes.INVALID_DATA);
+        final String nic = registrar.getNic();
+        if (!IdentificationNumberUtil.isValidNIC(nic)) {
+            handleException("Registrar nic : " + nic + " is invalid", ErrorCodes.INVALID_DATA);
         }
     }
 

@@ -1,21 +1,20 @@
 package lk.rgd.crs.core.service;
 
-import junit.framework.Assert;
 import junit.framework.TestCase;
 import lk.rgd.AppConstants;
+import lk.rgd.ErrorCodes;
 import lk.rgd.UnitTestManager;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.core.AuthorizationException;
 import lk.rgd.common.util.DateTimeUtils;
+import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.dao.MRDivisionDAO;
 import lk.rgd.crs.api.domain.Assignment;
 import lk.rgd.crs.api.domain.Registrar;
 import lk.rgd.crs.api.service.RegistrarManagementService;
 import org.springframework.context.ApplicationContext;
-
-import java.util.List;
 
 /**
  * @author asankha
@@ -58,6 +57,60 @@ public class RegistrarManagementServiceTest extends TestCase {
         assign1.setType(Assignment.Type.BIRTH);
         regMgtSvc.addAssignment(assign1, admin);
 
+    }
+
+    public void testAddRegistrarWithMinimalRequirements() {
+        Registrar registrar = addSampleRegistrar(1);
+        assertTrue(registrar.getRegistrarUKey() > 0);
+
+        Registrar reg = new Registrar();
+        reg.setFullNameInEnglishLanguage(" ");
+        reg.setFullNameInOfficialLanguage("Registrar name in official language");
+        reg.setNic("752101118V");
+        reg.setDateOfBirth(DateTimeUtils.getDateFromISO8601String("1975-07-28"));
+        reg.setCurrentAddress("Registrar address");
+        reg.setGender(AppConstants.Gender.MALE.ordinal());
+
+        try {
+            regMgtSvc.addRegistrar(reg, admin);
+            fail("Registrar cannot be registered with empty name in english");
+        } catch (CRSRuntimeException expected) {
+            checkErrorCode(expected);
+        }
+        reg.setFullNameInOfficialLanguage("  ");
+        try {
+            regMgtSvc.addRegistrar(reg, admin);
+            fail("Registrar cannot be registered with empty name in official language");
+        } catch (CRSRuntimeException expected) {
+            checkErrorCode(expected);
+        }
+        reg.setNic("  ");
+        try {
+            regMgtSvc.addRegistrar(reg, admin);
+            fail("Registrar cannot be registered with empty nic");
+        } catch (CRSRuntimeException expected) {
+            checkErrorCode(expected);
+        }
+        reg.setCurrentAddress("   ");
+        try {
+            regMgtSvc.addRegistrar(reg, admin);
+            fail("Registrar cannot be registered with empty address");
+        } catch (CRSRuntimeException expected) {
+            checkErrorCode(expected);
+        }
+        reg.setDateOfBirth(null);
+        try {
+            regMgtSvc.addRegistrar(reg, admin);
+            fail("Registrar cannot be registered with empty date of birth");
+        } catch (CRSRuntimeException expected) {
+            checkErrorCode(expected);
+        }
+    }
+
+    private void checkErrorCode(CRSRuntimeException e) {
+        if (e.getErrorCode() != ErrorCodes.INVALID_DATA) {
+            fail("Invalid error code, should be INVALID DATA");
+        }
     }
 
     private Registrar addSampleRegistrar(int i) {
