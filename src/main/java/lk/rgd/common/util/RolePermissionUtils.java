@@ -99,8 +99,8 @@ public class RolePermissionUtils {
         adminBitSet.set(Permission.EVENTS_MANAGEMENT);
         adminBitSet.set(Permission.INDEX_RECORDS);
         adminBitSet.set(Permission.GENERATE_REPORTS);
-        adminBitSet.set(Permission.PRS_LOOKUP_PERSON_BY_KEYS); 
-
+        adminBitSet.set(Permission.PRS_LOOKUP_PERSON_BY_KEYS);
+        adminBitSet.set(Permission.PRS_ADD_PERSON);
 
     }
 

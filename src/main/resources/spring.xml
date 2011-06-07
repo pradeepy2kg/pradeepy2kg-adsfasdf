@@ -192,7 +192,6 @@
     <bean id="registrarManagementService" class="lk.rgd.crs.core.service.RegistrarManagementServiceImpl">
         <constructor-arg ref="registrarDAOImpl"/>
         <constructor-arg ref="assignmentDAOImpl"/>
-        <constructor-arg ref="districtDAOImpl"/>
         <constructor-arg ref="dsDivisionDAOImpl"/>
         <constructor-arg ref="ecivilService"/>
     </bean>

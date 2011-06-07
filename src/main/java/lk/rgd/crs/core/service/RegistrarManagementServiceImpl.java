@@ -3,7 +3,6 @@ package lk.rgd.crs.core.service;
 import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
 import lk.rgd.common.api.dao.DSDivisionDAO;
-import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.IdentificationNumberUtil;
@@ -14,6 +13,7 @@ import lk.rgd.crs.api.dao.RegistrarDAO;
 import lk.rgd.crs.api.domain.Assignment;
 import lk.rgd.crs.api.domain.Registrar;
 import lk.rgd.crs.api.service.RegistrarManagementService;
+import lk.rgd.prs.api.domain.Address;
 import lk.rgd.prs.api.domain.Person;
 import lk.rgd.prs.api.service.PopulationRegistry;
 import org.slf4j.Logger;
@@ -37,15 +37,13 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
     private RegistrarDAO registrarDao;
     private AssignmentDAO assignmentDao;
     private PopulationRegistry ecivil;
-    private DistrictDAO districtDAO;
     private DSDivisionDAO dsDivisionDAO;
 
     public RegistrarManagementServiceImpl(RegistrarDAO registrarDao, AssignmentDAO assignmentDao,
-        PopulationRegistry ecivil, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO) {
+        PopulationRegistry ecivil, DSDivisionDAO dsDivisionDAO) {
         this.registrarDao = registrarDao;
         this.assignmentDao = assignmentDao;
         this.ecivil = ecivil;
-        this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
     }
 
@@ -61,6 +59,10 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
         }
 
         validateMinimalRequirements(registrar);
+        // validate pin and add registrar to the PRS
+        // TODO
+//        validatePinAndProcessRegistrarToPRS(registrar, user);
+
         final String shortName = registrar.getShortName();
         logger.debug("Request to add a new Registrar : {} by : {}", shortName, user.getUserId());
         registrarDao.addRegistrar(registrar, user);
@@ -78,23 +80,67 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
         }
 
         validateMinimalRequirements(registrar);
+        // validate pin and add registrar to the PRS
+        // TODO
+//        validatePinAndProcessRegistrarToPRS(registrar, user);
+
         final String shortName = registrar.getShortName();
         logger.debug("Request to update Registrar : {} by : {}", shortName, user.getUserId());
 
         registrarDao.updateRegistrar(registrar, user);
     }
 
-    private Person processRegistrarToPRS(Registrar registrar, User user) {
-        Person person = null;
-        if (IdentificationNumberUtil.isValidNIC(registrar.getNic())) {
+    private void validatePinAndProcessRegistrarToPRS(Registrar registrar, User user) {
+        if (registrar.getPin() == 0) {
+            // specified pin is empty
+            Person person = processRegistrarToPRS(registrar, user);
+            if (person != null) {
+                registrar.setPin(person.getPin());
+            }
+        } else {
+            final String pin = Long.toString(registrar.getPin());
 
+            if (PinAndNicUtils.isValidPIN(pin)) {
+                // given pin is valid but registrar not in the PRS
+                if (!PinAndNicUtils.isValidPIN(registrar.getPin(), ecivil, user)) {
+                    // add registrar to the PRS
+                    Person person = processRegistrarToPRS(registrar, user);
+                    if (person != null) {
+                        registrar.setPin(person.getPin());
+                    }
+                }
+            }
         }
-        return person;
     }
 
-    private Person findRegistrarFromPRS(String nic) {
+    private Person processRegistrarToPRS(Registrar registrar, User user) {
         Person person = null;
-//        PinAndNicUtils.isValidPINorNIC()
+        String nic = registrar.getNic();
+        if (IdentificationNumberUtil.isValidNIC(registrar.getNic())) {
+            List<Person> records = ecivil.findPersonsByNIC(nic, user);
+
+            if ((records == null || records.isEmpty())) {
+                logger.debug("Adding registrar with NIC : {} to the PRS", nic);
+
+                person = new Person();
+                person.setFullNameInOfficialLanguage(registrar.getFullNameInOfficialLanguage());
+                person.setFullNameInEnglishLanguage(registrar.getFullNameInEnglishLanguage());
+                person.setNic(nic);
+                person.setGender(registrar.getGender());
+                person.setDateOfBirth(registrar.getDateOfBirth());
+                person.setPersonPhoneNo(registrar.getPhoneNo());
+                person.setPersonEmail(registrar.getEmailAddress());
+                person.setStatus(Person.Status.SEMI_VERIFIED);
+                // add registrar to the PRS
+                ecivil.addPerson(person, user);
+
+                final Address add = new Address(registrar.getCurrentAddress());
+                person.specifyAddress(add);
+                ecivil.addAddress(add, user);
+                ecivil.updatePerson(person, user);
+            }
+        }
+
         return person;
     }
 
