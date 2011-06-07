@@ -48,7 +48,7 @@ public class RegistrarManagementServiceTest extends TestCase {
 
     public void testAddRegistrar() throws Exception {
         // reg1 is a birth and death registrar for BD division with PK 1
-        Registrar reg1 = addSampleRegistrar(1);
+        Registrar reg1 = addSampleRegistrar(5);
 
         Assignment assign1 = new Assignment();
         assign1.setAppointmentDate(DateTimeUtils.getDateFromISO8601String("2010-01-24"));
@@ -60,7 +60,7 @@ public class RegistrarManagementServiceTest extends TestCase {
     }
 
     public void testAddRegistrarWithMinimalRequirements() {
-        Registrar registrar = addSampleRegistrar(1);
+        Registrar registrar = addSampleRegistrar(5);
         assertTrue(registrar.getRegistrarUKey() > 0);
 
         Registrar reg = new Registrar();
@@ -118,10 +118,10 @@ public class RegistrarManagementServiceTest extends TestCase {
         registrar.setFullNameInEnglishLanguage("Name of Registrar " + i + " in English");
         registrar.setFullNameInOfficialLanguage("Name of Registrar " + i + " in Sinhala");
         registrar.setCurrentAddress("Address of the Registrar " + i);
-        registrar.setDateOfBirth(DateTimeUtils.getDateFromISO8601String("1980-11-14"));
+        registrar.setDateOfBirth(DateTimeUtils.getDateFromISO8601String("1975-11-14"));
         registrar.setGender(AppConstants.Gender.MALE.ordinal());
         registrar.setNic("75200111" + i + "V");
-        registrar.setPin(802001110L + i);
+        registrar.setPin(197520011110L + i);
         regMgtSvc.addRegistrar(registrar, admin);
         return registrar;
     }
