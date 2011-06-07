@@ -1623,6 +1623,7 @@ public class BirthRegistrationServiceImpl implements
             // if we couldn't locate the mother, add an unverified record to the PRS
             mother = new Person();
             mother.setFullNameInOfficialLanguage(parent.getMotherFullName());
+            mother.setFullNameInEnglishLanguage(parent.getMotherFullNameInEnglish());
             mother.setDateOfBirth(parent.getMotherDOB());
             mother.setGender(AppConstants.Gender.FEMALE.ordinal());
             mother.setPreferredLanguage(prefLanguage);
@@ -1708,6 +1709,7 @@ public class BirthRegistrationServiceImpl implements
         if (father == null && parent.getFatherFullName() != null) {
             father = new Person();
             father.setFullNameInOfficialLanguage(parent.getFatherFullName());
+            father.setFullNameInEnglishLanguage(parent.getMotherFullNameInEnglish());
             father.setDateOfBirth(parent.getFatherDOB());
             father.setGender(AppConstants.Gender.MALE.ordinal());
             father.setPreferredLanguage(prefLanguage);
