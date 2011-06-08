@@ -359,6 +359,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
             person.setFullNameInEnglishLanguage(dr.getDeathPerson().getDeathPersonNameInEnglish());
             person.setFullNameInOfficialLanguage(dr.getDeathPerson().getDeathPersonNameOfficialLang());
             person.setDateOfDeath(dr.getDeath().getDateOfDeath());
+            person.setDateOfBirth(dr.getDeathPerson().getDeathPersonDOB());
             person.setLifeStatus(Person.LifeStatus.DEAD);
             person.setGender(dr.getDeathPerson().getDeathPersonGender());
             person.setRace(dr.getDeathPerson().getDeathPersonRace());
