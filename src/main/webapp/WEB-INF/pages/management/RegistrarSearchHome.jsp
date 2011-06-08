@@ -113,14 +113,17 @@
             </div>
 
         </div>
+        <div style="float:left;">
+            <s:actionerror cssStyle="color:red;font-size:10pt"/>
+            <s:actionmessage cssStyle="color:blue;;font-size:10pt"/>
+        </div>
         <div class="form-submit">
             <s:submit type="submit" value="%{getText('button.search')}" id="searchButton"/>
         </div>
         <s:hidden name="page" value="1"/>
     </s:form>
 </fieldset>
-<s:actionerror cssStyle="color:red;font-size:10pt"/>
-<s:actionmessage cssStyle="color:blue;;font-size:10pt"/>
+
 
 <s:if test="%{registrarList.size()>0}">
     <fieldset style="margin-bottom:0px;margin-top:5px;border:none;">

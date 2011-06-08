@@ -194,6 +194,7 @@
         <constructor-arg ref="assignmentDAOImpl"/>
         <constructor-arg ref="dsDivisionDAOImpl"/>
         <constructor-arg ref="ecivilService"/>
+        <constructor-arg ref="pinGeneratorService"/>
     </bean>
 
     <!--Service API beans - these allows access at a 'service' level, suitable for consumption by

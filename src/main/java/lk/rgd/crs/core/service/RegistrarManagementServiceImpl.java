@@ -15,6 +15,7 @@ import lk.rgd.crs.api.domain.Registrar;
 import lk.rgd.crs.api.service.RegistrarManagementService;
 import lk.rgd.prs.api.domain.Address;
 import lk.rgd.prs.api.domain.Person;
+import lk.rgd.prs.api.service.PINGenerator;
 import lk.rgd.prs.api.service.PopulationRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,13 +39,15 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
     private AssignmentDAO assignmentDao;
     private PopulationRegistry ecivil;
     private DSDivisionDAO dsDivisionDAO;
+    private final PINGenerator pinGenerator;
 
     public RegistrarManagementServiceImpl(RegistrarDAO registrarDao, AssignmentDAO assignmentDao,
-        PopulationRegistry ecivil, DSDivisionDAO dsDivisionDAO) {
+        PopulationRegistry ecivil, DSDivisionDAO dsDivisionDAO, PINGenerator pinGenerator) {
         this.registrarDao = registrarDao;
         this.assignmentDao = assignmentDao;
         this.ecivil = ecivil;
         this.dsDivisionDAO = dsDivisionDAO;
+        this.pinGenerator = pinGenerator;
     }
 
     /**
@@ -60,8 +63,7 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
 
         validateMinimalRequirements(registrar);
         // validate pin and add registrar to the PRS
-        // TODO
-//        validatePinAndProcessRegistrarToPRS(registrar, user);
+        validatePinAndProcessRegistrarToPRS(registrar, user);
 
         final String shortName = registrar.getShortName();
         logger.debug("Request to add a new Registrar : {} by : {}", shortName, user.getUserId());
@@ -81,8 +83,7 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
 
         validateMinimalRequirements(registrar);
         // validate pin and add registrar to the PRS
-        // TODO
-//        validatePinAndProcessRegistrarToPRS(registrar, user);
+        validatePinAndProcessRegistrarToPRS(registrar, user);
 
         final String shortName = registrar.getShortName();
         logger.debug("Request to update Registrar : {} by : {}", shortName, user.getUserId());
@@ -131,6 +132,10 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
                 person.setPersonPhoneNo(registrar.getPhoneNo());
                 person.setPersonEmail(registrar.getEmailAddress());
                 person.setStatus(Person.Status.SEMI_VERIFIED);
+
+                // generate pin for registrar
+                final long pin = pinGenerator.generatePINNumber(person.getDateOfBirth(), person.getGender() == 0, nic);
+                person.setPin(pin);
                 // add registrar to the PRS
                 ecivil.addPerson(person, user);
 
