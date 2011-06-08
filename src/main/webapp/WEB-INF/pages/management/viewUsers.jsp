@@ -45,8 +45,6 @@
 </style>
 
 <div id="view-users">
-    <s:actionmessage cssStyle="color:blue;;font-size:10pt"/>
-
     <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
         <legend>Search Options</legend>
         <s:form action="eprViewSelectedUsers.do" name="viewUsers" id="view_usrs_form" method="POST">
@@ -86,6 +84,9 @@
         <div id="search-title">
             Search Results for : <s:property value="%{selectedRole}"/>
         </div>
+        <s:actionmessage cssStyle="color:blue;;font-size:10pt"/>
+        <s:actionerror cssStyle="color:red;font-size:10pt"/>
+
         <fieldset style="border:none">
             <s:form name="users_print" action="" method="POST">
                 <table id="users-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
@@ -117,6 +118,9 @@
                                 </td>
                                 <s:url id="deleteSelected" action="eprInactiveUsers.do">
                                     <s:param name="userId" value="userId"/>
+                                    <s:param name="roleId" value="roleId"/>
+                                    <s:param name="nameOfUser" value="nameOfUser"/>
+                                    <s:param name="userDistrictId" value="userDistrictId"/>
                                 </s:url>
                                 <td align="center">
                                     <s:a href="%{deleteSelected}" title="Delete User"><img
@@ -125,9 +129,15 @@
                                 </td>
                                 <s:url id="activeSelected" action="eprActiveUsers.do">
                                     <s:param name="userId" value="userId"/>
+                                    <s:param name="roleId" value="roleId"/>
+                                    <s:param name="nameOfUser" value="nameOfUser"/>
+                                    <s:param name="userDistrictId" value="userDistrictId"/>
                                 </s:url>
                                 <s:url id="inactiveSelected" action="eprDoInactiveUsers.do">
                                     <s:param name="userId" value="userId"/>
+                                    <s:param name="roleId" value="roleId"/>
+                                    <s:param name="nameOfUser" value="nameOfUser"/>
+                                    <s:param name="userDistrictId" value="userDistrictId"/>
                                 </s:url>
                                 <td align="center">
                                     <s:if test="!(lifeCycleInfo.active)">

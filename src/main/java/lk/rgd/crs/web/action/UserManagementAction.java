@@ -195,8 +195,10 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         user = service.getUserByID(userId);
         user.getLifeCycleInfo().setActive(false);
         service.deleteUser(user, (User) session.get(WebConstants.SESSION_USER_BEAN));
-        logger.debug("Deleting  user {} is success", user.getUserId());
-        usersList = service.getAllUsers();      /* because of this user loses his search result */
+        logger.debug("User : {} deleted successfully by {}", user.getUserId(), currentUser.getUserId());
+        filterUsers();
+        addActionMessage("User : " + userId + " Deleted Successfully");
+
         session.put("viewUsers", usersList);
         return SUCCESS;
     }
@@ -206,7 +208,10 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         user = service.getUserByID(userId);
         user.getLifeCycleInfo().setActive(false);
         service.updateUser(user, (User) session.get(WebConstants.SESSION_USER_BEAN));
-        usersList = service.getAllUsers();
+        logger.debug("User : {} inactivated successfully by {}", userId, currentUser.getUserId());
+        filterUsers();
+        addActionMessage("User : " + userId + " Inactivated Successfully");
+
         session.put("viewUsers", usersList);
         return SUCCESS;
     }
@@ -214,10 +219,18 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     public String activeUser() {
         populate();
         user = service.getUserByID(userId);
-        user.setLoginAttempts(1);
-        user.getLifeCycleInfo().setActive(true);
-        service.updateUser(user, (User) session.get(WebConstants.SESSION_USER_BEAN));
-        usersList = service.getAllUsers();
+
+        userLocationNameList = userLocationDAO.getUserLocationsListByUserId(userId);
+        if (userLocationNameList != null && !userLocationNameList.isEmpty()) {
+            user.setLoginAttempts(1);
+            user.getLifeCycleInfo().setActive(true);
+            service.updateUser(user, (User) session.get(WebConstants.SESSION_USER_BEAN));
+            logger.debug("User : {} activated successfully by {}", userId, currentUser.getUserId());
+            addActionMessage("User : " + userId + " Activated Successfully");
+        } else {
+            addActionError("Please Assign Locations to User : " + userId + ", Before Assign Locations");
+        }
+        filterUsers();
         session.put("viewUsers", usersList);
         return SUCCESS;
     }
@@ -442,7 +455,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 districtEn = districtDAO.getNameByPK(userDistrictId, "en");
                 dsDivisionEn = dsDivisionDAO.getNameByPK(dsDivisionId, "en");
                 locationNameList = locationDAO.getAllLocationsByDSDivisionKey(dsDivisionId);
-                logger.debug("Size of the loaded Lacation List is :{}", locationNameList.size());
+                logger.debug("Size of the loaded Location List is :{}", locationNameList.size());
                 if (setNull) {
                     location = null;
                 }
@@ -655,11 +668,17 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     }
 
     public String selectUsers() {
+        filterUsers();
+        session.put("viewUsers", usersList);
+        populate();
+        return SUCCESS;
+    }
+
+    private void filterUsers() {
         selectedRole = roleId;
-        String keepRole = roleId;
         usersList = Collections.emptyList();
 
-        if (userDistrictId == 0 /*ALL*/ && selectedRole.equals("ALL")/*ALL*/ && nameOfUser.length() == 0 /*No Name*/) {
+        if (userDistrictId == 0 /*ALL*/ && "ALL".equals(selectedRole)/*ALL*/ && nameOfUser.length() == 0 /*No Name*/) {
             usersList = service.getAllUsers();
             selectedRole = "ALL";
         } else {
@@ -690,11 +709,6 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 selectedRole = selectedRole + " AND " + nameOfUser;
             }
         }
-
-        session.put("viewUsers", usersList);
-        populate();
-        roleId = keepRole;
-        return SUCCESS;
     }
 
     public String indexRecords() {
@@ -777,7 +791,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
             Iterator<String> it = roleList.keySet().iterator();
             while (it.hasNext()) {
                 String r = it.next();
-                if (r.equals(Role.ROLE_DEO)) {
+                if (r.equals(roleId)) {
                     roleId = r;
                 }
             }
