@@ -228,7 +228,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
             logger.debug("User : {} activated successfully by {}", userId, currentUser.getUserId());
             addActionMessage("User : " + userId + " Activated Successfully");
         } else {
-            addActionError("Please Assign Locations to User : " + userId + ", Before Assign Locations");
+            addActionError("Please Assign Locations to User : " + userId + ", Before Trying to Activate");
         }
         filterUsers();
         session.put("viewUsers", usersList);
