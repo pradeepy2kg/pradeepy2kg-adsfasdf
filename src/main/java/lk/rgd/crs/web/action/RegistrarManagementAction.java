@@ -146,7 +146,7 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
             assignmentList = service.getAllActiveAssignment(true, user);
         } else {
             //selecting all division
-            if (dsDivisionId == -1) {
+            if (dsDivisionId == 0) {
                 if (type != null) {
                     assignmentList = service.getAssignmentsByDistrictId(districtId, type, state, user);
 
@@ -163,7 +163,6 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
         }
         districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
         dsDivisionList = dsDivisionDAO.getAllDSDivisionNames(districtId, user.getPrefLanguage(), user);
-        dsDivisionId = -1;
 
         return SUCCESS;
     }
@@ -177,14 +176,14 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
             Registrar existingRegistrar = service.getRegistrarByPin(registrar.getPin(), user);
             if (existingRegistrar != null) {
                 addActionError(getText("error.registrar.already.exists"));
-                return "error";
+                return ERROR;
             } else {
                 try {
                     service.addRegistrar(registrar, user);
                     session.put(WebConstants.SESSION_EXSISTING_REGISTRAR, registrar);
                 } catch (Exception e) {
                     addActionError("error.registrar.add");
-                    return "error";
+                    return ERROR;
                 }
             }
         } else {

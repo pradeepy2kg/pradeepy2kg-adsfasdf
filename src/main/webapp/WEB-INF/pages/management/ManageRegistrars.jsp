@@ -32,11 +32,11 @@
             "bJQueryUI": true,
             "sPaginationType": "full_numbers",
             "sDom":'T,C,H<"clear">lftipr'
-            /**
-             * plugin and short key
-             * TableTools T
-             * Colvis C (show hide colloum)
-             */
+        /**
+         * plugin and short key
+         * TableTools T
+         * Colvis C (show hide colloum)
+         */
             /*
              * Variable: sDom
              * Purpose:  Dictate the positioning that the created elements will take
@@ -92,12 +92,14 @@
             var id = $("select#dsDivisionId").attr("value");
             $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:2},
                     function(data) {
-                        var options = '';
-                        var bd = data.bdDivisionList;
-                        for (var i = 0; i < bd.length; i++) {
-                            options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
+                        if (data != null) {
+                            var options = '';
+                            var bd = data.bdDivisionList;
+                            for (var i = 0; i < bd.length; i++) {
+                                options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
+                            }
+                            $("select#birthDivisionId").html(options);
                         }
-                        $("select#birthDivisionId").html(options);
                     });
         });
     });
@@ -136,7 +138,7 @@
                 <td><s:property value="%{getText('label.DSDivision')}"/></td>
                 <td align="left">
                     <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList"
-                              value="%{dsDivisionId}" headerValue="%{getText('all.divisions.label')}" headerKey="-1"
+                              value="%{dsDivisionId}" headerValue="%{getText('all.divisions.label')}" headerKey="0"
                               cssStyle="float:left;  width:240px;"/>
                 </td>
             </tr>
