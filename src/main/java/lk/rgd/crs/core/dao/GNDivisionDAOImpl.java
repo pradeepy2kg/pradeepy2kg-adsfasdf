@@ -110,7 +110,7 @@ public class GNDivisionDAOImpl extends BaseDAO implements GNDivisionDAO, Preload
             updateCache(r);
         }
 
-        logger.debug("Loaded : {} birth and death registration divisions from the database", results.size());
+        logger.debug("Loaded : {} grama niladhari divisions from the database", results.size());
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)

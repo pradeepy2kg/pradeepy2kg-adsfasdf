@@ -113,15 +113,13 @@
     <fieldset style="margin-bottom:0px;margin-top:2px;border:2px solid #c3dcee;">
         <table cellspacing="0" cellpadding="0">
             <caption></caption>
-            <col width="218px">
-            <col width="500px">
-            <col width="200px">
-            <col width="500px">
+            <col width="20%">
+            <col width="25%">
+            <col width="10%">
+            <col width="20%">
+            <col width="25%">
             <tbody>
-            <tr>
-                <td colspan="4">&nbsp;</td>
-            </tr>
-            <tr>
+            <tr height="50px">
                 <td><s:property value="%{getText('label.district')}"/></td>
                 <td align="left">
                     <s:if test="%{#session.user_bean.role.roleId.equals('ADMIN')}">
@@ -134,32 +132,20 @@
                                   cssStyle="width:98.5%; width:240px;"/>
                     </s:else>
                 </td>
+                <td></td>
                 <td><s:property value="%{getText('label.DSDivision')}"/></td>
                 <td align="left">
                     <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList"
-                              value="%{dsDivisionId}"
+                              value="%{dsDivisionId}" headerValue="%{getText('all.divisions.label')}" headerKey="-1"
                               cssStyle="float:left;  width:240px;"/>
                 </td>
             </tr>
-            <tr>
-                <td colspan="4">&nbsp;</td>
-            </tr>
-                <%--</tbody>
-            </table>
-
-            <table cellspacing="5" cellpadding="0">
-                <caption></caption>
-                <col width="218px">
-                <col width="500px">
-                <col width="200px">
-                <col width="500px">
-
-                <tbody>--%>
             <tr>
                 <td><s:property value="%{getText('label.state')}"/></td>
                 <td align="left"><s:select
                         list="#@java.util.HashMap@{'0':getText('label.state.active'),'1':getText('label.state.inactive')}"
                         name="assignmentState" cssStyle="width:240px;"/></td>
+                <td></td>
                 <td><s:property value="%{getText('label.type')}"/></td>
                 <td align="left"><s:select
                         list="#@java.util.HashMap@{'0':getText('label.type.birth'),'1':getText('label.type.death'),'2':getText('label.type.marriage.general'),'3':getText('label.type.marriage.kandyan'),'4':getText('label.type.marriage.muslim')}"
@@ -167,13 +153,9 @@
                         headerValue="%{getText('label.all.types')}"/></td>
             </tr>
             <tr>
-                <td colspan="4">&nbsp;</td>
-            </tr>
-            <tr>
-                <td colspan="4" align="right">
+                <td colspan="5" align="right">
                     <div id="search_button" class="button">
-                        <s:submit name="refresh" value="%{getText('label.button.filter')}"
-                                  cssStyle="margin-right:128px;"/>
+                        <s:submit name="refresh" value="%{getText('label.button.filter')}"/>
                     </div>
                 </td>
             </tr>
@@ -204,8 +186,6 @@
                     <tr>
                         <s:if test="birthDivision != null">
                             <td><s:property value="birthDivision.enDivisionName"/></td>
-                            <%--                            <td><s:property value="birthDivision.enDivisionName"/></td>
-                           <td><s:property value="birthDivision.enDivisionName"/></td>--%>
                         </s:if>
                         <s:if test="deathDivision != null">
                             <td><s:property value="deathDivision.enDivisionName"/></td>

@@ -365,7 +365,7 @@
     </definition>
 
     <!--registrars managment tiles-->
-    <definition name="epr.registrarsManagmentList" extends="epr.template">
+    <definition name="epr.registrarsManagementList" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/management/ManageRegistrars.jsp"/>
         <put-attribute name="title" value="registrars.managment.title"/>
     </definition>
