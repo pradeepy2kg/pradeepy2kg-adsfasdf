@@ -1014,7 +1014,7 @@
 
         <action name="eprRegistrarsManagment" class="lk.rgd.crs.web.action.RegistrarManagementAction"
                 method="registrarsManagementHome">
-            <result type="tiles" name="success">epr.registrarsManagmentList</result>
+            <result type="tiles" name="success">epr.registrarsManagementList</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
 
@@ -1026,7 +1026,7 @@
 
         <action name="eprRegistrarsFilter" class="lk.rgd.crs.web.action.RegistrarManagementAction"
                 method="filter">
-            <result type="tiles" name="success">epr.registrarsManagmentList</result>
+            <result type="tiles" name="success">epr.registrarsManagementList</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
 

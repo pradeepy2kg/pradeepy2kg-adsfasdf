@@ -109,6 +109,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     private final UserLocationDAO userLocationDAO;
     private final AppParametersDAO appParametersDAO;
     private static final String BA_ROWS_PER_PAGE = "crs.br_rows_per_page";
+    private static final String VIEW_USERS = "viewUsers";
 
     private Map<Integer, String> districtList;
     private Map<Integer, String> divisionList;
@@ -174,7 +175,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
             addActionMessage(getText("data.Save.Success.label"));
             pageNo = 1;
         } else {
-            session.put("viewUsers", null);
+            session.put(VIEW_USERS, null);
             addActionMessage(getText("edit.Data.Save.Success.label"));
             pageNo = 3;
         }
@@ -199,7 +200,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         filterUsers();
         addActionMessage("User : " + userId + " Deleted Successfully");
 
-        session.put("viewUsers", usersList);
+        session.put(VIEW_USERS, usersList);
         return SUCCESS;
     }
 
@@ -212,7 +213,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         filterUsers();
         addActionMessage("User : " + userId + " Inactivated Successfully");
 
-        session.put("viewUsers", usersList);
+        session.put(VIEW_USERS, usersList);
         return SUCCESS;
     }
 
@@ -231,7 +232,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
             addActionError("Please Assign Locations to User : " + userId + ", Before Trying to Activate");
         }
         filterUsers();
-        session.put("viewUsers", usersList);
+        session.put(VIEW_USERS, usersList);
         return SUCCESS;
     }
 
@@ -257,7 +258,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     public String viewUsers() {
         populate();
         roleId = "ALL";
-        session.put("viewUsers", null);
+        session.put(VIEW_USERS, null);
         return SUCCESS;
     }
 
@@ -669,7 +670,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
 
     public String selectUsers() {
         filterUsers();
-        session.put("viewUsers", usersList);
+        session.put(VIEW_USERS, usersList);
         populate();
         return SUCCESS;
     }
