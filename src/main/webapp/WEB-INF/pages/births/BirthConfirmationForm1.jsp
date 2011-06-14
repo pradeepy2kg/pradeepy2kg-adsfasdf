@@ -376,7 +376,7 @@ function initPage() {
 </tr>
 <tr>
     <td>4</td>
-    <td colspan="7"><label> උප්පැන්න සහතිකය නිකුත් කල යුතු භාෂාව / பிறப்பு அத்தாட்சி ….. /<br>Preferred Language for
+    <td colspan="7"><label> උප්පැන්න සහතිකය නිකුත් කල යුතු භාෂාව / பிறப்புச் சான்றிதழ் வழங்கப்பட வேண்டிய  மொழி/<br>Preferred Language for
         Birth Certificate </label></td>
     <td colspan="6">
         <s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'தமிழ்'}" name="register.preferredLanguage"
@@ -400,7 +400,7 @@ function initPage() {
     <td colspan="6"><s:select list="districtList" name="birthDistrictId" id="districtId"/></td>
 </tr>
 <tr>
-    <td><label>D.S.කොට්ඨාශය<br>பிரிவு <br>D.S. Division</label></td>
+    <td><label>ප්‍රාදේශීය ලේකම් කොට්ඨාශය<br>பிரதேச செயளாளர் பிரிவு<br>Divisional Secretary Division</label></td>
     <td colspan="6">
         <s:if test="bdId != 0">
             <s:textfield value="%{getDsDivisionList().get(dsDivisionId)}" cssClass="disable" disabled="true"/>
@@ -531,7 +531,7 @@ function initPage() {
     <td></td>
     <td>
         මව පදිංචි දිස්ත්‍රික්කය <br>
-        Mother's district <br>
+        Mother's District <br>
         mother's district in ta
     </td>
     <td colspan="6">
@@ -545,7 +545,7 @@ function initPage() {
 <tr>
     <td>11</td>
     <td><label>මව පදිංචි ප්‍රාදේශීය ලේකම් කොට්ටාශය <br>
-        Mother's D.S.Division in ta<br>Mother's D.S.Division</label></td>
+        Mother's D.S.Division in ta<br>Mother's Divisional Secretary Division</label></td>
     <td colspan="6">
         <s:if test="bdId != 0">
             <s:textfield name="#session.birthConfirmation_db.parent.motherDsDivisionPrint" cssClass="disable"
@@ -561,7 +561,7 @@ function initPage() {
 <tr>
     <td>12</td>
     <td><label>මව පදිංචි ග්‍රාම නිලධරී කොට්ටාශය<br>
-        Mother's G.N. Division in ta<br>Mother's G.N. Division</label></td>
+        Mother's G.N. Division in ta<br>Mother's Grama Niladhari Division</label></td>
     <td colspan="6">
         <s:if test="bdId != 0">
             <s:textfield name="#session.birthConfirmation_db.parent.motherGNDivisionPrint" cssClass="disable"
