@@ -35,6 +35,7 @@
                         function(data) {
                             var locationAddress = data.locationAddress;
                             $("label#retAddress").html(locationAddress);
+                            $("textarea#retAddress").html(locationAddress);
                         });
             } else {
                 $("select#retAddress").html(options);
@@ -866,7 +867,8 @@
     </tr>
     <tr>
         <td height="100px" width="30%">
-            <s:label id="retAddress" value="%{returnAddress}" cssStyle="margin-top:30px;"/>
+            <s:textarea id="retAddress" value="%{returnAddress}" disabled="true" rows="5"
+                        cssStyle="margin-top:50px;text-transform:none;width:100%;font-size:11pt;background:transparent;border:none;" />
         </td>
         <td width="10%">&nbsp;</td>
         <td width="30%">
