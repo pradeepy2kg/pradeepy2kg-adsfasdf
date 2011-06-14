@@ -15,10 +15,7 @@
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 
 <script>
-
-
     $(document).ready(function() {
-
         //Hide (Collapse) the toggle containers on load
         $(".toggle_container").hide();
 
@@ -26,7 +23,6 @@
         $("h2.trigger").click(function() {
             $(this).toggleClass("active").next().slideToggle("slow");
         });
-
     });
 
     $(document).ready(function() {
@@ -37,7 +33,6 @@
             $(this).next(".msg_body").slideToggle(600);
         });
     });
-
 
     $(function() {
         $("#dateOfBirthDatePicker").datepicker({
@@ -157,8 +152,8 @@
         document.getElementById('saveUpdate').disabled = mode;
 
     }
-    function initPage() {
 
+    function initPage() {
         nameOfficialLang = document.getElementById('registrarNameInOfficelaLang');
         nameEnglish = document.getElementById('registrarNameInEnglish');
         pin = document.getElementById('registrarPin');
@@ -175,28 +170,47 @@
     function validateForm() {
         var check = document.getElementById('skipValidationId');
         var returnval = true;
-        //valdiate numbers
-        if ((check.checked && !isFieldEmpty(pin)) || (!check.checked)) {
-            isNumeric(pin.value, "invalideData", "pin")
-            //validate PIN or NIC
-            validatePINorNIC(pin, "invalideData", "pin")
-        }
-        if ((check.checked && !isFieldEmpty(nic)) || (!check.checked)) {
-            validatePINorNIC(nic, "invalideData", "nic")
-        }
-        if ((check.checked && !isFieldEmpty(phone)) || (!check.checked)) {
-            //validate phone number
-            validatePhoneNo(phone, "invalideData", "phone")
-        }
-        if ((check.checked && !isFieldEmpty(email)) || (!check.checked)) {
-            //validate email
-            validateEmail(email, "invalideData", "email")
-        }
-        /*        //validate date of birth
-         isDate(dob, "invalideData", "email")*/
-        /*todo validate compulsory fields*/
-        isEmpty(nameOfficialLang, "nameOfficial", "cannotNull")
 
+        isMandatoryFieldsEmpty(nameOfficialLang, document.getElementById('nameOfficialError').value, "cannotNull")
+        isMandatoryFieldsEmpty(nameEnglish, document.getElementById('nameEnglishError').value, "cannotNull")
+
+        if (!check.checked) {
+            if (isFieldEmpty(pin)) {
+                isEmpty(pin, document.getElementById('pin').value, "empty")
+            }
+        }
+
+        isMandatoryFieldsEmpty(nic, document.getElementById('nic').value, "cannotNull")
+        isMandatoryFieldsEmpty(dob, document.getElementById('dob').value, "cannotNull")
+        isMandatoryFieldsEmpty(address, document.getElementById('addressError').value, "cannotNull")
+
+        if (!check.checked) {
+            if (isFieldEmpty(phone)) {
+                isEmpty(phone, document.getElementById('phone').value, 'empty')
+            }
+            if (isFieldEmpty(email)) {
+                isEmpty(email, document.getElementById('email').value, 'empty')
+            }
+        }
+        if (!isFieldEmpty(pin) && isInteger(pin)) {
+            //validate PIN or NIC
+            validatePINorNIC(pin, "pin", "invalideData")
+        }
+        if (!isFieldEmpty(nic)) {
+            validatePINorNIC(nic, "nic", "invalideData")
+        }
+        if (!isFieldEmpty(phone)) {
+            //validate phone number
+            validatePhoneNo(phone, "phone", "invalideData")
+        }
+        if (!isFieldEmpty(email)) {
+            //validate email
+            validateEmail(email, "email", "invalideData")
+        }
+        //validate date of birth
+        if (!isFieldEmpty(dob)) {
+            isDate(dob.value, "Invalid ", "invalideData")
+        }
 
         if (errormsg != "") {
             alert(errormsg);
@@ -262,13 +276,14 @@
             </tr>
             <tr>
                 <td align="left">
-                    <s:property value="%{getText('registrar.pin')}"/> <s:label value="*"
-                                                                               cssStyle="color:red;font-size:14pt;"/>
+                    <s:property value="%{getText('registrar.pin')}"/>
                 </td>
                 <td align="left"><s:textfield id="registrarPin" name="registrar.pin" maxLength="12"/></td>
             </tr>
             <tr>
-                <td align="left"><s:property value="%{getText('registrar.nic')}"/></td>
+                <td align="left"><s:property value="%{getText('registrar.nic')}"/>
+                    <s:label value="*" cssStyle="color:red;font-size:14pt;"/>
+                </td>
                 <td align="left"><s:textfield id="registrarNIC" name="registrar.nic" maxLength="10"/></td>
             </tr>
             <tr>
@@ -279,8 +294,7 @@
             </tr>
             <tr>
                 <td align="left">
-                    <s:property value="%{getText('registrar.dateofbirth')}"/> <s:label value="*"
-                                                                                       cssStyle="color:red;font-size:14pt;"/>
+                    <s:property value="%{getText('registrar.dateofbirth')}"/> <s:label value="*" cssStyle="color:red;font-size:14pt;"/>
                 </td>
                 <td align="left"><s:textfield name="registrar.dateOfBirth" id="dateOfBirthDatePicker"/></td>
             </tr>
@@ -340,7 +354,7 @@
             <th width="100px"><s:label value="%{getText('label.startDate')}"/></th>
             <th width="100px"><s:label value="%{getText('label.endDate')}"/></th>
             <th width="40px"><s:label value="%{getText('label.active')}"/></th>
-            <th width="20px"></th>
+            <th width="15px"></th>
         </tr>
         </thead>
         <s:if test="assignmentList.size>0">
@@ -405,15 +419,17 @@
     </div>
 
 </fieldset>
+
 <s:hidden id="invalideData" value="%{getText('invalide.data')}"/>
 <s:hidden id="cannotNull" value="%{getText('cannot.null')}"/>
 <s:hidden id="pin" value="%{getText('registrar.pin')}"/>
 <s:hidden id="nic" value="%{getText('registrar.nic')}"/>
 <s:hidden id="dob" value="%{getText('registrar.dateofbirth')}"/>
-<s:hidden id="address" value="%{getText('registrar.address')}"/>
+<s:hidden id="addressError" value="%{getText('registrar.address')}"/>
 <s:hidden id="phone" value="%{getText('registrar.phone')}"/>
 <s:hidden id="email" value="%{getText('registrar.email')}"/>
-<s:hidden id="nameOfficial" value="%{getText('registrar.full.name.officelaLang')}"/>
-
+<s:hidden id="nameOfficialError" value="%{getText('registrar.full.name.officelaLang')}"/>
+<s:hidden id="nameEnglishError" value="%{getText('registrar.full.name.english')}"/>
+<s:hidden id="empty" value="%{getText('field.emptry')}"/>
 
 
