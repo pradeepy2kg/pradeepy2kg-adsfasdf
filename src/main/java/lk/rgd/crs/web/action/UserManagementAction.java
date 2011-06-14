@@ -399,6 +399,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         userLocationNameList = null;
         userLocation = userLocationDAO.getUserLocation(userId, locationId);
         pageType = 1;
+        roleId = userLocation.getUser().getRole().getName();
         populate();
         return SUCCESS;
     }
