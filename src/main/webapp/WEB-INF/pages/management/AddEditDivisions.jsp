@@ -95,13 +95,13 @@
         var pageName;
         pageType = document.getElementById("checkPage").value;
         if (pageType == 1)  pageName = "District";
-        if (pageType == 2)  pageName = "Ds Division";
+        if (pageType == 2)  pageName = "Divisional Secretary Division";
         if (pageType == 3)  pageName = "Division";
         if (pageType == 4)  pageName = "MR Division";
-        if (pageType == 7)  pageName = "GN Division";
+        if (pageType == 7)  pageName = "Grama Niladhari Division";
         domObject = document.getElementById("id");
         if (isFieldEmpty(domObject)) {
-            errormsg = errormsg + "Plese Enter The  Id of " + pageName + " \n";
+            errormsg = errormsg + "Please Enter The  Id of " + pageName + " \n";
         }
         else {
             var reg = /^([0-9]*)$/;
@@ -111,15 +111,15 @@
         }
         domObject = document.getElementById("enName");
         if (isFieldEmpty(domObject)) {
-            errormsg = errormsg + "Plese Enter The English Name of " + pageName + " \n";
+            errormsg = errormsg + "Please Enter The English Name of " + pageName + " \n";
         }
         domObject = document.getElementById("siName");
         if (isFieldEmpty(domObject)) {
-            errormsg = errormsg + "Plese Enter The Sinhala Name of " + pageName + " \n";
+            errormsg = errormsg + "Please Enter The Sinhala Name of " + pageName + " \n";
         }
         domObject = document.getElementById("taName");
         if (isFieldEmpty(domObject)) {
-            errormsg = errormsg + "Plese Enter The Tamil Name of " + pageName + " \n";
+            errormsg = errormsg + "Please Enter The Tamil Name of " + pageName + " \n";
         }
 
         if (errormsg != "") {
@@ -449,9 +449,9 @@
                 </tr>
                 <tr>
                     <td style="font-size:10pt;text-align:left;padding-left:25px;" colspan="3">
-                        * Add New GN <br>
-                        * Active GN <br>
-                        * Inactive GN
+                        * Add New Grama Niladhari Division<br>
+                        * Active Grama Niladhari Division<br>
+                        * Inactive Grama Niladhari Division
                     </td>
                     <td>
                         <div class="form-submit">
@@ -499,7 +499,14 @@
             </s:if>
             <s:if test="pageType!=7">
                 <tr>
-                    <td colspan="2">Id</td>
+                    <td colspan="2">
+                        <s:if test="pageType==1">District Id</s:if>
+                        <s:if test="pageType==2">Divisional Secretary Division Id</s:if>
+                        <s:if test="pageType==3">Registration Division Id</s:if>
+                        <s:if test="pageType==4">Marriage Registration Division Id</s:if>
+                        <s:if test="pageType==5">Court Id</s:if>
+                        <s:if test="pageType==6">Location Id</s:if> <s:label value="*" cssStyle="color:red;font-size:14pt;"/>
+                    </td>
                     <td>
                         <s:if test="pageType==1"><s:textfield name="district.districtId" id="id"
                                                               onkeypress="return isNumberKey(event)"/></s:if>
@@ -512,16 +519,16 @@
                         <s:if test="pageType==5"><s:textfield name="court.courtId" id="id"
                                                               onkeypress="return isNumberKey(event)"/></s:if>
                         <s:if test="pageType==6"><s:textfield name="location.locationCode" id="id"
-                                                              onkeypress="return isNumberKey(event)" readonly="true"/></s:if>
+                                                              onkeypress="return isNumberKey(event)"
+                                                              readonly="true"/></s:if>
                     </td>
                 </tr>
             </s:if>
             <s:if test="pageType==7">
                 <tr>
-                    <td colspan="2">GN Division Id</td>
+                    <td colspan="2">Grama Niladhari Division Id <s:label value="*" cssStyle="color:red;font-size:14pt;"/></td>
                     <td>
-                        <s:textfield name="gnDivision.gnDivisionId" id="id"
-                                     onkeypress="return isNumberKey(event)"/>
+                        <s:textfield name="gnDivision.gnDivisionId" id="id" onkeypress="return isNumberKey(event)"/>
                     </td>
                 </tr>
             </s:if>
@@ -530,10 +537,11 @@
                     <s:if test="pageType==1">District</s:if>
                     <s:if test="pageType==2">Divisional Secretary Division</s:if>
                     <s:if test="pageType==3">Registration Division</s:if>
-                    <s:if test="pageType==4">Marriage Division</s:if>
+                    <s:if test="pageType==4">Marriage Registration Division</s:if>
                     <s:if test="pageType==5">Court</s:if>
                     <s:if test="pageType==6">Office Name</s:if>
-                    <s:if test="pageType==7">GN Division</s:if>
+                    <s:if test="pageType==7">Grama Niladhari Division</s:if>
+                    <s:label value="*" cssStyle="color:red;font-size:14pt;"/>
                 </td>
                 <td>Name in English</td>
                 <td>
@@ -542,7 +550,8 @@
                     <s:if test="pageType==3"><s:textfield name="bdDivision.enDivisionName" id="enName"/></s:if>
                     <s:if test="pageType==4"><s:textfield name="mrDivision.enDivisionName" id="enName"/></s:if>
                     <s:if test="pageType==5"><s:textfield name="court.enCourtName" id="enName"/></s:if>
-                    <s:if test="pageType==6"><s:textfield name="location.enLocationName" id="enName" readonly="true"/></s:if>
+                    <s:if test="pageType==6"><s:textfield name="location.enLocationName" id="enName"
+                                                          readonly="true"/></s:if>
                     <s:if test="pageType==7"><s:textfield name="gnDivision.enGNDivisionName" id="enName"
                                                           value=""/></s:if>
                 </td>
@@ -555,7 +564,8 @@
                     <s:if test="pageType==3"><s:textfield name="bdDivision.siDivisionName" id="siName"/></s:if>
                     <s:if test="pageType==4"><s:textfield name="mrDivision.siDivisionName" id="siName"/></s:if>
                     <s:if test="pageType==5"><s:textfield name="court.siCourtName" id="siName"/></s:if>
-                    <s:if test="pageType==6"><s:textfield name="location.siLocationName" id="siName" readonly="true"/></s:if>
+                    <s:if test="pageType==6"><s:textfield name="location.siLocationName" id="siName"
+                                                          readonly="true"/></s:if>
                     <s:if test="pageType==7"><s:textfield name="gnDivision.siGNDivisionName" id="siName"
                                                           value=""/></s:if>
                 </td>
@@ -568,7 +578,8 @@
                     <s:if test="pageType==3"><s:textfield name="bdDivision.taDivisionName" id="taName"/></s:if>
                     <s:if test="pageType==4"><s:textfield name="mrDivision.taDivisionName" id="taName"/></s:if>
                     <s:if test="pageType==5"><s:textfield name="court.taCourtName" id="taName"/></s:if>
-                    <s:if test="pageType==6"><s:textfield name="location.taLocationName" id="taName" readonly="true"/></s:if>
+                    <s:if test="pageType==6"><s:textfield name="location.taLocationName" id="taName"
+                                                          readonly="true"/></s:if>
                     <s:if test="pageType==7"><s:textfield name="gnDivision.taGNDivisionName" id="taName"
                                                           value=""/></s:if>
                 </td>
@@ -585,15 +596,18 @@
                 <tr>
                     <td rowspan="3">Office Mailing Address</td>
                     <td>Address in English</td>
-                    <td><s:textarea name="location.enLocationMailingAddress" cssStyle="text-transform:none;" readonly="true" rows="3"/></td>
+                    <td><s:textarea name="location.enLocationMailingAddress" cssStyle="text-transform:none;"
+                                    readonly="true" rows="3"/></td>
                 </tr>
                 <tr>
                     <td>Address in Sinhala</td>
-                    <td><s:textarea name="location.siLocationMailingAddress" cssStyle="text-transform:none;" readonly="true" rows="3"/></td>
+                    <td><s:textarea name="location.siLocationMailingAddress" cssStyle="text-transform:none;"
+                                    readonly="true" rows="3"/></td>
                 </tr>
                 <tr>
                     <td>Address in Tamil</td>
-                    <td><s:textarea name="location.taLocationMailingAddress" cssStyle="text-transform:none;" readonly="true" rows="3"/></td>
+                    <td><s:textarea name="location.taLocationMailingAddress" cssStyle="text-transform:none;"
+                                    readonly="true" rows="3"/></td>
                 </tr>
             </s:if>
         </table>
@@ -646,7 +660,8 @@
                         <s:if test="(pageType==2 || pageType==3 || pageType==4)"><s:property
                                 value="enDivisionName"/></s:if>
                         <s:if test="(pageType==5)"><s:property value="enCourtName"/></s:if>
-                        <s:if test="(pageType==6)"><s:property value="enLocationName"/> / <s:property value="siLocationName"/></s:if>
+                        <s:if test="(pageType==6)"><s:property value="enLocationName"/> / <s:property
+                                value="siLocationName"/></s:if>
                         <s:if test="(pageType==7)"><s:property value="enGNDivisionName"/></s:if>
                     </td>
                     <s:if test="pageType==1">

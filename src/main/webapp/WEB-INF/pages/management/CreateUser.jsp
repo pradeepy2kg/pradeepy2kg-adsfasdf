@@ -208,7 +208,7 @@
 </script>
 <div id="user-create-outer">
 <fieldset
-        style="border:2px solid #c3dcee;margin-left:12em;margin-right:20.5em;margin-top:2.5em;margin-bottom:15px;">
+        style="border:2px solid #c3dcee;margin-left:8em;margin-right:20.5em;margin-top:2.5em;margin-bottom:15px;">
 <table class="user-create-table" cellspacing="0" cellpadding="0">
 <caption/>
 <col/>
@@ -286,7 +286,7 @@
 <tr>
     <td><s:label value="%{getText('preffered_language.label')}"/></td>
     <td>
-        <s:select list="#@java.util.HashMap@{'en':'English','si':'සිංහල','ta':'Tamil'}"
+        <s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'தமிழ்','en':'English'}"
                   name="user.prefLanguage" id="prefferedLanguage" cssStyle="width:90%;margin-left:0;"/>
     </td>
     <td></td>

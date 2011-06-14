@@ -60,9 +60,6 @@
         isMandatoryFieldsEmpty(address, document.getElementById('addressError').value, "cannotNull")
 
         if (!check.checked) {
-            /*if (isFieldEmpty(nic)) {
-             isEmpty(nic, document.getElementById('nic').value, 'empty')
-             }*/
             if (isFieldEmpty(phone)) {
                 isEmpty(phone, document.getElementById('phone').value, 'empty')
             }
