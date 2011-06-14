@@ -175,6 +175,7 @@ Please Select Ethnis Group/ කරුණාකර ජන වර්ගය ඇත�
 Divisional Secretariat,
 Divisional Secretary Division Office,
 
+මව පදිංචි දිස්ත්‍රික්කය/ Mother's District
 මව පදිංචි ග්‍රාම නිලධාරී කොට්ඨාශය/   Mother's Grama Niladhari Division
 මව පදිංචි ප්‍රාදේශීය ලේකම් කොට්ඨාශය/ Mother's Divisional Secretary Division
 

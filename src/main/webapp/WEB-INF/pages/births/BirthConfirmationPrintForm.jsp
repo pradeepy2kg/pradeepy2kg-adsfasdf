@@ -404,19 +404,19 @@
     </tr>
     <tr>
         <td class="cell_011">12</td>
-        <td><label>මව පදිංචි ග්‍රාම නිලධාරී කොට්ඨාශය<br>
-            Mother's G.N. Division in ta<br>Mother's Grama Niladhari Division</label></td>
+        <td><label>මව පදිංචි ප්‍රාදේශීය ලේකම් කොට්ඨාශය<br>
+            Mother's D.S.Division in ta<br>Mother's Divisional Secretary Division</label></td>
         <td colspan="6" style="font-size:12pt;">
-            <s:label value="%{parent.motherGNDivisionPrint}"/>
+            <s:label value="%{parent.motherDsDivisionPrint}"/>
         </td>
         <td colspan="11">&nbsp;</td>
     </tr>
     <tr>
         <td class="cell_011">13</td>
-        <td><label>මව පදිංචි ප්‍රාදේශීය ලේකම් කොට්ඨාශය<br>
-            Mother's D.S.Division in ta<br>Mother's Divisional Secretary Division</label></td>
+        <td><label>මව පදිංචි ග්‍රාම නිලධාරී කොට්ඨාශය<br>
+            Mother's G.N. Division in ta<br>Mother's Grama Niladhari Division</label></td>
         <td colspan="6" style="font-size:12pt;">
-            <s:label value="%{parent.motherDsDivisionPrint}"/>
+            <s:label value="%{parent.motherGNDivisionPrint}"/>
         </td>
         <td colspan="11">&nbsp;</td>
     </tr>

@@ -79,7 +79,7 @@
             <tr>
                 <td>
                     <div id="user-ds-division" class="font-10">
-                        <label>D.S.කොට්ඨාශය /D.S. பிரிவு / D.S. Division</label>
+                        <label>ප්‍රාදේශීය ලේකම් කොට්ඨාශය/ பிரதேச செயளாளர் பிரிவு/ Divisional Secretary Division</label>
                     </div>
                 </td>
                 <td width="250px"><s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList"
