@@ -1,5 +1,3 @@
-<%@ page import="java.util.Date" %>
-<%@ page import="lk.rgd.common.util.DateTimeUtils" %>
 <%--
  @author amith jayasekara
 --%>
@@ -45,7 +43,6 @@
     });
 
     function initPage() {
-
     }
 </script>
 
@@ -80,7 +77,6 @@
 </s:else>
 <div id="confermationRetAddress">
     <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;">
-
         <table>
             <caption/>
             <col/>
@@ -111,7 +107,6 @@
     </fieldset>
 </div>
 
-<div class="page-break">
 <table style="width:70%;float:left;">
     <caption></caption>
     <col/>
@@ -186,7 +181,6 @@
     </tbody>
 </table>
 
-
 <table class="table_con_page_01" width="100%" cellspacing="0">
     <caption></caption>
     <col/>
@@ -202,8 +196,9 @@
             <br>பிறப்பை பதிவு செய்வதற்கான விபரம்" எனும் படிவத்தின் தொடர் இலக்கமும் திகதியும்
             <br>Serial Number and the Date of the ‘Particulars for Registration of a Birth’ form
         </td>
-        <td width="200px"><s:label name="register.bdfSerialNo"/><br>
-            <s:label name="register.dateOfRegistration"/></td>
+        <td width="200px">
+            <s:label name="register.bdfSerialNo"/><br><s:label name="register.dateOfRegistration"/>
+        </td>
     </tr>
     <tr>
         <td style="text-align:center">2</td>
@@ -243,7 +238,7 @@
 <table class="table_con_page_01" width="100%" cellspacing="0">
     <caption></caption>
     <col width="36px"/>
-    <col width="230px"/>
+    <col width="240px"/>
     <col width="64px"/>
     <col width="60px"/>
     <col width="60px"/>
@@ -253,7 +248,7 @@
     <col width="60px"/>
     <col width="80px"/>
     <col width="60px"/>
-    <col width="70px"/>
+    <col width="60px"/>
     <col width="60px"/>
     <col width="70px"/>
     <tbody>
@@ -266,7 +261,8 @@
         <td class="cell_02" colspan="11" style="font-size:9pt;"><label>
             ඇතුලත් කර ඇති තොරතුරු හෝ යම් අක්ෂර දෝෂයක් නිවැරදි කල යුතුනම්, වෙනස් විය යුතු ආකාරය ඇතුලත් කරන්න
             <br>புதிய விபரங்களை இடுக அல்லது இருக்கும் விபரத்தை திருத்துக
-            <br>If there are spelling mistakes or changes in existing details.</label></td>
+            <br>If there are spelling mistakes or changes in existing details.</label>
+        </td>
     </tr>
     <tr>
         <td class="cell_011">4</td>
@@ -287,7 +283,6 @@
         <td>&nbsp;</td>
         <td><label>දිනය<br>திகதி<br>Day</label></td>
         <td>&nbsp;</td>
-
     </tr>
     <tr>
         <td class="cell_011">5</td>
@@ -326,23 +321,8 @@
         </td>
         <td colspan="11">&nbsp;</td>
     </tr>
-
-    <%--
-        <tr>
-            <td><label>
-                ග්‍රාම නිළධාරී කොටිඨාශය <br/>
-                Grama Niladhari Division in ta<br/>
-                Grama Niladhari Division</label>
-            </td>
-            <td colspan="6" style="font-size:12pt;">
-                <s:label value="%{register.gnDivisionPrint}"/>
-            </td>
-            <td colspan="11">&nbsp;</td>
-        </tr>
-    --%>
-
-    <tr height="35px">
-        <td><label>උපන් ස්ථානය
+    <tr height="45px">
+        <td height="85px"><label>උපන් ස්ථානය
             <br>பிறந்த இடம்
             <br>Place of Birth</label></td>
         <td colspan="6">
@@ -361,29 +341,59 @@
     </tr>
     <tr>
         <td class="cell_011">8</td>
-        <td><label>පියාගේ ජාතිය <br>தந்தையின் இனம்/Father's Race</label></td>
+        <td><label>පියාගේ ජන වර්ගය <br>தந்தையின் இனம்/Father's Race</label></td>
         <td colspan="6" style="font-size:12pt;">
             <s:label value="%{parent.fatherRacePrint}"/>
         </td>
         <td colspan="11">&nbsp;</td>
     </tr>
     <tr>
-
     <tr>
         <td class="cell_011">9</td>
         <td><label>ම‌වගේ අනන්‍යතා අංකය<br>தாயின் அடையாள எண் <br>Mother's Identification No.</label></td>
         <td colspan="6"><s:label name="parent.motherNICorPIN"/></td>
         <td colspan="11">&nbsp;</td>
     </tr>
+    </tbody>
+</table>
+<div style="page-break-after:always;"></div>
+
+<table class="table_con_page_01" width="100%" cellspacing="0">
+    <caption></caption>
+    <col width="36px"/>
+    <col width="240px"/>
+    <col width="64px"/>
+    <col width="60px"/>
+    <col width="60px"/>
+    <col width="60px"/>
+    <col width="60px"/>
+    <col width="60px"/>
+    <col width="60px"/>
+    <col width="80px"/>
+    <col width="60px"/>
+    <col width="60px"/>
+    <col width="60px"/>
+    <col width="70px"/>
+    <tbody>
+
+    <tr>
+        <td colspan="2"><label>විස්තර /விபரங்கள் /Particulars </label></td>
+        <td colspan="6"><label>දැනට අඩංගු විස්තර
+            /தற்போதய தகவல்
+            <br>Current Information </label></td>
+        <td class="cell_02" colspan="11" style="font-size:9pt;"><label>
+            ඇතුලත් කර ඇති තොරතුරු හෝ යම් අක්ෂර දෝෂයක් නිවැරදි කල යුතුනම්, වෙනස් විය යුතු ආකාරය ඇතුලත් කරන්න
+            <br>புதிய விபரங்களை இடுக அல்லது இருக்கும் விபரத்தை திருத்துக
+            <br>If there are spelling mistakes or changes in existing details.</label></td>
+    </tr>
     <tr>
         <td class="cell_011">10</td>
-        <td><label>මවගේ ජාතිය <br>தாயின் இனம்/Mother's Race</label></td>
+        <td><label>මවගේ ජන වර්ගය <br>தாயின் இனம்/Mother's Race</label></td>
         <td colspan="6" style="font-size:12pt;">
             <s:label value="%{parent.motherRacePrint}"/>
         </td>
         <td colspan="11">&nbsp;</td>
     </tr>
-
     <tr>
         <td class="cell_011">11</td>
         <td><label>මව්පියන් විවාහකද? <br>பெற்றோர் விவாகம் செய்தவர்களா?<br>Were Parents Married?</label></td>
@@ -394,17 +404,17 @@
     </tr>
     <tr>
         <td class="cell_011">12</td>
-        <td><label>මව පදිංචි ග්‍රාම නිලධරී කොට්ටාශය<br>
-            Mother's G.N. Division in ta<br>Mother's G.N. Division</label></td>
+        <td><label>මව පදිංචි ග්‍රාම නිලධාරී කොට්ඨාශය<br>
+            Mother's G.N. Division in ta<br>Mother's Grama Niladhari Division</label></td>
         <td colspan="6" style="font-size:12pt;">
             <s:label value="%{parent.motherGNDivisionPrint}"/>
         </td>
         <td colspan="11">&nbsp;</td>
     </tr>
-        <tr>
+    <tr>
         <td class="cell_011">13</td>
-        <td><label>මව පදිංචි ප්‍රාදේශීය ලේකම්  කොට්ටාශය <br>
-       Mother's D.S.Division in ta<br>Mother's D.S.Division</label></td>
+        <td><label>මව පදිංචි ප්‍රාදේශීය ලේකම් කොට්ඨාශය<br>
+            Mother's D.S.Division in ta<br>Mother's Divisional Secretary Division</label></td>
         <td colspan="6" style="font-size:12pt;">
             <s:label value="%{parent.motherDsDivisionPrint}"/>
         </td>
@@ -412,10 +422,8 @@
     </tr>
     </tbody>
 </table>
-</div>
 
-
-<table border="0" style="width:100%;float:left;">
+<table border="0" style="width:100%;">
     <caption></caption>
     <col/>
     <tbody>
@@ -451,7 +459,8 @@
             <br>திருத்தப்பட்ட பெயர்
             <br>Corrected name</label>
 
-            <p></p></td>
+            <p></p>
+        </td>
         <td>&nbsp;</td>
     </tr>
     <tr>
@@ -520,10 +529,9 @@
     <tbody>
     <tr>
         <td class="cell_001">16</td>
-        <td width="200px"><p></p><label>පියාගේ සම්පුර්ණ නම
+        <td width="200px"><p></p><label>පියාගේ සම්පුර්ණ නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)
             <br>தந்தையின் முழுப் பெயர்
-            <br>Father's Full Name</label>
-
+            <br>Father's Full Name in any of the official languages (Sinhala / Tamil)</label>
             <p></p>
         </td>
         <td><s:label name="parent.fatherFullName" cssStyle="font-size:12pt;"/></td>
@@ -551,6 +559,21 @@
     </tr>
     </tbody>
 </table>
+<div style="page-break-after:always;"></div>
+
+<table border="0" style="width:100%;">
+    <caption></caption>
+    <col/>
+    <tbody>
+    <tr>
+        <td colspan="3" style="text-align:center;font-size:12pt;">
+            <label><br>නම් වල අක්ෂර දෝෂ වෙනස් වීම් ඇතුලත් කිරීම / பெயரிலுள்ள எழுத்துப்பிழைகளை திருத்துதல் /
+                Correction of errors in Names</label>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
 <%--father full name in english --%>
 <table class="table_con_page2_table" cellspacing="0" width="100%">
     <caption></caption>
@@ -563,52 +586,9 @@
         <td width="200px"><p></p><label>පියාගේ සම්පුර්ණ නම ඉංග්‍රීසි භාෂාවෙන් (කැපිටල් අකුරෙන්)</label>
             <br>முழுப் பெயர்
             <br>Father's Full Name in English (in block letters)</label>
-
             <p></p>
         </td>
         <td><s:label name="parent.fatherFullNameInEnglish" cssStyle="font-size:12pt;"/></td>
-    </tr>
-    <tr>
-        <td rowspan="5" class="cell_012">&nbsp;</td>
-        <td rowspan="5"><p></p><label>පියාගේ නම වෙනස් විය යුතු අයුරු
-            <br>திருத்தப்பட்ட பெயர்
-            <br>Father's corrected name</label>
-
-            <p></p></td>
-        <td>&nbsp;</td>
-    </tr>
-    <tr>
-        <td>&nbsp;</td>
-    </tr>
-    <tr>
-        <td>&nbsp;</td>
-    </tr>
-    <tr>
-        <td>&nbsp;</td>
-    </tr>
-    <tr>
-        <td>&nbsp;</td>
-    </tr>
-    </tbody>
-</table>
-
-<%--mother full name in official language--%>
-<br class="page-break">
-<table class="table_con_page2_table" cellspacing="0" width="100%">
-    <caption></caption>
-    <col/>
-    <col/>
-    <col/>
-    <tbody>
-    <tr>
-        <td class="cell_001">18</td>
-        <td width="200px"><p></p><label>මවගේ සම්පූර්ණ නම
-            <br>தாயின் முழுப் பெயர்
-            <br>Mother's Full Name</label>
-
-            <p></p>
-        </td>
-        <td><s:label name="parent.motherFullName" cssStyle="font-size:12pt;"/></td>
     </tr>
     <tr>
         <td rowspan="5" class="cell_012">&nbsp;</td>
@@ -634,30 +614,27 @@
     </tbody>
 </table>
 
-<%--mother full name in english--%>
-
-<table class="table_con_page2_table" cellspacing="0" width="100%">
+<%--mother full name in official language--%>
+<table class="table_con_page2_table" cellspacing="0" width="100%" style="margin-top:30px;">
     <caption></caption>
     <col/>
     <col/>
     <col/>
     <tbody>
     <tr>
-        <td class="cell_001">19</td>
-        <td width="200px"><p></p><label>මවගේ සම්පුර්ණ නම ඉංග්‍රීසි භාෂාවෙන් (කැපිටල් අකුරෙන්)
-            <br>முழுப் பெயர்
-            <br>Mother's Full Name in English (in block letters)</label>
-
+        <td class="cell_001">18</td>
+        <td width="200px"><p></p><label>මවගේ සම්පුර්ණ නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)
+            <br>தாயின் முழுப் பெயர்
+            <br>Mother's Full Name in any of the official languages (Sinhala / Tamil)</label>
             <p></p>
         </td>
-        <td><s:label name="parent.motherFullNameInEnglish" cssStyle="font-size:12pt;"/></td>
+        <td><s:label name="parent.motherFullName" cssStyle="font-size:12pt;"/></td>
     </tr>
     <tr>
         <td rowspan="5" class="cell_012">&nbsp;</td>
-        <td rowspan="5"><p></p><label>මවගේ නම වෙනස් විය යුතු අයුරු
+        <td rowspan="5"><p></p><label>නම වෙනස් විය යුතු අයුරු
             <br>திருத்தப்பட்ட பெயர்
-            <br>mother's corrected name</label>
-
+            <br>Corrected name</label>
             <p></p></td>
         <td>&nbsp;</td>
     </tr>
@@ -676,7 +653,45 @@
     </tbody>
 </table>
 
-
+<%--mother full name in english--%>
+<table class="table_con_page2_table" cellspacing="0" width="100%" style="margin-top:30px;">
+    <caption></caption>
+    <col/>
+    <col/>
+    <col/>
+    <tbody>
+    <tr>
+        <td class="cell_001">19</td>
+        <td width="200px"><p></p><label>මවගේ සම්පුර්ණ නම ඉංග්‍රීසි භාෂාවෙන් (කැපිටල් අකුරෙන්)
+            <br>முழுப் பெயர்
+            <br>Mother's Full Name in English (in block letters)</label>
+            <p></p>
+        </td>
+        <td><s:label name="parent.motherFullNameInEnglish" cssStyle="font-size:12pt;"/></td>
+    </tr>
+    <tr>
+        <td rowspan="5" class="cell_012">&nbsp;</td>
+        <td rowspan="5"><p></p><label>නම වෙනස් විය යුතු අයුරු
+            <br>திருத்தப்பட்ட பெயர்
+            <br>Corrected name</label>
+            <p></p></td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+    </tr>
+    </tbody>
+</table>
+<div style="page-break-after:always;"></div>
 
 <div id="page3">
     <table border="0" style="width:100%;float:left;">
@@ -685,14 +700,11 @@
         <tbody>
         <tr>
             <td colspan="3" style="text-align:center;font-size:12pt">
-                <p></p>
-                <label>
+                <p></p><label>
                     උපත තහවුරු කරන්නාගේ විස්තර
                     <br>பிறப்பு விபரங்களை உறுதிப்படுத்துபவரின் விபரங்கள்
                     <br>Person confirming the birth details
-                </label>
-
-                <p></p>
+                </label><p></p>
             </td>
         </tr>
         </tbody>
@@ -732,12 +744,10 @@
                     <br>அடையாள எண்
                     <br>Identification number
                 </label>
-
                 <p></p>
             </td>
             <td colspan="7" width="350px">&nbsp;</td>
         </tr>
-
         <tr>
             <td rowspan="5" class="cell_012">22</td>
             <td rowspan="5">
@@ -750,7 +760,6 @@
 
                 <p></p>
             </td>
-
             <td colspan="6"><p></p></td>
         </tr>
         <tr>
@@ -765,7 +774,6 @@
         <tr>
             <td colspan="6"><p></p></td>
         </tr>
-
         <tr>
             <td rowspan="2" class="cell_001">23</td>
             <td rowspan="2">
@@ -787,7 +795,6 @@
     </table>
 </div>
 <hr style="border-style:dashed ; float:left;width:100% ;margin-bottom:30px;margin-top:30px;">
-  <br class="page-break">
 
 <table style="width:100%;">
     <caption></caption>
@@ -823,13 +830,7 @@
                 /மேற்குறிப்பிட்ட விபரங்கள் ‘சிவில் பதிவு முறையில்’ உள்ளடக்கப்பட்டன (மாவட்டப் பதிவாளர் / மேலதிக
                 மாவட்டப் பதிவாளர்)
                 /Above information has been entered into the Civil Registration System.
-
-                <%--         ඉහත සදහන් තොරතුරු සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියට ඇතුලත් කරන ලදී.
-       <br>மேற்குறிப்பிட்ட விபரங்கள் ‘சிவில் பதிவு முறையில்’ உள்ளடக்கப்பட்டன (மாவட்டப் பதிவாளர் / மேலதிக
-       மாவட்டப் பதிவாளர்)
-       <br>Above information has been entered into the Civil Registration System.--%>
             </label>
-
             <p></p>
         </td>
         <td><label>දිනය<br>திகதி<br>Date</label>
@@ -846,52 +847,51 @@
     </tbody>
 </table>
 
-<hr style="border-style:dashed ; float:left;width:100% ;margin-bottom:30px;margin-top:200px;">
+<hr style="border-style:dashed ; float:left;width:100% ;margin-bottom:30px;margin-top:105px;">
 <table border="0" cellspacing="0" width="100%">
     <caption></caption>
     <col/>
     <col/>
     <col/>
     <col/>
+    <col/>
     <tbody>
     <tr>
-        <td rowspan="8" width="200px" height="350px"></td>
-        <td colspan="2" width="600px" height="100px"
+        <td rowspan="7" width="200px" height="350px"></td>
+        <td colspan="3" width="600px" height="100px"
             style="text-align:center;margin-left:auto;margin-right:auto;font-size:16pt">
             <label>රාජ්‍ය සේවය පිණිසයි / அரச பணி
                 On State Service</label></td>
-        <td rowspan="8" width="200px"></td>
+        <td rowspan="7" width="200px"></td>
     </tr>
     <tr>
-        <td><s:label name="informant.informantName" cssStyle="width:600px;font-size:12pt;" cssClass="disable"
-                     disabled="true"/></td>
-    </tr>
-    <tr>
-        <td><s:label name="informant.informantAddress" cssStyle="width:600px;font-size:12pt;" cssClass="disable"
-                     disabled="true"/></td>
-    </tr>
-    <tr>
-        <td colspan="2"><p></p></td>
-    </tr>
-    <tr>
-        <td colspan="2"><p></p></td>
-    </tr>
-    <tr>
-        <td colspan="2"><p></p></td>
-    </tr>
-    <tr>
-        <td colspan="2"><p></p></td>
-    </tr>
-    <%--    <tr>
-        <td>
-            Printed On : <%= DateTimeUtils.getISO8601FormattedString(new Date()) %>
+        <td height="100px" width="30%">
+            <s:label id="retAddress" value="%{returnAddress}" cssStyle="margin-top:30px;"/>
         </td>
-        <td style="text-align:right;margin-left:auto;margin-right:0;">
-            &lt;%&ndash;<%= DateTimeUtils.getISO8601FormattedString(new Date()) %>&ndash;%&gt;
+        <td width="10%">&nbsp;</td>
+        <td width="30%">
+            <s:label name="informant.informantName" cssStyle="width:600px;font-size:12pt;"/>,<br/>
+            <s:label name="informant.informantAddress" cssStyle="width:600px;font-size:12pt;"/>
         </td>
-    </tr>--%>
+    </tr>
+    <tr>
+        <td height="100px" valign="top"></td>
+    </tr>
+    <tr>
+        <td colspan="2"><p></p></td>
+    </tr>
+    <tr>
+        <td colspan="2"><p></p></td>
+    </tr>
+    <tr>
+        <td colspan="2"><p></p></td>
+    </tr>
+    <tr>
+        <td colspan="2"><p></p></td>
+    </tr>
     </tbody>
 </table>
+
 <hr style="border-style:dashed ; float:left;width:100% ;margin-top:15px;"/>
 <br>
 
