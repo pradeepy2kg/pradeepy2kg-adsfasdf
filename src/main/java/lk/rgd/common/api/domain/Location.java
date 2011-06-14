@@ -50,11 +50,11 @@ public class Location implements Serializable {
     @Column(nullable = false, length = 120, unique = true, updatable = false)
     private String taLocationName;
 
-    @Column(nullable = true, length = 120, unique = true, updatable = false)
+    @Column(nullable = true, length = 255, unique = true, updatable = false)
     private String siLocationMailingAddress;
-    @Column(nullable = true, length = 120, unique = true, updatable = false)
+    @Column(nullable = true, length = 255, unique = true, updatable = false)
     private String enLocationMailingAddress;
-    @Column(nullable = true, length = 120, unique = true, updatable = false)
+    @Column(nullable = true, length = 255, unique = true, updatable = false)
     private String taLocationMailingAddress;
 
     @Column(nullable = true, length = 120, unique = false, updatable = false)
