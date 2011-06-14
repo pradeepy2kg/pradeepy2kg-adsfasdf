@@ -480,7 +480,7 @@
             </s:if>
         </div>
     </td>
-    <td>පියාගේ ජාතිය<br>தந்தையின் இனம்<br> Father's Race</td>
+    <td>පියාගේ ජන වර්ගය<br>தந்தையின் இனம்<br> Father's Ethnic Group</td>
     <td colspan="4">
         <s:label name="" value="%{fatherRacePrint}" cssStyle="font-size:14pt;"/><br/>
         <s:label name="" value="%{fatherRacePrintEn}" cssStyle="font-size:12pt;"/>
@@ -522,7 +522,7 @@
             </s:if>
         </div>
     </td>
-    <td>මවගේ ජාතිය<br>தாயின் இனம்<br> Mother's Race
+    <td>මවගේ ජන වර්ගය<br>தாயின் இனம்<br> Mother's Ethnic Group
     </td>
     <td colspan="4">
         <s:label name="" value="%{motherRacePrint}" cssStyle="font-size:14pt;"/><br/>

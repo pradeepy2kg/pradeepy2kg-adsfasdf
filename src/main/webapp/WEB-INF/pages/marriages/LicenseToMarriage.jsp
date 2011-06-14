@@ -287,9 +287,9 @@
     </tr>
     <tr>
         <td>
-            සිවිල් තත්වය සහ ජාතිය <br>
+            සිවිල් තත්වය සහ ජන වර්ගය <br>
             சிவில் நிலைமை <br>
-            Civil Status & Race
+            Civil Status & Ethnic Group
         </td>
         <td align="center">
             <%=CivilStatusUtil.getCivilStatus((Person.CivilStatus)

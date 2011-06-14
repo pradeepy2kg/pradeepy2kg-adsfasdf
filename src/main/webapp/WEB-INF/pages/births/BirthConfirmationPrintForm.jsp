@@ -341,7 +341,7 @@
     </tr>
     <tr>
         <td class="cell_011">8</td>
-        <td><label>පියාගේ ජන වර්ගය <br>தந்தையின் இனம்/Father's Race</label></td>
+        <td><label>පියාගේ ජන වර්ගය <br>தந்தையின் இனம்/Father's Ethnic Group</label></td>
         <td colspan="6" style="font-size:12pt;">
             <s:label value="%{parent.fatherRacePrint}"/>
         </td>
@@ -388,7 +388,7 @@
     </tr>
     <tr>
         <td class="cell_011">10</td>
-        <td><label>මවගේ ජන වර්ගය <br>தாயின் இனம்/Mother's Race</label></td>
+        <td><label>මවගේ ජන වර්ගය <br>தாயின் இனம்/Mother's Ethnic Group</label></td>
         <td colspan="6" style="font-size:12pt;">
             <s:label value="%{parent.motherRacePrint}"/>
         </td>

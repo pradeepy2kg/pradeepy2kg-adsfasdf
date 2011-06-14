@@ -453,7 +453,7 @@ function initPage() {
 </tr>
 <tr>
     <td>7</td>
-    <td><label>පියාගේ ජාතිය <br>தந்நையின் இனம்<br>Father's Race</label></td>
+    <td><label>පියාගේ ජන වර්ගය <br>தந்நையின் இனம்<br>Father's Ethnic Group</label></td>
     <td colspan="6">
         <s:textfield value="%{getRaceList().get(fatherRace)}" cssClass="disable" disabled="true"/>
     </td>
@@ -472,7 +472,7 @@ function initPage() {
 </tr>
 <tr>
     <td>9</td>
-    <td><label>මවගේ ජාතිය <br>தாயின் இனம்<br>Mother's Race</label></td>
+    <td><label>මවගේ ජන වර්ගය <br>தாயின் இனம்<br>Mother's Ethnic Group</label></td>
     <td colspan="6"><s:textfield value="%{getRaceList().get(motherRace)}" cssClass="disable"
                                  disabled="true"/></td>
     <td colspan="6">
