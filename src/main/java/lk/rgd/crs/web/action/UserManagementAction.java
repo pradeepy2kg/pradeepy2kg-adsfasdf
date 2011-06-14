@@ -7,6 +7,7 @@ import lk.rgd.common.RGDRuntimeException;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.*;
 import lk.rgd.common.api.service.UserManager;
+import lk.rgd.common.util.CommonUtil;
 import lk.rgd.common.util.HashUtil;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
@@ -423,23 +424,23 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 }
                 break;
             case 2:
-                districtEn = districtDAO.getNameByPK(userDistrictId, "en");
+                districtEn = districtDAO.getNameByPK(userDistrictId, AppConstants.ENGLISH);
                 dsDivisionNameList = dsDivisionDAO.getAllDSDivisionByDistrictKey(userDistrictId);
                 if (setNull) {
                     dsDivision = null;
                 }
                 break;
             case 3:
-                districtEn = districtDAO.getNameByPK(userDistrictId, "en");
-                dsDivisionEn = dsDivisionDAO.getNameByPK(dsDivisionId, "en");
+                districtEn = districtDAO.getNameByPK(userDistrictId, AppConstants.ENGLISH);
+                dsDivisionEn = dsDivisionDAO.getNameByPK(dsDivisionId, AppConstants.ENGLISH);
                 bdDivisionNameList = bdDivisionDAO.getAllBDDivisionByDsDivisionKey(dsDivisionId);
                 if (setNull) {
                     bdDivision = null;
                 }
                 break;
             case 4:
-                districtEn = districtDAO.getNameByPK(userDistrictId, "en");
-                dsDivisionEn = dsDivisionDAO.getNameByPK(dsDivisionId, "en");
+                districtEn = districtDAO.getNameByPK(userDistrictId, AppConstants.ENGLISH);
+                dsDivisionEn = dsDivisionDAO.getNameByPK(dsDivisionId, AppConstants.ENGLISH);
                 mrDivisionNameList = mrDivisionDAO.getAllMRDivisionsByDSDivisionKey(dsDivisionId);
                 if (setNull) {
                     mrDivision = null;
@@ -453,12 +454,25 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 }
                 break;
             case 6:
-                districtEn = districtDAO.getNameByPK(userDistrictId, "en");
-                dsDivisionEn = dsDivisionDAO.getNameByPK(dsDivisionId, "en");
+                districtEn = districtDAO.getNameByPK(userDistrictId, AppConstants.ENGLISH);
+                final DSDivision dsDivision = dsDivisionDAO.getDSDivisionByPK(dsDivisionId);
+                dsDivisionEn = dsDivision.getEnDivisionName();
                 locationNameList = locationDAO.getAllLocationsByDSDivisionKey(dsDivisionId);
+
                 logger.debug("Size of the loaded Location List is :{}", locationNameList.size());
                 if (setNull) {
-                    location = null;
+                    location = new Location();
+                    location.setLocationCode(dsDivision.getDivisionId());
+                    location.setEnLocationName(dsDivision.getEnDivisionName());
+                    location.setSiLocationName(dsDivision.getSiDivisionName());
+                    location.setTaLocationName(dsDivision.getTaDivisionName());
+
+                    location.setEnLocationMailingAddress(CommonUtil.getMailingAddress(AppConstants.ENGLISH) +
+                        dsDivision.getEnDivisionName() + AppConstants.FULL_STOP);
+                    location.setSiLocationMailingAddress(CommonUtil.getMailingAddress(AppConstants.SINHALA) +
+                        dsDivision.getSiDivisionName() + AppConstants.FULL_STOP);
+                    location.setTaLocationMailingAddress(CommonUtil.getMailingAddress(AppConstants.TAMIL) +
+                        dsDivision.getTaDivisionName() + AppConstants.FULL_STOP);
                 }
                 break;
             case 7:

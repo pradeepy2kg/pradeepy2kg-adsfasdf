@@ -16,6 +16,7 @@ public class AppConstants {
     }
 
     public static final String EMPTY_STRING = "";
+    public static final String FULL_STOP = ".";
 
     /**
      * Locale for Sri Lankan Sinhalese

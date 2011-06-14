@@ -26,6 +26,10 @@ public class CommonUtil {
         }
     }
 
+    public static String getMailingAddress(String language) {
+        return LocaleUtil.getLocalizedString(language, "officeMailAddress");
+    }
+
     public static void copyStreams(InputStream in, OutputStream out) throws IOException {
         try {
             byte[] buf = new byte[DEFAULT_BUFFER_SIZE];
@@ -37,12 +41,14 @@ public class CommonUtil {
             if (in != null) {
                 try {
                     in.close();
-                } catch (IOException ignore) {}
+                } catch (IOException ignore) {
+                }
             }
             if (out != null) {
                 try {
                     out.close();
-                } catch (IOException ignore) {}
+                } catch (IOException ignore) {
+                }
             }
         }
     }
