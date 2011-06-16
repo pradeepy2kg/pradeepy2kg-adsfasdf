@@ -12,14 +12,38 @@
             var text = $("textarea#childFullNameOfficialLang").attr("value");
 
             $.post('/ecivil/TransliterationService', {text:text,gender:'U'},
-                function(data) {
-                    if (data != null) {
-                        var s = data.translated;
-                        $("textarea#childFullNameEnglish").val(s);
-                    }
-                });
+                    function(data) {
+                        if (data != null) {
+                            var s = data.translated;
+                            $("textarea#childFullNameEnglish").val(s);
+                        }
+                    });
         });
-    })
+
+        $('img#fatherName').bind('click', function(evt) {
+            var text = $("textarea#fatherFullNameOfficialLang").attr("value");
+
+            $.post('/ecivil/TransliterationService', {text:text,gender:'U'},
+                    function(data) {
+                        if (data != null) {
+                            var s = data.translated;
+                            $("textarea#fatherFullNameEnglish").val(s);
+                        }
+                    });
+        });
+
+         $('img#motherName').bind('click', function(evt) {
+            var text = $("textarea#motherFullNameOfficialLang").attr("value");
+
+            $.post('/ecivil/TransliterationService', {text:text,gender:'U'},
+                    function(data) {
+                        if (data != null) {
+                            var s = data.translated;
+                            $("textarea#motherFullNameEnglish").val(s);
+                        }
+                    });
+        });
+    });
 
     var errormsg = "";
     function validate() {
@@ -69,54 +93,100 @@
                 </td>
             </tr>
             <tr>
-                <td class="cell_01">14</td>
-                <td><label>ළම‌යාගේ නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ) <br>பிறப்பு அத்... (சிங்களம் / தமிழ்)
-                    <br>Childs name in the official languages (Sinhala / Tamil)</label></td>
+                <td class="cell_01" rowspan="2">14</td>
+                <td>
+                    <label>ළම‌යාගේ නම රාජ්‍ය භාෂාවෙන් <br/>(සිංහල / දෙමළ)
+                        <br>குழந்தையின் பெயர் அரசகரும மொழிகளில் (சிங்களம்/தமிழ்)
+                        <br>Child's name in the official languages (Sinhala / Tamil)</label>
+                </td>
                 <td><s:textarea cssClass="disable" disabled="true"
                                 name="#session.birthConfirmation_db.child.childFullNameOfficialLang"/>
                 </td>
             </tr>
             <tr>
-                <td></td>
                 <td><label>නම වෙනස් විය යුතු අයුරු<br>திருத்தப்பட்ட பெயர் <br>Corrected name</label></td>
-                <td><s:textarea id="childFullNameOfficialLang" name="child.childFullNameOfficialLang"/></td>
+                <td><s:textarea id="childFullNameOfficialLang" name="child.childFullNameOfficialLang" rows="3"/></td>
             </tr>
             <tr>
-                <td>15</td>
-                <td><label>ළම‌යාගේ නම ඉංග්‍රීසි භාෂාවෙන්<br>பிறப்பு ... <br>Childs name in English</label></td>
+                <td rowspan="2">15</td>
+                <td>
+                    <label>ළම‌යාගේ නම ඉංග්‍රීසි භාෂාවෙන් <br>குழந்தையின் பெயர் ஆங்கிலத்தில் <br>Child's name in English
+            </label>
+                </td>
                 <td><s:textarea cssClass="disable" disabled="true" cssStyle="text-transform: uppercase;"
                                 name="#session.birthConfirmation_db.child.childFullNameEnglish"/></td>
             </tr>
             <tr>
-                <td></td>
                 <td><label>නම වෙනස් විය යුතු අයුරු<br>திருத்தப்பட்ட பெயர் <br>Corrected name</label></td>
                 <td>
-                    <s:textarea id="childFullNameEnglish" name="child.childFullNameEnglish"
+                    <s:textarea id="childFullNameEnglish" name="child.childFullNameEnglish" rows="3"
                                 cssStyle="text-transform: uppercase;"/> <br>
                     <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;" id="childName">
                 </td>
             </tr>
             <tr>
-                <td>16</td>
-                <td><label>පියාගේ සම්පුර්ණ නම <br>தந்நையின் முழுப் பெயர்<br>Father's Full Name</label></td>
+                <td rowspan="2">16</td>
+                <td>
+                    <label>පියාගේ සම්පුර්ණ නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)
+                    <br>தந்தையின் முழுப் பெயர்
+                    <br>Father's Full Name in any of the official languages (Sinhala / Tamil)</label>
+                </td>
                 <td><s:textarea cssClass="disable" disabled="true"
                                 name="#session.birthConfirmation_db.parent.fatherFullName"/></td>
             </tr>
             <tr>
-                <td></td>
                 <td><label>නම වෙනස් විය යුතු අයුරු<br>திருத்தப்பட்ட பெயர் <br>Corrected name</label></td>
-                <td><s:textarea id="fatherFullName" name="parent.fatherFullName"></s:textarea></td>
+                <td>
+                    <s:textarea id="fatherFullNameOfficialLang" name="parent.fatherFullName" rows="3"/>
+                </td>
             </tr>
             <tr>
-                <td>17</td>
-                <td><label>මවගේ සම්පූර්ණ නම <br>தாயின் முழுப் பெயர்<br>Mother's Full Name</label></td>
+                <td rowspan="2">17</td>
+                <td>
+                    <label>පියාගේ සම්පුර්ණ නම ඉංග්‍රීසි භාෂාවෙන් (කැපිටල් අකුරෙන්)</label>
+                        <br>முழுப் பெயர்
+                        <br>Father's Full Name in English (in block letters)</label>
+                </td>
+                <td><s:textarea cssClass="disable" disabled="true"
+                                name="#session.birthConfirmation_db.parent.fatherFullNameInEnglish"/></td>
+            </tr>
+            <tr>
+                <td><label>නම වෙනස් විය යුතු අයුරු<br>திருத்தப்பட்ட பெயர் <br>Corrected name</label></td>
+                <td>
+                    <s:textarea id="fatherFullNameEnglish" name="parent.fatherFullNameInEnglish" rows="3"/><br/>
+                    <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;" id="fatherName">
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="2">18</td>
+                <td>
+                    <label>මවගේ සම්පුර්ණ නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)
+                    <br>தாயின் முழுப் பெயர்
+                    <br>Mother's Full Name in any of the official languages (Sinhala / Tamil)</label>
+                </td>
                 <td><s:textarea cssClass="disable" disabled="true"
                                 name="#session.birthConfirmation_db.parent.motherFullName"/></td>
             </tr>
             <tr>
-                <td></td>
                 <td><label>නම වෙනස් විය යුතු අයුරු<br>திருத்தப்பட்ட பெயர் <br>Corrected name</label></td>
-                <td><s:textarea id="motherFullName" name="parent.motherFullName"></s:textarea></td>
+                <td><s:textarea id="motherFullNameOfficialLang" name="parent.motherFullName" rows="3"/></td>
+            </tr>
+            <tr>
+                <td rowspan="2">19</td>
+                <td>
+                    <label>මවගේ සම්පුර්ණ නම ඉංග්‍රීසි භාෂාවෙන් (කැපිටල් අකුරෙන්)
+                    <br>முழுப் பெயர்
+                    <br>Mother's Full Name in English (in block letters)</label>
+                </td>
+                <td><s:textarea cssClass="disable" disabled="true"
+                                name="#session.birthConfirmation_db.parent.motherFullNameInEnglish"/></td>
+            </tr>
+            <tr>
+                <td><label>නම වෙනස් විය යුතු අයුරු<br>திருத்தப்பட்ட பெயர் <br>Corrected name</label></td>
+                <td>
+                    <s:textarea id="motherFullNameEnglish" name="parent.motherFullNameInEnglish" rows="3"/><br/>
+                    <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;" id="motherName">
+                </td>
             </tr>
             </tbody>
         </table>
