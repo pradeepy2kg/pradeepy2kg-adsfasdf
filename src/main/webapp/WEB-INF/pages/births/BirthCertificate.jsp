@@ -61,7 +61,7 @@
                                         var officerSign = data.officerSignature;
                                         var locationSign = data.locationSignature;
                                         var location = data.locationName;
-                                        $("label#signature").html(officerSign);
+                                        $("textarea#signature").html(officerSign);
                                         $("label#placeSign").html(locationSign);
                                         $("label#placeName").html(location);
                                     });
@@ -82,7 +82,7 @@
                         var officerSign = data.officerSignature;
                         var locationSign = data.locationSignature;
                         var location = data.locationName;
-                        $("label#signature").html(officerSign);
+                        $("textarea#signature").html(officerSign);
                         $("label#placeSign").html(locationSign);
                         $("label#placeName").html(location);
                     });
@@ -256,12 +256,12 @@
     </tbody>
 </table>
 
-<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:10px 0;font-size:10pt">
-    <col width="185px">
-    <col width="230px">
-    <col width="180px">
+<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:5px 0;font-size:10pt">
+    <col width="195px">
     <col width="220px">
-    <col width="215px">
+    <col width="210px">
+    <col width="270px">
+    <col width="135px">
     <tbody>
     <tr height="70px">
         <td>දිස්ත්‍රික්කය<br>மாவட்டம் <br>District</td>
@@ -325,9 +325,9 @@
     </tbody>
 </table>
 
-<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:10px 0;font-size:10pt">
-<col width="185px">
-<col width="230px">
+<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:5px 0;font-size:10pt">
+<col width="195px">
+<col width="220px">
 <col width="155px">
 <col width="130px">
 <col width="115px">
@@ -480,8 +480,8 @@
             </s:if>
         </div>
     </td>
-    <td>පියාගේ ජන වර්ගය<br>தந்தையின் இனம்<br> Father's Ethnic Group</td>
-    <td colspan="4">
+    <td colspan="2">පියාගේ ජන වර්ගය<br>தந்தையின் இனம்<br> Father's Ethnic Group</td>
+    <td colspan="3">
         <s:label name="" value="%{fatherRacePrint}" cssStyle="font-size:14pt;"/><br/>
         <s:label name="" value="%{fatherRacePrintEn}" cssStyle="font-size:12pt;"/>
         <div class="changes-done">
@@ -522,9 +522,9 @@
             </s:if>
         </div>
     </td>
-    <td>මවගේ ජන වර්ගය<br>தாயின் இனம்<br> Mother's Ethnic Group
+    <td colspan="2">මවගේ ජන වර්ගය<br>தாயின் இனம்<br> Mother's Ethnic Group
     </td>
-    <td colspan="4">
+    <td colspan="3">
         <s:label name="" value="%{motherRacePrint}" cssStyle="font-size:14pt;"/><br/>
         <s:label name="" value="%{motherRacePrintEn}" cssStyle="font-size:12pt;"/>
         <div class="changes-done">
@@ -538,9 +538,9 @@
 </tbody>
 </table>
 
-<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:10px 0;font-size:10pt">
-    <col width="185px">
-    <col width="230px">
+<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:5px 0;font-size:10pt">
+    <col width="195px">
+    <col width="220px">
     <col width="155px">
     <col width="460px">
     <tbody>
@@ -558,21 +558,24 @@
         </td>
     </tr>
     <tr>
-        <td colspan="2" height="100px">
+        <td colspan="2" height="80px">
             සහතික කරනු ලබන නිලධාරියා ගේ නම, තනතුර සහ අත්සන<br>
             சான்றிதழ் அளிக்கும் அதிகாரியின் பெயர், பதவி, கையொப்பம்<br>
             Name, Signature and Designation of certifying officer
         </td>
-        <td colspan="2" style="font-size:12pt">
-            <s:label id="signature" value="%{#request.register.originalBCIssueUserSignPrint}"/>
+        <td colspan="2" style="font-size:11pt">
+            <s:textarea id="signature" value="%{#request.register.originalBCIssueUserSignPrint}" disabled="true" rows="3"
+                        cssStyle="margin-top:0;text-transform:none;width:100%;font-size:10pt;background:transparent;border:none;padding:0;" />
         </td>
     </tr>
     <tr>
-        <td colspan="2" height="70px">නිකුත් කළ ස්ථානය / வழங்கிய இடம்/ Place of Issue
+        <td colspan="2" height="60px">නිකුත් කළ ස්ථානය / வழங்கிய இடம்/ Place of Issue
         </td>
-        <td colspan="2" cssStyle="font-size:12pt;">
-            <s:label id="placeSign" value="%{#request.register.originalBCPlaceOfIssueSignPrint}"/><br>
-            <s:label id="placeName" value="%{#request.register.originalBCPlaceOfIssuePrint}"/>
+        <td colspan="2" cssStyle="font-size:11pt;">
+            <s:textarea id="placeSign" value="%{#request.register.originalBCPlaceOfIssueSignPrint}" disabled="true" rows="3"
+                        cssStyle="margin-top:10px;text-transform:none;width:100%;font-size:11pt;background:transparent;border:none;padding:0;" />
+            <%--<s:label id="placeSign" value="%{#request.register.originalBCPlaceOfIssueSignPrint}"/><br>--%>
+            <%--<s:label id="placeName" value="%{#request.register.originalBCPlaceOfIssuePrint}"/>--%>
         </td>
     </tr>
     </tbody>
@@ -595,22 +598,24 @@
     <col/>
     <col/>
     <col/>
+    <col/>
     <tbody>
     <tr>
-        <td rowspan="8" width="200px" height="350px"></td>
-        <td colspan="2" width="600px" height="100px"
+        <td rowspan="7" width="200px" height="350px"></td>
+        <td colspan="3" width="600px" height="100px"
             style="text-align:center;margin-left:auto;margin-right:auto;font-size:16pt">
             <label>රාජ්‍ය සේවය පිණිසයි / அரச பணி / On State Service</label>
         </td>
-        <td rowspan="8" width="200px"></td>
+        <td rowspan="7" width="200px"></td>
     </tr>
     <tr>
-        <td>
-            <s:label name="informant.informantName" cssStyle="width:600px;font-size:12pt;"/>
+        <td height="100px" width="30%">
+            <s:textarea id="retAddress" value="%{returnAddress}" disabled="true" rows="5"
+                        cssStyle="margin-top:50px;text-transform:none;width:100%;font-size:11pt;background:transparent;border:none;" />
         </td>
-    </tr>
-    <tr>
-        <td>
+        <td width="10%">&nbsp;</td>
+        <td width="30%">
+            <s:label name="informant.informantName" cssStyle="width:600px;font-size:12pt;"/><br/>
             <s:label name="informant.informantAddress" cssStyle="width:600px;font-size:12pt;"/>
         </td>
     </tr>
@@ -626,14 +631,6 @@
     <tr>
         <td colspan="2"><p></p></td>
     </tr>
-        <%--    <tr>
-            <td>
-                Printed On : <%= DateTimeUtils.getISO8601FormattedString(new Date()) %>
-            </td>
-
-            <td style="text-align:right;margin-left:auto;margin-right:0;">
-            </td>
-        </tr>--%>
     </tbody>
 </table>
 <hr style="border-style:dashed ; float:left;width:100% ;margin-top:30px;"/>
