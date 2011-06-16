@@ -284,7 +284,7 @@ function initPage() {
     <tbody>
     <tr>
         <td class="cell_01">1</td>
-        <td>සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ අදාල “උපතක් ලියාපදිංචි කිරීම සඳහා විස්තර” ප්‍රකාශනයේ අනුක්‍රමික අංකය
+        <td width="60%">සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ අදාල “උපතක් ලියාපදිංචි කිරීම සඳහා විස්තර” ප්‍රකාශනයේ අනුක්‍රමික අංකය
             හා දිනය
             <br>பிறப்பை பதிவு செய்வதற்கான விபரம்" எனும் படிவத்தின் தொடர் இலக்கமும் திகதியும்
             <br>Serial Number and the Date of the ‘Particulars for Registration of a Birth’ form
@@ -385,12 +385,12 @@ function initPage() {
 </tr>
 <tr>
     <td>5</td>
-    <td colspan="14"><label>උපන් ස්ථානය / பிறந்தபிறந்த இடம் / Place of birth<s:label value="*"
-                                                                                     cssStyle="color:red;font-size:14pt"/></label>
+    <td colspan="14"><label>උපන් ස්ථානය පිළිබඳ විස්තර / பிறந்த இடம் பற்றிய விபரம் / Particulars of Place of Birth
+        <s:label value="*" cssStyle="color:red;font-size:14pt"/></label>
     </td>
 </tr>
 <tr>
-    <td rowspan="5"></td>
+    <td rowspan="6"></td>
     <td><label>දිස්ත්‍රික්කය <br>மாவட்டம் <br>District</label></td>
     <td colspan="6">
         <s:if test="bdId != 0">
@@ -409,7 +409,7 @@ function initPage() {
     <td colspan="6"><s:select list="dsDivisionList" name="dsDivisionId" id="dsDivisionId"/></td>
 </tr>
 <tr>
-    <td><label>කොට්ඨාශය<br>பிரிவு <br>Registration Division</label></td>
+    <td><label>ලියාපදිංචි කිරීමේ කොට්ඨාශය<br>பதிவுப் பிரிவு<br>Registration Division</label></td>
     <td colspan="6">
         <s:if test="bdId != 0">
             <s:textfield value="%{getBdDivisionList().get(birthDivisionId)}" cssClass="disable" disabled="true"/>
@@ -417,28 +417,20 @@ function initPage() {
     </td>
     <td colspan="6"><s:select name="birthDivisionId" list="bdDivisionList" id="bdDivisionId"/></td>
 </tr>
-
-    <%--<tr>
-        <td><label> ග්‍රාම නිළධාරී කොටිඨාශය <br> Grama Niladhari Division in ta<br>Grama Niladhari Division</label></td>
-        <td colspan="6">
-            <s:if test="bdId != 0">
-                <s:textfield value="%{getGnDivisionList().get(gnDivisionId)}" cssClass="disable" disabled="true"/>
-            </s:if>
-        </td>
-        <td colspan="6"><s:select name="gnDivisionId" list="gnDivisionList"/></td>
-    </tr>--%>
-
 <tr>
-    <td><label>ස්ථානය <br>பிறந்த இடம் <br>Place</label></td>
-    <td colspan="6"><s:textfield name="#session.birthConfirmation_db.child.placeOfBirth" cssClass="disable"
-                                 disabled="true" size="45"/></td>
-    <td colspan="6"><s:textfield name="child.placeOfBirth" size="35" id="placeOfBirth"/></td>
+    <td colspan="12"><label>උපන් ස්ථානය  / பிறந்த இடம்/ Place of Birth</label></td>
 </tr>
 <tr>
-    <td><label>ඉංග්‍රීසි භාෂාවෙන් <br>இங்கிலீஷ் <br>In English</label></td>
+    <td colspan="1"><label>සිංහල හෝ දෙමළ භාෂාවෙන් <br>சிங்களம்அல்லது தமிழ் மொழியில்<br>In Sinhala or Tamil</label></td>
+    <td colspan="6"><s:textfield name="#session.birthConfirmation_db.child.placeOfBirth" cssClass="disable"
+                                 disabled="true" size="45"/></td>
+    <td colspan="5"><s:textfield name="child.placeOfBirth" size="35" id="placeOfBirth"/></td>
+</tr>
+<tr>
+    <td colspan="1"><label>ඉංග්‍රීසි භාෂාවෙන් <br>ஆங்கில மொழியில்<br>In English</label></td>
     <td colspan="6"><s:textfield name="#session.birthConfirmation_db.child.placeOfBirthEnglish" cssClass="disable"
                                  disabled="true" size="45"/></td>
-    <td colspan="6">
+    <td colspan="5">
         <s:textfield name="child.placeOfBirthEnglish" size="35" id="placeOfBirthEnglish"
                      cssStyle="margin-top:10px;"/>
         <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px;" id="place">
@@ -446,7 +438,7 @@ function initPage() {
 </tr>
 <tr>
     <td>6</td>
-    <td><label>පියාගේ අනන්‍යතා අංකය <br>தந்நையின் தனிநபர் அடையாள எண்<br>Father's PIN</label></td>
+    <td><label>පියාගේ අනන්‍යතා අංකය <br>தந்நையின் தனிநபர் அடையாள எண்<br>Father's Identification Number</label></td>
     <td colspan="6"><s:textfield name="#session.birthConfirmation_db.parent.fatherNICorPIN" cssClass="disable"
                                  disabled="true"/></td>
     <td colspan="6"><s:textfield name="parent.fatherNICorPIN" size="35" id="fatherNICorPIN" maxLength="12"/></td>
@@ -465,7 +457,7 @@ function initPage() {
 
 <tr>
     <td>8</td>
-    <td><label>ම‌වගේ අනන්‍යතා අංකය <br>தாயின் தனிநபர் அடையாள எண<br>Mother's PIN</label></td>
+    <td><label>ම‌වගේ අනන්‍යතා අංකය <br>தாயின் அடையாள எண்<br>Mother's Identification Number</label></td>
     <td colspan="6"><s:textfield name="#session.birthConfirmation_db.parent.motherNICorPIN" cssClass="disable"
                                  disabled="true"/></td>
     <td colspan="6"><s:textfield name="parent.motherNICorPIN" size="35" id="motherNICorPIN" maxLength="12"/></td>
@@ -481,7 +473,7 @@ function initPage() {
 </tr>
 <tr>
     <td>10</td>
-    <td><label>මව්පියන් විවාහකද? <br>பெற்றார் விவாகஞ் செய்தவர்களா? <br>Were Parents Married?</label></td>
+    <td><label>මව්පියන් විවාහකද? <br>பெற்றோர்கள் திருமணம் முடித்தவர்களா?<br>Were Parents Married?</label></td>
     <td colspan="6">
         <s:if test="bdId != 0">
             <s:textfield name="#session.birthConfirmation_db.marriage.parentsMarried" cssClass="disable"
@@ -510,9 +502,9 @@ function initPage() {
                 </td>
             </tr>
             <tr>
-                <td><label class="label">නැත - පසුව විවාහවී ඇත<br>
+                <td><label class="label">නැත, නමුත් පසුව විවාහවී ඇත<br>
                     இல்லை, பின் விவாகமாணவா்கள்<br>
-                    No but since married</label></td>
+                    No, but since married</label></td>
                 <td>
                     <s:radio name="marriage.parentsMarried" id="parentsMarried"
                              list="#@java.util.HashMap@{'NO_SINCE_MARRIED':''}"
@@ -528,11 +520,11 @@ function initPage() {
 </tr>
 
 <tr>
-    <td></td>
+    <td>11</td>
     <td>
         මව පදිංචි දිස්ත්‍රික්කය <br>
-        Mother's District <br>
-        mother's district in ta
+        Mother's District in ta<br>
+        Mother's District
     </td>
     <td colspan="6">
     </td>
@@ -543,8 +535,8 @@ function initPage() {
 
 </tr>
 <tr>
-    <td>11</td>
-    <td><label>මව පදිංචි ප්‍රාදේශීය ලේකම් කොට්ටාශය <br>
+    <td>12</td>
+    <td><label>මව පදිංචි ප්‍රාදේශීය ලේකම් කොට්ඨාශය<br>
         Mother's D.S.Division in ta<br>Mother's Divisional Secretary Division</label></td>
     <td colspan="6">
         <s:if test="bdId != 0">
@@ -559,8 +551,8 @@ function initPage() {
     </td>
 </tr>
 <tr>
-    <td>12</td>
-    <td><label>මව පදිංචි ග්‍රාම නිලධරී කොට්ටාශය<br>
+    <td>13</td>
+    <td><label>මව පදිංචි ග්‍රාම නිලධාරී කොට්ඨාශය<br>
         Mother's G.N. Division in ta<br>Mother's Grama Niladhari Division</label></td>
     <td colspan="6">
         <s:if test="bdId != 0">
