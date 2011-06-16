@@ -179,6 +179,7 @@ Divisional Secretary Division Office,
 මව පදිංචි ග්‍රාම නිලධාරී කොට්ඨාශය/   Mother's Grama Niladhari Division
 මව පදිංචි ප්‍රාදේශීය ලේකම් කොට්ඨාශය/ Mother's Divisional Secretary Division
 
+ළම‌යාගේ නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ) / Childs name in the official languages (Sinhala / Tamil)
 ළම‌යාගේ නම ඉංග්‍රීසි භාෂාවෙන්/Child's name in English
 නම වෙනස් විය යුතු අයුරු/Corrected name
 පියාගේ සම්පුර්ණ නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)/ Father's Full Name in any of the official languages (Sinhala / Tamil)
