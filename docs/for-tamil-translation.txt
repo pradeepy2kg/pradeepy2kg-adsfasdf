@@ -190,3 +190,18 @@ Divisional Secretary Division Office,
 උපත් විස්තර තහවුරු කරන්නාගේ සම්පූර්ණ නම/Full Name of the person confirming the birth details
 උපත තහවුරු කරන්නේ කවුරුන් විසින්ද/Person confirming the details
 උපත් විස්තර තහවුරු කරන්නාගේ සම්පූර්ණ නම/Full Name of the person confirming the birth details
+
+------------Race List----------------
+සිංහල
+ශ්‍රී ලාංකික දෙමල
+ඉන්දියානු දෙමල
+ශ්‍රී ලාංකික යෝනක
+බර්ගර්
+මැලේ
+ශ්‍රී ලාංකික චෙට්ටි
+භාරත
+ඉන්දියානු යෝනක
+පකිස්තානි යෝනක
+වෙනත් - පිටරට
+වෙනත් - ශ්‍රී ලාංකික
+නොදත්
