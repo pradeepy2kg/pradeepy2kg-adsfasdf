@@ -141,67 +141,67 @@ Mother தாய்
 சான்றிதழ் அச்சிடல,  සහතික මුද්‍රණය  ்//write in short
 
 ----------------------------------------------------------------------------------------------------
-Informant Signed Date/ දැනුම් දෙන්නා අත්සන්කල දිනය
-Enter informant name/ දැනුම් දෙන්නාගේ නම ඇතුල් කරන්න
-Enter informant address/දැනුම් දෙන්නාගේ ලිපිනය ඇතුල් කරන්න
+Informant Signed Date/ தகவல் அளித்தவர் கையொப்பமிட்ட திகதி දැනුම් දෙන්නා අත්සන්කල දිනය
+Enter informant name/ தகவல் அளித்தவரது திகதியினை உட்புகுத்தவும் දැනුම් දෙන්නාගේ නම ඇතුල් කරන්න
+Enter informant address/தகவல் அளித்தவரது முகவரியினை உட்புகுத்தவும் දැනුම් දෙන්නාගේ ලිපිනය ඇතුල් කරන්න
 
-Select Ethnic Group/ ජන වර්ගය තෝරන්න
-Select Grama Niladhari Division/ ග්‍රාම නිලධාරී කොට්ඨාශය තෝරන්න
-Father's Ethnic Group/ පියාගේ ජන වර්ගය
-Mother's Ethnic Group/  මවගේ ජන වර්ගය
-Civil Status & Ethnic Group/ සිවිල් තත්වය සහ ජන වර්ගය
-Bride's Ethnic Group/ මනමාලියාගේ ජන වර්ගය
-Groom's Ethnic Group/ මනමාලයාගේ ජන වර්ගය
-Please Select Ethnis Group/ කරුණාකර ජන වර්ගය ඇතුලත් කරන්න
+Select Ethnic Group/ இனவர்க்கத்தினை தெரிவு செய்யயயவும் ජන වර්ගය තෝරන්න
+Select Grama Niladhari Division/ கிராம சேவையாளரின் பிரிவினை தெரிவு செய்யவும் ග්‍රාම නිලධාරී කොට්ඨාශය තෝරන්න
+Father's Ethnic Group/ தந்தையின் இனவர்க்கம் යාගේ ජන වර්ගය
+Mother's Ethnic Group/  தாயின் இனவர்க்கம் මවගේ ජන වර්ගය
+Civil Status & Ethnic Group/ சிவில் நிலைமை மற்றும் இனவர்க்கம் සිවිල් තත්වය සහ ජන වර්ගය
+Bride's Ethnic Group/ மணமகனின் இனவர்க்கம் මනමාලියාගේ ජන වර්ගය
+Groom's Ethnic Group/ மணமகளின் இனவர்க்க்ம் මනමාලයාගේ ජන වර්ගය
+Please Select Ethnis Group/ தயவு செய்து இனவர்க்கத்தினை உட்புகுத்தவும் කරුණාකර ජන වර්ගය ඇතුලත් කරන්න
 
-අනුමත නොකළ / #Unverified# / UNVERIFIED
-අර්ධව අනුමතයි / #Semi Verified# / SEMI VERIFIED
-දත්ත ඇතුලත් කිරීම/ #Data Entry# / DATA ENTRY
-අනුමතයි / #Verified# / VERIFIED
-අවලංගුයි / #Cancelled# / CANCELLED
-ප්‍රතික්ෂේපිතයි / #Rejected# / REJECTED
+අනුමත නොකළ /அனுமதிக்கப்படாத  / UNVERIFIED
+අර්ධව අනුමතයි / பாதி அனுமதிக்கப்பட்ட  / SEMI VERIFIED
+දත්ත ඇතුලත් කිරීම/ தரவினை உட்புகுத்தல்  ENTRY
+අනුමතයි / அனுமதி  / VERIFIED
+අවලංගුයි / இரத்து  / CANCELLED
+ප්‍රතික්ෂේපිතයි / #தள்ளுபடி  / REJECTED
 
-වාර්තාව පිළිබඳ අදහස් / Record Comments
+වාර්තාව පිළිබඳ අදහස් / தகவல்பற்றிய கருத்து Record Comments
 
 --------- marriage related -------------------------
-විවාහ දිනය/ Date of Marriage
-විවාහය සිදු කල ස්ථානය/ place of Marriage
-රෙජිස්ට්‍රාර්තැන / දේවගැතිතැන/ Registrar / Minister
-විවාහයේ ස්වභාවය/ Type of Marriage
-පුරුෂ පාර්ශ්වය / Male Party
-ස්ත්‍රී පාර්ශ්වය / Female Party
-පසුවූ උපන් දිනයට වයස/ Age at last Birthday
+විවාහ දිනය/திருமண திகதி/ Date of Marriage
+විවාහය සිදු කල ස්ථානය/ திருமணம் நகழ்ந்த இடம்/place of Marriage
+රෙජිස්ට්‍රාර්තැන / දේවගැතිතැන/ பதிவாளர்/குருவானவர்/Registrar / Minister
+විවාහයේ ස්වභාවය/ திருமணத்தின் தன்மை/Type of Marriage
+පුරුෂ පාර්ශ්වය / மாப்பிள்ள திறத்தார்/Male Party
+ස්ත්‍රී පාර්ශ්වය /பெண் திறத்தார்/  Female Party
+පසුවූ උපන් දිනයට වයස/ சென்ற வருட பிறந்த தினத்தில் வயதி/ Age at last Birthday
 
-Divisional Secretariat,
-Divisional Secretary Division Office,
+Divisional Secretariat, பிரதேச செயலகம் 
+Divisional Secretary Division Office,பிரதேச செயலகத்தின் பிரிவு அலுவலகம் 
+මව පදිංචි දිස්ත්‍රික්කය/ தாயின் பதிவு மாவட்டம்/Mother's Districtம்
+මව පදිංචි ග්‍රාම නිලධාරී කොට්ඨාශය/   தாயின் கிராம சேவையாளர் பிரிவு/Mother's Grama Niladhari Division
+මව පදිංචි ප්‍රාදේශීය ලේකම් කොට්ඨාශය/ தாயின் பிரதேச செயலக பிரிவு/Mother's Divisional Secretary Division
 
-මව පදිංචි දිස්ත්‍රික්කය/ Mother's District
-මව පදිංචි ග්‍රාම නිලධාරී කොට්ඨාශය/   Mother's Grama Niladhari Division
-මව පදිංචි ප්‍රාදේශීය ලේකම් කොට්ඨාශය/ Mother's Divisional Secretary Division
-
-ළම‌යාගේ නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ) / Childs name in the official languages (Sinhala / Tamil)
-ළම‌යාගේ නම ඉංග්‍රීසි භාෂාවෙන්/Child's name in English
-නම වෙනස් විය යුතු අයුරු/Corrected name
-පියාගේ සම්පුර්ණ නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)/ Father's Full Name in any of the official languages (Sinhala / Tamil)
-පියාගේ සම්පුර්ණ නම ඉංග්‍රීසි භාෂාවෙන් (කැපිටල් අකුරෙන්) /Father's Full Name in English (in block letters)
-මවගේ සම්පුර්ණ නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)/Mother's Full Name in any of the official languages (Sinhala / Tamil)
-මවගේ සම්පුර්ණ නම ඉංග්‍රීසි භාෂාවෙන් (කැපිටල් අකුරෙන්)/Mother's Full Name in English (in block letters)
-උපත තහවුරු කරන්නාගේ විස්තර/  Person confirming the birth details
-උපත් විස්තර තහවුරු කරන්නාගේ සම්පූර්ණ නම/Full Name of the person confirming the birth details
-උපත තහවුරු කරන්නේ කවුරුන් විසින්ද/Person confirming the details
-උපත් විස්තර තහවුරු කරන්නාගේ සම්පූර්ණ නම/Full Name of the person confirming the birth details
+ළම‌යාගේ නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ) / பிள்ளையின்  பெயர் அரச கரும மொழியில்  (சிங்களம் / தமிழ்)Childs name in the official languages (Sinhala / Tamil)
+ළම‌යාගේ නම ඉංග්‍රීසි භාෂාවෙන්/பிள்ளையின்  பெயர் ஆங்கில மொழியில்Child's name in English
+නම වෙනස් විය යුතු අයුරු/பெயர் மாற்றப்பட வேண்டிய விதம்  Corrected name
+පියාගේ සම්පුර්ණ නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)/ தந்தையின் முழுப் பெயர் அரச கரும மொழியில்  (சிங்களம் / தமிழ்)Father's Full Name in any of the official languages (Sinhala / Tamil)
+පියාගේ සම්පුර්ණ නම ඉංග්‍රීසි භාෂාවෙන් (කැපිටල් අකුරෙන්) /தந்தையின் முழுப் பெயர் ஆங்கில மொழியில்(பெரிய எழுத்துக்களில்) Father's Full Name in English (in block letters)
+මවගේ සම්පුර්ණ නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)/தாயின் முழுப் பெயர் அரச கரும மொழியில்  (சிங்களம் / தமிழ்)Mother's Full Name in any of the official languages (Sinhala / Tamil)
+මවගේ සම්පුර්ණ නම ඉංග්‍රීසි භාෂාවෙන් (කැපිටල් අකුරෙන්)/தாயின் முழுப் பெயர் ஆங்கில மொழியில் (பெரிய எழுத்துக்களில்) Mother's Full Name in English (in block letters)
+උපත තහවුරු කරන්නාගේ විස්තර/  பிறப்பினை உறுதிப்படுத்துபவரின் விபரம் Person confirming the birth details
+උපත් විස්තර තහවුරු කරන්නාගේ සම්පූර්ණ නම/பிறப்பினை உறுதிப்படுத்துபவரின் முழுப் பெயர்Full Name of the person confirming the birth details
+උපත තහවුරු කරන්නේ කවුරුන් විසින්ද/பிறப்பினை உறுதிப்படுத்துவது யாரால்? Person confirming the details
+උපත් විස්තර තහවුරු කරන්නාගේ සම්පූර්ණ නම/பிறப்பினை உறுதிப்படுத்துபவரின் முழுப் பெயர்Full Name of the person confirming the birth details
 
 ------------Race List----------------
-සිංහල
-ශ්‍රී ලාංකික දෙමල
-ඉන්දියානු දෙමල
-ශ්‍රී ලාංකික යෝනක
-බර්ගර්
-මැලේ
-ශ්‍රී ලාංකික චෙට්ටි
-භාරත
-ඉන්දියානු යෝනක
-පකිස්තානි යෝනක
-වෙනත් - පිටරට
-වෙනත් - ශ්‍රී ලාංකික
-නොදත්
+සිංහල	சிங்களவ
+ශ්‍රී ලාංකික දෙමලர்	இலங்கைத்தமிழர்
+ඉන්දියානු දෙමල	இந்தியத்தமிழர்
+ශ්‍රී ලාංකික යෝනක	இலங்கை சோனகர்
+බර්ගර්	பர்கர்
+මැලේ	மலே
+ශ්‍රී ලාංකික චෙට්ටි	இலங்கை செட்டி
+භාරත	பாரத
+ඉන්දියානු යෝනක	இந்திய சோனகர்
+පකිස්තානි යෝනක	பாகிஸ்தானிய சோனகர் 
+වෙනත් - පිටරට	வேறு - வெளிநாட்டவர்
+වෙනත් - ශ්‍රී ලාංකික வேறு - இலங்கையர் 
+නොදත් தெரியாது 
+Malayali- මලයාලි/மலயாளம் 
