@@ -468,12 +468,8 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                     location.setSiLocationName(dsDivision.getSiDivisionName());
                     location.setTaLocationName(dsDivision.getTaDivisionName());
 
-                    location.setEnLocationMailingAddress(CommonUtil.getMailingAddress(AppConstants.ENGLISH) +
-                        dsDivision.getEnDivisionName() + AppConstants.FULL_STOP);
-                    location.setSiLocationMailingAddress(CommonUtil.getMailingAddress(AppConstants.SINHALA) +
-                        dsDivision.getSiDivisionName() + AppConstants.FULL_STOP);
-                    location.setTaLocationMailingAddress(CommonUtil.getMailingAddress(AppConstants.TAMIL) +
-                        dsDivision.getTaDivisionName() + AppConstants.FULL_STOP);
+                    generateLocationSignature(dsDivision);
+                    generateLocationMailingAddress(dsDivision);
                 }
                 break;
             case 7:
@@ -486,6 +482,39 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 break;
 
         }
+    }
+
+    private void generateLocationSignature(DSDivision dsDivision) {
+        final StringBuilder sb = new StringBuilder();
+        sb.append(CommonUtil.getOfficeSignature(AppConstants.SINHALA)).append(AppConstants.SPACE).
+            append(dsDivision.getSiDivisionName()).append(AppConstants.NEW_LINE).
+            append(CommonUtil.getOfficeSignature(AppConstants.ENGLISH)).append(dsDivision.getEnDivisionName()).
+            append(AppConstants.FULL_STOP);
+        location.setSienLocationSignature(sb.toString());
+        sb.delete(0, sb.length());
+
+        sb.append(CommonUtil.getOfficeSignature(AppConstants.TAMIL)).append(AppConstants.SPACE).
+            append(dsDivision.getTaDivisionName()).append(AppConstants.NEW_LINE).
+            append(CommonUtil.getOfficeSignature(AppConstants.ENGLISH)).append(dsDivision.getEnDivisionName()).
+            append(AppConstants.FULL_STOP);
+        location.setTaenLocationSignature(sb.toString());
+    }
+
+    private void generateLocationMailingAddress(DSDivision dsDivision) {
+        final StringBuilder sb = new StringBuilder();
+        sb.append(CommonUtil.getMailingAddress(AppConstants.ENGLISH)).append(dsDivision.getEnDivisionName()).
+            append(AppConstants.FULL_STOP);
+        location.setEnLocationMailingAddress(sb.toString());
+        sb.delete(0, sb.length());
+
+        sb.append(CommonUtil.getMailingAddress(AppConstants.SINHALA)).append(dsDivision.getSiDivisionName()).
+            append(AppConstants.FULL_STOP);
+        location.setSiLocationMailingAddress(sb.toString());
+        sb.delete(0, sb.length());
+
+        sb.append(CommonUtil.getMailingAddress(AppConstants.TAMIL)).append(dsDivision.getTaDivisionName()).
+            append(AppConstants.FULL_STOP);
+        location.setTaLocationMailingAddress(sb.toString());
     }
 
     public String activeOrInactive() {

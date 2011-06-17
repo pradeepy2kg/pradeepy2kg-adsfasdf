@@ -30,6 +30,10 @@ public class CommonUtil {
         return LocaleUtil.getLocalizedString(language, "officeMailAddress");
     }
 
+    public static String getOfficeSignature(String language) {
+        return LocaleUtil.getLocalizedString(language, "officeSignature");
+    }
+
     public static void copyStreams(InputStream in, OutputStream out) throws IOException {
         try {
             byte[] buf = new byte[DEFAULT_BUFFER_SIZE];
