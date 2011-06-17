@@ -473,7 +473,7 @@
 </table>
 </s:if>
 <s:if test="!(pageType == 0)">
-<fieldset style="border:2px solid #c3dcee;margin-left:6em;margin-right:20.5em;margin-top:2.5em;width:80%">
+<fieldset style="border:2px solid #c3dcee;margin-left:6em;margin-right:20.5em;margin-top:1.5em;width:80%">
     <table style="border:none;font:12pt bold;" align="center" cellpadding="0" cellspacing="0">
         <tr>
             <td><s:label cssStyle="color:blue;" name="msg"/>
@@ -483,6 +483,9 @@
     <s:form name="editDivisions" action="eprAddDivisionsAndDsDivisions.do" method="POST"
             onsubmit="javascript:return validate()">
         <table class="add-inactive-divisions-outer-table" cellspacing="0" align="center" style="margin-top:2px;">
+            <col width="27%"/>
+            <col width="18%"/>
+            <col width="55%"/>
             <s:if test="!((pageType==1) ||(pageType==5) )">   <%--||(pageType==6)--%>
                 <tr style="height:35px;">
                     <td colspan="2">District</td>
@@ -505,7 +508,8 @@
                         <s:if test="pageType==3">Registration Division Id</s:if>
                         <s:if test="pageType==4">Marriage Registration Division Id</s:if>
                         <s:if test="pageType==5">Court Id</s:if>
-                        <s:if test="pageType==6">Location Id</s:if> <s:label value="*" cssStyle="color:red;font-size:14pt;"/>
+                        <s:if test="pageType==6">Location Id</s:if> <s:label value="*"
+                                                                             cssStyle="color:red;font-size:14pt;"/>
                     </td>
                     <td>
                         <s:if test="pageType==1"><s:textfield name="district.districtId" id="id"
@@ -526,7 +530,8 @@
             </s:if>
             <s:if test="pageType==7">
                 <tr>
-                    <td colspan="2">Grama Niladhari Division Id <s:label value="*" cssStyle="color:red;font-size:14pt;"/></td>
+                    <td colspan="2">Grama Niladhari Division Id <s:label value="*"
+                                                                         cssStyle="color:red;font-size:14pt;"/></td>
                     <td>
                         <s:textfield name="gnDivision.gnDivisionId" id="id" onkeypress="return isNumberKey(event)"/>
                     </td>
@@ -594,19 +599,30 @@
                     </td>
                 </tr>
                 <tr>
+                    <td rowspan="2">Office Signature</td>
+                    <td>Signature in<br>Sinhala/English</td>
+                    <td><s:textarea name="location.sienLocationSignature" cssStyle="text-transform:none;width:95%;"
+                                    readonly="true" rows="2"/></td>
+                </tr>
+                <tr>
+                    <td>Signature in<br>Tamil/English</td>
+                    <td><s:textarea name="location.taenLocationSignature" cssStyle="text-transform:none;;width:95%;"
+                                    readonly="true" rows="2"/></td>
+                </tr>
+                <tr>
                     <td rowspan="3">Office Mailing Address</td>
                     <td>Address in English</td>
-                    <td><s:textarea name="location.enLocationMailingAddress" cssStyle="text-transform:none;"
+                    <td><s:textarea name="location.enLocationMailingAddress" cssStyle="text-transform:none;;width:95%;"
                                     readonly="true" rows="3"/></td>
                 </tr>
                 <tr>
                     <td>Address in Sinhala</td>
-                    <td><s:textarea name="location.siLocationMailingAddress" cssStyle="text-transform:none;"
+                    <td><s:textarea name="location.siLocationMailingAddress" cssStyle="text-transform:none;;width:95%;"
                                     readonly="true" rows="3"/></td>
                 </tr>
                 <tr>
                     <td>Address in Tamil</td>
-                    <td><s:textarea name="location.taLocationMailingAddress" cssStyle="text-transform:none;"
+                    <td><s:textarea name="location.taLocationMailingAddress" cssStyle="text-transform:none;;width:95%;"
                                     readonly="true" rows="3"/></td>
                 </tr>
             </s:if>
@@ -638,8 +654,8 @@
         <table id="users-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
             <thead>
             <tr>
-                <th style="width:5%"><s:label name="name" value="    "/></th>
-                <th style="width:70%"><s:label name="name" value="Name"/></th>
+                <th style="width:12%"><s:label name="name" value="Id/ Code"/></th>
+                <th style="width:63%"><s:label name="name" value="Name"/></th>
                 <th style="width:10%"><s:label name="inactive" value="Active"/></th>
                 <s:set name="allowEdit" value="true"/>
             </tr>
@@ -654,7 +670,15 @@
             <s:if test="pageType==7"> <s:set name="List" value="gnDivisionNameList"/></s:if>
             <s:iterator status="divisionListStatus" value="List">
                 <tr>
-                    <td><s:property value="%{#divisionListStatus.count}"/></td>
+                    <td align="center">
+                        <s:if test="pageType==1"><s:property value="districtId"/></s:if>
+                        <s:if test="pageType==2"><s:property value="divisionId"/></s:if>
+                        <s:if test="pageType==3"><s:property value="divisionId"/></s:if>
+                        <s:if test="pageType==4"><s:property value="divisionId"/></s:if>
+                        <s:if test="pageType==5"><s:property value="courtId"/></s:if>
+                        <s:if test="pageType==6"><s:property value="locationCode"/></s:if>
+                        <s:if test="pageType==7"><s:property value="gnDivisionId"/></s:if>
+                    </td>
                     <td>
                         <s:if test="pageType==1"><s:property value="enDistrictName"/></s:if>
                         <s:if test="(pageType==2 || pageType==3 || pageType==4)"><s:property
