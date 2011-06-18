@@ -554,7 +554,8 @@ $('select#dsDivisionId').bind('change', function(evt2) {
     <tr>
         <td>
             විවාහයේ ස්වභාවය <s:label value="*" cssStyle="color:red;font-size:10pt"/><br>
-            Type of Marriage <br>
+            திருமணத்தின் தன்மை<br>
+            Type of Marriage
         </td>
         <td>
             සාමාන්‍ය <br>
@@ -595,7 +596,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
     <col width="524px"/>
     <tr>
         <td colspan="2" align="center">
-            පුරුෂ පාර්ශ්වය / in tamil / Male Party
+            පුරුෂ පාර්ශ්වය / மாப்பிள்ள திறத்தார் / Male Party
         </td>
     </tr>
 </table>
@@ -647,7 +648,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
         </td>
         <td colspan="1">
             පසුවූ උපන් දිනයට වයස <s:label value="*" cssStyle="color:red;font-size:10pt"/><br>
-            in tamil <br>
+            சென்ற வருட பிறந்த தினத்தில் வயதி<br>
             Age at last Birthday
         </td>
         <td colspan="3">
@@ -878,7 +879,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
     <col width="524px"/>
     <tr>
         <td colspan="2" align="center">
-            ස්ත්‍රී පාර්ශ්වය / in tamil / Female Party
+            ස්ත්‍රී පාර්ශ්වය /பெண் திறத்தார்/  Female Party
         </td>
     </tr>
 </table>
@@ -931,7 +932,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
         </td>
         <td colspan="1">
             පසුවූ උපන් දිනයට වයස <s:label value="*" cssStyle="color:red;font-size:10pt"/><br>
-            in tamil <br>
+            சென்ற வருட பிறந்த தினத்தில் வயதி<br>
             Age at last Birthday
         </td>
         <td colspan="3">

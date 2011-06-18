@@ -247,7 +247,7 @@
     <tr>
         <td>
             විවාහය සිදු කල ස්ථානය<br>
-            in tamil <br>
+            திருமணம் நகழ்ந்த இடம்<br>
             place of Marriage
         </td>
         <td colspan="8">
@@ -273,7 +273,7 @@
     <tr>
         <td>
             රෙජිස්ට්‍රාර්තැන / දේවගැතිතැන<br>
-            in tamil <br>
+            பதிவாளர்/குருவானவர்<br>
             Registrar / Minister
         </td>
         <td colspan="8">
@@ -299,7 +299,7 @@
     <tr>
         <td>
             විවාහයේ ස්වභාවය <br>
-            type of marriage in tamil <br>
+            திருமணத்தின் தன்மை<br>
             Type of Marriage
         </td>
         <td colspan="8">
@@ -336,10 +336,10 @@
     <tr>
         <td>&nbsp;</td>
         <td align="center">
-            පුරුෂ පාර්ශ්වය / in tamil / Male Party
+            පුරුෂ පාර්ශ්වය / மாப்பிள்ள திறத்தார் / Male Party
         </td>
         <td align="center">
-            ස්ත්‍රී පාර්ශ්වය / in tamil / Female Party
+            ස්ත්‍රී පාර්ශ්වය /பெண் திறத்தார்/  Female Party
         </td>
     </tr>
     <tr>
@@ -372,7 +372,7 @@
     <tr>
         <td>
             පසුවූ උපන් දිනයට වයස <br>
-            in tamil <br>
+            சென்ற வருட பிறந்த தினத்தில் வயதி<br>
             Age at last Birthday
         </td>
         <td>

@@ -660,6 +660,7 @@ function maxLengthCalculate(id, max, divId) {
 </tr>
 </tbody>
 </table>
+</div>
 
 <s:hidden name="pageNo" value="1"/>
 <s:hidden name="rowNumber" value="%{row}"/>
@@ -706,5 +707,3 @@ function maxLengthCalculate(id, max, divId) {
 <s:hidden id="numChildGTOne" value="%{getText('p1.num.child.gt.one')}"/>
 <s:hidden id="childRankGTZero" value="%{getText('p1.child.rank.gt.zero')}"/>
 <s:hidden id="maxLengthError" value="%{getText('error.max.length')}"/>
-
-</div>

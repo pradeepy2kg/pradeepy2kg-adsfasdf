@@ -523,7 +523,7 @@ function initPage() {
     <td>11</td>
     <td>
         මව පදිංචි දිස්ත්‍රික්කය <br>
-        Mother's District in ta<br>
+        தாயின் பதிவு மாவட்டம்<br>
         Mother's District
     </td>
     <td colspan="6">
@@ -537,7 +537,7 @@ function initPage() {
 <tr>
     <td>12</td>
     <td><label>මව පදිංචි ප්‍රාදේශීය ලේකම් කොට්ඨාශය<br>
-        Mother's D.S.Division in ta<br>Mother's Divisional Secretary Division</label></td>
+        தாயின் பிரதேச செயலக பிரிவு<br>Mother's Divisional Secretary Division</label></td>
     <td colspan="6">
         <s:if test="bdId != 0">
             <s:textfield name="#session.birthConfirmation_db.parent.motherDsDivisionPrint" cssClass="disable"
@@ -553,7 +553,7 @@ function initPage() {
 <tr>
     <td>13</td>
     <td><label>මව පදිංචි ග්‍රාම නිලධාරී කොට්ඨාශය<br>
-        Mother's G.N. Division in ta<br>Mother's Grama Niladhari Division</label></td>
+        தாயின் கிராம சேவையாளர் பிரிவு<br>Mother's Grama Niladhari Division</label></td>
     <td colspan="6">
         <s:if test="bdId != 0">
             <s:textfield name="#session.birthConfirmation_db.parent.motherGNDivisionPrint" cssClass="disable"

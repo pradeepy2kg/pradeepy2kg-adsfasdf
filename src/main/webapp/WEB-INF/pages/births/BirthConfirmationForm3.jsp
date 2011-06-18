@@ -102,7 +102,7 @@
             <tbody>
             <tr>
                 <td colspan="7" style="text-align:center;font-size:12pt">උපත තහවුරු කරන්නාගේ විස්තර
-                    <br>பிறப்பு விபரங்களை உறுதிப்படுத்துபவர்
+                    <br>பிறப்பினை உறுதிப்படுத்துபவரின் விபரம்
                     <br>Person Confirming Birth Details
                 </td>
             </tr>
