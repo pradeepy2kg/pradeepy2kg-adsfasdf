@@ -406,7 +406,7 @@
     <tr>
         <td class="cell_011">12</td>
         <td><label>මව පදිංචි ප්‍රාදේශීය ලේකම් කොට්ඨාශය<br>
-            Mother's D.S.Division in ta<br>Mother's Divisional Secretary Division</label></td>
+            தாயின் பிரதேச செயலக பிரிவு<br>Mother's Divisional Secretary Division</label></td>
         <td colspan="6" style="font-size:12pt;">
             <s:label value="%{parent.motherDsDivisionPrint}"/>
         </td>
@@ -415,7 +415,7 @@
     <tr>
         <td class="cell_011">13</td>
         <td><label>මව පදිංචි ග්‍රාම නිලධාරී කොට්ඨාශය<br>
-            Mother's G.N. Division in ta<br>Mother's Grama Niladhari Division</label></td>
+            தாயின் கிராம சேவையாளர் பிரிவு<br>Mother's Grama Niladhari Division</label></td>
         <td colspan="6" style="font-size:12pt;">
             <s:label value="%{parent.motherGNDivisionPrint}"/>
         </td>
@@ -447,8 +447,7 @@
         <td class="cell_001">14</td>
         <td width="200px"><p></p><label>ළම‌යාගේ නම රාජ්‍ය භාෂාවෙන්
             (සිංහල / දෙමළ)
-            <br>குழந்தையின் பெயர் அரசகரும மொழிகளில்
-            (சிங்களம்/தமிழ்)
+            <br>பிள்ளையின்  பெயர் அரச கரும மொழியில்  (சிங்களம் / தமிழ்)
             <br>Child's name in the official languages (Sinhala / Tamil)</label>
 
             <p></p></td>
@@ -457,7 +456,7 @@
     <tr>
         <td rowspan="5" class="cell_012">&nbsp;</td>
         <td rowspan="5"><p></p><label>නම වෙනස් විය යුතු අයුරු
-            <br>திருத்தப்பட்ட பெயர்
+            <br>பெயர் மாற்றப்பட வேண்டிய விதம்  
             <br>Corrected name</label>
 
             <p></p>
@@ -489,7 +488,7 @@
         <td class="cell_001">15</td>
         <td width="200px"><p></p>
             <label>ළම‌යාගේ නම ඉංග්‍රීසි භාෂාවෙන්
-                <br>குழந்தையின் பெயர் ஆங்கிலத்தில்
+                <br>பிள்ளையின்  பெயர் ஆங்கில மொழியில்
                 <br>Child's name in English
             </label>
 
@@ -501,7 +500,7 @@
     <tr>
         <td rowspan="5" class="cell_012">&nbsp;</td>
         <td rowspan="5"><p></p><label>නම වෙනස් විය යුතු අයුරු
-            <br>திருத்தப்பட்ட பெயர்
+            <br>பெயர் மாற்றப்பட வேண்டிய விதம்  
             <br>Corrected name</label>
 
             <p></p></td>
@@ -531,7 +530,7 @@
     <tr>
         <td class="cell_001">16</td>
         <td width="200px"><p></p><label>පියාගේ සම්පුර්ණ නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)
-            <br>தந்தையின் முழுப் பெயர்
+            <br>தந்தையின் முழுப் பெயர் அரச கரும மொழியில்  (சிங்களம் / தமிழ்)
             <br>Father's Full Name in any of the official languages (Sinhala / Tamil)</label>
             <p></p>
         </td>
@@ -540,7 +539,7 @@
     <tr>
         <td rowspan="5" class="cell_012">&nbsp;</td>
         <td rowspan="5"><p></p><label>නම වෙනස් විය යුතු අයුරු
-            <br>திருத்தப்பட்ட பெயர்
+            <br>பெயர் மாற்றப்பட வேண்டிய விதம்  
             <br>Corrected name</label>
 
             <p></p></td>
@@ -585,7 +584,7 @@
     <tr>
         <td class="cell_001">17</td>
         <td width="200px"><p></p><label>පියාගේ සම්පුර්ණ නම ඉංග්‍රීසි භාෂාවෙන් (කැපිටල් අකුරෙන්)</label>
-            <br>முழுப் பெயர்
+            <br>தந்தையின் முழுப் பெயர் ஆங்கில மொழியில்(பெரிய எழுத்துக்களில்)
             <br>Father's Full Name in English (in block letters)</label>
             <p></p>
         </td>
@@ -594,7 +593,7 @@
     <tr>
         <td rowspan="5" class="cell_012">&nbsp;</td>
         <td rowspan="5"><p></p><label>නම වෙනස් විය යුතු අයුරු
-            <br>திருத்தப்பட்ட பெயர்
+            <br>பெயர் மாற்றப்பட வேண்டிய விதம்  
             <br>Corrected name</label>
 
             <p></p></td>
@@ -625,7 +624,7 @@
     <tr>
         <td class="cell_001">18</td>
         <td width="200px"><p></p><label>මවගේ සම්පුර්ණ නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)
-            <br>தாயின் முழுப் பெயர்
+            <br>தாயின் முழுப் பெயர் அரச கரும மொழியில்  (சிங்களம் / தமிழ்)
             <br>Mother's Full Name in any of the official languages (Sinhala / Tamil)</label>
             <p></p>
         </td>
@@ -634,7 +633,7 @@
     <tr>
         <td rowspan="5" class="cell_012">&nbsp;</td>
         <td rowspan="5"><p></p><label>නම වෙනස් විය යුතු අයුරු
-            <br>திருத்தப்பட்ட பெயர்
+            <br>பெயர் மாற்றப்பட வேண்டிய விதம்  
             <br>Corrected name</label>
             <p></p></td>
         <td>&nbsp;</td>
@@ -664,7 +663,7 @@
     <tr>
         <td class="cell_001">19</td>
         <td width="200px"><p></p><label>මවගේ සම්පුර්ණ නම ඉංග්‍රීසි භාෂාවෙන් (කැපිටල් අකුරෙන්)
-            <br>முழுப் பெயர்
+            <br>தாயின் முழுப் பெயர் ஆங்கில மொழியில் (பெரிய எழுத்துக்களில்)
             <br>Mother's Full Name in English (in block letters)</label>
             <p></p>
         </td>
@@ -673,7 +672,7 @@
     <tr>
         <td rowspan="5" class="cell_012">&nbsp;</td>
         <td rowspan="5"><p></p><label>නම වෙනස් විය යුතු අයුරු
-            <br>திருத்தப்பட்ட பெயர்
+            <br>பெயர் மாற்றப்பட வேண்டிய விதம்  
             <br>Corrected name</label>
             <p></p></td>
         <td>&nbsp;</td>
@@ -703,7 +702,7 @@
             <td colspan="3" style="text-align:center;font-size:12pt">
                 <p></p><label>
                     උපත තහවුරු කරන්නාගේ විස්තර
-                    <br>பிறப்பு விபரங்களை உறுதிப்படுத்துபவரின் விபரங்கள்
+                    <br>பிறப்பினை உறுதிப்படுத்துபவரின் விபரம்
                     <br>Person confirming the birth details
                 </label><p></p>
             </td>
@@ -755,7 +754,7 @@
                 <p></p>
                 <label>
                     උපත් විස්තර තහවුරු කරන්නාගේ සම්පූර්ණ නම
-                    <br>பிறப்பை உறுதிப்படுத்துபவரின் முழுப் பெயர்
+                    <br>பிறப்பினை உறுதிப்படுத்துபவரின் முழுப் பெயர்
                     <br>Full Name of the person confirming the birth details
                 </label>
 

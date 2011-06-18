@@ -219,7 +219,7 @@
         </td>
         <td colspan="1">
             විවාහයේ ස්වභාවය <br>
-            in tamil <br>
+            திருமணத்தின் தன்மை<br>
             Type of Marriage
         </td>
         <td align="center">
@@ -247,10 +247,10 @@
     <tr>
         <td></td>
         <td colspan="2" align="center">
-            පුරුෂ පාර්ශ්වය / Male Party
+            පුරුෂ පාර්ශ්වය / மாப்பிள்ள திறத்தார்
         </td>
         <td colspan="2" align="center">
-            ස්ත්‍රී පාර්ශ්වය / Female Party
+            ස්ත්‍රී පාර්ශ්වය /பெண் திறத்தார்
         </td>
     </tr>
     <tr>
