@@ -28,7 +28,7 @@ public final class Permission {
     public static final int SEARCH_DDF = 23;
     public static final int PRINT_DDF = 24;
     public static final int INDEX_RECORDS = 25;
-    public static final int REGISTRAR_MANAGEMENT_ADR = 26;
+    public static final int REGISTRAR_DELETE = 26;
     public static final int EDIT_MARRIAGE = 27;
     public static final int SEARCH_MARRIAGE = 28;
     //todo: to be removed
