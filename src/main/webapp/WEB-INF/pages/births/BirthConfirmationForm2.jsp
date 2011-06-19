@@ -58,11 +58,17 @@
             domObject = document.getElementById('childFullNameEnglish');
             isEmpty(domObject, "", 'error2');
 
-            domObject = document.getElementById('fatherFullName');
+            domObject = document.getElementById('fatherFullNameOfficialLang');
             isEmpty(domObject, "", 'error3');
 
-            domObject = document.getElementById('motherFullName');
+            domObject = document.getElementById('fatherFullNameEnglish');
+            isEmpty(domObject, "", 'error5');
+
+            domObject = document.getElementById('motherFullNameOfficialLang');
             isEmpty(domObject, "", 'error4');
+
+            domObject = document.getElementById('motherFullNameEnglish');
+            isEmpty(domObject, "", 'error6');
         }
 
         if (errormsg != "") {
@@ -127,7 +133,7 @@
             <tr>
                 <td rowspan="2">16</td>
                 <td>
-                    <label>පියාගේ සම්පුර්ණ නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)
+                    <label>පියාගේ සම්පුර්ණ නම රාජ්‍ය භාෂාවෙන් <br/>(සිංහල / දෙමළ)
                     <br>தந்தையின் முழுப் பெயர் அரச கரும மொழியில்  (சிங்களம் / தமிழ்)
                     <br>Father's Full Name in any of the official languages (Sinhala / Tamil)</label>
                 </td>
@@ -160,7 +166,7 @@
             <tr>
                 <td rowspan="2">18</td>
                 <td>
-                    <label>මවගේ සම්පුර්ණ නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)
+                    <label>මවගේ සම්පුර්ණ නම රාජ්‍ය භාෂාවෙන් <br/>(සිංහල / දෙමළ)
                     <br>தாயின் முழுப் பெயர் அரச கரும மொழியில்  (சிங்களம் / தமிழ்)
                     <br>Mother's Full Name in any of the official languages (Sinhala / Tamil)</label>
                 </td>
@@ -220,5 +226,7 @@
     <s:hidden id="error2" value="%{getText('p1.NameEnglish.error.value')}"/>
     <s:hidden id="error3" value="%{getText('p2.fatherName.error.value')}"/>
     <s:hidden id="error4" value="%{getText('p2.motherName.error.value')}"/>
+    <s:hidden id="error5" value="%{getText('fatherNameInEnglish')}"/>
+    <s:hidden id="error6" value="%{getText('motherNameInEnglish')}"/>
 </div>
 <%-- Styling Completed --%>
