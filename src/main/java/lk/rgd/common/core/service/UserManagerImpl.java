@@ -209,8 +209,10 @@ public class UserManagerImpl implements UserManager {
 
                 if (!updatedUser.getLocations().isEmpty()) {
                     updatedUser.setStatus(User.State.ACTIVE);
+                    updatedUser.getLifeCycleInfo().setActive(true);
                 } else {
                     updatedUser.setStatus(User.State.INACTIVE);
+                    updatedUser.getLifeCycleInfo().setActive(false);
                 }
                 if (changePassword) {
                     logger.debug("Change password {}", userDao.getUserByPK(userId).getUserName());
@@ -354,6 +356,7 @@ public class UserManagerImpl implements UserManager {
 
         } else {
             userToDelete.setStatus(User.State.DELETED);
+            userToDelete.getLifeCycleInfo().setActive(false);
             userDao.updateUser(userToDelete, adminUser);
         }
     }
