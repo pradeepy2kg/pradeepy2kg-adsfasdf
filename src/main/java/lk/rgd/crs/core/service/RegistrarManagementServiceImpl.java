@@ -197,14 +197,28 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
     public void updateAssignment(Assignment assignment, User user) {
 
         if (!user.isAuthorized(Permission.REGISTRAR_MANAGEMENT)) {
-            handleException("User : " + user.getUserId() +
-                " is not authorized to manage registrars", ErrorCodes.PERMISSION_DENIED);
+            handleException("User : " + user.getUserId() + " is not authorized to manage registrars",
+                ErrorCodes.PERMISSION_DENIED);
         }
 
         logger.debug("Request to update Assignment for registrar : {}",
             assignment.getRegistrar().getShortName());
 
         assignmentDao.updateAssignment(assignment, user);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void deleteAssignment(Assignment assignment, User user) {
+        if (!user.isAuthorized(Permission.REGISTRAR_DELETE)) {
+            handleException("User : " + user.getUserId() + " is not authorized to delete assignments",
+                ErrorCodes.PERMISSION_DENIED);
+        }
+        logger.debug("attempt to delete assignment with unique key : {}", assignment.getAssignmentUKey());
+
+        Assignment.Type type = assignment.getType();
     }
 
     /**

@@ -95,6 +95,7 @@ public class RolePermissionUtils {
         adminBitSet.set(Permission.SERVICE_MASTER_DATA_MANAGEMENT);
         adminBitSet.set(Permission.USER_PREFERENCES);
         adminBitSet.set(Permission.REGISTRAR_MANAGEMENT);
+        adminBitSet.set(Permission.REGISTRAR_DELETE);
         adminBitSet.set(Permission.SEARCH_REGISTRAR);
         adminBitSet.set(Permission.EVENTS_MANAGEMENT);
         adminBitSet.set(Permission.INDEX_RECORDS);

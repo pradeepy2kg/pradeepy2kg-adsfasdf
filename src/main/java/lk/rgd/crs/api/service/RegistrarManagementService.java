@@ -46,6 +46,14 @@ public interface RegistrarManagementService {
     public void updateAssignment(Assignment assignment, User user);
 
     /**
+     * Delete the assignment of a Registrar
+     *
+     * @param assignment the assignment to be deleted
+     * @param user       the user performing the action
+     */
+    public void deleteAssignment(Assignment assignment, User user);
+
+    /**
      * Inactivate an assignment of a registrar
      *
      * @param assignmentUKey
