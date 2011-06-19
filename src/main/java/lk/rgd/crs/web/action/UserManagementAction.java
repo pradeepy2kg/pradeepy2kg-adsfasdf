@@ -311,6 +311,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
 
     public String assignedUserLocation() {
         User user = userDAO.getUserByPK(userId);
+        roleId = user.getRole().getName();
         Location prmLocation = user.getPrimaryLocation();
         if (prmLocation != null) {
             primaryLocation = prmLocation.getLocationUKey();
@@ -488,15 +489,15 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         final StringBuilder sb = new StringBuilder();
         sb.append(CommonUtil.getOfficeSignature(AppConstants.SINHALA)).append(AppConstants.SPACE).
             append(dsDivision.getSiDivisionName()).append(AppConstants.NEW_LINE).
-            append(CommonUtil.getOfficeSignature(AppConstants.ENGLISH)).append(dsDivision.getEnDivisionName()).
-            append(AppConstants.FULL_STOP);
+            append(CommonUtil.getOfficeSignature(AppConstants.ENGLISH)).append(AppConstants.SPACE).
+            append(dsDivision.getEnDivisionName()).append(AppConstants.FULL_STOP);
         location.setSienLocationSignature(sb.toString());
         sb.delete(0, sb.length());
 
         sb.append(CommonUtil.getOfficeSignature(AppConstants.TAMIL)).append(AppConstants.SPACE).
             append(dsDivision.getTaDivisionName()).append(AppConstants.NEW_LINE).
-            append(CommonUtil.getOfficeSignature(AppConstants.ENGLISH)).append(dsDivision.getEnDivisionName()).
-            append(AppConstants.FULL_STOP);
+            append(CommonUtil.getOfficeSignature(AppConstants.ENGLISH)).append(AppConstants.SPACE).
+            append(dsDivision.getEnDivisionName()).append(AppConstants.FULL_STOP);
         location.setTaenLocationSignature(sb.toString());
     }
 
@@ -633,7 +634,6 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                     } else if (language.equals("ta")) {
                         msg = getText("new.mrDivision.add") + " : " + mrDivision.getTaDivisionName();
                     }
-
                 }
                 break;
             case 5:
@@ -807,10 +807,12 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         }
         if (userLocationDAO.getActiveUserLocations(userId, true).size() > 0) {
             user.setStatus(User.State.ACTIVE);
+            user.getLifeCycleInfo().setActive(true);
             service.updateUser(user);
             logger.debug("User Activated {}", user.getUserName());
         } else {
             user.setStatus(User.State.INACTIVE);
+            user.getLifeCycleInfo().setActive(false);
             service.updateUser(user);
             logger.debug("User Deactivated {}", user.getUserName());
         }
@@ -819,7 +821,6 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         if (user.getRole().getRoleId().equals(Role.ROLE_RG) || user.getRole().getRoleId().equals(Role.ROLE_ADMIN)) {
             locationList.put(1, locationDAO.getLocationNameByPK(1, user.getPrefLanguage()));
         }
-
     }
 
     /**
