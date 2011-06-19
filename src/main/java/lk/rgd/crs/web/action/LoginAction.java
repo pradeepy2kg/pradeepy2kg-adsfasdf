@@ -1,6 +1,7 @@
 package lk.rgd.crs.web.action;
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.AppConstants;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.*;
 import lk.rgd.common.api.service.StatisticsManager;
@@ -98,7 +99,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
      */
     public String login() {
 
-        if (javaScript.equals("false")) {
+        if ("false".equals(javaScript)) {
             addActionError("Please enable javaScript in your web browser");
             return ERROR;
         }
@@ -111,7 +112,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
                 user.setLoginAttempts(1);
                 userManager.updateUser(user);
             }
-            if (!user.getRole().getRoleId().equals("ADMIN") && !user.getRole().getRoleId().equals("RG")) {
+            if (!Role.ROLE_ADMIN.equals(user.getRole().getRoleId()) && !Role.ROLE_RG.equals(user.getRole().getRoleId())) {
                 if (user.getAssignedBDDSDivisions() != null && user.getAssignedBDDSDivisions().size() == 0) {
                     addActionError("You are not assign to any DS Division.Contact admin for resolve problem");
                     logger.error("User : {} , doesn't allocate to any DS Division", user.getUserName());
@@ -122,21 +123,22 @@ public class LoginAction extends ActionSupport implements SessionAware {
             user = userManager.getUserByID(userName);
             if (user != null) {
                 int loginAttempts = user.getLoginAttempts();
-                logger.debug("value of loging attempts :{}", loginAttempts);
+                logger.debug("value of login attempts :{}", loginAttempts);
                 int maxLoginAttempts = appParaDao.getIntParameter(AppParameter.MAX_NUMBER_OF_LOGIN_ATTEMPTS);
-                logger.debug("value of loging attempts :{}", maxLoginAttempts);
+                logger.debug("value of login attempts :{}", maxLoginAttempts);
+                User.State currentState = user.getStatus();
                 if (loginAttempts > maxLoginAttempts) {
                     user.getLifeCycleInfo().setActive(false);
                     addActionError("Please contact Admin to Active your Account");
                 } else {
-                    if (user.getStatus().equals(User.State.DELETED)) {
+                    if (User.State.DELETED.equals(currentState)) {
                         addActionError("Your user account has been deleted. Please contact Administrator");
                     } else {
                         addActionError("Incorrect user name or password");
                         user.setLoginAttempts(loginAttempts + 1);
                     }
                 }
-                if (!user.getStatus().equals(User.State.DELETED)) {
+                if (!User.State.DELETED.equals(currentState)) {
                     userManager.updateUser(user);
                 }
             } else {
@@ -149,7 +151,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
         try {
             String language = user.getPrefLanguage();
             String country = "LK";
-            if (language.equals("en")) {
+            if (AppConstants.ENGLISH.equals(language)) {
                 country = "US";
             }
             Map map = Menu.getAllowedLinks(user.getRole());     /* get allowed operations for user */
@@ -184,16 +186,17 @@ public class LoginAction extends ActionSupport implements SessionAware {
             SBPendingApprovals = 21;
 
             /* check if password is expired */
-            String result = checkUserExpiry(user);
-            if (result.equals(SUCCESS)) {
-                if ((result + userRole).equals("successRG") || (result + userRole).equals("successARG")) {
+            final String result = checkUserExpiry(user);
+            if (SUCCESS.equals(result)) {
+                String loginSuccess = result + userRole;
+                if ("successRG".equals(loginSuccess) || "successARG".equals(loginSuccess)) {
                     populateLists(user, WebConstants.USER_ARG);
                 }
-                if ((result + userRole).equals("successDR") || (result + userRole).equals("successADR")) {
+                if ("successDR".equals(loginSuccess) || "successADR".equals(loginSuccess)) {
                     populateLists(user, userRole);
                 }
 
-                return result + userRole;   /* Login succeeded */
+                return loginSuccess;   /* Login succeeded */
             } else {
                 return result;      /* some wrong with password */
             }
@@ -230,16 +233,17 @@ public class LoginAction extends ActionSupport implements SessionAware {
         Set<District> districtSet = user.getAssignedBDDistricts();
         districtList = new HashMap<Integer, String>();
         for (District district : districtSet) {
-            if (user.getPrefLanguage().equals("en")) {
+            String userLang = user.getPrefLanguage();
+            if (AppConstants.ENGLISH.equals(userLang)) {
                 districtList.put(district.getDistrictUKey(), district.getEnDistrictName());
-            } else if (user.getPrefLanguage().equals("si")) {
+            } else if (AppConstants.SINHALA.equals(userLang)) {
                 districtList.put(district.getDistrictUKey(), district.getSiDistrictName());
-            } else if (user.getPrefLanguage().equals("ta")) {
+            } else if (AppConstants.TAMIL.equals(userLang)) {
                 districtList.put(district.getDistrictUKey(), district.getTaDistrictName());
             }
         }
 
-        if (user.getRole().getRoleId().equals(Role.ROLE_RG)) {
+        if (Role.ROLE_RG.equals(user.getRole().getRoleId())) {
             districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
         }
 
@@ -259,7 +263,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
     void populateLists(User user, String userType) {
 
-        if (userType.equals(WebConstants.USER_ARG) || userType.equals(WebConstants.USER_RG)) {
+        if (WebConstants.USER_ARG.equals(userType) || WebConstants.USER_RG.equals(userType)) {
             if (districtList == null) {
                 districtList = districtDAO.getAllDistrictNames(user.getPrefLanguage(), user);
                 logger.debug("district List : {}", districtList.size());
@@ -277,7 +281,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
                 }
             }
 
-        } else if (userType.toLowerCase().equals(WebConstants.USER_ADR)) {
+        } else if (WebConstants.USER_ADR.equals(userType.toLowerCase())) {
             if (districtList == null) {
                 districtList = districtDAO.getAllDistrictNames(user.getPrefLanguage(), user);
                 logger.debug("district List : {}", districtList.size());
@@ -336,8 +340,9 @@ public class LoginAction extends ActionSupport implements SessionAware {
      */
     private String checkUserExpiry(User user) {
 
-        User checkUser = userManager.getUserByID(user.getUserId());
-        if (checkUser.getStatus().equals(User.State.INACTIVE) || checkUser.getStatus().equals(User.State.DELETED) || checkUser.getStatus().equals(User.State.LOCKEDOUT)) {
+        User.State currentState = userManager.getUserByID(user.getUserId()).getStatus();
+        if (User.State.INACTIVE.equals(currentState) || User.State.DELETED.equals(currentState) ||
+            User.State.LOCKEDOUT.equals(currentState)) {
             logger.warn("User Status is : {} for user :{}", user.getStatus(), user.getUserName());
             return ERROR;
         }
