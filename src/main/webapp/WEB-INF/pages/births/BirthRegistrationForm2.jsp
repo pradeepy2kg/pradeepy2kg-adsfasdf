@@ -24,6 +24,10 @@
 
 <s:hidden id="p2error1" value="%{getText('p2.fatherName.error.value')}"/>
 <s:hidden id="p2error2" value="%{getText('p2.motherName.error.value')}"/>
+<s:hidden id="fatherNameEnglish" value="%{getText('fatherNameInEnglish')}"/>
+<s:hidden id="motherNameEnglish" value="%{getText('motherNameInEnglish')}"/>
+<s:hidden id="error18" value="%{getText('enter.fatherRace')}"/>
+<s:hidden id="error19" value="%{getText('enter.motherRace')}"/>
 <s:hidden id="mother_age" value="%{getText('p2.motherAge.error.value')}"/>
 <s:hidden id="mother_birth_day_empty" value="%{getText('p2.motherAge.empty.error.value')}"/>
 <s:hidden id="childDateOfBirth" value="%{child.dateOfBirth}"/>
@@ -220,11 +224,26 @@ function validate() {
         if (isFieldEmpty(domObject)) {
             isEmpty(domObject, "", 'p2error1');
         }
+        // validate father full name in english
+        domObject = document.getElementById('fatherFullNameInEnglish');
+        if (isFieldEmpty(domObject)) {
+            isEmpty(domObject, "", 'fatherNameEnglish');
+        }
+        // validate father's race
+        domObject = document.getElementById('fatherRaceId');
+        if (domObject.value == 0) {
+            errormsg = errormsg + "\n" + document.getElementById('error18').value;
+        }
 
         // validate mother full name
         domObject = document.getElementById('motherFullName');
         if (isFieldEmpty(domObject)) {
             isEmpty(domObject, "", 'p2error2');
+        }
+        // validate mother full name in english
+        domObject = document.getElementById('motherFullNameInEnglish');
+        if (isFieldEmpty(domObject)) {
+            isEmpty(domObject, "", 'motherNameEnglish');
         }
 
         // validate mother date of birth
@@ -237,6 +256,11 @@ function validate() {
         domObject = document.getElementById('motherAgeAtBirth');
         if (isFieldEmpty(domObject)) {
             isEmpty(domObject, "", 'mother_age');
+        }
+        // validate mother's race
+        domObject = document.getElementById('motherRaceId');
+        if (domObject.value == 0) {
+            errormsg = errormsg + "\n" + document.getElementById('error19').value;
         }
 
         validateBirthYearWithNIC("father_pinOrNic", "fatherDatePicker", "error7");
