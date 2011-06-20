@@ -20,8 +20,8 @@ import lk.rgd.crs.api.service.AdoptionOrderService;
 import lk.rgd.crs.api.service.BirthAlterationService;
 import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.web.WebConstants;
-import lk.rgd.crs.web.util.DateState;
 import lk.rgd.crs.web.util.CommonUtil;
+import lk.rgd.crs.web.util.DateState;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -446,18 +446,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             String language = bdf.getRegister().getPreferredLanguage();
             locationList = commonUtil.populateActiveUserLocations(user, language);
             if (locationList.size() > 0) {
-                int defId = locationList.keySet().iterator().next();
-
-                Location location = locationDAO.getLocation(defId);
-                if (language.equals(AppConstants.SINHALA)) {
-                    returnAddress = location.getSiLocationMailingAddress();
-                }
-                if (language.equals(AppConstants.TAMIL)) {
-                    returnAddress = location.getTaLocationMailingAddress();
-                }
-                if (language.equals(AppConstants.ENGLISH)) {
-                    returnAddress = location.getEnLocationMailingAddress();
-                }
+                populateReturnAddress();
             }
             if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
                 bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED)) {
@@ -473,6 +462,21 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             return ERROR;
         }
 
+    }
+
+    private void populateReturnAddress() {
+        int locationId = locationList.keySet().iterator().next();
+
+        Location location = locationDAO.getLocation(locationId);
+        if (AppConstants.SINHALA.equals(language)) {
+            returnAddress = location.getSiLocationMailingAddress();
+        }
+        if (AppConstants.TAMIL.equals(language)) {
+            returnAddress = location.getTaLocationMailingAddress();
+        }
+        if (AppConstants.ENGLISH.equals(language)) {
+            returnAddress = location.getEnLocationMailingAddress();
+        }
     }
 
     public String initBirthRegistration() {
@@ -808,6 +812,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 if (!locationList.isEmpty()) {
                     //TODO get primary location
                     int selectedLocationId = locationList.keySet().iterator().next();
+                    populateReturnAddress();
                     userList = new HashMap<String, String>();
                     // TODO temporaray solution have to change this after caching done for user locations
                     for (User u : userLocationDAO.getBirthCertSignUsersByLocationId(selectedLocationId, true)) {

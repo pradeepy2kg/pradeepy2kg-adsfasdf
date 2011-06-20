@@ -61,9 +61,11 @@
                                         var officerSign = data.officerSignature;
                                         var locationSign = data.locationSignature;
                                         var location = data.locationName;
+                                        var locationAddress = data.locationAddress;
                                         $("textarea#signature").html(officerSign);
                                         $("label#placeSign").html(locationSign);
                                         $("label#placeName").html(location);
+                                        $("textarea#retAddress").html(locationAddress);
                                     });
                         });
 
@@ -82,9 +84,11 @@
                         var officerSign = data.officerSignature;
                         var locationSign = data.locationSignature;
                         var location = data.locationName;
+                        var locationAddress = data.locationAddress;
                         $("textarea#signature").html(officerSign);
                         $("label#placeSign").html(locationSign);
                         $("label#placeName").html(location);
+                        $("textarea#retAddress").html(locationAddress);
                     });
         });
     });
@@ -222,16 +226,16 @@
         <td>
             <table border="1" style="width:50%;border:1px solid #000;border-collapse:collapse;float:right;">
                 <tr height="60px">
-<%--
-                   <td>ලියාපදිංචි කිරීමේ අංකය<br>பதிவு இலக்கம்<br>Registration Number</td>
---%>
-             
+                        <%--
+                                           <td>ලියාපදිංචි කිරීමේ අංකය<br>பதிவு இலக்கம்<br>Registration Number</td>
+                        --%>
+
                     <td width="100%">සහතික පත්‍රයේ අංකය<br>சான்றிதழ் இல<br>Certificate Number</td>
                 </tr>
                 <tr height="40px">
-                <%--            <td align="center"><s:property value="%{#page.location}"/>
-                        <s:label name="register.bdfSerialNo" cssStyle="font-size:11pt;"/>
-                    </td>--%>
+                        <%--            <td align="center"><s:property value="%{#page.location}"/>
+                            <s:label name="register.bdfSerialNo" cssStyle="font-size:11pt;"/>
+                        </td>--%>
                     <td align="center"><s:label id="certificateId" name="bdId" cssStyle="font-size:11pt;"/></td>
                 </tr>
             </table>
@@ -558,24 +562,24 @@
         </td>
     </tr>
     <tr>
-        <td colspan="2" height="80px">
+        <td colspan="2" height="85px">
             සහතික කරනු ලබන නිලධාරියා ගේ නම, තනතුර සහ අත්සන<br>
             சான்றிதழ் அளிக்கும் அதிகாரியின் பெயர், பதவி, கையொப்பம்<br>
             Name, Signature and Designation of certifying officer
         </td>
         <td colspan="2" style="font-size:11pt">
-            <s:textarea id="signature" value="%{#request.register.originalBCIssueUserSignPrint}" disabled="true" rows="3"
-                        cssStyle="margin-top:0;text-transform:none;width:100%;font-size:10pt;background:transparent;border:none;padding:0;" />
+            <s:textarea id="signature" value="%{#request.register.originalBCIssueUserSignPrint}" disabled="true"
+                        rows="4"
+                        cssStyle="margin-top:10px;text-transform:none;width:100%;font-size:10pt;background:transparent;border:none;padding:0;"/>
         </td>
     </tr>
     <tr>
-        <td colspan="2" height="60px">නිකුත් කළ ස්ථානය / வழங்கிய இடம்/ Place of Issue
+        <td colspan="2" height="40px">නිකුත් කළ ස්ථානය / வழங்கிய இடம்/ Place of Issue
         </td>
         <td colspan="2" cssStyle="font-size:11pt;">
-            <s:textarea id="placeSign" value="%{#request.register.originalBCPlaceOfIssueSignPrint}" disabled="true" rows="3"
-                        cssStyle="margin-top:10px;text-transform:none;width:100%;font-size:11pt;background:transparent;border:none;padding:0;" />
-            <%--<s:label id="placeSign" value="%{#request.register.originalBCPlaceOfIssueSignPrint}"/><br>--%>
-            <%--<s:label id="placeName" value="%{#request.register.originalBCPlaceOfIssuePrint}"/>--%>
+            <s:textarea id="placeSign" value="%{#request.register.originalBCPlaceOfIssueSignPrint}" disabled="true"
+                        rows="3"
+                        cssStyle="margin-top:10px;text-transform:none;width:100%;font-size:10pt;background:transparent;border:none;padding:0;"/>
         </td>
     </tr>
     </tbody>
@@ -611,7 +615,7 @@
     <tr>
         <td height="100px" width="30%">
             <s:textarea id="retAddress" value="%{returnAddress}" disabled="true" rows="5"
-                        cssStyle="margin-top:50px;text-transform:none;width:100%;font-size:11pt;background:transparent;border:none;" />
+                        cssStyle="margin-top:50px;text-transform:none;width:100%;font-size:11pt;background:transparent;border:none;"/>
         </td>
         <td width="10%">&nbsp;</td>
         <td width="30%">
