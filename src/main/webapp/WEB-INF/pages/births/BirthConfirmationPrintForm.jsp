@@ -456,7 +456,7 @@
     <tr>
         <td rowspan="5" class="cell_012">&nbsp;</td>
         <td rowspan="5"><p></p><label>නම වෙනස් විය යුතු අයුරු
-            <br>பெயர் மாற்றப்பட வேண்டிய விதம்  
+            <br>பெயர் மாற்றப்பட வேண்டிய விதம்
             <br>Corrected name</label>
 
             <p></p>
@@ -500,7 +500,7 @@
     <tr>
         <td rowspan="5" class="cell_012">&nbsp;</td>
         <td rowspan="5"><p></p><label>නම වෙනස් විය යුතු අයුරු
-            <br>பெயர் மாற்றப்பட வேண்டிய விதம்  
+            <br>பெயர் மாற்றப்பட வேண்டிய விதம்
             <br>Corrected name</label>
 
             <p></p></td>
@@ -539,7 +539,7 @@
     <tr>
         <td rowspan="5" class="cell_012">&nbsp;</td>
         <td rowspan="5"><p></p><label>නම වෙනස් විය යුතු අයුරු
-            <br>பெயர் மாற்றப்பட வேண்டிய விதம்  
+            <br>பெயர் மாற்றப்பட வேண்டிய விதம்
             <br>Corrected name</label>
 
             <p></p></td>
@@ -593,7 +593,7 @@
     <tr>
         <td rowspan="5" class="cell_012">&nbsp;</td>
         <td rowspan="5"><p></p><label>නම වෙනස් විය යුතු අයුරු
-            <br>பெயர் மாற்றப்பட வேண்டிய விதம்  
+            <br>பெயர் மாற்றப்பட வேண்டிய விதம்
             <br>Corrected name</label>
 
             <p></p></td>
@@ -633,7 +633,7 @@
     <tr>
         <td rowspan="5" class="cell_012">&nbsp;</td>
         <td rowspan="5"><p></p><label>නම වෙනස් විය යුතු අයුරු
-            <br>பெயர் மாற்றப்பட வேண்டிய விதம்  
+            <br>பெயர் மாற்றப்பட வேண்டிய விதம்
             <br>Corrected name</label>
             <p></p></td>
         <td>&nbsp;</td>
@@ -672,7 +672,7 @@
     <tr>
         <td rowspan="5" class="cell_012">&nbsp;</td>
         <td rowspan="5"><p></p><label>නම වෙනස් විය යුතු අයුරු
-            <br>பெயர் மாற்றப்பட வேண்டிய விதம்  
+            <br>பெயர் மாற்றப்பட வேண்டிய விதம்
             <br>Corrected name</label>
             <p></p></td>
         <td>&nbsp;</td>
