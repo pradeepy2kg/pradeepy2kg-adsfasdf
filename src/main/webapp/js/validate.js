@@ -413,3 +413,9 @@ function calculateBirthDay(id, error) {
         alert(error);
     }
 }
+
+function deleteWarning(message) {
+    var ret = true;
+    ret = confirm(document.getElementById(message).value);
+    return ret;
+}

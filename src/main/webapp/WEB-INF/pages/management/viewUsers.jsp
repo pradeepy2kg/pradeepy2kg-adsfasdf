@@ -26,12 +26,6 @@
 
     function initPage() {
     }
-
-    function deleteWarning() {
-        var ret = true;
-        ret = confirm("Do You Really Want to Delete the Selected User ?");
-        return ret;
-    }
 </script>
 
 <style type="text/css">
@@ -125,7 +119,7 @@
                                 <td align="center">
                                     <s:a href="%{deleteSelected}" title="Delete User"><img
                                             src="<s:url value='/images/delete.gif'/>" width="25" height="25"
-                                            border="none" onclick="javascript:return deleteWarning()"/></s:a>
+                                            border="none" onclick="javascript:return deleteWarning('warning')"/></s:a>
                                 </td>
                                 <s:url id="activeSelected" action="eprActiveUsers.do">
                                     <s:param name="userId" value="userId"/>
@@ -170,5 +164,4 @@
 
 </div>
 
-
-
+<s:hidden id="warning" value="Do You Really Want to Delete the Selected User ?"/>

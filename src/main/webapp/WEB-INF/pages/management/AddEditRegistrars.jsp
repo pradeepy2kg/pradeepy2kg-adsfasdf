@@ -349,12 +349,13 @@
     <table id="registrars-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
         <thead>
         <tr class="table-title">
-            <th width="200px"><s:label value="%{getText('label.bdDivision')}"/></th>
-            <th width="100px"><s:label value="%{getText('label.type')}"/></th>
-            <th width="100px"><s:label value="%{getText('label.startDate')}"/></th>
-            <th width="100px"><s:label value="%{getText('label.endDate')}"/></th>
-            <th width="40px"><s:label value="%{getText('label.active')}"/></th>
-            <th width="15px"></th>
+            <th width="31%"><s:label value="%{getText('label.bdDivision')}"/></th>
+            <th width="17%"><s:label value="%{getText('label.type')}"/></th>
+            <th width="16%"><s:label value="%{getText('label.startDate')}"/></th>
+            <th width="17%"><s:label value="%{getText('label.endDate')}"/></th>
+            <th width="9%"><s:label value="%{getText('label.active')}"/></th>
+            <th width="5%"></th>
+            <th width="5%"></th>
         </tr>
         </thead>
         <s:if test="assignmentList.size>0">
@@ -395,6 +396,11 @@
                             <img src="<s:url value='/images/edit.png'/>" width="25" height="25"
                                  border="none"/></s:a>
                     </td>
+                    <td align="center">
+                        <s:a href="%{deleteSelected}" title="%{getText('deleteToolTip.label')}"><img
+                                src="<s:url value='/images/delete.gif'/>" width="25" height="25"
+                                border="none" onclick="javascript:return deleteWarning('warning')"/></s:a>
+                    </td>
                 </tr>
             </s:iterator>
             </tbody>
@@ -431,5 +437,6 @@
 <s:hidden id="nameOfficialError" value="%{getText('registrar.full.name.officelaLang')}"/>
 <s:hidden id="nameEnglishError" value="%{getText('registrar.full.name.english')}"/>
 <s:hidden id="empty" value="%{getText('field.emptry')}"/>
+<s:hidden id="warning" value="Do you really want to delete this assignment ?"/>
 
 
