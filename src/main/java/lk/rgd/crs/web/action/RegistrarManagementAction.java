@@ -76,6 +76,7 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
     private Date permanentDate;
     private Date terminationDate;
 
+    private String language;
     private String districtName;
     private String dsDivisionName;
     private String divisionName;
@@ -90,19 +91,16 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
     }
 
     public String registrarsManagementHome() {
-
         /* lists are generated according to the user */
         session.remove(WebConstants.SESSION_EXSISTING_REGISTRAR);
-        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
-        String usrRole = user.getRole().getRoleId();
         districtId = 1;
         dsDivisionId = 0;
 
-        districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
+        districtList = districtDAO.getDistrictNames(language, user);
         if (districtList != null) {
             districtId = districtList.keySet().iterator().next();
         }
-        dsDivisionList = dsDivisionDAO.getAllDSDivisionNames(districtId, user.getPrefLanguage(), user);
+        dsDivisionList = dsDivisionDAO.getAllDSDivisionNames(districtId, language, user);
         if (dsDivisionList != null) {
             dsDivisionId = districtList.keySet().iterator().next();
         }
@@ -161,8 +159,8 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
                 }
             }
         }
-        districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
-        dsDivisionList = dsDivisionDAO.getAllDSDivisionNames(districtId, user.getPrefLanguage(), user);
+        districtList = districtDAO.getDistrictNames(language, user);
+        dsDivisionList = dsDivisionDAO.getAllDSDivisionNames(districtId, language, user);
 
         return SUCCESS;
     }
@@ -260,7 +258,6 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
     }
 
     public String editAssignment() {
-        String language = user.getPrefLanguage();
         //put current assignment in to session for redirection purposes
         assignment = service.getAssignmentById(assignmentUKey, user);
         session.put(WebConstants.SESSION_UPDATED_ASSIGNMENT_REGISTRAR, assignment);
@@ -287,6 +284,12 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
         }
         districtName = districtDAO.getNameByPK(districtId, language);
         dsDivisionName = dsDivisionDAO.getNameByPK(dsDivisionId, language);
+        return SUCCESS;
+    }
+
+    public String deleteAssignment() {
+
+        service.deleteAssignment(assignmentUKey, user);
         return SUCCESS;
     }
 
@@ -353,7 +356,6 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
     //loads basic lists for separate types
 
     private void populateLists(int districtId, int dsDivisionId, int assignmentType) {
-        String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         if (user.getRole().getRoleId().equals(Role.ROLE_ADMIN)) {
             districtList = districtDAO.getAllDistrictNames(language, user);
             dsDivisionList = dsDivisionDAO.getAllDSDivisionNames(districtId, language, user);
@@ -381,7 +383,8 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
         logger.debug("Set session {}", map);
         this.session = map;
         user = (User) session.get(WebConstants.SESSION_USER_BEAN);
-        logger.debug("setting User: {}", user.getUserName());
+        language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
+        logger.debug("setting User: {} and UserLanguage : {}", user.getUserName(), language);
     }
 
     public Map getSession() {
@@ -649,6 +652,14 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
 
     public void setIndirect(boolean indirect) {
         this.indirect = indirect;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
     public String getDistrictName() {

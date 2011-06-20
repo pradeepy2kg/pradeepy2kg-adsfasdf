@@ -130,9 +130,9 @@
         <table id="registrars-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
             <thead>
             <tr class="table-title">
-                <th width="600px"><s:label value="%{getText('label.name')}"/></th>
-                <th width="230px"><s:label value="%{getText('registrar.address')}"/></th>
-                <th width="200px"><s:label value="%{getText('registrar.phone')}"/></th>
+                <th width="50%"><s:label value="%{getText('label.name')}"/></th>
+                <th width="35%"><s:label value="%{getText('registrar.address')}"/></th>
+                <th width="15%"><s:label value="%{getText('registrar.phone')}"/></th>
             </tr>
             </thead>
             <tbody>
