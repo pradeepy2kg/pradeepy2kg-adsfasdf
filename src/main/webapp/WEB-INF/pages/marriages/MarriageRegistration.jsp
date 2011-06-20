@@ -94,7 +94,7 @@
             <label>
                     <span class="font-8">විවාහ දිනය
                         <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-                        <br>in tamil<br>Date of Marriage</span>
+                        <br>திருமண திகதி<br>Date of Marriage</span>
             </label>
         </td>
         <td>

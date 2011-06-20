@@ -215,7 +215,7 @@
         <td>
             <label>
                 <span class="font-8">විවාහ දිනය
-                    <br>in tamil<br>Date of Marriage</span>
+                    <br>திருமண திகதி<br>Date of Marriage</span>
             </label>
         </td>
         <td colspan="2">
