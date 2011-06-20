@@ -164,12 +164,6 @@
         errormsg = "";
         return returnval;
     }
-
-    function deleteWarning() {
-        var ret = true;
-        ret = confirm(document.getElementById('warning').value)
-        return ret;
-    }
 </script>
 
 <div id="birth-register-approval">
@@ -365,7 +359,7 @@
                         </s:url>
                         <s:a href="%{deleteSelected}" title="%{getText('deleteToolTip.label')}"><img
                                 src="<s:url value='/images/delete.gif'/>" width="25" height="25"
-                                border="none" onclick="javascript:return deleteWarning()"/></s:a>
+                                border="none" onclick="javascript:return deleteWarning('warning')"/></s:a>
                     </s:if>
                 </td>
 
