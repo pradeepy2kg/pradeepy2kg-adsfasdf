@@ -63,7 +63,7 @@
                                         var location = data.locationName;
                                         var locationAddress = data.locationAddress;
                                         $("textarea#signature").html(officerSign);
-                                        $("label#placeSign").html(locationSign);
+                                        $("textarea#placeSign").html(locationSign);
                                         $("label#placeName").html(location);
                                         $("textarea#retAddress").html(locationAddress);
                                     });
@@ -86,7 +86,7 @@
                         var location = data.locationName;
                         var locationAddress = data.locationAddress;
                         $("textarea#signature").html(officerSign);
-                        $("label#placeSign").html(locationSign);
+                        $("textarea#placeSign").html(locationSign);
                         $("label#placeName").html(location);
                         $("textarea#retAddress").html(locationAddress);
                     });
@@ -226,16 +226,9 @@
         <td>
             <table border="1" style="width:50%;border:1px solid #000;border-collapse:collapse;float:right;">
                 <tr height="60px">
-                        <%--
-                                           <td>ලියාපදිංචි කිරීමේ අංකය<br>பதிவு இலக்கம்<br>Registration Number</td>
-                        --%>
-
                     <td width="100%">සහතික පත්‍රයේ අංකය<br>சான்றிதழ் இல<br>Certificate Number</td>
                 </tr>
                 <tr height="40px">
-                        <%--            <td align="center"><s:property value="%{#page.location}"/>
-                            <s:label name="register.bdfSerialNo" cssStyle="font-size:11pt;"/>
-                        </td>--%>
                     <td align="center"><s:label id="certificateId" name="bdId" cssStyle="font-size:11pt;"/></td>
                 </tr>
             </table>
@@ -367,7 +360,7 @@
         <td>උපන් ස්ථානය <br>பிறந்த இடம்<br>Place of birth
         </td>
         <td colspan="2">
-            <s:label name="placeOfBirth" value="%{#request.child.placeOfBirth}" cssStyle="font-size:14pt;"/>
+            <s:label name="placeOfBirth" value="%{#request.child.placeOfBirth}" cssStyle="font-size:11pt;"/>
             <div class="changes-done">
                 <s:if test="changedFields.get(22)">
                     **
@@ -375,7 +368,7 @@
             </div>
             <br>
             <s:label name="placeOfBirthEnglish" value="%{#request.child.placeOfBirthEnglish}"
-                     cssStyle="font-size:12pt;"/>
+                     cssStyle="font-size:10pt;"/>
             <div class="changes-done">
                 <s:if test="changedFields.get(23)">
                     **
@@ -423,7 +416,7 @@
         <td>උපන් ස්ථානය <br>பிறந்த இடம்<br>Place of birth
         </td>
         <td colspan="6">
-            <s:label name="placeOfBirth" value="%{#request.child.placeOfBirth}" cssStyle="font-size:14pt;"/><br>
+            <s:label name="placeOfBirth" value="%{#request.child.placeOfBirth}" cssStyle="font-size:11pt;"/><br>
             <s:label name="placeOfBirthEnglish" value="%{#request.child.placeOfBirthEnglish}"
                      cssStyle="font-size:12pt;"/>
         </td>
@@ -477,7 +470,7 @@
         தந்தையின் அடையாள எண்<br>
         Father's Identification No.
     </td>
-    <td align="center"><s:label name="" value="%{#request.parent.fatherNICorPIN}"/>
+    <td align="center"><s:label name="" value="%{#request.parent.fatherNICorPIN}" cssStyle="font-size:12pt;"/>
         <div class="changes-done">
             <s:if test="changedFields.get(11)">
                 **
@@ -486,8 +479,8 @@
     </td>
     <td colspan="2">පියාගේ ජන වර්ගය<br>தந்தையின் இனம்<br> Father's Ethnic Group</td>
     <td colspan="3">
-        <s:label name="" value="%{fatherRacePrint}" cssStyle="font-size:14pt;"/><br/>
-        <s:label name="" value="%{fatherRacePrintEn}" cssStyle="font-size:12pt;"/>
+        <s:label name="" value="%{fatherRacePrint}" cssStyle="font-size:11pt;"/><br/>
+        <s:label name="" value="%{fatherRacePrintEn}"/>
         <div class="changes-done">
             <s:if test="changedFields.get(16)">
                 **
@@ -519,7 +512,7 @@
         தாயின் அடையாள எண் <br>
         Mother's Identification No.
     </td>
-    <td align="center"><s:label name="" value="%{#request.parent.motherNICorPIN}"/>
+    <td align="center"><s:label name="" value="%{#request.parent.motherNICorPIN}" cssStyle="font-size:12pt;"/>
         <div class="changes-done">
             <s:if test="changedFields.get(27)">
                 **
@@ -529,8 +522,8 @@
     <td colspan="2">මවගේ ජන වර්ගය<br>தாயின் இனம்<br> Mother's Ethnic Group
     </td>
     <td colspan="3">
-        <s:label name="" value="%{motherRacePrint}" cssStyle="font-size:14pt;"/><br/>
-        <s:label name="" value="%{motherRacePrintEn}" cssStyle="font-size:12pt;"/>
+        <s:label name="" value="%{motherRacePrint}" cssStyle="font-size:11pt;"/><br/>
+        <s:label name="" value="%{motherRacePrintEn}"/>
         <div class="changes-done">
             <s:if test="changedFields.get(32)">
                 **
@@ -551,13 +544,13 @@
     <tr height="60px">
         <td>ලියාපදිංචි කළ දිනය<br>பதிவு செய்யப்பட்ட திகதி<br> Date of Registration</td>
         <td>
-            <s:label name="" value="%{#request.register.dateOfRegistrationForPrint}"/><br>
+            <s:label name="" value="%{#request.register.dateOfRegistrationForPrint}" cssStyle="font-size:12pt;"/><br>
             <s:label value="YYYY-MM-DD" cssStyle="font-size:8pt;"/>
         </td>
         <td>නිකුත් කළ දිනය<br>வழங்கிய திகதி<br> Date of Issue
         </td>
         <td>
-            <%= DateTimeUtils.getISO8601FormattedString(new Date()) %><br>
+            <label style="font-size:12pt;"><%= DateTimeUtils.getISO8601FormattedString(new Date()) %></label><br>
             <s:label value="YYYY-MM-DD" cssStyle="font-size:8pt;"/>
         </td>
     </tr>
@@ -594,7 +587,7 @@
 
 <div style="page-break-after:always;">
 </div>
-<hr style="border-style:dashed ; float:left;width:100% ;margin-bottom:30px;margin-top:30px;">
+<hr style="border-style:dashed ; float:left;width:100% ;margin-bottom:30px;margin-top:150px;">
 
 <table border="0" cellspacing="0" width="100%">
     <caption></caption>
@@ -605,22 +598,30 @@
     <col/>
     <tbody>
     <tr>
-        <td rowspan="7" width="200px" height="350px"></td>
-        <td colspan="3" width="600px" height="100px"
-            style="text-align:center;margin-left:auto;margin-right:auto;font-size:16pt">
-            <label>රාජ්‍ය සේවය පිණිසයි / அரச பணி / On State Service</label>
+        <td rowspan="7" width="10%" height="350px"></td>
+        <td colspan="3" width="80%" height="100px"
+            style="text-align:center;margin-left:auto;margin-right:auto;font-size:22pt">
+            <label>රාජ්‍ය සේවය පිණිසයි   &nbsp;&nbsp;அரச பணி   &nbsp;&nbsp;ON STATE SERVICE</label><br/>
+            <label style="font-size:11pt;">රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව  &nbsp;&nbsp;பதிவாளர் நாயகம் திணைக்களம்
+                &nbsp;&nbsp;REGISTRAR GENERAL'S DEPARTMENT</label>
         </td>
-        <td rowspan="7" width="200px"></td>
+        <td rowspan="7" width="10%"></td>
     </tr>
     <tr>
-        <td height="100px" width="30%">
+        <td></td>
+        <td width="10%">&nbsp;</td>
+        <td width="30%">
+            <s:label name="informant.informantName" cssStyle="width:600px;font-size:14pt;"/><br/>
+            <s:label name="informant.informantAddress" cssStyle="width:600px;font-size:14pt;"/>
+        </td>
+    </tr>
+    <tr>
+        <td height="50px" width="30%">
             <s:textarea id="retAddress" value="%{returnAddress}" disabled="true" rows="5"
-                        cssStyle="margin-top:50px;text-transform:none;width:100%;font-size:11pt;background:transparent;border:none;"/>
+                        cssStyle="margin-top:10px;text-transform:none;width:100%;font-size:14pt;background:transparent;border:none;"/>
         </td>
         <td width="10%">&nbsp;</td>
         <td width="30%">
-            <s:label name="informant.informantName" cssStyle="width:600px;font-size:12pt;"/><br/>
-            <s:label name="informant.informantAddress" cssStyle="width:600px;font-size:12pt;"/>
         </td>
     </tr>
     <tr>
