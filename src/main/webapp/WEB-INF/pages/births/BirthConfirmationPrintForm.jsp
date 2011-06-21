@@ -857,26 +857,31 @@
     <col/>
     <tbody>
     <tr>
-        <td rowspan="7" width="200px" height="350px"></td>
-        <td colspan="3" width="600px" height="100px"
-            style="text-align:center;margin-left:auto;margin-right:auto;font-size:16pt">
-            <label>රාජ්‍ය සේවය පිණිසයි / அரச பணி
-                On State Service</label></td>
-        <td rowspan="7" width="200px"></td>
-    </tr>
-    <tr>
-        <td height="100px" width="30%">
-            <s:textarea id="retAddress" value="%{returnAddress}" disabled="true" rows="5"
-                        cssStyle="margin-top:50px;text-transform:none;width:100%;font-size:11pt;background:transparent;border:none;" />
+        <td rowspan="7" width="10%" height="350px"></td>
+        <td colspan="3" width="80%" height="100px"
+            style="text-align:center;margin-left:auto;margin-right:auto;font-size:22pt">
+            <label>රාජ්‍ය සේවය පිණිසයි   &nbsp;&nbsp;அரச பணி   &nbsp;&nbsp;ON STATE SERVICE</label><br/>
+            <label style="font-size:11pt;">රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව  &nbsp;&nbsp;பதிவாளர் நாயகம் திணைக்களம்
+                &nbsp;&nbsp;REGISTRAR GENERAL'S DEPARTMENT</label>
         </td>
+        <td rowspan="7" width="10%"></td>
+    </tr>
+    <tr><td colspan="5" height="30px;"></td></tr>
+    <tr>
+        <td></td>
         <td width="10%">&nbsp;</td>
         <td width="30%">
-            <s:label name="informant.informantName" cssStyle="width:600px;font-size:12pt;"/>,<br/>
-            <s:label name="informant.informantAddress" cssStyle="width:600px;font-size:12pt;"/>
+            <s:label name="informant.informantName" cssStyle="width:600px;font-size:14pt;"/>,<br/>
+            <s:label name="informant.informantAddress" cssStyle="width:600px;font-size:14pt;"/>
         </td>
     </tr>
     <tr>
-        <td height="100px" valign="top"></td>
+        <td height="50px" width="30%">
+            <s:textarea id="retAddress" value="%{returnAddress}" disabled="true" rows="5"
+                        cssStyle="margin-top:10px;text-transform:none;width:100%;font-size:14pt;background:transparent;border:none;" />
+        </td>
+        <td width="10%">&nbsp;</td>
+        <td width="30%"></td>
     </tr>
     <tr>
         <td colspan="2"><p></p></td>
@@ -893,7 +898,7 @@
     </tbody>
 </table>
 
-<hr style="border-style:dashed ; float:left;width:100% ;margin-top:15px;"/>
+<hr style="border-style:dashed ; float:left;width:100% ;margin-top:10px;"/>
 <br>
 
 <div class="form-submit" style="float:right;margin-top:15px;">
