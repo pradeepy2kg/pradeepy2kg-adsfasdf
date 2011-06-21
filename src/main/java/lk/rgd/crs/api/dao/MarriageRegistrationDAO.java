@@ -7,8 +7,8 @@ import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.domain.MarriageRegister;
 
 import java.util.Date;
-import java.util.List;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -372,4 +372,12 @@ public interface MarriageRegistrationDAO {
      */
     public List<MarriageRegister> getActiveMarriageLicense(String groomPIN, String bridePIN);
 
+    /**
+     * Returns all Marriage Registrations registered by the specified Registrar(by registrar pin or nic)
+     *
+     * @param registrarPin the pin of registrar
+     * @param registrarNic the nic of registrar
+     * @return list of matching marriage registrations
+     */
+    public List<MarriageRegister> getMarriageRegistersByRegistrarPinOrNic(long registrarPin, String registrarNic);
 }

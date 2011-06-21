@@ -495,4 +495,15 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
         q.setParameter("state", MarriageRegister.State.NOTICE_APPROVED);
         return q.getResultList();
     }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<MarriageRegister> getMarriageRegistersByRegistrarPinOrNic(long registrarPin, String registrarNic) {
+        Query q = em.createNamedQuery("get.mr.by.registrarPinOrNic");
+        q.setParameter("registrarPin", registrarPin);
+        q.setParameter("registrarNic", registrarNic);
+        return q.getResultList();
+    }
 }
