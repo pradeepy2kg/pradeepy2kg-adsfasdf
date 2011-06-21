@@ -30,6 +30,14 @@ public interface RegistrarManagementService {
     public void updateRegistrar(Registrar registrar, User user);
 
     /**
+     * Delete the specified Registrar
+     *
+     * @param registrar
+     * @param user      the user performing the action
+     */
+    public void deleteRegistrar(Registrar registrar, User user);
+
+    /**
      * Add a new Registrar assignment to the system
      *
      * @param assignment the assignment being added
@@ -46,12 +54,12 @@ public interface RegistrarManagementService {
     public void updateAssignment(Assignment assignment, User user);
 
     /**
-     * Delete the assignment of a Registrar
+     * Delete the specified assignment of a Registrar
      *
-     * @param assignmentId
-     * @param user       the user performing the action
+     * @param assignmentUKey
+     * @param user         the user performing the action
      */
-    public void deleteAssignment(long assignmentId, User user);
+    public void deleteAssignment(long assignmentUKey, User user);
 
     /**
      * Inactivate an assignment of a registrar

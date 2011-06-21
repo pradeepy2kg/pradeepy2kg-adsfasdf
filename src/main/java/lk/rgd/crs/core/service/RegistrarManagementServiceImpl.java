@@ -8,8 +8,7 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.IdentificationNumberUtil;
 import lk.rgd.common.util.PinAndNicUtils;
 import lk.rgd.crs.CRSRuntimeException;
-import lk.rgd.crs.api.dao.AssignmentDAO;
-import lk.rgd.crs.api.dao.RegistrarDAO;
+import lk.rgd.crs.api.dao.*;
 import lk.rgd.crs.api.domain.Assignment;
 import lk.rgd.crs.api.domain.Registrar;
 import lk.rgd.crs.api.service.RegistrarManagementService;
@@ -40,14 +39,22 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
     private PopulationRegistry ecivil;
     private DSDivisionDAO dsDivisionDAO;
     private final PINGenerator pinGenerator;
+    private final BirthDeclarationDAO birthDeclarationDAO;
+    private final DeathRegisterDAO deathRegisterDAO;
+    private final MarriageRegistrationDAO marriageRegistrationDAO;
 
     public RegistrarManagementServiceImpl(RegistrarDAO registrarDao, AssignmentDAO assignmentDao,
-        PopulationRegistry ecivil, DSDivisionDAO dsDivisionDAO, PINGenerator pinGenerator) {
+        PopulationRegistry ecivil, DSDivisionDAO dsDivisionDAO, PINGenerator pinGenerator,
+        BirthDeclarationDAO birthDeclarationDAO, DeathRegisterDAO deathRegisterDAO,
+        MarriageRegistrationDAO marriageRegistrationDAO) {
         this.registrarDao = registrarDao;
         this.assignmentDao = assignmentDao;
         this.ecivil = ecivil;
         this.dsDivisionDAO = dsDivisionDAO;
         this.pinGenerator = pinGenerator;
+        this.birthDeclarationDAO = birthDeclarationDAO;
+        this.deathRegisterDAO = deathRegisterDAO;
+        this.marriageRegistrationDAO = marriageRegistrationDAO;
     }
 
     /**
@@ -89,6 +96,12 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
         logger.debug("Request to update Registrar : {} by : {}", shortName, user.getUserId());
 
         registrarDao.updateRegistrar(registrar, user);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void deleteRegistrar(Registrar registrar, User user) {
+        // TODO
+        throw new UnsupportedOperationException();
     }
 
     private void validatePinAndProcessRegistrarToPRS(Registrar registrar, User user) {
@@ -211,15 +224,46 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void deleteAssignment(long assignmentId, User user) {
+    public void deleteAssignment(long assignmentUKey, User user) {
         if (!user.isAuthorized(Permission.REGISTRAR_DELETE)) {
             handleException("User : " + user.getUserId() + " is not authorized to delete assignments",
                 ErrorCodes.PERMISSION_DENIED);
         }
-        logger.debug("attempt to delete assignment with unique key : {}", assignmentId);
+        logger.debug("Attempt to delete assignment with unique key : {} by user : {}", assignmentUKey, user.getUserId());
 
-        Assignment assignment = assignmentDao.getById(assignmentId);
+        Assignment assignment = assignmentDao.getById(assignmentUKey);
+
+        if (isAssignmentEligibleToDelete(assignment)) {
+            assignment.setState(Assignment.State.DELETED);
+            assignment.getLifeCycleInfo().setActive(false);
+            assignmentDao.updateAssignment(assignment, user);
+            logger.debug("Deleted assignment with assignmentUKey : {} by user : {}", assignmentUKey, user.getUserId());
+        }
+
+        handleException("Assignment : " + assignmentUKey + " is not allowed to delete since it have mapping registrations",
+            ErrorCodes.INVALID_STATE_FOR_REMOVAL);
+    }
+
+    private boolean isAssignmentEligibleToDelete(Assignment assignment) {
         Assignment.Type type = assignment.getType();
+        final long registrarPin = assignment.getRegistrar().getPin();
+        final String registrarNic = assignment.getRegistrar().getNic();
+
+        List<Object> list = new ArrayList<Object>();
+        switch (type) {
+            case BIRTH:
+                list.addAll(birthDeclarationDAO.getBirthRecordsByRegistrarPinOrNic(registrarPin, registrarNic));
+                break;
+            case DEATH:
+                list.addAll(deathRegisterDAO.getDeathRecordsByRegistrarPinOrNic(registrarPin, registrarNic));
+                break;
+            case GENERAL_MARRIAGE:
+            case KANDYAN_MARRIAGE:
+            case MUSLIM_MARRIAGE:
+                list.addAll(marriageRegistrationDAO.getMarriageRegistersByRegistrarPinOrNic(registrarPin, registrarNic));
+                break;
+        }
+        return list.size() == 0;
     }
 
     /**
