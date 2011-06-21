@@ -390,8 +390,6 @@
         <put-attribute name="title" value="assignment.add.title"/>
     </definition>
 
-
-
     <definition name="epr.eventManagement" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/management/EventsViewer.jsp"/>
         <put-attribute name="title" value="event.management.title"/>
