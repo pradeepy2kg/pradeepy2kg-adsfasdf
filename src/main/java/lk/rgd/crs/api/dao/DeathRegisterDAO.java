@@ -3,7 +3,6 @@ package lk.rgd.crs.api.dao;
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.domain.BDDivision;
-import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.domain.DeathRegister;
 
 import java.util.Date;
@@ -206,7 +205,17 @@ public interface DeathRegisterDAO {
      * @param endDate
      * @return
      */
-    public List<DeathRegister> getDeathRegisterByDivisionAndStatusAndDate(DSDivision deathDivision, DeathRegister.State status, Date startDate, Date endDate);
+    public List<DeathRegister> getDeathRegisterByDivisionAndStatusAndDate(DSDivision deathDivision,
+        DeathRegister.State status, Date startDate, Date endDate);
+
+    /**
+     * Returns all Death Registrations registered by the specified Registrar(by registrar pin or nic)
+     *
+     * @param registrarPin the pin of registrar
+     * @param registrarNic the nic of registrar
+     * @return list of matching death registrations
+     */
+    public List<DeathRegister> getDeathRecordsByRegistrarPinOrNic(long registrarPin, String registrarNic);
 }
 
 
