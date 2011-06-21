@@ -1,11 +1,12 @@
 package lk.rgd.crs.core.dao;
 
+import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.User;
-import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.core.dao.BaseDAO;
 import lk.rgd.crs.api.dao.BirthDeclarationDAO;
-import lk.rgd.crs.api.domain.*;
+import lk.rgd.crs.api.domain.BDDivision;
+import lk.rgd.crs.api.domain.BirthDeclaration;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -410,6 +411,17 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
         Query q = em.createNamedQuery("get.bdf.by.mother");
         q.setParameter("mother", motherIdentification);
         q.setParameter("type", BirthDeclaration.BirthType.LIVE);
+        return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<BirthDeclaration> getBirthRecordsByRegistrarPinOrNic(long registrarPin, String registrarNic) {
+        Query q = em.createNamedQuery("get.bdf.by.registrarPinOrNic");
+        q.setParameter("registrarPin", registrarPin);
+        q.setParameter("registrarNic", registrarNic);
         return q.getResultList();
     }
 }

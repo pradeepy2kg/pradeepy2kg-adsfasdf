@@ -1,8 +1,8 @@
 package lk.rgd.crs.api.dao;
 
+import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.User;
-import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.BirthDeclaration;
 
@@ -350,5 +350,14 @@ public interface BirthDeclarationDAO {
      * @return list of birth records
      */
     public List<BirthDeclaration> getListOfLiveBirthsForGivenMother(String motherIdentification);
+
+    /**
+     * Returns all Birth Declarations registered by the specified Registrar(by registrar pin or nic)
+     *
+     * @param registrarPin the pin of registrar
+     * @param registrarNic the nic of registrar
+     * @return list of matching birth declarations
+     */
+    public List<BirthDeclaration> getBirthRecordsByRegistrarPinOrNic(long registrarPin, String registrarNic);
 }
 
