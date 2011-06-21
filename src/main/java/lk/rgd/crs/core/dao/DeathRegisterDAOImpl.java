@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -246,10 +245,20 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
     public List<DeathRegister> getDeathRegisterByDivisionAndStatusAndDate(DSDivision deathDivision, DeathRegister.State status, Date startDate, Date endDate) {
         Query q = em.createNamedQuery("get.by.division.register.date.state");
         q.setParameter("deathDivision", deathDivision);
-        q.setParameter("status", status);
+        q.setParameter("state", status);
         q.setParameter("startDate", startDate);
         q.setParameter("endDate", endDate);
         return q.getResultList();
     }
 
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<DeathRegister> getDeathRecordsByRegistrarPinOrNic(long registrarPin, String registrarNic) {
+        Query q = em.createNamedQuery("get.dr.by.registrarPinOrNic");
+        q.setParameter("registrarPin", registrarPin);
+        q.setParameter("registrarNic", registrarNic);
+        return q.getResultList();
+    }
 }
