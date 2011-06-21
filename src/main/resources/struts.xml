@@ -1071,17 +1071,17 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
+        <!--TODO-->
+        <action name="eprAssignmentDelete" class="lk.rgd.crs.web.action.RegistrarManagementAction"
+                method="deleteAssignment">
+            <result type="tiles" name="success">epr.registrarsView</result>
+        </action>
+
         <action name="eprAssignmentAddDirect" class="lk.rgd.crs.web.action.RegistrarManagementAction"
                 method="assignmentAddPageLoad">
             <result type="tiles" name="success">epr.addAssignment</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
-
-        <!--        <action name="eprSearchRegistrarByPin" class="lk.rgd.crs.web.action.RegistrarsManagementActionn"
-                method="searchRegistrarByPin">
-            <result type="tiles" name="success">epr.addAssignment</result>
-            <result type="tiles" name="error">epr.error</result>
-        </action>-->
 
         <action name="eprFindRegistrar" class="lk.rgd.crs.web.action.RegistrarManagementAction"
                 method="findRegistrar">

@@ -1,12 +1,14 @@
 package lk.rgd.crs.web.action;
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.ErrorCodes;
 import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.domain.BaseLifeCycleInfo;
 import lk.rgd.common.api.domain.Role;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.WebUtils;
+import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.dao.MRDivisionDAO;
 import lk.rgd.crs.api.domain.Assignment;
@@ -19,6 +21,7 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.security.spec.EllipticCurve;
 import java.util.*;
 
 /**
@@ -288,8 +291,13 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
     }
 
     public String deleteAssignment() {
-
-        service.deleteAssignment(assignmentUKey, user);
+        try {
+            service.deleteAssignment(assignmentUKey, user);
+        } catch (CRSRuntimeException e) {
+            if (e.getErrorCode() == ErrorCodes.INVALID_STATE_FOR_REMOVAL) {
+                addActionError("Selected assignment can not be deleted since it have mapping registrations");
+            }
+        }
         return SUCCESS;
     }
 
