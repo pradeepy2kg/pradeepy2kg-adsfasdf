@@ -111,7 +111,9 @@ import java.io.Serializable;
         " WHERE bdf.register.bdfSerialNo =:serial AND bdf.register.birthDivision.dsDivision.dsDivisionUKey =:dsId " +
         "AND bdf.lifeCycleInfo.activeRecord IS TRUE "),
     @NamedQuery(name = "get.bdf.by.mother", query = "SELECT bdf FROM BirthDeclaration bdf WHERE " +
-        "(bdf.parent.motherNICorPIN =:mother AND bdf.register.birthType =:type AND bdf.lifeCycleInfo.activeRecord IS TRUE) ")
+        "(bdf.parent.motherNICorPIN =:mother AND bdf.register.birthType =:type AND bdf.lifeCycleInfo.activeRecord IS TRUE) "),
+    @NamedQuery(name = "get.bdf.by.registrarPinOrNic", query = "SELECT bdf FROM BirthDeclaration bdf " +
+        "WHERE bdf.notifyingAuthority.notifyingAuthorityPIN = :registrarPin OR bdf.notifyingAuthority.notifyingAuthorityPIN = :registrarNic")
 })
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class BirthDeclaration implements Serializable, Cloneable {
