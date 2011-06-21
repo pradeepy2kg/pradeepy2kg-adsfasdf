@@ -210,7 +210,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
         User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         logger.debug("Logged User's UserName : {}", user.getUserId());
-        logger.debug("Logged User's Role : {}", user.getRole());
+        logger.debug("Logged User's Role : {}", user.getRole().getName());
         role = user.getRole().getRoleId();
 
         statistics = statisticsManager.getStatisticsForUser(user);
