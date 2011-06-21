@@ -195,6 +195,9 @@
         <constructor-arg ref="dsDivisionDAOImpl"/>
         <constructor-arg ref="ecivilService"/>
         <constructor-arg ref="pinGeneratorService"/>
+        <constructor-arg ref="birthDeclarationDAOImpl"/>
+        <constructor-arg ref="deathRegisterDAOImpl"/>
+        <constructor-arg ref="marriageRegistrationDAOImpl"/>
     </bean>
 
     <!--Service API beans - these allows access at a 'service' level, suitable for consumption by
