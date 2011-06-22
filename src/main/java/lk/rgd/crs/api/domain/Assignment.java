@@ -33,7 +33,7 @@ import java.util.Date;
         " WHERE a.lifeCycleInfo.active = :active AND a.type = :type " +
         " AND a.marriageDivision.dsDivision.dsDivisionUKey = :dsDivisionUKey"),
     @NamedQuery(name = "get.by.registrarUKey", query = "SELECT a FROM Assignment a " +
-        "WHERE a.registrar.registrarUKey = :registrarUKey"),
+        "WHERE a.registrar.registrarUKey = :registrarUKey AND a.state <> 2"),
     @NamedQuery(name = "get.assignments.by.type.and.division", query = "SELECT a FROM Assignment a " +
         "WHERE a.type = :type AND " +
         "((a.birthDivision IS NOT NULL AND a.birthDivision.bdDivisionUKey = :divisionUKey) OR " +
