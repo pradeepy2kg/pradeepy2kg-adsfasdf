@@ -357,7 +357,9 @@ function validateForm() {
             <th width="17%"><s:label value="%{getText('label.endDate')}"/></th>
             <th width="9%"><s:label value="%{getText('label.active')}"/></th>
             <th width="5%"></th>
-            <th width="5%"></th>
+            <s:if test="user.role.roleId == 'ADMIN'">
+                <th width="5%"></th>
+            </s:if>
         </tr>
         </thead>
         <s:if test="assignmentList.size>0">
@@ -398,14 +400,16 @@ function validateForm() {
                             <img src="<s:url value='/images/edit.png'/>" width="25" height="25"
                                  border="none"/></s:a>
                     </td>
-                    <td align="center">
-                        <s:url action="eprAssignmentDelete.do" id="deleteSelected">
-                            <s:param name="assignmentUKey" value="assignmentUKey"/>
-                        </s:url>
-                        <s:a href="%{deleteSelected}" title="%{getText('deleteToolTip.label')}"><img
-                                src="<s:url value='/images/delete.gif'/>" width="25" height="25"
-                                border="none" onclick="javascript:return deleteWarning('warning')"/></s:a>
-                    </td>
+                    <s:if test="user.role.roleId == 'ADMIN'">
+                        <td align="center">
+                            <s:url action="eprAssignmentDelete.do" id="deleteSelected">
+                                <s:param name="assignmentUKey" value="assignmentUKey"/>
+                            </s:url>
+                            <s:a href="%{deleteSelected}" title="%{getText('deleteToolTip.label')}"><img
+                                    src="<s:url value='/images/delete.gif'/>" width="25" height="25"
+                                    border="none" onclick="javascript:return deleteWarning('warning')"/></s:a>
+                        </td>
+                    </s:if>
                 </tr>
             </s:iterator>
             </tbody>
