@@ -375,9 +375,11 @@ public interface MarriageRegistrationDAO {
     /**
      * Returns all Marriage Registrations registered by the specified Registrar(by registrar pin or nic)
      *
-     * @param registrarPin the pin of registrar
-     * @param registrarNic the nic of registrar
+     * @param registrarPin   the pin of registrar
+     * @param registrarNic   the nic of registrar
+     * @param mrDivisionUKey the marriage division unique key
      * @return list of matching marriage registrations
      */
-    public List<MarriageRegister> getMarriageRegistersByRegistrarPinOrNic(long registrarPin, String registrarNic);
+    public List<MarriageRegister> getMarriagesByRegistrarPinOrNicAndDivision(String registrarPin, String registrarNic,
+        int mrDivisionUKey);
 }

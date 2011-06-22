@@ -500,8 +500,10 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.SUPPORTS)
-    public List<MarriageRegister> getMarriageRegistersByRegistrarPinOrNic(long registrarPin, String registrarNic) {
-        Query q = em.createNamedQuery("get.mr.by.registrarPinOrNic");
+    public List<MarriageRegister> getMarriagesByRegistrarPinOrNicAndDivision(String registrarPin, String registrarNic,
+        int mrDivisionUKey) {
+        Query q = em.createNamedQuery("get.mr.by.division.registrarPinOrNic");
+        q.setParameter("mrDivision", mrDivisionUKey);
         q.setParameter("registrarPin", registrarPin);
         q.setParameter("registrarNic", registrarNic);
         return q.getResultList();

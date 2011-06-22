@@ -173,8 +173,9 @@ import java.util.Date;
         "(mr.female.identificationNumberFemale =:bridePIN OR mr.male.identificationNumberMale =:groomPIN) AND mr.state =:state " +
         "AND mr.lifeCycleInfo.activeRecord IS TRUE "),
 
-    @NamedQuery(name = "get.mr.by.registrarPinOrNic", query = "SELECT mr FROM MarriageRegister mr " +
-        "WHERE mr.registrarOrMinisterPIN = :registrarPin OR mr.registrarOrMinisterPIN = :registrarNic")
+    @NamedQuery(name = "get.mr.by.division.registrarPinOrNic", query = "SELECT mr FROM MarriageRegister mr " +
+        "WHERE mr.mrDivision.mrDivisionUKey = :mrDivision " +
+        "AND (mr.registrarOrMinisterPIN = :registrarPin OR mr.registrarOrMinisterPIN = :registrarNic)")
 })
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class MarriageRegister implements Serializable, Cloneable {
