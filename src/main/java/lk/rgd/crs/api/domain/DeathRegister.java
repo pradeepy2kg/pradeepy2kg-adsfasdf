@@ -65,8 +65,9 @@ import java.io.Serializable;
         "(dr.death.deathDivision.bdDivisionUKey = :dsDivisionId AND dr.lifeCycleInfo.activeRecord =:active " +
         "AND dr.status =:state   AND (dr.death.dateOfRegistration BETWEEN :startDate AND :endDate))"),
 
-    @NamedQuery(name = "get.dr.by.registrarPinOrNic", query = "SELECT dr FROM DeathRegister dr " +
-        "WHERE dr.notifyingAuthority.notifyingAuthorityPIN = :registrarPin OR dr.notifyingAuthority.notifyingAuthorityPIN = :registrarNic")
+    @NamedQuery(name = "get.dr.by.division.registrarPinOrNic", query = "SELECT dr FROM DeathRegister dr " +
+        "WHERE dr.death.deathDivision.bdDivisionUKey = :deathDivision " +
+        "AND (dr.notifyingAuthority.notifyingAuthorityPIN = :registrarPin OR dr.notifyingAuthority.notifyingAuthorityPIN = :registrarNic)")
 })
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class DeathRegister implements Serializable, Cloneable {

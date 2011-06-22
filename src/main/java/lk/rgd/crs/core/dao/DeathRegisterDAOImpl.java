@@ -255,8 +255,10 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.SUPPORTS)
-    public List<DeathRegister> getDeathRecordsByRegistrarPinOrNic(long registrarPin, String registrarNic) {
-        Query q = em.createNamedQuery("get.dr.by.registrarPinOrNic");
+    public List<DeathRegister> getDeathsByRegistrarPinOrNicAndDivision(String registrarPin, String registrarNic,
+        int deathDivisionUKey) {
+        Query q = em.createNamedQuery("get.dr.by.division.registrarPinOrNic");
+        q.setParameter("deathDivision", deathDivisionUKey);
         q.setParameter("registrarPin", registrarPin);
         q.setParameter("registrarNic", registrarNic);
         return q.getResultList();

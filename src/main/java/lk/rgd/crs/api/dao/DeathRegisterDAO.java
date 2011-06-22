@@ -211,11 +211,13 @@ public interface DeathRegisterDAO {
     /**
      * Returns all Death Registrations registered by the specified Registrar(by registrar pin or nic)
      *
-     * @param registrarPin the pin of registrar
-     * @param registrarNic the nic of registrar
+     * @param registrarPin      the pin of registrar
+     * @param registrarNic      the nic of registrar
+     * @param deathDivisionUKey the death division unique key
      * @return list of matching death registrations
      */
-    public List<DeathRegister> getDeathRecordsByRegistrarPinOrNic(long registrarPin, String registrarNic);
+    public List<DeathRegister> getDeathsByRegistrarPinOrNicAndDivision(String registrarPin, String registrarNic,
+        int deathDivisionUKey);
 }
 
 
