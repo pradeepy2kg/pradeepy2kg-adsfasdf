@@ -73,6 +73,7 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
         validatePinAndProcessRegistrarToPRS(registrar, user);
 
         final String shortName = registrar.getShortName();
+        registrar.setState(Registrar.State.ACTIVE);
         logger.debug("Request to add a new Registrar : {} by : {}", shortName, user.getUserId());
         registrarDao.addRegistrar(registrar, user);
     }
@@ -197,9 +198,8 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
             }
         }
 
-        logger.debug("Request to add new Assignment for registrar : {}",
-            assignment.getRegistrar().getShortName());
-
+        logger.debug("Request to add new Assignment for registrar : {}", assignment.getRegistrar().getShortName());
+        assignment.setState(Assignment.State.ACTIVE);
         assignmentDao.addAssignment(assignment, user);
     }
 
@@ -214,8 +214,7 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
                 ErrorCodes.PERMISSION_DENIED);
         }
 
-        logger.debug("Request to update Assignment for registrar : {}",
-            assignment.getRegistrar().getShortName());
+        logger.debug("Request to update Assignment for registrar : {}", assignment.getRegistrar().getShortName());
 
         assignmentDao.updateAssignment(assignment, user);
     }
@@ -238,29 +237,39 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
             assignment.getLifeCycleInfo().setActive(false);
             assignmentDao.updateAssignment(assignment, user);
             logger.debug("Deleted assignment with assignmentUKey : {} by user : {}", assignmentUKey, user.getUserId());
+        } else {
+            handleException("Assignment : " + assignmentUKey + " is not allowed to delete since it have mapping registrations",
+                ErrorCodes.INVALID_STATE_FOR_REMOVAL);
         }
-
-        handleException("Assignment : " + assignmentUKey + " is not allowed to delete since it have mapping registrations",
-            ErrorCodes.INVALID_STATE_FOR_REMOVAL);
     }
 
+    /**
+     * Checks whether a given assignment is eligible to delete
+     *
+     * @param assignment the assignment to be deleted
+     * @return if eligible return true
+     */
     private boolean isAssignmentEligibleToDelete(Assignment assignment) {
         Assignment.Type type = assignment.getType();
-        final long registrarPin = assignment.getRegistrar().getPin();
-        final String registrarNic = assignment.getRegistrar().getNic();
+        final String pin = Long.toString(assignment.getRegistrar().getPin());
+        final String nic = assignment.getRegistrar().getNic();
+        int divisionUKey = 0;
 
         List<Object> list = new ArrayList<Object>();
         switch (type) {
             case BIRTH:
-                list.addAll(birthDeclarationDAO.getBirthRecordsByRegistrarPinOrNic(registrarPin, registrarNic));
+                divisionUKey = assignment.getBirthDivision().getBdDivisionUKey();
+                list.addAll(birthDeclarationDAO.getBirthsByRegistrarPinOrNicAndDivision(pin, nic, divisionUKey));
                 break;
             case DEATH:
-                list.addAll(deathRegisterDAO.getDeathRecordsByRegistrarPinOrNic(registrarPin, registrarNic));
+                divisionUKey = assignment.getDeathDivision().getBdDivisionUKey();
+                list.addAll(deathRegisterDAO.getDeathsByRegistrarPinOrNicAndDivision(pin, nic, divisionUKey));
                 break;
             case GENERAL_MARRIAGE:
             case KANDYAN_MARRIAGE:
             case MUSLIM_MARRIAGE:
-                list.addAll(marriageRegistrationDAO.getMarriageRegistersByRegistrarPinOrNic(registrarPin, registrarNic));
+                divisionUKey = assignment.getMarriageDivision().getMrDivisionUKey();
+                list.addAll(marriageRegistrationDAO.getMarriagesByRegistrarPinOrNicAndDivision(pin, nic, divisionUKey));
                 break;
         }
         return list.size() == 0;
@@ -278,9 +287,9 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
         }
 
         Assignment assignment = assignmentDao.getById(assignmentUKey);
-        logger.debug("Request to inactivate Assignment for registrar : {}",
-            assignment.getRegistrar().getShortName());
+        logger.debug("Request to inactivate Assignment for registrar : {}", assignment.getRegistrar().getShortName());
 
+        assignment.setState(Assignment.State.INACTIVE);
         assignment.getLifeCycleInfo().setActive(false);
         assignmentDao.updateAssignment(assignment, user);
     }
