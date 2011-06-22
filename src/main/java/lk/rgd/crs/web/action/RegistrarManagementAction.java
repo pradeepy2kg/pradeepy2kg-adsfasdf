@@ -293,12 +293,26 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
     public String deleteAssignment() {
         try {
             service.deleteAssignment(assignmentUKey, user);
+            addActionMessage("Assignment deleted successfully");
         } catch (CRSRuntimeException e) {
             if (e.getErrorCode() == ErrorCodes.INVALID_STATE_FOR_REMOVAL) {
                 addActionError("Selected assignment can not be deleted since it have mapping registrations");
             }
         }
+        loadRegistrarPage();
         return SUCCESS;
+    }
+
+    private void loadRegistrarPage() {
+        logger.debug("loading registrar view page by user : {}", user.getUserId());
+        session.remove(WebConstants.SESSION_UPDATED_ASSIGNMENT_REGISTRAR);
+
+        Registrar existing = (Registrar) session.get(WebConstants.SESSION_EXSISTING_REGISTRAR);
+        if (existing != null && existing.getRegistrarUKey() > 0) {
+            registrar = existing;
+            assignmentList = service.getAssignments(registrar.getRegistrarUKey(), user);
+            logger.debug("registrar  : {} with {} assignment loaded", registrar.getShortName(), assignmentList.size());
+        }
     }
 
     public String updateRegistrar() {

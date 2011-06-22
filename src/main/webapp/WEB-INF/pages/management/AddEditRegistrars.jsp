@@ -15,210 +15,210 @@
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 
 <script>
-    $(document).ready(function() {
-        //Hide (Collapse) the toggle containers on load
-        $(".toggle_container").hide();
+$(document).ready(function() {
+    //Hide (Collapse) the toggle containers on load
+    $(".toggle_container").hide();
 
-        //Switch the "Open" and "Close" state per click then slide up/down (depending on open/close state)
-        $("h2.trigger").click(function() {
-            $(this).toggleClass("active").next().slideToggle("slow");
-        });
+    //Switch the "Open" and "Close" state per click then slide up/down (depending on open/close state)
+    $("h2.trigger").click(function() {
+        $(this).toggleClass("active").next().slideToggle("slow");
+    });
+});
+
+$(document).ready(function() {
+    //hide the all of the element with class msg_body
+    $(".msg_body").hide();
+    //toggle the componenet with class msg_body
+    $(".msg_head").click(function() {
+        $(this).next(".msg_body").slideToggle(600);
+    });
+});
+
+$(function() {
+    $("#dateOfBirthDatePicker").datepicker({
+        changeYear: true,
+        yearRange: '1960:2020',
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2040-12-31'
+    });
+});
+
+$(function() {
+    $("#dateOfAppoinmentDatePicker").datepicker({
+        changeYear: true,
+        yearRange: '1960:2020',
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2040-12-31'
+    });
+});
+
+$(function() {
+    $("#dateOfPermenentDatePicker").datepicker({
+        changeYear: true,
+        yearRange: '1960:2020',
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2040-12-31'
+    });
+});
+
+$(function() {
+    $("#dateOfTerminationDatePicker").datepicker({
+        changeYear: true,
+        yearRange: '1960:2020',
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2040-12-31'
+    });
+});
+
+
+$(document).ready(function() {
+    $('#registrars-list-table').dataTable({
+        "bPaginate": true,
+        "bLengthChange": false,
+        "bFilter": true,
+        "bSort": true,
+        "bInfo": false,
+        "bAutoWidth": false,
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers"
+    });
+});
+
+// mode 1 = passing District, will return DS list
+// mode 2 = passing DsDivision, will return BD list
+// any other = passing district, will return DS list and the BD list for the first DS
+$(function() {
+    $('select#districtId').bind('change', function(evt1) {
+        var id = $("select#districtId").attr("value");
+        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:3},
+                function(data) {
+                    var options1 = '';
+                    var ds = data.dsDivisionList;
+                    for (var i = 0; i < ds.length; i++) {
+                        options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                    }
+                    $("select#dsDivisionId").html(options1);
+
+                    var options2 = '';
+                    var bd = data.bdDivisionList;
+                    for (var j = 0; j < bd.length; j++) {
+                        options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
+                    }
+                    $("select#birthDivisionId").html(options2);
+                });
     });
 
-    $(document).ready(function() {
-        //hide the all of the element with class msg_body
-        $(".msg_body").hide();
-        //toggle the componenet with class msg_body
-        $(".msg_head").click(function() {
-            $(this).next(".msg_body").slideToggle(600);
-        });
+    $('select#dsDivisionId').bind('change', function(evt2) {
+        var id = $("select#dsDivisionId").attr("value");
+        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:2},
+                function(data) {
+                    var options = '';
+                    var bd = data.bdDivisionList;
+                    for (var i = 0; i < bd.length; i++) {
+                        options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
+                    }
+                    $("select#birthDivisionId").html(options);
+                });
     });
+});
 
-    $(function() {
-        $("#dateOfBirthDatePicker").datepicker({
-            changeYear: true,
-            yearRange: '1960:2020',
-            dateFormat:'yy-mm-dd',
-            startDate:'2000-01-01',
-            endDate:'2040-12-31'
-        });
-    });
+var nameOfficialLang;
+var nameEnglish;
+var pin;
+var nic;
+var gender;
+var dob;
+var address;
+var phone;
+var email;
+var lang;
+var errormsg = "";
 
-    $(function() {
-        $("#dateOfAppoinmentDatePicker").datepicker({
-            changeYear: true,
-            yearRange: '1960:2020',
-            dateFormat:'yy-mm-dd',
-            startDate:'2000-01-01',
-            endDate:'2040-12-31'
-        });
-    });
+function disableFields(mode) {
+    nameOfficialLang.disabled = mode;
+    nameEnglish.disabled = mode;
+    pin.disabled = mode;
+    nic.disabled = mode;
+    gender.disabled = mode;
+    dob.disabled = mode;
+    address.disabled = mode;
+    phone.disabled = mode;
+    email.disabled = mode;
+    lang.disabled = mode;
+    document.getElementById('saveUpdate').disabled = mode;
 
-    $(function() {
-        $("#dateOfPermenentDatePicker").datepicker({
-            changeYear: true,
-            yearRange: '1960:2020',
-            dateFormat:'yy-mm-dd',
-            startDate:'2000-01-01',
-            endDate:'2040-12-31'
-        });
-    });
+}
 
-    $(function() {
-        $("#dateOfTerminationDatePicker").datepicker({
-            changeYear: true,
-            yearRange: '1960:2020',
-            dateFormat:'yy-mm-dd',
-            startDate:'2000-01-01',
-            endDate:'2040-12-31'
-        });
-    });
+function initPage() {
+    nameOfficialLang = document.getElementById('registrarNameInOfficelaLang');
+    nameEnglish = document.getElementById('registrarNameInEnglish');
+    pin = document.getElementById('registrarPin');
+    nic = document.getElementById('registrarNIC');
+    gender = document.getElementById('registrarGender');
+    dob = document.getElementById('dateOfBirthDatePicker');
+    address = document.getElementById('registrarAddress');
+    phone = document.getElementById('registrarPhone');
+    email = document.getElementById('registrarEmail');
+    lang = document.getElementById('prefLanguage');
+    disableFields(true)
+}
 
+function validateForm() {
+    var check = document.getElementById('skipValidationId');
+    var returnval = true;
 
-    $(document).ready(function() {
-        $('#registrars-list-table').dataTable({
-            "bPaginate": true,
-            "bLengthChange": false,
-            "bFilter": true,
-            "bSort": true,
-            "bInfo": false,
-            "bAutoWidth": false,
-            "bJQueryUI": true,
-            "sPaginationType": "full_numbers"
-        });
-    });
+    isMandatoryFieldsEmpty(nameOfficialLang, document.getElementById('nameOfficialError').value, "cannotNull")
+    isMandatoryFieldsEmpty(nameEnglish, document.getElementById('nameEnglishError').value, "cannotNull")
 
-    // mode 1 = passing District, will return DS list
-    // mode 2 = passing DsDivision, will return BD list
-    // any other = passing district, will return DS list and the BD list for the first DS
-    $(function() {
-        $('select#districtId').bind('change', function(evt1) {
-            var id = $("select#districtId").attr("value");
-            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:3},
-                    function(data) {
-                        var options1 = '';
-                        var ds = data.dsDivisionList;
-                        for (var i = 0; i < ds.length; i++) {
-                            options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
-                        }
-                        $("select#dsDivisionId").html(options1);
-
-                        var options2 = '';
-                        var bd = data.bdDivisionList;
-                        for (var j = 0; j < bd.length; j++) {
-                            options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
-                        }
-                        $("select#birthDivisionId").html(options2);
-                    });
-        });
-
-        $('select#dsDivisionId').bind('change', function(evt2) {
-            var id = $("select#dsDivisionId").attr("value");
-            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:2},
-                    function(data) {
-                        var options = '';
-                        var bd = data.bdDivisionList;
-                        for (var i = 0; i < bd.length; i++) {
-                            options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
-                        }
-                        $("select#birthDivisionId").html(options);
-                    });
-        });
-    });
-
-    var nameOfficialLang;
-    var nameEnglish;
-    var pin;
-    var nic;
-    var gender;
-    var dob;
-    var address;
-    var phone;
-    var email;
-    var lang;
-    var errormsg = "";
-
-    function disableFields(mode) {
-        nameOfficialLang.disabled = mode;
-        nameEnglish.disabled = mode;
-        pin.disabled = mode;
-        nic.disabled = mode;
-        gender.disabled = mode;
-        dob.disabled = mode;
-        address.disabled = mode;
-        phone.disabled = mode;
-        email.disabled = mode;
-        lang.disabled = mode;
-        document.getElementById('saveUpdate').disabled = mode;
-
+    if (!check.checked) {
+        if (isFieldEmpty(pin)) {
+            isEmpty(pin, document.getElementById('pin').value, "empty")
+        }
     }
 
-    function initPage() {
-        nameOfficialLang = document.getElementById('registrarNameInOfficelaLang');
-        nameEnglish = document.getElementById('registrarNameInEnglish');
-        pin = document.getElementById('registrarPin');
-        nic = document.getElementById('registrarNIC');
-        gender = document.getElementById('registrarGender');
-        dob = document.getElementById('dateOfBirthDatePicker');
-        address = document.getElementById('registrarAddress');
-        phone = document.getElementById('registrarPhone');
-        email = document.getElementById('registrarEmail');
-        lang = document.getElementById('prefLanguage');
-        disableFields(true)
+    isMandatoryFieldsEmpty(nic, document.getElementById('nic').value, "cannotNull")
+    isMandatoryFieldsEmpty(dob, document.getElementById('dob').value, "cannotNull")
+    isMandatoryFieldsEmpty(address, document.getElementById('addressError').value, "cannotNull")
+
+    if (!check.checked) {
+        if (isFieldEmpty(phone)) {
+            isEmpty(phone, document.getElementById('phone').value, 'empty')
+        }
+        if (isFieldEmpty(email)) {
+            isEmpty(email, document.getElementById('email').value, 'empty')
+        }
+    }
+    if (!isFieldEmpty(pin) && isInteger(pin)) {
+        //validate PIN or NIC
+        validatePINorNIC(pin, "pin", "invalideData")
+    }
+    if (!isFieldEmpty(nic)) {
+        validatePINorNIC(nic, "nic", "invalideData")
+    }
+    if (!isFieldEmpty(phone)) {
+        //validate phone number
+        validatePhoneNo(phone, "phone", "invalideData")
+    }
+    if (!isFieldEmpty(email)) {
+        //validate email
+        validateEmail(email, "email", "invalideData")
+    }
+    //validate date of birth
+    if (!isFieldEmpty(dob)) {
+        isDate(dob.value, "Invalid ", "invalideData")
     }
 
-    function validateForm() {
-        var check = document.getElementById('skipValidationId');
-        var returnval = true;
-
-        isMandatoryFieldsEmpty(nameOfficialLang, document.getElementById('nameOfficialError').value, "cannotNull")
-        isMandatoryFieldsEmpty(nameEnglish, document.getElementById('nameEnglishError').value, "cannotNull")
-
-        if (!check.checked) {
-            if (isFieldEmpty(pin)) {
-                isEmpty(pin, document.getElementById('pin').value, "empty")
-            }
-        }
-
-        isMandatoryFieldsEmpty(nic, document.getElementById('nic').value, "cannotNull")
-        isMandatoryFieldsEmpty(dob, document.getElementById('dob').value, "cannotNull")
-        isMandatoryFieldsEmpty(address, document.getElementById('addressError').value, "cannotNull")
-
-        if (!check.checked) {
-            if (isFieldEmpty(phone)) {
-                isEmpty(phone, document.getElementById('phone').value, 'empty')
-            }
-            if (isFieldEmpty(email)) {
-                isEmpty(email, document.getElementById('email').value, 'empty')
-            }
-        }
-        if (!isFieldEmpty(pin) && isInteger(pin)) {
-            //validate PIN or NIC
-            validatePINorNIC(pin, "pin", "invalideData")
-        }
-        if (!isFieldEmpty(nic)) {
-            validatePINorNIC(nic, "nic", "invalideData")
-        }
-        if (!isFieldEmpty(phone)) {
-            //validate phone number
-            validatePhoneNo(phone, "phone", "invalideData")
-        }
-        if (!isFieldEmpty(email)) {
-            //validate email
-            validateEmail(email, "email", "invalideData")
-        }
-        //validate date of birth
-        if (!isFieldEmpty(dob)) {
-            isDate(dob.value, "Invalid ", "invalideData")
-        }
-
-        if (errormsg != "") {
-            alert(errormsg);
-            returnval = false;
-        }
-        errormsg = "";
-        return returnval;
+    if (errormsg != "") {
+        alert(errormsg);
+        returnval = false;
     }
+    errormsg = "";
+    return returnval;
+}
 </script>
 
 <style type="text/css">
@@ -294,7 +294,8 @@
             </tr>
             <tr>
                 <td align="left">
-                    <s:property value="%{getText('registrar.dateofbirth')}"/> <s:label value="*" cssStyle="color:red;font-size:14pt;"/>
+                    <s:property value="%{getText('registrar.dateofbirth')}"/> <s:label value="*"
+                                                                                       cssStyle="color:red;font-size:14pt;"/>
                 </td>
                 <td align="left"><s:textfield name="registrar.dateOfBirth" id="dateOfBirthDatePicker"/></td>
             </tr>
@@ -346,10 +347,11 @@
 <%--current assignments--%>
 <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
     <legend align="right"><s:property value="%{getText('registrar.current.assignments')}"/></legend>
+    <s:actionerror cssStyle="color:red;"/><s:actionmessage cssStyle="color:blue;"/>
     <table id="registrars-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
         <thead>
         <tr class="table-title">
-            <th width="31%"><s:label value="%{getText('label.bdDivision')}"/></th>
+            <th><s:label value="%{getText('label.bdDivision')}"/></th>
             <th width="17%"><s:label value="%{getText('label.type')}"/></th>
             <th width="16%"><s:label value="%{getText('label.startDate')}"/></th>
             <th width="17%"><s:label value="%{getText('label.endDate')}"/></th>
@@ -398,7 +400,7 @@
                     </td>
                     <td align="center">
                         <s:url action="eprAssignmentDelete.do" id="deleteSelected">
-                             <s:param name="assignmentUKey" value="assignmentUKey"/>
+                            <s:param name="assignmentUKey" value="assignmentUKey"/>
                         </s:url>
                         <s:a href="%{deleteSelected}" title="%{getText('deleteToolTip.label')}"><img
                                 src="<s:url value='/images/delete.gif'/>" width="25" height="25"
