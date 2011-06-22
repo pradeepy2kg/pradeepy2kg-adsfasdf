@@ -354,10 +354,12 @@ public interface BirthDeclarationDAO {
     /**
      * Returns all Birth Declarations registered by the specified Registrar(by registrar pin or nic)
      *
-     * @param registrarPin the pin of registrar
-     * @param registrarNic the nic of registrar
+     * @param registrarPin   the pin of registrar
+     * @param registrarNic   the nic of registrar
+     * @param bdDivisionUKey the birth division unique key
      * @return list of matching birth declarations
      */
-    public List<BirthDeclaration> getBirthRecordsByRegistrarPinOrNic(long registrarPin, String registrarNic);
+    public List<BirthDeclaration> getBirthsByRegistrarPinOrNicAndDivision(String registrarPin, String registrarNic,
+        int bdDivisionUKey);
 }
 
