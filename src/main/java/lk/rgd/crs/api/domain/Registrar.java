@@ -28,6 +28,10 @@ import java.util.Set;
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Registrar implements Serializable {
 
+    public enum State {
+        INACTIVE, ACTIVE, DELETED
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long registrarUKey;
@@ -59,6 +63,13 @@ public class Registrar implements Serializable {
     @Column(nullable = true)
     @Temporal(value = TemporalType.DATE)
     private Date dateOfBirth;
+
+    /**
+     * The state of the registrar
+     */
+    @Enumerated
+    @Column(nullable = true)
+    private State state;
 
     /**
      * Date of appointment
@@ -173,6 +184,14 @@ public class Registrar implements Serializable {
 
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
     }
 
     public String getFullNameInOfficialLanguage() {
