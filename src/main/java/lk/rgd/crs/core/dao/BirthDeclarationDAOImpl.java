@@ -418,8 +418,10 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.SUPPORTS)
-    public List<BirthDeclaration> getBirthRecordsByRegistrarPinOrNic(long registrarPin, String registrarNic) {
-        Query q = em.createNamedQuery("get.bdf.by.registrarPinOrNic");
+    public List<BirthDeclaration> getBirthsByRegistrarPinOrNicAndDivision(String registrarPin, String registrarNic,
+        int bdDivisionUKey) {
+        Query q = em.createNamedQuery("get.bdf.by.division.registrarPinOrNic");
+        q.setParameter("birthDivision", bdDivisionUKey);
         q.setParameter("registrarPin", registrarPin);
         q.setParameter("registrarNic", registrarNic);
         return q.getResultList();
