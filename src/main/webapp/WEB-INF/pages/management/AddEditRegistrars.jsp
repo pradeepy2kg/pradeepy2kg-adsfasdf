@@ -309,7 +309,7 @@ function validateForm() {
             </tr>
             <tr>
                 <td align="left"><s:property value="%{getText('registrar.phone')}"/></td>
-                <td align="left"><s:textfield id="registrarPhone" name="registrar.phoneNo"/></td>
+                <td align="left"><s:textfield id="registrarPhone" name="registrar.phoneNo" maxLength="10"/></td>
             </tr>
             <tr>
                 <td align="left"><s:property value="%{getText('registrar.email')}"/></td>
