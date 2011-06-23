@@ -21,7 +21,7 @@ import java.util.Set;
 @NamedQueries({
     @NamedQuery(name = "get.registrars.by.pin", query = "SELECT registrar FROM Registrar registrar WHERE registrar.pin = :pin "),
     @NamedQuery(name = "get.registrar.by.name.or.part.of.name", query = "SELECT registrar FROM Registrar registrar WHERE " +
-        "(registrar.fullNameInEnglishLanguage LIKE :name OR registrar.fullNameInOfficialLanguage LIKE :name)")
+        "(registrar.fullNameInEnglishLanguage LIKE :name OR registrar.fullNameInOfficialLanguage LIKE :name) AND registrar.state <> 2")
 })
 @Entity
 @Table(name = "REGISTRAR", schema = "CRS")
