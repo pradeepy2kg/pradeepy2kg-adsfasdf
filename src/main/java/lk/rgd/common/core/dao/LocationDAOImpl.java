@@ -39,6 +39,7 @@ public class LocationDAOImpl extends BaseDAO implements LocationDAO, Preloadable
         location.getLifeCycleInfo().setLastUpdatedUser(admin);
         location.getLifeCycleInfo().setLastUpdatedTimestamp(new Date());
         em.persist(location);
+        updateCache(location);
     }
 
     /**
