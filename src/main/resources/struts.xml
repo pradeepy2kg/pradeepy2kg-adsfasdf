@@ -1051,6 +1051,11 @@
             <result type="tiles" name="error">epr.addRegistrar</result>
         </action>
 
+        <action name="eprRegistrarDelete" class="lk.rgd.crs.web.action.RegistrarManagementAction"
+                method="deleteRegistrar">
+            <result type="tiles" name="success">epr.findRegistrar</result>
+        </action>
+
         <action name="eprAssignmentAdd" class="lk.rgd.crs.web.action.RegistrarManagementAction"
                 method="assignmentAdd">
             <result type="redirectAction" name="success">
@@ -1071,7 +1076,6 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
-        <!--TODO-->
         <action name="eprAssignmentDelete" class="lk.rgd.crs.web.action.RegistrarManagementAction"
                 method="deleteAssignment">
             <result type="tiles" name="success">epr.registrarsView</result>

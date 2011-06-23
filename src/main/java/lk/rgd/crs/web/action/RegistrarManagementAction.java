@@ -21,7 +21,6 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.security.spec.EllipticCurve;
 import java.util.*;
 
 /**
@@ -295,8 +294,13 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
             service.deleteAssignment(assignmentUKey, user);
             addActionMessage("Assignment deleted successfully");
         } catch (CRSRuntimeException e) {
-            if (e.getErrorCode() == ErrorCodes.INVALID_STATE_FOR_REMOVAL) {
-                addActionError("Selected assignment can not be deleted since it have mapping registrations");
+            switch (e.getErrorCode()) {
+                case ErrorCodes.PERMISSION_DENIED:
+                    addActionError(getText("message.noPermission"));
+                    break;
+                case ErrorCodes.INVALID_STATE_FOR_REMOVAL:
+                    addActionError("Selected assignment can not be deleted since it have mapping registrations");
+                    break;
             }
         }
         loadRegistrarPage();
@@ -319,18 +323,54 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
         Registrar existing = (Registrar) session.get(WebConstants.SESSION_EXSISTING_REGISTRAR);
 
         logger.debug("attempting to update registrar : {}", registrar.getFullNameInEnglishLanguage());
-        //setting previous life cycle info
+        // setting previous registrar info to the edited registrar
         registrar.setLifeCycleInfo(existing.getLifeCycleInfo());
-        //setting current assignment
         registrar.setAssignments(existing.getAssignments());
-        //setting uK
         registrar.setRegistrarUKey(existing.getRegistrarUKey());
+        registrar.setState(existing.getState());
 
         service.updateRegistrar(registrar, user);
         session.put(WebConstants.SESSION_EXSISTING_REGISTRAR, registrar);
         return SUCCESS;
     }
 
+    public String deleteRegistrar() {
+        try {
+            service.deleteRegistrar(registrarUkey, user);
+            addActionMessage("Registrar Deleted Successfully");
+        } catch (CRSRuntimeException e) {
+            switch (e.getErrorCode()) {
+                case ErrorCodes.PERMISSION_DENIED:
+                    addActionError(getText("message.noPermission"));
+                    break;
+                case ErrorCodes.INVALID_STATE_FOR_REMOVAL:
+                    addActionError("Selected registrar can not be deleted since he/she has mapping registrations");
+                    break;
+            }
+        }
+        loadFindRegistrarResults();
+
+        return SUCCESS;
+    }
+
+    private void loadFindRegistrarResults() {
+        if (registrarPin > 0) {
+            logger.debug("attempt to search a registrar by pin : {}", registrarPin);
+            //search by registrar pin number
+            Registrar existing = service.getRegistrarByPin(registrarPin, user);
+            registrarList = new ArrayList<Registrar>();
+            if (existing != null) {
+                registrarList.add(existing);
+            }
+        } else if (registrarName != null) {
+            logger.debug("attempt to search a registrar by name : {}", registrarName);
+            //search by name or part of the name
+            registrarList = service.getRegistrarByNameOrPartOfTheName(registrarName, user);
+        }
+        if (registrarList != null && registrarList.size() == 0) {
+            addActionMessage(getText("no.registrars.found"));
+        }
+    }
 
     public String assignmentAddPageLoad() {
         session.remove(WebConstants.SESSION_EXSISTING_REGISTRAR);
@@ -345,23 +385,8 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
 
     public String findRegistrar() {
         removeExistingRegistrars();
-
         if (page > 0) {
-            logger.debug("attempt to search a registrar");
-            if (registrarPin > 0) {
-                //search by registrar pin number
-                Registrar existingRegistrar = service.getRegistrarByPin(registrarPin, user);
-                registrarList = new ArrayList<Registrar>();
-                if (existingRegistrar != null) {
-                    registrarList.add(existingRegistrar);
-                }
-            } else if (registrarName != null) {
-                //search by name or part of the name
-                registrarList = service.getRegistrarByNameOrPartOfTheName(registrarName, user);
-            }
-            if (registrarList != null && registrarList.size() == 0) {
-                addActionMessage(getText("no.registrars.found"));
-            }
+            loadFindRegistrarResults();
             return SUCCESS;
         }
         logger.debug("attempt to load find registrar home page");
@@ -376,7 +401,6 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
     }
 
     //loads basic lists for separate types
-
     private void populateLists(int districtId, int dsDivisionId, int assignmentType) {
         if (user.getRole().getRoleId().equals(Role.ROLE_ADMIN)) {
             districtList = districtDAO.getAllDistrictNames(language, user);
