@@ -70,6 +70,7 @@ public class Menu {
         adminLink.put("eprRegistrarsView.do", new Link(null, "/ecivil/management/", "eprRegistrarsView.do", Permission.REGISTRAR_MANAGEMENT));
         adminLink.put("eprRegistrarsFilter.do", new Link(null, "/ecivil/management/", "eprRegistrarsFilter.do", Permission.REGISTRAR_MANAGEMENT));
         adminLink.put("eprRegistrarsAdd.do", new Link("registrar.add", "/ecivil/management/", "eprRegistrarsAdd.do", Permission.REGISTRAR_MANAGEMENT));
+        adminLink.put("eprRegistrarDelete.do", new Link("search.registrar", "/ecivil/management/", "eprRegistrarDelete.do", Permission.REGISTRAR_DELETE));
         adminLink.put("eprAssignmentAddDirect.do", new Link(null, "/ecivil/management/", "eprAssignmentAddDirect.do", Permission.REGISTRAR_MANAGEMENT));
         adminLink.put("eprAssignmentAdd.do", new Link(null, "/ecivil/management/", "eprAssignmentAdd.do", Permission.REGISTRAR_MANAGEMENT));
         adminLink.put("eprAssignmentDelete.do", new Link(null, "/ecivil/management/", "eprAssignmentDelete.do", Permission.REGISTRAR_DELETE));
