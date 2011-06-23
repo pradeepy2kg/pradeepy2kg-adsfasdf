@@ -32,10 +32,10 @@ public interface RegistrarManagementService {
     /**
      * Delete the specified Registrar
      *
-     * @param registrar
-     * @param user      the user performing the action
+     * @param registrarUKey the registrar unique key
+     * @param user          the user performing the action
      */
-    public void deleteRegistrar(Registrar registrar, User user);
+    public void deleteRegistrar(long registrarUKey, User user);
 
     /**
      * Add a new Registrar assignment to the system
@@ -57,7 +57,7 @@ public interface RegistrarManagementService {
      * Delete the specified assignment of a Registrar
      *
      * @param assignmentUKey
-     * @param user         the user performing the action
+     * @param user           the user performing the action
      */
     public void deleteAssignment(long assignmentUKey, User user);
 

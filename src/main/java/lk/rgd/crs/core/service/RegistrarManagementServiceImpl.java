@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Manage Registrars and Registration Assignments
@@ -82,6 +83,41 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
+    public void deleteRegistrar(long registrarUKey, User user) {
+        logger.debug("Attempt to delete registrar with unique key : {} by user : {}", registrarUKey, user.getUserId());
+        if (!user.isAuthorized(Permission.REGISTRAR_DELETE)) {
+            handleException("User : " + user.getUserId() + " is not authorized to delete registrars",
+                ErrorCodes.PERMISSION_DENIED);
+        }
+
+        Registrar registrar = registrarDao.getById(registrarUKey);
+
+        if (registrar.getAssignments() == null || registrar.getAssignments().isEmpty() || isRegistrarEligibleToDelete(registrar)) {
+            registrar.setState(Registrar.State.DELETED);
+            registrar.getLifeCycleInfo().setActive(false);
+            registrarDao.updateRegistrar(registrar, user);
+            logger.debug("Deleted registrar with registrarUKey : {} by user : {}", registrarUKey, user.getUserId());
+        } else {
+            handleException("Registrar with registrarUKey : " + registrarUKey + " is not allowed to delete since " +
+                "he/she has mapping registrations", ErrorCodes.INVALID_STATE_FOR_REMOVAL);
+        }
+    }
+
+    private boolean isRegistrarEligibleToDelete(Registrar registrar) {
+        Set<Assignment> assignmentSet = registrar.getAssignments();
+        List<Object> list = new ArrayList<Object>();
+        for (Assignment assignment : assignmentSet) {
+            if (!isAssignmentEligibleToDelete(assignment)) {
+                return false;
+            }
+        }
+        return list.size() == 0;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
     public void updateRegistrar(Registrar registrar, User user) {
 
         if (!user.isAuthorized(Permission.REGISTRAR_MANAGEMENT)) {
@@ -97,12 +133,6 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
         logger.debug("Request to update Registrar : {} by : {}", shortName, user.getUserId());
 
         registrarDao.updateRegistrar(registrar, user);
-    }
-
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void deleteRegistrar(Registrar registrar, User user) {
-        // TODO
-        throw new UnsupportedOperationException();
     }
 
     private void validatePinAndProcessRegistrarToPRS(Registrar registrar, User user) {
@@ -224,11 +254,11 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void deleteAssignment(long assignmentUKey, User user) {
+        logger.debug("Attempt to delete assignment with unique key : {} by user : {}", assignmentUKey, user.getUserId());
         if (!user.isAuthorized(Permission.REGISTRAR_DELETE)) {
             handleException("User : " + user.getUserId() + " is not authorized to delete assignments",
                 ErrorCodes.PERMISSION_DENIED);
         }
-        logger.debug("Attempt to delete assignment with unique key : {} by user : {}", assignmentUKey, user.getUserId());
 
         Assignment assignment = assignmentDao.getById(assignmentUKey);
 
@@ -238,8 +268,8 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
             assignmentDao.updateAssignment(assignment, user);
             logger.debug("Deleted assignment with assignmentUKey : {} by user : {}", assignmentUKey, user.getUserId());
         } else {
-            handleException("Assignment : " + assignmentUKey + " is not allowed to delete since it have mapping registrations",
-                ErrorCodes.INVALID_STATE_FOR_REMOVAL);
+            handleException("Assignment : " + assignmentUKey +
+                " is not allowed to delete since it have mapping registrations", ErrorCodes.INVALID_STATE_FOR_REMOVAL);
         }
     }
 
@@ -308,6 +338,7 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
         Registrar registrar = registrarDao.getById(registrarUKey);
         logger.debug("Request to inactivate Registrar : {}", registrar.getShortName());
 
+        registrar.setState(Registrar.State.INACTIVE);
         registrar.getLifeCycleInfo().setActive(false);
         registrarDao.updateRegistrar(registrar, user);
     }
