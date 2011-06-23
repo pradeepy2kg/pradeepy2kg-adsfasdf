@@ -62,7 +62,8 @@
         return true;
     }
 
-    function initPage(){}
+    function initPage() {
+    }
 </script>
 <fieldset style="margin-bottom:0px;margin-top:5px;border:none;">
     <s:form method="post" action="eprFindRegistrar.do" onsubmit="javascript:return validatePage()">
@@ -86,7 +87,7 @@
                         </td>
                         <td align="left">
                             <s:textfield name="registrarPin" id="registrarPin" value="" maxLength="12"
-                                    onkeypress="return isNumberKey(event)"/>
+                                         onkeypress="return isNumberKey(event)"/>
                         </td>
                     </tr>
                     </tbody>
@@ -133,15 +134,18 @@
                 <th width="50%"><s:label value="%{getText('label.name')}"/></th>
                 <th width="35%"><s:label value="%{getText('registrar.address')}"/></th>
                 <th width="15%"><s:label value="%{getText('registrar.phone')}"/></th>
+                <s:if test="user.role.roleId == 'ADMIN'">
+                    <th width="5%"></th>
+                </s:if>
             </tr>
             </thead>
             <tbody>
             <s:iterator status="registrar" value="registrarList" id="registrarList">
                 <tr>
-                    <s:url id="registrar" action="eprRegistrarsView.do" namespace="/management">
-                        <s:param name="registrarUkey" value="registrarUKey"/>
-                    </s:url>
                     <td>
+                        <s:url id="registrar" action="eprRegistrarsView.do" namespace="/management">
+                            <s:param name="registrarUkey" value="registrarUKey"/>
+                        </s:url>
                         <s:a href="%{registrar}"><s:label value="%{fullNameInEnglishLanguage}"/> </s:a>
                     </td>
                     <td>
@@ -150,6 +154,18 @@
                     <td>
                         <s:label value="%{phoneNo}"/>
                     </td>
+                    <s:if test="user.role.roleId == 'ADMIN'">
+                        <td>
+                            <s:url id="deleteSelected" action="eprRegistrarDelete.do" namespace="/management">
+                                <s:param name="registrarUkey" value="registrarUKey"/>
+                                <s:param name="registrarName" value="registrarName"/>
+                                <s:param name="registrarPin" value="registrarPin"/>
+                            </s:url>
+                            <s:a href="%{deleteSelected}" title="%{getText('deleteToolTip.label')}"><img
+                                    src="<s:url value='/images/delete.gif'/>" width="25" height="25"
+                                    border="none" onclick="javascript:return deleteWarning('warning')"/></s:a>
+                        </td>
+                    </s:if>
                 </tr>
             </s:iterator>
             </tbody>
@@ -159,4 +175,5 @@
 <s:hidden id="msg_oneMechanism" value="%{getText('search.use.one.mechanism')}"/>
 <s:hidden id="no.data.entered" value="%{getText('no.data')}"/>
 <s:hidden id="filed_pin" value="%{getText('label.tab.search.by.registrar.pin')}"/>
-<s:hidden id="err_invalide_input_type" value="%{getText('invalide.data')}"/> 
+<s:hidden id="err_invalide_input_type" value="%{getText('invalide.data')}"/>
+<s:hidden id="warning" value="Do you really want to delete this Registrar ?"/>
