@@ -464,7 +464,9 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 logger.debug("Size of the loaded Location List is :{}", locationNameList.size());
                 if (setNull) {
                     location = new Location();
-                    location.setLocationCode(dsDivision.getDivisionId());
+                    String locationCode = Integer.toString(dsDivision.getDistrict().getDistrictId()) +
+                        AppConstants.DASH + Integer.toString(dsDivision.getDivisionId());
+                    location.setLocationCode(locationCode);
                     location.setEnLocationName(dsDivision.getEnDivisionName());
                     location.setSiLocationName(dsDivision.getSiDivisionName());
                     location.setTaLocationName(dsDivision.getTaDivisionName());
@@ -656,10 +658,11 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 }
                 break;
             case 6:
-                Location checkLocation = locationDAO.getLocationByCode(location.getLocationCode());
-                if (checkLocation != null) {
-                    addFieldError("duplicateIdNumberError", "Location Code Already Used. Please check again");
-                    logger.debug("Duplicate Location code number is : {} : duplicated", checkLocation.getLocationCode());
+                List<Location> checkLocations = locationDAO.getLocationByAnyName(location.getSiLocationName(),
+                    location.getEnLocationName(), location.getTaLocationName());
+                if (checkLocations.size() > 0) {
+                    addFieldError("duplicateIdNumberError", "Office names already used. Please check again");
+                    logger.debug("Location name is duplicated");
                     checkDuplicate++;
                 }
                 if (checkDuplicate == 0) {
