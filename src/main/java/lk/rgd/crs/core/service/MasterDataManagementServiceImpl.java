@@ -303,6 +303,9 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void addLocation(Location location, User user) {
+        if (isEmptyString(location.getLocationCode())) {
+            throw new CRSRuntimeException("Location code is empty", ErrorCodes.INVALID_DATA);
+        }
         if (isEmptyString(location.getEnLocationName()) ||
             isEmptyString(location.getSiLocationName()) ||
             isEmptyString(location.getTaLocationName())) {
