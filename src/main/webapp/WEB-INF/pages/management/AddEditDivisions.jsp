@@ -104,9 +104,11 @@
             errormsg = errormsg + "Please Enter The  Id of " + pageName + " \n";
         }
         else {
-            var reg = /^([0-9]*)$/;
-            if (reg.test(domObject.value.trim()) == false) {
-                errormsg = errormsg + pageName + " Id Is Invalid \n";
+            if (pageType != 6) {
+                var reg = /^([0-9]*)$/;
+                if (reg.test(domObject.value.trim()) == false) {
+                    errormsg = errormsg + pageName + " Id Is Invalid \n";
+                }
             }
         }
         domObject = document.getElementById("enName");
@@ -508,8 +510,8 @@
                         <s:if test="pageType==3">Registration Division Id</s:if>
                         <s:if test="pageType==4">Marriage Registration Division Id</s:if>
                         <s:if test="pageType==5">Court Id</s:if>
-                        <s:if test="pageType==6">Location Id</s:if> <s:label value="*"
-                                                                             cssStyle="color:red;font-size:14pt;"/>
+                        <s:if test="pageType==6">Location Code</s:if> <s:label value="*"
+                                                                               cssStyle="color:red;font-size:14pt;"/>
                     </td>
                     <td>
                         <s:if test="pageType==1"><s:textfield name="district.districtId" id="id"
@@ -523,7 +525,6 @@
                         <s:if test="pageType==5"><s:textfield name="court.courtId" id="id"
                                                               onkeypress="return isNumberKey(event)"/></s:if>
                         <s:if test="pageType==6"><s:textfield name="location.locationCode" id="id"
-                                                              onkeypress="return isNumberKey(event)"
                                                               readonly="true"/></s:if>
                     </td>
                 </tr>
@@ -555,8 +556,7 @@
                     <s:if test="pageType==3"><s:textfield name="bdDivision.enDivisionName" id="enName"/></s:if>
                     <s:if test="pageType==4"><s:textfield name="mrDivision.enDivisionName" id="enName"/></s:if>
                     <s:if test="pageType==5"><s:textfield name="court.enCourtName" id="enName"/></s:if>
-                    <s:if test="pageType==6"><s:textfield name="location.enLocationName" id="enName"
-                                                          readonly="true"/></s:if>
+                    <s:if test="pageType==6"><s:textfield name="location.enLocationName" id="enName"/></s:if>
                     <s:if test="pageType==7"><s:textfield name="gnDivision.enGNDivisionName" id="enName"
                                                           value=""/></s:if>
                 </td>
@@ -569,8 +569,7 @@
                     <s:if test="pageType==3"><s:textfield name="bdDivision.siDivisionName" id="siName"/></s:if>
                     <s:if test="pageType==4"><s:textfield name="mrDivision.siDivisionName" id="siName"/></s:if>
                     <s:if test="pageType==5"><s:textfield name="court.siCourtName" id="siName"/></s:if>
-                    <s:if test="pageType==6"><s:textfield name="location.siLocationName" id="siName"
-                                                          readonly="true"/></s:if>
+                    <s:if test="pageType==6"><s:textfield name="location.siLocationName" id="siName"/></s:if>
                     <s:if test="pageType==7"><s:textfield name="gnDivision.siGNDivisionName" id="siName"
                                                           value=""/></s:if>
                 </td>
@@ -583,8 +582,7 @@
                     <s:if test="pageType==3"><s:textfield name="bdDivision.taDivisionName" id="taName"/></s:if>
                     <s:if test="pageType==4"><s:textfield name="mrDivision.taDivisionName" id="taName"/></s:if>
                     <s:if test="pageType==5"><s:textfield name="court.taCourtName" id="taName"/></s:if>
-                    <s:if test="pageType==6"><s:textfield name="location.taLocationName" id="taName"
-                                                          readonly="true"/></s:if>
+                    <s:if test="pageType==6"><s:textfield name="location.taLocationName" id="taName"/></s:if>
                     <s:if test="pageType==7"><s:textfield name="gnDivision.taGNDivisionName" id="taName"
                                                           value=""/></s:if>
                 </td>
