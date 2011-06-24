@@ -743,7 +743,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 District district = districtDAO.getDistrict(userDistrictId);
                 usersList = service.getUsersByRoleAndAssignedBDDistrict(roleDAO.getRole(selectedRole), district);
                 selectedRole = selectedRole + " AND " + district.getEnDistrictName();
-            } else if (!selectedRole.equals("ALL") && nameOfUser.length() != 0 && userDistrictId == 0) {
+            } else if (!selectedRole.equals("ALL") && nameOfUser.length() != 0) {
                 List<User> tempRole = service.getUsersByRole(selectedRole);
                 List<User> tempName = service.getUsersByIDMatch(nameOfUser);
                 usersList = new ArrayList<User>();
