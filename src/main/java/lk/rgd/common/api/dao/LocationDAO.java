@@ -69,7 +69,18 @@ public interface LocationDAO {
      * @param locationCode
      * @return
      */
-    public Location getLocationByCode(int locationCode);
+    public Location getLocationByCode(String locationCode);
+
+    /**
+     * Return locations which have matching location name in sinhala, english or tamil, to ensure locations have unique
+     * names
+     *
+     * @param siName the location name in sinhala
+     * @param enName the location name in english
+     * @param taName the location name in tamil
+     * @return
+     */
+    public List<Location> getLocationByAnyName(String siName, String enName, String taName);
 
     /**
      * Return the location that have given location code and DSDivision ID

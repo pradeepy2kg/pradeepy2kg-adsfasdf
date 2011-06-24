@@ -99,7 +99,7 @@ public class LocationDAOImpl extends BaseDAO implements LocationDAO, Preloadable
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
-    public Location getLocationByCode(int locationCode) {
+    public Location getLocationByCode(String locationCode) {
         Query q = em.createNamedQuery("get.location.by.code");
         q.setParameter("locationCode", locationCode);
         try {
@@ -107,6 +107,15 @@ public class LocationDAOImpl extends BaseDAO implements LocationDAO, Preloadable
         } catch (NoResultException e) {
             return null;
         }
+    }
+
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<Location> getLocationByAnyName(String siName, String enName, String taName) {
+        Query q = em.createNamedQuery("get.location.by.anyName");
+        q.setParameter("siName", siName);
+        q.setParameter("enName", enName);
+        q.setParameter("taName", taName);
+        return q.getResultList();
     }
 
     @Transactional(propagation = Propagation.NEVER)
@@ -156,7 +165,7 @@ public class LocationDAOImpl extends BaseDAO implements LocationDAO, Preloadable
     }
 
     private void updateCache(Location l) {
-        final int locationId = l.getLocationCode();
+        final String locationId = l.getLocationCode();
         final int locationUKey = l.getLocationUKey();
         locationsByPK.put(locationUKey, l);
         siLocationName.put(locationUKey, locationId + SPACER + l.getSiLocationName());
