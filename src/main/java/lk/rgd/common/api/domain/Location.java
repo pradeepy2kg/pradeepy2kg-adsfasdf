@@ -1,6 +1,7 @@
 package lk.rgd.common.api.domain;
 
 import lk.rgd.AppConstants;
+import lk.rgd.common.util.WebUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -8,7 +9,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Represents a RGD office location
@@ -18,16 +18,18 @@ import java.util.Set;
 @Entity
 @Table(name = "LOCATIONS", schema = "COMMON")
 @NamedQueries({
-        @NamedQuery(name = "getAllLocations", query = "SELECT l FROM Location l " +
-                "ORDER BY l.enLocationName desc"),
-        @NamedQuery(name = "get.location.by.code", query = "SELECT l FROM Location l " +
-                "WHERE l.locationCode=:locationCode"),
-        @NamedQuery(name = "get.location.by.code.and.by.dsDivisionId", query = "SELECT l FROM Location l " +
-                "WHERE l.locationCode=:locationCode AND l.dsDivisionId=:dsDivisionId "),
-        @NamedQuery(name = "get.location.by.dsDivisionId", query = "SELECT l FROM Location l " +
-                "WHERE l.dsDivisionId=:dsDivisionId")
+    @NamedQuery(name = "getAllLocations", query = "SELECT l FROM Location l " +
+        "ORDER BY l.enLocationName desc"),
+    @NamedQuery(name = "get.location.by.code", query = "SELECT l FROM Location l " +
+        "WHERE l.locationCode=:locationCode"),
+    @NamedQuery(name = "get.location.by.code.and.by.dsDivisionId", query = "SELECT l FROM Location l " +
+        "WHERE l.locationCode=:locationCode AND l.dsDivisionId=:dsDivisionId "),
+    @NamedQuery(name = "get.location.by.dsDivisionId", query = "SELECT l FROM Location l " +
+        "WHERE l.dsDivisionId=:dsDivisionId"),
+    @NamedQuery(name = "get.location.by.anyName", query = "SELECT l FROM Location l " +
+        "WHERE l.enLocationName = :enName OR l.siLocationName = :siName OR l.taLocationName = :taName")
 })
-@Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Location implements Serializable {
 
     /**
@@ -40,8 +42,8 @@ public class Location implements Serializable {
     @Embedded
     private BaseLifeCycleInfo lifeCycleInfo = new BaseLifeCycleInfo();
 
-    @Column(nullable = false, unique = true, updatable = false)
-    private int locationCode;
+    @Column(nullable = false, length = 10, updatable = false)
+    private String locationCode;
 
     @Column(nullable = false, length = 120, unique = true, updatable = false)
     private String siLocationName;
@@ -50,11 +52,11 @@ public class Location implements Serializable {
     @Column(nullable = false, length = 120, unique = true, updatable = false)
     private String taLocationName;
 
-    @Column(nullable = true, length = 255, unique = true, updatable = false)
+    @Column(nullable = true, length = 255, unique = false, updatable = false)
     private String siLocationMailingAddress;
-    @Column(nullable = true, length = 255, unique = true, updatable = false)
+    @Column(nullable = true, length = 255, unique = false, updatable = false)
     private String enLocationMailingAddress;
-    @Column(nullable = true, length = 255, unique = true, updatable = false)
+    @Column(nullable = true, length = 255, unique = false, updatable = false)
     private String taLocationMailingAddress;
 
     @Column(nullable = true, length = 120, unique = false, updatable = false)
@@ -87,12 +89,12 @@ public class Location implements Serializable {
         this.lifeCycleInfo = lifeCycleInfo;
     }
 
-    public int getLocationCode() {
+    public String getLocationCode() {
         return locationCode;
     }
 
-    public void setLocationCode(int locationCode) {
-        this.locationCode = locationCode;
+    public void setLocationCode(String locationCode) {
+        this.locationCode = WebUtils.filterBlanks(locationCode);
     }
 
     public String getSiLocationName() {
@@ -100,7 +102,7 @@ public class Location implements Serializable {
     }
 
     public void setSiLocationName(String siLocationName) {
-        this.siLocationName = siLocationName;
+        this.siLocationName = WebUtils.filterBlanks(siLocationName);
     }
 
     public String getEnLocationName() {
@@ -108,7 +110,7 @@ public class Location implements Serializable {
     }
 
     public void setEnLocationName(String enLocationName) {
-        this.enLocationName = enLocationName;
+        this.enLocationName = WebUtils.filterBlanks(enLocationName);
     }
 
     public String getTaLocationName() {
@@ -116,7 +118,7 @@ public class Location implements Serializable {
     }
 
     public void setTaLocationName(String taLocationName) {
-        this.taLocationName = taLocationName;
+        this.taLocationName = WebUtils.filterBlanks(taLocationName);
     }
 
     public List<UserLocation> getUsers() {
@@ -132,7 +134,7 @@ public class Location implements Serializable {
     }
 
     public void setSiLocationMailingAddress(String siLocationMailingAddress) {
-        this.siLocationMailingAddress = siLocationMailingAddress;
+        this.siLocationMailingAddress = WebUtils.filterBlanks(siLocationMailingAddress);
     }
 
     public String getEnLocationMailingAddress() {
@@ -140,7 +142,7 @@ public class Location implements Serializable {
     }
 
     public void setEnLocationMailingAddress(String enLocationMailingAddress) {
-        this.enLocationMailingAddress = enLocationMailingAddress;
+        this.enLocationMailingAddress = WebUtils.filterBlanks(enLocationMailingAddress);
     }
 
     public String getTaLocationMailingAddress() {
@@ -148,7 +150,7 @@ public class Location implements Serializable {
     }
 
     public void setTaLocationMailingAddress(String taLocationMailingAddress) {
-        this.taLocationMailingAddress = taLocationMailingAddress;
+        this.taLocationMailingAddress = WebUtils.filterBlanks(taLocationMailingAddress);
     }
 
     public String getSienLocationSignature() {
@@ -156,7 +158,7 @@ public class Location implements Serializable {
     }
 
     public void setSienLocationSignature(String sienLocationSignature) {
-        this.sienLocationSignature = sienLocationSignature;
+        this.sienLocationSignature = WebUtils.filterBlanks(sienLocationSignature);
     }
 
     public String getTaenLocationSignature() {
@@ -164,7 +166,7 @@ public class Location implements Serializable {
     }
 
     public void setTaenLocationSignature(String taenLocationSignature) {
-        this.taenLocationSignature = taenLocationSignature;
+        this.taenLocationSignature = WebUtils.filterBlanks(taenLocationSignature);
     }
 
     public int getDsDivisionId() {
@@ -185,7 +187,7 @@ public class Location implements Serializable {
             sb.append(this.getTaLocationName());
             sb.append(" / ");
             sb.append(this.getEnLocationName());
-        } else if(AppConstants.ENGLISH.equals(language)){
+        } else if (AppConstants.ENGLISH.equals(language)) {
             sb.append(this.getEnLocationName());
         }
         return sb.toString();
