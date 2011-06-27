@@ -855,12 +855,14 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 addActionMessage("message.print.success");
                 //TODO is this line is suitable here ?,this condition should check before loading all those above stuff :D ??
                 allowPrintCertificate = user.isAuthorized(Permission.PRINT_BIRTH_CERTIFICATE);
-                //loading alterations done to this certificate
-                archivedEntryList = service.getHistoricalBirthDeclarationRecordForBDDivisionAndSerialNo(bdf.getRegister().getBirthDivision(),
-                    bdf.getRegister().getBdfSerialNo(), bdf.getIdUKey(), user);
-                //create changed bit set to display *  marks
-                if (archivedEntryList.size() > 0) {
-                    displayChangesInStarMark(archivedEntryList);
+                if (!certificateSearch) {
+                    //loading alterations done to this certificate
+                    archivedEntryList = service.getHistoricalBirthDeclarationRecordForBDDivisionAndSerialNo(bdf.getRegister().getBirthDivision(),
+                        bdf.getRegister().getBdfSerialNo(), bdf.getIdUKey(), user);
+                    //create changed bit set to display *  marks
+                    if (archivedEntryList.size() > 0) {
+                        displayChangesInStarMark(archivedEntryList);
+                    }
                 }
                 return "pageLoad";
             }
