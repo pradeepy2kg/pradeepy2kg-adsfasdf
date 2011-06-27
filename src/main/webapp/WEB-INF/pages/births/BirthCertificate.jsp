@@ -165,7 +165,7 @@
 </s:else>
 <div style="width:65%;float:left;margin-top:5px;" id="locationSignId">
     <s:form action="%{print}" method="post">
-    <s:if test="register.status.ordinal() == 8">
+    <s:if test="register.status.ordinal() == 8 || #request.certificateSearch">
         <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;">
             <legend><b><s:label value="%{getText('selectoption.label')}"/></b></legend>
             <table>
@@ -585,6 +585,7 @@
     Issued by Registrar General's Department according to Birth and Death Registration Act (Chapter 110)
 </p>
 
+<s:if test="!#request.certificateSearch">
 <div style="page-break-after:always;">
 </div>
 <hr style="border-style:dashed ; float:left;width:100% ;margin-bottom:30px;margin-top:150px;">
@@ -640,6 +641,7 @@
 </table>
 <hr style="border-style:dashed ; float:left;width:100% ;margin-top:30px;"/>
 <br><br>
+</s:if>
 
 <s:if test="#request.allowPrintCertificate">
     <div class="form-submit" style="margin:5px 0 0 0;">
