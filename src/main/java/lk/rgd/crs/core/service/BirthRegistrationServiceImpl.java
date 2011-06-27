@@ -1200,7 +1200,6 @@ public class BirthRegistrationServiceImpl implements
         logger.debug("Load birth declaration record : {}", bdId);
         BirthDeclaration bdf = birthDeclarationDAO.getById(bdId);
         // does the user have access to the BDF (i.e. check district and DS division)
-        validateAccessOfUser(user, bdf);
         //trigger lazy loader handler by calling this lazy loading object
         bdf.getLifeCycleInfo().getApprovalOrRejectUser().getUserName();
         logger.debug(bdf.getLifeCycleInfo().getApprovalOrRejectUser().getUserName());
@@ -1365,7 +1364,6 @@ public class BirthRegistrationServiceImpl implements
     public BirthDeclaration loadValuesForPrint(BirthDeclaration bdf, User user) {
 
         logger.debug("Loading record : {} for printing", bdf.getIdUKey());
-        validateAccessOfUser(user, bdf);
         String prefLanguage = bdf.getRegister().getPreferredLanguage();
 
         ChildInfo child = bdf.getChild();
