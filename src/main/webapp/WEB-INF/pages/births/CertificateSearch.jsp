@@ -53,7 +53,7 @@
     $(function() {
         $('select#districtId').bind('change', function(evt1) {
             var id = $("select#districtId").attr("value");
-            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id},
+            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:16},
                     function(data) {
                         var options1 = '';
                         var ds = data.dsDivisionList;
@@ -63,8 +63,8 @@
                         $("select#dsDivisionId").html(options1);
 
                         var options2 = '';
-                        var bd = data.bdDivisionList;
-                        options2 += '<option value="' + 0 + '">' + <s:label value="%{getText('select.registrationDivision.label')}"/> + '</option>';
+                        var bd = data.divisionList;
+                        <%--options2 += '<option value="' + 0 + '">' + <s:label value="%{getText('select.registrationDivision.label')}"/> + '</option>';--%>
                         for (var j = 0; j < bd.length; j++) {
                             options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
                         }
@@ -78,7 +78,7 @@
                     function(data) {
                         var options = '';
                         var bd = data.bdDivisionList;
-                        options += '<option value="' + 0 + '">' + <s:label value="%{getText('select.registrationDivision.label')}"/> + '</option>';
+                        <%--options += '<option value="' + 0 + '">' + <s:label value="%{getText('select.registrationDivision.label')}"/> + '</option>';--%>
                         for (var i = 0; i < bd.length; i++) {
                             options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
                         }
@@ -409,12 +409,12 @@
                          cssStyle="text-transform:uppercase;"/></td>
     </tr>
     <tr>
-        <td class="font-9" rowspan="2"><label>(6) රෙජිසිට්‍රර්ගේ කොට්ඨාශය<br>பதிவாளர் பிரிவு <br>Registrar's
+        <td class="font-9" rowspan="2"><label>(6) රෙජිසිට්‍රර්ගේ කොට්ඨාශය
+            <s:label value="*" cssStyle="color:red;font-size:14pt"/><br>பதிவாளர் பிரிவு <br>Registrar's
             Division</label></td>
         <td><label>දිස්ත්‍රික්කය மாவட்டம் District</label></td>
         <td colspan="6" class="table_reg_cell_01">
-            <s:select id="districtId" name="birthDistrictId" list="districtList" value="birthDistrictId"
-                      cssStyle="width:98.5%;"/>
+            <s:select id="districtId" name="birthDistrictId" list="allDistrictList" value="birthDistrictId" cssStyle="width:98.5%;"/>
         </td>
     </tr>
     <tr>
@@ -424,7 +424,7 @@
             <br/>Divisional Secretary Division
         </label></td>
         <td colspan="6" class="table_reg_cell_01" id="table_reg_cell_01">
-            <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
+            <s:select id="dsDivisionId" name="dsDivisionId" list="allDSDivisionList" value="%{dsDivisionId}"
                       cssStyle="width:98.5%;"/>
         </td>
     <tr>
