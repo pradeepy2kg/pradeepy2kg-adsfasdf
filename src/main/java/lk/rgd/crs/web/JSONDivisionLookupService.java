@@ -184,8 +184,10 @@ public class JSONDivisionLookupService extends HttpServlet {
                 List ds = getAllDSDivisionList(lang, divisionId, user, withAll);
                 int dsDivisionId = Integer.parseInt(((SelectOption) ds.get(0)).getOptionValue());
                 List bd = getBDDivisionList(lang, dsDivisionId, user, withAll);
+                List gn = getGNDivisions(lang, dsDivisionId, user);
                 optionLists.put("dsDivisionList", ds);
                 optionLists.put("divisionList", bd);
+                optionLists.put("gnDivisionList", gn);
             } else if ("17".equals(mode)) { // used for generalized dynamic list population in division.js
                 //return ds division list and mr division list
                 List ds = getAllDSDivisionList(lang, divisionId, user, withAll);
@@ -229,8 +231,7 @@ public class JSONDivisionLookupService extends HttpServlet {
         try {
             gnDivisionList = gnDivisionDAO.getGNDivisionNames(dsDivisionId, language, user);
             logger.debug("Loaded GN list : {}", gnDivisionList);
-        }
-        catch (RGDRuntimeException e) {
+        } catch (RGDRuntimeException e) {
             gnDivisionList = Collections.emptyMap();
         }
         return getList(gnDivisionList);
