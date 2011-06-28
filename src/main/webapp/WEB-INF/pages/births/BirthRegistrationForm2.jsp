@@ -170,7 +170,7 @@ $(function() {
     $('select#motherDistrictId').bind('change', function(evt3) {
         var id = $("select#motherDistrictId").attr("value");
         var label = $("input#dsDivisionLabel").attr("value");
-        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id},
+        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:16},
                 function(data) {
                     var options = '';
                     var ds = data.dsDivisionList;
@@ -179,7 +179,6 @@ $(function() {
                         options += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
                     }
                     $("select#motherDSDivisionId").html(options);
-
 
                     var options3 = '';
                     var gn = data.gnDivisionList;
