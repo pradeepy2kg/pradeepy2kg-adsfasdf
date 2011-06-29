@@ -111,6 +111,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     private final AppParametersDAO appParametersDAO;
     private static final String BA_ROWS_PER_PAGE = "crs.br_rows_per_page";
     private static final String VIEW_USERS = "viewUsers";
+    private static final String COLON = " : ";
 
     private Map<Integer, String> districtList;
     private Map<Integer, String> divisionList;
@@ -552,7 +553,6 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     public String addDivisionsAndDsDivisions() {
         int checkDuplicate = 0;
         User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
-        String language = user.getPrefLanguage();
         switch (pageType) {
             case 1:
                 District checkDistrict = districtDAO.getDistrictByCode(district.getDistrictId());
@@ -565,77 +565,56 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                     district.setActive(true);
                     dataManagementService.addDistrict(district, currentUser);
                     logger.debug("New Id of new District {} is   :{}", district.getEnDistrictName(), district.getDistrictId());
-                    if (language.equals("si")) {
-                        msg = getText("new.district.add") + " : " + district.getSiDistrictName();
-                    } else if (language.equals("en")) {
-                        msg = getText("new.district.add") + " : " + district.getEnDistrictName();
-                    } else if (language.equals("ta")) {
-                        msg = getText("new.district.add") + " : " + district.getTaDistrictName();
-                    }
+                    printMessage("new.district.add", district.getSiDistrictName(), district.getEnDistrictName(),
+                        district.getTaDistrictName());
                 }
                 break;
             case 2:
-                DSDivision checkDSDivision = dsDivisionDAO.getDSDivisionByCode(dsDivision.getDivisionId(),
-                    districtDAO.getDistrict(userDistrictId));
-                if (checkDSDivision != null) {
-                    addFieldError("duplicateIdNumberError", "DS Division Id Number Already Used. Please Insert Another Number");
-                    logger.debug("Duplicate District code number is :", checkDSDivision.getDivisionId());
+                List<DSDivision> checkDSDivisions = dsDivisionDAO.getDSDivisionByAnyName(dsDivision);
+                if (checkDSDivisions.size() > 0) {
+                    addFieldError("duplicateIdNumberError", "DS Division names are already used. Please check again");
+                    logger.debug("DSDivision names are duplicated");
                     checkDuplicate++;
                 }
                 if (checkDuplicate == 0) {
                     dsDivision.setDistrict(districtDAO.getDistrict(userDistrictId));
-                    dsDivision.setActive(true);
                     dataManagementService.addDSDivision(dsDivision, currentUser);
                     logger.debug("New Id of new Ds Division {} is   :{}", dsDivision.getEnDivisionName(), dsDivision.getDivisionId());
-                    if (language.equals("si")) {
-                        msg = getText("new.dsDivision.add") + " : " + dsDivision.getSiDivisionName();
-                    } else if (language.equals("en")) {
-                        msg = getText("new.dsDivision.add") + " : " + dsDivision.getEnDivisionName();
-                    } else if (language.equals("ta")) {
-                        msg = getText("new.dsDivision.add") + " : " + dsDivision.getTaDivisionName();
-                    }
+                    printMessage("new.dsDivision.add", dsDivision.getSiDivisionName(), dsDivision.getEnDivisionName(),
+                        dsDivision.getTaDivisionName());
                 }
                 break;
             case 3:
-                BDDivision checkBDDivision = bdDivisionDAO.getBDDivisionByCode(bdDivision.getDivisionId(), dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
-                if (checkBDDivision != null) {
-                    addFieldError("duplicateIdNumberError", "Division Id Number Already Used. Please Insert Another Number");
-                    logger.debug("Duplicate District code number is :", checkBDDivision.getDivisionId());
+                List<BDDivision> checkBDDivisions =
+                    bdDivisionDAO.getBDDivisionByAnyNameAndDSDivisionKey(bdDivision, dsDivisionId);
+                if (checkBDDivisions.size() > 0) {
+                    addFieldError("duplicateIdNumberError", "BD Division names are already used. Please check again");
+                    logger.debug("BDDivision names are duplicated");
                     checkDuplicate++;
                 }
                 if (checkDuplicate == 0) {
                     bdDivision.setDsDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
-                    bdDivision.setActive(true);
                     dataManagementService.addBDDivision(bdDivision, currentUser);
                     logger.debug("New Id of New Division {} is   :{}", bdDivision.getEnDivisionName(), bdDivision.getDivisionId());
-                    if (language.equals("si")) {
-                        msg = getText("new.bdDivision.add") + " : " + bdDivision.getSiDivisionName();
-                    } else if (language.equals("en")) {
-                        msg = getText("new.bdDivision.add") + " : " + bdDivision.getEnDivisionName();
-                    } else if (language.equals("ta")) {
-                        msg = getText("new.bdDivision.add") + " : " + bdDivision.getTaDivisionName();
-                    }
+                    printMessage("new.bdDivision.add", bdDivision.getSiDivisionName(), bdDivision.getEnDivisionName(),
+                        bdDivision.getTaDivisionName());
                 }
                 break;
             case 4:
-                MRDivision checkMrDivision = mrDivisionDAO.getMRDivisionByCode(mrDivision.getDivisionId(), dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
-                if (checkMrDivision != null) {
-                    addFieldError("duplicateIdNumberError", "MR Division Id Number Already Used. Please Insert Another Number");
-                    logger.debug("Duplicate MR Division code number is :", checkMrDivision.getDivisionId());
+                List<MRDivision> checkMrDivisions =
+                    mrDivisionDAO.getMRDivisionByAnyNameAndDSDivision(mrDivision, dsDivisionId);
+
+                if (checkMrDivisions.size() > 0) {
+                    addFieldError("duplicateIdNumberError", "MR Division names are already used. Please check again");
+                    logger.debug("MRDivision names are duplicated");
                     checkDuplicate++;
                 }
                 if (checkDuplicate == 0) {
                     mrDivision.setDsDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
-                    mrDivision.setActive(true);
                     dataManagementService.addMRDivision(mrDivision, currentUser);
                     logger.debug("New Id of New MRDivision {} is   :{}", mrDivision.getEnDivisionName(), mrDivision.getDivisionId());
-                    if (language.equals("si")) {
-                        msg = getText("new.mrDivision.add") + " : " + mrDivision.getSiDivisionName();
-                    } else if (language.equals("en")) {
-                        msg = getText("new.mrDivision.add") + " : " + mrDivision.getEnDivisionName();
-                    } else if (language.equals("ta")) {
-                        msg = getText("new.mrDivision.add") + " : " + mrDivision.getTaDivisionName();
-                    }
+                    printMessage("new.mrDivision.add", mrDivision.getSiDivisionName(), mrDivision.getEnDivisionName(),
+                        mrDivision.getTaDivisionName());
                 }
                 break;
             case 5:
@@ -648,20 +627,14 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 if (checkDuplicate == 0) {
                     dataManagementService.addCourt(court, currentUser);
                     logger.debug("New Id of New Court {} is  :{}", locationDAO.getLocation(locationId), locationId);
-                    if (language.equals("si")) {
-                        msg = getText("new.court.add") + " : " + court.getSiCourtName();
-                    } else if (language.equals("en")) {
-                        msg = getText("new.court.add") + " : " + court.getEnCourtName();
-                    } else if (language.equals("ta")) {
-                        msg = getText("new.court.add") + " : " + court.getTaCourtName();
-                    }
+                    printMessage("new.court.add", court.getSiCourtName(), court.getEnCourtName(), court.getTaCourtName());
                 }
                 break;
             case 6:
                 List<Location> checkLocations = locationDAO.getLocationByAnyName(location.getSiLocationName(),
                     location.getEnLocationName(), location.getTaLocationName());
                 if (checkLocations.size() > 0) {
-                    addFieldError("duplicateIdNumberError", "Office names already used. Please check again");
+                    addFieldError("duplicateIdNumberError", "Office names are already used. Please check again");
                     logger.debug("Location name is duplicated");
                     checkDuplicate++;
                 }
@@ -679,30 +652,25 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 }
                 break;
             case 7:
-                GNDivision checkGNDivision = gnDivisionDAO.getGNDivisionByCode(gnDivision.getGnDivisionId(), dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
+                List<GNDivision> checkGNDivisions =
+                    gnDivisionDAO.getGNDivisionByAnyNameAndDSDivision(gnDivision, dsDivisionId, currentUser);
 
-                if (checkGNDivision != null) {
-                    addFieldError("duplicateIdNumberError", "GNDivision Id Number Already Used. Please Insert Another Number");
-                    logger.debug("Duplicate District code number is :", checkGNDivision.getGnDivisionId());
+                if (checkGNDivisions.size() > 0) {
+                    addFieldError("duplicateIdNumberError", "GNDivision names are already exist. Please check again");
+                    logger.debug("GNDivision names are duplicated");
                     checkDuplicate++;
                 }
                 if (checkDuplicate == 0) {
                     gnDivision.setDsDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
-                    gnDivision.setActive(true);
                     try {
                         dataManagementService.addGNDivision(gnDivision, currentUser);
                     } catch (CRSRuntimeException e) {
-                        logger.error("GN division adding error :{gnDivisionId}", 10);
+                        logger.error("GN division adding error :{}", gnDivisionId);
                         addActionError(getText("new.gnDivision.add"));
                     }
                     logger.debug("New Id of New Division {} is   :{}", gnDivision.getEnGNDivisionName(), gnDivision.getGnDivisionId());
-                    if (language.equals("si")) {
-                        msg = getText("new.gnDivision.add") + " : " + gnDivision.getSiGNDivisionName();
-                    } else if (language.equals("en")) {
-                        msg = getText("new.gnDivision.add") + " : " + gnDivision.getEnGNDivisionName();
-                    } else if (language.equals("ta")) {
-                        msg = getText("new.gnDivision.add") + " : " + gnDivision.getTaGNDivisionName();
-                    }
+                    printMessage("new.gnDivision.add", gnDivision.getSiGNDivisionName(),
+                        gnDivision.getEnGNDivisionName(), gnDivision.getTaGNDivisionName());
                 }
 
         }
@@ -713,6 +681,16 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
             setDivisionList(false);
         }
         return SUCCESS;
+    }
+
+    private void printMessage(String propertyKey, String siName, String enName, String taName) {
+        if (AppConstants.SINHALA.equals(language)) {
+            msg = getText(propertyKey) + COLON + siName;
+        } else if (AppConstants.ENGLISH.equals(language)) {
+            msg = getText(propertyKey) + COLON + enName;
+        } else if (AppConstants.TAMIL.equals(language)) {
+            msg = getText(propertyKey) + COLON + taName;
+        }
     }
 
     public String selectUsers() {
