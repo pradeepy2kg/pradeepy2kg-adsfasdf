@@ -97,17 +97,28 @@ public class MRDivisionDAOImpl extends BaseDAO implements MRDivisionDAO, Preload
         return q.getResultList();
     }
 
-    @Override
-    public MRDivision getMRDivisionByCode(int mrDivisionId, DSDivision dsDivision) {
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public List<MRDivision> getMRDivisionByCode(int mrDivisionId, DSDivision dsDivision) {
         Query q = em.createNamedQuery("get.mrDivision.by.code");
         q.setParameter("mrDivisionId", mrDivisionId);
         q.setParameter("dsDivision", dsDivision);
-        try {
-            return (MRDivision) q.getSingleResult();
-        } catch (NoResultException e) {
-            logger.debug("No id duplication of id :{}", mrDivisionId);
-            return null;
-        }
+        return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<MRDivision> getMRDivisionByAnyNameAndDSDivision(MRDivision mrDivision, int dsDivisionUKey) {
+        Query q = em.createNamedQuery("get.mrDivision.by.dsDivision.anyName");
+        q.setParameter("dsDivisionId", dsDivisionUKey);
+        q.setParameter("siName", mrDivision.getSiDivisionName());
+        q.setParameter("enName", mrDivision.getEnDivisionName());
+        q.setParameter("taName", mrDivision.getTaDivisionName());
+        return q.getResultList();
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
