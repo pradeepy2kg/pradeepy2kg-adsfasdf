@@ -2,6 +2,9 @@ package lk.rgd.crs.api.domain;
 
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.util.WebUtils;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,14 +17,16 @@ import java.io.Serializable;
 @Table(name = "GN_DIVISIONS", schema = "COMMON", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"dsDivisionUKey", "gnDivisionUKey"})
 })
-
 @NamedQueries({
     @NamedQuery(name = "get.gnDivisions.by.code", query = "SELECT gn FROM GNDivision gn WHERE " +
         "(gn.gnDivisionId =:gnDivisionCode AND gn.dsDivision =:dsDivision)"),
     @NamedQuery(name = "get.all.gnDivisions.by.dsDivisionId", query = "SELECT gn FROM GNDivision gn WHERE " +
-        "gn.dsDivision.dsDivisionUKey = :dsDivisionId")
+        "gn.dsDivision.dsDivisionUKey = :dsDivisionId"),
+    @NamedQuery(name = "get.gnDivision.by.name.dsDivision", query = "SELECT gn FROM GNDivision gn " +
+        "WHERE gn.dsDivision.dsDivisionUKey = :dsDivision " +
+        "AND (gn.siGNDivisionName = :siName OR gn.enGNDivisionName = :enName OR gn.taGNDivisionName = :taName)")
 })
-//todo add cache control amith :))
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class GNDivision implements Serializable {
     /**
      * system generated unique key
@@ -95,7 +100,7 @@ public class GNDivision implements Serializable {
     }
 
     public void setSiGNDivisionName(String siGNDivisionName) {
-        this.siGNDivisionName = siGNDivisionName;
+        this.siGNDivisionName = WebUtils.filterBlanks(siGNDivisionName);
     }
 
     public String getEnGNDivisionName() {
@@ -103,7 +108,7 @@ public class GNDivision implements Serializable {
     }
 
     public void setEnGNDivisionName(String enGNDivisionName) {
-        this.enGNDivisionName = enGNDivisionName;
+        this.enGNDivisionName = WebUtils.filterBlanks(enGNDivisionName);
     }
 
     public String getTaGNDivisionName() {
@@ -111,7 +116,7 @@ public class GNDivision implements Serializable {
     }
 
     public void setTaGNDivisionName(String taGNDivisionName) {
-        this.taGNDivisionName = taGNDivisionName;
+        this.taGNDivisionName = WebUtils.filterBlanks(taGNDivisionName);
     }
 
     public boolean isActive() {
