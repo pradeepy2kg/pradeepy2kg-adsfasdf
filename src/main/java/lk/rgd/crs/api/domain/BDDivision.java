@@ -2,6 +2,7 @@ package lk.rgd.crs.api.domain;
 
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.District;
+import lk.rgd.common.util.WebUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -18,16 +19,19 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "BD_DIVISIONS", schema = "CRS",
-        uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"dsDivisionUKey", "divisionId"})})
+    uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"bdDivisionUKey", "dsDivisionUKey", "divisionId"})})
 @NamedQueries({
-        @NamedQuery(name = "findAllBDDivisions", query = "SELECT d FROM BDDivision d"),
-        @NamedQuery(name = "get.bdDivision.by.code", query = "SELECT d FROM BDDivision d " +
-                "WHERE d.divisionId =:bdDivisionId AND d.dsDivision=:dsDivision"),
-        @NamedQuery(name = "get.all.divisions.by.dsDivisionId", query = "SELECT d FROM BDDivision d " +
-                "WHERE d.dsDivision.dsDivisionUKey =:dsDivisionId ")
+    @NamedQuery(name = "findAllBDDivisions", query = "SELECT d FROM BDDivision d"),
+    @NamedQuery(name = "get.bdDivision.by.code", query = "SELECT d FROM BDDivision d " +
+        "WHERE d.divisionId =:bdDivisionId AND d.dsDivision=:dsDivision"),
+    @NamedQuery(name = "get.all.divisions.by.dsDivisionId", query = "SELECT d FROM BDDivision d " +
+        "WHERE d.dsDivision.dsDivisionUKey =:dsDivisionId "),
+    @NamedQuery(name = "get.bdDivision.by.dsDivision.anyName", query = "SELECT d FROM BDDivision d " +
+        "WHERE d.dsDivision.dsDivisionUKey = :dsDivisionId " +
+        "AND (d.siDivisionName = :siName OR d.enDivisionName = :enName OR d.taDivisionName = :taName)")
 })
-@Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class BDDivision implements Serializable {
 
     /**
@@ -65,7 +69,7 @@ public class BDDivision implements Serializable {
     }
 
     public BDDivision(DSDivision dsDivision, int divisionId,
-                      String siDivisionName, String enDivisionName, String taDivisionName, boolean active) {
+        String siDivisionName, String enDivisionName, String taDivisionName, boolean active) {
         this.dsDivision = dsDivision;
         this.divisionId = divisionId;
         this.siDivisionName = siDivisionName;
@@ -99,7 +103,7 @@ public class BDDivision implements Serializable {
     }
 
     public void setSiDivisionName(String siDivisionName) {
-        this.siDivisionName = siDivisionName;
+        this.siDivisionName = WebUtils.filterBlanks(siDivisionName);
     }
 
     public String getEnDivisionName() {
@@ -107,7 +111,7 @@ public class BDDivision implements Serializable {
     }
 
     public void setEnDivisionName(String enDivisionName) {
-        this.enDivisionName = enDivisionName;
+        this.enDivisionName = WebUtils.filterBlanks(enDivisionName);
     }
 
     public String getTaDivisionName() {
@@ -115,7 +119,7 @@ public class BDDivision implements Serializable {
     }
 
     public void setTaDivisionName(String taDivisionName) {
-        this.taDivisionName = taDivisionName;
+        this.taDivisionName = WebUtils.filterBlanks(taDivisionName);
     }
 
     public boolean isActive() {

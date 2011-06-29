@@ -2,19 +2,16 @@ package lk.rgd.crs.core.dao;
 
 import lk.rgd.AppConstants;
 import lk.rgd.ErrorCodes;
-import lk.rgd.Permission;
-import lk.rgd.common.core.dao.BaseDAO;
-import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.api.domain.User;
+import lk.rgd.common.core.dao.BaseDAO;
 import lk.rgd.common.core.dao.PreloadableDAO;
-import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.BDDivision;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Query;
-import javax.persistence.NoResultException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,18 +68,28 @@ public class BDDivisionDAOImpl extends BaseDAO implements BDDivisionDAO, Preload
         return em.find(BDDivision.class, bdDivision);
     }
 
-    @Override
-    public BDDivision getBDDivisionByCode(int bdDivisionId, DSDivision dsDivision) {
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public List<BDDivision> getBDDivisionByCode(int bdDivisionId, DSDivision dsDivision) {
         Query q = em.createNamedQuery("get.bdDivision.by.code");
         q.setParameter("bdDivisionId", bdDivisionId);
         q.setParameter("dsDivision", dsDivision);
-        try {
-            return (BDDivision) q.getSingleResult();
-        }
-        catch (NoResultException e) {
-            logger.debug("No id duplication of id :{}", bdDivisionId);
-            return null;
-        }
+        return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<BDDivision> getBDDivisionByAnyNameAndDSDivisionKey(BDDivision bdDivision, int dsDivisionUKey) {
+        Query q = em.createNamedQuery("get.bdDivision.by.dsDivision.anyName");
+        q.setParameter("dsDivisionId", dsDivisionUKey);
+        q.setParameter("siName", bdDivision.getSiDivisionName());
+        q.setParameter("enName", bdDivision.getEnDivisionName());
+        q.setParameter("taName", bdDivision.getTaDivisionName());
+        return q.getResultList();
     }
 
     /**
@@ -115,7 +122,7 @@ public class BDDivisionDAOImpl extends BaseDAO implements BDDivisionDAO, Preload
     @Transactional(propagation = Propagation.SUPPORTS)
     public List<BDDivision> getAllBDDivisionByDsDivisionKey(int dsDivisionId) {
         Query q = em.createNamedQuery("get.all.divisions.by.dsDivisionId");
-        q.setParameter("dsDivisionId",dsDivisionId);                                 
+        q.setParameter("dsDivisionId", dsDivisionId);
         return q.getResultList();
     }
 
