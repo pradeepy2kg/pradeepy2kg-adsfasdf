@@ -182,7 +182,7 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
                     service.addRegistrar(registrar, user);
                     session.put(WebConstants.SESSION_EXSISTING_REGISTRAR, registrar);
                 } catch (Exception e) {
-                    addActionError("error.registrar.add");
+                    addActionError(getText("error.registrar.add"));
                     return ERROR;
                 }
             }
