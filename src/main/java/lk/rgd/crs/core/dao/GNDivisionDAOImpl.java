@@ -11,7 +11,6 @@ import lk.rgd.crs.api.domain.GNDivision;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.HashMap;
 import java.util.List;
@@ -76,16 +75,28 @@ public class GNDivisionDAOImpl extends BaseDAO implements GNDivisionDAO, Preload
         updateCache(gnDivision);
     }
 
-    public GNDivision getGNDivisionByCode(int gnDivisionId, DSDivision dsDivision) {
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public List<GNDivision> getGNDivisionByCodeAndDSDivision(int gnDivisionId, DSDivision dsDivision) {
         Query q = em.createNamedQuery("get.gnDivisions.by.code");
         q.setParameter("gnDivisionCode", gnDivisionId);
         q.setParameter("dsDivision", dsDivision);
-        try {
-            return (GNDivision) q.getSingleResult();
-        } catch (NoResultException e) {
-            logger.debug("No id duplication of id :{}", gnDivisionId);
-            return null;
-        }
+        return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<GNDivision> getGNDivisionByAnyNameAndDSDivision(GNDivision gnDivision, int dsDivisionUKey, User user) {
+        Query q = em.createNamedQuery("get.gnDivision.by.name.dsDivision");
+        q.setParameter("dsDivision", dsDivisionUKey);
+        q.setParameter("siName", gnDivision.getSiGNDivisionName());
+        q.setParameter("enName", gnDivision.getEnGNDivisionName());
+        q.setParameter("taName", gnDivision.getTaGNDivisionName());
+        return q.getResultList();
     }
 
     /**

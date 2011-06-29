@@ -1,12 +1,11 @@
 package lk.rgd.crs.api.dao;
 
-import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.domain.GNDivision;
-import lk.rgd.crs.api.domain.BDDivision;
 
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 
 /**
  * DAO for GN Division
@@ -43,14 +42,26 @@ public interface GNDivisionDAO {
     public String getNameByPK(int gnDivisionUKey, String language);
 
     /**
+     * Return the list of GN Divisions by GN Division code and DS Division unique key and
+     *
      * @param gnDivisionId the unique GN Division ID
-     * @param dsDivision
+     * @param dsDivision   the DS Division
      * @return the BD division object
      */
-    public GNDivision getGNDivisionByCode(int gnDivisionId, DSDivision dsDivision);
+    public List<GNDivision> getGNDivisionByCodeAndDSDivision(int gnDivisionId, DSDivision dsDivision);
 
     /**
-      * Update a GN Division
+     * Return the list of GN Divisions by DS Division unique key and matching DN Division name in any language
+     *
+     * @param gnDivision
+     * @param dsDivisionUKey the unique DS Division key
+     * @param user           the user invoking the action
+     * @return the list of matching GN Divisions
+     */
+    public List<GNDivision> getGNDivisionByAnyNameAndDSDivision(GNDivision gnDivision, int dsDivisionUKey, User user);
+
+    /**
+     * Update a GN Division
      *
      * @param gnDivision division to be updated
      * @param user       user executing the operation
@@ -58,11 +69,10 @@ public interface GNDivisionDAO {
     public void update(GNDivision gnDivision, User user);
 
     /**
-     * 
      * @param gnDivision division to be added
-     * @param user user executing the operation
+     * @param user       user executing the operation
      */
-    public void add(GNDivision gnDivision,User user);
+    public void add(GNDivision gnDivision, User user);
 
     public List<GNDivision> getAllGNDivisionByDsDivisionKey(int dsDivisionId);
 
