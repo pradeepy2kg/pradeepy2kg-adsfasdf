@@ -94,7 +94,7 @@ $(function() {
 
     $('select#deathPersonPermenentAddressDistrictId').bind('change', function(evt1) {
         var id = $("select#deathPersonPermenentAddressDistrictId").attr("value");
-        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id},
+        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:16},
                 function(data) {
                     var options1 = '';
                     var ds = data.dsDivisionList;
