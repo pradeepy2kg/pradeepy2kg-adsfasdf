@@ -4,14 +4,13 @@ import lk.rgd.AppConstants;
 import lk.rgd.ErrorCodes;
 import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.Role;
 import lk.rgd.common.api.domain.User;
-import lk.rgd.common.api.domain.District;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Query;
-import javax.persistence.NoResultException;
 import java.util.*;
 
 /**
@@ -53,8 +52,8 @@ public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, Preload
             // Admin, RG and has full access
             return result;
         } else if (
-                (Role.ROLE_ARG.equals(user.getRole().getRoleId()) || Role.ROLE_DR.equals(user.getRole().getRoleId()))
-                        && user.isAllowedAccessToBDDistrict(districtUKey)) {
+            (Role.ROLE_ARG.equals(user.getRole().getRoleId()) || Role.ROLE_DR.equals(user.getRole().getRoleId()))
+                && user.isAllowedAccessToBDDistrict(districtUKey)) {
             // the ARG, or DR who has been assigned to this district has full access
             return result;
         } else {
@@ -97,7 +96,7 @@ public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, Preload
     }
 
     private Map<Integer, String> getDSDivisionNamesImpl(
-            Map<Integer, Map<Integer, String>> namesByDistrict, int districtUKey) {
+        Map<Integer, Map<Integer, String>> namesByDistrict, int districtUKey) {
 
         Map<Integer, String> dsDivisionNames = namesByDistrict.get(districtUKey);
         if (dsDivisionNames != null) {
@@ -132,7 +131,7 @@ public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, Preload
     /**
      * @inheritDoc
      */
-    @Transactional(propagation = Propagation.NEVER,readOnly = true)
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<DSDivision> findAll() {
         Query q = em.createNamedQuery("findAllDSDivisions");
         return q.getResultList();
@@ -156,7 +155,6 @@ public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, Preload
         logger.debug("Loaded : {} DSDivisions from the database", results.size());
     }
 
-    //todo
     /**
      * @inheritDoc
      */
@@ -167,20 +165,28 @@ public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, Preload
         return q.getResultList();
     }
 
-    @Override
-    public DSDivision getDSDivisionByCode(int dsDivisionId, District district) {
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public List<DSDivision> getDSDivisionByCode(int dsDivisionId, District district) {
         Query q = em.createNamedQuery("get.dsDivision.by.code");
         q.setParameter("dsDivisionId", dsDivisionId);
         q.setParameter("district", district);
-        try {
-            return (DSDivision) q.getSingleResult();
-        }
-        catch (NoResultException e) {
-            logger.debug("No DS division id duplication of id :{}", dsDivisionId);
-            return null;
-        }
+        return q.getResultList();
     }
 
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<DSDivision> getDSDivisionByAnyName(DSDivision dsDivision) {
+        Query q = em.createNamedQuery("get.dsDivision.by.anyName");
+        q.setParameter("siName", dsDivision.getSiDivisionName());
+        q.setParameter("enName", dsDivision.getEnDivisionName());
+        q.setParameter("taName", dsDivision.getTaDivisionName());
+        return q.getResultList();
+    }
 
     private void updateCache(DSDivision d) {
         Map<Integer, String> subMap;

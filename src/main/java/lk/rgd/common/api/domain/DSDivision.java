@@ -1,5 +1,6 @@
 package lk.rgd.common.api.domain;
 
+import lk.rgd.common.util.WebUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -13,15 +14,17 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "DS_DIVISIONS", schema = "COMMON",
-        uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"districtUKey", "divisionId"})})
+    uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"dsDivisionUKey", "districtUKey", "divisionId"})})
 @NamedQueries({
-        @NamedQuery(name = "findAllDSDivisions", query = "SELECT d FROM DSDivision d"),
-        @NamedQuery(name = "get.all.divisions.by.districtId", query = "SELECT d FROM DSDivision d WHERE d.district.districtUKey = :districtUKey"),
-        @NamedQuery(name = "get.dsDivision.by.code", query = "SELECT d FROM DSDivision d" +
-                " WHERE d.divisionId = :dsDivisionId AND d.district=:district")}
-)
-@Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
+    @NamedQuery(name = "findAllDSDivisions", query = "SELECT d FROM DSDivision d"),
+    @NamedQuery(name = "get.all.divisions.by.districtId", query = "SELECT d FROM DSDivision d WHERE d.district.districtUKey = :districtUKey"),
+    @NamedQuery(name = "get.dsDivision.by.code", query = "SELECT d FROM DSDivision d" +
+        " WHERE d.divisionId = :dsDivisionId AND d.district=:district"),
+    @NamedQuery(name = "get.dsDivision.by.anyName", query = "SELECT d FROM DSDivision d " +
+        "WHERE d.siDivisionName = :siName OR d.enDivisionName = :enName OR d.taDivisionName = :taName")
+})
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class DSDivision implements Serializable {
 
     /**
@@ -59,7 +62,7 @@ public class DSDivision implements Serializable {
     }
 
     public DSDivision(District district, int divisionId,
-                      String siDivisionName, String enDivisionName, String taDivisionName, boolean active) {
+        String siDivisionName, String enDivisionName, String taDivisionName, boolean active) {
         this.district = district;
         this.divisionId = divisionId;
         this.siDivisionName = siDivisionName;
@@ -89,7 +92,7 @@ public class DSDivision implements Serializable {
     }
 
     public void setSiDivisionName(String siDivisionName) {
-        this.siDivisionName = siDivisionName;
+        this.siDivisionName = WebUtils.filterBlanks(siDivisionName);
     }
 
     public String getEnDivisionName() {
@@ -97,7 +100,7 @@ public class DSDivision implements Serializable {
     }
 
     public void setEnDivisionName(String enDivisionName) {
-        this.enDivisionName = enDivisionName;
+        this.enDivisionName = WebUtils.filterBlanks(enDivisionName);
     }
 
     public String getTaDivisionName() {
@@ -105,7 +108,7 @@ public class DSDivision implements Serializable {
     }
 
     public void setTaDivisionName(String taDivisionName) {
-        this.taDivisionName = taDivisionName;
+        this.taDivisionName = WebUtils.filterBlanks(taDivisionName);
     }
 
     public boolean isActive() {
