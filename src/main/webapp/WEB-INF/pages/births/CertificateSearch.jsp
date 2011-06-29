@@ -64,7 +64,7 @@
 
                         var options2 = '';
                         var bd = data.divisionList;
-                        <%--options2 += '<option value="' + 0 + '">' + <s:label value="%{getText('select.registrationDivision.label')}"/> + '</option>';--%>
+                        options2 += '<option value="' + 0 + '">' + <s:label value="%{getText('select.registrationDivision.label')}"/> + '</option>';
                         for (var j = 0; j < bd.length; j++) {
                             options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
                         }
@@ -78,7 +78,7 @@
                     function(data) {
                         var options = '';
                         var bd = data.bdDivisionList;
-                        <%--options += '<option value="' + 0 + '">' + <s:label value="%{getText('select.registrationDivision.label')}"/> + '</option>';--%>
+                        options += '<option value="' + 0 + '">' + <s:label value="%{getText('select.registrationDivision.label')}"/> + '</option>';
                         for (var i = 0; i < bd.length; i++) {
                             options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
                         }
