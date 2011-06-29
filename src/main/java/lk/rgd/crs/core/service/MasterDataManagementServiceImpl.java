@@ -24,6 +24,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Performs management of master data
  *
@@ -67,6 +69,9 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
 
         if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
             try {
+                List<BDDivision> divisions = bdDivisionDAO.getBDDivisionByCode(bdDivision.getDivisionId(),
+                    bdDivision.getDsDivision());
+                bdDivision.setActive(divisions.isEmpty());
                 bdDivisionDAO.add(bdDivision, user);
             } catch (Exception e) {
                 logger.error("Attempt to add BD Division : " + bdDivision.getEnDivisionName() + " failed", e);
@@ -89,6 +94,10 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
         if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
             try {
                 logger.debug("successfully added GNDivision with code number : {}", gnDivision.getGnDivisionId());
+                List<GNDivision> divisions = gnDivisionDAO.getGNDivisionByCodeAndDSDivision(
+                    gnDivision.getGnDivisionId(), gnDivision.getDsDivision());
+                gnDivision.setActive(divisions.isEmpty());
+
                 gnDivisionDAO.add(gnDivision, user);
             } catch (Exception e) {
                 logger.error("Attempt to add BD Division : " + gnDivision.getEnGNDivisionName() + " failed", e);
@@ -162,6 +171,10 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
 
         if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
             try {
+                List<MRDivision> divisions = mrDivisionDAO.getMRDivisionByCode(mrDivision.getDivisionId(),
+                    mrDivision.getDsDivision());
+                mrDivision.setActive(divisions.isEmpty());
+
                 mrDivisionDAO.add(mrDivision, user);
             } catch (Exception e) {
                 logger.error("Attempt to add MR Division : " + mrDivision.getEnDivisionName() + " failed", e);
@@ -213,6 +226,9 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
 
         if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
             try {
+                List<DSDivision> divisions = dsDivisionDAO.getDSDivisionByCode(dsDivision.getDivisionId(),
+                    dsDivision.getDistrict());
+                dsDivision.setActive(divisions.isEmpty());
                 dsDivisionDAO.add(dsDivision, user);
             } catch (Exception e) {
                 logger.error("Attempt to add DS Division : " + dsDivision.getEnDivisionName() + " failed", e);
@@ -315,6 +331,10 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
 
         if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
             try {
+                List<Location> locations = locationDAO.getLocationByCodeAndByDSDivisionID(location.getLocationCode(),
+                    location.getDsDivisionId());
+                location.getLifeCycleInfo().setActive(locations.isEmpty());
+
                 locationDAO.add(location, user);
             } catch (Exception e) {
                 logger.error("Attempt to add Location : " + location.getEnLocationName() + " failed", e);
