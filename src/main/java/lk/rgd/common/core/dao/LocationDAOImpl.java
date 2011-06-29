@@ -8,7 +8,6 @@ import lk.rgd.common.api.domain.User;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.*;
 
@@ -50,6 +49,7 @@ public class LocationDAOImpl extends BaseDAO implements LocationDAO, Preloadable
         location.getLifeCycleInfo().setLastUpdatedUser(admin);
         location.getLifeCycleInfo().setLastUpdatedTimestamp(new Date());
         em.merge(location);
+        updateCache(location);
     }
 
     /**
@@ -99,14 +99,10 @@ public class LocationDAOImpl extends BaseDAO implements LocationDAO, Preloadable
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
-    public Location getLocationByCode(String locationCode) {
+    public List<Location> getLocationByCode(String locationCode) {
         Query q = em.createNamedQuery("get.location.by.code");
         q.setParameter("locationCode", locationCode);
-        try {
-            return (Location) q.getSingleResult();
-        } catch (NoResultException e) {
-            return null;
-        }
+        return q.getResultList();
     }
 
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
@@ -118,16 +114,12 @@ public class LocationDAOImpl extends BaseDAO implements LocationDAO, Preloadable
         return q.getResultList();
     }
 
-    @Transactional(propagation = Propagation.NEVER)
-    public Location getLocationByCodeAndByDSDivisionID(int locationCode, int dsDivisionId) {
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public List<Location> getLocationByCodeAndByDSDivisionID(String locationCode, int dsDivisionId) {
         Query q = em.createNamedQuery("get.location.by.code.and.by.dsDivisionId");
         q.setParameter("locationCode", locationCode);
         q.setParameter("dsDivisionId", dsDivisionId);
-        try {
-            return (Location) q.getSingleResult();
-        } catch (NoResultException e) {
-            return null;
-        }
+        return q.getResultList();
     }
 
     @Transactional(propagation = Propagation.NEVER)
