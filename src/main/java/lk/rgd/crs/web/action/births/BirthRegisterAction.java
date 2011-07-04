@@ -819,9 +819,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         userList.put(u.getUserId(), NameFormatUtil.getDisplayName(u.getUserName(), 50));
                     }
                 }
-                if (bdf.getRegister().getOriginalBCIssueUser() == null &&
+                if ((bdf.getRegister().getOriginalBCIssueUser() == null &&
                     bdf.getRegister().getOriginalBCPlaceOfIssue() == null &&
-                    BirthDeclaration.State.ARCHIVED_CERT_GENERATED == bdf.getRegister().getStatus()) {
+                    BirthDeclaration.State.ARCHIVED_CERT_GENERATED == bdf.getRegister().getStatus())||(certificateSearch)) {
                     //TODO use primary location to find Userlocation
                     UserLocation userLocation = userLocationDAO.getUserLocation(
                         userList.keySet().iterator().next(), locationList.keySet().iterator().next());
