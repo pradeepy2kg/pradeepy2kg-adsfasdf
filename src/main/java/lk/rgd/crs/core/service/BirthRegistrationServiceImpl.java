@@ -1462,6 +1462,8 @@ public class BirthRegistrationServiceImpl implements
         child.setLifeStatus(Person.LifeStatus.ALIVE);
         child.setStatus(Person.Status.VERIFIED);
         child.setPreferredLanguage(bdf.getRegister().getPreferredLanguage());
+        child.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
+        child.getLifeCycleInfo().setApprovalOrRejectUser(userManager.getSystemUser());
 
         // check mother and father
         final ParentInfo parent = bdf.getParent();
@@ -1530,6 +1532,17 @@ public class BirthRegistrationServiceImpl implements
 
         // generate a PIN number
         long pin = ecivil.addPerson(child, user);
+        // setting child address
+        if (mother != null && parent.getMotherAddress() != null) {
+            final Address address = new Address(parent.getMotherAddress());
+            address.setPermanent(true);
+            child.specifyAddress(address);
+            // save new address to PRS
+            ecivil.addAddress(address, user);
+            // update mother to reflect new address
+            ecivil.updatePerson(child, user);
+        }
+
         childInfo.setPin(pin);
         bdf.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CERT_GENERATED);
 
@@ -1646,7 +1659,7 @@ public class BirthRegistrationServiceImpl implements
                     getPersonCitizenship(parent.getMotherCountry(), parent.getMotherPassportNo(), mother), user);
             }
             if (mother.getPin() != null) {
-                parent.setMotherNICorPIN(mother.getPin().toString());
+                person.setMotherPINorNIC(mother.getPin().toString());
             }
 
             if (parent.getMotherAddress() != null) {
@@ -1731,7 +1744,7 @@ public class BirthRegistrationServiceImpl implements
                     getPersonCitizenship(parent.getFatherCountry(), parent.getFatherPassportNo(), father), user);
             }
             if (father.getPin() != null) {
-                parent.setFatherNICorPIN(father.getPin().toString());
+                person.setFatherPINorNIC(father.getPin().toString());
             }
 
             // locate address of father if he is the informant
