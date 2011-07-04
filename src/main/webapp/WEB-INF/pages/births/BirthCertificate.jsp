@@ -585,8 +585,8 @@
     Issued by Registrar General's Department according to Birth and Death Registration Act (Chapter 110)
 </p>
 
-<s:if test="!#request.certificateSearch">
 <div style="page-break-after:always;">
+<s:if test="!#request.certificateSearch">
 </div>
 <hr style="border-style:dashed ; float:left;width:100% ;margin-bottom:30px;margin-top:150px;">
 
