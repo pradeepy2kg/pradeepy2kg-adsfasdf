@@ -44,11 +44,11 @@ public class GNDivision implements Serializable {
     @JoinColumn(name = "dsDivisionUKey", nullable = false, updatable = false)
     private DSDivision dsDivision;
 
-    @Column(nullable = false, length = 60, updatable = false)
+    @Column(nullable = false, length = 60)
     private String siGNDivisionName;
-    @Column(nullable = false, length = 60, updatable = false)
+    @Column(nullable = false, length = 60)
     private String enGNDivisionName;
-    @Column(nullable = false, length = 60, updatable = false)
+    @Column(nullable = false, length = 60)
     private String taGNDivisionName;
 
     /**
