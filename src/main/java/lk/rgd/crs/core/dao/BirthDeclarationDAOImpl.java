@@ -426,4 +426,34 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
         q.setParameter("registrarNic", registrarNic);
         return q.getResultList();
     }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public Long findDSDivisionUsageInBirthRecords(int dsDivisionUKey) {
+        Query q = em.createNamedQuery("count.birth.dsDivision.usage");
+        q.setParameter("dsDivisionId", dsDivisionUKey);
+        return (Long) q.getSingleResult();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public Long findGNDivisionUsageInBirthRecords(int gnDivisionUKey) {
+        Query q = em.createNamedQuery("count.birth.gnDivision.usage");
+        q.setParameter("gnDivisionId", gnDivisionUKey);
+        return (Long) q.getSingleResult();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public Long findBDDivisionUsageInBirthRecords(int bdDivisionUKey) {
+        Query q = em.createNamedQuery("count.birth.bdDivision.usage");
+        q.setParameter("bdDivisionId", bdDivisionUKey);
+        return (Long) q.getSingleResult();
+    }
 }

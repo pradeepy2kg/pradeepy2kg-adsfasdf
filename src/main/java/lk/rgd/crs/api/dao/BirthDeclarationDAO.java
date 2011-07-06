@@ -361,5 +361,11 @@ public interface BirthDeclarationDAO {
      */
     public List<BirthDeclaration> getBirthsByRegistrarPinOrNicAndDivision(String registrarPin, String registrarNic,
         int bdDivisionUKey);
+
+    public Long findDSDivisionUsageInBirthRecords(int dsDivisionUKey);
+
+    public Long findGNDivisionUsageInBirthRecords(int gnDivisionUKey);
+
+    public Long findBDDivisionUsageInBirthRecords(int bdDivisionUKey);
 }
 
