@@ -92,6 +92,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     private UserLocation userLocation;
     private GNDivision gnDivision;
     private boolean newUser;
+    private boolean editMode;
 
     private Location location;
     private int primaryLocation;
@@ -412,6 +413,184 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         return SUCCESS;
     }
 
+    public String initEditDivisionDetails() {
+        switch (pageType) {
+            // district edit option not provided
+            case 2:
+                districtEn = districtDAO.getNameByPK(userDistrictId, AppConstants.ENGLISH);
+                dsDivision = dsDivisionDAO.getDSDivisionByPK(dsDivisionId);
+                break;
+            case 3:
+                districtEn = districtDAO.getNameByPK(userDistrictId, AppConstants.ENGLISH);
+                dsDivisionEn = dsDivisionDAO.getNameByPK(dsDivisionId, AppConstants.ENGLISH);
+                bdDivision = bdDivisionDAO.getBDDivisionByPK(divisionId);
+                bdDivisionNameList = null;
+                break;
+            case 4:
+                districtEn = districtDAO.getNameByPK(userDistrictId, AppConstants.ENGLISH);
+                dsDivisionEn = dsDivisionDAO.getNameByPK(dsDivisionId, AppConstants.ENGLISH);
+                mrDivision = mrDivisionDAO.getMRDivisionByPK(mrdivisionId);
+                mrDivisionNameList = null;
+                break;
+            case 5:
+                court = courtDAO.getCourt(courtId);
+                courtNameList = null;
+                break;
+            case 6:
+                districtEn = districtDAO.getNameByPK(userDistrictId, AppConstants.ENGLISH);
+                final DSDivision dsDivision = dsDivisionDAO.getDSDivisionByPK(dsDivisionId);
+                dsDivisionEn = dsDivision.getEnDivisionName();
+                location = locationDAO.getLocation(locationId);
+                locationNameList = null;
+                break;
+            case 7:
+                districtEn = districtDAO.getNameByPK(userDistrictId, AppConstants.ENGLISH);
+                dsDivisionEn = dsDivisionDAO.getNameByPK(dsDivisionId, AppConstants.ENGLISH);
+                gnDivision = gnDivisionDAO.getGNDivisionByPK(gnDivisionId);
+                gnDivisionNameList = null;
+                break;
+        }
+        return SUCCESS;
+    }
+
+    public String editDivisionDetails() {
+        int checkDuplicate = 0;
+        switch (pageType) {
+            // districts can not be edited
+            case 2:
+                List<DSDivision> checkDSDivisions = dsDivisionDAO.getDSDivisionByAnyName(dsDivision);
+                if (checkDSDivisions.size() > 0) {
+                    addFieldError("duplicateIdNumberError", "DS Division names are already used. Please check again");
+                    logger.debug("DSDivision names are duplicated");
+                    checkDuplicate++;
+                    editMode = true;
+                }
+                if (checkDuplicate == 0) {
+                    try {
+                        dataManagementService.updateDSDivision(dsDivision, currentUser);
+                        printMessage("update.success");
+                    } catch (CRSRuntimeException e) {
+                        if (e.getErrorCode() == ErrorCodes.ILLEGAL_STATE) {
+                            addFieldError("duplicateIdNumberError", "Can not update Divisional Secretariat Division, since it have mapping records");
+                        }
+                    }
+                }
+                break;
+            case 3:
+                List<BDDivision> checkBDDivisions =
+                    bdDivisionDAO.getBDDivisionByAnyNameAndDSDivisionKey(bdDivision, dsDivisionId);
+                if (checkBDDivisions.size() > 0) {
+                    addFieldError("duplicateIdNumberError", "BD Division names are already used. Please check again");
+                    logger.debug("BDDivision names are duplicated");
+                    checkDuplicate++;
+                    editMode = true;
+                }
+                if (checkDuplicate == 0) {
+                    bdDivision.setDsDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
+                    try {
+                        dataManagementService.updateBDDivision(divisionId, bdDivision, currentUser);
+                        printMessage("update.success");
+                    } catch (CRSRuntimeException e) {
+                        if (e.getErrorCode() == ErrorCodes.ILLEGAL_STATE) {
+                            addFieldError("duplicateIdNumberError", "Can not update Birth Death Registration Division, since it have mapping records");
+                        }
+                    }
+                }
+                break;
+            case 4:
+                List<MRDivision> checkMrDivisions =
+                    mrDivisionDAO.getMRDivisionByAnyNameAndDSDivision(mrDivision, dsDivisionId);
+
+                if (checkMrDivisions.size() > 0) {
+                    addFieldError("duplicateIdNumberError", "MR Division names are already used. Please check again");
+                    logger.debug("MRDivision names are duplicated");
+                    checkDuplicate++;
+                    editMode = true;
+                }
+                if (checkDuplicate == 0) {
+                    try {
+                        mrDivision.setDsDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
+                        dataManagementService.updateMRDivision(mrdivisionId, mrDivision, currentUser);
+                        printMessage("update.success");
+                    } catch (CRSRuntimeException e) {
+                        if (e.getErrorCode() == ErrorCodes.ILLEGAL_STATE) {
+                            addFieldError("duplicateIdNumberError", "Can not update Marriage Registration Division, since it have mapping records");
+                        }
+                    }
+                }
+                break;
+            case 5:
+                List<Court> checkCourts = courtDAO.getCourtByAnyName(court, currentUser);
+                if (checkCourts.size() > 0) {
+                    addFieldError("duplicateIdNumberError", "Court names are already used. Please check again");
+                    logger.debug("Court names are duplicated");
+                    checkDuplicate++;
+                    editMode = true;
+                }
+                if (checkDuplicate == 0) {
+                    try {
+                        dataManagementService.updateCourt(courtId, court, currentUser);
+                        printMessage("update.success");
+                    } catch (CRSRuntimeException e) {
+                        if (e.getErrorCode() == ErrorCodes.ILLEGAL_STATE) {
+                            addFieldError("duplicateIdNumberError", "Can not update Court, since it have mapping records");
+                        }
+                    }
+                }
+                break;
+            case 6:
+                List<Location> checkLocations = locationDAO.getLocationByAnyName(location);
+
+                if (checkLocations.size() > 0) {
+                    addFieldError("duplicateIdNumberError", "Office names are already used. Please check again");
+                    logger.debug("Location name is duplicated");
+                    checkDuplicate++;
+                    editMode = true;
+                }
+                if (checkDuplicate == 0) {
+                    try {
+                        dataManagementService.updateLocation(locationId, location, currentUser);
+                        printMessage("update.success");
+                    } catch (CRSRuntimeException e) {
+                        if (e.getErrorCode() == ErrorCodes.ILLEGAL_STATE) {
+                            addFieldError("duplicateIdNumberError", "Can not update Location, since it have mapping records");
+                        }
+                    }
+                }
+                break;
+            case 7:
+                List<GNDivision> checkGNDivisions =
+                    gnDivisionDAO.getGNDivisionByAnyNameAndDSDivision(gnDivision, dsDivisionId, currentUser);
+
+                if (checkGNDivisions.size() > 0) {
+                    addFieldError("duplicateIdNumberError", "GNDivision names are already exist. Please check again");
+                    logger.debug("GNDivision names are duplicated");
+                    checkDuplicate++;
+                    editMode = true;
+                }
+                if (checkDuplicate == 0) {
+                    gnDivision.setDsDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
+                    try {
+                        dataManagementService.updateGNDivision(gnDivisionId, gnDivision, currentUser);
+                        printMessage("update.success");
+                    } catch (CRSRuntimeException e) {
+                        if (e.getErrorCode() == ErrorCodes.ILLEGAL_STATE) {
+                            addFieldError("duplicateIdNumberError", "Can not update Grama Niladhari Division, since it have mapping records");
+                        }
+                    }
+                }
+
+        }
+        if (checkDuplicate == 0) {
+            setDivisionList(true);
+        }
+        if (checkDuplicate == 1) {
+            setDivisionList(false);
+        }
+
+        return SUCCESS;
+    }
+
     public String initDivisionList() {
         populate();
         setDivisionList(true);
@@ -552,7 +731,6 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
 
     public String addDivisionsAndDsDivisions() {
         int checkDuplicate = 0;
-        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         switch (pageType) {
             case 1:
                 District checkDistrict = districtDAO.getDistrictByCode(district.getDistrictId());
@@ -631,8 +809,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 }
                 break;
             case 6:
-                List<Location> checkLocations = locationDAO.getLocationByAnyName(location.getSiLocationName(),
-                    location.getEnLocationName(), location.getTaLocationName());
+                List<Location> checkLocations = locationDAO.getLocationByAnyName(location);
                 if (checkLocations.size() > 0) {
                     addFieldError("duplicateIdNumberError", "Office names are already used. Please check again");
                     logger.debug("Location name is duplicated");
@@ -691,6 +868,10 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         } else if (AppConstants.TAMIL.equals(language)) {
             msg = getText(propertyKey) + COLON + taName;
         }
+    }
+
+    private void printMessage(String propertyKey) {
+        msg = getText(propertyKey);
     }
 
     public String selectUsers() {
@@ -1389,5 +1570,13 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
 
     public void setGnDivisionNameList(List<GNDivision> gnDivisionNameList) {
         this.gnDivisionNameList = gnDivisionNameList;
+    }
+
+    public boolean isEditMode() {
+        return editMode;
+    }
+
+    public void setEditMode(boolean editMode) {
+        this.editMode = editMode;
     }
 }

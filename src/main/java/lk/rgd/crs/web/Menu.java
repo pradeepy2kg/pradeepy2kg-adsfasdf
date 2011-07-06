@@ -58,6 +58,7 @@ public class Menu {
         adminLink.put("eprInitUserCreation.do", new Link("creat_user.label", "/ecivil/management/", "eprInitUserCreation.do", Permission.USER_MANAGEMENT));
         adminLink.put("eprViewUsers.do", new Link("viewUsers.label", "/ecivil/management/", "eprViewUsers.do", Permission.USER_MANAGEMENT));
         adminLink.put("eprInitAddDivisionsAndDsDivisions.do", new Link("addDivision.label", "/ecivil/management/", "eprInitAddDivisionsAndDsDivisions.do", Permission.SERVICE_MASTER_DATA_MANAGEMENT));
+        adminLink.put("eprInitEditDivisionDetails.do", new Link(null, "/ecivil/management/", "eprInitEditDivisionDetails.do", Permission.SERVICE_MASTER_DATA_MANAGEMENT));
         adminLink.put("eprUserCreation.do", new Link(null, "/ecivil/management/", "eprUserCreation.do", Permission.USER_MANAGEMENT));
         adminLink.put("eprInactiveUsers.do", new Link(null, "/ecivil/management/", "eprInactiveUsers.do", Permission.USER_MANAGEMENT));
         adminLink.put("eprDoInactiveUsers.do", new Link(null, "/ecivil/management/", "eprDoInactiveUsers.do", Permission.USER_MANAGEMENT));
@@ -65,6 +66,7 @@ public class Menu {
         adminLink.put("eprViewSelectedUsers.do", new Link(null, "/ecivil/management/", "eprViewSelectedUsers.do", Permission.USER_MANAGEMENT));
         adminLink.put("eprActivateOrInactivateDivisionsAndDsDivisions.do", new Link(null, "/ecivil/management/", "eprActivateOrInactivateDivisionsAndDsDivisions.do", Permission.SERVICE_MASTER_DATA_MANAGEMENT));
         adminLink.put("eprAddDivisionsAndDsDivisions.do", new Link(null, "/ecivil/management/", "eprAddDivisionsAndDsDivisions.do", Permission.SERVICE_MASTER_DATA_MANAGEMENT));
+        adminLink.put("eprEditDivisionDetails.do", new Link(null, "/ecivil/management/", "eprEditDivisionDetails.do", Permission.SERVICE_MASTER_DATA_MANAGEMENT));
         adminLink.put("eprInitDivisionList.do", new Link(null, "/ecivil/management/", "eprInitDivisionList.do", Permission.SERVICE_MASTER_DATA_MANAGEMENT));
         adminLink.put("eprRegistrarsManagment.do", new Link("registrars.managment", "/ecivil/management/", "eprRegistrarsManagment.do", Permission.REGISTRAR_MANAGEMENT));
         adminLink.put("eprRegistrarsView.do", new Link(null, "/ecivil/management/", "eprRegistrarsView.do", Permission.REGISTRAR_MANAGEMENT));
