@@ -165,10 +165,10 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.SUPPORTS)
-    public DeathRegister getWithTransientValuesById(long idUKey, User user) {
-        logger.debug("laod deth register record with transient values : idUKey{}", idUKey);
+    public DeathRegister getWithTransientValuesById(long idUKey, boolean certificateSearch, User user) {
+        logger.debug("load death register with idUKey : {} record with transient values", idUKey);
         DeathRegister dr = deathRegisterDAO.getById(idUKey);
-        loadValues(dr, user);
+        loadValues(dr, certificateSearch, user);
         return dr;
     }
 
@@ -549,9 +549,10 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         }
     }
 
-    private void loadValues(DeathRegister deathRegister, User user) {
+    private void loadValues(DeathRegister deathRegister, boolean certificateSearch, User user) {
         logger.debug("loading transient values for death record : {}", deathRegister.getIdUKey());
-        if (deathRegister.getOriginalDCIssueUser() == null && deathRegister.getOriginalDCPlaceOfIssue() == null) {
+        if ((deathRegister.getOriginalDCIssueUser() == null && deathRegister.getOriginalDCPlaceOfIssue() == null)
+            || certificateSearch) {
             //first time marking as print
             deathRegister.setOriginalDCIssueUser(user);
             deathRegister.setOriginalDCPlaceOfIssue(user.getPrimaryLocation());

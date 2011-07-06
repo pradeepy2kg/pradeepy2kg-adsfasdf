@@ -278,7 +278,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
 
     public String deathCertificate() {
-        deathRegister = service.getWithTransientValuesById(idUKey, user);
+        deathRegister = service.getWithTransientValuesById(idUKey, certificateSearch, user);
         if ((deathRegister.getStatus() != DeathRegister.State.ARCHIVED_CERT_GENERATED) && (deathRegister.getStatus()
             != DeathRegister.State.ARCHIVED_ALTERED) && (deathRegister.getStatus() != DeathRegister.State.APPROVED)) {
             addActionError(getText("death.error.no.permission.print"));
@@ -307,16 +307,18 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
             deathPersonDistrictEn = districtDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(
                 deathRegister.getDeath().getDeathDivision().getDivisionId()).getDistrict().getDistrictUKey(), AppConstants.ENGLISH);
             initPermissionForApprovalAndPrint();
-            //loading historical recodes
-            archivedEntryList = service.getArchivedCorrectedEntriesForGivenSerialNo(deathRegister.getDeath().getDeathDivision(),
-                deathRegister.getDeath().getDeathSerialNo(), idUKey, user);
-            //create changed bit set to display *  marks
-            if (archivedEntryList.size() > 0) {
-                displayChangesInStarMark(archivedEntryList);
+
+            if (!certificateSearch) {
+                //loading historical recodes
+                archivedEntryList = service.getArchivedCorrectedEntriesForGivenSerialNo(deathRegister.getDeath().getDeathDivision(),
+                    deathRegister.getDeath().getDeathSerialNo(), idUKey, user);
+                //create changed bit set to display *  marks
+                if (archivedEntryList.size() > 0) {
+                    displayChangesInStarMark(archivedEntryList);
+                }
             }
 
             //display user locations
-
             locationList = commonUtil.populateActiveUserLocations(user, language);
             if (!locationList.isEmpty()) {
                 int selectedLocationId = locationList.keySet().iterator().next();
@@ -646,7 +648,6 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public String deathDeclarationViewMode() {
-
         logger.debug("Non Editable Mode Step {} of 2", pageNo);
         DeathRegister ddf;
         if (back) {

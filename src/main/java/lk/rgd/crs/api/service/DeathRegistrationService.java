@@ -231,11 +231,11 @@ public interface DeathRegistrationService {
     /**
      * get death register with transient values
      *
-     * @param idUKey death idUKey
-     * @param user   the user making the request
-     * @return death register object
+     * @param idUKey            the unique key of the death register
+     * @param certificateSearch the death register to be loaded in certificate search mode or not
+     * @param user              the user making the request  @return death register object
      */
-    public DeathRegister getWithTransientValuesById(long idUKey, User user);
+    public DeathRegister getWithTransientValuesById(long idUKey, boolean certificateSearch, User user);
 
     /**
      * Returns all statistics information related to Deaths
