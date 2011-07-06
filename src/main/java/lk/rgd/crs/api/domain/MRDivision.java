@@ -51,11 +51,11 @@ public class MRDivision implements Serializable {
     @JoinColumn(name = "dsDivisionUKey", nullable = false, updatable = false)
     private DSDivision dsDivision;
 
-    @Column(nullable = false, length = 60, updatable = false)
+    @Column(nullable = false, length = 60)
     private String siDivisionName;
-    @Column(nullable = false, length = 60, updatable = false)
+    @Column(nullable = false, length = 60)
     private String enDivisionName;
-    @Column(nullable = false, length = 60, updatable = false)
+    @Column(nullable = false, length = 60)
     private String taDivisionName;
 
     /**
