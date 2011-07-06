@@ -64,4 +64,13 @@ public interface CourtDAO {
      * @return the Court
      */
     public Court getCourtByCode(int courtId);
+
+    /**
+     * Return the list of courts by Court name in any language
+     *
+     * @param court the court data
+     * @param user  the user invoking the action
+     * @return the list of matching courts
+     */
+    public List<Court> getCourtByAnyName(Court court, User user);
 }
