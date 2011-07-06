@@ -35,8 +35,7 @@ import java.util.*;
 /**
  * The central service managing the CRS Birth Registration process
  */
-public class BirthRegistrationServiceImpl implements
-    BirthRegistrationService {
+public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
     private static final Logger logger = LoggerFactory.getLogger(BirthRegistrationServiceImpl.class);
     private final BirthDeclarationDAO birthDeclarationDAO;
@@ -58,7 +57,8 @@ public class BirthRegistrationServiceImpl implements
         BirthDeclarationDAO birthDeclarationDAO, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
         BDDivisionDAO bdDivisionDAO, CountryDAO countryDAO, RaceDAO raceDAO, PopulationRegistry ecivil,
         AppParametersDAO appParametersDAO, UserManager userManager, BirthRecordsIndexer birthRecordsIndexer,
-        AdoptionOrderDAO adoptionOrderDAO, BirthDeclarationValidator birthDeclarationValidator, AdoptionOrderService adoptionOrderService, GNDivisionDAO gnDivisionDAO) {
+        AdoptionOrderDAO adoptionOrderDAO, BirthDeclarationValidator birthDeclarationValidator,
+        AdoptionOrderService adoptionOrderService, GNDivisionDAO gnDivisionDAO) {
         this.birthDeclarationDAO = birthDeclarationDAO;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
