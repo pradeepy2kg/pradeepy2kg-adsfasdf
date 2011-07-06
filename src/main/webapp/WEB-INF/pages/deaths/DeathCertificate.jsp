@@ -70,8 +70,8 @@
                                         var officerSign = data.officerSignature;
                                         var locationSign = data.locationSignature;
                                         var location = data.locationName;
-                                        $("label#signature").html(officerSign);
-                                        $("label#placeSign").html(locationSign);
+                                        $("textarea#signature").html(officerSign);
+                                        $("textarea#placeSign").html(locationSign);
                                         $("label#placeName").html(location);
                                     });
                         });
@@ -91,8 +91,8 @@
                         var officerSign = data.officerSignature;
                         var locationSign = data.locationSignature;
                         var location = data.locationName;
-                        $("label#signature").html(officerSign);
-                        $("label#placeSign").html(locationSign);
+                        $("textarea#signature").html(officerSign);
+                        $("textarea#placeSign").html(locationSign);
                         $("label#placeName").html(location);
                     });
         });
@@ -101,6 +101,42 @@
     function initPage() {
     }
 </script>
+
+<s:if test="#request.certificateSearch">
+    <s:url id="print" action="eprDeathCertificateSearch.do"/>
+    <s:url id="cancel" action="eprDeathCertificateSearch.do"/>
+</s:if>
+<s:else>
+    <s:url id="print" action="eprPrintDeathCertificate.do">
+        <s:param name="idUKey" value="#request.idUKey"/>
+        <s:param name="currentStatus" value="#request.currentStatus"/>
+        <s:param name="pageNo" value="#request.pageNo"/>
+        <s:param name="nextFlag" value="#request.nextFlag"/>
+        <s:param name="previousFlag" value="#request.previousFlag"/>
+        <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
+        <s:param name="deathDivisionId" value="#request.deathDivisionId}"/>
+    </s:url>
+    <s:if test="%{pageNo>0}">
+        <s:url id="cancel" action="eprDeathBackToPreviousState.do">
+            <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+            <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+            <s:param name="pageNo" value="%{pageNo}"/>
+            <s:param name="currentStatus" value="%{#request.currentStatus}"/>
+            <s:param name="dsDivisionId" value="%{deathRegister.death.deathDivision.dsDivision.dsDivisionUKey}"/>
+            <s:param name="deathDivisionId" value="%{deathRegister.death.deathDivision.bdDivisionUKey}"/>
+        </s:url>
+    </s:if>
+    <s:else>
+        <s:url id="cancel" action="eprDeathBackToPreviousState.do">
+            <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+            <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+            <s:param name="pageNo" value="%{1}"/>
+            <s:param name="currentStatus" value="%{#request.currentStatus}"/>
+            <s:param name="dsDivisionId" value="%{deathRegister.death.deathDivision.dsDivision.dsDivisionUKey}"/>
+            <s:param name="deathDivisionId" value="%{deathRegister.death.deathDivision.bdDivisionUKey}"/>
+        </s:url>
+    </s:else>
+</s:else>
 
 <div id="death-certificate-outer">
 <s:form action="eprPrintDeathCertificate.do" method="post">
@@ -132,7 +168,7 @@
         </fieldset>
     </div>
 </s:if>
-<s:if test="deathRegister.status.ordinal()==1 ">
+<s:if test="deathRegister.status.ordinal()==1 || #request.certificateSearch">
     <div id="locations">
         <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;width:500px">
             <legend><s:label value="%{getText('selectoption.label')}"/></legend>
@@ -157,37 +193,6 @@
         </fieldset>
     </div>
 </s:if>
-
-<s:url id="print" action="eprPrintDeathCertificate.do">
-    <s:param name="idUKey" value="#request.idUKey"/>
-    <s:param name="currentStatus" value="%{#request.currentStatus}"/>
-    <s:param name="pageNo" value="%{#request.pageNo}"/>
-    <s:param name="nextFlag" value="%{#request.nextFlag}"/>
-    <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-    <s:param name="dsDivisionId" value="%{#request.dsDivisionId}"/>
-    <s:param name="deathDivisionId" value="%{#request.deathDivisionId}"/>
-</s:url>
-<s:if test="%{pageNo>0}">
-    <s:url id="cancel" action="eprDeathBackToPreviousState.do">
-        <s:param name="nextFlag" value="%{#request.nextFlag}"/>
-        <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-        <s:param name="pageNo" value="%{pageNo}"/>
-        <s:param name="currentStatus" value="%{#request.currentStatus}"/>
-        <s:param name="dsDivisionId" value="%{deathRegister.death.deathDivision.dsDivision.dsDivisionUKey}"/>
-        <s:param name="deathDivisionId" value="%{deathRegister.death.deathDivision.bdDivisionUKey}"/>
-    </s:url>
-</s:if>
-<s:else>
-    <s:url id="cancel" action="eprDeathBackToPreviousState.do">
-        <s:param name="nextFlag" value="%{#request.nextFlag}"/>
-        <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-        <s:param name="pageNo" value="%{1}"/>
-        <s:param name="currentStatus" value="%{#request.currentStatus}"/>
-        <s:param name="dsDivisionId" value="%{deathRegister.death.deathDivision.dsDivision.dsDivisionUKey}"/>
-        <s:param name="deathDivisionId" value="%{deathRegister.death.deathDivision.bdDivisionUKey}"/>
-    </s:url>
-</s:else>
-
 
 <table style="width: 100%; border:none; border-collapse:collapse; ">
     <col width="250px"/>
@@ -224,8 +229,8 @@
                     <td>සහතික පත්‍රයේ අංකය<br>சான்றிதழ் இல<br>Certificate Number</td>
                 </tr>
                 <tr height="40px">
-                <%--    <td align="center"><s:label value="%{deathRegister.death.deathSerialNo}"
-                                                cssStyle="font-size:11pt;"/></td>--%>
+                        <%--    <td align="center"><s:label value="%{deathRegister.death.deathSerialNo}"
+                        cssStyle="font-size:11pt;"/></td>--%>
                     <td align="center"><s:label name="idUKey" cssStyle="font-size:11pt;" id="certificateId"/></td>
                 </tr>
             </table>
@@ -534,8 +539,8 @@
 
 <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin-bottom:0;"
        class="font-9">
-    <col width="195px"/>
     <col width="215px"/>
+    <col width="180px"/>
     <col width="120px"/>
     <col/>
     <tbody>
@@ -555,22 +560,25 @@
         </td>
     </tr>
     <tr>
-        <td colspan="2" height="80px">
+        <td colspan="2" height="75px">
             සහතික කරනු ලබන නිලධාරියා ගේ නම, තනතුර සහ අත්සන
             <br>சான்றிதழ் அளிக்கும் அதிகாரியின் பெயர், பதவி, கையொப்பம்
             <br>Name, Signature and Designation of certifying officer
         </td>
-        <td colspan="2">
-            <s:label id="signature" value="%{deathRegister.originalDCIssueUserSignPrint}"/>
+        <td colspan="2" style="font-size:11pt">
+            <s:textarea id="signature" value="%{deathRegister.originalDCIssueUserSignPrint}" disabled="true"
+                        rows="4"
+                        cssStyle="margin-top:10px;text-transform:none;width:100%;font-size:10pt;background:transparent;border:none;padding:0;"/>
         </td>
     </tr>
     <tr>
         <td colspan="2" height="30px">
             නිකුත් කළ ස්ථානය / வழங்கிய இடம் / Place of Issue
         </td>
-        <td colspan="2">
-            <s:label id="placeSign" value="%{deathRegister.originalDCPlaceOfIssueSignPrint}"/><br>
-            <s:label id="placeName" value="%{deathRegister.originalDCPlaceOfIssuePrint}"/>
+        <td colspan="2" style="font-size:11pt">
+            <s:textarea id="placeSign" value="%{deathRegister.originalDCPlaceOfIssueSignPrint}" disabled="true"
+                        rows="3"
+                        cssStyle="margin-top:10px;text-transform:none;width:100%;font-size:10pt;background:transparent;border:none;padding:0;"/>
         </td>
     </tr>
     </tbody>
@@ -602,6 +610,7 @@
 <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
 <s:hidden name="dsDivisionId" value="%{deathRegister.death.deathDivision.dsDivision.dsDivisionUKey}"/>
 <s:hidden name="deathDivisionId" value="%{deathRegister.death.deathDivision.bdDivisionUKey}"/>
+<s:hidden name="certificateSearch" value="%{certificateSearch}"/>
 </s:form>
 
 
