@@ -75,12 +75,12 @@ public interface LocationDAO {
      * Return locations which have matching location name in sinhala, english or tamil, to ensure locations have unique
      * names
      *
-     * @param siName the location name in sinhala
-     * @param enName the location name in english
-     * @param taName the location name in tamil
+     *
+     *
+     * @param location
      * @return
      */
-    public List<Location> getLocationByAnyName(String siName, String enName, String taName);
+    public List<Location> getLocationByAnyName(Location location);
 
     /**
      * Return the the list of Locations by DS Division unique key and location code

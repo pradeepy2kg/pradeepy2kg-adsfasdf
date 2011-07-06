@@ -106,11 +106,11 @@ public class LocationDAOImpl extends BaseDAO implements LocationDAO, Preloadable
     }
 
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<Location> getLocationByAnyName(String siName, String enName, String taName) {
+    public List<Location> getLocationByAnyName(Location location) {
         Query q = em.createNamedQuery("get.location.by.anyName");
-        q.setParameter("siName", siName);
-        q.setParameter("enName", enName);
-        q.setParameter("taName", taName);
+        q.setParameter("siName", location.getSiLocationName());
+        q.setParameter("enName", location.getEnLocationName());
+        q.setParameter("taName", location.getTaLocationName());
         return q.getResultList();
     }
 
