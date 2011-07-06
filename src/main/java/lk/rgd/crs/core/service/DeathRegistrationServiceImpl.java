@@ -703,7 +703,8 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         return data;
     }
 
-    public List<DeathRegister> getByDSDivisionAndStatusAndRegistrationDateRange(DSDivision dsDivision, Date startDate, Date endDate, DeathRegister.State state, User user) {
+    public List<DeathRegister> getByDSDivisionAndStatusAndRegistrationDateRange(DSDivision dsDivision, Date startDate,
+        Date endDate, DeathRegister.State state, User user) {
         //TODO check user permission
         return deathRegisterDAO.getDeathRegisterByDivisionAndStatusAndDate(dsDivision, state, startDate, endDate);
     }
