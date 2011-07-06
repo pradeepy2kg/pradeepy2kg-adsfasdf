@@ -392,7 +392,8 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
 
     private boolean isEligibleToUpdateDSDivision(int dsDivisionUKey) {
         // TODO
-        return false;
+        long size = birthDeclarationDAO.findDSDivisionUsageInBirthRecords(dsDivisionUKey);
+        return size == 0;
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
