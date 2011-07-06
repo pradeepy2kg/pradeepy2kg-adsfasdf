@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>deathAlteration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">deathAlteration</td></tr>
+</thead><tbody>
+<tr>
+	<td>clickAndWait</td>
+	<td>logout-button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/ecivil/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_userName</td>
+	<td>adr-kalutara-panadura</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_password</td>
+	<td>password</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprLogin_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>userPreference.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>user_preference_prefLanguage</td>
+	<td>label=English</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>user_preference_0</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>clickAndWait</td>
+	<td>link=ALTERATION</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>death.registration.alteration</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>idUKey</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>searchButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>reciveDatePicker</td>
+	<td>2011-03-28</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>death-info-max</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>death-info-check</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>deathTimePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>deathTimePicker</td>
+	<td>12:10</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>death-info-min</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprCaptureDeathAlteration_deathAlteration_otherDocuments</td>
+	<td>mistake</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>declarantTypeFATHER</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>declarantTypeFATHER</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>declarantTypeBORTHER_OR_SISTER</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>death-info-max</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>death-info-min</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>type</td>
+	<td>declarantName</td>
+	<td>anura</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>declarantAddress</td>
+	<td>no.5, wadduwa</td>
+</tr>
+
+<tr>
+	<td>type</td>
+	<td>declarant_pinOrNic</td>
+	<td>855012132V</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprCaptureDeathAlteration_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>label.manage.alterations</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>eprApproveDeathAlterations_refresh</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>divisionId</td>
+	<td>label=1 : Panadura (Medical)</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprApproveDeathAlterations_refresh</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
