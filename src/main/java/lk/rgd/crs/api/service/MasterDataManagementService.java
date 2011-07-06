@@ -5,11 +5,9 @@ import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.domain.BDDivision;
-import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.domain.Court;
 import lk.rgd.crs.api.domain.GNDivision;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
+import lk.rgd.crs.api.domain.MRDivision;
 
 /**
  * Perform the management of Master Data
@@ -26,6 +24,15 @@ public interface MasterDataManagementService {
      */
     void addBDDivision(BDDivision bdDivision, User user);
 
+    /**
+     * Update BD Division (only BD Division name in sinhala, english, tamil can be updated), if the selected BD Division
+     * does not have any mappings by birth, death etc.
+     *
+     * @param bdDivisionUKey the unique key of BD Division to be updated
+     * @param bdDivision     the BD Division to be updated
+     * @param user           the user invoking the action
+     */
+    void updateBDDivision(int bdDivisionUKey, BDDivision bdDivision, User user);
 
     /**
      * Mark a BD Division as active
@@ -45,6 +52,16 @@ public interface MasterDataManagementService {
     void addMRDivision(MRDivision mrDivision, User user);
 
     /**
+     * updated MR Division (only MR Division name in sinhala, english, tamil can be updated), if the selected
+     * MR Division does not have any mappings by marriage register
+     *
+     * @param mrDivisionUKey the unique key of MR Division to be updated
+     * @param mrDivision     the MR Division to be updated
+     * @param user           the user invoking the action
+     */
+    void updateMRDivision(int mrDivisionUKey, MRDivision mrDivision, User user);
+
+    /**
      * Mark a MR Division as inactive
      *
      * @param mrDivisionUKey the MR Division to be updated
@@ -52,6 +69,7 @@ public interface MasterDataManagementService {
      * @param user           the user invoking the action
      */
     void activateOrInactivateMRDivision(int mrDivisionUKey, boolean activate, User user);
+
     /**
      * Add a new DS Division
      *
@@ -61,6 +79,15 @@ public interface MasterDataManagementService {
     void addDSDivision(DSDivision dsDivision, User user);
 
     /**
+     * Update a DS Division (only DS Division name in sinhala, english, tamil can be updated), if it does not have any
+     * mappings by birth, death etc.
+     *
+     * @param dsDivision the DS Division to be updated
+     * @param user       the user invoking the action
+     */
+    void updateDSDivision(DSDivision dsDivision, User user);
+
+    /**
      * Mark a DS Division as inactive
      *
      * @param dsDivisionUKey the DS Division to be updated
@@ -68,6 +95,7 @@ public interface MasterDataManagementService {
      * @param user           the user invoking the action
      */
     void activateOrInactivateDSDivision(int dsDivisionUKey, boolean active, User user);
+
     /**
      * Add a new District
      *
@@ -84,6 +112,7 @@ public interface MasterDataManagementService {
      * @param active       check that active or inactive district
      */
     void activateOrInactivateDistrict(int districtUKey, boolean active, User user);
+
     /**
      * Add a new Location as active
      *
@@ -93,6 +122,16 @@ public interface MasterDataManagementService {
     public void addLocation(Location location, User user);
 
     /**
+     * Update Location (only Location name in sinhala, english, tamil can be updated), if it does not have any mapping
+     * db records
+     *
+     * @param locationUKey the unique key of Location to be updated
+     * @param location     the Location to be updated
+     * @param user         the user invoking the action
+     */
+    public void updateLocation(int locationUKey, Location location, User user);
+
+    /**
      * Mark a Location as active
      *
      * @param locationUKey the location to mark as active
@@ -100,6 +139,7 @@ public interface MasterDataManagementService {
      * @param user         user invoking the action
      */
     public void activateOrInactivateLocation(int locationUKey, boolean activate, User user);
+
     /**
      * Add a new Court as active
      *
@@ -107,6 +147,16 @@ public interface MasterDataManagementService {
      * @param user  user invoking the action
      */
     public void addCourt(Court court, User user);
+
+    /**
+     * Update a Court (only Court name in sinhala, english, tamil can be updated), if it does not have any mappings by
+     * Adoption etc.
+     *
+     * @param courtUKey the unique key of Court to be updated
+     * @param court     the court to be updated
+     * @param user      the user invoking the action
+     */
+    public void updateCourt(int courtUKey, Court court, User user);
 
     /**
      * Mark a Court as active
@@ -126,7 +176,17 @@ public interface MasterDataManagementService {
      */
     void addGNDivision(GNDivision gnDivision, User user);
 
-     /**
+    /**
+     * update a GN Division (only GN Division name in sinhala, english, tamil can be updated), if it does not have any
+     * mappings
+     *
+     * @param gnDivisionUKey the unique key of GN Division to be updated
+     * @param gnDivision     the GN Division to be updated
+     * @param user           the user invoking the action
+     */
+    void updateGNDivision(int gnDivisionUKey, GNDivision gnDivision, User user);
+
+    /**
      * Mark a GN Division as active
      *
      * @param gnDivisionUKey the BD Division to be updated

@@ -10,10 +10,7 @@ import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.CRSRuntimeException;
-import lk.rgd.crs.api.dao.BDDivisionDAO;
-import lk.rgd.crs.api.dao.CourtDAO;
-import lk.rgd.crs.api.dao.GNDivisionDAO;
-import lk.rgd.crs.api.dao.MRDivisionDAO;
+import lk.rgd.crs.api.dao.*;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.Court;
 import lk.rgd.crs.api.domain.GNDivision;
@@ -42,9 +39,12 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
     private final LocationDAO locationDAO;
     private final CourtDAO courtDAO;
     private final GNDivisionDAO gnDivisionDAO;
+    private final BirthDeclarationDAO birthDeclarationDAO;
+    private final DeathRegisterDAO deathRegisterDAO;
 
     public MasterDataManagementServiceImpl(BDDivisionDAO bdDivisionDAO, MRDivisionDAO mrDivisionDAO,
-        DSDivisionDAO dsDivisionDAO, DistrictDAO districtDAO, LocationDAO locationDAO, CourtDAO courtDAO, GNDivisionDAO gnDivisionDAO) {
+        DSDivisionDAO dsDivisionDAO, DistrictDAO districtDAO, LocationDAO locationDAO, CourtDAO courtDAO,
+        GNDivisionDAO gnDivisionDAO, BirthDeclarationDAO birthDeclarationDAO, DeathRegisterDAO deathRegisterDAO) {
         this.bdDivisionDAO = bdDivisionDAO;
         this.mrDivisionDAO = mrDivisionDAO;
         this.dsDivisionDAO = dsDivisionDAO;
@@ -52,6 +52,8 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
         this.locationDAO = locationDAO;
         this.courtDAO = courtDAO;
         this.gnDivisionDAO = gnDivisionDAO;
+        this.birthDeclarationDAO = birthDeclarationDAO;
+        this.deathRegisterDAO = deathRegisterDAO;
     }
 
     /**
@@ -59,13 +61,7 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void addBDDivision(BDDivision bdDivision, User user) {
-
-        if (isEmptyString(bdDivision.getEnDivisionName()) ||
-            isEmptyString(bdDivision.getEnDivisionName()) ||
-            isEmptyString(bdDivision.getEnDivisionName())) {
-            throw new CRSRuntimeException(
-                "One or more names of the BD Division is invalid - check all languages", ErrorCodes.INVALID_DATA);
-        }
+        validateMinimalRequirements(bdDivision);
 
         if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
             try {
@@ -82,30 +78,113 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
         }
     }
 
+    /**
+     * @inheritDoc
+     */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void addGNDivision(GNDivision gnDivision, User user) {
-        if (isEmptyString(gnDivision.getEnGNDivisionName()) ||
-            isEmptyString(gnDivision.getEnGNDivisionName()) ||
-            isEmptyString(gnDivision.getEnGNDivisionName())) {
+    public void updateBDDivision(int bdDivisionUKey, BDDivision bdDivision, User user) {
+        validateMinimalRequirements(bdDivision);
+
+        if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
+            logger.debug("Attempt to edit BD Division with key : {}", bdDivisionUKey);
+            // validate BD Division usage before edit
+            if (!isEligibleToUpdateBDDivision(bdDivisionUKey)) {
+                handleException("BD Division with key : " + bdDivisionUKey + " have mapping db records.",
+                    ErrorCodes.ILLEGAL_STATE);
+            }
+            BDDivision current = bdDivisionDAO.getBDDivisionByPK(bdDivisionUKey);
+
+            if (current != null) {
+                current.setEnDivisionName(bdDivision.getEnDivisionName());
+                current.setSiDivisionName(bdDivision.getSiDivisionName());
+                current.setTaDivisionName(bdDivision.getTaDivisionName());
+                bdDivisionDAO.update(current, user);
+                logger.info("BD Division with key : {} updated successfully", bdDivisionUKey);
+            }
+        } else {
+            logger.error("User : {} was not allowed to edit BD Division with key : {}", user.getUserId(),
+                bdDivisionUKey);
+        }
+    }
+
+    private void validateMinimalRequirements(BDDivision bdDivision) {
+        if (isEmptyString(bdDivision.getEnDivisionName()) ||
+            isEmptyString(bdDivision.getSiDivisionName()) ||
+            isEmptyString(bdDivision.getTaDivisionName())) {
             throw new CRSRuntimeException(
                 "One or more names of the BD Division is invalid - check all languages", ErrorCodes.INVALID_DATA);
         }
+    }
+
+    private boolean isEligibleToUpdateBDDivision(int bdDivisionUKey) {
+        long size = birthDeclarationDAO.findBDDivisionUsageInBirthRecords(bdDivisionUKey);
+        size += deathRegisterDAO.findBDDivisionUsageInDeathRecords(bdDivisionUKey);
+        // TODO
+        return size == 0;
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void addGNDivision(GNDivision gnDivision, User user) {
+        validateMinimalRequirements(gnDivision);
 
         if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
             try {
-                logger.debug("successfully added GNDivision with code number : {}", gnDivision.getGnDivisionId());
                 List<GNDivision> divisions = gnDivisionDAO.getGNDivisionByCodeAndDSDivision(
                     gnDivision.getGnDivisionId(), gnDivision.getDsDivision());
                 gnDivision.setActive(divisions.isEmpty());
-
                 gnDivisionDAO.add(gnDivision, user);
+                logger.debug("successfully added GNDivision with code number : {}", gnDivision.getGnDivisionId());
             } catch (Exception e) {
-                logger.error("Attempt to add BD Division : " + gnDivision.getEnGNDivisionName() + " failed", e);
+                logger.error("Attempt to add GN Division : " + gnDivision.getEnGNDivisionName() + " failed", e);
             }
         } else {
-            logger.error("User : " + user.getUserId() +
-                " was not allowed to add a new BD Division : " + gnDivision.getEnGNDivisionName());
+            logger.error("User : " + user.getUserId() + " was not allowed to add a new GN Division : " +
+                gnDivision.getEnGNDivisionName());
         }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void updateGNDivision(int gnDivisionUKey, GNDivision gnDivision, User user) {
+        validateMinimalRequirements(gnDivision);
+
+        if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
+            logger.debug("Attempt to edit GN Division with key : {}", gnDivisionUKey);
+            // validate GN Division usage before edit
+            if (!isEligibleToUpdateGNDivision(gnDivisionUKey)) {
+                handleException("GN Division with key : " + gnDivisionUKey + " have mapping db records.",
+                    ErrorCodes.ILLEGAL_STATE);
+            }
+
+            GNDivision current = gnDivisionDAO.getGNDivisionByPK(gnDivisionUKey);
+
+            if (current != null) {
+                current.setEnGNDivisionName(gnDivision.getEnGNDivisionName());
+                current.setSiGNDivisionName(gnDivision.getSiGNDivisionName());
+                current.setTaGNDivisionName(gnDivision.getTaGNDivisionName());
+                gnDivisionDAO.update(current, user);
+                logger.info("GN Division with key : {} updated successfully", gnDivisionUKey);
+            }
+        } else {
+            logger.error("User : {} was not allowed to edit GN Division with key : {}", user.getUserId(),
+                gnDivisionUKey);
+        }
+    }
+
+    private void validateMinimalRequirements(GNDivision gnDivision) {
+        if (isEmptyString(gnDivision.getEnGNDivisionName()) ||
+            isEmptyString(gnDivision.getSiGNDivisionName()) ||
+            isEmptyString(gnDivision.getTaGNDivisionName())) {
+            throw new CRSRuntimeException(
+                "One or more names of the GN Division is invalid - check all languages", ErrorCodes.INVALID_DATA);
+        }
+    }
+
+    private boolean isEligibleToUpdateGNDivision(int gnDivisionUKey) {
+        long size = birthDeclarationDAO.findGNDivisionUsageInBirthRecords(gnDivisionUKey);
+        return size > 0 ? false : deathRegisterDAO.findGNDivisionUsageInDeathRecords(gnDivisionUKey) == 0;
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
@@ -121,10 +200,12 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
                 if (existing != null) {
                     existing.setActive(activate);
                     gnDivisionDAO.update(existing, user);
-                    logger.info("GN Division : {} " + (activate ? "" : "in-") + "activated by : {}", existing.getEnGNDivisionName(), user.getUserId());
+                    logger.info("GN Division : {} " + (activate ? "" : "in-") + "activated by : {}",
+                        existing.getEnGNDivisionName(), user.getUserId());
                 }
             } catch (Exception e) {
-                logger.error("Attempt to " + (activate ? "" : "in-") + "activate GN Division with key : " + gnDivisionUKey + " failed", e);
+                logger.error("Attempt to " + (activate ? "" : "in-") + "activate GN Division with key : " +
+                    gnDivisionUKey + " failed", e);
             }
         } else {
             logger.error("User : " + user.getUserId() +
@@ -161,13 +242,7 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void addMRDivision(MRDivision mrDivision, User user) {
-
-        if (isEmptyString(mrDivision.getEnDivisionName()) ||
-            isEmptyString(mrDivision.getEnDivisionName()) ||
-            isEmptyString(mrDivision.getEnDivisionName())) {
-            throw new CRSRuntimeException(
-                "One or more names of the MR Division is invalid - check all languages", ErrorCodes.INVALID_DATA);
-        }
+        validateMinimalRequirements(mrDivision);
 
         if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
             try {
@@ -183,6 +258,48 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
             logger.error("User : " + user.getUserId() +
                 " was not allowed to add a new MR Division : " + mrDivision.getEnDivisionName());
         }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void updateMRDivision(int mrDivisionUKey, MRDivision mrDivision, User user) {
+        validateMinimalRequirements(mrDivision);
+
+        if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
+            logger.debug("Attempt to edit MR Division with key : {}", mrDivisionUKey);
+            // validate MR Division usage before edit
+            if (!isEligibleToUpdateMRDivision(mrDivisionUKey)) {
+                handleException("MR Division with key : " + mrDivisionUKey + " have mapping db records.",
+                    ErrorCodes.ILLEGAL_STATE);
+            }
+            MRDivision current = mrDivisionDAO.getMRDivisionByPK(mrDivisionUKey);
+
+            if (current != null) {
+                current.setEnDivisionName(mrDivision.getEnDivisionName());
+                current.setSiDivisionName(mrDivision.getSiDivisionName());
+                current.setTaDivisionName(mrDivision.getTaDivisionName());
+                mrDivisionDAO.update(current, user);
+                logger.info("MR Division with key : {} updated successfully", current.getMrDivisionUKey());
+            }
+        } else {
+            logger.error("User : {} was not allowed to edit MR Division : {}", user.getUserId(), mrDivisionUKey);
+        }
+    }
+
+    private void validateMinimalRequirements(MRDivision mrDivision) {
+        if (isEmptyString(mrDivision.getEnDivisionName()) ||
+            isEmptyString(mrDivision.getSiDivisionName()) ||
+            isEmptyString(mrDivision.getTaDivisionName())) {
+            throw new CRSRuntimeException(
+                "One or more names of the MR Division is invalid - check all languages", ErrorCodes.INVALID_DATA);
+        }
+    }
+
+    private boolean isEligibleToUpdateMRDivision(int mrDivisionUKey) {
+        // TODO
+        return false;
     }
 
     /**
@@ -216,13 +333,7 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void addDSDivision(DSDivision dsDivision, User user) {
-
-        if (isEmptyString(dsDivision.getEnDivisionName()) ||
-            isEmptyString(dsDivision.getEnDivisionName()) ||
-            isEmptyString(dsDivision.getEnDivisionName())) {
-            throw new CRSRuntimeException(
-                "One or more names of the DS Division is invalid - check all languages", ErrorCodes.INVALID_DATA);
-        }
+        validateMinimalRequirements(dsDivision);
 
         if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
             try {
@@ -237,6 +348,51 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
             logger.error("User : " + user.getUserId() +
                 " was not allowed to add a new DS Division : " + dsDivision.getEnDivisionName());
         }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void updateDSDivision(DSDivision dsDivision, User user) {
+        validateMinimalRequirements(dsDivision);
+
+        final int dsDivisionUKey = dsDivision.getDsDivisionUKey();
+        if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
+
+            logger.debug("Attempt to edit DS Division with key : {}", dsDivisionUKey);
+            // validate DS Division usage before edit
+            if (!isEligibleToUpdateDSDivision(dsDivisionUKey)) {
+                handleException("DS Division with key : " + dsDivisionUKey + " have mapping db records.",
+                    ErrorCodes.ILLEGAL_STATE);
+            }
+            DSDivision current = dsDivisionDAO.getDSDivisionByPK(dsDivision.getDsDivisionUKey());
+
+            if (current != null) {
+                current.setEnDivisionName(dsDivision.getEnDivisionName());
+                current.setSiDivisionName(dsDivision.getSiDivisionName());
+                current.setTaDivisionName(dsDivision.getTaDivisionName());
+                dsDivisionDAO.update(current, user);
+                logger.info("DS Division with key : {} updated successfully", dsDivisionUKey);
+            }
+        } else {
+            logger.error("User : " + user.getUserId() + " was not allowed to edit DS Division with key: " +
+                dsDivisionUKey);
+        }
+    }
+
+    private void validateMinimalRequirements(DSDivision dsDivision) {
+        if (isEmptyString(dsDivision.getEnDivisionName()) ||
+            isEmptyString(dsDivision.getSiDivisionName()) ||
+            isEmptyString(dsDivision.getTaDivisionName())) {
+            throw new CRSRuntimeException(
+                "One or more names of the DS Division is invalid - check all languages", ErrorCodes.INVALID_DATA);
+        }
+    }
+
+    private boolean isEligibleToUpdateDSDivision(int dsDivisionUKey) {
+        // TODO
+        return false;
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
@@ -319,15 +475,7 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void addLocation(Location location, User user) {
-        if (isEmptyString(location.getLocationCode())) {
-            throw new CRSRuntimeException("Location code is empty", ErrorCodes.INVALID_DATA);
-        }
-        if (isEmptyString(location.getEnLocationName()) ||
-            isEmptyString(location.getSiLocationName()) ||
-            isEmptyString(location.getTaLocationName())) {
-            throw new CRSRuntimeException(
-                "One or more names of the Location names is invalid - check all languages", ErrorCodes.INVALID_DATA);
-        }
+        validateMinimalRequirements(location);
 
         if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
             try {
@@ -343,6 +491,51 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
             logger.error("User : " + user.getUserId() +
                 " was not allowed to add a new Location : " + location.getEnLocationName());
         }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void updateLocation(int locationUKey, Location location, User user) {
+        validateMinimalRequirements(location);
+
+        if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
+            logger.debug("Attempt to edit Location with key : {}", locationUKey);
+            // validate Location usage before edit
+            if (!isEligibleToUpdateLocation(locationUKey)) {
+                handleException("Location with key : " + locationUKey + " have mapping db records.",
+                    ErrorCodes.ILLEGAL_STATE);
+            }
+            Location current = locationDAO.getLocation(locationUKey);
+
+            if (current != null) {
+                current.setSiLocationName(location.getSiLocationName());
+                current.setEnLocationName(location.getEnLocationName());
+                current.setTaLocationName(location.getTaLocationName());
+                locationDAO.update(current, user);
+                logger.info("Location with key : {} updated successfully", locationUKey);
+            }
+        } else {
+            logger.error("User : {} was not allowed to edit Location with key : ", user.getUserId(), locationUKey);
+        }
+    }
+
+    private void validateMinimalRequirements(Location location) {
+        if (isEmptyString(location.getLocationCode())) {
+            throw new CRSRuntimeException("Location code is empty", ErrorCodes.INVALID_DATA);
+        }
+        if (isEmptyString(location.getEnLocationName()) ||
+            isEmptyString(location.getSiLocationName()) ||
+            isEmptyString(location.getTaLocationName())) {
+            throw new CRSRuntimeException(
+                "One or more names of the Location names is invalid - check all languages", ErrorCodes.INVALID_DATA);
+        }
+    }
+
+    private boolean isEligibleToUpdateLocation(int locationUKey) {
+        // TODO
+        return false;
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
@@ -371,18 +564,12 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
         }
     }
 
-
     /**
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void addCourt(Court court, User user) {
-        if (isEmptyString(court.getEnCourtName()) ||
-            isEmptyString(court.getSiCourtName()) ||
-            isEmptyString(court.getTaCourtName())) {
-            throw new CRSRuntimeException(
-                "One or more names of the Court names is invalid - check all languages", ErrorCodes.INVALID_DATA);
-        }
+        validateMinimalRequirements(court);
 
         if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
             try {
@@ -391,9 +578,53 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
                 logger.error("Attempt to add Court : " + court.getEnCourtName() + " failed", e);
             }
         } else {
-            logger.error("User : " + user.getUserId() +
-                " was not allowed to add a new Location : " + court.getEnCourtName());
+            logger.error("User : " + user.getUserId() + " was not allowed to add a new Court : " +
+                court.getEnCourtName());
         }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void updateCourt(int courtUKey, Court court, User user) {
+        validateMinimalRequirements(court);
+
+        if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
+            logger.debug("Attempt to edit Court with key : {}", courtUKey);
+            // TODO validate usage of courts
+            // validate Court usage before edit
+            if (!isEligibleToUpdateCourt(courtUKey)) {
+                handleException("Court with key : " + courtUKey + " have mapping db records.",
+                    ErrorCodes.ILLEGAL_STATE);
+            }
+            Court current = courtDAO.getCourt(courtUKey);
+
+            if (current != null) {
+                current.setEnCourtName(court.getEnCourtName());
+                current.setSiCourtName(court.getSiCourtName());
+                current.setTaCourtName(court.getTaCourtName());
+                courtDAO.update(current, user);
+                logger.info("Court with key : {} updated successfully", court.getCourtUKey());
+            }
+        } else {
+            logger.error("User : {} was not allowed to edit Court with key : {}", user.getUserId(),
+                court.getCourtUKey());
+        }
+    }
+
+    private void validateMinimalRequirements(Court court) {
+        if (isEmptyString(court.getEnCourtName()) ||
+            isEmptyString(court.getSiCourtName()) ||
+            isEmptyString(court.getTaCourtName())) {
+            throw new CRSRuntimeException(
+                "One or more names of the Court names is invalid - check all languages", ErrorCodes.INVALID_DATA);
+        }
+    }
+
+    private boolean isEligibleToUpdateCourt(int courtUKey) {
+        // TODO
+        return false;
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
@@ -419,6 +650,11 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
             logger.error("User : " + user.getUserId() +
                 " was not allowed to activate/inactivate Location with key : " + courtUKey);
         }
+    }
+
+    private void handleException(String message, int code) {
+        logger.error(message);
+        throw new CRSRuntimeException(message, code);
     }
 
     private static final boolean isEmptyString(String s) {
