@@ -1140,6 +1140,11 @@
                 method="initAddDivisionsAndDsDivision">
             <result type="tiles" name="success">epr.addEditDivisions</result>
         </action>
+        <action name="eprInitEditDivisionDetails" class="lk.rgd.crs.web.action.UserManagementAction"
+                method="initEditDivisionDetails">
+            <param name="editMode">true</param>
+            <result type="tiles" name="success">epr.addEditDivisions</result>
+        </action>
         <action name="eprInitDivisionList" class="lk.rgd.crs.web.action.UserManagementAction"
                 method="initDivisionList">
             <result type="tiles" name="success">epr.addEditDivisions</result>
@@ -1150,6 +1155,10 @@
         </action>
         <action name="eprAddDivisionsAndDsDivisions" class="lk.rgd.crs.web.action.UserManagementAction"
                 method="addDivisionsAndDsDivisions">
+            <result type="tiles" name="success">epr.addEditDivisions</result>
+        </action>
+        <action name="eprEditDivisionDetails" class="lk.rgd.crs.web.action.UserManagementAction"
+                method="editDivisionDetails">
             <result type="tiles" name="success">epr.addEditDivisions</result>
         </action>
         <action name="eprInitAssignedUserLocation" class="lk.rgd.crs.web.action.UserManagementAction"

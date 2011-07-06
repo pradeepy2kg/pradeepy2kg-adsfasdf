@@ -267,6 +267,8 @@
         <constructor-arg ref="locationDAOImpl"/>
         <constructor-arg ref="courtDAOImpl"/>
         <constructor-arg ref="gnDivisionDAOImpl"/>
+        <constructor-arg ref="birthDeclarationDAOImpl"/>
+        <constructor-arg ref="deathRegisterDAOImpl"/>
     </bean>
 
     <bean id="certificateSearchService" class="lk.rgd.crs.core.service.CertificateSearchServiceImpl">
