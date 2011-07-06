@@ -218,6 +218,10 @@ public interface DeathRegisterDAO {
      */
     public List<DeathRegister> getDeathsByRegistrarPinOrNicAndDivision(String registrarPin, String registrarNic,
         int deathDivisionUKey);
+
+    public Long findGNDivisionUsageInDeathRecords(int gnDivisionUKey);
+
+    public Long findBDDivisionUsageInDeathRecords(int bdDivisionUKey);
 }
 
 

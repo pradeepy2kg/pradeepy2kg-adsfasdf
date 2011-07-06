@@ -263,4 +263,24 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
         q.setParameter("registrarNic", registrarNic);
         return q.getResultList();
     }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public Long findGNDivisionUsageInDeathRecords(int gnDivisionUKey) {
+        Query q = em.createNamedQuery("count.death.gnDivision.usage");
+        q.setParameter("gnDivisionId", gnDivisionUKey);
+        return (Long) q.getSingleResult();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public Long findBDDivisionUsageInDeathRecords(int bdDivisionUKey) {
+        Query q = em.createNamedQuery("count.death.bdDivision.usage");
+        q.setParameter("bdDivisionId", bdDivisionUKey);
+        return (Long) q.getSingleResult();
+    }
 }
