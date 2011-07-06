@@ -44,11 +44,11 @@ public class DSDivision implements Serializable {
     @JoinColumn(name = "districtUKey", nullable = false, updatable = false)
     private District district;
 
-    @Column(nullable = false, length = 60, updatable = false)
+    @Column(nullable = false, length = 60)
     private String siDivisionName;
-    @Column(nullable = false, length = 60, updatable = false)
+    @Column(nullable = false, length = 60)
     private String enDivisionName;
-    @Column(nullable = false, length = 60, updatable = false)
+    @Column(nullable = false, length = 60)
     private String taDivisionName;
 
     /**
