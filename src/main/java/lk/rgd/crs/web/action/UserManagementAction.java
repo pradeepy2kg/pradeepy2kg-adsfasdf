@@ -460,10 +460,12 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
             case 2:
                 List<DSDivision> checkDSDivisions = dsDivisionDAO.getDSDivisionByAnyName(dsDivision);
                 if (checkDSDivisions.size() > 0) {
-                    addFieldError("duplicateIdNumberError", "DS Division names are already used. Please check again");
-                    logger.debug("DSDivision names are duplicated");
-                    checkDuplicate++;
-                    editMode = true;
+                    if (checkNameDuplicatesForEdits(dsDivision.getDsDivisionUKey(), pageType, checkDSDivisions)) {
+                        addFieldError("duplicateIdNumberError", "DS Division names are already used. Please check again");
+                        logger.debug("DSDivision names are duplicated");
+                        checkDuplicate++;
+                        editMode = true;
+                    }
                 }
                 if (checkDuplicate == 0) {
                     try {
@@ -480,10 +482,12 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 List<BDDivision> checkBDDivisions =
                     bdDivisionDAO.getBDDivisionByAnyNameAndDSDivisionKey(bdDivision, dsDivisionId);
                 if (checkBDDivisions.size() > 0) {
-                    addFieldError("duplicateIdNumberError", "BD Division names are already used. Please check again");
-                    logger.debug("BDDivision names are duplicated");
-                    checkDuplicate++;
-                    editMode = true;
+                    if (checkNameDuplicatesForEdits(divisionId, pageType, checkBDDivisions)) {
+                        addFieldError("duplicateIdNumberError", "BD Division names are already used. Please check again");
+                        logger.debug("BDDivision names are duplicated");
+                        checkDuplicate++;
+                        editMode = true;
+                    }
                 }
                 if (checkDuplicate == 0) {
                     bdDivision.setDsDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
@@ -502,10 +506,12 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                     mrDivisionDAO.getMRDivisionByAnyNameAndDSDivision(mrDivision, dsDivisionId);
 
                 if (checkMrDivisions.size() > 0) {
-                    addFieldError("duplicateIdNumberError", "MR Division names are already used. Please check again");
-                    logger.debug("MRDivision names are duplicated");
-                    checkDuplicate++;
-                    editMode = true;
+                    if (checkNameDuplicatesForEdits(mrdivisionId, pageType, checkMrDivisions)) {
+                        addFieldError("duplicateIdNumberError", "MR Division names are already used. Please check again");
+                        logger.debug("MRDivision names are duplicated");
+                        checkDuplicate++;
+                        editMode = true;
+                    }
                 }
                 if (checkDuplicate == 0) {
                     try {
@@ -522,10 +528,12 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
             case 5:
                 List<Court> checkCourts = courtDAO.getCourtByAnyName(court, currentUser);
                 if (checkCourts.size() > 0) {
-                    addFieldError("duplicateIdNumberError", "Court names are already used. Please check again");
-                    logger.debug("Court names are duplicated");
-                    checkDuplicate++;
-                    editMode = true;
+                    if (checkNameDuplicatesForEdits(courtId, pageType, checkCourts)) {
+                        addFieldError("duplicateIdNumberError", "Court names are already used. Please check again");
+                        logger.debug("Court names are duplicated");
+                        checkDuplicate++;
+                        editMode = true;
+                    }
                 }
                 if (checkDuplicate == 0) {
                     try {
@@ -542,10 +550,12 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                 List<Location> checkLocations = locationDAO.getLocationByAnyName(location);
 
                 if (checkLocations.size() > 0) {
-                    addFieldError("duplicateIdNumberError", "Office names are already used. Please check again");
-                    logger.debug("Location name is duplicated");
-                    checkDuplicate++;
-                    editMode = true;
+                    if (checkNameDuplicatesForEdits(locationId, pageType, checkLocations)) {
+                        addFieldError("duplicateIdNumberError", "Office names are already used. Please check again");
+                        logger.debug("Location name is duplicated");
+                        checkDuplicate++;
+                        editMode = true;
+                    }
                 }
                 if (checkDuplicate == 0) {
                     try {
@@ -563,14 +573,16 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
                     gnDivisionDAO.getGNDivisionByAnyNameAndDSDivision(gnDivision, dsDivisionId, currentUser);
 
                 if (checkGNDivisions.size() > 0) {
-                    addFieldError("duplicateIdNumberError", "GNDivision names are already exist. Please check again");
-                    logger.debug("GNDivision names are duplicated");
-                    checkDuplicate++;
-                    editMode = true;
+                    if (checkNameDuplicatesForEdits(gnDivisionId, pageType, checkGNDivisions)) {
+                        addFieldError("duplicateIdNumberError", "GNDivision names are already exist. Please check again");
+                        logger.debug("GNDivision names are duplicated");
+                        checkDuplicate++;
+                        editMode = true;
+                    }
                 }
                 if (checkDuplicate == 0) {
-                    gnDivision.setDsDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
                     try {
+                        gnDivision.setDsDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
                         dataManagementService.updateGNDivision(gnDivisionId, gnDivision, currentUser);
                         printMessage("update.success");
                     } catch (CRSRuntimeException e) {
@@ -589,6 +601,45 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         }
 
         return SUCCESS;
+    }
+
+    private boolean checkNameDuplicatesForEdits(int divisionUKey, int type, List divisions) {
+        List duplicates = new ArrayList(1);
+        for (Object division : divisions) {
+            switch (type) {
+                case 2:
+                    if (((DSDivision) division).getDsDivisionUKey() != divisionUKey) {
+                        duplicates.add(division);
+                        break;
+                    }
+                case 3:
+                    if (((BDDivision) division).getBdDivisionUKey() != divisionUKey) {
+                        duplicates.add(division);
+                        break;
+                    }
+                case 4:
+                    if (((MRDivision) division).getMrDivisionUKey() != divisionUKey) {
+                        duplicates.add(division);
+                        break;
+                    }
+                case 5:
+                    if (((Court) division).getCourtUKey() != divisionUKey) {
+                        duplicates.add(division);
+                        break;
+                    }
+                case 6:
+                    if (((Location) division).getLocationUKey() != divisionUKey) {
+                        duplicates.add(division);
+                        break;
+                    }
+                case 7:
+                    if (((GNDivision) division).getGnDivisionUKey() != divisionUKey) {
+                        duplicates.add(division);
+                        break;
+                    }
+            }
+        }
+        return duplicates.size() > 0;
     }
 
     public String initDivisionList() {
