@@ -605,38 +605,45 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
 
     private boolean checkNameDuplicatesForEdits(int divisionUKey, int type, List divisions) {
         List duplicates = new ArrayList(1);
+        Outer:
         for (Object division : divisions) {
             switch (type) {
                 case 2:
                     if (((DSDivision) division).getDsDivisionUKey() != divisionUKey) {
                         duplicates.add(division);
-                        break;
+                        break Outer;
                     }
+                    break;
                 case 3:
                     if (((BDDivision) division).getBdDivisionUKey() != divisionUKey) {
                         duplicates.add(division);
-                        break;
+                        break Outer;
                     }
+                    break;
                 case 4:
                     if (((MRDivision) division).getMrDivisionUKey() != divisionUKey) {
                         duplicates.add(division);
-                        break;
+                        break Outer;
                     }
+                    break;
                 case 5:
                     if (((Court) division).getCourtUKey() != divisionUKey) {
                         duplicates.add(division);
-                        break;
+                        break Outer;
                     }
+                    break;
                 case 6:
                     if (((Location) division).getLocationUKey() != divisionUKey) {
                         duplicates.add(division);
-                        break;
+                        break Outer;
                     }
+                    break;
                 case 7:
                     if (((GNDivision) division).getGnDivisionUKey() != divisionUKey) {
                         duplicates.add(division);
-                        break;
+                        break Outer;
                     }
+                    break;
             }
         }
         return duplicates.size() > 0;
