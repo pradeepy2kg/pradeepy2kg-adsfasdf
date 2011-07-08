@@ -382,4 +382,8 @@ public interface MarriageRegistrationDAO {
      */
     public List<MarriageRegister> getMarriagesByRegistrarPinOrNicAndDivision(String registrarPin, String registrarNic,
         int mrDivisionUKey);
+
+    public Long findMRDivisionUsageInMarriageRecords(int mrDivisionUKey);
+
+    public Long findLocationUsageInMarriageRecords(int locationUKey);
 }
