@@ -243,7 +243,7 @@
     </td>
     <td>
         <s:textfield name="user.userName" id="userName"
-                     cssStyle="text-transform:none;width:90%;margin-left:0;"/>
+                     cssStyle="text-transform:capitalize;width:90%;margin-left:0;"/>
     </td>
     <td></td>
 </tr>
@@ -262,7 +262,7 @@
     <td><s:label value="%{getText('si.en.signature')}"/></td>
     <td>
         <s:textarea name="user.sienSignatureText" id="userName"
-                    cssStyle="text-transform:none;width:90%;margin-left:0;" rows="3"/>
+                    cssStyle="text-transform:capitalize;width:90%;margin-left:0;" rows="3"/>
 
     </td>
     <td>
@@ -275,7 +275,7 @@
     <td><s:label value="%{getText('ta.en.signature')}"/></td>
     <td>
         <s:textarea name="user.taenSignatureText" id="userPin"
-                    cssStyle="text-transform:none;width:90%;margin-left:0;" rows="3"/>
+                    cssStyle="text-transform:capitalize;width:90%;margin-left:0;" rows="3"/>
     </td>
     <td>
         <s:a href="" title="%{getText('tamilSignature.tooltip')}">
