@@ -29,12 +29,6 @@
     });
 </script>
 
-<style type="text/css">
-    input {
-        text-transform: none;
-    }
-</style>
-
 <script type="text/javascript">
     // mode 1 = passing District, will return DS list
     // mode 2 = passing DsDivision, will return BD list
@@ -611,28 +605,28 @@
                 <tr>
                     <td rowspan="2">Office Signature</td>
                     <td>Signature in<br>Sinhala/English</td>
-                    <td><s:textarea name="location.sienLocationSignature" cssStyle="text-transform:none;width:95%;"
+                    <td><s:textarea name="location.sienLocationSignature" cssStyle="text-transform:capitalize;width:95%;"
                                     readonly="true" rows="2"/></td>
                 </tr>
                 <tr>
                     <td>Signature in<br>Tamil/English</td>
-                    <td><s:textarea name="location.taenLocationSignature" cssStyle="text-transform:none;;width:95%;"
+                    <td><s:textarea name="location.taenLocationSignature" cssStyle="text-transform:capitalize;width:95%;"
                                     readonly="true" rows="2"/></td>
                 </tr>
                 <tr>
                     <td rowspan="3">Office Mailing Address</td>
                     <td>Address in English</td>
-                    <td><s:textarea name="location.enLocationMailingAddress" cssStyle="text-transform:none;;width:95%;"
+                    <td><s:textarea name="location.enLocationMailingAddress" cssStyle="text-transform:capitalize;width:95%;"
                                     readonly="true" rows="3"/></td>
                 </tr>
                 <tr>
                     <td>Address in Sinhala</td>
-                    <td><s:textarea name="location.siLocationMailingAddress" cssStyle="text-transform:none;;width:95%;"
+                    <td><s:textarea name="location.siLocationMailingAddress" cssStyle="text-transform:capitalize;width:95%;"
                                     readonly="true" rows="3"/></td>
                 </tr>
                 <tr>
                     <td>Address in Tamil</td>
-                    <td><s:textarea name="location.taLocationMailingAddress" cssStyle="text-transform:none;;width:95%;"
+                    <td><s:textarea name="location.taLocationMailingAddress" cssStyle="text-transform:capitalize;width:95%;"
                                     readonly="true" rows="3"/></td>
                 </tr>
             </s:if>

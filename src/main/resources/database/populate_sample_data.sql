@@ -280,31 +280,31 @@ INSERT INTO COMMON.RACES (RACEID, SIRACENAME, ENRACENAME, TARACENAME) VALUES(12,
 INSERT INTO COMMON.RACES (RACEID, SIRACENAME, ENRACENAME, TARACENAME) VALUES(13, 'නොදත්', 'UNKNOWN', 'தெரியாது');
 
 -- Districts (final and already translated)
-INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(11, 'කොළඹ', 'Colombo', '‎கொழும்பு');
-INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(12, 'ගම්පහ', 'Gampaha', 'கம்‍‍‎ப‍‍ஹ');
-INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(13, 'කළුතර', 'Kalutara', 'களுத்து‍றை');
-INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(21, 'මහනුවර', 'Kandy', 'கண்டி');
-INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(22, 'මාතලේ', 'Matale', 'மாத்த‍‍‍ளை');
-INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(23, 'නුවරඑළිය', 'Nuwara Eliya', 'நுவ‎ரெளியா');
-INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(31, 'ගාල්ල', 'Galle', 'காலி');
-INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(32, 'මාතර', 'Matara', 'மாத்தறை');
-INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(33, 'හම්බන්තොට', 'Hambantota', 'ஹம்பாந்தோட்‍டை');
-INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(41, 'යාපනය', 'Jaffna', 'யாழ்பாணம்');
-INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(42, 'මන්නාරම', 'Mannar', 'மன்னார்');
-INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(43, 'වව්නියාව', 'Vavuniya', 'வவுனியா');
-INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(44, 'මුලතිව්', 'Mullaitivu', 'முள்ளைத்தீவு');
-INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(45, 'කිලිනොච්චි', 'Kilinochchi', 'கிளி‎‎நொச்சி');
-INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(51, 'මඩකලපුව', 'Batticaloa', 'மட்டக்களப்பு');
-INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(52, 'අම්පාර', 'Ampara', 'அம்பா‍‍றை');
-INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(53, 'ත්‍රිකුණාමලය', 'Trincomalee', 'திரு‍கோண‍மலை');
-INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(61, 'කුරුණෑගල', 'Kurunegala', 'குருணாக‍லை');
-INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(62, 'පුත්තලම', 'Puttalam', 'புத்தளம்');
-INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(71, 'අනුරාධපුරය', 'Anuradhapura', 'அநுராதபுரம்');
-INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(72, 'පොළොන්නරුව', 'Polonnaruwa', '‎பொலண்ணரு‍வை');
-INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(81, 'බදුල්ල', 'Badulla', 'பது‍ளை');
-INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(82, 'මොනරාගල', 'Moneragala', '‎மொணராக‍லை');
-INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(91, 'රත්නපුර', 'Ratnapura', 'இரத்திணபுரி');
-INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(92, 'කෑගල්ල', 'Kegalle', '‍‎‍‍‍கேகா‍லை');
+INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(11, 'කොළඹ', 'COLOMBO', '‎கொழும்பு');
+INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(12, 'ගම්පහ', 'GAMPAHA', 'கம்‍‍‎ப‍‍ஹ');
+INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(13, 'කළුතර', 'KALUTARA', 'களுத்து‍றை');
+INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(21, 'මහනුවර', 'KANDY', 'கண்டி');
+INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(22, 'මාතලේ', 'MATALE', 'மாத்த‍‍‍ளை');
+INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(23, 'නුවරඑළිය', 'NUWARA ELIYA', 'நுவ‎ரெளியா');
+INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(31, 'ගාල්ල', 'GALLE', 'காலி');
+INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(32, 'මාතර', 'MATARA', 'மாத்தறை');
+INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(33, 'හම්බන්තොට', 'HAMBANTOTA', 'ஹம்பாந்தோட்‍டை');
+INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(41, 'යාපනය', 'JAFFNA', 'யாழ்பாணம்');
+INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(42, 'මන්නාරම', 'MANNAR', 'மன்னார்');
+INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(43, 'වව්නියාව', 'VAVUNIYA', 'வவுனியா');
+INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(44, 'මුලතිව්', 'MULLAITIVU', 'முள்ளைத்தீவு');
+INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(45, 'කිලිනොච්චි', 'KILINOCHCHI', 'கிளி‎‎நொச்சி');
+INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(51, 'මඩකලපුව', 'BATTICALOA', 'மட்டக்களப்பு');
+INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(52, 'අම්පාර', 'AMPARA', 'அம்பா‍‍றை');
+INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(53, 'ත්‍රිකුණාමලය', 'TRINCOMALEE', 'திரு‍கோண‍மலை');
+INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(61, 'කුරුණෑගල', 'KURUNEGALA', 'குருணாக‍லை');
+INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(62, 'පුත්තලම', 'PUTTALAM', 'புத்தளம்');
+INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(71, 'අනුරාධපුරය', 'ANURADHAPURA', 'அநுராதபுரம்');
+INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(72, 'පොළොන්නරුව', 'POLONNARUWA', '‎பொலண்ணரு‍வை');
+INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(81, 'බදුල්ල', 'BADULLA', 'பது‍ளை');
+INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(82, 'මොනරාගල', 'MONERAGALA', '‎மொணராக‍லை');
+INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(91, 'රත්නපුර', 'RATNAPURA', 'இரத்திணபுரி');
+INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(92, 'කෑගල්ල', 'KEGALLE', '‍‎‍‍‍கேகா‍லை');
 
 -- DS Divisions (These are final and already translated)
 INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, enDivisionName, siDivisionName, taDivisionName) VALUES(1, 3, 'Colombo', 'කොළඹ', 'கொழும்பு');
