@@ -72,7 +72,9 @@ import java.io.Serializable;
     @NamedQuery(name = "count.death.gnDivision.usage", query = "SELECT COUNT(dr) FROM DeathRegister dr " +
         "WHERE dr.deathPerson.gnDivision.gnDivisionUKey = :gnDivisionId"),
     @NamedQuery(name = "count.death.bdDivision.usage", query = "SELECT COUNT(dr) FROM DeathRegister dr " +
-        "WHERE dr.death.deathDivision.bdDivisionUKey = :bdDivisionId")
+        "WHERE dr.death.deathDivision.bdDivisionUKey = :bdDivisionId"),
+    @NamedQuery(name = "count.death.location.usage", query = "SELECT COUNT(dr) FROM DeathRegister dr " +
+        "WHERE dr.originalDCPlaceOfIssue.locationUKey = :locationId")
 })
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class DeathRegister implements Serializable, Cloneable {

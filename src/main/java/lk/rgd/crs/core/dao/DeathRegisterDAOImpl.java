@@ -283,4 +283,14 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
         q.setParameter("bdDivisionId", bdDivisionUKey);
         return (Long) q.getSingleResult();
     }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public Long findLocationUsageInDeathRecords(int locationUKey) {
+        Query q = em.createNamedQuery("count.death.location.usage");
+        q.setParameter("locationId", locationUKey);
+        return (Long) q.getSingleResult();
+    }
 }
