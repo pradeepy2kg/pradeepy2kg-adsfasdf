@@ -222,6 +222,8 @@ public interface DeathRegisterDAO {
     public Long findGNDivisionUsageInDeathRecords(int gnDivisionUKey);
 
     public Long findBDDivisionUsageInDeathRecords(int bdDivisionUKey);
+
+    public Long findLocationUsageInDeathRecords(int locationUKey);
 }
 
 
