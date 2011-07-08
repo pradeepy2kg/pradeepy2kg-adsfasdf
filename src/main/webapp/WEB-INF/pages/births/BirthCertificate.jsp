@@ -347,7 +347,7 @@
         </td>
         <td>ස්ත්‍රී පුරුෂ භාවය<br>பால்<br>Gender</td>
         <td colspan="2">
-            <s:label name="" value="%{gender}" cssStyle="font-size:11pt;"/><br/>
+            <s:label name="" value="%{gender}" cssStyle="font-size:12pt;"/><br/>
             <s:label name="" value="%{genderEn}"/>
             <div class="changes-done">
                 <s:if test="changedFields.get(25)">
@@ -479,7 +479,7 @@
     </td>
     <td colspan="2">පියාගේ ජන වර්ගය<br>தந்தையின் இனம்<br> Father's Ethnic Group</td>
     <td colspan="3">
-        <s:label name="" value="%{fatherRacePrint}" cssStyle="font-size:11pt;"/><br/>
+        <s:label name="" value="%{fatherRacePrint}" cssStyle="font-size:12pt;"/><br/>
         <s:label name="" value="%{fatherRacePrintEn}"/>
         <div class="changes-done">
             <s:if test="changedFields.get(16)">
@@ -522,7 +522,7 @@
     <td colspan="2">මවගේ ජන වර්ගය<br>தாயின் இனம்<br> Mother's Ethnic Group
     </td>
     <td colspan="3">
-        <s:label name="" value="%{motherRacePrint}" cssStyle="font-size:11pt;"/><br/>
+        <s:label name="" value="%{motherRacePrint}" cssStyle="font-size:12pt;"/><br/>
         <s:label name="" value="%{motherRacePrintEn}"/>
         <div class="changes-done">
             <s:if test="changedFields.get(32)">
