@@ -456,4 +456,14 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
         q.setParameter("bdDivisionId", bdDivisionUKey);
         return (Long) q.getSingleResult();
     }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public Long findLocationUsageInBirthRecords(int locationUKey) {
+        Query q = em.createNamedQuery("count.birth.location.usage");
+        q.setParameter("locationId", locationUKey);
+        return (Long) q.getSingleResult();
+    }
 }

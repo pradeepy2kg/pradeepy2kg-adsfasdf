@@ -123,7 +123,9 @@ import java.io.Serializable;
     @NamedQuery(name = "count.birth.gnDivision.usage", query = "SELECT COUNT(bdf) FROM BirthDeclaration bdf " +
         "WHERE bdf.parent.motherGNDivision.gnDivisionUKey = :gnDivisionId"),
     @NamedQuery(name = "count.birth.bdDivision.usage", query = "SELECT COUNT(bdf) FROM BirthDeclaration bdf " +
-        "WHERE bdf.register.birthDivision.bdDivisionUKey = :bdDivisionId")
+        "WHERE bdf.register.birthDivision.bdDivisionUKey = :bdDivisionId"),
+    @NamedQuery(name = "count.birth.location.usage", query = "SELECT COUNT(bdf) FROM BirthDeclaration bdf " +
+        "WHERE bdf.register.originalBCPlaceOfIssue.locationUKey = :locationId")
 })
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class BirthDeclaration implements Serializable, Cloneable {
