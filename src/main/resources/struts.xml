@@ -310,13 +310,13 @@
 
 
         <action name="eprBirthCertificate" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
-                method="birthCetificatePrint">
+                method="birthCertificatePrint">
             <result type="tiles" name="pageLoad">epr.birthCertificate_form</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
 
         <action name="eprStillBirthCertificatePrint" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
-                method="birthCetificatePrint">
+                method="birthCertificatePrint">
             <result type="tiles" name="pageLoad">epr.birthCertificate_form</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
@@ -470,7 +470,7 @@
         </action>
 
         <action name="eprBirthCertificatDirectPrint" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
-                method="birthCetificatePrint">
+                method="birthCertificatePrint">
             <result type="tiles" name="pageLoad">epr.birthCertificate_form</result>
         </action>
 
