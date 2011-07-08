@@ -323,7 +323,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
             if (!locationList.isEmpty()) {
                 int selectedLocationId = locationList.keySet().iterator().next();
                 userList = new HashMap<String, String>();
-                // TODO temporaray solution have to change this after caching done for user locations
+                // TODO temporary solution have to change this after caching done for user locations
                 for (User u : userLocationDAO.getBirthCertSignUsersByLocationId(selectedLocationId, true)) {
                     userList.put(u.getUserId(), NameFormatUtil.getDisplayName(u.getUserName(), 50));
                 }

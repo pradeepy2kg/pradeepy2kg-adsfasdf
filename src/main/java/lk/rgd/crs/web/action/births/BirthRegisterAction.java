@@ -83,7 +83,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     private int pageNo; //pageNo is used to decide the current pageNo of the Birth Registration Form
     private long bdId;   // If present, it should be used to fetch a new BD instead of creating a new one (we are in edit mode)
-    private long oldBdId;    // bdId of previously persisted birth declaration, used in add neew entry in batch mode
+    private long oldBdId;    // bdId of previously persisted birth declaration, used in add new entry in batch mode
     private long adoptionId; // adoption order id, used in registering an adopted child
     private boolean confirmationSearchFlag;//if true request to search an entry based on serialNo
     private int rowNumber;
@@ -170,7 +170,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      * as their persistence. pageNo hidden variable which is passed to the action (empty=0 for the
      * very first form page) is used to decide which state of the process we are in. at the last step
      * only we do a persistence, until then all data will be in the session. This is a design decision
-     * to limit DB writes. Masterdata population will be done before displaying every page.
+     * to limit DB writes. Master data population will be done before displaying every page.
      * This will have no performance impact as they will be cached in the back end.
      */
     public String birthDeclaration() {
@@ -446,7 +446,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             String language = bdf.getRegister().getPreferredLanguage();
             locationList = commonUtil.populateActiveUserLocations(user, language);
             if (locationList.size() > 0) {
-                populateReturnAddress();
+                populateReturnAddress(null);
             }
             if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
                 bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED)) {
@@ -464,10 +464,11 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     }
 
-    private void populateReturnAddress() {
-        int locationId = locationList.keySet().iterator().next();
-
-        Location location = locationDAO.getLocation(locationId);
+    private void populateReturnAddress(Location location) {
+        if (location == null) {
+            int locationId = locationList.keySet().iterator().next();
+            location = locationDAO.getLocation(locationId);
+        }
         if (AppConstants.SINHALA.equals(language)) {
             returnAddress = location.getSiLocationMailingAddress();
         }
@@ -482,7 +483,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     public String initBirthRegistration() {
         return SUCCESS;
     }
-
 
     public String initStillBirth() {
         return SUCCESS;
@@ -569,7 +569,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             try {
                 existingBDF = service.getById(existBDUKey, user);
             } catch (NullPointerException e) {
-                logger.error("faild to find requested BDF :", e);
+                logger.error("failed to find requested BDF :", e);
                 addActionError(getText("adoption_invalid_birth_certificate_number.label"));
                 return ERROR;
             }
@@ -792,8 +792,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      *
      * @return pageLoad
      */
-
-    public String birthCetificatePrint() {
+    public String birthCertificatePrint() {
         try {
             BirthDeclaration bdf = service.getWithRelationshipsById(bdId, user);
 
@@ -812,17 +811,16 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 if (!locationList.isEmpty()) {
                     //TODO get primary location
                     int selectedLocationId = locationList.keySet().iterator().next();
-                    populateReturnAddress();
                     userList = new HashMap<String, String>();
-                    // TODO temporaray solution have to change this after caching done for user locations
+                    // TODO temporary solution have to change this after caching done for user locations
                     for (User u : userLocationDAO.getBirthCertSignUsersByLocationId(selectedLocationId, true)) {
                         userList.put(u.getUserId(), NameFormatUtil.getDisplayName(u.getUserName(), 50));
                     }
                 }
                 if ((bdf.getRegister().getOriginalBCIssueUser() == null &&
                     bdf.getRegister().getOriginalBCPlaceOfIssue() == null &&
-                    BirthDeclaration.State.ARCHIVED_CERT_GENERATED == bdf.getRegister().getStatus())||(certificateSearch)) {
-                    //TODO use primary location to find Userlocation
+                    BirthDeclaration.State.ARCHIVED_CERT_GENERATED == bdf.getRegister().getStatus()) || (certificateSearch)) {
+                    //TODO use primary location to find User location
                     UserLocation userLocation = userLocationDAO.getUserLocation(
                         userList.keySet().iterator().next(), locationList.keySet().iterator().next());
                     String prefLang = bdf.getRegister().getPreferredLanguage();
@@ -830,6 +828,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     bdf.getRegister().setOriginalBCIssueUserSignPrint(userLocation.getUser().getUserSignature(prefLang));
                     bdf.getRegister().setOriginalBCPlaceOfIssueSignPrint(userLocation.getLocation().getLocationSignature(prefLang));
                     bdf.getRegister().setOriginalBCPlaceOfIssuePrint(userLocation.getLocation().getLocationName(prefLang));
+                    populateReturnAddress(null);
+                } else {
+                    populateReturnAddress(bdf.getRegister().getOriginalBCPlaceOfIssue());
                 }
 
                 gender = child.getChildGenderPrint();
@@ -1007,7 +1008,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
         populateDynamicLists(language);
 
-        // following painful null checks are needed b'cos the DB may have incomplete data
+        // following painful null checks are needed because the DB may have incomplete data
         if (parent != null) {
             if (parent.getFatherCountry() != null) {
                 fatherCountry = parent.getFatherCountry().getCountryId();
@@ -1065,7 +1066,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     private void populateDynamicLists(String language) {
-        //Polulate division lists and set the first item as default
+        //Populate division lists and set the first item as default
         birthDistrictId = commonUtil.findDefaultListValue(districtList, birthDistrictId);
         dsDivisionId = commonUtil.findDivisionList(dsDivisionList, dsDivisionId, birthDistrictId, AppConstants.DS_DIVISION, user, language);
         birthDivisionId = commonUtil.findDivisionList(bdDivisionList, birthDivisionId, dsDivisionId, AppConstants.BIRTH, user, language);
