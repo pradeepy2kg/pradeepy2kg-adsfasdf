@@ -1,12 +1,11 @@
 package lk.rgd.crs.core.dao;
 
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.core.dao.BaseDAO;
 import lk.rgd.crs.api.dao.AdoptionOrderDAO;
 import lk.rgd.crs.api.domain.AdoptionOrder;
-import lk.rgd.crs.api.domain.BirthDeclaration;
-import lk.rgd.common.core.dao.BaseDAO;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -110,5 +109,15 @@ public class AdoptionOrderDAOImpl extends BaseDAO implements AdoptionOrderDAO {
     public List<AdoptionOrder> findAll() {
         Query q = em.createNamedQuery("getAllAdoptions");
         return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public Long findCourtUsageInAdoptions(int courtUKey) {
+        Query q = em.createNamedQuery("count.adoption.court.usage");
+        q.setParameter("courtId", courtUKey);
+        return (Long) q.getSingleResult();
     }
 }

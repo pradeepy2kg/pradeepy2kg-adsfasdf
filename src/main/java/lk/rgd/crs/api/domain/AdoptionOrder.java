@@ -23,7 +23,9 @@ import java.util.Date;
         "WHERE adoption.courtOrderNumber = :courtOrderNumber"),
     // TODO fix this to use the courtUKey
 
-    @NamedQuery(name = "getAllAdoptions", query = "SELECT adoption FROM AdoptionOrder adoption")
+    @NamedQuery(name = "getAllAdoptions", query = "SELECT adoption FROM AdoptionOrder adoption"),
+    @NamedQuery(name = "count.adoption.court.usage", query = "SELECT COUNT(adoption) FROM AdoptionOrder adoption " +
+        "WHERE adoption.court.courtUKey = :courtId")
 })
 
 public class AdoptionOrder implements Serializable {
