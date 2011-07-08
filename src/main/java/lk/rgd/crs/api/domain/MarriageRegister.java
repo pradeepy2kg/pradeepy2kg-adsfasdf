@@ -139,9 +139,7 @@ import java.util.Date;
         "ORDER BY mr.idUKey DESC "),
 
     @NamedQuery(name = "getMarriageRegisterByIdUKeyAndState", query = "SELECT mr FROM MarriageRegister mr " +
-        "WHERE mr.lifeCycleInfo.activeRecord IS TRUE " +
-        "AND mr.idUKey = :idUKey " +
-        "AND mr.state IN (:stateList)"),
+        "WHERE mr.idUKey = :idUKey AND (mr.state IN (:stateList)) AND mr.lifeCycleInfo.activeRecord IS TRUE"),
     //TODO: to be removed
     @NamedQuery(name = "findMarriageBySerialNumber", query = "SELECT mr FROM MarriageRegister mr " +
         "WHERE mr.lifeCycleInfo.activeRecord IS TRUE " +
@@ -159,9 +157,8 @@ import java.util.Date;
         " WHERE mr.lifeCycleInfo.createdUser =:user AND (mr.lifeCycleInfo.createdTimestamp BETWEEN :startDate AND :endDate)"),
 
     @NamedQuery(name = "getMarriageRegisterBySerialAndMRDivision", query = "SELECT mr FROM MarriageRegister mr " +
-        "WHERE mr.lifeCycleInfo.activeRecord IS TRUE " +
-        "AND mr.serialNumber IS NOT NULL AND mr.serialNumber = :serialNumber " +
-        "AND mr.mrDivision IS NOT NULL AND mr.mrDivision = :mrDivision"),
+        "WHERE mr.serialNumber IS NOT NULL AND mr.serialNumber = :serialNumber " +
+        "AND mr.mrDivision IS NOT NULL AND mr.mrDivision = :mrDivision AND  mr.lifeCycleInfo.activeRecord IS TRUE "),
     @NamedQuery(name = "filter.notice.by.district.date.range", query = "SELECT mr FROM MarriageRegister mr " +
         "WHERE (mr.state <= 3 OR mr.state = 7) AND mr.lifeCycleInfo.activeRecord = :active " +
         "AND (mr.mrDivisionOfMaleNotice IN (SELECT m FROM MRDivision m WHERE (m.dsDivision.district = mr.mrDivisionOfMaleNotice.dsDivision.district AND mr.mrDivisionOfMaleNotice.dsDivision.district = :district ))" +
@@ -175,7 +172,12 @@ import java.util.Date;
 
     @NamedQuery(name = "get.mr.by.division.registrarPinOrNic", query = "SELECT mr FROM MarriageRegister mr " +
         "WHERE mr.mrDivision.mrDivisionUKey = :mrDivision " +
-        "AND (mr.registrarOrMinisterPIN = :registrarPin OR mr.registrarOrMinisterPIN = :registrarNic)")
+        "AND (mr.registrarOrMinisterPIN = :registrarPin OR mr.registrarOrMinisterPIN = :registrarNic)"),
+
+    @NamedQuery(name = "count.marriage.mrDivision.usage", query = "SELECT COUNT(mr) FROM MarriageRegister mr " +
+        "WHERE mr.mrDivision.mrDivisionUKey = :mrId OR mr.mrDivisionOfMaleNotice.mrDivisionUKey = :mrId OR mr.mrDivisionOfFemaleNotice.mrDivisionUKey = :mrId"),
+    @NamedQuery(name = "count.marriage.location.usage", query = "SELECT COUNT(mr) FROM MarriageRegister mr " +
+        "WHERE mr.licenseIssueLocation.locationUKey = :locationId OR mr.extractIssuedLocation.locationUKey = :locationId")
 })
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class MarriageRegister implements Serializable, Cloneable {

@@ -1,5 +1,6 @@
 package lk.rgd.crs.core.dao;
 
+import lk.rgd.AppConstants;
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.User;
@@ -7,13 +8,15 @@ import lk.rgd.common.core.dao.BaseDAO;
 import lk.rgd.crs.api.dao.MarriageRegistrationDAO;
 import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.domain.MarriageRegister;
-import lk.rgd.AppConstants;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
-import java.util.*;
+import java.util.Date;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author amith jayasekara
@@ -507,5 +510,25 @@ public class MarriageRegistrationDAOImpl extends BaseDAO implements MarriageRegi
         q.setParameter("registrarPin", registrarPin);
         q.setParameter("registrarNic", registrarNic);
         return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public Long findMRDivisionUsageInMarriageRecords(int mrDivisionUKey) {
+        Query q = em.createNamedQuery("count.marriage.mrDivision.usage");
+        q.setParameter("mrId", mrDivisionUKey);
+        return (Long) q.getSingleResult();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public Long findLocationUsageInMarriageRecords(int locationUKey) {
+        Query q = em.createNamedQuery("count.marriage.location.usage");
+        q.setParameter("locationId", locationUKey);
+        return (Long) q.getSingleResult();
     }
 }
