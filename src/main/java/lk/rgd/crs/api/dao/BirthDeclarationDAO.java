@@ -367,5 +367,7 @@ public interface BirthDeclarationDAO {
     public Long findGNDivisionUsageInBirthRecords(int gnDivisionUKey);
 
     public Long findBDDivisionUsageInBirthRecords(int bdDivisionUKey);
+
+    public Long findLocationUsageInBirthRecords(int locationUKey);
 }
 
