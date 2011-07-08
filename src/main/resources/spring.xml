@@ -269,6 +269,8 @@
         <constructor-arg ref="gnDivisionDAOImpl"/>
         <constructor-arg ref="birthDeclarationDAOImpl"/>
         <constructor-arg ref="deathRegisterDAOImpl"/>
+        <constructor-arg ref="marriageRegistrationDAOImpl"/>
+        <constructor-arg ref="adoptionOrderDAOImpl"/>
     </bean>
 
     <bean id="certificateSearchService" class="lk.rgd.crs.core.service.CertificateSearchServiceImpl">
