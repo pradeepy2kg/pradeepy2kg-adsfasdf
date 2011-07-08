@@ -225,12 +225,9 @@
         <td class="font-9" height="60px">
             <table border="1" style="width:100%;border:1px solid #000;border-collapse:collapse;float:right;">
                 <tr height="60px">
-                        <%--     <td>ලියාපදිංචි කිරීමේ අංකය<br>பதிவு இலக்கம்<br>Registration Number</td>--%>
                     <td>සහතික පත්‍රයේ අංකය<br>சான்றிதழ் இல<br>Certificate Number</td>
                 </tr>
                 <tr height="40px">
-                        <%--    <td align="center"><s:label value="%{deathRegister.death.deathSerialNo}"
-                        cssStyle="font-size:11pt;"/></td>--%>
                     <td align="center"><s:label name="idUKey" cssStyle="font-size:11pt;" id="certificateId"/></td>
                 </tr>
             </table>
@@ -514,7 +511,7 @@
 </tr>
 <tr>
     <td colspan="1" height="80px">
-        දැනුම් දෙන්නගේ නම
+        දැනුම් දෙන්නාගේ නම
         <br>தகவலளிப்பவரின் பெயர்
         <br>Informant's Name
     </td>
@@ -528,7 +525,7 @@
 </tr>
 <tr>
     <td colspan="1" height="80px">
-        දැනුම් ලිපිනය
+        දැනුම් දෙන්නාගේ ලිපිනය
         <br>தகவலளிப்பவரின் முகவரி
         <br>Informant's Address
     </td>
@@ -585,10 +582,10 @@
 </table>
 
 <s:label><p class="font-8" style="width:100%; text-align:center;">
-    උප්පැන්න හා මරණ ලියාපදිංචි කිරීමේ ආඥාපනතේ 110 වෙනි පරිච්චේදය යටතේ නිකුත් කරන ලදී
-    <br>பிறப்பு இறப்பு பதிவு செய்யும் சட்டத்தின்(110 ஆம் அத்தியாயத்தின்) கீழ் பதிவாளர் நாயகம் திணைக்களத்தினால்
-    வழங்கப்பட்டது
-    <br>Issued under Cap. 110 of the Births and Deaths Registration Act
+    උප්පැන්න හා මරණ ලියපදිංචි කිරිමේ පණත (110 අධිකාරය) යටතේ රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව විසින් නිකුත් කරන
+    ලදි,<br>
+    பிறப்பு இறப்பு பதிவு செய்யும் சட்டத்தின் (110 வது அதிகாரத்தின் ) கீழ் பதிவாளர் நாயகத் திணைக்களத்தினால் வழங்கப்பட்டது<br>
+    Issued by Registrar General's Department according to Birth and Death Registration Act (Chapter 110)
 </s:label>
 <s:if test="#request.allowPrintCertificate">
     <div id="birthRegistration-page" class="form-submit">
