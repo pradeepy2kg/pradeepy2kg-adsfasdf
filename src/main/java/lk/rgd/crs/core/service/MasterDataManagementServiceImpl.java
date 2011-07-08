@@ -41,10 +41,13 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
     private final GNDivisionDAO gnDivisionDAO;
     private final BirthDeclarationDAO birthDeclarationDAO;
     private final DeathRegisterDAO deathRegisterDAO;
+    private final MarriageRegistrationDAO marriageRegistrationDAO;
+    private final AdoptionOrderDAO adoptionOrderDAO;
 
     public MasterDataManagementServiceImpl(BDDivisionDAO bdDivisionDAO, MRDivisionDAO mrDivisionDAO,
         DSDivisionDAO dsDivisionDAO, DistrictDAO districtDAO, LocationDAO locationDAO, CourtDAO courtDAO,
-        GNDivisionDAO gnDivisionDAO, BirthDeclarationDAO birthDeclarationDAO, DeathRegisterDAO deathRegisterDAO) {
+        GNDivisionDAO gnDivisionDAO, BirthDeclarationDAO birthDeclarationDAO, DeathRegisterDAO deathRegisterDAO,
+        MarriageRegistrationDAO marriageRegistrationDAO, AdoptionOrderDAO adoptionOrderDAO) {
         this.bdDivisionDAO = bdDivisionDAO;
         this.mrDivisionDAO = mrDivisionDAO;
         this.dsDivisionDAO = dsDivisionDAO;
@@ -54,6 +57,8 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
         this.gnDivisionDAO = gnDivisionDAO;
         this.birthDeclarationDAO = birthDeclarationDAO;
         this.deathRegisterDAO = deathRegisterDAO;
+        this.marriageRegistrationDAO = marriageRegistrationDAO;
+        this.adoptionOrderDAO = adoptionOrderDAO;
     }
 
     /**
@@ -119,7 +124,7 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
     private boolean isEligibleToUpdateBDDivision(int bdDivisionUKey) {
         long size = birthDeclarationDAO.findBDDivisionUsageInBirthRecords(bdDivisionUKey);
         size += deathRegisterDAO.findBDDivisionUsageInDeathRecords(bdDivisionUKey);
-        // TODO
+        // TODO complete this
         return size == 0;
     }
 
@@ -298,8 +303,8 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
     }
 
     private boolean isEligibleToUpdateMRDivision(int mrDivisionUKey) {
-        // TODO
-        return false;
+        long size = marriageRegistrationDAO.findMRDivisionUsageInMarriageRecords(mrDivisionUKey);
+        return size == 0;
     }
 
     /**
@@ -391,7 +396,7 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
     }
 
     private boolean isEligibleToUpdateDSDivision(int dsDivisionUKey) {
-        // TODO
+        // TODO not complete
         long size = birthDeclarationDAO.findDSDivisionUsageInBirthRecords(dsDivisionUKey);
         return size == 0;
     }
@@ -535,8 +540,11 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
     }
 
     private boolean isEligibleToUpdateLocation(int locationUKey) {
-        // TODO
-        return false;
+        // TODO not complete
+        long size = birthDeclarationDAO.findLocationUsageInBirthRecords(locationUKey);
+        size += deathRegisterDAO.findLocationUsageInDeathRecords(locationUKey);
+        size += marriageRegistrationDAO.findLocationUsageInMarriageRecords(locationUKey);
+        return size == 0;
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
@@ -593,7 +601,6 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
 
         if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
             logger.debug("Attempt to edit Court with key : {}", courtUKey);
-            // TODO validate usage of courts
             // validate Court usage before edit
             if (!isEligibleToUpdateCourt(courtUKey)) {
                 handleException("Court with key : " + courtUKey + " have mapping db records.",
@@ -624,8 +631,7 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
     }
 
     private boolean isEligibleToUpdateCourt(int courtUKey) {
-        // TODO
-        return false;
+        return adoptionOrderDAO.findCourtUsageInAdoptions(courtUKey) == 0;
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
