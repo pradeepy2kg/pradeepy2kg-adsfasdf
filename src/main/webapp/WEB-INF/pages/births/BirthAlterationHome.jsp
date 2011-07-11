@@ -10,7 +10,7 @@
         background: url('<s:url value="/images/birth-alteration-flow-detail-pic.gif"/>') no-repeat;
         width: 960px;
         height: 702px;
-        margin: 40px 0px 0px 100px;
+        margin: 40px 0px 0px 90px;
         text-align: center;
     }
 
@@ -20,7 +20,7 @@
         position: absolute;
         width: 135px;
         height: 39px;
-        margin: 140px 0px 0px 495px;
+        margin: 140px 0px 0px 485px;
     }
 
     .link-approval {
@@ -30,7 +30,7 @@
         position: absolute;
         width: 137px;
         height: 39px;
-        margin: 207px 0px 0px 493px;
+        margin: 207px 0px 0px 483px;
     }
 
     .link-print {
@@ -40,7 +40,7 @@
         position: absolute;
         width: 144px;
         height: 43px;
-        margin: 293px 0px 0px 490px;
+        margin: 293px 0px 0px 480px;
     }
 
     .lable-adr {
@@ -48,7 +48,7 @@
         position: absolute;
         width: 102px;
         text-align: center;
-        margin: 253px 0px 0px 616px;
+        margin: 253px 0px 0px 606px;
     }
 
     .lable-child-birth {
@@ -56,7 +56,7 @@
         position: absolute;
         width: 300px;
         text-align: center;
-        margin: 109px 0px 0px 76px;
+        margin: 109px 0px 0px 66px;
     }
 
     .receive-birth-cetificate {
@@ -64,7 +64,7 @@
         position: absolute;
         width: 300px;
         text-align: center;
-        margin: 50px 0px 0px 250px;
+        margin: 50px 0px 0px 240px;
     }
 
     .receive-new-birth-cetificate {
@@ -72,7 +72,7 @@
         position: absolute;
         width: 100px;
         text-align: center;
-        margin: 320px 0px 0px 180px;
+        margin: 320px 0px 0px 170px;
     }
 
     .request-ba {
@@ -80,7 +80,7 @@
         position: absolute;
         width: 150px;
         text-align: center;
-        margin: 90px 0px 0px 562px;
+        margin: 90px 0px 0px 552px;
     }
 </style>
 
