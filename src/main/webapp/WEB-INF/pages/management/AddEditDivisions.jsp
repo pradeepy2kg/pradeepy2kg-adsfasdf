@@ -482,6 +482,7 @@
         <s:url id="manageDivision" action="eprEditDivisionDetails.do" namespace="../management"/>
     </s:if>
     <s:else>
+        <s:url id="manageDivision" action="eprAddDivisionsAndDsDivisions.do" namespace="../management"/>
         <s:url id="print" action="eprAddDivisionsAndDsDivisions.do" namespace="../management"/>
     </s:else>
     <s:form name="editDivisions" method="POST" action="%{manageDivision}"
