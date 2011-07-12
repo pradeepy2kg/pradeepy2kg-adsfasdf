@@ -23,6 +23,10 @@
         #locationSignId {
             display: none;
         }
+
+        #alterations {
+            display: none;
+        }
     }
 
     #birth-certificate-outer .form-submit {
@@ -257,8 +261,8 @@
     <col width="195px">
     <col width="220px">
     <col width="210px">
-    <col width="270px">
-    <col width="135px">
+    <col width="220px">
+    <col width="185px">
     <tbody>
     <tr height="70px">
         <td>දිස්ත්‍රික්කය<br>மாவட்டம் <br>District</td>
@@ -283,7 +287,8 @@
             </td>
             <td colspan="2">
                 <s:label name="" value="%{#request.register.bdDivisionPrint}" cssStyle="font-size:11pt;"/><br>
-                <s:label name="" value="%{#request.register.birthDivision.enDivisionName}" cssStyle="text-transform:uppercase;"/>
+                <s:label name="" value="%{#request.register.birthDivision.enDivisionName}"
+                         cssStyle="text-transform:uppercase;"/>
             </td>
             <td style="font-size:9pt;">මුල් ලියාපදිංචියෙන් පසු වෙනස්කම්
                 <br>முதல் பதிவின் பின் நிறைவேற்றிய மாற்றங்கள்
@@ -315,7 +320,8 @@
             </td>
             <td colspan="4">
                 <s:label name="" value="%{#request.register.bdDivisionPrint}" cssStyle="font-size:11pt;"/><br>
-                <s:label name="" value="%{#request.register.birthDivision.enDivisionName}" cssStyle="text-transform:uppercase;"/>
+                <s:label name="" value="%{#request.register.birthDivision.enDivisionName}"
+                         cssStyle="text-transform:uppercase;"/>
             </td>
         </tr>
     </s:else>
@@ -550,7 +556,8 @@
         <td>නිකුත් කළ දිනය<br>வழங்கிய திகதி<br> Date of Issue
         </td>
         <td>
-            <label style="font-size:12pt;"><%= DateTimeUtils.getISO8601FormattedString(new Date()) %></label><br>
+            <label style="font-size:12pt;"><%= DateTimeUtils.getISO8601FormattedString(new Date()) %>
+            </label><br>
             <s:label value="YYYY-MM-DD" cssStyle="font-size:8pt;"/>
         </td>
     </tr>
@@ -586,7 +593,7 @@
 </p>
 
 <div style="page-break-after:always;">
-<s:if test="!#request.certificateSearch">
+    <s:if test="!#request.certificateSearch">
 </div>
 <hr style="border-style:dashed ; float:left;width:100% ;margin-bottom:30px;margin-top:150px;">
 
@@ -602,8 +609,8 @@
         <td rowspan="7" width="10%" height="350px"></td>
         <td colspan="3" width="80%" height="100px"
             style="text-align:center;margin-left:auto;margin-right:auto;font-size:22pt">
-            <label>රාජ්‍ය සේවය පිණිසයි   &nbsp;&nbsp;அரச பணி   &nbsp;&nbsp;ON STATE SERVICE</label><br/>
-            <label style="font-size:11pt;">රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව  &nbsp;&nbsp;பதிவாளர் நாயகம் திணைக்களம்
+            <label>රාජ්‍ය සේවය පිණිසයි &nbsp;&nbsp;அரச பணி &nbsp;&nbsp;ON STATE SERVICE</label><br/>
+            <label style="font-size:11pt;">රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව &nbsp;&nbsp;பதிவாளர் நாயகம் திணைக்களம்
                 &nbsp;&nbsp;REGISTRAR GENERAL'S DEPARTMENT</label>
         </td>
         <td rowspan="7" width="10%"></td>
