@@ -227,7 +227,7 @@ public class User implements Serializable {
     }
 
     public void setUserName(String userName) {
-        this.userName = WebUtils.filterBlanksAndToUpper(userName);
+        this.userName = WebUtils.filterBlanks(userName);
     }
 
     public long getPin() {
@@ -360,7 +360,7 @@ public class User implements Serializable {
     }
 
     public void setSienSignatureText(String sienSignatureText) {
-        this.sienSignatureText = WebUtils.filterBlanksAndToUpper(sienSignatureText);
+        this.sienSignatureText = WebUtils.filterBlanks(sienSignatureText);
     }
 
     public String getTaenSignatureText() {
@@ -368,7 +368,7 @@ public class User implements Serializable {
     }
 
     public void setTaenSignatureText(String taenSignatureText) {
-        this.taenSignatureText = WebUtils.filterBlanksAndToUpper(taenSignatureText);
+        this.taenSignatureText = WebUtils.filterBlanks(taenSignatureText);
     }
 
     public Location getPrimaryLocation() {
