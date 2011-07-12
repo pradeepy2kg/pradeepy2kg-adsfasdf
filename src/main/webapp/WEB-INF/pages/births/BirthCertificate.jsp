@@ -264,7 +264,7 @@
         <td>දිස්ත්‍රික්කය<br>மாவட்டம் <br>District</td>
         <td>
             <s:label name="" value="%{childDistrict}" cssStyle="font-size:11pt;"/><br/>
-            <s:label name="" value="%{childDistrictEn}"/>
+            <s:label name="" value="%{childDistrictEn}" cssStyle="text-transform:uppercase;"/>
         </td>
         <td>ප්‍රාදේශීය ලේකම් කොට්ඨාශය
             <br/>பிரதேச செயளாளர் பிரிவு
@@ -272,7 +272,7 @@
         </td>
         <td colspan="2">
             <s:label name="" value="%{childDsDivision}" cssStyle="font-size:11pt;"/><br/>
-            <s:label name="" value="%{childDsDivisionEn}"/>
+            <s:label name="" value="%{childDsDivisionEn}" cssStyle="text-transform:uppercase;"/>
         </td>
     </tr>
     <s:if test="birthType.ordinal() != 0">
@@ -283,7 +283,7 @@
             </td>
             <td colspan="2">
                 <s:label name="" value="%{#request.register.bdDivisionPrint}" cssStyle="font-size:11pt;"/><br>
-                <s:label name="" value="%{#request.register.birthDivision.enDivisionName}"/>
+                <s:label name="" value="%{#request.register.birthDivision.enDivisionName}" cssStyle="text-transform:uppercase;"/>
             </td>
             <td style="font-size:9pt;">මුල් ලියාපදිංචියෙන් පසු වෙනස්කම්
                 <br>முதல் பதிவின் பின் நிறைவேற்றிய மாற்றங்கள்
@@ -315,7 +315,7 @@
             </td>
             <td colspan="4">
                 <s:label name="" value="%{#request.register.bdDivisionPrint}" cssStyle="font-size:11pt;"/><br>
-                <s:label name="" value="%{#request.register.birthDivision.enDivisionName}"/>
+                <s:label name="" value="%{#request.register.birthDivision.enDivisionName}" cssStyle="text-transform:uppercase;"/>
             </td>
         </tr>
     </s:else>
@@ -480,7 +480,7 @@
     <td colspan="2">පියාගේ ජන වර්ගය<br>தந்தையின் இனம்<br> Father's Ethnic Group</td>
     <td colspan="3">
         <s:label name="" value="%{fatherRacePrint}" cssStyle="font-size:12pt;"/><br/>
-        <s:label name="" value="%{fatherRacePrintEn}"/>
+        <s:label name="" value="%{fatherRacePrintEn}" cssStyle="text-transform:uppercase;"/>
         <div class="changes-done">
             <s:if test="changedFields.get(16)">
                 **
@@ -523,7 +523,7 @@
     </td>
     <td colspan="3">
         <s:label name="" value="%{motherRacePrint}" cssStyle="font-size:12pt;"/><br/>
-        <s:label name="" value="%{motherRacePrintEn}"/>
+        <s:label name="" value="%{motherRacePrintEn}" cssStyle="text-transform:uppercase;"/>
         <div class="changes-done">
             <s:if test="changedFields.get(32)">
                 **
@@ -563,7 +563,7 @@
         <td colspan="2" style="font-size:11pt">
             <s:textarea id="signature" value="%{#request.register.originalBCIssueUserSignPrint}" disabled="true"
                         rows="4"
-                        cssStyle="margin-top:10px;text-transform:none;width:100%;font-size:10pt;background:transparent;border:none;padding:0;"/>
+                        cssStyle="margin-top:10px;text-transform:none;width:100%;font-size:10pt;background:transparent;border:none;padding:0;text-transform:uppercase;"/>
         </td>
     </tr>
     <tr>
@@ -572,7 +572,7 @@
         <td colspan="2" cssStyle="font-size:11pt;">
             <s:textarea id="placeSign" value="%{#request.register.originalBCPlaceOfIssueSignPrint}" disabled="true"
                         rows="3"
-                        cssStyle="margin-top:10px;text-transform:none;width:100%;font-size:10pt;background:transparent;border:none;padding:0;"/>
+                        cssStyle="margin-top:10px;text-transform:none;width:100%;font-size:10pt;background:transparent;border:none;padding:0;text-transform:uppercase;"/>
         </td>
     </tr>
     </tbody>

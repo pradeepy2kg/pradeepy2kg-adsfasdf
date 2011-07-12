@@ -29,6 +29,12 @@
     });
 </script>
 
+<style type="text/css">
+    input {
+        text-transform: none;
+    }
+</style>
+
 <script type="text/javascript">
     // mode 1 = passing District, will return DS list
     // mode 2 = passing DsDivision, will return BD list
