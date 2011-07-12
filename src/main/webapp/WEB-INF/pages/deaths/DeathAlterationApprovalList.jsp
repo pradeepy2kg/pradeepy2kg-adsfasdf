@@ -323,7 +323,7 @@
                                 <s:if test="status.ordinal()==0">
                                     <s:a href="%{editSelected}" title="%{getText('editTooltip.label')}">
                                         <img src="<s:url value='/images/edit.png'/>" width="25" height="25"
-                                             border="none"/></s:a>
+                                             border="none" onclick="javascript:return deleteWarning('warning')"/></s:a>
                                 </s:if>
                             </td>
 
@@ -332,7 +332,7 @@
                                     <s:a href="%{deleteSelected}"
                                          title="%{getText('deleteToolTip.label')}"><img
                                             src="<s:url value='/images/delete.gif'/>" width="25" height="25"
-                                            border="none"/></s:a>
+                                            border="none" onclick="javascript:return deleteWarning('warning')"/></s:a>
                                 </s:if>
                             </td>
                             <td align="center">
@@ -391,3 +391,4 @@
 <s:hidden id="invalideDataErr" value="%{getText('err.invalide.data')}"/>
 <s:hidden id="pinNumberFi" value="%{getText('field.pin.number')}"/>
 <s:hidden id="all" value="%{getText('all.text')}"/>
+<s:hidden id="warning" value="%{getText('death.delete.warning')}"/>
