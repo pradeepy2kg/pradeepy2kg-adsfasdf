@@ -207,7 +207,7 @@
                     <td>
                         <s:select id="bdDivisionSerial" name="birthDivisionId" list="bdDivisionList"
                                   headerKey="0" headerValue="%{getText('select.registrationDivision.label')}"
-                                  cssStyle="float:left;  width:240px; margin:2px 5px;"/>
+                                  cssStyle="float:left;width:240px;margin:2px 0;"/>
                     </td>
                 </tr>
                 <tr>
@@ -330,7 +330,8 @@
                             <s:param name="idUKey" value="idUKey"/>
                         </s:url>
                         <s:a href="%{deleteSelected}" title="%{getText('toolTip.delete')}">
-                            <img src="<s:url value='/images/delete.gif'/>" width="25" height="25" border="none"/></s:a>
+                            <img src="<s:url value='/images/delete.gif'/>" width="25" height="25" border="none"
+                                    onclick="javascript:return deleteWarning('warning')"/></s:a>
                     </s:if>
                 </td>
                 <td align="center">
@@ -395,3 +396,4 @@
 <s:hidden id="serialNumnerFi" value="%{getText('field.serial.number')}"/>
 <s:hidden id="pinNumberFi" value="%{getText('field.pin.number')}"/>
 <s:hidden id="certificateNumberFi" value="%{getText('field.certificate.number')}"/>
+<s:hidden id="warning" value="%{getText('birth.delete.warning')}"/>
