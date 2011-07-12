@@ -2,7 +2,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
 <style type="text/css">
-    #alteration-approval-list-outer table tr td {
+    #alteration-print-letter-outer table tr td {
         padding: 0 5px;
     }
 
@@ -16,7 +16,7 @@
         }
     }
 
-    #alteration-approval-list-outer .form-submit {
+    #alteration-print-letter-outer .form-submit {
         margin: 5px 0 15px 0;
     }
 </style>
@@ -26,7 +26,7 @@
     }
 </script>
 
-<div id="alteration-approval-list-outer">
+<div id="alteration-print-letter-outer">
 <div class="form-submit" style="margin-bottom:20px;margin-right:10px;">
     <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
     <s:hidden id="printMessage" value="%{getText('print.message')}"/>
@@ -43,7 +43,7 @@
         <td style="width:33%;height:50px;"></td>
         <td style="width:33%"></td>
         <td rowspan="2" style="width:33%">
-            <table class="alteration-approval-list-table" width="100%" cellpadding="0"
+            <table class="table_print" width="100%" cellpadding="0"
                    style="float:right;"
                    cellspacing="0">
                 <tr>
@@ -91,7 +91,7 @@
         </td>
     </tr>
 </table>
-<table class="alteration-approval-list-table" width="100%" cellpadding="0" cellspacing="0"
+<table class="table_print" width="100%" cellpadding="0" cellspacing="0"
        style="margin-bottom:10px;">
     <tr>
         <td colspan="2">සහතිකයේ සඳහන් පුද්ගලයාගේ අනන්‍යතා අංකය <br>
@@ -125,7 +125,7 @@
         <td><s:label name="birthDeclaration.register.bdfSerialNo"/></td>
     </tr>
 </table>
-<table class="alteration-approval-list-table" width="100%" cellpadding="0" cellspacing="0">
+<table class="table_print" width="100%" cellpadding="0" cellspacing="0">
     <tr>
         <td style="text-align:center;width:15%;font-size:10pt;">Heading <br>
             தலைப்பு <br>
@@ -211,7 +211,7 @@
         <td style="width:33%;height:50px;"></td>
         <td style="width:33%"></td>
         <td rowspan="2" style="width:33%">
-            <table class="alteration-approval-list-table" width="100%" cellpadding="0"
+            <table class="table_print" width="100%" cellpadding="0"
                    style="float:right;"
                    cellspacing="0">
                 <tr>
@@ -254,7 +254,7 @@
         </td>
     </tr>
 </table>
-<table class="alteration-approval-list-table" width="100%" cellpadding="0" cellspacing="0"
+<table class="table_print" width="100%" cellpadding="0" cellspacing="0"
        style="margin-bottom:10px;">
     <tr>
         <td colspan="2">සහතිකයේ සඳහන් පුද්ගලයාගේ අනන්‍යතා අංකය <br>
@@ -288,7 +288,7 @@
         <td><s:label name="birthDeclaration.register.bdfSerialNo"/></td>
     </tr>
 </table>
-<table class="alteration-approval-list-table" width="100%" cellpadding="0" cellspacing="0">
+<table class="table_print" width="100%" cellpadding="0" cellspacing="0">
     <tr>
         <td style="text-align:center;width:15%;font-size:10pt;">Heading <br>
             தலைப்பு <br>

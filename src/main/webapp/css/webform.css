@@ -2246,6 +2246,28 @@ todo amith
     line-height: 20px;
 }
 
+/*Generic table styles*/
+.table_print {
+    border: 1px solid #000000;;
+    border-right: none;
+    border-bottom: none;
+    font-size: 9pt;
+}
 
+.table_print td {
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    padding: 3px;
+    font-size:10pt;
+}
+
+.table_print select, .table_print input {
+    width: 95%;
+    margin: 2px 5px;
+}
+
+.table_print input {
+    width: 93%;
+}
 
 
