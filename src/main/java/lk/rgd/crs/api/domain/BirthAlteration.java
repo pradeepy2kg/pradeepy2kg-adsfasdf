@@ -4,8 +4,8 @@ import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.util.WebUtils;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.BitSet;
+import java.util.Date;
 
 
 /**
