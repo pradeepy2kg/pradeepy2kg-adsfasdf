@@ -261,14 +261,14 @@
             <br>District
         </td>
         <td><s:label name="" value="%{deathPersonDistrict}"/><br>
-            <s:label name="" value="%{deathPersonDistrictEn}"/></td>
+            <s:label name="" value="%{deathPersonDistrictEn}" cssStyle="text-transform:uppercase;"/></td>
         <td>
             ප්‍රාදේශීය ලේකම් කොට්ඨාශය
             <br/>பிரதேச செயளாளர் பிரிவு
             <br/>Divisional Secretary Division
         </td>
         <td><s:label name="" value="%{deathPersondsDivision}"/><br>
-            <s:label name="" value="%{deathPersondsDivisionEn}"/>
+            <s:label name="" value="%{deathPersondsDivisionEn}" cssStyle="text-transform:uppercase;"/>
         </td>
     </tr>
     <tr>
@@ -278,7 +278,7 @@
             <br>Registration Division
         </td>
         <td><s:label name="" value="%{deathPersonDeathDivision}"/><br>
-            <s:label name="" value="%{deathPersonDeathDivisionEn}"/></td>
+            <s:label name="" value="%{deathPersonDeathDivisionEn}" cssStyle="text-transform:uppercase;"/></td>
         <td>
             මුල් ලියාපදිංචියෙන් පසු වෙනස්කම්
             <br>நிறைவேற்றிய மாற்றங்கள்
@@ -375,7 +375,7 @@
 
     <td colspan="7">
         <%=DeathTypeUtil.getDeathType((Integer) request.getAttribute("deathRegister.deathType.ordinal()"),
-                (String) request.getAttribute("deathRegister.death.preferredLanguage"))%>
+                (String) request.getAttribute("deathRegister.death.preferredLanguage")).toUpperCase()%>
         <div class="changes-done">
             <s:if test="changedFields.get(0)">
                 **
@@ -565,7 +565,7 @@
         <td colspan="2" style="font-size:11pt">
             <s:textarea id="signature" value="%{deathRegister.originalDCIssueUserSignPrint}" disabled="true"
                         rows="4"
-                        cssStyle="margin-top:10px;text-transform:none;width:100%;font-size:10pt;background:transparent;border:none;padding:0;"/>
+                        cssStyle="margin-top:10px;text-transform:none;width:100%;font-size:10pt;background:transparent;border:none;padding:0;text-transform:uppercase;"/>
         </td>
     </tr>
     <tr>
@@ -575,7 +575,7 @@
         <td colspan="2" style="font-size:11pt">
             <s:textarea id="placeSign" value="%{deathRegister.originalDCPlaceOfIssueSignPrint}" disabled="true"
                         rows="3"
-                        cssStyle="margin-top:10px;text-transform:none;width:100%;font-size:10pt;background:transparent;border:none;padding:0;"/>
+                        cssStyle="margin-top:10px;text-transform:none;width:100%;font-size:10pt;background:transparent;border:none;padding:0;text-transform:uppercase;"/>
         </td>
     </tr>
     </tbody>
