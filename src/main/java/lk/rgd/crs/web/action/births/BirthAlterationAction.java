@@ -161,7 +161,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             populateBasicLists();
             return ERROR;
         } else {
-            parent =bdf.getParent();
+            parent = bdf.getParent();
             try {
                 birthAlterationValidator.checkOnGoingAlterationOnThisSection(bdf.getIdUKey(), alterationType, user);
             } catch (CRSRuntimeException e) {
@@ -683,6 +683,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             dsDivisionName = dsDivision.getTaDivisionName();
             bdDivisionName = bdDivision.getTaDivisionName();
         }
+        nicOrPin = birthDeclaration.getChild().getPin();
     }
 
     private void changesOfAlt27A(BirthAlteration birthAlteration, BirthDeclaration bdf, String language) {
