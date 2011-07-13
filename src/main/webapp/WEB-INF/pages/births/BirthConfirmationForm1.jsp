@@ -53,10 +53,12 @@ $(function() {
 $(function() {
     $('select#motherDistrictId').bind('change', function(evt1) {
         var id = $("select#motherDistrictId").attr("value");
-        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id},
+        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:16},
                 function(data) {
                     var options1 = '';
                     var ds = data.dsDivisionList;
+                    var select =  document.getElementById('selectDSDivision').value;
+                    options1 += '<option value="' + 0 + '">' + select + '</option>';
                     for (var i = 0; i < ds.length; i++) {
                         options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
                     }
@@ -64,6 +66,8 @@ $(function() {
 
                     var options3 = '';
                     var gn = data.gnDivisionList;
+                    var select = document.getElementById('selectGNDivision').value;
+                    options3 += '<option value="' + 0 + '">' + select + '</option>';
                     for (var k = 0; k < gn.length; k++) {
                         options3 += '<option value="' + gn[k].optionValue + '">' + gn[k].optionDisplay + '</option>';
                     }
@@ -77,6 +81,8 @@ $(function() {
                 function(data) {
                     var options4 = '';
                     var gn = data.gnDivisionList;
+                    var select = document.getElementById('selectGNDivision').value;
+                    options4 += '<option value="' + 0 + '">' + select + '</option>';
                     for (var k = 0; k < gn.length; k++) {
                         options4 += '<option value="' + gn[k].optionValue + '">' + gn[k].optionDisplay + '</option>';
                     }
@@ -527,6 +533,8 @@ function initPage() {
         Mother's District
     </td>
     <td colspan="6">
+        <s:textfield name="#session.birthConfirmation_db.parent.motherDistrictPrint" cssClass="disable"
+                         disabled="true"/>
     </td>
     <td>
         <s:select list="allDistrictList" name="motherDistrictId" headerValue="%{getText('select_district.label')}"
@@ -590,7 +598,8 @@ function initPage() {
 <s:hidden id="error4" value="%{getText('p1.dob')}"/>
 <s:hidden id="error6" value="%{getText('fatherPINorNIC.label')}"/>
 <s:hidden id="error7" value="%{getText('motherPINorNIC.label')}"/>
-
+<s:hidden id="selectGNDivision" value="%{getText('select.gn.division')}"/>
+<s:hidden id="selectDSDivision" value="%{getText('select_DS_division1.label')}"/>
 </div>
 
 <%-- Styling Completed --%>

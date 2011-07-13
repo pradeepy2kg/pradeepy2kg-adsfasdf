@@ -206,6 +206,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 register.setAdoptionUKey(bdf.getRegister().getAdoptionUKey());
                 bdf.setRegister(register);
                 bdf.getRegister().setBirthType(birthType);
+                // populate all district, DS and GN lists
+                populateMotherFullLists(bdf);
                 break;
             case 2:
                 birthType = bdf.getRegister().getBirthType();
@@ -307,9 +309,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 dsDivisionId);
         }
         populate(bdf);
-        if (pageNo == 1 && parent != null && parent.getMotherDSDivision() != null && parent.getMotherDSDivision().getDistrict() != null) {
-            populateAllDSDivisionList(parent.getMotherDSDivision().getDistrict().getDistrictUKey(), language);
-        }
+
         logger.debug("Birth Declaration: PageNo=" + pageNo);
         return "form" + pageNo;
     }
@@ -737,40 +737,51 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             bcf = new BirthDeclaration();
         }
         session.put(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN, bdf);
-        populateGNDivisionName(bcf);
+        populateMotherFullLists(bcf);
         session.put(WebConstants.SESSION_BIRTH_CONFIRMATION_DB_BEAN, bcf);
         populate(bdf);
         return "form0";
     }
 
-    private void populateGNDivisionName(BirthDeclaration birthDeclaration) {
-        DSDivision motherDS = birthDeclaration.getParent().getMotherDSDivision();
+    private void populateMotherFullLists(BirthDeclaration birthDeclaration) {
+        ParentInfo parent = birthDeclaration.getParent();
+        DSDivision motherDS = parent.getMotherDSDivision();
         if (motherDS != null) {
-            GNDivision motherGN = (birthDeclaration.getParent().getMotherGNDivision() != null) ?
-                gnDivisionDAO.getGNDivisionByPK(birthDeclaration.getParent().getMotherGNDivision().getGnDivisionUKey()) : null;
-            String gnPrint = "";
-            String dsPrint = "";
+            GNDivision motherGN = (parent.getMotherGNDivision() != null) ?
+                gnDivisionDAO.getGNDivisionByPK(parent.getMotherGNDivision().getGnDivisionUKey()) : null;
+            String districtPrint = null, dsPrint = null, gnPrint = null;
             if (language.equals(AppConstants.SINHALA)) {
-                gnPrint = (motherGN != null) ? motherGN.getSiGNDivisionName() : "";
+                gnPrint = (motherGN != null) ? motherGN.getSiGNDivisionName() : null;
                 dsPrint = motherDS.getSiDivisionName();
+                districtPrint = motherDS.getDistrict().getSiDistrictName();
             } else if (language.equals(AppConstants.TAMIL)) {
-                gnPrint = (motherGN != null) ? motherGN.getTaGNDivisionName() : "";
+                gnPrint = (motherGN != null) ? motherGN.getTaGNDivisionName() : null;
                 dsPrint = motherDS.getTaDivisionName();
+                districtPrint = motherDS.getDistrict().getTaDistrictName();
             } else {
-                gnPrint = (motherGN != null) ? motherGN.getEnGNDivisionName() : "";
+                gnPrint = (motherGN != null) ? motherGN.getEnGNDivisionName() : null;
                 dsPrint = motherDS.getEnDivisionName();
+                districtPrint = motherDS.getDistrict().getEnDistrictName();
             }
-            birthDeclaration.getParent().setMotherGNDivisionPrint(gnPrint);
+            birthDeclaration.getParent().setMotherDistrictPrint(districtPrint);
             birthDeclaration.getParent().setMotherDsDivisionPrint(dsPrint);
+            birthDeclaration.getParent().setMotherGNDivisionPrint(gnPrint);
             motherDistrictId = motherDS.getDistrict().getDistrictUKey();
             motherDSDivisionId = motherDS.getDsDivisionUKey();
             motherGNDivisionId = (motherGN != null) ? motherGN.getGnDivisionUKey() : 0;
             //populate lists
             allDistrictList = districtDAO.getAllDistrictNames(language, user);
-            allDSDivisionList = dsDivisionDAO.getAllDSDivisionNames(motherDistrictId, language, user);
+            populateAllDSDivisionList(motherDistrictId, language);
             gnDivisionList = gnDivisionDAO.getGNDivisionNames(motherDSDivisionId, language, user);
+        } else {
+            /** getting full district list and DS list for mother */
+            allDistrictList = districtDAO.getAllDistrictNames(language, user);
+            if (!allDistrictList.isEmpty()) {
+                int selectedDistrictId = allDistrictList.keySet().iterator().next();
+                allDSDivisionList = dsDivisionDAO.getAllDSDivisionNames(selectedDistrictId, language, user);
+                gnDivisionList = gnDivisionDAO.getGNDivisionNames(selectedDistrictId, language, user);
+            }
         }
-
     }
 
     /**
@@ -1076,14 +1087,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         countryList = countryDAO.getCountries(language);
         districtList = districtDAO.getDistrictNames(language, user);
         raceList = raceDAO.getRaces(language);
-        //todo change  amith :))
-        /** getting full district list and DS list for mother info on page 4 */
-        allDistrictList = districtDAO.getAllDistrictNames(language, user);
-        if (!allDistrictList.isEmpty()) {
-            int selectedDistrictId = allDistrictList.keySet().iterator().next();
-            allDSDivisionList = dsDivisionDAO.getAllDSDivisionNames(selectedDistrictId, language, user);
-            gnDivisionList = gnDivisionDAO.getGNDivisionNames(selectedDistrictId, language, user);
-        }
     }
 
     private void populateAllDSDivisionList(int districtID, String language) {
