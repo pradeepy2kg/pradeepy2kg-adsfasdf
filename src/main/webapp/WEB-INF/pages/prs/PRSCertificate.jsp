@@ -89,10 +89,8 @@
         <td>
             <table border="1" style="width:100%;border:1px solid #000;border-collapse:collapse;font-size:10pt;">
                 <tr height="60px">
-                    <td>
-                        අනුක්‍රමික අංකය
-                        <br>தொடர் இலக்கம்
-                        <br>Serial Number
+                    <td width="140px;">
+                        සහතික පත්‍රයේ අංකය<br>சான்றிதழ் இல<br>Certificate Number
                     </td>
                     <td width="150px" style="font-size:11pt"><s:label name="personUKey"/></td>
                 </tr>
@@ -318,7 +316,7 @@
     <tr height="60px">
         <td>ලියාපදිංචි කළ දිනය<br>பதிவு செய்யப்பட்ட திகதி<br> Date of Registration</td>
         <td>
-            <s:label name="" value="%{#request.register.dateOfRegistrationForPrint}" cssStyle="font-size:12pt;"/><br>
+            <s:label name="" value="%{person.dateOfRegistration}" cssStyle="font-size:12pt;"/><br>
             <s:label value="YYYY-MM-DD" cssStyle="font-size:8pt;"/>
         </td>
         <td>නිකුත් කළ දිනය<br>வழங்கிய திகதி<br> Date of Issue
@@ -336,7 +334,7 @@
             Name, Signature and Designation of certifying officer
         </td>
         <td colspan="2" style="font-size:11pt">
-            <s:textarea id="signature" value="%{#request.register.originalBCIssueUserSignPrint}" disabled="true"
+            <s:textarea id="signature" value="%{person.originalBCIssueUserSignPrint}" disabled="true"
                         rows="4"
                         cssStyle="margin-top:10px;text-transform:none;width:100%;font-size:10pt;background:transparent;border:none;padding:0;"/>
         </td>
