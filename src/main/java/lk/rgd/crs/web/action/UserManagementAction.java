@@ -276,7 +276,6 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
             primaryLocation = prmLocation.getLocationUKey();
         }
         populateLocationListOnly(user);
-        roleId = user.getRole().getName();
         //populate();                                                                                                     // todo shan
         return SUCCESS;
     }
@@ -313,7 +312,6 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
 
     public String assignedUserLocation() {
         User user = userDAO.getUserByPK(userId);
-        roleId = user.getRole().getName();
         Location prmLocation = user.getPrimaryLocation();
         if (prmLocation != null) {
             primaryLocation = prmLocation.getLocationUKey();
@@ -1041,6 +1039,7 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         if (user.getRole().getRoleId().equals(Role.ROLE_RG) || user.getRole().getRoleId().equals(Role.ROLE_ADMIN)) {
             locationList.put(1, locationDAO.getLocationNameByPK(1, user.getPrefLanguage()));
         }
+        roleId = user.getRole().getName();
     }
 
     /**
