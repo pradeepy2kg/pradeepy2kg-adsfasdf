@@ -1318,7 +1318,7 @@
         </action>
         <action name="eprPrintBirthAlterarionNotice" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
                 method="printBirthAlterationNotice">
-            <result type="tiles" name="success">epr.printBirthAlterarionNotice</result>
+            <result type="tiles" name="success">epr.printBirthAlterationNotice</result>
             <result type="tiles" name="error">epr.birthAlterationPendingApproval</result>
         </action>
 
