@@ -183,14 +183,17 @@
     <col/>
     <col/>
     <col/>
+    <col/>
     <tbody>
     <tr>
-        <td rowspan="8" width="200px" height="350px"></td>
-        <td colspan="2" width="600px" height="100px"
-            style="text-align:center;margin-left:auto;margin-right:auto;font-size:16pt">
-            <label>රාජ්‍ය සේවය පිණිසයි / அரச பணி
-                On State Service</label></td>
-        <td rowspan="8" width="200px"></td>
+        <td rowspan="7" width="10%" height="350px"></td>
+        <td colspan="2" width="80%" height="100px"
+            style="text-align:center;margin-left:auto;margin-right:auto;font-size:22pt">
+            <label>රාජ්‍ය සේවය පිණිසයි &nbsp;&nbsp;அரச பணி &nbsp;&nbsp;ON STATE SERVICE</label><br/>
+            <label style="font-size:11pt;">රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව &nbsp;&nbsp;பதிவாளர் நாயகம் திணைக்களம்
+                &nbsp;&nbsp;REGISTRAR GENERAL'S DEPARTMENT</label>
+        </td>
+        <td rowspan="7" width="10%"></td>
     </tr>
     <tr>
         <td><s:label cssStyle="width:600px;font-size:10pt;" name="birthAlteration.declarant.declarantFullName"
