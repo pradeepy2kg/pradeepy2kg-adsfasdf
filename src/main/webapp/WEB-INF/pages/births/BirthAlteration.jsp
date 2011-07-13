@@ -555,8 +555,8 @@ function validateBirthYear(domElement, errorText, errorCode) {
             <s:fielderror name="duplicateSerialNumberError" cssStyle="color:red;font-size:10pt"/>
             <table class="birth-alteration-table-style02" cellspacing="0" style="float:right;width:100%">
                 <tr>
-                    <td colspan="2" style="text-align:center;">කාර්යාල ප්‍රයෝජනය සඳහා පමණි / <br>
-                        அலுவலக பாவனைக்காக மட்டும் / <br>
+                    <td colspan="2" style="text-align:center;">කාර්යාල ප්‍රයෝජනය සඳහා පමණි <br>
+                        அலுவலக பாவனைக்காக மட்டும் <br>
                         For office use only
                     </td>
                 </tr>
@@ -568,7 +568,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                     <td><s:textfield id="acceptanceDate" name="birthAlteration.dateReceived"/></td>
                 <tr>
                     <td><s:label value="පනතේ වගන්තිය "/><br>
-                        <s:label value="பிறப்பைப்"/> <br>
+                        <s:label value="சட்டத்தின் பிரிவு"/> <br>
                         <s:label value="Section of the Act"/>
                     </td>
                     <td align="center">
@@ -602,21 +602,21 @@ function validateBirthYear(domElement, errorText, errorCode) {
             <td colspan="3" style="font-size:12pt;text-align:center;">
                 <s:if test="alterationType.ordinal()==0">
                     <s:hidden id="sectionOfAct" value="1"/>
-                    <s:label value="නම ඇතුලත් කිරීම හෝ වෙනස් කිරීම (27 වගන්තිය)"/> <br>
-                    <s:label value="தந்தை பற்றிய தகவல்"/>் <br>
-                    <s:label value="Insertion or Alteration of the Name (Section 27)"/>
+                    නම ඇතුලත් කිරීම හෝ වෙනස් කිරීම (27 වගන්තිය)<br/>
+                    பெயரினை உட்புகுத்தல் அல்லது மாற்றியமைத்தல் ( 27 ஆம் பிரிவு)<br/>
+                    Insertion or Alteration of the Name (Section 27)
                 </s:if>
                 <s:if test="alterationType.ordinal()!=1 && alterationType.ordinal()!=0 ">
                     <s:hidden id="sectionOfAct" value="2"/>
-                    <s:label value="උප්පැන සහතිකයක දෝෂ නිවැරදි කිරීම (52 (1) වගන්තිය)"/> <br>
-                    <s:label value="தந்தை பற்றிய தகவல்"/> <br>
-                    <s:label value="Correction of Errors of a Birth Certificate (Section  52 (1))"/>
+                    උප්පැන සහතිකයක දෝෂ නිවැරදි කිරීම (52 (1) වගන්තිය)<br/>
+                    பிறப்புச் சான்றிதழில் பிழை திருத்துதல் (52(1) பிரிவு)<br/>
+                    Correction of Errors of a Birth Certificate (Section 52 (1))
                 </s:if>
                 <s:if test="alterationType.ordinal()==1">
                     <s:hidden id="sectionOfAct" value="3"/>
-                    <s:label value="උප්පැන්න සහතිකයක තොරතුරු සංශෝදනය කිරීම (27 A වගන්තිය)"/> <br>
-                    <s:label value="தந்தை பற்றிய தகவல்"/> <br>
-                    <s:label value="Amendment of Birth Registration Entry (Section 27 A)"/>
+                    උප්පැන්න සහතිකයක තොරතුරු සංශෝදනය කිරීම (27 A වගන්තිය)<br/>
+                    பிறப்புச் சான்றிதழில் விபரங்களை திருத்தியமைத்தல் ( 27 (அ) பிரிவு )<br/>
+                    Amendment of Birth Registration Entry (Section 27 A)
                 </s:if>
             </td>
         </tr>
@@ -631,9 +631,9 @@ function validateBirthYear(domElement, errorText, errorCode) {
         </tr>
         <tr>
             <td colspan="3" style="font-size:11pt;text-align:center;margin-top:20px;">
-                <s:label value="වෙනස් කලයුතු උප්පැන්න සහතිකය පිලිබඳ විස්තර"/> <br>
-                <s:label value="பிள்ளை பற்றிய தகவல்"/> <br>
-                <s:label value="Particulars of the Birth Certificate to amend"/>
+                වෙනස් කලයුතු උප්පැන්න සහතිකය පිලිබඳ විස්තර<br/>
+                மாற்றியமைக்கும் பிறப்புச் சான்றிதழ் பற்றிய விபரங்கள்<br/>
+                Particulars of the Birth Certificate to amend
             </td>
         </tr>
     </table>
@@ -647,9 +647,10 @@ function validateBirthYear(domElement, errorText, errorCode) {
         <col style="width:20%"/>
         <tbody>
         <tr>
-            <td colspan="2">සහතිකයේ සඳහන් පුද්ගලයාගේ අනන්‍යතා අංකය <br>
-                தனிநபர்அடையாள எண் <br>
-                Person Identification Number (PIN) stated in the Certificate
+            <td colspan="2">
+                සහතිකයේ සඳහන් පුද්ගලයාගේ අනන්‍යතා අංකය<br/>
+                சான்றிதழில் குறிப்பிட்ட நபரின் அடையாள எண்<br/>
+                Identification Number of Person stated in the Certificate
             </td>
             <td><s:label value="%{#request.nicOrPin}"/></td>
             <td>සහතික පත්‍රයේ අංකය <br>
@@ -693,7 +694,10 @@ function validateBirthYear(domElement, errorText, errorCode) {
 </div>
 <s:if test="alterationType.ordinal()==0">
     <s:hidden name=" birthDivisionId"/>
-<div id="actNumber1" style="margin-top:10px">
+<div id="actNumber1" style="margin-top:20px">
+    නම ඇතුලත් කලයුතු හෝ නිවැරදි කල යුතු ආකාරය සඳහන් කරන්න<br/>
+    மாற்றியமைத்தல்/ உட்புகுத்தல் சம்பந்தமாக சரியாக பதியப்படவேண்டிய விதத்தினை உரிய கூட்டில் குறிப்பிடுக<br/>
+    For alteration / insertion state the name as it should appear.
     <table class="birth-alteration-table-style02" style="width:100%" cellpadding="0" cellspacing="0">
         <caption></caption>
         <col width="250px"/>
@@ -701,8 +705,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
         <tbody>
         <tr>
             <td>
-                නම රාජ්‍ය භාෂාවෙන්
-                (සිංහල / දෙමළ)
+                නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)
                 <br>பெயர் அரச கரும மொழியில் (சிங்களம் / தமிழ்)
                 <br>Name in any of the official languages (Sinhala / Tamil)
             </td>
@@ -1101,7 +1104,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
         </tr>
         <tr>
             <td>ගමන් බලපත්‍ර අංකය<br>
-                கடவுச் சீட்டு<br>
+                கடவுச் சீட்டு இல <br>
                 Passport No.
             </td>
             <td><s:textfield name="birthAlteration.alt27A.father.fatherPassportNo" id="fatherPassportNoId"/></td>
@@ -1163,7 +1166,11 @@ function validateBirthYear(domElement, errorText, errorCode) {
     <table class="birth-alteration-table-style02" style=" margin-top:0px;width:100%;border-top:none;" cellpadding="0"
            cellspacing="0">
         <tr>
-            <td rowspan="2">මව්පියන් විවාහකද?</td>
+            <td rowspan="2">
+                මව්පියන් විවාහකද?<br/>
+                பெற்றோர்கள் மணம் முடித்தவர்களா?<br/>
+                Were Parent's Married?
+            </td>
             <td rowspan="2">
                 <table style="width:100%; border:none;">
                     <col width="60px"/>
@@ -1234,7 +1241,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
         <td style="width:25%; border-right:none"></td>
         <td colspan="2" style="text-align:center;font-size:11pt;border-right:none;width:50%;">
             විවාහයෙන් පසු මවගේ නම වෙනස් කිරීම<br>
-            தாத்தாவின பாட்டனின் விபரங்கள் <br>
+            திருமணத்தின் பின் தாயின் பெயரினை மாற்றுதல்<br>
             Change of Mothers name after marriage
         </td>
         <td style="width:20%;text-align:right;border-right:none">
@@ -1256,7 +1263,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
            cellspacing="0">
         <tr>
             <td style="width:250px;">විවාහයට පසුව මවගේ සම්පුර්ණ නම<br>
-                முழுப் பெயர்<br>
+                திருமணத்தின் பின் தாயின் முழுப் பெயர்<br>
                 Full Name of Mother after Marriage
             </td>
             <td style="width:760px;"><s:textarea name="birthAlteration.alt27A.mothersNameAfterMarriage"
@@ -1271,7 +1278,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
         <td style="width:25%; border-right:none"></td>
         <td colspan="8" style="width:50%;text-align:center;font-size:11pt;border-right:none;">මුත්තා / මී මුත්තා ගේ
             විස්තර වෙනස් කිරීම<br>
-            தாத்தாவின் / பாட்டனின் விபரங்கள் <br>
+            பாட்டன்/ பூட்டனின் விபரங்கள் <br>
             Changing of the Details of the Grand Father / Great Grand Father
         </td>
         <td style="width:20%;text-align:right;border-right:none">
@@ -1308,7 +1315,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
         <tr>
             <td rowspan="2" style="background-color:darkgray;"></td>
             <td>ඔහුගේ සම්පුර්ණ නම<br>
-                அவரின் முழுப் பேயர்<br>
+                அவரின் முழுப் பெயர்<br>
                 His Full Name
             </td>
             <td colspan="6"><s:textarea name="birthAlteration.alt27A.grandFather.grandFatherFullName"
@@ -1452,19 +1459,19 @@ function validateBirthYear(domElement, errorText, errorCode) {
     <tbody>
     <tr>
         <td colspan="5" style="text-align:center;font-size:11pt">ප්‍රකාශය කරන්නාගේ විස්තර<br>
-            அறிவிப்பு கொடுப்பவரின் தகவல்கள்<br>
+            பிரதிக்கினை செய்பவரின் விபரங்கள்<br>
             Details of the Declarant
         </td>
     </tr>
     <tr>
         <td>ප්‍රකාශය කරන්නේ කවුරුන් විසින් ද?<br>
-            தகவல் வழங்குபவா் <br>
+            தகவல் வழங்குபவர் <br>
             Person Giving declaration
         <td>
             <table style="border:none;width:100%">
                 <tr>
-                    <td style="width:75%;border:none">මව <br>மாதா<br>
-                        Mother
+                    <td style="width:75%;border:none">
+                        මව <br>மாதா<br>Mother
                     </td>
                     <td style="width:25%;border:none;">
                         <s:radio id="declarantType" name="birthAlteration.declarant.declarantType"
@@ -1498,7 +1505,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
         <td>
             <table style="border:none;width:100%">
                 <tr>
-                    <td style="width:75%;border:none"> තමුන්<br> மாதா<br> Self
+                    <td style="width:75%;border:none"> තමුන්<br> தன்னால்<br> Self
                     </td>
                     <td style="width:25%;border:none;">
                         <s:radio id="declarantType" name="birthAlteration.declarant.declarantType"
@@ -1519,7 +1526,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
     </tr>
     <tr>
         <td>නම<br>
-            கொடுப்பவரின் பெயர்<br>
+            பெயர்<br>
             Name<br></td>
         <td colspan="4"><s:textarea id="declarantName" name="birthAlteration.declarant.declarantFullName"/></td>
     </tr>
