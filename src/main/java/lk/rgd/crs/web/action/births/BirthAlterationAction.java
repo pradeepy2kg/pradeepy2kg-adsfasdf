@@ -9,6 +9,7 @@ import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.Race;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.DateTimeUtils;
+import lk.rgd.common.util.GenderUtil;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.*;
@@ -788,8 +789,8 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
 
             if (!(child.getChildGender() == alt52_1.getChildGender())) {
                 changesList.add(new FieldValue(
-                    child.getChildGender() != 0 ? Integer.toString(child.getChildGender()) : null,
-                    alt52_1.getChildGender() != 0 ? Integer.toString(alt52_1.getChildGender()) : null,
+                    child.getChildGender() != 0 ? GenderUtil.getGender(child.getChildGender(), language) : null,
+                    alt52_1.getChildGender() != 0 ? GenderUtil.getGender(alt52_1.getChildGender(), language) : null,
                     Alteration52_1.GENDER, lk.rgd.common.util.CommonUtil.
                     getYesOrNo(birthAlteration.getApprovalStatuses().get(Alteration52_1.GENDER), language)));
             }
@@ -813,7 +814,13 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             compareStringValues(parent.getMotherPassportNo(), mother.getMotherPassportNo(),
                 Alteration52_1.MOTHER_PASSPORT, language);
 
-            if (!(parent.getMotherAgeAtBirth() == mother.getMotherAgeAtBirth())) {
+            if (parent.getMotherAgeAtBirth() == null) {
+                if (mother.getMotherAgeAtBirth() != null) {
+                    changesList.add(new FieldValue(null, Integer.toString(mother.getMotherAgeAtBirth()),
+                        Alteration52_1.MOTHER_AGE_AT_BIRTH, lk.rgd.common.util.CommonUtil.
+                        getYesOrNo(birthAlteration.getApprovalStatuses().get(Alteration52_1.MOTHER_AGE_AT_BIRTH), language)));
+                }
+            } else if (!(parent.getMotherAgeAtBirth().equals(mother.getMotherAgeAtBirth()))) {
                 changesList.add(new FieldValue(
                     parent.getMotherAgeAtBirth() != null ? Integer.toString(parent.getMotherAgeAtBirth()) : null,
                     mother.getMotherAgeAtBirth() != null ? Integer.toString(mother.getMotherAgeAtBirth()) : null,
