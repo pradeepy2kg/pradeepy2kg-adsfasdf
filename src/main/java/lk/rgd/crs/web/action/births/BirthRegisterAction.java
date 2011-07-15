@@ -324,7 +324,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         logger.debug("Step {} of 3 ", pageNo);
         BirthDeclaration bdf;
         if (back) {
-            populate((BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN));
+            BirthDeclaration bdfSession = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
+            populate(bdfSession);
+            populateMotherFullLists(bdfSession);
             return "form" + pageNo;
         }
         if (pageNo < 1) {
