@@ -34,10 +34,15 @@
     }
 
     .changes-done {
-        font-size: 6pt;
+        font-size: 12pt;
         font: bold;
-        position: relative;
+        float: left;
         top: 3px
+    }
+
+    .changes-noalign {
+        font-size: 12pt;
+        font: bold;
     }
 
 </style>
@@ -296,11 +301,11 @@
             </td>
             <td style="font-size:9pt;">
                 <s:if test="changedFields.size() > 0">
-                    ඔව් - “**” ලකුණින් පෙන්වා ඈත
+                    ඔව්, <label class="font-12">**</label> ලකුණින් පෙන්වා ඈත
                     <br>
-                    ஆம்-”**” குறியீட்டில் குறிப்பிடப்பட்டுள்ளது
+                    ஆம், <label class="font-12">**</label> குறியீட்டில் குறிப்பிடப்பட்டுள்ளது
                     <br>
-                    Yes - marked with “**”
+                    Yes, marked with <label class="font-12">**</label>
                 </s:if>
                 <s:else>
                     නැත
@@ -343,22 +348,26 @@
         <td align="center" style="font-size:14pt;"><s:label name="" value="%{#request.child.pin}"/></td>
         <td>උපන් දිනය <br>பிறந்த திகதி<br>Date of Birth</td>
         <td>
-            <s:label name="" value="%{#request.child.childDateOfBirthForPrint}" cssStyle="font-size:12pt;"/><br>
-            <s:label value="YYYY-MM-DD" cssStyle="font-size:8pt;"/>
             <div class="changes-done">
                 <s:if test="changedFields.get(21)">
-                    **
+                    **&nbsp;<br/>&nbsp;
                 </s:if>
+            </div>
+            <div>
+                <s:label name="" value="%{#request.child.childDateOfBirthForPrint}" cssStyle="font-size:12pt;"/><br>
+                <s:label value="YYYY-MM-DD" cssStyle="font-size:8pt;"/>
             </div>
         </td>
         <td>ස්ත්‍රී පුරුෂ භාවය<br>பால்<br>Gender</td>
         <td colspan="2">
-            <s:label name="" value="%{gender}" cssStyle="font-size:12pt;"/><br/>
-            <s:label name="" value="%{genderEn}"/>
             <div class="changes-done">
                 <s:if test="changedFields.get(25)">
-                    **
+                    **&nbsp;<br/>&nbsp;
                 </s:if>
+            </div>
+            <div>
+                <s:label name="" value="%{gender}" cssStyle="font-size:12pt;"/><br/>
+                <s:label name="" value="%{genderEn}"/>
             </div>
         </td>
     </tr>
@@ -366,30 +375,33 @@
         <td>උපන් ස්ථානය <br>பிறந்த இடம்<br>Place of birth
         </td>
         <td colspan="2">
-            <s:label name="placeOfBirth" value="%{#request.child.placeOfBirth}" cssStyle="font-size:11pt;"/>
             <div class="changes-done">
                 <s:if test="changedFields.get(22)">
-                    **
+                    **&nbsp;
                 </s:if>
             </div>
+            <s:label name="placeOfBirth" value="%{#request.child.placeOfBirth}" cssStyle="font-size:11pt;"/>
             <br>
-            <s:label name="placeOfBirthEnglish" value="%{#request.child.placeOfBirthEnglish}"
-                     cssStyle="font-size:10pt;"/>
+
             <div class="changes-done">
                 <s:if test="changedFields.get(23)">
-                    **
+                    **&nbsp;
                 </s:if>
             </div>
+            <s:label name="placeOfBirthEnglish" value="%{#request.child.placeOfBirthEnglish}"
+                     cssStyle="font-size:10pt;"/>
         </td>
         <td colspan="2">මව්පියන් විවාහකද? <br>பெற்றோர் விவாகம் செய்தவர்களா?<br>Were Parents Married?
         </td>
         <td colspan="2">
-            <s:label name="" value="%{marriedStatus}" cssStyle="font-size:11pt;"/><br>
-            <s:label name="" value="%{marriedStatusEn}"/>
             <div class="changes-done">
                 <s:if test="changedFields.get(17)">
-                    **
+                    **&nbsp;<br/>&nbsp;
                 </s:if>
+            </div>
+            <div>
+                <s:label name="" value="%{marriedStatus}" cssStyle="font-size:11pt;"/><br>
+                <s:label name="" value="%{marriedStatusEn}"/>
             </div>
         </td>
     </tr>
@@ -398,12 +410,14 @@
     <tr height="60px">
         <td>උපන් දිනය <br>பிறந்த திகதி<br>Date of Birth</td>
         <td>
-            <s:label name="" value="%{#request.child.childDateOfBirthForPrint}" cssStyle="font-size:12pt;"/><br>
-            <s:label value="YYYY-MM-DD" cssStyle="font-size:8pt;"/>
             <div class="changes-done">
                 <s:if test="changedFields.get(1)">
-                    **
+                    **&nbsp;<br/>&nbsp;
                 </s:if>
+            </div>
+            <div>
+                <s:label name="" value="%{#request.child.childDateOfBirthForPrint}" cssStyle="font-size:12pt;"/><br>
+                <s:label value="YYYY-MM-DD" cssStyle="font-size:8pt;"/>
             </div>
         </td>
         <td>ස්ත්‍රී පුරුෂ භාවය<br>பால்<br>Gender</td>
@@ -434,24 +448,27 @@
         <td>නම <br>பெயர்<br>Name
         </td>
         <td colspan="6" class="bc-name" style="font-size:14pt">
-            <s:label name="" value="%{#request.child.childFullNameOfficialLang}"/>
-            <div class="changes-done">
-                <s:if test="changedFields.get(0)">
-                    **
-                </s:if>
-            </div>
+            <s:if test="child.childFullNameOfficialLang != null">
+                <div class="changes-done">
+                    <s:if test="changedFields.get(0)">
+                        **&nbsp;
+                    </s:if>
+                </div>
+                <s:label name="" value="%{#request.child.childFullNameOfficialLang}"/>
+            </s:if>
+            <s:else></s:else>
         </td>
     </tr>
     <tr height="140px">
         <td>නම ඉංග්‍රීසි භාෂාවෙන් <br>ஆங்கிலத்தில் பெயர் <br> Name in English
         </td>
         <td colspan="6" class="bc-name" style="font-size:12pt">
-            <s:label name="" cssStyle="text-transform: uppercase;" value="%{#request.child.childFullNameEnglish}"/>
             <div class="changes-done">
                 <s:if test="changedFields.get(1)">
-                    **
+                    **&nbsp;
                 </s:if>
             </div>
+            <s:label name="" cssStyle="text-transform: uppercase;" value="%{#request.child.childFullNameEnglish}"/>
         </td>
     </tr>
 </s:if>
@@ -459,16 +476,18 @@
     <td>පියාගේ සම්පුර්ණ නම<br>தந்தையின்முழுப் பெயர்<br> Father's Full Name
     </td>
     <td colspan="6" class="bc-name">
+        <s:if test="parent.fatherFullName != null || parent.fatherFullNameInEnglish != null">
+            <div class="changes-done">
+                <s:if test="changedFields.get(10)">
+                    **&nbsp;
+                </s:if>
+            </div>
         <span style="padding-right:5px"><s:label cssStyle="font-size:14pt" name=""
                                                  value="%{#request.parent.fatherFullName}"/> </span>
-        | <span style="padding-left:5px"><s:label cssStyle="font-size:8pt" name=""
-                                                  value="%{#request.parent.fatherFullNameInEnglish}"/> </span>
+            | <span style="padding-left:5px"><s:label cssStyle="font-size:8pt" name=""
+                                                      value="%{#request.parent.fatherFullNameInEnglish}"/> </span>
 
-        <div class="changes-done">
-            <s:if test="changedFields.get(10)">
-                **
-            </s:if>
-        </div>
+        </s:if>
     </td>
 </tr>
 <tr height="50px">
@@ -476,21 +495,22 @@
         தந்தையின் அடையாள எண்<br>
         Father's Identification No.
     </td>
-    <td align="center"><s:label name="" value="%{#request.parent.fatherNICorPIN}" cssStyle="font-size:12pt;"/>
-        <div class="changes-done">
-            <s:if test="changedFields.get(11)">
-                **
-            </s:if>
-        </div>
+    <td align="center">
+        <s:if test="changedFields.get(11)">
+            <label class="changes-noalign">**&nbsp;</label>
+        </s:if>
+        <s:label name="" value="%{#request.parent.fatherNICorPIN}" cssStyle="font-size:12pt;"/>
     </td>
     <td colspan="2">පියාගේ ජන වර්ගය<br>தந்தையின் இனம்<br> Father's Ethnic Group</td>
     <td colspan="3">
-        <s:label name="" value="%{fatherRacePrint}" cssStyle="font-size:12pt;"/><br/>
-        <s:label name="" value="%{fatherRacePrintEn}" cssStyle="text-transform:uppercase;"/>
         <div class="changes-done">
             <s:if test="changedFields.get(16)">
-                **
+                **&nbsp;<br/>&nbsp;
             </s:if>
+        </div>
+        <div>
+            <s:label name="" value="%{fatherRacePrint}" cssStyle="font-size:12pt;"/><br/>
+            <s:label name="" value="%{fatherRacePrintEn}" cssStyle="text-transform:uppercase;"/>
         </div>
     </td>
 </tr>
@@ -501,16 +521,17 @@
         <br> Mother's Full Name
     </td>
     <td colspan="6" class="bc-name" style="font-size:14pt">
+        <s:if test="parent.motherFullName != null || parent.motherFullNameInEnglish != null">
+            <div class="changes-done">
+                <s:if test="changedFields.get(26)">
+                    **&nbsp;
+                </s:if>
+            </div>
         <span style="padding-right:5px"><s:label cssStyle="font-size:14pt" name=""
                                                  value="%{#request.parent.motherFullName}"/> </span>
-        | <span style="padding-left:5px"><s:label cssStyle="font-size:8pt" name=""
-                                                  value="%{#request.parent.motherFullNameInEnglish}"/> </span>
-
-        <div class="changes-done">
-            <s:if test="changedFields.get(26)">
-                **
-            </s:if>
-        </div>
+            | <span style="padding-left:5px"><s:label cssStyle="font-size:8pt" name=""
+                                                      value="%{#request.parent.motherFullNameInEnglish}"/> </span>
+        </s:if>
     </td>
 </tr>
 <tr height="50px">
@@ -518,22 +539,23 @@
         தாயின் அடையாள எண் <br>
         Mother's Identification No.
     </td>
-    <td align="center"><s:label name="" value="%{#request.parent.motherNICorPIN}" cssStyle="font-size:12pt;"/>
-        <div class="changes-done">
-            <s:if test="changedFields.get(27)">
-                **
-            </s:if>
-        </div>
+    <td align="center">
+        <s:if test="changedFields.get(27)">
+            <label class="changes-noalign">**&nbsp;</label>
+        </s:if>
+        <s:label name="" value="%{#request.parent.motherNICorPIN}" cssStyle="font-size:12pt;"/>
     </td>
     <td colspan="2">මවගේ ජන වර්ගය<br>தாயின் இனம்<br> Mother's Ethnic Group
     </td>
     <td colspan="3">
-        <s:label name="" value="%{motherRacePrint}" cssStyle="font-size:12pt;"/><br/>
-        <s:label name="" value="%{motherRacePrintEn}" cssStyle="text-transform:uppercase;"/>
         <div class="changes-done">
             <s:if test="changedFields.get(32)">
-                **
+                **&nbsp;<br/>&nbsp;
             </s:if>
+        </div>
+        <div>
+            <s:label name="" value="%{motherRacePrint}" cssStyle="font-size:12pt;"/><br/>
+            <s:label name="" value="%{motherRacePrintEn}" cssStyle="text-transform:uppercase;"/>
         </div>
     </td>
 </tr>
