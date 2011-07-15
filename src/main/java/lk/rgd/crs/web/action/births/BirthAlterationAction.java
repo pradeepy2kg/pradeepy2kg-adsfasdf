@@ -4,10 +4,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.AppConstants;
 import lk.rgd.ErrorCodes;
 import lk.rgd.common.api.dao.*;
-import lk.rgd.common.api.domain.Country;
-import lk.rgd.common.api.domain.DSDivision;
-import lk.rgd.common.api.domain.Race;
-import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.*;
 import lk.rgd.common.util.DateTimeUtils;
 import lk.rgd.common.util.GenderUtil;
 import lk.rgd.crs.CRSRuntimeException;
@@ -94,6 +91,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
     private String originalName;
     private String comment;
     private String language;
+    private String returnAddress;
 
     private boolean nextFlag;
     private boolean previousFlag;
@@ -685,6 +683,23 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             bdDivisionName = bdDivision.getTaDivisionName();
         }
         nicOrPin = birthDeclaration.getChild().getPin();
+        populateReturnAddress(user.getPrimaryLocation());
+    }
+
+    private void populateReturnAddress(Location location) {
+        if (location != null) {
+            if (AppConstants.SINHALA.equals(language)) {
+                returnAddress = location.getSiLocationMailingAddress();
+            }
+            if (AppConstants.TAMIL.equals(language)) {
+                returnAddress = location.getTaLocationMailingAddress();
+            }
+            if (AppConstants.ENGLISH.equals(language)) {
+                returnAddress = location.getEnLocationMailingAddress();
+            }
+        } else {
+            logger.warn("Location is empty, return address not populated in birth alteration notice");
+        }
     }
 
     private void changesOfAlt27A(BirthAlteration birthAlteration, BirthDeclaration bdf, String language) {
@@ -1695,5 +1710,13 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
 
     public void setParent(ParentInfo parent) {
         this.parent = parent;
+    }
+
+    public String getReturnAddress() {
+        return returnAddress;
+    }
+
+    public void setReturnAddress(String returnAddress) {
+        this.returnAddress = returnAddress;
     }
 }
