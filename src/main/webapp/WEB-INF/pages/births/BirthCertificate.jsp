@@ -45,6 +45,12 @@
         font: bold;
     }
 
+    .center-text {
+        font-size: 10pt;
+        font-style: italic;
+        text-align: center;
+    }
+
 </style>
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
 <script>
@@ -301,11 +307,11 @@
             </td>
             <td style="font-size:9pt;">
                 <s:if test="changedFields.size() > 0">
-                    ඔව්, <label class="font-12">**</label> ලකුණින් පෙන්වා ඈත
+                    ඔව්, <label class="font-9">**</label> ලකුණින් පෙන්වා ඈත
                     <br>
-                    ஆம், <label class="font-12">**</label> குறியீட்டில் குறிப்பிடப்பட்டுள்ளது
+                    ஆம், <label class="font-9">**</label> குறியீட்டில் குறிப்பிடப்பட்டுள்ளது
                     <br>
-                    Yes, marked with <label class="font-12">**</label>
+                    Yes, marked with <label class="font-9">**</label>
                 </s:if>
                 <s:else>
                     නැත
@@ -456,19 +462,32 @@
                 </div>
                 <s:label name="" value="%{#request.child.childFullNameOfficialLang}"/>
             </s:if>
-            <s:else></s:else>
+            <s:else>
+                <div class="center-text">
+                    <s:label name="unknownFieldPref" cssStyle="font-size:12pt;"/> /
+                    <s:label name="unknownFieldEn"/>
+                </div>
+            </s:else>
         </td>
     </tr>
     <tr height="140px">
         <td>නම ඉංග්‍රීසි භාෂාවෙන් <br>ஆங்கிலத்தில் பெயர் <br> Name in English
         </td>
         <td colspan="6" class="bc-name" style="font-size:12pt">
-            <div class="changes-done">
-                <s:if test="changedFields.get(1)">
-                    **&nbsp;
-                </s:if>
-            </div>
-            <s:label name="" cssStyle="text-transform: uppercase;" value="%{#request.child.childFullNameEnglish}"/>
+            <s:if test="child.childFullNameEnglish != null">
+                <div class="changes-done">
+                    <s:if test="changedFields.get(1)">
+                        **&nbsp;
+                    </s:if>
+                </div>
+                <s:label name="" cssStyle="text-transform: uppercase;" value="%{#request.child.childFullNameEnglish}"/>
+            </s:if>
+            <s:else>
+                <div class="center-text">
+                    <s:label name="unknownFieldPref" cssStyle="font-size:12pt;"/> /
+                    <s:label name="unknownFieldEn"/>
+                </div>
+            </s:else>
         </td>
     </tr>
 </s:if>
@@ -486,8 +505,13 @@
                                                  value="%{#request.parent.fatherFullName}"/> </span>
             | <span style="padding-left:5px"><s:label cssStyle="font-size:8pt" name=""
                                                       value="%{#request.parent.fatherFullNameInEnglish}"/> </span>
-
         </s:if>
+        <s:else>
+            <div class="center-text">
+                <s:label name="unknownFieldPref" cssStyle="font-size:12pt;"/> /
+                <s:label name="unknownFieldEn"/>
+            </div>
+        </s:else>
     </td>
 </tr>
 <tr height="50px">
@@ -496,22 +520,38 @@
         Father's Identification No.
     </td>
     <td align="center">
-        <s:if test="changedFields.get(11)">
-            <label class="changes-noalign">**&nbsp;</label>
+        <s:if test="parent.fatherNICorPIN !=null">
+            <s:if test="changedFields.get(11)">
+                <label class="changes-noalign">**&nbsp;</label>
+            </s:if>
+            <s:label name="" value="%{#request.parent.fatherNICorPIN}" cssStyle="font-size:12pt;"/>
         </s:if>
-        <s:label name="" value="%{#request.parent.fatherNICorPIN}" cssStyle="font-size:12pt;"/>
+        <s:else>
+            <div class="center-text">
+                <s:label name="unknownFieldPref" cssStyle="font-size:12pt;"/> /
+                <s:label name="unknownFieldEn"/>
+            </div>
+        </s:else>
     </td>
     <td colspan="2">පියාගේ ජන වර්ගය<br>தந்தையின் இனம்<br> Father's Ethnic Group</td>
     <td colspan="3">
-        <div class="changes-done">
-            <s:if test="changedFields.get(16)">
-                **&nbsp;<br/>&nbsp;
-            </s:if>
-        </div>
-        <div>
-            <s:label name="" value="%{fatherRacePrint}" cssStyle="font-size:12pt;"/><br/>
-            <s:label name="" value="%{fatherRacePrintEn}" cssStyle="text-transform:uppercase;"/>
-        </div>
+        <s:if test="parent.fatherRace != null">
+            <div class="changes-done">
+                <s:if test="changedFields.get(16)">
+                    **&nbsp;<br/>&nbsp;
+                </s:if>
+            </div>
+            <div>
+                <s:label name="" value="%{fatherRacePrint}" cssStyle="font-size:12pt;"/><br/>
+                <s:label name="" value="%{fatherRacePrintEn}" cssStyle="text-transform:uppercase;"/>
+            </div>
+        </s:if>
+        <s:else>
+            <div class="center-text">
+                <s:label name="unknownFieldPref" cssStyle="font-size:12pt;"/> /
+                <s:label name="unknownFieldEn"/>
+            </div>
+        </s:else>
     </td>
 </tr>
 
@@ -532,6 +572,12 @@
             | <span style="padding-left:5px"><s:label cssStyle="font-size:8pt" name=""
                                                       value="%{#request.parent.motherFullNameInEnglish}"/> </span>
         </s:if>
+        <s:else>
+            <div class="center-text">
+                <s:label name="unknownFieldPref" cssStyle="font-size:12pt;"/> /
+                <s:label name="unknownFieldEn"/>
+            </div>
+        </s:else>
     </td>
 </tr>
 <tr height="50px">
@@ -540,23 +586,39 @@
         Mother's Identification No.
     </td>
     <td align="center">
-        <s:if test="changedFields.get(27)">
-            <label class="changes-noalign">**&nbsp;</label>
+        <s:if test="parent.motherNICorPIN != null">
+            <s:if test="changedFields.get(27)">
+                <label class="changes-noalign">**&nbsp;</label>
+            </s:if>
+            <s:label name="" value="%{#request.parent.motherNICorPIN}" cssStyle="font-size:12pt;"/>
         </s:if>
-        <s:label name="" value="%{#request.parent.motherNICorPIN}" cssStyle="font-size:12pt;"/>
+        <s:else>
+            <div class="center-text">
+                <s:label name="unknownFieldPref" cssStyle="font-size:12pt;"/> /
+                <s:label name="unknownFieldEn"/>
+            </div>
+        </s:else>
     </td>
     <td colspan="2">මවගේ ජන වර්ගය<br>தாயின் இனம்<br> Mother's Ethnic Group
     </td>
     <td colspan="3">
-        <div class="changes-done">
-            <s:if test="changedFields.get(32)">
-                **&nbsp;<br/>&nbsp;
-            </s:if>
-        </div>
-        <div>
-            <s:label name="" value="%{motherRacePrint}" cssStyle="font-size:12pt;"/><br/>
-            <s:label name="" value="%{motherRacePrintEn}" cssStyle="text-transform:uppercase;"/>
-        </div>
+        <s:if test="parent.motherRace != null">
+            <div class="changes-done">
+                <s:if test="changedFields.get(32)">
+                    **&nbsp;<br/>&nbsp;
+                </s:if>
+            </div>
+            <div>
+                <s:label name="" value="%{motherRacePrint}" cssStyle="font-size:12pt;"/><br/>
+                <s:label name="" value="%{motherRacePrintEn}" cssStyle="text-transform:uppercase;"/>
+            </div>
+        </s:if>
+        <s:else>
+            <div class="center-text">
+                <s:label name="unknownFieldPref" cssStyle="font-size:12pt;"/> /
+                <s:label name="unknownFieldEn"/>
+            </div>
+        </s:else>
     </td>
 </tr>
 
