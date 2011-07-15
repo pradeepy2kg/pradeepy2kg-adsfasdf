@@ -136,7 +136,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private String marriedStatus;
     private String marriedStatusEn;
     private String returnAddress;
-
+    private String unknownFieldPref;
+    private String unknownFieldEn;
 
     public String welcome() {
         return SUCCESS;
@@ -853,6 +854,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 childDsDivision = register.getDsDivisionPrint();
                 childDsDivisionEn = register.getDsDivision().getEnDivisionName();
                 fatherRacePrint = parent.getFatherRacePrint();
+                unknownFieldPref = lk.rgd.common.util.CommonUtil.getUnknownForCertificate(register.getPreferredLanguage());
+                unknownFieldEn = lk.rgd.common.util.CommonUtil.getUnknownForCertificate(AppConstants.ENGLISH);
 
                 if (parent.getFatherRace() != null) {
                     fatherRacePrintEn = raceDAO.getNameByPK(parent.getFatherRace().getRaceId(), AppConstants.ENGLISH);
@@ -1726,5 +1729,21 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         }
         parent.setMotherGNDivision(gnDivisionDAO.getGNDivisionByPK(motherGNDivisionId));
         logger.debug("setting Mother GNDivision: {}", parent.getMotherGNDivision().getEnGNDivisionName());
+    }
+
+    public String getUnknownFieldPref() {
+        return unknownFieldPref;
+    }
+
+    public void setUnknownFieldPref(String unknownFieldPref) {
+        this.unknownFieldPref = unknownFieldPref;
+    }
+
+    public String getUnknownFieldEn() {
+        return unknownFieldEn;
+    }
+
+    public void setUnknownFieldEn(String unknownFieldEn) {
+        this.unknownFieldEn = unknownFieldEn;
     }
 }

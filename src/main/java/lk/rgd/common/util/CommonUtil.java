@@ -15,6 +15,10 @@ public class CommonUtil {
     private static final Logger logger = LoggerFactory.getLogger(GenderUtil.class);
     private static final int DEFAULT_BUFFER_SIZE = 10240; // ..bytes = 10KB.
 
+    private static final String SI_UNKNOWN = "නොදනී";
+    private static final String TA_UNKNOWN = "தெரியாது";
+    private static final String EN_UNKNOWN = "UNKNOWN";
+
     public static String getYesOrNo(boolean code, String language) {
         if (AppConstants.SINHALA.equals(language)) {
             return code == true ? "ඔව්" : "නැත";
@@ -32,6 +36,19 @@ public class CommonUtil {
 
     public static String getOfficeSignature(String language) {
         return LocaleUtil.getLocalizedString(language, "officeSignature");
+    }
+
+    public static String getUnknownForCertificate(String language) {
+        if (AppConstants.SINHALA.equals(language)) {
+            return SI_UNKNOWN;
+        } else if (AppConstants.TAMIL.equals(language)) {
+            return TA_UNKNOWN;
+        } else if (AppConstants.ENGLISH.equals(language)) {
+            return EN_UNKNOWN;
+        } else {
+            logger.error("Invalid language : {}. Only si and ta applicable", language);
+            throw new IllegalArgumentException("Invalid language : " + language);
+        }
     }
 
     public static void copyStreams(InputStream in, OutputStream out) throws IOException {
