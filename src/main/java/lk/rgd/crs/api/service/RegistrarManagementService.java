@@ -24,10 +24,11 @@ public interface RegistrarManagementService {
     /**
      * Update Registrar information
      *
-     * @param registrar the instance being updated
-     * @param user      the user invoking the action
+     * @param previousPin the existing pin of the registrar
+     * @param registrar   the instance being updated
+     * @param user        the user invoking the action
      */
-    public void updateRegistrar(Registrar registrar, User user);
+    public void updateRegistrar(long previousPin, Registrar registrar, User user);
 
     /**
      * Delete the specified Registrar
