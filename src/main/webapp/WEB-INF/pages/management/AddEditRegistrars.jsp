@@ -219,6 +219,23 @@ function validateForm() {
     errormsg = "";
     return returnval;
 }
+
+$(function() {
+    $('img#registrar_lookup').bind('click', function(evt1) {
+        var id1 = $("input#registrarPin").attr("value");
+        $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
+                function(data1) {
+                    $("input#registrarNameInOfficelaLang").val(data1.fullNameInOfficialLanguage);
+                    $("input#registrarNameInEnglish").val(data1.fullNameInEnglishLanguage);
+                    $("input#registrarNIC").val(data1.nic);
+                    $("select#registrarGender").val(data1.gender);
+                    $("input#dateOfBirthDatePicker").val(data1.dateOfBirth);
+                    $("textarea#registrarAddress").val(data1.address);
+                    $("input#registrarPhone").val(data1.phoneNumber);
+                    $("input#registrarEmail").val(data1.email);
+                });
+    });
+});
 </script>
 
 <style type="text/css">
@@ -278,7 +295,11 @@ function validateForm() {
                 <td align="left">
                     <s:property value="%{getText('registrar.pin')}"/>
                 </td>
-                <td align="left"><s:textfield id="registrarPin" name="registrar.pin" maxLength="12"/></td>
+                <td align="left">
+                    <s:textfield id="registrarPin" name="registrar.pin" maxLength="12"/>
+                    <img src="<s:url value='/images/search-father.png' />" style="vertical-align:middle;"
+                         id="registrar_lookup"/>
+                </td>
             </tr>
             <tr>
                 <td align="left"><s:property value="%{getText('registrar.nic')}"/>
