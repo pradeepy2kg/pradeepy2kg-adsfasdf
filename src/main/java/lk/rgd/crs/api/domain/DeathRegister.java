@@ -70,27 +70,40 @@ import java.io.Serializable;
         "AND (dr.notifyingAuthority.notifyingAuthorityPIN = :registrarPin OR dr.notifyingAuthority.notifyingAuthorityPIN = :registrarNic)"),
 
     @NamedQuery(name = "count.death.gnDivision.usage", query = "SELECT COUNT(dr) FROM DeathRegister dr " +
-        "WHERE dr.deathPerson.gnDivision.gnDivisionUKey = :gnDivisionId"),
+        "WHERE dr.deathPerson.gnDivision.gnDivisionUKey = :gnDivisionId AND dr.status <> 0"),
     @NamedQuery(name = "count.death.bdDivision.usage", query = "SELECT COUNT(dr) FROM DeathRegister dr " +
-        "WHERE dr.death.deathDivision.bdDivisionUKey = :bdDivisionId"),
+        "WHERE dr.death.deathDivision.bdDivisionUKey = :bdDivisionId AND dr.status <> 0"),
     @NamedQuery(name = "count.death.location.usage", query = "SELECT COUNT(dr) FROM DeathRegister dr " +
-        "WHERE dr.originalDCPlaceOfIssue.locationUKey = :locationId")
+        "WHERE dr.originalDCPlaceOfIssue.locationUKey = :locationId AND dr.status <> 0")
 })
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class DeathRegister implements Serializable, Cloneable {
 
     public enum State {
-        DATA_ENTRY, // 0 - A newly entered death registration - can be edited by DEO, ADR
-
-        APPROVED, // 1 - An ADR or higher approved death registration
-
-        REJECTED,  // 2 - An death registration rejected by the ADR
-
-        ARCHIVED_CERT_GENERATED, // 3 A certificate is printed   (Mark as printed)
-
-        ARCHIVED_ALTERED,// 4 record is archived after an alteration
-
-        ARCHIVED_CANCELLED // 5 cancelled due to a duplication or registration of an event that did not occur
+        /**
+         * 0 - A newly entered death registration - can be edited by DEO, ADR
+         */
+        DATA_ENTRY,
+        /**
+         * 1 - An ADR or higher approved death registration
+         */
+        APPROVED,
+        /**
+         * 2 - An death registration rejected by the ADR
+         */
+        REJECTED,
+        /**
+         * 3 - A certificate is printed   (Mark as printed)
+         */
+        ARCHIVED_CERT_GENERATED,
+        /**
+         * 4 - record is archived after an alteration
+         */
+        ARCHIVED_ALTERED,
+        /**
+         * 5 - cancelled due to a duplication or registration of an event that did not occur
+         */
+        ARCHIVED_CANCELLED
     }
 
     public enum Type {

@@ -175,9 +175,10 @@ import java.util.Date;
         "AND (mr.registrarOrMinisterPIN = :registrarPin OR mr.registrarOrMinisterPIN = :registrarNic)"),
 
     @NamedQuery(name = "count.marriage.mrDivision.usage", query = "SELECT COUNT(mr) FROM MarriageRegister mr " +
-        "WHERE mr.mrDivision.mrDivisionUKey = :mrId OR mr.mrDivisionOfMaleNotice.mrDivisionUKey = :mrId OR mr.mrDivisionOfFemaleNotice.mrDivisionUKey = :mrId"),
+        "WHERE mr.state <> 0 AND (mr.mrDivision.mrDivisionUKey = :mrId " +
+        "OR mr.mrDivisionOfMaleNotice.mrDivisionUKey = :mrId OR mr.mrDivisionOfFemaleNotice.mrDivisionUKey = :mrId)"),
     @NamedQuery(name = "count.marriage.location.usage", query = "SELECT COUNT(mr) FROM MarriageRegister mr " +
-        "WHERE mr.licenseIssueLocation.locationUKey = :locationId OR mr.extractIssuedLocation.locationUKey = :locationId")
+        "WHERE mr.state <> 0 AND (mr.licenseIssueLocation.locationUKey = :locationId OR mr.extractIssuedLocation.locationUKey = :locationId)")
 })
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class MarriageRegister implements Serializable, Cloneable {
