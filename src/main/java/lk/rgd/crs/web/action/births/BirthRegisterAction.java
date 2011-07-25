@@ -5,6 +5,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.AppConstants;
 import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
+import lk.rgd.common.RGDRuntimeException;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.*;
 import lk.rgd.common.util.GenderUtil;
@@ -775,14 +776,22 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             //populate lists
             allDistrictList = districtDAO.getAllDistrictNames(language, user);
             populateAllDSDivisionList(motherDistrictId, language);
-            gnDivisionList = gnDivisionDAO.getGNDivisionNames(motherDSDivisionId, language, user);
+            try {
+                gnDivisionList = gnDivisionDAO.getGNDivisionNames(motherDSDivisionId, language, user);
+            } catch (RGDRuntimeException e) {
+                gnDivisionList = Collections.emptyMap();
+            }
         } else {
             /** getting full district list and DS list for mother */
             allDistrictList = districtDAO.getAllDistrictNames(language, user);
             if (!allDistrictList.isEmpty()) {
                 int selectedDistrictId = allDistrictList.keySet().iterator().next();
                 allDSDivisionList = dsDivisionDAO.getAllDSDivisionNames(selectedDistrictId, language, user);
-                gnDivisionList = gnDivisionDAO.getGNDivisionNames(selectedDistrictId, language, user);
+                try {
+                    gnDivisionList = gnDivisionDAO.getGNDivisionNames(selectedDistrictId, language, user);
+                } catch (RGDRuntimeException e) {
+                    gnDivisionList = Collections.emptyMap();
+                }
             }
         }
     }

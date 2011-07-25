@@ -929,7 +929,11 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         bdDivisionList = bdDivisionDAO.getBDDivisionNames(getDsDivisionId(), language, user);
         //populate all ds division list for  address of the death person when page load this set to all ds divisions from death district
         permenantAddressDsDivisionList = dsDivisionDAO.getAllDSDivisionNames(deathDistrictId, language, user);
-        gnDivisionList = gnDivisionDAO.getGNDivisionNames(permenantAddressDsDivisionList.keySet().iterator().next(), language, user);
+        try {
+            gnDivisionList = gnDivisionDAO.getGNDivisionNames(permenantAddressDsDivisionList.keySet().iterator().next(), language, user);
+        } catch (RGDRuntimeException e) {
+            gnDivisionList = Collections.emptyMap();
+        }
         /*if (getDeathDivisionId() == 0) {
             setDeathDivisionId(bdDivisionList.keySet().iterator().next());
             logger.debug("first allowed BD Div in the list {} was set", getDeathDivisionId());
