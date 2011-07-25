@@ -329,7 +329,7 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
         registrar.setRegistrarUKey(existing.getRegistrarUKey());
         registrar.setState(existing.getState());
 
-        service.updateRegistrar(registrar, user);
+        service.updateRegistrar(existing.getPin(), registrar, user);
         session.put(WebConstants.SESSION_EXSISTING_REGISTRAR, registrar);
         return SUCCESS;
     }

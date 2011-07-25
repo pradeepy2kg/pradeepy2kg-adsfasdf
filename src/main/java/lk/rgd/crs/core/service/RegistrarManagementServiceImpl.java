@@ -71,7 +71,7 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
 
         validateMinimalRequirements(registrar);
         // validate pin and add registrar to the PRS
-        validatePinAndProcessRegistrarToPRS(registrar, user);
+        validatePinAndProcessRegistrarToPRS(0, registrar, user);
 
         final String shortName = registrar.getShortName();
         registrar.setState(Registrar.State.ACTIVE);
@@ -118,7 +118,7 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void updateRegistrar(Registrar registrar, User user) {
+    public void updateRegistrar(long previousPin, Registrar registrar, User user) {
 
         if (!user.isAuthorized(Permission.REGISTRAR_MANAGEMENT)) {
             handleException("User : " + user.getUserId() +
@@ -127,7 +127,7 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
 
         validateMinimalRequirements(registrar);
         // validate pin and add registrar to the PRS
-        validatePinAndProcessRegistrarToPRS(registrar, user);
+        validatePinAndProcessRegistrarToPRS(previousPin, registrar, user);
 
         final String shortName = registrar.getShortName();
         logger.debug("Request to update Registrar : {} by : {}", shortName, user.getUserId());
@@ -135,13 +135,11 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
         registrarDao.updateRegistrar(registrar, user);
     }
 
-    private void validatePinAndProcessRegistrarToPRS(Registrar registrar, User user) {
+    private void validatePinAndProcessRegistrarToPRS(long previousPin, Registrar registrar, User user) {
+        Person person = null;
         if (registrar.getPin() == 0) {
             // specified pin is empty
-            Person person = processRegistrarToPRS(registrar, user);
-            if (person != null) {
-                registrar.setPin(person.getPin());
-            }
+            person = processRegistrarToPRS(registrar, user);
         } else {
             final String pin = Long.toString(registrar.getPin());
 
@@ -149,45 +147,52 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
                 // given pin is valid but registrar not in the PRS
                 if (!PinAndNicUtils.isValidPIN(registrar.getPin(), ecivil, user)) {
                     // add registrar to the PRS
-                    Person person = processRegistrarToPRS(registrar, user);
-                    if (person != null) {
-                        registrar.setPin(person.getPin());
-                    }
+                    person = processRegistrarToPRS(registrar, user);
                 }
             }
         }
+
+        if (person != null) {
+            registrar.setPin(person.getPin());
+        } else {
+            registrar.setPin(previousPin);
+        }
+        logger.debug("validate pin and process registrar to PRS with previousPin : {} and currentPin : {}", previousPin,
+            registrar.getPin());
     }
 
     private Person processRegistrarToPRS(Registrar registrar, User user) {
+        logger.debug("processing registrar to PRS");
         Person person = null;
         String nic = registrar.getNic();
         if (IdentificationNumberUtil.isValidNIC(registrar.getNic())) {
-            List<Person> records = ecivil.findPersonsByNIC(nic, user);
+            // TODO this is a temporary solution have to fix immediately
+//            List<Person> records = ecivil.findPersonsByNIC(nic, user);
 
-            if ((records == null || records.isEmpty())) {
-                logger.debug("Adding registrar with NIC : {} to the PRS", nic);
+//            if ((records == null || records.isEmpty())) {
+            logger.debug("Adding registrar with NIC : {} to the PRS", nic);
 
-                person = new Person();
-                person.setFullNameInOfficialLanguage(registrar.getFullNameInOfficialLanguage());
-                person.setFullNameInEnglishLanguage(registrar.getFullNameInEnglishLanguage());
-                person.setNic(nic);
-                person.setGender(registrar.getGender());
-                person.setDateOfBirth(registrar.getDateOfBirth());
-                person.setPersonPhoneNo(registrar.getPhoneNo());
-                person.setPersonEmail(registrar.getEmailAddress());
-                person.setStatus(Person.Status.SEMI_VERIFIED);
+            person = new Person();
+            person.setFullNameInOfficialLanguage(registrar.getFullNameInOfficialLanguage());
+            person.setFullNameInEnglishLanguage(registrar.getFullNameInEnglishLanguage());
+            person.setNic(nic);
+            person.setGender(registrar.getGender());
+            person.setDateOfBirth(registrar.getDateOfBirth());
+            person.setPersonPhoneNo(registrar.getPhoneNo());
+            person.setPersonEmail(registrar.getEmailAddress());
+            person.setStatus(Person.Status.SEMI_VERIFIED);
 
-                // generate pin for registrar
-                final long pin = pinGenerator.generatePINNumber(person.getDateOfBirth(), person.getGender() == 0, nic);
-                person.setPin(pin);
-                // add registrar to the PRS
-                ecivil.addPerson(person, user);
+            // generate pin for registrar
+            final long pin = pinGenerator.generatePINNumber(person.getDateOfBirth(), person.getGender() == 0, nic);
+            person.setPin(pin);
+            // add registrar to the PRS
+            ecivil.addPerson(person, user);
 
-                final Address add = new Address(registrar.getCurrentAddress());
-                person.specifyAddress(add);
-                ecivil.addAddress(add, user);
-                ecivil.updatePerson(person, user);
-            }
+            final Address add = new Address(registrar.getCurrentAddress());
+            person.specifyAddress(add);
+            ecivil.addAddress(add, user);
+            ecivil.updatePerson(person, user);
+//            }
         }
 
         return person;
