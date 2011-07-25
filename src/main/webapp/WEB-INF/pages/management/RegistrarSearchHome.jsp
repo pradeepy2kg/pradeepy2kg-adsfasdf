@@ -51,7 +51,7 @@
         }
 
         if (pin.value != "") {
-            validatePINorNIC(pin, "err_invalide_input_type", "filed_pin");
+            validatePIN(pin, "err_invalide_input_type", "filed_pin");
         }
         if (errormsg != "") {
             alert(errormsg)
