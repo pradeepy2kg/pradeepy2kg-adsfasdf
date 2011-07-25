@@ -118,14 +118,14 @@ import java.io.Serializable;
         "AND (bdf.notifyingAuthority.notifyingAuthorityPIN = :registrarPin OR bdf.notifyingAuthority.notifyingAuthorityPIN = :registrarNic)"),
 
     @NamedQuery(name = "count.birth.dsDivision.usage", query = "SELECT COUNT(bdf) FROM BirthDeclaration bdf " +
-        "WHERE bdf.register.birthDivision.dsDivision.dsDivisionUKey = :dsDivisionId " +
-        "OR bdf.parent.motherDSDivision.dsDivisionUKey = :dsDivisionId"),
+        "WHERE (bdf.register.birthDivision.dsDivision.dsDivisionUKey = :dsDivisionId OR bdf.parent.motherDSDivision.dsDivisionUKey = :dsDivisionId) " +
+        "AND bdf.register.status <> 0"),
     @NamedQuery(name = "count.birth.gnDivision.usage", query = "SELECT COUNT(bdf) FROM BirthDeclaration bdf " +
-        "WHERE bdf.parent.motherGNDivision.gnDivisionUKey = :gnDivisionId"),
+        "WHERE bdf.parent.motherGNDivision.gnDivisionUKey = :gnDivisionId AND bdf.register.status <> 0"),
     @NamedQuery(name = "count.birth.bdDivision.usage", query = "SELECT COUNT(bdf) FROM BirthDeclaration bdf " +
-        "WHERE bdf.register.birthDivision.bdDivisionUKey = :bdDivisionId"),
+        "WHERE bdf.register.birthDivision.bdDivisionUKey = :bdDivisionId AND bdf.register.status <> 0"),
     @NamedQuery(name = "count.birth.location.usage", query = "SELECT COUNT(bdf) FROM BirthDeclaration bdf " +
-        "WHERE bdf.register.originalBCPlaceOfIssue.locationUKey = :locationId")
+        "WHERE bdf.register.originalBCPlaceOfIssue.locationUKey = :locationId AND bdf.register.status <> 0")
 })
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class BirthDeclaration implements Serializable, Cloneable {
