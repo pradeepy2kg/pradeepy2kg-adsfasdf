@@ -7,7 +7,6 @@
 </script>
 
 <s:hidden id="pageType" value="%{pageType}"/>
-<b>AAA : <s:property value="pageType"/></b>
 <div id="death-declaration-form-1-outer">
 <s:form name="nonEditableDeathRegistrationForm1" action="eprDeathViewMode.do" method="POST">
 <s:set value="%{#session.WW_TRANS_I18N_LOCALE.language}" name="userPreferedLang"/>
