@@ -6,6 +6,8 @@
     }
 </script>
 
+<s:hidden id="pageType" value="%{pageType}"/>
+<b>AAA : <s:property value="pageType"/></b>
 <div id="death-declaration-form-1-outer">
 <s:form name="nonEditableDeathRegistrationForm1" action="eprDeathViewMode.do" method="POST">
 <s:set value="%{#session.WW_TRANS_I18N_LOCALE.language}" name="userPreferedLang"/>
@@ -121,30 +123,6 @@
             <br>Information about the Death
         </td>
     </tr>
-    <s:if test="deathType.ordinal() == 2">
-        <tr>
-            <td>
-                හදිසි මරණයක්ද ? <br/>
-                திடீர் மரணமா?<br/>
-                Sudden death?
-            </td>
-            <td colspan="8">
-                <s:label value="%{getText('yes.label')}"/>
-            </td>
-        </tr>
-    </s:if>
-    <s:elseif test="deathType.ordinal() == 3">
-        <tr>
-            <td colspan="2">
-                නැතිවුණු පුද්ගලයෙකුගේ මරණයක්ද ? <br/>
-                காணாமற்போன நபரது மரணமா?<br/>
-                Is the death of a missing person?
-            </td>
-            <td colspan="6">
-                <s:label value="%{getText('yes.label')}"/>
-            </td>
-        </tr>
-    </s:elseif>
     <s:if test="pageType == 0">
         <tr>
             <td colspan="4">
@@ -157,6 +135,18 @@
             </td>
         </tr>
     </s:if>
+    <s:elseif test="pageType == 1">
+        <tr>
+            <td colspan="4">
+                මරණයේ ස්වභාවය?
+                <br/>மரணத்தின் வகை? <br/>
+                Type of death?
+            </td>
+            <td colspan="5">
+                කාලය ඉකුත්වූ මරණයකි/ Late Death Tamil/ Late Death
+            </td>
+        </tr>
+    </s:elseif>
     <s:elseif test="pageType == 2">
         <tr>
             <td colspan="4">
@@ -166,6 +156,18 @@
             </td>
             <td colspan="5">
                 හදිසි මරණයකි / திடீர் மரணம் / Sudden Death
+            </td>
+        </tr>
+    </s:elseif>
+    <s:elseif test="pageType == 3">
+        <tr>
+            <td colspan="4">
+                මරණයේ ස්වභාවය?
+                <br/>மரணத்தின் வகை? <br/>
+                Type of death?
+            </td>
+            <td colspan="5">
+                නැතිවුණු පුද්ගලයෙකුගේ මරණයකි / Death of Missing Person Tamil/ Death of Missing Person
             </td>
         </tr>
     </s:elseif>
