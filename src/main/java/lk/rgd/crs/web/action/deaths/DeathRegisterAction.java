@@ -663,6 +663,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                 try {
                     ddf = service.getById(idUKey, user);
                     deathType = ddf.getDeathType();
+                    pageTypeGetter(deathType);
                     session.put(WebConstants.SESSION_DEATH_DECLARATION_BEAN, ddf);
 
                 } catch (Exception e) {
@@ -808,6 +809,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         populateBasicLists(language);
         deathType = ddf.getDeathType();
+        pageTypeGetter(deathType);
 
         if (addNewMode) {
             DeathRegister oldDdf = service.getById(oldIdUKey, user);
