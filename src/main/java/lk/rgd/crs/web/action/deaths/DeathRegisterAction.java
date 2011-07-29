@@ -651,7 +651,9 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         logger.debug("Non Editable Mode Step {} of 2", pageNo);
         DeathRegister ddf;
         if (back) {
-            populate((DeathRegister) session.get(WebConstants.SESSION_DEATH_DECLARATION_BEAN));
+            DeathRegister sessionDR = (DeathRegister) session.get(WebConstants.SESSION_DEATH_DECLARATION_BEAN);
+            populate(sessionDR);
+            pageTypeGetter(sessionDR.getDeathType());
             return "form" + pageNo;
         } else {
             if (pageNo < 0 || pageNo > 2) {
@@ -809,7 +811,6 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         populateBasicLists(language);
         deathType = ddf.getDeathType();
-        pageTypeGetter(deathType);
 
         if (addNewMode) {
             DeathRegister oldDdf = service.getById(oldIdUKey, user);
