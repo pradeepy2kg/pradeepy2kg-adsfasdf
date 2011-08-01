@@ -597,12 +597,6 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     }
 
     /**
-     * register groom on PRS
-     */
-    public void processGroomToPRS(MaleParty groom, User user) {
-    }
-
-    /**
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
