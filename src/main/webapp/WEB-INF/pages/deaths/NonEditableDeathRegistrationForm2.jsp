@@ -75,7 +75,7 @@
                 <td><s:label value="%{#session.deathRegister.declarant.declarantEMail}"/></td>
             </tr>
             <tr>
-                <td colspan="2">දැනුම් දෙන්නා අත්සන්කල දිනය<s:label value="*" cssStyle="color:red;font-size:10pt"/>
+                <td colspan="2">දැනුම් දෙන්නා අත්සන්කල දිනය
                     <br>தகவல் அளித்தவர் கையொப்பமிட்ட திகதி <br>Informant Signed Date
                 </td>
                 <td colspan="5">
