@@ -1,16 +1,12 @@
 package lk.rgd.common.util;
 
+import lk.rgd.AppConstants;
+import lk.rgd.prs.api.domain.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import lk.rgd.prs.api.domain.Person;
-import lk.rgd.AppConstants;
 
 /**
- * Created by IntelliJ IDEA.
- * User: widu
- * Date: Oct 27, 2010
- * Time: 5:18:37 PM
- * To change this template use File | Settings | File Templates.
+ * Utility class to display life status
  */
 public class LifeStatusUtil {
     private static final Logger logger = LoggerFactory.getLogger(LifeStatusUtil.class);

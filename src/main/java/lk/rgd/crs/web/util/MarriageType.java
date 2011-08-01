@@ -1,13 +1,16 @@
 package lk.rgd.crs.web.util;
 
+import lk.rgd.AppConstants;
+
 /**
  * @author Mahesha
  */
 public enum MarriageType {
-    GENERAL("සාමාන්‍ය ", "general marriage in tamil", "General"),
-    KANDYAN_BINNA("උඩරට බින්න ", "Kandyan binna in tamil", "Kandyan Binna"),
-    KANDYAN_DEEGA("උඩරට දීග ", "kandyan deega in tamil", "Kandyan Deega"),
-    MUSLIM("මුස්ලිම්", "Muslim in Tamil", "Muslim");
+
+    GENERAL("සාමාන්‍ය ", "பொது", "General"),
+    KANDYAN_BINNA("උඩරට බින්න ", "கண்டிய  பின்ன ", "Kandyan Binna"),
+    KANDYAN_DEEGA("උඩරට දීග ", "கண்டிய தீக ", "Kandyan Deega"),
+    MUSLIM("මුස්ලිම්", "முஸ்லிம்", "Muslim");
 
     private String siType;
     private String taType;
@@ -37,7 +40,8 @@ public enum MarriageType {
     }
 
     public String getType() {
-        StringBuilder sb = new StringBuilder(siType).append(" / ").append(taType).append(" / ").append(enType);
+        StringBuilder sb = new StringBuilder(siType).append(AppConstants.SLASH).append(taType).
+            append(AppConstants.SLASH).append(enType);
         type = sb.toString();
         return type;
     }

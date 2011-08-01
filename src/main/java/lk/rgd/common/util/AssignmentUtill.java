@@ -1,20 +1,19 @@
 package lk.rgd.common.util;
 
+import lk.rgd.AppConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import lk.rgd.AppConstants;
-import lk.rgd.common.api.domain.Role;
 
 /**
  * @authar amith jayasekara
  */
 public class AssignmentUtill {
     private static final Logger logger = LoggerFactory.getLogger(GenderUtil.class);
-    private static final String ASSIGNMENT_TYPE_BIRTH = "උපත්/birth/@birth@";
-    private static final String ASSIGNMENT_TYPE_DEATH = "මරණ/death/@death@";
-    private static final String ASSIGNMENT_TYPE_GENERAL_MARRIAGE = "සාමාන්‍ය විවාහ/general marriage/@general marriage@";
-    private static final String ASSIGNMENT_TYPE_KANDYAN_MARRIAGE = "උඩරට විවාහ/kandyan marriage/@kandyan marriage@";
-    private static final String ASSIGNMENT_TYPE_MUSLIM_MARRIAGE = "මුස්ලිම් විවාහ/muslim marriage/@muslim marriage@";
+    private static final String ASSIGNMENT_TYPE_BIRTH = "උපත්/ Birth/ பிறப்பு";
+    private static final String ASSIGNMENT_TYPE_DEATH = "මරණ/ Death/ இறப்பு";
+    private static final String ASSIGNMENT_TYPE_GENERAL_MARRIAGE = "සාමාන්‍ය විවාහ/ General Marriage/ பொது விவாகம் ";
+    private static final String ASSIGNMENT_TYPE_KANDYAN_MARRIAGE = "උඩරට විවාහ/ Kandyan Marriage/ கண்டிய விவாகம் ";
+    private static final String ASSIGNMENT_TYPE_MUSLIM_MARRIAGE = "මුස්ලිම් විවාහ/ Muslim Marriage/ முஸ்லிம் விவாகம் ";
 
     public static String getAssignmentType(int code) {
         switch (code) {
@@ -52,29 +51,28 @@ public class AssignmentUtill {
         } else if (lang.endsWith(AppConstants.TAMIL)) {
             switch (code) {
                 case 0:
-                    return "@birth@";
-
+                    return "பிறப்பு";
                 case 1:
-                    return "@death@";
+                    return "இறப்பு";
                 case 2:
-                    return "@general marriage@";
+                    return "பொது விவாகம் ";
                 case 3:
-                    return "@kandyan marriage@";
+                    return "கண்டிய விவாகம் ";
                 case 4:
-                    return "@muslim marriage@";
+                    return "முஸ்லிம் விவாகம் ";
             }
         } else if (lang.endsWith(AppConstants.ENGLISH)) {
             switch (code) {
                 case 0:
-                    return "birth";
+                    return "Birth";
                 case 1:
-                    return "death";
+                    return "Death";
                 case 2:
-                    return "general marriage";
+                    return "General Marriage";
                 case 3:
-                    return "kandyan marriage";
+                    return "Kandyan Marriage";
                 case 4:
-                    return "muslim marriage";
+                    return "Muslim Marriage";
             }
         } else {
             logger.error("Invalid language : {}", lang);
@@ -82,7 +80,7 @@ public class AssignmentUtill {
             //invalid language code
         }
         logger.error("Invalid type code : {}", code);
-        throw new IllegalArgumentException("Invalid gender code : {}");
+        throw new IllegalArgumentException("Invalid gender code : " + code);
     }
 
 
