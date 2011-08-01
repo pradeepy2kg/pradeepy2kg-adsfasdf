@@ -160,13 +160,14 @@ public class DeathDeclarationValidator {
 
         // checks whether the death person is a infant(30 days less than from birth)
         if (deathRegister.getDeath().isInfantLessThan30Days()) {
+            logger.debug("infant death processing before approval");
             // see whether birth is already registered if not give warnings
             checkInfantWarnings(deathRegister, warnings, rb);
         }
 
         // checks whether the death person is a women bellow 49 years
         if (checkWomanBellow49()) {
-
+            // TODO
         }
 
         return warnings;
