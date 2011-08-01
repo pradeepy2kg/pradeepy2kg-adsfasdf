@@ -320,7 +320,7 @@
     </tr>
     <tr>
         <td colspan="2">දැනුම් දෙන්නා අත්සන්කල දිනය<s:label value="*" cssStyle="color:red;font-size:10pt"/>
-            <br>Informant Signed Date Tamil<br>Informant Signed Date
+            <br>தகவல் அளித்தவர் கையொப்பமிட்ட திகதி <br>Informant Signed Date
         </td>
         <td colspan="5">
             <s:label value="YYYY-MM-DD" cssStyle="font-size:10px"/><br>
