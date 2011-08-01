@@ -1,14 +1,16 @@
 package lk.rgd.crs.web.util;
 
+import lk.rgd.AppConstants;
+
 /**
  * @author Mahesha
  */
 public enum TypeOfMarriagePlace {
 
-    REGISTRAR_OFFICE(1, "රෙජිස්ට්‍රාර් කන්තෝරුව ", "Registrars Office in tamil", "Registrars Office"),
-    DS_OFFICE(2, "ප්‍රා. ලේ. කන්තෝරුව", "DS Office in tamil", "DS Office"),
-    CHURCH(3, "දේවස්ථානය", "Church in tamil", "Church"),
-    OTHER(4, "වෙනත්","Other in tamil", "Other");
+    REGISTRAR_OFFICE(1, "රෙජිස්ට්‍රාර් කන්තෝරුව ", "பதிவாளர் அலுவலகம் ", "Registrars Office"),
+    DS_OFFICE(2, "ප්‍රාදේශීය ලේකම් කාර්යාලය", "பிரதேச செயலகம் ", "Divisional Secretariat Office"),
+    CHURCH(3, "දේවස්ථානය", "தேவாலயம்", "Church"),
+    OTHER(4, "වෙනත්", "வேறு", "Other");
 
     private int id;
     private String siType;
@@ -44,7 +46,8 @@ public enum TypeOfMarriagePlace {
     }
 
     public String getType() {
-        StringBuilder sb = new StringBuilder(siType).append(" / ").append(taType).append(" / ").append(enType);
+        StringBuilder sb = new StringBuilder(siType).append(AppConstants.SLASH).append(taType).
+            append(AppConstants.SLASH).append(enType);
         type = sb.toString();
         return type;
     }
