@@ -180,7 +180,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         BirthDeclaration bdf;
         if (back) {
             populate((BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN));
-            if (pageNo == 1 && parent.getMotherDSDivision() != null) {
+            if (pageNo == 1) {
                 populateMotherFullLists((BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN));
             }
             return "form" + pageNo;
