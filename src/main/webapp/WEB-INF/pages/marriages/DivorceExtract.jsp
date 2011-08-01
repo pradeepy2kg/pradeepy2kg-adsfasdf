@@ -107,7 +107,7 @@
         <tr style="font-size:14pt">
             <td colspan="3" align="center">
                 <s:if test="marriage.typeOfMarriage.ordinal() == 1 || marriage.typeOfMarriage.ordinal() == 2">
-                    දික්කසාද සහතිකය / in Tamil / Divorce Certificate
+                    දික්කසාද සහතිකය / விவாகரத்துச்சான்றிதழ் / Divorce Certificate
                 </s:if>
                 <s:else>
                     විවාහ ලේඛනයේ උපුටාගැනීම / குடிமதிப்பீட்டு ஆவணத்தில் / Extract of Marriage Register
@@ -489,7 +489,7 @@
     <tr>
         <td class="font-8">
             දික්කසාදය සිදුකල නිලධාරියා <br>
-            in tamil <br>
+            விவாகரத்தினை நடாத்திய அதிகாரியின் பெயரும் முகவரியும்<br>
             Name, Signature and Designation of the officer
         </td>
         <td>
