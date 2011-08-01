@@ -74,8 +74,6 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void addNewDeathRegistration(DeathRegister deathRegistration, User user) {
-        // checks age and set it as a death of infant less than 30 days
-        deathRegistration.getDeath().setInfantLessThan30Days(checkDeathPersonInfant(deathRegistration));
 
         //validate access of the user  to Death division
         ValidationUtils.validateAccessToBDDivision(user, deathRegistration.getDeath().getDeathDivision());
@@ -115,6 +113,9 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
 
     private void addDeathRegistration(DeathRegister deathRegistration, User user) {
         validateAccessOfUser(user, deathRegistration);
+        // checks age and set it as a death of infant less than 30 days
+        deathRegistration.getDeath().setInfantLessThan30Days(checkDeathPersonInfant(deathRegistration));
+
         //validate minimal requirements
         deathDeclarationValidator.validateMinimalRequirements(deathRegistration);
         // has this serial number been used already?
