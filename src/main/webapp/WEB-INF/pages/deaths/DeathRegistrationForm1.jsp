@@ -952,7 +952,7 @@ function maxLengthCalculate(id, max, divId) {
     </td>
     <td colspan="7">
         <s:select id="deathPersonPermenentAddressDistrictId" name="deathPersonPermenentAddressDistrictId"
-                  list="districtList" value="%{deathPersonPermenentAddressDistrictId}"
+                  list="allDistrictList" value="%{deathPersonPermenentAddressDistrictId}"
                   cssStyle="float:left;  width:98%;" headerValue="%{getText('district.label')}" headerKey="0"/>
     </td>
 </tr>
@@ -964,7 +964,7 @@ function maxLengthCalculate(id, max, divId) {
     </td>
     <td colspan="7">
         <s:select id="deathPersonPermenentAddressDSDivisionId" name="deathPersonPermenentAddressDSDivisionId"
-                  list="permenantAddressDsDivisionList" value="%{deathPersonPermenentAddressDSDivisionId}"
+                  list="allDSDivisionList" value="%{deathPersonPermenentAddressDSDivisionId}"
                   cssStyle="float:left;  width:98%;" headerValue="%{getText('dsDivision.label')}" headerKey="0"/>
     </td>
 </tr>
