@@ -313,7 +313,6 @@
         <put-attribute name="title" value="death_declaration_details.title"/>
     </definition>
 
-    <!--TODO change this 2-->
     <definition name="epr.non_editable_deathDeclaration_form1" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/deaths/NonEditableDeathRegistrationForm1.jsp"/>
         <put-attribute name="title" value="death_declaration_form1.title"/>

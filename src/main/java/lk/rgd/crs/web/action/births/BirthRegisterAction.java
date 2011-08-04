@@ -879,7 +879,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 }
 
                 addActionMessage("message.print.success");
-                //TODO is this line is suitable here ?,this condition should check before loading all those above stuff :D ??
                 allowPrintCertificate = user.isAuthorized(Permission.PRINT_BIRTH_CERTIFICATE);
                 if (!certificateSearch) {
                     //loading alterations done to this certificate
