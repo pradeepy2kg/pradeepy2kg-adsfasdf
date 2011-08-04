@@ -437,7 +437,6 @@
             <br>Number of weeks pregnant at the time of still-birth
         </td>
         <td>
-            <s:property value="child.weeksPregnant"/>
             <s:if test="child.weeksPregnant != null && child.weeksPregnant != 0">
                 <s:label name="" value="%{#request.child.weeksPregnant}"/>
             </s:if>
