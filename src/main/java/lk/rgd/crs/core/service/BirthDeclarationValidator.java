@@ -26,11 +26,11 @@ import java.util.*;
 public class BirthDeclarationValidator {
 
     private static final ResourceBundle rb_si =
-            ResourceBundle.getBundle("messages/bdf_validation_messages", AppConstants.LK_SI);
+        ResourceBundle.getBundle("messages/bdf_validation_messages", AppConstants.LK_SI);
     private static final ResourceBundle rb_ta =
-            ResourceBundle.getBundle("messages/bdf_validation_messages", AppConstants.LK_TA);
+        ResourceBundle.getBundle("messages/bdf_validation_messages", AppConstants.LK_TA);
     private static final ResourceBundle rb_en =
-            ResourceBundle.getBundle("messages/bdf_validation_messages", AppConstants.LK_EN);
+        ResourceBundle.getBundle("messages/bdf_validation_messages", AppConstants.LK_EN);
 
     private static final Logger logger = LoggerFactory.getLogger(BirthDeclarationValidator.class);
     private static final int WEEKS_FOR_FOETUS_TO_SURVIVE = 28;
@@ -54,29 +54,29 @@ public class BirthDeclarationValidator {
     public void validateMinimalRequirements(BirthDeclaration bdf) {
 
         if (bdf.getRegister().getDateOfRegistration() == null ||
-                bdf.getRegister().getBirthDivision() == null ||
-                bdf.getChild().getDateOfBirth() == null ||
-                isEmptyString(bdf.getChild().getPlaceOfBirth()) ||
-                //bdf.getChild().getChildGender() - cannot validate
-                isEmptyString(bdf.getInformant().getInformantName()) ||
-                isEmptyString(bdf.getInformant().getInformantAddress()) ||
-                bdf.getInformant().getInformantSignDate() == null ||
-                //bdf.getInformant().getInformantType() - cannot validate
+            bdf.getRegister().getBirthDivision() == null ||
+            bdf.getChild().getDateOfBirth() == null ||
+            isEmptyString(bdf.getChild().getPlaceOfBirth()) ||
+            //bdf.getChild().getChildGender() - cannot validate
+            isEmptyString(bdf.getInformant().getInformantName()) ||
+            isEmptyString(bdf.getInformant().getInformantAddress()) ||
+            bdf.getInformant().getInformantSignDate() == null ||
+            //bdf.getInformant().getInformantType() - cannot validate
 
-                isEmptyString(bdf.getNotifyingAuthority().getNotifyingAuthorityAddress()) ||
-                bdf.getNotifyingAuthority().getNotifyingAuthoritySignDate() == null ||
-                isEmptyString(bdf.getNotifyingAuthority().getNotifyingAuthorityName()) ||
-                isEmptyString(bdf.getNotifyingAuthority().getNotifyingAuthorityPIN())) {
+            isEmptyString(bdf.getNotifyingAuthority().getNotifyingAuthorityAddress()) ||
+            bdf.getNotifyingAuthority().getNotifyingAuthoritySignDate() == null ||
+            isEmptyString(bdf.getNotifyingAuthority().getNotifyingAuthorityName()) ||
+            isEmptyString(bdf.getNotifyingAuthority().getNotifyingAuthorityPIN())) {
 
             if (bdf.getIdUKey() > 0) {
                 handleException("Birth declaration record ID : " + bdf.getIdUKey() + " is not complete. " +
-                        "Check required field values", ErrorCodes.INVALID_DATA);
+                    "Check required field values", ErrorCodes.INVALID_DATA);
             } else if (bdf.getRegister().getBdfSerialNo() > 0) {
                 handleException("Birth declaration record with serial number : " + bdf.getRegister().getBdfSerialNo() +
-                        " is not complete. Check required field values", ErrorCodes.INVALID_DATA);
+                    " is not complete. Check required field values", ErrorCodes.INVALID_DATA);
             } else {
                 handleException("Birth declaration record being processed is incomplete " +
-                        "Check required field values", ErrorCodes.INVALID_DATA);
+                    "Check required field values", ErrorCodes.INVALID_DATA);
             }
         }
 
@@ -87,11 +87,11 @@ public class BirthDeclarationValidator {
             String s = Long.toString(serialNo);
             if (!s.matches(SERIAL_NUMBER_PATTERN)) {
                 handleException("Birth declaration record being processed is invalid " +
-                        "Check serial number : " + s, ErrorCodes.INVALID_DATA);
+                    "Check serial number : " + s, ErrorCodes.INVALID_DATA);
             }
         } else {
             handleException("Birth declaration record being processed is invalid " +
-                    "Check serial number : " + serialNo, ErrorCodes.INVALID_DATA);
+                "Check serial number : " + serialNo, ErrorCodes.INVALID_DATA);
         }
         /*todo uncomment and check test cases all birth related test are fails if this uncomment (urgent amith)    
     //validate duplicate serial numbers
@@ -116,7 +116,7 @@ public class BirthDeclarationValidator {
      * @return a list of warnings issued against the BDF
      */
     public List<UserWarning> validateStandardRequirements(
-            BirthDeclarationDAO birthDeclarationDAO, BirthDeclaration bdf, User user) {
+        BirthDeclarationDAO birthDeclarationDAO, BirthDeclaration bdf, User user) {
 
         // create a holder to capture any warnings
         List<UserWarning> warnings = new ArrayList<UserWarning>();
@@ -135,6 +135,10 @@ public class BirthDeclarationValidator {
         if (BirthDeclaration.BirthType.STILL != birthType) {
             checkValidString(child.getChildFullNameOfficialLang(), warnings, rb, "child_name_official_invalid");
             checkValidString(child.getChildFullNameEnglish(), warnings, rb, "child_name_en_invalid");
+        } else {
+            if (child.getWeeksPregnant() == null || child.getWeeksPregnant() == 0) {
+                warnings.add(new UserWarning(rb.getString("weeks_pregnant_empty")));
+            }
         }
         ParentInfo parent = bdf.getParent();
         checkValidString(parent.getFatherFullName(), warnings, rb, "father_name_invalid");
@@ -152,7 +156,7 @@ public class BirthDeclarationValidator {
 
         // if mother or father is known, a guardian cannot be the informant
         if (bdf.getInformant().getInformantType() == InformantInfo.InformantType.GUARDIAN &&
-                (!isEmptyString(parent.getMotherFullName()) || !isEmptyString(parent.getFatherFullName()))) {
+            (!isEmptyString(parent.getMotherFullName()) || !isEmptyString(parent.getFatherFullName()))) {
             warnings.add(new UserWarning(rb.getString("illegal_informant"), UserWarning.Severity.ERROR));
         }
 
@@ -168,18 +172,18 @@ public class BirthDeclarationValidator {
             end.add(Calendar.DATE, 7 * WEEKS_FOR_FOETUS_TO_SURVIVE);
 
             List<BirthDeclaration> existingRecords = birthDeclarationDAO.getByDOBRangeandMotherNICorPIN(
-                    start.getTime(), end.getTime(), bdf.getParent().getMotherNICorPIN());
+                start.getTime(), end.getTime(), bdf.getParent().getMotherNICorPIN());
 
             for (BirthDeclaration b : existingRecords) {
                 if (!
-                        (b.getRegister().getBirthDivision().getBdDivisionUKey() ==
-                                bdf.getRegister().getBirthDivision().getBdDivisionUKey() &&
-                                b.getRegister().getBdfSerialNo() == bdf.getRegister().getBdfSerialNo())
-                        ) {
+                    (b.getRegister().getBirthDivision().getBdDivisionUKey() ==
+                        bdf.getRegister().getBirthDivision().getBdDivisionUKey() &&
+                        b.getRegister().getBdfSerialNo() == bdf.getRegister().getBdfSerialNo())
+                    ) {
                     warnings.add(
-                            new UserWarning(MessageFormat.format(rb.getString("possible_duplicate"),
-                                    b.getIdUKey(), b.getRegister().getDateOfRegistration(),
-                                    b.getChild().getChildFullNameOfficialLangToLength(20))));
+                        new UserWarning(MessageFormat.format(rb.getString("possible_duplicate"),
+                            b.getIdUKey(), b.getRegister().getDateOfRegistration(),
+                            b.getChild().getChildFullNameOfficialLangToLength(20))));
                 }
             }
         }
@@ -195,9 +199,9 @@ public class BirthDeclarationValidator {
 
         for (BirthDeclaration birthDeclaration : prevChildList) {
             if (bdf.getChild().getChildRank().equals(birthDeclaration.getChild().getChildRank()) &&
-                    birthDeclaration.getRegister().getStatus() != BirthDeclaration.State.DATA_ENTRY) {
+                birthDeclaration.getRegister().getStatus() != BirthDeclaration.State.DATA_ENTRY) {
                 UserWarning w = new UserWarning(MessageFormat.format(rb.getString("duplicate_child_rank"),
-                        bdf.getChild().getChildRank()));
+                    bdf.getChild().getChildRank()));
                 w.setSeverity(UserWarning.Severity.ERROR);
                 warnings.add(w);
                 break;
@@ -208,7 +212,7 @@ public class BirthDeclarationValidator {
         {
             if (!PinAndNicUtils.isValidPINorNIC(bdf.getNotifyingAuthority().getNotifyingAuthorityPIN(), ecivil, user)) {
                 UserWarning w = new UserWarning(MessageFormat.format(rb.getString("invalid_na_pin"),
-                        bdf.getNotifyingAuthority().getNotifyingAuthorityPIN()));
+                    bdf.getNotifyingAuthority().getNotifyingAuthorityPIN()));
                 w.setSeverity(UserWarning.Severity.ERROR);
                 warnings.add(w);
             }
