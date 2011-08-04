@@ -497,7 +497,6 @@
             <result type="tiles" name="success">epr.birthRegistration_details</result>
         </action>
 
-        <!--TODO-->
         <!--Action for Print Button in direct printing birth confirmation in batch mode -->
         <action name="eprDirectPrintBirthConfirmation" class="lk.rgd.crs.web.action.births.PrintAction"
                 method="markAsPrinted">
@@ -714,7 +713,7 @@
                 method="previouseDeathRegisterApprovalPage">
             <result type="tiles" name="success">epr.deathApproveAndPrint</result>
         </action>
-        <!--todo-->
+
         <action name="eprDeathEditMoe" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
                 method="deathDeclarationEditMode">
             <result type="tiles" name="success">epr.deathDeclaration_form1</result>
