@@ -436,7 +436,18 @@
             <br>பிள்ளை இறந்து பிறந்த பொழுது கர்ப்பந் தரித்து எத்தனை வாரம்
             <br>Number of weeks pregnant at the time of still-birth
         </td>
-        <td><s:label name="" value="%{#request.child.weeksPregnant}"/></td>
+        <td>
+            <s:property value="child.weeksPregnant"/>
+            <s:if test="child.weeksPregnant != null && child.weeksPregnant != 0">
+                <s:label name="" value="%{#request.child.weeksPregnant}"/>
+            </s:if>
+            <s:else>
+                <div class="center-text">
+                    <s:label name="unknownFieldPref" cssStyle="font-size:12pt;"/> /
+                    <s:label name="unknownFieldEn"/>
+                </div>
+            </s:else>
+        </td>
     </tr>
     <tr height="70px">
         <td>උපන් ස්ථානය <br>பிறந்த இடம்<br>Place of birth
