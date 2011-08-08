@@ -127,8 +127,8 @@ function validate() {
         errormsg = errormsg + "\n" + document.getElementById('error15').value;
     }
     //validate declarent sign date
-    var declarant = document.getElementById("declarantDatePicker").value;
-    var notify = document.getElementById("submitDatePicker").value;
+    var declarant = document.getElementById("declarantDatePicker");
+    var notify = document.getElementById("submitDatePicker");
     domObject = document.getElementById('declarantDatePicker');
     if (isFieldEmpty(domObject)) {
         isEmpty(domObject, '', 'error21');
@@ -167,7 +167,7 @@ function validate() {
         isDate(domObject.value, 'error1', 'p2error6');
     }
 
-    if (notify < declarant) {
+    if (!isFieldEmpty(notify) && !isFieldEmpty(declarant) && notify.value < declarant.value) {
         errormsg = errormsg + "\n" + document.getElementById("error5").value;
     }
 
