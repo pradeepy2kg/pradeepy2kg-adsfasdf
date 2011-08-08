@@ -136,6 +136,9 @@ public class DeathRegister implements Serializable, Cloneable {
     private NotifyingAuthorityInfo notifyingAuthority = new NotifyingAuthorityInfo();
 
     @Embedded
+    private CertifyingAuthority certifyingAuthority = new CertifyingAuthority();
+
+    @Embedded
     private DeclarantInfo declarant = new DeclarantInfo();
 
     @Enumerated
@@ -322,5 +325,13 @@ public class DeathRegister implements Serializable, Cloneable {
 
     public void setOriginalDCIssueUserSignPrint(String originalDCIssueUserSignPrint) {
         this.originalDCIssueUserSignPrint = originalDCIssueUserSignPrint;
+    }
+
+    public CertifyingAuthority getCertifyingAuthority() {
+        return certifyingAuthority;
+    }
+
+    public void setCertifyingAuthority(CertifyingAuthority certifyingAuthority) {
+        this.certifyingAuthority = certifyingAuthority;
     }
 }
