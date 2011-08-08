@@ -40,6 +40,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private DeathInfo death;
     private DeathPersonInfo deathPerson;
     private DeclarantInfo declarant;
+    private CertifyingAuthority certifyingAuthority;
     private NotifyingAuthorityInfo notifyingAuthority;
     private CRSLifeCycleInfo lifeCycleInfo;
 
@@ -204,6 +205,9 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                 deathType = ddf.getDeathType();
                 ddf.setDeclarant(declarant);
                 ddf.setNotifyingAuthority(notifyingAuthority);
+                if (DeathRegister.Type.SUDDEN == deathType) {
+                    ddf.setCertifyingAuthority(certifyingAuthority);
+                }
                 idUKey = ddf.getIdUKey();
                 if (idUKey == 0) {
                     try {
@@ -655,6 +659,10 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                     return ERROR;
                 }
             }
+            if (pageNo == 1) {
+                DeathRegister sessionDR = (DeathRegister) session.get(WebConstants.SESSION_DEATH_DECLARATION_BEAN);
+                pageTypeGetter(sessionDR.getDeathType());
+            }
             if (pageNo == 2) {
                 session.remove(WebConstants.SESSION_DEATH_DECLARATION_BEAN);
             }
@@ -810,6 +818,15 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
             populateDynamicLists(language);
 
+            if (DeathRegister.Type.SUDDEN == deathType) {
+                certifyingAuthority = new CertifyingAuthority();
+                certifyingAuthority.setCertifyingAuthorityPIN(oldDdf.getCertifyingAuthority().getCertifyingAuthorityPIN());
+                certifyingAuthority.setCertifyingAuthorityName(oldDdf.getCertifyingAuthority().getCertifyingAuthorityName());
+                certifyingAuthority.setCertifyingAuthorityAddress(oldDdf.getCertifyingAuthority().getCertifyingAuthorityAddress());
+                certifyingAuthority.setCertifyingAuthoritySignDate(oldDdf.getCertifyingAuthority().getCertifyingAuthoritySignDate());
+                ddf.setCertifyingAuthority(certifyingAuthority);
+            }
+
             notifyingAuthority = new NotifyingAuthorityInfo();
             notifyingAuthority.setNotifyingAuthorityPIN(oldDdf.getNotifyingAuthority().getNotifyingAuthorityPIN());
             notifyingAuthority.setNotifyingAuthorityName(oldDdf.getNotifyingAuthority().getNotifyingAuthorityName());
@@ -860,6 +877,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         declarant = ddf.getDeclarant();
         notifyingAuthority = ddf.getNotifyingAuthority();
         declarant = ddf.getDeclarant();
+        certifyingAuthority = ddf.getCertifyingAuthority();
         setLifeCycleInfo(ddf.getLifeCycleInfo());
 
         populateDayMonthList();
@@ -1617,5 +1635,13 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public void setAllDSDivisionList(Map<Integer, String> allDSDivisionList) {
         this.allDSDivisionList = allDSDivisionList;
+    }
+
+    public CertifyingAuthority getCertifyingAuthority() {
+        return certifyingAuthority;
+    }
+
+    public void setCertifyingAuthority(CertifyingAuthority certifyingAuthority) {
+        this.certifyingAuthority = certifyingAuthority;
     }
 }
