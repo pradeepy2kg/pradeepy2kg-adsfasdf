@@ -1188,6 +1188,21 @@ function maxLengthCalculate(id, max, divId) {
     </tr>
     </tbody>
 </table>
+
+<div class="skip-validation">
+    <s:checkbox name="skipjavaScript" id="skipjs" value="false">
+        <s:label value="%{getText('skipvalidation.label')}"/>
+    </s:checkbox>
+</div>
+<div class="form-submit">
+    <s:hidden name="pageNo" value="1"/>
+    <s:hidden name="rowNumber" value="%{row}"/>
+    <s:submit value="%{getText('next.label')}" cssStyle="margin-top:10px;"/>
+</div>
+<s:hidden name="pageType" value="%{pageType}"/>
+<s:hidden name="idUKey" value="%{#request.idUKey}"/>
+</s:form>
+<br/><br/>
 <s:hidden id="error0" value="%{getText('p1.errorlable.serialNumber')}"/>
 <s:hidden id="error1" value="%{getText('p1.errorlable.dateofReg')}"/>
 <s:hidden id="error2" value="%{getText('p1.errorlable.dateofDeath')}"/>
@@ -1217,23 +1232,6 @@ function maxLengthCalculate(id, max, divId) {
 <s:hidden id="daysBeforeAbortionOrBirth" value="%{getText('error.days.before.abortion.or.birth')}"/>
 
 
-<div class="skip-validation">
-    <s:checkbox name="skipjavaScript" id="skipjs" value="false">
-        <s:label value="%{getText('skipvalidation.label')}"/>
-    </s:checkbox>
-</div>
-<div class="form-submit">
-    <s:hidden name="pageNo" value="1"/>
-    <s:hidden name="rowNumber" value="%{row}"/>
-    <s:submit value="%{getText('next.label')}" cssStyle="margin-top:10px;"/>
-</div>
-<s:hidden name="pageType" value="%{pageType}"/>
-<s:hidden name="idUKey" value="%{#request.idUKey}"/>
-</s:form>
-<br/><br/>
-<%--
-<s:hidden id="pageType" value="%{pageType}"/>
---%>
 <s:hidden id="error13" value="%{getText('enter.reasonForLate.label')}"/>
 <s:hidden id="reasonForLateDefaultText" value="%{getText('text.default.reason')}"/>
 <s:hidden id="selectDSDivision" value="%{getText('dsDivision.label')}"/>
