@@ -4,6 +4,7 @@ import lk.rgd.AppConstants;
 import lk.rgd.ErrorCodes;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.DateTimeUtils;
+import lk.rgd.common.util.PinAndNicUtils;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.BirthDeclarationDAO;
@@ -61,10 +62,16 @@ public class DeathDeclarationValidator {
             isEmptyString(deathRegister.getNotifyingAuthority().getNotifyingAuthorityName()) ||
             isEmptyString(deathRegister.getNotifyingAuthority().getNotifyingAuthorityAddress()) ||
             isEmptyString(deathRegister.getNotifyingAuthority().getNotifyingAuthorityPIN());
+
         //validating serial number and duplicate serial numbers
         validateSerialNumber(deathRegister.getDeath().getDeathSerialNo(), deathRegister.getDeath().getDeathDivision());
-        //validate declerent
+        // validate declarant
         validateDeathDeclerentForAddingDeathRegistration(deathRegister.getDeclarant());
+        // validate death certifying officer info for sudden deaths
+        if (deathRegister.getDeathType() == DeathRegister.Type.SUDDEN) {
+            validateDeathCertifyingInfo(deathRegister.getCertifyingAuthority());
+        }
+
         if (primaryCondition) {
             if (deathRegister.getIdUKey() > 0) {
                 handleException("Death declaration record ID : " + deathRegister.getIdUKey() + " is not complete. " +
@@ -242,6 +249,13 @@ public class DeathDeclarationValidator {
             handleException("declerent info on register death , declerent address :" + declarantInfo.getDeclarantAddress() +
                 " declerent name :" + declarantInfo.getDeclarantFullName() + " declerent type :" +
                 declarantInfo.getDeclarantType(), ErrorCodes.INCOMPLETE_DECLERENT);
+        }
+    }
+
+    private void validateDeathCertifyingInfo(CertifyingAuthority ca) {
+        if (isEmptyString(ca.getCertifyingAuthorityName()) || isEmptyString(ca.getCertifyingAuthorityAddress()) ||
+            ca.getCertifyingAuthoritySignDate() == null) {
+            handleException("death certifying authority info incomplete", ErrorCodes.INCOMPLETE_DECLERENT);
         }
     }
 
