@@ -58,6 +58,7 @@ public class DeathDeclarationValidator {
         boolean primaryCondition = deathRegister.getDeath().getDateOfRegistration() == null ||
             deathRegister.getDeath().getDeathDivision() == null || deathRegister.getDeath().getDateOfDeath() == null ||
             isEmptyString(deathRegister.getDeath().getPlaceOfDeath()) || isEmptyString(deathRegister.getDeclarant().getDeclarantAddress()) ||
+            deathRegister.getDeclarant().getDeclarantSignDate() == null ||
             deathRegister.getNotifyingAuthority().getNotifyingAuthoritySignDate() == null ||
             isEmptyString(deathRegister.getNotifyingAuthority().getNotifyingAuthorityName()) ||
             isEmptyString(deathRegister.getNotifyingAuthority().getNotifyingAuthorityAddress()) ||

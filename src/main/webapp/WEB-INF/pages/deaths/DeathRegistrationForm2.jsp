@@ -184,7 +184,6 @@ function initPage() {
 }
 
 function validateCertifyingAuthority() {
-    // TODO
     // certifying authority PIN or NIC
     var domObject = document.getElementById('certifying_authority_NICorPIN');
     if (!isFieldEmpty(domObject)) {
