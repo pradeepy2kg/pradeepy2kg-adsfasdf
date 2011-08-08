@@ -871,14 +871,13 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     }
 
     private void beanPopulate(DeathRegister ddf) {
-        //TODO is all needed
         deathPerson = ddf.getDeathPerson();
         death = ddf.getDeath();
         declarant = ddf.getDeclarant();
         notifyingAuthority = ddf.getNotifyingAuthority();
         declarant = ddf.getDeclarant();
         certifyingAuthority = ddf.getCertifyingAuthority();
-        setLifeCycleInfo(ddf.getLifeCycleInfo());
+        lifeCycleInfo = ddf.getLifeCycleInfo();
 
         populateDayMonthList();
     }
