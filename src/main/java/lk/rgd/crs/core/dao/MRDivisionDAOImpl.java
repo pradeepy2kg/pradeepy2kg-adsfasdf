@@ -134,7 +134,7 @@ public class MRDivisionDAOImpl extends BaseDAO implements MRDivisionDAO, Preload
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public void preload() {
 
-        Query query = em.createQuery("SELECT d FROM MRDivision d");
+        Query query = em.createQuery("SELECT d FROM MRDivision d WHERE d.active = TRUE");
         List<MRDivision> results = query.getResultList();
 
         for (MRDivision r : results) {

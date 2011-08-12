@@ -132,7 +132,7 @@ public class BDDivisionDAOImpl extends BaseDAO implements BDDivisionDAO, Preload
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public void preload() {
 
-        Query query = em.createQuery("SELECT d FROM BDDivision d");
+        Query query = em.createQuery("SELECT d FROM BDDivision d WHERE d.active = TRUE");
         List<BDDivision> results = query.getResultList();
 
         for (BDDivision r : results) {

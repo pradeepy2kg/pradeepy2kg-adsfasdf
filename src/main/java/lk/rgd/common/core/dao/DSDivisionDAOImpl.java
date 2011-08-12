@@ -143,7 +143,7 @@ public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, Preload
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public void preload() {
 
-        Query query = em.createQuery("SELECT d FROM DSDivision d");
+        Query query = em.createQuery("SELECT d FROM DSDivision d WHERE d.active = TRUE");
         List<DSDivision> results = query.getResultList();
 
         Map<Integer, String> subMap = null;
