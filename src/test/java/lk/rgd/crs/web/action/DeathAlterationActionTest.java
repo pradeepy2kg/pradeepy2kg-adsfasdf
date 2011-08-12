@@ -212,6 +212,7 @@ public class DeathAlterationActionTest extends CustomStrutsTestCase {
             declarant.setDeclarantEMail("declarant email" + i);
             declarant.setDeclarantFullName("declarant full name " + i);
             declarant.setDeclarantNICorPIN("" + (123456789 + i));
+            declarant.setDeclarantSignDate(gCal.getTime());
 
             DeathRegister deathRegister = new DeathRegister();
             deathRegister.setStatus(DeathRegister.State.DATA_ENTRY);

@@ -137,6 +137,7 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
             declarant.setDeclarantEMail("declarant email" + i);
             declarant.setDeclarantFullName("declarant full name " + i);
             declarant.setDeclarantNICorPIN("" + (123456789 + i));
+            declarant.setDeclarantSignDate(gCal.getTime());
 
             DeathRegister deathRegister = new DeathRegister();
             deathRegister.setStatus(DeathRegister.State.DATA_ENTRY);
@@ -217,6 +218,7 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
         request.setParameter("declarant.declarantPhone", "0718617804V");
         request.setParameter("declarant.declarantEMail", "htpunchihewa@gmail.com");
         request.setParameter("declarant.declarantType", "3");
+        request.setParameter("declarant.declarantSignDate", "2010-07-21");
 
         request.setParameter("notifyingAuthority.notifyingAuthorityPIN", "853303399v");
         request.setParameter("notifyingAuthority.notifyingAuthorityName", "Saman kUmara");
