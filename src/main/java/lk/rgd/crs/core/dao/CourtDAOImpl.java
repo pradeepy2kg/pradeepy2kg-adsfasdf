@@ -121,7 +121,7 @@ public class CourtDAOImpl extends BaseDAO implements CourtDAO, PreloadableDAO {
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public void preload() {
 
-        Query query = em.createQuery("SELECT c FROM Court c");
+        Query query = em.createQuery("SELECT c FROM Court c WHERE c.active = TRUE");
         List<Court> results = query.getResultList();
 
         for (Court court : results) {

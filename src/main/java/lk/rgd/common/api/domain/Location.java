@@ -18,7 +18,7 @@ import java.util.List;
 @Entity
 @Table(name = "LOCATIONS", schema = "COMMON")
 @NamedQueries({
-    @NamedQuery(name = "getAllLocations", query = "SELECT l FROM Location l " +
+    @NamedQuery(name = "getAllLocations", query = "SELECT l FROM Location l WHERE l.lifeCycleInfo.active = TRUE " +
         "ORDER BY l.enLocationName desc"),
     @NamedQuery(name = "get.location.by.code", query = "SELECT l FROM Location l " +
         "WHERE l.locationCode=:locationCode"),

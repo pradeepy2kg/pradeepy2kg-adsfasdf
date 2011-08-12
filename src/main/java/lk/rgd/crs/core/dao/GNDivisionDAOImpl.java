@@ -114,7 +114,7 @@ public class GNDivisionDAOImpl extends BaseDAO implements GNDivisionDAO, Preload
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public void preload() {
 
-        Query query = em.createQuery("SELECT d FROM GNDivision d");
+        Query query = em.createQuery("SELECT d FROM GNDivision d WHERE d.active = TRUE");
         List<GNDivision> results = query.getResultList();
 
         for (GNDivision r : results) {
