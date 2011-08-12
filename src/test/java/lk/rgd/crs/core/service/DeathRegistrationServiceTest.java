@@ -313,6 +313,7 @@ public class DeathRegistrationServiceTest extends TestCase {
         ddf.getDeclarant().setDeclarantEMail("declarant email");
         ddf.getDeclarant().setDeclarantFullName("declarant full name ");
         ddf.getDeclarant().setDeclarantNICorPIN("" + 123456789);
+        ddf.getDeclarant().setDeclarantSignDate(today);
         ddf.getDeathPerson().setGnDivision(gnDivision);
 
         ddf.getNotifyingAuthority().setNotifyingAuthorityPIN("750010001");

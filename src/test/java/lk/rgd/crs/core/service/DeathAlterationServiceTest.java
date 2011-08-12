@@ -167,6 +167,7 @@ public class DeathAlterationServiceTest extends TestCase {
         ddf.getDeclarant().setDeclarantAddress("declarant address ");
         ddf.getDeclarant().setDeclarantEMail("declarant email");
         ddf.getDeclarant().setDeclarantFullName("declarant full name ");
+        ddf.getDeclarant().setDeclarantSignDate(today);
 
         ddf.getNotifyingAuthority().setNotifyingAuthorityPIN("750010001");
         ddf.getNotifyingAuthority().setNotifyingAuthorityName("Name of the Notifying Authority");
