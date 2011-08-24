@@ -71,6 +71,9 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
     private int courtId;
     private int locationId;
     private int gnDivisionId;
+    private int selectDistrictId;
+    private int selectDSDivisionId;
+    private int[] gnDivisions;
     private boolean nextFlag;
     private boolean previousFlag;
     private int noOfRows;
@@ -651,6 +654,34 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
         populate();
         setDivisionList(true);
         return SUCCESS;
+    }
+
+    public String initRearrangeDivision() {
+        populateGNReArrangeDivisions();
+        return SUCCESS;
+    }
+
+    public String reArrangeDivisions() {
+        logger.debug("Re-arranging GNDivisions, selected gnDivisions : {}", gnDivisions.length);
+        dataManagementService.reArrangeGNDivisions(dsDivisionId, selectDSDivisionId, gnDivisions, currentUser);
+        DSDivision moved = dsDivisionDAO.getDSDivisionByPK(selectDSDivisionId);
+        addActionMessage("Selected Grama Niladhari Division/s moved to Divisional Secretariat Division : " +
+            moved.getEnDivisionName());
+        gnDivisions = null;
+        selectDistrictId = 0;
+        selectDSDivisionId = 0;
+        populateGNReArrangeDivisions();
+
+        return SUCCESS;
+    }
+
+    private void populateGNReArrangeDivisions() {
+        districtList = districtDAO.getAllDistrictNames(language, user);
+        userDistrictId = userDistrictId == 0 ? districtList.keySet().iterator().next() : userDistrictId;
+        dsDivisionList = dsDivisionDAO.getAllDSDivisionNames(userDistrictId, language, user);
+        dsDivisionId = dsDivisionId == 0 ? dsDivisionList.keySet().iterator().next() : dsDivisionId;
+        logger.debug("Loading GNDivision re-arrange with districtUKey : {} and dsDivisionUKey : {}", userDistrictId, dsDivisionId);
+        gnDivisionNameList = gnDivisionDAO.getAllGNDivisionByDsDivisionKey(dsDivisionId);
     }
 
     public void setDivisionList(boolean setNull) {
@@ -1635,5 +1666,29 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
 
     public void setEditMode(boolean editMode) {
         this.editMode = editMode;
+    }
+
+    public int getSelectDistrictId() {
+        return selectDistrictId;
+    }
+
+    public void setSelectDistrictId(int selectDistrictId) {
+        this.selectDistrictId = selectDistrictId;
+    }
+
+    public int getSelectDSDivisionId() {
+        return selectDSDivisionId;
+    }
+
+    public void setSelectDSDivisionId(int selectDSDivisionId) {
+        this.selectDSDivisionId = selectDSDivisionId;
+    }
+
+    public int[] getGnDivisions() {
+        return gnDivisions;
+    }
+
+    public void setGnDivisions(int[] gnDivisions) {
+        this.gnDivisions = gnDivisions;
     }
 }

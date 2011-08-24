@@ -24,8 +24,12 @@ import java.io.Serializable;
         "gn.dsDivision.dsDivisionUKey = :dsDivisionId"),
     @NamedQuery(name = "get.gnDivision.by.name.dsDivision", query = "SELECT gn FROM GNDivision gn " +
         "WHERE gn.dsDivision.dsDivisionUKey = :dsDivision " +
-        "AND (gn.siGNDivisionName = :siName OR gn.enGNDivisionName = :enName OR gn.taGNDivisionName = :taName)")
+        "AND (gn.siGNDivisionName = :siName OR gn.enGNDivisionName = :enName OR gn.taGNDivisionName = :taName)"),
+
+    @NamedQuery(name = "update.bulk.gnDivisions", query = "UPDATE GNDivision gn SET gn.dsDivision = :dsDivisionNew " +
+        "WHERE gn.gnDivisionUKey = :gnDivisionUKey AND gn.dsDivision = :dsDivisionOld")
 })
+
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class GNDivision implements Serializable {
     /**
@@ -41,7 +45,7 @@ public class GNDivision implements Serializable {
     private int gnDivisionId;
 
     @ManyToOne
-    @JoinColumn(name = "dsDivisionUKey", nullable = false, updatable = false)
+    @JoinColumn(name = "dsDivisionUKey", nullable = false)
     private DSDivision dsDivision;
 
     @Column(nullable = false, length = 60)

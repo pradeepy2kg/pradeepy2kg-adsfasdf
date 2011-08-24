@@ -186,6 +186,8 @@ public interface MasterDataManagementService {
      */
     void updateGNDivision(int gnDivisionUKey, GNDivision gnDivision, User user);
 
+    void reArrangeGNDivisions(int oldDSDivisionUKey, int newDSDivisionUKey, int[] gnDivisions, User user);
+
     /**
      * Mark a GN Division as active
      *

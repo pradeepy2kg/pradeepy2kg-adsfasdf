@@ -68,6 +68,8 @@ public interface GNDivisionDAO {
      */
     public void update(GNDivision gnDivision, User user);
 
+    public void bulkUpdate(DSDivision oldDSDivision, DSDivision newDSDivision, int[] gnDivisions, User user);
+
     /**
      * @param gnDivision division to be added
      * @param user       user executing the operation
@@ -75,6 +77,8 @@ public interface GNDivisionDAO {
     public void add(GNDivision gnDivision, User user);
 
     public List<GNDivision> getAllGNDivisionByDsDivisionKey(int dsDivisionId);
+
+    public List<GNDivision> getAllGNDivisionsByDistrictUKey(List<DSDivision> dsDivisions);
 
 }
 
