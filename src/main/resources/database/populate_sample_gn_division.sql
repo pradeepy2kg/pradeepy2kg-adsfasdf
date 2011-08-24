@@ -1,8 +1,8 @@
-INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName,  active)  VALUES(3, 5, 'Sammanthranapura', 'සම්මන්ත්‍රණපුර', 'ஸம்மந்திரணபுரை',1);
-INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES(3, 10, 'Mattakkuliya', 'මට්ටක්කුලිය', 'மட்டக்குளி', 1 );
-INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES(3, 15, 'Modara', 'මෝදර', 'மோத‍ரை', 1 );
-INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES(3, 20, 'Madampitiya', 'මඩම්පිටිය', 'மாதம்பிட்டிய', 1 );
-INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES(3,5, 'Mahawatta', 'මහවත්ත', 'மஹவத்தை', 1 );
+INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName,  active)  VALUES( 3, 5, 'Sammanthranapura', 'සම්මන්ත්‍රණපුර', 'ஸம்மந்திரணபுரை',1);
+INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 3, 10, 'Mattakkuliya', 'මට්ටක්කුලිය', 'மட்டக்குளி', 1 );
+INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 3, 15, 'Modara', 'මෝදර', 'மோத‍ரை', 1 );
+INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 3, 20, 'Madampitiya', 'මඩම්පිටිය', 'மாதம்பிட்டிய', 1 );
+INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 3,5, 'Mahawatta', 'මහවත්ත', 'மஹவத்தை', 1 );
 INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 3, 30, 'Aluthmawatha', 'අළුත්මාවත', 'அளுத்மாவத்தை', 1 );
 INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 3, 35, 'Lunupokuna', 'ලුණුපොකුණ', 'ளுணு‎பொக்குண', 1 );
 INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 3, 40, 'Bloemendhal', 'බ්ලුමැන්ඩල්', 'புளூ‎மெண்டல்', 1 );
@@ -55,7 +55,7 @@ INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName
 INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 6, 100, 'Wellampitiya', 'වැල්ලමිපිටිය', '‎வெல்லம்பிட்டிய', 1 );
 INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 6, 105, 'Kuriniyawatta', 'කුරිනියවත්ත', 'குரிநியாவத்‍தை', 1 );
 INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 6, 110, 'Kolonnawa', 'කොළොන්නාව', '‎கொ‎லொண்ணா‍வை', 1 );
-INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES(6, 115, 'Dahampura', 'දහමිපුර', 'தஹம்பு‍ரை', 1 );
+INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 6, 115, 'Dahampura', 'දහමිපුර', 'தஹம்பு‍ரை', 1 );
 INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 6, 120, 'Singhapura', 'සිංහපුර', 'சிங்ஹபு‍ரை', 1 );
 INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 6, 125, 'Megoda Kolonnawa', 'මිගොඩ කොළොන්නාව', '‎மெகொட ‎கொ‎லொண்ணா‍வ', 1 );
 INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 6, 130, 'Bopetta', 'බෝපිට', '‍‎‍போ‎பெத்த', 1 );
@@ -85,7 +85,7 @@ INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName
 INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 9, 20, 'Kaduwela', 'කඩුවෙල', 'கடு‎வெ‍லை', 1 );
 INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 9, 25, 'Pahala Bomiriya', 'පහළ බෝමිරිය', 'பஹள ‍‎‍போமிரிய', 1 );
 INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 9, 30, 'Ihala Bomiriya', 'ඉහළ බෝමිරිය', 'இஹள ‍போமிரிய', 1 );
-INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES(9, 35, 'Wekewatta', 'වැකේවත්ත', '‍‎‍வே‎கெவிட்ட', 1 );
+INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 9, 35, 'Wekewatta', 'වැකේවත්ත', '‍‎‍வே‎கெவிட்ட', 1 );
 INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 9, 40, 'Nawagamuwa', 'නවගමුව', 'நவகமுவ', 1 );
 INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 9, 45, 'Pahala Bomiriya B', 'පහළ බෝමිරිය බි', 'பஹள ‍‎‍போமிரிய B', 1 );
 INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 9, 50, 'Welihinda', 'වැලි හින්න', '‎வெலிஹிந்த', 1 );
@@ -141,10 +141,10 @@ INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName
 INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 12, 15, 'Atigala West', 'ආටිගල  බස්නාහිර', 'அடிகல ‍மேற்கு', 1 );
 INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 12, 20, 'Atigala East', 'අිටිගල  නැගනහිර', 'அடிகல கிழக்கு', 1 );
 INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 12, 25, 'Batawala', 'බටවෙල', 'பட்டவல', 1 );
-INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES(12, 30, 'Walpita', 'වල්පිට', 'வல்பிட்ட', 1 );
+INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 12, 30, 'Walpita', 'වල්පිට', 'வல்பிட்ட', 1 );
 INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 12, 35, 'Nawalamulla', 'නාවලමුල්ල', 'நாவலமுல்ல', 1 );
-INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES(12, 40, 'Meegasmulla', 'මිගස්මුල්ල', 'மீகஸ்முல்ல', 1 );
-INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES(12, 45, 'Habarakada North', 'හබරකන්ද  උතුර', 'ஹபரகட வடக்கு', 1 );
+INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 12, 40, 'Meegasmulla', 'මිගස්මුල්ල', 'மீகஸ்முல்ல', 1 );
+INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 12, 45, 'Habarakada North', 'හබරකන්ද  උතුර', 'ஹபரகட வடக்கு', 1 );
 INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 12, 50, 'Mullegama North', 'මුල්ලේගම උතුර', 'முல்‍லேகம வடக்கு', 1 );
 INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 12, 55, 'Mullegama South', 'මුල්ලේගම දකුණ', 'முல்‍லேகம ‎தெற்கு', 1 );
 INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 12, 60, 'Habarakada South', 'හබරකන්ද  දකුණ', 'ஹபரகட ‎தெற்கு', 1 );
@@ -311,7 +311,7 @@ INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName
 INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 18, 120, 'Angamuwa', 'අන්ගමුව', 'அங்கமுவ', 1 );
 INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 18, 125, 'Udumulla', 'උඩුමුල්ල', 'உடுமுள்ள', 1 );
 INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 18, 130, 'Poregedara', 'පොරෙිගෙදර', '‍‍‎‍போ‎ரெ‎கெதர', 1 );
-INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES(18, 135, 'Pahala Padukka', 'පහළ පාදුක්ක', 'பஹல பாதுக்கை', 1 );
+INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 18, 135, 'Pahala Padukka', 'පහළ පාදුක්ක', 'பஹல பாதுக்கை', 1 );
 INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 18, 140, 'Liyanwala', 'ලියත්වල', 'லியண்வல', 1 );
 INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 18, 145, 'Kurugala', 'කුරැගල්ල', 'குருகல', 1 );
 INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 18, 150, 'Madulawa South', 'මඩුවල දකුණ', 'மாதுலவ ‎தெற்கு', 1 );
@@ -511,7 +511,7 @@ INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName
 INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 36, 140, 'Pelenwatta West', 'පැලන්වත්ත බටහිර', '‎பெ‎லெண்வத்த ‍மேற்கு', 1 );
 INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 36, 145, 'Paligedara', 'පැළිගෙදර', '‎‎பலி‎கெதர', 1 );
 INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 36, 150, 'Kaliyammahara', 'කළියම්මහර', 'காலியம்மஹர', 1 );
-INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES(36, 155, 'Bokundara', 'බොකුන්දර', '‍‎‍போகுந்தர', 1 );
+INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 36, 155, 'Bokundara', 'බොකුන්දර', '‍‎‍போகுந்தர', 1 );
 INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 36, 160, 'Thumbovila South', 'තුම්බොවිල දකුණ', 'தும்‍போவில ‎தெற்கு', 1 );
 INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 36, 165, 'Thumbovila North', 'තුම්බොවිල  උතුර', 'தும்‍போவில வடக்கு', 1 );
 INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 36, 170, 'Wewala West', 'වේවල   බටහිර', '‍‎‍வேவள ‍மேற்கு', 1 );
@@ -622,7 +622,7 @@ INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName
 INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 6, 135, 'Pahala Kadirana', 'පහළ කදිරන', 'பஹல கதிராண', 1 );
 INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 6, 140, 'Kadirana', 'කදිරන', 'கதிராண', 1 );
 INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 6, 145, 'Akkara 50', 'අක්කර 50', 'அக்கர 50', 1 );
-INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES(6, 150, 'Kadirana South', 'කදිරන දකුණ', 'கதிராண ‎தெற்கு', 1 );
+INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 6, 150, 'Kadirana South', 'කදිරන දකුණ', 'கதிராண ‎தெற்கு', 1 );
 INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 6, 155, 'Kimbulapitiya West', 'කිූඔලපිටිය', 'கிம்புலாபிட்டிய ‍மேற்கு', 1 );
 INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 6, 160, 'Kimbulapitiya North', 'කිූඔලපිටිය  උතුර', 'கிம்புலாபிட்டிய வடக்கு', 1 );
 INSERT INTO COMMON.GN_DIVISIONS (dsDivisionUKey , gnDivisionId, enGNDivisionName, siGNDivisionName, taGNDivisionName , active)  VALUES( 6, 165, 'Kimbulapitiya South', 'කිූඔලපිටිය  දකුණ', 'கிம்புலாபிட்டிய ‎தெற்கு', 1 );
