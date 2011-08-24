@@ -37,6 +37,15 @@ public interface UserLocationDAO {
     public void update(UserLocation userLocation, User admin);
 
     /**
+     * User Locations inactivation when the associated Location is inactivated. And all the User Locations with the
+     * specified unique location key inactivated
+     *
+     * @param locationUKey the inactivated location unique key
+     * @param admin        the user performing the action
+     */
+    public void inactivateUserLocations(int locationUKey, User admin);
+
+    /**
      * Return all user locations active or inactive
      *
      * @param active filter for results
