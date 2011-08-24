@@ -12,10 +12,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Query;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * @author amith jayasekara
@@ -108,6 +105,18 @@ public class GNDivisionDAOImpl extends BaseDAO implements GNDivisionDAO, Preload
         updateCache(gnDivision);
     }
 
+    @Transactional(propagation = Propagation.MANDATORY)
+    public void bulkUpdate(DSDivision oldDSDivision, DSDivision newDSDivision, int[] gnDivisions, User user) {
+        Query q = em.createNamedQuery("update.bulk.gnDivisions");
+        q.setParameter("dsDivisionOld", oldDSDivision);
+        q.setParameter("dsDivisionNew", newDSDivision);
+        for (int gnDivisionUKey : gnDivisions) {
+            q.setParameter("gnDivisionUKey", gnDivisionUKey);
+            q.executeUpdate();
+        }
+        preload();
+    }
+
     /**
      * Loads all values from the database table into a cache
      */
@@ -131,32 +140,43 @@ public class GNDivisionDAOImpl extends BaseDAO implements GNDivisionDAO, Preload
         return q.getResultList();
     }
 
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<GNDivision> getAllGNDivisionsByDistrictUKey(List<DSDivision> dsDivisions) {
+        List<GNDivision> gnDivisions = new ArrayList<GNDivision>();
+        Query q = em.createNamedQuery("get.all.gnDivisions.by.dsDivisionId");
+        for (DSDivision ds : dsDivisions) {
+            q.setParameter("dsDivisionId", ds.getDsDivisionUKey());
+            gnDivisions.addAll(q.getResultList());
+        }
+        return gnDivisions;
+    }
+
     private void updateCache(GNDivision r) {
         final int dsDivisionUKey = r.getDsDivision().getDsDivisionUKey();
-        final int bdDivisionId = r.getGnDivisionId();
-        final int bdDivisionUKey = r.getGnDivisionUKey();
+        final int gnDivisionId = r.getGnDivisionId();
+        final int gnDivisionUKey = r.getGnDivisionUKey();
 
-        gnDivisionsByPK.put(bdDivisionUKey, r);
+        gnDivisionsByPK.put(gnDivisionUKey, r);
 
         Map<Integer, String> districtMap = siGNDivisions.get(dsDivisionUKey);
         if (districtMap == null) {
             districtMap = new TreeMap<Integer, String>();
             siGNDivisions.put(dsDivisionUKey, districtMap);
         }
-        districtMap.put(bdDivisionUKey, bdDivisionId + ": " + r.getSiGNDivisionName());
+        districtMap.put(gnDivisionUKey, gnDivisionId + ": " + r.getSiGNDivisionName());
 
         districtMap = enGNDivisions.get(dsDivisionUKey);
         if (districtMap == null) {
             districtMap = new TreeMap<Integer, String>();
             enGNDivisions.put(dsDivisionUKey, districtMap);
         }
-        districtMap.put(bdDivisionUKey, bdDivisionId + SPACER + r.getEnGNDivisionName());
+        districtMap.put(gnDivisionUKey, gnDivisionId + SPACER + r.getEnGNDivisionName());
 
         districtMap = taGNDivisions.get(dsDivisionUKey);
         if (districtMap == null) {
             districtMap = new TreeMap<Integer, String>();
             taGNDivisions.put(dsDivisionUKey, districtMap);
         }
-        districtMap.put(bdDivisionUKey, bdDivisionId + SPACER + r.getTaGNDivisionName());
+        districtMap.put(gnDivisionUKey, gnDivisionId + SPACER + r.getTaGNDivisionName());
     }
 }

@@ -5,6 +5,7 @@ import lk.rgd.Permission;
 import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.LocationDAO;
+import lk.rgd.common.api.dao.UserLocationDAO;
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.Location;
@@ -43,11 +44,13 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
     private final DeathRegisterDAO deathRegisterDAO;
     private final MarriageRegistrationDAO marriageRegistrationDAO;
     private final AdoptionOrderDAO adoptionOrderDAO;
+    private final UserLocationDAO userLocationDAO;
 
     public MasterDataManagementServiceImpl(BDDivisionDAO bdDivisionDAO, MRDivisionDAO mrDivisionDAO,
         DSDivisionDAO dsDivisionDAO, DistrictDAO districtDAO, LocationDAO locationDAO, CourtDAO courtDAO,
         GNDivisionDAO gnDivisionDAO, BirthDeclarationDAO birthDeclarationDAO, DeathRegisterDAO deathRegisterDAO,
-        MarriageRegistrationDAO marriageRegistrationDAO, AdoptionOrderDAO adoptionOrderDAO) {
+        MarriageRegistrationDAO marriageRegistrationDAO, AdoptionOrderDAO adoptionOrderDAO,
+        UserLocationDAO userLocationDAO) {
         this.bdDivisionDAO = bdDivisionDAO;
         this.mrDivisionDAO = mrDivisionDAO;
         this.dsDivisionDAO = dsDivisionDAO;
@@ -59,6 +62,7 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
         this.deathRegisterDAO = deathRegisterDAO;
         this.marriageRegistrationDAO = marriageRegistrationDAO;
         this.adoptionOrderDAO = adoptionOrderDAO;
+        this.userLocationDAO = userLocationDAO;
     }
 
     /**
@@ -190,6 +194,32 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
     private boolean isEligibleToUpdateGNDivision(int gnDivisionUKey) {
         long size = birthDeclarationDAO.findGNDivisionUsageInBirthRecords(gnDivisionUKey);
         return size > 0 ? false : deathRegisterDAO.findGNDivisionUsageInDeathRecords(gnDivisionUKey) == 0;
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void reArrangeGNDivisions(int oldDSDivisionUKey, int newDSDivisionUKey, int[] gnDivisions, User user) {
+        if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
+            logger.debug("Attempt to re-arrange GNDivisions ");
+            // TODO validate old and new DS divisions
+            // TODO validate gnDivision list is valid i.e oldDS related with specified gnDivisions
+
+            DSDivision oldDS = dsDivisionDAO.getDSDivisionByPK(oldDSDivisionUKey);
+            DSDivision newDS = dsDivisionDAO.getDSDivisionByPK(newDSDivisionUKey);
+
+            if (oldDS == null || newDS == null || gnDivisions == null || gnDivisions.length == 0) {
+                // TODO
+                handleException("message", ErrorCodes.ILLEGAL_STATE);
+            }
+
+            gnDivisionDAO.bulkUpdate(oldDS, newDS, gnDivisions, user);
+            for (int gnDivisionUKey : gnDivisions) {
+                GNDivision current = gnDivisionDAO.getGNDivisionByPK(gnDivisionUKey);
+                logger.debug("setted GNDivision name : {}", current.getSiGNDivisionName());
+            }
+
+        } else {
+            logger.error("User : {} was not allowed to re-arrange GN Divisions", user.getUserId());
+        }
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
@@ -558,6 +588,10 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
             try {
                 Location existing = locationDAO.getLocation(locationUKey);
                 if (existing != null) {
+                    // when location is inactivated mapping user locations needs to be updated
+                    if (!activate) {
+                        userLocationDAO.inactivateUserLocations(locationUKey, user);
+                    }
                     existing.getLifeCycleInfo().setActive(activate);
                     locationDAO.update(existing, user);
                     logger.info("Location : {} " + (activate ? "" : "in-") + "activated by : {}",
