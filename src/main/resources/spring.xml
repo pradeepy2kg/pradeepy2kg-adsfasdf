@@ -271,6 +271,7 @@
         <constructor-arg ref="deathRegisterDAOImpl"/>
         <constructor-arg ref="marriageRegistrationDAOImpl"/>
         <constructor-arg ref="adoptionOrderDAOImpl"/>
+        <constructor-arg ref="userLocationDAOImpl"/>
     </bean>
 
     <bean id="certificateSearchService" class="lk.rgd.crs.core.service.CertificateSearchServiceImpl">
@@ -304,9 +305,9 @@
 
     <!--Solr index manager-->
     <bean id="solrIndexManager" class="lk.rgd.common.core.index.SolrIndexManager">
-        <constructor-arg value="http://localhost:8080/solr/births"/>
-        <constructor-arg value="http://localhost:8080/solr/prs"/>
-        <constructor-arg value="http://localhost:8080/solr/deaths"/>
+        <constructor-arg value="http://localhost:9443/solr/births"/>
+        <constructor-arg value="http://localhost:9443/solr/prs"/>
+        <constructor-arg value="http://localhost:9443/solr/deaths"/>
     </bean>
     <bean id="birthRecordsIndexer" class="lk.rgd.crs.core.service.BirthRecordsIndexer">
         <constructor-arg ref="solrIndexManager"/>

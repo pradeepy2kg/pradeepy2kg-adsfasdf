@@ -1,16 +1,16 @@
 package lk.rgd.crs.web;
 
+import lk.rgd.AppConstants;
 import lk.rgd.common.RGDRuntimeException;
+import lk.rgd.common.api.dao.DSDivisionDAO;
+import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.RoleDAO;
 import lk.rgd.common.api.dao.UserDAO;
 import lk.rgd.common.api.domain.User;
-import lk.rgd.common.api.dao.DSDivisionDAO;
-import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.util.LocaleUtil;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.dao.GNDivisionDAO;
 import lk.rgd.crs.api.dao.MRDivisionDAO;
-import lk.rgd.AppConstants;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -195,6 +195,9 @@ public class JSONDivisionLookupService extends HttpServlet {
                 List bd = getMRDivisionList(lang, dsDivisionId, user, withAll);
                 optionLists.put("dsDivisionList", ds);
                 optionLists.put("divisionList", bd);
+            } else if ("18".equals(mode)) {
+                List gn = getGNDivisions(lang, divisionId, user);
+                optionLists.put("gnDivisionList", gn);
             } else {
                 // passing districtId, return DS List and the BD List for the 1st DS division
                 List ds = getDSDivisions(lang, divisionId, user);

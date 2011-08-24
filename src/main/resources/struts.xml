@@ -1148,6 +1148,16 @@
                 method="initDivisionList">
             <result type="tiles" name="success">epr.addEditDivisions</result>
         </action>
+
+        <!--TODO for GN Division re-arange option-->
+        <action name="eprInitRearrangeDivision" class="lk.rgd.crs.web.action.UserManagementAction"
+                method="initRearrangeDivision">
+            <result type="tiles" name="success">epr.ReArrangeDivisions</result>
+        </action>
+        <action name="eprRearrangeDivision" class="lk.rgd.crs.web.action.UserManagementAction"
+                method="reArrangeDivisions">
+            <result type="tiles" name="success">epr.ReArrangeDivisions</result>
+        </action>
         <action name="eprActivateOrInactivateDivisionsAndDsDivisions" class="lk.rgd.crs.web.action.UserManagementAction"
                 method="activeOrInactive">
             <result type="tiles" name="success">epr.addEditDivisions</result>
