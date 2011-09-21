@@ -419,3 +419,20 @@ function deleteWarning(message) {
     ret = confirm(document.getElementById(message).value);
     return ret;
 }
+
+// Display popup window to search District and DSDivision of any given GNDivision
+function displayGNSearch() {
+    var url = 'http://www.life.gov.lk/LIFe/navigate/';
+    displayPopup(url);
+}
+
+// Display popup by using specified url
+function displayPopup(url) {
+    var w = 850;
+    var h = 750;
+    var left = (w / 2 - 150);
+    var top = (h / 2 - 300);
+    var features = "width=" + w + ",height=" + h + ",top=" + top + ",left=" + left;
+    features += ",scrollbars=1,resizable=0,status=0,directories=no,menubar=0,toolbar=1";
+    window.open(url, '', features);
+}
