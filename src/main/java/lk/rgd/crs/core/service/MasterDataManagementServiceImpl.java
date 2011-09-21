@@ -199,23 +199,42 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
     @Transactional(propagation = Propagation.REQUIRED)
     public void reArrangeGNDivisions(int oldDSDivisionUKey, int newDSDivisionUKey, int[] gnDivisions, User user) {
         if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
-            logger.debug("Attempt to re-arrange GNDivisions ");
-            // TODO validate old and new DS divisions
-            // TODO validate gnDivision list is valid i.e oldDS related with specified gnDivisions
+            logger.debug("Attempt to re-arrange GNDivisions");
 
             DSDivision oldDS = dsDivisionDAO.getDSDivisionByPK(oldDSDivisionUKey);
             DSDivision newDS = dsDivisionDAO.getDSDivisionByPK(newDSDivisionUKey);
 
+            // validate arguments passed are not invalid before re-arrange of GNDivisions
             if (oldDS == null || newDS == null || gnDivisions == null || gnDivisions.length == 0) {
-                // TODO
-                handleException("message", ErrorCodes.ILLEGAL_STATE);
+                handleException("Passed old DSDivision unique key or new DSDivision unique key or GNDivisions invalid",
+                    ErrorCodes.ILLEGAL_STATE);
+            }
+            for (int gnDivisionUKey : gnDivisions) {
+                GNDivision passed = gnDivisionDAO.getGNDivisionByPK(gnDivisionUKey);
+                if (passed == null) {
+                    handleException("Passed GNDivision unique key : " + gnDivisionUKey +
+                        " does not have any matching GNDivision record in the DB", ErrorCodes.ILLEGAL_STATE);
+                }
+                if (oldDSDivisionUKey != passed.getDsDivision().getDsDivisionUKey()) {
+                    handleException("Passed GNDivision with unique key : " + gnDivisionUKey +
+                        " was not mapped to DSDivision : " + oldDS.getEnDivisionName(), ErrorCodes.ILLEGAL_STATE);
+                }
+                if (!isEligibleToUpdateGNDivision(gnDivisionUKey)) {
+                    handleException("GNDivision with unique key : " + gnDivisionUKey +
+                        " is already used by birth/death record(s)", ErrorCodes.ILLEGAL_STATE);
+                }
             }
 
             gnDivisionDAO.bulkUpdate(oldDS, newDS, gnDivisions, user);
-            for (int gnDivisionUKey : gnDivisions) {
-                GNDivision current = gnDivisionDAO.getGNDivisionByPK(gnDivisionUKey);
-                logger.debug("setted GNDivision name : {}", current.getSiGNDivisionName());
+            if (logger.isDebugEnabled()) {
+                for (int gnDivisionUKey : gnDivisions) {
+                    GNDivision current = gnDivisionDAO.getGNDivisionByPK(gnDivisionUKey);
+                    logger.debug("GNDivision : " + current.getEnGNDivisionName() + " moved from DSDivision : " +
+                        newDS.getEnDivisionName() + " to " + oldDS.getEnDivisionName());
+                }
             }
+            logger.debug("GNDivision list of size : {} moved from DSDivision : {} to {} by user : {}",
+                new Object[]{gnDivisions.length, oldDS.getEnDivisionName(), newDS.getEnDivisionName(), user.getUserId()});
 
         } else {
             logger.error("User : {} was not allowed to re-arrange GN Divisions", user.getUserId());

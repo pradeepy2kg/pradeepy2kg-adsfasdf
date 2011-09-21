@@ -663,10 +663,14 @@ public class UserManagementAction extends ActionSupport implements SessionAware 
 
     public String reArrangeDivisions() {
         logger.debug("Re-arranging GNDivisions, selected gnDivisions : {}", gnDivisions.length);
-        dataManagementService.reArrangeGNDivisions(dsDivisionId, selectDSDivisionId, gnDivisions, currentUser);
-        DSDivision moved = dsDivisionDAO.getDSDivisionByPK(selectDSDivisionId);
-        addActionMessage("Selected Grama Niladhari Division/s moved to Divisional Secretariat Division : " +
-            moved.getEnDivisionName());
+        try {
+            dataManagementService.reArrangeGNDivisions(dsDivisionId, selectDSDivisionId, gnDivisions, currentUser);
+            DSDivision moved = dsDivisionDAO.getDSDivisionByPK(selectDSDivisionId);
+            addActionMessage("Selected Grama Niladhari Division/s moved to Divisional Secretariat Division : " +
+                moved.getEnDivisionName());
+        } catch (CRSRuntimeException e) {
+            addActionError("Selected one or more Grama Niladhari Division(s) does not match with the minimum requirements");
+        }
         gnDivisions = null;
         selectDistrictId = 0;
         selectDSDivisionId = 0;
