@@ -672,10 +672,13 @@ function maxLengthCalculate(id, max, divId) {
             கிராம சேவையாளர் பிரிவு/<br/>
             Grama Niladhari Division
         </td>
-        <td colspan="5">
+        <td colspan="5" align="center">
             <s:select id="gnDivisionId" name="gnDivisionId" value="%{gnDivisionId}" list="gnDivisionList"
                       cssStyle="float:left;  width:99%; margin:2px 5px;" headerKey="0"
                       headerValue="%{getText('select.gn.division')}"/>
+            <a href="javascript:displayGNSearch()">
+                <span><s:label value="%{getText('searchGNDivision.label')}"/></span>
+            </a>
         </td>
     </tr>
     <tr>
