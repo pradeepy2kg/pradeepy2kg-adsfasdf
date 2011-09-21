@@ -97,7 +97,6 @@
             <interceptor-ref name="default"/>
             <result type="tiles" name="success">epr.home</result>
         </action>
-
     </package>
 
     <package name="prs" namespace="/prs" extends="NG">
@@ -1694,7 +1693,5 @@
             <result name="success" type="tiles">epr.printScannedMarriageCertificate</result>
             <result name="error" type="tiles">epr.error</result>
         </action>
-
-
     </package>
 </struts>
