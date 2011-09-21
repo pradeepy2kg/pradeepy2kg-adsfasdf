@@ -905,7 +905,7 @@ function maxLengthCalculate(id, max, divId) {
 <tr>
     <td>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
         නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)
-        <br>பெயர் அரச கரும மொழியில்  (சிங்களம் / தமிழ்)
+        <br>பெயர் அரச கரும மொழியில் (சிங்களம் / தமிழ்)
         <br>Name in either of the official languages (Sinhala / Tamil)
     </td>
     <td colspan="10">
@@ -972,10 +972,13 @@ function maxLengthCalculate(id, max, divId) {
     <td colspan="4"><label>
         ග්‍රාම නිළධාරී කොටිඨාශය / கிராம சேவையாளர் பிரிவு/ Grama Niladhari Division</label>
     </td>
-    <td colspan="7">
+    <td colspan="7" align="center">
         <s:select id="deathPersonPermanentAddressGNDivision" name="gnDivisionId" value="%{gnDivisionId}"
                   list="gnDivisionList"
-                  cssStyle="float:left; width:99%" headerKey="0" headerValue="%{getText('gnDivisions.label')}"/>
+                  cssStyle="float:left; width:99%" headerKey="0" headerValue="%{getText('gnDivisions.label')}"/><br/>
+        <a href="javascript:displayGNSearch()">
+            <span><s:label value="%{getText('searchGNDivision.label')}"/></span>
+        </a>
     </td>
 </tr>
 
