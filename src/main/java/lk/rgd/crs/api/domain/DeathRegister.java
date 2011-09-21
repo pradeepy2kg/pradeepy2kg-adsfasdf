@@ -33,7 +33,7 @@ import java.io.Serializable;
         " AND deathRegister.lifeCycleInfo.activeRecord IS TRUE ORDER BY deathRegister.death.dateOfRegistration desc"),
 
     @NamedQuery(name = "get.by.division.register.date.state", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
-        "WHERE deathRegister.death.deathDivision = :deathDivision AND (deathRegister.death.dateOfRegistration BETWEEN :startDate AND :endDate)" +
+        "WHERE deathRegister.death.deathDivision.dsDivision = :deathDivision AND (deathRegister.death.dateOfRegistration BETWEEN :startDate AND :endDate)" +
         " AND deathRegister.status =:state  AND deathRegister.lifeCycleInfo.activeRecord IS TRUE ORDER BY deathRegister.death.dateOfRegistration desc"),
 
     @NamedQuery(name = "death.register.filter.by.and.dsDivision.status.paginated", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
