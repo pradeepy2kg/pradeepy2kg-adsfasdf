@@ -568,9 +568,12 @@ function initPage() {
                          disabled="true"/>
         </s:if>
     </td>
-    <td>
+    <td align="center">
         <s:select list="gnDivisionList" name="motherGNDivisionId" headerKey="0"
                   headerValue="%{getText('select.gn.division')}" id="motherGNDivisionId"/>
+        <a href="javascript:displayGNSearch()">
+            <span><s:label value="%{getText('searchGNDivision.label')}"/></span>
+        </a>
     </td>
 </tr>
 
