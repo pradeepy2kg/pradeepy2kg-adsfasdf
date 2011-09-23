@@ -1,7 +1,5 @@
 package lk.rgd.common.api.domain;
 
-import org.omg.CORBA.portable.Streamable;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;

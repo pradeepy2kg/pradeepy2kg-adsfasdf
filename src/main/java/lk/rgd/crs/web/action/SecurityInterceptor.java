@@ -1,15 +1,17 @@
 package lk.rgd.crs.web.action;
 
+import com.opensymphony.xwork2.Action;
+import com.opensymphony.xwork2.ActionInvocation;
+import com.opensymphony.xwork2.TextProvider;
+import com.opensymphony.xwork2.ValidationAware;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
-import com.opensymphony.xwork2.*;
-
-import java.util.Map;
-
-import lk.rgd.crs.web.WebConstants;
-import lk.rgd.crs.web.Link;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.crs.web.Link;
+import lk.rgd.crs.web.WebConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Map;
 
 /**
  * This Struts Interceptor will be executed before all action calls to ensure the user has logged in and has privileges to where he is going
@@ -28,7 +30,7 @@ public class SecurityInterceptor extends AbstractInterceptor {
         }
 
         Map<String, Map> map = (Map<String, Map>) session.get(WebConstants.SESSION_USER_MENUE_LIST);
-        
+
         User user = (User) obj;
         boolean found = false;
         String cat = null;
@@ -41,7 +43,7 @@ public class SecurityInterceptor extends AbstractInterceptor {
                 key = link.getPermissionKey();
                 found = true;
                 break;
-            }    
+            }
         }
 
         if (found && user.isAuthorized(key)) {
