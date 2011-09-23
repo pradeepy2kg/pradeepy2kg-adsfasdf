@@ -70,8 +70,8 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
     private Statistics statistics;
     private String role;
-    private StatisticsDAO statisticsDAO;
-    private StatisticsManager statisticsManager;
+    private final StatisticsDAO statisticsDAO;
+    private final StatisticsManager statisticsManager;
 
     public LoginAction(UserManager userManager, AppParametersDAO appParaDao, DistrictDAO districtDAO,
         DSDivisionDAO dsDivisionDAO, UserDAO userDAO, RoleDAO roleDAO, StatisticsDAO statisticsDAO, StatisticsManager statisticsManager) {
@@ -171,20 +171,6 @@ public class LoginAction extends ActionSupport implements SessionAware {
             String userRole = user.getRole().getRoleId();
             logger.debug("Role of the {} is :{}", user.getUserName(), userRole);
 
-            //todo : to be removed when dashboard implemented
-            totalDeclarations = 10;
-            totalDecArrivals = 11;
-            approvalPending = 12;
-            totalConfirmChanges = 13;
-            confirmApproved = 14;
-            confirmApprovedPending = 15;
-            confirmPrinted = 16;
-            confirmPrintingPending = 17;
-            BCprinted = 18;
-            BCPrintPending = 19;
-            stillBirths = 20;
-            SBPendingApprovals = 21;
-
             /* check if password is expired */
             final String result = checkUserExpiry(user);
             if (SUCCESS.equals(result)) {
@@ -209,8 +195,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
     public String showHomeStatistics() {
 
         User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
-        logger.debug("Logged User's UserName : {}", user.getUserId());
-        logger.debug("Logged User's Role : {}", user.getRole().getName());
+        logger.debug("Logged user's UserName : {} and Role : {}", user.getUserId(), user.getRole().getName());
         role = user.getRole().getRoleId();
 
         statistics = statisticsManager.getStatisticsForUser(user);
@@ -227,8 +212,6 @@ public class LoginAction extends ActionSupport implements SessionAware {
         } else {
             statistics = new Statistics();
         }
-
-        //statistics = new Statistics();      // todo: remove this after the performance tests
 
         Set<District> districtSet = user.getAssignedBDDistricts();
         districtList = new HashMap<Integer, String>();
