@@ -36,7 +36,7 @@ public class InformantInfo implements Serializable, Cloneable {
     @Column(nullable = true, length = 30)
     private String informantPhoneNo;
 
-    @Column(nullable = true, length = 30)
+    @Column(nullable = true, length = 50)
     private String informantEmail;
 
     @Column(nullable = false)

@@ -181,7 +181,7 @@ public class ParentInfo implements Serializable, Cloneable {
     /**
      * Email of mother
      */
-    @Column(nullable = true, length = 30)
+    @Column(nullable = true, length = 50)
     private String motherEmail;
 
     /**

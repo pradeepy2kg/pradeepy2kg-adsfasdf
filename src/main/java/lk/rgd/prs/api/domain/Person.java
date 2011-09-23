@@ -136,7 +136,7 @@ public class Person implements Serializable {
     /**
      * The email address of person
      */
-    @Column(nullable = true, length = 30)
+    @Column(nullable = true, length = 50)
     private String personEmail;
     /**
      * Gender 0 - male, 1 - female, 2 - unknown

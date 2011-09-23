@@ -44,7 +44,7 @@ public class DeclarantInfo implements Serializable, Cloneable {
     @Column(nullable = true)
     private String declarantPhone;
 
-    @Column(nullable = true)
+    @Column(nullable = true, length = 50)
     private String declarantEMail;
 
     @Column(nullable = false)
