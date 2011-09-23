@@ -113,7 +113,7 @@ public class Registrar implements Serializable {
     /**
      * Email address
      */
-    @Column(nullable = true, length = 30)
+    @Column(nullable = true, length = 50)
     private String emailAddress;
 
     /**
