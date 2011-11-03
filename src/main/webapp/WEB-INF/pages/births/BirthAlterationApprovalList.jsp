@@ -293,6 +293,24 @@
                     </s:if>
                 </td>
                 <td align="center">
+                    <s:url id="historySelected" action="eprApproveHistoryBirthAlteration.do">
+                        <s:param name="idUKey" value="idUKey"/>
+                    </s:url>
+                    <s:set name="birthDivision" value="birthRecordDivision"/>
+                    <s:if test="status.ordinal()==0 & (#session.user_bean.role.roleId.equals('ARG') | #session.user_bean.role.roleId.equals('RG'))">
+                        <%
+                            BDDivision deathDivision = (BDDivision) pageContext.getAttribute("birthDivision");
+                            int deathDSDivsion = deathDivision.getDsDivision().getDsDivisionUKey();
+                            boolean approveRights = user.isAllowedAccessToBDDSDivision(deathDSDivsion);
+                            if (approveRights) {
+                        %>
+                        <s:a href="%{historySelected}" >
+                            <img src="<s:url value='/images/history_icon.jpg'/>" width="25" height="25"
+                                 border="none"/></s:a>
+                        <%}%>
+                    </s:if>
+                </td>
+                <td align="center">
 
                     <s:url id="rejectSelected" action="eprRejectBirthAlterationInit.do">
                         <s:param name="idUKey" value="idUKey"/>

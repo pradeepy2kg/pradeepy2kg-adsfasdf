@@ -33,7 +33,8 @@ import java.util.BitSet;
         "FROM BirthAlteration ba WHERE( ba.bdfIDUKey=:certificateNumber AND ba.lifeCycleInfo.activeRecord IS TRUE )")
 })
 
-public class BirthAlteration {
+public class
+    BirthAlteration {
 
     /**
      * Section 27

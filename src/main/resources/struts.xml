@@ -1283,6 +1283,14 @@
             <result type="tiles" name="success">epr.birthAlterationApproval</result>
             <result type="tiles" name="error">epr.birthAlterationPendingApproval</result>
         </action>
+        <!--To show the history of the birth alteration -->
+        <action name="eprApproveHistoryBirthAlteration" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
+                method="getBirthAlterationHistory">
+           <result type="tiles" name="success">epr.birthAlterarionHistory</result>
+            <result type="tiles" name="error">epr.birthAlterationPendingApproval</result>
+        </action>
+
+
         <action name="eprRejectBirthAlterationInit" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
                 method="rejectBirthAlterationInit">
             <result name="pageLoad" type="tiles">epr.rejectBirthAlterationComment</result>

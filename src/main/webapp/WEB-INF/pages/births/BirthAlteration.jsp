@@ -194,7 +194,50 @@ function enableFields(fieldIds) {
         document.getElementById(fieldIds[i]).disabled = false;
     }
 }
+function changeAlt52_1Changes() {
+    //initPage();
+    var idNames = new Array('errors-info', 'mother-info', 'informant-info');
+    for (var i = 0; i < idNames.length; i++) {
+        document.getElementById(idNames[i]).style.display = 'none';
+        document.getElementById(idNames[i] + "-min").style.display = 'none';
+        document.getElementById(idNames[i] + "-max").style.display = 'block';
+    }
+    var idNames = new Array('errors-info', 'mother-info', 'informant-info');
+    var checkIdNames = new Array('errors-info-check', 'mother-info-check', 'informant-info-check');
+    var fieldIds = new Array('childBirthDatePicker', 'childBirthDistrictId', 'childDsDivisionId', 'childBirthDivisionId',
+            'placeOfBirth', 'placeOfBirthEnglish', 'childGender', 'mother_pinOrNic', 'motherCountryId', 'motherPassportNoId', 'motherFullNameId',
+            'motherDateOfBirth', 'motherAgeAtBirth', 'motherRaceId', 'motherPlaceOfBirthId', 'motherAddressId', 'informent_pinOrNic',
+            'informentName', 'informentAddress', 'informantTypeFATHER', 'informantTypeMOTHER', 'informantTypeGUARDIAN');
+    document.getElementById("header-info-max").style.display = 'none';
+    for (var i = 0; i < idNames.length; i++) {
+        document.getElementById(idNames[i]).style.display = 'none';
+        document.getElementById(idNames[i] + "-min").style.display = 'none';
+        document.getElementById(idNames[i] + "-max").style.display = 'block';
+    }
+    for (var i = 0; i < checkIdNames.length; i++) {
+        document.getElementById(checkIdNames[i]).style.display = 'none';
+        document.getElementById(checkIdNames[i] + "-lable").style.display = 'none';
+    }
+    for (var i = 0; i < fieldIds.length; i++) {
+        document.getElementById(fieldIds[i]).disabled = true;
+    }
+    checkIdNames = new Array('errors-info-check', 'mother-info-check', 'informant-info-check');
+    if (document.getElementById("alterationType").value == "TYPE_52_1_H") {
 
+        for (var i = 0; i < checkIdNames.length; i++) {
+            document.getElementById(checkIdNames[i]).checked =false;
+            document.getElementById(checkIdNames[i]).disabled = false;
+        }
+    }
+    else {
+        for (var i = 0; i < checkIdNames.length; i++) {
+            document.getElementById(checkIdNames[i]).checked =false;
+            document.getElementById(checkIdNames[i]).disabled = true;
+        }
+    }
+
+
+}
 function initPage() {
     var sectionOfAct = document.getElementById("sectionOfAct").value;
     var idNames;
@@ -237,6 +280,7 @@ function initPage() {
             document.getElementById(fieldIds[i]).disabled = true;
         }
     }
+
     if (sectionOfAct == 2) {
         checkIdNames = new Array('errors-info-check', 'mother-info-check', 'informant-info-check');
     }
@@ -249,6 +293,7 @@ function initPage() {
             checkBoxCheck(document.getElementById(checkIdNames[i]));
         }
     }
+
 }
 function checkBoxCheck(id) {
     if (id.checked) {
@@ -480,6 +525,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
     }
 
     function setDeclarantPerson(id) {
+
         var NICorPIN;
         var name;
         var address;
@@ -551,11 +597,11 @@ function validateBirthYear(domElement, errorText, errorCode) {
                     </td>
                     <td align="center">
                         <s:if test="alterationType.ordinal()!=1 && alterationType.ordinal()!=0">
-                            <s:select
+                            <s:select value="TYPE_52_1_H"
                                     list="#@java.util.HashMap@{'TYPE_52_1_A':'52(1)A','TYPE_52_1_B':'52(1)B','TYPE_52_1_D':'52(1)D',
-                                    'TYPE_52_1_E':'52(1)E','TYPE_52_1_H':'52(1)H','TYPE_52_1_I':'52(1)I'}"
-                                    name="alterationType" cssStyle="width:190px; margin-left:5px"
-                                    />
+                                    'TYPE_52_1_E':'52(1)E','TYPE_52_1_H':'52(1)H'}"
+                                    name="alterationType" cssStyle="width:190px; margin-left:5px" id="alterationType"
+                                    onchange="changeAlt52_1Changes()"/>
                         </s:if>
                         <s:elseif test="alterationType.ordinal()==0">
                             <s:hidden value="%{alterationType}" name="alterationType"/>

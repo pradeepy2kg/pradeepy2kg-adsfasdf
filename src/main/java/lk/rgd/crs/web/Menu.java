@@ -350,6 +350,7 @@ public class Menu {
         argAlterationLink.put("eprDeathAlterationApplyChanges.do", new Link(null, "/ecivil/alteration/", "eprDeathAlterationApplyChanges.do", Permission.APPROVE_BIRTH_ALTERATION));
 
         argAlterationLink.put("eprApproveBirthAlterationInit.do", new Link(null, "/ecivil/alteration/", "eprApproveBirthAlterationInit.do", Permission.APPROVE_BIRTH_ALTERATION));
+        argAlterationLink.put("eprApproveHistoryBirthAlteration.do", new Link(null, "/ecivil/alteration/", "eprApproveHistoryBirthAlteration.do", Permission.APPROVE_BIRTH_ALTERATION));
         argAlterationLink.put("eprApproveBirthAlteration.do", new Link(null, "/ecivil/births/", "eprApproveBirthAlteration.do", Permission.APPROVE_BIRTH_ALTERATION));
         argAlterationLink.put("eprRejectBirthAlteration.do", new Link(null, "/ecivil/births/", "eprRejectBirthAlteration", Permission.APPROVE_BIRTH_ALTERATION));
         argAlterationLink.put("eprRejectBirthAlterationInit.do", new Link(null, "/ecivil/births/", "eprRejectBirthAlterationInit", Permission.APPROVE_BIRTH_ALTERATION));

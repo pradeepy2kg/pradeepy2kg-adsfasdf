@@ -18,6 +18,7 @@ import lk.rgd.crs.core.service.BirthAlterationValidator;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.web.util.CommonUtil;
 import lk.rgd.crs.web.util.FieldValue;
+import lk.rgd.crs.web.util.HistoryFieldValue;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,8 +56,10 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
     private Map<Integer, String> allDsDivisionList;
     private Map<Integer, String> allBdDivisionList;
     private Map<Integer, String> userLocations;
+    private Map<Integer, Date> alterationHistoryDate;
 
     private List<FieldValue> changesList = new LinkedList<FieldValue>();
+    private Map<Integer, ArrayList<HistoryFieldValue>> historyChangesList = new HashMap<Integer, ArrayList<HistoryFieldValue>>();
     private List<BirthAlteration> birthAlterationPendingApprovalList;
 
     private User user;
@@ -92,6 +95,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
     private String originalName;
     private String comment;
     private String language;
+    private ParentInfo parent;
 
     private boolean nextFlag;
     private boolean previousFlag;
@@ -192,6 +196,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
                     populateAlt52_1(bdf);
                 }
             }
+            parent=bdf.getParent();
             populateBasicLists();
             populateCountryRacesAndAllDSDivisions();
         }
@@ -1255,6 +1260,115 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         logger.debug("populate birth alteration for edit completed idUKey : {}", idUKey);
     }
 
+    public String getBirthAlterationHistory() {
+        BirthDeclaration bdf;
+        birthAlteration = alterationService.getByIDUKey(idUKey, user);
+        long lastIdUKey=idUKey;
+        bdf = service.getById(birthAlteration.getBdfIDUKey());
+        List<BirthDeclaration> bdfList = service.getArchivedCorrectedEntriesForGivenSerialNo(
+            bdf.getRegister().getBirthDivision(), bdf.getRegister().getBdfSerialNo(), user);
+        List<Date> altApproveDates = new ArrayList<Date>();
+        int count = 0;
+        try {
+            if (bdfList.size() > 0) {
+                for (int j = 0; j < bdfList.size(); j++) {
+                    bdf = bdfList.get(j);
+                    List<BirthAlteration> birthAlterations = alterationService.getBirthAlterationByBirthCertificateNumber
+                        (bdf.getIdUKey(), user);
+                    for (int i = 0; i < birthAlterations.size(); i++) {
+                        idUKey = birthAlterations.get(i).getIdUKey();
+                        birthAlteration = alterationService.getByIDUKey(idUKey, user);
+                        if (birthAlteration != null) {
+                            bdf = service.getById(birthAlteration.getBdfIDUKey());
+                            String preferedLan = bdf.getRegister().getPreferredLanguage();
+                            //alterationHistoryDate.put(count, birthAlteration.getLifeCycleInfo().getApprovalOrRejectTimestamp());
+
+                            switch (birthAlteration.getType()) {
+                                case TYPE_27:
+                                    changesOfAlt27(birthAlteration, bdf, preferedLan);
+                                    break;
+                                case TYPE_27A:
+                                    changesOfAlt27A(birthAlteration, bdf, preferedLan);
+                                    break;
+                                default: {
+                                    changesOfAlt52_1(birthAlteration, bdf, preferedLan);
+                                }
+                            }
+                            for (int k = count; k < changesList.size(); k++) {
+                                altApproveDates.add(count, birthAlteration.getLifeCycleInfo().getApprovalOrRejectTimestamp());
+                            }
+                            count = changesList.size();
+
+
+                        } else {
+                            logger.debug("unable to found birth alteration for print notice idUKey : {} ", idUKey);
+                            populateBasicLists();
+                            filterBirthAlteration();
+                            addActionError(getText("error.unable.to.find.birth.alteration.for.print.notice"));
+                            return ERROR;
+                        }
+                    }
+
+
+                }
+
+                int maxFiledValue = 0;
+                int minFiledValue = changesList.get(0).getFieldConstant();
+                logger.debug("min max value is", minFiledValue);
+                List<FieldValue> changesListTemp = new LinkedList<FieldValue>();
+                for (int i = 0; i < changesList.size(); i++) {
+                    if (changesList.get(i).getFieldConstant() > maxFiledValue) {
+                        maxFiledValue = changesList.get(i).getFieldConstant();
+                    }
+                }
+                for (int i = 0; i < changesList.size(); i++) {
+                    if (changesList.get(i).getFieldConstant() < minFiledValue) {
+                        minFiledValue = changesList.get(i).getFieldConstant();
+                    }
+                }
+                for (int i = minFiledValue; i < maxFiledValue + 1; i++) {
+                    for (int j = 0; j < changesList.size(); j++) {
+                        if (changesList.get(j).getFieldConstant() == i) {
+                            changesListTemp.add(new FieldValue(changesList.get(j).getExistingValue(),
+                                changesList.get(j).getAlterationValue(), changesList.get(j).getFieldConstant(),
+                                changesList.get(j).getApproved()));
+                            // changesList.remove(j);
+                        }
+                    }
+                }
+                changesList = changesListTemp;
+            }
+            int fieldConstantTemp = changesList.get(0).getFieldConstant();
+            ArrayList<HistoryFieldValue> historyChangesListTemp = new ArrayList<HistoryFieldValue>();
+            historyChangesListTemp.add(new HistoryFieldValue(changesList.get(0).getAlterationValue(), altApproveDates.get(0)));
+            for (int i = 1; i < changesList.size(); i++) {
+                if (fieldConstantTemp != changesList.get(i).getFieldConstant()) {
+                    historyChangesListTemp.add(new HistoryFieldValue(changesList.get(i - 1).getExistingValue(), altApproveDates.get(0)));
+                    historyChangesList.put(fieldConstantTemp, historyChangesListTemp);
+                    fieldConstantTemp = changesList.get(i).getFieldConstant();
+                    historyChangesListTemp = new ArrayList<HistoryFieldValue>();
+
+                }
+                historyChangesListTemp.add(new HistoryFieldValue(changesList.get(i).getAlterationValue(), altApproveDates.get(i)));
+                if (i == changesList.size() - 1) {
+                    logger.info("Start find birth alteration history");
+                    historyChangesListTemp.add(new HistoryFieldValue(changesList.get(i).getExistingValue(), altApproveDates.get(0)));
+                    historyChangesList.put(fieldConstantTemp, historyChangesListTemp);
+                }
+
+            }
+            nicOrPin = bdf.getChild().getPin();
+            birthAlteration = alterationService.getByIDUKey(lastIdUKey, user);
+            populateBirthAlterationNotice(birthAlteration);
+
+        } catch (Exception e) {
+
+        }
+
+
+        return SUCCESS;
+    }
+
     public int getPageNo() {
         return pageNo;
     }
@@ -1678,5 +1792,29 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
 
     public void setBirthDistrictId(int birthDistrictId) {
         this.birthDistrictId = birthDistrictId;
+    }
+
+    public Map<Integer, Date> getAlterationHistoryDate() {
+        return alterationHistoryDate;
+    }
+
+    public void setAlterationHistoryDate(Map<Integer, Date> alterationHistoryDate) {
+        this.alterationHistoryDate = alterationHistoryDate;
+    }
+
+    public Map<Integer, ArrayList<HistoryFieldValue>> getHistoryChangesList() {
+        return historyChangesList;
+    }
+
+    public void setHistoryChangesList(Map<Integer, ArrayList<HistoryFieldValue>> historyChangesList) {
+        this.historyChangesList = historyChangesList;
+    }
+
+    public ParentInfo getParent() {
+        return parent;
+    }
+
+    public void setParent(ParentInfo parent) {
+        this.parent = parent;
     }
 }
