@@ -324,16 +324,28 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
      * searching death alterations for approvals/rejection/delete and edit
      */
     private void findDeathAlterationForApproval() {
+        if (pageNo == 0) {
+            pageNo = 1;
+        }
         //search by pin
         rowNo = appParametersDAO.getIntParameter(DA_APPROVAL_ROWS_PER_PAGE);
         if (pin != null) {
+            logger.debug("attempt to search death alteration approval list by person pin  : {}", pin);
             approvalList = deathAlterationService.getAlterationByDeathPersonPin(pin, user);
         } else if (locationUKey > 0) {
             //search by user location
+            logger.debug("attempt to search death alteration approval list by location id : {}", locationUKey);
             approvalList = deathAlterationService.getDeathAlterationByUserLocation(locationUKey, user);
         } else if (divisionUKey > 0) {
+            logger.debug("attempt to search death alteration approval list by Division id : {}", divisionUKey);
             approvalList = deathAlterationService.getAlterationApprovalListByDeathDivision(pageNo, rowNo, divisionUKey, user);
+        } else if (divisionUKey == 0) {
+            logger.debug("attempt to search death alteration approval list by dsDivision id : {}", dsDivisionId);
+            //search by all divisions that means searching records for ds division
+            approvalList = deathAlterationService.getAlterationApprovalListByDeathDSDivision(pageNo, rowNo, dsDivisionId, user);
         } else {
+            //default search by users primary location
+            logger.debug("attempt to search death alteration approval list by users : {}  primary location", user.getUserId());
             approvalList = deathAlterationService.getAlterationApprovalListByDeathDivision(1, rowNo,
                 user.getPrimaryLocation().getDsDivisionId(), user);
         }
@@ -500,7 +512,6 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         logger.debug("begin generating changes list");
 
         if (deathAlteration.getDeathInfo() != null && deathRegister.getDeath() != null) {
-            //todo check sudden death
             String dateEx = null;
             String dateAlt = null;
             if (deathRegister.getDeath().getDateOfDeath() != null) {
@@ -588,7 +599,8 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             compareStringValues(deathRegister.getDeathPerson().getDeathPersonPassportNo(),
                 deathAlteration.getDeathPerson().getDeathPersonPassportNo(), DeathAlteration.PASSPORT, preferedLan);
 
-            if (!(deathRegister.getDeathPerson().getDeathPersonAge() .equals(deathAlteration.getDeathPerson().getDeathPersonAge()))) {
+            if ((deathRegister.getDeathPerson().getDeathPersonAge() != null) &&
+                !(deathRegister.getDeathPerson().getDeathPersonAge().equals(deathAlteration.getDeathPerson().getDeathPersonAge()))) {
                 changesList.add(new FieldValue(
                     deathRegister.getDeathPerson().getDeathPersonAge() != null ? Integer.toString(deathRegister.getDeathPerson().getDeathPersonAge()) : null,
                     deathAlteration.getDeathPerson().getDeathPersonAge() != null ? Integer.toString(deathAlteration.getDeathPerson().getDeathPersonAge()) : null,
@@ -745,11 +757,15 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     /**
      * basic list district/divisions/DS
      */
-    private void populatePrimaryLists(int districtUKey, int dsDivisionId, String language, User user) {
+    private void populatePrimaryLists(int districtId, int dsDivisionIdUkey, String language, User user) {
         districtList = districtDAO.getDistrictNames(language, user);
-        districtUKey = districtList.keySet().iterator().next();
+        if (districtUKey == 0) {
+            districtUKey = districtList.keySet().iterator().next();
+        }
         dsDivisionList = dsDivisionDAO.getDSDivisionNames(districtUKey, language, user);
-        dsDivisionId = dsDivisionList.keySet().iterator().next();
+        if (dsDivisionId == 0) {
+            dsDivisionId = dsDivisionList.keySet().iterator().next();
+        }
         bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
         logger.debug("basic lists (district list ,D.S Division list,death division list) are populated");
     }

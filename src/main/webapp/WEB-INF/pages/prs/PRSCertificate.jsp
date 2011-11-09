@@ -1,3 +1,5 @@
+<%@ page import="lk.rgd.common.util.DateTimeUtils" %>
+<%@ page import="java.util.Date" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
@@ -87,10 +89,8 @@
         <td>
             <table border="1" style="width:100%;border:1px solid #000;border-collapse:collapse;font-size:10pt;">
                 <tr height="60px">
-                    <td>
-                        අනුක්‍රමික අංකය
-                        <br>தொடர் இலக்கம்
-                        <br>Serial Number
+                    <td width="140px;">
+                        සහතික පත්‍රයේ අංකය<br>சான்றிதழ் இல<br>Certificate Number
                     </td>
                     <td width="150px" style="font-size:11pt"><s:label name="personUKey"/></td>
                 </tr>
@@ -112,13 +112,14 @@
 </table>
 
 <table border="1"
-       style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:10px 0;font-size:10pt">
-    <col width="150px">
-    <col width="100px">
-    <col width="150px">
-    <col width="150px">
-    <col width="100px">
-    <col width="150px">
+       style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:5px 0;font-size:10pt">
+    <col width="20%"/>
+    <col width="20%"/>
+    <col width="10%"/>
+    <col width="20%"/>
+    <col width="10%"/>
+    <col width="20%"/>
+
     <tbody>
     <tr>
         <td height="60px">
@@ -132,7 +133,7 @@
         <td>
             උපන් දිනය
             <br>பிறந்த திகதி
-            <br>Date of birth
+            <br>Date of Birth
         </td>
         <td colspan="2" style="font-size:12pt">
             <s:label value="%{person.dateOfBirth}"/><br>
@@ -150,9 +151,9 @@
             <s:label name="" value="%{genderEn}"/>
         </td>
         <td>
-            ජාතිය
-            <br>இனம்
-            <br>Race
+            ජන වර්ගය<br/>
+            இனம்<br/>
+            Ethnic Group
         </td>
         <td colspan="2" style="font-size:12pt">
             <s:label value="%{race}"/> <br>
@@ -190,20 +191,20 @@
         </td>
     </tr>
     <tr>
-        <td colspan="2" height="80px">
-            මවගේ අනන්‍යතා අංකය හෝ ජාතික හැඳුනුම්පත් අංකය
-            <br>தாயின் அடையாள எண் அல்லது தேசிய அடையாள அட்டை இலக்கம்
-            <br>Mothers Identification Number (PIN) or NIC
+        <td height="60px">
+            ම‌වගේ අනන්‍යතා අංකය<br>
+            தாயின் அடையாள எண் <br>
+            Mother's Identification No.
         </td>
-        <td style="font-size:12pt">
+        <td colspan="2" style="font-size:12pt">
             <s:label value="%{person.motherPINorNIC}"/>
         </td>
-        <td colspan="2">
-            පියාගේ අනන්‍යතා අංකය හෝ ජාතික හැඳුනුම්පත් අංකය
-            <br>தந்தையின் அடையாள எண் அல்லது தேசிய அடையாள அட்டை இலக்கம்
-            <br>Fathers Identification Number (PIN) or NIC
+        <td>
+            පියාගේ අනන්‍යතා අංකය<br>
+            தந்தையின் அடையாள எண்<br>
+            Father's Identification No.
         </td>
-        <td style="font-size:12pt">
+        <td colspan="2" style="font-size:12pt">
             <s:label value="%{person.fatherPINorNIC}"/>
         </td>
     </tr>
@@ -211,10 +212,10 @@
 </table>
 <table border="1"
        style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:10px 0;font-size:10pt">
-    <col width="200px">
-    <col width="300px">
-    <col width="100px">
-    <col width="430px">
+    <col width="20%"/>
+    <col width="30%"/>
+    <col width="20%"/>
+    <col width="30%"/>
     <tbody>
     <tr>
         <td height="120px">
@@ -230,8 +231,7 @@
     </tr>
     <tr>
         <td colspan="4" height="40px">
-            වර්තමාන පදිංචිය වෙනත් ස්ථානයක නම් පමණක්, தற்போதைய முகவரி வேறு இடமாயின் மட்டும் , Only if residing at a
-            different location,
+            වර්තමාන පදිංචිය වෙනත් ස්ථානයක නම් පමණක්, தற்போதைய முகவரி வேறு இடமாயின் மட்டும், Only if residing at a different location,
         </td>
     </tr>
     <tr>
@@ -264,12 +264,11 @@
             <s:label value="%{person.personEmail}"/>
         </td>
     </tr>
-
     </tbody>
 </table>
 
 <s:if test="person.countries.size() != 0">
-    <table style="width:100%; border:none; border-collapse:collapse;">
+    <table style="width:100%; border:none; border-collapse:collapse;margin-bottom:2px;">
         <tr>
             <td align="center" style="font-size:12pt;">
                 වෙනත් රටවල පුරවැසිභාවය ඇතිනම් ඒ පිලිබඳ විස්තර
@@ -280,10 +279,10 @@
     </table>
     <table border="1"
            style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:10px 0;font-size:10pt">
-        <col width="180px">
-        <col width="200px">
-        <col width="350px">
-        <col width="200px">
+        <col width="20%"/>
+        <col width="23%"/>
+        <col width="34%"/>
+        <col width="23%"/>
         <tbody>
         <s:iterator value="person.countries">
             <tr>
@@ -307,6 +306,57 @@
         </tbody>
     </table>
 </s:if>
+
+<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:5px 0;font-size:10pt">
+    <col width="20%"/>
+    <col width="20%"/>
+    <col width="20%"/>
+    <col width="40%"/>
+    <tbody>
+    <tr height="60px">
+        <td>ලියාපදිංචි කළ දිනය<br>பதிவு செய்யப்பட்ட திகதி<br> Date of Registration</td>
+        <td>
+            <s:label name="" value="%{person.dateOfRegistration}" cssStyle="font-size:12pt;"/><br>
+            <s:label value="YYYY-MM-DD" cssStyle="font-size:8pt;"/>
+        </td>
+        <td>නිකුත් කළ දිනය<br>வழங்கிய திகதி<br> Date of Issue
+        </td>
+        <td>
+            <label style="font-size:12pt;"><%= DateTimeUtils.getISO8601FormattedString(new Date()) %>
+            </label><br>
+            <s:label value="YYYY-MM-DD" cssStyle="font-size:8pt;"/>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" height="85px">
+            සහතික කරනු ලබන නිලධාරියා ගේ නම, තනතුර සහ අත්සන<br>
+            சான்றிதழ் அளிக்கும் அதிகாரியின் பெயர், பதவி, கையொப்பம்<br>
+            Name, Signature and Designation of certifying officer
+        </td>
+        <td colspan="2" style="font-size:11pt">
+            <s:textarea id="signature" value="%{person.originalBCIssueUserSignPrint}" disabled="true"
+                        rows="4"
+                        cssStyle="margin-top:10px;text-transform:none;width:100%;font-size:10pt;background:transparent;border:none;padding:0;"/>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" height="40px">නිකුත් කළ ස්ථානය / வழங்கிய இடம்/ Place of Issue
+        </td>
+        <td colspan="2" cssStyle="font-size:11pt;">
+            <s:textarea id="placeSign" value="%{#request.register.originalBCPlaceOfIssueSignPrint}" disabled="true"
+                        rows="3"
+                        cssStyle="margin-top:10px;text-transform:none;width:100%;font-size:10pt;background:transparent;border:none;padding:0;"/>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<p style="font-size:9pt">
+    උප්පැන්න හා මරණ ලියපදිංචි කිරිමේ පණත (110 අධිකාරය) යටතේ රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව විසින් නිකුත් කරන
+    ලදි,<br>
+    பிறப்பு இறப்பு பதிவு செய்யும் சட்டத்தின் (110 வது அதிகாரத்தின் ) கீழ் பதிவாளர் நாயகத் திணைக்களத்தினால் வழங்கப்பட்டது<br>
+    Issued by Registrar General's Department according to Birth and Death Registration Act (Chapter 110)
+</p>
 
 <div class="form-submit" style="margin:5px 0 0 0;">
     <s:submit value="%{getText('mark_as_print.button')}" type="submit"/>

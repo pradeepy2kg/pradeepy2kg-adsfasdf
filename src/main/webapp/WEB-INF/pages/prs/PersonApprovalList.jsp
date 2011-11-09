@@ -51,7 +51,7 @@
                 null,
                 null,
                 null,
-                null,
+                null
             ]
         });
     });
@@ -132,7 +132,7 @@
                         </td>
                         <td></td>
                         <td>
-                            <s:textfield name="searchPin" id="searchPin" maxLength="10"
+                            <s:textfield name="searchPin" id="searchPin" maxLength="12"
                                          onkeypress="return isNumberKey(event)"/>
                         </td>
                     </tr>
@@ -169,7 +169,7 @@
                         </td>
                         <td></td>
                         <td>
-                            <s:textfield name="searchTempPin" id="searchTempPin" maxLength="10"
+                            <s:textfield name="searchTempPin" id="searchTempPin" maxLength="12"
                                          onkeypress="return isNumberKey(event)"/>
                         </td>
                     </tr>

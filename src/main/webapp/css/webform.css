@@ -122,7 +122,7 @@
 }
 
 .form-submit-long {
-    float: right;
+    float:right;
     margin-top: 5px;
 }
 
@@ -378,7 +378,7 @@
     width: 850px;
 }
 
-#father-dob input, #father-pob input, #father-race select, #mother-dob input, #mother-pob input, #mother-race select, #mother-age input, #hospital-admision-no input {
+#father-dob input, #father-pob input, #father-Ethnic Group select, #mother-dob input, #mother-pob input, #mother-Ethnic Group select, #mother-age input, #hospital-admision-no input {
     margin: 12px 5px;
     width: 335px;
 }
@@ -892,7 +892,7 @@
     margin: 15px 5px;
 }
 
-#bcf-dob, #bcf-gender, #bcf-district, #bcf-ds-division, #bcf-division, #bcf-place, #bcf-gncode, #bcf-father-pin, #bcf-father-race, #bcf-mother-pin, #bcf-mother-race, #bcf-marital-status {
+#bcf-dob, #bcf-gender, #bcf-district, #bcf-ds-division, #bcf-division, #bcf-place, #bcf-gncode, #bcf-father-pin, #bcf-father-Ethnic Group, #bcf-mother-pin, #bcf-mother-Ethnic Group, #bcf-marital-status {
     border: 1px solid #000;
     height: 57px;
     border-top: none;
@@ -902,7 +902,7 @@
     height: 75px;
 }
 
-#bcf-dob label, #bcf-gender label, #bcf-district label, #bcf-ds-division label, #bcf-division label, #bcf-place label, #bcf-gncode label, #bcf-father-pin label, #bcf-father-race label, #bcf-mother-pin label, #bcf-mother-race label, #bcf-marital-status label {
+#bcf-dob label, #bcf-gender label, #bcf-district label, #bcf-ds-division label, #bcf-division label, #bcf-place label, #bcf-gncode label, #bcf-father-pin label, #bcf-father-Ethnic Group label, #bcf-mother-pin label, #bcf-mother-Ethnic Group label, #bcf-marital-status label {
     float: left;
     width: 170px;
     border-left: 1px solid #000;
@@ -1185,7 +1185,7 @@
 }
 
 .table_reg_datePicker_page_01 {
-    width: 300px;
+    width: 320px;
     border: 1px solid #000000;
     margin: 10px
 }
@@ -1459,7 +1459,7 @@
 
 .cell_012 {
     width: 40px;
-    height: 200px;
+    height: 175px;
     text-align: center;
 }
 
@@ -1692,7 +1692,7 @@
 }
 
 .user-create-table {
-    width: 37em;
+    width: 45em;
     margin: 2em;
 }
 
@@ -1760,7 +1760,7 @@
     }
 
     .form-submit-long a {
-        display: none;
+        display: none; 
     }
 }
 
@@ -2246,6 +2246,28 @@ todo amith
     line-height: 20px;
 }
 
+/*Generic table styles*/
+.table_print {
+    border: 1px solid #000000;;
+    border-right: none;
+    border-bottom: none;
+    font-size: 9pt;
+}
 
+.table_print td {
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    padding: 3px;
+    font-size:10pt;
+}
+
+.table_print select, .table_print input {
+    width: 95%;
+    margin: 2px 5px;
+}
+
+.table_print input {
+    width: 93%;
+}
 
 

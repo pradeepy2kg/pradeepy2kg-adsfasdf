@@ -107,7 +107,7 @@
         <tr style="font-size:14pt">
             <td colspan="3" align="center">
                 <s:if test="marriage.typeOfMarriage.ordinal() == 1 || marriage.typeOfMarriage.ordinal() == 2">
-                    දික්කසාද සහතිකය / in Tamil / Divorce Certificate
+                    දික්කසාද සහතිකය / விவாகரத்துச்சான்றிதழ் / Divorce Certificate
                 </s:if>
                 <s:else>
                     විවාහ ලේඛනයේ උපුටාගැනීම / குடிமதிப்பீட்டு ஆவணத்தில் / Extract of Marriage Register
@@ -140,8 +140,9 @@
             <s:label name="marriage.mrDivision.dsDivision.district.enDistrictName"/><br/>
         </td>
         <td><label><span class="font-8">
-            ප්‍රාදේශීය ලේකම් කොට්ඨාශය
-                <br>பிரதேச செயளாளர் பிரிவு <br>Divisional Secretariat</span>
+            ප්‍රාදේශීය ලේකම් කොට්ඨාශය<br/>
+            பிரதேச செயளாளர் பிரிவு <br/>
+            Divisional Secretary Division</span>
         </label>
         </td>
         <td align="center">
@@ -158,7 +159,7 @@
     <tr>
         <td><label><span class="font-8">
             ලියාපදිංචි කිරීමේ කොට්ඨාශය
-                        <br>பதிவுப் பிரிவு  <br>Registration Division</span>
+                        <br>பதிவுப் பிரிவு <br>Registration Division</span>
         </label>
         </td>
         <td colspan="3">
@@ -203,7 +204,7 @@
         <td>
             <label>
                 <span class="font-8">විවාහ දිනය
-                    <br>in tamil<br>Date of Marriage</span>
+                    <br>திருமண திகதி<br>Date of Marriage</span>
             </label>
         </td>
         <td colspan="2">
@@ -218,8 +219,9 @@
     </tr>
     <tr>
         <td>
-            විවාහ ස්ථානයේ ස්වභාවය<br>
-            Type of Marriage Place<br>
+            විවාහ ස්ථානයේ ස්වභාවය<br/>
+            திருமண நிகழ்விடத்தின் வகை<br/>
+            Type of Marriage Place
         </td>
         <td colspan="8">
             <s:if test="marriage.preferredLanguage=='si'">
@@ -234,7 +236,7 @@
     <tr>
         <td>
             විවාහය සිදු කල ස්ථානය<br>
-            in tamil <br>
+            திருமணம் நகழ்ந்த இடம்<br>
             place of Marriage
         </td>
         <td colspan="8">
@@ -260,7 +262,7 @@
     <tr>
         <td>
             රෙජිස්ට්‍රාර්තැන / දේවගැතිතැන<br>
-            in tamil <br>
+            பதிவாளர்/குருவானவர்<br>
             Registrar / Minister
         </td>
         <td colspan="8">
@@ -286,7 +288,7 @@
     <tr>
         <td>
             විවාහයේ ස්වභාවය <br>
-            type of marriage in tamil <br>
+            திருமணத்தின் தன்மை<br>
             Type of Marriage
         </td>
         <td colspan="8">
@@ -323,10 +325,10 @@
     <tr>
         <td>&nbsp;</td>
         <td align="center">
-            පුරුෂ පාර්ශ්වය / in tamil / Male Party
+            පුරුෂ පාර්ශ්වය / மாப்பிள்ள திறத்தார் / Male Party
         </td>
         <td align="center">
-            ස්ත්‍රී පාර්ශ්වය / in tamil / Female Party
+            ස්ත්‍රී පාර්ශ්වය /பெண் திறத்தார்/  Female Party
         </td>
     </tr>
     <tr>
@@ -344,36 +346,9 @@
     </tr>
     <tr>
         <td>
-            උපන් දිනය <br>
-            பிறந்த திகதி <br>
-            Date of Birth
-        </td>
-        <td>
-            <s:label name="marriage.male.dateOfBirthMale"/>
-        </td>
-        <td>
-            <s:label name="marriage.female.dateOfBirthFemale"/>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            පසුවූ උපන් දිනයට වයස <br>
-            in tamil <br>
-            Age at last Birthday
-
-        </td>
-        <td>
-            <s:label name="marriage.male.ageAtLastBirthDayMale"/>
-        </td>
-        <td>
-            <s:label name="marriage.female.ageAtLastBirthDayFemale"/>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            ජාතිය <br>
-            Race <br>
-
+            ජන වර්ගය<br/>
+            இனம்<br/>
+            Ethnic Group
         </td>
         <td>
             <s:if test="marriage.preferredLanguage=='si'">
@@ -514,7 +489,7 @@
     <tr>
         <td class="font-8">
             දික්කසාදය සිදුකල නිලධාරියා <br>
-            in tamil <br>
+            விவாகரத்தினை நடாத்திய அதிகாரியின் பெயரும் முகவரியும்<br>
             Name, Signature and Designation of the officer
         </td>
         <td>
@@ -539,7 +514,7 @@
     <tr>
         <td class="font-8">
             දික්කසාදය බලපැවැත්වෙන දිනය
-            <br>in tamil<br>Effective Date of Divorce</span>
+            <br>விவாகரத்து செல்லுபடியகும் திகதி<br>Effective Date of Divorce</span>
         </td>
         <td>
             <s:label name="marriage.effectiveDateOfDivorce"/>

@@ -1,7 +1,8 @@
 package lk.rgd.crs.api.dao;
 
-import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.api.domain.District;
+import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.BirthDeclaration;
 
@@ -215,6 +216,18 @@ public interface BirthDeclarationDAO {
         BirthDeclaration.State state);
 
     /**
+     * Get Paginated list of BDFs for the given state based on given district
+     *
+     * @param district district
+     * @param pageNo   page number
+     * @param noOfRows number of rows
+     * @param state    the state of the records to be returned
+     * @return approved list for print
+     */
+    public List<BirthDeclaration> getPaginatedListForStateByDistrict(District district, int pageNo, int noOfRows,
+        BirthDeclaration.State state);
+
+    /**
      * Get Paginated list of BDFs for the given state based on given DSDivision ,birth type and state
      *
      * @param dsDivision the divisional Secretariat
@@ -337,5 +350,24 @@ public interface BirthDeclarationDAO {
      * @return list of birth records
      */
     public List<BirthDeclaration> getListOfLiveBirthsForGivenMother(String motherIdentification);
+
+    /**
+     * Returns all Birth Declarations registered by the specified Registrar(by registrar pin or nic)
+     *
+     * @param registrarPin   the pin of registrar
+     * @param registrarNic   the nic of registrar
+     * @param bdDivisionUKey the birth division unique key
+     * @return list of matching birth declarations
+     */
+    public List<BirthDeclaration> getBirthsByRegistrarPinOrNicAndDivision(String registrarPin, String registrarNic,
+        int bdDivisionUKey);
+
+    public Long findDSDivisionUsageInBirthRecords(int dsDivisionUKey);
+
+    public Long findGNDivisionUsageInBirthRecords(int gnDivisionUKey);
+
+    public Long findBDDivisionUsageInBirthRecords(int bdDivisionUKey);
+
+    public Long findLocationUsageInBirthRecords(int locationUKey);
 }
 

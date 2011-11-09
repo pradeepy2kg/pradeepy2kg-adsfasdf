@@ -125,7 +125,7 @@
 
                 <td colspan="1"><s:label value="%{getText('death_select_state.lable')}"/></td>
                 <td colspan="2">
-                    <s:select list="#@java.util.HashMap@{'1':getText('data.entry.label'),'2':getText('Approved.label'),
+                    <s:select list="#@java.util.HashMap@{'1':getText('data.entry'),'2':getText('Approved.label'),
                                 '3':getText('rejected.label'),'4':getText('death.certificate.printed.label')}"
                               name="currentStatus" value="%{#request.currentStatus}" headerKey="0"
                               headerValue="%{getText('death_select_all.label')}"

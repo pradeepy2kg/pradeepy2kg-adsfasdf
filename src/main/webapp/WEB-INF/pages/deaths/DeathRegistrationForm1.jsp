@@ -1,3 +1,5 @@
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
 <%-- @author Duminda Dharmakeerthi --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
@@ -78,21 +80,43 @@ $(function() {
                         options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
                     }
                     $("select#deathDivisionId").html(options2);
+
+
+                    var options3 = '';
+                    var gn = data.gnDivisionList;
+                    for (var k = 0; k < gn.length; k++) {
+                        options3 += '<option value="' + gn[k].optionValue + '">' + gn[k].optionDisplay + '</option>';
+                    }
+                    $("select#gnDivisionId").html(options3);
+
                 });
     });
 
     $('select#deathPersonPermenentAddressDistrictId').bind('change', function(evt1) {
         var id = $("select#deathPersonPermenentAddressDistrictId").attr("value");
-        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id},
+        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:16},
                 function(data) {
                     var options1 = '';
                     var ds = data.dsDivisionList;
+                    var dsDivisionsSelect = document.getElementById('selectDSDivision').value;
+                    options1 += '<option value="' + 0 + '">' + dsDivisionsSelect + '</option>';
                     for (var i = 0; i < ds.length; i++) {
                         options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
                     }
                     $("select#deathPersonPermenentAddressDSDivisionId").html(options1);
+
+
+                    var options3 = '';
+                    var gn = data.gnDivisionList;
+                    var gnDivisionsSelect = document.getElementById('selectGNDivision').value;
+                    options3 += '<option value="' + 0 + '">' + gnDivisionsSelect + '</option>';
+                    for (var k = 0; k < gn.length; k++) {
+                        options3 += '<option value="' + gn[k].optionValue + '">' + gn[k].optionDisplay + '</option>';
+                    }
+                    $("select#deathPersonPermanentAddressGNDivision").html(options3);
                 });
     });
+
 
     $('select#deathDsDivisionId').bind('change', function(evt2) {
         var id = $("select#deathDsDivisionId").attr("value");
@@ -106,6 +130,23 @@ $(function() {
                     $("select#deathDivisionId").html(options);
                 });
     });
+
+    $('select#deathPersonPermenentAddressDSDivisionId').bind('change', function(evt2) {
+        var id = $("select#deathPersonPermenentAddressDSDivisionId").attr("value");
+        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:2},
+                function(data) {
+
+                    var options4 = '';
+                    var gn = data.gnDivisionList;
+                    var dsDivisionsSelect = document.getElementById('selectGNDivision').value;
+                    options4 += '<option value="' + 0 + '">' + dsDivisionsSelect + '</option>';
+                    for (var k = 0; k < gn.length; k++) {
+                        options4 += '<option value="' + gn[k].optionValue + '">' + gn[k].optionDisplay + '</option>';
+                    }
+                    $("select#deathPersonPermanentAddressGNDivision").html(options4);
+
+                });
+    });
     /**
      *
      fatherNameInOfficialLang fatherIdentificationNumber
@@ -113,32 +154,42 @@ $(function() {
      */
     $('img#death_person_lookup').bind('click', function(evt3) {
         var id1 = $("input#deathPerson_PINorNIC").attr("value");
+        var datePicker = $('#deathPersonDOB');
+        var error = "error message for invalid date of birth";
+        datePicker.datepicker('setDate', calculateBirthDay(id1, error));
+
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
                 function(data1) {
-                    $("textarea#deathPersonNameOfficialLang").val(data1.fullNameInOfficialLanguage);
-                    $("textarea#deathPersonNameInEnglish").val(data1.fullNameInEnglishLanguage)
-                    $("input#deathPersonDOB").val(data1.dateOfBirth);
-                    $("select#deathPersonGender").val(data1.gender);
-                    $("select#deathPersonRace").val(data1.race);
-                    $("textarea#deathPersonPermanentAddress").val(data1.address);
-                    $("input#deathPersonFather_PINorNIC").val(data1.fatherIdentificationNumber);
-                    $("textarea#deathPersonFatherFullName").val(data1.fatherNameInOfficialLang);
-                    $("input#deathPersonMother_PINorNIC").val(data1.motherIdentificationNumber);
-                    $("textarea#deathPersonMotherFullName").val(data1.motherNameInOfficialLang);
+                    if (data1 != null) {
+                        $("textarea#deathPersonNameOfficialLang").val(data1.fullNameInOfficialLanguage);
+                        $("textarea#deathPersonNameInEnglish").val(data1.fullNameInEnglishLanguage)
+                        $("input#deathPersonDOB").val(data1.dateOfBirth);
+                        $("select#deathPersonGender").val(data1.gender);
+                        $("select#deathPersonRace").val(data1.race);
+                        $("textarea#deathPersonPermanentAddress").val(data1.address);
+                        $("input#deathPersonFather_PINorNIC").val(data1.fatherIdentificationNumber);
+                        $("textarea#deathPersonFatherFullName").val(data1.fatherNameInOfficialLang);
+                        $("input#deathPersonMother_PINorNIC").val(data1.motherIdentificationNumber);
+                        $("textarea#deathPersonMotherFullName").val(data1.motherNameInOfficialLang);
+                    }
                 });
     });
     $('img#death_person_father_lookup').bind('click', function(evt4) {
         var id2 = $("input#deathPersonFather_PINorNIC").attr("value");
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id2},
                 function(data2) {
-                    $("textarea#deathPersonFatherFullName").val(data2.fullNameInOfficialLanguage);
+                    if (data2 != null) {
+                        $("textarea#deathPersonFatherFullName").val(data2.fullNameInOfficialLanguage);
+                    }
                 });
     });
     $('img#death_person_mother_lookup').bind('click', function(evt5) {
         var id3 = $("input#deathPersonMother_PINorNIC").attr("value");
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id3},
                 function(data3) {
-                    $("textarea#deathPersonMotherFullName").val(data3.fullNameInOfficialLanguage);
+                    if (data3 != null) {
+                        $("textarea#deathPersonMotherFullName").val(data3.fullNameInOfficialLanguage);
+                    }
                 });
     });
 });
@@ -289,70 +340,30 @@ function otherValidations() {
 
 $(function() {
     $('img#place').bind('click', function(evt6) {
-        var id = $("input#placeOfDeath").attr("value");
-        var wsMethod = "transliterate";
-        var soapNs = "http://translitwebservice.transliteration.icta.com/";
+        var text = $("textarea#placeOfDeath").attr("value");
 
-        var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
-        soapBody.attr("xmlns:trans", soapNs);
-        soapBody.appendChild(new SOAPObject('InputName')).val(id);
-        soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
-        soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
-        //soapBody.appendChild(new SOAPObject('Gender')).val('U');
-
-        //added by shan [ NOT Tested ] -> start
-        var genderVal = $("select#deathPersonGender").attr("value");
-        soapBody.appendChild(new SOAPObject('Gender')).val(genderVal);
-        //-> end
-
-        //Create a new SOAP Request
-        var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
-
-        //Lets send it
-        SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
-        SOAPClient.SendRequest(sr, processResponse1); //Send request to server and assign a callback
+        $.post('/ecivil/TransliterationService', {text:text,gender:'U'},
+                function(data) {
+                    if (data != null) {
+                        var s = data.translated;
+                        $("input#placeOfDeathInEnglish").val(s);
+                    }
+                });
     });
-
-    function processResponse1(respObj) {
-        //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("input#placeOfDeathInEnglish").val(respObj.Body[0].transliterateResponse[0].
-        return[0].Text
-    )
-        ;
-    }
 
     $('img#deathName').bind('click', function(evt7) {
-        var id = $("textarea#deathPersonNameOfficialLang").attr("value");
-        var wsMethod = "transliterate";
-        var soapNs = "http://translitwebservice.transliteration.icta.com/";
-
-        var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
-        soapBody.attr("xmlns:trans", soapNs);
-        soapBody.appendChild(new SOAPObject('InputName')).val(id);
-        soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
-        soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
-        soapBody.appendChild(new SOAPObject('Gender')).val('U');
-
-        //added by shan [ NOT Tested ] -> start
+        var text = $("textarea#deathPersonNameOfficialLang").attr("value");
         var genderVal = $("select#deathPersonGender").attr("value");
-        soapBody.appendChild(new SOAPObject('Gender')).val(genderVal);
-        //-> end
+        var gender = genderVal == 0 ? 'M' : 'F';
 
-        //Create a new SOAP Request
-        var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
-
-        //Lets send it
-        SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
-        SOAPClient.SendRequest(sr, processResponse2); //Send request to server and assign a callback
+        $.post('/ecivil/TransliterationService', {text:text,gender:gender},
+                function(data) {
+                    if (data != null) {
+                        var s = data.translated;
+                        $("textarea#deathPersonNameInEnglish").val(s);
+                    }
+                });
     });
-
-    function processResponse2(respObj) {
-        //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("textarea#deathPersonNameInEnglish").val(respObj.Body[0].transliterateResponse[0].
-        return[0].Text
-    )
-        ;
-    }
 });
 
 function initSerialNumber() {
@@ -367,7 +378,9 @@ function initSerialNumber() {
 
 function initPage() {
     initSerialNumber();
+<s:if test="pageType==1">
     document.getElementById('resonForLateRegistration').value = document.getElementById('reasonForLateDefaultText').value;
+</s:if>
 }
 
 function personAgeDeath() {
@@ -395,6 +408,16 @@ function personAgeDeath() {
     }
 
 }
+
+function maxLengthCalculate(id, max, divId) {
+    var dom = document.getElementById(id).value;
+    if (dom.length > max) {
+        document.getElementById(divId).innerHTML = document.getElementById('maxLengthError').value + " : " + max
+    }
+    else {
+        document.getElementById(divId).innerHTML = "";
+    }
+}
 </script>
 
 
@@ -412,9 +435,9 @@ function personAgeDeath() {
         <td align="center" style="font-size:12pt; width:430px"><img src="<s:url value="/images/official-logo.png"/>"
                                                                     alt=""/><br>
             <s:if test="pageType == 0">
-                මරණ ප්‍රකාශයක් [30, 39(1), 41(1) (උ) වගන්ති] - සාමාන්‍ය මරණ හා හදිසි මරණ
-                <br>இறப்பு பிரதிக்கினை [30, 39(1), 41(1) (உ) பிரிவு ]- சாதாரண மரணம் மற்றும் திடீா் மரணம்
-                <br>Declaration of Death [Sections 30, 39(1) and 41(1)(e)] – Normal Death or Sudden Death
+                මරණ ප්‍රකාශය - සාමාන්‍ය මරණ
+                <br>இறப்பு பிரதிக்கினை - சாதாரண மரணம்
+                <br>Declaration of Death – Normal Death
             </s:if>
             <s:elseif test="pageType == 1">
                 මරණ ප්‍රකාශයක් [36වෙනි වගන්තිය] - කාලය ඉකුත් වූ මරණ ලියාපදිංචි කිරීම හෝ නැතිවුණු පුද්ගලයෙකුගේ මරණ
@@ -422,10 +445,9 @@ function personAgeDeath() {
                 <br>Declaration of Death [Section 36] – Late registration or Death of missing person
             </s:elseif>
             <s:elseif test="pageType == 2">
-                sudden death <br>
-                මරණ ප්‍රකාශයක් [30, 39(1), 41(1) (උ) වගන්ති] - සාමාන්‍ය මරණ හා හදිසි මරණ
-                <br>இறப்பு பிரதிக்கினை [30, 39(1), 41(1) (உ) பிரிவு ]- சாதாரண மரணம் மற்றும் திடீா் மரணம்
-                <br>Declaration of Death [Sections 30, 39(1) and 41(1)(e)] – Normal Death or Sudden Death
+                මරණ ප්‍රකාශය - හදිසි මරණ
+                <br>இறப்பு பிரதிக்கினை - திடீர் மரணம்
+                <br>Declaration of Death – Sudden Death
             </s:elseif>
             <s:elseif test="pageType == 3">
                 missing person <br>
@@ -471,9 +493,10 @@ function personAgeDeath() {
     <tr>
         <td colspan="3">
             <s:if test="pageType == 0 ">
-                ප්‍රකාශකයා විසින් මරණය සිදු වූ කොට්ටාශයේ මරණ රෙජිස්ට්‍රාර් තැන වෙත ලබා දිය යුතුය. මෙම තොරතුරු මත සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ මරණය ලියාපදිංචි කරනු ලැබේ.
-                <br>தகவல் தருபவரால் இறப்பு நிகழ்ந்த பிரிவின் இறப்பு பதிவாளாரிடம் சமா்ப்பித்தல் வேண்டும். இத்தகவலின்படி சிவில் பதிவு அமைப்பில் பிறப்பு பதிவு செய்யப்படும்
-                <br>Should be perfected by the declarant and the duly completed form should be forwarded to the Registrar of Deaths of the division where the death has occurred. The death will be registered in the Civil Registration System based on the information provided in this form.
+                දැනුම් දෙන්නා විසින් සම්පුර්ණ කර තොරතුරු වාර්තා කරන නිලධාරියා / රෙජිස්ට්‍රාර් වෙත භාර දිය යුතුය. මෙම තොරතුරු මත සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ මරණය ලියාපදිංචි කරනු ලැබේ.
+                <br>தகவல் தருபவரால் இறப்பு நிகழ்ந்த பிரிவின் அறிக்கையிடும் அதிகாரியிடம் /இறப்பு பதிவாளாரிடம் சமர்ப்பித்தல் வேண்டும். இத்தகவலின்படி சிவில் பதிவு முறையில் இறப்பு பதிவு செய்யப்படும்.
+                <br>Should be perfected by the informant and the duly completed form should be forwarded to the Officer / Registrar.
+                The death will be registered in the Civil Registration System based on the information provided in this form.
             </s:if>
             <s:elseif test="pageType== 1">
                 ලියාපදිංචි නොකරන ලද මරණයක් සම්බන්ධයෙන් මෙහි පහත ප්‍රකාශ කරනු ලබන විස්තර මගේ දැනීමේ හා විශ්වාසයේ ප්‍රකාර සැබෑ බව හා නිවැරදි බවද, මරණය සිදුවී, නැතහොත් ගෘහයක් හෝ ගොඩනැගිල්ලක් නොවන ස්ථානයක තිබී මෘතශරීරය සම්බවී, මාස තුඅනක් ඇතුලත දී මරණය ලියාපදිංචි කිරීමට නොහැකි වුයේ මෙහි පහත සඳහන් කාරණය හේතු කොටගෙන බවද, ..... පදිංචි .... වන මම ගාම්භීරතා පුර්වකාවද, අවංක ලෙසද, සැබෑ ලෙසද, මෙයින් ප්‍රකාශ කරමි.
@@ -481,11 +504,10 @@ function personAgeDeath() {
                 <br>I …. of …. solemnly, sincerely, and truly declare that the particulars stated below relating to an unregistered death, are true and correct to the best of my knowledge and belief, and that the death has not been registered within three months from its occurrence or from the finding of the corpse in a place other than a house or a building, for this reason.
             </s:elseif>
             <s:elseif test="pageType== 2">
-                sudden death <br>
-                ප්‍රකාශකයා විසින් මරණය සිදු වූ කොට්ටාශයේ මරණ රෙජිස්ට්‍රාර් තැන වෙත ලබා දිය යුතුය. මෙම තොරතුරු මත සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ මරණය ලියාපදිංචි කරනු ලැබේ.
-                <br>தகவல் தருபவரால் இறப்பு நிகழ்ந்த பிரிவின் இறப்பு பதிவாளாரிடம் சமா்ப்பித்தல் வேண்டும். இத்தகவலின்படி சிவில் பதிவு அமைப்பில் பிறப்பு பதிவு செய்யப்படும்
-                <br>Should be perfected by the declarant and the duly completed form should be forwarded to the Registrar of Deaths of the division where the death has occurred. The death will be registered in the Civil Registration System based on the information provided in this form.
-
+                දැනුම් දෙන්නා විසින් සම්පුර්ණ කර තොරතුරු වාර්තා කරන නිලධාරියා / රෙජිස්ට්‍රාර් වෙත භාර දිය යුතුය. මෙම තොරතුරු මත සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ මරණය ලියාපදිංචි කරනු ලැබේ.
+                <br>தகவல் தருபவரால் இறப்பு நிகழ்ந்த பிரிவின் அறிக்கையிடும் அதிகாரியிடம் /இறப்பு பதிவாளாரிடம் சமர்ப்பித்தல் வேண்டும். இத்தகவலின்படி சிவில் பதிவு முறையில் இறப்பு பதிவு செய்யப்படும்.
+                <br>Should be perfected by the informant and the duly completed form should be forwarded to the Officer / Registrar.
+                The death will be registered in the Civil Registration System based on the information provided in this form.
             </s:elseif>
             <s:elseif test="pageType== 3">
                 missing person <br>
@@ -506,13 +528,18 @@ function personAgeDeath() {
                 <br>இறப்பினை பதிவதற்கு தாமதித்ததற்கான காரணம்
                 <br>Reason for the late registration of the death
             </td>
-            <td><s:textarea id="resonForLateRegistration" name="death.reasonForLateRegistration"
-                            cssStyle="width:880px;"/></td>
+            <td>
+                <s:textarea name="death.reasonForLateRegistration" id="resonForLateRegistration" cssStyle="width:880px;"
+                            onblur="maxLengthCalculate('resonForLateRegistration','255','resonForLateRegistration_div');"/>
+                <div id="resonForLateRegistration_div" style="color:red;font-size:8pt"></div>
+
+            </td>
         </tr>
     </table>
 </s:if>
 
-<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse;" class="font-9">
+<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse;margin-bottom:15px;"
+       class="font-9">
 <col width="155px"/>
 <col width="120px"/>
 <col width="120px"/>
@@ -531,48 +558,37 @@ function personAgeDeath() {
         <br>Information about the Death
     </td>
 </tr>
-    <%--<s:if test="pageType ==0">
-        <tr>
-            <td>
-                (1)හදිසි මරණයක්ද ? <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-                <br>திடீா் மரணமா?
-                <br>Sudden death?
-            </td>
-            <td colspan="3">ඔව් xx Yes</td>
-            <td align="center"><s:radio name="deathType" list="#@java.util.HashMap@{'SUDDEN':''}"
-                                        value="%{deathType}"/></td>
-            <td colspan="3">නැත xx No</td>
-            <td align="center"><s:radio name="deathType" list="#@java.util.HashMap@{'NORMAL':''}"
-                                        value="%{deathType}"/></td>
-        </tr>
-    </s:if>
-    <s:elseif test="pageType==1">
-        <tr>
-            <td colspan="4">
-                (2)නැතිවුණු පුද්ගලයෙකුගේ මරණයක්ද ? <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-                <br>காணாமற்போன நபரது மரணமா?
-                <br>Is the death of a missing person?
-            </td>
-            <td align="center">
-                 <s:radio name="deathType" list="#@java.util.HashMap@{'MISSING':''}" value="%{deathType}"/>
-            </td>
-            <td colspan="3">
-                කාලය ඉකුත් වූ මරණ <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-                <br>in ta
-                <br>Late registration
-            </td>
-            <td align="center">
-                <s:radio name="deathType" list="#@java.util.HashMap@{'LATE_NORMAL':''}" value="%{deathType}"/>
-            </td>
-        </tr>
-    </s:elseif>--%>
+<s:if test="pageType == 0">
+    <tr>
+        <td colspan="4">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+            මරණයේ ස්වභාවය?
+            <br/>மரணத்தின் வகை? <br/>
+            Type of death?
+        </td>
+        <td colspan="5">
+            සාමාන්‍ය මරණයකි / சாதாரண மரணம் / Normal Death
+        </td>
+    </tr>
+</s:if>
+<s:elseif test="pageType == 2">
+    <tr>
+        <td colspan="4">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+            මරණයේ ස්වභාවය?
+            <br/>மரணத்தின் வகை? <br/>
+            Type of death?
+        </td>
+        <td colspan="5">
+            හදිසි මරණයකි / திடீர் மரணம் / Sudden Death
+        </td>
+    </tr>
+</s:elseif>
 <tr>
     <td>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
         මරණය සිදු වූ දිනය <s:label value="*" cssStyle="color:red;font-size:10pt"/>
         <br>இறந்த திகதி
         <br>Date of Death
     </td>
-    <td colspan="4">
+    <td colspan="3">
         <s:label value="YYYY-MM-DD" cssStyle="font-size:10px"/><br>
         <s:textfield id="deathDatePicker" name="death.dateOfDeath" maxLength="10"/>
     </td>
@@ -581,7 +597,7 @@ function personAgeDeath() {
         <br>நேரம்
         <br>Time
     </td>
-    <td colspan="3">
+    <td colspan="4">
         <s:textfield name="death.timeOfDeath" id="timePicker"/>
     </td>
 </tr>
@@ -597,8 +613,8 @@ function personAgeDeath() {
 <tr>
     <td colspan="3">
         ප්‍රාදේශීය ලේකම් කොට්ඨාශය /
-        <br>பிரதேச செயளாளா் பிரிவு /
-        <br>Divisional Secretariat
+        <br/>பிரதேச செயளாளர் பிரிவு
+        <br/>Divisional Secretary Division
     </td>
     <td colspan="5"><s:select id="deathDsDivisionId" name="dsDivisionId" list="dsDivisionList"
                               cssStyle="float:left; "/></td>
@@ -612,7 +628,6 @@ function personAgeDeath() {
     <td colspan="5"><s:select id="deathDivisionId" name="deathDivisionId" list="bdDivisionList"
                               cssStyle="float:left;"/></td>
 </tr>
-
 <tr>
     <td rowspan="2" colspan="1">
         ස්ථානය
@@ -624,8 +639,11 @@ function personAgeDeath() {
         <br>சிங்களம்அல்லது தமிழ் மொழியில்
         <br>In Sinhala or Tamil
     </td>
-    <td colspan="5"><s:textfield name="death.placeOfDeath" cssStyle="width:555px;" id="placeOfDeath"
-                                 maxLength="240"/></td>
+    <td colspan="5">
+        <s:textarea name="death.placeOfDeath" id="placeOfDeath" cssStyle="width:555px;"
+                    onblur="maxLengthCalculate('placeOfDeath','255','placeOfDeath_div');"/>
+        <div id="placeOfDeath_div" style="color:red;font-size:8pt"></div>
+    </td>
 </tr>
 <tr>
     <td colspan="2">
@@ -634,8 +652,10 @@ function personAgeDeath() {
         <br>In English
     </td>
     <td colspan="5">
+
         <s:textfield name="death.placeOfDeathInEnglish" id="placeOfDeathInEnglish" cssStyle="width:555px;"
                      maxLength="240"/>
+
         <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px 0;"
              id="place">
     </td>
@@ -686,32 +706,20 @@ function personAgeDeath() {
         <s:radio name="death.causeOfDeathEstablished"
                  list="#@java.util.HashMap@{'false':''}"/>
     </td>
-        <%--    <td rowspan="2" colspan="3">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-මරණය දින 30 කට අඩු ළදරුවෙකුගේද?
-<br>இறப்பு 30 நாட்களுக்கு குறைவான சிசுவினதா?
-<br>Is the death of an infant less than 30 days?
-</td>
-<td colspan="1">නැත / இல்லை / No</td>
-<td colspan="1" align="center"><s:radio name="death.infantLessThan30Days"
-        list="#@java.util.HashMap@{'false':''}"/></td>--%>
 </tr>
-    <%--<tr>
-        <td colspan="1">ඔව් / ஆம் /Yes</td>
-        <td colspan="2" align="center"><s:radio name="death.causeOfDeathEstablished"
-                                                list="#@java.util.HashMap@{'true':''}"/></td>
-        <td colspan="1">ඔව් / ஆம் /Yes</td>
-        <td colspan="1" align="center"><s:radio name="death.infantLessThan30Days"
-                                                list="#@java.util.HashMap@{'true':''}"/></td>
-    </tr>--%>
 <tr>
     <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
         මරණයට හේතුව
         <br>இறப்பிற்கான காரணம்
         <br>Cause of death
     </td>
-    <td colspan="4"><s:textarea name="death.causeOfDeath" cssStyle="width:420px; "/></td>
+    <td colspan="4">
+        <s:textarea name="death.causeOfDeath" id="causeOfDeath" cssStyle="width:420px;"
+                    onblur="maxLengthCalculate('causeOfDeath','600','causeOfDeath_div');" rows="6"/>
+        <div id="causeOfDeath_div" style="color:red;font-size:8pt"></div>
+    </td>
     <td colspan="2">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-        ේතුවේ ICD කේත අංකය
+        හේතුවේ ICD කේත අංකය
         <br>காரணத்திற்கான ICD குறியீட்டு இலக்கம்
         <br>ICD Code of cause
     </td>
@@ -723,26 +731,21 @@ function personAgeDeath() {
         <br>அடக்கம் செய்த அல்லது தகனஞ் செய்த இடம்
         <br>Place of burial or cremation
     </td>
-    <td colspan="8"><s:textarea name="death.placeOfBurial" id="placeOfBurial" cssStyle="width:880px;"/></td>
-</tr>
-<tr>
-    <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-        වෙනත් තොරතුරු
-        <br>வேறுத்தகவல்கள்
-        <br>Any other information
+    <td colspan="8">
+        <s:textarea name="death.placeOfBurial" id="placeOfBurial" cssStyle="width:880px;"
+                    onblur="maxLengthCalculate('placeOfBurial','255','placeOfBurial_div');"/>
+        <div id="placeOfBurial_div" style="color:red;font-size:8pt"></div>
     </td>
-    <td colspan="8"><s:textarea name="death.anyOtherInformation" id="anyOtherInfo"
-                                cssStyle="width:880px;"/></td>
 </tr>
 <tr>
-    <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+    <td colspan="4"><label>
         මරණ
         සහතිකය නිකුත් කල යුතු භාෂාව
         <br>சான்றிதழ் வழங்கப்பட வேண்டிய மொழி
         <br>Preferred
         Language for
         Death Certificate </label></td>
-    <td colspan="7"><s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'தமிழ்'}"
+    <td colspan="5"><s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'தமிழ்'}"
                               name="death.preferredLanguage"
                               cssStyle="width:190px; margin-left:5px;"></s:select></td>
 </tr>
@@ -765,358 +768,367 @@ function personAgeDeath() {
             <br>Information about the person Departed
         </td>
     </tr>
-    <tr>
-        <td colspan="1">
-            (<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-            මැරුණු පුද්ගලයා හඳුනාගෙන තිබේද? <br>
-            இறந்த நபர் அடையாளம் காணப்பட்டுள்ளாரா?<br>
-            Is the departed person identified?
-        </td>
-        <td>
-            ඔව්
-            <br> ஆம்
-            <br>Yes
-        </td>
-        <td>
-            <s:radio name="deathPerson.personIdentified"
-                     list="#@java.util.HashMap@{'true':''}"/></td>
-        <td>
-            නැත <br>
-            இல்லை <br> No
-        </td>
-        <td><s:radio name="deathPerson.personIdentified"
-                     list="#@java.util.HashMap@{'false':''}"/></td>
-    </tr>
     </tbody>
 </table>
-<table border="1" style="width: 100%;border-top:none;border-bottom:none; border-collapse:collapse; margin-bottom:0;"
+
+<table border="1" style="width: 100%;border-top:none;border-collapse:collapse; margin-bottom:15px;"
        class="font-9">
+<col width="200px"/>
+<col width="100px"/>
+<col width="100px"/>
+<col width="100px"/>
+<col width="100px"/>
+<col width="75px"/>
+<col width="70px"/>
+<col width="73px"/>
+<col width="72px"/>
+<col width="70px"/>
+<col width="70px"/>
+<tbody>
 
-    <col width="220px"/>
-    <col width="100px"/>
-    <col width="100px"/>
-    <col width="100px"/>
-    <col width="150px"/>
-    <col width="130px"/>
-    <col/>
-    <tbody>
+<tr>
+    <td colspan="4">
+        (<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+        මැරුණු පුද්ගලයා හඳුනාගෙන තිබේද? <br>
+        இறந்த நபர் அடையாளம் காணப்பட்டுள்ளாரா?<br>
+        Is the departed person identified?
+    </td>
+    <td colspan="2">
+        ඔව්
+        <br> ஆம்
+        <br>Yes
+    </td>
+    <td colspan="2">
+        <s:radio name="deathPerson.personIdentified"
+                 list="#@java.util.HashMap@{'true':''}"/></td>
+    <td colspan="2">
+        නැත <br>
+        இல்லை <br> No
+    </td>
+    <td><s:radio name="deathPerson.personIdentified"
+                 list="#@java.util.HashMap@{'false':''}"/></td>
+</tr>
+<tr>
+    <td>
+        (<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+        ශ්‍රී ලාංකිකයෙකු නම්<br/>இலங்கையராயின் <br/>If Sri Lankan
+    </td>
+    <td colspan="3">
+        අනන්‍යතා අංකය
+        <br>அடையாள எண்
+        <br>Identification Number
+    </td>
+    <td colspan="7" class="find-person">
+        <img src="<s:url value="/images/alphabet-V.gif" />"
+             id="death_person_NIC_V" onclick="javascript:addXorV('deathPerson_PINorNIC','V','error12')">
+        <img src="<s:url value="/images/alphabet-X.gif" />"
+             id="death_person_NIC_X" onclick="javascript:addXorV('deathPerson_PINorNIC','X','error12')">
+        <br>
+        <s:textfield name="deathPerson.deathPersonPINorNIC" id="deathPerson_PINorNIC"
+                     cssStyle="float:left;" maxLength="12"/>
+        <img src="<s:url value="/images/search-father.png" />"
+             style="vertical-align:middle; margin-left:20px;" id="death_person_lookup">
 
+    </td>
+</tr>
+<tr>
+    <td rowspan="2">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+        විදේශිකය‍කු නම්
+        <br>வெளிநாட்டவர் எனின்
+        <br>If a foreigner
+    </td>
+    <td colspan="3">
+        රට / நாடு / Country
+    </td>
+    <td colspan="7"><s:select id="deathPersonCountryId" name="deathPersonCountry" list="countryList" headerKey="0"
+                              headerValue="%{getText('select_country.label')}" cssStyle="width:185px;"/></td>
+</tr>
+<tr>
+    <td colspan="3">
+        ගමන් බලපත්‍ර අංකය / கடவுச் சீட்டு இல. / <br/>Passport Number
+    </td>
+    <td colspan="7"><s:textfield name="deathPerson.deathPersonPassportNo" cssStyle="width:180px;" maxLength="15"/></td>
+</tr>
+
+<tr>
+    <td>
+        (<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+        උපන් දිනය
+        <br>பிறந்த திகதி
+        <br>Date of Birth
+    </td>
+    <td colspan="2"><s:textfield maxLength="10" name="deathPerson.deathPersonDOB" id="deathPersonDOB"
+                                 value="%{deathPerson.deathPersonDOB}" onchange="personAgeDeath();"/></td>
+    <td colspan="2">
+        (<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+        වයස
+        <br>வயது
+        <br>Age
+    </td>
+    <td>අවුරුදු<br/>வருடங்கள் <br/>Years</td>
+    <td><s:textfield id="deathPersonAge" name="deathPerson.deathPersonAge" cssStyle="width:50px;"
+                     maxlength="3"/></td>
+    <td>මාස<br/>மாதங்கள்<br/>Months</td>
+    <td>
+        <s:select list="months" id="deathPersonAgeMonth"
+                  name="deathPerson.deathPersonAgeMonth" headerKey="0" headerValue=" --- " cssStyle="width:60px;"/>
+    </td>
+    <td>දින<br/>திகதி<br/>Days</td>
+    <td>
+        <s:select list="days" id="deathPersonAgeDate" name="deathPerson.deathPersonAgeDate" headerKey="0"
+                  headerValue=" --- " cssStyle="width:60px;"/>
+    </td>
+</tr>
+<tr>
+    <td>
+        (<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+        ස්ත්‍රී පුරුෂ භාවය
+        <br>பால்
+        <br>Gender
+    </td>
+    <td colspan="2">
+        <s:select
+                list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
+                name="deathPerson.deathPersonGender" headerKey="0" headerValue="%{getText('select_gender.label')}"
+                id="deathPersonGender" cssStyle="width:185px;"/>
+    </td>
+    <td colspan="2">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+        ජන වර්ගය<br/>
+        இனம்<br/>
+        Ethnic Group
+    </td>
+    <td colspan="6">
+        <s:select list="raceList" name="deathPersonRace" headerKey="0" headerValue="%{getText('select_race.label')}"
+                  cssStyle="width:190px;" id="deathPersonRace"/>
+    </td>
+</tr>
+<tr>
+    <td>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+        නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)
+        <br>பெயர் அரச கரும மொழியில் (சிங்களம் / தமிழ்)
+        <br>Name in either of the official languages (Sinhala / Tamil)
+    </td>
+    <td colspan="10">
+
+        <s:textarea name="deathPerson.deathPersonNameOfficialLang" id="deathPersonNameOfficialLang"
+                    onblur="maxLengthCalculate('deathPersonNameOfficialLang','600','deathPersonNameOfficialLang_div');"
+                    cssStyle="width:99%"/>
+        <div id="deathPersonNameOfficialLang_div" style="color:red;font-size:8pt"></div>
+    </td>
+</tr>
+<tr>
+    <td>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+        නම ඉංග්‍රීසි භාෂාවෙන්
+        <br>பெயர் ஆங்கில மொழியில்
+        <br>Name in English
+    </td>
+    <td colspan="10">
+        <s:textarea name="deathPerson.deathPersonNameInEnglish" id="deathPersonNameInEnglish"
+                    onblur="maxLengthCalculate('deathPersonNameInEnglish','600','deathPersonNameInEnglish_div');"
+                    cssStyle="width:99%"/>
+        <div id="deathPersonNameInEnglish_div" style="color:red;font-size:8pt;"></div>
+        <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px 0;"
+             id="deathName">
+    </td>
+</tr>
+<tr>
+    <td rowspan="4">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+        ස්ථිර ලිපිනය
+        <br>நிரந்தர வதிவிட முகவரி
+        <br>Permanent Address
+    </td>
+    <td colspan="10">
+        <s:textarea name="deathPerson.deathPersonPermanentAddress" id="deathPersonPermanentAddress"
+                    cssStyle="width:99%;"
+                    onblur="maxLengthCalculate('deathPersonPermanentAddress','255','deathPersonPermanentAddress_div');"/>
+        <div id="deathPersonPermanentAddress_div" style="color:red;font-size:8pt"></div>
+    </td>
+</tr>
+<tr>
+    <td colspan="4">
+        දිස්ත්‍රික්කය <br>
+        மாவட்டம் <br>
+        District
+    </td>
+    <td colspan="7">
+        <s:select id="deathPersonPermenentAddressDistrictId" name="deathPersonPermenentAddressDistrictId"
+                  list="allDistrictList" value="%{deathPersonPermenentAddressDistrictId}"
+                  cssStyle="float:left;  width:98%;" headerValue="%{getText('district.label')}" headerKey="0"/>
+    </td>
+</tr>
+<tr>
+    <td colspan="4">
+        ප්‍රාදේශීය ලේකම් කොට්ඨාශය <br>
+        பிரதேச செயளாளர் பிரிவு <br/>
+        Divisional Secretary Division
+    </td>
+    <td colspan="7">
+        <s:select id="deathPersonPermenentAddressDSDivisionId" name="deathPersonPermenentAddressDSDivisionId"
+                  list="allDSDivisionList" value="%{deathPersonPermenentAddressDSDivisionId}"
+                  cssStyle="float:left;  width:98%;" headerValue="%{getText('dsDivision.label')}" headerKey="0"/>
+    </td>
+</tr>
+<tr>
+    <td colspan="4"><label>
+        ග්‍රාම නිළධාරී කොටිඨාශය / கிராம சேவையாளர் பிரிவு/ Grama Niladhari Division</label>
+    </td>
+    <td colspan="7" align="center">
+        <s:select id="deathPersonPermanentAddressGNDivision" name="gnDivisionId" value="%{gnDivisionId}"
+                  list="gnDivisionList"
+                  cssStyle="float:left; width:99%" headerKey="0" headerValue="%{getText('gnDivisions.label')}"/><br/>
+        <a href="javascript:displayGNSearch()">
+            <span><s:label value="%{getText('searchGNDivision.label')}"/></span>
+        </a>
+    </td>
+</tr>
+
+<s:if test="pageType==3">
     <tr>
-        <td rowspan="2" colspan="2">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-            අනන්‍යතා අංකය
-            <br>அடையாள எண்
-            <br>Identification No.
-        </td>
-        <td rowspan="2" colspan="2" class="find-person">
-            <img src="<s:url value="/images/alphabet-V.gif" />"
-                 id="death_person_NIC_V" onclick="javascript:addXorV('deathPerson_PINorNIC','V','error12')">
-            <img src="<s:url value="/images/alphabet-X.gif" />"
-                 id="death_person_NIC_X" onclick="javascript:addXorV('deathPerson_PINorNIC','X','error12')">
-            <br>
-            <s:textfield name="deathPerson.deathPersonPINorNIC" id="deathPerson_PINorNIC"
-                         cssStyle="float:left;" maxLength="10"/>
-            <img src="<s:url value="/images/search-father.png" />"
-                 style="vertical-align:middle; margin-left:20px;" id="death_person_lookup">
-
-        </td>
-        <td rowspan="2">
-            විදේශිකය‍කු නම්
-            <br>வெளிநாட்டவர் எனின்
-            <br>If a foreigner
-        </td>
-        <td>
-            රට
-            <br>நாடு
-            <br>Country
-        </td>
-        <td><s:select id="deathPersonCountryId" name="deathPersonCountry" list="countryList" headerKey="0"
-                      headerValue="%{getText('select_country.label')}" cssStyle="width:185px;"/></td>
-    </tr>
-    <tr>
-        <td>
-            ගමන් බලපත්‍ර අංකය
-            <br>கடவுச் சீட்டு
-            <br>Passport No.
-        </td>
-        <td><s:textfield name="deathPerson.deathPersonPassportNo" cssStyle="width:180px;" maxLength="15"/></td>
-    </tr>
-
-    </tbody>
-</table>
-<table border="1" style="width: 100%;border-bottom:none; border-collapse:collapse; margin-bottom:0;"
-       class="font-9">
-    <caption/>
-    <col width="320px"/>
-    <col width="200px"/>
-    <col width="280px"/>
-    <col/>
-    <tbody>
-    <tr>
-        <td>
+        <td colspan="11" height="35px">
             (<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-            උපන් දිනය
-            <br>பிறந்த திகதி
-            <br>Date of Birth
+            නැතිවූ පුද්ගලයෙකුගේ මරණයක් නම් / காணாமற் போன நபரின் இறப்பாயின் / If the death is for a Missing Person
         </td>
-        <td><s:textfield maxLength="10" name="deathPerson.deathPersonDOB" id="deathPersonDOB"
-                         value="%{deathPerson.deathPersonDOB}" onchange="personAgeDeath();"/></td>
-        <td>
-            (<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-            වයස හෝ අනුමාන වයස
-            <br>வயது அல்லது அனுமான வயது
-            <br>Age or probable Age
-        </td>
-        <td><s:textfield name="deathPerson.deathPersonAge" id="deathPersonAge" onfocus="personAgeDeath();"
-                         maxLength="3"/></td>
     </tr>
     <tr>
         <td>
-            (<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-            ස්ත්‍රී පුරුෂ භාවය
-            <br>பால்
-            <br>Gender
+            අවසන් වරට පදිංචි ලිපිනය <br>
+            கடைசியாக குடியிருந்த இடம் <br>
+            Last address
         </td>
-        <td>
-            <s:select
-                    list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
-                    name="deathPerson.deathPersonGender" headerKey="0" headerValue="%{getText('select_gender.label')}"
-                    id="deathPersonGender" cssStyle="width:185px;"/>
-        </td>
-        <td>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-            ජාතිය
-            <br>இனம்
-            <br>Race
-        </td>
-        <td>
-            <s:select list="raceList" name="deathPersonRace" headerKey="0" headerValue="%{getText('select_race.label')}"
-                      cssStyle="width:190px;" id="deathPersonRace"/>
+        <td colspan="10">
+                <%--<s:textarea name="deathPerson.lastAddressOfMissingPerson" id="lastAddressOfMissingPerson"
+                cssStyle="width:98%;"/>--%>
+            <s:textarea name="deathPerson.lastAddressOfMissingPerson" id="lastAddressOfMissingPerson"
+                        cssStyle="width:99%;"
+                        onblur="maxLengthCalculate('lastAddressOfMissingPerson','255','lastAddressOfMissingPerson_div');"/>
+            <div id="lastAddressOfMissingPerson_div" style="color:red;font-size:8pt"></div>
         </td>
     </tr>
-    </tbody>
+</s:if>
+<tr>
+    <td>
+        (<s:property value="#row"/><s:set name="row" value="#row+1"/>) තත්වය නොහොත් වෘත්තීය <br>
+        நிலவரம் அல்லது தொழில் <br>
+        Rank or Profession
+    </td>
+    <td colspan="4">
+
+        <s:textarea name="deathPerson.rankOrProfession" id="deathPersonRank"
+                    cssStyle="width:98%;"
+                    onblur="maxLengthCalculate('deathPersonRank','255','deathPersonRank_div');"/>
+        <div id="deathPersonRank_div" style="color:red;font-size:8pt"></div>
+    </td>
+    <td colspan="2">විශ්‍රාම වැටුප් ලාභියෙකුද? <br>
+        இளைப்பாற்று ஊதியம் பெறுபவரா? <br>
+        Was a Pensioner?
+    </td>
+    <td>
+        ඔව් <br>
+        ஆம் <br>
+        Yes
+    </td>
+    <td align="center">
+        <s:radio name="deathPerson.pensioner"
+                 list="#@java.util.HashMap@{'true':''}"/>
+    </td>
+    <td>
+        නැත <br>
+        இல்லை <br>
+        No
+    </td>
+    <td align="center">
+        <s:radio name="deathPerson.pensioner"
+                 list="#@java.util.HashMap@{'false':''}"/>
+    </td>
+</tr>
+
+<tr>
+    <td colspan="5">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+        පියාගේ අනන්‍යතා අංකය / தந்தையின் அடையாள எண் / Fathers Identification No.
+    </td>
+    <td colspan="6" class="find-person">
+        <img src="<s:url value="/images/alphabet-V.gif" />"
+             id="death_person_father_NIC_V"
+             onclick="javascript:addXorV('deathPersonFather_PINorNIC','V','error12')">
+        <img src="<s:url value="/images/alphabet-X.gif" />"
+             id="death_person_father_NIC_X"
+             onclick="javascript:addXorV('deathPersonFather_PINorNIC','X','error12')">
+        <br>
+        <s:textfield name="deathPerson.deathPersonFatherPINorNIC" id="deathPersonFather_PINorNIC"
+                     cssStyle="float:left;" maxLength="12"/>
+
+        <img src="<s:url value="/images/search-father.png" />"
+             style="vertical-align:middle; margin-left:20px;" id="death_person_father_lookup">
+
+    </td>
+</tr>
+<tr>
+    <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+        පියාගේ සම්පුර්ණ නම
+        <br>தந்தையின் முழுப் பெயர்
+        <br>Fathers full name
+    </td>
+    <td colspan="10">
+
+        <s:textarea name="deathPerson.deathPersonFatherFullName" id="deathPersonFatherFullName"
+                    cssStyle="width:99%;"
+                    onblur="maxLengthCalculate('deathPersonFatherFullName','255','deathPersonFatherFullName_div');"/>
+        <div id="deathPersonFatherFullName_div" style="color:red;font-size:8pt"></div>
+    </td>
+</tr>
+<tr>
+    <td colspan="5">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+        මවගේ අනන්‍යතා අංකය / தாயின் அடையாள எண் / Mothers Identification No.
+    </td>
+    <td colspan="6" class="find-person">
+        <img src="<s:url value="/images/alphabet-V.gif" />"
+             id="death_person_mother_NIC_V"
+             onclick="javascript:addXorV('deathPersonMother_PINorNIC','V','error12')">
+        <img src="<s:url value="/images/alphabet-X.gif" />"
+             id="death_person_mother_NIC_X"
+             onclick="javascript:addXorV('deathPersonMother_PINorNIC','X','error12')">
+        <br>
+        <s:textfield name="deathPerson.deathPersonMotherPINorNIC" id="deathPersonMother_PINorNIC"
+                     cssStyle="float:left;" maxLength="12"/>
+        <img src="<s:url value="/images/search-mother.png" />"
+             style="vertical-align:middle; margin-left:20px;" id="death_person_mother_lookup"></td>
+</tr>
+<tr>
+    <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+        මවගේ සම්පුර්ණ නම
+        <br>தாயின் முழுப் பெயர்
+        <br>Mothers full name
+    </td>
+    <td colspan="10">
+
+        <s:textarea name="deathPerson.deathPersonMotherFullName" id="deathPersonMotherFullName"
+                    cssStyle="width:99%;"
+                    onblur="maxLengthCalculate('deathPersonMotherFullName','255','deathPersonMotherFullName_div');"/>
+        <div id="deathPersonMotherFullName_div" style="color:red;font-size:8pt"></div>
+    </td>
+</tr>
+</tbody>
 </table>
 
-<table border="1"
-       style="width: 100%;border-top:none;border-bottom:none; border:1px solid #000; border-collapse:collapse; margin-bottom:0;"
-       class="font-9">
-    <col width="220px"/>
-    <col width="100px"/>
-    <col width="100px"/>
-    <col width="100px"/>
-    <col width="150px"/>
-    <col width="130px"/>
-    <col/>
-
-    <tr>
-        <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-            නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)
-            <br>பெயா் அரச கரும மொழியில் (சிங்களம் / தமிழ்)
-            <br>Name in either of the official languages (Sinhala / Tamil)
-        </td>
-        <td colspan="6"><s:textarea name="deathPerson.deathPersonNameOfficialLang" id="deathPersonNameOfficialLang"
-                                    cssStyle="width:880px;"/>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-            නම ඉංග්‍රීසි භාෂාවෙන්
-            <br>பெயா் ஆங்கில மொழியில்
-            <br>Name in English
-        </td>
-        <td colspan="6">
-            <s:textarea name="deathPerson.deathPersonNameInEnglish" id="deathPersonNameInEnglish"
-                        cssStyle="width:880px;"/>
-            <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px 0;"
-                 id="deathName">
-        </td>
-    </tr>
-    <tr>
-        <td colspan="1" rowspan="2">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-            ස්ථිර ලිපිනය
-            <br>நிரந்தர வதிவிட முகவரி
-            <br>Permanent Address
-        </td>
-        <td colspan="6">
-            <s:textarea name="deathPerson.deathPersonPermanentAddress" id="deathPersonPermanentAddress"
-                        cssStyle="width:880px;"/>
-        </td>
-    </tr>
-    <tr>
-        <td width="150px">
-            දිස්ත්‍රික්කය <br>
-            மாவட்டம் <br>
-            District
-        </td>
-        <td width="150px">
-            <s:select id="deathPersonPermenentAddressDistrictId" name="deathPersonPermenentAddressDistrictId"
-                      list="districtList" value="%{deathPersonPermenentAddressDistrictId}"
-                      cssStyle="float:left;  width:240px;" headerValue="%{getText('district.select')}" headerKey="0"/>
-        </td>
-        <td width="150px">
-            ප්‍රාදේශීය ලේකම් කොට්ඨාශය <br>
-            பிரதேச செயளாளர் பிரிவு <br>
-            Divisional Secretariat
-        </td>
-        <td width="150px">
-            <s:select id="deathPersonPermenentAddressDSDivisionId" name="deathPersonPermenentAddressDSDivisionId"
-                      list="permenantAddressDsDivisionList" value="%{deathPersonPermenentAddressDSDivisionId}"
-                      cssStyle="float:left;  width:240px;" headerValue="%{getText('dsDivision.select')}" headerKey="0"/>
-        </td>
-        <td style="background:#cccccc"></td>
-    </tr>
-</table>
-<table class="font-9" id="special" border="1"
-       style="border:1px solid #000;margin-bottom:0;width: 100%;border-top:none;border-bottom:none;border-collapse:collapse;">
-    <caption/>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <tbody>
-    <s:if test="pageType==3">
-        <tr>
-            <td colspan="7" height="35px">
-                (<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-                නැතිවූ පුද්ගලයෙකුගේ මරණයක් නම් / காணாமற் போன நபரின் இறப்பாயின் / If the death is for a Missing Person
-            </td>
-        </tr>
-        <tr>
-            <td colspan="1">
-                අවසන් වරට පදිංචි ලිපිනය <br>
-                கடைசியாக குடியிருந்த இடம் <br>
-                Last address
-            </td>
-            <td colspan="6">
-                <s:textarea name="deathPerson.lastAddressOfMissingPerson" id="lastAddressOfMissingPerson"
-                            cssStyle="width:98%;"/>
-            </td>
-        </tr>
-    </s:if>
-    <tr>
-        <td width="121px">
-            (<s:property value="#row"/><s:set name="row" value="#row+1"/>) තත්වය නොහොත් වෘත්තීය <br>
-            நிலவரம் அல்லது தொழில் <br>
-            Rank or Profession
-        </td>
-        <td width="400px">
-            <s:textarea name="deathPerson.rankOrProfession" id="deathPersonRank"
-                        cssStyle="width:98%;"/>
-        </td>
-        <td width="200px">විශ්‍රාම වැටුප් ලාභියෙකුද? <br>
-            இளைப்பாற்று ஊதியம் பெறுபவரா? <br>
-            Was a Pensioner?
-        </td>
-        <td width="50px">
-            ඔව් <br>
-            ஆம் <br>
-            Yes
-        </td>
-        <td align="center">
-            <s:radio name="deathPerson.pensioner"
-                     list="#@java.util.HashMap@{'true':''}"/>
-        </td>
-        <td width="50px">
-            නැත <br>
-            இல்லை <br>
-            No
-        </td>
-        <td align="center">
-            <s:radio name="deathPerson.pensioner"
-                     list="#@java.util.HashMap@{'false':''}"/>
-        </td>
-    </tr>
-    </tbody>
-</table>
-<table border="1"
-       style="width: 100%;border-top:none; border:1px solid #000; border-collapse:collapse; margin-bottom:10;"
-       class="font-9">
-    <tr>
-        <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-            පියාගේ අනන්‍යතා අංකය
-            <br>தந்தையின் அடையாள எண்
-            <br>Fathers Identification No.
-        </td>
-        <td colspan="6" class="find-person">
-            <img src="<s:url value="/images/alphabet-V.gif" />"
-                 id="death_person_father_NIC_V"
-                 onclick="javascript:addXorV('deathPersonFather_PINorNIC','V','error12')">
-            <img src="<s:url value="/images/alphabet-X.gif" />"
-                 id="death_person_father_NIC_X"
-                 onclick="javascript:addXorV('deathPersonFather_PINorNIC','X','error12')">
-            <br>
-            <s:textfield name="deathPerson.deathPersonFatherPINorNIC" id="deathPersonFather_PINorNIC"
-                         cssStyle="float:left;" maxLength="10"/>
-
-            <img src="<s:url value="/images/search-father.png" />"
-                 style="vertical-align:middle; margin-left:20px;" id="death_person_father_lookup">
-
-        </td>
-    </tr>
-    <tr>
-        <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-            පියාගේ සම්පුර්ණ නම
-            <br>தந்தையின் முழுப் பெயர்
-            <br>Fathers full name
-        </td>
-        <td colspan="6">
-            <s:textarea name="deathPerson.deathPersonFatherFullName" id="deathPersonFatherFullName"
-                        cssStyle="width:880px;"/>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-            මවගේ අනන්‍යතා අංකය
-            <br>தாயின் அடையாள எண்
-            <br>Mothers Identification No.
-        </td>
-        <td colspan="6" class="find-person">
-            <img src="<s:url value="/images/alphabet-V.gif" />"
-                 id="death_person_mother_NIC_V"
-                 onclick="javascript:addXorV('deathPersonMother_PINorNIC','V','error12')">
-            <img src="<s:url value="/images/alphabet-X.gif" />"
-                 id="death_person_mother_NIC_X"
-                 onclick="javascript:addXorV('deathPersonMother_PINorNIC','X','error12')">
-            <br>
-            <s:textfield name="deathPerson.deathPersonMotherPINorNIC" id="deathPersonMother_PINorNIC"
-                         cssStyle="float:left;" maxLength="10"/>
-            <img src="<s:url value="/images/search-mother.png" />"
-                 style="vertical-align:middle; margin-left:20px;" id="death_person_mother_lookup"></td>
-    </tr>
-    <tr>
-        <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-            මවගේ සම්පුර්ණ නම
-            <br>தாயின் முழுப் பெயர்
-            <br>Mothers full name
-        </td>
-        <td colspan="6">
-            <s:textarea name="deathPerson.deathPersonMotherFullName" id="deathPersonMotherFullName"
-                        cssStyle="width:880px;"/>
-        </td>
-    </tr>
-    </tbody>
-</table>
 <div class="font-10">
     (<s:property value="#row"/><s:set name="row" value="#row+1"/>)
     මියගියේ වයස අවු. 49ට අඩු කාන්තාවක් නම් පමණක් මෙම කොටස සම්පුර්ණ කල යුතුය
-    <br>
-    இறந்த நபர் 49வயதிற்கு குறைந்த பெண்ணாயிருந்தால் மடடும் இப்பகுதி பூரணப்படுத்தப்படல்வேண்டும் <br>
-    Fill this section only If the departed is a woman below 49 years
+    <br>இறந்த நபர் 49வயதிற்கு குறைந்த பெண்ணாயிருந்தால் மடடும் இப்பகுதி பூரணப்படுத்தப்படல்வேண்டும்
+    <br>Fill this section only If the departed is a woman below 49 years
 </div>
 
 <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin-bottom:10; margin-top:10;"
        class="font-9">
     <caption/>
-    <col width="50px"/>
-    <col width="824px"/>
-    <col width="100px"/>
-    <col width="100px"/>
+    <col width="4%"/>
+    <col width="66%"/>
+    <col width="15%"/>
+    <col width="15%"/>
     <tbody>
     <tr>
         <td colspan="2"></td>
-        <td colspan="1">ඔව්/ஆம்/Yes</td>
-        <td colspan="1">නැත/இல்லை/No</td>
+        <td colspan="1" align="center">ඔව් / ஆம் / Yes</td>
+        <td colspan="1" align="center">නැත / இல்லை / No</td>
     </tr>
     <tr>
         <td colspan="2">
@@ -1168,18 +1180,32 @@ function personAgeDeath() {
     <tr>
         <td style="background:#cccccc;"></td>
         <td>
-            දරු ප්‍රසුතිය හෝ ගබ්සාව සිදුවුයේ මරණය සිදුවීමට දින කීයකට පෙරද? <br>
-            பிரசவம் அல்லது கருக்கலைப்பு நடைப்பெற்றது இறப்பு நடைப்பெறுவதற்கு எத்தனை நாட்களுக்கு முன்?<br>
-            If a birth or abortion took place, how many days before the death has it occured?
+            දරු ප්‍රසුතිය හෝ ගබ්සාව සිදුවුයේ මරණය සිදුවීමට දින කීයකට පෙරද?
+            <br>பிரசவம் அல்லது கருக்கலைப்பு நடைப்பெற்றது இறப்பு நடைப்பெறுவதற்கு எத்தனை நாட்களுக்கு முன்?
+            <br>If a birth or abortion took place, how many days before the death has it occurred?
         </td>
         <td colspan="2" align="left">
             <s:textfield name="deathPerson.daysBeforeAbortionOrBirth" id="days_before_abortion_or_birth"
                          cssStyle="float:left;" maxLength="3"/>
         </td>
     </tr>
-
     </tbody>
 </table>
+
+<div class="skip-validation">
+    <s:checkbox name="skipjavaScript" id="skipjs" value="false">
+        <s:label value="%{getText('skipvalidation.label')}"/>
+    </s:checkbox>
+</div>
+<div class="form-submit">
+    <s:hidden name="pageNo" value="1"/>
+    <s:hidden name="rowNumber" value="%{row}"/>
+    <s:submit value="%{getText('next.label')}" cssStyle="margin-top:10px;"/>
+</div>
+<s:hidden name="pageType" value="%{pageType}"/>
+<s:hidden name="idUKey" value="%{#request.idUKey}"/>
+</s:form>
+<br/><br/>
 <s:hidden id="error0" value="%{getText('p1.errorlable.serialNumber')}"/>
 <s:hidden id="error1" value="%{getText('p1.errorlable.dateofReg')}"/>
 <s:hidden id="error2" value="%{getText('p1.errorlable.dateofDeath')}"/>
@@ -1209,25 +1235,9 @@ function personAgeDeath() {
 <s:hidden id="daysBeforeAbortionOrBirth" value="%{getText('error.days.before.abortion.or.birth')}"/>
 
 
-<div class="skip-validation">
-    <s:checkbox name="skipjavaScript" id="skipjs" value="false">
-        <s:label value="%{getText('skipvalidation.label')}"/>
-    </s:checkbox>
-</div>
-<div class="form-submit">
-    <s:hidden name="pageNo" value="1"/>
-    <s:hidden name="rowNumber" value="%{row}"/>
-    <s:submit value="%{getText('next.label')}" cssStyle="margin-top:10px;"/>
-</div>
-<s:hidden name="pageType" value="%{pageType}"/>
-<s:hidden name="idUKey" value="%{#request.idUKey}"/>
-</s:form>
-
-<%--
-<s:hidden id="pageType" value="%{pageType}"/>
---%>
 <s:hidden id="error13" value="%{getText('enter.reasonForLate.label')}"/>
 <s:hidden id="reasonForLateDefaultText" value="%{getText('text.default.reason')}"/>
+<s:hidden id="selectDSDivision" value="%{getText('dsDivision.label')}"/>
+<s:hidden id="selectGNDivision" value="%{getText('gnDivisions.label')}"/>
+<s:hidden id="maxLengthError" value="%{getText('error.max.length')}"/>
 </div>
-
-

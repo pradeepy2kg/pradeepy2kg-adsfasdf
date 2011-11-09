@@ -1,3 +1,4 @@
+<%@ page import="java.util.Locale" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -42,27 +43,66 @@
 <link rel="stylesheet" href="../css/ui.daterangepicker.css" type="text/css" />
 
 <script>
+    function setUserPrefLang(){
+        <% String lang=((Locale)session.getAttribute("WW_TRANS_I18N_LOCALE")).getLanguage(); %>
+        setPrefLanguage("<%= lang%>");
+    }
+
   $(document).ready(function() {
     $("#tabs").tabs();
-    $('#queryDOBRange').daterangepicker({arrows:true});
-    $('#queryDODRange').daterangepicker({arrows:true});
+    $('#queryDOBRange').daterangepicker({
+        arrows:true,
+        onClose: function() {
+            $('#queryDOBRange').focus();
+        }
+    });
+
+    $('#queryDODRange').daterangepicker({
+        arrows:true,
+        onClose: function() {
+            $('#queryDODRange').focus();
+        }
+    });
+
     $('#queryDOB').datepicker({
         changeYear: true,
         yearRange: '1960:2020',
         dateFormat:'yy-mm-dd',
         startDate:'2000-01-01',
-        endDate:'2040-12-31'
+        endDate:'2040-12-31',
+        onSelect: function() {
+            $(this).focus();
+        }
     });
+
     $('#queryDOD').datepicker({
         changeYear: true,
         yearRange: '1960:2020',
         dateFormat:'yy-mm-dd',
         startDate:'2000-01-01',
-        endDate:'2040-12-31'
+        endDate:'2040-12-31',
+        onSelect: function() {
+            $(this).focus();
+        }
     });
+
+//      TODO to capture enter key press
+//    $('#tabs input').bind('keypress', function(e) {
+//        if(e.keyCode == 13 || e.which == 13){
+//            alert("Enter Pressed");
+//            validate();
+//        }
+//    });
   });
 
-  function initPage(){}
+  function initPage(){
+      setUserPrefLang();
+  }
+
+  function validate(){
+//      alert("Inside ");
+      return false;
+  }
 </script>
 
 
@@ -72,65 +112,85 @@
 
         <div id="tabs">
             <ul>
-                <li><a href="#fragment-1"><span>Names and Numbers</span></a></li>
-                <li><a href="#fragment-2"><span>Statuses, Gender and Citizenship</span></a></li>
-                <li><a href="#fragment-3"><span>Birth and Death</span></a></li>
-                <li><a href="#fragment-4"><span>Address and Contact</span></a></li>
+                <li><a href="#fragment-1"><span><s:label value="%{getText('search.names.and.numbers')}" /></span></a></li>
+                <li><a href="#fragment-2"><span><s:label value="%{getText('search.status.gender.citizen')}"/> </span></a></li>
+                <li><a href="#fragment-3"><span><s:label value="%{getText('search.birth.and.death')}" /></span></a></li>
+                <li><a href="#fragment-4"><span><s:label value="%{getText('search.address.and.contacts')}"/> </span></a></li>
                 <%--li><a href="#fragment-5"><span>Advanced</span></a></li--%>
             </ul>
             <div id="fragment-1">
                 <table>
-                    <tr><td><span>Search full name in English</span></td>
+                    <tr><td><span><s:label value="%{getText('search.nameInEnglish')}" /></span></td>
                     <td><div id="searchEnglish"><input type="text" id="searchEnglish" name="searchEnglish"/></div></td>
-                    <td><span>PIN</span></td>
-                    <td><div id="searchPIN"><input type="text" id="searchPIN" name="searchPIN" maxlength="10"/></div></td></tr>
+                    <td width="50px;"></td>
+                    <td><span><s:label value="%{getText('search.pin')}" /></span></td>
+                    <td><div id="searchPIN"><input type="text" id="searchPIN" name="searchPIN" maxlength="12"/></div></td></tr>
 
-                    <tr><td><span>Search full name in Official Language</span></td>
+                    <tr><td><span><s:label value="%{getText('search.nameInOfficialLang')}" /></span></td>
                     <td><div id="searchOfficial"><input type="text" id="searchOfficial" name="searchOfficial"/></div></td>
-                    <td><span>NIC</span></td>
+                    <td width="50px;"></td>
+                    <td><span><s:label value="%{getText('search.nic')}" /></span></td>
                     <td><div id="searchNIC"><input type="text" id="searchNic" name="searchNic" maxlength="10" style="text-transform:uppercase;"/></div></td></tr>
 
-                    <tr><td><span>Search for name</span></td>
+                    <tr><td><span><s:label value="%{getText('search.forName')}"/> </span></td>
                     <td><div id="searchAllNames"><input type="text" id="searchAllNames" name="searchAllNames"/></div></td>
-                    <td><span>Passport No</span></td>
+                    <td width="50px;"></td>
+                    <td><span><s:label value="%{getText('search.passportNo')}"/> </span></td>
                     <td><div id="searchPassport"><input type="text" id="searchPassport" name="searchPassport" maxlength="15" style="text-transform:uppercase;"/></div></td></tr>
                 </table>
             </div>
             <div id="fragment-2">
                 <table>
-                    <tr><td><span>Gender</span></td><td><div class="tagcloud" id="gender"></div></td></tr>
-                    <tr><td><span>Life Status</span></td><td><div class="tagcloud" id="lifeStatus"></div></td></tr>
-                    <tr><td><span>Civil Status</span></td><td><div class="tagcloud" id="civilStatus"></div></td></tr>
-                    <tr><td><span>Record Status</span></td><td><div class="tagcloud" id="recordStatus"></div></td></tr>
-                    <tr><td><span>Citizenship</span></td><td><div class="tagcloud" id="citizenship"></div></td></tr>
+                    <tr><td><span><s:label value="%{getText('search.gender')}"/> </span></td><td><div class="tagcloud" id="gender"></div></td></tr>
+                    <tr><td><span><s:label value="%{getText('search.lifeStatus')}"/></span></td><td><div class="tagcloud" id="lifeStatus"></div></td></tr>
+                    <tr><td><span><s:label value="%{getText('search.civilStatus')}"/></span></td><td><div class="tagcloud" id="civilStatus"></div></td></tr>
+                    <tr><td><span><s:label value="%{getText('search.recordStatus')}"/></span></td><td><div class="tagcloud" id="recordStatus"></div></td></tr>
+                    <tr><td><span><s:label value="%{getText('search.citizenship')}"/></span></td><td><div class="tagcloud" id="citizenship"></div></td></tr>
                     <tr><td></td><td></td></tr>
                 </table>
             </div>
             <div id="fragment-3">
                 <table>
-                    <tr><td><span>Date of Birth</span></td>
-                    <td><div id="searchDOB"><input type="text" id="queryDOB" name="queryDOB" maxlength="10"/></div></td>
-                        <td><span>Date of Birth Range</span></td>
-                    <td><div id="searchDOBRange"><input type="text" id="queryDOBRange" name="queryDOBRange"/></div></td></tr>
-                    <tr><td><span>Place of Birth</span></td>
-                    <td><div id="searchPOB"><input type="text" id="queryPOB" name="queryPOB"/></div></td><td></td></tr>
+                    <tr>
+                        <td><span><s:label value="%{getText('search.dobRange')}"/> </span></td>
+                        <td><div id="searchDOBRange"><input type="text" id="queryDOBRange" name="queryDOBRange"/></div></td>
+                        <td width="50px;"></td>
+                        <td><span><s:label value="%{getText('search.dob')}" /></span></td>
+                        <td><div id="searchDOB"><input type="text" id="queryDOB" name="queryDOB" maxlength="10"/></div></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><span><s:label value="%{getText('search.placeOfBirth')}" /></span></td>
+                        <td><div id="searchPOB"><input type="text" id="queryPOB" name="queryPOB"/></div></td><td></td>
+                    </tr>
                     <tr></tr>
-                    <tr><td><span>Date of Death</span></td>
-                    <td><div id="searchDOD"><input type="text" id="queryDOD" name="queryDOD" maxlength="10"/></div></td>
-                        <td><span>Date of Death Range</span></td>
-                    <td><div id="searchDODRange"><input type="text" id="queryDODRange" name="queryDODRange"/></div></td></tr>
+                    <tr>
+                        <td><span><s:label value="%{getText('search.dodRange')}"/> </span></td>
+                        <td><div id="searchDODRange"><input type="text" id="queryDODRange" name="queryDODRange"/></div></td>
+                        <td></td>
+                        <td><span><s:label value="%{getText('search.dod')}"/></span></td>
+                        <td><div id="searchDOD"><input type="text" id="queryDOD" name="queryDOD" maxlength="10"/></div></td>
+                    </tr>
                 </table>
             </div>
             <div id="fragment-4">
                 <table>
-                    <tr><td><span>Current Address</span></td>
-                    <td><div id="searchLastAddress"><input type="text" id="queryLastAddress" name="queryLastAddress"/></div></td>
-                        <td><span>All Addresses</span></td>
-                    <td><div id="searchAllAddresses"><input type="text" id="queryAllAddresses" name="queryAllAddresses"/></div></td></tr>
-                    <tr><td><span>Phone</span></td>
-                    <td><div id="searchPhone"><input type="text" id="queryPhone" name="queryPhone" maxlength="15"/></div></td>
-                        <td><span>Email</span></td>
-                    <td><div id="searchEmail"><input type="text" id="queryEmail" name="queryEmail" style="text-transform:none;"/></div></td></tr>
+                    <tr>
+                        <td><span><s:label value="%{getText('search.currentAddress')}"/></span></td>
+                        <td><div id="searchLastAddress"><input type="text" id="queryLastAddress" name="queryLastAddress"/></div></td>
+                        <td width="50px;"></td>
+                        <td><span><s:label value="%{getText('search.allAddresses')}"/></span></td>
+                        <td><div id="searchAllAddresses"><input type="text" id="queryAllAddresses" name="queryAllAddresses"/></div></td>
+                    </tr>
+                    <tr>
+                        <td><span><s:label value="%{getText('search.phoneNo')}"/></span></td>
+                        <td><div id="searchPhone"><input type="text" id="queryPhone" name="queryPhone" maxlength="15"/></div></td>
+                        <td width="50px;"></td>
+                        <td><span><s:label value="%{getText('search.email')}"/></span></td>
+                        <td><div id="searchEmail"><input type="text" id="queryEmail" name="queryEmail" style="text-transform:none;"/></div></td>
+                    </tr>
                 </table>
             </div>
             <%--div id="fragment-5">

@@ -116,6 +116,7 @@
     <bean id="courtDAOImpl" class="lk.rgd.crs.core.dao.CourtDAOImpl"/>
     <bean id="raceDAOImpl" class="lk.rgd.common.core.dao.RaceDAOImpl"/>
     <bean id="bdDivisionDAOImpl" class="lk.rgd.crs.core.dao.BDDivisionDAOImpl"/>
+    <bean id="gnDivisionDAOImpl" class="lk.rgd.crs.core.dao.GNDivisionDAOImpl"/>
     <bean id="mrDivisionDAOImpl" class="lk.rgd.crs.core.dao.MRDivisionDAOImpl"/>
     <bean id="userDAOImpl" class="lk.rgd.common.core.dao.UserDAOImpl"/>
     <bean id="roleDAOImpl" class="lk.rgd.common.core.dao.RoleDAOImpl"/>
@@ -144,6 +145,7 @@
     <bean id="deathDeclarationValidator" class="lk.rgd.crs.core.service.DeathDeclarationValidator">
         <constructor-arg ref="deathRegisterDAOImpl"/>
         <constructor-arg ref="ecivilService"/>
+        <constructor-arg ref="birthDeclarationDAOImpl"/>
     </bean>
 
     <bean id="birthAlterationValidator" class="lk.rgd.crs.core.service.BirthAlterationValidator">
@@ -154,6 +156,8 @@
         <constructor-arg ref="marriageRegistrationDAOImpl"/>
         <constructor-arg ref="appParametersDAOImpl"/>
         <constructor-arg ref="ecivilService"/>
+        <constructor-arg ref="registrarManagementService"/>
+        <constructor-arg ref="assignmentDAOImpl"/>
     </bean>
 
     <bean id="populationRegisterValidator" class="lk.rgd.crs.core.service.PopulationRegisterValidator">
@@ -188,9 +192,12 @@
     <bean id="registrarManagementService" class="lk.rgd.crs.core.service.RegistrarManagementServiceImpl">
         <constructor-arg ref="registrarDAOImpl"/>
         <constructor-arg ref="assignmentDAOImpl"/>
-        <constructor-arg ref="districtDAOImpl"/>
         <constructor-arg ref="dsDivisionDAOImpl"/>
         <constructor-arg ref="ecivilService"/>
+        <constructor-arg ref="pinGeneratorService"/>
+        <constructor-arg ref="birthDeclarationDAOImpl"/>
+        <constructor-arg ref="deathRegisterDAOImpl"/>
+        <constructor-arg ref="marriageRegistrationDAOImpl"/>
     </bean>
 
     <!--Service API beans - these allows access at a 'service' level, suitable for consumption by
@@ -209,6 +216,7 @@
         <constructor-arg ref="adoptionOrderDAOImpl"/>
         <constructor-arg ref="birthDeclarationValidator"/>
         <constructor-arg ref="adoptionOrderService"/>
+        <constructor-arg ref="gnDivisionDAOImpl"/>
     </bean>
 
 
@@ -217,6 +225,7 @@
         <constructor-arg ref="userManagerService"/>
         <constructor-arg ref="ecivilService"/>
         <constructor-arg ref="deathDeclarationValidator"/>
+        <constructor-arg ref="appParametersDAOImpl"/>
     </bean>
 
     <bean id="adoptionOrderService" class="lk.rgd.crs.core.service.AdoptionOrderServiceImpl">
@@ -257,6 +266,12 @@
         <constructor-arg ref="districtDAOImpl"/>
         <constructor-arg ref="locationDAOImpl"/>
         <constructor-arg ref="courtDAOImpl"/>
+        <constructor-arg ref="gnDivisionDAOImpl"/>
+        <constructor-arg ref="birthDeclarationDAOImpl"/>
+        <constructor-arg ref="deathRegisterDAOImpl"/>
+        <constructor-arg ref="marriageRegistrationDAOImpl"/>
+        <constructor-arg ref="adoptionOrderDAOImpl"/>
+        <constructor-arg ref="userLocationDAOImpl"/>
     </bean>
 
     <bean id="certificateSearchService" class="lk.rgd.crs.core.service.CertificateSearchServiceImpl">
@@ -343,6 +358,7 @@
         <constructor-arg ref="assignmentDAOImpl"/>
         <constructor-arg ref="birthAlterationService"/>
         <constructor-arg ref="commonUtil"/>
+        <constructor-arg ref="gnDivisionDAOImpl"/>
     </bean>
 
     <bean id="birthAlterationAction" scope="prototype" class="lk.rgd.crs.web.action.births.BirthAlterationAction">
@@ -434,6 +450,7 @@
         <constructor-arg ref="birthRecordsIndexer"/>
         <constructor-arg ref="deathRecordsIndexer"/>
         <constructor-arg ref="prsRecordsIndexer"/>
+        <constructor-arg ref="gnDivisionDAOImpl"/>
     </bean>
 
     <bean id="registrarsManagmentAction" class="lk.rgd.crs.web.action.RegistrarManagementAction">

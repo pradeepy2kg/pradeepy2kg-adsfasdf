@@ -3,6 +3,7 @@ package lk.rgd.crs.api.domain;
 import lk.rgd.AppConstants;
 import lk.rgd.common.api.domain.BaseLifeCycleInfo;
 import lk.rgd.common.util.NameFormatUtil;
+import lk.rgd.common.util.WebUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -20,12 +21,16 @@ import java.util.Set;
 @NamedQueries({
     @NamedQuery(name = "get.registrars.by.pin", query = "SELECT registrar FROM Registrar registrar WHERE registrar.pin = :pin "),
     @NamedQuery(name = "get.registrar.by.name.or.part.of.name", query = "SELECT registrar FROM Registrar registrar WHERE " +
-        "(registrar.fullNameInEnglishLanguage LIKE :name OR registrar.fullNameInOfficialLanguage LIKE :name)")
+        "(registrar.fullNameInEnglishLanguage LIKE :name OR registrar.fullNameInOfficialLanguage LIKE :name) AND registrar.state <> 2")
 })
 @Entity
 @Table(name = "REGISTRAR", schema = "CRS")
-@Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Registrar implements Serializable {
+
+    public enum State {
+        INACTIVE, ACTIVE, DELETED
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,6 +63,13 @@ public class Registrar implements Serializable {
     @Column(nullable = true)
     @Temporal(value = TemporalType.DATE)
     private Date dateOfBirth;
+
+    /**
+     * The state of the registrar
+     */
+    @Enumerated
+    @Column(nullable = true)
+    private State state;
 
     /**
      * Date of appointment
@@ -101,7 +113,7 @@ public class Registrar implements Serializable {
     /**
      * Email address
      */
-    @Column(nullable = true, length = 30)
+    @Column(nullable = true, length = 50)
     private String emailAddress;
 
     /**
@@ -155,7 +167,7 @@ public class Registrar implements Serializable {
     }
 
     public void setNic(String nic) {
-        this.nic = nic;
+        this.nic = WebUtils.filterBlanksAndToUpper(nic);
     }
 
     public int getGender() {
@@ -174,12 +186,20 @@ public class Registrar implements Serializable {
         this.dateOfBirth = dateOfBirth;
     }
 
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
     public String getFullNameInOfficialLanguage() {
         return fullNameInOfficialLanguage;
     }
 
     public void setFullNameInOfficialLanguage(String fullNameInOfficialLanguage) {
-        this.fullNameInOfficialLanguage = fullNameInOfficialLanguage;
+        this.fullNameInOfficialLanguage = WebUtils.filterBlanksAndToUpper(fullNameInOfficialLanguage);
     }
 
     public String getFullNameInEnglishLanguage() {
@@ -187,7 +207,7 @@ public class Registrar implements Serializable {
     }
 
     public void setFullNameInEnglishLanguage(String fullNameInEnglishLanguage) {
-        this.fullNameInEnglishLanguage = fullNameInEnglishLanguage;
+        this.fullNameInEnglishLanguage = WebUtils.filterBlanksAndToUpper(fullNameInEnglishLanguage);
     }
 
     public String getCurrentAddress() {
@@ -195,7 +215,7 @@ public class Registrar implements Serializable {
     }
 
     public void setCurrentAddress(String currentAddress) {
-        this.currentAddress = currentAddress;
+        this.currentAddress = WebUtils.filterBlanksAndToUpper(currentAddress);
     }
 
     public String getPreferredLanguage() {
@@ -231,7 +251,7 @@ public class Registrar implements Serializable {
     }
 
     public void setPhoneNo(String phoneNo) {
-        this.phoneNo = phoneNo;
+        this.phoneNo = WebUtils.filterBlanks(phoneNo);
     }
 
     public String getEmailAddress() {
@@ -239,7 +259,7 @@ public class Registrar implements Serializable {
     }
 
     public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
+        this.emailAddress = WebUtils.filterBlanks(emailAddress);
     }
 
     public String getShortName() {

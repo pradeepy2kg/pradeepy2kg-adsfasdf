@@ -14,7 +14,9 @@
             "bPaginate": true,
             "bLengthChange": false,
             "bFilter": true,
-            "bSort": true,
+            "aaSorting": [
+                [0,'desc']
+            ],
             "bInfo": false,
             "bAutoWidth": false,
             "bJQueryUI": true,
@@ -68,7 +70,7 @@
         <tr>
             <td><s:label value="%{getText('select.status.label')}"/></td>
             <td>
-                <s:select list="#@java.util.HashMap@{'1':getText('data.entry.label'),'2':getText('Approved.label'),'3':getText('notice.printed.label'),
+                <s:select list="#@java.util.HashMap@{'1':getText('data.entry'),'2':getText('Approved.label'),'3':getText('notice.printed.label'),
         '4':getText('rejected.label'),'5':getText('certificate.issual.request.captured.label'),'6':getText('adoption.certificate.printed.label')}"
                           name="currentStatus" value="%{#request.currentStatus}" headerKey="0"
                           headerValue="%{getText('select.status.label')}"
@@ -241,11 +243,21 @@
                             <s:param name="previousFlag" value="%{#request.previousFlag}"/>
                         </s:url>
                         <s:if test="status.ordinal() >3 && allowEditAdoption">
-                            <s:a href="%{cetificatePrintUrl}"
-                                 title="%{getText('printAdoptionCertificateToolTip.label')}">
-                                <img src="<s:url value='/images/print_icon.gif'/>" border="none" width="25"
-                                     height="25"/>
-                            </s:a>
+                            <s:if test="status.ordinal() ==5">
+                                <s:a href="%{cetificatePrintUrl}"
+                                     title="%{getText('reprintAdoptionCertificateToolTip.label')}">
+                                    <img src="<s:url value='/images/print_icon.gif'/>" border="none" width="25"
+                                         height="25"/>
+                                </s:a>
+                            </s:if>
+                            <s:else>
+                                <s:a href="%{cetificatePrintUrl}"
+                                     title="%{getText('printAdoptionCertificateToolTip.label')}">
+                                    <img src="<s:url value='/images/print_icon.gif'/>" border="none" width="25"
+                                         height="25"/>
+                                </s:a>
+                            </s:else>
+
                         </s:if>
                     </td>
                     <td align="center">

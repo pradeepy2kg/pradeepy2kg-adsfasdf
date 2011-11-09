@@ -129,16 +129,29 @@ public class BirthDeclarationValidator {
             rb = rb_ta;
         }
 
-        // check child and parent  information - the names and mothers address to be non-empty
+        // check child and parent  information - the names,races and mothers address to be non-empty
         ChildInfo child = bdf.getChild();
         final BirthDeclaration.BirthType birthType = bdf.getRegister().getBirthType();
         if (BirthDeclaration.BirthType.STILL != birthType) {
             checkValidString(child.getChildFullNameOfficialLang(), warnings, rb, "child_name_official_invalid");
             checkValidString(child.getChildFullNameEnglish(), warnings, rb, "child_name_en_invalid");
+        } else {
+            if (child.getWeeksPregnant() == null || child.getWeeksPregnant() == 0) {
+                warnings.add(new UserWarning(rb.getString("weeks_pregnant_empty")));
+            }
         }
         ParentInfo parent = bdf.getParent();
         checkValidString(parent.getFatherFullName(), warnings, rb, "father_name_invalid");
+        checkValidString(parent.getFatherFullName(), warnings, rb, "father_name_en_invalid");
+        if (parent.getFatherRace() == null) {
+            warnings.add(new UserWarning(rb.getString("father_race_empty")));
+        }
+
         checkValidString(parent.getMotherFullName(), warnings, rb, "mother_name_invalid");
+        checkValidString(parent.getMotherFullName(), warnings, rb, "mother_name_en_invalid");
+        if (parent.getMotherRace() == null) {
+            warnings.add(new UserWarning(rb.getString("mother_race_empty")));
+        }
         checkValidString(parent.getMotherAddress(), warnings, rb, "mother_address_invalid");
 
         // if mother or father is known, a guardian cannot be the informant

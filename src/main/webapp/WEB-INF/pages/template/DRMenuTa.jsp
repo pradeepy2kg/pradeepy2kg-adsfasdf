@@ -26,8 +26,7 @@
             </a>
         </li>
         <li>
-            <a id="birth_register_approval.label" href="/ecivil/births/eprBirthRegisterApproval.do"
-               style="color:red">
+            <a id="birth_register_approval.label" href="/ecivil/births/eprBirthRegisterApproval.do">
                 (2) பிறப்பு பதிவிற்கான அனுமதி
             </a>
         </li>
@@ -67,22 +66,22 @@
     <ul class="acitem">
         <li>
             <a id="death_registration.label" href="/ecivil/deaths/eprInitDeathDeclaration.do">
-                (1)normal death registration in ta
+                (1) சாதாரண இறப்புப்பதிவு
             </a>
         </li>
         <li>
             <a id="late_death_registration.label" href="/ecivil/deaths/eprInitLateDeathDeclaration.do">
-                (1)late death registration in ta
+                (1) காலங்கடந்த இறப்புப்பதிவு
             </a>
         </li>
         <li>
             <a id="sudden_death_registration.label" href="/ecivil/deaths/eprInitSuddenDeathDeclaration.do">
-                (1)sudden death registration in ta
+                (1) திடீர் இறப்புப் பதிவு
             </a>
         </li>
         <li>
             <a id="missing_person_registration.label" href="/ecivil/deaths/eprInitMissingPersonDeclaration.do">
-                (1)missing death registration in ta
+                (1) காணாமற் போன நபரின் இறப்புப்பதிவு
             </a>
         </li>
         <li>
@@ -205,7 +204,7 @@
         </li>
         <li>
             <a id="prs.personApproval.label" href="/ecivil/prs/eprPersonApproval.do">
-                Person Registration Management Tamil
+                நபர் பதிவு முகாமைத்துவம்
             </a>
         </li>
     </ul>
@@ -284,27 +283,27 @@
     <ul class="acitem">
         <li>
             <a id="menu.marriage.notice" href="/ecivil/marriages/eprSelectNoticeType.do">
-                Marriage Notice in ta
+                திருமண அறிவித்தல்
             </a>
         </li>
         <li>
-            <a id="menu.marriage.register.search" href="/ecivil/marriages/eprMarriageRegisterSearchInit.do">
-                Marriage Register Search in tamil
+            <a id="menu.marriage.notice.search" href="/ecivil/marriages/eprMarriageNoticeSearchHome.do">
+                திருமண அறிவித்தல் தேடுதல்
             </a>
         </li>
         <li>
             <a id="menu.marriagelicense.search" href="/ecivil/marriages/eprMarriageLicenseSearchInit.do">
-                Marriage License Search in tamil
+                திருமண உத்தரவுப்பத்திரம் தேடுதல்
             </a>
         </li>
         <li>
             <a id="menu.marriage.registration" href="/ecivil/marriages/eprMarriageRegistrationInit.do">
-                Marriage Registration in ta
+                திருமணப்பதிவு
             </a>
         </li>
         <li>
-            <a id="menu.marriage.notice.search" href="/ecivil/marriages/eprMarriageNoticeSearchInit.do">
-                Search Notice in ta
+            <a id="menu.marriage.register.search" href="/ecivil/marriages/eprMarriageRegisterSearchInit.do">
+                திருமணச்சான்றிதழ் தேடுதல்
             </a>
         </li>
     </ul>

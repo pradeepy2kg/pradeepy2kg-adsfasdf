@@ -312,19 +312,19 @@ public class PopulationRegistryImpl implements PopulationRegistry {
 
         Person existing = personDao.getByUKey(personUKey);
 
-        // validate existing person
-        validatePersonState(existing, Person.Status.VERIFIED);
-        validateAccessToLocation(existing.getSubmittedLocation(), user);
+        if (existing != null) {
+            // validate existing person
+            validatePersonState(existing, Person.Status.VERIFIED);
+            validateAccessToLocation(existing.getSubmittedLocation(), user);
 
-        // TODO if birth exist can not edit , throw exception (use alteration process)
-        // TODO is this applicable after approval not for before approval
+            // TODO if birth exist can not edit , throw exception (use alteration process)
+            // TODO is this applicable after approval not for before approval
 
-        // TODO from here
-        // only Approved person record exist now
-
-
-        // TODO chathuranga
-        throw new UnsupportedOperationException("Edit person after approval operation not implemented yet...");
+            // TODO from here
+            // only Approved person record exist now
+        } else {
+            logger.debug("");
+        }
     }
 
     /**
@@ -620,7 +620,20 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             handleException("User : " + user.getUserId() + " is not allowed to update marriages to the PRS",
                 ErrorCodes.PRS_ADD_RECORD_DENIED);
         }
-        personDao.addMarriage(marriage);
+        personDao.updateMarriage(marriage);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Auditable
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public Marriage findMarriageByMRUKey(long mrUKey, User user) {
+        if (!user.isAuthorized(Permission.PRS_LOOKUP_PERSON_BY_KEYS)) {
+            handleException("User : " + user.getUserId() + " is not allowed to lookup entries from the PRS",
+                ErrorCodes.PRS_LOOKUP_BY_KEYS_DENIED);
+        }
+        return personDao.findMarriageByMRUKey(mrUKey);
     }
 
     /**
@@ -833,11 +846,11 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      */
     @Transactional(propagation = Propagation.SUPPORTS)
     public List<Person> findGrandMother(Person person, User user) {
-        logger.debug("get grand mother list for person , pin : {}", person.getPin());
+        logger.debug("get grand mother list for person , pin : {}", (person != null) ? person.getPin() : "null");
         List<Person> grandMother = Collections.emptyList();
         //have maximum two grand mothers (fathers mother and mothers mother)
-        Person father = findPersonByPINorNIC(person.getFatherPINorNIC(), user);
-        Person mother = findPersonByPINorNIC(person.getMotherPINorNIC(), user);
+        Person father = (person != null) ? findPersonByPINorNIC(person.getFatherPINorNIC(), user) : null;
+        Person mother = (person != null) ? findPersonByPINorNIC(person.getMotherPINorNIC(), user) : null;
         //add father's mother as grand mother
         if (father != null) {
             Person fathersMother = findPersonByPINorNIC(father.getMotherPINorNIC(), user);
@@ -860,11 +873,11 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      */
     @Transactional(propagation = Propagation.SUPPORTS)
     public List<Person> findGrandFather(Person person, User user) {
-        logger.debug("get grand father list for person , pin : {}", person.getPin());
+        logger.debug("get grand father list for person , pin : {}", (person != null) ? person.getPin() : "null");
         List<Person> grandFather = Collections.emptyList();
         //have maximum two grand fathers (fathers father and mothers father)
-        Person father = findPersonByPINorNIC(person.getFatherPINorNIC(), user);
-        Person mother = findPersonByPINorNIC(person.getMotherPINorNIC(), user);
+        Person father = (person != null) ? findPersonByPINorNIC(person.getFatherPINorNIC(), user) : null;
+        Person mother = (person != null) ? findPersonByPINorNIC(person.getMotherPINorNIC(), user) : null;
         //add father's father as grand father
         if (father != null) {
             Person fathersFather = findPersonByPINorNIC(father.getFatherPINorNIC(), user);

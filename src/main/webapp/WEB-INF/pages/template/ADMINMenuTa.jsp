@@ -31,13 +31,18 @@
                     </a>
                 </li>
                 <li>
-                    <a id="registrars.managment" href="/ecivil/management/eprRegistrarsManagment.do">
-                        பதிவாளார் நிருவாகம்
+                    <a id="registrar.add" href="/ecivil/management/eprRegistrarsAdd.do">
+                        புதிய பதிவாளர்களை உட்புகுத்தல்
                     </a>
                 </li>
                 <li>
-                    <a id="registrar.add" href="/ecivil/management/eprRegistrarsAdd.do">
-                        புதிய பதிவாளர்களை உட்புகுத்தல்
+                    <a id="search.registrar" href="/ecivil/management/eprFindRegistrar.do">
+                        பதிவாளரினை தேடுதல்
+                    </a>
+                </li>
+                <li>
+                    <a id="registrars.managment" href="/ecivil/management/eprRegistrarsManagment.do">
+                        பதிவாளார் நிருவாகம்
                     </a>
                 </li>
                 <li>
@@ -48,11 +53,6 @@
                 <li>
                     <a id="indexRecords.label" href="/ecivil/management/eprIndexRecords.do">
                         சுட்டெண் அறிக்கை
-                    </a>
-                </li>
-                <li>
-                    <a id="search.registrar" href="/ecivil/management/eprFindRegistrar.do">
-                        பதிவாளரினை தேடுதல்
                     </a>
                 </li>
                 <li>

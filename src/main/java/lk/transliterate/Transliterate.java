@@ -43,7 +43,7 @@ public class Transliterate {
     public static final int FEMALE = 2;
 
     private static final String END_VOVELS   = ".aeiou#";
-    private static final String START_VOVELS = ".aeiou"; 
+    private static final String START_VOVELS = ".aeiou";
 
     private static final Map<String, String> engToSinNames = new HashMap<String, String>();
     private static final Map<String, String> engToSinOther = new HashMap<String, String>();
@@ -112,20 +112,20 @@ public class Transliterate {
 
         System.out.println("java -jar transliterate.jar [-s si|ta|en] [-t si|ta|en] [-g m|f|u]");
 
-        for (int i=0; i<args.length; i++) {
+        for (int i = 0; i < args.length; i++) {
             if (args[i].equals("-s")) {
-                if (i+1 < args.length) {
-                    src = "si".equals(args[i+1]) ? SINHALA : "ta".equals(args[i+1]) ? TAMIL : ENGLISH;
+                if (i + 1 < args.length) {
+                    src = "si".equals(args[i + 1]) ? SINHALA : "ta".equals(args[i + 1]) ? TAMIL : ENGLISH;
                 }
             }
             if (args[i].equals("-t")) {
-                if (i+1 < args.length) {
-                    dst = "si".equals(args[i+1]) ? SINHALA : "ta".equals(args[i+1]) ? TAMIL : ENGLISH;
+                if (i + 1 < args.length) {
+                    dst = "si".equals(args[i + 1]) ? SINHALA : "ta".equals(args[i + 1]) ? TAMIL : ENGLISH;
                 }
             }
             if (args[i].equals("-g")) {
-                if (i+1 < args.length) {
-                    gender = "m".equals(args[i+1]) ? MALE : "f".equals(args[i+1]) ? FEMALE : UNKNOWN;
+                if (i + 1 < args.length) {
+                    gender = "m".equals(args[i + 1]) ? MALE : "f".equals(args[i + 1]) ? FEMALE : UNKNOWN;
                 }
             }
         }
@@ -136,7 +136,8 @@ public class Transliterate {
             while ((s = sc.nextLine()) != null) {
                 System.out.println(translateLine(s, src, dst, gender));
             }
-        } catch (NoSuchElementException ignore) {}
+        } catch (NoSuchElementException ignore) {
+        }
     }
 
     private static lk.transliterate.LangToPhonetic[] loadLangToPhoneticFile(String filename) throws Exception {
@@ -201,7 +202,7 @@ public class Transliterate {
     public static String translateLine(String s, int src, int dst, int gender) {
 
         if (DEBUG) {
-            System.out.println("Src : " + src + " Target : " + dst + " Gender : " + gender);    
+            System.out.println("Src : " + src + " Target : " + dst + " Gender : " + gender);
         }
 
         StringTokenizer st = new StringTokenizer(s.toLowerCase(), " ,\\[]#'\"()", true);
@@ -287,14 +288,14 @@ public class Transliterate {
             System.out.println("Invalid language pair");
             return null;
         }
-        
+
         String result = null;
         if (gender == UNKNOWN) {
             result = otherMap.get(s);
         } else {
             result = namesMap.get(s);
         }
-        
+
         if (result != null) {
             return result;
         } else {
@@ -378,10 +379,10 @@ public class Transliterate {
     private static void appendPhoneticWithCorrection(StringBuilder out, String ph) {
         final int len = out.length();
         if (len > 0) {
-            String lastChar = out.substring(len-1);
+            String lastChar = out.substring(len - 1);
             if (END_VOVELS.indexOf(lastChar) == -1) {   // not a vowel
                 if (ph.length() > 0) {
-                    if (START_VOVELS.indexOf(ph.substring(0,1)) == -1) { // not a vowel
+                    if (START_VOVELS.indexOf(ph.substring(0, 1)) == -1) { // not a vowel
                         out.append(".a");
                     }
                 } else {

@@ -445,6 +445,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
      */
     public String adoptionApprovalAndPrint() {
         setPageNo(1);
+        birthDistrictId = user.getPrefBDDistrict().getDistrictUKey();
         populate();
         initPermissionForApprovalAndPrint();
         noOfRows = appParametersDAO.getIntParameter(ADOPTION_APPROVAL_AND_PRINT_ROWS_PER_PAGE);

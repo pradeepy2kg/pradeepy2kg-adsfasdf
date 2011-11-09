@@ -115,7 +115,7 @@ public class AssignmentDAOImpl extends BaseDAO implements AssignmentDAO {
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<Assignment> getAllAssignmentsByBDorMRDivisionAndType(int divisionUKey, Assignment.Type type,
-                                                                     boolean active, boolean acting) {
+        boolean active, boolean acting) {
         Query q = em.createNamedQuery("get.assignments.by.type.and.division");
         q.setParameter("type", type);
         q.setParameter("divisionUKey", divisionUKey);

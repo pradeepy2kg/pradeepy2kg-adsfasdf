@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>printAndReregistration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">printAndReregistration</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/ecivil/adoption/eprAdoptionFilterByStatus.do</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//table[@id='approval-list-table']/tbody/tr/td[9]/a/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='adoption-page1']/a/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//table[@id='approval-list-table']/tbody/tr/td[10]/a/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>skipjs</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>placeOfBirth</td>
+	<td>රෝහල</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>placeOfBirthEnglish</td>
+	<td>In hospital</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>birth-registration-form-1_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertAlert</td>
+	<td><br />Invalid Data : Serial Number Field<br />Enter Submitted Date </td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>bdfSerialNo</td>
+	<td>2011012348</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>submitDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>submitDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>submitDatePicker</td>
+	<td>2011-03-22</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-registration-form-1_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>skipjs</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-registration-form-2_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>placeOfMarriage</td>
+	<td>nugegoda</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>marriageDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>marriageDatePicker</td>
+	<td>2009-05-05</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>informantTypeFATHER</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>informantAddress</td>
+	<td>no.8 , kirulapana</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>informDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>informDatePicker</td>
+	<td>2011-03-23</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>birth-registration-form-3_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertAlert</td>
+	<td><br />Inform Date&nbsp;&nbsp;Must Be Before Submitted Date</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>informDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>informDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>informDatePicker</td>
+	<td>2011-03-21</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-registration-form-3_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>notifyingAuthorityPIN</td>
+	<td>845231547v</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>modifiedDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>modifiedDatePicker</td>
+	<td>2011-03-23</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>birth-registration-form-4_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertAlert</td>
+	<td><br />Notifying Date Should Be Before Submitted Date</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>modifiedDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>modifiedDatePicker</td>
+	<td>2011-03-22</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-registration-form-4_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='birth-register-approval-footer']/a[3]/label</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

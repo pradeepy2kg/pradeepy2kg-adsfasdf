@@ -7,7 +7,6 @@ import lk.rgd.common.api.domain.UserLocation;
 import lk.rgd.common.core.AuthorizationException;
 
 import java.util.List;
-import java.util.Date;
 
 /**
  * @author asankha
@@ -128,12 +127,26 @@ public interface UserManager {
 
 
     /**
-     * Create a new user
+     * Create a new user  with a random password
+     * initially this  user's password is set to expired so this user has to change password after first time loging
+     * <br>
+     * expected roles
+     * DEO , ADR , DR, ARG, RG ,ADMIN
+     * <br>
+     * expected userId
+     * for adding new user userId must be null for updating user there must be a valid user id
      *
-     * @param user
-     * @param userId
-     * @param roleId
-     * @param admin
+     * @param user           user to be created
+     * @param userId         user's id ex; rg , arg-western...  or null
+     * @param roleId         user's role
+     * @param admin          admin user who create the user
+     * @param assDistricts   array of assigned districts for the user
+     * @param assDivisions   array of assigned divisions for hte user
+     * @param randomPassword random password for the newly created user.
+     *                       user is forced to change this password when user's first loging
+     * @return return true if user is successfully created else false
+     * @throws AuthorizationException     if admin user does not have permission to create user
+     * @throws lk.rgd.common.RGDException if user is existing
      */
     public boolean createUser(User user, User admin, String userId, String roleId, int[] assDistricts, int[] assDivisions, boolean changePassword, String randomPassword);
 

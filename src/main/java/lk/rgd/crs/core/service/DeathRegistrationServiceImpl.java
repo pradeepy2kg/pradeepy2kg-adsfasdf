@@ -3,17 +3,18 @@ package lk.rgd.crs.core.service;
 import lk.rgd.AppConstants;
 import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
-import lk.rgd.common.api.domain.CommonStatistics;
-import lk.rgd.common.api.domain.DSDivision;
-import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.dao.AppParametersDAO;
+import lk.rgd.common.api.domain.*;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.DeathRegisterDAO;
 import lk.rgd.crs.api.domain.BDDivision;
+import lk.rgd.crs.api.domain.DeathPersonInfo;
 import lk.rgd.crs.api.domain.DeathRegister;
 import lk.rgd.crs.api.service.DeathRegistrationService;
 import lk.rgd.crs.core.ValidationUtils;
+import lk.rgd.crs.web.WebConstants;
 import lk.rgd.prs.api.domain.Address;
 import lk.rgd.prs.api.domain.Marriage;
 import lk.rgd.prs.api.domain.Person;
@@ -23,10 +24,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Indunil Moremada
@@ -36,20 +34,24 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
 
     private static final Logger logger = LoggerFactory.getLogger(DeathRegistrationService.class);
     private final DeathRegisterDAO deathRegisterDAO;
+    private final AppParametersDAO appParametersDAO;
     private final PopulationRegistry ecivil;
     private final UserManager userManager;
     private final DeathDeclarationValidator deathDeclarationValidator;
 
-    DeathRegistrationServiceImpl(DeathRegisterDAO deathRegisterDAO, UserManager userManager, PopulationRegistry ecivil, DeathDeclarationValidator deathDeclarationValidator) {
+    DeathRegistrationServiceImpl(DeathRegisterDAO deathRegisterDAO, UserManager userManager, PopulationRegistry ecivil,
+        DeathDeclarationValidator deathDeclarationValidator, AppParametersDAO appParametersDAO) {
         this.deathRegisterDAO = deathRegisterDAO;
         this.userManager = userManager;
         this.ecivil = ecivil;
         this.deathDeclarationValidator = deathDeclarationValidator;
+        this.appParametersDAO = appParametersDAO;
     }
 
     /**
      * @inheritDoc
      */
+    // todo remove no usage found for that method so we trow Unsupported operation exception until we remove this function
     @Transactional(propagation = Propagation.REQUIRED)
     public void addLateDeathRegistration(DeathRegister deathRegistration, User user) {
         logger.debug("adding late/missing death registration");
@@ -63,24 +65,58 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         }
         addDeathRegistration(deathRegistration, user);
         logger.debug("added a late/missing registration with idUKey : {} ", deathRegistration.getIdUKey());
+        throw new UnsupportedOperationException("this method  {addLateDeathRegistration} does not have a usage if any " +
+            "usage found  remove this exception throw ");
     }
 
     /**
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void addNormalDeathRegistration(DeathRegister deathRegistration, User user) {
-        logger.debug("adding normal/sudden death registration");
+    public void addNewDeathRegistration(DeathRegister deathRegistration, User user) {
+
         //validate access of the user  to Death division
         ValidationUtils.validateAccessToBDDivision(user, deathRegistration.getDeath().getDeathDivision());
         deathDeclarationValidator.validateMinimalRequirements(deathRegistration);
         addDeathRegistration(deathRegistration, user);
-        logger.debug("added a normal/sudden registration with idUKey : {} ", deathRegistration.getIdUKey());
+        logger.debug("added a death  registration with idUKey : {}  and type of death : {}",
+            deathRegistration.getIdUKey(), deathRegistration.getDeathType());
+    }
+
+    /**
+     * Checks whether the given death register belongs to a infant
+     *
+     * @param deathRegister the death register bean
+     * @return if infant true else false
+     */
+    private boolean checkDeathPersonInfant(DeathRegister deathRegister) {
+        Date dob = deathRegister.getDeathPerson().getDeathPersonDOB();
+        Date dod = deathRegister.getDeath().getDateOfDeath();
+        int infantDays = appParametersDAO.getIntParameter(AppParameter.CRS_DEATH_INFANT_DAYS);
+
+        if (dob != null && dod != null) {
+            long dobMilli = dob.getTime();
+            long dodMilli = dod.getTime();
+
+            long days = (dodMilli - dobMilli) / WebConstants.DAY_IN_MILLISECONDS;
+            return days <= infantDays;
+        }
+
+        DeathPersonInfo dp = deathRegister.getDeathPerson();
+        if ((dp.getDeathPersonAge() == null || dp.getDeathPersonAge() == 0) && dp.getDeathPersonAgeMonth() == null &&
+            dp.getDeathPersonAgeDate() != null && dp.getDeathPersonAgeDate() <= infantDays) {
+            return true;
+        }
+
+        return false;
     }
 
     private void addDeathRegistration(DeathRegister deathRegistration, User user) {
         validateAccessOfUser(user, deathRegistration);
-        //validate minimul requirments
+        // checks age and set it as a death of infant less than 30 days
+        deathRegistration.getDeath().setInfantLessThan30Days(checkDeathPersonInfant(deathRegistration));
+
+        //validate minimal requirements
         deathDeclarationValidator.validateMinimalRequirements(deathRegistration);
         // has this serial number been used already?
         DeathRegister existing = deathRegisterDAO.getActiveRecordByBDDivisionAndDeathSerialNo(deathRegistration.getDeath().getDeathDivision(),
@@ -99,6 +135,8 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     @Transactional(propagation = Propagation.REQUIRED)
     public void updateDeathRegistration(DeathRegister deathRegistration, User user) {
         businessValidations(deathRegistration, user);
+        deathRegistration.getDeath().setInfantLessThan30Days(checkDeathPersonInfant(deathRegistration));
+
         DeathRegister dr = deathRegisterDAO.getById(deathRegistration.getIdUKey());
         if (DeathRegister.State.DATA_ENTRY != dr.getStatus()) {
             handleException("Cannot update death registration " + deathRegistration.getIdUKey() +
@@ -128,10 +166,10 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.SUPPORTS)
-    public DeathRegister getWithTransientValuesById(long idUKey, User user) {
-        logger.debug("laod deth register record with transient values : idUKey{}", idUKey);
+    public DeathRegister getWithTransientValuesById(long idUKey, boolean certificateSearch, User user) {
+        logger.debug("load death register with idUKey : {} record with transient values", idUKey);
         DeathRegister dr = deathRegisterDAO.getById(idUKey);
-        loadValues(dr, user);
+        loadValues(dr, certificateSearch, user);
         return dr;
     }
 
@@ -164,11 +202,45 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
             handleException("unable to update death register idUKey :" + deathRegisterIdUKey + " invalid state :" +
                 dr.getStatus(), ErrorCodes.INVALID_STATE_FOR_APPROVE_DEATH_REGISTRATION);
         }
-        List<UserWarning> warnings = DeathDeclarationValidator.validateStandardRequirements(deathRegisterDAO, dr, user);
+        //check user permission to approve death registration
+        ValidationUtils.validateAccessToBDDivision(user, dr.getDeath().getDeathDivision());
+        //check user permission to approve death registration TODO
+
+        //there are special user access validation is required to approve late death registration
+        if (dr.getDeathType() == DeathRegister.Type.LATE) {
+            checkUSerPermissionToApproveLateDeathRegistration(dr, user);
+        }
+
+        List<UserWarning> warnings = deathDeclarationValidator.validateStandardRequirements(deathRegisterDAO, dr, user);
         if (warnings.isEmpty() || ignoreWarnings) {
             setApprovalStatus(deathRegisterIdUKey, user, DeathRegister.State.APPROVED, null);
         }
         return warnings;
+    }
+
+    private void checkUSerPermissionToApproveLateDeathRegistration(DeathRegister dr, User user) {
+        /**
+         * on section 36 ADR/DR/ARG/RG allows to approve
+
+         if(with in  12 months)
+         ADR/DR can approve
+
+         then
+         only the ARG and RG has power to approve
+
+         */
+        java.util.GregorianCalendar gCal = new GregorianCalendar();
+        gCal.setTime(dr.getDeath().getDateOfRegistration());
+        gCal.add(Calendar.MONTH, -12);
+        Date dateOfRegistration = gCal.getTime();
+        Date dateOfDeath = dr.getDeath().getDateOfDeath();
+        //check is data of registration -12 month is less than date of death that mean needs ARG /  RG approval
+        if (dateOfDeath.before(dateOfRegistration) && (!(user.getRole().getRoleId().equalsIgnoreCase(Role.ROLE_RG) ||
+            user.getRole().getRoleId().equalsIgnoreCase(Role.ROLE_ARG)))) {
+            handleException("User :" + user.getUserId() + " does not have permission to approve late death registration idUKey :" +
+                dr.getIdUKey() + " , registration is over 12 months so need higher approval",
+                ErrorCodes.UNABLE_TO_APPROVE_LATE_DEATH_REGISTRATION_NEED_HIGHER_APPROVAL_THAN_DR);
+        }
     }
 
     /**
@@ -288,6 +360,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
             person.setFullNameInEnglishLanguage(dr.getDeathPerson().getDeathPersonNameInEnglish());
             person.setFullNameInOfficialLanguage(dr.getDeathPerson().getDeathPersonNameOfficialLang());
             person.setDateOfDeath(dr.getDeath().getDateOfDeath());
+            person.setDateOfBirth(dr.getDeathPerson().getDeathPersonDOB());
             person.setLifeStatus(Person.LifeStatus.DEAD);
             person.setGender(dr.getDeathPerson().getDeathPersonGender());
             person.setRace(dr.getDeathPerson().getDeathPersonRace());
@@ -358,6 +431,20 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
         ValidationUtils.validateAccessToBDDivision(user, deathDivision);
         return deathRegisterDAO.getByBDDivisionAndRegistrationDateRange(deathDivision, startDate, endDate, pageNo, noOfRows);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<DeathRegister> getByBDDivisionAndRegistrationDateRangeAndState(BDDivision deathDivision,
+        Date startDate, Date endDate, int pageNo, int noOfRows, DeathRegister.State state, User user) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("attempt to get paginated list of death records by bdDivision :" + deathDivision +
+                " and date range :" + startDate + "-" + endDate + " and state :" + state);
+        }
+        ValidationUtils.validateAccessToBDDivision(user, deathDivision);
+        return deathRegisterDAO.getByBDDivisionAndRegistrationDateRangeAndState(deathDivision, startDate, endDate, pageNo, noOfRows, state);
     }
 
     /**
@@ -463,9 +550,10 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         }
     }
 
-    private void loadValues(DeathRegister deathRegister, User user) {
+    private void loadValues(DeathRegister deathRegister, boolean certificateSearch, User user) {
         logger.debug("loading transient values for death record : {}", deathRegister.getIdUKey());
-        if (deathRegister.getOriginalDCIssueUser() == null && deathRegister.getOriginalDCPlaceOfIssue() == null) {
+        if ((deathRegister.getOriginalDCIssueUser() == null && deathRegister.getOriginalDCPlaceOfIssue() == null)
+            || certificateSearch) {
             //first time marking as print
             deathRegister.setOriginalDCIssueUser(user);
             deathRegister.setOriginalDCPlaceOfIssue(user.getPrimaryLocation());
@@ -517,6 +605,20 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         }
         return deathRegisterDAO.getPaginatedDeathRegisterListByDSDivisionAndRegistrationDateRange(dsDivisionId, startDate,
             endDate, pageNo, numOfRows, active);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<DeathRegister> getPaginatedDeathRegisterListByDSDivisionAndRegistrationDateRangeAndState(int dsDivisionId,
+        Date startDate, Date endDate, boolean active, int pageNo, int numOfRows, DeathRegister.State status, User user) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("attempt to get list of death register objects by dsDivision idUKey :" + dsDivisionId +
+                " and from :" + startDate + " to : " + endDate + "and active :" + active + "and state :" + status);
+        }
+        return deathRegisterDAO.getPaginatedDeathRegisterListByDSDivisionAndRegistrationDateRangeAndState(dsDivisionId, startDate,
+            endDate, pageNo, numOfRows, active, status);
     }
 
     /**
@@ -603,7 +705,8 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         return data;
     }
 
-    public List<DeathRegister> getByDSDivisionAndStatusAndRegistrationDateRange(DSDivision dsDivision, Date startDate, Date endDate, DeathRegister.State state, User user) {
+    public List<DeathRegister> getByDSDivisionAndStatusAndRegistrationDateRange(DSDivision dsDivision, Date startDate,
+        Date endDate, DeathRegister.State state, User user) {
         //TODO check user permission
         return deathRegisterDAO.getDeathRegisterByDivisionAndStatusAndDate(dsDivision, state, startDate, endDate);
     }

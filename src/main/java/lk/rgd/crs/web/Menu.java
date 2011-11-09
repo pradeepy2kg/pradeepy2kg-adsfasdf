@@ -58,6 +58,7 @@ public class Menu {
         adminLink.put("eprInitUserCreation.do", new Link("creat_user.label", "/ecivil/management/", "eprInitUserCreation.do", Permission.USER_MANAGEMENT));
         adminLink.put("eprViewUsers.do", new Link("viewUsers.label", "/ecivil/management/", "eprViewUsers.do", Permission.USER_MANAGEMENT));
         adminLink.put("eprInitAddDivisionsAndDsDivisions.do", new Link("addDivision.label", "/ecivil/management/", "eprInitAddDivisionsAndDsDivisions.do", Permission.SERVICE_MASTER_DATA_MANAGEMENT));
+        adminLink.put("eprInitEditDivisionDetails.do", new Link(null, "/ecivil/management/", "eprInitEditDivisionDetails.do", Permission.SERVICE_MASTER_DATA_MANAGEMENT));
         adminLink.put("eprUserCreation.do", new Link(null, "/ecivil/management/", "eprUserCreation.do", Permission.USER_MANAGEMENT));
         adminLink.put("eprInactiveUsers.do", new Link(null, "/ecivil/management/", "eprInactiveUsers.do", Permission.USER_MANAGEMENT));
         adminLink.put("eprDoInactiveUsers.do", new Link(null, "/ecivil/management/", "eprDoInactiveUsers.do", Permission.USER_MANAGEMENT));
@@ -65,13 +66,19 @@ public class Menu {
         adminLink.put("eprViewSelectedUsers.do", new Link(null, "/ecivil/management/", "eprViewSelectedUsers.do", Permission.USER_MANAGEMENT));
         adminLink.put("eprActivateOrInactivateDivisionsAndDsDivisions.do", new Link(null, "/ecivil/management/", "eprActivateOrInactivateDivisionsAndDsDivisions.do", Permission.SERVICE_MASTER_DATA_MANAGEMENT));
         adminLink.put("eprAddDivisionsAndDsDivisions.do", new Link(null, "/ecivil/management/", "eprAddDivisionsAndDsDivisions.do", Permission.SERVICE_MASTER_DATA_MANAGEMENT));
+        adminLink.put("eprEditDivisionDetails.do", new Link(null, "/ecivil/management/", "eprEditDivisionDetails.do", Permission.SERVICE_MASTER_DATA_MANAGEMENT));
         adminLink.put("eprInitDivisionList.do", new Link(null, "/ecivil/management/", "eprInitDivisionList.do", Permission.SERVICE_MASTER_DATA_MANAGEMENT));
+        // TODO temp permission to re-arrange divisions
+        adminLink.put("eprInitRearrangeDivision.do", new Link(null, "/ecivil/management/", "eprInitRearrangeDivision.do", Permission.SERVICE_MASTER_DATA_MANAGEMENT));
+        adminLink.put("eprRearrangeDivision.do", new Link(null, "/ecivil/management/", "eprRearrangeDivision.do", Permission.SERVICE_MASTER_DATA_MANAGEMENT));
         adminLink.put("eprRegistrarsManagment.do", new Link("registrars.managment", "/ecivil/management/", "eprRegistrarsManagment.do", Permission.REGISTRAR_MANAGEMENT));
         adminLink.put("eprRegistrarsView.do", new Link(null, "/ecivil/management/", "eprRegistrarsView.do", Permission.REGISTRAR_MANAGEMENT));
         adminLink.put("eprRegistrarsFilter.do", new Link(null, "/ecivil/management/", "eprRegistrarsFilter.do", Permission.REGISTRAR_MANAGEMENT));
         adminLink.put("eprRegistrarsAdd.do", new Link("registrar.add", "/ecivil/management/", "eprRegistrarsAdd.do", Permission.REGISTRAR_MANAGEMENT));
+        adminLink.put("eprRegistrarDelete.do", new Link("search.registrar", "/ecivil/management/", "eprRegistrarDelete.do", Permission.REGISTRAR_DELETE));
         adminLink.put("eprAssignmentAddDirect.do", new Link(null, "/ecivil/management/", "eprAssignmentAddDirect.do", Permission.REGISTRAR_MANAGEMENT));
         adminLink.put("eprAssignmentAdd.do", new Link(null, "/ecivil/management/", "eprAssignmentAdd.do", Permission.REGISTRAR_MANAGEMENT));
+        adminLink.put("eprAssignmentDelete.do", new Link(null, "/ecivil/management/", "eprAssignmentDelete.do", Permission.REGISTRAR_DELETE));
         adminLink.put("eprSearchRegistrarByPin.do", new Link(null, "/ecivil/management/", "eprSearchRegistrarByPin.do", Permission.REGISTRAR_MANAGEMENT));
         adminLink.put("eprAssignmentEdit.do", new Link(null, "/ecivil/management/", "eprAssignmentEdit.do", Permission.REGISTRAR_MANAGEMENT));
         adminLink.put("eprUpdateRegistrar.do", new Link(null, "/ecivil/management/", "eprUpdateRegistrar.do", Permission.REGISTRAR_MANAGEMENT));
@@ -132,6 +139,8 @@ public class Menu {
         // PRS links for ADR
         adrPRSLink.putAll(deoPRSLink);
         adrPRSLink.put("eprEditPerson.do", new Link(null, "/ecivil/prs/", "eprEditPerson.do", Permission.PRS_EDIT_PERSON));
+        adrPRSLink.put("eprEditPersonDetails.do", new Link(null, "/ecivil/prs/", "eprEditPersonDetails.do", Permission.PRS_EDIT_PERSON));
+        adrPRSLink.put("eprUpdatePersonDetails.do", new Link(null, "/ecivil/prs/", "eprUpdatePersonDetails.do", Permission.PRS_APPROVE_EDIT_PERSON));
         adrPRSLink.put("eprPRSAdvancedSearch.do", new Link("prs.advanceSearch.label", "/ecivil/prs/", "eprPRSAdvancedSearch.do", Permission.SEARCH_PRS));
         adrPRSLink.put("eprPersonApproval.do", new Link("prs.personApproval.label", "/ecivil/prs/", "eprPersonApproval.do", Permission.SEARCH_PRS));
         adrPRSLink.put("eprApprovePerson.do", new Link(null, "/ecivil/prs/", "eprApprovePerson.do", Permission.PRS_APPROVE_PERSON));
@@ -194,6 +203,8 @@ public class Menu {
         deoBirthLink.put("eprCertificatePrintPrevious.do", new Link(null, "/ecivil/births/", "eprCertificatePrintPrevious.do", Permission.SEARCH_BDF));
         deoBirthLink.put("eprStillBirthCertificatePrint.do", new Link(null, "/ecivil/births/", "eprStillBirthCertificatePrint.do", Permission.PRINT_BDF));
         deoBirthLink.put("eprDirectPrintStillBirthCertificate.do", new Link(null, "/ecivil/births/", "eprDirectPrintStillBirthCertificate.do", Permission.PRINT_BDF));
+        deoBirthLink.put("eprBirthRegisterApproval.do", new Link("birth_register_approval.label", "/ecivil/births/", "eprBirthRegisterApproval.do", Permission.EDIT_BDF));
+        deoBirthLink.put("eprApprovalRefresh.do", new Link(null, "/ecivil/births/", "eprApprovalRefresh.do", Permission.EDIT_BDF));
 
 
         // Birth for ADR
@@ -339,6 +350,10 @@ public class Menu {
 
         // Birth Alteration for ADR
         adrAlterationLink.putAll(deoAlterationLink);
+        adrAlterationLink.put("eprRejectBirthAlterationInit.do", new Link(null, "/ecivil/births/", "eprRejectBirthAlterationInit", Permission.APPROVE_BIRTH_ALTERATION));
+        adrAlterationLink.put("eprApproveBirthAlterationInit.do", new Link(null, "/ecivil/alteration/", "eprApproveBirthAlterationInit.do", Permission.APPROVE_BIRTH_ALTERATION));
+        adrAlterationLink.put("eprRejectBirthAlteration.do", new Link(null, "/ecivil/births/", "eprRejectBirthAlteration", Permission.APPROVE_BIRTH_ALTERATION));
+        adrAlterationLink.put("eprApproveAndApplyBirthAlteration.do", new Link(null, "/ecivil/alteration/", "eprApproveAndApplyBirthAlteration.do", Permission.APPROVE_BIRTH_ALTERATION));
 
         //Birth Alteration for ARG
         argAlterationLink.putAll(adrAlterationLink);
@@ -348,12 +363,7 @@ public class Menu {
         argAlterationLink.put("eprDeathAlterationSetBits.do", new Link(null, "/ecivil/alteration/", "eprDeathAlterationSetBits.do", Permission.APPROVE_BIRTH_ALTERATION));
         argAlterationLink.put("eprDeathAlterationReject.do", new Link(null, "/ecivil/alteration/", "eprDeathAlterationReject.do", Permission.APPROVE_BIRTH_ALTERATION));
         argAlterationLink.put("eprDeathAlterationApplyChanges.do", new Link(null, "/ecivil/alteration/", "eprDeathAlterationApplyChanges.do", Permission.APPROVE_BIRTH_ALTERATION));
-
-        argAlterationLink.put("eprApproveBirthAlterationInit.do", new Link(null, "/ecivil/alteration/", "eprApproveBirthAlterationInit.do", Permission.APPROVE_BIRTH_ALTERATION));
-        argAlterationLink.put("eprApproveHistoryBirthAlteration.do", new Link(null, "/ecivil/alteration/", "eprApproveHistoryBirthAlteration.do", Permission.APPROVE_BIRTH_ALTERATION));
         argAlterationLink.put("eprApproveBirthAlteration.do", new Link(null, "/ecivil/births/", "eprApproveBirthAlteration.do", Permission.APPROVE_BIRTH_ALTERATION));
-        argAlterationLink.put("eprRejectBirthAlteration.do", new Link(null, "/ecivil/births/", "eprRejectBirthAlteration", Permission.APPROVE_BIRTH_ALTERATION));
-        argAlterationLink.put("eprRejectBirthAlterationInit.do", new Link(null, "/ecivil/births/", "eprRejectBirthAlterationInit", Permission.APPROVE_BIRTH_ALTERATION));
         argAlterationLink.put("eprBirthAlterationApplyChanges.do", new Link(null, "/ecivil/alteration/", "eprBirthAlterationApplyChanges.do", Permission.APPROVE_BIRTH_ALTERATION));
         argAlterationLink.put("eprApproveAndApplyBirthAlteration.do", new Link(null, "/ecivil/alteration/", "eprApproveAndApplyBirthAlteration.do", Permission.APPROVE_BIRTH_ALTERATION));
 

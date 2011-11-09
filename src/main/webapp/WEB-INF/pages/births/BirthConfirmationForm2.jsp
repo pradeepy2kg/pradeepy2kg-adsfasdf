@@ -1,5 +1,3 @@
-<%@ page import="java.util.Map" %>
-<%@ page import="java.util.Iterator" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
@@ -11,33 +9,41 @@
 <script>
     $(function() {
         $('img#childName').bind('click', function(evt) {
-            var id = $("textarea#childFullNameOfficialLang").attr("value");
-            var wsMethod = "transliterate";
-            var soapNs = "http://translitwebservice.transliteration.icta.com/";
+            var text = $("textarea#childFullNameOfficialLang").attr("value");
 
-            var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
-            soapBody.attr("xmlns:trans", soapNs);
-            soapBody.appendChild(new SOAPObject('InputName')).val(id);
-            soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
-            soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
-            soapBody.appendChild(new SOAPObject('Gender')).val('U');
-
-            //Create a new SOAP Request
-            var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
-
-            //Lets send it
-            SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
-            SOAPClient.SendRequest(sr, processResponse); //Send request to server and assign a callback
+            $.post('/ecivil/TransliterationService', {text:text,gender:'U'},
+                    function(data) {
+                        if (data != null) {
+                            var s = data.translated;
+                            $("textarea#childFullNameEnglish").val(s);
+                        }
+                    });
         });
 
-        function processResponse(respObj) {
-            //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-            $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].
-            return[0].Text
-        )
-            ;
-        }
-    })
+        $('img#fatherName').bind('click', function(evt) {
+            var text = $("textarea#fatherFullNameOfficialLang").attr("value");
+
+            $.post('/ecivil/TransliterationService', {text:text,gender:'U'},
+                    function(data) {
+                        if (data != null) {
+                            var s = data.translated;
+                            $("textarea#fatherFullNameEnglish").val(s);
+                        }
+                    });
+        });
+
+         $('img#motherName').bind('click', function(evt) {
+            var text = $("textarea#motherFullNameOfficialLang").attr("value");
+
+            $.post('/ecivil/TransliterationService', {text:text,gender:'U'},
+                    function(data) {
+                        if (data != null) {
+                            var s = data.translated;
+                            $("textarea#motherFullNameEnglish").val(s);
+                        }
+                    });
+        });
+    });
 
     var errormsg = "";
     function validate() {
@@ -52,11 +58,17 @@
             domObject = document.getElementById('childFullNameEnglish');
             isEmpty(domObject, "", 'error2');
 
-            domObject = document.getElementById('fatherFullName');
+            domObject = document.getElementById('fatherFullNameOfficialLang');
             isEmpty(domObject, "", 'error3');
 
-            domObject = document.getElementById('motherFullName');
+            domObject = document.getElementById('fatherFullNameEnglish');
+            isEmpty(domObject, "", 'error5');
+
+            domObject = document.getElementById('motherFullNameOfficialLang');
             isEmpty(domObject, "", 'error4');
+
+            domObject = document.getElementById('motherFullNameEnglish');
+            isEmpty(domObject, "", 'error6');
         }
 
         if (errormsg != "") {
@@ -87,54 +99,100 @@
                 </td>
             </tr>
             <tr>
-                <td class="cell_01">11</td>
-                <td><label>ළම‌යාගේ නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ) <br>பிறப்பு அத்... (சிங்களம் / தமிழ்)
-                    <br>Childs name in the official languages (Sinhala / Tamil)</label></td>
+                <td class="cell_01" rowspan="2">14</td>
+                <td>
+                    <label>ළම‌යාගේ නම රාජ්‍ය භාෂාවෙන් <br/>(සිංහල / දෙමළ)
+                        <br>பிள்ளையின்  பெயர் அரச கரும மொழியில்  (சிங்களம் / தமிழ்)
+                        <br>Child's name in the official languages (Sinhala / Tamil)</label>
+                </td>
                 <td><s:textarea cssClass="disable" disabled="true"
                                 name="#session.birthConfirmation_db.child.childFullNameOfficialLang"/>
                 </td>
             </tr>
             <tr>
-                <td></td>
-                <td><label>නම වෙනස් විය යුතු අයුරු<br>திருத்தப்பட்ட பெயர் <br>Corrected name</label></td>
-                <td><s:textarea id="childFullNameOfficialLang" name="child.childFullNameOfficialLang"/></td>
+                <td><label>නම වෙනස් විය යුතු අයුරු<br>பெயர் மாற்றப்பட வேண்டிய விதம்  <br>Corrected name</label></td>
+                <td><s:textarea id="childFullNameOfficialLang" name="child.childFullNameOfficialLang" rows="3"/></td>
             </tr>
             <tr>
-                <td>12</td>
-                <td><label>ළම‌යාගේ නම ඉංග්‍රීසි භාෂාවෙන්<br>பிறப்பு ... <br>Childs name in English</label></td>
+                <td rowspan="2">15</td>
+                <td>
+                    <label>ළම‌යාගේ නම ඉංග්‍රීසි භාෂාවෙන් <br>பிள்ளையின்  பெயர் ஆங்கில மொழியில்<br>Child's name in English
+            </label>
+                </td>
                 <td><s:textarea cssClass="disable" disabled="true" cssStyle="text-transform: uppercase;"
                                 name="#session.birthConfirmation_db.child.childFullNameEnglish"/></td>
             </tr>
             <tr>
-                <td></td>
-                <td><label>නම වෙනස් විය යුතු අයුරු<br>திருத்தப்பட்ட பெயர் <br>Corrected name</label></td>
+                <td><label>නම වෙනස් විය යුතු අයුරු<br>பெயர் மாற்றப்பட வேண்டிய விதம்  <br>Corrected name</label></td>
                 <td>
-                    <s:textarea id="childFullNameEnglish" name="child.childFullNameEnglish"
+                    <s:textarea id="childFullNameEnglish" name="child.childFullNameEnglish" rows="3"
                                 cssStyle="text-transform: uppercase;"/> <br>
                     <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;" id="childName">
                 </td>
             </tr>
             <tr>
-                <td>13</td>
-                <td><label>පියාගේ සම්පුර්ණ නම <br>தந்நையின் முழுப் பெயர்<br>Father's Full Name</label></td>
+                <td rowspan="2">16</td>
+                <td>
+                    <label>පියාගේ සම්පුර්ණ නම රාජ්‍ය භාෂාවෙන් <br/>(සිංහල / දෙමළ)
+                    <br>தந்தையின் முழுப் பெயர் அரச கரும மொழியில்  (சிங்களம் / தமிழ்)
+                    <br>Father's Full Name in any of the official languages (Sinhala / Tamil)</label>
+                </td>
                 <td><s:textarea cssClass="disable" disabled="true"
                                 name="#session.birthConfirmation_db.parent.fatherFullName"/></td>
             </tr>
             <tr>
-                <td></td>
-                <td><label>නම වෙනස් විය යුතු අයුරු<br>திருத்தப்பட்ட பெயர் <br>Corrected name</label></td>
-                <td><s:textarea id="fatherFullName" name="parent.fatherFullName"></s:textarea></td>
+                <td><label>නම වෙනස් විය යුතු අයුරු<br>பெயர் மாற்றப்பட வேண்டிய விதம்  <br>Corrected name</label></td>
+                <td>
+                    <s:textarea id="fatherFullNameOfficialLang" name="parent.fatherFullName" rows="3"/>
+                </td>
             </tr>
             <tr>
-                <td>14</td>
-                <td><label>මවගේ සම්පූර්ණ නම <br>தாயின் முழுப் பெயர்<br>Mother's Full Name</label></td>
+                <td rowspan="2">17</td>
+                <td>
+                    <label>පියාගේ සම්පුර්ණ නම ඉංග්‍රීසි භාෂාවෙන් (කැපිටල් අකුරෙන්)</label>
+                        <br>தந்தையின் முழுப் பெயர் ஆங்கில மொழியில்(பெரிய எழுத்துக்களில்)
+                        <br>Father's Full Name in English (in block letters)</label>
+                </td>
+                <td><s:textarea cssClass="disable" disabled="true"
+                                name="#session.birthConfirmation_db.parent.fatherFullNameInEnglish"/></td>
+            </tr>
+            <tr>
+                <td><label>නම වෙනස් විය යුතු අයුරු<br>பெயர் மாற்றப்பட வேண்டிய விதம்  <br>Corrected name</label></td>
+                <td>
+                    <s:textarea id="fatherFullNameEnglish" name="parent.fatherFullNameInEnglish" rows="3"/><br/>
+                    <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;" id="fatherName">
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="2">18</td>
+                <td>
+                    <label>මවගේ සම්පුර්ණ නම රාජ්‍ය භාෂාවෙන් <br/>(සිංහල / දෙමළ)
+                    <br>தாயின் முழுப் பெயர் அரச கரும மொழியில்  (சிங்களம் / தமிழ்)
+                    <br>Mother's Full Name in any of the official languages (Sinhala / Tamil)</label>
+                </td>
                 <td><s:textarea cssClass="disable" disabled="true"
                                 name="#session.birthConfirmation_db.parent.motherFullName"/></td>
             </tr>
             <tr>
-                <td></td>
-                <td><label>නම වෙනස් විය යුතු අයුරු<br>திருத்தப்பட்ட பெயர் <br>Corrected name</label></td>
-                <td><s:textarea id="motherFullName" name="parent.motherFullName"></s:textarea></td>
+                <td><label>නම වෙනස් විය යුතු අයුරු<br>பெயர் மாற்றப்பட வேண்டிய விதம்  <br>Corrected name</label></td>
+                <td><s:textarea id="motherFullNameOfficialLang" name="parent.motherFullName" rows="3"/></td>
+            </tr>
+            <tr>
+                <td rowspan="2">19</td>
+                <td>
+                    <label>මවගේ සම්පුර්ණ නම ඉංග්‍රීසි භාෂාවෙන් (කැපිටල් අකුරෙන්)
+                    <br>தாயின் முழுப் பெயர் ஆங்கில மொழியில் (பெரிய எழுத்துக்களில்)
+                    <br>Mother's Full Name in English (in block letters)</label>
+                </td>
+                <td><s:textarea cssClass="disable" disabled="true"
+                                name="#session.birthConfirmation_db.parent.motherFullNameInEnglish"/></td>
+            </tr>
+            <tr>
+                <td><label>නම වෙනස් විය යුතු අයුරු<br>பெயர் மாற்றப்பட வேண்டிய விதம்  <br>Corrected name</label></td>
+                <td>
+                    <s:textarea id="motherFullNameEnglish" name="parent.motherFullNameInEnglish" rows="3"/><br/>
+                    <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;" id="motherName">
+                </td>
             </tr>
             </tbody>
         </table>
@@ -168,5 +226,7 @@
     <s:hidden id="error2" value="%{getText('p1.NameEnglish.error.value')}"/>
     <s:hidden id="error3" value="%{getText('p2.fatherName.error.value')}"/>
     <s:hidden id="error4" value="%{getText('p2.motherName.error.value')}"/>
+    <s:hidden id="error5" value="%{getText('fatherNameInEnglish')}"/>
+    <s:hidden id="error6" value="%{getText('motherNameInEnglish')}"/>
 </div>
 <%-- Styling Completed --%>

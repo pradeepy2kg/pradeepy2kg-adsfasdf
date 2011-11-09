@@ -18,7 +18,6 @@ public interface StatisticsManager {
 
     /**
      * Updates statisticsList. invoked by scheduled task only
-     *
      */
     public void updateStatisticsList();
 
@@ -30,8 +29,8 @@ public interface StatisticsManager {
 
     /**
      * Return Statistics object for given user
-     * 
-     * @param user  user
+     *
+     * @param user user
      * @return statistics object
      */
     public Statistics getStatisticsForUser(User user);
@@ -45,10 +44,10 @@ public interface StatisticsManager {
     public void addStatistics(User user, Statistics statistics);
 
     /**
-     *  check whether user has a statistics record already
+     * check whether user has a statistics record already
      *
      * @param user
-     * @return  true - if exists : false - if not
+     * @return true - if exists : false - if not
      */
     public boolean existsStatisticsForUser(User user);
 

@@ -115,6 +115,8 @@ public class UserManagerImpl implements UserManager {
 
             // adding new default password
             User user = userDao.getUserByPK(userToCreate.getUserId());
+
+
             if (user != null) {
                 handleException("User Name is already assigned", ErrorCodes.ENTITY_ALREADY_EXIST);
                 logger.debug("User already assigned");
@@ -127,18 +129,11 @@ public class UserManagerImpl implements UserManager {
     }
 
     /**
-     * @param user              New user object
-     * @param adminUser         Administrator
-     * @param userId            UserId of current user
-     * @param roleId            roleId
-     * @param assignedDistricts assigned Districts
-     * @param assDivisions      assigned Divisions
-     * @param changePassword    changePassword (true/false)
-     * @param randomPassword    randomly generated password
-     * @return is new user
+     * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public boolean createUser(User user, User adminUser, String userId, String roleId, int[] assignedDistricts, int[] assDivisions, boolean changePassword, String randomPassword) {
+    public boolean createUser(User user, User adminUser, String userId, String roleId, int[] assignedDistricts,
+        int[] assDivisions, boolean changePassword, String randomPassword) {
 
         boolean isNewUser = false;
 
@@ -166,8 +161,11 @@ public class UserManagerImpl implements UserManager {
             }
 
             user.setStatus(User.State.INACTIVE);
+            user.getLifeCycleInfo().setActive(false);
 
             if (userId == null) {
+                //validate user object
+                validateUserForAdd(user);
                 isNewUser = true;
                 /*randomPassword = getRandomPassword(randomPasswordLength);*/
                 user.setPasswordHash(hashPassword(randomPassword));
@@ -175,8 +173,13 @@ public class UserManagerImpl implements UserManager {
                 user.setAssignedMRDistricts(assDistrict);
                 user.setAssignedBDDSDivisions(assDSDivision);
                 user.setAssignedMRDSDivisions(assDSDivision);
+                //set default BDDistrict , MRDistrict and BDDSDivision
+                if (assDistrict != null && !assDistrict.isEmpty() && assDSDivision != null && !assDSDivision.isEmpty()) {
+                    user.setPrefBDDistrict(assDistrict.iterator().next());
+                    user.setPrefMRDistrict(assDistrict.iterator().next());
+                    user.setPrefBDDSDivision(assDSDivision.iterator().next());
+                }
                 user.setRole(roleDao.getRole(roleId));
-
                 java.util.GregorianCalendar gCal = new GregorianCalendar();
                 gCal.add(Calendar.DATE, -1);
                 user.setPasswordExpiry(gCal.getTime());
@@ -206,8 +209,10 @@ public class UserManagerImpl implements UserManager {
 
                 if (!updatedUser.getLocations().isEmpty()) {
                     updatedUser.setStatus(User.State.ACTIVE);
+                    updatedUser.getLifeCycleInfo().setActive(true);
                 } else {
                     updatedUser.setStatus(User.State.INACTIVE);
+                    updatedUser.getLifeCycleInfo().setActive(false);
                 }
                 if (changePassword) {
                     logger.debug("Change password {}", userDao.getUserByPK(userId).getUserName());
@@ -232,6 +237,13 @@ public class UserManagerImpl implements UserManager {
         }
         return isNewUser;
 
+    }
+
+    private void validateUserForAdd(User user) {
+        if (user.getUserName() == null || user.getPrefLanguage() == null ||
+            user.getStatus() == null || user.getPin() == 0 || user.getUserId() == null) {
+            handleException("incomplete user object for create user :" + user.getUserId(), ErrorCodes.INCOMPLETE_USER_OBJECT);
+        }
     }
 
     /**
@@ -344,6 +356,7 @@ public class UserManagerImpl implements UserManager {
 
         } else {
             userToDelete.setStatus(User.State.DELETED);
+            userToDelete.getLifeCycleInfo().setActive(false);
             userDao.updateUser(userToDelete, adminUser);
         }
     }

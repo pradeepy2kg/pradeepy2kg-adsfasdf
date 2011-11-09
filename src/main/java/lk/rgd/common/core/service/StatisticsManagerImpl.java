@@ -1,12 +1,9 @@
 package lk.rgd.common.core.service;
 
-import lk.rgd.common.api.dao.DSDivisionDAO;
-import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.StatisticsDAO;
 import lk.rgd.common.api.dao.UserDAO;
 import lk.rgd.common.api.domain.*;
 import lk.rgd.common.api.service.StatisticsManager;
-import lk.rgd.common.core.dao.StatisticsDAOImpl;
 import lk.rgd.crs.api.dao.BirthDeclarationDAO;
 import lk.rgd.crs.api.dao.DeathRegisterDAO;
 import lk.rgd.crs.api.dao.MarriageRegistrationDAO;

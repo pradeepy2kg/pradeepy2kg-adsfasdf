@@ -102,13 +102,13 @@
             <tbody>
             <tr>
                 <td colspan="7" style="text-align:center;font-size:12pt">උපත තහවුරු කරන්නාගේ විස්තර
-                    <br>பிறப்பு விபரங்களை உறுதிப்படுத்துபவர்
+                    <br>பிறப்பினை உறுதிப்படுத்துபவரின் விபரம்
                     <br>Person Confirming Birth Details
                 </td>
             </tr>
 
             <tr>
-                <td width="40px">15</td>
+                <td width="40px">20</td>
                 <td colspan="1"><label>තහවුරු කරන්නේ කවුරුන් විසින් ද?
                     <s:label value="*" cssStyle="color:red;font-size:10pt"/>
                     <br>பிறப்பினை உறுதிப்படுத்துவது யாரால்?<br>Person
@@ -154,7 +154,7 @@
             </tr>
 
             <tr>
-                <td>16</td>
+                <td>21</td>
                 <td colspan="4"><label>
                     උපත තහවුරු කරන්නාගේ පුද්ගල අනන්‍යතා අංකය / ජාතික හැඳුනුම්පත් අංකය
                     <br>பிறப்​பை உறுதிப்படுத்துபவரின் தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை எண்
@@ -166,14 +166,14 @@
                     <img src="<s:url value="/images/alphabet-X.gif" />"
                          id="confirmant_NIC_X" onclick="javascript:addXorV('confirmantNICorPIN','X','error5')">
                     <br>
-                    <s:textfield name="confirmant.confirmantNICorPIN" id="confirmantNICorPIN" maxLength="10"/>
+                    <s:textfield name="confirmant.confirmantNICorPIN" id="confirmantNICorPIN" maxLength="12"/>
                     <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
                          id="confirmant_lookup"/>
                 </td>
             </tr>
 
             <tr>
-                <td>17</td>
+                <td>22</td>
                 <td colspan="1"><label>
                     උපත තහවුරු කරන්නාගේ සම්පූර්ණ නම<s:label value="*" cssStyle="color:red;font-size:10pt"/>
                     <br>பிறப்​பை உறுதிப்படுத்துபவரின் முழுப் பெயர்
@@ -182,7 +182,7 @@
                                             cssStyle="width:98%;"/></td>
             </tr>
             <tr>
-                <td>18</td>
+                <td>23</td>
                 <td colspan="2"><label> ඉහත සදහන් තොරතුරු නිවැරදි බව සහතික කරමි
                     <br>மேற்குறிப்பிட்ட விபரங்கள் சரியானவை என இத்தால் உறுதிப்படுத்துகிறேன்.
                     <br>I hereby certify that the above information are correct </label></td>

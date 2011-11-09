@@ -23,25 +23,46 @@ import java.util.Date;
         "WHERE adoption.courtOrderNumber = :courtOrderNumber"),
     // TODO fix this to use the courtUKey
 
-    @NamedQuery(name = "getAllAdoptions", query = "SELECT adoption FROM AdoptionOrder adoption")
+    @NamedQuery(name = "getAllAdoptions", query = "SELECT adoption FROM AdoptionOrder adoption"),
+    @NamedQuery(name = "count.adoption.court.usage", query = "SELECT COUNT(adoption) FROM AdoptionOrder adoption " +
+        "WHERE adoption.court.courtUKey = :courtId AND adoption.status <> 0")
 })
 
 public class AdoptionOrder implements Serializable {
 
     public enum State {
-        DATA_ENTRY, // 0 - A newly entered Adoption - can be edited by DEO, ADR
-
-        APPROVED, // 1 - An ARG or higher approved Adoption
-
-        NOTICE_LETTER_PRINTED,  // 2 - An  Adoption which is printed for parent confirmation
-
-        REJECTED,  // 3 - An Adoption rejected by the ARG
-
-        CERTIFICATE_ISSUE_REQUEST_CAPTURED, //4 Acertifcate is requested
-
-        ADOPTION_CERTIFICATE_PRINTED, //5 Acertifcate is requested
-        RE_REGISTRATION_REQUESTED,// 6 requesting an adoption re registration
-        RE_REGISTERED // 7 re registered
+        /**
+         * 0 - A newly entered Adoption - can be edited by DEO, ADR
+         */
+        DATA_ENTRY,
+        /**
+         * 1 - An ARG or higher approved Adoption
+         */
+        APPROVED,
+        /**
+         * 2 - An  Adoption which is printed for parent confirmation
+         */
+        NOTICE_LETTER_PRINTED,
+        /**
+         * 3 - An Adoption rejected by the ARG
+         */
+        REJECTED,
+        /**
+         * 4 - A certificate is requested
+         */
+        CERTIFICATE_ISSUE_REQUEST_CAPTURED,
+        /**
+         * 5 - A certificate is requested
+         */
+        ADOPTION_CERTIFICATE_PRINTED,
+        /**
+         * 6 - requesting an adoption re registration
+         */
+        RE_REGISTRATION_REQUESTED,
+        /**
+         * 7 - re registered
+         */
+        RE_REGISTERED
     }
 
     public enum ApplicantType {

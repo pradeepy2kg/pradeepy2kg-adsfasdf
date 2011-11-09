@@ -22,30 +22,30 @@ public class DeathTypeUtil {
         if (AppConstants.SINHALA.equals(language)) {
             switch (type) {
                 case 0:
-                    return "සාමාන්‍ය මරණ/Normal Death";
+                    return "සාමාන්‍ය මරණ / Normal Death";
                 case 1:
-                    return "හදිසි මරණ/Sudden Death ";
+                    return "හදිසි මරණ / Sudden Death";
                 case 2:
-                    return "කාලය ඉකුත් වූ සාමාන්‍ය මරණ /Late registration,Normal Death ";
+                    return "කාලය ඉකුත් වූ සාමාන්‍ය මරණ / Late Registration, Normal Death";
                 case 3:
-                    return "කාලය ඉකුත් වූ හදිසි මරණ/Late registration,Sudden Death ";
+                    return "කාලය ඉකුත් වූ හදිසි මරණ / Late Registration, Sudden Death";
                 case 4:
-                    return "නැතිවුණු පුද්ගලයෙකුගේ මරණ/Death of missing person";
+                    return "නැතිවුණු පුද්ගලයෙකුගේ මරණ / Death of Missing Person";
             }
         } else if (AppConstants.TAMIL.equals(language)) {
             switch (type) {
                 case 0:
-                    return "சாதாரண மரணம்/Normal Death";
+                    return "இயற்கை மரணம்  / Normal Death";
                 case 1:
-                    return "திடீா் மரணம் /Sudden Death";
+                    return "திடீர்  மரணம்  / Sudden Death";
                 case 2:
-                    return "Late registration,Normal Death in tamil";
+                    return "காலங்கடந்த பதிவு, இயற்கை மரணம் / Late Registration, Normal Death";
                 case 3:
-                    return "Late registration,Sudden Death  in tamil";
+                    return "காலங்கடந்த பதிவு, திடீர்  மரணம் / Late Registration, Sudden Death";
                 case 4:
-                    return "Death of missing person in tamil";
+                    return "காணாமற் போன நபரின் இறப்பு / Death of Missing Person";
             }
-        }  else {
+        } else {
             logger.error("Invalid language : {}", language);
             throw new IllegalArgumentException("Invalid language : " + language);
         }

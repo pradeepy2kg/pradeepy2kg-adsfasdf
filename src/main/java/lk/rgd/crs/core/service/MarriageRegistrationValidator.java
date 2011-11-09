@@ -7,8 +7,10 @@ import lk.rgd.common.api.dao.AppParametersDAO;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
+import lk.rgd.crs.api.dao.AssignmentDAO;
 import lk.rgd.crs.api.dao.MarriageRegistrationDAO;
 import lk.rgd.crs.api.domain.*;
+import lk.rgd.crs.api.service.RegistrarManagementService;
 import lk.rgd.prs.api.domain.Marriage;
 import lk.rgd.prs.api.domain.Person;
 import lk.rgd.prs.api.service.PopulationRegistry;
@@ -36,11 +38,15 @@ public class MarriageRegistrationValidator {
     private final MarriageRegistrationDAO marriageRegistrationDAO;
     private final AppParametersDAO appParametersDAO;
     private final PopulationRegistry populationRegistry;
+    private final RegistrarManagementService registrarManagementService;
+    private final AssignmentDAO assignmentDAO;
 
-    public MarriageRegistrationValidator(MarriageRegistrationDAO marriageRegistrationDAO, AppParametersDAO appParametersDAO, PopulationRegistry populationRegistry) {
+    public MarriageRegistrationValidator(MarriageRegistrationDAO marriageRegistrationDAO, AppParametersDAO appParametersDAO, PopulationRegistry populationRegistry, RegistrarManagementService registrarManagementService, AssignmentDAO assignmentDAO) {
         this.marriageRegistrationDAO = marriageRegistrationDAO;
         this.appParametersDAO = appParametersDAO;
         this.populationRegistry = populationRegistry;
+        this.registrarManagementService = registrarManagementService;
+        this.assignmentDAO = assignmentDAO;
     }
 
     /**
@@ -133,9 +139,64 @@ public class MarriageRegistrationValidator {
             checkDuplicatePinOrNic(malePin, femalePin, warnings, rb, "duplicate_male_female_pin");
         }
 
-        // check prohibited relationships
-        // TODO
+        //check is registrar is assign to this job
+        //we cannot validate this with minister so we only look at registrars
+        //following warning only issue when it is come by a notice
+        if (mr.getSerialOfMaleNotice() != null || mr.getSerialOfFemaleNotice() != null) {
+            try {
+                Registrar registrar = registrarManagementService.getRegistrarByPin(Long.parseLong(mr.getRegistrarOrMinisterPIN()), user);
+                //assign type
+                Assignment.Type assignmentType = null;
+                boolean isRegistrarHasPermission = false;
+                switch (mr.getTypeOfMarriage()) {
+                    case GENERAL:
+                        assignmentType = Assignment.Type.GENERAL_MARRIAGE;
+                        break;
+                    case MUSLIM:
+                        assignmentType = Assignment.Type.MUSLIM_MARRIAGE;
+                        break;
+                    case KANDYAN_BINNA:
+                    case KANDYAN_DEEGA:
+                        assignmentType = Assignment.Type.KANDYAN_MARRIAGE;
+                        break;
+                }
+                if (registrar != null && registrar.getLifeCycleInfo().isActive()) {
+                    Set<Assignment> registrarsAssignments = registrar.getAssignments();
+                    //check is registrar is assign to do marriages with give type
+                    for (Assignment assignment : registrarsAssignments) {
+                        if (assignment.getLifeCycleInfo().isActive() == true && assignment.getType() == assignmentType) {
+                            logger.debug("registrar : {} ,is assigned to register : {} , marriages ",
+                                registrar.getPin(), assignmentType);
+                            //check only active assignments
+                            //check is registrar is terminated from the job
+                            if (assignment.getTerminationDate() != null &&
+                                assignment.getTerminationDate().before(mr.getDateOfMarriage())) {
+                                if (logger.isDebugEnabled()) {
+                                    logger.debug("registrar : " + registrar.getPin() +
+                                        " is terminated form the task registering : " + assignmentType +
+                                        " marriages from : " + assignment.getTerminationDate());
+                                }
+                                //that mean this registrar is terminated by this day
+                                warnings.add(new UserWarning(MessageFormat.
+                                    format(rb.getString("warn.registrar.terminate.by.date.of.marriage"), Long.toString(registrar.getPin())),
+                                    UserWarning.Severity.WARN));
+                            }
+                            isRegistrarHasPermission = true;
+                            break;
+                        }
+                    }
+                    if (!isRegistrarHasPermission) {
+                        warnings.add(new UserWarning(MessageFormat.
+                            format(rb.getString("warn.registrar.does.not.have.permission.to.do.marriage"), assignmentType, Long.toString(registrar.getPin())),
+                            UserWarning.Severity.WARN));
+                    }
 
+                }                 //check
+            }
+            catch (NumberFormatException e) {
+                //do nothing this is happen try to find a registrar by PIN
+            }
+        }
         return warnings;
     }
 
@@ -331,15 +392,13 @@ public class MarriageRegistrationValidator {
 
     private boolean prohibitedRelationship(MarriageRegister register, List<UserWarning> userWarnings,
         ResourceBundle rb, User user) {
-        final Person bride = populationRegistry.findPersonByPIN(Long.
-            parseLong(register.getFemale().getIdentificationNumberFemale()), user);
-        final Person groom = populationRegistry.findPersonByPIN(Long.
-            parseLong(register.getMale().getIdentificationNumberMale()), user);
+        final Person bride = populationRegistry.findPersonByPINorNIC(register.getFemale().getIdentificationNumberFemale(), user);
+        final Person groom = populationRegistry.findPersonByPINorNIC(register.getMale().getIdentificationNumberMale(), user);
 
-        final Person bridesFather = bride.getFather();
-        final Person bridesMother = bride.getMother();
-        final Person groomsFather = groom.getFather();
-        final Person groomsMother = groom.getMother();
+        final Person bridesFather = (bride != null) ? bride.getFather() : null;
+        final Person bridesMother = (bride != null) ? bride.getMother() : null;
+        final Person groomsFather = (groom != null) ? groom.getFather() : null;
+        final Person groomsMother = (groom != null) ? groom.getMother() : null;
         final List<Person> groomsGrandFathers = populationRegistry.findGrandFather(groom, user);
         final List<Person> bridesGrandMothers = populationRegistry.findGrandMother(bride, user);
         final List<Person> bridesChildren = populationRegistry.findAllChildren(bride, user);
@@ -411,7 +470,7 @@ public class MarriageRegistrationValidator {
         logger.debug("check prohibited relationship :'bride is grand mother of groom' :{}", prohibited);
 
         //One party is a sibling of the other party (Note: two parties are siblings if they have one or both parents in common)
-        List<Person> bridesSiblings = populationRegistry.findAllSiblings(bride, user);
+        List<Person> bridesSiblings = (bride != null) ? populationRegistry.findAllSiblings(bride, user) : Collections.<Person>emptyList();
 
         //check groom is sibling of bride
         if (bridesSiblings.contains(groom)) {
@@ -454,7 +513,7 @@ public class MarriageRegistrationValidator {
         //that means if bride was previously married with grooms father  then relation ship between bride and groom is illegal
         //and vise versa
         //check brides previous marriages  vs grooms father
-        Set<Marriage> bridesPrevMarriages = bride.getMarriages();
+        Set<Marriage> bridesPrevMarriages = (bride != null) ? bride.getMarriages() : Collections.<Marriage>emptySet();
         for (Marriage m : bridesPrevMarriages) {
             if (groomsFather != null) {
                 if (groomsFather.equals(m.getGroom())) {
@@ -468,7 +527,7 @@ public class MarriageRegistrationValidator {
         logger.debug("check prohibited relationship :'father of groom was a spouse of bride' :{}", prohibited);
 
         //check grooms prev marriages vs brides mother
-        Set<Marriage> groomsPrevMarriages = bride.getMarriages();
+        Set<Marriage> groomsPrevMarriages = (bride != null) ? bride.getMarriages() : Collections.<Marriage>emptySet();
         for (Marriage m : groomsPrevMarriages) {
             if (bridesMother != null) {
                 if (bridesMother.equals(m.getGroom())) {

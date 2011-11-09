@@ -31,13 +31,18 @@
                     </a>
                 </li>
                 <li>
-                    <a id="registrars.managment" href="/ecivil/management/eprRegistrarsManagment.do">
-                        රෙජිස්ට්‍රාර් වරු පරිපාලනය
+                    <a id="registrar.add" href="/ecivil/management/eprRegistrarsAdd.do">
+                        නව රෙජිස්ට්‍රාර් වරයකු ඇතුල් කිරීම
                     </a>
                 </li>
                 <li>
-                    <a id="registrar.add" href="/ecivil/management/eprRegistrarsAdd.do">
-                        නව රෙජිස්ට්‍රාර් වරයකු ඇතුල් කිරීම
+                    <a id="search.registrar" href="/ecivil/management/eprFindRegistrar.do">
+                        රෙජිස්ට්‍රාර්වරයකු සෙවීම
+                    </a>
+                </li>
+                <li>
+                    <a id="registrars.managment" href="/ecivil/management/eprRegistrarsManagment.do">
+                        රෙජිස්ට්‍රාර් වරු පරිපාලනය
                     </a>
                 </li>
                 <li>
@@ -48,11 +53,6 @@
                 <li>
                     <a id="indexRecords.label" href="/ecivil/management/eprIndexRecords.do">
                         දත්ත සුචි ගත කිරීම
-                    </a>
-                </li>
-                <li>
-                    <a id="search.registrar" href="/ecivil/management/eprFindRegistrar.do">
-                        රෙජිස්ට්‍රාර්වරයකු සෙවීම
                     </a>
                 </li>
                 <li>

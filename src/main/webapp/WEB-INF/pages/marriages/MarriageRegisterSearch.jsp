@@ -44,7 +44,7 @@
 
     function validatePINNumber() {
         var errormsg = "";
-        errormsg = validatePin("pinOrNic", "errorEmptyRegistrarPIN", "errorInvalidRegistrarPIN", errormsg);
+        errormsg = validatePinOrNic("pinOrNic", "errorEmptyRegistrarPIN", "errorInvalidRegistrarPIN", errormsg);
         return printErrorMessages(errormsg);
     }
 
@@ -66,6 +66,49 @@
 
     function initPage() {
     }
+
+    $(function() {
+        $('select#districtId').bind('change', function(evt1) {
+            var id = $("select#districtId").attr("value");
+            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:12},
+                    function(data) {
+                        var options1 = '';
+                        var ds = data.dsDivisionList;
+                     //   alert(ds[0].optionDisplay)
+                        var allText = document.getElementById('all').value;
+                        options1 += '<option value="0">' + allText + '</option>';
+                        for (var i = 0; i < ds.length; i++) {
+                            options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                        }
+                        $("select#dsDivisionId").html(options1);
+
+                        var options2 = '';
+                        var bd = data.divisionList;
+                        var allText = document.getElementById('all').value;
+                        options2 += '<option value="0">' + allText + '</option>';
+                        for (var j = 0; j < bd.length; j++) {
+                            options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
+                        }
+                        $("select#mrDivisionId").html(options2);
+                    });
+        });
+
+        $('select#dsDivisionId').bind('change', function(evt2) {
+            var id = $("select#dsDivisionId").attr("value");
+            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:10},
+                    function(data) {
+                        var options = '';
+                        var bd = data.divisionList;
+                        var allText = document.getElementById('all').value;
+                        options += '<option value="0">' + allText + '</option>';
+                        for (var i = 0; i < bd.length; i++) {
+                            options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
+                        }
+                        $("select#mrDivisionId").html(options);
+                    });
+        });
+    });
+
 
 </script>
 <s:actionerror cssStyle="color:red;font-size:10pt"/>
@@ -118,9 +161,11 @@
                     </td>
                     <td>
                         <s:select id="districtId" name="districtId" list="districtList"
-                                  value="%{districtId}"
-                                  cssStyle="width:98.5%; width:240px;"
-                                  onchange="populateDSDivisions('districtId','dsDivisionId','mrDivisionId', 'Marriage', true)"/>
+                                  value="%{districtId}" headerKey="0" headerValue="%{getText('all.label')}"
+                                  cssStyle="width:98.5%; width:240px;"/>
+                            <%--
+                                                              onchange="populateDSDivisions('districtId','dsDivisionId','mrDivisionId', 'Marriage', true)"/>
+                            --%>
                     </td>
                     <td></td>
                     <td>
@@ -128,9 +173,11 @@
                     </td>
                     <td>
                         <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList"
-                                  value="%{dsDivisionId}"
-                                  cssStyle="width:98.5%; width:240px;"
-                                  onchange="populateDivisions('dsDivisionId', 'mrDivisionId', 'Marriage', true)"/>
+                                  value="%{dsDivisionId}" headerKey="0" headerValue="%{getText('all.label')}"
+                                  cssStyle="width:98.5%; width:240px;"/>
+                            <%--
+                                                              onchange="populateDivisions('dsDivisionId', 'mrDivisionId', 'Marriage', true)"/>
+                            --%>
                     </td>
                 </tr>
                 <tr>
@@ -139,7 +186,7 @@
                     </td>
                     <td>
                         <s:select id="mrDivisionId" name="mrDivisionId" list="mrDivisionList"
-                                  value="%{request.mrDivisionId}"
+                                  value="%{mrDivisionId}" headerKey="0" headerValue="%{getText('all.label')}"
                                   cssStyle="width:98.5%; width:240px;"/>
                     </td>
                     <td colspan="3">
@@ -177,7 +224,7 @@
                     <td>
                         <s:label value="%{getText('label.marriageregister.pin')}"/>
                     </td>
-                    <td><s:textfield name="pinOrNic" id="pinOrNic" maxLength="10"/></td>
+                    <td><s:textfield name="pinOrNic" id="pinOrNic" maxLength="12"/></td>
                     <td>
                         <div class="form-submit">
                             <s:submit value="%{getText('bdfSearch.button')}"/>
@@ -480,3 +527,4 @@
           value="%{getText('label.marriageregister.number') + getText('message.cannotbeempty')}"/>
 <s:hidden id="errorInvalidMarriageIdUKey"
           value="%{getText('error.invalid') + getText('label.marriageregister.number')}"/>
+<s:hidden id="all" value="%{getText('all.label')}"/>

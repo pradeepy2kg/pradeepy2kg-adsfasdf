@@ -36,11 +36,13 @@ public class BirthRegisterInfo implements Serializable, Cloneable {
     @JoinColumn(name = "bdDivisionUKey", nullable = false)
     private BDDivision birthDivision;
 
+
     /**
      * The name of the Birth/Death registration division in the preferred language
      */
     @Transient
     private String bdDivisionPrint;
+
 
     /**
      * The name of the DS division in the preferred language
@@ -297,7 +299,7 @@ public class BirthRegisterInfo implements Serializable, Cloneable {
     }
 
     public void setOriginalBCPlaceOfIssueSignPrint(String originalBCPlaceOfIssueSignPrint) {
-        this.originalBCPlaceOfIssueSignPrint = originalBCPlaceOfIssueSignPrint;
+        this.originalBCPlaceOfIssueSignPrint =originalBCPlaceOfIssueSignPrint;
     }
 
     public User getOriginalBCIssueUser() {

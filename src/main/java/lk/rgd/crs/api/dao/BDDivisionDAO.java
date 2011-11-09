@@ -1,7 +1,7 @@
 package lk.rgd.crs.api.dao;
 
-import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.domain.BDDivision;
 
 import java.util.List;
@@ -37,11 +37,22 @@ public interface BDDivisionDAO {
     public BDDivision getBDDivisionByPK(int bdDivisionUKey);
 
     /**
+     * Return the list of Birth & Death Registration Divisions within a selected DS Division by division id/code
+     *
      * @param bdDivisionId the unique BD Division ID
      * @param dsDivision   DS Division of the  BD Division
-     * @return the BD division object
+     * @return the list of BD divisions
      */
-    public BDDivision getBDDivisionByCode(int bdDivisionId, DSDivision dsDivision);
+    public List<BDDivision> getBDDivisionByCode(int bdDivisionId, DSDivision dsDivision);
+
+    /**
+     * Return the list of Birth & Death Registration Divisions within a selected DS Division by any division name
+     *
+     * @param bdDivision     the division
+     * @param dsDivisionUKey the unique DS Division key
+     * @return the list of BD Divisions
+     */
+    public List<BDDivision> getBDDivisionByAnyNameAndDSDivisionKey(BDDivision bdDivision, int dsDivisionUKey);
 
     /**
      * Update a BD Division
@@ -65,11 +76,10 @@ public interface BDDivisionDAO {
      * @return all BD Divisions
      */
     public List<BDDivision> findAll();
-        /**
-     *
-     * @return  BD Divisions
-     */
-    public List<BDDivision> getAllDSDivisionByDsDivisionKey(int dsDivisionId);
 
+    /**
+     * @return BD Divisions
+     */
+    public List<BDDivision> getAllBDDivisionByDsDivisionKey(int dsDivisionId);
 
 }

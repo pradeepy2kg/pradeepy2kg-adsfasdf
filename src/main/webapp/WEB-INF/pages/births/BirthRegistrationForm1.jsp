@@ -49,97 +49,78 @@ $(function() {
     $('select#districtId').bind('change', function(evt1) {
         var id = $("select#districtId").attr("value");
         $.getJSON('/ecivil/crs/DivisionLookupService', {id:id},
-                 function(data) {
-                     var options1 = '';
-                     var ds = data.dsDivisionList;
-                     for (var i = 0; i < ds.length; i++) {
-                         options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
-                     }
-                     $("select#dsDivisionId").html(options1);
+                function(data) {
+                    var options1 = '';
+                    var ds = data.dsDivisionList;
+                    for (var i = 0; i < ds.length; i++) {
+                        options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                    }
+                    $("select#dsDivisionId").html(options1);
 
-                     var options2 = '';
-                     var bd = data.bdDivisionList;
-                     for (var j = 0; j < bd.length; j++) {
-                         options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
-                     }
-                     $("select#birthDivisionId").html(options2);
-                 });
+                    var options2 = '';
+                    var bd = data.bdDivisionList;
+                    for (var j = 0; j < bd.length; j++) {
+                        options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
+                    }
+                    $("select#birthDivisionId").html(options2);
+
+                    var options3 = '';
+                    var gn = data.gnDivisionList;
+                    for (var k = 0; k < gn.length; k++) {
+                        options3 += '<option value="' + gn[k].optionValue + '">' + gn[k].optionDisplay + '</option>';
+                    }
+                    $("select#gnDivisionId").html(options3);
+                });
     });
 
     $('select#dsDivisionId').bind('change', function(evt2) {
         var id = $("select#dsDivisionId").attr("value");
-        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:2},
-                 function(data) {
-                     var options = '';
-                     var bd = data.bdDivisionList;
-                     for (var i = 0; i < bd.length; i++) {
-                         options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
-                     }
-                     $("select#birthDivisionId").html(options);
-                 });
+        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:2},
+                function(data) {
+                    var options = '';
+                    var bd = data.bdDivisionList;
+                    for (var i = 0; i < bd.length; i++) {
+                        options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
+                    }
+                    $("select#birthDivisionId").html(options);
+
+                    var options4 = '';
+                    var gn = data.gnDivisionList;
+                    for (var k = 0; k < gn.length; k++) {
+                        options4 += '<option value="' + gn[k].optionValue + '">' + gn[k].optionDisplay + '</option>';
+                    }
+                    $("select#gnDivisionId").html(options4);
+                });
     });
 
 
     $('img#childName').bind('click', function(evt3) {
-        var id = $("textarea#childFullNameOfficialLang").attr("value");
-        var wsMethod = "transliterate";
-        var soapNs = "http://translitwebservice.transliteration.icta.com/";
+        var text = $("textarea#childFullNameOfficialLang").attr("value");
 
-        var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
-        soapBody.attr("xmlns:trans", soapNs);
-        soapBody.appendChild(new SOAPObject('InputName')).val(id);
-        soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
-        soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
-        soapBody.appendChild(new SOAPObject('Gender')).val('U');
-
-        //Create a new SOAP Request
-        var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
-
-        //Lets send it
-        SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
-        SOAPClient.SendRequest(sr, processResponse1); //Send request to server and assign a callback
+        $.post('/ecivil/TransliterationService', {text:text,gender:'M'},
+                function(data) {
+                    if (data != null) {
+                        var s = data.translated;
+                        $("textarea#childFullNameEnglish").val(s);
+                    }
+                });
     });
-
-    function processResponse1(respObj) {
-        //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
-    };
 
     $('img#place').bind('click', function(evt4) {
-        var id = $("input#placeOfBirth").attr("value");
-        var wsMethod = "transliterate";
-        var soapNs = "http://translitwebservice.transliteration.icta.com/";
+        var text = $("input#placeOfBirth").attr("value");
 
-        var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
-        soapBody.attr("xmlns:trans", soapNs);
-        soapBody.appendChild(new SOAPObject('InputName')).val(id);
-        soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
-        soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
-        //soapBody.appendChild(new SOAPObject('Gender')).val('U');
-
-        //added by shan [ NOT Tested ] -> start
-        var genderVal = $("select#genderList").attr("value");
-        soapBody.appendChild(new SOAPObject('Gender')).val(genderVal);
-        //-> end
-
-        //Create a new SOAP Request
-        var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
-
-        //Lets send it
-        SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
-        SOAPClient.SendRequest(sr, processResponse2); //Send request to server and assign a callback
+        $.post('/ecivil/TransliterationService', {text:text,gender:'U'},
+                function(data) {
+                    if (data != null) {
+                        var s = data.translated;
+                        $("input#placeOfBirthEnglish").val(s);
+                    }
+                });
     });
-
-    function processResponse2(respObj) {
-        //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].
-        return[0].Text
-    )
-        ;
-    }
 });
 
 var errormsg = "";
+
 function validate() {
     //skipping low priority data validations
     var check = document.getElementById('skipjs');
@@ -276,6 +257,7 @@ function liveBirthCommonTags(check) {
         }
     }
 }
+
 // validate birth weight of the child
 function validateBirthWeight(domElement, errorText, errorCode) {
     with (domElement) {
@@ -314,6 +296,7 @@ function dateRange() {
         }
     }
 }
+
 function initSerialNumber() {
     var domobject = document.getElementById('bdfSerialNo');
     if (isFieldEmpty(domobject)) {
@@ -325,6 +308,17 @@ function initPage() {
     dateRange();
     initSerialNumber();
 }
+
+function maxLengthCalculate(id, max, divId) {
+    var dom = document.getElementById(id).value;
+    if (dom.length > max) {
+        document.getElementById(divId).innerHTML = document.getElementById('maxLengthError').value + " : " + max
+    }
+    else {
+        document.getElementById(divId).innerHTML = "";
+    }
+}
+
 </script>
 
 <s:form action="eprBirthRegistration.do" name="birthRegistrationForm1" id="birth-registration-form-1" method="POST"
@@ -341,7 +335,7 @@ function initPage() {
                                                                     alt=""/><br>
             <s:if test="birthType.ordinal() == 1 || birthType.ordinal() == 3">
                 <label>උපතක් ලියාපදිංචි කිරීම සඳහා විස්තර
-                    <br>ஒரு பிறப்பைப் பதிவு செய்வதற்கான விபரங்கள்
+                    <br>பிறப்பொன்றை பதிவு செய்வதற்கான விபரங்கள்
                     <br>Particulars for Registration of a Birth</label>
             </s:if>
             <s:elseif test="birthType.ordinal() == 0">
@@ -363,16 +357,11 @@ function initPage() {
                 </tr>
                 <tr>
                     <td><label><span class="font-8">අනුක්‍රමික අංකය<s:label value="*"
-                                                                            cssStyle="color:red;font-size:10pt;"/> <br>தொடர் இலக்கம்<br>Serial Number</span></label>
+                                                                            cssStyle="color:red;font-size:10pt;"/>
+                        <br>தொடர் இலக்கம்<br>Serial Number</span></label>
                     </td>
                     <td>
-                            <%--                        <s:if test="editMode">
-                                <s:textfield name="register.bdfSerialNo" id="bdfSerialNo" readonly="true"/>
-                            </s:if>
-                            <s:else>--%>
                         <s:textfield name="register.bdfSerialNo" id="bdfSerialNo" maxLength="10"/>
-                            <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>         --%>
-                            <%--    </s:else>--%>
                     </td>
                 </tr>
             </table>
@@ -388,8 +377,10 @@ function initPage() {
                 <tr>
                     <td>
                         <label>
-                            <span class="font-8">භාරගත්  දිනය<s:label value="*"
-                                                                      cssStyle="color:red;font-size:10pt;"/> <br>பிறப்பைப் பதிவு திகதி <br>Submitted Date</span>
+                            <span class="font-8">
+                                භාරගත්  දිනය<s:label value="*" cssStyle="color:red;font-size:10pt;"/>
+                                <br>பெறப்பட்ட திகதி <br>Date of Acceptance
+                            </span>
                         </label>
                     </td>
                     <td><s:label value="YYYY-MM-DD" cssStyle="margin-left:20px;font-size:10px"/><br>
@@ -403,15 +394,13 @@ function initPage() {
     <tr>
         <td colspan="3">
             <s:if test="birthType.ordinal() == 1 || birthType.ordinal() == 3">
-                දැනුම් දෙන්නා (දෙමවිපියන් / භාරකරු) විසින් සම්පුර්ණ කර තොරතුරු වාර්තා කරන නිලධාරි වෙත භාර දිය
-                යුතුය. මෙම
-                තොරතුරු මත සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ උපත ලියාපදිංචි කරනු ලැබේ.
-                <br>தகவல் தருபவரால் (பெற்றோர்/பொறுப்பாளர்) பூா்த்தி செய்யப்பட்டு தகவல் சேகரிக்கும் அதிகாரியிடம்
-                சமா்ப்பித்தல் வேண்டும். இத்தகவலின்படி சிவில் பதிவு அமைப்பில் பிறப்பு பதிவு செய்யப்படும்
+                දැනුම් දෙන්නා (දෙමවිපියන් / භාරකරු) විසින් සම්පුර්ණ කර තොරතුරු වාර්තා කරන නිලධාරියා
+                / රෙජිස්ට්‍රාර් වෙත භාර දිය යුතුය. මෙම තොරතුරු මත සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ උපත ලියාපදිංචි කරනු ලැබේ.
+                <br>தகவல் தருபவரால் (பெற்றோர்/பாதுகாவலர் ) பூர்த்தி செய்யப்பட்டு தகவல் சேகரிக்கும் அதிகாரியிடம்
+                /பதிவாளரிடம் சமர்ப்பிக்கப்படல் வேண்டும். இத்தகவலின்படி சிவில் முறையில் பிறப்பு பதிவு செய்யப்படும்.
                 <br>Should be perfected by the informant (Parent / Guardian) and the duly completed form should be
-                forwarded
-                to the Notifying Authority. The birth will be registered in the Civil Registration System based on the
-                information provided in this form.
+                forwarded to the Officer / Registrar. The birth will be registered in the Civil Registration System
+                based on the information provided in this form.
             </s:if>
             <s:elseif test="birthType.ordinal() == 0">
                 දැනුම් දෙන්නා (දෙමවිපියන් / නෑයන්) විසින් සම්පුර්ණ කර තොරතුරු වාර්තා කරන නිලධාරි වෙත භාර දිය යුතුය.
@@ -462,13 +451,13 @@ function initPage() {
     <%--TODO style not added--%>
 <s:if test="birthType.ordinal() == 2">
     <tr style="border-left:1px solid #000000;">
-        <td width="150px" colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)දරුකමට
+        <td width="150px" colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) දරුකමට
             ගැනීම පිළිබඳ සහතික පත්‍රයේ අංකය<br> மகவேற்புச் செய்யப்பட்டது சம்பற்தமான சான்றிதழின் இலக்கம்<br>Serial
             Number of the Certificate of Adoption</label></td>
         <td colspan="7"><s:label value="%{#session.birthRegister.register.adoptionUKey}"/></td>
     </tr>
     <tr>
-        <td rowspan="5"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+        <td rowspan="4"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
             ළමයාගේ උපත කලින්
             ලියාපදිංචි කර තිබුනේනමි<br>பிள்ளையின் பிறப்பு பதிவு செய்யப்பட்டிருந்தால்<br>If the birth was
             previously registered</label></td>
@@ -476,7 +465,11 @@ function initPage() {
         <td colspan="6" class="table_reg_cell_01"><s:label value="%{#session.oldBdfForAdoption.districtName}"/></td>
     </tr>
     <tr>
-        <td><label>ප්‍රාදේශීය ලේකමි කොටිඨාශය<br>பிரதேச செயளாளா் பிரிவு <br>Divisional Secretariat</label></td>
+        <td><label>
+            ප්‍රාදේශීය ලේකම් කොට්ඨාශය
+            <br/>பிரதேச செயளாளர் பிரிவு
+            <br/>Divisional Secretary Division
+        </label></td>
         <td colspan="6" class="table_reg_cell_01"><s:label
                 value="%{#session.oldBdfForAdoption.dsDivisionName}"/></td>
     </tr>
@@ -492,7 +485,7 @@ function initPage() {
 </s:if>
 <tr></tr>
 <tr style="border-left:1px solid #000000;">
-    <td width="150px" align="left"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)උපන් දිනය
+    <td width="150px" align="left"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපන් දිනය
         <s:label value="*" cssStyle="color:red;font-size:14pt;"/><br>
         பிறந்த திகதி<br>Date of Birth</label></td>
     <td colspan="3" style="border-right:none;">
@@ -505,18 +498,22 @@ function initPage() {
     </td>
 </tr>
 <tr>
-    <td rowspan="6"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපන්
-        ස්ථානය <s:label value="*" cssStyle="color:red;font-size:14pt;"/>
-        <br>பிறந்த இடம்
-        <br> Place of Birth</label></td>
-    <td><label>දිස්ත්‍රික්කය மாவட்டம் District</label></td>
+    <td rowspan="6"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+        උපන් ස්ථානය පිළිබඳ විස්තර<s:label value="*" cssStyle="color:red;font-size:14pt;"/>
+        <br>பிறந்த இடம் பற்றிய விபரம்
+        <br>Particulars of Place of Birth</label></td>
+    <td><label>දිස්ත්‍රික්කය/ மாவட்டம் / District</label></td>
     <td colspan="6" class="table_reg_cell_01">
         <s:select id="districtId" name="birthDistrictId" list="districtList" value="birthDistrictId"
                   cssStyle="width:98.5%; width:240px;"/>
     </td>
 </tr>
 <tr>
-    <td><label>ප්‍රාදේශීය ලේකමි කොටිඨාශය/<br/>பிரதேச செயளாளா் பிரிவு/ <br/>Divisional Secretariat</label></td>
+    <td><label>
+        ප්‍රාදේශීය ලේකම් කොට්ඨාශය
+        <br/>பிரதேச செயளாளர் பிரிவு
+        <br/>Divisional Secretary Division
+    </label></td>
     <td colspan="6" class="table_reg_cell_01" id="table_reg_cell_01">
         <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
                   cssStyle="float:left;  width:240px;"/>
@@ -534,10 +531,11 @@ function initPage() {
     </td>
 </tr>
 <tr>
+    <td rowspan="2">උපන් ස්ථානය<br/>பிறந்த இடம்<br/>Place of Birth</td>
     <td><label>සිංහල හෝ දෙමළ භාෂාවෙන් <br>சிங்களம்அல்லது தமிழ் மொழியில்<br>In Sinhala or Tamil</label></td>
-    <td colspan="6"><s:textfield name="child.placeOfBirth" id="placeOfBirth" cssStyle="width:95%;"
-                                 maxLength="255"/>
-            <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>          --%>
+    <td colspan="6">
+        <s:textfield name="child.placeOfBirth" id="placeOfBirth" cssStyle="width:95%;"
+                     maxLength="255"/>
     </td>
 </tr>
 <tr>
@@ -549,7 +547,7 @@ function initPage() {
     </td>
 </tr>
 <tr>
-    <td colspan="3"><label>උපත සිදුවුයේ රෝහලකද? <br>பிறப்பு நிகழ்ந்தது வைத்திய சாலையிலா?<br>Did the birth occur at a
+    <td colspan="3"><label>උපත සිදුවුයේ රෝහලකද? <br>பிறப்பு நிகழ்ந்தது வைத்தியசாலையிலா?<br>Did the birth occur at a
         hospital?</label></td>
     <td colspan="1"><label>ඔව් / ஆம் / Yes </label></td>
     <td align="center"><s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'true':''}"
@@ -565,8 +563,9 @@ function initPage() {
             <br>Name in any of the official languages (Sinhala / Tamil)</label>
         </td>
         <td colspan="7">
-            <s:textarea name="child.childFullNameOfficialLang" id="childFullNameOfficialLang"
-                        cssStyle="width:98.2%;"/>
+            <s:textarea name="child.childFullNameOfficialLang" id="childFullNameOfficialLang" cssStyle="width:880px;"
+                        onblur="maxLengthCalculate('childFullNameOfficialLang','600','childFullNameOfficialLang_div');"/>
+            <div id="childFullNameOfficialLang_div" style="color:red;font-size:8pt"></div>
         </td>
     </tr>
     <tr>
@@ -574,16 +573,18 @@ function initPage() {
             නම ඉංග්‍රීසි භාෂාවෙන් <br>பெயா் ஆங்கில மொழியில்<br>Name in English
         </label></td>
         <td colspan="7">
-            <s:textarea name="child.childFullNameEnglish" id="childFullNameEnglish"
-                        cssStyle="width:98.2%;text-transform: uppercase;"/>
+            <s:textarea name="child.childFullNameEnglish" id="childFullNameEnglish" cssStyle="width:880px;"
+                        onblur="maxLengthCalculate('childFullNameEnglish','600','childFullNameEnglish_div');"/>
+            <div id="childFullNameEnglish_div" style="color:red;font-size:8pt"></div>
             <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px;"
                  id="childName">
         </td>
     </tr>
 </s:if>
 <tr>
-    <td class="font-9" colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උප්පැන්න
-        සහතිකය නිකුත් කල යුතු භාෂාව <br>பிறப்பு அத்தாட்சி ….. <br>Preferred Language for Birth Certificate </label>
+    <td class="font-9" colspan="2"><label> උප්පැන්න
+        සහතිකය නිකුත් කල යුතු භාෂාව <br>பிறப்புச் சான்றிதழ் வழங்கப்பட வேண்டிய மொழி<br>Preferred Language for Birth
+        Certificate </label>
     </td>
     <td colspan="6">
         <s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'தமிழ்'}" name="register.preferredLanguage"
@@ -592,7 +593,7 @@ function initPage() {
 </tr>
 <tr>
     <td class="font-9">
-        <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ස්ත්‍රී
+        <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) ස්ත්‍රී
             පුරුෂ භාවය<br>பால் <br>Gender
             of the child</label>
     </td>
@@ -605,7 +606,7 @@ function initPage() {
         <s:if test="birthType.ordinal() == 1 || birthType.ordinal() == 3">
             <td colspan="2">
                 <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපත්
-                    බර<br>பிறப்பு நிறை<br>Birth
+                    බර<br>பிறப்பு நிறை <br>Birth
                     Weight (kg)</label>
             </td>
         </s:if>
@@ -617,7 +618,7 @@ function initPage() {
             </td>
         </s:if>
         <td colspan="2"><s:textfield name="child.childBirthWeight" id="childBirthWeight"
-                                     cssStyle="width:95%;" maxLength="5"/></td>
+                                     cssStyle="width:94%;" maxLength="5"/></td>
     </s:if>
     <s:elseif test="birthType.ordinal() == 0">
         <td colspan="2">
@@ -631,7 +632,7 @@ function initPage() {
     </s:elseif>
 </tr>
 <tr>
-    <td class="font-9">
+    <td class="font-9" colspan="4">
         <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
             <s:if test="birthType.ordinal() != 0">
                 සජිවි උපත් අනුපිළි‍‍වල අනුව කීවෙනි ළමයා
@@ -646,19 +647,20 @@ function initPage() {
             </s:else>
         </label>
     </td>
-    <td colspan="3" class="font-9"><s:textfield name="child.childRank" id="childRank" maxLength="2"/></td>
-    <td colspan="2" class="font-9">
-        <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)නිවුන්
+    <td colspan="4" class="font-9"><s:textfield name="child.childRank" id="childRank" maxLength="2"/></td>
+</tr>
+<tr>
+    <td colspan="4" class="font-9">
+        <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) නිවුන්
             දරු උපතක් නම්, දරුවන් ගණන
-            <br>பல்வகைத்தன்மை (இரட்டையர்கள் எனின்),
-            <br> பிள்னளகளின் எண்ணிக்கை
+            <br>ஓரே சுழலில் ஒன்றுக்கு மேற்பட்ட பிள்ளை பிறந்திருந்தால் , பிள்ளைகளின் எண்ணிக்கை
             <br>If multiple births, number of children</label>
     </td>
-    <td colspan="2"><s:textfield name="child.numberOfChildrenBorn" id="numberOfChildrenBorn"
-                                 cssStyle="width:95%;" maxLength="2"/></td>
+    <td colspan="4"><s:textfield name="child.numberOfChildrenBorn" id="numberOfChildrenBorn" maxLength="2"/></td>
 </tr>
 </tbody>
 </table>
+</div>
 
 <s:hidden name="pageNo" value="1"/>
 <s:hidden name="rowNumber" value="%{row}"/>
@@ -704,5 +706,4 @@ function initPage() {
 <s:hidden id="submitDate" value="%{getText('p1.submit.date')}"/>
 <s:hidden id="numChildGTOne" value="%{getText('p1.num.child.gt.one')}"/>
 <s:hidden id="childRankGTZero" value="%{getText('p1.child.rank.gt.zero')}"/>
-
-</div>
+<s:hidden id="maxLengthError" value="%{getText('error.max.length')}"/>

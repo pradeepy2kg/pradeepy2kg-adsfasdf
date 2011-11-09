@@ -124,6 +124,19 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<DeathAlteration> getAlterationApprovalListByDeathDSDivision(int pageNo, int numRows, int dsDivisionId, User user) {
+        logger.debug("attempt to get death alteration approval list by DSDivision idUKey : {} and pageNo :{}", dsDivisionId, pageNo);
+        List<DeathAlteration> result = deathAlterationDAO.getPaginatedAlterationApprovalListByDeathDSDivision(pageNo, numRows, dsDivisionId);
+        for (DeathAlteration da : result) {
+            loadValuesToDeathAlterationObject(da);
+        }
+        return Collections.emptyList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<DeathAlteration> getAlterationByDeathId(long deathId, User user) {
         return deathAlterationDAO.getAlterationByDeathId(deathId);
     }

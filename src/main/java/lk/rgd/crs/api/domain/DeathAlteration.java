@@ -19,6 +19,9 @@ import java.util.Date;
     @NamedQuery(name = "get.alt.by.division.death.division", query = "SELECT da FROM DeathAlteration da," +
         "DeathRegister dr WHERE da.deathRegisterIDUkey=dr.idUKey " +
         "AND dr.death.deathDivision.bdDivisionUKey =:deathDivisionUkey AND da.lifeCycleInfo.activeRecord = true"),
+    @NamedQuery(name = "get.alt.by.death.dsdivision", query = "SELECT da FROM DeathAlteration da," +
+        "DeathRegister dr WHERE da.deathRegisterIDUkey=dr.idUKey " +
+        "AND dr.death.deathDivision.bdDivisionUKey =:deathDSdivisionUkey AND da.lifeCycleInfo.activeRecord = true"),
     @NamedQuery(name = "get.atl.by.death.id", query = "SELECT da FROM DeathAlteration da WHERE da.deathRegisterIDUkey=:deathId"),
     @NamedQuery(name = "get.alt.by.user.location", query = "SELECT da FROM DeathAlteration  da" +
         " WHERE da.submittedLocation.locationUKey =:locationUKey"),

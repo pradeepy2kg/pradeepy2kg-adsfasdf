@@ -64,6 +64,10 @@ import java.io.Serializable;
         "WHERE bdf.register.birthDivision.dsDivision = :dsDivision AND bdf.register.status = :status " +
         "ORDER BY bdf.register.dateOfRegistration desc"),
 
+    @NamedQuery(name = "filter.by.district.and.status", query = "SELECT bdf FROM BirthDeclaration bdf " +
+        "WHERE bdf.register.birthDivision.dsDivision.district = :district AND bdf.register.status = :status " +
+        "ORDER BY bdf.register.dateOfRegistration desc"),
+
     @NamedQuery(name = "get.by.dsdivision.and.status", query = "SELECT bdf FROM BirthDeclaration bdf " +
         "WHERE bdf.register.birthDivision.dsDivision = :dsDivision AND bdf.register.status = :status " +
         "AND bdf.child.dateOfBirth BETWEEN :start AND :end"),
@@ -107,9 +111,23 @@ import java.io.Serializable;
         " WHERE bdf.register.bdfSerialNo =:serial AND bdf.register.birthDivision.dsDivision.dsDivisionUKey =:dsId " +
         "AND bdf.lifeCycleInfo.activeRecord IS TRUE "),
     @NamedQuery(name = "get.bdf.by.mother", query = "SELECT bdf FROM BirthDeclaration bdf WHERE " +
-        "(bdf.parent.motherNICorPIN =:mother AND bdf.register.birthType =:type AND bdf.lifeCycleInfo.activeRecord IS TRUE) ")
+        "(bdf.parent.motherNICorPIN =:mother AND bdf.register.birthType =:type AND bdf.lifeCycleInfo.activeRecord IS TRUE) "),
+
+    @NamedQuery(name = "get.bdf.by.division.registrarPinOrNic", query = "SELECT bdf FROM BirthDeclaration bdf " +
+        "WHERE bdf.register.birthDivision.bdDivisionUKey = :birthDivision " +
+        "AND (bdf.notifyingAuthority.notifyingAuthorityPIN = :registrarPin OR bdf.notifyingAuthority.notifyingAuthorityPIN = :registrarNic)"),
+
+    @NamedQuery(name = "count.birth.dsDivision.usage", query = "SELECT COUNT(bdf) FROM BirthDeclaration bdf " +
+        "WHERE (bdf.register.birthDivision.dsDivision.dsDivisionUKey = :dsDivisionId OR bdf.parent.motherDSDivision.dsDivisionUKey = :dsDivisionId) " +
+        "AND bdf.register.status <> 0"),
+    @NamedQuery(name = "count.birth.gnDivision.usage", query = "SELECT COUNT(bdf) FROM BirthDeclaration bdf " +
+        "WHERE bdf.parent.motherGNDivision.gnDivisionUKey = :gnDivisionId AND bdf.register.status <> 0"),
+    @NamedQuery(name = "count.birth.bdDivision.usage", query = "SELECT COUNT(bdf) FROM BirthDeclaration bdf " +
+        "WHERE bdf.register.birthDivision.bdDivisionUKey = :bdDivisionId AND bdf.register.status <> 0"),
+    @NamedQuery(name = "count.birth.location.usage", query = "SELECT COUNT(bdf) FROM BirthDeclaration bdf " +
+        "WHERE bdf.register.originalBCPlaceOfIssue.locationUKey = :locationId AND bdf.register.status <> 0")
 })
-@Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class BirthDeclaration implements Serializable, Cloneable {
 
     /**

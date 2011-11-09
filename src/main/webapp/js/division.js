@@ -42,24 +42,32 @@ function clear_list(list) {
 function getModeForDSList(type) {
     if (type == "Birth") {
         return 11;
-    } else if (type == "Marriage") {
-        return 12;
-    } else if (type == "BirthWithAllDS") {
-        return 16;
-    } else if (type == "MarriageWithAllDS") {
-        return 17;
     } else {
-        return 0;
+        if (type == "Marriage") {
+            return 12;
+        } else {
+            if (type == "BirthWithAllDS") {
+                return 16;
+            } else {
+                if (type == "MarriageWithAllDS") {
+                    return 17;
+                } else {
+                    return 0;
+                }
+            }
+        }
     }
 }
 
 function getModeForDivisionList(type) {
     if (type == "Birth") {
         return 9;
-    } else if (type == "Marriage") {
-        return 10;
     } else {
-        return 0;
+        if (type == "Marriage") {
+            return 10;
+        } else {
+            return 0;
+        }
     }
 }
 

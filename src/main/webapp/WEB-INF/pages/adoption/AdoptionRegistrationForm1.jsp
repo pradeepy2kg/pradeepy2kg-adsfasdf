@@ -391,7 +391,7 @@ function enableSerialNumber(mode) {
             <br>
             <s:textfield name="adoption.applicantPINorNIC"
                          id="applicantPin"
-                         cssStyle="float:left;width:200px;" maxLength="10"/>
+                         cssStyle="float:left;width:200px;" maxLength="12"/>
             <img src="<s:url value="/images/search-father.png" />"
                  style="vertical-align:middle; margin-left:10px;" id="adoption_applicant_lookup"></td>
     </tr>
@@ -412,7 +412,7 @@ function enableSerialNumber(mode) {
         </td>
         <td>
             ගමන් බලපත්‍ර අංකය
-            <br>கடவுச் சீட்டு
+            <br>கடவுச் சீட்டு இல.
             <br>Passport No.
         </td>
         <td><s:textfield name="adoption.applicantPassport" id="applcantPassportNumber" cssStyle="width:90%"
@@ -468,7 +468,7 @@ function enableSerialNumber(mode) {
                  id="wife_NIC_X" onclick="javascript:addXorV('wifePINorNIC','X','error21')">
             <br>
             <s:textfield name="adoption.wifePINorNIC" id="wifePINorNIC"
-                         cssStyle="float:left;width:200px;" maxLength="10"/>
+                         cssStyle="float:left;width:200px;" maxLength="12"/>
             <img src="<s:url value="/images/search-mother.png" />"
                  style="vertical-align:middle; margin-left:10px;" id="mother_lookup"></td>
     </tr>
@@ -486,7 +486,7 @@ function enableSerialNumber(mode) {
                       headerValue="%{getText('adoption.select_country.label')}" cssStyle="width:90%"/>
         </td>
         <td>ගමන් බලපත්‍ර අංකය <br/>
-            கடவுச் சீட்டு <br/>
+            கடவுச் சீட்டு இல. <br/>
             Passport No.
         </td>
         <td>
@@ -534,7 +534,7 @@ function enableSerialNumber(mode) {
         <td>
             උපන් දිනය
             <br>பிறந்த திகதி
-            <br>Date of birth
+            <br>Date of Birth
         </td>
         <td colspan="2">
             <s:label value="YYYY-MM-DD" cssStyle="margin-left:10px;font-size:10px"/><br>
@@ -682,9 +682,9 @@ function enableSerialNumber(mode) {
     </tr>
     <tr>
         <td colspan="1">
-            ප්‍රාදේශීය ලේකම් කොට්ටාශය
-            <br>பிரதேச செயலாளா் பிரிவு
-            <br>Divisional Secretariat
+            ප්‍රාදේශීය ලේකම් කොට්ඨාශය
+            <br/>பிரதேச செயளாளர் பிரிவு
+            <br/>Divisional Secretary Division
         </td>
         <td colspan="5">
             <s:select id="dsDivisionId" name="dsDivisionId" list="allDSDivisionList" value="%{dsDivisionId}"

@@ -26,8 +26,7 @@
             </a>
         </li>
         <li>
-            <a id="birth_register_approval.label" href="/ecivil/births/eprBirthRegisterApproval.do"
-               style="color:red">
+            <a id="birth_register_approval.label" href="/ecivil/births/eprBirthRegisterApproval.do">
                 (2) උපත් ලියාපදිංචි අනුමතය
             </a>
         </li>
@@ -288,8 +287,8 @@
             </a>
         </li>
         <li>
-            <a id="menu.marriage.register.search" href="/ecivil/marriages/eprMarriageRegisterSearchInit.do">
-                විවාහ ලේකම් පොත සේවීම
+            <a id="menu.marriage.notice.search" href="/ecivil/marriages/eprMarriageNoticeSearchHome.do">
+                විවාහ දැන්වීම් සෙවීම
             </a>
         </li>
         <li>
@@ -303,8 +302,8 @@
             </a>
         </li>
         <li>
-            <a id="menu.marriage.notice.search" href="/ecivil/marriages/eprMarriageNoticeSearchInit.do">
-                විවාහ දැන්වීම් සෙවීම
+            <a id="menu.marriage.register.search" href="/ecivil/marriages/eprMarriageRegisterSearchInit.do">
+                විවාහ ලේකම් පොත සේවීම
             </a>
         </li>
     </ul>

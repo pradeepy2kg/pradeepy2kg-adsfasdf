@@ -20,7 +20,7 @@ import java.util.Map;
  * Printing actions
  *
  * @author Chathuranga Withana
- * @author Indunil Moremada
+ * @author Indunil Moremada                                           N
  * @authar amith jayasekara
  */
 public class PrintAction extends ActionSupport implements SessionAware {
@@ -180,6 +180,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
             if (currentState != BirthDeclaration.State.APPROVED) {
                 addActionError(getText("birth.confirmation.invalid.state.to.marak.as.print"));
             } else {
+                addActionMessage(getText("birth.confirmation.printed"));
                 service.markLiveBirthConfirmationAsPrinted(bdf, user);
             }
             if (!directPrint) {
@@ -197,7 +198,6 @@ public class PrintAction extends ActionSupport implements SessionAware {
                 currentState != BirthDeclaration.State.ARCHIVED_ALTERED &&
                 currentState != BirthDeclaration.State.ARCHIVED_CERT_PRINTED) {
                 addActionError(getText("birth.certificate.invalid.state.to.mark.as.print"));
-
             } else {
                 if (currentState == BirthDeclaration.State.ARCHIVED_CERT_GENERATED) {
 

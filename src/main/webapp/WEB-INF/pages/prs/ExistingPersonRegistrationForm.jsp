@@ -19,6 +19,7 @@
     function validate() {
         var returnVal = true;
         var domObject;
+        var domObject1;
 
         domObject = document.getElementById("submitDatePicker");
         if (isFieldEmpty(domObject)) {
@@ -60,12 +61,22 @@
             }
         }
 
+        domObject1 = document.getElementById("submitDatePicker");
         domObject = document.getElementById("birthDatePicker");
         if (isFieldEmpty(domObject)) {
             isEmpty(domObject, "", 'error4');
         } else {
             isDate(domObject.value, 'error0', 'error4');
         }
+       //
+        if(!isFieldEmpty(domObject) && !isFieldEmpty(domObject1)){
+            if(domObject.value>domObject1.value){
+                  errormsg = errormsg + "\n" + document.getElementById('error18').value;
+            }
+        }
+
+
+
 
         domObject = document.getElementById("placeOfBirth");
         if (isFieldEmpty(domObject)) {
@@ -149,7 +160,7 @@
     }
 
     // TODO for dob calculation for person, how to add??
-    /*function calculateBirthDay(id, datePicker, error) {
+    /*function calculateBirthDay(id, error) {
      var reg = /^([0-9]{9}[X|x|V|v])$/;
      var day = id.substring(2, 5);
      var year = 19 + id.substring(0, 2);
@@ -193,34 +204,16 @@
 
     $(function() {
         $('img#personName').bind('click', function(evt3) {
-            var id = $("textarea#personFullNameOfficialLang").attr("value");
-            var wsMethod = "transliterate";
-            var soapNs = "http://translitwebservice.transliteration.icta.com/";
+            var text = $("textarea#personFullNameOfficialLang").attr("value");
 
-            var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
-            soapBody.attr("xmlns:trans", soapNs);
-            soapBody.appendChild(new SOAPObject('InputName')).val(id);
-            soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
-            soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
-            soapBody.appendChild(new SOAPObject('Gender')).val('U');
-
-            //Create a new SOAP Request
-            var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
-
-            //Lets send it
-            SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
-            SOAPClient.SendRequest(sr, processResponse1); //Send request to server and assign a callback
+            $.post('/ecivil/TransliterationService', {text:text,gender:'M'},
+                function(data) {
+                    if (data != null) {
+                        var s = data.translated;
+                        $("textarea#personFullNameEnglish").val(s);
+                    }
+                });
         });
-
-        function processResponse1(respObj) {
-            //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-            $("textarea#personFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].
-            return[0].Text
-        )
-            ;
-        }
-
-        ;
     });
 
     $(function() {
@@ -508,13 +501,13 @@
             <br>Temporary Identification number
         </td>
         <td colspan="2">
-            <s:textfield name="person.temporaryPin" id="temporaryPIN" maxLength="10"
+            <s:textfield name="person.temporaryPin" id="temporaryPIN" maxLength="12"
                          onkeypress="return isNumberKey(event)"/>
         </td>
     </tr>
     <tr>
         <td>
-            (3) ජාතිය<s:label value="*" cssStyle="color:red;font-size:14pt"/><br>இனம்<br>Race
+            (3) ජන වර්ගය<s:label value="*" cssStyle="color:red;font-size:14pt"/><br>இனம்<br>Ethnic Group
         </td>
         <td colspan="2">
             <s:select id="personRaceId" name="personRaceId" list="raceList" headerKey="0"
@@ -614,7 +607,7 @@
             <br>Mothers Identification Number (PIN) or NIC
         </td>
         <td colspan="2">
-            <s:textfield name="person.motherPINorNIC" id="motherPINorNIC" maxLength="10"/>
+            <s:textfield name="person.motherPINorNIC" id="motherPINorNIC" maxLength="12"/>
         </td>
         <td colspan="3">
             (12) පියාගේ අනන්‍යතා අංකය හෝ ජාතික හැඳුනුම්පත් අංකය
@@ -622,7 +615,7 @@
             <br>Fathers Identification Number (PIN) or NIC
         </td>
         <td colspan="2">
-            <s:textfield name="person.fatherPINorNIC" id="fatherPINorNIC" maxLength="10"/>
+            <s:textfield name="person.fatherPINorNIC" id="fatherPINorNIC" maxLength="12"/>
         </td>
     </tr>
     </tbody>
@@ -667,7 +660,7 @@
             <s:textfield name="person.personPhoneNo" id="personPhoneNo" maxLength="15"
                          onkeypress="return isNumberKey(event)"/>
         </td>
-        <td>(16) ඉ – තැපැල් <br>மின்னஞ்சல்<br>Email</td>
+        <td>(16) ඉ – තැපැල <br>மின்னஞ்சல்<br>Email</td>
         <td colspan="4">
             <s:textfield name="person.personEmail" id="personEmail" cssStyle="text-transform:none;" maxLength="30"/>
         </td>
@@ -789,4 +782,5 @@
 <s:hidden id="error15" value="%{getText('er.label.fatherPINorNIC')}"/>
 <s:hidden id="error16" value="%{getText('er.label.personRace')}"/>
 <s:hidden id="error17" value="%{getText('er.label.civilStatus')}"/>
+<s:hidden id="error18" value="%{getText('er.label.birthAcceptDate')}"/>
 </div>

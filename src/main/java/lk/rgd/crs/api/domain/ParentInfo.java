@@ -11,6 +11,7 @@ import java.util.Date;
 
 /**
  * Java bean instance to capture parent information as given by page 2 of birth declaration form
+ * If the database column sizes are modified the setter methods must be modified
  */
 @Embeddable
 public class ParentInfo implements Serializable, Cloneable {
@@ -44,6 +45,12 @@ public class ParentInfo implements Serializable, Cloneable {
      */
     @Column(nullable = true, length = 600)
     private String fatherFullName;
+
+    /**
+     * Name of father in English
+     */
+    @Column(nullable = true, length = 600)
+    private String fatherFullNameInEnglish;
 
     /**
      * DOB of father
@@ -101,6 +108,12 @@ public class ParentInfo implements Serializable, Cloneable {
      */
     @Column(nullable = true, length = 600)
     private String motherFullName;
+
+    /**
+     * Full name of mother in English
+     */
+    @Column(nullable = true, length = 600)
+    private String motherFullNameInEnglish;
 
     /**
      * DOB of mother
@@ -168,7 +181,7 @@ public class ParentInfo implements Serializable, Cloneable {
     /**
      * Email of mother
      */
-    @Column(nullable = true, length = 30)
+    @Column(nullable = true, length = 50)
     private String motherEmail;
 
     /**
@@ -178,18 +191,30 @@ public class ParentInfo implements Serializable, Cloneable {
     private String motherAdmissionNo;
 
     /**
-     * Date the mother admitted that she was pregnant. -- just kidding, the date she got addmitted to the hospital of course. -- 
+     * Date the mother admitted that she was pregnant. -- just kidding, the date she got addmitted to the hospital of course. --
      */
     @Column(nullable = true)
     @Temporal(value = TemporalType.DATE)
     private Date motherAdmissionDate;
+
+    /**
+     * The GN  division where the birth is registered (Includes District)
+     */
+    //todo remove nullable to false when we have all the data
+    @ManyToOne
+    @JoinColumn(name = "motherGNDivisionUKey", nullable = true)
+    private GNDivision motherGNDivision;
+
+
+    @Transient
+    private String motherGNDivisionPrint;
 
     public String getFatherNICorPIN() {
         return fatherNICorPIN;
     }
 
     public void setFatherNICorPIN(String fatherNICorPIN) {
-        this.fatherNICorPIN = WebUtils.filterBlanksAndToUpper(fatherNICorPIN);
+        this.fatherNICorPIN = WebUtils.filterBlanksAndToUpperAndTrim(fatherNICorPIN, 12, "fatherNICorPIN");
     }
 
     public String getFatherPassportNo() {
@@ -197,7 +222,7 @@ public class ParentInfo implements Serializable, Cloneable {
     }
 
     public void setFatherPassportNo(String fatherPassportNo) {
-        this.fatherPassportNo = WebUtils.filterBlanksAndToUpper(fatherPassportNo);
+        this.fatherPassportNo = WebUtils.filterBlanksAndToUpperAndTrim(fatherPassportNo, 15, "fatherPassportNo");
     }
 
     public Country getFatherCountry() {
@@ -212,8 +237,16 @@ public class ParentInfo implements Serializable, Cloneable {
         return fatherFullName;
     }
 
+    public String getFatherFullNameInEnglish() {
+        return fatherFullNameInEnglish;
+    }
+
     public void setFatherFullName(String fatherFullName) {
-        this.fatherFullName = WebUtils.filterBlanksAndToUpper(fatherFullName);
+        this.fatherFullName = WebUtils.filterBlanksAndToUpperAndTrim(fatherFullName, 600, "fatherFullName");
+    }
+
+    public void setFatherFullNameInEnglish(String fatherFullNameInEnglish) {
+        this.fatherFullNameInEnglish = WebUtils.filterBlanksAndToUpperAndTrim(fatherFullNameInEnglish, 600, "fatherFullNameInEnglish");
     }
 
     public Date getFatherDOB() {
@@ -229,7 +262,7 @@ public class ParentInfo implements Serializable, Cloneable {
     }
 
     public void setFatherPlaceOfBirth(String fatherPlaceOfBirth) {
-        this.fatherPlaceOfBirth = WebUtils.filterBlanksAndToUpper(fatherPlaceOfBirth);
+        this.fatherPlaceOfBirth = WebUtils.filterBlanksAndToUpperAndTrim(fatherPlaceOfBirth, 60, "fatherPlaceOfBirth");
     }
 
     public Race getFatherRace() {
@@ -245,7 +278,7 @@ public class ParentInfo implements Serializable, Cloneable {
     }
 
     public void setMotherNICorPIN(String motherNICorPIN) {
-        this.motherNICorPIN = WebUtils.filterBlanksAndToUpper(motherNICorPIN);
+        this.motherNICorPIN = WebUtils.filterBlanksAndToUpperAndTrim(motherNICorPIN, 12, "motherNICorPIN");
     }
 
     public String getMotherPassportNo() {
@@ -253,7 +286,7 @@ public class ParentInfo implements Serializable, Cloneable {
     }
 
     public void setMotherPassportNo(String motherPassportNo) {
-        this.motherPassportNo = WebUtils.filterBlanksAndToUpper(motherPassportNo);
+        this.motherPassportNo = WebUtils.filterBlanksAndToUpperAndTrim(motherPassportNo, 15, "motherPassportNo");
     }
 
     public Country getMotherCountry() {
@@ -268,9 +301,18 @@ public class ParentInfo implements Serializable, Cloneable {
         return motherFullName;
     }
 
-    public void setMotherFullName(String motherFullName) {
-        this.motherFullName = WebUtils.filterBlanksAndToUpper(motherFullName);
+    public String getMotherFullNameInEnglish() {
+        return motherFullNameInEnglish;
     }
+
+    public void setMotherFullName(String motherFullName) {
+        this.motherFullName = WebUtils.filterBlanksAndToUpperAndTrim(motherFullName, 600, "motherFullName");
+    }
+
+    public void setMotherFullNameInEnglish(String motherFullNameInEnglish) {
+        this.motherFullNameInEnglish = WebUtils.filterBlanksAndToUpperAndTrim(motherFullNameInEnglish, 600, "motherFullNameInEnglish");
+    }
+
 
     public Date getMotherDOB() {
         return motherDOB;
@@ -285,7 +327,7 @@ public class ParentInfo implements Serializable, Cloneable {
     }
 
     public void setMotherPlaceOfBirth(String motherPlaceOfBirth) {
-        this.motherPlaceOfBirth = WebUtils.filterBlanksAndToUpper(motherPlaceOfBirth);
+        this.motherPlaceOfBirth = WebUtils.filterBlanksAndToUpperAndTrim(motherPlaceOfBirth, 60, "motherPlaceOfBirth");
     }
 
     public Race getMotherRace() {
@@ -309,7 +351,7 @@ public class ParentInfo implements Serializable, Cloneable {
     }
 
     public void setMotherAddress(String motherAddress) {
-        this.motherAddress = WebUtils.filterBlanksAndToUpper(motherAddress);
+        this.motherAddress = WebUtils.filterBlanksAndToUpperAndTrim(motherAddress, 255, "motherAddress");
     }
 
     public String getMotherPhoneNo() {
@@ -317,7 +359,7 @@ public class ParentInfo implements Serializable, Cloneable {
     }
 
     public void setMotherPhoneNo(String motherPhoneNo) {
-        this.motherPhoneNo = WebUtils.filterBlanks(motherPhoneNo);
+        this.motherPhoneNo = WebUtils.filterBlanksAndToUpperAndTrim(motherPhoneNo, 30, "motherPhoneNo");
     }
 
     public String getMotherEmail() {
@@ -333,7 +375,7 @@ public class ParentInfo implements Serializable, Cloneable {
     }
 
     public void setMotherAdmissionNo(String motherAdmissionNo) {
-        this.motherAdmissionNo = WebUtils.filterBlanks(motherAdmissionNo);
+        this.motherAdmissionNo = WebUtils.filterBlanksAndToUpperAndTrim(motherAdmissionNo, 15, "motherAdmissionNo");
     }
 
     public Date getMotherAdmissionDate() {
@@ -400,8 +442,24 @@ public class ParentInfo implements Serializable, Cloneable {
         this.motherDistrictPrint = motherDistrictPrint;
     }
 
+    public GNDivision getMotherGNDivision() {
+        return motherGNDivision;
+    }
+
+    public void setMotherGNDivision(GNDivision motherGNDivision) {
+        this.motherGNDivision = motherGNDivision;
+    }
+
     @Override
     protected ParentInfo clone() throws CloneNotSupportedException {
         return (ParentInfo) super.clone();
+    }
+
+    public String getMotherGNDivisionPrint() {
+        return motherGNDivisionPrint;
+    }
+
+    public void setMotherGNDivisionPrint(String motherGNDivisionPrint) {
+        this.motherGNDivisionPrint = motherGNDivisionPrint;
     }
 }

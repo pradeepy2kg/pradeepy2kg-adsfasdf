@@ -4,7 +4,10 @@ import lk.rgd.common.util.WebUtils;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author Duminda Dharmakeerthi
@@ -41,12 +44,15 @@ public class DeclarantInfo implements Serializable, Cloneable {
     @Column(nullable = true)
     private String declarantPhone;
 
-    @Column(nullable = true)
+    @Column(nullable = true, length = 50)
     private String declarantEMail;
 
     @Column(nullable = false)
     private DeclarantType declarantType;
 
+    @Column(nullable = true)
+    @Temporal(value = TemporalType.DATE)
+    private Date declarantSignDate;
 
     public String getDeclarantNICorPIN() {
         return declarantNICorPIN;
@@ -94,6 +100,14 @@ public class DeclarantInfo implements Serializable, Cloneable {
 
     public void setDeclarantType(DeclarantType declarantType) {
         this.declarantType = declarantType;
+    }
+
+    public Date getDeclarantSignDate() {
+        return declarantSignDate;
+    }
+
+    public void setDeclarantSignDate(Date declarantSignDate) {
+        this.declarantSignDate = declarantSignDate;
     }
 
     @Override

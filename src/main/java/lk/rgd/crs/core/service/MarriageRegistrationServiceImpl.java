@@ -143,22 +143,8 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.SUPPORTS)
-    public MarriageRegister getMarriageLicenseByIdUKeyAndState(long idUKey, User user, int permission) {
-        ValidationUtils.validateUserPermission(permission, user);
-
-        EnumSet<MarriageRegister.State> stateList = StateUtil.getMarriageRegisterStateList(MarriageRegister.State.LICENSE_PRINTED);
-
-        MarriageRegister marriageRegister = marriageRegistrationDAO.getMarriageRegisterByIdUKeyAndState(idUKey, stateList);
-
-        return marriageRegister;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    @Transactional(propagation = Propagation.SUPPORTS)
-    public MarriageRegister getMarriageRegisterByIdUKeyAndState(long idUKey, User user, int permission) {
-        ValidationUtils.validateUserPermission(permission, user);
+    public MarriageRegister getMarriageRegisterByIdUKeyAndState(long idUKey, User user) {
+        ValidationUtils.validateUserPermission(Permission.SEARCH_MARRIAGE, user);
 
         EnumSet<MarriageRegister.State> stateList = StateUtil.getMarriageRegisterStateList(null);
 
@@ -173,8 +159,8 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.SUPPORTS)
-    public List<MarriageRegister> getMarriageRegisterBySerialNumber(long serialNumber, User user, int permission) {
-        ValidationUtils.validateUserPermission(permission, user);
+    public List<MarriageRegister> getMarriageRegisterBySerialNumber(long serialNumber, User user) {
+        ValidationUtils.validateUserPermission(Permission.SEARCH_MARRIAGE, user);
         EnumSet<MarriageRegister.State> stateList = StateUtil.getMarriageRegisterStateList(null);
         Set<DSDivision> dsDivisionList = null;
         if (!Role.ROLE_RG.equals(user.getRole().getRoleId())) {
@@ -611,12 +597,6 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     }
 
     /**
-     * register groom on PRS
-     */
-    public void processGroomToPRS(MaleParty groom, User user) {
-    }
-
-    /**
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
@@ -667,7 +647,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
             marriageRegistrationDAO.updateMarriageRegister(mr, user);
 
             // TODO following is not complete and only temporary solution to update person if they already exist in PRS
-            updateExistingPRSRecords(mr, user);
+            updateExistingPRSRecords(mr, Person.CivilStatus.MARRIED, user);
 
             logger.debug("Approved marriage register with idUKey : {} Ignore warnings : {}", idUKey, ignoreWarnings);
             return Collections.emptyList();
@@ -676,8 +656,32 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
             return warnings;
         }
     }
+    //extract bride information's form the marriage register object
 
-    private void updateExistingPRSRecords(MarriageRegister mr, User user) {
+    private Person getBrideForProcessToPRS(MarriageRegister register,Person.CivilStatus civilStatus) {
+        Person bride = new Person();
+        bride.setCivilStatus(civilStatus);
+        bride.setRace(register.getFemale().getFemaleRace());
+        bride.setDateOfBirth(register.getFemale().getDateOfBirthFemale());
+        bride.setCurrentAddress(register.getFemale().getResidentAddressFemaleInOfficialLang());
+        bride.setFullNameInEnglishLanguage(register.getFemale().getNameInEnglishFemale());
+        bride.setFullNameInOfficialLanguage(register.getFemale().getNameInOfficialLanguageFemale());
+        return bride;
+    }
+    //extract groom's information's form the marriage register object 
+
+    private Person getGroomForProcessToPRS(MarriageRegister register, Person.CivilStatus civilStatus) {
+        Person groom = new Person();
+        groom.setCivilStatus(civilStatus);
+        groom.setRace(register.getMale().getMaleRace());
+        groom.setDateOfBirth(register.getMale().getDateOfBirthMale());
+        groom.setCurrentAddress(register.getMale().getResidentAddressMaleInOfficialLang());
+        groom.setFullNameInEnglishLanguage(register.getMale().getNameInEnglishMale());
+        groom.setFullNameInOfficialLanguage(register.getMale().getNameInOfficialLanguageMale());
+        return groom;
+    }
+
+    private void updateExistingPRSRecords(MarriageRegister mr, Person.CivilStatus civilStatus, User user) {
 
         logger.debug("Processing details of marriage to the PRS");
         Person groom = null, bride = null;
@@ -688,8 +692,13 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         if (groomPinOrNic != null) {
             groom = findGroomOrBride(groomPinOrNic, user);
             if (groom != null) {
-                groom.setCivilStatus(Person.CivilStatus.MARRIED);
+                groom.setCivilStatus(civilStatus);
                 eCivil.updatePerson(groom, user);
+            } else {
+                //adding non existing groom to PRS as semi verified
+                groom = getGroomForProcessToPRS(mr, civilStatus);
+                groom.setStatus(Person.Status.SEMI_VERIFIED);
+                eCivil.addPerson(groom, user);
             }
         }
 
@@ -697,28 +706,47 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         if (bridePinOrNic != null) {
             bride = findGroomOrBride(bridePinOrNic, user);
             if (bride != null) {
-                bride.setCivilStatus(Person.CivilStatus.MARRIED);
+                bride.setCivilStatus(civilStatus);
                 eCivil.updatePerson(bride, user);
+            } else {
+                //adding non existing bride to PRS as semi verified
+                bride = getBrideForProcessToPRS(mr, civilStatus);
+                bride.setStatus(Person.Status.SEMI_VERIFIED);
+                eCivil.addPerson(bride, user);
             }
         }
 
-        // adding marriage entry to the PRS
-        if (groom != null && bride != null && mr.getDateOfMarriage() != null) {
-            Marriage m = new Marriage();
-            m.setGroom(groom);
-            m.setBride(bride);
-            m.setDateOfMarriage(mr.getDateOfMarriage());
-            m.setPlaceOfMarriage(mr.getRegPlaceInEnglishLang());
-            m.setState(Marriage.State.MARRIED);
-            m.setPreferredLanguage(mr.getPreferredLanguage());
-            m.setTypeOfMarriage(mr.getTypeOfMarriage());
-            groom.specifyMarriage(m);
-            bride.specifyMarriage(m);
+        if (Person.CivilStatus.MARRIED == civilStatus) {
+            // adding marriage entry to the PRS
+            if (groom != null && bride != null && mr.getDateOfMarriage() != null) {
+                Marriage m = new Marriage();
+                m.setGroom(groom);
+                m.setBride(bride);
+                m.setDateOfMarriage(mr.getDateOfMarriage());
+                m.setPlaceOfMarriage(mr.getRegPlaceInOfficialLang());
+                m.setState(Marriage.State.MARRIED);
+                m.setPreferredLanguage(mr.getPreferredLanguage());
+                m.setTypeOfMarriage(mr.getTypeOfMarriage());
+                m.setMarriageRegister(mr);
+                groom.specifyMarriage(m);
+                bride.specifyMarriage(m);
+                // add marriage to the PRS
+                eCivil.addMarriage(m, user);
+                eCivil.updatePerson(groom, user);
+                eCivil.updatePerson(bride, user);
+            }
+        } else if (Person.CivilStatus.DIVORCED == civilStatus) {
+            // select marriage record from PRS
+            Marriage m = eCivil.findMarriageByMRUKey(mr.getIdUKey(), user);
+            if (m != null) {
+                m.setDateOfDissolution(new Date());
+                m.setState(Marriage.State.DIVORCED);
 
-            // add marriage to the PRS
-            eCivil.addMarriage(m, user);
-            eCivil.updatePerson(groom, user);
-            eCivil.updatePerson(bride, user);
+                // update marriage to the PRS
+                eCivil.updateMarriage(m, user);
+            } else {
+                logger.debug("No marriage record found for marriageUKey : {} in PRS", mr.getIdUKey());
+            }
         }
     }
 
@@ -730,7 +758,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      * @return matching person result if exist or null
      */
     private Person findGroomOrBride(String nicOrPin, User user) {
-        logger.debug("Location PRS entry using NIC or PIN : {}", nicOrPin);
+        logger.debug("Locating PRS entry using NIC or PIN : {}", nicOrPin);
         Person person = null;
         if (nicOrPin != null) {
             try {
@@ -752,10 +780,10 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void divorce(long idUKey, User user, int permission,
-        String comment, Date effectiveDateOfDivorce, MarriageRegister.State state) {
+    public void divorce(long idUKey, String comment, Date effectiveDateOfDivorce, MarriageRegister.State state,
+        User user) {
         //todo: to be renamed this method to divorce
-        ValidationUtils.validateUserPermission(permission, user);
+        ValidationUtils.validateUserPermission(Permission.DIVORCE, user);
         MarriageRegister marriageRegister = marriageRegistrationDAO.getByIdUKey(idUKey);
         ValidationUtils.validateUserAccessToDSDivision(marriageRegister.getMrDivision().getDsDivision().getDsDivisionUKey(), user);
         marriageRegister.setState(state);
@@ -764,6 +792,9 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         marriageRegister.setDivorcedByUser(user);
         marriageRegister.setDivorcedDate(new Date());
         marriageRegistrationDAO.updateMarriageRegister(marriageRegister, user);
+
+        // update marriage record state and civil status in PRS as divorce
+        updateExistingPRSRecords(marriageRegister, Person.CivilStatus.DIVORCED, user);
     }
 
     /**
@@ -1343,8 +1374,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
                 m.getLifeCycleInfo().setActiveRecord(false);
                 //now updating
                 marriageRegistrationDAO.updateMarriageRegister(m, systemUser);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 logger.error("Error while expiring marriage notice :idUKey {}", m.getIdUKey());
             }
         }

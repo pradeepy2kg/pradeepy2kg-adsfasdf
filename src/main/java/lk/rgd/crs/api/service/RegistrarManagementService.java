@@ -24,10 +24,19 @@ public interface RegistrarManagementService {
     /**
      * Update Registrar information
      *
-     * @param registrar the instance being updated
-     * @param user      the user invoking the action
+     * @param previousPin the existing pin of the registrar
+     * @param registrar   the instance being updated
+     * @param user        the user invoking the action
      */
-    public void updateRegistrar(Registrar registrar, User user);
+    public void updateRegistrar(long previousPin, Registrar registrar, User user);
+
+    /**
+     * Delete the specified Registrar
+     *
+     * @param registrarUKey the registrar unique key
+     * @param user          the user performing the action
+     */
+    public void deleteRegistrar(long registrarUKey, User user);
 
     /**
      * Add a new Registrar assignment to the system
@@ -44,6 +53,14 @@ public interface RegistrarManagementService {
      * @param user       the user invoking the action
      */
     public void updateAssignment(Assignment assignment, User user);
+
+    /**
+     * Delete the specified assignment of a Registrar
+     *
+     * @param assignmentUKey
+     * @param user           the user performing the action
+     */
+    public void deleteAssignment(long assignmentUKey, User user);
 
     /**
      * Inactivate an assignment of a registrar

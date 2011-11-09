@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -139,6 +138,22 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<DeathRegister> getByBDDivisionAndRegistrationDateRangeAndState(BDDivision deathDivision,
+        Date startDate, Date endDate, int pageNo, int noOfRows, DeathRegister.State state) {
+
+        Query q = em.createNamedQuery("get.by.division.register.date.state").
+            setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+        q.setParameter("deathDivision", deathDivision);
+        q.setParameter("startDate", startDate);
+        q.setParameter("endDate", endDate);
+        q.setParameter("state", state);
+        return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<DeathRegister> getPaginatedListForStateByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, DeathRegister.State status) {
         Query q = em.createNamedQuery("death.register.filter.by.and.dsDivision.status.paginated").
             setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
@@ -211,13 +226,71 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<DeathRegister> getPaginatedDeathRegisterListByDSDivisionAndRegistrationDateRangeAndState(int dsDivisionId,
+        Date startDate, Date endDate, int pageNo, int numOfRows, boolean active, DeathRegister.State state) {
+        Query q = em.createNamedQuery("get.all.by.death.division.time.frame.state").setFirstResult((pageNo - 1)
+            * numOfRows).setMaxResults(numOfRows);
+        q.setParameter("dsDivisionId", dsDivisionId);
+        q.setParameter("startDate", startDate);
+        q.setParameter("endDate", endDate);
+        q.setParameter("active", active);
+        q.setParameter("state", state);
+        return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<DeathRegister> getDeathRegisterByDivisionAndStatusAndDate(DSDivision deathDivision, DeathRegister.State status, Date startDate, Date endDate) {
         Query q = em.createNamedQuery("get.by.division.register.date.state");
         q.setParameter("deathDivision", deathDivision);
-        q.setParameter("status", status);
+        q.setParameter("state", status);
         q.setParameter("startDate", startDate);
         q.setParameter("endDate", endDate);
         return q.getResultList();
     }
 
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<DeathRegister> getDeathsByRegistrarPinOrNicAndDivision(String registrarPin, String registrarNic,
+        int deathDivisionUKey) {
+        Query q = em.createNamedQuery("get.dr.by.division.registrarPinOrNic");
+        q.setParameter("deathDivision", deathDivisionUKey);
+        q.setParameter("registrarPin", registrarPin);
+        q.setParameter("registrarNic", registrarNic);
+        return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public Long findGNDivisionUsageInDeathRecords(int gnDivisionUKey) {
+        Query q = em.createNamedQuery("count.death.gnDivision.usage");
+        q.setParameter("gnDivisionId", gnDivisionUKey);
+        return (Long) q.getSingleResult();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public Long findBDDivisionUsageInDeathRecords(int bdDivisionUKey) {
+        Query q = em.createNamedQuery("count.death.bdDivision.usage");
+        q.setParameter("bdDivisionId", bdDivisionUKey);
+        return (Long) q.getSingleResult();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public Long findLocationUsageInDeathRecords(int locationUKey) {
+        Query q = em.createNamedQuery("count.death.location.usage");
+        q.setParameter("locationId", locationUKey);
+        return (Long) q.getSingleResult();
+    }
 }

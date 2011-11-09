@@ -464,9 +464,9 @@ $('select#dsDivisionId').bind('change', function(evt2) {
                 </tr>
                 <tr>
                     <td>
-                        ප්‍රාදේශීය ලේකම් කොට්ඨාශය <br>
-                        பிரதேச செயளாளர் பிரிவு <br>
-                        Divisional Secretariat <br>
+                        ප්‍රාදේශීය ලේකම් කොට්ඨාශය<br/>
+                        பிரதேச செயளாளர் பிரிவு <br/>
+                        Divisional Secretary Division
                     </td>
                     <td>
                         <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="dsDivisionId"
@@ -554,7 +554,8 @@ $('select#dsDivisionId').bind('change', function(evt2) {
     <tr>
         <td>
             විවාහයේ ස්වභාවය <s:label value="*" cssStyle="color:red;font-size:10pt"/><br>
-            Type of Marriage <br>
+            திருமணத்தின் தன்மை<br>
+            Type of Marriage
         </td>
         <td>
             සාමාන්‍ය <br>
@@ -595,7 +596,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
     <col width="524px"/>
     <tr>
         <td colspan="2" align="center">
-            පුරුෂ පාර්ශ්වය / in tamil / Male Party
+            පුරුෂ පාර්ශ්වය / மாப்பிள்ள திறத்தார் / Male Party
         </td>
     </tr>
 </table>
@@ -618,7 +619,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
             Identification number(PIN)
         </td>
         <td colspan="2">
-            <s:textfield name="marriage.male.identificationNumberMale" id="identification_male" maxLength="10"/>
+            <s:textfield name="marriage.male.identificationNumberMale" id="identification_male" maxLength="12"/>
             <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="male_lookup"
                  onclick="malePersonLookUp('identification_male');">
             <br>
@@ -637,9 +638,9 @@ $('select#dsDivisionId').bind('change', function(evt2) {
     </tr>
     <tr>
         <td colspan="1">
-            ජාතිය <s:label value="*" cssStyle="color:red;font-size:10pt"/><br>
-            in tamil <br>
-            Race
+            ජන වර්ගය <s:label value="*" cssStyle="color:red;font-size:10pt"/><br/>
+            இனம்<br/>
+            Ethnic Group
         </td>
         <td colspan="2">
             <s:select list="raceList" name="raceIdMale" headerKey="0" headerValue="%{getText('select_race.label')}"
@@ -647,7 +648,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
         </td>
         <td colspan="1">
             පසුවූ උපන් දිනයට වයස <s:label value="*" cssStyle="color:red;font-size:10pt"/><br>
-            in tamil <br>
+            சென்ற வருட பிறந்த தினத்தில் வயதி<br>
             Age at last Birthday
         </td>
         <td colspan="3">
@@ -673,20 +674,20 @@ $('select#dsDivisionId').bind('change', function(evt2) {
         </td>
         <td>
             ගමන් බලපත්‍ර අංකය <br>
-            கடவுச் சீட்டு இல. <br>
+            கடவுச் சீட்டு இல.<br>
             Passport No.
         </td>
         <td>
-            <s:textfield name="marriage.male.passport" id="passport_male" maxLength="15"
-                         cssStyle="width:120px" value="%{marriage.male.passport}"/>
+            <s:textfield name="marriage.male.malePassport" id="passport_male" maxLength="15"
+                         cssStyle="width:120px" value="%{marriage.male.malePassport}"/>
         </td>
         <td>ලංකාවට පැමිණි දිනය <br>
             in tamil <br>
             Date of Arrival
         </td>
         <td>
-            <s:textfield name="marriage.male.dateOfArrival" id="date_arrival_male" maxLength="10"
-                         cssStyle="width:80px" value="%{marriage.male.dateOfArrival}"/>
+            <s:textfield name="marriage.male.maleDateOfArrival" id="date_arrival_male" maxLength="10"
+                         cssStyle="width:80px" value="%{marriage.male.maleDateOfArrival}"/>
         </td>
     </tr>
     <tr>
@@ -833,7 +834,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
         </td>
         <td colspan="8">
             <s:textfield name="marriage.male.fatherIdentificationNumberMale" id="father_pin_or_nic_male"
-                         cssStyle="width:240px;" maxLength="10"/>
+                         cssStyle="width:240px;" maxLength="12"/>
             <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="male_lookup"
                  onclick="malePartyFather('father_pin_or_nic_male');">
         </td>
@@ -878,7 +879,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
     <col width="524px"/>
     <tr>
         <td colspan="2" align="center">
-            ස්ත්‍රී පාර්ශ්වය / in tamil / Female Party
+            ස්ත්‍රී පාර්ශ්වය /பெண் திறத்தார்/  Female Party
         </td>
     </tr>
 </table>
@@ -901,7 +902,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
             Identification number(PIN)
         </td>
         <td colspan="2">
-            <s:textfield name="marriage.female.identificationNumberFemale" id="identification_female" maxLength="10"/>
+            <s:textfield name="marriage.female.identificationNumberFemale" id="identification_female" maxLength="12"/>
             <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="male_lookup"
                  onclick="femalePersonLookUp('identification_female');">
             <br>
@@ -920,9 +921,9 @@ $('select#dsDivisionId').bind('change', function(evt2) {
     </tr>
     <tr>
         <td colspan="1">
-            ජාතිය <s:label value="*" cssStyle="color:red;font-size:10pt"/><br>
-            in tamil <br>
-            Race
+            ජන වර්ගය <s:label value="*" cssStyle="color:red;font-size:10pt"/><br/>
+            இனம்<br/>
+            Ethnic Group
         </td>
         <td colspan="2">
             <s:select list="raceList" id="raceFemaleId" name="raceIdFemale" headerKey="0"
@@ -931,7 +932,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
         </td>
         <td colspan="1">
             පසුවූ උපන් දිනයට වයස <s:label value="*" cssStyle="color:red;font-size:10pt"/><br>
-            in tamil <br>
+            சென்ற வருட பிறந்த தினத்தில் வயதி<br>
             Age at last Birthday
         </td>
         <td colspan="3">
@@ -961,16 +962,16 @@ $('select#dsDivisionId').bind('change', function(evt2) {
             Passport No.
         </td>
         <td>
-            <s:textfield name="marriage.female.passport" id="passport_female" maxLength="15"
-                         cssStyle="width:120px" value="%{marriage.female.passport}"/>
+            <s:textfield name="marriage.female.femalePassport" id="passport_female" maxLength="15"
+                         cssStyle="width:120px" value="%{marriage.female.femalePassport}"/>
         </td>
         <td>ලංකාවට පැමිණි දිනය <br>
             in tamil <br>
             Date of Arrival
         </td>
         <td>
-            <s:textfield name="marriage.female.dateOfArrival" id="date_arrival_female" maxLength="10"
-                         cssStyle="width:80px" value="%{marriage.female.dateOfArrival}"/>
+            <s:textfield name="marriage.female.femaleDateOfArrival" id="date_arrival_female" maxLength="10"
+                         cssStyle="width:80px" value="%{marriage.female.femaleDateOfArrival}"/>
         </td>
     </tr>
     <tr>
@@ -1118,7 +1119,7 @@ $('select#dsDivisionId').bind('change', function(evt2) {
         </td>
         <td colspan="8">
             <s:textfield name="marriage.female.fatherIdentificationNumberFemale" id="father_pin_or_nic_female"
-                         cssStyle="width:240px;" maxLength="10"/>
+                         cssStyle="width:240px;" maxLength="12"/>
             <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="male_lookup"
                  onclick="femalePartyFather('father_pin_or_nic_female');">
         </td>

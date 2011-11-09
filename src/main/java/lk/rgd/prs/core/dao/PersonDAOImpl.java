@@ -54,6 +54,18 @@ public class PersonDAOImpl extends BaseDAO implements PersonDAO {
         em.merge(m);
     }
 
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public Marriage findMarriageByMRUKey(long mrUKey) {
+        Query q = em.createNamedQuery("getMarriageByMarriageRegister");
+        q.setParameter("mrUKey", mrUKey);
+        try {
+            return (Marriage) q.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+        // NonUniqueResultException will not be thrown since the mrUKey is unique
+    }
+
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public Address getAddressByUKey(long addressUKey) {
         return em.find(Address.class, addressUKey);

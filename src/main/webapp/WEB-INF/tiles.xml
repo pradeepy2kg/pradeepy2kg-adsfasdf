@@ -215,7 +215,7 @@
 
     <definition name="epr.birthRegistrationHome" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/births/BirthRegistrationHome.jsp"/>
-        <put-attribute name="title" value="birth_registration.label"/>
+        <put-attribute name="title" value="birth_registration.label1"/>
     </definition>
 
     <definition name="epr.stillBirth" extends="epr.template">
@@ -249,7 +249,7 @@
         <put-attribute name="body" value="/WEB-INF/pages/births/BirthAlterationHome.jsp"/>
         <put-attribute name="title" value="birth_alteration_home.title"/>
     </definition>
-    <definition name="epr.printBirthAlterarionNotice" extends="epr.template">
+    <definition name="epr.printBirthAlterationNotice" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/births/BirthAlterationNotice.jsp"/>
         <put-attribute name="title" value="birth_alteration_notice_Print.title"/>
     </definition>
@@ -317,7 +317,6 @@
         <put-attribute name="title" value="death_declaration_details.title"/>
     </definition>
 
-    <!--TODO change this 2-->
     <definition name="epr.non_editable_deathDeclaration_form1" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/deaths/NonEditableDeathRegistrationForm1.jsp"/>
         <put-attribute name="title" value="death_declaration_form1.title"/>
@@ -368,8 +367,13 @@
         <put-attribute name="title" value="add_divisions.title"/>
     </definition>
 
-    <!--registrars managment tiles-->
-    <definition name="epr.registrarsManagmentList" extends="epr.template">
+    <definition name="epr.ReArrangeDivisions" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/management/RearrangeDivisions.jsp"/>
+        <put-attribute name="title" value="Re-arrange Divisions"/>
+    </definition>
+
+    <!--registrars management tiles-->
+    <definition name="epr.registrarsManagementList" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/management/ManageRegistrars.jsp"/>
         <put-attribute name="title" value="registrars.managment.title"/>
     </definition>
@@ -515,6 +519,11 @@
         <put-attribute name="title" value="person_approval_warning.title"/>
     </definition>
 
+    <definition name="epr.editPersonDetails" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/prs/PersonDetailUpdateForm.jsp"/>
+        <put-attribute name="title" value="person_detail_update.title"/>
+    </definition>
+
     <!--marriages related tiles definitions-->
     <definition name="epr.marriageNoticeInit" extends="epr.template">
         <description>
@@ -578,6 +587,14 @@
         </description>
         <put-attribute name="body" value="/WEB-INF/pages/marriages/MarriageRegisterWarnings.jsp"/>
         <put-attribute name="title" value="title.marriage.register.warnings"/>
+    </definition>
+
+    <definition name="epr.marriageRegistrationSuccess" extends="epr.template">
+        <description>
+            success page for marriage registration
+        </description>
+        <put-attribute name="body" value="/WEB-INF/pages/marriages/MarriageRegistrationResults.jsp"/>
+        <put-attribute name="title" value="title.marriage.registration.results"/>
     </definition>
 
     <definition name="epr.marriageLicenseSearchInit" extends="epr.template">

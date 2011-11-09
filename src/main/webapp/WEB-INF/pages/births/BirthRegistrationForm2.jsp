@@ -5,15 +5,15 @@
 
 <s:if test="birthType.ordinal()==0">
     <%--still birth--%>
-    <s:set name="row" value="8"/>
+    <s:set name="row" value="7"/>
 </s:if>
 <s:elseif test="birthType.ordinal()==1">
     <%--live birth--%>
-    <s:set name="row" value="10"/>
+    <s:set name="row" value="9"/>
 </s:elseif>
 <s:elseif test="birthType.ordinal()==2">
     <%--adoption--%>
-    <s:set name="row" value="12"/>
+    <s:set name="row" value="11"/>
 </s:elseif>
 
 <script src="/ecivil/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
@@ -24,6 +24,10 @@
 
 <s:hidden id="p2error1" value="%{getText('p2.fatherName.error.value')}"/>
 <s:hidden id="p2error2" value="%{getText('p2.motherName.error.value')}"/>
+<s:hidden id="fatherNameEnglish" value="%{getText('fatherNameInEnglish')}"/>
+<s:hidden id="motherNameEnglish" value="%{getText('motherNameInEnglish')}"/>
+<s:hidden id="error18" value="%{getText('enter.fatherRace')}"/>
+<s:hidden id="error19" value="%{getText('enter.motherRace')}"/>
 <s:hidden id="mother_age" value="%{getText('p2.motherAge.error.value')}"/>
 <s:hidden id="mother_birth_day_empty" value="%{getText('p2.motherAge.empty.error.value')}"/>
 <s:hidden id="childDateOfBirth" value="%{child.dateOfBirth}"/>
@@ -73,6 +77,31 @@ $(function() {
         var mother_age = child_bday.getYear() - motherbday.getYear();
         $("input#motherAgeAtBirth").val(mother_age);
     }
+
+    /*trans iterators for father and mothers name*/
+    $('img#name_english_father').bind('click', function(evt4) {
+        var text = $("textarea#fatherFullName").attr("value");
+
+        $.post('/ecivil/TransliterationService', {text:text,gender:'M'},
+                function(data) {
+                    if (data != null) {
+                        var s = data.translated;
+                        $("textarea#fatherFullNameInEnglish").val(s);
+                    }
+                });
+    });
+
+    $('img#name_english_mother').bind('click', function(evt4) {
+        var text = $("textarea#motherFullName").attr("value");
+
+        $.post('/ecivil/TransliterationService', {text:text,gender:'F'},
+                function(data) {
+                    if (data != null) {
+                        var s = data.translated;
+                        $("textarea#motherFullNameInEnglish").val(s);
+                    }
+                });
+    });
 });
 
 $(function() {
@@ -91,63 +120,42 @@ $(function() {
         var id1 = $("input#father_pinOrNic").attr("value");
         var datePicker = $('#fatherDatePicker');
         var error = document.getElementById('error10').value;
-        calculateBirthDay(id1, datePicker, error);
+        datePicker.datepicker('setDate', calculateBirthDay(id1, error));
+
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
-                 function(data1) {
-                     $("textarea#fatherFullName").val(data1.fullNameInOfficialLanguage);
-                     $("input#fatherPlaceOfBirth").val(data1.placeOfBirth);
-                     $("select#fatherRaceId").val(data1.race);
-                     var fatherDOB = data1.dateOfBirth;
-                     if (fatherDOB != null) {
-                         $("input#fatherDatePicker").val(fatherDOB);
-                     }
-                 });
+                function(data1) {
+                    if (data1 != null) {
+                        $("textarea#fatherFullName").val(data1.fullNameInOfficialLanguage);
+                        $("input#fatherPlaceOfBirth").val(data1.placeOfBirth);
+                        $("select#fatherRaceId").val(data1.race);
+                        var fatherDOB = data1.dateOfBirth;
+                        if (fatherDOB != null) {
+                            $("input#fatherDatePicker").val(fatherDOB);
+                        }
+                    }
+                });
     });
 
     $('img#mother_lookup').bind('click', function(evt2) {
         var id2 = $("input#mother_pinOrNic").attr("value");
         var datePicker = $('#motherDatePicker');
         var error = document.getElementById('error11').value;
-        calculateBirthDay(id2, datePicker, error);
+        datePicker.datepicker('setDate', calculateBirthDay(id2, error));
+
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id2},
-                 function(data2) {
-                     $("textarea#motherFullName").val(data2.fullNameInOfficialLanguage);
-                     $("input#motherPlaceOfBirth").val(data2.placeOfBirth);
-                     $("textarea#motherAddress").val(data2.lastAddress);
-                     $("select#motherRaceId").val(data2.race);
-                     var motherDOB = data2.dateOfBirth;
-                     if (motherDOB != null) {
-                         $("input#motherDatePicker").val(motherDOB);
-                     }
-                 });
+                function(data2) {
+                    if (data2 != null) {
+                        $("textarea#motherFullName").val(data2.fullNameInOfficialLanguage);
+                        $("input#motherPlaceOfBirth").val(data2.placeOfBirth);
+                        $("textarea#motherAddress").val(data2.lastAddress);
+                        $("select#motherRaceId").val(data2.race);
+                        var motherDOB = data2.dateOfBirth;
+                        if (motherDOB != null) {
+                            $("input#motherDatePicker").val(motherDOB);
+                        }
+                    }
+                });
     });
-
-    function calculateBirthDay(id, datePicker, error) {
-        var regNIC = /^([0-9]{9}[X|x|V|v])$/;
-        var day = id.substring(2, 5);
-        var BirthYear = 19 + id.substring(0, 2);
-        var D = new Date(BirthYear);
-        if ((id.search(regNIC) == 0) && (day >= 501 && day <= 866)) {
-            if ((day > 559) && ((D.getFullYear() % 4) != 0 )) {
-                day = id.substring(2, 5) - 2;
-                D.setDate(D.getDate() + day - 500);
-            } else {
-                D.setDate(D.getDate() + day - 1500);
-            }
-            datePicker.datepicker('setDate', new Date(D.getYear(), D.getMonth(), D.getDate()));
-        } else if ((id.search(regNIC) == 0) && (day > 0 && day <= 366)) {
-            if ((day > 59) && ((D.getFullYear() % 4) != 0 )) {
-                day = id.substring(2, 5) - 2;
-                D.setDate(D.getDate() + day);
-            } else {
-                D.setDate(D.getDate() + day - 1000);
-            }
-
-            datePicker.datepicker('setDate', new Date(D.getYear(), D.getMonth(), D.getDate()));
-        } else if ((id.search(regNIC) == 0) && ((day >= 367 && day <= 501)) | (day > 867)) {
-            alert(error);
-        }
-    }
 
     $('#mother_lookup').click(function() {
         var child_bday = new Date(document.getElementById('childDateOfBirth').value);
@@ -161,17 +169,42 @@ $(function() {
 
     $('select#motherDistrictId').bind('change', function(evt3) {
         var id = $("select#motherDistrictId").attr("value");
-        var label = $("input#dsDivisionLabel").attr("value");
-        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:3},
-                 function(data) {
-                     var options = '';
-                     var ds = data.dsDivisionList;
-                     options += '<option value="-1">' + label + '</option>';
-                     for (var i = 0; i < ds.length; i++) {
-                         options += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
-                     }
-                     $("select#motherDSDivisionId").html(options);
-                 });
+        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:16},
+                function(data) {
+                    var options = '';
+                    var ds = data.dsDivisionList;
+                    var select = document.getElementById('selectDSDivision').value;
+                    options += '<option value="' + 0 + '">' + select + '</option>';
+                    for (var i = 0; i < ds.length; i++) {
+                        options += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                    }
+                    $("select#motherDSDivisionId").html(options);
+
+                    var options3 = '';
+                    var gn = data.gnDivisionList;
+                    var select = document.getElementById('selectGNDivision').value;
+                    options3 += '<option value="' + 0 + '">' + select + '</option>';
+                    for (var k = 0; k < gn.length; k++) {
+                        options3 += '<option value="' + gn[k].optionValue + '">' + gn[k].optionDisplay + '</option>';
+                    }
+                    $("select#gnDivisionId").html(options3);
+                });
+    });
+
+
+    $('select#motherDSDivisionId').bind('change', function(evt2) {
+        var id = $("select#motherDSDivisionId").attr("value");
+        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:2},
+                function(data) {
+                    var options4 = '';
+                    var gn = data.gnDivisionList;
+                    var select = document.getElementById('selectGNDivision').value;
+                    options4 += '<option value="' + 0 + '">' + select + '</option>';
+                    for (var k = 0; k < gn.length; k++) {
+                        options4 += '<option value="' + gn[k].optionValue + '">' + gn[k].optionDisplay + '</option>';
+                    }
+                    $("select#gnDivisionId").html(options4);
+                });
     });
 })
 
@@ -190,11 +223,26 @@ function validate() {
         if (isFieldEmpty(domObject)) {
             isEmpty(domObject, "", 'p2error1');
         }
+        // validate father full name in english
+        domObject = document.getElementById('fatherFullNameInEnglish');
+        if (isFieldEmpty(domObject)) {
+            isEmpty(domObject, "", 'fatherNameEnglish');
+        }
+        // validate father's race
+        domObject = document.getElementById('fatherRaceId');
+        if (domObject.value == 0) {
+            errormsg = errormsg + "\n" + document.getElementById('error18').value;
+        }
 
         // validate mother full name
         domObject = document.getElementById('motherFullName');
         if (isFieldEmpty(domObject)) {
             isEmpty(domObject, "", 'p2error2');
+        }
+        // validate mother full name in english
+        domObject = document.getElementById('motherFullNameInEnglish');
+        if (isFieldEmpty(domObject)) {
+            isEmpty(domObject, "", 'motherNameEnglish');
         }
 
         // validate mother date of birth
@@ -207,6 +255,11 @@ function validate() {
         domObject = document.getElementById('motherAgeAtBirth');
         if (isFieldEmpty(domObject)) {
             isEmpty(domObject, "", 'mother_age');
+        }
+        // validate mother's race
+        domObject = document.getElementById('motherRaceId');
+        if (domObject.value == 0) {
+            errormsg = errormsg + "\n" + document.getElementById('error19').value;
         }
 
         validateBirthYearWithNIC("father_pinOrNic", "fatherDatePicker", "error7");
@@ -253,7 +306,7 @@ function motherAgeBirth() {
     var mother_bday = new Date(document.getElementById('motherDatePicker').value);
     var mother_age = child_bday.getYear() - mother_bday.getYear();
     document.getElementById("motherAgeAtBirth").value = mother_age;
-    if (mother_age <= 0) {
+    if (mother_age <= 0 || isNaN(mother_bday)) {
         document.getElementById("motherAgeAtBirth").value = 0;
     }
 }
@@ -339,6 +392,16 @@ function commonTags() {
     }
 }
 
+function maxLengthCalculate(id, max, divId) {
+    var dom = document.getElementById(id).value;
+    if (dom.length > max) {
+        document.getElementById(divId).innerHTML = document.getElementById('maxLengthError').value + " : " + max
+    }
+    else {
+        document.getElementById(divId).innerHTML = "";
+    }
+}
+
 </script>
 
 <div class="birth-registration-form-outer" id="birth-registration-form-2-outer">
@@ -347,8 +410,7 @@ function commonTags() {
 
 <table class="table_reg_page_02" cellspacing="0">
     <caption></caption>
-    <col/>
-    <col/>
+    <col width="200px"/>
     <col/>
     <col/>
     <col/>
@@ -364,82 +426,97 @@ function commonTags() {
         </td>
     </tr>
     <tr>
-        <td rowspan="2" width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set
-                name="i" value="#i+1"/>)අනන්‍යතා අංකය <br>
+        <td>
+            (<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>)
+            ශ්‍රී ලාංකිකයෙකු නම්<br/>இலங்கையராயின் <br/>If Sri Lankan
+        </td>
+        <td colspan="2"><label>අනන්‍යතා අංකය <br>
             அடையாள எண் <br>
             Identification Number</label></td>
-        <td rowspan="2" width="230px" class="find-person">
+        <td colspan="5" class="find-person">
             <img src="<s:url value="/images/alphabet-V.gif" />"
                  id="father_NIC_V" onclick="javascript:addXorV('father_pinOrNic','V','error9')">
             <img src="<s:url value="/images/alphabet-X.gif" />"
                  id="father_NIC_X" onclick="javascript:addXorV('father_pinOrNic','X','error9')">
             <br>
-            <s:textfield id="father_pinOrNic" name="parent.fatherNICorPIN" maxLength="10"/>
+            <s:textfield id="father_pinOrNic" name="parent.fatherNICorPIN" maxLength="12"/>
             <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="father_lookup">
         </td>
-        <td colspan="2" rowspan="2" width="120px"><label>විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If foreigner</label>
+    </tr>
+    <tr>
+        <td rowspan="2"><label>
+            (<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>)
+            විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If a foreigner</label>
         </td>
         <td colspan="2"><label>රට<br>நாடு<br>Country</label></td>
-        <td colspan="2">
+        <td colspan="5">
             <s:select id="fatherCountryId" name="fatherCountry" list="countryList" headerKey="0"
                       headerValue="%{getText('select_country.label')}" cssStyle="width:97%;"/>
         </td>
     </tr>
     <tr>
-        <td colspan="2"><label>ගමන් බලපත්‍ර අංකය <br>கடவுச் சீட்டு இல.<br>Passport No.</label></td>
-        <td class="passport"><s:textfield name="parent.fatherPassportNo" id="fatherPassportNo" maxLength="15"/></td>
+        <td colspan="2"><label>ගමන් බලපත්‍ර අංකය <br>கடவுச் சீட்டு இல.<br>Passport Number</label></td>
+        <td colspan="5" class="passport"><s:textfield name="parent.fatherPassportNo" id="fatherPassportNo"
+                                                      maxLength="15"/></td>
     </tr>
-    </tbody>
-</table>
-
-<table class="table_reg_page_02" cellspacing="0" style="margin:-10px auto; border-top:none;">
     <tr>
-        <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i"
-                                                                                                     value="#i+1"/>)සම්පුර්ණ
-            නම<br>தந்தையின் முழு பெயர்<br>Full Name</label></td>
-        <td colspan="8">
-            <s:textarea name="parent.fatherFullName" id="fatherFullName" cssStyle="width:98%;"/>
+        <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>)
+            සම්පුර්ණ නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)
+            <br>முழுப் பெயர் அரச கரும மொழியில் (சிங்களம் / தமிழ்)
+            <br>Full Name in any of the official languages (Sinhala / Tamil)</label></td>
+        <td colspan="7">
+            <s:textarea name="parent.fatherFullName" id="fatherFullName" cssStyle="width:98%;"
+                        onblur="maxLengthCalculate('fatherFullName','600','fatherFullName_div');"/>
+            <div id="fatherFullName_div" style="color:red;font-size:8pt"></div>
         </td>
     </tr>
     <tr>
-        <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i"
-                                                                                                     value="#i+1"/>)උපන්
+        <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>) සම්පුර්ණ
+            නම ඉංග්‍රීසි භාෂාවෙන් (කැපිටල් අකුරෙන්)
+            <br>முழுப் பெயர் ஆங்கில மொழியில்(பெரிய எழுத்துக்களில்)<br>Full Name in English (In block letters)</label>
+        </td>
+        <td colspan="7">
+            <s:textarea name="parent.fatherFullNameInEnglish" id="fatherFullNameInEnglish" cssStyle="width:98%;"
+                        onblur="maxLengthCalculate('fatherFullNameInEnglish','600','fatherFullNameInEnglish_div');"/>
+            <div id="fatherFullNameInEnglish_div" style="color:red;font-size:8pt"></div>
+            <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px;"
+                 id="name_english_father">
+        </td>
+    </tr>
+    <tr>
+        <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>) උපන්
             දිනය <br>பிறந்த
             திகதி <br>Date of Birth</label></td>
         <td colspan="2">
-            <s:label value="YYYY-MM-DD" cssStyle="margin-left:180px;font-size:10px"/><br>
-            <s:textfield name="parent.fatherDOB" id="fatherDatePicker" maxLength="10"/>
+            <s:label value="YYYY-MM-DD" cssStyle="margin-left:5px;font-size:10px"/><br/>
+            <s:textfield name="parent.fatherDOB" id="fatherDatePicker" cssStyle="float:left;margin-left:5px;"
+                         maxLength="10"/>
         </td>
         <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i"
-                                                                                                   value="#i+1"/>)උපන්
-            ස්ථානය <br>பிறந்த இடம்
-            <br>Place of Birth</label></td>
-        <td colspan="2"><s:textfield id="fatherPlaceOfBirth" name="parent.fatherPlaceOfBirth"
-                                     cssStyle="width:95%;"/></td>
-
-    </tr>
-</table>
-
-<table class="table_reg_page_02" cellspacing="0" style="border-top:none;">
-    <tbody>
-    <tr>
-        <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i"
-                                                                                                     value="#i+1"/>)පියාගේ
-            ජාතිය<br>இனம்<br>
-            Father's Race</label></td>
-        <td colspan="6" class="table_reg_cell_02">
+                                                                                                   value="#i+1"/>)
+            ජන වර්ගය <br/>
+            இனம்<br/>
+            Ethnic Group</label></td>
+        <td colspan="2" class="table_reg_cell_02">
             <s:select id="fatherRaceId" list="raceList" name="fatherRace" headerKey="0"
                       headerValue="%{getText('select_race.label')}"
-                      cssStyle="width:200px;"/>
+                      cssStyle="width:95%;"/>
         </td>
+    </tr>
+    <tr>
+        <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i"
+                                                                                                   value="#i+1"/>) උපන්
+            ස්ථානය <br>பிறந்த இடம்
+            <br>Place of Birth</label></td>
+        <td colspan="7"><s:textfield id="fatherPlaceOfBirth" name="parent.fatherPlaceOfBirth"
+                                     cssStyle="width:97%;"/></td>
     </tr>
     </tbody>
 </table>
 
-<table class="table_reg_page_02" cellspacing="0" style="margin:0;">
+<table class="table_reg_page_02" cellspacing="0">
     <caption></caption>
-    <col/>
-    <col/>
+    <col width="200px"/>
     <col/>
     <col/>
     <col/>
@@ -449,64 +526,83 @@ function commonTags() {
     <col/>
     <tbody>
     <tr>
-        <td colspan="9" style="text-align:center;font-size:12pt"> මවගේ විස්තර <br>தாய் பற்றிய தகவல்<br>Details of the
-            Mother
+        <td colspan="9" style="text-align:center;font-size:12pt">මවගේ විස්තර
+            <br>தாய் பற்றிய தகவல்
+            <br>Details of the Mother
         </td>
     </tr>
     <tr>
-        <td rowspan="2" width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set
-                name="i" value="#i+1"/>)අනන්‍යතා අංකය <br>
+        <td>
+            (<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>)
+            ශ්‍රී ලාංකිකයෙකු නම්<br/>இலங்கையராயின் <br/>If Sri Lankan
+        </td>
+        <td colspan="2"><label>අනන්‍යතා අංකය <br>
             அடையாள எண் <br>
             Identification Number</label></td>
-        <td colspan="2" rowspan="2" width="230px" class="find-person">
+        <td colspan="5" class="find-person">
             <img src="<s:url value="/images/alphabet-V.gif" />"
                  id="mother_NIC_V" onclick="javascript:addXorV('mother_pinOrNic','V','error9')">
             <img src="<s:url value="/images/alphabet-X.gif" />"
                  id="mother_NIC_X" onclick="javascript:addXorV('mother_pinOrNic','X','error9')">
             <br>
-            <s:textfield id="mother_pinOrNic" name="parent.motherNICorPIN" maxLength="10"/>
+            <s:textfield id="mother_pinOrNic" name="parent.motherNICorPIN" maxLength="12"/>
             <img src="<s:url value="/images/search-mother.png"/>" style="vertical-align:middle;" id="mother_lookup">
         </td>
-        <td colspan="2" rowspan="2" width="120px"><label>විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If foreigner</label>
+    </tr>
+    <tr>
+        <td rowspan="2"><label>
+            (<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>)
+            විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If a foreigner</label>
         </td>
         <td colspan="2"><label>රට<br>நாடு <br>Country</label></td>
-        <td colspan="2"><s:select id="motherCountryId" name="motherCountry" list="countryList" headerKey="0"
-                                  headerValue="%{getText('select_country.label')}"/></td>
+        <td colspan="5"><s:select id="motherCountryId" name="motherCountry" list="countryList" headerKey="0"
+                                  headerValue="%{getText('select_country.label')}" cssStyle="width:97%;"/></td>
     </tr>
     <tr>
-        <td colspan="2"><label>ගමන් බලපත්‍ර අංකය <br>கடவுச் சீட்டு இல.<br>Passport No.</label></td>
-        <td colspan="2" class="passport"><s:textfield name="parent.motherPassportNo" id="motherPassportNo"
+        <td colspan="2"><label>ගමන් බලපත්‍ර අංකය <br>கடவுச் சீட்டு இல.<br>Passport Number</label></td>
+        <td colspan="5" class="passport"><s:textfield name="parent.motherPassportNo" id="motherPassportNo"
                                                       maxLength="15"/></td>
     </tr>
-    </tbody>
-</table>
-
-<table class="table_reg_page_02" cellspacing="0" style="margin:0; border-top:none; border-bottom:none;">
-    <tbody>
     <tr>
-        <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i"
-                                                                                                     value="#i+1"/>)සම්පුර්ණ
-            නම<br>தந்தையின்
-            முழு பெயர்<br>Full Name</label></td>
-        <td colspan="8">
-            <s:textarea name="parent.motherFullName" id="motherFullName" cssStyle="width:98%;"/>
+        <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>)
+            සම්පුර්ණ නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)
+            <br>முழுப் பெயர் அரச கரும மொழியில் (சிங்களம் / தமிழ்)
+            <br>Full Name in any of the official languages (Sinhala / Tamil)</label></td>
+        <td colspan="7">
+            <s:textarea name="parent.motherFullName" id="motherFullName" cssStyle="width:98%;"
+                        onblur="maxLengthCalculate('motherFullName','600','motherFullName_div');"/>
+            <div id="motherFullName_div" style="color:red;font-size:8pt"></div>
         </td>
     </tr>
     <tr>
-        <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i"
-                                                                                                     value="#i+1"/>)
+        <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>) සම්පුර්ණ
+            නම ඉංග්‍රීසි භාෂාවෙන් (කැපිටල් අකුරෙන්)
+            <br>முழுப் பெயர் ஆங்கில மொழியில்(பெரிய எழுத்துக்களில்)<br>Full Name in English (In block letters)</label>
+        </td>
+        <td colspan="7">
+            <s:textarea name="parent.motherFullNameInEnglish" id="motherFullNameInEnglish" cssStyle="width:98%;"
+                        onblur="maxLengthCalculate('motherFullNameInEnglish','600','motherFullNameInEnglish_div');"/>
+            <div id="motherFullNameInEnglish_div" style="color:red;font-size:8pt"></div>
+            <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px"
+                 id="name_english_mother">
+        </td>
+    </tr>
+    <tr>
+        <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i"
+                                                                                       value="#i+1"/>)
             උපන් දිනය
             <br>பிறந்த திகதி
             <br>Date of Birth</label></td>
-        <td colspan="3">
-                <s:label value="YYYY-MM-DD" cssStyle="margin-left:140px;font-size:10px"/><br>
-                <s:textfield name="parent.motherDOB" id="motherDatePicker" maxLength="10"/>
+        <td colspan="1">
+                <s:label value="YYYY-MM-DD" cssStyle="margin-left:5px;font-size:10px"/><br>
+                <s:textfield name="parent.motherDOB" id="motherDatePicker" cssStyle="float:left;margin-left:5px;"
+                             maxLength="10"/>
         <td colspan="3" width="100px"><label>
             <s:if test="%{#session.birthRegister.register.birthType.ordinal() != 0}">
-                (<s:property value="#row"/><s:set name="row"
-                                                  value="#row+1"/><s:set name="i"
-                                                                         value="#i+1"/>) ළමයාගේ උපන් දිනට මවගේ වයස
-                <br>பிள்ளை பிறந்த திகதியில் மாதாவின் வயது <br>Mother's Age as at the date of birth of child
+                (<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>)
+                ළමයාගේ උපන් දිනට වයස
+                <br>பிள்ளை பிறந்த திகதியில் மாதாவின் வயது
+                <br>Age as at the date of birth of child
             </s:if>
             <s:else>
                 (<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>)
@@ -521,29 +617,38 @@ function commonTags() {
                          maxLength="2"/>
             <div id="motherAgeAtChildBirth" style="color:red;"/>
         </td>
-
     </tr>
-    <tr style="border-bottom:none;">
-        <td style="border-bottom:none;"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set
-                name="i" value="#i+1"/>)ස්ථිර ලිපිනය<br>தாயின் நிரந்தர வதிவிட முகவரி<br>Permanent Address</label>
-        </td>
-        <td colspan="8" style="border-bottom:none;">
-            <s:textarea id="motherAddress" name="parent.motherAddress" cssStyle="width:98%;"/>
-        </td>
-    </tr>
-
-    </tbody>
-</table>
-
-<table class="table_reg_page_02" cellspacing="0" style="margin:0; border-top:none;">
-    <tbody>
     <tr>
-        <td width="200px" style="border-top:none; border-bottom:none;"></td>
-        <td colspan="2" class="table_reg_cell_02" style="border-top:1px solid #000;"><label>දිස්ත්‍රික්කය /மாவட்டம்
-            /District</label></td>
-        <td colspan="6" class="table_reg_cell_02" style="border-top:1px solid #000;">
+        <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>)
+            ජන වර්ගය <br/>
+            இனம்<br/>
+            Ethnic Group</label></td>
+        <td colspan="2"><s:select id="motherRaceId" list="raceList" name="motherRace" headerKey="0"
+                                  headerValue="%{getText('select_race.label')}"/></td>
+
+        <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i"
+                                                                                                   value="#i+1"/>
+            ) උපන් ස්ථානය <br>பிறந்த இடம்
+            <br>Place of Birth</label></td>
+        <td colspan="3" class="passport"><s:textfield id="motherPlaceOfBirth" name="parent.motherPlaceOfBirth"/></td>
+    </tr>
+    <tr>
+        <td rowspan="4"><label>(<s:property value="#row"/><s:set name="row"
+                                                                 value="#row+1"/><s:set
+                name="i" value="#i+1"/>) ස්ථිර ලිපිනය<br>தாயின் நிரந்தர வதிவிட முகவரி<br>Permanent Address</label>
+        </td>
+        <td colspan="7">
+            <s:textarea name="parent.motherAddress" id="motherAddress" cssStyle="width:98%;"
+                        onblur="maxLengthCalculate('motherAddress','255','motherAddress_div');"/>
+            <div id="motherAddress_div" style="color:red;font-size:8pt"></div>
+        </td>
+    <tr>
+        <td colspan="2" class="table_reg_cell_02"><label>දිස්ත්‍රික්කය /<br>மாவட்டம்
+            /<br>District</label></td>
+        <td colspan="5" class="table_reg_cell_02">
             <s:if test="#parent.motherDSDivision.district.districtUKey >0">
-            <s:select id="motherDistrictId" name="motherDistrictId" list="allDistrictList" cssStyle="width:99%;"/></td>
+            <s:select id="motherDistrictId" name="motherDistrictId" list="allDistrictList"
+                      cssStyle="width:99%;"/></td>
         </s:if>
         <s:else>
             <s:select id="motherDistrictId" name="motherDistrictId" list="allDistrictList" headerKey="0"
@@ -551,63 +656,59 @@ function commonTags() {
         </s:else>
     </tr>
     <tr>
-        <td width="200px" style="border-top:none;"></td>
-        <td colspan="2"><label>ප්‍රාදේශීය ලේකම් කොට්ඨාශය /<br>பிரதேச செயளாளா் பிரிவு/<br>Divisional Secretariat</label>
+        <td colspan="2"><label>ප්‍රාදේශීය ලේකම් කොට්ඨාශය /<br>
+            பிரதேச செயளாளர் பிரிவு <br/>
+            Divisional Secretary Division
+        </label>
         </td>
-        <td colspan="6" class="table_reg_cell_02">
-            <s:if test="#parent.motherDSDivision.dsDivisionUKey > 0">
-                <s:select id="motherDSDivisionId" name="motherDSDivisionId" list="allDSDivisionList"
-                          headerKey="#parent.motherDSDivision.dsDivisionUKey" cssStyle="width:99%;"/>
-            </s:if>
-            <s:else>
-                <s:select id="motherDSDivisionId" name="motherDSDivisionId" list="allDSDivisionList"
-                          headerKey="0" headerValue="%{getText('select_ds_division.label')}" cssStyle="width:99%;"/>
-            </s:else>
-            <s:textfield id="dsDivisionLabel" value="%{getText('select_ds_division.label')}" cssStyle="display:none;"/>
+        <td colspan="5" class="table_reg_cell_02">
+            <s:select id="motherDSDivisionId" name="motherDSDivisionId" list="allDSDivisionList"
+                      headerKey="0" headerValue="%{getText('select_ds_division.label')}" cssStyle="width:99%;"/>
         </td>
     </tr>
     <tr>
-        <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i"
-                                                                                                     value="#i+1"/>
-            )ම‌වගේ ජාතිය<br>இனம்<br>
-            Mother's Race</label></td>
-        <td colspan="2"><s:select id="motherRaceId" list="raceList" name="motherRace" headerKey="0"
-                                  headerValue="%{getText('select_race.label')}"/></td>
-
-        <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i"
-                                                                                                   value="#i+1"/>
-            )උපන් ස්ථානය <br>பிறந்த இடம்
-            <br>Place of Birth</label></td>
-        <td colspan="3" class="passport"><s:textfield id="motherPlaceOfBirth" name="parent.motherPlaceOfBirth"/></td>
-    </tr>
-    <tr>
-        <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/> <s:set name="i" value="#i+1"/>)රෝහලට
-            ඇතුලත් කිරිමේ අංකය<br>
-            வைத்தியசாலை அனுமதி இலக்கம் <br>
-            Hospital Admission Number</label></td>
-        <td colspan="2" class="passport"><s:textfield name="parent.motherAdmissionNo" maxLength="15"/></td>
-        <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i"
-                                                                                                   value="#i+1"/>
-            )රෝහලට ඇතුලත් කිරිමේ
-            දිනය<br>
-            வைத்தியசாலையில் அனுமதித்த திகதி <br>
-            Hospital Admission Date</label></td>
-        <td colspan="3">
-            <s:label value="YYYY-MM-DD" cssStyle="margin-left:5px;font-size:10px"/><br>
-            <s:textfield name="parent.motherAdmissionDate" id="admitDatePicker" cssStyle="float:left;margin-left:5px;"
-                         maxLength="10"/>
+        <td colspan="2">
+            ග්‍රාම නිලධාරී කොට්ඨාශය/<br/>
+            கிராம சேவையாளர் பிரிவு/<br/>
+            Grama Niladhari Division
+        </td>
+        <td colspan="5" align="center">
+            <s:select id="gnDivisionId" name="gnDivisionId" value="%{gnDivisionId}" list="gnDivisionList"
+                      cssStyle="float:left;  width:99%; margin:2px 5px;" headerKey="0"
+                      headerValue="%{getText('select.gn.division')}"/>
+            <a href="javascript:displayGNSearch()">
+                <span><s:label value="%{getText('searchGNDivision.label')}"/></span>
+            </a>
         </td>
     </tr>
     <tr>
         <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/> <s:set name="i" value="#i+1"/>)
             සම්බන්ධ කල හැකි තොරතුරු
-            <br>தாயினை தொடர்பு கொள்ளக்கூடிய தகவல்கள்
+            <br>தொடர்பு கொள்ளக்கூடிய தகவல்கள்
             <br>Contact Details </label></td>
-        <td colspan="1"><label>දුරකතනය <br> தொலைபேசி இலக்கம் <br> Telephone</label></td>
-        <td colspan="1"><s:textfield id="motherPhoneNo" name="parent.motherPhoneNo" maxLength="15"/></td>
-        <td colspan="2"><label>ඉ – තැපැල් <br> மின்னஞ்சல்<br>Email</label></td>
+        <td colspan="1"><label>දුරකතනය <br>தொலைபேசி இலக்கம் <br> Telephone</label></td>
+        <td colspan="1"><s:textfield id="motherPhoneNo" name="parent.motherPhoneNo" maxLength="10"/></td>
+        <td colspan="2"><label>ඉ – තැපැල <br> மின்னஞ்சல்<br>Email</label></td>
         <td colspan="3" class="passport"><s:textfield name="parent.motherEmail" id="motherEmail"
                                                       cssStyle="text-transform:none;"/></td>
+    </tr>
+    <tr>
+        <td colspan="3" rowspan="2">(<s:property value="#row"/><s:set name="row" value="#row+1"/> <s:set name="i"
+                                                                                                         value="#i+1"/>)
+            රෝහලට ඇතුලත් කිරිමේ තොරතුරු (ඔබ සතුව පවතී නම්)<br/>
+            வைத்தியசாலை அனுமதி இலக்கமும் திகதியும் (இருந்தால்)<br/>
+            Hospital Admission Details (if available)
+        </td>
+        <td colspan="2"><label>අංකය / இலக்கம் / Number </label></td>
+        <td colspan="4" class="passport"><s:textfield name="parent.motherAdmissionNo" maxLength="15"/></td>
+    </tr>
+    <tr>
+        <td colspan="2"><span>දිනය/ திகதி / Date</span>
+        <td colspan="3">
+            <s:label value="YYYY-MM-DD" cssStyle="margin-left:5px;font-size:10px"/><br>
+            <s:textfield name="parent.motherAdmissionDate" id="admitDatePicker" cssStyle="float:left;margin-left:5px;"
+                         maxLength="10"/>
+        </td>
     </tr>
     </tbody>
 </table>
@@ -656,7 +757,8 @@ function commonTags() {
 <s:hidden id="error15" value="%{getText('enter.motherPassportNo.label')}"/>
 <s:hidden id="error16" value="%{getText('enter.fatherCountry.label')}"/>
 <s:hidden id="error17" value="%{getText('enter.motherCountry.label')}"/>
-
-
+<s:hidden id="selectGNDivision" value="%{getText('select.gn.division')}"/>
+<s:hidden id="maxLengthError" value="%{getText('error.max.length')}"/>
+<s:hidden id="selectDSDivision" value="%{getText('select_DS_division1.label')}"/>
 </div>
 <%-- Styling Completed --%>

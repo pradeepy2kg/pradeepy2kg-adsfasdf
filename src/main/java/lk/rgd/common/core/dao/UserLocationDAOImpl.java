@@ -4,6 +4,7 @@ import lk.rgd.common.api.dao.UserLocationDAO;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.UserLocation;
 import lk.rgd.common.api.domain.UserLocationID;
+import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -61,6 +62,19 @@ public class UserLocationDAOImpl extends BaseDAO implements UserLocationDAO {
 
             logger.debug("End date of the existing is :{}", existing.getEndDate());
         }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public void inactivateUserLocations(int locationUKey, User admin) {
+        Query q = em.createNamedQuery("updateAllInactiveUserLocations");
+        q.setParameter("locationUKey", locationUKey);
+//        q.setParameter("updateUser", admin);
+//        q.setParameter("updateDate", new Date());
+        q.executeUpdate();
+        logger.debug("Inactivated User Locations which are mapped to locationUKey : {}", locationUKey);
     }
 
     /**

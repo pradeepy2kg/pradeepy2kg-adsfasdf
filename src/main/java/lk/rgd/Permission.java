@@ -28,7 +28,7 @@ public final class Permission {
     public static final int SEARCH_DDF = 23;
     public static final int PRINT_DDF = 24;
     public static final int INDEX_RECORDS = 25;
-    public static final int REGISTRAR_MANAGEMENT_ADR = 26;
+    public static final int REGISTRAR_DELETE = 26;
     public static final int EDIT_MARRIAGE = 27;
     public static final int SEARCH_MARRIAGE = 28;
     //todo: to be removed
@@ -42,6 +42,7 @@ public final class Permission {
     public static final int SEARCH_REGISTRAR = 36;
     public static final int VIEW_MARRIAGE_REGISTER = 37;
     public static final int DIVORCE = 38;
+    public static final int MARK_BIRTH_CERT_PRINTED = 39;
 
     // permission for PRS
     public static final int PRS_ADD_PERSON = 50;
@@ -54,7 +55,8 @@ public final class Permission {
     public static final int PRS_PRINT_CERT = 57;
     public static final int PRS_MARK_CERT_PRINTED = 58;
     public static final int PRS_EDIT_PERSON_AFTER_APPROVE = 59;
+    public static final int PRS_APPROVE_EDIT_PERSON = 60;
 
     // permission for Reports
-    public static final int GENERATE_REPORTS = 60;
+    public static final int GENERATE_REPORTS = 61;
 }

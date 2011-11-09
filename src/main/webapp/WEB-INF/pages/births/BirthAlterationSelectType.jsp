@@ -103,9 +103,13 @@
         }
 
         //validate   number fields
-        isNumeric(certifcateNumber, 'invalideDateErr', 'certificateNumberFi')
-        isNumeric(serial, 'invalideDateErr', 'serialNumnerFi')
-        isNumeric(pin, 'invalideDateErr', 'pinNumberFi')
+        isNumeric(certifcateNumber, 'invalidDateErr', 'certificateNumberFi');
+        isNumeric(serial, 'invalidDateErr', 'serialNumberFi');
+
+        var domObject = document.getElementById('idNumberSearch');
+        if (!isFieldEmpty(domObject)) {
+            validatePINorNIC(domObject, 'invalidDateErr', 'pinNumberFi');
+        }
 
         if (errormsg != "") {
             alert(errormsg)
@@ -119,6 +123,8 @@
         return false;
     }
 
+    function initPage() {
+    }
 </script>
 <div id="birth-confirmation-search">
 <s:actionerror cssStyle="color:red;font-size:10pt"/>
@@ -158,7 +164,7 @@
                 <tr>
                     <td width="135px"><s:label name="confirmationSearch"
                                                value="%{getText('idNumber.lable')}"/></td>
-                    <td width="200px"><s:textfield name="nicOrPin" id="idNumberSearch" maxLength="10" value=""/></td>
+                    <td width="200px"><s:textfield name="nicOrPin" id="idNumberSearch" maxLength="12" value=""/></td>
 
                 </tr>
             </table>
@@ -207,7 +213,7 @@
     </div>
 </s:form>
 <s:hidden id="oneMethodErr" value="%{getText('err.use.one,method.to.search')}"/>
-<s:hidden id="invalideDateErr" value="%{getText('err.invalide.data')}"/>
-<s:hidden id="serialNumnerFi" value="%{getText('field.serial.number')}"/>
+<s:hidden id="invalidDateErr" value="%{getText('err.invalide.data')}"/>
+<s:hidden id="serialNumberFi" value="%{getText('field.serial.number')}"/>
 <s:hidden id="pinNumberFi" value="%{getText('field.pin.number')}"/>
 <s:hidden id="certificateNumberFi" value="%{getText('field.certificate.number')}"/>

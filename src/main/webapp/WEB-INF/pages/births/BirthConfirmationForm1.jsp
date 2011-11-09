@@ -8,146 +8,210 @@
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 <script>
 
-    function disableNext(mode) {
-        if (mode) {
-            document.getElementById('next').style.display = 'none';
-        }
-        else {
-            document.getElementById('next').style.display = 'block';
-        }
-    }
 
-    function disableOk(mode) {
-        if (mode) {
-            document.getElementById('searchOk').style.display = 'none';
-        }
-        else {
-            document.getElementById('searchOk').style.display = 'block';
-        }
-    }
+// mode 1 = passing District, will return DS list
+// mode 2 = passing DsDivision, will return BD list
+// any other = passing district, will return DS list and the BD list for the first DS
+$(function() {
+    $('select#districtId').bind('change', function(evt1) {
+        var id = $("select#districtId").attr("value");
+        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id},
+                function(data) {
+                    var options1 = '';
+                    var ds = data.dsDivisionList;
+                    for (var i = 0; i < ds.length; i++) {
+                        options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                    }
+                    $("select#dsDivisionId").html(options1);
 
-    function okCheck() {
-        var ok = document.getElementById('skipChangesCBox');
-        if (ok.checked) {
-            disableNext(true)
-            disableOk(false)
-        } else {
-            disableOk(true)
-            disableNext(false)
-        }
-    }
-
-    $(function() {
-        $("#submitDatePicker").datepicker({
-            changeYear: true,
-            dateFormat:'yy-mm-dd',
-            startDate:'2000-01-01',
-            endDate:'2020-12-31'
-        });
+                    var options2 = '';
+                    var bd = data.bdDivisionList;
+                    for (var j = 0; j < bd.length; j++) {
+                        options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
+                    }
+                    $("select#bdDivisionId").html(options2);
+                });
     });
-    $(function() {
-        $('img#place').bind('click', function(evt) {
-            var id = $("input#placeOfBirth").attr("value");
-            var wsMethod = "transliterate";
-            var soapNs = "http://translitwebservice.transliteration.icta.com/";
 
-            var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
-            soapBody.attr("xmlns:trans", soapNs);
-            soapBody.appendChild(new SOAPObject('InputName')).val(id);
-            soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
-            soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
-            //soapBody.appendChild(new SOAPObject('Gender')).val('U');
+    $('select#dsDivisionId').bind('change', function(evt2) {
+        var id = $("select#dsDivisionId").attr("value");
+        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:2},
+                function(data) {
+                    var options = '';
+                    var bd = data.bdDivisionList;
+                    for (var i = 0; i < bd.length; i++) {
+                        options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
+                    }
+                    $("select#bdDivisionId").html(options);
+                });
+    });
+});
 
-            //added by shan [ NOT Tested ] -> start
-            var genderVal = $("select#genderList").attr("value");
-            soapBody.appendChild(new SOAPObject('Gender')).val(genderVal);
-            //-> end
+// mode 1 = passing District, will return DS list
+// mode 2 = passing DsDivision, will return BD list
+// any other = passing district, will return DS list and the BD list for the first DS
+$(function() {
+    $('select#motherDistrictId').bind('change', function(evt1) {
+        var id = $("select#motherDistrictId").attr("value");
+        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:16},
+                function(data) {
+                    var options1 = '';
+                    var ds = data.dsDivisionList;
+                    var select =  document.getElementById('selectDSDivision').value;
+                    options1 += '<option value="' + 0 + '">' + select + '</option>';
+                    for (var i = 0; i < ds.length; i++) {
+                        options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                    }
+                    $("select#motherDSDivisionId").html(options1);
 
-            //Create a new SOAP Request
-            var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
+                    var options3 = '';
+                    var gn = data.gnDivisionList;
+                    var select = document.getElementById('selectGNDivision').value;
+                    options3 += '<option value="' + 0 + '">' + select + '</option>';
+                    for (var k = 0; k < gn.length; k++) {
+                        options3 += '<option value="' + gn[k].optionValue + '">' + gn[k].optionDisplay + '</option>';
+                    }
+                    $("select#motherGNDivisionId").html(options3);
+                });
+    });
 
-            //Lets send it
-            SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
-            SOAPClient.SendRequest(sr, processResponse); //Send request to server and assign a callback
-        });
+    $('select#motherDSDivisionId').bind('change', function(evt2) {
+        var id = $("select#motherDSDivisionId").attr("value");
+        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:2},
+                function(data) {
+                    var options4 = '';
+                    var gn = data.gnDivisionList;
+                    var select = document.getElementById('selectGNDivision').value;
+                    options4 += '<option value="' + 0 + '">' + select + '</option>';
+                    for (var k = 0; k < gn.length; k++) {
+                        options4 += '<option value="' + gn[k].optionValue + '">' + gn[k].optionDisplay + '</option>';
+                    }
+                    $("select#motherGNDivisionId").html(options4);
+                });
+    });
+});
 
-        function processResponse(respObj) {
-            //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-            $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].
-            return[0].Text
-        )
-            ;
-        }
-    })
-
-    var errormsg = "";
-    function validate() {
-        var domObject;
-        var returnval = true;
-
-        // validate serial number
-        domObject = document.getElementById('SerialNo');
-        if (isFieldEmpty(domObject)) {
-            //            errormsg = errormsg + "\n" + document.getElementById('error2').value;
-        } else {
-            isNumeric(domObject.value, 'error1', 'error2');
-        }
-
-        // validate date of birth
-        domObject = document.getElementById('submitDatePicker');
-        if (isFieldEmpty(domObject))
-            isEmpty(domObject, "", 'p1error3')
-        else
-            isDate(domObject.value, "error1", "error4");
-
-        domObject = document.getElementById('placeOfBirth');
-        if (isFieldEmpty(domObject)) {
-            isEmpty(domObject, "", "error3");
-        }
-
-        domObject = document.getElementById('fatherNICorPIN');
-        if (!isFieldEmpty(domObject))
-            validatePINorNIC(domObject, 'error1', 'error6');
-
-        domObject = document.getElementById('motherNICorPIN');
-        if (!isFieldEmpty(domObject))
-            validatePINorNIC(domObject, 'error1', 'error6');
-
-        if (errormsg != "") {
-            alert(errormsg);
-            returnval = false;
-        }
-        errormsg = "";
-        return returnval;
+function disableNext(mode) {
+    if (mode) {
+        document.getElementById('next').style.display = 'none';
     }
-
-    function validateSearch() {
-        var domObject;
-        var returnval = true;
-
-        // validate serial number
-        domObject = document.getElementById('SerialNo');
-        if (isFieldEmpty(domObject)) {
-            errormsg = errormsg + "\n" + document.getElementById('error2').value;
-        } else {
-            isNumeric(domObject.value, 'error1', 'error2');
-        }
-
-        if (errormsg != "") {
-            alert(errormsg);
-            returnval = false;
-        }
-        errormsg = "";
-        return returnval;
+    else {
+        document.getElementById('next').style.display = 'block';
     }
+}
 
-    function initPage() {
-        var domObject = document.getElementById('SerialNo');
-        if (domObject.value.trim() == 0) {
-            domObject.value = null;
-        }
+function disableOk(mode) {
+    if (mode) {
         document.getElementById('searchOk').style.display = 'none';
     }
+    else {
+        document.getElementById('searchOk').style.display = 'block';
+    }
+}
+
+function okCheck() {
+    var ok = document.getElementById('skipChangesCBox');
+    if (ok.checked) {
+        disableNext(true)
+        disableOk(false)
+    } else {
+        disableOk(true)
+        disableNext(false)
+    }
+}
+
+$(function() {
+    $("#submitDatePicker").datepicker({
+        changeYear: true,
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2020-12-31'
+    });
+});
+$(function() {
+    $('img#place').bind('click', function(evt) {
+        var text = $("input#placeOfBirth").attr("value");
+
+        $.post('/ecivil/TransliterationService', {text:text,gender:'U'},
+                function(data) {
+                    if (data != null) {
+                        var s = data.translated;
+                        $("input#placeOfBirthEnglish").val(s);
+                    }
+                });
+    });
+
+})
+
+var errormsg = "";
+
+function validate() {
+    var domObject;
+    var returnval = true;
+
+    // validate serial number
+    domObject = document.getElementById('SerialNo');
+    if (isFieldEmpty(domObject)) {
+        //            errormsg = errormsg + "\n" + document.getElementById('error2').value;
+    } else {
+        isNumeric(domObject.value, 'error1', 'error2');
+    }
+
+    // validate date of birth
+    domObject = document.getElementById('submitDatePicker');
+    if (isFieldEmpty(domObject))
+        isEmpty(domObject, "", 'p1error3')
+    else
+        isDate(domObject.value, "error1", "error4");
+
+    domObject = document.getElementById('placeOfBirth');
+    if (isFieldEmpty(domObject)) {
+        isEmpty(domObject, "", "error3");
+    }
+
+    domObject = document.getElementById('fatherNICorPIN');
+    if (!isFieldEmpty(domObject))
+        validatePINorNIC(domObject, 'error1', 'error6');
+
+    domObject = document.getElementById('motherNICorPIN');
+    if (!isFieldEmpty(domObject))
+        validatePINorNIC(domObject, 'error1', 'error6');
+
+    if (errormsg != "") {
+        alert(errormsg);
+        returnval = false;
+    }
+    errormsg = "";
+    return returnval;
+}
+
+function validateSearch() {
+    var domObject;
+    var returnval = true;
+
+    // validate serial number
+    domObject = document.getElementById('SerialNo');
+    if (isFieldEmpty(domObject)) {
+        errormsg = errormsg + "\n" + document.getElementById('error2').value;
+    } else {
+        isNumeric(domObject.value, 'error1', 'error2');
+    }
+
+    if (errormsg != "") {
+        alert(errormsg);
+        returnval = false;
+    }
+    errormsg = "";
+    return returnval;
+}
+
+function initPage() {
+    var domObject = document.getElementById('SerialNo');
+    if (domObject.value.trim() == 0) {
+        domObject.value = null;
+    }
+    document.getElementById('searchOk').style.display = 'none';
+}
 </script>
 
 <div id="birth-confirmation-form-outer">
@@ -171,7 +235,7 @@
                     <tr><s:actionerror cssStyle="color:red;font-size:10pt"/></tr>
                     <tr>
                         <td><label><span class="font-8">අනුක්‍රමික අංකය<s:label value="*"
-                                                                                cssStyle="color:red;font-size:10pt"/><br>தொடர் இலக்கம்<br>Serial Number</span></label>
+                                                                                cssStyle="color:red;font-size:20pt"/><br>தொடர் இலக்கம்<br>Serial Number</span></label>
                         </td>
                         <td><s:textfield name="bdId" id="SerialNo" value="%{bdId}"/>
                             <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>--%>
@@ -226,7 +290,7 @@
     <tbody>
     <tr>
         <td class="cell_01">1</td>
-        <td>සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ අදාල “උපතක් ලියාපදිංචි කිරීම සඳහා විස්තර” ප්‍රකාශනයේ අනුක්‍රමික අංකය
+        <td width="60%">සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ අදාල “උපතක් ලියාපදිංචි කිරීම සඳහා විස්තර” ප්‍රකාශනයේ අනුක්‍රමික අංකය
             හා දිනය
             <br>பிறப்பை பதிவு செய்வதற்கான விபரம்" எனும் படிவத்தின் தொடர் இலக்கமும் திகதியும்
             <br>Serial Number and the Date of the ‘Particulars for Registration of a Birth’ form
@@ -318,7 +382,7 @@
 </tr>
 <tr>
     <td>4</td>
-    <td colspan="7"><label> උප්පැන්න සහතිකය නිකුත් කල යුතු භාෂාව / பிறப்பு அத்தாட்சி ….. /<br>Preferred Language for
+    <td colspan="7"><label> උප්පැන්න සහතිකය නිකුත් කල යුතු භාෂාව / பிறப்புச் சான்றிதழ் வழங்கப்பட வேண்டிய  மொழி/<br>Preferred Language for
         Birth Certificate </label></td>
     <td colspan="6">
         <s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'தமிழ்'}" name="register.preferredLanguage"
@@ -327,49 +391,52 @@
 </tr>
 <tr>
     <td>5</td>
-    <td colspan="14"><label>උපන් ස්ථානය / பிறந்தபிறந்த இடம் / Place of birth<s:label value="*"
-                                                                                     cssStyle="color:red;font-size:14pt"/></label>
+    <td colspan="14"><label>උපන් ස්ථානය පිළිබඳ විස්තර / பிறந்த இடம் பற்றிய விபரம் / Particulars of Place of Birth
+        <s:label value="*" cssStyle="color:red;font-size:14pt"/></label>
     </td>
 </tr>
 <tr>
-    <td rowspan="5"></td>
+    <td rowspan="6"></td>
     <td><label>දිස්ත්‍රික්කය <br>மாவட்டம் <br>District</label></td>
     <td colspan="6">
         <s:if test="bdId != 0">
             <s:textfield value="%{getDistrictList().get(birthDistrictId)}" cssClass="disable" disabled="true"/>
         </s:if>
     </td>
-    <td colspan="6"><s:select list="districtList" name="birthDistrictId"/></td>
+    <td colspan="6"><s:select list="districtList" name="birthDistrictId" id="districtId"/></td>
 </tr>
 <tr>
-    <td><label>D.S.කොට්ඨාශය<br>பிரிவு <br>D.S. Division</label></td>
+    <td><label>ප්‍රාදේශීය ලේකම් කොට්ඨාශය<br>பிரதேச செயளாளர் பிரிவு<br>Divisional Secretary Division</label></td>
     <td colspan="6">
         <s:if test="bdId != 0">
             <s:textfield value="%{getDsDivisionList().get(dsDivisionId)}" cssClass="disable" disabled="true"/>
         </s:if>
     </td>
-    <td colspan="6"><s:select list="dsDivisionList" name="dsDivisionId"/></td>
+    <td colspan="6"><s:select list="dsDivisionList" name="dsDivisionId" id="dsDivisionId"/></td>
 </tr>
 <tr>
-    <td><label>කොට්ඨාශය<br>பிரிவு <br>Registration Division</label></td>
+    <td><label>ලියාපදිංචි කිරීමේ කොට්ඨාශය<br>பதிவுப் பிரிவு<br>Registration Division</label></td>
     <td colspan="6">
         <s:if test="bdId != 0">
             <s:textfield value="%{getBdDivisionList().get(birthDivisionId)}" cssClass="disable" disabled="true"/>
         </s:if>
     </td>
-    <td colspan="6"><s:select name="birthDivisionId" list="bdDivisionList"/></td>
+    <td colspan="6"><s:select name="birthDivisionId" list="bdDivisionList" id="bdDivisionId"/></td>
 </tr>
 <tr>
-    <td><label>ස්ථානය <br>பிறந்த இடம் <br>Place</label></td>
+    <td colspan="12"><label>උපන් ස්ථානය  / பிறந்த இடம்/ Place of Birth</label></td>
+</tr>
+<tr>
+    <td colspan="1"><label>සිංහල හෝ දෙමළ භාෂාවෙන් <br>சிங்களம்அல்லது தமிழ் மொழியில்<br>In Sinhala or Tamil</label></td>
     <td colspan="6"><s:textfield name="#session.birthConfirmation_db.child.placeOfBirth" cssClass="disable"
                                  disabled="true" size="45"/></td>
-    <td colspan="6"><s:textfield name="child.placeOfBirth" size="35" id="placeOfBirth"/></td>
+    <td colspan="5"><s:textfield name="child.placeOfBirth" size="35" id="placeOfBirth"/></td>
 </tr>
 <tr>
-    <td><label>ඉංග්‍රීසි භාෂාවෙන් <br>இங்கிலீஷ் <br>In English</label></td>
+    <td colspan="1"><label>ඉංග්‍රීසි භාෂාවෙන් <br>ஆங்கில மொழியில்<br>In English</label></td>
     <td colspan="6"><s:textfield name="#session.birthConfirmation_db.child.placeOfBirthEnglish" cssClass="disable"
                                  disabled="true" size="45"/></td>
-    <td colspan="6">
+    <td colspan="5">
         <s:textfield name="child.placeOfBirthEnglish" size="35" id="placeOfBirthEnglish"
                      cssStyle="margin-top:10px;"/>
         <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px;" id="place">
@@ -377,14 +444,14 @@
 </tr>
 <tr>
     <td>6</td>
-    <td><label>පියාගේ අනන්‍යතා අංකය <br>தந்நையின் தனிநபர் அடையாள எண்<br>Father's PIN</label></td>
+    <td><label>පියාගේ අනන්‍යතා අංකය <br>தந்நையின் தனிநபர் அடையாள எண்<br>Father's Identification Number</label></td>
     <td colspan="6"><s:textfield name="#session.birthConfirmation_db.parent.fatherNICorPIN" cssClass="disable"
                                  disabled="true"/></td>
-    <td colspan="6"><s:textfield name="parent.fatherNICorPIN" size="35" id="fatherNICorPIN" maxLength="10"/></td>
+    <td colspan="6"><s:textfield name="parent.fatherNICorPIN" size="35" id="fatherNICorPIN" maxLength="12"/></td>
 </tr>
 <tr>
     <td>7</td>
-    <td><label>පියාගේ ජාතිය <br>தந்நையின் இனம்<br>Father's Race</label></td>
+    <td><label>පියාගේ ජන වර්ගය <br>தந்நையின் இனம்<br>Father's Ethnic Group</label></td>
     <td colspan="6">
         <s:textfield value="%{getRaceList().get(fatherRace)}" cssClass="disable" disabled="true"/>
     </td>
@@ -396,14 +463,14 @@
 
 <tr>
     <td>8</td>
-    <td><label>ම‌වගේ අනන්‍යතා අංකය <br>தாயின் தனிநபர் அடையாள எண<br>Mother's PIN</label></td>
+    <td><label>ම‌වගේ අනන්‍යතා අංකය <br>தாயின் அடையாள எண்<br>Mother's Identification Number</label></td>
     <td colspan="6"><s:textfield name="#session.birthConfirmation_db.parent.motherNICorPIN" cssClass="disable"
                                  disabled="true"/></td>
-    <td colspan="6"><s:textfield name="parent.motherNICorPIN" size="35" id="motherNICorPIN" maxLength="10"/></td>
+    <td colspan="6"><s:textfield name="parent.motherNICorPIN" size="35" id="motherNICorPIN" maxLength="12"/></td>
 </tr>
 <tr>
     <td>9</td>
-    <td><label>මවගේ ජාතිය <br>தாயின் இனம்<br>Mother's Race</label></td>
+    <td><label>මවගේ ජන වර්ගය <br>தாயின் இனம்<br>Mother's Ethnic Group</label></td>
     <td colspan="6"><s:textfield value="%{getRaceList().get(motherRace)}" cssClass="disable"
                                  disabled="true"/></td>
     <td colspan="6">
@@ -412,7 +479,7 @@
 </tr>
 <tr>
     <td>10</td>
-    <td><label>මව්පියන් විවාහකද? <br>பெற்றார் விவாகஞ் செய்தவர்களா? <br>Were Parents Married?</label></td>
+    <td><label>මව්පියන් විවාහකද? <br>பெற்றோர்கள் திருமணம் முடித்தவர்களா?<br>Were Parents Married?</label></td>
     <td colspan="6">
         <s:if test="bdId != 0">
             <s:textfield name="#session.birthConfirmation_db.marriage.parentsMarried" cssClass="disable"
@@ -441,9 +508,9 @@
                 </td>
             </tr>
             <tr>
-                <td><label class="label">නැත - පසුව විවාහවී ඇත<br>
+                <td><label class="label">නැත, නමුත් පසුව විවාහවී ඇත<br>
                     இல்லை, பின் விவாகமாணவா்கள்<br>
-                    No but since married</label></td>
+                    No, but since married</label></td>
                 <td>
                     <s:radio name="marriage.parentsMarried" id="parentsMarried"
                              list="#@java.util.HashMap@{'NO_SINCE_MARRIED':''}"
@@ -457,6 +524,60 @@
         </table>
     </td>
 </tr>
+
+<tr>
+    <td>11</td>
+    <td>
+        මව පදිංචි දිස්ත්‍රික්කය <br>
+        தாயின் பதிவு மாவட்டம்<br>
+        Mother's District
+    </td>
+    <td colspan="6">
+        <s:textfield name="#session.birthConfirmation_db.parent.motherDistrictPrint" cssClass="disable"
+                         disabled="true"/>
+    </td>
+    <td>
+        <s:select list="allDistrictList" name="motherDistrictId" headerValue="%{getText('select_district.label')}"
+                  headerKey="0" id="motherDistrictId"/>
+    </td>
+
+</tr>
+<tr>
+    <td>12</td>
+    <td><label>මව පදිංචි ප්‍රාදේශීය ලේකම් කොට්ඨාශය<br>
+        தாயின் பிரதேச செயலக பிரிவு<br>Mother's Divisional Secretary Division</label></td>
+    <td colspan="6">
+        <s:if test="bdId != 0">
+            <s:textfield name="#session.birthConfirmation_db.parent.motherDsDivisionPrint" cssClass="disable"
+                         disabled="true"/>
+        </s:if>
+    </td>
+    <td>
+        <s:select list="allDSDivisionList" name="motherDSDivisionId"
+                  headerValue="%{getText('select_DS_division1.label')}"
+                  headerKey="0" id="motherDSDivisionId"/>
+    </td>
+</tr>
+<tr>
+    <td>13</td>
+    <td><label>මව පදිංචි ග්‍රාම නිලධාරී කොට්ඨාශය<br>
+        தாயின் கிராம சேவையாளர் பிரிவு<br>Mother's Grama Niladhari Division</label></td>
+    <td colspan="6">
+        <s:if test="bdId != 0">
+            <s:textfield name="#session.birthConfirmation_db.parent.motherGNDivisionPrint" cssClass="disable"
+                         disabled="true"/>
+        </s:if>
+    </td>
+    <td align="center">
+        <s:select list="gnDivisionList" name="motherGNDivisionId" headerKey="0"
+                  headerValue="%{getText('select.gn.division')}" id="motherGNDivisionId"/>
+        <a href="javascript:displayGNSearch()">
+            <span><s:label value="%{getText('searchGNDivision.label')}"/></span>
+        </a>
+    </td>
+</tr>
+
+
 </tbody>
 </table>
 
@@ -480,7 +601,8 @@
 <s:hidden id="error4" value="%{getText('p1.dob')}"/>
 <s:hidden id="error6" value="%{getText('fatherPINorNIC.label')}"/>
 <s:hidden id="error7" value="%{getText('motherPINorNIC.label')}"/>
-
+<s:hidden id="selectGNDivision" value="%{getText('select.gn.division')}"/>
+<s:hidden id="selectDSDivision" value="%{getText('select_DS_division1.label')}"/>
 </div>
 
 <%-- Styling Completed --%>

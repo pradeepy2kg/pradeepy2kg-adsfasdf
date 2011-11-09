@@ -136,7 +136,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
             existing.setStatus(BirthAlteration.State.FULLY_APPROVED);
 
             // We've saved the alteration record, now lets modify the birth record
-            BirthDeclaration bdf = birthDeclarationDAO.getById(existing.getBdfIDUKey());
+            BirthDeclaration bdf = birthDeclarationDAO.getById(existing.getBdfIdUKey());
             switch (existing.getType()) {
 
                 case TYPE_27:
@@ -174,7 +174,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
                     birthDeclarationDAO.updateBirthDeclaration(bdf, user);
                     logger.debug("Alteration of type : {} is a cancellation of the existing record : {}",
                         existing.getType().ordinal(), bdf.getIdUKey());
-
+                    removeOtherAlterations(bdf.getIdUKey(), existing.getIdUKey());
                     // cancel any person on the PRS related to this same PIN
                     Person person = personDAO.findPersonByPIN(bdf.getChild().getPin());
                     if (person != null) {
@@ -193,13 +193,34 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
         logger.debug("Updated birth alteration : {}", existing.getIdUKey());
     }
 
+    /**
+     * if a alteration approved by 52_1 A, B,D,E then original certificate is no longer active one so the existing
+     * DE alterations are no longer valid for that certificate
+     */
+    private void removeOtherAlterations(long certificateNumber, long currentAlterationId) {
+        List<BirthAlteration> birthAlterations = birthAlterationDAO.getBirthAlterationByBirthCertificateNumber(certificateNumber);
+        for (BirthAlteration ba : birthAlterations) {
+            if (ba.getIdUKey() != currentAlterationId && (ba.getStatus() != BirthAlteration.State.FULLY_APPROVED ||
+                ba.getStatus() != BirthAlteration.State.PRINTED)) {
+                try {
+                    birthAlterationDAO.deleteBirthAlteration(ba.getIdUKey());
+                }
+                catch (Exception e) {
+                    logger.debug("unable to delete birth alteration while cleaning existing birth alteration when an " +
+                        "there is a approval for 52_1 A,B,D,E idUKey : {}", ba.getIdUKey());
+                    continue;
+                }
+            }
+        }
+    }
+
     private void syncFKOfOtherActiveAlterationsAfterApproval(long newFK, long oldFK, User user) {
         //find existing alterations
         List<BirthAlteration> birthAlterations = birthAlterationDAO.getBirthAlterationByBirthCertificateNumber(oldFK);
         for (BirthAlteration ba : birthAlterations) {
             if (ba.getStatus() == BirthAlteration.State.DATA_ENTRY && ba.getLifeCycleInfo().isActiveRecord()) {
                 //updating BA with new FK
-                ba.setBdfIDUKey(newFK);
+                ba.setBdfIdUKey(newFK);
                 birthAlterationDAO.updateBirthAlteration(ba, user);
                 logger.debug("successfully sync FK of birth alteration idUKey : {} ", ba.getIdUKey());
             }
@@ -332,7 +353,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
 
     private List<BirthAlteration> populateTransientNameOfficialLanguage(List<BirthAlteration> birthAlterations) {
         for (BirthAlteration birthAlteration : birthAlterations) {
-            birthAlteration.setChildNameInOfficialLanguage(birthDeclarationDAO.getById(birthAlteration.getBdfIDUKey()).
+            birthAlteration.setChildNameInOfficialLanguage(birthDeclarationDAO.getById(birthAlteration.getBdfIdUKey()).
                 getChild().getChildFullNameOfficialLang());
         }
         return birthAlterations;
@@ -415,12 +436,14 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
         }
 
         ValidationUtils.validateAccessToBDDivision(user,
-            birthDeclarationDAO.getById(ba.getBdfIDUKey()).getRegister().getBirthDivision());
+            birthDeclarationDAO.getById(ba.getBdfIdUKey()).getRegister().getBirthDivision());
     }
 
     /**
      * Checks if the user can approve the birth alteration entry. Only an ARG level user, in charge of the BDF under
      * consideration can approve an alteration
+     * <p/>
+     * note :if the section is 27 ADR also can approve the record
      *
      * @param ba   the birth alteration entry
      * @param user the user attempting to approve
@@ -428,14 +451,15 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
     private void validateAccessOfUserForApproval(BirthAlteration ba, User user) {
         if (Role.ROLE_RG.equals(user.getRole().getRoleId())) {
             // RG can approve any record
-            //todo if ba==null then this throw NPE and it is not throws here amith ???
-        } else if (Role.ROLE_ARG.equals(user.getRole().getRoleId())) {
+        } else if ((Role.ROLE_ARG.equals(user.getRole().getRoleId())) ||
+            (!(Role.ROLE_DEO.equals(user.getRole().getRoleId())) &&
+                (ba.getType() == BirthAlteration.AlterationType.TYPE_27))) {
             ValidationUtils.validateAccessToBDDivision(user,
-                birthDeclarationDAO.getById(ba.getBdfIDUKey()).getRegister().getBirthDivision());
+                birthDeclarationDAO.getById(ba.getBdfIdUKey()).getRegister().getBirthDivision());
 
             if (!user.isAuthorized(Permission.APPROVE_BIRTH_ALTERATION)) {
-                handleException("User : " + user.getUserId() + " is not allowed to approve/reject birth alteration",
-                    ErrorCodes.PERMISSION_DENIED);
+                handleException("User : " + user.getUserId() + " is not allowed to approve/reject birth alteration , " +
+                    "alteration type : " + ba.getType().name(), ErrorCodes.PERMISSION_DENIED);
             }
         } else {
             handleException("User : " + user.getUserId() + " is not an ARG for alteration approval",

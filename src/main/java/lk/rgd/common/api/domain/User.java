@@ -1,6 +1,7 @@
 package lk.rgd.common.api.domain;
 
 import lk.rgd.AppConstants;
+import lk.rgd.common.util.WebUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.slf4j.Logger;
@@ -161,7 +162,7 @@ public class User implements Serializable {
     /**
      * @see State
      */
-    @Column(nullable = false, name = "STATUS", columnDefinition = "smallint not null default 1")
+    @Column(nullable = false, columnDefinition = "smallint not null default 1")
     private State status;
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
@@ -187,7 +188,7 @@ public class User implements Serializable {
     @Column
     private String taenSignatureText;
 
-    @Column(name = "loginAttempts", columnDefinition = "smallint not null default 1")
+    @Column(columnDefinition = "smallint not null default 1")
     private int loginAttempts;
 
     public User() {
@@ -218,7 +219,7 @@ public class User implements Serializable {
     }
 
     public void setUserId(String userId) {
-        this.userId = userId;
+        this.userId = WebUtils.filterBlanks(userId);
     }
 
     public String getUserName() {
@@ -226,7 +227,7 @@ public class User implements Serializable {
     }
 
     public void setUserName(String userName) {
-        this.userName = userName;
+        this.userName = WebUtils.filterBlanks(userName);
     }
 
     public long getPin() {
@@ -359,7 +360,7 @@ public class User implements Serializable {
     }
 
     public void setSienSignatureText(String sienSignatureText) {
-        this.sienSignatureText = sienSignatureText;
+        this.sienSignatureText = WebUtils.filterBlanks(sienSignatureText);
     }
 
     public String getTaenSignatureText() {
@@ -367,7 +368,7 @@ public class User implements Serializable {
     }
 
     public void setTaenSignatureText(String taenSignatureText) {
-        this.taenSignatureText = taenSignatureText;
+        this.taenSignatureText = WebUtils.filterBlanks(taenSignatureText);
     }
 
     public Location getPrimaryLocation() {

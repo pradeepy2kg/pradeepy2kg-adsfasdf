@@ -2,7 +2,6 @@ package lk.rgd.crs.api.domain;
 
 import lk.rgd.common.api.domain.Country;
 import lk.rgd.common.api.domain.DSDivision;
-import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.Race;
 import lk.rgd.common.util.WebUtils;
 
@@ -30,6 +29,12 @@ public class DeathPersonInfo implements Serializable, Cloneable {
 
     @Column(nullable = true)
     private Integer deathPersonAge;
+
+    @Column(nullable = true)
+    private Integer deathPersonAgeMonth;
+
+    @Column(nullable = true)
+    private Integer deathPersonAgeDate;
 
     /**
      * Gender 0 - male, 1 - female, 2 - unknown
@@ -99,12 +104,17 @@ public class DeathPersonInfo implements Serializable, Cloneable {
     @Column(nullable = true)
     private boolean personIdentified;
 
+    //todo change nullable to false when we have all the data
+    @ManyToOne
+    @JoinColumn(name = "gnDivisionUKey", nullable = true)
+    private GNDivision gnDivision;
+
     public String getDeathPersonPINorNIC() {
         return deathPersonPINorNIC;
     }
 
     public void setDeathPersonPINorNIC(String deathPersonPINorNIC) {
-        this.deathPersonPINorNIC = WebUtils.filterBlanksAndToUpper(deathPersonPINorNIC);
+        this.deathPersonPINorNIC = WebUtils.filterBlanksAndToUpperAndTrim(deathPersonPINorNIC, 12, "deathPersonPINorNIC");
     }
 
     public Country getDeathPersonCountry() {
@@ -120,7 +130,7 @@ public class DeathPersonInfo implements Serializable, Cloneable {
     }
 
     public void setDeathPersonPassportNo(String deathPersonPassportNo) {
-        this.deathPersonPassportNo = WebUtils.filterBlanksAndToUpper(deathPersonPassportNo);
+        this.deathPersonPassportNo = WebUtils.filterBlanksAndToUpperAndTrim(deathPersonPassportNo, 255, "deathPersonPassportNo");
     }
 
     public Integer getDeathPersonAge() {
@@ -129,6 +139,22 @@ public class DeathPersonInfo implements Serializable, Cloneable {
 
     public void setDeathPersonAge(Integer deathPersonAge) {
         this.deathPersonAge = deathPersonAge;
+    }
+
+    public Integer getDeathPersonAgeMonth() {
+        return deathPersonAgeMonth;
+    }
+
+    public void setDeathPersonAgeMonth(Integer deathPersonAgeMonth) {
+        this.deathPersonAgeMonth = deathPersonAgeMonth == 0 ? null : deathPersonAgeMonth;
+    }
+
+    public Integer getDeathPersonAgeDate() {
+        return deathPersonAgeDate;
+    }
+
+    public void setDeathPersonAgeDate(Integer deathPersonAgeDate) {
+        this.deathPersonAgeDate = deathPersonAgeDate == 0 ? null : deathPersonAgeDate;
     }
 
     public int getDeathPersonGender() {
@@ -152,7 +178,7 @@ public class DeathPersonInfo implements Serializable, Cloneable {
     }
 
     public void setDeathPersonNameOfficialLang(String deathPersonNameOfficialLang) {
-        this.deathPersonNameOfficialLang = WebUtils.filterBlanksAndToUpper(deathPersonNameOfficialLang);
+        this.deathPersonNameOfficialLang = WebUtils.filterBlanksAndToUpperAndTrim(deathPersonNameOfficialLang, 600, "deathPersonNameOfficialLang");
     }
 
     public String getDeathPersonNameInEnglish() {
@@ -160,7 +186,7 @@ public class DeathPersonInfo implements Serializable, Cloneable {
     }
 
     public void setDeathPersonNameInEnglish(String deathPersonNameInEnglish) {
-        this.deathPersonNameInEnglish = WebUtils.filterBlanksAndToUpper(deathPersonNameInEnglish);
+        this.deathPersonNameInEnglish = WebUtils.filterBlanksAndToUpperAndTrim(deathPersonNameInEnglish, 600, "deathPersonNameInEnglish");
     }
 
     public String getDeathPersonPermanentAddress() {
@@ -168,7 +194,7 @@ public class DeathPersonInfo implements Serializable, Cloneable {
     }
 
     public void setDeathPersonPermanentAddress(String deathPersonPermanentAddress) {
-        this.deathPersonPermanentAddress = WebUtils.filterBlanksAndToUpper(deathPersonPermanentAddress);
+        this.deathPersonPermanentAddress = WebUtils.filterBlanksAndToUpperAndTrim(deathPersonPermanentAddress, 255, "deathPersonPermanentAddress");
     }
 
     public String getDeathPersonFatherPINorNIC() {
@@ -176,7 +202,7 @@ public class DeathPersonInfo implements Serializable, Cloneable {
     }
 
     public void setDeathPersonFatherPINorNIC(String deathPersonFatherPINorNIC) {
-        this.deathPersonFatherPINorNIC = WebUtils.filterBlanksAndToUpper(deathPersonFatherPINorNIC);
+        this.deathPersonFatherPINorNIC = WebUtils.filterBlanksAndToUpperAndTrim(deathPersonFatherPINorNIC, 12, "deathPersonFatherPINorNIC");
     }
 
     public String getDeathPersonFatherFullName() {
@@ -184,7 +210,7 @@ public class DeathPersonInfo implements Serializable, Cloneable {
     }
 
     public void setDeathPersonFatherFullName(String deathPersonFatherFullName) {
-        this.deathPersonFatherFullName = WebUtils.filterBlanksAndToUpper(deathPersonFatherFullName);
+        this.deathPersonFatherFullName = WebUtils.filterBlanksAndToUpperAndTrim(deathPersonFatherFullName, 255, "deathPersonFatherFullName");
     }
 
     public String getDeathPersonMotherPINorNIC() {
@@ -192,7 +218,7 @@ public class DeathPersonInfo implements Serializable, Cloneable {
     }
 
     public void setDeathPersonMotherPINorNIC(String deathPersonMotherPINorNIC) {
-        this.deathPersonMotherPINorNIC = WebUtils.filterBlanksAndToUpper(deathPersonMotherPINorNIC);
+        this.deathPersonMotherPINorNIC = WebUtils.filterBlanksAndToUpperAndTrim(deathPersonMotherPINorNIC, 12, "deathPersonMotherPINorNIC");
     }
 
     public String getDeathPersonMotherFullName() {
@@ -200,7 +226,7 @@ public class DeathPersonInfo implements Serializable, Cloneable {
     }
 
     public void setDeathPersonMotherFullName(String deathPersonMotherFullName) {
-        this.deathPersonMotherFullName = WebUtils.filterBlanksAndToUpper(deathPersonMotherFullName);
+        this.deathPersonMotherFullName = WebUtils.filterBlanksAndToUpperAndTrim(deathPersonMotherFullName, 255, "deathPersonMotherFullName");
     }
 
     public Date getDeathPersonDOB() {
@@ -224,7 +250,7 @@ public class DeathPersonInfo implements Serializable, Cloneable {
     }
 
     public void setLastAddressOfMissingPerson(String lastAddressOfMissingPerson) {
-        this.lastAddressOfMissingPerson = WebUtils.filterBlanksAndToUpper(lastAddressOfMissingPerson);
+        this.lastAddressOfMissingPerson = WebUtils.filterBlanksAndToUpperAndTrim(lastAddressOfMissingPerson, 255, "lastAddressOfMissingPerson");
     }
 
     public String getRankOrProfession() {
@@ -232,7 +258,7 @@ public class DeathPersonInfo implements Serializable, Cloneable {
     }
 
     public void setRankOrProfession(String rankOrProfession) {
-        this.rankOrProfession = WebUtils.filterBlanksAndToUpper(rankOrProfession);
+        this.rankOrProfession = WebUtils.filterBlanksAndToUpperAndTrim(rankOrProfession, 255, "rankOrProfession");
     }
 
     public boolean isPensioner() {
@@ -300,5 +326,13 @@ public class DeathPersonInfo implements Serializable, Cloneable {
     @Override
     protected DeathPersonInfo clone() throws CloneNotSupportedException {
         return (DeathPersonInfo) super.clone();
+    }
+
+    public GNDivision getGnDivision() {
+        return gnDivision;
+    }
+
+    public void setGnDivision(GNDivision gnDivision) {
+        this.gnDivision = gnDivision;
     }
 }

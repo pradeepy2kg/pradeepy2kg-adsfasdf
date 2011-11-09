@@ -207,7 +207,7 @@
                     <td>
                         <s:select id="bdDivisionSerial" name="birthDivisionId" list="bdDivisionList"
                                   headerKey="0" headerValue="%{getText('select.registrationDivision.label')}"
-                                  cssStyle="float:left;  width:240px; margin:2px 5px;"/>
+                                  cssStyle="float:left;width:240px;margin:2px 0;"/>
                     </td>
                 </tr>
                 <tr>
@@ -271,7 +271,7 @@
         <s:iterator status="approvalStatus" value="birthAlterationPendingApprovalList" id="approvalList">
             <%--todo has to be completed--%>
             <tr>
-                <td align="center"><s:property value="bdfIDUKey"/></td>
+                <td align="center"><s:property value="bdfIdUKey"/></td>
                 <td align="center"><s:property value="type"/></td>
                 <td><s:property value="childNameInOfficialLanguage"/></td>
                 <td align="center">
@@ -279,7 +279,9 @@
                         <s:param name="idUKey" value="idUKey"/>
                     </s:url>
                     <s:set name="birthDivision" value="birthRecordDivision"/>
-                    <s:if test="status.ordinal()==0 & (#session.user_bean.role.roleId.equals('ARG') | #session.user_bean.role.roleId.equals('RG'))">
+                    <s:if test="status.ordinal()==0 & (#session.user_bean.role.roleId.equals('ARG') |
+                     #session.user_bean.role.roleId.equals('RG') | (!(#session.user_bean.role.roleId.equals('DEO')) &
+                      type.ordinal()== 0))">
                         <%
                             BDDivision deathDivision = (BDDivision) pageContext.getAttribute("birthDivision");
                             int deathDSDivsion = deathDivision.getDsDivision().getDsDivisionUKey();
@@ -316,7 +318,9 @@
                         <s:param name="idUKey" value="idUKey"/>
                     </s:url>
                     <s:set name="birthDivision" value="birthRecordDivision"/>
-                    <s:if test="status.ordinal()==0 & (#session.user_bean.role.roleId.equals('ARG') | #session.user_bean.role.roleId.equals('RG'))">
+                    <s:if test="status.ordinal()==0 & (#session.user_bean.role.roleId.equals('ARG') |
+                     #session.user_bean.role.roleId.equals('RG') | (!(#session.user_bean.role.roleId.equals('DEO')) &
+                      type.ordinal()== 0))">
                         <%
                             BDDivision deathDivision = (BDDivision) pageContext.getAttribute("birthDivision");
                             int deathDSDivsion = deathDivision.getDsDivision().getDsDivisionUKey();
@@ -328,7 +332,8 @@
                                  border="none"/>
                         </s:a>
                         <%}%>
-                    </s:if></td>
+                    </s:if>
+                </td>
                 <td align="center">
                     <s:if test="(status.ordinal()==0)">
                         <s:url id="editSelected" action="eprEditBirthAlterationInit.do">
@@ -344,7 +349,8 @@
                             <s:param name="idUKey" value="idUKey"/>
                         </s:url>
                         <s:a href="%{deleteSelected}" title="%{getText('toolTip.delete')}">
-                            <img src="<s:url value='/images/delete.gif'/>" width="25" height="25" border="none"/></s:a>
+                            <img src="<s:url value='/images/delete.gif'/>" width="25" height="25" border="none"
+                                    onclick="javascript:return deleteWarning('warning')"/></s:a>
                     </s:if>
                 </td>
                 <td align="center">
@@ -409,3 +415,4 @@
 <s:hidden id="serialNumnerFi" value="%{getText('field.serial.number')}"/>
 <s:hidden id="pinNumberFi" value="%{getText('field.pin.number')}"/>
 <s:hidden id="certificateNumberFi" value="%{getText('field.certificate.number')}"/>
+<s:hidden id="warning" value="%{getText('birth.delete.warning')}"/>
