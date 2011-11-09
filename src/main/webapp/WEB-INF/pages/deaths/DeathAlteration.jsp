@@ -104,6 +104,11 @@
             printMessage("text_must_select", errorText)
         }
     }
+
+
+    function disableFields(){
+        var type=document.getElementById("")
+    }
 </script>
 
 <script type="text/javascript">
@@ -281,9 +286,9 @@
                     </td>
                     <td>
                         <s:select
-                                list="#@java.util.HashMap@{'TYPE_52_1_A':'52(1) A ','TYPE_52_1_B':'52(1) B','TYPE_52_1_D':'52(1) D','TYPE_52_1_E':'52(1) E','TYPE_52_1_I':'52(1) I','TYPE_52_1_H':'52(1) H','TYPE_53':'53'}"
-                                name="deathAlteration.type"
-                                cssStyle="width:190px; margin-left:5px;" onchange="setAct(value)"/>
+                                list="#@java.util.HashMap@{'TYPE_52_1_A':'52(1) A ','TYPE_52_1_B':'52(1) B','TYPE_52_1_D':'52(1) D','TYPE_52_1_E':'52(1) E','TYPE_52_1_I':'52(1) I','TYPE_53':'53'}"
+                                name="deathAlteration.type" id="deathAlterationType"
+                                cssStyle="width:190px; margin-left:5px;" onchange="disableFields()"/>
                     </td>
 
                 </tr>

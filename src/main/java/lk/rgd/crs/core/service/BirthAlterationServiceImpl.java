@@ -2,7 +2,6 @@ package lk.rgd.crs.core.service;
 
 import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
-import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.Role;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.CRSRuntimeException;
@@ -11,7 +10,6 @@ import lk.rgd.crs.api.dao.BirthDeclarationDAO;
 import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.BirthAlterationService;
 import lk.rgd.crs.core.ValidationUtils;
-import lk.rgd.crs.web.WebConstants;
 import lk.rgd.prs.api.dao.PersonDAO;
 import lk.rgd.prs.api.domain.Person;
 import lk.rgd.prs.api.service.PopulationRegistry;
@@ -57,7 +55,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
         //todo amith call to adding validator (check must fill fields)
         //validate can be added a BA for this BC by state
         logger.debug("Adding new birth alteration record on request of : {}", ba.getDeclarant().getDeclarantFullName());
-  //      birthAlterationValidator.checkOnGoingAlterationOnThisSection(ba.getBdfIDUKey(), ba.getType(), user);
+        //      birthAlterationValidator.checkOnGoingAlterationOnThisSection(ba.getBdfIDUKey(), ba.getType(), user);
         ba.setSubmittedLocation(user.getPrimaryLocation());
         ba.setStatus(BirthAlteration.State.DATA_ENTRY);
         // any user (DEO, ADR of any DS office or BD division etc) can add a birth alteration request
@@ -143,8 +141,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
 
                 case TYPE_27:
                 case TYPE_27A:
-                case TYPE_52_1_H:
-                case TYPE_52_1_I: {
+                case TYPE_52_1_H: {
                     logger.debug("Alteration is an amendment, inclusion of omission or correction. Type : {}",
                         existing.getType().ordinal());
                     bdf.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_ALTERED);
@@ -573,6 +570,9 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
         }
         if (ba.getApprovalStatuses().get(Alteration52_1.PLACE_OF_BIRTH_ENGLISH)) {
             bdf.getChild().setPlaceOfBirthEnglish(alt.getPlaceOfBirthEnglish());
+        }
+        if (ba.getApprovalStatuses().get(Alteration52_1.BIRTH_DIVISION)) {
+            bdf.getRegister().setBirthDivision(alt.getBirthDivision());
         }
         if (ba.getApprovalStatuses().get(Alteration52_1.GENDER)) {
             bdf.getChild().setChildGender(alt.getChildGender());
