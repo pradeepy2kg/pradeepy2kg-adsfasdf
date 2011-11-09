@@ -166,6 +166,20 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         } else {
 
             try {
+                List<BirthAlteration> baList = alterationService.getBirthAlterationByBirthCertificateNumber(bdf.getIdUKey(), user);
+                for (BirthAlteration ba : baList) {
+                    if (ba.getLifeCycleInfo().isActiveRecord()) {
+                        logger.debug("there is  a pending birth alteration for this birth of idUKey", bdf.getIdUKey());
+                        addActionMessage(getText("error.ongoing.alteration.on.this.section"));
+                        populateBasicLists();
+                        return ERROR;
+                    }
+                }
+            } catch (Exception e) {
+
+
+            }
+            try {
                 birthAlterationValidator.checkOnGoingAlterationOnThisSection(bdf.getIdUKey(), alterationType, user);
             } catch (CRSRuntimeException e) {
                 addActionError(getText("error.ongoing.alteration.on.this.section", new String[]{"" + idUKey}));
@@ -196,7 +210,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
                     populateAlt52_1(bdf);
                 }
             }
-            parent=bdf.getParent();
+            parent = bdf.getParent();
             populateBasicLists();
             populateCountryRacesAndAllDSDivisions();
         }
@@ -500,10 +514,11 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
                     break;
                 case TYPE_52_1_A:
                 case TYPE_52_1_B:
-                case TYPE_52_1_D:
+                case TYPE_52_1_D:   
                 case TYPE_52_1_E:
-                case TYPE_52_1_H:
-                case TYPE_52_1_I: {
+                    logger.debug("select the alteration going to be Cancel the birth record of idUKey : {} ", idUKey);
+                    break;
+                case TYPE_52_1_H: {
                     changesOfAlt52_1(birthAlteration, bdf, language);
                 }
             }
@@ -518,7 +533,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             idUKey, bdf.getIdUKey());
         return SUCCESS;
     }
-    //todo use a one private method for above and below two methods       amith
+    //todo use a one private method for above and below two methods  amith
 
     /**
      * load birth alteration notice
@@ -1087,7 +1102,6 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             dsDivisionName = dsDivisionDAO.getNameByPK(dsDivisionId, language);
             bdDivisionName = bdDivisionDAO.getNameByPK(birthDivisionId, language);
         }
-
     }
 
 
@@ -1263,7 +1277,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
     public String getBirthAlterationHistory() {
         BirthDeclaration bdf;
         birthAlteration = alterationService.getByIDUKey(idUKey, user);
-        long lastIdUKey=idUKey;
+        long lastIdUKey = idUKey;
         bdf = service.getById(birthAlteration.getBdfIDUKey());
         List<BirthDeclaration> bdfList = service.getArchivedCorrectedEntriesForGivenSerialNo(
             bdf.getRegister().getBirthDivision(), bdf.getRegister().getBdfSerialNo(), user);

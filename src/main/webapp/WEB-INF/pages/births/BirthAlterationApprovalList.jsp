@@ -297,7 +297,7 @@
                         <s:param name="idUKey" value="idUKey"/>
                     </s:url>
                     <s:set name="birthDivision" value="birthRecordDivision"/>
-                    <s:if test="status.ordinal()==0 & (#session.user_bean.role.roleId.equals('ARG') | #session.user_bean.role.roleId.equals('RG'))">
+                    <s:if test=" (#session.user_bean.role.roleId.equals('ARG') | #session.user_bean.role.roleId.equals('RG'))">
                         <%
                             BDDivision deathDivision = (BDDivision) pageContext.getAttribute("birthDivision");
                             int deathDSDivsion = deathDivision.getDsDivision().getDsDivisionUKey();
