@@ -165,6 +165,7 @@
                     <td width="240px">
                         <s:property value="%{districtName}"/>
                     </td>
+                    <td width="100px">&nbsp;</td>
                     <td width="200px">
                         <s:property value="%{getText('label.dsDivision')}"/>
                     </td>
@@ -199,6 +200,7 @@
 
                         </s:else>
                     </td>
+                    <td width="100px">&nbsp;</td>
                     <td width="200px">
                         <s:property value="%{getText('label.dsDivision')}"/>
                     </td>

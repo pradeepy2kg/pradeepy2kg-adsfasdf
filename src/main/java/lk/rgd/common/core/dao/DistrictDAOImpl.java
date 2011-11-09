@@ -148,7 +148,7 @@ public class DistrictDAOImpl extends BaseDAO implements DistrictDAO, Preloadable
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public void preload() {
 
-        Query query = em.createQuery("SELECT d FROM District d");
+        Query query = em.createQuery("SELECT d FROM District d WHERE d.active = TRUE");
         List<District> results = query.getResultList();
 
         for (District d : results) {

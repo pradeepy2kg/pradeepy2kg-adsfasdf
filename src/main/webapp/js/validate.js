@@ -93,17 +93,25 @@ function validatePhoneNo(domElement, errorText, errorCode) {
 // validate PIN or NIC
 function validatePINorNIC(domElement, errorText, errorCode) {
     with (domElement) {
-        var reg = /^(([0-9]{10})|([0-9]{9}[X|x|V|v]))$/;
-        if (reg.test(value.trim()) == false) {
-            printMessage(errorText, errorCode);
-        } else {
+        var pinOrNic = value.trim();
+
+        if (pinOrNic.length == 12) {
+            if (checkInvalidPIN(pinOrNic, true, false)) {
+                printMessage(errorText, errorCode);
+            }
+        } else if (pinOrNic.length == 10) {
             var regNIC = /^([0-9]{9}[X|x|V|v])$/;
-            if (domElement.value.search(regNIC) == 0) {
+
+            if (regNIC.test(pinOrNic)) {
                 var day = domElement.value.substring(2, 5);
                 if ((day >= 367 && day <= 500) || (day >= 867)) {
                     printMessage(errorText, errorCode);
                 }
+            } else {
+                printMessage(errorText, errorCode);
             }
+        } else {
+            printMessage(errorText, errorCode);
         }
     }
 }
@@ -126,24 +134,84 @@ function validateNIC(domElement, errorText, errorCode) {
     }
 }
 
-// TODO not complete
 // validate Temporary PIN
 function validateTemPIN(domElement, errorText, errorCode) {
     with (domElement) {
-        var reg = /^([0-9]{10})$/;
-        if (reg.test(value.trim()) == false) {
+        var pin = value.trim();
+        if (pin.length != 12 || checkInvalidPIN(pin, false, false)) {
             printMessage(errorText, errorCode);
         }
     }
 }
 
-// TODO not complete
+// validate PIN
 function validatePIN(domElement, errorText, errorCode) {
     with (domElement) {
-        var reg = /^([0-9]{10})$/;
-        if (reg.test(value.trim()) == false) {
+        var pin = value.trim();
+        if (pin.length != 12 || checkInvalidPIN(pin, false, true)) {
             printMessage(errorText, errorCode);
         }
+    }
+}
+
+// used to validate temporary pin and pin
+// * both = true for fields enable to enter PIN and Temporary PIN both, * both = false for only PIN or Temporary PIN
+// * isPin=true for PIN, * isPin=false for Temporary PIN
+// both = true                  - to check both PIN or Temporary PIN invalid
+// both = false, isPin = true   - to check PIN invalid
+// both = false, isPin = false  - to check Temporary PIN invalid
+function checkInvalidPIN(pin, both, isPin) {
+    var invalid = false;
+    var year = pin.substring(0, 4);
+    var date = pin.substring(4, 7);
+    var serial = pin.substring(7, 11);
+    var check = pin.substring(11, 12);
+    var number = pin.substring(0, 11);
+
+    // validate year range
+    if (both) {
+        if ((year < 1700) || (year > 2200 && year < 6700) || (year > 7200)) {
+            return true;
+        }
+    } else {
+        if (isPin) {
+            if ((year < 1700) || (year > 2200)) {
+                return true;
+            }
+        } else {
+            if ((year < 6700) || (year > 7200)) {
+                return true;
+            }
+        }
+    }
+    // validate date range
+    if ((date >= 367 && date <= 500) || (date >= 867)) {
+        return true;
+    }
+    // validate serial number range
+    if (serial < 1 || serial > 9999) {
+        return true;
+    }
+    // validate check digit
+    if (check != calculateCheckDigit(number)) {
+        return true;
+    }
+    return false;
+}
+
+// calculate check digit of given pin
+function calculateCheckDigit(number) {
+    var N = new Array(11);
+    for (var i = 0; i < N.length; i++) {
+        N[i] = number.substring(i, i + 1);
+    }
+
+    var check = 11 - ((N[0] * 8 + N[1] * 4 + N[2] * 3 + N[3] * 2 + N[4] * 7 + N[5] * 6 + N[6] * 5 + N[7] * 7 + N[8] * 4 + N[9] * 3 + N[10] * 2) % 11);
+
+    if (check > 9) {
+        return check - 10;
+    } else {
+        return check;
     }
 }
 
@@ -152,7 +220,7 @@ function isNumberKey(evt) {
     var charCode = (evt.which) ? evt.which : event.keyCode
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
         // can enter only "V", this is to use Paste shortcut key (Ctrl+V)
-        if(charCode != 118) {
+        if (charCode != 118) {
             return false;
         }
     }
@@ -316,4 +384,55 @@ function customAlert(text) {
     //    nInfo.innerHTML = text + " <br><input type='submit' value='OK' onclick=exit;/>";
     nInfo.innerHTML = "<h6>Warnings</h6>" + text;
     window.document.body.appendChild(nInfo);
+}
+
+function calculateBirthDay(id, error) {
+    var regNIC = /^([0-9]{9}[X|x|V|v])$/;
+    var day = id.substring(2, 5);
+    var BirthYear = 19 + id.substring(0, 2);
+    var D = new Date(BirthYear);
+    if ((id.search(regNIC) == 0) && (day >= 501 && day <= 866)) {
+        if ((day > 559) && ((D.getFullYear() % 4) != 0 )) {
+            day = id.substring(2, 5) - 2;
+            D.setDate(D.getDate() + day - 500);
+        } else {
+            D.setDate(D.getDate() + day - 1500);
+        }
+        return   new Date(D.getYear(), D.getMonth(), D.getDate());
+
+    } else if ((id.search(regNIC) == 0) && (day > 0 && day <= 366)) {
+        if ((day > 59) && ((D.getFullYear() % 4) != 0 )) {
+            day = id.substring(2, 5) - 2;
+            D.setDate(D.getDate() + day);
+        } else {
+            D.setDate(D.getDate() + day - 1000);
+        }
+        return new Date(D.getYear(), D.getMonth(), D.getDate());
+
+    } else if ((id.search(regNIC) == 0) && ((day >= 367 && day <= 501)) | (day > 867)) {
+        alert(error);
+    }
+}
+
+function deleteWarning(message) {
+    var ret = true;
+    ret = confirm(document.getElementById(message).value);
+    return ret;
+}
+
+// Display popup window to search District and DSDivision of any given GNDivision
+function displayGNSearch() {
+    var url = 'http://www.life.gov.lk/LIFe/navigate/';
+    displayPopup(url);
+}
+
+// Display popup by using specified url
+function displayPopup(url) {
+    var w = 850;
+    var h = 750;
+    var left = (w / 2 - 150);
+    var top = (h / 2 - 300);
+    var features = "width=" + w + ",height=" + h + ",top=" + top + ",left=" + left;
+    features += ",scrollbars=1,resizable=0,status=0,directories=no,menubar=0,toolbar=1";
+    window.open(url, '', features);
 }

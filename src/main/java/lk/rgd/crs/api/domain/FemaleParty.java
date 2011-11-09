@@ -1,7 +1,6 @@
 package lk.rgd.crs.api.domain;
 
 import lk.rgd.common.api.domain.Country;
-import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.Race;
 import lk.rgd.common.util.WebUtils;
 import lk.rgd.prs.api.domain.Person;
@@ -15,60 +14,60 @@ import java.util.Date;
 @Embeddable
 public class FemaleParty {
 
-    @Column(name = "F_IDENTIFICATION_NUMBER", nullable = true)
+    @Column(nullable = true)
     //pin only a pin
     private String identificationNumberFemale;
 
-    @Column(name = "F_DOB", nullable = true)
+    @Column(nullable = true)
     @Temporal(value = TemporalType.DATE)
     private Date dateOfBirthFemale;
 
     @ManyToOne
-    @JoinColumn(name = "F_RACE_IDUKEY", nullable = true)
+    @JoinColumn(name = "femaleRaceId", nullable = true)
     private Race femaleRace;
 
-    @Column(name = "F_AGE_LAST_BD", nullable = true)
+    @Column(nullable = true)
     private int ageAtLastBirthDayFemale;
 
     @ManyToOne
-    @JoinColumn(name = "F_COUNTRY_IDUKEY", nullable = true)
-    private Country country;
+    @JoinColumn(nullable = true)
+    private Country femaleCountry;
 
-    @Column(name = "F_PASSPORT", nullable = true, length = 15)
-    private String passport;
+    @Column(nullable = true, length = 15)
+    private String femalePassport;
 
-    @Column(name = "F_DATE_ARRIVAL", nullable = true)
+    @Column(nullable = true)
     @Temporal(value = TemporalType.DATE)
-    private Date dateOfArrival;
+    private Date femaleDateOfArrival;
 
-    @Column(name = "F_NAME_OFFICIAL", nullable = true, length = 600)
+    @Column(nullable = true, length = 600)
     private String nameInOfficialLanguageFemale;
 
-    @Column(name = "F_NAME_ENGLISH", nullable = true, length = 600)
+    @Column(nullable = true, length = 600)
     private String nameInEnglishFemale;
 
-    @Column(name = "F_ADDRESS_OFFICIAL", nullable = true, length = 255)
+    @Column(nullable = true, length = 255)
     private String residentAddressFemaleInOfficialLang;
 
-    @Column(name = "F_ADDRESS_ENGLISH", nullable = true, length = 255)
+    @Column(nullable = true, length = 255)
     private String residentAddressFemaleInEnglish;
 
-    @Column(name = "F_RANK_PROFESSION_OFFICIAL", nullable = true, length = 255)
+    @Column(nullable = true, length = 255)
     private String rankOrProfessionFemaleInOfficialLang;
 
-    @Column(name = "F_RANK_PROFESSION_ENGLISH", nullable = true, length = 255)
+    @Column(nullable = true, length = 255)
     private String rankOrProfessionFemaleInEnglish;
 
-    @Column(name = "F_CIVIL_STATE", nullable = true)
+    @Column(nullable = true)
     private Person.CivilStatus civilStatusFemale;
 
-    @Column(name = "F_IDENTIFICATION_FATHER", length = 12, nullable = true)
+    @Column(length = 12, nullable = true)
     private String fatherIdentificationNumberFemale;
 
-    @Column(name = "F_FULL_NAME_FATHER_OFFICIAL", length = 600, nullable = true)
+    @Column(length = 600, nullable = true)
     private String fatherFullNameFemaleInOfficialLang;
 
-    @Column(name = "F_FULL_NAME_FATHER_ENGLISH", length = 600, nullable = true)
+    @Column(length = 600, nullable = true)
     private String fatherFullNameFemaleInEnglish;
 
     public String getIdentificationNumberFemale() {
@@ -76,7 +75,7 @@ public class FemaleParty {
     }
 
     public void setIdentificationNumberFemale(String identificationNumberFemale) {
-        this.identificationNumberFemale =identificationNumberFemale;
+        this.identificationNumberFemale = identificationNumberFemale;
     }
 
     public Date getDateOfBirthFemale() {
@@ -103,28 +102,28 @@ public class FemaleParty {
         this.ageAtLastBirthDayFemale = ageAtLastBirthDayFemale;
     }
 
-    public Country getCountry() {
-        return country;
+    public Country getFemaleCountry() {
+        return femaleCountry;
     }
 
-    public void setCountry(Country country) {
-        this.country = country;
+    public void setFemaleCountry(Country femaleCountry) {
+        this.femaleCountry = femaleCountry;
     }
 
-    public Date getDateOfArrival() {
-        return dateOfArrival;
+    public Date getFemaleDateOfArrival() {
+        return femaleDateOfArrival;
     }
 
-    public void setDateOfArrival(Date dateOfArrival) {
-        this.dateOfArrival = dateOfArrival;
+    public void setFemaleDateOfArrival(Date femaleDateOfArrival) {
+        this.femaleDateOfArrival = femaleDateOfArrival;
     }
 
-    public String getPassport() {
-        return passport;
+    public String getFemalePassport() {
+        return femalePassport;
     }
 
-    public void setPassport(String passport) {
-        this.passport = WebUtils.filterBlanks(passport);
+    public void setFemalePassport(String femalePassport) {
+        this.femalePassport = femalePassport;
     }
 
     public String getNameInOfficialLanguageFemale() {

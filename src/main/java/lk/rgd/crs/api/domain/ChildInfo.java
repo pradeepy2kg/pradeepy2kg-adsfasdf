@@ -9,6 +9,7 @@ import java.util.Date;
 
 /**
  * An instance representing child information submitted for the declaration of a birth (page 1 of the form)
+ * If the database column sizes are modified the setter methods must be modified
  */
 @Embeddable
 public class ChildInfo implements Serializable, Cloneable {
@@ -109,7 +110,7 @@ public class ChildInfo implements Serializable, Cloneable {
     }
 
     public void setPlaceOfBirth(String placeOfBirth) {
-        this.placeOfBirth = WebUtils.filterBlanksAndToUpper(placeOfBirth);
+        this.placeOfBirth = WebUtils.filterBlanksAndToUpperAndTrim(placeOfBirth, 255, "placeOfBirth");
     }
 
     public String getChildFullNameOfficialLang() {
@@ -125,13 +126,13 @@ public class ChildInfo implements Serializable, Cloneable {
     public String getChildFullNameOfficialLangToLength(int maxLength) {
         if (childFullNameOfficialLang != null && childFullNameOfficialLang.length() > maxLength) {
             return "..." + childFullNameOfficialLang.substring(childFullNameOfficialLang.length() - maxLength + 3,
-                    childFullNameOfficialLang.length());
+                childFullNameOfficialLang.length());
         }
         return childFullNameOfficialLang;
     }
 
     public void setChildFullNameOfficialLang(String childFullNameOfficialLang) {
-        this.childFullNameOfficialLang = WebUtils.filterBlanksAndToUpper(childFullNameOfficialLang);
+        this.childFullNameOfficialLang = WebUtils.filterBlanksAndToUpperAndTrim(childFullNameOfficialLang, 600, "childFullNameOfficialLang");
     }
 
     public String getChildFullNameEnglish() {
@@ -152,7 +153,7 @@ public class ChildInfo implements Serializable, Cloneable {
     }
 
     public void setChildFullNameEnglish(String childFullNameEnglish) {
-        this.childFullNameEnglish = WebUtils.filterBlanksAndToUpper(childFullNameEnglish);
+        this.childFullNameEnglish = WebUtils.filterBlanksAndToUpperAndTrim(childFullNameEnglish, 600, "childFullNameEnglish");
     }
 
     public int getChildGender() {
@@ -224,7 +225,7 @@ public class ChildInfo implements Serializable, Cloneable {
     }
 
     public void setPlaceOfBirthEnglish(String placeOfBirthEnglish) {
-        this.placeOfBirthEnglish = WebUtils.filterBlanksAndToUpper(placeOfBirthEnglish);
+        this.placeOfBirthEnglish = WebUtils.filterBlanksAndToUpperAndTrim(placeOfBirthEnglish, 255, "placeOfBirthEnglish");
     }
 
     @Override

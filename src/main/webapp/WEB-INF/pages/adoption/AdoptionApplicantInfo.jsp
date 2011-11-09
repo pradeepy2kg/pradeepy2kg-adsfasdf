@@ -17,8 +17,7 @@
         });
     });
 
-    function setApplicantInfo(pin, name, address, fatherAddress, wifeName, wifePin)
-    {
+    function setApplicantInfo(pin, name, address, fatherAddress, wifeName, wifePin) {
 
         var applicantPin = document.getElementById("certifcateApplicantPin").value = "";
         var applicantName = document.getElementById("certificateApplicantName").value = "";
@@ -100,7 +99,7 @@
 
     function displaySave() {
         var receive = document.getElementById('receivedDate').value;
-        if(receive.trim() == 0) {
+        if (receive.trim() == 0) {
             disableButton(true);
         } else {
             disableButton(false);
@@ -111,19 +110,21 @@
 
 <div id="adoption-applicant-info-form-outer">
 <form action="eprAdoptionFind.do" method="post">
-    <table style=" border:1px solid #000000; width:300px">
+    <table style=" border:1px solid #000000; width:400px">
         <tr><s:actionerror cssStyle="color:red;"/></tr>
         <tr>
             <td>
-                <s:label value="%{getText('adoption_order_serial.label')}"/>
+                අනුක්‍රමික අංකය <br>
+                serial number in ta <br>
+                serial number
             </td>
             <td>
-            <s:textfield name="idUKey" id="idUKey" onkeypress="return isNumberKey(event)"/>
-            <s:hidden id="receivedDate" value="%{#request.adoption.orderReceivedDate}"/>
+                <s:textfield name="idUKey" id="idUKey" onkeypress="return isNumberKey(event)" maxLength="10"/>
+                <s:hidden id="receivedDate" value="%{#request.adoption.orderReceivedDate}"/>
             </td>
         </tr>
     </table>
-    <table style=" width:300px">
+    <table style=" width:400px">
         <tr>
 
         <tr>
@@ -140,31 +141,36 @@
        style="border:1px solid #000; border-collapse:collapse;">
     <tr>
         <td width="662px">නියෝගය ලැබුණු දිනය <br/>
+            Received Date in ta<br>
             Received Date
         </td>
         <td style="text-align:center;" width="350px"><s:label value="%{#request.adoption.orderReceivedDate}"/></td>
     </tr>
     <tr>
         <td>අධිකරණය<br/>
+            Court in ta<br>
             Court
         </td>
         <td style="text-align:center;"><s:label name="courtName" id="court"/></td>
     </tr>
     <tr>
         <td>නියෝගය නිකුත් කල දිනය <br/>
-            Issued Date
+            order Issued Date in ta <br>
+            order Issued Date
         </td>
         <td style="text-align:center;"><s:label value="%{#request.adoption.orderIssuedDate}"/></td>
     </tr>
     <tr>
         <td>නියෝග අංකය<br/>
+            Court order number in ta<br>
             Court order number
         </td>
         <td style="text-align:center;"><s:label value="%{#request.adoption.courtOrderNumber}"
                                                 id="courtOrderNumber"/></td>
     </tr>
     <tr>
-        <td>විනිසුරුගේ  නම <br/>
+        <td>විනිසුරුගේ නම <br/>
+            Name of the Judge in ta<br>
             Name of the Judge
         </td>
         <td style="text-align: center;"><s:label value="%{#request.adoption.judgeName}" id="judgeName"
@@ -185,12 +191,14 @@
     <tbody>
     <tr>
         <td>උපන් දිනය<br/>
-            Date of birth
+            பிறந்த திகதி<br>
+            Date of Birth
         </td>
         <td colspan="2" style="text-align:center;">
             <s:label value="%{#request.adoption.childBirthDate}"/>
         </td>
         <td>ස්ත්‍රී පුරුෂ භාවය<br/>
+            Gender in ta<br>
             Gender
         </td>
         <td>
@@ -207,13 +215,16 @@
     </tr>
     <tr>
         <td>වයස <br/>
+            Age in ta<br>
             Age
         </td>
         <td>අවුරුදු <br/>
+            Years in ta<br>
             Years
         </td>
         <td><s:label value="%{#request.adoption.childAgeYears}" id="childAgeYears"/></td>
         <td>මාස <br/>
+            Months in ta<br>
             Months
         </td>
         <td><s:label value="%{#request.adoption.childAgeMonths}" id="childAgeMonths"/></td>
@@ -221,6 +232,8 @@
     <tr>
         <td>දැනට පවතින නම <br/>
             (නමක් දී ඇති නම්) <br/>
+            Existing Name in ta <br/>
+            (if already given) in ta
             Existing Name <br/>
             (if already given)
         </td>
@@ -228,6 +241,7 @@
     </tr>
     <tr>
         <td>ලබා දෙන නම <br/>
+            New name given in ta<br>
             New name given
         </td>
         <td colspan="4"><s:label value="%{#request.adoption.childNewName}" id="childNewName"/></td>
@@ -255,9 +269,11 @@
 
         <tr>
             <td colspan="2">අයදුම්කරු <s:label value="*" cssStyle="color:red;font-size:10pt;"/><br/>
+                Applicant in ta<br>
                 Applicant
             </td>
             <td>පියා   </br>
+                Father in ta<br>
                 Father
             </td>
             <td><s:if test="#request.adoption.applicantMother==false">
@@ -271,6 +287,7 @@
                 </s:else>
             </td>
             <td>මව <br/>
+                Mother in ta<br>
                 Mother
             </td>
             <td><s:if test="#request.adoption.applicantMother==true">
@@ -285,6 +302,7 @@
                 </s:else>
             </td>
             <td>වෙනත් <br/>
+                Other in ta<br>
                 Other
             </td>
             <td>
@@ -294,7 +312,8 @@
         </tr>
         <tr>
             <td colspan="6">
-                අයදුම්කරුගේ පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<s:label value="*" cssStyle="color:red;font-size:10pt;"/>
+                අයදුම්කරුගේ පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<s:label value="*"
+                                                                                  cssStyle="color:red;font-size:10pt;"/>
                 <br>
                 தாயின் தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை இலக்கம்
                 <br>
@@ -307,7 +326,7 @@
                 <img src="<s:url value="/images/alphabet-X.gif" />"
                      id="applicant_NIC_X" onclick="javascript:addXorV('certifcateApplicantPin','X','error6')">
                 <br>
-                <s:textfield id="certifcateApplicantPin" name="certificateApplicantPINorNIC" maxLength="10"/> <img
+                <s:textfield id="certifcateApplicantPin" name="certificateApplicantPINorNIC" maxLength="12"/> <img
                     src="<s:url value="/images/search-father.png" />"
                     style="vertical-align:middle; margin-left:20px;" id="adoption_applicant_lookup">
             </td>
@@ -315,6 +334,7 @@
         <td colspan="2">
             අයදුම්කරුගේ නම<s:label value="*" cssStyle="color:red;font-size:10pt;"/>
             <br>
+            Name of the Applicant in ta<br>
             Name of the Applicant
         </td>
         <td colspan="6">
@@ -326,6 +346,7 @@
             <td colspan="2">
                 ලිපිනය<s:label value="*" cssStyle="color:red;font-size:10pt;"/>
                 <br>
+                Address in ta<br>
                 Address
             </td>
             <td colspan="6">

@@ -10,7 +10,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Java bean instance to contain notifying authority information enterd by page 4 of birth declaration form
+ * Java bean instance to contain notifying authority information entered by page 4 of birth declaration form
+ * If the database column sizes are modified the setter methods must be modified 
  */
 @Embeddable
 public class NotifyingAuthorityInfo implements Serializable, Cloneable {
@@ -52,7 +53,7 @@ public class NotifyingAuthorityInfo implements Serializable, Cloneable {
     }
 
     public void setNotifyingAuthorityName(String notifyingAuthorityName) {
-        this.notifyingAuthorityName = WebUtils.filterBlanksAndToUpper(notifyingAuthorityName);
+        this.notifyingAuthorityName = WebUtils.filterBlanksAndToUpperAndTrim(notifyingAuthorityName,120,"notifyingAuthorityName");
     }
 
     public String getNotifyingAuthorityAddress() {
@@ -60,7 +61,7 @@ public class NotifyingAuthorityInfo implements Serializable, Cloneable {
     }
 
     public void setNotifyingAuthorityAddress(String notifyingAuthorityAddress) {
-        this.notifyingAuthorityAddress = WebUtils.filterBlanksAndToUpper(notifyingAuthorityAddress);
+        this.notifyingAuthorityAddress = WebUtils.filterBlanksAndToUpperAndTrim(notifyingAuthorityAddress,255,"notifyingAuthorityAddress");
     }
 
     public Date getNotifyingAuthoritySignDate() {

@@ -2,6 +2,7 @@ package lk.rgd.crs.api.service;
 
 import lk.rgd.common.api.domain.CommonStatistics;
 import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.domain.BDDivision;
@@ -481,6 +482,18 @@ public interface BirthRegistrationService {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getDeclarationApprovalPendingByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, User user);
+
+    /**
+     * * Returns a limited set of BirthDeclarations for which confirmation changes are not captured yet awaiting approval
+     * by an ADR and based on given district id. Results are ordered on the descending confirmationProcessedTimestamp
+     *
+     * @param district district
+     * @param pageNo   the page number for the results required (start from 1)
+     * @param noOfRows number of rows to return per page
+     * @param user     user initiating the action
+     * @return the birth declaration results
+     */
+    public List<BirthDeclaration> getDeclarationApprovalPendingByDistrictId(District district, int pageNo, int noOfRows, User user);
 
     /**
      * Returns a limited set of Belated BirthDeclarations for which confirmation changes are not captured yet awaiting approval

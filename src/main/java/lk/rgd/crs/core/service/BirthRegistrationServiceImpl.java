@@ -15,6 +15,7 @@ import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.AdoptionOrderDAO;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.dao.BirthDeclarationDAO;
+import lk.rgd.crs.api.dao.GNDivisionDAO;
 import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.AdoptionOrderService;
 import lk.rgd.crs.api.service.BirthRegistrationService;
@@ -34,8 +35,7 @@ import java.util.*;
 /**
  * The central service managing the CRS Birth Registration process
  */
-public class BirthRegistrationServiceImpl implements
-    BirthRegistrationService {
+public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
     private static final Logger logger = LoggerFactory.getLogger(BirthRegistrationServiceImpl.class);
     private final BirthDeclarationDAO birthDeclarationDAO;
@@ -51,12 +51,14 @@ public class BirthRegistrationServiceImpl implements
     private final AdoptionOrderDAO adoptionOrderDAO;
     private final BirthDeclarationValidator birthDeclarationValidator;
     private final AdoptionOrderService adoptionOrderService;
+    private final GNDivisionDAO gnDivisionDAO;
 
     public BirthRegistrationServiceImpl(
         BirthDeclarationDAO birthDeclarationDAO, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
         BDDivisionDAO bdDivisionDAO, CountryDAO countryDAO, RaceDAO raceDAO, PopulationRegistry ecivil,
         AppParametersDAO appParametersDAO, UserManager userManager, BirthRecordsIndexer birthRecordsIndexer,
-        AdoptionOrderDAO adoptionOrderDAO, BirthDeclarationValidator birthDeclarationValidator, AdoptionOrderService adoptionOrderService) {
+        AdoptionOrderDAO adoptionOrderDAO, BirthDeclarationValidator birthDeclarationValidator,
+        AdoptionOrderService adoptionOrderService, GNDivisionDAO gnDivisionDAO) {
         this.birthDeclarationDAO = birthDeclarationDAO;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
@@ -70,6 +72,7 @@ public class BirthRegistrationServiceImpl implements
         this.adoptionOrderDAO = adoptionOrderDAO;
         this.birthDeclarationValidator = birthDeclarationValidator;
         this.adoptionOrderService = adoptionOrderService;
+        this.gnDivisionDAO = gnDivisionDAO;
     }
 
     /**
@@ -868,9 +871,16 @@ public class BirthRegistrationServiceImpl implements
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void markLiveBirthCertificateAsPrinted(BirthDeclaration bdf, User user) {
-        // TODO validate access to location
-        validateBirthType(bdf, BirthDeclaration.BirthType.LIVE);
+
         logger.debug("Request to mark as Birth certificate printed for record : {}", bdf.getIdUKey());
+        validateBirthType(bdf, BirthDeclaration.BirthType.LIVE);
+        if (!user.isAuthorized(Permission.MARK_BIRTH_CERT_PRINTED)) {
+            handleException("User : " + user.getUserId() + " is not allowed to mark Live Birth Certificate as printed",
+                ErrorCodes.PERMISSION_DENIED);
+        }
+        // validate access for certificate issue user to the certificate issuing location
+        ValidationUtils.validateAccessToLocation(bdf.getRegister().getOriginalBCPlaceOfIssue(),
+            bdf.getRegister().getOriginalBCIssueUser());
 
         // load the existing record
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
@@ -884,8 +894,6 @@ public class BirthRegistrationServiceImpl implements
         existing.getRegister().setOriginalBCPlaceOfIssue(bdf.getRegister().getOriginalBCPlaceOfIssue());
         existing.getRegister().setOriginalBCIssueUser(bdf.getRegister().getOriginalBCIssueUser());
         existing.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CERT_PRINTED);
-        final Date originalBCDateOfIssue = new Date();
-        // TODO existing.getRegister().setOriginalBCPlaceOfIssue();
         birthDeclarationDAO.updateBirthDeclaration(existing, user);
 
         logger.debug("Marked as Birth certificate printed for record : {}", bdf.getIdUKey());
@@ -897,8 +905,15 @@ public class BirthRegistrationServiceImpl implements
     @Transactional(propagation = Propagation.REQUIRED)
     public void markStillBirthCertificateAsPrinted(BirthDeclaration bdf, User user) {
 
-        validateBirthType(bdf, BirthDeclaration.BirthType.STILL);
         logger.debug("Request to mark as Still Birth certificate printed for record : {}", bdf.getIdUKey());
+        validateBirthType(bdf, BirthDeclaration.BirthType.STILL);
+        if (!user.isAuthorized(Permission.MARK_BIRTH_CERT_PRINTED)) {
+            handleException("User : " + user.getUserId() + " is not allowed to mark Still Birth Certificate as printed",
+                ErrorCodes.PERMISSION_DENIED);
+        }
+        // validate access for certificate issue user to the certificate issuing location
+        ValidationUtils.validateAccessToLocation(bdf.getRegister().getOriginalBCPlaceOfIssue(),
+            bdf.getRegister().getOriginalBCIssueUser());
 
         // load the existing record
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
@@ -912,8 +927,6 @@ public class BirthRegistrationServiceImpl implements
         existing.getRegister().setOriginalBCPlaceOfIssue(bdf.getRegister().getOriginalBCPlaceOfIssue());
         existing.getRegister().setOriginalBCIssueUser(bdf.getRegister().getOriginalBCIssueUser());
         existing.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CERT_PRINTED);
-        final Date originalBCDateOfIssue = new Date();
-        // TODO existing.getRegister().setOriginalBCPlaceOfIssue();
         birthDeclarationDAO.updateBirthDeclaration(existing, user);
 
         logger.debug("Marked as Still Birth certificate printed for record : {}", bdf.getIdUKey());
@@ -925,8 +938,15 @@ public class BirthRegistrationServiceImpl implements
     @Transactional(propagation = Propagation.REQUIRED)
     public void markBelatedBirthCertificateAsPrinted(BirthDeclaration bdf, User user) {
 
-        validateBirthType(bdf, BirthDeclaration.BirthType.BELATED);
         logger.debug("Request to mark as Birth certificate printed for belated record : {}", bdf.getIdUKey());
+        validateBirthType(bdf, BirthDeclaration.BirthType.BELATED);
+        if (!user.isAuthorized(Permission.MARK_BIRTH_CERT_PRINTED)) {
+            handleException("User : " + user.getUserId() + " is not allowed to mark Belated Birth Certificate as printed",
+                ErrorCodes.PERMISSION_DENIED);
+        }
+        // validate access for certificate issue user to the certificate issuing location
+        ValidationUtils.validateAccessToLocation(bdf.getRegister().getOriginalBCPlaceOfIssue(),
+            bdf.getRegister().getOriginalBCIssueUser());
 
         // load the existing record
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
@@ -940,8 +960,6 @@ public class BirthRegistrationServiceImpl implements
         existing.getRegister().setOriginalBCPlaceOfIssue(bdf.getRegister().getOriginalBCPlaceOfIssue());
         existing.getRegister().setOriginalBCIssueUser(bdf.getRegister().getOriginalBCIssueUser());
         existing.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CERT_PRINTED);
-        final Date originalBCDateOfIssue = new Date();
-        // TODO existing.getRegister().setOriginalBCPlaceOfIssue();
         birthDeclarationDAO.updateBirthDeclaration(existing, user);
 
         logger.debug("Marked as Birth certificate printed for belated record : {}", bdf.getIdUKey());
@@ -953,8 +971,15 @@ public class BirthRegistrationServiceImpl implements
     @Transactional(propagation = Propagation.REQUIRED)
     public void markAdoptionBirthCertificateAsPrinted(BirthDeclaration bdf, User user) {
 
-        validateBirthType(bdf, BirthDeclaration.BirthType.ADOPTION);
         logger.debug("Request to mark as Adoption Birth certificate printed for record : {}", bdf.getIdUKey());
+        validateBirthType(bdf, BirthDeclaration.BirthType.ADOPTION);
+        if (!user.isAuthorized(Permission.MARK_BIRTH_CERT_PRINTED)) {
+            handleException("User : " + user.getUserId() + " is not allowed to mark Adoption Birth Certificate as printed",
+                ErrorCodes.PERMISSION_DENIED);
+        }
+        // validate access for certificate issue user to the certificate issuing location
+        ValidationUtils.validateAccessToLocation(bdf.getRegister().getOriginalBCPlaceOfIssue(),
+            bdf.getRegister().getOriginalBCIssueUser());
 
         // load the existing record
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
@@ -968,8 +993,6 @@ public class BirthRegistrationServiceImpl implements
         existing.getRegister().setOriginalBCPlaceOfIssue(bdf.getRegister().getOriginalBCPlaceOfIssue());
         existing.getRegister().setOriginalBCIssueUser(bdf.getRegister().getOriginalBCIssueUser());
         existing.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CERT_PRINTED);
-        final Date originalBCDateOfIssue = new Date();
-        // TODO existing.getRegister().setOriginalBCPlaceOfIssue();
         birthDeclarationDAO.updateBirthDeclaration(existing, user);
 
         logger.debug("Marked as Adoption Birth certificate printed for record : {}", bdf.getIdUKey());
@@ -1129,8 +1152,7 @@ public class BirthRegistrationServiceImpl implements
                 AdoptionOrder adoptionOrder = adoptionOrderService.getById(birthDeclaration.getRegister().getAdoptionUKey(), user);
                 adoptionOrder.setStatus(AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED);
                 adoptionOrderService.updateAdoptionOrder(adoptionOrder, user);
-            }
-            catch (CRSRuntimeException e) {
+            } catch (CRSRuntimeException e) {
                 handleException("Cannot update adoption order idUKey : " +
                     birthDeclaration.getRegister().getAdoptionUKey() + " birth record idUKey :" +
                     birthDeclaration.getIdUKey(), ErrorCodes.UNABLE_TO_UPDATE_ADOPTION_ORDER);
@@ -1178,7 +1200,6 @@ public class BirthRegistrationServiceImpl implements
         logger.debug("Load birth declaration record : {}", bdId);
         BirthDeclaration bdf = birthDeclarationDAO.getById(bdId);
         // does the user have access to the BDF (i.e. check district and DS division)
-        validateAccessOfUser(user, bdf);
         //trigger lazy loader handler by calling this lazy loading object
         bdf.getLifeCycleInfo().getApprovalOrRejectUser().getUserName();
         logger.debug(bdf.getLifeCycleInfo().getApprovalOrRejectUser().getUserName());
@@ -1343,7 +1364,6 @@ public class BirthRegistrationServiceImpl implements
     public BirthDeclaration loadValuesForPrint(BirthDeclaration bdf, User user) {
 
         logger.debug("Loading record : {} for printing", bdf.getIdUKey());
-        validateAccessOfUser(user, bdf);
         String prefLanguage = bdf.getRegister().getPreferredLanguage();
 
         ChildInfo child = bdf.getChild();
@@ -1389,6 +1409,10 @@ public class BirthRegistrationServiceImpl implements
                     districtDAO.getNameByPK(parent.getMotherDSDivision().getDistrict().getDistrictUKey(), prefLanguage));
                 parent.setMotherDsDivisionPrint(
                     dsDivisionDAO.getNameByPK(parent.getMotherDSDivision().getDsDivisionUKey(), prefLanguage));
+            }
+            if (parent.getMotherGNDivision() != null) {
+                parent.setMotherGNDivisionPrint(gnDivisionDAO.
+                    getNameByPK(parent.getMotherGNDivision().getGnDivisionUKey(), prefLanguage));
             }
         }
 
@@ -1438,6 +1462,8 @@ public class BirthRegistrationServiceImpl implements
         child.setLifeStatus(Person.LifeStatus.ALIVE);
         child.setStatus(Person.Status.VERIFIED);
         child.setPreferredLanguage(bdf.getRegister().getPreferredLanguage());
+        child.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
+        child.getLifeCycleInfo().setApprovalOrRejectUser(userManager.getSystemUser());
 
         // check mother and father
         final ParentInfo parent = bdf.getParent();
@@ -1506,6 +1532,17 @@ public class BirthRegistrationServiceImpl implements
 
         // generate a PIN number
         long pin = ecivil.addPerson(child, user);
+        // setting child address
+        if (mother != null && parent.getMotherAddress() != null) {
+            final Address address = new Address(parent.getMotherAddress());
+            address.setPermanent(true);
+            child.specifyAddress(address);
+            // save new address to PRS
+            ecivil.addAddress(address, user);
+            // update mother to reflect new address
+            ecivil.updatePerson(child, user);
+        }
+
         childInfo.setPin(pin);
         bdf.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CERT_GENERATED);
 
@@ -1597,6 +1634,7 @@ public class BirthRegistrationServiceImpl implements
             // if we couldn't locate the mother, add an unverified record to the PRS
             mother = new Person();
             mother.setFullNameInOfficialLanguage(parent.getMotherFullName());
+            mother.setFullNameInEnglishLanguage(parent.getMotherFullNameInEnglish());
             mother.setDateOfBirth(parent.getMotherDOB());
             mother.setGender(AppConstants.Gender.FEMALE.ordinal());
             mother.setPreferredLanguage(prefLanguage);
@@ -1621,7 +1659,7 @@ public class BirthRegistrationServiceImpl implements
                     getPersonCitizenship(parent.getMotherCountry(), parent.getMotherPassportNo(), mother), user);
             }
             if (mother.getPin() != null) {
-                parent.setMotherNICorPIN(mother.getPin().toString());
+                person.setMotherPINorNIC(mother.getPin().toString());
             }
 
             if (parent.getMotherAddress() != null) {
@@ -1682,6 +1720,7 @@ public class BirthRegistrationServiceImpl implements
         if (father == null && parent.getFatherFullName() != null) {
             father = new Person();
             father.setFullNameInOfficialLanguage(parent.getFatherFullName());
+            father.setFullNameInEnglishLanguage(parent.getMotherFullNameInEnglish());
             father.setDateOfBirth(parent.getFatherDOB());
             father.setGender(AppConstants.Gender.MALE.ordinal());
             father.setPreferredLanguage(prefLanguage);
@@ -1705,7 +1744,7 @@ public class BirthRegistrationServiceImpl implements
                     getPersonCitizenship(parent.getFatherCountry(), parent.getFatherPassportNo(), father), user);
             }
             if (father.getPin() != null) {
-                parent.setFatherNICorPIN(father.getPin().toString());
+                person.setFatherPINorNIC(father.getPin().toString());
             }
 
             // locate address of father if he is the informant
@@ -1834,6 +1873,16 @@ public class BirthRegistrationServiceImpl implements
     public List<BirthDeclaration> getDeclarationApprovalPendingByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, User user) {
         ValidationUtils.validateAccessToDSDivision(dsDivision, user);
         return birthDeclarationDAO.getPaginatedListForStateByDSDivision(dsDivision, pageNo, noOfRows,
+            BirthDeclaration.State.DATA_ENTRY);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<BirthDeclaration> getDeclarationApprovalPendingByDistrictId(District district, int pageNo, int noOfRows, User user) {
+        ValidationUtils.validateAccessToBDDistrict(user, district);
+        return birthDeclarationDAO.getPaginatedListForStateByDistrict(district, pageNo, noOfRows,
             BirthDeclaration.State.DATA_ENTRY);
     }
 

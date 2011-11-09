@@ -39,8 +39,14 @@
         var mode = document.getElementById("mode").value;
         if (mode == 'divorce') {
             errormsg = validateEmptyField("divorceComment", "errorComment", errormsg);
+            errormsg = validateEmptyField("effectiveDateDatePicker", "errorCommentDate", errormsg);
             return printErrorMessages(errormsg);
         }
+        else if (mode == 'reject') {
+            errormsg = validateEmptyField("registrationRejectComment", "errorComment", errormsg);
+            return printErrorMessages(errormsg);
+        }
+        return false;
     }
 </script>
 
@@ -145,8 +151,9 @@
             <s:label name="marriage.mrDivision.dsDivision.district.enDistrictName"/><br/>
         </td>
         <td><label><span class="font-8">
-            ප්‍රාදේශීය ලේකම් කොට්ඨාශය
-                <br>பிரதேச செயளாளர் பிரிவு <br>Divisional Secretariat</span>
+            ප්‍රාදේශීය ලේකම් කොට්ඨාශය<br/>
+            பிரதேச செயளாளர் பிரிவு <br/>
+            Divisional Secretary Division</span>
         </label>
         </td>
         <td align="center">
@@ -163,7 +170,7 @@
     <tr>
         <td><label><span class="font-8">
             ලියාපදිංචි කිරීමේ කොට්ඨාශය
-                        <br>பதிவுப் பிரிவு  <br>Registration Division</span>
+                        <br>பதிவுப் பிரிவு<br>Registration Division</span>
         </label>
         </td>
         <td colspan="3">
@@ -208,7 +215,7 @@
         <td>
             <label>
                 <span class="font-8">විවාහ දිනය
-                    <br>in tamil<br>Date of Marriage</span>
+                    <br>திருமண திகதி<br>Date of Marriage</span>
             </label>
         </td>
         <td colspan="2">
@@ -223,8 +230,9 @@
     </tr>
     <tr>
         <td>
-            විවාහ ස්ථානයේ ස්වභාවය<br>
-            Type of Marriage Place<br>
+            විවාහ ස්ථානයේ ස්වභාවය<br/>
+            திருமண நிகழ்விடத்தின் வகை<br/>
+            Type of Marriage Place
         </td>
         <td colspan="8">
             <s:if test="marriage.preferredLanguage=='si'">
@@ -239,7 +247,7 @@
     <tr>
         <td>
             විවාහය සිදු කල ස්ථානය<br>
-            in tamil <br>
+            திருமணம் நகழ்ந்த இடம்<br>
             place of Marriage
         </td>
         <td colspan="8">
@@ -265,7 +273,7 @@
     <tr>
         <td>
             රෙජිස්ට්‍රාර්තැන / දේවගැතිතැන<br>
-            in tamil <br>
+            பதிவாளர்/குருவானவர்<br>
             Registrar / Minister
         </td>
         <td colspan="8">
@@ -291,7 +299,7 @@
     <tr>
         <td>
             විවාහයේ ස්වභාවය <br>
-            type of marriage in tamil <br>
+            திருமணத்தின் தன்மை<br>
             Type of Marriage
         </td>
         <td colspan="8">
@@ -328,10 +336,10 @@
     <tr>
         <td>&nbsp;</td>
         <td align="center">
-            පුරුෂ පාර්ශ්වය / in tamil / Male Party
+            පුරුෂ පාර්ශ්වය / மாப்பிள்ள திறத்தார் / Male Party
         </td>
         <td align="center">
-            ස්ත්‍රී පාර්ශ්වය / in tamil / Female Party
+            ස්ත්‍රී පාර්ශ්වය /பெண் திறத்தார்/  Female Party
         </td>
     </tr>
     <tr>
@@ -347,6 +355,7 @@
             <s:label name="marriage.female.identificationNumberFemale"/>
         </td>
     </tr>
+    <s:if test="mode !='divorce'">
     <tr>
         <td>
             උපන් දිනය <br>
@@ -363,9 +372,8 @@
     <tr>
         <td>
             පසුවූ උපන් දිනයට වයස <br>
-            in tamil <br>
+            சென்ற வருட பிறந்த தினத்தில் வயதி<br>
             Age at last Birthday
-
         </td>
         <td>
             <s:label name="marriage.male.ageAtLastBirthDayMale"/>
@@ -374,11 +382,12 @@
             <s:label name="marriage.female.ageAtLastBirthDayFemale"/>
         </td>
     </tr>
+    </s:if>
     <tr>
         <td>
-            ජාතිය <br>
-            Race <br>
-
+            ජන වර්ගය<br/>
+            இனம்<br/>
+            Ethnic Group
         </td>
         <td>
             <s:if test="marriage.preferredLanguage=='si'">
@@ -554,7 +563,8 @@
     </tr>
 </table>
 <s:if test="mode=='reject'">
-    <s:form method="post">
+    <s:form method="post" onsubmit="javascript:return validateComments()">
+        <s:hidden name="mode" id="mode"/>
         <s:hidden name="idUKey"/>
         <table border="1" style="margin-top:10px;width:100%;border:1px solid #000;border-collapse:collapse;"
                cellpadding="2px">
@@ -564,8 +574,8 @@
             <tr>
                 <td class="font-8">
                     අදහස් දක්වන්න
-                    <br>Comment in ta
-                    <br>Comment
+                    <br>கருத்தினை தெரிவிக்கவும்
+                    <br>Add Comments
                 </td>
                 <td>
                     <s:textarea name="comment" id="registrationRejectComment"
@@ -592,8 +602,8 @@
                 <td class="font-8">
                     අදහස් දක්වන්න
                     <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-                    <br>Comment in ta
-                    <br>Comment
+                    <br>கருத்தினை தெரிவிக்கவும்
+                    <br>Add Comments
                 </td>
                 <td>
                     <s:textarea name="comment" id="divorceComment"
@@ -604,7 +614,8 @@
                 <td>
                     <label>
                     <span class="font-8">බලපැවැත්වෙන දිනය
-                        <br>in tamil<br>Effective Date of Divorce</span>
+                         <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
+                        <br>விவாகரத்து செல்லுபடியகும் திகதி<br>Effective Date of Divorce</span>
                     </label>
                 </td>
                 <td>
@@ -619,7 +630,9 @@
                       value="%{getText('button.marriageregister.divorced')}"/>
         </div>
     </s:form>
-    <s:hidden id="errorComment"
-              value="%{getText('error.js.marriageregister.comment') + getText('message.cannotbeempty')}"/>
 </s:if>
+<s:hidden id="errorComment"
+          value="%{getText('error.js.marriageregister.comment') + getText('message.cannotbeempty')}"/>
+<s:hidden id="errorCommentDate"
+          value="%{getText('error.js.marriageregister.date') + getText('message.cannotbeempty')}"/>
 </div>

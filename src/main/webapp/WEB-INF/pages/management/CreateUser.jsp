@@ -208,7 +208,7 @@
 </script>
 <div id="user-create-outer">
 <fieldset
-        style="border:2px solid #c3dcee;margin-left:12em;margin-right:20.5em;margin-top:2.5em;margin-bottom:15px;">
+        style="border:2px solid #c3dcee;margin-left:8em;margin-right:20.5em;margin-top:2.5em;margin-bottom:15px;">
 <table class="user-create-table" cellspacing="0" cellpadding="0">
 <caption/>
 <col/>
@@ -243,7 +243,7 @@
     </td>
     <td>
         <s:textfield name="user.userName" id="userName"
-                     cssStyle="text-transform:none;width:90%;margin-left:0;"/>
+                     cssStyle="text-transform:capitalize;width:90%;margin-left:0;"/>
     </td>
     <td></td>
 </tr>
@@ -254,7 +254,7 @@
     </td>
     <td>
         <s:textfield name="user.pin" id="userPin" cssStyle="text-transform:none;width:90%;margin-left:0;"
-                     maxLength="10"/>
+                     maxLength="12"/>
     </td>
     <td></td>
 </tr>
@@ -262,7 +262,7 @@
     <td><s:label value="%{getText('si.en.signature')}"/></td>
     <td>
         <s:textarea name="user.sienSignatureText" id="userName"
-                    cssStyle="text-transform:none;width:90%;margin-left:0;"/>
+                    cssStyle="text-transform:capitalize;width:90%;margin-left:0;" rows="3"/>
 
     </td>
     <td>
@@ -275,7 +275,7 @@
     <td><s:label value="%{getText('ta.en.signature')}"/></td>
     <td>
         <s:textarea name="user.taenSignatureText" id="userPin"
-                    cssStyle="text-transform:none;width:90%;margin-left:0;"/>
+                    cssStyle="text-transform:capitalize;width:90%;margin-left:0;" rows="3"/>
     </td>
     <td>
         <s:a href="" title="%{getText('tamilSignature.tooltip')}">
@@ -286,7 +286,7 @@
 <tr>
     <td><s:label value="%{getText('preffered_language.label')}"/></td>
     <td>
-        <s:select list="#@java.util.HashMap@{'en':'English','si':'සිංහල','ta':'Tamil'}"
+        <s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'தமிழ்','en':'English'}"
                   name="user.prefLanguage" id="prefferedLanguage" cssStyle="width:90%;margin-left:0;"/>
     </td>
     <td></td>
@@ -388,7 +388,7 @@
                 <tr>
                     <td style="width:75%">
                         <div>
-                            <s:label value="Change User Password"/>
+                            <s:label value="Generate and assign random password"/>
                             <s:checkbox name="changePassword"/>
                         </div>
                     </td>

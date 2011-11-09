@@ -198,7 +198,7 @@
                     </td>
                     <td></td>
                     <td>
-                        <s:textfield name="pinOrNic" id="pinOrNic" maxLength="10"/>
+                        <s:textfield name="pinOrNic" id="pinOrNic" maxLength="12"/>
                     </td>
                 </tr>
                 </tbody>

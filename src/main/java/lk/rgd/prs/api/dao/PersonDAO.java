@@ -47,6 +47,14 @@ public interface PersonDAO {
     public void updateMarriage(Marriage m);
 
     /**
+     * Returns Marriage for the given marriageRegisterUKey
+     *
+     * @param mrUKey the marriage register unique key
+     * @return the matching marriage
+     */
+    public Marriage findMarriageByMRUKey(long mrUKey);
+
+    /**
      * Return the Address object for the given unique key
      * NOTE: TO BE ONLY USED BY THE PRS INDEXER
      *

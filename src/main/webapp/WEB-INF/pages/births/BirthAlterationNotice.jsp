@@ -2,7 +2,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
 <style type="text/css">
-    #alteration-approval-list-outer table tr td {
+    #alteration-print-letter-outer table tr td {
         padding: 0 5px;
     }
 
@@ -14,9 +14,13 @@
         td {
             font-size: 10pt;
         }
+
+        #page-separator {
+            display: none;
+        }
     }
 
-    #alteration-approval-list-outer .form-submit {
+    #alteration-print-letter-outer .form-submit {
         margin: 5px 0 15px 0;
     }
 </style>
@@ -26,24 +30,24 @@
     }
 </script>
 
-<div id="alteration-approval-list-outer">
-<div class="form-submit" style="margin-bottom:20px;margin-right:10px;">
-    <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
-    <s:hidden id="printMessage" value="%{getText('print.message')}"/>
-</div>
+<div id="alteration-print-letter-outer">
 <s:form action="eprMarkBirthAlterationAsPrint.do" method="post">
     <div class="form-submit" style="margin-bottom:20px;margin-right:10px;">
         <s:submit type="button" value="%{getText('mark.as.print.button')}"/>
     </div>
     <s:hidden name="idUKey" value="%{#request.idUKey}"/>
 </s:form>
+<div class="form-submit" style="margin-bottom:20px;margin-right:10px;">
+    <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
+    <s:hidden id="printMessage" value="%{getText('print.message')}"/>
+</div>
 
 <table style="border:none;width:98.6%">
     <tr>
         <td style="width:33%;height:50px;"></td>
         <td style="width:33%"></td>
         <td rowspan="2" style="width:33%">
-            <table class="alteration-approval-list-table" width="100%" cellpadding="0"
+            <table class="table_print" width="100%" cellpadding="0"
                    style="float:right;"
                    cellspacing="0">
                 <tr>
@@ -91,7 +95,7 @@
         </td>
     </tr>
 </table>
-<table class="alteration-approval-list-table" width="100%" cellpadding="0" cellspacing="0"
+<table class="table_print" width="100%" cellpadding="0" cellspacing="0"
        style="margin-bottom:10px;">
     <tr>
         <td colspan="2">සහතිකයේ සඳහන් පුද්ගලයාගේ අනන්‍යතා අංකය <br>
@@ -107,14 +111,14 @@
         </td>
         <td style="width:30%"><s:label name="districtName"/></td>
         <td style="width:20%">ප්‍රාදේශීය ලේකම් කොට්ඨාශය <br>
-            பிரதேச செயளாளார் பிரிவு <br>
-            Divisional Secretariat
+            பிரதேச செயளாளர் பிரிவு <br/>
+            Divisional Secretary Division
         </td>
         <td style="width:30%"><s:label name="dsDivisionName"/></td>
     </tr>
     <tr>
         <td>ලියාපදිංචි කිරීමේ කොට්ඨාශය <br>
-            பதிவுப் பிரிவு <br>
+            பதிவுப் பிரிவு<br>
             Registration Division
         </td>
         <td><s:label name="bdDivisionName"/></td>
@@ -125,7 +129,7 @@
         <td><s:label name="birthDeclaration.register.bdfSerialNo"/></td>
     </tr>
 </table>
-<table class="alteration-approval-list-table" width="100%" cellpadding="0" cellspacing="0">
+<table class="table_print" width="100%" cellpadding="0" cellspacing="0">
     <tr>
         <td style="text-align:center;width:15%;font-size:10pt;">Heading <br>
             தலைப்பு <br>
@@ -167,51 +171,19 @@
             <td align="center">
                 <s:label value="%{approved}"/>
             </td>
-
         </tr>
     </s:iterator>
-
 </table>
 
-<hr style="border-style:dashed ; float:left;width:100% ;margin-bottom:30px;margin-top:60px;">
-<div style="page-break-after:always;margin-bottom:350px;"></div>
+<hr id="page-separator" style="border-style:dashed;float:left;width:100% ;margin-bottom:30px;margin-top:60px;">
+<div style="page-break-after:always;"></div>
 
-<%--Latter for declarant   --%>
-<table border="0" cellspacing="0" width="100%" style="margin-top:0;">
-    <caption></caption>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <tbody>
-    <tr>
-        <td rowspan="8" width="200px" height="350px"></td>
-        <td colspan="2" width="600px" height="100px"
-            style="text-align:center;margin-left:auto;margin-right:auto;font-size:16pt">
-            <label>රාජ්‍ය සේවය පිණිසයි / அரச பணி
-                On State Service</label></td>
-        <td rowspan="8" width="200px"></td>
-    </tr>
-    <tr>
-        <td><s:label cssStyle="width:600px;font-size:10pt;" name="birthAlteration.declarant.declarantFullName"
-                     disabled="true"/></td>
-    </tr>
-    <tr>
-        <td><s:label cssStyle="width:600px;font-size:10pt;" name="birthAlteration.declarant.declarantAddress"
-                     cssClass="disable"
-                     disabled="true"/></td>
-    </tr>
-
-    </tbody>
-</table>
-
-<hr style="border-style:dashed ; float:left;width:100% ;margin-bottom:30px;margin-top:30px;">
 <table style="border:none;width:98.6%">
     <tr>
         <td style="width:33%;height:50px;"></td>
         <td style="width:33%"></td>
         <td rowspan="2" style="width:33%">
-            <table class="alteration-approval-list-table" width="100%" cellpadding="0"
+            <table class="table_print" width="100%" cellpadding="0"
                    style="float:right;"
                    cellspacing="0">
                 <tr>
@@ -254,7 +226,7 @@
         </td>
     </tr>
 </table>
-<table class="alteration-approval-list-table" width="100%" cellpadding="0" cellspacing="0"
+<table class="table_print" width="100%" cellpadding="0" cellspacing="0"
        style="margin-bottom:10px;">
     <tr>
         <td colspan="2">සහතිකයේ සඳහන් පුද්ගලයාගේ අනන්‍යතා අංකය <br>
@@ -270,8 +242,8 @@
         </td>
         <td style="width:30%"><s:label name="districtName"/></td>
         <td style="width:20%">ප්‍රාදේශීය ලේකම් කොට්ඨාශය <br>
-            பிரதேச செயளாளார் பிரிவு <br>
-            Divisional Secretariat
+            பிரதேச செயளாளர் பிரிவு <br/>
+            Divisional Secretary Division
         </td>
         <td style="width:30%"><s:label name="dsDivisionName"/></td>
     </tr>
@@ -288,7 +260,7 @@
         <td><s:label name="birthDeclaration.register.bdfSerialNo"/></td>
     </tr>
 </table>
-<table class="alteration-approval-list-table" width="100%" cellpadding="0" cellspacing="0">
+<table class="table_print" width="100%" cellpadding="0" cellspacing="0">
     <tr>
         <td style="text-align:center;width:15%;font-size:10pt;">Heading <br>
             தலைப்பு <br>
@@ -350,12 +322,63 @@
             </td>
         </tr>
     </s:iterator>
-
 </table>
-</div>
-<div class="form-submit" style="margin-bottom:20px;margin-right:10px;">
-    <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
-    <s:hidden id="printMessage" value="%{getText('print.message')}"/>
+
+<div style="page-break-after:always;"></div>
+<hr style="border-style:dashed ; float:left;width:100% ;margin-bottom:30px;margin-top:60px;">
+<%--Latter for declarant   --%>
+<table border="0" cellspacing="0" width="100%">
+    <caption></caption>
+    <col/>
+    <col/>
+    <col/>
+    <col/>
+    <col/>
+    <tbody>
+    <tr>
+        <td rowspan="7" width="10%" height="350px"></td>
+        <td colspan="3" width="80%" height="100px"
+            style="text-align:center;margin-left:auto;margin-right:auto;font-size:22pt">
+            <label>රාජ්‍ය සේවය පිණිසයි &nbsp;&nbsp;அரச பணி &nbsp;&nbsp;ON STATE SERVICE</label><br/>
+            <label style="font-size:11pt;">රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව &nbsp;&nbsp;பதிவாளர் நாயகம் திணைக்களம்
+                &nbsp;&nbsp;REGISTRAR GENERAL'S DEPARTMENT</label>
+        </td>
+        <td rowspan="7" width="10%"></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td width="10%">&nbsp;</td>
+        <td width="30%">
+            <s:label name="birthAlteration.declarant.declarantFullName" cssStyle="width:600px;font-size:14pt;"/><br/>
+            <s:label name="birthAlteration.declarant.declarantAddress" cssStyle="width:600px;font-size:14pt;"/>
+        </td>
+    </tr>
+    <tr>
+        <td height="50px" width="30%">
+            <s:textarea id="retAddress" value="%{returnAddress}" disabled="true" rows="5"
+                        cssStyle="margin-top:10px;text-transform:none;width:100%;font-size:14pt;background:transparent;border:none;"/>
+        </td>
+        <td width="10%">&nbsp;</td>
+        <td width="30%">
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2"><p></p></td>
+    </tr>
+    <tr>
+        <td colspan="2"><p></p></td>
+    </tr>
+    <tr>
+        <td colspan="2"><p></p></td>
+    </tr>
+    <tr>
+        <td colspan="2"><p></p></td>
+    </tr>
+    </tbody>
+</table>
+<hr style="border-style:dashed;float:left;width:100%;margin-top:30px;">
+<br/><br/>
+
 </div>
 <s:form action="eprMarkBirthAlterationAsPrint.do" method="post">
     <div class="form-submit" style="margin-bottom:20px;margin-right:10px;">
@@ -363,3 +386,7 @@
     </div>
     <s:hidden name="idUKey" value="%{#request.idUKey}"/>
 </s:form>
+<div class="form-submit" style="margin-bottom:20px;">
+    <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
+    <s:hidden id="printMessage" value="%{getText('print.message')}"/>
+</div>

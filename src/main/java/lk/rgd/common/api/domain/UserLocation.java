@@ -25,9 +25,13 @@ import java.io.Serializable;
     @NamedQuery(name = "get.marriage.certificateSign.user.by.locationId.and.active", query = "SELECT ul.user FROM UserLocation ul" +
         " WHERE ul.locationId =:locationId AND ul.lifeCycleInfo.active = :active AND ul.signMarriageCert IS TRUE"),
     @NamedQuery(name = "get.active.locations.by.userId", query = "SELECT ul FROM UserLocation ul " +
-        "WHERE ul.lifeCycleInfo.active = :active AND ul.userId = :userId ORDER BY ul.location.enLocationName desc")
+        "WHERE ul.lifeCycleInfo.active = :active AND ul.userId = :userId ORDER BY ul.location.enLocationName desc"),
+
+    @NamedQuery(name = "updateAllInactiveUserLocations", query = "UPDATE UserLocation ul " +
+        "SET ul.lifeCycleInfo.active = FALSE " +
+        "WHERE ul.locationId = :locationUKey")
 })
-@Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class UserLocation implements Serializable {
     @Id
     private String userId;

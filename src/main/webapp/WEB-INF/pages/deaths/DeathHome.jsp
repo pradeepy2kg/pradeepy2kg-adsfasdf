@@ -8,7 +8,7 @@
         background: url('<s:url value="/images/death.png"/>') no-repeat;
         width: 960px;
         height: 702px;
-        margin: 40px 0px 0px 100px;
+        margin: 40px 0px 0px 80px;
         text-align: center;
     }
 
@@ -32,7 +32,7 @@
         position: absolute;
         width: 140px;
         height: 29px;
-        margin: 399px 0px 0px 390px;
+        margin: 399px 0px 0px 370px;
         padding-top: 11px;
     }
 
@@ -42,7 +42,7 @@
         position: absolute;
         width: 140px;
         height: 26px;
-        margin: 455px 0px 0px 389px;
+        margin: 455px 0px 0px 369px;
         padding-top: 15px;
     }
 
@@ -51,7 +51,7 @@
         text-align: center;
         position: absolute;
         width: 140px;
-        margin: 541px 0px 0px 394px;
+        margin: 541px 0px 0px 374px;
         padding-top: 1px;
     }
 
@@ -60,7 +60,7 @@
         text-align: center;
         position: absolute;
         width: 120px;
-        margin: 410px 0px 0px 530px;
+        margin: 410px 0px 0px 540px;
     }
 
     .label02 {
@@ -68,28 +68,28 @@
         text-align: center;
         position: absolute;
         width: 120px;
-        margin: 480px 0px 0px 530px;
+        margin: 480px 0px 0px 510px;
     }
 
     #label03 {
         font-size: 9pt;
         text-align: center;
         position: absolute;
-        margin: 10px 0px 0px 110px;
+        margin: 10px 0px 0px 100px;
     }
 
     #label04 {
         font-size: 9pt;
         text-align: center;
         position: absolute;
-        margin: 90px 0px 0px 310px;
+        margin: 90px 0px 0px 260px;
     }
 
     #label05 {
         font-size: 9pt;
         text-align: center;
         position: absolute;
-        margin: 290px 0px 0px 430px;
+        margin: 290px 0px 0px 400px;
     }
 
     #label06 {
@@ -103,14 +103,14 @@
         font-size: 9pt;
         text-align: center;
         position: absolute;
-        margin: 360px 0px 0px 220px;
+        margin: 360px 0px 0px 200px;
     }
 
     #label08 {
         font-size: 9pt;
         text-align: center;
         position: absolute;
-        margin: 590px 0px 0px 170px;
+        margin: 590px 0px 0px 160px;
     }
 
 </style>

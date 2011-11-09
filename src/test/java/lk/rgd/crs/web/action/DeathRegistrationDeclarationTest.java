@@ -1,5 +1,6 @@
 package lk.rgd.crs.web.action;
 
+import lk.rgd.crs.api.dao.GNDivisionDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -39,6 +40,7 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
 
     protected static BDDivision colomboBDDivision;
     protected static BDDivision negamboBDDivision;
+    protected static GNDivision samantranapuraGNDivision;
     protected static Country sriLanka;
     protected static Race sinhalese;
 
@@ -49,6 +51,7 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
     protected final static CountryDAO countryDAO = (CountryDAO) ctx.getBean("countryDAOImpl", CountryDAO.class);
     protected final static RaceDAO raceDOA = (RaceDAO) ctx.getBean("raceDAOImpl", RaceDAO.class);
     protected final static DeathRegistrationService deathRegistrationService = (DeathRegistrationService) ctx.getBean("deathRegisterService", DeathRegistrationService.class);
+    protected final static GNDivisionDAO gnDivisionDAO = (GNDivisionDAO) ctx.getBean("gnDivisionDAOImpl", GNDivisionDAO.class);
 
     public static Test suite() {
         TestSetup setup = new TestSetup(new TestSuite(DeathRegistrationDeclarationTest.class)) {
@@ -58,11 +61,12 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
                 negamboBDDivision = bdDivisionDAO.getBDDivisionByPK(9);
                 sriLanka = countryDAO.getCountry(1);
                 sinhalese = raceDOA.getRace(1);
+                samantranapuraGNDivision = gnDivisionDAO.getGNDivisionByPK(1);
 
                 List deaths = sampleDeaths();
                 User sampleUser = loginSampleUser();
                 for (int i = 0; i < deaths.size(); i++) {
-                    deathRegistrationService.addNormalDeathRegistration((DeathRegister) deaths.get(i), sampleUser);
+                    deathRegistrationService.addNewDeathRegistration((DeathRegister) deaths.get(i), sampleUser);
                 }
 
                 //setting serial number 2010012349 colombo to APPROVED
@@ -118,7 +122,7 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
             person.setDeathPersonMotherPINorNIC("1234567890");
             person.setDeathPersonNameInEnglish("name in english" + i);
             person.setDeathPersonPermanentAddress("address" + i);
-
+            person.setGnDivision(samantranapuraGNDivision);
             //notifying authority info
             NotifyingAuthorityInfo notify = new NotifyingAuthorityInfo();
             notify.setNotifyingAuthorityName("notify name :" + i);
@@ -133,6 +137,7 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
             declarant.setDeclarantEMail("declarant email" + i);
             declarant.setDeclarantFullName("declarant full name " + i);
             declarant.setDeclarantNICorPIN("" + (123456789 + i));
+            declarant.setDeclarantSignDate(gCal.getTime());
 
             DeathRegister deathRegister = new DeathRegister();
             deathRegister.setStatus(DeathRegister.State.DATA_ENTRY);
@@ -213,6 +218,7 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
         request.setParameter("declarant.declarantPhone", "0718617804V");
         request.setParameter("declarant.declarantEMail", "htpunchihewa@gmail.com");
         request.setParameter("declarant.declarantType", "3");
+        request.setParameter("declarant.declarantSignDate", "2010-07-21");
 
         request.setParameter("notifyingAuthority.notifyingAuthorityPIN", "853303399v");
         request.setParameter("notifyingAuthority.notifyingAuthorityName", "Saman kUmara");
@@ -350,7 +356,7 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
         initAndExucute("/deaths/eprDeathEditMode.do", session);
         //check user object is retrieved properly
         assertNotNull("User object ", deathAction.getUser());
-        //there shoud be an action error
+        //there should be an action error
         assertEquals("Action Error", 1, deathAction.getActionErrors().size());
         logger.info("testing death edit mode  completed");
     }

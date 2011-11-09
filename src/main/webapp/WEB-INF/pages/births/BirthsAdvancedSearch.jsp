@@ -1,3 +1,4 @@
+<%@ page import="java.util.Locale" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -41,13 +42,24 @@
 <link rel="stylesheet" href="../css/ui.daterangepicker.css" type="text/css"/>
 
 <script>
+    function setUserPrefLang(){
+        <% String lang=((Locale)session.getAttribute("WW_TRANS_I18N_LOCALE")).getLanguage(); %>
+        setPrefLanguage("<%= lang%>");
+    }
+
     $(document).ready(function() {
         $("#tabs").tabs();
-        $('#queryDOBRange').daterangepicker({arrows:true});
+        $('#queryDOBRange').daterangepicker({
+            arrows:true,
+            onClose: function() {
+            $('#queryDOBRange').focus();
+        }
+        });
     });
 
-    function initPage() {
-    }
+    function initPage(){
+      setUserPrefLang();
+  }
 
 </script>
 
@@ -58,41 +70,40 @@
 
         <div id="tabs">
             <ul>
-                <li><a href="#fragment-1"><span>Basic Search</span></a></li>
-                <li><a href="#fragment-2"><span>Name</span></a></li>
-                <li><a href="#fragment-3"><span>Gender</span></a></li>
-                <li><a href="#fragment-4"><span>District</span></a></li>
-                <li><a href="#fragment-5"><span>Division</span></a></li>
-                <li><a href="#fragment-6"><span>Date</span></a></li>
-                <li><a href="#fragment-7"><span>Advanced Search</span></a></li>
+                <li><a href="#fragment-1"><span><s:label value="%{getText('search.basicSearch')}"/></span></a></li>
+                <li><a href="#fragment-2"><span><s:label value="%{getText('search.name')}"/></span></a></li>
+                <li><a href="#fragment-3"><span><s:label value="%{getText('search.gender')}"/></span></a></li>
+                <li><a href="#fragment-4"><span><s:label value="%{getText('search.district')}"/></span></a></li>
+                <li><a href="#fragment-5"><span><s:label value="%{getText('search.division')}"/></span></a></li>
+                <li><a href="#fragment-6"><span><s:label value="%{getText('search.date')}"/></span></a></li>
             </ul>
             <div id="fragment-1">
                 <table>
                     <tr>
-                        <td><span>Search PIN Number</span></td>
-                        <td><div id="searchPIN"><input type="text" id="queryPIN" name="queryPIN" maxlength="10"/></div></td>
+                        <td><span><s:label value="%{getText('search.pin')}"/> </span></td>
+                        <td><div id="searchPIN"><input type="text" id="queryPIN" name="queryPIN" maxlength="12"/></div></td>
                     </tr>
                     <tr>
-                        <td><span>Search by Mothers NIC or PIN</span></td>
-                        <td><div id="searchMothersNICorPIN"><input type="text" id="queryMothersNICorPIN" name="queryMothersNICorPIN" maxlength="10"/></div></td>
+                        <td><span><s:label value="%{getText('search.motherNicOrPin')}"/></span></td>
+                        <td><div id="searchMothersNICorPIN"><input type="text" id="queryMothersNICorPIN" name="queryMothersNICorPIN" maxlength="12"/></div></td>
                     </tr>
                 </table>
             </div>
             <div id="fragment-2">
                 <table>
                     <tr>
-                        <td><span>Search full name in English</span></td>
+                        <td><span><s:label value="%{getText('search.nameInEnglish')}"/></span></td>
                         <td><div id="searchEnglish"><input type="text" id="queryEnglish" name="queryEnglish"/></div></td>
                     </tr>
                     <tr>
-                        <td><span>Search full name in Official Language</span></td>
+                        <td><span><s:label value="%{getText('search.nameInOfficialLang')}"/></span></td>
                         <td><div id="searchOfficial"><input type="text" id="queryOfficial" name="queryOfficial"/></div></td>
                     </tr>
                 </table>
             </div>
             <div id="fragment-3">
                 <fieldset style="border:none">
-                    <span>Gender</span>
+                    <span><s:label value="%{getText('search.gender')}"/></span>
 
                     <div class="tagcloud" id="childGender"></div>
                     <div class="clear"></div>
@@ -100,7 +111,7 @@
             </div>
             <div id="fragment-4">
                 <fieldset style="border:none">
-                    <span>Registration District</span>
+                    <span><s:label value="%{getText('search.registerDistrict')}"/> </span>
 
                     <div class="tagcloud" id="birthDistrict"></div>
                     <div class="clear"></div>
@@ -108,7 +119,7 @@
             </div>
             <div id="fragment-5">
                 <fieldset style="border:none">
-                    <span>Registration  Division</span>
+                    <span><s:label value="%{getText('search.registerDivision')}"/> </span>
 
                     <div class="tagcloud" id="birthDivision"></div>
                     <div class="clear"></div>
@@ -117,14 +128,10 @@
             <div id="fragment-6">
                 <table>
                     <tr>
-                        <td><span>Choose Date of Birth Range</span></td>
+                        <td><span><s:label value="%{getText('search.dobRange')}"/></span></td>
                         <td><div id="searchDOBRange"><input type="text" id="queryDOBRange" name="queryDOBRange"/></div></td>
                     </tr>
                 </table>
-            </div>
-            <div id="fragment-7">
-                <span>Advanced Search</span>
-                <div id="searchAdvanced"><input type="text" id="queryAdvanced" name="queryAdvanced" size="117" style="text-transform:none;"/></div>
             </div>
         </div>
 

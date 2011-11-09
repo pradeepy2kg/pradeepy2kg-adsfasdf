@@ -2,7 +2,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <script type="text/javascript">
-    function initPage(){}
+    function initPage() {
+    }
+    var errorMsg = "";
+    function validate() {
+        var comment = document.getElementById('comments').value;
+        if (comment == "") {
+            errorMsg = errorMsg + document.getElementById('commentEmpty').value;
+            alert(errorMsg);
+            errorMsg = "";
+            return false;
+        }
+        return true;
+    }
 </script>
 <div id="birth-declaration-reject-outer" class="birth-declaration-reject-outer">
     <table>
@@ -26,7 +38,7 @@
 
     <s:actionerror cssStyle="color:red;font-size:10pt"/>
 
-    <s:form action="eprRejectBirthDeclaration.do" method="post">
+    <s:form action="eprRejectBirthDeclaration.do" method="post" onsubmit="javascript:return validate()">
         <fieldset>
             <legend><b><s:label value="%{getText('rejectLegend.label')}"/></b></legend>
             <s:hidden name="bdId" value="%{#request.bdId}"/>
@@ -52,3 +64,4 @@
         </fieldset>
     </s:form>
 </div>
+<s:hidden id="commentEmpty" value="%{getText('error.comment.not.available')}"/>

@@ -50,10 +50,15 @@
         <servlet-class>lk.rgd.crs.web.JSONStatisticsLookupService</servlet-class>
     </servlet>
 
-       <servlet>
-     <servlet-name>ScannedImage</servlet-name>
-     <servlet-class>lk.rgd.crs.web.MCImageServlet</servlet-class>
-    </servlet> 
+    <servlet>
+        <servlet-name>TransliterationService</servlet-name>
+        <servlet-class>lk.rgd.crs.web.JSONTransliterationService</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>ScannedImage</servlet-name>
+        <servlet-class>lk.rgd.crs.web.MCImageServlet</servlet-class>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>PersonLookupService</servlet-name>
@@ -83,12 +88,17 @@
     <servlet-mapping>
         <servlet-name>StatisticsLookupService</servlet-name>
         <url-pattern>/crs/StatisticsLookupService</url-pattern>
-    </servlet-mapping>    
+    </servlet-mapping>
 
-     <servlet-mapping>
-      <servlet-name>ScannedImage</servlet-name>
-      <url-pattern>/crs/Image</url-pattern>
-     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TransliterationService</servlet-name>
+        <url-pattern>/TransliterationService</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>ScannedImage</servlet-name>
+        <url-pattern>/crs/Image</url-pattern>
+    </servlet-mapping>
 
     <filter-mapping>
         <filter-name>struts2</filter-name>
@@ -112,10 +122,6 @@
             <param-value>/WEB-INF/lib/tiles/base-tiles-def.xml</param-value>
         </init-param>
         <load-on-startup>2</load-on-startup>
-    </servlet>
-    <servlet>
-        <servlet-name>JSONStatisticsLookupService</servlet-name>
-        <servlet-class>lk.rgd.crs.web.JSONStatisticsLookupService</servlet-class>
     </servlet>
 
     <listener>

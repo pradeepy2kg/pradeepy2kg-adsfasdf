@@ -26,7 +26,7 @@ public interface DeathRegistrationService {
      * @throws lk.rgd.crs.CRSRuntimeException for un-authorized
      *                                        operations and invalid data
      */
-    public void addNormalDeathRegistration(DeathRegister deathRegistration, User user);
+    public void addNewDeathRegistration(DeathRegister deathRegistration, User user);
 
     /**
      * Adds a late or sudden death registration to the system. This is a Data Entry operation,
@@ -156,6 +156,24 @@ public interface DeathRegistrationService {
         Date startDate, Date endDate, int pageNo, int noOfRows, User user);
 
     /**
+     * Returns a limited set of DeathRegister for selected BD Division and selected range of registration dates and state
+     * Results are ordered on the descending registration date. pageNo  and noOfRows used for pagination
+     *
+     * @param deathDivision the death division
+     * @param startDate     starting date of the range
+     * @param endDate       ending date of the range
+     * @param pageNo        page number
+     * @param noOfRows      number of rows
+     * @param state         state of the record
+     * @param user          user initiating the action
+     * @return the death registration results
+     * @throws lk.rgd.crs.CRSRuntimeException for un-authorized operations
+     */
+    public List<DeathRegister> getByBDDivisionAndRegistrationDateRangeAndState(BDDivision deathDivision,
+        Date startDate, Date endDate, int pageNo, int noOfRows, DeathRegister.State state, User user);
+
+
+    /**
      * Get the list of death registrations for a given state based on given DSDivision
      *
      * @param dsDivision the divisional Secretariat
@@ -213,11 +231,11 @@ public interface DeathRegistrationService {
     /**
      * get death register with transient values
      *
-     * @param idUKey death idUKey
-     * @param user   the user making the request
-     * @return death register object
+     * @param idUKey            the unique key of the death register
+     * @param certificateSearch the death register to be loaded in certificate search mode or not
+     * @param user              the user making the request  @return death register object
      */
-    public DeathRegister getWithTransientValuesById(long idUKey, User user);
+    public DeathRegister getWithTransientValuesById(long idUKey, boolean certificateSearch, User user);
 
     /**
      * Returns all statistics information related to Deaths
@@ -250,6 +268,21 @@ public interface DeathRegistrationService {
         Date startDate, Date endDate, boolean active, int pageNo, int numOfRows, User user);
 
     /**
+     * get list of death register objects for given time frame and given DSDivision and state
+     *
+     * @param dsDivisionId dsDivision id
+     * @param startDate    registrations from
+     * @param endDate      registrations to
+     * @param active       active record
+     * @param pageNo       page number
+     * @param numOfRows    number of rows to be fetched
+     * @param user         user who performs the action
+     * @return
+     */
+    public List<DeathRegister> getPaginatedDeathRegisterListByDSDivisionAndRegistrationDateRangeAndState(int dsDivisionId,
+        Date startDate, Date endDate, boolean active, int pageNo, int numOfRows, DeathRegister.State status, User user);
+
+    /**
      * get list of death register objects for given time frame and given district
      *
      * @param districtId district id
@@ -276,11 +309,10 @@ public interface DeathRegistrationService {
         Date startDate, Date endDate, boolean active, User user);
 
     /**
-     *
-     * @param dsDivision    death division id
-     * @param startDate     registrations from
-     * @param endDate       registrations to
-     * @param state         active record
+     * @param dsDivision death division id
+     * @param startDate  registrations from
+     * @param endDate    registrations to
+     * @param state      active record
      * @param user
      * @return
      */

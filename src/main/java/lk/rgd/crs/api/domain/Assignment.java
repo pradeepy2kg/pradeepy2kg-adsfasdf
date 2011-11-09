@@ -16,33 +16,33 @@ import java.util.Date;
 @Entity
 @Table(name = "ASSIGNMENT", schema = "CRS")
 @NamedQueries({
-        // Do NOT try to optimize the below three queries into one
-        @NamedQuery(name = "get.assignments.by.state.and.dsdivision", query = "SELECT a FROM Assignment a " +
-                " WHERE (a.lifeCycleInfo.active = :active) " +
-                " AND (((a.birthDivision is not null) and (a.birthDivision.dsDivision.dsDivisionUKey = :dsDivisionUKey)) " +
-                "   OR ((a.deathDivision is not null) and (a.deathDivision.dsDivision.dsDivisionUKey = :dsDivisionUKey)) " +
-                "   OR ((a.marriageDivision is not null) and (a.marriageDivision.dsDivision.dsDivisionUKey = :dsDivisionUKey))) "),
+    // Do NOT try to optimize the below three queries into one
+    @NamedQuery(name = "get.assignments.by.state.and.dsdivision", query = "SELECT a FROM Assignment a " +
+        " WHERE (a.lifeCycleInfo.active = :active) " +
+        " AND (((a.birthDivision is not null) and (a.birthDivision.dsDivision.dsDivisionUKey = :dsDivisionUKey)) " +
+        "   OR ((a.deathDivision is not null) and (a.deathDivision.dsDivision.dsDivisionUKey = :dsDivisionUKey)) " +
+        "   OR ((a.marriageDivision is not null) and (a.marriageDivision.dsDivision.dsDivisionUKey = :dsDivisionUKey))) "),
 
-        @NamedQuery(name = "get.birth.assignments.by.state.type.and.dsdivision", query = "SELECT a FROM Assignment a " +
-                " WHERE a.lifeCycleInfo.active = :active AND a.type = :type " +
-                " AND a.birthDivision.dsDivision.dsDivisionUKey = :dsDivisionUKey"),
-        @NamedQuery(name = "get.death.assignments.by.state.type.and.dsdivision", query = "SELECT a FROM Assignment a " +
-                " WHERE a.lifeCycleInfo.active = :active AND a.type = :type " +
-                " AND a.deathDivision.dsDivision.dsDivisionUKey = :dsDivisionUKey"),
-        @NamedQuery(name = "get.marriage.assignments.by.state.type.and.dsdivision", query = "SELECT a FROM Assignment a " +
-                " WHERE a.lifeCycleInfo.active = :active AND a.type = :type " +
-                " AND a.marriageDivision.dsDivision.dsDivisionUKey = :dsDivisionUKey"),
-        @NamedQuery(name = "get.by.registrarUKey", query = "SELECT a FROM Assignment a " +
-                "WHERE a.registrar.registrarUKey = :registrarUKey"),
-        @NamedQuery(name = "get.assignments.by.type.and.division", query = "SELECT a FROM Assignment a " +
-                "WHERE a.type = :type AND " +
-                "((a.birthDivision IS NOT NULL AND a.birthDivision.bdDivisionUKey = :divisionUKey) OR " +
-                "(a.deathDivision IS NOT NULL AND a.deathDivision.bdDivisionUKey = :divisionUKey) OR" +
-                "(a.marriageDivision IS NOT NULL AND a.marriageDivision.mrDivisionUKey = :divisionUKey))" +
-                "AND a.lifeCycleInfo.active = :active AND a.registrar.acting = :acting"),
-        @NamedQuery(name = "get.all.assignments", query = "SELECT a FROM Assignment a WHERE a.lifeCycleInfo.active =:active")
+    @NamedQuery(name = "get.birth.assignments.by.state.type.and.dsdivision", query = "SELECT a FROM Assignment a " +
+        " WHERE a.lifeCycleInfo.active = :active AND a.type = :type " +
+        " AND a.birthDivision.dsDivision.dsDivisionUKey = :dsDivisionUKey"),
+    @NamedQuery(name = "get.death.assignments.by.state.type.and.dsdivision", query = "SELECT a FROM Assignment a " +
+        " WHERE a.lifeCycleInfo.active = :active AND a.type = :type " +
+        " AND a.deathDivision.dsDivision.dsDivisionUKey = :dsDivisionUKey"),
+    @NamedQuery(name = "get.marriage.assignments.by.state.type.and.dsdivision", query = "SELECT a FROM Assignment a " +
+        " WHERE a.lifeCycleInfo.active = :active AND a.type = :type " +
+        " AND a.marriageDivision.dsDivision.dsDivisionUKey = :dsDivisionUKey"),
+    @NamedQuery(name = "get.by.registrarUKey", query = "SELECT a FROM Assignment a " +
+        "WHERE a.registrar.registrarUKey = :registrarUKey AND a.state <> 2"),
+    @NamedQuery(name = "get.assignments.by.type.and.division", query = "SELECT a FROM Assignment a " +
+        "WHERE a.type = :type AND " +
+        "((a.birthDivision IS NOT NULL AND a.birthDivision.bdDivisionUKey = :divisionUKey) OR " +
+        "(a.deathDivision IS NOT NULL AND a.deathDivision.bdDivisionUKey = :divisionUKey) OR" +
+        "(a.marriageDivision IS NOT NULL AND a.marriageDivision.mrDivisionUKey = :divisionUKey))" +
+        "AND a.lifeCycleInfo.active = :active AND a.registrar.acting = :acting"),
+    @NamedQuery(name = "get.all.assignments", query = "SELECT a FROM Assignment a WHERE a.lifeCycleInfo.active =:active")
 })
-@Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Assignment implements Serializable {
 
     /**
@@ -50,6 +50,10 @@ public class Assignment implements Serializable {
      */
     public enum Type {
         BIRTH, DEATH, GENERAL_MARRIAGE, KANDYAN_MARRIAGE, MUSLIM_MARRIAGE
+    }
+
+    public enum State {
+        INACTIVE, ACTIVE, DELETED
     }
 
     @Id
@@ -91,6 +95,13 @@ public class Assignment implements Serializable {
     @Enumerated
     @Column(nullable = false)
     private Type type;
+
+    /**
+     * The state of the assignment
+     */
+    @Enumerated
+    @Column(nullable = true)
+    private State state;
 
     /**
      * Is this an Additional Registrar assignment ?
@@ -195,6 +206,14 @@ public class Assignment implements Serializable {
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
     }
 
     public boolean isAdditional() {

@@ -97,7 +97,6 @@
             <interceptor-ref name="default"/>
             <result type="tiles" name="success">epr.home</result>
         </action>
-
     </package>
 
     <package name="prs" namespace="/prs" extends="NG">
@@ -128,6 +127,19 @@
 
         <action name="eprEditPerson" class="lk.rgd.prs.web.action.PersonRegisterAction" method="personEditInit">
             <result type="tiles" name="success">epr.existingPersonRegistration</result>
+        </action>
+
+        <action name="eprEditPersonDetails" class="lk.rgd.prs.web.action.PersonRegisterAction" method="personEditInit">
+            <!--param name="personUKey">true</param-->
+            <result type="tiles" name="success">epr.editPersonDetails</result>
+        </action>
+
+        <action name="eprUpdatePersonDetails" class="lk.rgd.prs.web.action.PersonRegisterAction"
+                method="updatePersonDetails">
+            <result type="redirectAction" name="success">
+                <param name="actionName">eprPersonDetails</param>
+                <param name="personUKey">${personUKey}</param>
+            </result>
         </action>
 
         <action name="eprDirectEditPerson" class="lk.rgd.prs.web.action.PersonRegisterAction" method="personEditInit">
@@ -297,13 +309,13 @@
 
 
         <action name="eprBirthCertificate" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
-                method="birthCetificatePrint">
+                method="birthCertificatePrint">
             <result type="tiles" name="pageLoad">epr.birthCertificate_form</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
 
         <action name="eprStillBirthCertificatePrint" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
-                method="birthCetificatePrint">
+                method="birthCertificatePrint">
             <result type="tiles" name="pageLoad">epr.birthCertificate_form</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
@@ -457,7 +469,7 @@
         </action>
 
         <action name="eprBirthCertificatDirectPrint" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
-                method="birthCetificatePrint">
+                method="birthCertificatePrint">
             <result type="tiles" name="pageLoad">epr.birthCertificate_form</result>
         </action>
 
@@ -484,7 +496,6 @@
             <result type="tiles" name="success">epr.birthRegistration_details</result>
         </action>
 
-        <!--TODO-->
         <!--Action for Print Button in direct printing birth confirmation in batch mode -->
         <action name="eprDirectPrintBirthConfirmation" class="lk.rgd.crs.web.action.births.PrintAction"
                 method="markAsPrinted">
@@ -671,13 +682,6 @@
             <result type="tiles" name="success">epr.deathDeclaration_form1</result>
         </action>
 
-        <!--todo remove this action no usage-->
-        <action name="eprLateDeathDeclaration" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
-                method="lateDeath">
-            <result type="tiles" name="success">epr.home</result>
-            <result type="tiles" name="error">epr.error</result>
-        </action>
-
         <action name="eprDeathEditMode" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
                 method="deathDeclarationEditMode">
             <result type="tiles" name="success">epr.deathDeclaration_form1</result>
@@ -708,7 +712,7 @@
                 method="previouseDeathRegisterApprovalPage">
             <result type="tiles" name="success">epr.deathApproveAndPrint</result>
         </action>
-        <!--todo-->
+
         <action name="eprDeathEditMoe" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
                 method="deathDeclarationEditMode">
             <result type="tiles" name="success">epr.deathDeclaration_form1</result>
@@ -1008,7 +1012,7 @@
 
         <action name="eprRegistrarsManagment" class="lk.rgd.crs.web.action.RegistrarManagementAction"
                 method="registrarsManagementHome">
-            <result type="tiles" name="success">epr.registrarsManagmentList</result>
+            <result type="tiles" name="success">epr.registrarsManagementList</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
 
@@ -1020,7 +1024,7 @@
 
         <action name="eprRegistrarsFilter" class="lk.rgd.crs.web.action.RegistrarManagementAction"
                 method="filter">
-            <result type="tiles" name="success">epr.registrarsManagmentList</result>
+            <result type="tiles" name="success">epr.registrarsManagementList</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
 
@@ -1045,6 +1049,11 @@
             <result type="tiles" name="error">epr.addRegistrar</result>
         </action>
 
+        <action name="eprRegistrarDelete" class="lk.rgd.crs.web.action.RegistrarManagementAction"
+                method="deleteRegistrar">
+            <result type="tiles" name="success">epr.findRegistrar</result>
+        </action>
+
         <action name="eprAssignmentAdd" class="lk.rgd.crs.web.action.RegistrarManagementAction"
                 method="assignmentAdd">
             <result type="redirectAction" name="success">
@@ -1065,17 +1074,16 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
+        <action name="eprAssignmentDelete" class="lk.rgd.crs.web.action.RegistrarManagementAction"
+                method="deleteAssignment">
+            <result type="tiles" name="success">epr.registrarsView</result>
+        </action>
+
         <action name="eprAssignmentAddDirect" class="lk.rgd.crs.web.action.RegistrarManagementAction"
                 method="assignmentAddPageLoad">
             <result type="tiles" name="success">epr.addAssignment</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
-
-        <!--        <action name="eprSearchRegistrarByPin" class="lk.rgd.crs.web.action.RegistrarsManagementActionn"
-                method="searchRegistrarByPin">
-            <result type="tiles" name="success">epr.addAssignment</result>
-            <result type="tiles" name="error">epr.error</result>
-        </action>-->
 
         <action name="eprFindRegistrar" class="lk.rgd.crs.web.action.RegistrarManagementAction"
                 method="findRegistrar">
@@ -1130,9 +1138,24 @@
                 method="initAddDivisionsAndDsDivision">
             <result type="tiles" name="success">epr.addEditDivisions</result>
         </action>
+        <action name="eprInitEditDivisionDetails" class="lk.rgd.crs.web.action.UserManagementAction"
+                method="initEditDivisionDetails">
+            <param name="editMode">true</param>
+            <result type="tiles" name="success">epr.addEditDivisions</result>
+        </action>
         <action name="eprInitDivisionList" class="lk.rgd.crs.web.action.UserManagementAction"
                 method="initDivisionList">
             <result type="tiles" name="success">epr.addEditDivisions</result>
+        </action>
+
+        <!--TODO for GN Division re-arange option-->
+        <action name="eprInitRearrangeDivision" class="lk.rgd.crs.web.action.UserManagementAction"
+                method="initRearrangeDivision">
+            <result type="tiles" name="success">epr.ReArrangeDivisions</result>
+        </action>
+        <action name="eprRearrangeDivision" class="lk.rgd.crs.web.action.UserManagementAction"
+                method="reArrangeDivisions">
+            <result type="tiles" name="success">epr.ReArrangeDivisions</result>
         </action>
         <action name="eprActivateOrInactivateDivisionsAndDsDivisions" class="lk.rgd.crs.web.action.UserManagementAction"
                 method="activeOrInactive">
@@ -1140,6 +1163,10 @@
         </action>
         <action name="eprAddDivisionsAndDsDivisions" class="lk.rgd.crs.web.action.UserManagementAction"
                 method="addDivisionsAndDsDivisions">
+            <result type="tiles" name="success">epr.addEditDivisions</result>
+        </action>
+        <action name="eprEditDivisionDetails" class="lk.rgd.crs.web.action.UserManagementAction"
+                method="editDivisionDetails">
             <result type="tiles" name="success">epr.addEditDivisions</result>
         </action>
         <action name="eprInitAssignedUserLocation" class="lk.rgd.crs.web.action.UserManagementAction"
@@ -1307,7 +1334,7 @@
         </action>
         <action name="eprPrintBirthAlterarionNotice" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
                 method="printBirthAlterationNotice">
-            <result type="tiles" name="success">epr.printBirthAlterarionNotice</result>
+            <result type="tiles" name="success">epr.printBirthAlterationNotice</result>
             <result type="tiles" name="error">epr.birthAlterationPendingApproval</result>
         </action>
 
@@ -1419,6 +1446,12 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
+        <action name="eprMarriageNoticeSearchHome" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
+                method="marriageNoticeSearchHome">
+            <result type="tiles" name="success">epr.marriageNoticeSearchHome</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
         <action name="eprMarriageNoticeSearchNext" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
                 method="nextNoticesPage">
             <result type="tiles" name="success">epr.marriageNoticeSearchHome</result>
@@ -1447,40 +1480,38 @@
 
         <action name="eprRegisterNewMarriage" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
                 method="registerNewMarriage">
-            <result type="tiles" name="success">epr.success</result>
+            <result type="tiles" name="success">epr.marriageRegistrationSuccess</result>
             <result type="tiles" name="input">epr.marriageRegistration</result>
         </action>
 
         <action name="eprUpdateMarriage" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
                 method="updateMarriageDetails">
-            <result type="tiles" name="success">epr.success</result>
+            <result type="tiles" name="success">epr.marriageRegistrationSuccess</result>
             <result type="tiles" name="input">epr.marriageRegistration</result>
         </action>
 
         <action name="eprUpdateAndApproveMuslimMarriage"
                 class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
                 method="updateAndApproveMuslimMarriage">
-            <result type="tiles" name="success">epr.success</result>
+            <result type="tiles" name="success">epr.marriageRegistrationSuccess</result>
             <result type="tiles" name="input">epr.marriageRegistration</result>
             <result type="tiles" name="warning">epr.marriageRegisterWarnings</result>
         </action>
 
         <action name="eprRegisterNoticedMarriage" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
                 method="registerNoticedMarriage">
-            <result type="tiles" name="success">epr.success</result>
+            <result type="tiles" name="success">epr.marriageRegistrationSuccess</result>
             <result type="tiles" name="input">epr.marriageRegistration</result>
         </action>
 
         <action name="eprMarriageNoticeEditInit" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
                 method="editMarriageNoticeInit">
-            <!--todo do not forward to default error page-->
             <result type="tiles" name="pageLoad">epr.marriageNoticeInit</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
 
         <action name="eprMarriageNoticeEdit" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
                 method="editMarriageNotice">
-            <!--todo do not forward to default error page-->
             <result type="tiles" name="success">epr.marriageNoticeResults</result>
             <result type="tiles" name="error">epr.error</result>
             <result type="tiles" name="warn">epr.marriageNoticeWarn</result>
@@ -1503,7 +1534,6 @@
 
         <action name="eprMarriageCertificateLoad" class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
                 method="marriageCertificateInit">
-            <!--todo do not forward to default error page todo redirect to search results-->
             <result type="tiles" name="pageLoad">epr.marriageCertificate</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
@@ -1628,7 +1658,7 @@
                 class="lk.rgd.crs.web.action.marriages.MarriageRegistrationAction"
                 method="registerAndApproveNewMarriage">
             <param name="register">true</param>
-            <result type="tiles" name="success">epr.success</result>
+            <result type="tiles" name="success">epr.marriageRegistrationSuccess</result>
             <result type="tiles" name="input">epr.marriageRegistration</result>
             <result type="tiles" name="warning">epr.marriageRegisterWarnings</result>
         </action>
@@ -1643,14 +1673,14 @@
         <action name="eprMarkMarriageExtractAsPrinted"
                 class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
                 method="markMarriageExtractAsPrinted">
-            <result name="success" type="tiles">epr.success</result>
+            <result name="success" type="tiles">epr.marriageRegistrationSuccess</result>
             <result name="error" type="tiles">epr.error</result>
         </action>
 
         <action name="eprMarkDivorceExtractAsPrinted"
                 class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
                 method="markDivorceExtractAsPrinted">
-            <result name="success" type="tiles">epr.success</result>
+            <result name="success" type="tiles">epr.marriageRegistrationSuccess</result>
             <result name="error" type="tiles">epr.error</result>
         </action>
 
@@ -1662,7 +1692,7 @@
 
         <action name="eprDivorce" class="lk.rgd.crs.web.action.marriages.MarriageRegisterSearchAction"
                 method="divorce">
-            <result name="success" type="tiles">epr.success</result>
+            <result name="success" type="tiles">epr.marriageRegistrationSuccess</result>
             <result name="error" type="tiles">epr.error</result>
         </action>
 
@@ -1671,7 +1701,5 @@
             <result name="success" type="tiles">epr.printScannedMarriageCertificate</result>
             <result name="error" type="tiles">epr.error</result>
         </action>
-
-
     </package>
 </struts>

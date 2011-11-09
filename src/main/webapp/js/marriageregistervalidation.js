@@ -41,20 +41,41 @@ function validateRadioSet(fieldName, messageId, errormsg) {
     return printValidationMessage(messageId, errormsg);
 }
 
-function validatePin(fieldId, emptymsg, invalidmsg, errormsg) {
+function validatePinOrNic(fieldId, emptyMsg, invalidMsg, errorMsg) {
     var domObject = document.getElementById(fieldId);
 
-    if (isFieldEmpty(domObject)) {
-        return printValidationMessage(emptymsg, errormsg);
+    if (emptyMsg.trim().length != 0 && isFieldEmpty(domObject)) {
+        return printValidationMessage(emptyMsg, errorMsg);
     }
-    //if (!isFieldEmpty(domObject)) {
-    //validatePINNumber(domObject, messageId, errormsg);
-    if (isValidPIN(domObject)) {
-        return errormsg;
-    }
-    // }
-    return printValidationMessage(invalidmsg, errormsg);
 
+    if (!isFieldEmpty(domObject)) {
+        var pinOrNic = domObject.value.trim();
+
+        if (pinOrNic.length == 12) {
+            if (checkInvalidPIN(pinOrNic, true, false)) {
+                return printValidationMessage(invalidMsg, errorMsg);
+            } else {
+                return errorMsg;
+            }
+        } else if (pinOrNic.length == 10) {
+            var regNIC = /^([0-9]{9}[X|x|V|v])$/;
+
+            if (regNIC.test(pinOrNic)) {
+                var day = pinOrNic.substring(2, 5);
+                if ((day >= 367 && day <= 500) || (day >= 867)) {
+                    return printValidationMessage(invalidMsg, errorMsg);
+                } else {
+                    return errorMsg;
+                }
+            } else {
+                return printValidationMessage(invalidMsg, errorMsg);
+            }
+        } else {
+            return printValidationMessage(invalidMsg, errorMsg);
+        }
+    } else {
+        return errorMsg;
+    }
 }
 
 function validateIdUkey(fieldId, emptymsg, invalidmsg, errormsg) {
@@ -112,6 +133,7 @@ function isValidPIN(domElement) {
     }
     return true;
 }
+
 
 function isFieldEmpty(domElement) {
     with (domElement) {
@@ -232,5 +254,66 @@ function addXorV(domElement, letter, error) {
         document.getElementById(domElement).value = document.getElementById(domElement).value + letter;
     } else {
         alert(document.getElementById(error).value);
+    }
+}
+
+// used to validate temporary pin and pin
+// * both = true for fields enable to enter PIN and Temporary PIN both, * both = false for only PIN or Temporary PIN
+// * isPin=true for PIN, * isPin=false for Temporary PIN
+// both = true                  - to check both PIN or Temporary PIN invalid
+// both = false, isPin = true   - to check PIN invalid
+// both = false, isPin = false  - to check Temporary PIN invalid
+function checkInvalidPIN(pin, both, isPin) {
+    var invalid = false;
+    var year = pin.substring(0, 4);
+    var date = pin.substring(4, 7);
+    var serial = pin.substring(7, 11);
+    var check = pin.substring(11, 12);
+    var number = pin.substring(0, 11);
+
+    // validate year range
+    if (both) {
+        if ((year < 1700) || (year > 2200 && year < 6700) || (year > 7200)) {
+            return true;
+        }
+    } else {
+        if (isPin) {
+            if ((year < 1700) || (year > 2200)) {
+                return true;
+            }
+        } else {
+            if ((year < 6700) || (year > 7200)) {
+                return true;
+            }
+        }
+    }
+    // validate date range
+    if ((date >= 367 && date <= 500) || (date >= 867)) {
+        return true;
+    }
+    // validate serial number range
+    if (serial < 1 || serial > 9999) {
+        return true;
+    }
+    // validate check digit
+    if (check != calculateCheckDigit(number)) {
+        return true;
+    }
+    return false;
+}
+
+// calculate check digit of given pin
+function calculateCheckDigit(number) {
+    var N = new Array(11);
+    for (var i = 0; i < N.length; i++) {
+        N[i] = number.substring(i, i + 1);
+    }
+
+    var check = 11 - ((N[0] * 8 + N[1] * 4 + N[2] * 3 + N[3] * 2 + N[4] * 7 + N[5] * 6 + N[6] * 5 + N[7] * 7 + N[8] * 4 + N[9] * 3 + N[10] * 2) % 11);
+
+    if (check > 9) {
+        return check - 10;
+    } else {
+        return check;
     }
 }

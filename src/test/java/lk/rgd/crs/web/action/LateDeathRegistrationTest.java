@@ -1,34 +1,32 @@
 package lk.rgd.crs.web.action;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.apache.struts2.dispatcher.mapper.ActionMapping;
-import org.springframework.context.ApplicationContext;
-import com.opensymphony.xwork2.ActionProxy;
 import com.opensymphony.xwork2.ActionContext;
-import lk.rgd.common.api.domain.User;
-import lk.rgd.common.api.domain.Country;
-import lk.rgd.common.api.domain.Race;
-import lk.rgd.common.api.service.UserManager;
+import com.opensymphony.xwork2.ActionProxy;
+import junit.extensions.TestSetup;
+import junit.framework.Test;
+import junit.framework.TestSuite;
+import lk.rgd.UnitTestManager;
+import lk.rgd.common.CustomStrutsTestCase;
 import lk.rgd.common.api.dao.CountryDAO;
 import lk.rgd.common.api.dao.RaceDAO;
-import lk.rgd.common.CustomStrutsTestCase;
+import lk.rgd.common.api.domain.Country;
+import lk.rgd.common.api.domain.Race;
+import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.core.AuthorizationException;
 import lk.rgd.common.util.DateTimeUtils;
-import lk.rgd.crs.web.action.deaths.DeathRegisterAction;
-import lk.rgd.crs.web.WebConstants;
+import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.api.service.DeathRegistrationService;
-import lk.rgd.crs.api.dao.BDDivisionDAO;
-import lk.rgd.UnitTestManager;
+import lk.rgd.crs.web.WebConstants;
+import lk.rgd.crs.web.action.deaths.DeathRegisterAction;
+import org.apache.struts2.dispatcher.mapper.ActionMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
 
 import java.util.*;
-import java.text.DateFormat;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
-import junit.extensions.TestSetup;
 
 public class LateDeathRegistrationTest extends CustomStrutsTestCase {
     private static final Logger logger = LoggerFactory.getLogger(LateDeathRegistrationTest.class);
@@ -43,11 +41,14 @@ public class LateDeathRegistrationTest extends CustomStrutsTestCase {
 
     protected final static ApplicationContext ctx = UnitTestManager.ctx;
     protected final static UserManager userManager = (UserManager) ctx.getBean("userManagerService", UserManager.class);
-    protected final static BirthRegistrationService birthRegistrationService = (BirthRegistrationService) ctx.getBean("manageBirthService", BirthRegistrationService.class);
-    protected final static BDDivisionDAO bdDivisionDAO = (BDDivisionDAO) ctx.getBean("bdDivisionDAOImpl", BDDivisionDAO.class);
+    protected final static BirthRegistrationService birthRegistrationService =
+        (BirthRegistrationService) ctx.getBean("manageBirthService", BirthRegistrationService.class);
+    protected final static BDDivisionDAO bdDivisionDAO =
+        (BDDivisionDAO) ctx.getBean("bdDivisionDAOImpl", BDDivisionDAO.class);
     protected final static CountryDAO countryDAO = (CountryDAO) ctx.getBean("countryDAOImpl", CountryDAO.class);
     protected final static RaceDAO raceDOA = (RaceDAO) ctx.getBean("raceDAOImpl", RaceDAO.class);
-    protected final static DeathRegistrationService deathRegistrationService = (DeathRegistrationService) ctx.getBean("deathRegisterService", DeathRegistrationService.class);
+    protected final static DeathRegistrationService deathRegistrationService =
+        (DeathRegistrationService) ctx.getBean("deathRegisterService", DeathRegistrationService.class);
 
 
     public static Test suite() {
@@ -62,7 +63,7 @@ public class LateDeathRegistrationTest extends CustomStrutsTestCase {
                 List deaths = sampleDeaths();
                 User sampleUser = loginSampleUser();
                 for (int i = 0; i < deaths.size(); i++) {
-                    deathRegistrationService.addNormalDeathRegistration((DeathRegister) deaths.get(i), sampleUser);
+                    deathRegistrationService.addNewDeathRegistration((DeathRegister) deaths.get(i), sampleUser);
                 }
 
                 //setting serial number 2010012349 colombo to APPROVED
@@ -81,14 +82,13 @@ public class LateDeathRegistrationTest extends CustomStrutsTestCase {
         User rg = null;
         try {
             rg = userManager.authenticateUser("rg", "password");
-        }
-        catch (AuthorizationException e) {
-            logger.debug("exception when autharizing a user :'rg' ");
+        } catch (AuthorizationException e) {
+            logger.debug("exception when authorizing a user :'rg' ");
         }
         return rg;
     }
 
-       private static List sampleDeaths() {
+    private static List sampleDeaths() {
         List list = new LinkedList();
 
         for (int i = 0; i < 10; i++) {
@@ -99,7 +99,7 @@ public class LateDeathRegistrationTest extends CustomStrutsTestCase {
             death.setDeathSerialNo(2010012445 + i);
             death.setPlaceOfDeath("place of death :" + i);
             gCal.add(Calendar.DATE, -20);
-            death.setDateOfDeath(gCal.getTime());                   
+            death.setDateOfDeath(gCal.getTime());
             gCal.add(Calendar.DATE, -2);
             death.setDateOfRegistration(gCal.getTime());
             death.setPreferredLanguage("si");
@@ -109,7 +109,7 @@ public class LateDeathRegistrationTest extends CustomStrutsTestCase {
             //death person info
             DeathPersonInfo person = new DeathPersonInfo();
             person.setDeathPersonGender(0);
-            person.setDeathPersonNameOfficialLang("name in offocial lang" + i);
+            person.setDeathPersonNameOfficialLang("name in official lang" + i);
             person.setDeathPersonAge(25);
             person.setDeathPersonCountry(sriLanka);
             person.setDeathPersonFatherFullName("father full name " + i);
@@ -122,7 +122,7 @@ public class LateDeathRegistrationTest extends CustomStrutsTestCase {
             //notifu authority info
             NotifyingAuthorityInfo notify = new NotifyingAuthorityInfo();
             notify.setNotifyingAuthorityName("notify name :" + i);
-            notify.setNotifyingAuthorityAddress("notifi address :" + i);
+            notify.setNotifyingAuthorityAddress("notifier address :" + i);
             notify.setNotifyingAuthorityPIN("" + 123456789 + i);
             gCal.add(Calendar.DATE, -1);
             notify.setNotifyingAuthoritySignDate(gCal.getTime());
@@ -134,6 +134,7 @@ public class LateDeathRegistrationTest extends CustomStrutsTestCase {
             declarant.setDeclarantEMail("declarant email" + i);
             declarant.setDeclarantFullName("declarant full name " + i);
             declarant.setDeclarantNICorPIN("" + (123456789 + i));
+            declarant.setDeclarantSignDate(gCal.getTime());
 
             DeathRegister deathRegister = new DeathRegister();
             deathRegister.setStatus(DeathRegister.State.DATA_ENTRY);
@@ -147,8 +148,9 @@ public class LateDeathRegistrationTest extends CustomStrutsTestCase {
         }
         return list;
     }
+
     private Map UserLogin(String username, String passwd) throws Exception {
-        request.setParameter("javaScript","true");
+        request.setParameter("javaScript", "true");
         request.setParameter("userName", username);
         request.setParameter("password", passwd);
         ActionProxy proxy = getActionProxy("/eprLogin.do");
@@ -158,7 +160,7 @@ public class LateDeathRegistrationTest extends CustomStrutsTestCase {
         return loginAction.getSession();
     }
 
-    private void initAndExucute(String mapping, Map session) {
+    private void initAndExecute(String mapping, Map session) {
         proxy = getActionProxy(mapping);
         deathAction = (DeathRegisterAction) proxy.getAction();
         assertNotNull(deathAction);
@@ -191,7 +193,7 @@ public class LateDeathRegistrationTest extends CustomStrutsTestCase {
 
     public void testLateDeathDeclaration() throws Exception {
         Map session = UserLogin("ashoka", "ashoka");
-        initAndExucute("/deaths/eprInitLateDeathDeclaration.do", session);
+        initAndExecute("/deaths/eprInitLateDeathDeclaration.do", session);
         assertEquals("Action errors for Adoption Declaration ", 0, deathAction.getActionErrors().size());
 
         DeathRegister ddf;
@@ -231,7 +233,7 @@ public class LateDeathRegistrationTest extends CustomStrutsTestCase {
         request.setParameter("dsDivisionId", "1");
         request.setParameter("pageNo", "1");
 
-        initAndExucute("/deaths/eprDeathDeclaration.do", session);
+        initAndExecute("/deaths/eprDeathDeclaration.do", session);
         session = deathAction.getSession();
         assertEquals("Action errors for Adoption Declaration ", 0, deathAction.getActionErrors().size());
 
@@ -258,15 +260,16 @@ public class LateDeathRegistrationTest extends CustomStrutsTestCase {
         request.setParameter("declarant.declarantNICorPIN", "333333333");
         request.setParameter("declarant.declarantPhone", "3434343434");
         request.setParameter("declarant.declarantType", "RELATIVE");
+        request.setParameter("declarant.declarantSignDate", "2010-08-17");
         request.setParameter("notifyingAuthority.notifyingAuthorityName", "Rajapaksha M.");
         request.setParameter("notifyingAuthority.notifyingAuthorityAddress", "GANGODAVILA,EGODAWATHTHA");
         request.setParameter("notifyingAuthority.notifyingAuthorityPIN", "852012132V");
         request.setParameter("notifyingAuthority.notifyingAuthoritySignDate", "2010-08-17");
         request.setParameter("pageNo", "2");
 
-        initAndExucute("/deaths/eprDeathDeclaration.do", session);
+        initAndExecute("/deaths/eprDeathDeclaration.do", session);
         session = deathAction.getSession();
-        assertEquals("Action erros for Adoption Declaration ", 0, deathAction.getActionErrors().size());
+        assertEquals("Action errors for Adoption Declaration ", 0, deathAction.getActionErrors().size());
 
         assertEquals("Declarent Address", "EGODAWATHTHA,MAHARAGAMA.", ddf.getDeclarant().getDeclarantAddress());
         assertEquals("Declarent E-Mail Address", "wwwww@gmail.com", ddf.getDeclarant().getDeclarantEMail());
@@ -275,6 +278,4 @@ public class LateDeathRegistrationTest extends CustomStrutsTestCase {
         assertEquals("NotifyingAuthority Address", "GANGODAVILA,EGODAWATHTHA", ddf.getNotifyingAuthority().getNotifyingAuthorityAddress());
         logger.debug("New late death declaration successfuly persist S idUKey : {}", ddf.getIdUKey());
     }
-
-
 }

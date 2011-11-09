@@ -67,7 +67,7 @@ public class DeathAlterationActionTest extends CustomStrutsTestCase {
                 List deaths = sampleDeaths();
 
                 for (int i = 0; i < deaths.size(); i++) {
-                    deathRegistrationService.addNormalDeathRegistration((DeathRegister) deaths.get(i), sampleUser);
+                    deathRegistrationService.addNewDeathRegistration((DeathRegister) deaths.get(i), sampleUser);
                 }
                 //change state to certificate printed otherwise cannot add alterations
                 DeathRegister dr;
@@ -212,6 +212,7 @@ public class DeathAlterationActionTest extends CustomStrutsTestCase {
             declarant.setDeclarantEMail("declarant email" + i);
             declarant.setDeclarantFullName("declarant full name " + i);
             declarant.setDeclarantNICorPIN("" + (123456789 + i));
+            declarant.setDeclarantSignDate(gCal.getTime());
 
             DeathRegister deathRegister = new DeathRegister();
             deathRegister.setStatus(DeathRegister.State.DATA_ENTRY);

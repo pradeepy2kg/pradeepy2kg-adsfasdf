@@ -53,7 +53,7 @@
     $(function() {
         $('select#districtId').bind('change', function(evt1) {
             var id = $("select#districtId").attr("value");
-            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id},
+            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:16},
                     function(data) {
                         var options1 = '';
                         var ds = data.dsDivisionList;
@@ -63,7 +63,7 @@
                         $("select#dsDivisionId").html(options1);
 
                         var options2 = '';
-                        var bd = data.bdDivisionList;
+                        var bd = data.divisionList;
                         options2 += '<option value="' + 0 + '">' + <s:label value="%{getText('select.registrationDivision.label')}"/> + '</option>';
                         for (var j = 0; j < bd.length; j++) {
                             options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
@@ -83,6 +83,18 @@
                             options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
                         }
                         $("select#birthDivisionId").html(options);
+                    });
+        });
+
+        $('img#personName').bind('click', function(evt4) {
+            var text = $("textarea#searchFullNameOfficialLang").attr("value");
+
+            $.post('/ecivil/TransliterationService', {text:text,gender:'U'},
+                    function(data) {
+                        if (data != null) {
+                            var s = data.translated;
+                            $("textarea#searchFullNameEnglish").val(s);
+                        }
                     });
         });
     });
@@ -210,7 +222,8 @@
                 </tr>
                 <tr>
                     <td><label><span
-                            class="font-8">ඉල්ලුම් පත්‍ර අංකය <s:label value="*" cssStyle="color:red;font-size:10pt"/><br>விண்ணப்ப இலக்கம்<br>Application No</span></label>
+                            class="font-8">ඉල්ලුම් පත්‍ර අංකය <s:label value="*"
+                                                                       cssStyle="color:red;font-size:10pt"/><br>விண்ணப்ப இலக்கம்<br>Application No</span></label>
                     </td>
                     <td><s:textfield name="certSearch.certificate.applicationNo" id="applicationNo"
                                      cssStyle="text-transform:uppercase;"/></td>
@@ -257,13 +270,16 @@
 
 <table class="table_reg_page_01" cellspacing="0" cellpadding="2px">
     <tr>
-        <td class="font-9" width="400px"><label>(1) ඉල්ලුම්කරුගේ සම්පූර්ණ නම<s:label value="*" cssStyle="color:red;font-size:10pt"/><br>விண்ணப்பதாரரின் முழுப் பெயர் <br>
+        <td class="font-9" width="400px"><label>(1) ඉල්ලුම්කරුගේ සම්පූර්ණ නම<s:label value="*"
+                                                                                     cssStyle="color:red;font-size:10pt"/><br>விண்ணப்பதாரரின்
+            முழுப் பெயர் <br>
             Full Name of the Applicant</label></td>
         <td colspan="6"><s:textarea name="certSearch.certificate.applicantFullName" id="applicantFullName"
                                     cssStyle="text-transform:uppercase;"/></td>
     </tr>
     <tr>
-        <td class="font-9"><label>ඉල්ලුම්කරුගේ ලිපිනය<s:label value="*" cssStyle="color:red;font-size:10pt"/><br>விண்ணப்பதாரரின் முகவரி <br>
+        <td class="font-9"><label>ඉල්ලුම්කරුගේ ලිපිනය<s:label value="*" cssStyle="color:red;font-size:10pt"/><br>விண்ணப்பதாரரின்
+            முகவரி <br>
             Address of the Applicant</label></td>
         <td colspan="6"><s:textarea name="certSearch.certificate.applicantAddress" id="applicantAddress"
                                     cssStyle="text-transform:uppercase;"/></td>
@@ -272,14 +288,16 @@
         <td class="font-9">
             <s:if test="certificateType.ordinal() == 0">
                 <label>(2) ඉල්ලුම්කරන්නේ කාගේ උප්පැන්නය ගැනද? <br>එම අයගේ සම්පූර්ණ නම රාජ්‍ය භාෂාවෙන්
-                    (සිංහල / දෙමළ)<s:label value="*" cssStyle="color:red;font-size:10pt"/><br>விண்ணப்பிப்பது யாருடைய பிறப்பினை? <br>
-அவரின் முழுப்பெயர் அரச கரும மொழியில்(சிங்களம்/ தழிழ்) <br>
+                    (සිංහල / දෙමළ)<s:label value="*" cssStyle="color:red;font-size:10pt"/><br>விண்ணப்பிப்பது யாருடைய
+                    பிறப்பினை? <br>
+                    அவரின் முழுப்பெயர் அரச கரும மொழியில்(சிங்களம்/ தழிழ்) <br>
                     Full Name of the person respecting whose birth application is made (Sinhala/Tamil) ?</label>
             </s:if>
             <s:elseif test="certificateType.ordinal() == 1">
                 <label>(2) ඉල්ලුම් කරන්නේ කාගේ මරණය ගැනද? <br>එම අයගේ සම්පූර්ණ නම රාජ්‍ය භාෂාවෙන්
-                    (සිංහල / දෙමළ)<s:label value="*" cssStyle="color:red;font-size:10pt"/><br>விண்ணப்பிப்பது யாருடைய இறப்பினை?  <br>
-அவரின் முழுப்பெயர் அரச கரும மொழியில்(சிங்களம்/ தழிழ்) <br>
+                    (සිංහල / දෙමළ)<s:label value="*" cssStyle="color:red;font-size:10pt"/><br>விண்ணப்பிப்பது யாருடைய
+                    இறப்பினை? <br>
+                    அவரின் முழுப்பெயர் அரச கரும மொழியில்(சிங்களம்/ தழிழ்) <br>
                     Full Name of the person respecting whose death application is made (Sinhala/Tamil) ?</label>
             </s:elseif>
         </td>
@@ -294,18 +312,22 @@
                 <label> ඉල්ලුම්කරන්නේ කාගේ උප්පැන්නය ගැනද? <br>එම අයගේ සම්පූර්ණ නම ඉංග්‍රීසි භාෂාවෙන්
                     <s:label value="*" cssStyle="color:red;font-size:10pt"/>
                     <br>விண்ணப்பிப்பது யாருடைய பிறப்பினை? <br>
-அவரின் முழுப்பெயர் ஆங்கில மொழியில் <br>
+                    அவரின் முழுப்பெயர் ஆங்கில மொழியில் <br>
                     Full Name of the person respecting whose birth application is made in English ?</label>
             </s:if>
             <s:if test="certificateType.ordinal() == 1">
-                <label> ඉල්ලුම් කරන්නේ කාගේ මරණය ගැනද? <br>එම අයගේ සම්පූර්ණ නම ඉංග්‍රීසි භාෂාවෙන් <s:label value="*" cssStyle="color:red;font-size:10pt"/>
+                <label> ඉල්ලුම් කරන්නේ කාගේ මරණය ගැනද? <br>එම අයගේ සම්පූර්ණ නම ඉංග්‍රීසි භාෂාවෙන් <s:label value="*"
+                                                                                                           cssStyle="color:red;font-size:10pt"/>
                     <br>விண்ணப்பிப்பது யாருடைய இறப்பினை?
-அவரின் முழுப்பெயர் ஆங்கில மொழியில்<br>
+                    அவரின் முழுப்பெயர் ஆங்கில மொழியில்<br>
                     Full Name of the person respecting whose birth application is made in English ?</label>
             </s:if>
         </td>
         <td colspan="6"><s:textarea name="certSearch.search.searchFullNameEnglish" id="searchFullNameEnglish"
-                                    cssStyle="text-transform:uppercase;"/></td>
+                                    cssStyle="text-transform:uppercase;"/><br/>
+            <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px"
+                 id="personName">
+        </td>
     </tr>
     <s:if test="certificateType.ordinal() == 1">
         <tr>
@@ -324,7 +346,8 @@
                 list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
                 name="certSearch.search.gender" headerKey="0" headerValue="%{getText('select_gender.label')}"
                 cssStyle="width:190px; margin-left:5px;"/></td>
-        <td><label>අවශ‍ය පිටපත් ගණන<s:label value="*" cssStyle="color:red;font-size:14pt"/><br>தேவையான பிரதிகளின் எண்ணிக்கை<br>No. of Copies required</label></td>
+        <td><label>අවශ‍ය පිටපත් ගණන<s:label value="*" cssStyle="color:red;font-size:14pt"/><br>தேவையான பிரதிகளின்
+            எண்ணிக்கை<br>No. of Copies required</label></td>
         <td><s:textfield name="certSearch.certificate.noOfCopies" id="noOfCopies" maxLength="2"/></td>
     </tr>
     <tr>
@@ -386,33 +409,39 @@
                          cssStyle="text-transform:uppercase;"/></td>
     </tr>
     <tr>
-        <td class="font-9" rowspan="2"><label>(6) රෙජිසිට්‍රර්ගේ කොට්ඨාශය<br>பதிவாளர் பிரிவு <br>Registrar's
+        <td class="font-9" rowspan="2"><label>(6) රෙජිසිට්‍රර්ගේ කොට්ඨාශය
+            <s:label value="*" cssStyle="color:red;font-size:14pt"/><br>பதிவாளர் பிரிவு <br>Registrar's
             Division</label></td>
         <td><label>දිස්ත්‍රික්කය மாவட்டம் District</label></td>
         <td colspan="6" class="table_reg_cell_01">
-            <s:select id="districtId" name="birthDistrictId" list="districtList" value="birthDistrictId"
-                      cssStyle="width:98.5%;"/>
+            <s:select id="districtId" name="birthDistrictId" list="allDistrictList" value="birthDistrictId" cssStyle="width:98.5%;"/>
         </td>
     </tr>
     <tr>
-        <td><label>ප්‍රාදේශීය ලේකමි කොටිඨාශය<br>பிரதேச செயலாளர் பிரிவு <br>Divisional Secretariat</label></td>
+        <td><label>
+            ප්‍රාදේශීය ලේකම් කොට්ඨාශය
+            <br/>பிரதேச செயளாளர் பிரிவு
+            <br/>Divisional Secretary Division
+        </label></td>
         <td colspan="6" class="table_reg_cell_01" id="table_reg_cell_01">
-            <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
+            <s:select id="dsDivisionId" name="dsDivisionId" list="allDSDivisionList" value="%{dsDivisionId}"
                       cssStyle="width:98.5%;"/>
         </td>
     <tr>
     <tr>
         <td class="font-9">
             <s:if test="certificateType.ordinal() == 0">
-                <label>උපත් ප්‍රකාශනයේ අනුක්‍රමික අංකය<br>பிறப்பு பிரதிக்கினையின் தொடர் இலக்கம்<br>Birth Declaration Serial Number</label>
+                <label>උපත් ප්‍රකාශනයේ අනුක්‍රමික අංකය<br>பிறப்பு பிரதிக்கினையின் தொடர் இலக்கம்<br>Birth Declaration
+                    Serial Number</label>
             </s:if>
             <s:elseif test="certificateType.ordinal() == 1">
-                <label>මරණ ප්‍රකාශනයේ අනුක්‍රමික අංකය<br>இறப்பு பிரதிக்கினையின் தொடர் இலக்கம்<br>Birth Declaration Serial Number</label>
+                <label>මරණ ප්‍රකාශනයේ අනුක්‍රමික අංකය<br>இறப்பு பிரதிக்கினையின் தொடர் இலக்கம்<br>Death Declaration
+                    Serial Number</label>
             </s:elseif>
         </td>
         <td><s:textfield name="certSearch.search.searchSerialNo" id="searchSerialNo" maxLength="10"/></td>
         <td width="180px">
-            <label>ලියාපදිංචි කිරීමේ කොට්ඨාශය /<br/>பிரிவு /<br/>Registration Division</label>
+            <label>ලියාපදිංචි කිරීමේ කොට්ඨාශය /<br/>பதிவுப் பிரிவு/<br/>Registration Division</label>
         </td>
         <td><s:select id="birthDivisionId" name="birthDivisionId" list="bdDivisionList"
                       headerKey="0" headerValue="%{getText('select.registrationDivision.label')}"
@@ -425,7 +454,7 @@
                 <label>(7) උප්පැන්න සහතිකයේ අංකය<br>பிறப்புச் சான்றிதழின் இலக்கம் <br>Birth Certificate Number</label>
             </s:if>
             <s:elseif test="certificateType.ordinal() == 1">
-                <label>(7) මරණ සහතිකයේ අංකය<br>இறப்புச் சான்றிதழின் இலக்கம் <br>Birth Certificate Number</label>
+                <label>(7) මරණ සහතිකයේ අංකය<br>இறப்புச் சான்றிதழின் இலக்கம் <br>Death Certificate Number</label>
             </s:elseif>
         </td>
         <td><s:textfield name="certSearch.search.certificateNo" id="certificateNo"/></td>
@@ -441,11 +470,12 @@
         <td class="font-9"><label>
             (8) අනන්‍යතා අංකය <br>அடையாள எண் <br>Identification Number</label>
         </td>
-        <td colspan="3"><s:textfield name="certSearch.search.searchPIN" maxLength="10"/></td>
+        <td colspan="3"><s:textfield name="certSearch.search.searchPIN" maxLength="12"/></td>
     </tr>
     <tr>
         <td class="font-9"><label>
-            (9) මෙහි ඇලවූ මුද්දරවල වටිනාකම<s:label value="*" cssStyle="color:red;font-size:10pt"/><br>இங்கு ஒட்டப்பட்ட முத்திரைகளின் பெறுமதி <br>Value of stamps affixed</label>
+            (9) මෙහි ඇලවූ මුද්දරවල වටිනාකම<s:label value="*" cssStyle="color:red;font-size:10pt"/><br>இங்கு ஒட்டப்பட்ட
+            முத்திரைகளின் பெறுமதி <br>Value of stamps affixed</label>
         </td>
         <td colspan="3"><s:textfield name="certSearch.certificate.stampCharges" id="stampCharges" maxLength="5"/></td>
     </tr>

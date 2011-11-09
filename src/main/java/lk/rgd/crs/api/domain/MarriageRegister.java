@@ -15,7 +15,6 @@ import java.util.Date;
 /**
  * @author amith jayasekara
  *         entity class for marriage notice
- *         note:this class is not complete
  */
 @Entity
 @Table(name = "MARRIAGE_REGISTER", schema = "CRS")
@@ -140,9 +139,7 @@ import java.util.Date;
         "ORDER BY mr.idUKey DESC "),
 
     @NamedQuery(name = "getMarriageRegisterByIdUKeyAndState", query = "SELECT mr FROM MarriageRegister mr " +
-        "WHERE mr.lifeCycleInfo.activeRecord IS TRUE " +
-        "AND mr.idUKey = :idUKey " +
-        "AND mr.state IN (:stateList)"),
+        "WHERE mr.idUKey = :idUKey AND (mr.state IN (:stateList)) AND mr.lifeCycleInfo.activeRecord IS TRUE"),
     //TODO: to be removed
     @NamedQuery(name = "findMarriageBySerialNumber", query = "SELECT mr FROM MarriageRegister mr " +
         "WHERE mr.lifeCycleInfo.activeRecord IS TRUE " +
@@ -160,9 +157,8 @@ import java.util.Date;
         " WHERE mr.lifeCycleInfo.createdUser =:user AND (mr.lifeCycleInfo.createdTimestamp BETWEEN :startDate AND :endDate)"),
 
     @NamedQuery(name = "getMarriageRegisterBySerialAndMRDivision", query = "SELECT mr FROM MarriageRegister mr " +
-        "WHERE mr.lifeCycleInfo.activeRecord IS TRUE " +
-        "AND mr.serialNumber IS NOT NULL AND mr.serialNumber = :serialNumber " +
-        "AND mr.mrDivision IS NOT NULL AND mr.mrDivision = :mrDivision"),
+        "WHERE mr.serialNumber IS NOT NULL AND mr.serialNumber = :serialNumber " +
+        "AND mr.mrDivision IS NOT NULL AND mr.mrDivision = :mrDivision AND  mr.lifeCycleInfo.activeRecord IS TRUE "),
     @NamedQuery(name = "filter.notice.by.district.date.range", query = "SELECT mr FROM MarriageRegister mr " +
         "WHERE (mr.state <= 3 OR mr.state = 7) AND mr.lifeCycleInfo.activeRecord = :active " +
         "AND (mr.mrDivisionOfMaleNotice IN (SELECT m FROM MRDivision m WHERE (m.dsDivision.district = mr.mrDivisionOfMaleNotice.dsDivision.district AND mr.mrDivisionOfMaleNotice.dsDivision.district = :district ))" +
@@ -172,13 +168,20 @@ import java.util.Date;
         " mr.state=:state AND mr.lifeCycleInfo.lastUpdatedTimestamp < :date"),
     @NamedQuery(name = "get.active.marriage.license", query = "SELECT mr FROM MarriageRegister mr WHERE " +
         "(mr.female.identificationNumberFemale =:bridePIN OR mr.male.identificationNumberMale =:groomPIN) AND mr.state =:state " +
-        "AND mr.lifeCycleInfo.activeRecord IS TRUE ")
+        "AND mr.lifeCycleInfo.activeRecord IS TRUE "),
 
+    @NamedQuery(name = "get.mr.by.division.registrarPinOrNic", query = "SELECT mr FROM MarriageRegister mr " +
+        "WHERE mr.mrDivision.mrDivisionUKey = :mrDivision " +
+        "AND (mr.registrarOrMinisterPIN = :registrarPin OR mr.registrarOrMinisterPIN = :registrarNic)"),
+
+    @NamedQuery(name = "count.marriage.mrDivision.usage", query = "SELECT COUNT(mr) FROM MarriageRegister mr " +
+        "WHERE mr.state <> 0 AND (mr.mrDivision.mrDivisionUKey = :mrId " +
+        "OR mr.mrDivisionOfMaleNotice.mrDivisionUKey = :mrId OR mr.mrDivisionOfFemaleNotice.mrDivisionUKey = :mrId)"),
+    @NamedQuery(name = "count.marriage.location.usage", query = "SELECT COUNT(mr) FROM MarriageRegister mr " +
+        "WHERE mr.state <> 0 AND (mr.licenseIssueLocation.locationUKey = :locationId OR mr.extractIssuedLocation.locationUKey = :locationId)")
 })
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class MarriageRegister implements Serializable, Cloneable {
-
-    //todo add divorce related col
 
     public enum State {
         DATA_ENTRY,    //0
@@ -207,7 +210,6 @@ public class MarriageRegister implements Serializable, Cloneable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "IDUKEY")
     private long idUKey;
     /**
      * The preferred language to print the Extract of Marriage Register
@@ -215,61 +217,61 @@ public class MarriageRegister implements Serializable, Cloneable {
     @Column(nullable = true, columnDefinition = "char(2) default 'si'")
     private String preferredLanguage = "si";
 
-    @Column(name = "STATE", nullable = false)
+    @Column(nullable = false)
     private State state;
 
     @ManyToOne
-    @JoinColumn(name = "REG_MRDIVISIONUKEY", nullable = true)
+    @JoinColumn(name = "mrDivisionUKey", nullable = true)
     private MRDivision mrDivision;
 
-    @Column(name = "SCANNED_IMAGE", nullable = true)
+    @Column(nullable = true)
     private String scannedImagePath;
 
     //received date for marriage registry
-    @Column(name = "RECEIVED_DATE", nullable = true)
+    @Column(nullable = true)
     @Temporal(value = TemporalType.DATE)
     private Date receivedDate;
 
-    @Column(name = "TYPE_MARRIAGE", nullable = true)
+    @Column(nullable = true)
     private MarriageType typeOfMarriage;
 
-    @Column(name = "TYPE_MARRIAGE_PLACE", nullable = true)
+    @Column(nullable = true)
     private TypeOfMarriagePlace typeOfMarriagePlace;
 
-    @Column(name = "REG_MIN_PIN")
+    @Column(nullable = true, length = 12)
     private String registrarOrMinisterPIN;
 
-    @Column(length = 10, name = "REG_SERIAL", nullable = true)
+    @Column(length = 10, nullable = true)
     private long serialNumber;
 
-    @Column(name = "MARRIAGE_DATE", nullable = true)
+    @Column(nullable = true)
     @Temporal(value = TemporalType.DATE)
     private Date dateOfMarriage;
 
-    @Column(name = "REG_SUBMITTED_DATE", nullable = true)
+    @Column(nullable = true)
     @Temporal(value = TemporalType.DATE)
     private Date registrationDate;
 
-    @Column(name = "REGISTRAR_NAME_OFFICIAL_LANG", nullable = true)
+    @Column(nullable = true)
     private String regNameInOfficialLang;
 
-    @Column(name = "REGISTRAR_NAME_ENGLISH_LANG", nullable = true)
+    @Column(nullable = true)
     private String regNameInEnglishLang;
 
-    @Column(name = "REG_PLACE_MARRIAGE_OFFICIAL_LANG", nullable = true)
+    @Column(nullable = true)
     private String regPlaceInOfficialLang;
 
-    @Column(name = "REG_PLACE_MARRIAGE_ENGLISH_LANG", nullable = true)
+    @Column(nullable = true)
     private String regPlaceInEnglishLang;
 
     //marriage notice related columns
-    @Column(name = "SINGLE_NOTICE", nullable = false)
+    @Column(nullable = false)
     private boolean singleNotice;
 
-    @Column(name = "NOTICE_REJECT_COMMENT", nullable = true)
+    @Column(nullable = true, length = 4096)
     private String noticeRejectionComment;
 
-    @Column(name = "REG_REJECT_COMMENT", nullable = true, length = 4096)
+    @Column(nullable = true, length = 4096)
     private String registrationComment;
 
     /**
@@ -303,20 +305,20 @@ public class MarriageRegister implements Serializable, Cloneable {
      * The user printing the license
      */
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "LICENSE_PRINT_USER", nullable = true)
+    @JoinColumn(name = "licensePrintUserId", nullable = true)
     private User licensePrintUser;
 
     /**
      * The user who cetified the extract of marriage
      */
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "EXTRACT_CERTIFIED_USER", nullable = true)
+    @JoinColumn(name = "extractCertifiedUserId", nullable = true)
     private User extractCertifiedUser;
 
     /**
      * The timestamp when license is printed for this record
      */
-    @Column(nullable = true, name = "LICENSE_PRINT_DATE")
+    @Column(nullable = true)
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date licensePrintTimestamp;
 
@@ -324,41 +326,37 @@ public class MarriageRegister implements Serializable, Cloneable {
      * The place of issue for the original birth certificate - free copy (Stores the Location ID)
      */
     @OneToOne
-    @JoinColumn(name = "LICENSE_ISSUE_LOCATION", nullable = true)
+    @JoinColumn(name = "licenseIssueLocationId", nullable = true)
     private Location licenseIssueLocation;
 
     /**
      * The Locations where the extract of marriage can be issued
      */
     @OneToOne
-    @JoinColumn(name = "EXTRACT_ISSUED_LOCATION", nullable = true)
+    @JoinColumn(name = "extractIssuedLocationId", nullable = true)
     private Location extractIssuedLocation;
 
     /**
      * The timestamp when the Extract of Marriage printed
      */
-    @Column(nullable = true, name = "EXTRACT_PRINTED_DATE")
+    @Column(nullable = true)
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date extractPrintedTimestamp;
 
     //male notice related columns
 
-    @Column(name = "LI_REQ_PARTY", nullable = true)
+    @Column(nullable = true)
     private LicenseCollectType licenseCollectType;
 
-    @Column(length = 10, name = "NOTICE_SERIAL_MALE")
+    @Column(length = 10)
     private Long serialOfMaleNotice;
 
-    @Column(name = "NOTICE_DATE_M_N")
+    @Column(nullable = true)
     @Temporal(value = TemporalType.DATE)
     private Date dateOfMaleNotice;
 
-    //todo to be removed
-    @Column(name = "NOTICE_PIN_M_N")
-    private long registrarPINOfMaleNotice;
-
     @ManyToOne
-    @JoinColumn(name = "NOTICE_MRDIVISIONUKEY_M", nullable = true)
+    @JoinColumn(name = "mrDivisionIdOfMaleNotice", nullable = true)
     private MRDivision mrDivisionOfMaleNotice;
 
     //party information male
@@ -367,19 +365,15 @@ public class MarriageRegister implements Serializable, Cloneable {
 
     //female notice related columns
 
-    @Column(length = 10, name = "NOTICE_SERIAL_FEMALE")
+    @Column(length = 10)
     private Long serialOfFemaleNotice;
 
-    @Column(name = "NOTICE_DATE_F_N")
+    @Column(nullable = true)
     @Temporal(value = TemporalType.DATE)
     private Date dateOfFemaleNotice;
 
-    //todo to be removed
-    @Column(name = "NOTICE_PIN_F_N")
-    private long registrarPINOfFemaleNotice;
-
     @ManyToOne
-    @JoinColumn(name = "NOTICE_MRDIVISIONUKEY_F", nullable = true)
+    @JoinColumn(name = "mrDivisionIdOfFemaleNotice", nullable = true)
     private MRDivision mrDivisionOfFemaleNotice;
 
     //party female
@@ -469,14 +463,6 @@ public class MarriageRegister implements Serializable, Cloneable {
         this.dateOfFemaleNotice = dateOfFemaleNotice;
     }
 
-    public long getRegistrarPINOfFirstNotice() {
-        return registrarPINOfMaleNotice;
-    }
-
-    public void setRegistrarPINOfFirstNotice(long registrarPINOfFirstNotice) {
-        this.registrarPINOfMaleNotice = registrarPINOfFirstNotice;
-    }
-
     public State getState() {
         return state;
     }
@@ -507,22 +493,6 @@ public class MarriageRegister implements Serializable, Cloneable {
 
     public void setMrDivisionOfFemaleNotice(MRDivision mrDivisionOfFemaleNotice) {
         this.mrDivisionOfFemaleNotice = mrDivisionOfFemaleNotice;
-    }
-
-    public long getRegistrarPINOfFemaleNotice() {
-        return registrarPINOfFemaleNotice;
-    }
-
-    public void setRegistrarPINOfFemaleNotice(long registrarPINOfFemaleNotice) {
-        this.registrarPINOfFemaleNotice = registrarPINOfFemaleNotice;
-    }
-
-    public long getRegistrarPINOfMaleNotice() {
-        return registrarPINOfMaleNotice;
-    }
-
-    public void setRegistrarPINOfMaleNotice(long registrarPINOfMaleNotice) {
-        this.registrarPINOfMaleNotice = registrarPINOfMaleNotice;
     }
 
     public Long getSerialOfFemaleNotice() {

@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>addAndSearchUser</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">addAndSearchUser</td></tr>
+</thead><tbody>
+
+<tr>
+	<td>clickAndWait</td>
+	<td>logout-button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_userName</td>
+	<td>admin</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_password</td>
+	<td>password</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprLogin_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>userPreference.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>user_preference_prefLanguage</td>
+	<td>label=English</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>user_preference_0</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>click</td>
+	<td>link=ADMIN TASK</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>creat_user.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>checkUserId</td>
+	<td>deo-colombo-kaduwela</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>userName</td>
+	<td>deo/colombo/kaduwela</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>userPin</td>
+	<td>197824316930</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>user.sienSignatureText</td>
+	<td>Signature in Sinhala And English</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>user.taenSignatureText</td>
+	<td>Signature in Tamil And English</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>prefferedLanguage</td>
+	<td>label=English</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>role</td>
+	<td>label=Additional District Registrar</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>checkUserId</td>
+	<td>adrcolombo-kaduwela</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>userName</td>
+	<td>adr/colombo/kaduwela</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>districtId</td>
+	<td>label=11 : Colombo</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//option[@value='1']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>divisionId</td>
+	<td>label=9 : Kaduwela</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>divisionId</td>
+	<td>label=9 : Kaduwela</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprUserCreation_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='user-managment-outer']/table/tbody/tr[4]/td/a/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>eprAssignedUserLocation_userLocation_signBirthCert</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>eprAssignedUserLocation_userLocation_signDeathCert</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>eprAssignedUserLocation_userLocation_signMarriageCert</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>startDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>startDatePicker</td>
+	<td>2011-03-23</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>endDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>endDatePicker</td>
+	<td>2012-03-01</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprAssignedUserLocation_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//td[5]/a/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprInitAssignedUserLocation_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>viewUsers.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>view_usrs_form_roleId</td>
+	<td>label=Additional District Registrar</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>view_usrs_form_nameOfUser</td>
+	<td>adr</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>view_usrs_form_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//tr[5]/td[6]/a/img</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

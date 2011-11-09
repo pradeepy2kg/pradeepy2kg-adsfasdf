@@ -8,7 +8,6 @@ import lk.rgd.common.api.domain.User;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.*;
 
@@ -39,6 +38,7 @@ public class LocationDAOImpl extends BaseDAO implements LocationDAO, Preloadable
         location.getLifeCycleInfo().setLastUpdatedUser(admin);
         location.getLifeCycleInfo().setLastUpdatedTimestamp(new Date());
         em.persist(location);
+        updateCache(location);
     }
 
     /**
@@ -49,6 +49,7 @@ public class LocationDAOImpl extends BaseDAO implements LocationDAO, Preloadable
         location.getLifeCycleInfo().setLastUpdatedUser(admin);
         location.getLifeCycleInfo().setLastUpdatedTimestamp(new Date());
         em.merge(location);
+        updateCache(location);
     }
 
     /**
@@ -98,28 +99,27 @@ public class LocationDAOImpl extends BaseDAO implements LocationDAO, Preloadable
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
-    public Location getLocationByCode(int locationCode) {
+    public List<Location> getLocationByCode(String locationCode) {
         Query q = em.createNamedQuery("get.location.by.code");
         q.setParameter("locationCode", locationCode);
-        try {
-            return (Location) q.getSingleResult();
-        }
-        catch (NoResultException e) {
-            return null;
-        }
+        return q.getResultList();
     }
 
-    @Transactional(propagation = Propagation.NEVER)
-    public Location getLocationByCodeAndByDSDivisionID(int locationCode, int dsDivisionId) {
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<Location> getLocationByAnyName(Location location) {
+        Query q = em.createNamedQuery("get.location.by.anyName");
+        q.setParameter("siName", location.getSiLocationName());
+        q.setParameter("enName", location.getEnLocationName());
+        q.setParameter("taName", location.getTaLocationName());
+        return q.getResultList();
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public List<Location> getLocationByCodeAndByDSDivisionID(String locationCode, int dsDivisionId) {
         Query q = em.createNamedQuery("get.location.by.code.and.by.dsDivisionId");
         q.setParameter("locationCode", locationCode);
         q.setParameter("dsDivisionId", dsDivisionId);
-        try {
-            return (Location) q.getSingleResult();
-        }
-        catch (NoResultException e) {
-            return null;
-        }
+        return q.getResultList();
     }
 
     @Transactional(propagation = Propagation.NEVER)
@@ -138,6 +138,13 @@ public class LocationDAOImpl extends BaseDAO implements LocationDAO, Preloadable
         return locationsByPK;
     }
 
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<Location> getAllLocationsByDSDivisionKey(int dsDivisionId) {
+        Query q = em.createNamedQuery("get.location.by.dsDivisionId");
+        q.setParameter("dsDivisionId", dsDivisionId);
+        return q.getResultList();
+    }
+
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public void preload() {
         Query q = em.createNamedQuery("getAllLocations");
@@ -150,7 +157,7 @@ public class LocationDAOImpl extends BaseDAO implements LocationDAO, Preloadable
     }
 
     private void updateCache(Location l) {
-        final int locationId = l.getLocationCode();
+        final String locationId = l.getLocationCode();
         final int locationUKey = l.getLocationUKey();
         locationsByPK.put(locationUKey, l);
         siLocationName.put(locationUKey, locationId + SPACER + l.getSiLocationName());

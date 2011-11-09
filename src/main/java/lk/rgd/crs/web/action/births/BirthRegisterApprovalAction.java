@@ -106,7 +106,8 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      *
      * @return
      */
-    public String initBirthDeclarationApproval() {
+    public String
+    initBirthDeclarationApproval() {
         birthRegisterApproval();
         return SUCCESS;
     }
@@ -582,9 +583,14 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         //dsDivisions
         this.dsDivisionList = dsDivisionDAO.getDSDivisionNames(birthDistrictId, language, user);
         //setting bdDivisions
-        if (!dsDivisionList.isEmpty()) {
+        /*     if (!dsDivisionList.isEmpty()) {
             dsDivisionId = dsDivisionList.keySet().iterator().next();
             bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
+        }*/
+        if (dsDivisionId != 0) {
+            bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
+        } else {
+            bdDivisionList = Collections.emptyMap();
         }
         if (pageNo == 0) {
             setInitialDistrict();
@@ -717,7 +723,11 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                     dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);
             }
         } else {
-            if (birthDivisionId != 0) {
+            if (dsDivisionId == 0) {
+                //search by DS
+                approvalPendingList = service.getDeclarationApprovalPendingByDistrictId(
+                    districtDAO.getDistrict(birthDistrictId), pageNo, noOfRows, user);
+            } else if (birthDivisionId != 0) {
                 approvalPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
                     pageNo, noOfRows, user);
             } else {

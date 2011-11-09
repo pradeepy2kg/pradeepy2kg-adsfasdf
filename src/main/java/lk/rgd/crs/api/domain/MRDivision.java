@@ -2,6 +2,7 @@ package lk.rgd.crs.api.domain;
 
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.District;
+import lk.rgd.common.util.WebUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -18,14 +19,19 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "MR_DIVISIONS", schema = "CRS",
-        uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"dsDivisionUKey", "divisionId"})})
+    uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"mrDivisionUKey", "dsDivisionUKey", "divisionId"})})
 @NamedQueries({
-        @NamedQuery(name = "findAllMRDivisions", query = "SELECT d FROM MRDivision d"),
-        @NamedQuery(name = "get.mrDivision.by.code", query = "SELECT d FROM MRDivision d " +
-                "WHERE d.divisionId=:mrDivisionId AND d.dsDivision=:dsDivision")
+    @NamedQuery(name = "findAllMRDivisions", query = "SELECT d FROM MRDivision d"),
+    @NamedQuery(name = "get.mrDivision.by.code", query = "SELECT d FROM MRDivision d " +
+        "WHERE d.divisionId=:mrDivisionId AND d.dsDivision=:dsDivision"),
+    @NamedQuery(name = "get.all.mrDivisions.by.dsDivisionId", query = "SELECT d FROM MRDivision d " +
+        "WHERE d.dsDivision.dsDivisionUKey =:dsDivisionId "),
+    @NamedQuery(name = "get.mrDivision.by.dsDivision.anyName", query = "SELECT d FROM MRDivision d " +
+        "WHERE d.dsDivision.dsDivisionUKey = :dsDivisionId " +
+        "AND (d.siDivisionName = :siName OR d.enDivisionName = :enName OR d.taDivisionName = :taName)")
 })
-@Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class MRDivision implements Serializable {
 
     /**
@@ -45,11 +51,11 @@ public class MRDivision implements Serializable {
     @JoinColumn(name = "dsDivisionUKey", nullable = false, updatable = false)
     private DSDivision dsDivision;
 
-    @Column(nullable = false, length = 60, updatable = false)
+    @Column(nullable = false, length = 60)
     private String siDivisionName;
-    @Column(nullable = false, length = 60, updatable = false)
+    @Column(nullable = false, length = 60)
     private String enDivisionName;
-    @Column(nullable = false, length = 60, updatable = false)
+    @Column(nullable = false, length = 60)
     private String taDivisionName;
 
     /**
@@ -63,7 +69,7 @@ public class MRDivision implements Serializable {
     }
 
     public MRDivision(DSDivision dsDivision, int divisionId,
-                      String siDivisionName, String enDivisionName, String taDivisionName, boolean active) {
+        String siDivisionName, String enDivisionName, String taDivisionName, boolean active) {
         this.dsDivision = dsDivision;
         this.divisionId = divisionId;
         this.siDivisionName = siDivisionName;
@@ -97,7 +103,7 @@ public class MRDivision implements Serializable {
     }
 
     public void setSiDivisionName(String siDivisionName) {
-        this.siDivisionName = siDivisionName;
+        this.siDivisionName = WebUtils.filterBlanks(siDivisionName);
     }
 
     public String getEnDivisionName() {
@@ -105,7 +111,7 @@ public class MRDivision implements Serializable {
     }
 
     public void setEnDivisionName(String enDivisionName) {
-        this.enDivisionName = enDivisionName;
+        this.enDivisionName = WebUtils.filterBlanks(enDivisionName);
     }
 
     public String getTaDivisionName() {
@@ -113,7 +119,7 @@ public class MRDivision implements Serializable {
     }
 
     public void setTaDivisionName(String taDivisionName) {
-        this.taDivisionName = taDivisionName;
+        this.taDivisionName = WebUtils.filterBlanks(taDivisionName);
     }
 
     public boolean isActive() {

@@ -363,14 +363,14 @@
             <s:property value="district"/>
         </td>
         <td>(4)ප්‍රාදේශීය ලේකම් කොට්ඨාශය <br>
-            பிரிவு <br>
-            Divisional Secretariat
+            பிரதேச செயளாளர் பிரிவு <br/>
+            Divisional Secretary Division
         </td>
         <td colspan="2"><s:property value="dsDivision"/></td>
     </tr>
     <tr>
         <td>(5)ලියාපදිංචි කිරීමේ කොට්ඨාශය <br>
-            பிரிவு <br>
+            பதிவுப் பிரிவு<br>
             Registration Division
         </td>
         <td>
@@ -635,7 +635,7 @@
         <tr>
             <td style="border-top:20px">
                 ගමන් බලපත්‍ර අංකය <br>
-                கடவுச் சீட்டு <br>
+                கடவுச் சீட்டு இல.<br>
                 Passport No.
             </td>
             <td>
@@ -664,9 +664,9 @@
                         id="deathPersonGender" cssStyle="width:190px; margin-left:5px;"/>
             </td>
             <td>
-                (21)ජාතිය <br>
-                பிறப் <br>
-                Race
+                (21) ජන වර්ගය<br/>
+                    இனம்<br/>
+                    Ethnic Group
             </td>
             <td colspan="2" align="center">
                 <s:select list="raceList" name="deathPersonRace" headerKey="0" value="%{deathRaceId}"
@@ -903,7 +903,7 @@
             Identification Number
         </td>
         <td colspan="6" align="left">
-            <s:textfield id="declarant_pinOrNic" name="deathAlteration.declarant.declarantNICorPIN" maxLength="10"
+            <s:textfield id="declarant_pinOrNic" name="deathAlteration.declarant.declarantNICorPIN" maxLength="12"
                          value="%{deathAlteration.declarant.declarantNICorPIN}"/>
         </td>
     </tr>

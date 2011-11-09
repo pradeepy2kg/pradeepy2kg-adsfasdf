@@ -32,6 +32,10 @@ import java.io.Serializable;
         "WHERE deathRegister.death.deathDivision = :deathDivision AND (deathRegister.death.dateOfRegistration BETWEEN :startDate AND :endDate)" +
         " AND deathRegister.lifeCycleInfo.activeRecord IS TRUE ORDER BY deathRegister.death.dateOfRegistration desc"),
 
+    @NamedQuery(name = "get.by.division.register.date.state", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
+        "WHERE deathRegister.death.deathDivision.dsDivision = :deathDivision AND (deathRegister.death.dateOfRegistration BETWEEN :startDate AND :endDate)" +
+        " AND deathRegister.status =:state  AND deathRegister.lifeCycleInfo.activeRecord IS TRUE ORDER BY deathRegister.death.dateOfRegistration desc"),
+
     @NamedQuery(name = "death.register.filter.by.and.dsDivision.status.paginated", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
         "WHERE deathRegister.status = :status AND deathRegister.death.deathDivision.dsDivision = :dsDivision " +
         "AND deathRegister.lifeCycleInfo.activeRecord IS TRUE ORDER BY deathRegister.death.dateOfRegistration desc"),
@@ -55,26 +59,51 @@ import java.io.Serializable;
         " WHERE dr.lifeCycleInfo.createdUser =:user AND (dr.lifeCycleInfo.createdTimestamp BETWEEN :startDate AND :endDate)"),
     @NamedQuery(name = "get.all.by.death.division.time.frame", query = "SELECT dr FROM DeathRegister dr WHERE " +
         "(dr.death.deathDivision.bdDivisionUKey = :dsDivisionId AND dr.lifeCycleInfo.activeRecord =:active " +
-        "AND (dr.lifeCycleInfo.createdTimestamp BETWEEN :startDate AND :endDate)) "),
-    @NamedQuery(name = "get.by.division.register.date.state", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
-        "WHERE deathRegister.death.deathDivision.dsDivision = :deathDivision AND deathRegister.status = :status " +
-        "AND (deathRegister.death.dateOfRegistration BETWEEN :startDate AND :endDate) ")
+        "AND (dr.death.dateOfRegistration BETWEEN :startDate AND :endDate)) "),
+
+    @NamedQuery(name = "get.all.by.death.division.time.frame.state", query = "SELECT dr FROM DeathRegister dr WHERE " +
+        "(dr.death.deathDivision.bdDivisionUKey = :dsDivisionId AND dr.lifeCycleInfo.activeRecord =:active " +
+        "AND dr.status =:state   AND (dr.death.dateOfRegistration BETWEEN :startDate AND :endDate))"),
+
+    @NamedQuery(name = "get.dr.by.division.registrarPinOrNic", query = "SELECT dr FROM DeathRegister dr " +
+        "WHERE dr.death.deathDivision.bdDivisionUKey = :deathDivision " +
+        "AND (dr.notifyingAuthority.notifyingAuthorityPIN = :registrarPin OR dr.notifyingAuthority.notifyingAuthorityPIN = :registrarNic)"),
+
+    @NamedQuery(name = "count.death.gnDivision.usage", query = "SELECT COUNT(dr) FROM DeathRegister dr " +
+        "WHERE dr.deathPerson.gnDivision.gnDivisionUKey = :gnDivisionId AND dr.status <> 0"),
+    @NamedQuery(name = "count.death.bdDivision.usage", query = "SELECT COUNT(dr) FROM DeathRegister dr " +
+        "WHERE dr.death.deathDivision.bdDivisionUKey = :bdDivisionId AND dr.status <> 0"),
+    @NamedQuery(name = "count.death.location.usage", query = "SELECT COUNT(dr) FROM DeathRegister dr " +
+        "WHERE dr.originalDCPlaceOfIssue.locationUKey = :locationId AND dr.status <> 0")
 })
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class DeathRegister implements Serializable, Cloneable {
 
     public enum State {
-        DATA_ENTRY, // 0 - A newly entered death registration - can be edited by DEO, ADR
-
-        APPROVED, // 1 - An ADR or higher approved death registration
-
-        REJECTED,  // 2 - An death registration rejected by the ADR
-
-        ARCHIVED_CERT_GENERATED, // 3 A certificate is printed
-
-        ARCHIVED_ALTERED,// 4 record is archived after an alteration
-
-        ARCHIVED_CANCELLED // 5 cancelled due to a duplication or registration of an event that did not occur
+        /**
+         * 0 - A newly entered death registration - can be edited by DEO, ADR
+         */
+        DATA_ENTRY,
+        /**
+         * 1 - An ADR or higher approved death registration
+         */
+        APPROVED,
+        /**
+         * 2 - An death registration rejected by the ADR
+         */
+        REJECTED,
+        /**
+         * 3 - A certificate is printed   (Mark as printed)
+         */
+        ARCHIVED_CERT_GENERATED,
+        /**
+         * 4 - record is archived after an alteration
+         */
+        ARCHIVED_ALTERED,
+        /**
+         * 5 - cancelled due to a duplication or registration of an event that did not occur
+         */
+        ARCHIVED_CANCELLED
     }
 
     public enum Type {
@@ -86,18 +115,6 @@ public class DeathRegister implements Serializable, Cloneable {
 
         MISSING   // 3 - A death of a missing person
     }
-
-/*        public enum Type {
-    NORMAL,  // 0 -  A normal death
-
-    SUDDEN,  // 1 - A sudden death
-
-    LATE_NORMAL,   // 2 - A late death registration for a normal death
-
-    LATE_SUDDEN,   // 3 - A late death registration for a sudden death
-
-    MISSING   // 4 - A death of a missing person
-}*/
 
     /**
      * This is an auto generated unique row identifier
@@ -119,6 +136,9 @@ public class DeathRegister implements Serializable, Cloneable {
     private NotifyingAuthorityInfo notifyingAuthority = new NotifyingAuthorityInfo();
 
     @Embedded
+    private CertifyingAuthority certifyingAuthority = new CertifyingAuthority();
+
+    @Embedded
     private DeclarantInfo declarant = new DeclarantInfo();
 
     @Enumerated
@@ -130,7 +150,7 @@ public class DeathRegister implements Serializable, Cloneable {
     private Type deathType;
 
     // comment for rejecting death declaration
-    @Column(nullable = true, length = 100, name = "COMMENT")
+    @Column(nullable = true, length = 100)
     private String comment;
 
     /**
@@ -305,5 +325,13 @@ public class DeathRegister implements Serializable, Cloneable {
 
     public void setOriginalDCIssueUserSignPrint(String originalDCIssueUserSignPrint) {
         this.originalDCIssueUserSignPrint = originalDCIssueUserSignPrint;
+    }
+
+    public CertifyingAuthority getCertifyingAuthority() {
+        return certifyingAuthority;
+    }
+
+    public void setCertifyingAuthority(CertifyingAuthority certifyingAuthority) {
+        this.certifyingAuthority = certifyingAuthority;
     }
 }

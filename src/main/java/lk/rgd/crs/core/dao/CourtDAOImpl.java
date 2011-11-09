@@ -95,15 +95,25 @@ public class CourtDAOImpl extends BaseDAO implements CourtDAO, PreloadableDAO {
     @Override
     public Court getCourtByCode(int courtId) {
         Query q = em.createNamedQuery("get.court.by.code");
-        q.setParameter("courtId",courtId);
+        q.setParameter("courtId", courtId);
         try {
             return (Court) q.getSingleResult();
-        }
-        catch (NoResultException e) {
+        } catch (NoResultException e) {
             return null;
         }
     }
 
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<Court> getCourtByAnyName(Court court, User user) {
+        Query q = em.createNamedQuery("get.court.by.name");
+        q.setParameter("enName", court.getEnCourtName());
+        q.setParameter("siName", court.getSiCourtName());
+        q.setParameter("taName", court.getTaCourtName());
+        return q.getResultList();
+    }
 
     /**
      * Loads all values from the database table into a cache
@@ -111,7 +121,7 @@ public class CourtDAOImpl extends BaseDAO implements CourtDAO, PreloadableDAO {
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public void preload() {
 
-        Query query = em.createQuery("SELECT c FROM Court c");
+        Query query = em.createQuery("SELECT c FROM Court c WHERE c.active = TRUE");
         List<Court> results = query.getResultList();
 
         for (Court court : results) {

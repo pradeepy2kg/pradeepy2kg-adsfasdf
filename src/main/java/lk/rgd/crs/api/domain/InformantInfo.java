@@ -9,6 +9,9 @@ import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * If the database column sizes are modified the setter methods must be modified
+ */
 @Embeddable
 public class InformantInfo implements Serializable, Cloneable {
     public enum InformantType {
@@ -33,7 +36,7 @@ public class InformantInfo implements Serializable, Cloneable {
     @Column(nullable = true, length = 30)
     private String informantPhoneNo;
 
-    @Column(nullable = true, length = 30)
+    @Column(nullable = true, length = 50)
     private String informantEmail;
 
     @Column(nullable = false)
@@ -53,7 +56,7 @@ public class InformantInfo implements Serializable, Cloneable {
     }
 
     public void setInformantName(String informantName) {
-        this.informantName = WebUtils.filterBlanksAndToUpper(informantName);
+        this.informantName = WebUtils.filterBlanksAndToUpperAndTrim(informantName, 600, "informantName");
     }
 
     public String getInformantNICorPIN() {
@@ -61,7 +64,7 @@ public class InformantInfo implements Serializable, Cloneable {
     }
 
     public void setInformantNICorPIN(String informantNICorPIN) {
-        this.informantNICorPIN = WebUtils.filterBlanksAndToUpper(informantNICorPIN);
+        this.informantNICorPIN = WebUtils.filterBlanksAndToUpperAndTrim(informantNICorPIN, 12, "informantNICorPIN");
     }
 
     public String getInformantAddress() {
@@ -69,7 +72,7 @@ public class InformantInfo implements Serializable, Cloneable {
     }
 
     public void setInformantAddress(String informantAddress) {
-        this.informantAddress = WebUtils.filterBlanksAndToUpper(informantAddress);
+        this.informantAddress = WebUtils.filterBlanksAndToUpperAndTrim(informantAddress, 255, "informantAddress");
     }
 
     public String getInformantPhoneNo() {
@@ -77,7 +80,7 @@ public class InformantInfo implements Serializable, Cloneable {
     }
 
     public void setInformantPhoneNo(String informantPhoneNo) {
-        this.informantPhoneNo = WebUtils.filterBlanks(informantPhoneNo);
+        this.informantPhoneNo = WebUtils.filterBlanksAndToUpperAndTrim(informantPhoneNo, 30, "informantPhoneNo");
     }
 
     public String getInformantEmail() {

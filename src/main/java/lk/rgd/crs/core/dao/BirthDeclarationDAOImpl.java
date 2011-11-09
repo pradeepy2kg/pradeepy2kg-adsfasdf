@@ -1,10 +1,12 @@
 package lk.rgd.crs.core.dao;
 
-import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.api.domain.District;
+import lk.rgd.common.api.domain.User;
 import lk.rgd.common.core.dao.BaseDAO;
 import lk.rgd.crs.api.dao.BirthDeclarationDAO;
-import lk.rgd.crs.api.domain.*;
+import lk.rgd.crs.api.domain.BDDivision;
+import lk.rgd.crs.api.domain.BirthDeclaration;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -257,6 +259,20 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
         return q.getResultList();
     }
 
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<BirthDeclaration> getPaginatedListForStateByDistrict(District district, int pageNo, int noOfRows,
+        BirthDeclaration.State state) {
+        Query q = em.createNamedQuery("filter.by.district.and.status").
+            setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+        q.setParameter("district", district);
+        q.setParameter("status", BirthDeclaration.State.DATA_ENTRY);
+        return q.getResultList();
+    }
+
     /**
      * @inheritDoc
      */
@@ -396,5 +412,58 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
         q.setParameter("mother", motherIdentification);
         q.setParameter("type", BirthDeclaration.BirthType.LIVE);
         return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<BirthDeclaration> getBirthsByRegistrarPinOrNicAndDivision(String registrarPin, String registrarNic,
+        int bdDivisionUKey) {
+        Query q = em.createNamedQuery("get.bdf.by.division.registrarPinOrNic");
+        q.setParameter("birthDivision", bdDivisionUKey);
+        q.setParameter("registrarPin", registrarPin);
+        q.setParameter("registrarNic", registrarNic);
+        return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public Long findDSDivisionUsageInBirthRecords(int dsDivisionUKey) {
+        Query q = em.createNamedQuery("count.birth.dsDivision.usage");
+        q.setParameter("dsDivisionId", dsDivisionUKey);
+        return (Long) q.getSingleResult();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public Long findGNDivisionUsageInBirthRecords(int gnDivisionUKey) {
+        Query q = em.createNamedQuery("count.birth.gnDivision.usage");
+        q.setParameter("gnDivisionId", gnDivisionUKey);
+        return (Long) q.getSingleResult();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public Long findBDDivisionUsageInBirthRecords(int bdDivisionUKey) {
+        Query q = em.createNamedQuery("count.birth.bdDivision.usage");
+        q.setParameter("bdDivisionId", bdDivisionUKey);
+        return (Long) q.getSingleResult();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public Long findLocationUsageInBirthRecords(int locationUKey) {
+        Query q = em.createNamedQuery("count.birth.location.usage");
+        q.setParameter("locationId", locationUKey);
+        return (Long) q.getSingleResult();
     }
 }

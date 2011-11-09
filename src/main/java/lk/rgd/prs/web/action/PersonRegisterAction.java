@@ -103,6 +103,37 @@ public class PersonRegisterAction extends ActionSupport implements SessionAware 
         }
     }
 
+    public String updatePersonDetails() {
+        /* logger.debug("Editing of exiting person in PRS");
+        if (person.getDateOfRegistration() == null ||person.getCivilStatus() == null || person.getPermanentAddress() == null) {
+            addFieldError("requiredFieldsEmpty", getText("er.label.requiredFields"));
+        }
+
+        citizenshipList = new ArrayList<PersonCitizenship>();
+        getCitizenshipList(citizenshipList);
+        if (personCountryId != 0 && personPassportNo != null) {
+            citizenshipList.add(createPersonCitizenship(countryDAO.getCountry(personCountryId), personPassportNo));
+        }
+
+        if (personUKey == 0) {
+            personList = service.addExistingPerson(person, citizenshipList, ignoreDuplicate, user);
+            if (personList.isEmpty()) {
+                addActionMessage(getText("person_reg_success.message", new String[]{person.getPin().toString()}));
+            }
+        } else {
+            logger.debug("Editing existing person in PRS with personUKey : {}", personUKey);
+            service.editExistingPersonBeforeApproval(person, citizenshipList, user);
+            personList = Collections.emptyList();
+            addActionMessage(getText("person_edit_success.message"));
+        }
+
+        initPermissions();
+
+
+            // TODO service.editExistingPersonAfterApproval(person, user);*/
+          
+        return SUCCESS;
+    }
     /**
      * This method is used to load existing person registration form
      */

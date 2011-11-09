@@ -1058,9 +1058,10 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
 
             District district = dsDivision.getDistrict();
             for (DeathRegister deathRegister : deathRecords) {
-                if (deathRegister.getDeathPerson() != null) {
-                    Date birthDate = deathRegister.getDeathPerson().getDeathPersonDOB();
-                    Date deathDate = deathRegister.getDeath().getDateOfDeath();
+                Date birthDate = deathRegister.getDeathPerson().getDeathPersonDOB();
+                Date deathDate = deathRegister.getDeath().getDateOfDeath();
+
+                if (deathRegister.getDeathPerson() != null && birthDate != null) {
                     cal.setTime(deathDate);
                     cal.add(Calendar.DATE, -7);
                     Date beforeSevenDaysFromDeath = cal.getTime();

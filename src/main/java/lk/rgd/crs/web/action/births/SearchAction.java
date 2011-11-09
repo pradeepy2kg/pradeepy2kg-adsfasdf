@@ -22,7 +22,7 @@ import java.util.Map;
 /**
  * @author Indunil Moremada
  * @author Chathuranga Withana
- *         Struts Action Class for Search puposes
+ *         Struts Action Class for Search purposes
  */
 public class SearchAction extends ActionSupport implements SessionAware {
     private static final Logger logger = LoggerFactory.getLogger(SearchAction.class);
@@ -35,7 +35,9 @@ public class SearchAction extends ActionSupport implements SessionAware {
 
     private Map<Integer, String> bdDivisionList;
     private Map<Integer, String> districtList;
+    private Map<Integer, String> allDistrictList;
     private Map<Integer, String> dsDivisionList;
+    private Map<Integer, String> allDSDivisionList;
     private List searchResultList;
     private Map session;
     private User user;
@@ -51,6 +53,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
     private Long idUKey;
     private String childName;
     private String status;
+    private String language;
     private int pageNo;
 
     public SearchAction(BirthRegistrationService service, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
@@ -117,7 +120,6 @@ public class SearchAction extends ActionSupport implements SessionAware {
      * Populate master data to the UI
      */
     private void populate() {
-        String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         logger.debug("inside populate() : language {} observed ", language);
         setDistrictList(districtDAO.getDistrictNames(language, user));
         //initial birth district id
@@ -132,6 +134,15 @@ public class SearchAction extends ActionSupport implements SessionAware {
             dsDivisionId = dsDivisionList.keySet().iterator().next();
             bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
         }
+    }
+
+    private void populateAllDivisions() {
+        logger.debug("populate all district, division list in {}", language);
+        allDistrictList = districtDAO.getAllDistrictNames(language, user);
+        int firstDistrict = allDistrictList.keySet().iterator().next();
+        allDSDivisionList = dsDivisionDAO.getAllDSDivisionNames(firstDistrict, language, user);
+        int firstDSDivision = allDSDivisionList.keySet().iterator().next();
+        bdDivisionList = bdDivisionDAO.getBDDivisionNames(firstDSDivision, language, user);
     }
 
     /**
@@ -200,7 +211,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
                 return ERROR;
             }
         }
-        populate();
+        populateAllDivisions();
         return "page" + pageNo;
     }
 
@@ -228,6 +239,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
     public void setSession(Map session) {
         this.session = session;
         user = (User) session.get(WebConstants.SESSION_USER_BEAN);
+        language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
     }
 
     public BirthDeclaration getBdf() {
@@ -262,6 +274,22 @@ public class SearchAction extends ActionSupport implements SessionAware {
         this.districtList = districtList;
     }
 
+    public Map<Integer, String> getAllDistrictList() {
+        return allDistrictList;
+    }
+
+    public void setAllDistrictList(Map<Integer, String> allDistrictList) {
+        this.allDistrictList = allDistrictList;
+    }
+
+    public Map<Integer, String> getAllDSDivisionList() {
+        return allDSDivisionList;
+    }
+
+    public void setAllDSDivisionList(Map<Integer, String> allDSDivisionList) {
+        this.allDSDivisionList = allDSDivisionList;
+    }
+
     public int getBirthDivisionId() {
         return birthDivisionId;
     }
@@ -284,6 +312,14 @@ public class SearchAction extends ActionSupport implements SessionAware {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
     public int getDsDivisionId() {

@@ -4,15 +4,15 @@
 <s:set value="rowNumber" name="row"/>
 <s:if test="birthType.ordinal()==0">
     <%--still birth--%>
-    <s:set name="row" value="29"/>
+    <s:set name="row" value="31"/>
 </s:if>
 <s:elseif test="birthType.ordinal()==1 || birthType.ordinal()==3">
     <%--live birth--%>
-    <s:set name="row" value="34"/>
+    <s:set name="row" value="39"/>
 </s:elseif>
 <s:elseif test="birthType.ordinal()==2">
     <%--adoption--%>
-    <s:set name="row" value="36"/>
+    <s:set name="row" value="38"/>
 </s:elseif>
 
 <script src="/ecivil/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
@@ -36,8 +36,10 @@
             var id1 = $("input#notifyingAuthorityPIN").attr("value");
             $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
                     function(data1) {
-                        $("textarea#notifyingAuthorityName").val(data1.fullNameInOfficialLanguage);
-                        $("textarea#notifyingAuthorityAddress").val(data1.lastAddress);
+                        if (data1 != null) {
+                            $("textarea#notifyingAuthorityName").val(data1.fullNameInOfficialLanguage);
+                            $("textarea#notifyingAuthorityAddress").val(data1.lastAddress);
+                        }
                     });
         });
         //        $('#notifying_authority_NIC_V').bind('click', function() {
@@ -133,6 +135,17 @@
     function initPage() {
         // TODO 
     }
+
+    function maxLengthCalculate(id, max, divId) {
+        var dom = document.getElementById(id).value;
+        if (dom.length > max) {
+            document.getElementById(divId).innerHTML = document.getElementById('maxLengthError').value + " : " + max
+        }
+        else {
+            document.getElementById(divId).innerHTML = "";
+        }
+    }
+
 </script>
 
 <div class="birth-registration-form-outer" id="birth-registration-form-4-outer">
@@ -148,9 +161,10 @@
             <col/>
             <tbody>
             <tr>
-                <td colspan="5" style="text-align:center;font-size:12pt"> තොරතුරු වාර්තා කරන පාර්ශවය
-                    <br>அதிகாரியிடம் தெரிவித்தல்
-                    <br>Notifying Authority
+                <td colspan="5" style="text-align:center;font-size:12pt">
+                    තොරතුරු වාර්තා කරන නිලධාරියාගේ / රෙජිස්ට්‍රාර්ගේ විස්තර
+                    <br>அறிக்கையிடும் அதிகாரி/பதிவாளர் பற்றிய விபரங்கள்
+                    <br>Details of the Notifying Officer / Registrar
                 </td>
             </tr>
             <tr>
@@ -167,10 +181,9 @@
                          onclick="javascript:addXorV('notifyingAuthorityPIN','X','error5')">
                     <br>
                     <s:textfield name="notifyingAuthority.notifyingAuthorityPIN" id="notifyingAuthorityPIN"
-                                 maxLength="10"/>
+                                 maxLength="12"/>
                     <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
                          id="notifier_lookup"/>
-                        <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>--%>
                 </td>
             </tr>
             <tr>
@@ -179,18 +192,20 @@
                 </td>
                 <td colspan="4">
                     <s:textarea name="notifyingAuthority.notifyingAuthorityName" id="notifyingAuthorityName"
-                                cssStyle="width:95%;"/>
-                        <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>--%>
+                                cssStyle="width:95%;"
+                                onblur="maxLengthCalculate('notifyingAuthorityName','120','notifyingAuthorityName_div');"/>
+                    <div id="notifyingAuthorityName_div" style="color:red;font-size:8pt"></div>
                 </td>
             </tr>
             <tr>
-                <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)තැපැල්
-                    ලිපිනය<s:label value="*" cssStyle="color:red;font-size:14pt;"/><br>தபால்
-                    முகவரி <br>Postal Address</label></td>
-                <td colspan="4"><s:textarea name="notifyingAuthority.notifyingAuthorityAddress"
-                                            id="notifyingAuthorityAddress"
-                                            cssStyle="width:95%;"/>
-                        <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>--%>
+                <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) තැපැල්
+                    ලිපිනය<s:label value="*" cssStyle="color:red;font-size:14pt;"/>
+                    <br>தபால் முகவரி<br>Postal Address</label></td>
+                <td colspan="4">
+                    <s:textarea name="notifyingAuthority.notifyingAuthorityAddress" id="notifyingAuthorityAddress"
+                                cssStyle="width:95%;"
+                                onblur="maxLengthCalculate('notifyingAuthorityAddress','255','notifyingAuthorityAddress_div');"/>
+                    <div id="notifyingAuthorityAddress_div" style="color:red;font-size:8pt"></div>
                 </td>
             </tr>
             <tr>
@@ -200,7 +215,6 @@
                     <s:label value="YYYY-MM-DD" cssStyle="float:left;margin-left:1%;font-size:10px"/><br>
                     <s:textfield name="notifyingAuthority.notifyingAuthoritySignDate" id="modifiedDatePicker"
                                  cssStyle="float:left;margin-right:60px;" maxLength="10"/>
-                        <%--<s:label value="*" cssStyle="color:red;font-size:15pt"/>--%>
                 </td>
             </tr>
             </tbody>
@@ -280,4 +294,6 @@
     <s:hidden id="error5" value="%{getText('NIC.error.add.VX')}"/>
     <s:hidden id="error6" value="%{getText('notifyDate.and.birthDate')}"/>
     <s:hidden id="error7" value="%{getText('notifyDate.and.informDate')}"/>
+    <s:hidden id="maxLengthError" value="%{getText('error.max.length')}"/>
+
 </div>

@@ -69,16 +69,27 @@ public interface LocationDAO {
      * @param locationCode
      * @return
      */
-    public Location getLocationByCode(int locationCode);
+    public List<Location> getLocationByCode(String locationCode);
 
     /**
-     * Return the location that have given location code and DSDivision ID
+     * Return locations which have matching location name in sinhala, english or tamil, to ensure locations have unique
+     * names
      *
-     * @param locationCode
-     * @param dsDivisionId
-     * @return one location that have given location code and dsdivision id
+     *
+     *
+     * @param location
+     * @return
      */
-    public Location getLocationByCodeAndByDSDivisionID(int locationCode, int dsDivisionId);
+    public List<Location> getLocationByAnyName(Location location);
+
+    /**
+     * Return the the list of Locations by DS Division unique key and location code
+     *
+     * @param locationCode the location code
+     * @param dsDivisionId the DS Division unique key
+     * @return the list of Locations
+     */
+    public List<Location> getLocationByCodeAndByDSDivisionID(String locationCode, int dsDivisionId);
 
     /**
      * Return list of locations that have given DSDivision ID
@@ -87,4 +98,12 @@ public interface LocationDAO {
      * @return Map<Integer, String> of locations that have given DSDivision ID
      */
     public Map<Integer, String> getLocationByDSDivisionID(int dsDivisionId, String lang);
+
+    /**
+     * Return all Locations in specified DSDivision
+     *
+     * @param dsDivisionId
+     * @return all Locations in DSDivision
+     */
+    public List<Location> getAllLocationsByDSDivisionKey(int dsDivisionId);
 }

@@ -14,12 +14,14 @@ import java.io.Serializable;
 @Entity
 @Table(name = "COURTS", schema = "CRS")
 @NamedQueries({
-        @NamedQuery(name = "findAllCourts", query = "SELECT c FROM Court c " +
-                "ORDER BY c.enCourtName desc"),
-        @NamedQuery(name = "get.court.by.code", query = "SELECT c FROM Court c " +
-                "WHERE c.courtId=:courtId")
+    @NamedQuery(name = "findAllCourts", query = "SELECT c FROM Court c " +
+        "ORDER BY c.enCourtName desc"),
+    @NamedQuery(name = "get.court.by.code", query = "SELECT c FROM Court c " +
+        "WHERE c.courtId=:courtId"),
+    @NamedQuery(name = "get.court.by.name", query = "SELECT c FROM Court c " +
+        "WHERE c.siCourtName = :siName OR c.enCourtName = :enName OR c.taCourtName = :taName")
 })
-@Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Court implements Serializable {
 
     /**
@@ -35,11 +37,11 @@ public class Court implements Serializable {
     @Column(nullable = false)
     private int courtId;
 
-    @Column(nullable = false, length = 60, updatable = false)
+    @Column(nullable = false, length = 60)
     private String siCourtName;
-    @Column(nullable = false, length = 60, updatable = false)
+    @Column(nullable = false, length = 60)
     private String enCourtName;
-    @Column(nullable = false, length = 60, updatable = false)
+    @Column(nullable = false, length = 60)
     private String taCourtName;
 
     public int getCourtUKey() {

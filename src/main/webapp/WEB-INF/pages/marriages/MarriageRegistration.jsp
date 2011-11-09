@@ -38,6 +38,8 @@
         errormsg = validateSerialNo("serialNumber", "errorEmptySerialNumber", "errorInvalidSerialNumber", errormsg);
 
         errormsg = validateRegisterAndMarriedDate(errormsg);
+        errormsg = validatePinOrNic("malePIN", "", "errorMalePIN", errormsg);
+        errormsg = validatePinOrNic("femalePIN", "", "errorFemalePIN", errormsg);
 
         return printErrorMessages(errormsg);
     }
@@ -46,7 +48,7 @@
     function validateRegistrationDetails(errormsg) {
         errormsg = isDate("marriageDatePick", "errorEmptyMarriageDate", "errorInvalidMarriageDate", errormsg);
         //validate registrar details
-        errormsg = validatePin("regPIN", "errorEmptyRegistrarPIN", "errorInvalidRegistrarPIN", errormsg);
+        errormsg = validatePinOrNic("regPIN", "errorEmptyRegistrarPIN", "errorInvalidRegistrarPIN", errormsg);
         errormsg = validateEmptyField("regPlaceInOfficialLang", "errorEmptyRegistrationPlace", errormsg);
         errormsg = validateEmptyField("regNameInOfficialLang", "errorEmptyRegistrarName", errormsg);
         errormsg = isDate("registrationDatePicker", "errorEmptyRegistrationDate", "errorInvalidRegistrationDate", errormsg);
@@ -62,8 +64,8 @@
         var married = new Date(document.getElementById('marriageDatePick').value);
         var register = new Date(document.getElementById('registrationDatePicker').value);
 
-        if(married.getTime() > register.getTime()) {
-            errormsg = errormsg + "\n" + document.getElementById('errorMarriageRegisterationDate').value;
+        if (married.getTime() > register.getTime()) {
+            errormsg = errormsg + "\n" + document.getElementById('errorMarriageRegistrationDate').value;
         }
         return errormsg;
     }
@@ -92,7 +94,7 @@
             <label>
                     <span class="font-8">විවාහ දිනය
                         <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-                        <br>in tamil<br>Date of Marriage</span>
+                        <br>திருமண திகதி<br>Date of Marriage</span>
             </label>
         </td>
         <td>
@@ -111,21 +113,21 @@
                  id="NIC_X" onclick="javascript:addXorV('regPIN','X','errorOnXOrVOfPIN');">
             <br>
             <s:if test="marriage.registrarOrMinisterPIN==0">
-                <s:textfield name="marriage.registrarOrMinisterPIN" id="regPIN" maxLength="10" value=""/>
+                <s:textfield name="marriage.registrarOrMinisterPIN" id="regPIN" maxLength="12" value=""/>
             </s:if>
             <s:else>
-                <s:textfield name="marriage.registrarOrMinisterPIN" id="regPIN" maxLength="10"/>
+                <s:textfield name="marriage.registrarOrMinisterPIN" id="regPIN" maxLength="12"/>
             </s:else>
             <img src="<s:url value='/images/search-father.png' />"
                  style="vertical-align:middle;" id="registrar_lookup"
-                 onmouseover="registrarLookup('regPIN')">
+                 onclick="registrarLookup('regPIN')">
         </td>
     </tr>
     <tr>
         <td>
             විවාහ ස්ථානයේ ස්වභාවය
             <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-            <br>in tamil
+            <br>திருமண நிகழ்விடத்தின் வகை
             <br>Type of Marriage Place
         </td>
         <td colspan="3">
@@ -150,8 +152,9 @@
         </td>
         <td><label><span class="font-8">
             ප්‍රාදේශීය ලේකම් කොට්ඨාශය
-                <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-                <br>பிரதேச செயளாளர் பிரிவு <br>Divisional Secretariat</span>
+                <s:label value="*" cssStyle="color:red;font-size:10pt;"/><br/>
+                பிரதேச செயளாளர் பிரிவு <br/>
+                Divisional Secretary Division</span>
         </label>
         </td>
         <td>
@@ -164,7 +167,7 @@
         <td><label><span class="font-8">
         ලියාපදිංචි කිරීමේ කොට්ඨාශය
                <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-                    <br>பதிவுப் பிரிவு  <br>Registration Division</span>
+                    <br>பதிவுப் பிரிவு<br>Registration Division</span>
         </label>
         </td>
         <td colspan="3">
@@ -176,7 +179,7 @@
     <tr>
         <td>
             විවාහය සිදු කල ස්ථානය<br>
-            in tamil <br>
+            திருமணம் நகழ்ந்த இடம்<br>
             place of Marriage
         </td>
         <td colspan="3">
@@ -223,7 +226,7 @@
     <tr>
         <td>
             රෙජිස්ට්‍රාර්තැන / දේවගැතිතැන<br>
-            in tamil <br>
+             பதிவாளர்/குருவானவர்<br>
             Registrar / Minister
         </td>
         <td colspan="3">
@@ -278,7 +281,7 @@
         <td>
             විවාහයේ ස්වභාවය
             <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-            <br>type of marriage in tamil
+            <br>திருமணத்தின் தன்மை
             <br>Type of Marriage
         </td>
         <td>
@@ -318,10 +321,10 @@
 <tr>
     <td>&nbsp;</td>
     <td align="center">
-        පුරුෂ පාර්ශ්වය / in tamil / Male Party
+        පුරුෂ පාර්ශ්වය / மாப்பிள்ள திறத்தார் / Male Party
     </td>
     <td align="center">
-        ස්ත්‍රී පාර්ශ්වය / in tamil / Female Party
+        ස්ත්‍රී පාර්ශ්වය /பெண் திறத்தார்/  Female Party
     </td>
 </tr>
 <tr>
@@ -333,7 +336,7 @@
     </td>
     <td colspan="1" align="left">
         <s:if test="mode=='register'">
-            <s:textfield name="marriage.male.identificationNumberMale" id="malePIN" maxLength="10" disabled="true"/>
+            <s:textfield name="marriage.male.identificationNumberMale" id="malePIN" maxLength="12" disabled="true"/>
         </s:if>
         <s:else>
             <img src="<s:url value="/images/alphabet-V.gif" />"
@@ -341,14 +344,14 @@
             <img src="<s:url value="/images/alphabet-X.gif" />"
                  id="NIC_X" onclick="javascript:addXorV('malePIN','X','errorOnXOrVOfPIN');">
             <br>
-            <s:textfield name="marriage.male.identificationNumberMale" id="malePIN" maxLength="10"/>
+            <s:textfield name="marriage.male.identificationNumberMale" id="malePIN" maxLength="12"/>
             <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="male_lookup"
                  onclick="personLookup('malePIN', 'Male');">
         </s:else>
     </td>
     <td colspan="1" align="left">
         <s:if test="mode=='register'">
-            <s:textfield name="marriage.female.identificationNumberFemale" id="femalePIN" maxLength="10"
+            <s:textfield name="marriage.female.identificationNumberFemale" id="femalePIN" maxLength="12"
                          disabled="true"/>
         </s:if>
         <s:else>
@@ -357,7 +360,7 @@
             <img src="<s:url value="/images/alphabet-X.gif" />"
                  id="NIC_X" onclick="javascript:addXorV('femalePIN','X','errorOnXOrVOfPIN');">
             <br>
-            <s:textfield name="marriage.female.identificationNumberFemale" id="femalePIN" maxLength="10"/>
+            <s:textfield name="marriage.female.identificationNumberFemale" id="femalePIN" maxLength="12"/>
             <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="female_lookup"
                  onclick="personLookup('femalePIN', 'Female');">
         </s:else>
@@ -397,7 +400,7 @@
     <td colspan="1">
         පසුවූ උපන් දිනයට වයස
         <s:label value="*" cssStyle="color:red;font-size:10pt;"/><br>
-        in tamil <br>
+        சென்ற வருட பிறந்த தினத்தில் வயதி<br>
         Age at last Birthday
 
     </td>
@@ -435,10 +438,9 @@
 </tr>
 <tr>
     <td>
-        ජාතිය
-        <s:label value="*" cssStyle="color:red;font-size:10pt;"/><br>
-        Race <br>
-
+        ජන වර්ගය <s:label value="*" cssStyle="color:red;font-size:10pt"/><br/>
+        இனம்<br/>
+        Ethnic Group
     </td>
     <td>
         <s:if test="mode=='register'">
@@ -486,7 +488,8 @@
                                  disabled="true"/>
                     </s:if>
                     <s:else>
-                        <s:radio name="marriage.male.civilStatusMale" list="civilStatusMale" theme="horizontal"/>
+                        <s:radio name="marriage.male.civilStatusMale" list="civilStatusMale" theme="horizontal"
+                                 id="civilStateMale"/>
                     </s:else>
                     <br>
                 </td>
@@ -504,10 +507,11 @@
                 <td>
                     <s:if test="mode=='register'">
                         <s:radio name="marriage.female.civilStatusFemale" list="civilStatusFemale" theme="horizontal"
-                                 disabled="true"/>
+                                 disabled="true" id="civilStatusFemale"/>
                     </s:if>
                     <s:else>
-                        <s:radio name="marriage.female.civilStatusFemale" list="civilStatusFemale" theme="horizontal"/>
+                        <s:radio name="marriage.female.civilStatusFemale" list="civilStatusFemale" theme="horizontal"
+                                 id="civilStateFemale"/>
                     </s:else>
 
                 </td>
@@ -687,8 +691,8 @@
         <tr>
             <td class="font-8">
                 අදහස් දක්වන්න
-                <br>Comment in ta
-                <br>Comment
+                <br>கருத்தினை தெரிவிக்கவும்
+                <br>Add Comments
             </td>
             <td colspan="3">
                 <s:textarea name="comment" id="registrationRejectComment"
@@ -745,10 +749,10 @@
 <s:hidden id="errorEmptyRegistrationPlace"
           value="%{getText('error.js.marriageregister.registrationPlace') + getText('message.cannotbeempty')}"/>
 
-<%--
+
 <s:hidden id="errorMalePIN" value="%{getText('error.invalid') + getText('error.js.marriageregister.malePIN')}"/>
 <s:hidden id="errorFemalePIN" value="%{getText('error.invalid') + getText('error.js.marriageregister.femalePIN')}"/>
-
+<%--
 <s:hidden id="errorDateOfBirthMale"
           value="%{getText('error.invalid') + getText('error.js.marriageregister.DateOfBirthMale')}"/>
 <s:hidden id="errorDateOfBirthFemale"
@@ -756,17 +760,21 @@
 
  --%>
 <s:hidden id="errorEmptyAgeMale" value="%{getText('error.invalid') + getText('error.js.marriageregister.ageMale')}"/>
-<s:hidden id="errorEmptyAgeFemale" value="%{getText('error.invalid') + getText('error.js.marriageregister.ageFemale')}"/>
+<s:hidden id="errorEmptyAgeFemale"
+          value="%{getText('error.invalid') + getText('error.js.marriageregister.ageFemale')}"/>
 <s:hidden id="errorEmptyNameOfficialMale"
           value="%{getText('error.js.marriageregister.nameOfficialMale') + getText('message.cannotbeempty')}"/>
 <s:hidden id="errorEmptyNameOfficialFemale"
           value="%{getText('error.js.marriageregister.nameOfficialFemale') + getText('message.cannotbeempty')}"/>
-<s:hidden id="errorEmptyAddressMale" value="%{getText('error.js.marriageregister.addressMale') + getText('message.cannotbeempty')}"/>
+<s:hidden id="errorEmptyAddressMale"
+          value="%{getText('error.js.marriageregister.addressMale') + getText('message.cannotbeempty')}"/>
 <s:hidden id="errorEmptyAddressFemale"
           value="%{getText('error.js.marriageregister.addressFemale') + getText('message.cannotbeempty')}"/>
 
-<s:hidden id="errorEmptyMaleRace" value="%{getText('error.js.marriageregister.maleRace') + getText('message.cannotbeempty')}"/>
-<s:hidden id="errorEmptyFemaleRace" value="%{getText('error.js.marriageregister.femaleRace') + getText('message.cannotbeempty')}"/>
+<s:hidden id="errorEmptyMaleRace"
+          value="%{getText('error.js.marriageregister.maleRace') + getText('message.cannotbeempty')}"/>
+<s:hidden id="errorEmptyFemaleRace"
+          value="%{getText('error.js.marriageregister.femaleRace') + getText('message.cannotbeempty')}"/>
 
 <s:hidden id="errorEmptySerialNumber"
           value="%{getText('error.js.marriageregister.serialNumber') + getText('message.cannotbeempty')}"/>
@@ -775,5 +783,5 @@
 
 <s:hidden id="errorEmptyscannedImage"
           value="%{getText('error.js.marriageregister.scannedImage') + getText('message.cannotbeempty')}"/>
-<s:hidden id="errorMarriageRegisterationDate" value="%{getText('error.dateOfMarriage.with.registerDate')}"/>  
+<s:hidden id="errorMarriageRegistrationDate" value="%{getText('error.dateOfMarriage.with.registerDate')}"/>
 </div>

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>registrationAndManagemnt</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">registrationAndManagemnt</td></tr>
+</thead><tbody>
+<tr>
+	<td>clickAndWait</td>
+	<td>logout-button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/ecivil/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_userName</td>
+	<td>adr-colombo-colombo</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_password</td>
+	<td>password</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprLogin_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>userPreference.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>user_preference_prefLanguage</td>
+	<td>label=English</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>user_preference_0</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>click</td>
+	<td>link=PRS</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>prs.personRegistration.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>person_NIC</td>
+	<td>752022100V</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>birthDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>birthDatePicker</td>
+	<td>1975-07-19</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>personRaceId</td>
+	<td>label=1 : Sinhalese</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>placeOfBirth</td>
+	<td>ragama</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>personFullNameOfficialLang</td>
+	<td>රත්නායක මුදියන්සේලාගේ හිරන්ත ඹිෂධ<br /></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>personFullNameEnglish</td>
+	<td>rathnayaka mudiyanselage hiranatha oshada</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>eprExistingPersonRegistration_person_civilStatusMARRIED</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>fatherPINorNIC</td>
+	<td>420111321V</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>permanentAddress</td>
+	<td>n0.13 , beruwala</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>citizen-info-max</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>citizenCountryId</td>
+	<td>label=JP : Japan</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>citizenPassportNo</td>
+	<td>D1266723</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//table[@id='citizen']/tbody/tr/td[5]/a/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>citizen-info-min</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>personPhoneNo</td>
+	<td>0782923874</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>personEmail</td>
+	<td>ghj@yahoo.com</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>submitButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>prs.personApproval.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprPersonApproval_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//table[@id='person-approve-list']/tbody/tr/td[4]/a/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>submitButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>prs.personApproval.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//table[@id='person-approve-list']/tbody/tr/td[5]/a/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>prs.personApproval.label</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

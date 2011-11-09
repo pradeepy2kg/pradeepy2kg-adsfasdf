@@ -6,7 +6,7 @@ var Manager;
 
         Manager = new AjaxSolr.Manager({
             solrUrl: window.location.protocol + '//' + window.location.host + '/solr/prs/'
-            //solrUrl: 'http://localhost:9443/solr/prs/'
+//            solrUrl: 'http://localhost:9443/solr/prs/'
         });
 
         Manager.addWidget(new AjaxSolr.ResultWidget({

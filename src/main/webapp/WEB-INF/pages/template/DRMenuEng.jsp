@@ -26,8 +26,7 @@
             </a>
         </li>
         <li>
-            <a id="birth_register_approval.label" href="/ecivil/births/eprBirthRegisterApproval.do"
-               style="color:red">
+            <a id="birth_register_approval.label" href="/ecivil/births/eprBirthRegisterApproval.do">
                 (2) Birth Registration Approval
             </a>
         </li>
@@ -288,8 +287,8 @@
             </a>
         </li>
         <li>
-            <a id="menu.marriage.register.search" href="/ecivil/marriages/eprMarriageRegisterSearchInit.do">
-                Marriage Register Search
+            <a id="menu.marriage.notice.search" href="/ecivil/marriages/eprMarriageNoticeSearchHome.do">
+                Marriage Notice Search
             </a>
         </li>
         <li>
@@ -303,8 +302,8 @@
             </a>
         </li>
         <li>
-            <a id="menu.marriage.notice.search" href="/ecivil/marriages/eprMarriageNoticeSearchInit.do">
-                Search Notice
+            <a id="menu.marriage.register.search" href="/ecivil/marriages/eprMarriageRegisterSearchInit.do">
+                Marriage Register Search
             </a>
         </li>
     </ul>

@@ -9,6 +9,7 @@ public class OldBDInfo {
     private String districtName;
     private String dsDivisionName;
     private String bdDivisionName;
+    private String gnDivisionName;
     private Long serialNumber;
 
     public String getDistrictName() {
@@ -41,5 +42,13 @@ public class OldBDInfo {
 
     public void setSerialNumber(Long serialNumber) {
         this.serialNumber = serialNumber;
+    }
+
+    public String getGnDivisionName() {
+        return gnDivisionName;
+    }
+
+    public void setGnDivisionName(String gnDivisionName) {
+        this.gnDivisionName = gnDivisionName;
     }
 }

@@ -1,24 +1,27 @@
 package lk.rgd.crs.web.action;
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.ErrorCodes;
+import lk.rgd.common.api.dao.DSDivisionDAO;
+import lk.rgd.common.api.dao.DistrictDAO;
+import lk.rgd.common.api.domain.BaseLifeCycleInfo;
+import lk.rgd.common.api.domain.Role;
+import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.WebUtils;
+import lk.rgd.crs.CRSRuntimeException;
+import lk.rgd.crs.api.dao.BDDivisionDAO;
+import lk.rgd.crs.api.dao.MRDivisionDAO;
+import lk.rgd.crs.api.domain.Assignment;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.MRDivision;
+import lk.rgd.crs.api.domain.Registrar;
+import lk.rgd.crs.api.service.RegistrarManagementService;
+import lk.rgd.crs.web.WebConstants;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
-
-import lk.rgd.common.api.dao.DistrictDAO;
-import lk.rgd.common.api.dao.DSDivisionDAO;
-import lk.rgd.common.api.domain.*;
-import lk.rgd.crs.api.dao.BDDivisionDAO;
-import lk.rgd.crs.api.dao.MRDivisionDAO;
-import lk.rgd.crs.api.domain.Assignment;
-import lk.rgd.crs.api.domain.Registrar;
-import lk.rgd.crs.api.service.RegistrarManagementService;
-import lk.rgd.crs.web.WebConstants;
 
 /**
  * action class for managing registrars    and their assignments
@@ -75,6 +78,7 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
     private Date permanentDate;
     private Date terminationDate;
 
+    private String language;
     private String districtName;
     private String dsDivisionName;
     private String divisionName;
@@ -89,19 +93,16 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
     }
 
     public String registrarsManagementHome() {
-
         /* lists are generated according to the user */
         session.remove(WebConstants.SESSION_EXSISTING_REGISTRAR);
-        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
-        String usrRole = user.getRole().getRoleId();
         districtId = 1;
         dsDivisionId = 0;
-   
-        districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
+
+        districtList = districtDAO.getDistrictNames(language, user);
         if (districtList != null) {
             districtId = districtList.keySet().iterator().next();
         }
-        dsDivisionList = dsDivisionDAO.getAllDSDivisionNames(districtId, user.getPrefLanguage(), user);
+        dsDivisionList = dsDivisionDAO.getAllDSDivisionNames(districtId, language, user);
         if (dsDivisionList != null) {
             dsDivisionId = districtList.keySet().iterator().next();
         }
@@ -145,7 +146,7 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
             assignmentList = service.getAllActiveAssignment(true, user);
         } else {
             //selecting all division
-            if (dsDivisionId == -1) {
+            if (dsDivisionId == 0) {
                 if (type != null) {
                     assignmentList = service.getAssignmentsByDistrictId(districtId, type, state, user);
 
@@ -160,9 +161,8 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
                 }
             }
         }
-        districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
-        dsDivisionList = dsDivisionDAO.getAllDSDivisionNames(districtId, user.getPrefLanguage(), user);
-        dsDivisionId = -1;
+        districtList = districtDAO.getDistrictNames(language, user);
+        dsDivisionList = dsDivisionDAO.getAllDSDivisionNames(districtId, language, user);
 
         return SUCCESS;
     }
@@ -176,14 +176,14 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
             Registrar existingRegistrar = service.getRegistrarByPin(registrar.getPin(), user);
             if (existingRegistrar != null) {
                 addActionError(getText("error.registrar.already.exists"));
-                return "error";
+                return ERROR;
             } else {
                 try {
                     service.addRegistrar(registrar, user);
                     session.put(WebConstants.SESSION_EXSISTING_REGISTRAR, registrar);
                 } catch (Exception e) {
-                    addActionError("error.registrar.add");
-                    return "error";
+                    addActionError(getText("error.registrar.add"));
+                    return ERROR;
                 }
             }
         } else {
@@ -260,7 +260,6 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
     }
 
     public String editAssignment() {
-        String language = user.getPrefLanguage();
         //put current assignment in to session for redirection purposes
         assignment = service.getAssignmentById(assignmentUKey, user);
         session.put(WebConstants.SESSION_UPDATED_ASSIGNMENT_REGISTRAR, assignment);
@@ -290,22 +289,88 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
         return SUCCESS;
     }
 
+    public String deleteAssignment() {
+        try {
+            service.deleteAssignment(assignmentUKey, user);
+            addActionMessage("Assignment deleted successfully");
+        } catch (CRSRuntimeException e) {
+            switch (e.getErrorCode()) {
+                case ErrorCodes.PERMISSION_DENIED:
+                    addActionError(getText("message.noPermission"));
+                    break;
+                case ErrorCodes.INVALID_STATE_FOR_REMOVAL:
+                    addActionError("Selected assignment can not be deleted since it have mapping registrations");
+                    break;
+            }
+        }
+        loadRegistrarPage();
+        return SUCCESS;
+    }
+
+    private void loadRegistrarPage() {
+        logger.debug("loading registrar view page by user : {}", user.getUserId());
+        session.remove(WebConstants.SESSION_UPDATED_ASSIGNMENT_REGISTRAR);
+
+        Registrar existing = (Registrar) session.get(WebConstants.SESSION_EXSISTING_REGISTRAR);
+        if (existing != null && existing.getRegistrarUKey() > 0) {
+            registrar = existing;
+            assignmentList = service.getAssignments(registrar.getRegistrarUKey(), user);
+            logger.debug("registrar  : {} with {} assignment loaded", registrar.getShortName(), assignmentList.size());
+        }
+    }
+
     public String updateRegistrar() {
         Registrar existing = (Registrar) session.get(WebConstants.SESSION_EXSISTING_REGISTRAR);
 
         logger.debug("attempting to update registrar : {}", registrar.getFullNameInEnglishLanguage());
-        //setting previous life cycle info
+        // setting previous registrar info to the edited registrar
         registrar.setLifeCycleInfo(existing.getLifeCycleInfo());
-        //setting current assignment
         registrar.setAssignments(existing.getAssignments());
-        //setting uK
         registrar.setRegistrarUKey(existing.getRegistrarUKey());
+        registrar.setState(existing.getState());
 
-        service.updateRegistrar(registrar, user);
+        service.updateRegistrar(existing.getPin(), registrar, user);
         session.put(WebConstants.SESSION_EXSISTING_REGISTRAR, registrar);
         return SUCCESS;
     }
 
+    public String deleteRegistrar() {
+        try {
+            service.deleteRegistrar(registrarUkey, user);
+            addActionMessage("Registrar Deleted Successfully");
+        } catch (CRSRuntimeException e) {
+            switch (e.getErrorCode()) {
+                case ErrorCodes.PERMISSION_DENIED:
+                    addActionError(getText("message.noPermission"));
+                    break;
+                case ErrorCodes.INVALID_STATE_FOR_REMOVAL:
+                    addActionError("Selected registrar can not be deleted since he/she has mapping registrations");
+                    break;
+            }
+        }
+        loadFindRegistrarResults();
+
+        return SUCCESS;
+    }
+
+    private void loadFindRegistrarResults() {
+        if (registrarPin > 0) {
+            logger.debug("attempt to search a registrar by pin : {}", registrarPin);
+            //search by registrar pin number
+            Registrar existing = service.getRegistrarByPin(registrarPin, user);
+            registrarList = new ArrayList<Registrar>();
+            if (existing != null) {
+                registrarList.add(existing);
+            }
+        } else if (registrarName != null) {
+            logger.debug("attempt to search a registrar by name : {}", registrarName);
+            //search by name or part of the name
+            registrarList = service.getRegistrarByNameOrPartOfTheName(registrarName, user);
+        }
+        if (registrarList != null && registrarList.size() == 0) {
+            addActionMessage(getText("no.registrars.found"));
+        }
+    }
 
     public String assignmentAddPageLoad() {
         session.remove(WebConstants.SESSION_EXSISTING_REGISTRAR);
@@ -319,38 +384,31 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
     }
 
     public String findRegistrar() {
+        removeExistingRegistrars();
         if (page > 0) {
-            logger.debug("attempt to search a registrar");
-            if (registrarPin > 0) {
-                //search by registrar pin number
-                Registrar existingRegistrar = service.getRegistrarByPin(registrarPin, user);
-                registrarList = new ArrayList<Registrar>();
-                if (existingRegistrar != null) {
-                    registrarList.add(existingRegistrar);
-                }
-            } else if (registrarName != null) {
-                //search by name or part of the name
-                registrarList = service.getRegistrarByNameOrPartOfTheName(registrarName, user);
-            }
-            if (registrarList != null && registrarList.size() == 0) {
-                addActionMessage(getText("no.registrars.found"));
-            }
+            loadFindRegistrarResults();
             return SUCCESS;
         }
         logger.debug("attempt to load find registrar home page");
         return "pageLoad";
     }
 
-    //loads basic lists for separate types
+    private void removeExistingRegistrars() {
+        Object o = session.get(WebConstants.SESSION_EXSISTING_REGISTRAR);
+        if (o != null) {
+            session.remove(WebConstants.SESSION_EXSISTING_REGISTRAR);
+        }
+    }
 
+    //loads basic lists for separate types
     private void populateLists(int districtId, int dsDivisionId, int assignmentType) {
-        String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         if (user.getRole().getRoleId().equals(Role.ROLE_ADMIN)) {
             districtList = districtDAO.getAllDistrictNames(language, user);
             dsDivisionList = dsDivisionDAO.getAllDSDivisionNames(districtId, language, user);
         } else {
             districtList = districtDAO.getDistrictNames(language, user);
             dsDivisionList = dsDivisionDAO.getDSDivisionNames(districtId, language, user);
+
         }
         switch (assignmentType) {
             //requesting death /birth division list
@@ -371,7 +429,8 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
         logger.debug("Set session {}", map);
         this.session = map;
         user = (User) session.get(WebConstants.SESSION_USER_BEAN);
-        logger.debug("setting User: {}", user.getUserName());
+        language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
+        logger.debug("setting User: {} and UserLanguage : {}", user.getUserName(), language);
     }
 
     public Map getSession() {
@@ -639,6 +698,14 @@ public class RegistrarManagementAction extends ActionSupport implements SessionA
 
     public void setIndirect(boolean indirect) {
         this.indirect = indirect;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
     public String getDistrictName() {

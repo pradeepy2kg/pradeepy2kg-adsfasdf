@@ -444,14 +444,14 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             District district = null;
             switch (type) {
                 case BOTH_NOTICE:
-                    countryIdFemale = (marriage.getFemale().getCountry() != null) ?
-                        marriage.getFemale().getCountry().getCountryId() : 0;
+                    countryIdFemale = (marriage.getFemale().getFemaleCountry() != null) ?
+                        marriage.getFemale().getFemaleCountry().getCountryId() : 0;
                     //race cannot be null
                     raceIdFemale = marriage.getFemale().getFemaleRace().getRaceId();
                     //only both related populations
                 case MALE_NOTICE:
-                    countryIdMale = (marriage.getMale().getCountry() != null) ?
-                        marriage.getMale().getCountry().getCountryId() : 0;
+                    countryIdMale = (marriage.getMale().getMaleCountry() != null) ?
+                        marriage.getMale().getMaleCountry().getCountryId() : 0;
                     raceIdMale = (marriage.getMale().getMaleRace() != null) ?
                         marriage.getMale().getMaleRace().getRaceId() : 0;
                     serialNumber = marriage.getSerialOfMaleNotice();
@@ -459,8 +459,8 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
                     mrDivision = marriage.getMrDivisionOfMaleNotice();
                     break;
                 case FEMALE_NOTICE:
-                    countryIdFemale = (marriage.getFemale().getCountry() != null) ?
-                        marriage.getFemale().getCountry().getCountryId() : 0;
+                    countryIdFemale = (marriage.getFemale().getFemaleCountry() != null) ?
+                        marriage.getFemale().getFemaleCountry().getCountryId() : 0;
                     raceIdFemale = (marriage.getFemale().getFemaleRace() != null) ?
                         marriage.getFemale().getFemaleRace().getRaceId() : 0;
                     serialNumber = marriage.getSerialOfFemaleNotice();
@@ -506,10 +506,10 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             marriage.getFemale().setFemaleRace(raceDAO.getRace(raceIdFemale));
         }
         if (countryIdMale != 0) {
-            marriage.getMale().setCountry(countryDAO.getCountry(countryIdMale));
+            marriage.getMale().setMaleCountry(countryDAO.getCountry(countryIdMale));
         }
         if (countryIdFemale != 0) {
-            marriage.getFemale().setCountry(countryDAO.getCountry(countryIdFemale));
+            marriage.getFemale().setFemaleCountry(countryDAO.getCountry(countryIdFemale));
         }
     }
 
@@ -743,7 +743,12 @@ public class MarriageRegistrationAction extends ActionSupport implements Session
             addActionError(getText("error.marriageregister.registrationfailed"));
             return marriageRegistrationInit();
         }
-        addActionMessage(getText("message.marriageregister.registered"));
+        if (editMode) {
+            addActionMessage(getText("message.marriageregister.updated"));
+
+        } else {
+            addActionMessage(getText("message.marriageregister.registered"));
+        }
         return SUCCESS;
     }
 
