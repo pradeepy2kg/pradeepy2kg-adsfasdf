@@ -6,7 +6,8 @@ package lk.rgd.common.api.domain;
 public class CommonStatistics {
 
     private String statType;
-    
+    private String userRole;
+
     private int totalSubmissions;
     private int lateSubmissions;
     private int normalSubmissions;
@@ -25,6 +26,14 @@ public class CommonStatistics {
         totalPendingItems = 0;
         arrearsPendingItems = 0;
         thisMonthPendingItems = 0;
+    }
+
+    public String getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
     }
 
     public int getApprovedItems() {
@@ -99,7 +108,7 @@ public class CommonStatistics {
         this.totalSubmissions = totalSubmissions;
     }
 
-    public void add(CommonStatistics cs){
+    public void add(CommonStatistics cs) {
         this.totalSubmissions += cs.totalSubmissions;
         this.lateSubmissions += cs.lateSubmissions;
         this.normalSubmissions += cs.normalSubmissions;

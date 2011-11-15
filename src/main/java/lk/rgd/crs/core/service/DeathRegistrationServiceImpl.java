@@ -665,10 +665,10 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         }
 
         CommonStatistics commonStat = new CommonStatistics();
-        commonStat.setTotalSubmissions(/*data_entry + approved + rejected*/23);
-        commonStat.setApprovedItems(/*approved*/12);
-        commonStat.setRejectedItems(/*rejected*/8);
-        commonStat.setTotalPendingItems(/*data_entry*/9);
+        commonStat.setTotalSubmissions(data_entry + approved + rejected);
+        commonStat.setApprovedItems(approved);
+        commonStat.setRejectedItems(rejected);
+        commonStat.setTotalPendingItems(data_entry);
 
         cal = Calendar.getInstance();
         cal.add(Calendar.YEAR, -5);
@@ -694,12 +694,17 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         List<DeathRegister> deathList = deathRegisterDAO.getByCreatedUser(user, start, end);
 
         for (DeathRegister dr : deathList) {
-            if (dr.getStatus() == DeathRegister.State.APPROVED) {
-                data[0] += 1;
-            } else if (dr.getStatus() == DeathRegister.State.REJECTED) {
-                data[1] += 1;
-            } else if (dr.getStatus() == DeathRegister.State.DATA_ENTRY) {
-                data[2] += 1;
+            DeathRegister.State state = dr.getStatus();
+            switch (state) {
+                case APPROVED:
+                    data[0] += 1;
+                    break;
+                case REJECTED:
+                    data[1] += 1;
+                    break;
+                case DATA_ENTRY:
+                    data[2] += 1;
+                    break;
             }
         }
         return data;
