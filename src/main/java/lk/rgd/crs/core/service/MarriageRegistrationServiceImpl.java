@@ -17,7 +17,6 @@ import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.MRDivisionDAO;
 import lk.rgd.crs.api.dao.MarriageRegistrationDAO;
 import lk.rgd.crs.api.domain.MRDivision;
-import lk.rgd.crs.api.domain.MaleParty;
 import lk.rgd.crs.api.domain.MarriageNotice;
 import lk.rgd.crs.api.domain.MarriageRegister;
 import lk.rgd.crs.api.service.MarriageRegistrationService;
@@ -658,7 +657,7 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
     }
     //extract bride information's form the marriage register object
 
-    private Person getBrideForProcessToPRS(MarriageRegister register,Person.CivilStatus civilStatus) {
+    private Person getBrideForProcessToPRS(MarriageRegister register, Person.CivilStatus civilStatus) {
         Person bride = new Person();
         bride.setCivilStatus(civilStatus);
         bride.setRace(register.getFemale().getFemaleRace());
@@ -1292,10 +1291,10 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         }
 
         CommonStatistics commonStat = new CommonStatistics();
-        commonStat.setTotalSubmissions(/*data_entry + approved + rejected*/23);
-        commonStat.setApprovedItems(/*approved*/12);
-        commonStat.setRejectedItems(/*rejected*/8);
-        commonStat.setTotalPendingItems(/*data_entry*/9);
+        commonStat.setTotalSubmissions(data_entry + approved + rejected);
+        commonStat.setApprovedItems(approved);
+        commonStat.setRejectedItems(rejected);
+        commonStat.setTotalPendingItems(data_entry);
 
         cal = Calendar.getInstance();
         cal.add(Calendar.YEAR, -1);
@@ -1321,12 +1320,17 @@ public class MarriageRegistrationServiceImpl implements MarriageRegistrationServ
         List<MarriageRegister> mrList = marriageRegistrationDAO.getByCreatedUser(user, start, end);
 
         for (MarriageRegister mr : mrList) {
-            if (mr.getState() == MarriageRegister.State.NOTICE_APPROVED) {
-                data[0] += 1;
-            } else if (mr.getState() == MarriageRegister.State.NOTICE_REJECTED) {
-                data[1] += 1;
-            } else if (mr.getState() == MarriageRegister.State.DATA_ENTRY) {
-                data[2] += 1;
+            MarriageRegister.State state = mr.getState();
+            switch (state) {
+                case NOTICE_APPROVED:
+                    data[0] += 1;
+                    break;
+                case NOTICE_REJECTED:
+                    data[1] += 1;
+                    break;
+                case DATA_ENTRY:
+                    data[2] += 1;
+                    break;
             }
         }
         return data;
