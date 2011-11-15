@@ -475,6 +475,10 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     }
 
     private void selectDropDownListForEditMode(DeathRegister deathRegister) {
+        // populate death person race
+        deathPersonRace = deathRegister.getDeathPerson().getDeathPersonRace() != null ?
+            deathRegister.getDeathPerson().getDeathPersonRace().getRaceId() : 0;
+        // populate death person address related lists
         BDDivision bddivision = deathRegister.getDeath().getDeathDivision();
         dsDivisionId = bddivision.getDsDivision().getDsDivisionUKey();
         deathDivisionId = bddivision.getBdDivisionUKey();
@@ -867,6 +871,12 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                 dsDivisionId = 0;
             }
             logger.debug("Districts, DS and BD divisions set from defaults : {} {}", deathDistrictId, dsDivisionId);
+        }
+
+        if (deathPerson != null) {
+            if (deathPerson.getDeathPersonRace() != null) {
+                deathPersonRace = deathPerson.getDeathPersonRace().getRaceId();
+            }
         }
     }
 
