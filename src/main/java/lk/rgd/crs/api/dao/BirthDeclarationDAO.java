@@ -326,11 +326,12 @@ public interface BirthDeclarationDAO {
     public int getBirthCertificateCount(BirthDeclaration.State status, Date startDate, Date endDate);
 
     /**
-     * Returns all Birth Declaration records which are created by given User
+     * Returns all Birth Declaration records which are created by given User in the given date range
      *
      * @param user  created user
-     * @param start
-     * @param end   @return list of birth declarations
+     * @param start start date
+     * @param end   end date
+     * @return list of birth declarations in the specified date range
      */
     public List<BirthDeclaration> getByCreatedUser(User user, Date start, Date end);
 

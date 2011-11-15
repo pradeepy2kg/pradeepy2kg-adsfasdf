@@ -2071,10 +2071,10 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         int approved = birthDeclarationDAO.getBirthCertificateCount(BirthDeclaration.State.APPROVED, new Date(), new Date());
         int rejected = birthDeclarationDAO.getBirthCertificateCount(BirthDeclaration.State.ARCHIVED_REJECTED, new Date(), new Date());
 
-        commonStat.setTotalSubmissions(/*data_entry + approved + rejected*/23);
-        commonStat.setApprovedItems(/*approved*/12);
-        commonStat.setRejectedItems(/*rejected*/8);
-        commonStat.setTotalPendingItems(/*data_entry*/9);
+        commonStat.setTotalSubmissions(data_entry + approved + rejected);
+        commonStat.setApprovedItems(approved);
+        commonStat.setRejectedItems(rejected);
+        commonStat.setTotalPendingItems(data_entry);
 
         logger.debug("BirthRegistrationService Called!");
 
@@ -2108,10 +2108,10 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         }
 
         CommonStatistics commonStat = new CommonStatistics();
-        commonStat.setTotalSubmissions(/*data_entry + approved + rejected*/23);
-        commonStat.setApprovedItems(/*approved*/12);
-        commonStat.setRejectedItems(/*rejected*/8);
-        commonStat.setTotalPendingItems(/*data_entry*/9);
+        commonStat.setTotalSubmissions(data_entry + approved + rejected);
+        commonStat.setApprovedItems(approved);
+        commonStat.setRejectedItems(rejected);
+        commonStat.setTotalPendingItems(data_entry);
 
         cal = Calendar.getInstance();
         cal.add(Calendar.YEAR, -5);
@@ -2137,12 +2137,17 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         List<BirthDeclaration> bdfList = birthDeclarationDAO.getByCreatedUser(user, start, end);
 
         for (BirthDeclaration bdf : bdfList) {
-            if (bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED) {
-                data[0] += 1;
-            } else if (bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_REJECTED) {
-                data[1] += 1;
-            } else if (bdf.getRegister().getStatus() == BirthDeclaration.State.DATA_ENTRY) {
-                data[2] += 1;
+            BirthDeclaration.State state = bdf.getRegister().getStatus();
+            switch (state) {
+                case APPROVED:
+                    data[0] += 1;
+                    break;
+                case ARCHIVED_REJECTED:
+                    data[1] += 1;
+                    break;
+                case DATA_ENTRY:
+                    data[2] += 1;
+                    break;
             }
         }
         return data;
