@@ -185,7 +185,7 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
 
         statistics = statisticsDAO.getByUser(user.getUserId());    //TODO: remove this comments after the performance tests
         if (statistics == null) {
-            statistics = statisticsManager.getStatisticsForUser(user);
+            statistics = statisticsManager.getStatisticsForUser(user, null, null);
             if (statistics == null) {
                 statistics = new Statistics();
             }
@@ -295,7 +295,7 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
 
         statistics = statisticsDAO.getByUser(user.getUserId());      // TODO: remove this comments after the performance tests
         if (statistics == null) {
-            statistics = statisticsManager.getStatisticsForUser(user);
+            statistics = statisticsManager.getStatisticsForUser(user, null, null);
             if (statistics == null) {
                 statistics = new Statistics();
             }

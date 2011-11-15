@@ -4,12 +4,12 @@ import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.common.RGDRuntimeException;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.service.StatisticsManager;
+import lk.rgd.crs.api.service.ReportsGenerator;
 import lk.rgd.crs.web.ReportCodes;
 import lk.rgd.crs.web.WebConstants;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import lk.rgd.crs.api.service.ReportsGenerator;
 
 import java.util.*;
 
@@ -48,6 +48,7 @@ public class ReportsAction extends ActionSupport implements SessionAware {
 
     /**
      * create a statistical report
+     *
      * @return String
      */
     public String create() {
@@ -122,12 +123,10 @@ public class ReportsAction extends ActionSupport implements SessionAware {
                 logger.debug("Chart Type {}", chartType);
                 //generateReport(year, user, ReportCodes.DEATH_TABLE_4_3);
                 reportsService.createDeathReport_4_4(user, ReportCodes.DEATH_TABLE_4_4);
-            }*/
-            else if (chartType == 16) {
+            }*/ else if (chartType == 16) {
                 logger.debug("Chart Type {}", chartType);
                 generateReport(year, user, ReportCodes.BIRTH_RAW_DATA);
-            }
-            else if (chartType == 17) {
+            } else if (chartType == 17) {
                 logger.debug("Chart Type {}", chartType);
                 generateReport(year, user, ReportCodes.DEATH_RAW_DATA);
             }
