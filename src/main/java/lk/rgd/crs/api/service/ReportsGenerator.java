@@ -36,7 +36,6 @@ public interface ReportsGenerator {
     public BirthIslandWideStatistics generate_2_5_new(int year, User user, boolean clearCache);
 
     /**
-     *
      * @param year
      * @param user
      * @param clearCache
@@ -45,7 +44,6 @@ public interface ReportsGenerator {
     public BirthIslandWideStatistics generate_2_2a(int year, User user, boolean clearCache);
 
     /**
-     *
      * @param year
      * @param user
      * @param clearCache
@@ -54,7 +52,6 @@ public interface ReportsGenerator {
     public BirthIslandWideStatistics generate_2_7(int year, User user, boolean clearCache);
 
     /**
-     *
      * @param year
      * @param user
      * @param clearCache
@@ -100,7 +97,6 @@ public interface ReportsGenerator {
     public BirthIslandWideStatistics generate_2_12(int year, User user, boolean clearCache);
 
     /**
-     * 
      * @param year
      * @param user
      * @param clearCache
@@ -108,7 +104,6 @@ public interface ReportsGenerator {
     public void generateDeathReport(int year, User user, boolean clearCache);
 
     /**
-     *
      * @param year
      * @param user
      * @param clearCache
@@ -116,7 +111,6 @@ public interface ReportsGenerator {
     public void generateDeathReport2(int year, User user, boolean clearCache);
 
     /**
-     *
      * @param year
      * @param user
      * @param clearCache
@@ -134,8 +128,6 @@ public interface ReportsGenerator {
     public String createReport(User user, int headerCode);
 
     /**
-    *
-*
      * @param user
      * @param headerCode
      * @return
@@ -143,35 +135,30 @@ public interface ReportsGenerator {
     public void createDeathReport_all(User user, int headerCode);
 
     /**
-     *
      * @param user
      * @param headerCode
      */
     public void createDeathReport_4_6(User user, int headerCode);
 
     /**
-     *
      * @param user
      * @param headerCode
      */
     public void createDeathReport_4_2(User user, int headerCode);
 
     /**
-     *
      * @param user
      * @param headerCode
      */
     public void createDeathReport_4_4(User user, int headerCode);
 
     /**
-     *
      * @param user
      * @param clearCache
      */
     public void createBirthRawDataTable(int year, User user, boolean clearCache);
 
     /**
-     *
      * @param year
      * @param user
      * @param clearCache
