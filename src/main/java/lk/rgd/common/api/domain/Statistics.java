@@ -32,6 +32,9 @@ public class Statistics implements Serializable {
 
     private int birthsNormalSubmissions;
 
+    @Transient
+    private int birthsStillSubmissions;
+
     private int birthsApprovedItems;
 
     private int birthsRejectedItems;
@@ -310,5 +313,13 @@ public class Statistics implements Serializable {
 
     public void setUser(String userId) {
         this.userId = userId;
+    }
+
+    public int getBirthsStillSubmissions() {
+        return birthsStillSubmissions;
+    }
+
+    public void setBirthsStillSubmissions(int birthsStillSubmissions) {
+        this.birthsStillSubmissions = birthsStillSubmissions;
     }
 }

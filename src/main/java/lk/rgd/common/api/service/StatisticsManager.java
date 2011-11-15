@@ -3,6 +3,8 @@ package lk.rgd.common.api.service;
 import lk.rgd.common.api.domain.Statistics;
 import lk.rgd.common.api.domain.User;
 
+import java.util.Date;
+
 /**
  * @author shan
  */
@@ -30,10 +32,11 @@ public interface StatisticsManager {
     /**
      * Return Statistics object for given user
      *
-     * @param user user
-     * @return statistics object
+     * @param user      user
+     * @param startDate
+     * @param endDate   @return statistics object
      */
-    public Statistics getStatisticsForUser(User user);
+    public Statistics getStatisticsForUser(User user, Date startDate, Date endDate);
 
     /**
      * Save a statistics record
