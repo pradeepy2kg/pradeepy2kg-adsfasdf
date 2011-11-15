@@ -55,6 +55,10 @@
 
     function initPage() {
     }
+
+    function submitSelected(){
+        // TODO submit selected gnDivisions, currently selecting items only in current page(page loaded when submitting)
+    }
 </script>
 
 <s:actionmessage cssStyle="color:blue;;font-size:10pt"/>
