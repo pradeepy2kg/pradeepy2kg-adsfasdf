@@ -3,8 +3,8 @@ package lk.rgd.crs.core.service;
 import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
 import lk.rgd.common.RGDRuntimeException;
-import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.DSDivisionDAO;
+import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.RaceDAO;
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.District;
@@ -13,20 +13,20 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.crs.api.bean.*;
 import lk.rgd.crs.api.domain.*;
+import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.api.service.DeathRegistrationService;
 import lk.rgd.crs.api.service.ReportsGenerator;
-import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.web.ReportCodes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.text.NumberFormat;
-import java.util.List;
-import java.util.Calendar;
-import java.util.Date;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.NumberFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author Ashoka Ekanayaka
@@ -34,13 +34,13 @@ import java.io.IOException;
 public class ReportsGeneratorImpl implements ReportsGenerator {
     private static final Logger logger = LoggerFactory.getLogger(ReportsGeneratorImpl.class);
 
-    private final BirthRegistrationService birthRegister;
-    private final DeathRegistrationService deathRegister;
+    private final BirthRegistrationService birthRegSvc;
+    private final DeathRegistrationService deathRegSvc;
     private final DistrictDAO districtDAO;
     private final RaceDAO raceDAO;
     private final DSDivisionDAO dsDivisionDAO;
-    private final UserManager userManagementService;
-    BirthIslandWideStatistics statistics = BirthIslandWideStatistics.getInstance();
+    private final UserManager userMgtSvc;
+    private final BirthIslandWideStatistics statistics = BirthIslandWideStatistics.getInstance();
     private int[][] age_race_total;
     private int[][] table_2_4;
     private int[][] age_district_total;
@@ -54,6 +54,11 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
     private BirthDistrictYearStatistics[] districtYearStatisticsList;
     NumberFormat nf = NumberFormat.getInstance();
     static DeathIslandWideStatistics deathIslandWideStatistics = new DeathIslandWideStatistics();
+
+    private static final String COMMA = ",";
+    private static final String CSV_EXT = ".csv";
+    private static final String NEW_LINE = "\n";
+    private static final String QUOTE = "\"";
 
     public enum DeathColumn {
         TOTAL,
@@ -213,13 +218,13 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         BETWEEN_85_PLUS
     }
 
-    public ReportsGeneratorImpl(BirthRegistrationService birthRegister, DeathRegistrationService deathRegister, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, RaceDAO raceDAO, UserManager service) {
-        this.birthRegister = birthRegister;
-        this.deathRegister = deathRegister;
+    public ReportsGeneratorImpl(BirthRegistrationService birthRegSvc, DeathRegistrationService deathRegSvc, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, RaceDAO raceDAO, UserManager service) {
+        this.birthRegSvc = birthRegSvc;
+        this.deathRegSvc = deathRegSvc;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.raceDAO = raceDAO;
-        this.userManagementService = service;
+        this.userMgtSvc = service;
         age_race_total = new int[BirthMonthlyStatistics.NO_OF_RACES][BirthRaceStatistics.NO_OF_AGE_GROUPS];
         table_2_4 = new int[26][15];
         age_district_total = new int[BirthIslandWideStatistics.NO_OF_DISTRICTS][BirthRaceStatistics.NO_OF_AGE_GROUPS];
@@ -245,7 +250,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         }
 
         List<DSDivision> dsDivisions = dsDivisionDAO.findAll();
-        User systemUser = userManagementService.getSystemUser();
+        User systemUser = userMgtSvc.getSystemUser();
         List<BirthDeclaration> birthRecords;
 
         Calendar cal = Calendar.getInstance();
@@ -260,7 +265,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
 
         int all = 0, allMales = 0, allFemales = 0;
         for (DSDivision dsDivision : dsDivisions) {
-            birthRecords = birthRegister.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
+            birthRecords = birthRegSvc.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
                 BirthDeclaration.State.ARCHIVED_CERT_PRINTED, systemUser);
 
             int districtIndex = dsDivision.getDistrict().getDistrictUKey();
@@ -306,7 +311,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         }
 
         List<DSDivision> dsDivisions = dsDivisionDAO.findAll();
-        User systemUser = userManagementService.getSystemUser();
+        User systemUser = userMgtSvc.getSystemUser();
         List<BirthDeclaration> birthRecords;
 
         Calendar cal = Calendar.getInstance();
@@ -320,7 +325,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         Date endDate = cal.getTime();
 
         for (DSDivision dsDivision : dsDivisions) {
-            birthRecords = birthRegister.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
+            birthRecords = birthRegSvc.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
                 BirthDeclaration.State.ARCHIVED_CERT_PRINTED, systemUser);
 
             int districtIndex = dsDivision.getDistrict().getDistrictUKey() - 1;
@@ -356,7 +361,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         }
 
         List<DSDivision> dsDivisions = dsDivisionDAO.findAll();
-        User systemUser = userManagementService.getSystemUser();
+        User systemUser = userMgtSvc.getSystemUser();
         List<BirthDeclaration> birthRecords;
 
         Calendar cal = Calendar.getInstance();
@@ -371,7 +376,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
 
         int all = 0, allMales = 0, allFemales = 0, allLegBirths = 0, allIllegBirths = 0, allHospitalBirths = 0;
         for (DSDivision dsDivision : dsDivisions) {
-            birthRecords = birthRegister.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
+            birthRecords = birthRegSvc.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
                 BirthDeclaration.State.ARCHIVED_CERT_PRINTED, systemUser);
 
             int districtIndex = dsDivision.getDistrict().getDistrictUKey();
@@ -471,7 +476,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         }
 
         List<DSDivision> dsDivisions = dsDivisionDAO.findAll();
-        User systemUser = userManagementService.getSystemUser();
+        User systemUser = userMgtSvc.getSystemUser();
         List<BirthDeclaration> birthRecords;
 
         Calendar cal = Calendar.getInstance();
@@ -485,7 +490,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         Date endDate = cal.getTime();
 
         for (DSDivision dsDivision : dsDivisions) {
-            birthRecords = birthRegister.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
+            birthRecords = birthRegSvc.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
                 BirthDeclaration.State.ARCHIVED_CERT_PRINTED, systemUser);
 
             int districtIndex = dsDivision.getDistrict().getDistrictUKey();
@@ -533,7 +538,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         }
 
         List<DSDivision> dsDivisions = dsDivisionDAO.findAll();
-        User systemUser = userManagementService.getSystemUser();
+        User systemUser = userMgtSvc.getSystemUser();
         List<BirthDeclaration> birthRecords;
 
         Calendar cal = Calendar.getInstance();
@@ -547,7 +552,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         Date endDate = cal.getTime();
 
         for (DSDivision dsDivision : dsDivisions) {
-            birthRecords = birthRegister.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
+            birthRecords = birthRegSvc.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
                 BirthDeclaration.State.ARCHIVED_CERT_PRINTED, systemUser);
 
             for (BirthDeclaration bd : birthRecords) {
@@ -586,7 +591,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         }
 
         List<DSDivision> dsDivisions = dsDivisionDAO.findAll();
-        User systemUser = userManagementService.getSystemUser();
+        User systemUser = userMgtSvc.getSystemUser();
         List<BirthDeclaration> birthRecords;
 
         Calendar cal = Calendar.getInstance();
@@ -600,7 +605,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         Date endDate = cal.getTime();
 
         for (DSDivision dsDivision : dsDivisions) {
-            birthRecords = birthRegister.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
+            birthRecords = birthRegSvc.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
                 BirthDeclaration.State.ARCHIVED_CERT_PRINTED, systemUser);
             int district = dsDivision.getDistrict().getDistrictUKey();
 
@@ -639,7 +644,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         }
 
         List<DSDivision> dsDivisions = dsDivisionDAO.findAll();
-        User systemUser = userManagementService.getSystemUser();
+        User systemUser = userMgtSvc.getSystemUser();
         List<BirthDeclaration> birthRecords;
 
         Calendar cal = Calendar.getInstance();
@@ -653,7 +658,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         Date endDate = cal.getTime();
 
         for (DSDivision dsDivision : dsDivisions) {
-            birthRecords = birthRegister.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
+            birthRecords = birthRegSvc.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
                 BirthDeclaration.State.ARCHIVED_CERT_PRINTED, systemUser);
 
             int districtIndex = dsDivision.getDistrict().getDistrictUKey();
@@ -741,7 +746,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         }
 
         List<DSDivision> dsDivisionList = dsDivisionDAO.findAll();
-        User systemUser = userManagementService.getSystemUser();
+        User systemUser = userMgtSvc.getSystemUser();
         List<BirthDeclaration> birthRecords;
 
         Calendar cal = Calendar.getInstance();
@@ -755,7 +760,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         Date endDate = cal.getTime();
 
         for (DSDivision dsDivision : dsDivisionList) {
-            birthRecords = birthRegister.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
+            birthRecords = birthRegSvc.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
                 BirthDeclaration.State.ARCHIVED_CERT_PRINTED, systemUser);
             int districtId = dsDivision.getDistrict().getDistrictUKey() - 1;
             for (BirthDeclaration birthDeclaration : birthRecords) {
@@ -788,7 +793,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         }
 
         List<DSDivision> dsDivisionList = dsDivisionDAO.findAll();
-        User systemUser = userManagementService.getSystemUser();
+        User systemUser = userMgtSvc.getSystemUser();
         List<BirthDeclaration> birthRecords;
 
         Calendar cal = Calendar.getInstance();
@@ -802,7 +807,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         Date endDate = cal.getTime();
 
         for (DSDivision dsDivision : dsDivisionList) {
-            birthRecords = birthRegister.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
+            birthRecords = birthRegSvc.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
                 BirthDeclaration.State.ARCHIVED_CERT_PRINTED, systemUser);
             int districtId = dsDivision.getDistrict().getDistrictUKey() - 1;
             for (BirthDeclaration birthDeclaration : birthRecords) {
@@ -833,7 +838,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         }
 
         List<DSDivision> dsDivisionList = dsDivisionDAO.findAll();
-        User systemUser = userManagementService.getSystemUser();
+        User systemUser = userMgtSvc.getSystemUser();
         List<BirthDeclaration> birthRecords;
 
         Calendar cal = Calendar.getInstance();
@@ -847,7 +852,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         Date endDate = cal.getTime();
 
         for (DSDivision dsDivision : dsDivisionList) {
-            birthRecords = birthRegister.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
+            birthRecords = birthRegSvc.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
                 BirthDeclaration.State.ARCHIVED_CERT_PRINTED, systemUser);
             for (BirthDeclaration birthDeclaration : birthRecords) {
                 ChildInfo childInfo = birthDeclaration.getChild();
@@ -882,7 +887,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         }
 
         List<DSDivision> dsDivisionList = dsDivisionDAO.findAll();
-        User systemUser = userManagementService.getSystemUser();
+        User systemUser = userMgtSvc.getSystemUser();
         List<BirthDeclaration> birthRecords;
 
         Calendar cal = Calendar.getInstance();
@@ -896,7 +901,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         Date endDate = cal.getTime();
 
         for (DSDivision dsDivision : dsDivisionList) {
-            birthRecords = birthRegister.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
+            birthRecords = birthRegSvc.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
                 BirthDeclaration.State.ARCHIVED_CERT_PRINTED, systemUser);
             for (BirthDeclaration birthDeclaration : birthRecords) {
                 int ageId = 0;
@@ -974,7 +979,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         }
 
         List<DSDivision> dsDivisionList = dsDivisionDAO.findAll();
-        User systemUser = userManagementService.getSystemUser();
+        User systemUser = userMgtSvc.getSystemUser();
         List<BirthDeclaration> birthRecords;
 
         Calendar cal = Calendar.getInstance();
@@ -988,7 +993,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         Date endDate = cal.getTime();
 
         for (DSDivision dsDivision : dsDivisionList) {
-            birthRecords = birthRegister.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
+            birthRecords = birthRegSvc.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
                 BirthDeclaration.State.ARCHIVED_CERT_PRINTED, systemUser);
             int districtIndex = dsDivision.getDistrict().getDistrictUKey() - 1;
             for (BirthDeclaration birthDeclaration : birthRecords) {
@@ -1038,7 +1043,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         }
 
         List<DSDivision> dsDivisionList = dsDivisionDAO.findAll();
-        User systemUser = userManagementService.getSystemUser();
+        User systemUser = userMgtSvc.getSystemUser();
         List<DeathRegister> deathRecords;
         int array[][][] = new int[BirthIslandWideStatistics.NO_OF_DISTRICTS][BirthMonthlyStatistics.NO_OF_RACES][DeathReport2Column.values().length];
 
@@ -1053,7 +1058,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         Date endDate = cal.getTime();
 
         for (DSDivision dsDivision : dsDivisionList) {
-            deathRecords = deathRegister.getByDSDivisionAndStatusAndRegistrationDateRange(
+            deathRecords = deathRegSvc.getByDSDivisionAndStatusAndRegistrationDateRange(
                 dsDivision, startDate, endDate, DeathRegister.State.ARCHIVED_CERT_GENERATED, user);
 
             District district = dsDivision.getDistrict();
@@ -1179,12 +1184,12 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         }
 
         StringBuilder csv = new StringBuilder();
-        String filename = ReportCodes.INFANT_DEATH_TABLE_3_5a_NAME + ".csv";
+        String filename = ReportCodes.INFANT_DEATH_TABLE_3_5a_NAME + CSV_EXT;
 
         csv.append("DISTRICT,TOTAL UNDER 1 MONTH - TOTAL,TOTAL UNDER 1 MONTH - MALE,TOTAL UNDER 1 MONTH - FEMALE," +
             "1 WEEK AND UNDER - TOTAL,1 WEEK AND UNDER - MALE,1 WEEK AND UNDER - FEMALE," +
             "1 WEEK AND UNDER 1 MONTH - TOTAL,1 WEEK AND UNDER 1 MONTH - MALE,1 WEEK AND UNDER 1 MONTH - FEMALE," +
-            "\n");
+            NEW_LINE);
 
         for (int i = 0; i < BirthIslandWideStatistics.NO_OF_DISTRICTS; i++) {
             String districtName = "UNKNOWN DISTRICT";
@@ -1192,7 +1197,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
             if (district != null) {
                 districtName = district.getEnDistrictName();
             }
-            csv.append(districtName + ",");
+            csv.append(districtName).append(COMMA);
             int arr[] = new int[DeathReport2Column.values().length];
 
             for (int k = 0; k < BirthMonthlyStatistics.NO_OF_RACES; k++) {
@@ -1225,10 +1230,10 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
             }
 
             for (int k = 0; k < 9/*DeathReport2Column.values().length*/; k++) {
-                csv.append(arr[k] + ",");
+                csv.append(arr[k]).append(COMMA);
             }
 
-            csv.append("\n");
+            csv.append(NEW_LINE);
 
             for (int j = 0; j < BirthMonthlyStatistics.NO_OF_RACES; j++) {
                 String raceName = "UNKNOWN RACE";
@@ -1236,32 +1241,32 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 if (race != null) {
                     raceName = race.getEnRaceName();
                 }
-                csv.append(raceName + ",");
-                csv.append(array[i][j][DeathReport2Column.TOTAL_UNDER_1_MONTH.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.MALE_UNDER_1_MONTH.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.FEMALE_UNDER_1_MONTH.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.TOTAL_UNDER_1_WEEK.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.MALE_UNDER_1_WEEK.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.FEMALE_UNDER_1_WEEK.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.TOTAL_1_WEEK_UNDER_1_MONTH.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.MALE_1_WEEK_UNDER_1_MONTH.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.FEMALE_1_WEEK_UNDER_1_MONTH.ordinal()] + ",\n"
-                    /*array[i][j][DeathReport2Column.TOTAL_UNDER_1_YEAR.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.MALE_UNDER_1_YEAR.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.FEMALE_UNDER_1_YEAR.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.TOTAL_UNDER_3_MONTH.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.MALE_UNDER_3_MONTH.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.FEMALE_UNDER_3_MONTH.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.TOTAL_UNDER_6_MONTH.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.MALE_UNDER_6_MONTH.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.FEMALE_UNDER_6_MONTH.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.TOTAL_UNDER_9_MONTH.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.MALE_UNDER_9_MONTH.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.FEMALE_UNDER_9_MONTH.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.TOTAL_UNDER_12_MONTH.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.MALE_UNDER_12_MONTH.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.FEMALE_UNDER_12_MONTH.ordinal()] + ",\n"*/
-                );
+                csv.append(raceName).append(COMMA);
+                csv.append(array[i][j][DeathReport2Column.TOTAL_UNDER_1_MONTH.ordinal()]).
+                    append(COMMA).append(array[i][j][DeathReport2Column.MALE_UNDER_1_MONTH.ordinal()]).
+                    append(COMMA).append(array[i][j][DeathReport2Column.FEMALE_UNDER_1_MONTH.ordinal()]).
+                    append(COMMA).append(array[i][j][DeathReport2Column.TOTAL_UNDER_1_WEEK.ordinal()]).append(COMMA).
+                    append(array[i][j][DeathReport2Column.MALE_UNDER_1_WEEK.ordinal()]).append(COMMA).
+                    append(array[i][j][DeathReport2Column.FEMALE_UNDER_1_WEEK.ordinal()]).append(COMMA).
+                    append(array[i][j][DeathReport2Column.TOTAL_1_WEEK_UNDER_1_MONTH.ordinal()]).append(COMMA).
+                    append(array[i][j][DeathReport2Column.MALE_1_WEEK_UNDER_1_MONTH.ordinal()]).append(COMMA).
+                    append(array[i][j][DeathReport2Column.FEMALE_1_WEEK_UNDER_1_MONTH.ordinal()]).append(",\n");
+                /*array[i][j][DeathReport2Column.TOTAL_UNDER_1_YEAR.ordinal()] + COMMA +
+              array[i][j][DeathReport2Column.MALE_UNDER_1_YEAR.ordinal()] + COMMA +
+              array[i][j][DeathReport2Column.FEMALE_UNDER_1_YEAR.ordinal()] + COMMA +
+              array[i][j][DeathReport2Column.TOTAL_UNDER_3_MONTH.ordinal()] + COMMA +
+              array[i][j][DeathReport2Column.MALE_UNDER_3_MONTH.ordinal()] + COMMA +
+              array[i][j][DeathReport2Column.FEMALE_UNDER_3_MONTH.ordinal()] + COMMA +
+              array[i][j][DeathReport2Column.TOTAL_UNDER_6_MONTH.ordinal()] + COMMA +
+              array[i][j][DeathReport2Column.MALE_UNDER_6_MONTH.ordinal()] + COMMA +
+              array[i][j][DeathReport2Column.FEMALE_UNDER_6_MONTH.ordinal()] + COMMA +
+              array[i][j][DeathReport2Column.TOTAL_UNDER_9_MONTH.ordinal()] + COMMA +
+              array[i][j][DeathReport2Column.MALE_UNDER_9_MONTH.ordinal()] + COMMA +
+              array[i][j][DeathReport2Column.FEMALE_UNDER_9_MONTH.ordinal()] + COMMA +
+              array[i][j][DeathReport2Column.TOTAL_UNDER_12_MONTH.ordinal()] + COMMA +
+              array[i][j][DeathReport2Column.MALE_UNDER_12_MONTH.ordinal()] + COMMA +
+              array[i][j][DeathReport2Column.FEMALE_UNDER_12_MONTH.ordinal()] + ",\n"*/
+
             }
         }
 
@@ -1281,7 +1286,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         }
 
         StringBuilder csv2 = new StringBuilder();
-        String filename2 = ReportCodes.INFANT_DEATH_TABLE_3_5b_NAME + ".csv";
+        String filename2 = ReportCodes.INFANT_DEATH_TABLE_3_5b_NAME + CSV_EXT;
 
         csv2.append("DISTRICT,TOTAL_UNDER_1_YEAR,MALE_UNDER_1_YEAR,FEMALE_UNDER_1_YEAR," +
             "TOTAL_UNDER_3_MONTH,MALE_UNDER_3_MONTH,FEMALE_UNDER_3_MONTH," +
@@ -1295,7 +1300,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
             if (district != null) {
                 districtName = district.getEnDistrictName();
             }
-            csv2.append(districtName + ",");
+            csv2.append(districtName).append(COMMA);
             int arr[] = new int[DeathReport2Column.values().length];
 
             for (int k = 0; k < BirthMonthlyStatistics.NO_OF_RACES; k++) {
@@ -1328,10 +1333,10 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
             }
 
             for (int k = 9/*0*/; k < DeathReport2Column.values().length; k++) {
-                csv2.append(arr[k] + ",");
+                csv2.append(arr[k]).append(COMMA);
             }
 
-            csv2.append("\n");
+            csv2.append(NEW_LINE);
 
             for (int j = 0; j < BirthMonthlyStatistics.NO_OF_RACES; j++) {
                 String raceName = "UNKNOWN RACE";
@@ -1339,32 +1344,31 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 if (race != null) {
                     raceName = race.getEnRaceName();
                 }
-                csv2.append(raceName + ",");
-                csv2.append(/*array[i][j][DeathReport2Column.TOTAL_UNDER_1_MONTH.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.MALE_UNDER_1_MONTH.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.FEMALE_UNDER_1_MONTH.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.TOTAL_UNDER_1_WEEK.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.MALE_UNDER_1_WEEK.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.FEMALE_UNDER_1_WEEK.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.TOTAL_1_WEEK_UNDER_1_MONTH.ordinal()] + "," +
-                    array[i][j][DeathReport2Column.MALE_1_WEEK_UNDER_1_MONTH.ordinal()] + "," +
+                csv2.append(raceName).append(COMMA);
+                /*array[i][j][DeathReport2Column.TOTAL_UNDER_1_MONTH.ordinal()] + COMMA +
+                    array[i][j][DeathReport2Column.MALE_UNDER_1_MONTH.ordinal()] + COMMA +
+                    array[i][j][DeathReport2Column.FEMALE_UNDER_1_MONTH.ordinal()] + COMMA +
+                    array[i][j][DeathReport2Column.TOTAL_UNDER_1_WEEK.ordinal()] + COMMA +
+                    array[i][j][DeathReport2Column.MALE_UNDER_1_WEEK.ordinal()] + COMMA +
+                    array[i][j][DeathReport2Column.FEMALE_UNDER_1_WEEK.ordinal()] + COMMA +
+                    array[i][j][DeathReport2Column.TOTAL_1_WEEK_UNDER_1_MONTH.ordinal()] + COMMA +
+                    array[i][j][DeathReport2Column.MALE_1_WEEK_UNDER_1_MONTH.ordinal()] + COMMA +
                     array[i][j][DeathReport2Column.FEMALE_1_WEEK_UNDER_1_MONTH.ordinal()] + ",\n"*/
-                    array[i][j][DeathReport2Column.TOTAL_UNDER_1_YEAR.ordinal()] + "," +
-                        array[i][j][DeathReport2Column.MALE_UNDER_1_YEAR.ordinal()] + "," +
-                        array[i][j][DeathReport2Column.FEMALE_UNDER_1_YEAR.ordinal()] + "," +
-                        array[i][j][DeathReport2Column.TOTAL_UNDER_3_MONTH.ordinal()] + "," +
-                        array[i][j][DeathReport2Column.MALE_UNDER_3_MONTH.ordinal()] + "," +
-                        array[i][j][DeathReport2Column.FEMALE_UNDER_3_MONTH.ordinal()] + "," +
-                        array[i][j][DeathReport2Column.TOTAL_UNDER_6_MONTH.ordinal()] + "," +
-                        array[i][j][DeathReport2Column.MALE_UNDER_6_MONTH.ordinal()] + "," +
-                        array[i][j][DeathReport2Column.FEMALE_UNDER_6_MONTH.ordinal()] + "," +
-                        array[i][j][DeathReport2Column.TOTAL_UNDER_9_MONTH.ordinal()] + "," +
-                        array[i][j][DeathReport2Column.MALE_UNDER_9_MONTH.ordinal()] + "," +
-                        array[i][j][DeathReport2Column.FEMALE_UNDER_9_MONTH.ordinal()] + "," +
-                        array[i][j][DeathReport2Column.TOTAL_UNDER_12_MONTH.ordinal()] + "," +
-                        array[i][j][DeathReport2Column.MALE_UNDER_12_MONTH.ordinal()] + "," +
-                        array[i][j][DeathReport2Column.FEMALE_UNDER_12_MONTH.ordinal()] + ",\n"
-                );
+                csv2.append(array[i][j][DeathReport2Column.TOTAL_UNDER_1_YEAR.ordinal()]).
+                    append(COMMA).append(array[i][j][DeathReport2Column.MALE_UNDER_1_YEAR.ordinal()]).append(COMMA).
+                    append(array[i][j][DeathReport2Column.FEMALE_UNDER_1_YEAR.ordinal()]).append(COMMA).
+                    append(array[i][j][DeathReport2Column.TOTAL_UNDER_3_MONTH.ordinal()]).append(COMMA).
+                    append(array[i][j][DeathReport2Column.MALE_UNDER_3_MONTH.ordinal()]).append(COMMA).
+                    append(array[i][j][DeathReport2Column.FEMALE_UNDER_3_MONTH.ordinal()]).append(COMMA).
+                    append(array[i][j][DeathReport2Column.TOTAL_UNDER_6_MONTH.ordinal()]).append(COMMA).
+                    append(array[i][j][DeathReport2Column.MALE_UNDER_6_MONTH.ordinal()]).append(COMMA).
+                    append(array[i][j][DeathReport2Column.FEMALE_UNDER_6_MONTH.ordinal()]).append(COMMA).
+                    append(array[i][j][DeathReport2Column.TOTAL_UNDER_9_MONTH.ordinal()]).append(COMMA).
+                    append(array[i][j][DeathReport2Column.MALE_UNDER_9_MONTH.ordinal()]).append(COMMA).
+                    append(array[i][j][DeathReport2Column.FEMALE_UNDER_9_MONTH.ordinal()]).append(COMMA).
+                    append(array[i][j][DeathReport2Column.TOTAL_UNDER_12_MONTH.ordinal()]).append(COMMA).
+                    append(array[i][j][DeathReport2Column.MALE_UNDER_12_MONTH.ordinal()]).append(COMMA).
+                    append(array[i][j][DeathReport2Column.FEMALE_UNDER_12_MONTH.ordinal()]).append(",\n");
             }
 
             String dirPath2 = "reports" + File.separator + year;
@@ -1400,7 +1404,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         }
 
         List<DSDivision> dsDivisionList = dsDivisionDAO.findAll();
-        User systemUser = userManagementService.getSystemUser();
+        User systemUser = userMgtSvc.getSystemUser();
         List<DeathRegister> deathRecords;
 
         Calendar cal = Calendar.getInstance();
@@ -1414,7 +1418,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         Date endDate = cal.getTime();
 
         for (DSDivision dsDivision : dsDivisionList) {
-            deathRecords = deathRegister.getByDSDivisionAndStatusAndRegistrationDateRange(
+            deathRecords = deathRegSvc.getByDSDivisionAndStatusAndRegistrationDateRange(
                 dsDivision, startDate, endDate, DeathRegister.State.ARCHIVED_CERT_GENERATED, user);
             District district = dsDivision.getDistrict();
 
@@ -1545,18 +1549,12 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                     );
 
                     deathIslandWideStatistics.districtStatisticsList[districtId].setDistrictFemale(
-                        deathIslandWideStatistics.districtStatisticsList[districtId].getDistrictFemale() + 1
-                    );
+                        deathIslandWideStatistics.districtStatisticsList[districtId].getDistrictFemale() + 1);
                     deathIslandWideStatistics.districtStatisticsList[districtId].setDistrictTotal(
-                        deathIslandWideStatistics.districtStatisticsList[districtId].getDistrictTotal() + 1
-                    );
+                        deathIslandWideStatistics.districtStatisticsList[districtId].getDistrictTotal() + 1);
 
-                    deathIslandWideStatistics.setIslandWideFemale(
-                        deathIslandWideStatistics.getIslandWideFemale() + 1
-                    );
-                    deathIslandWideStatistics.setIslandWideTotal(
-                        deathIslandWideStatistics.getIslandWideTotal() + 1
-                    );
+                    deathIslandWideStatistics.setIslandWideFemale(deathIslandWideStatistics.getIslandWideFemale() + 1);
+                    deathIslandWideStatistics.setIslandWideTotal(deathIslandWideStatistics.getIslandWideTotal() + 1);
                 }
             }
         }
@@ -1564,7 +1562,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
 
     public void createDeathReport_all(User user, int headerCode) {       /* TABLE 4.3 */
         StringBuilder csv = new StringBuilder();
-        String filename = ReportCodes.DEATH_TABLE_4_3_NAME + ".csv";
+        String filename = ReportCodes.DEATH_TABLE_4_3_NAME + CSV_EXT;
 
         csv.append("District,,Unknown,,,1,,,2,,,3,,,4,,,5-9,,,10-14,,,15-19,,,20-24,,,25-29,,,30-34,,,35-39,,,40-44,,,45-49,,,50-54,,,55-59,,,60-64,,,65-69,,,70-74,,,75-79,,,80-84,,,85+,,\n");
         csv.append(",T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,\n");
@@ -1575,11 +1573,11 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 districtName = districtDAO.getDistrict(i).getEnDistrictName();
             }
 
-            csv.append(districtName + ",");
+            csv.append(districtName).append(COMMA);
 
-            /*csv.append(deathIslandWideStatistics.districtStatisticsList[i].getDistrictTotal() + "," +
-                deathIslandWideStatistics.districtStatisticsList[i].getDistrictMale() + "," +
-                deathIslandWideStatistics.districtStatisticsList[i].getDistrictFemale() + ","
+            /*csv.append(deathIslandWideStatistics.districtStatisticsList[i].getDistrictTotal() + COMMA +
+                deathIslandWideStatistics.districtStatisticsList[i].getDistrictMale() + COMMA +
+                deathIslandWideStatistics.districtStatisticsList[i].getDistrictFemale() + COMMA
             );*/
             for (int l = 0; l < DeathRaceStatistics.NO_OF_AGE_GROUPS; l++) {
                 int male = 0, female = 0, total = 0;
@@ -1590,10 +1588,10 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                         female += deathIslandWideStatistics.districtStatisticsList[i].deathMonthlyStatistics[j].deathRaceStatistics[k].deathAgeGroupStatistics[l].getAgeGroupFemale();
                     }
                 }
-                csv.append(total + "," + male + "," + female + ",");
+                csv.append(total).append(COMMA).append(male).append(COMMA).append(female).append(COMMA);
             }
 
-            csv.append("\n");
+            csv.append(NEW_LINE);
 
         }
 
@@ -1616,7 +1614,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
 
     public void createDeathReport_4_2(User user, int headerCode) {
         StringBuilder csv = new StringBuilder();
-        String filename = ReportCodes.DEATH_TABLE_4_2_NAME + ".csv";
+        String filename = ReportCodes.DEATH_TABLE_4_2_NAME + CSV_EXT;
 
         csv.append("District,Total,Male,Female\n");
 
@@ -1626,14 +1624,13 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 districtName = districtDAO.getDistrict(i).getEnDistrictName();
             }
 
-            csv.append(districtName + ",");
+            csv.append(districtName).append(COMMA);
 
-            csv.append(deathIslandWideStatistics.districtStatisticsList[i].getDistrictTotal() + "," +
-                deathIslandWideStatistics.districtStatisticsList[i].getDistrictMale() + "," +
-                deathIslandWideStatistics.districtStatisticsList[i].getDistrictFemale() + ","
-            );
+            csv.append(deathIslandWideStatistics.districtStatisticsList[i].getDistrictTotal()).append(COMMA).
+                append(deathIslandWideStatistics.districtStatisticsList[i].getDistrictMale()).append(COMMA).
+                append(deathIslandWideStatistics.districtStatisticsList[i].getDistrictFemale()).append(COMMA);
 
-            csv.append("\n");
+            csv.append(NEW_LINE);
         }
 
         String dirPath = "reports" + File.separator + year;
@@ -1654,7 +1651,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
 
     public void createDeathReport_4_6(User user, int headerCode) {
         StringBuilder csv = new StringBuilder();
-        String filename = ReportCodes.DEATH_TABLE_4_6_NAME + ".csv";
+        String filename = ReportCodes.DEATH_TABLE_4_6_NAME + CSV_EXT;
 
         csv.append("District,");
         for (int f = 0; f < DeathMonthlyStatistics.NO_OF_RACES; f++) {
@@ -1662,7 +1659,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
             if (raceDAO.getRace(f) != null) {
                 raceName = raceDAO.getRace(f).getEnRaceName();
             }
-            csv.append("," + raceName + ",,");
+            csv.append(COMMA).append(raceName).append(",,");
         }
         csv.append("\n,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,\n");
 
@@ -1672,7 +1669,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 districtName = districtDAO.getDistrict(i).getEnDistrictName();
             }
 
-            csv.append(districtName + ",");
+            csv.append(districtName).append(COMMA);
 
             for (int j = 0; j < DeathMonthlyStatistics.NO_OF_RACES; j++) {
                 int male = 0, female = 0, total = 0;
@@ -1681,9 +1678,9 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                     male += deathIslandWideStatistics.districtStatisticsList[i].deathMonthlyStatistics[k].deathRaceStatistics[j].getRaceMale();
                     female += deathIslandWideStatistics.districtStatisticsList[i].deathMonthlyStatistics[k].deathRaceStatistics[j].getRaceFemale();
                 }
-                csv.append(total + "," + male + "," + female + ",");
+                csv.append(total).append(COMMA).append(male).append(COMMA).append(female).append(COMMA);
             }
-            csv.append("\n");
+            csv.append(NEW_LINE);
         }
 
         String dirPath = "reports" + File.separator + year;
@@ -1704,7 +1701,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
 
     public void createDeathReport_4_4(User user, int headerCode) {
         StringBuilder csv = new StringBuilder();
-        String filename = ReportCodes.DEATH_TABLE_4_4_NAME + ".csv";
+        String filename = ReportCodes.DEATH_TABLE_4_4_NAME + CSV_EXT;
 
         csv.append("District,,Unknown,,,1,,,2,,,3,,,4,,,5-9,,,10-14,,,15-19,,,20-24,,,25-29,,,30-34,,,35-39,,,40-44,,,45-49,,,50-54,,,55-59,,,60-64,,,65-69,,,70-74,,,75-79,,,80-84,,,85 plus,,Total,Male,Female,\n");
         csv.append(",T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,T,M,F,,,,\n");
@@ -1716,7 +1713,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
             if (raceDAO.getRace(i) != null) {
                 raceName = raceDAO.getRace(i).getEnRaceName();
             }
-            csv.append(raceName + ",");
+            csv.append(raceName).append(COMMA);
             for (int l = 0; l < DeathRaceStatistics.NO_OF_AGE_GROUPS; l++) {
                 int male = 0, female = 0, total = 0;
                 for (int j = 0; j < DeathIslandWideStatistics.NO_OF_DISTRICTS; j++) {
@@ -1729,11 +1726,11 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 allTotal += total;
                 allMale += male;
                 allFemale += female;
-                csv.append(total + "," + male + "," + female + ",");
+                csv.append(total).append(COMMA).append(male).append(COMMA).append(female).append(COMMA);
 
             }
-            csv.append(allTotal + "," + allMale + "," + allFemale + ",");
-            csv.append("\n");
+            csv.append(allTotal).append(COMMA).append(allMale).append(COMMA).append(allFemale).append(COMMA);
+            csv.append(NEW_LINE);
         }
 
         String dirPath = "reports" + File.separator + year;
@@ -1761,7 +1758,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         }
 
         List<DSDivision> dsDivisionList = dsDivisionDAO.findAll();
-        User systemUser = userManagementService.getSystemUser();
+        User systemUser = userMgtSvc.getSystemUser();
         List<DeathRegister> deathRecords;
 
         Calendar cal = Calendar.getInstance();
@@ -1777,7 +1774,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         int array[][] = new int[BirthIslandWideStatistics.NO_OF_DISTRICTS][DeathColumn.values().length];
 
         for (DSDivision dsDivision : dsDivisionList) {
-            deathRecords = deathRegister.getByDSDivisionAndStatusAndRegistrationDateRange(
+            deathRecords = deathRegSvc.getByDSDivisionAndStatusAndRegistrationDateRange(
                 dsDivision, startDate, endDate, DeathRegister.State.ARCHIVED_CERT_GENERATED, user);
 
             District district = dsDivision.getDistrict();
@@ -1953,28 +1950,44 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         /*  INFANT_DEATH_TABLE 3.2  */
 
         StringBuilder csv3_2 = new StringBuilder();
-        String filename3_2 = ReportCodes.INFANT_DEATH_TABLE_3_2_NAME + ".csv";
+        String filename3_2 = ReportCodes.INFANT_DEATH_TABLE_3_2_NAME + CSV_EXT;
         csv3_2.append("DISTRICT,TOTAL,MALE,FEMALE,TOTAL UNDER 1 YEAR,MALE UNDER 1 YEAR,FEMALE UNDER 1 YEAR," +
             "TOTAL 1 WEEK & UNDER 1 WEEK,MALE 1 WEEK & UNDER 1 WEEK,FEMALE 1 WEEK & UNDER 1 WEEK," +
             "TOTAL 1 WEEK & UNDER 1 MONTH,MALE 1 WEEK & UNDER 1 MONTH,FEMALE 1 WEEK & UNDER 1 MONTH," +
             "TOTAL 1 MONTH & UNDER 3 MONTH,MALE 1 MONTH & UNDER 3 MONTH,FEMALE 1 MONTH & UNDER 3 MONTH," +
             "TOTAL 3 MONTH & UNDER 6 MONTH,MALE 3 MONTH & UNDER 6 MONTH,FEMALE 3 MONTH & UNDER 6 MONTH," +
             "TOTAL 6 MONTH & UNDER 9 MONTH,MALE 6 MONTH & UNDER 9 MONTH,FEMALE 6 MONTH & UNDER 9 MONTH," +
-            "TOTAL 9 MONTH & UNDER 1 YEAR,MALE 9 MONTH & UNDER 1 YEAR,FEMALE 9 MONTH & UNDER 1 YEAR," + "\n");
+            "TOTAL 9 MONTH & UNDER 1 YEAR,MALE 9 MONTH & UNDER 1 YEAR,FEMALE 9 MONTH & UNDER 1 YEAR," + NEW_LINE);
 
         for (int i = 0; i < BirthIslandWideStatistics.NO_OF_DISTRICTS; i++) {
             String districtName = "Unknown";
             if (districtDAO.getDistrict(i + 1) != null) {
                 districtName = districtDAO.getDistrict(i + 1).getEnDistrictName();
             }
-            csv3_2.append(districtName + "," + array[i][DeathColumn.TOTAL.ordinal()] + "," + array[i][DeathColumn.MALE.ordinal()] + "," + array[i][DeathColumn.FEMALE.ordinal()] +
-                "," + array[i][DeathColumn.TOTAL_UNDER_1_YEAR.ordinal()] + "," + array[i][DeathColumn.MALE_UNDER_1_YEAR.ordinal()] + "," + array[i][DeathColumn.FEMALE_UNDER_1_YEAR.ordinal()] +
-                "," + array[i][DeathColumn.TOTAL_UNDER_1_WEEK.ordinal()] + "," + array[i][DeathColumn.MALE_UNDER_1_WEEK.ordinal()] + "," + array[i][DeathColumn.FEMALE_UNDER_1_WEEK.ordinal()] +
-                "," + array[i][DeathColumn.TOTAL_UNDER_1_MONTH.ordinal()] + "," + array[i][DeathColumn.MALE_UNDER_1_MONTH.ordinal()] + "," + array[i][DeathColumn.FEMALE_UNDER_1_MONTH.ordinal()] +
-                "," + array[i][DeathColumn.TOTAL_UNDER_3_MONTH.ordinal()] + "," + array[i][DeathColumn.MALE_UNDER_3_MONTH.ordinal()] + "," + array[i][DeathColumn.FEMALE_UNDER_3_MONTH.ordinal()] +
-                "," + array[i][DeathColumn.TOTAL_UNDER_6_MONTH.ordinal()] + "," + array[i][DeathColumn.MALE_UNDER_6_MONTH.ordinal()] + "," + array[i][DeathColumn.FEMALE_UNDER_6_MONTH.ordinal()] +
-                "," + array[i][DeathColumn.TOTAL_UNDER_9_MONTH.ordinal()] + "," + array[i][DeathColumn.MALE_UNDER_9_MONTH.ordinal()] + "," + array[i][DeathColumn.FEMALE_UNDER_9_MONTH.ordinal()] +
-                "," + array[i][DeathColumn.TOTAL_UNDER_12_MONTH.ordinal()] + "," + array[i][DeathColumn.MALE_UNDER_12_MONTH.ordinal()] + "," + array[i][DeathColumn.FEMALE_UNDER_12_MONTH.ordinal()] + "\n");
+            csv3_2.append(districtName).append(COMMA).append(array[i][DeathColumn.TOTAL.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.MALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.FEMALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.TOTAL_UNDER_1_YEAR.ordinal()]).
+                append(COMMA).append(array[i][DeathColumn.MALE_UNDER_1_YEAR.ordinal()]).
+                append(COMMA).append(array[i][DeathColumn.FEMALE_UNDER_1_YEAR.ordinal()]).
+                append(COMMA).append(array[i][DeathColumn.TOTAL_UNDER_1_WEEK.ordinal()]).
+                append(COMMA).append(array[i][DeathColumn.MALE_UNDER_1_WEEK.ordinal()]).
+                append(COMMA).append(array[i][DeathColumn.FEMALE_UNDER_1_WEEK.ordinal()]).
+                append(COMMA).append(array[i][DeathColumn.TOTAL_UNDER_1_MONTH.ordinal()]).
+                append(COMMA).append(array[i][DeathColumn.MALE_UNDER_1_MONTH.ordinal()]).
+                append(COMMA).append(array[i][DeathColumn.FEMALE_UNDER_1_MONTH.ordinal()]).
+                append(COMMA).append(array[i][DeathColumn.TOTAL_UNDER_3_MONTH.ordinal()]).
+                append(COMMA).append(array[i][DeathColumn.MALE_UNDER_3_MONTH.ordinal()]).
+                append(COMMA).append(array[i][DeathColumn.FEMALE_UNDER_3_MONTH.ordinal()]).
+                append(COMMA).append(array[i][DeathColumn.TOTAL_UNDER_6_MONTH.ordinal()]).
+                append(COMMA).append(array[i][DeathColumn.MALE_UNDER_6_MONTH.ordinal()]).
+                append(COMMA).append(array[i][DeathColumn.FEMALE_UNDER_6_MONTH.ordinal()]).
+                append(COMMA).append(array[i][DeathColumn.TOTAL_UNDER_9_MONTH.ordinal()]).
+                append(COMMA).append(array[i][DeathColumn.MALE_UNDER_9_MONTH.ordinal()]).
+                append(COMMA).append(array[i][DeathColumn.FEMALE_UNDER_9_MONTH.ordinal()]).
+                append(COMMA).append(array[i][DeathColumn.TOTAL_UNDER_12_MONTH.ordinal()]).
+                append(COMMA).append(array[i][DeathColumn.MALE_UNDER_12_MONTH.ordinal()]).
+                append(COMMA).append(array[i][DeathColumn.FEMALE_UNDER_12_MONTH.ordinal()]).append(NEW_LINE);
         }
 
         String dirPath3_2 = "reports" + File.separator + year;
@@ -1995,7 +2008,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         /*  INFANT_DEATH_TABLE 3.3  */
 
         StringBuilder csv3_3 = new StringBuilder();
-        String filename3_3 = ReportCodes.INFANT_DEATH_TABLE_3_3_NAME + ".csv";
+        String filename3_3 = ReportCodes.INFANT_DEATH_TABLE_3_3_NAME + CSV_EXT;
         csv3_3.append("DISTRICT,");
 
         for (int i = 0; i < BirthMonthlyStatistics.NO_OF_RACES; i++) {
@@ -2004,29 +2017,55 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
             if (race != null) {
                 raceName = race.getEnRaceName().toUpperCase();
             }
-            csv3_3.append(raceName + " TOTAL," + raceName + " MALE," + raceName + " FEMALE,");
+            csv3_3.append(raceName).append(" TOTAL,").append(raceName).append(" MALE,").append(raceName).append(" FEMALE,");
         }
 
-        csv3_3.append("\n");
+        csv3_3.append(NEW_LINE);
 
         for (int i = 0; i < BirthIslandWideStatistics.NO_OF_DISTRICTS; i++) {
             String districtName = "Unknown";
             if (districtDAO.getDistrict(i + 1) != null) {
                 districtName = districtDAO.getDistrict(i + 1).getEnDistrictName();
             }
-            csv3_3.append(districtName + "," + array[i][DeathColumn.SINHALESE_TOTAL.ordinal()] + "," + array[i][DeathColumn.SINHALESE_MALE.ordinal()] + "," + array[i][DeathColumn.SINHALESE_FEMALE.ordinal()] +
-                "," + array[i][DeathColumn.SRI_LANKAN_TAMIL_TOTAL.ordinal()] + "," + array[i][DeathColumn.SRI_LANKAN_TAMIL_MALE.ordinal()] + "," + array[i][DeathColumn.SRI_LANKAN_TAMIL_FEMALE.ordinal()] +
-                "," + array[i][DeathColumn.INDIAN_TAMIL_TOTAL.ordinal()] + "," + array[i][DeathColumn.INDIAN_TAMIL_MALE.ordinal()] + "," + array[i][DeathColumn.INDIAN_TAMIL_FEMALE.ordinal()] +
-                "," + array[i][DeathColumn.SRI_LANKAN_MOOR_TOTAL.ordinal()] + "," + array[i][DeathColumn.SRI_LANKAN_MOOR_MALE.ordinal()] + "," + array[i][DeathColumn.SRI_LANKAN_MOOR_FEMALE.ordinal()] +
-                "," + array[i][DeathColumn.BURGHER_TOTAL.ordinal()] + "," + array[i][DeathColumn.BURGHER_MALE.ordinal()] + "," + array[i][DeathColumn.BURGHER_FEMALE.ordinal()] +
-                "," + array[i][DeathColumn.MALAY_TOTAL.ordinal()] + "," + array[i][DeathColumn.MALAY_MALE.ordinal()] + "," + array[i][DeathColumn.MALAY_FEMALE.ordinal()] +
-                "," + array[i][DeathColumn.SRI_LANKAN_CHETTY_TOTAL.ordinal()] + "," + array[i][DeathColumn.SRI_LANKAN_CHETTY_MALE.ordinal()] + "," + array[i][DeathColumn.SRI_LANKAN_CHETTY_FEMALE.ordinal()] +
-                "," + array[i][DeathColumn.BHARATHA_TOTAL.ordinal()] + "," + array[i][DeathColumn.BHARATHA_MALE.ordinal()] + "," + array[i][DeathColumn.BHARATHA_FEMALE.ordinal()] +
-                "," + array[i][DeathColumn.INDIAN_MOOR_TOTAL.ordinal()] + "," + array[i][DeathColumn.INDIAN_MOOR_MALE.ordinal()] + "," + array[i][DeathColumn.INDIAN_MOOR_FEMALE.ordinal()] +
-                "," + array[i][DeathColumn.PAKISTAN_TOTAL.ordinal()] + "," + array[i][DeathColumn.PAKISTAN_MALE.ordinal()] + "," + array[i][DeathColumn.PAKISTAN_FEMALE.ordinal()] +
-                "," + array[i][DeathColumn.OTHER_FOREIGNERS_TOTAL.ordinal()] + "," + array[i][DeathColumn.OTHER_FOREIGNERS_MALE.ordinal()] + "," + array[i][DeathColumn.OTHER_FOREIGNERS_FEMALE.ordinal()] +
-                "," + array[i][DeathColumn.OTHER_SL_TOTAL.ordinal()] + "," + array[i][DeathColumn.OTHER_SL_MALE.ordinal()] + "," + array[i][DeathColumn.OTHER_SL_FEMALE.ordinal()] +
-                "," + array[i][DeathColumn.UNKNOWN_RACE_TOTAL.ordinal()] + "," + array[i][DeathColumn.UNKNOWN_RACE_MALE.ordinal()] + "," + array[i][DeathColumn.UNKNOWN_RACE_FEMALE.ordinal()] + "\n");
+            csv3_3.append(districtName).append(COMMA).append(array[i][DeathColumn.SINHALESE_TOTAL.ordinal()]).
+                append(COMMA).append(array[i][DeathColumn.SINHALESE_MALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.SINHALESE_FEMALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.SRI_LANKAN_TAMIL_TOTAL.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.SRI_LANKAN_TAMIL_MALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.SRI_LANKAN_TAMIL_FEMALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.INDIAN_TAMIL_TOTAL.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.INDIAN_TAMIL_MALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.INDIAN_TAMIL_FEMALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.SRI_LANKAN_MOOR_TOTAL.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.SRI_LANKAN_MOOR_MALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.SRI_LANKAN_MOOR_FEMALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.BURGHER_TOTAL.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.BURGHER_MALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.BURGHER_FEMALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.MALAY_TOTAL.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.MALAY_MALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.MALAY_FEMALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.SRI_LANKAN_CHETTY_TOTAL.ordinal()]).
+                append(COMMA).append(array[i][DeathColumn.SRI_LANKAN_CHETTY_MALE.ordinal()]).
+                append(COMMA).append(array[i][DeathColumn.SRI_LANKAN_CHETTY_FEMALE.ordinal()]).
+                append(COMMA).append(array[i][DeathColumn.BHARATHA_TOTAL.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.BHARATHA_MALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.BHARATHA_FEMALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.INDIAN_MOOR_TOTAL.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.INDIAN_MOOR_MALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.INDIAN_MOOR_FEMALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.PAKISTAN_TOTAL.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.PAKISTAN_MALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.PAKISTAN_FEMALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.OTHER_FOREIGNERS_TOTAL.ordinal()]).
+                append(COMMA).append(array[i][DeathColumn.OTHER_FOREIGNERS_MALE.ordinal()]).
+                append(COMMA).append(array[i][DeathColumn.OTHER_FOREIGNERS_FEMALE.ordinal()]).
+                append(COMMA).append(array[i][DeathColumn.OTHER_SL_TOTAL.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.OTHER_SL_MALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.OTHER_SL_FEMALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.UNKNOWN_RACE_TOTAL.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.UNKNOWN_RACE_MALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.UNKNOWN_RACE_FEMALE.ordinal()]).append(NEW_LINE);
         }
 
         String dirPath3_3 = "reports" + File.separator + year;
@@ -2047,7 +2086,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         /*  INFANT_DEATH_TABLE 3.4  */
 
         StringBuilder csv3_4 = new StringBuilder();
-        String filename3_4 = ReportCodes.INFANT_DEATH_TABLE_3_4_NAME + ".csv";
+        String filename3_4 = ReportCodes.INFANT_DEATH_TABLE_3_4_NAME + CSV_EXT;
         csv3_4.append("DISTRICT,");
 
         csv3_4.append("JANUARY_TOTAL,JANUARY_MALE,JANUARY_FEMALE," +
@@ -2062,26 +2101,49 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
             "OCTOBER_TOTAL,OCTOBER_MALE,OCTOBER_FEMALE," +
             "NOVEMBER_TOTAL,NOVEMBER_MALE,NOVEMBER_FEMALE," +
             "DECEMBER_TOTAL,DECEMBER_MALE,DECEMBER_FEMALE,");
-        csv3_4.append("\n");
+        csv3_4.append(NEW_LINE);
 
         for (int i = 0; i < BirthIslandWideStatistics.NO_OF_DISTRICTS; i++) {
             String districtName = "Unknown";
             if (districtDAO.getDistrict(i + 1) != null) {
                 districtName = districtDAO.getDistrict(i + 1).getEnDistrictName();
             }
-            csv3_4.append(districtName + "," + array[i][DeathColumn.JANUARY_TOTAL.ordinal()] + "," + array[i][DeathColumn.JANUARY_MALE.ordinal()] + "," + array[i][DeathColumn.JANUARY_FEMALE.ordinal()] +
-                "," + array[i][DeathColumn.FEBRUARY_TOTAL.ordinal()] + "," + array[i][DeathColumn.FEBRUARY_MALE.ordinal()] + "," + array[i][DeathColumn.FEBRUARY_FEMALE.ordinal()] +
-                "," + array[i][DeathColumn.MARCH_TOTAL.ordinal()] + "," + array[i][DeathColumn.MARCH_MALE.ordinal()] + "," + array[i][DeathColumn.MARCH_FEMALE.ordinal()] +
-                "," + array[i][DeathColumn.APRIL_TOTAL.ordinal()] + "," + array[i][DeathColumn.APRIL_MALE.ordinal()] + "," + array[i][DeathColumn.APRIL_FEMALE.ordinal()] +
-                "," + array[i][DeathColumn.MAY_TOTAL.ordinal()] + "," + array[i][DeathColumn.MAY_MALE.ordinal()] + "," + array[i][DeathColumn.MAY_FEMALE.ordinal()] +
-                "," + array[i][DeathColumn.JUNE_TOTAL.ordinal()] + "," + array[i][DeathColumn.JUNE_MALE.ordinal()] + "," + array[i][DeathColumn.JUNE_FEMALE.ordinal()] +
-                "," + array[i][DeathColumn.JULY_TOTAL.ordinal()] + "," + array[i][DeathColumn.JULY_MALE.ordinal()] + "," + array[i][DeathColumn.JULY_FEMALE.ordinal()] +
-                "," + array[i][DeathColumn.AUGUST_TOTAL.ordinal()] + "," + array[i][DeathColumn.AUGUST_MALE.ordinal()] + "," + array[i][DeathColumn.AUGUST_FEMALE.ordinal()] +
-                "," + array[i][DeathColumn.SEPTEMBER_TOTAL.ordinal()] + "," + array[i][DeathColumn.SEPTEMBER_MALE.ordinal()] + "," + array[i][DeathColumn.SEPTEMBER_FEMALE.ordinal()] +
-                "," + array[i][DeathColumn.OCTOBER_TOTAL.ordinal()] + "," + array[i][DeathColumn.OCTOBER_MALE.ordinal()] + "," + array[i][DeathColumn.OCTOBER_FEMALE.ordinal()] +
-                "," + array[i][DeathColumn.NOVEMBER_TOTAL.ordinal()] + "," + array[i][DeathColumn.NOVEMBER_MALE.ordinal()] + "," + array[i][DeathColumn.NOVEMBER_FEMALE.ordinal()] +
-                "," + array[i][DeathColumn.DECEMBER_TOTAL.ordinal()] + "," + array[i][DeathColumn.DECEMBER_MALE.ordinal()] + "," + array[i][DeathColumn.DECEMBER_FEMALE.ordinal()] +
-                "," + "\n");
+            csv3_4.append(districtName).append(COMMA).append(array[i][DeathColumn.JANUARY_TOTAL.ordinal()]).
+                append(COMMA).append(array[i][DeathColumn.JANUARY_MALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.JANUARY_FEMALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.FEBRUARY_TOTAL.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.FEBRUARY_MALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.FEBRUARY_FEMALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.MARCH_TOTAL.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.MARCH_MALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.MARCH_FEMALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.APRIL_TOTAL.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.APRIL_MALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.APRIL_FEMALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.MAY_TOTAL.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.MAY_MALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.MAY_FEMALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.JUNE_TOTAL.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.JUNE_MALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.JUNE_FEMALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.JULY_TOTAL.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.JULY_MALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.JULY_FEMALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.AUGUST_TOTAL.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.AUGUST_MALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.AUGUST_FEMALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.SEPTEMBER_TOTAL.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.SEPTEMBER_MALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.SEPTEMBER_FEMALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.OCTOBER_TOTAL.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.OCTOBER_MALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.OCTOBER_FEMALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.NOVEMBER_TOTAL.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.NOVEMBER_MALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.NOVEMBER_FEMALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.DECEMBER_TOTAL.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.DECEMBER_MALE.ordinal()]).append(COMMA).
+                append(array[i][DeathColumn.DECEMBER_FEMALE.ordinal()]).append(COMMA).append(NEW_LINE);
         }
 
         String dirPath3_4 = "reports" + File.separator + year;
@@ -2113,7 +2175,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         }
 
         List<DSDivision> dsDivisions = dsDivisionDAO.findAll();
-        User systemUser = userManagementService.getSystemUser();
+        User systemUser = userMgtSvc.getSystemUser();
         List<BirthDeclaration> birthRecords;
 
         Calendar cal = Calendar.getInstance();
@@ -2127,73 +2189,72 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         Date endDate = cal.getTime();
 
         StringBuilder csv = new StringBuilder();
-        String filename = ReportCodes.BIRTH_RAW_DATA_NAME + ".csv";
-        csv.append(
-            "DSDIVISION_NAME," +
-                "BIRTH_AT_HOSPITAL," +
-                "CHILD_BIRTH_WEIGHT," +
-                "CHILD_GENDER," +
-                "CHILD_RANK," +
-                "DATE_OF_BIRTH," +
-                "NUMBER_OF_CHILDREN_BORN," +
-                "PIN," +
-                "PLACE_OF_BIRTH," +
-                "WEEKS_PREGNANT," +
-                "CONFIRMANT_NIC_OR_PIN," +
-                "CONFIRMATION_PROCESSED_TIMESTAMP," +
-                "LAST_DATE_FOR_CONFIRMATION," +
-                "GRANDFATHER_BIRTH_PLACE," +
-                "GRANDFATHER_BIRTH_YEAR," +
-                "GRANDFATHER_NIC_OR_PIN," +
-                "GREAT_GRAND_FATHER_BIRTH_PLACE," +
-                "GREAT_GRAND_FATHER_BIRTH_YEAR," +
-                "GREAT_GRAND_FATHER_NIC_OR_PIN," +
-                "INFORMANT_EMAIL," +
-                "INFORMANT_NIC_OR_PIN," +
-                "INFORMANT_PHONE_NO," +
-                "INFORMANT_SIGN_DATE," +
-                "INFORMANT_TYPE," +
-                "DATE_OF_MARRIAGE," +
-                "FATHER_SIGNED," +
-                "MOTHER_SIGNED," +
-                "PARENTS_MARRIED," +
-                "PLACE_OF_MARRIAGE," +
-                "NOTIFYING_AUTHORITY_PIN," +
-                "NOTIFYING_AUTHORITY_SIGN_DATE," +
-                "FATHER_DOB," +
-                "FATHER_NIC_OR_PIN," +
-                "FATHER_PASSPORT_NO," +
-                "FATHER_PLACE_OF_BIRTH," +
-                "MOTHER_ADMISSION_DATE," +
-                "MOTHER_ADMISSION_NO," +
-                "MOTHER_AGE_AT_BIRTH," +
-                "MOTHER_DOB," +
-                "MOTHER_EMAIL," +
-                "MOTHER_NIC_OR_PIN," +
-                "MOTHER_PASSPORT_NO," +
-                "MOTHER_PHONE_NO," +
-                "MOTHER_PLACE_OF_BIRTH," +
-                "BDF_SERIAL_NO," +
-                "BIRTH_TYPE," +
-                "CASE_FILE_NUMBER," +
-                "DATE_OF_REGISTRATION," +
-                "CONFIRMATION_PROCESSED_USERID," +
-                "APPROVAL_OR_REJECT_USERID," +
-                "CERTIFICATE_GENERATED_USERID," +
-                "CREATED_USERID," +
-                "FATHER_COUNTRY_ID," +
-                "FATHER_RACE," +
-                "MOTHER_COUNTRY_ID," +
-                "MOTHER_DSDIVISION_UKEY," +
-                "MOTHER_RACE," +
-                "BDDIVISION_UKEY," +
-                "ORIGINAL_BC_ISSUE_USERID," +
-                "ORIGINAL_BCP_ISSUE_LOCATIONID\n");
+        String filename = ReportCodes.BIRTH_RAW_DATA_NAME + CSV_EXT;
+        csv.append("DSDIVISION_NAME").append(COMMA).
+            append("BIRTH_AT_HOSPITAL").append(COMMA).
+            append("CHILD_BIRTH_WEIGHT").append(COMMA).
+            append("CHILD_GENDER").append(COMMA).
+            append("CHILD_RANK").append(COMMA).
+            append("CHILD_DOB").append(COMMA).
+            append("NUMBER_OF_CHILDREN_BORN").append(COMMA).
+            append("CHILD_PIN").append(COMMA).
+            append("PLACE_OF_BIRTH").append(COMMA).
+            append("WEEKS_PREGNANT").append(COMMA).
+            append("CONFIRMANT_NIC_OR_PIN").append(COMMA).
+            append("CONFIRMATION_PROCESSED_TIMESTAMP").append(COMMA).
+            append("LAST_DATE_FOR_CONFIRMATION").append(COMMA).
+            append("GRANDFATHER_BIRTH_PLACE").append(COMMA).
+            append("GRANDFATHER_BIRTH_YEAR").append(COMMA).
+            append("GRANDFATHER_NIC_OR_PIN").append(COMMA).
+            append("GREAT_GRAND_FATHER_BIRTH_PLACE").append(COMMA).
+            append("GREAT_GRAND_FATHER_BIRTH_YEAR").append(COMMA).
+            append("GREAT_GRAND_FATHER_NIC_OR_PIN").append(COMMA).
+            append("INFORMANT_EMAIL").append(COMMA).
+            append("INFORMANT_NIC_OR_PIN").append(COMMA).
+            append("INFORMANT_PHONE_NO").append(COMMA).
+            append("INFORMANT_SIGN_DATE").append(COMMA).
+            append("INFORMANT_TYPE").append(COMMA).
+            append("DATE_OF_MARRIAGE").append(COMMA).
+            append("FATHER_SIGNED").append(COMMA).
+            append("MOTHER_SIGNED").append(COMMA).
+            append("PARENTS_MARRIED").append(COMMA).
+            append("PLACE_OF_MARRIAGE").append(COMMA).
+            append("NOTIFYING_AUTHORITY_PIN").append(COMMA).
+            append("NOTIFYING_AUTHORITY_SIGN_DATE").append(COMMA).
+            append("FATHER_DOB").append(COMMA).
+            append("FATHER_NIC_OR_PIN").append(COMMA).
+            append("FATHER_PASSPORT_NO").append(COMMA).
+            append("FATHER_PLACE_OF_BIRTH").append(COMMA).
+            append("MOTHER_ADMISSION_DATE").append(COMMA).
+            append("MOTHER_ADMISSION_NO").append(COMMA).
+            append("MOTHER_AGE_AT_BIRTH").append(COMMA).
+            append("MOTHER_DOB").append(COMMA).
+            append("MOTHER_EMAIL").append(COMMA).
+            append("MOTHER_NIC_OR_PIN").append(COMMA).
+            append("MOTHER_PASSPORT_NO").append(COMMA).
+            append("MOTHER_PHONE_NO").append(COMMA).
+            append("MOTHER_PLACE_OF_BIRTH").append(COMMA).
+            append("BDF_SERIAL_NO").append(COMMA).
+            append("BIRTH_TYPE").append(COMMA).
+            append("CASE_FILE_NUMBER").append(COMMA).
+            append("DATE_OF_REGISTRATION").append(COMMA).
+            append("CONFIRMATION_PROCESSED_USERID").append(COMMA).
+            append("APPROVAL_OR_REJECT_USERID").append(COMMA).
+            append("CERTIFICATE_GENERATED_USERID").append(COMMA).
+            append("CREATED_USERID").append(COMMA).
+            append("FATHER_COUNTRY_ID").append(COMMA).
+            append("FATHER_RACE").append(COMMA).
+            append("MOTHER_COUNTRY_ID").append(COMMA).
+            append("MOTHER_DSDIVISION_UKEY").append(COMMA).
+            append("MOTHER_RACE").append(COMMA).
+            append("BDDIVISION_UKEY").append(COMMA).
+            append("ORIGINAL_BC_ISSUE_USERID").append(COMMA).
+            append("ORIGINAL_BCP_ISSUE_LOCATIONID\n");
 
         for (DSDivision dsDivision : dsDivisions) {
-            birthRecords = birthRegister.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
+            birthRecords = birthRegSvc.getByDSDivisionAndStatusAndBirthDateRange(dsDivision, startDate, endDate,
                 BirthDeclaration.State.ARCHIVED_CERT_PRINTED, systemUser);
-            csv.append(dsDivision.getEnDivisionName() + ",");
+            csv.append(dsDivision.getEnDivisionName()).append(COMMA);
 
             boolean noRecords = true;
             int count = 0;
@@ -2210,161 +2271,160 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 NotifyingAuthorityInfo notify = bd.getNotifyingAuthority();
                 BirthRegisterInfo birth = bd.getRegister();
                 if (count > 0) {
-                    csv.append(dsDivision.getEnDivisionName() + ",");
+                    csv.append(dsDivision.getEnDivisionName()).append(COMMA);
                 }
 
                 if (child != null) {
-                    csv.append(
-                        child.getBirthAtHospital() + "," +
-                            child.getChildBirthWeight() + "," +
-                            child.getChildGender() + "," +
-                            child.getChildRank() + "," +
-                            child.getDateOfBirth() + "," +
-                            child.getNumberOfChildrenBorn() + "," +
-                            child.getPin() + "," +
-                            child.getPlaceOfBirth() + "," +
-                            child.getWeeksPregnant() + ",");
+                    csv.append(child.getBirthAtHospital()).append(COMMA).
+                        append(child.getChildBirthWeight()).append(COMMA).
+                        append(child.getChildGender()).append(COMMA).
+                        append(child.getChildRank()).append(COMMA).
+                        append(child.getDateOfBirth()).append(COMMA).
+                        append(child.getNumberOfChildrenBorn()).append(COMMA).
+                        append(child.getPin()).append(COMMA).
+                        append(QUOTE).append(child.getPlaceOfBirth()).append(QUOTE).append(COMMA).
+                        append(child.getWeeksPregnant()).append(COMMA);
                 } else {
                     csv.append(",,,,,,,,,");
                 }
 
                 if (confirm != null) {
-                    csv.append(confirm.getConfirmantNICorPIN() + "," +
-                        confirm.getConfirmationProcessedTimestamp() + "," +
-                        confirm.getLastDateForConfirmation() + ",");
+                    csv.append(confirm.getConfirmantNICorPIN()).append(COMMA).
+                        append(confirm.getConfirmationProcessedTimestamp()).append(COMMA).
+                        append(confirm.getLastDateForConfirmation()).append(COMMA);
                 } else {
                     csv.append(",,,");
                 }
                 if (grandFather != null) {
-                    csv.append(grandFather.getGrandFatherBirthPlace() + "," +
-                        grandFather.getGrandFatherBirthYear() + "," +
-                        grandFather.getGrandFatherNICorPIN() + ",");
+                    csv.append(QUOTE).append(grandFather.getGrandFatherBirthPlace()).append(QUOTE).append(COMMA).
+                        append(grandFather.getGrandFatherBirthYear()).append(COMMA).
+                        append(grandFather.getGrandFatherNICorPIN()).append(COMMA).
+                        append(QUOTE).append(grandFather.getGreatGrandFatherBirthPlace()).append(QUOTE).append(COMMA).
+                        append(grandFather.getGreatGrandFatherBirthYear()).append(COMMA).
+                        append(grandFather.getGreatGrandFatherNICorPIN()).append(COMMA);
+
                 } else {
                     csv.append(",,,");
                 }
                 if (inform != null) {
-                    csv.append(inform.getInformantEmail() + "," +
-                        inform.getInformantNICorPIN() + "," +
-                        inform.getInformantPhoneNo() + "," +
-                        inform.getInformantType() + ",");
+                    csv.append(inform.getInformantEmail()).append(COMMA).
+                        append(inform.getInformantNICorPIN()).append(COMMA).
+                        append(inform.getInformantPhoneNo()).append(COMMA).
+                        append(inform.getInformantSignDate()).append(COMMA).
+                        append(inform.getInformantType()).append(COMMA);
                 } else {
                     csv.append(",,,,");
                 }
                 if (marriage != null) {
-                    csv.append(marriage.getDateOfMarriage() + "," +
-                        marriage.isFatherSigned() + "," +
-                        marriage.isMotherSigned() + "," +
-                        marriage.getParentsMarried() + "," +
-                        marriage.getPlaceOfMarriage() + ",");
+                    csv.append(marriage.getDateOfMarriage()).append(COMMA).
+                        append(marriage.isFatherSigned()).append(COMMA).
+                        append(marriage.isMotherSigned()).append(COMMA).
+                        append(marriage.getParentsMarried()).append(COMMA).
+                        append(QUOTE).append(marriage.getPlaceOfMarriage()).append(QUOTE).append(COMMA);
                 } else {
                     csv.append(",,,,,");
                 }
                 if (notify != null) {
-                    csv.append(notify.getNotifyingAuthorityPIN() + "," +
-                        notify.getNotifyingAuthoritySignDate() + ",");
+                    csv.append(notify.getNotifyingAuthorityPIN()).append(COMMA).
+                        append(notify.getNotifyingAuthoritySignDate()).append(COMMA);
                 } else {
                     csv.append(",,");
                 }
 
                 if (parent != null) {
-                    csv.append(parent.getFatherDOB() + "," +
-                        parent.getFatherNICorPIN() + "," +
-                        parent.getFatherPassportNo() + "," +
-                        parent.getFatherPlaceOfBirth() + "," +
-                        parent.getMotherAdmissionDate() + "," +
-                        parent.getMotherAdmissionNo() + "," +
-                        parent.getMotherAgeAtBirth() + "," +
-                        parent.getMotherDOB() + "," +
-                        parent.getMotherEmail() + "," +
-                        parent.getMotherNICorPIN() + "," +
-                        parent.getMotherPassportNo() + "," +
-                        parent.getMotherPhoneNo() + "," +
-                        parent.getMotherPlaceOfBirth() + ",");
+                    csv.append(parent.getFatherDOB()).append(COMMA).
+                        append(parent.getFatherNICorPIN()).append(COMMA).
+                        append(parent.getFatherPassportNo()).append(COMMA).
+                        append(QUOTE).append(parent.getFatherPlaceOfBirth()).append(QUOTE).append(COMMA).
+                        append(parent.getMotherAdmissionDate()).append(COMMA).
+                        append(parent.getMotherAdmissionNo()).append(COMMA).
+                        append(parent.getMotherAgeAtBirth()).append(COMMA).
+                        append(parent.getMotherDOB()).append(COMMA).
+                        append(parent.getMotherEmail()).append(COMMA).
+                        append(parent.getMotherNICorPIN()).append(COMMA).
+                        append(parent.getMotherPassportNo()).append(COMMA).
+                        append(parent.getMotherPhoneNo()).append(COMMA).
+                        append(QUOTE).append(parent.getMotherPlaceOfBirth()).append(QUOTE).append(COMMA);
                 } else {
                     csv.append(",,,,,,,,,,,,,");
                 }
                 if (birth != null) {
-                    csv.append(birth.getBdfSerialNo() + "," +
-                        birth.getBirthType() + "," +
-                        birth.getCaseFileNumber() + "," +
-                        birth.getDateOfRegistration() + ",");
+                    csv.append(birth.getBdfSerialNo()).append(COMMA).
+                        append(birth.getBirthType()).append(COMMA).
+                        append(birth.getCaseFileNumber()).append(COMMA).
+                        append(birth.getDateOfRegistration()).append(COMMA);
                 } else {
                     csv.append(",,,,");
                 }
                 if (confirm != null) {
                     if (confirm.getConfirmationProcessedUser() != null) {
-                        csv.append(confirm.getConfirmationProcessedUser().getUserId() + ",");
-                    } else {
-                        csv.append(",");
+                        csv.append(confirm.getConfirmationProcessedUser().getUserId());
                     }
+                    csv.append(COMMA);
                 } else {
-                    csv.append(",");
+                    csv.append(COMMA);
                 }
                 if (life != null) {
                     if (life.getApprovalOrRejectUser() != null) {
-                        csv.append(life.getApprovalOrRejectUser().getUserId() + ",");
-                    } else {
-                        csv.append(",");
+                        csv.append(life.getApprovalOrRejectUser().getUserId());
                     }
+                    csv.append(COMMA);
                     if (life.getCertificateGeneratedUser() != null) {
-                        csv.append(life.getCertificateGeneratedUser().getUserId() + ",");
-                    } else {
-                        csv.append(",");
+                        csv.append(life.getCertificateGeneratedUser().getUserId());
                     }
+                    csv.append(COMMA);
                     if (life.getCreatedUser() != null) {
-                        //csv.append(life.getCreatedUser().getUserId() + ",");
-                        csv.append(",");
-                    } else {
-                        csv.append(",");
+                        csv.append(life.getCreatedUser().getUserId());
                     }
+                    csv.append(COMMA);
                 } else {
                     csv.append(",,,");
                 }
                 if (parent != null) {
                     if (parent.getFatherCountry() != null) {
-                        csv.append(parent.getFatherCountry().getCountryId() + ",");
-                    } else {
-                        csv.append(",");
+                        csv.append(parent.getFatherCountry().getCountryCode());
                     }
-                    csv.append(parent.getFatherRace() + ",");
+                    csv.append(COMMA);
+                    if (parent.getFatherRace() != null) {
+                        csv.append(parent.getFatherRace().getRaceId());
+                    }
+                    csv.append(COMMA);
                     if (parent.getMotherCountry() != null) {
-                        csv.append(parent.getMotherCountry().getCountryId() + ",");
-                    } else {
-                        csv.append(",");
+                        csv.append(parent.getMotherCountry().getCountryCode());
                     }
+                    csv.append(COMMA);
                     if (parent.getMotherDSDivision() != null) {
-                        csv.append(parent.getMotherDSDivision().getDsDivisionUKey() + ",");
-                    } else {
-                        csv.append(",");
+                        csv.append(parent.getMotherDSDivision().getDivisionId());
                     }
-                    csv.append(parent.getMotherRace() + ",");
+                    csv.append(COMMA);
+                    if (parent.getMotherRace() != null) {
+                        csv.append(parent.getMotherRace().getRaceId());
+                    }
+                    csv.append(COMMA);
                 } else {
                     csv.append(",,,,,");
                 }
                 if (birth != null) {
                     if (birth.getBirthDivision() != null) {
-                        csv.append(birth.getBirthDivision().getDivisionId() + ",");
-                    } else {
-                        csv.append(",");
+                        csv.append(birth.getBirthDivision().getDivisionId());
                     }
+                    csv.append(COMMA);
                     if (birth.getOriginalBCIssueUser() != null) {
-                        csv.append(birth.getOriginalBCIssueUser().getUserId() + ",");
-                    } else {
-                        csv.append(",");
+                        csv.append(birth.getOriginalBCIssueUser().getUserId());
                     }
+                    csv.append(COMMA);
                     if (birth.getOriginalBCPlaceOfIssue() != null) {
-                        csv.append(birth.getOriginalBCPlaceOfIssue().getLocationCode() + ",");
-                    } else {
-                        csv.append(",");
+                        csv.append(birth.getOriginalBCPlaceOfIssue().getLocationCode());
                     }
+                    csv.append(COMMA);
                 } else {
                     csv.append(",,,");
                 }
-                csv.append("\n");
+                csv.append(NEW_LINE);
                 count++;
             }
             if (noRecords) {
-                csv.append("\n");
+                csv.append(NEW_LINE);
             }
         }
 
@@ -2394,7 +2454,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         }
 
         List<DSDivision> dsDivisionList = dsDivisionDAO.findAll();
-        User systemUser = userManagementService.getSystemUser();
+        User systemUser = userMgtSvc.getSystemUser();
         List<DeathRegister> deathRecords;
 
         Calendar cal = Calendar.getInstance();
@@ -2408,52 +2468,51 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         Date endDate = cal.getTime();
 
         StringBuilder csv = new StringBuilder();
-        String filename = ReportCodes.DEATH_RAW_DATA_NAME + ".csv";
+        String filename = ReportCodes.DEATH_RAW_DATA_NAME + CSV_EXT;
 
-        csv.append(
-            "DIVISION_NAME" + "," +
-                "CAUSE_OF_DEATH," +
-                "CAUSE_OF_DEATH_ESTABLISHED," +
-                "DATE_OF_DEATH," +
-                "DATE_OF_REGISTRATION," +
-                "DEATH_SERIALNO," +
-                "ICD_CODE_OF_CAUSE," +
-                "INFANT_LESS_THAN_30_DAYS," +
-                "PLACE_OF_BURIAL," +
-                "PLACE_OF_DEATH_IN_ENGLISH" +
-                "PLACE_OF_ISSUE," +
-                "TIME_OF_DEATH," +
-                "DEATH_PERSON_AGE," +
-                "DEATH_PERSON_DOB," +
-                "DEATH_PERSON_FATHER_PIN_OR_NIC," +
-                "DEATH_PERSON_GENDER," +
-                "DEATH_PERSON_MOTHER_PIN_OR_NIC," +
-                "DEATH_PERSON_PIN_OR_NIC," +
-                "DEATH_PERSON_PASSPORT_NO," +
-                "DEATH_TYPE," +
-                "DECLARANT_EMAIL," +
-                "DECLARANT_NIC_OR_PIN," +
-                "DECLARANT_PHONE," +
-                "DECLARANT_TYPE," +
-                "APPROVAL_OR_REJECT_TIMESTAMP," +
-                "CERTIFICATE_GENERATED_TIMESTAMP," +
-                "CREATED_TIMESTAMP," +
-                "NOTIFYING_AUTHORITY_PIN," +
-                "NOTIFYING_AUTHORITY_SIGNDATE," +
-                "STATUS," +
-                "BDDIVISION_UKEY," +
-                "DEATH_PERSON_COUNTRYID," +
-                "DEATH_PERSON_RACE," +
-                "APPROVAL_OR_REJECT_USERID," +
-                "CERTIFICATE_GENERATED_USERID," +
-                "CREATED_USERID," +
-                "ORIGINAL_DC_ISSUE_USERID," +
-                "ORIGINAL_DCP_ISSUE_LOCATIONID\n");
+        csv.append("DIVISION_NAME").append(COMMA).
+            append("CAUSE_OF_DEATH").append(COMMA).
+            append("CAUSE_OF_DEATH_ESTABLISHED").append(COMMA).
+            append("DATE_OF_DEATH").append(COMMA).
+            append("DATE_OF_REGISTRATION").append(COMMA).
+            append("DEATH_SERIALNO").append(COMMA).
+            append("ICD_CODE_OF_CAUSE").append(COMMA).
+            append("INFANT_LESS_THAN_30_DAYS").append(COMMA).
+            append("PLACE_OF_BURIAL").append(COMMA).
+            append("PLACE_OF_DEATH_IN_ENGLISH").append(COMMA).
+            append("PLACE_OF_ISSUE").append(COMMA).
+            append("TIME_OF_DEATH").append(COMMA).
+            append("DEATH_PERSON_AGE").append(COMMA).
+            append("DEATH_PERSON_DOB").append(COMMA).
+            append("DEATH_PERSON_FATHER_PIN_OR_NIC").append(COMMA).
+            append("DEATH_PERSON_GENDER").append(COMMA).
+            append("DEATH_PERSON_MOTHER_PIN_OR_NIC").append(COMMA).
+            append("DEATH_PERSON_PIN_OR_NIC").append(COMMA).
+            append("DEATH_PERSON_PASSPORT_NO").append(COMMA).
+            append("DEATH_TYPE").append(COMMA).
+            append("DECLARANT_EMAIL").append(COMMA).
+            append("DECLARANT_NIC_OR_PIN").append(COMMA).
+            append("DECLARANT_PHONE").append(COMMA).
+            append("DECLARANT_TYPE").append(COMMA).
+            append("APPROVAL_OR_REJECT_TIMESTAMP").append(COMMA).
+            append("CERTIFICATE_GENERATED_TIMESTAMP").append(COMMA).
+            append("CREATED_TIMESTAMP").append(COMMA).
+            append("NOTIFYING_AUTHORITY_PIN").append(COMMA).
+            append("NOTIFYING_AUTHORITY_SIGNDATE").append(COMMA).
+            append("STATUS").append(COMMA).
+            append("BDDIVISION_CODE").append(COMMA).
+            append("DEATH_PERSON_COUNTRYID").append(COMMA).
+            append("DEATH_PERSON_RACE").append(COMMA).
+            append("APPROVAL_OR_REJECT_USERID").append(COMMA).
+            append("CERTIFICATE_GENERATED_USERID").append(COMMA).
+            append("CREATED_USERID").append(COMMA).
+            append("ORIGINAL_DC_ISSUE_USERID").append(COMMA).
+            append("ORIGINAL_DCP_ISSUE_LOCATIONID\n");
 
         for (DSDivision dsDivision : dsDivisionList) {
-            deathRecords = deathRegister.getByDSDivisionAndStatusAndRegistrationDateRange(
+            deathRecords = deathRegSvc.getByDSDivisionAndStatusAndRegistrationDateRange(
                 dsDivision, startDate, endDate, DeathRegister.State.ARCHIVED_CERT_GENERATED, systemUser);
-            csv.append(dsDivision.getEnDivisionName() + ",");
+            csv.append(dsDivision.getEnDivisionName()).append(COMMA);
 
             boolean noRecords = true;
             int count = 0;
@@ -2467,120 +2526,103 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 NotifyingAuthorityInfo notify = deathRegister.getNotifyingAuthority();
 
                 if (count > 0) {
-                    csv.append(dsDivision.getEnDivisionName() + ",");
+                    csv.append(dsDivision.getEnDivisionName()).append(COMMA);
                 }
 
                 if (info != null) {
-                    csv.append(
-                        info.getCauseOfDeath() + "," +
-                            info.isCauseOfDeathEstablished() + "," +
-                            info.getDateOfDeath() + "," +
-                            info.getDateOfRegistration() + "," +
-                            info.getDeathSerialNo() + "," +
-                            info.getIcdCodeOfCause() + "," +
-                            info.isInfantLessThan30Days() + "," +
-                            info.getPlaceOfBurial() + "," +
-                            info.getPlaceOfDeath() + "," +
-                            info.getPlaceOfIssue() + "," +
-                            info.getTimeOfDeath() + ","
-                    );
+                    csv.append(QUOTE).append(info.getCauseOfDeath()).append(QUOTE).append(COMMA).
+                        append(info.isCauseOfDeathEstablished()).append(COMMA).
+                        append(info.getDateOfDeath()).append(COMMA).
+                        append(info.getDateOfRegistration()).append(COMMA).
+                        append(info.getDeathSerialNo()).append(COMMA).
+                        append(info.getIcdCodeOfCause()).append(COMMA).
+                        append(info.isInfantLessThan30Days()).append(COMMA).
+                        append(QUOTE).append(info.getPlaceOfBurial()).append(QUOTE).append(COMMA).
+                        append(QUOTE).append(info.getPlaceOfDeath()).append(QUOTE).append(COMMA).
+                        append(QUOTE).append(info.getPlaceOfIssue()).append(QUOTE).append(COMMA).
+                        append(info.getTimeOfDeath()).append(COMMA);
                 } else {
                     csv.append(",,,,,,,,,,,");
                 }
                 if (person != null) {
-                    csv.append(
-                        person.getDeathPersonAge() + "," +
-                            person.getDeathPersonDOB() + "," +
-                            person.getDeathPersonFatherPINorNIC() + "," +
-                            person.getDeathPersonGender() + "," +
-                            person.getDeathPersonMotherPINorNIC() + "," +
-                            person.getDeathPersonPINorNIC() + "," +
-                            person.getDeathPersonPassportNo()
-                    );
+                    csv.append(person.getDeathPersonAge()).append(COMMA).
+                        append(person.getDeathPersonDOB()).append(COMMA).
+                        append(person.getDeathPersonFatherPINorNIC()).append(COMMA).
+                        append(person.getDeathPersonGender()).append(COMMA).
+                        append(person.getDeathPersonMotherPINorNIC()).append(COMMA).
+                        append(person.getDeathPersonPINorNIC()).append(COMMA).
+                        append(person.getDeathPersonPassportNo()).append(COMMA);
                 } else {
                     csv.append(",,,,,,,");
                 }
                 if (deathRegister != null) {
-                    csv.append(
-                        deathRegister.getDeathType() + ","
-                    );
+                    csv.append(deathRegister.getDeathType()).append(COMMA);
                 } else {
-                    csv.append(",");
+                    csv.append(COMMA);
                 }
                 if (decl != null) {
-                    csv.append(
-                        decl.getDeclarantEMail() + "," +
-                            decl.getDeclarantNICorPIN() + "," +
-                            decl.getDeclarantPhone() + "," +
-                            decl.getDeclarantType() + ","
-                    );
+                    csv.append(decl.getDeclarantEMail()).append(COMMA).append(decl.getDeclarantNICorPIN()).
+                        append(COMMA).append(decl.getDeclarantPhone()).append(COMMA).append(decl.getDeclarantType()).
+                        append(COMMA);
                 } else {
                     csv.append(",,,,");
                 }
                 if (life != null) {
-                    csv.append(
-                        life.getApprovalOrRejectTimestamp() + "," +
-                            life.getCertificateGeneratedTimestamp() + "," +
-                            life.getCreatedTimestamp() + ","
-                    );
+                    csv.append(life.getApprovalOrRejectTimestamp()).append(COMMA).
+                        append(life.getCertificateGeneratedTimestamp()).append(COMMA).
+                        append(life.getCreatedTimestamp()).append(COMMA);
                 } else {
                     csv.append(",,,");
                 }
                 if (notify != null) {
-                    csv.append(
-                        notify.getNotifyingAuthorityPIN() + "," +
-                            notify.getNotifyingAuthoritySignDate() + ","
-                    );
+                    csv.append(notify.getNotifyingAuthorityPIN()).append(COMMA).
+                        append(notify.getNotifyingAuthoritySignDate()).append(COMMA);
                 } else {
                     csv.append(",,");
                 }
                 if (deathRegister != null) {
-                    csv.append(deathRegister.getStatus() + ",");
+                    csv.append(deathRegister.getStatus()).append(COMMA);
                 } else {
-                    csv.append(",");
+                    csv.append(COMMA);
                 }
                 if (info != null) {
                     if (info.getDeathDivision() != null) {
-                        csv.append(info.getDeathDivision().getDivisionId() + ",");
+                        csv.append(info.getDeathDivision().getDivisionId()).append(COMMA);
                     } else {
-                        csv.append(",");
+                        csv.append(COMMA);
                     }
                 } else {
-                    csv.append(",");
+                    csv.append(COMMA);
                 }
                 if (person != null) {
                     if (person.getDeathPersonCountry() != null) {
-                        csv.append(person.getDeathPersonCountry().getCountryId() + ",");
+                        csv.append(person.getDeathPersonCountry().getCountryCode()).append(COMMA);
                     } else {
-                        csv.append(",");
+                        csv.append(COMMA);
                     }
-                    csv.append(person.getDeathPersonRace() + ",");
+                    csv.append(person.getDeathPersonRace().getRaceId()).append(COMMA);
                 } else {
                     csv.append(",,");
                 }
                 if (life != null) {
-                    csv.append(
-                        life.getApprovalOrRejectUser().getUserId() + "," +
-                            life.getCertificateGeneratedUser().getUserId() + "," +
-                            life.getCreatedUser().getUserId() + ","
-                    );
+                    csv.append(life.getApprovalOrRejectUser().getUserId()).append(COMMA).
+                        append(life.getCertificateGeneratedUser().getUserId()).append(COMMA).
+                        append(life.getCreatedUser().getUserId()).append(COMMA);
                 } else {
                     csv.append(",,,");
                 }
                 if (deathRegister != null) {
-                    csv.append(
-                        deathRegister.getOriginalDCIssueUser().getUserId() + "," +
-                            deathRegister.getOriginalDCPlaceOfIssue().getLocationCode()
-                    );
+                    csv.append(deathRegister.getOriginalDCIssueUser().getUserId()).
+                        append(COMMA).append(deathRegister.getOriginalDCPlaceOfIssue().getLocationCode());
                 } else {
                     csv.append(",,");
                 }
-                csv.append("\n");
+                csv.append(NEW_LINE);
                 count++;
             }
 
             if (noRecords) {
-                csv.append("\n");
+                csv.append(NEW_LINE);
             }
         }
 
@@ -2625,7 +2667,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
         int i = 0;
         switch (headerCode) {
             case ReportCodes.TABLE_2_2:
-                filename = ReportCodes.TABLE_2_2_NAME + ".csv";
+                filename = ReportCodes.TABLE_2_2_NAME + CSV_EXT;
                 for (i = 0; i < BirthIslandWideStatistics.NO_OF_DISTRICTS; i++) {
                     District district = districtDAO.getDistrict(i + 1);
                     String districtId = "Unknown";
@@ -2633,17 +2675,17 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                         districtId = district.getEnDistrictName();
                     }
                     csv.append(districtId);
-                    csv.append(",");
+                    csv.append(COMMA);
                     csv.append(table_2_2[i][2]);
-                    csv.append(",");
+                    csv.append(COMMA);
                     csv.append(table_2_2[i][0]);
-                    csv.append(",");
+                    csv.append(COMMA);
                     csv.append(table_2_2[i][1]);
-                    csv.append("\n");
+                    csv.append(NEW_LINE);
                 }
                 break;
             case ReportCodes.TABLE_2_8:
-                filename = ReportCodes.TABLE_2_8_NAME + ".csv";
+                filename = ReportCodes.TABLE_2_8_NAME + CSV_EXT;
                 for (i = 0; i < length; i++) {
                     BirthDistrictStatistics districtStats = statistics.totals.get(i);
                     District district = districtDAO.getDistrict(i);
@@ -2652,47 +2694,44 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                         districtId = district.getEnDistrictName();
                     }
                     csv.append(districtId);
-                    csv.append(",");
+                    csv.append(COMMA);
                     csv.append(districtStats.getTotal());
-                    csv.append(",");
+                    csv.append(COMMA);
                     csv.append(districtStats.getMaleTotal());
-                    csv.append(",");
+                    csv.append(COMMA);
                     csv.append(districtStats.getFemaleTotal());
-                    csv.append(",");
+                    csv.append(COMMA);
                     csv.append(districtStats.getProportion());
-                    csv.append(",");
+                    csv.append(COMMA);
                     csv.append(districtStats.getLegitimacyBirths());
-                    csv.append(",");
+                    csv.append(COMMA);
                     csv.append(districtStats.getIllegitimacyBirths());
-                    csv.append(",");
+                    csv.append(COMMA);
                     csv.append(districtStats.getHospitalBirths());
-                    csv.append("\n");
+                    csv.append(NEW_LINE);
                 }
                 break;
             case ReportCodes.TABLE_2_5:
-                filename = ReportCodes.TABLE_2_5_NAME + ".csv";
+                filename = ReportCodes.TABLE_2_5_NAME + CSV_EXT;
                 for (i = 0; i < BirthMonthlyStatistics.NO_OF_RACES; i++) {
                     Race race = raceDAO.getRace(i);
-                    String raceId = "Unknown-Race";
-                    if (race != null) {
-                        raceId = race.getEnRaceName();
-                    }
+                    String raceId = (race != null) ? race.getEnRaceName() : "Unknown-Race";
 
                     csv.append(raceId);
-                    csv.append(",");
+                    csv.append(COMMA);
 
                     int total = 0;
                     for (int j = 0; j < BirthRaceStatistics.NO_OF_AGE_GROUPS; j++) {
                         csv.append(age_race_total[i][j]);
-                        csv.append(",");
+                        csv.append(COMMA);
                         total += age_race_total[i][j];
                     }
                     csv.append(total);
-                    csv.append("\n");
+                    csv.append(NEW_LINE);
                 }
                 break;
             case ReportCodes.TABLE_2_4:
-                filename = ReportCodes.TABLE_2_4_NAME + ".csv";
+                filename = ReportCodes.TABLE_2_4_NAME + CSV_EXT;
                 int total = 0;
                 for (i = 0; i < 26; i++) {
                     District district = districtDAO.getDistrict(i + 1);
@@ -2700,17 +2739,17 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                     if (district != null) {
                         districtId = district.getEnDistrictName();
                     }
-                    csv.append(districtId + ",");
+                    csv.append(districtId).append(COMMA);
                     total = 0;
                     for (int j = 0; j < 13; j++) {
-                        csv.append(table_2_4[i][j] + ",");
+                        csv.append(table_2_4[i][j]).append(COMMA);
                         total += table_2_4[i][j];
                     }
-                    csv.append(total + "\n");
+                    csv.append(total).append(NEW_LINE);
                 }
                 break;
             case ReportCodes.TABLE_2_7:
-                filename = ReportCodes.TABLE_2_7_NAME + ".csv";
+                filename = ReportCodes.TABLE_2_7_NAME + CSV_EXT;
 
                 for (i = 0; i < BirthIslandWideStatistics.NO_OF_DISTRICTS; i++) {
                     District district = districtDAO.getDistrict(i + 1);
@@ -2719,20 +2758,20 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                         districtName = district.getEnDistrictName();
                     }
                     csv.append(districtName);
-                    csv.append(",");
+                    csv.append(COMMA);
 
                     int Total = 0;
                     for (int j = 0; j < BirthRaceStatistics.NO_OF_AGE_GROUPS; j++) {
                         csv.append(age_district_total[i][j]);
-                        csv.append(",");
+                        csv.append(COMMA);
                         Total += age_district_total[i][j];
                     }
                     csv.append(Total);
-                    csv.append("\n");
+                    csv.append(NEW_LINE);
                 }
                 break;
             case ReportCodes.TABLE_2_6:
-                filename = ReportCodes.TABLE_2_6_NAME + ".csv";
+                filename = ReportCodes.TABLE_2_6_NAME + CSV_EXT;
 
                 for (int p = 0; p < BirthIslandWideStatistics.NO_OF_DISTRICTS; p++) {
                     String disName = "Unknown";
@@ -2740,25 +2779,25 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                     if (district != null) {
                         disName = district.getEnDistrictName();
                     }
-                    csv.append(disName + ",");
+                    csv.append(disName).append(COMMA);
                     int districtTotal_m = 0, districtTotal_f = 0, districtTotal_all = 0;
                     for (int q = 0; q < 12; q++) {
-                        csv.append(table_2_6[p][q][2] + ",");
+                        csv.append(table_2_6[p][q][2]).append(COMMA);
                         districtTotal_all += table_2_6[p][q][2];
-                        csv.append(table_2_6[p][q][0] + ",");
+                        csv.append(table_2_6[p][q][0]).append(COMMA);
                         districtTotal_m += table_2_6[p][q][0];
-                        csv.append(table_2_6[p][q][1] + ",");
+                        csv.append(table_2_6[p][q][1]).append(COMMA);
                         districtTotal_f += table_2_6[p][q][1];
                     }
-                    csv.append(districtTotal_all + ",");
-                    csv.append(districtTotal_m + ",");
-                    csv.append(districtTotal_f + ",");
-                    csv.append("\n");
+                    csv.append(districtTotal_all).append(COMMA);
+                    csv.append(districtTotal_m).append(COMMA);
+                    csv.append(districtTotal_f).append(COMMA);
+                    csv.append(NEW_LINE);
                 }
 
                 break;
             case ReportCodes.TABLE_2_2A:
-                filename = ReportCodes.TABLE_2_2A_NAME + ".csv";
+                filename = ReportCodes.TABLE_2_2A_NAME + CSV_EXT;
 
                 for (int p = 0; p < BirthIslandWideStatistics.NO_OF_DISTRICTS; p++) {
                     int t = 0;
@@ -2767,18 +2806,18 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                     if (district != null) {
                         districtName = district.getEnDistrictName();
                     }
-                    csv.append(districtName + ",");
+                    csv.append(districtName).append(COMMA);
                     for (int q = 0; q < BirthDistrictStatistics.NO_OF_MONTHS; q++) {
-                        csv.append(table_2_2a[p][q] + ",");
+                        csv.append(table_2_2a[p][q]).append(COMMA);
                         t += table_2_2a[p][q];
                     }
-                    csv.append(t + ",");
-                    csv.append("\n");
+                    csv.append(t).append(COMMA);
+                    csv.append(NEW_LINE);
                 }
-                csv.append("\n");
+                csv.append(NEW_LINE);
                 break;
             case ReportCodes.TABLE_2_3:
-                filename = ReportCodes.TABLE_2_3_NAME + ".csv";
+                filename = ReportCodes.TABLE_2_3_NAME + CSV_EXT;
 
                 districtStat = statistics.totals;
                 i = 0;
@@ -2788,75 +2827,75 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                     if (district != null) {
                         districtName = district.getEnDistrictName();
                     }
-                    csv.append(districtName + ",");
+                    csv.append(districtName).append(COMMA);
                     int dis_total = 0, dis_male = 0, dis_female = 0;
                     List<BirthChildRankStatistics> bcs = bds.birthOrder;
                     for (BirthChildRankStatistics rankStat : bcs) {
-                        csv.append(rankStat.getMaleTotal() + ",");
-                        csv.append(rankStat.getFemaleTotal() + ",");
-                        csv.append(rankStat.getTotal() + ",");
+                        csv.append(rankStat.getMaleTotal()).append(COMMA);
+                        csv.append(rankStat.getFemaleTotal()).append(COMMA);
+                        csv.append(rankStat.getTotal()).append(COMMA);
 
                         dis_total += rankStat.getTotal();
                         dis_female += rankStat.getFemaleTotal();
                         dis_male += rankStat.getMaleTotal();
                     }
-                    csv.append(dis_male + "," + dis_female + "," + dis_total);
-                    csv.append("\n");
+                    csv.append(dis_male).append(COMMA).append(dis_female).append(COMMA).append(dis_total);
+                    csv.append(NEW_LINE);
                     i++;
                 }
                 break;
             case ReportCodes.TABLE_2_11:
-                filename = ReportCodes.TABLE_2_11_NAME + ".csv";
+                filename = ReportCodes.TABLE_2_11_NAME + CSV_EXT;
                 String months[] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
                 for (int u = 0; u < months.length; u++) {
                     int rTotal = 0, rMale = 0, rFemale = 0;
                     csv.append(months[u]);
                     for (int v = 0; v < BirthMonthlyStatistics.NO_OF_RACES; v++) {
-                        csv.append("," + month_race_total[u][v][0]);
-                        csv.append("," + month_race_total[u][v][1]);
-                        csv.append("," + month_race_total[u][v][2]);
+                        csv.append(COMMA).append(month_race_total[u][v][0]);
+                        csv.append(COMMA).append(month_race_total[u][v][1]);
+                        csv.append(COMMA).append(month_race_total[u][v][2]);
                         rTotal += month_race_total[u][v][2];
                         rMale += month_race_total[u][v][0];
                         rFemale += month_race_total[u][v][1];
                     }
-                    csv.append("," + rMale);
-                    csv.append("," + rFemale);
-                    csv.append("," + rTotal);
-                    csv.append("\n");
+                    csv.append(COMMA).append(rMale);
+                    csv.append(COMMA).append(rFemale);
+                    csv.append(COMMA).append(rTotal);
+                    csv.append(NEW_LINE);
                 }
                 break;
             case ReportCodes.TABLE_2_10:
-                filename = ReportCodes.TABLE_2_10_NAME + ".csv";
+                filename = ReportCodes.TABLE_2_10_NAME + CSV_EXT;
 
                 for (int k = 0; k < 38; k++) {
-                    csv.append((k + 13) + ",");
+                    csv.append(k + 13).append(COMMA);
 
-                    csv.append(sector_leg_total[k][2][2] + ",");
-                    csv.append(nf.format((sector_leg_total[k][2][2] / checkZero(total_arr[0])) * 100.0) + ",");
-                    csv.append(sector_leg_total[k][2][0] + ",");
-                    csv.append(nf.format((sector_leg_total[k][2][0] / checkZero(total_arr[0])) * 100.0) + ",");
-                    csv.append(sector_leg_total[k][2][1] + ",");
-                    csv.append(nf.format((sector_leg_total[k][2][1] / checkZero(total_arr[0])) * 100.0) + ",");
+                    csv.append(sector_leg_total[k][2][2]).append(COMMA);
+                    csv.append(nf.format((sector_leg_total[k][2][2] / checkZero(total_arr[0])) * 100.0)).append(COMMA);
+                    csv.append(sector_leg_total[k][2][0]).append(COMMA);
+                    csv.append(nf.format((sector_leg_total[k][2][0] / checkZero(total_arr[0])) * 100.0)).append(COMMA);
+                    csv.append(sector_leg_total[k][2][1]).append(COMMA);
+                    csv.append(nf.format((sector_leg_total[k][2][1] / checkZero(total_arr[0])) * 100.0)).append(COMMA);
 
-                    csv.append(sector_leg_total[k][0][2] + ",");
-                    csv.append(nf.format((sector_leg_total[k][0][2] / checkZero(total_arr[0])) * 100.0) + ",");
-                    csv.append(sector_leg_total[k][0][0] + ",");
-                    csv.append(nf.format((sector_leg_total[k][0][0] / checkZero(total_arr[0])) * 100.0) + ",");
-                    csv.append(sector_leg_total[k][0][1] + ",");
-                    csv.append(nf.format((sector_leg_total[k][0][1] / checkZero(total_arr[0])) * 100.0) + ",");
+                    csv.append(sector_leg_total[k][0][2]).append(COMMA);
+                    csv.append(nf.format((sector_leg_total[k][0][2] / checkZero(total_arr[0])) * 100.0)).append(COMMA);
+                    csv.append(sector_leg_total[k][0][0]).append(COMMA);
+                    csv.append(nf.format((sector_leg_total[k][0][0] / checkZero(total_arr[0])) * 100.0)).append(COMMA);
+                    csv.append(sector_leg_total[k][0][1]).append(COMMA);
+                    csv.append(nf.format((sector_leg_total[k][0][1] / checkZero(total_arr[0])) * 100.0)).append(COMMA);
 
-                    csv.append(sector_leg_total[k][1][2] + ",");
-                    csv.append(nf.format((sector_leg_total[k][1][2] / checkZero(total_arr[0])) * 100.0) + ",");
-                    csv.append(sector_leg_total[k][1][0] + ",");
-                    csv.append(nf.format((sector_leg_total[k][1][0] / checkZero(total_arr[0])) * 100.0) + ",");
-                    csv.append(sector_leg_total[k][1][1] + ",");
-                    csv.append(nf.format((sector_leg_total[k][1][1] / checkZero(total_arr[0])) * 100.0) + ",");
-                    csv.append("\n");
+                    csv.append(sector_leg_total[k][1][2]).append(COMMA);
+                    csv.append(nf.format((sector_leg_total[k][1][2] / checkZero(total_arr[0])) * 100.0)).append(COMMA);
+                    csv.append(sector_leg_total[k][1][0]).append(COMMA);
+                    csv.append(nf.format((sector_leg_total[k][1][0] / checkZero(total_arr[0])) * 100.0)).append(COMMA);
+                    csv.append(sector_leg_total[k][1][1]).append(COMMA);
+                    csv.append(nf.format((sector_leg_total[k][1][1] / checkZero(total_arr[0])) * 100.0)).append(COMMA);
+                    csv.append(NEW_LINE);
                 }
 
                 break;
             case ReportCodes.TABLE_2_12:
-                filename = ReportCodes.TABLE_2_12_NAME + ".csv";
+                filename = ReportCodes.TABLE_2_12_NAME + CSV_EXT;
 
                 for (int k = 1; k < districtYearStatisticsList.length; k++) {
                     District district = districtDAO.getDistrict(k);
@@ -2865,61 +2904,61 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                         districtName = district.getEnDistrictName();
                     }
                     int all = 0, male = 0, female = 0;
-                    csv.append(districtName + "\n");
-                    csv.append("Before " + (year - 1) + ",");
+                    csv.append(districtName).append(NEW_LINE);
+                    csv.append("Before ").append(year - 1).append(COMMA);
                     for (int l = 0; l < 12; l++) {
-                        csv.append(districtYearStatisticsList[k - 1].before_last_year_month_array[l][2] + ",");
-                        csv.append(districtYearStatisticsList[k - 1].before_last_year_month_array[l][0] + ",");
-                        csv.append(districtYearStatisticsList[k - 1].before_last_year_month_array[l][1] + ",");
+                        csv.append(districtYearStatisticsList[k - 1].before_last_year_month_array[l][2]).append(COMMA);
+                        csv.append(districtYearStatisticsList[k - 1].before_last_year_month_array[l][0]).append(COMMA);
+                        csv.append(districtYearStatisticsList[k - 1].before_last_year_month_array[l][1]).append(COMMA);
                         all += districtYearStatisticsList[k - 1].before_last_year_month_array[l][2];
                         male += districtYearStatisticsList[k - 1].before_last_year_month_array[l][0];
                         female += districtYearStatisticsList[k - 1].before_last_year_month_array[l][1];
                     }
-                    csv.append(all + ",");
-                    csv.append(male + ",");
-                    csv.append(female + ",");
+                    csv.append(all).append(COMMA);
+                    csv.append(male).append(COMMA);
+                    csv.append(female).append(COMMA);
                     all = 0;
                     male = 0;
                     female = 0;
-                    csv.append("\n");
-                    csv.append("During " + (year - 1) + ",");
+                    csv.append(NEW_LINE);
+                    csv.append("During ").append(year - 1).append(COMMA);
                     for (int l = 0; l < 12; l++) {
-                        csv.append(districtYearStatisticsList[k - 1].during_last_year_month_array[l][2] + ",");
-                        csv.append(districtYearStatisticsList[k - 1].during_last_year_month_array[l][0] + ",");
-                        csv.append(districtYearStatisticsList[k - 1].during_last_year_month_array[l][1] + ",");
+                        csv.append(districtYearStatisticsList[k - 1].during_last_year_month_array[l][2]).append(COMMA);
+                        csv.append(districtYearStatisticsList[k - 1].during_last_year_month_array[l][0]).append(COMMA);
+                        csv.append(districtYearStatisticsList[k - 1].during_last_year_month_array[l][1]).append(COMMA);
                         all += districtYearStatisticsList[k - 1].during_last_year_month_array[l][2];
                         male += districtYearStatisticsList[k - 1].during_last_year_month_array[l][0];
                         female += districtYearStatisticsList[k - 1].during_last_year_month_array[l][1];
                     }
-                    csv.append(all + ",");
-                    csv.append(male + ",");
-                    csv.append(female + ",");
+                    csv.append(all).append(COMMA);
+                    csv.append(male).append(COMMA);
+                    csv.append(female).append(COMMA);
                     all = 0;
                     male = 0;
                     female = 0;
-                    csv.append("\n");
-                    csv.append("During " + year + ",");
+                    csv.append(NEW_LINE);
+                    csv.append("During ").append(year).append(COMMA);
                     for (int l = 0; l < 12; l++) {
-                        csv.append(districtYearStatisticsList[k - 1].during_this_year_month_array[l][2] + ",");
-                        csv.append(districtYearStatisticsList[k - 1].during_this_year_month_array[l][0] + ",");
-                        csv.append(districtYearStatisticsList[k - 1].during_this_year_month_array[l][1] + ",");
+                        csv.append(districtYearStatisticsList[k - 1].during_this_year_month_array[l][2]).append(COMMA);
+                        csv.append(districtYearStatisticsList[k - 1].during_this_year_month_array[l][0]).append(COMMA);
+                        csv.append(districtYearStatisticsList[k - 1].during_this_year_month_array[l][1]).append(COMMA);
                         all += districtYearStatisticsList[k - 1].during_this_year_month_array[l][2];
                         male += districtYearStatisticsList[k - 1].during_this_year_month_array[l][0];
                         female += districtYearStatisticsList[k - 1].during_this_year_month_array[l][1];
                     }
-                    csv.append(all + ",");
-                    csv.append(male + ",");
-                    csv.append(female + ",");
-                    csv.append("\n");
+                    csv.append(all).append(COMMA);
+                    csv.append(male).append(COMMA);
+                    csv.append(female).append(COMMA);
+                    csv.append(NEW_LINE);
                     csv.append("Total,");
 
                     for (int l = 0; l < 12; l++) {
-                        csv.append(districtYearStatisticsList[k - 1].total_year_month_array[l][2] + ",");
-                        csv.append(districtYearStatisticsList[k - 1].total_year_month_array[l][0] + ",");
-                        csv.append(districtYearStatisticsList[k - 1].total_year_month_array[l][1] + ",");
+                        csv.append(districtYearStatisticsList[k - 1].total_year_month_array[l][2]).append(COMMA);
+                        csv.append(districtYearStatisticsList[k - 1].total_year_month_array[l][0]).append(COMMA);
+                        csv.append(districtYearStatisticsList[k - 1].total_year_month_array[l][1]).append(COMMA);
                     }
 
-                    csv.append("\n");
+                    csv.append(NEW_LINE);
                 }
 
                 break;
@@ -2962,21 +3001,21 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
             case ReportCodes.TABLE_2_2:
                 csv.append("District,Total,Male,Female\n");
                 csv.append("Sri Lanka,");
-                csv.append(table_2_2[BirthIslandWideStatistics.NO_OF_DISTRICTS][2] + ",");
-                csv.append(table_2_2[BirthIslandWideStatistics.NO_OF_DISTRICTS][0] + ",");
-                csv.append(table_2_2[BirthIslandWideStatistics.NO_OF_DISTRICTS][1] + ",\n");
+                csv.append(table_2_2[BirthIslandWideStatistics.NO_OF_DISTRICTS][2]).append(COMMA);
+                csv.append(table_2_2[BirthIslandWideStatistics.NO_OF_DISTRICTS][0]).append(COMMA);
+                csv.append(table_2_2[BirthIslandWideStatistics.NO_OF_DISTRICTS][1]).append(",\n");
                 break;
             case ReportCodes.TABLE_2_8:
                 csv.append("District,Total,Male,Female,Proportion of male births per 100 female births," +
                     "Legitimacy Births,Illegitimacy Births,Hospital Births\n");
                 csv.append("Sri Lanka,");
-                csv.append(statistics.getTotal() + ",");
-                csv.append(statistics.getMaleTotal() + ",");
-                csv.append(statistics.getFemaleTotal() + ",");
-                csv.append(statistics.getProportion() + ",");
-                csv.append(statistics.getLegitimacyBirths() + ",");
-                csv.append(statistics.getIllegitimacyBirths() + ",");
-                csv.append(statistics.getHospitalBirths() + ",\n");
+                csv.append(statistics.getTotal()).append(COMMA);
+                csv.append(statistics.getMaleTotal()).append(COMMA);
+                csv.append(statistics.getFemaleTotal()).append(COMMA);
+                csv.append(statistics.getProportion()).append(COMMA);
+                csv.append(statistics.getLegitimacyBirths()).append(COMMA);
+                csv.append(statistics.getIllegitimacyBirths()).append(COMMA);
+                csv.append(statistics.getHospitalBirths()).append(",\n");
                 break;
             case ReportCodes.TABLE_2_5:
                 int total = 0;
@@ -2990,16 +3029,16 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                         raceTotal += age_race_total[k][m];
                     }
                     islandTotal += raceTotal;
-                    csv.append(raceTotal + ",");
+                    csv.append(raceTotal).append(COMMA);
                 }
                 csv.append(islandTotal);
-                csv.append("\n");
+                csv.append(NEW_LINE);
                 break;
             case ReportCodes.TABLE_2_4:
 
                 csv.append("District,");
                 for (int i = 0; i < 13; i++) {
-                    csv.append(raceDAO.getRace(i + 1).getEnRaceName() + ",");
+                    csv.append(raceDAO.getRace(i + 1).getEnRaceName()).append(COMMA);
                 }
                 csv.append("All Ethnic Groups\n");
                 csv.append("Sri Lanka,");
@@ -3008,14 +3047,14 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                     for (int j = 0; j < 26; j++) {
                         total += table_2_4[j][i];
                     }
-                    csv.append(total + ",");
+                    csv.append(total).append(COMMA);
                 }
                 total = 0;
                 for (int i = 0; i < 13; i++) {
                     total += table_2_4[0][i];
                 }
-                csv.append(total + ",");
-                csv.append("\n");
+                csv.append(total).append(COMMA);
+                csv.append(NEW_LINE);
 
                 break;
             case ReportCodes.TABLE_2_7:
@@ -3030,10 +3069,10 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                         ageTotal += age_district_total[m][n];
                     }
                     slTotal += ageTotal;
-                    csv.append(ageTotal + ",");
+                    csv.append(ageTotal).append(COMMA);
                 }
-                csv.append(slTotal + ",");
-                csv.append("\n");
+                csv.append(slTotal).append(COMMA);
+                csv.append(NEW_LINE);
                 break;
             case ReportCodes.TABLE_2_6:
                 csv.append(",,January,,,February,,,March,,,April,,,May,,,June,,,July,,,August,,,September,,,October,,,November,,,December,,,Total,,\n");
@@ -3053,17 +3092,17 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 }
                 int districtTotal_m = 0, districtTotal_f = 0, districtTotal_all = 0;
                 for (int p = 0; p < 12; p++) {
-                    csv.append(m[p][2] + ",");
+                    csv.append(m[p][2]).append(COMMA);
                     districtTotal_all += m[p][2];
-                    csv.append(m[p][0] + ",");
+                    csv.append(m[p][0]).append(COMMA);
                     districtTotal_m += m[p][0];
-                    csv.append(m[p][1] + ",");
+                    csv.append(m[p][1]).append(COMMA);
                     districtTotal_f += m[p][1];
                 }
-                csv.append(districtTotal_all + ",");
-                csv.append(districtTotal_m + ",");
-                csv.append(districtTotal_f + ",");
-                csv.append("\n");
+                csv.append(districtTotal_all).append(COMMA);
+                csv.append(districtTotal_m).append(COMMA);
+                csv.append(districtTotal_f).append(COMMA);
+                csv.append(NEW_LINE);
 
                 break;
             case ReportCodes.TABLE_2_2A:
@@ -3078,11 +3117,11 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 }
                 int t = 0;
                 for (int k = 0; k < arr.length; k++) {
-                    csv.append("," + arr[k]);
+                    csv.append(COMMA).append(arr[k]);
                     t += arr[k];
                 }
-                csv.append("," + t);
-                csv.append("\n");
+                csv.append(COMMA).append(t);
+                csv.append(NEW_LINE);
                 break;
             case ReportCodes.TABLE_2_3:
                 districtStat = statistics.totals;
@@ -3102,7 +3141,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                     if (b == 0) {
                         csv.append(",Unknown,,");
                     } else {
-                        csv.append(",rank : " + b + ",,");
+                        csv.append(",rank : ").append(b).append(",,");
                     }
                 }
                 csv.append(",Total,,");
@@ -3116,7 +3155,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                 csv.append("\nSri Lanka");
                 for (int k = 0; k < 10; k++) {
                     for (int l = 0; l < 3; l++) {
-                        csv.append("," + array[k][l]);
+                        csv.append(COMMA).append(array[k][l]);
                         if (l == 2) {
                             dis_total += array[k][l];
                         }
@@ -3128,13 +3167,13 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                         }
                     }
                 }
-                csv.append("," + dis_male + "," + dis_female + "," + dis_total);
-                csv.append("\n");
+                csv.append(COMMA).append(dis_male).append(COMMA).append(dis_female).append(COMMA).append(dis_total);
+                csv.append(NEW_LINE);
                 break;
             case ReportCodes.TABLE_2_11:
                 csv.append("Month");
                 for (int c = 1; c < BirthMonthlyStatistics.NO_OF_RACES + 1; c++) {
-                    csv.append(",," + raceDAO.getNameByPK(c, "en") + ",");
+                    csv.append(",,").append(raceDAO.getNameByPK(c, "en")).append(COMMA);
                 }
                 csv.append(",,Total,");
                 csv.append("\n,");
@@ -3142,7 +3181,7 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                     csv.append("male,female,total,");
                 }
                 csv.append("male,female,total,");
-                csv.append("\n");
+                csv.append(NEW_LINE);
                 csv.append("All Months");
                 int oMale = 0, oFemale = 0, oTotal = 0;
                 for (int d = 0; d < BirthMonthlyStatistics.NO_OF_RACES; d++) {
@@ -3152,17 +3191,17 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                         rFemale += month_race_total[c][d][1];
                         rTotal += month_race_total[c][d][2];
                     }
-                    csv.append("," + rMale);
-                    csv.append("," + rFemale);
-                    csv.append("," + rTotal);
+                    csv.append(COMMA).append(rMale);
+                    csv.append(COMMA).append(rFemale);
+                    csv.append(COMMA).append(rTotal);
                     oMale += rMale;
                     oFemale += rFemale;
                     oTotal += rTotal;
                 }
-                csv.append("," + oMale);
-                csv.append("," + oFemale);
-                csv.append("," + oTotal);
-                csv.append("\n");
+                csv.append(COMMA).append(oMale);
+                csv.append(COMMA).append(oFemale);
+                csv.append(COMMA).append(oTotal);
+                csv.append(NEW_LINE);
                 break;
             case ReportCodes.TABLE_2_10:
                 csv.append("Sector/age of Mother,,,,Total,,,,,,Legitimacy Births,,,,,,Illegitimacy Births,,,\n");
@@ -3184,17 +3223,17 @@ public class ReportsGeneratorImpl implements ReportsGenerator {
                     total_arr[8] += sector_leg_total[k][1][1];
                 }
                 for (int k = 0; k < total_arr.length; k++) {
-                    csv.append("," + total_arr[k]);
+                    csv.append(COMMA).append(total_arr[k]);
                     csv.append(",100.0");
                 }
-                csv.append("\n");
+                csv.append(NEW_LINE);
                 break;
             case ReportCodes.TABLE_2_12:
                 csv.append("District / Year of Occurrence,,January,,,February,,,March,,,April,,,May,,,June,,,July,,,August,,,September,,,October,,,November,,,December,,,Total,\n");
                 for (int k = 0; k < 13; k++) {
                     csv.append(",Total,Male,Female");
                 }
-                csv.append("\n");
+                csv.append(NEW_LINE);
                 break;
         }
 
