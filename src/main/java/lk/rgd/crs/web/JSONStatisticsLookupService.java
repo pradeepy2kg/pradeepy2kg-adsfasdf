@@ -3,10 +3,9 @@ package lk.rgd.crs.web;
 import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.UserDAO;
-import lk.rgd.common.api.domain.CommonStatistics;
-import lk.rgd.common.api.domain.DSDivision;
-import lk.rgd.common.api.domain.District;
-import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.*;
+import lk.rgd.common.api.service.StatisticsManager;
+import lk.rgd.common.util.DateTimeUtils;
 import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.api.service.DeathRegistrationService;
 import lk.rgd.crs.api.service.MarriageRegistrationService;
@@ -23,10 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author shan
@@ -38,6 +34,7 @@ public class JSONStatisticsLookupService extends HttpServlet {
     private DeathRegistrationService deathRegistrationService;          //todo to be removed
     private BirthRegistrationService birthRegistrationService;          //todo to be removed
     private MarriageRegistrationService marriageRegistrationService;    //todo to be removed
+    private StatisticsManager statisticsService;
     private UserDAO userDAO;
     private DistrictDAO districtDAO;
     private DSDivisionDAO dsDivisionDAO;
@@ -51,6 +48,7 @@ public class JSONStatisticsLookupService extends HttpServlet {
         deathRegistrationService = (DeathRegistrationService) context.getBean("deathRegisterService");
         birthRegistrationService = (BirthRegistrationService) context.getBean("manageBirthService");
         marriageRegistrationService = (MarriageRegistrationService) context.getBean("marriageRegistrationService");
+        statisticsService = (StatisticsManager) context.getBean("statisticsManagerService");
         userDAO = (UserDAO) context.getBean("userDAOImpl");
         dsDivisionDAO = (DSDivisionDAO) context.getBean("dsDivisionDAOImpl");
         districtDAO = (DistrictDAO) context.getBean("districtDAOImpl");
@@ -60,26 +58,93 @@ public class JSONStatisticsLookupService extends HttpServlet {
         doGet(request, response);
     }
 
+    private CommonStatistics birthDataTransfer(Statistics stat, CommonStatistics commonStat, String userRole) {
+        commonStat.setApprovedItems(stat.getBirthsApprovedItems());
+        commonStat.setArrearsPendingItems(stat.getBirthsArrearsPendingItems());
+        commonStat.setLateSubmissions(stat.getBirthsLateSubmissions());
+        commonStat.setNormalSubmissions(stat.getBirthsNormalSubmissions());
+        commonStat.setRejectedItems(stat.getBirthsRejectedItems());
+        commonStat.setUserRole(userRole);
+        commonStat.setThisMonthPendingItems(stat.getBirthsThisMonthPendingItems());
+        commonStat.setTotalPendingItems(stat.getBirthsTotalPendingItems());
+        commonStat.setTotalSubmissions(stat.getBirthsTotalSubmissions());
+        return commonStat;
+    }
+
+    private CommonStatistics deathDataTransfer(Statistics stat, CommonStatistics commonStat, String userRole) {
+        commonStat.setApprovedItems(stat.getDeathsApprovedItems());
+        commonStat.setArrearsPendingItems(stat.getDeathsArrearsPendingItems());
+        commonStat.setLateSubmissions(stat.getDeathsLateSubmissions());
+        commonStat.setNormalSubmissions(stat.getDeathsNormalSubmissions());
+        commonStat.setRejectedItems(stat.getDeathsRejectedItems());
+        commonStat.setUserRole(userRole);
+        commonStat.setThisMonthPendingItems(stat.getDeathsThisMonthPendingItems());
+        commonStat.setTotalPendingItems(stat.getDeathsTotalPendingItems());
+        commonStat.setTotalSubmissions(stat.getDeathsTotalSubmissions());
+        return commonStat;
+    }
+
+    private CommonStatistics marriageDataTransfer(Statistics stat, CommonStatistics commonStat, String userRole) {
+        commonStat.setApprovedItems(stat.getMrgApprovedItems());
+        commonStat.setArrearsPendingItems(stat.getMrgArrearsPendingItems());
+        commonStat.setLateSubmissions(stat.getMrgLateSubmissions());
+        commonStat.setNormalSubmissions(stat.getMrgNormalSubmissions());
+        commonStat.setRejectedItems(stat.getMrgRejectedItems());
+        commonStat.setUserRole(userRole);
+        commonStat.setThisMonthPendingItems(stat.getMrgThisMonthPendingItems());
+        commonStat.setTotalPendingItems(stat.getMrgTotalPendingItems());
+        commonStat.setTotalSubmissions(stat.getMrgTotalSubmissions());
+        return commonStat;
+    }
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userType = request.getParameter(WebConstants.USER_TYPE);
         String statType = request.getParameter(WebConstants.STAT_TYPE);
-        String deoUserId = request.getParameter(WebConstants.USER_DEO);
+        String deoUserId = request.getParameter("userId");
         String userName = request.getParameter("userName");
         String mode = request.getParameter("mode");
         String districtId = request.getParameter("districtId");
         String dsDivisionId = request.getParameter("dsDivisionId");
+
+        String startD = request.getParameter("startDate");
+        String endD = request.getParameter("endDate");
+        Date startDate = DateTimeUtils.getDateFromISO8601String(startD);
+        Date endDate = DateTimeUtils.getDateFromISO8601String(endD);
 
         logger.debug("Received Division userType and statType : {} {} ", userType, statType);
         logger.debug("Received Division mode and user id : {} {}", mode, deoUserId);
 
         optionLists = new HashMap<String, Object>();
 
-        try {
+        User statUser = null;
+        if ("admin".equals(deoUserId)) {
+            statUser = userDAO.getUsersByRole(Role.ROLE_RG).get(0);
+        } else {
+            statUser = userDAO.getUserByPK(deoUserId);
+        }
+        String userRole = statUser.getRole().getRoleId();
+        Statistics statistics = statisticsService.getStatisticsForUser(statUser, startDate, endDate);
+
+        CommonStatistics cs_b = new CommonStatistics();
+        CommonStatistics cs_d = new CommonStatistics();
+        CommonStatistics cs_m = new CommonStatistics();
+        CommonStatistics cs = new CommonStatistics();
+
+        birthDataTransfer(statistics, cs_b, userRole);
+        deathDataTransfer(statistics, cs_d, userRole);
+        marriageDataTransfer(statistics, cs_m, userRole);
+
+        populateBirthStatistics(cs_b);
+        populateDeathStatistics(cs_d);
+        populateMarriageStatistics(cs_m);
+
+
+        /*try {
             if (mode.equals("drStatInfo")) {  // DR selects ADR
-                CommonStatistics cs_b = new CommonStatistics();
-                CommonStatistics cs_d = new CommonStatistics();
-                CommonStatistics cs_m = new CommonStatistics();
-                CommonStatistics cs = new CommonStatistics();    // default
+                cs_b = new CommonStatistics();
+                cs_d = new CommonStatistics();
+                cs_m = new CommonStatistics();
+                cs = new CommonStatistics();    // default
                 List<User> temp = new ArrayList<User>();
                 User user = userDAO.getUserByPK(userName);
 
@@ -95,24 +160,24 @@ public class JSONStatisticsLookupService extends HttpServlet {
                         }
                     }
                     if (temp.size() > 0) {
-                        /* adding together all the birth statistics objects which belongs to 'temp' list members */
+                        *//* adding together all the birth statistics objects which belongs to 'temp' list members *//*
                         for (User one : temp) {
                             cs_b.add(birthRegistrationService.getBirthStatisticsForUser(one.getUserId()));
                             cs_d.add(deathRegistrationService.getDeathStatisticsForUser(one.getUserId()));
                             cs_m.add(marriageRegistrationService.getMarriageStatisticsForUser(one.getUserId()));
                         }
-                        /* adding combined statistics object to response object */
+                        *//* adding combined statistics object to response object *//*
                         populateBirthStatistics(cs_b);
                         populateDeathStatistics(cs_d);
                         populateMarriageStatistics(cs_m);
                     }
                 } else {
-                    /* if user is null, populate default(0) values */
+                    *//* if user is null, populate default(0) values *//*
                     populateBirthStatistics(cs);
                 }
 
             } else if (mode.equals("adrStatInfo") || mode.equals("deoStatInfo")) {  // ADR selects DEO
-                CommonStatistics cs = new CommonStatistics();
+                cs = new CommonStatistics();
 
                 if (userDAO.getUserByPK(deoUserId) != null) {
                     cs = birthRegistrationService.getBirthStatisticsForUser(deoUserId);
@@ -124,17 +189,17 @@ public class JSONStatisticsLookupService extends HttpServlet {
                     cs = marriageRegistrationService.getMarriageStatisticsForUser(deoUserId);
                     populateMarriageStatistics(cs);
                 } else {
-                    /* if user is null, populate default(0) values */
+                    *//* if user is null, populate default(0) values *//*
                     populateBirthStatistics(cs);
                 }
 
             } else if (mode.equals("rgStatInfo") || mode.equals("argStatInfo")) { // RG selects District or DsDivision
 
                 logger.debug("District = {} DSDivision = {}", districtId, dsDivisionId);
-                CommonStatistics cs_b = new CommonStatistics();
-                CommonStatistics cs_d = new CommonStatistics();
-                CommonStatistics cs_m = new CommonStatistics();
-                CommonStatistics cs = new CommonStatistics();
+                cs_b = new CommonStatistics();
+                cs_d = new CommonStatistics();
+                cs_m = new CommonStatistics();
+                cs = new CommonStatistics();
                 List<User> allUsers = userDAO.getUsersByRole("DEO");
                 List<User> temp = new ArrayList<User>();
 
@@ -146,13 +211,13 @@ public class JSONStatisticsLookupService extends HttpServlet {
                         }
                     }
                     if (temp.size() > 0) {
-                        /* adding together all the birth statistics objects which belongs to 'temp' list members */
+                        *//* adding together all the birth statistics objects which belongs to 'temp' list members *//*
                         for (User user : temp) {
                             cs_b.add(birthRegistrationService.getBirthStatisticsForUser(user.getUserId()));
                             cs_d.add(deathRegistrationService.getDeathStatisticsForUser(user.getUserId()));
                             cs_m.add(marriageRegistrationService.getMarriageStatisticsForUser(user.getUserId()));
                         }
-                        /* adding combined statistics object to response object */
+                        *//* adding combined statistics object to response object *//*
                         populateBirthStatistics(cs_b);
                         populateDeathStatistics(cs_d);
                         populateMarriageStatistics(cs_m);
@@ -165,20 +230,20 @@ public class JSONStatisticsLookupService extends HttpServlet {
                         }
                     }
                     if (temp.size() > 0) {
-                        /* adding together all the birth statistics objects which belongs to 'temp' list members */
+                        *//* adding together all the birth statistics objects which belongs to 'temp' list members *//*
                         for (User user : temp) {
                             cs_b.add(birthRegistrationService.getBirthStatisticsForUser(user.getUserId()));
                             cs_d.add(deathRegistrationService.getDeathStatisticsForUser(user.getUserId()));
                             cs_m.add(marriageRegistrationService.getMarriageStatisticsForUser(user.getUserId()));
                         }
-                        /* adding combined statistics object to response object */
+                        *//* adding combined statistics object to response object *//*
                         populateBirthStatistics(cs_b);
                         populateDeathStatistics(cs_d);
                         populateMarriageStatistics(cs_m);
                     }
 
                 } else {
-                    /* if user is null, populate default(0) values */
+                    *//* if user is null, populate default(0) values *//*
                     populateBirthStatistics(cs);
                 }
 
@@ -189,7 +254,7 @@ public class JSONStatisticsLookupService extends HttpServlet {
         } catch (Exception e) {
             logger.error("[JSONStatisticsLookupService] Fatal Error : {}", e);
             return;
-        }
+        }*/
 
         response.setContentType("application/json; charset=utf-8");
         PrintWriter out = response.getWriter();
@@ -202,27 +267,30 @@ public class JSONStatisticsLookupService extends HttpServlet {
     public void populateBirthStatistics(CommonStatistics cs) {
         optionLists.put("approved_b", cs.getApprovedItems());
         optionLists.put("rejected_b", cs.getRejectedItems());
-        optionLists.put("this_month_b", cs.getThisMonthPendingItems());
-        optionLists.put("arrears_b", cs.getArrearsPendingItems());
+        optionLists.put("thismonth_pend_b", cs.getThisMonthPendingItems());
+        optionLists.put("arrears_pend_b", cs.getArrearsPendingItems());
         optionLists.put("normal_b", cs.getNormalSubmissions());
         optionLists.put("late_b", cs.getLateSubmissions());
+        optionLists.put("userRole", cs.getUserRole());
     }
 
     public void populateDeathStatistics(CommonStatistics cs) {
         optionLists.put("approved_d", cs.getApprovedItems());
         optionLists.put("rejected_d", cs.getRejectedItems());
-        optionLists.put("this_month_d", cs.getThisMonthPendingItems());
-        optionLists.put("arrears_d", cs.getArrearsPendingItems());
+        optionLists.put("thismonth_pend_d", cs.getThisMonthPendingItems());
+        optionLists.put("arrears_pend_d", cs.getArrearsPendingItems());
         optionLists.put("normal_d", cs.getNormalSubmissions());
         optionLists.put("late_d", cs.getLateSubmissions());
+        optionLists.put("userRole", cs.getUserRole());
     }
 
     public void populateMarriageStatistics(CommonStatistics cs) {
         optionLists.put("approved_m", cs.getApprovedItems());
         optionLists.put("rejected_m", cs.getRejectedItems());
-        optionLists.put("this_month_m", cs.getThisMonthPendingItems());
-        optionLists.put("arrears_m", cs.getArrearsPendingItems());
+        optionLists.put("thismonth_pend_m", cs.getThisMonthPendingItems());
+        optionLists.put("arrears_pend_m", cs.getArrearsPendingItems());
         optionLists.put("normal_m", cs.getNormalSubmissions());
         optionLists.put("late_m", cs.getLateSubmissions());
+        optionLists.put("userRole", cs.getUserRole());
     }
 }
