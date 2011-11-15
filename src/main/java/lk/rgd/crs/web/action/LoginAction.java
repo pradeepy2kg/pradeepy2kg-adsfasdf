@@ -195,10 +195,15 @@ public class LoginAction extends ActionSupport implements SessionAware {
     public String showHomeStatistics() {
 
         User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
+        User tempUser = (User) session.get(WebConstants.SESSION_USER_BEAN);
         logger.debug("Logged user's UserName : {} and Role : {}", user.getUserId(), user.getRole().getName());
+
+        if (Role.ROLE_ADMIN.equalsIgnoreCase(user.getUserId())) {
+            user = userDAO.getUsersByRole(Role.ROLE_RG).get(0);
+        }
         role = user.getRole().getRoleId();
 
-        statistics = statisticsManager.getStatisticsForUser(user);
+        statistics = statisticsManager.getStatisticsForUser(user, null, null);
         if (statistics != null) {
             if (!statisticsManager.existsStatisticsForUser(user)) {
                 statisticsManager.addStatistics(user, statistics);
@@ -213,33 +218,34 @@ public class LoginAction extends ActionSupport implements SessionAware {
             statistics = new Statistics();
         }
 
-        Set<District> districtSet = user.getAssignedBDDistricts();
-        districtList = new HashMap<Integer, String>();
-        for (District district : districtSet) {
-            String userLang = user.getPrefLanguage();
-            if (AppConstants.ENGLISH.equals(userLang)) {
-                districtList.put(district.getDistrictUKey(), district.getEnDistrictName());
-            } else if (AppConstants.SINHALA.equals(userLang)) {
-                districtList.put(district.getDistrictUKey(), district.getSiDistrictName());
-            } else if (AppConstants.TAMIL.equals(userLang)) {
-                districtList.put(district.getDistrictUKey(), district.getTaDistrictName());
-            }
-        }
-
-        if (Role.ROLE_RG.equals(user.getRole().getRoleId())) {
-            districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
-        }
-
-        if (districtList.size() > 0) {
-            districtId = districtList.keySet().iterator().next();
-        }
-        divisionList = dsDivisionDAO.getAllDSDivisionNames(districtId, user.getPrefLanguage(), user);
-        if (divisionList.size() > 0) {
-            dsDivisionId = divisionList.keySet().iterator().next();
-            deoList = userDAO.getDEOsByDSDivision(user.getPrefLanguage(), user,
-                dsDivisionDAO.getDSDivisionByPK(dsDivisionId), roleDAO.getRole(Role.ROLE_DEO));
-        }
+        // TODO quick fix must to refactor
+//        districtList = new HashMap<Integer, String>();
+//        if (Role.ROLE_ADMIN.equals(role)) {
+//            String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
+//            districtList = districtDAO.getAllDistrictNames(language, user);
+//        } else {
+//            String userLang = user.getPrefLanguage();
+//            districtList = districtDAO.getDistrictNames(userLang, user);
+//        }
+//
+//        if (Role.ROLE_RG.equals(user.getRole().getRoleId()) || Role.ROLE_ADMIN.equals(role)) {
+//            districtList = districtDAO.getDistrictNames(user.getPrefLanguage(), user);
+//        }
+//
+//        if (districtList.size() > 0) {
+//            districtId = districtList.keySet().iterator().next();
+//        }
+//        divisionList = dsDivisionDAO.getAllDSDivisionNames(districtId, user.getPrefLanguage(), user);
+//        if (divisionList.size() > 0) {
+//            dsDivisionId = divisionList.keySet().iterator().next();
+//            deoList = userDAO.getDEOsByDSDivision(user.getPrefLanguage(), user,
+//                dsDivisionDAO.getDSDivisionByPK(dsDivisionId), roleDAO.getRole(Role.ROLE_DEO));
+//        }
         deoUserId = 1;
+
+        user = tempUser;
+        userName = user.getUserId();
+        role = user.getRole().getRoleId();
 
         return SUCCESS;
     }
