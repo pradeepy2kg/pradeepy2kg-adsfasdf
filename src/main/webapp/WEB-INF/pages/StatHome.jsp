@@ -154,19 +154,17 @@
                     });
         });
 
-        $('select#deoUser').bind('change', function(evt1) {
-            var deo = $("select#deoUser").attr("value");
+        $('#search_button').bind('click', function(evt1) {
+            var deo = $("input#userId").val();
             var mode = 'adrStatInfo';
+            var startDate = $("input#sdate").val();
+            var endDate = $("input#edate").val();
+//            alert("JSON pass : " + deo + ", " + startDate + "<>" + endDate);
 
-            $.getJSON('/ecivil/crs/StatisticsLookupService',
-            {
-                mode:mode,
-                deo:deo
-            },
+            $.getJSON('/ecivil/crs/StatisticsLookupService', {mode:mode, userId:deo,startDate:startDate,endDate:endDate},
                     function(data) {
-                        alert("data captured");//drawChart(data);
-                    }
-                    );
+                        drawChart(data);
+                    });
         });
 
     });
@@ -181,6 +179,8 @@
         data.approved_b = parseInt($("input#birthsApprovedItems").val());
         data.arrears_pend_b = parseInt($("input#birthsArrearsPendingItems").val());
         data.thismonth_pend_b = parseInt($("input#birthsThisMonthPendingItems").val());
+        data.total_submitted_b = parseInt($("input#birthsThisMonthTotalItems").val());
+        data.still_b = parseInt($("input#birthsStillSubmissions").val());
 
         data.late_d = parseInt($("input#DeathsLateSubmissions").val());
         data.normal_d = parseInt($("input#DeathsNormalSubmissions").val());
@@ -196,12 +196,7 @@
         data.arrears_pend_m = parseInt($("input#MrgArrearsPendingItems").val());
         data.thismonth_pend_m = parseInt($("input#MrgThisMonthPendingItems").val());
 
-        if ($("input#userRole").val() == 'ADMIN') {
-
-        } else {
-            drawChart(data);
-        }
-
+        drawChart(data);
     });
 
     function initPage() {
@@ -209,18 +204,64 @@
 </script>
 
 <div id="home-page-outer">
-<s:if test="role == 'ADMIN'">
-    <img src="<s:url value="/images/dashboard.png" />">
-</s:if>
-<s:else>
+<%--<s:if test="role == 'ADMIN'">
+    <div id="stat-preferences">
+        <table border="0" width="100%" cellpadding="5" cellspacing="5">
+            <tr bgcolor="#eeeeee">
+                <th colspan="4" align="left">Custom Search</th>
+            </tr>
+            <tr>
+                <td width="20%" align="right">District</td>
+                <td width="30%" align="left">
+                    <s:select
+                            id="district"
+                            name="districtId"
+                            list="districtList"
+                            />
+                </td>
+                <td width="20%" align="right">DSDivision</td>
+                <td width="30%" align="left">
+                    <s:select
+                            id="dsDivision"
+                            name="dsDivisionId"
+                            list="divisionList"
+                            />
+                </td>
+            </tr>
+            <tr>
+                <td align="right">Start Date</td>
+                <td align="left">
+                    <s:textfield id="sdate" name="startDate" cssStyle="width:70%;"/>
+                </td>
+                <td align="right">End Date</td>
+                <td align="left">
+                    <s:textfield id="edate" name="endDate" cssStyle="width:70%;"/>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">DEO</td>
+                <td align="left">
+                    <s:select
+                            id="deoUser" headerKey="0" headerValue="Select Role"
+                            name="deoUserId"
+                            list="deoList"
+                            />
+                </td>
+                <td>&nbsp;</td>
+                <td><s:submit id="search_button" align="right" value="Search"/></td>
+            </tr>
+        </table>
+    </div>
+</s:if>--%>
+<%--<s:else>--%>
 <s:if test="role != 'DEO'">
-    <%--<s:form action="eprShowStatistics.do" method="post">
-        <div id="stat-preferences">
-            <table border="0" width="100%" cellpadding="5" cellspacing="5">
-                <tr bgcolor="#eeeeee">
-                    <th colspan="4" align="left">Custom Search</th>
-                </tr>
-                <tr>
+    <%--<s:form action="eprShowStatistics.do" method="post">--%>
+    <div id="stat-preferences">
+        <table border="0" width="100%" cellpadding="5" cellspacing="5">
+            <tr bgcolor="#eeeeee">
+                <th colspan="5" align="left">Custom Search</th>
+            </tr>
+                <%--<tr>
                     <td width="20%" align="right">District</td>
                     <td width="30%" align="left">
                         <s:select
@@ -237,38 +278,40 @@
                                 list="divisionList"
                                 />
                     </td>
-                </tr>
-                <tr>
-                    <td align="right">Start Date</td>
-                    <td align="left">
-                        <s:textfield id="sdate" name="startDate" cssStyle="width:70%;"/>
-                    </td>
-                    <td align="right">End Date</td>
-                    <td align="left">
-                        <s:textfield id="edate" name="endDate" cssStyle="width:70%;"/>
-                    </td>
-                </tr>
-                <tr>
-                    <s:if test="role == 'RG' || role == 'ARG'">
-                        <td align="right">&nbsp;</td>
-                        <td align="left">&nbsp;</td>
-                    </s:if>
-                    <s:else>
-                        <td align="right">DEO</td>
-                        <td align="left">
-                            <s:select
-                                    id="deoUser"
-                                    name="deoUserId"
-                                    list="deoList"
-                                    />
-                        </td>
-                    </s:else>
+                </tr>--%>
+            <tr>
+                <td align="right">Start Date</td>
+                <td align="left">
+                    <s:textfield id="sdate" name="startDate" cssStyle="width:70%;"/>
+                </td>
+                <td align="right">End Date</td>
+                <td align="left">
+                    <s:textfield id="edate" name="endDate" cssStyle="width:70%;"/>
+                </td>
+                <td><s:submit id="search_button" align="right" value="Search"/></td>
+            </tr>
+                <%--<tr>
+                        &lt;%&ndash;TODO&ndash;%&gt;
+                        &lt;%&ndash;<s:if test="role == 'RG' || role == 'ARG' || role == 'ADMIN'">&ndash;%&gt;
+                    <td align="right">&nbsp;</td>
+                    <td align="left">&nbsp;</td>
+                        &lt;%&ndash;</s:if>&ndash;%&gt;
+                        &lt;%&ndash;<s:else>&ndash;%&gt;
+                        &lt;%&ndash;<td align="right">DEO</td>&ndash;%&gt;
+                        &lt;%&ndash;<td align="left">&ndash;%&gt;
+                        &lt;%&ndash;<s:select&ndash;%&gt;
+                        &lt;%&ndash;id="deoUser" headerKey="0" headerValue="Select Role"&ndash;%&gt;
+                        &lt;%&ndash;name="deoUserId"&ndash;%&gt;
+                        &lt;%&ndash;list="deoList"&ndash;%&gt;
+                        &lt;%&ndash;/>&ndash;%&gt;
+                        &lt;%&ndash;</td>&ndash;%&gt;
+                        &lt;%&ndash;</s:else>&ndash;%&gt;
                     <td>&nbsp;</td>
-                    <td><s:submit align="right"/></td>
-                </tr>
-            </table>
-        </div>
-    </s:form>--%>
+                    <td><s:submit id="search_button" align="right" value="Search"/></td>
+                </tr>--%>
+        </table>
+    </div>
+    <%--</s:form>--%>
 </s:if>
 <s:if test="role == 'DEO' || role == 'ADR' || role == 'DR'">
     <div id="stat-charts">
@@ -421,6 +464,36 @@
                     <div id="birth-bar">
 
                     </div>
+                    <table align="center">
+                        <tr>
+                            <td align="right">All Pending</td>
+                            <td>:</td>
+                            <td>
+                                <input style="border:none;width:40px;" type="text" id="all_pending_b" readonly="true"
+                                       maxlength="3"/>
+                            </td>
+                            <td align="right">Arrears</td>
+                            <td>:</td>
+                            <td>
+                                <input style="border:none;width:40px;" type="text" id="arrears_b" readonly="true"
+                                       maxlength="3"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">Total Submitted Items</td>
+                            <td>:</td>
+                            <td>
+                                <input style="border:none;width:40px;" type="text" id="total_submitted_b"
+                                       readonly="true" maxlength="3"/>
+                            </td>
+                            <td align="right">Late Items</td>
+                            <td>:</td>
+                            <td>
+                                <input style="border:none;width:40px;" type="text" id="late_b" readonly="true"
+                                       maxlength="3"/>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </td>
             <td>
@@ -431,6 +504,36 @@
                     <div id="death-bar">
 
                     </div>
+                    <table align="center">
+                        <tr>
+                            <td align="right">All Pending</td>
+                            <td>:</td>
+                            <td>
+                                <input style="border:none;width:40px;" type="text" id="all_pending_d" readonly="true"
+                                       maxlength="3"/>
+                            </td>
+                            <td align="right">Arrears</td>
+                            <td>:</td>
+                            <td>
+                                <input style="border:none;width:40px;" type="text" id="arrears_d" readonly="true"
+                                       maxlength="3"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">Total Submitted Items</td>
+                            <td>:</td>
+                            <td>
+                                <input style="border:none;width:40px;" type="text" id="total_submitted_d"
+                                       readonly="true" maxlength="3"/>
+                            </td>
+                            <td align="right">Late Items</td>
+                            <td>:</td>
+                            <td>
+                                <input style="border:none;width:40px;" type="text" id="late_d" readonly="true"
+                                       maxlength="3"/>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </td>
             <td>
@@ -441,20 +544,52 @@
                     <div id="mrg-bar">
 
                     </div>
+                    <table align="center">
+                        <tr>
+                            <td align="right">All Pending</td>
+                            <td>:</td>
+                            <td>
+                                <input style="border:none;width:40px;" type="text" id="all_pending_m" readonly="true"
+                                       maxlength="3"/>
+                            </td>
+                            <td align="right">Arrears</td>
+                            <td>:</td>
+                            <td>
+                                <input style="border:none;width:40px;" type="text" id="arrears_m" readonly="true"
+                                       maxlength="3"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">Total Submitted Items</td>
+                            <td>:</td>
+                            <td>
+                                <input style="border:none;width:40px;" type="text" id="total_submitted_m"
+                                       readonly="true" maxlength="3"/>
+                            </td>
+                            <td align="right">Late Items</td>
+                            <td>:</td>
+                            <td>
+                                <input style="border:none;width:40px;" type="text" id="late_m" readonly="true"
+                                       maxlength="3"/>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </td>
         </tr>
     </table>
 </s:else>
-</s:else>
+<%--</s:else>--%>
 </div>
 
 <s:hidden id="birthsLateSubmissions" value="%{statistics.birthsLateSubmissions}"/>
 <s:hidden id="birthsNormalSubmissions" value="%{statistics.birthsNormalSubmissions}"/>
+<s:hidden id="birthsStillSubmissions" value="%{statistics.birthsStillSubmissions}"/>
 <s:hidden id="birthsApprovedItems" value="%{statistics.birthsApprovedItems}"/>
 <s:hidden id="birthsRejectedItems" value="%{statistics.birthsRejectedItems}"/>
 <s:hidden id="birthsArrearsPendingItems" value="%{statistics.birthsArrearsPendingItems}"/>
 <s:hidden id="birthsThisMonthPendingItems" value="%{statistics.birthsThisMonthPendingItems}"/>
+<s:hidden id="birthsThisMonthTotalItems" value="%{statistics.birthsTotalSubmissions}"/>
 
 <s:hidden id="DeathsLateSubmissions" value="%{statistics.DeathsLateSubmissions}"/>
 <s:hidden id="DeathsNormalSubmissions" value="%{statistics.DeathsNormalSubmissions}"/>
@@ -471,6 +606,7 @@
 <s:hidden id="MrgThisMonthPendingItems" value="%{statistics.MrgThisMonthPendingItems}"/>
 
 <s:hidden id="userRole" value="%{role}"/>
+<s:hidden id="userId" value="%{userName}"/>
 
 
 
