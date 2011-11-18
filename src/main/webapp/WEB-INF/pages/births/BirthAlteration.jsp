@@ -843,7 +843,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 <s:label value="பதிவுப் பிரிவு/"/> <br>
                 <s:label value="Registration Division"/>
             </td>
-            <td colspan="4"><s:select id="childBirthDivisionId" name="divisionAltaration"
+            <td colspan="4"><s:select id="childBirthDivisionId" name="divisionAlteration"
                                       list="allBdDivisionList"
                                       cssStyle="float:left;  width:95%; "/>
             </td>

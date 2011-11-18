@@ -64,7 +64,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
     private BirthRegisterInfo register;
     private BirthAlteration birthAlteration;
     private BirthDeclaration birthDeclaration;
-    private Date alterationRecivedDate;
+    private Date alterationReceivedDate;
     private BirthAlteration.AlterationType alterationType;
     private ParentInfo parent;
 
@@ -78,7 +78,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
     private int motherRaceId;
     private int dsDivisionId;
     private int locationUKey;
-    private int divisionAltaration;
+    private int divisionAlteration;
     private int[] approvedIndex;
 
     private long bdId;
@@ -242,8 +242,8 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             case TYPE_52_1_I:
             case TYPE_52_1_D: {
                 //populate 52_1 object
-                if (divisionAltaration > 0) {
-                    birthAlteration.getAlt52_1().setBirthDivision(bdDivisionDAO.getBDDivisionByPK(divisionAltaration));
+                if (divisionAlteration > 0) {
+                    birthAlteration.getAlt52_1().setBirthDivision(bdDivisionDAO.getBDDivisionByPK(divisionAlteration));
                 }
                 if (motherCountryId > 0) {
                     birthAlteration.getAlt52_1().getMother().setMotherCountry(countryDAO.getCountry(motherCountryId));
@@ -513,7 +513,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
                     break;
                 case TYPE_52_1_A:
                 case TYPE_52_1_B:
-                case TYPE_52_1_D:   
+                case TYPE_52_1_D:
                 case TYPE_52_1_E:
                     logger.debug("select the alteration going to be Cancel the birth record of idUKey : {} ", idUKey);
                     break;
@@ -543,16 +543,16 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         BirthDeclaration birthRegister;
         if (birthAlteration != null) {
             birthRegister = service.getById(birthAlteration.getBdfIdUKey());
-            String preferedLan = birthRegister.getRegister().getPreferredLanguage();
+            String preferredLan = birthRegister.getRegister().getPreferredLanguage();
             switch (birthAlteration.getType()) {
                 case TYPE_27:
-                    changesOfAlt27(birthAlteration, birthRegister, preferedLan);
+                    changesOfAlt27(birthAlteration, birthRegister, preferredLan);
                     break;
                 case TYPE_27A:
-                    changesOfAlt27A(birthAlteration, birthRegister, preferedLan);
+                    changesOfAlt27A(birthAlteration, birthRegister, preferredLan);
                     break;
                 default: {
-                    changesOfAlt52_1(birthAlteration, birthRegister, preferedLan);
+                    changesOfAlt52_1(birthAlteration, birthRegister, preferredLan);
                 }
             }
         } else {
@@ -579,8 +579,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             try {
                 Hashtable<Integer, Boolean> approveBitset = new Hashtable<Integer, Boolean>();
                 if (approvedIndex != null) {
-                    for (int i = 0; i < approvedIndex.length; i++) {
-                        int bit = approvedIndex[i];
+                    for (int bit : approvedIndex) {
                         approveBitset.put(bit, true);
                     }
                 }
@@ -678,12 +677,12 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         return SUCCESS;
     }
 
-    private void compareStringValues(String registerValue, String alterationValue, int constantValue, String preferedLan) {
+    private void compareStringValues(String registerValue, String alterationValue, int constantValue, String language) {
         if (!(registerValue == null && alterationValue == null)) {
-            boolean x = registerValue != null ? !(registerValue.equals(alterationValue)) : true;
+            boolean x = registerValue == null || !(registerValue.equals(alterationValue));
             if (x) {
                 changesList.add(new FieldValue(registerValue, alterationValue, constantValue,
-                    lk.rgd.common.util.CommonUtil.getYesOrNo(birthAlteration.getApprovalStatuses().get(constantValue), preferedLan)));
+                    lk.rgd.common.util.CommonUtil.getYesOrNo(birthAlteration.getApprovalStatuses().get(constantValue), language)));
             }
         }
     }
@@ -793,8 +792,10 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
             compareDate(marriageOriginal.getDateOfMarriage(), marriage.getDateOfMarriage(), language,
                 Alteration27A.DATE_OF_MARRIAGE);
         }
-        compareStringValues(parent.getMotherFullName(), alt27A.getMothersNameAfterMarriage(),
-            Alteration27A.MOTHER_NAME_AFTER_MARRIAGE, language);
+        if (parent != null) {
+            compareStringValues(parent.getMotherFullName(), alt27A.getMothersNameAfterMarriage(),
+                Alteration27A.MOTHER_NAME_AFTER_MARRIAGE, language);
+        }
     }
 
     private void changesOfAlt27(BirthAlteration birthAlteration, BirthDeclaration birthDeclaration, String language) {
@@ -898,7 +899,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         }
     }
 
-    private void compareDate(Date registerValue, Date alterationValue, String preferedLan, int constant) {
+    private void compareDate(Date registerValue, Date alterationValue, String language, int constant) {
         String dateEx = null;
         String dateAlt = null;
         if (registerValue != null) {
@@ -907,23 +908,23 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         if (alterationValue != null) {
             dateAlt = DateTimeUtils.getISO8601FormattedString(alterationValue);
         }
-        compareStringValues(dateEx, dateAlt, constant, preferedLan);
+        compareStringValues(dateEx, dateAlt, constant, language);
     }
 
-    private FieldValue compareBDDivision(BDDivision registerValue, BDDivision alterationValue, String preferedLan, int constant) {
+    private FieldValue compareBDDivision(BDDivision registerValue, BDDivision alterationValue, String language, int constant) {
         logger.debug("compare country for generating death alteration changes list");
         //one case null or both null in both null no need to add ,in other case need to add with out comparison
         //not both case null
         //case 1 : death register death country is null
         final FieldValue fv = new FieldValue(null, null, constant,
-            lk.rgd.common.util.CommonUtil.getYesOrNo(birthAlteration.getApprovalStatuses().get(constant), preferedLan));
+            lk.rgd.common.util.CommonUtil.getYesOrNo(birthAlteration.getApprovalStatuses().get(constant), language));
         if (registerValue != null && alterationValue != null) {
             if (registerValue.getBdDivisionUKey() != alterationValue.getBdDivisionUKey()) {
-                if (AppConstants.SINHALA.equals(preferedLan)) {
+                if (AppConstants.SINHALA.equals(language)) {
                     fv.setExistingValue(registerValue.getSiDivisionName());
                     fv.setAlterationValue(alterationValue.getSiDivisionName());
                 }
-                if (AppConstants.TAMIL.equals(preferedLan)) {
+                if (AppConstants.TAMIL.equals(language)) {
                     fv.setExistingValue(registerValue.getTaDivisionName());
                     fv.setAlterationValue(alterationValue.getTaDivisionName());
                 }
@@ -933,17 +934,17 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         } else {
             if (registerValue != null) {
                 fv.setExistingValue(null);
-                if (AppConstants.SINHALA.equals(preferedLan)) {
+                if (AppConstants.SINHALA.equals(language)) {
                     fv.setExistingValue(registerValue.getSiDivisionName());
                 }
-                if (AppConstants.TAMIL.equals(preferedLan)) {
+                if (AppConstants.TAMIL.equals(language)) {
                     fv.setExistingValue(registerValue.getTaDivisionName());
                 }
             } else if (alterationValue != null) {
-                if (AppConstants.SINHALA.equals(preferedLan)) {
+                if (AppConstants.SINHALA.equals(language)) {
                     fv.setAlterationValue(alterationValue.getSiDivisionName());
                 }
-                if (AppConstants.TAMIL.equals(preferedLan)) {
+                if (AppConstants.TAMIL.equals(language)) {
                     fv.setAlterationValue(alterationValue.getTaDivisionName());
                 }
             }
@@ -956,20 +957,20 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
     }
     //todo use one method for follow 3 amith
 
-    private FieldValue compareCountry(Country registerValue, Country alterationValue, String preferedLan, int constant) {
+    private FieldValue compareCountry(Country registerValue, Country alterationValue, String language, int constant) {
         logger.debug("compare country for generating death alteration changes list");
         //one case null or both null in both null no need to add ,in other case need to add with out comparison
         //not both case null
         //case 1 : death register death country is null
         final FieldValue fv = new FieldValue(null, null, constant,
-            lk.rgd.common.util.CommonUtil.getYesOrNo(birthAlteration.getApprovalStatuses().get(constant), preferedLan));
+            lk.rgd.common.util.CommonUtil.getYesOrNo(birthAlteration.getApprovalStatuses().get(constant), language));
         if (registerValue != null && alterationValue != null) {
             if (registerValue.getCountryId() != alterationValue.getCountryId()) {
-                if (AppConstants.SINHALA.equals(preferedLan)) {
+                if (AppConstants.SINHALA.equals(language)) {
                     fv.setExistingValue(registerValue.getSiCountryName());
                     fv.setAlterationValue(alterationValue.getSiCountryName());
                 }
-                if (AppConstants.TAMIL.equals(preferedLan)) {
+                if (AppConstants.TAMIL.equals(language)) {
                     fv.setExistingValue(registerValue.getTaCountryName());
                     fv.setAlterationValue(alterationValue.getTaCountryName());
                 }
@@ -979,17 +980,17 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         } else {
             if (registerValue != null) {
                 fv.setExistingValue(null);
-                if (AppConstants.SINHALA.equals(preferedLan)) {
+                if (AppConstants.SINHALA.equals(language)) {
                     fv.setExistingValue(registerValue.getSiCountryName());
                 }
-                if (AppConstants.TAMIL.equals(preferedLan)) {
+                if (AppConstants.TAMIL.equals(language)) {
                     fv.setExistingValue(registerValue.getTaCountryName());
                 }
             } else if (alterationValue != null) {
-                if (AppConstants.SINHALA.equals(preferedLan)) {
+                if (AppConstants.SINHALA.equals(language)) {
                     fv.setAlterationValue(alterationValue.getSiCountryName());
                 }
-                if (AppConstants.TAMIL.equals(preferedLan)) {
+                if (AppConstants.TAMIL.equals(language)) {
                     fv.setAlterationValue(alterationValue.getTaCountryName());
                 }
             }
@@ -1001,21 +1002,21 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         return fv;
     }
 
-    private FieldValue compareRace(Race registerValue, Race alterationValue, String preferedLan, int constant) {
+    private FieldValue compareRace(Race registerValue, Race alterationValue, String language, int constant) {
         logger.debug("compare race for generating death alteration changes list");
         //one case null or both null in both null no need to add ,in other case need to add with out comparison
         //not both case null
         //case 1 : death register death country is null
         final FieldValue fv = new FieldValue(null, null, constant,
-            lk.rgd.common.util.CommonUtil.getYesOrNo(birthAlteration.getApprovalStatuses().get(constant), preferedLan));
+            lk.rgd.common.util.CommonUtil.getYesOrNo(birthAlteration.getApprovalStatuses().get(constant), language));
 
         if (registerValue != null && alterationValue != null) {
             if (registerValue.getRaceId() != alterationValue.getRaceId()) {
-                if (AppConstants.SINHALA.equals(preferedLan)) {
+                if (AppConstants.SINHALA.equals(language)) {
                     fv.setExistingValue(registerValue.getSiRaceName());
                     fv.setAlterationValue(alterationValue.getSiRaceName());
                 }
-                if (AppConstants.TAMIL.equals(preferedLan)) {
+                if (AppConstants.TAMIL.equals(language)) {
                     fv.setExistingValue(registerValue.getTaRaceName());
                     fv.setAlterationValue(alterationValue.getTaRaceName());
                 }
@@ -1025,18 +1026,18 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         } else {
             if (registerValue != null) {
                 fv.setExistingValue(null);
-                if (AppConstants.SINHALA.equals(preferedLan)) {
+                if (AppConstants.SINHALA.equals(language)) {
                     fv.setExistingValue(registerValue.getSiRaceName());
 
                 }
-                if (AppConstants.TAMIL.equals(preferedLan)) {
+                if (AppConstants.TAMIL.equals(language)) {
                     fv.setExistingValue(registerValue.getTaRaceName());
                 }
             } else if (alterationValue != null) {
-                if (AppConstants.SINHALA.equals(preferedLan)) {
+                if (AppConstants.SINHALA.equals(language)) {
                     fv.setAlterationValue(alterationValue.getSiRaceName());
                 }
-                if (AppConstants.TAMIL.equals(preferedLan)) {
+                if (AppConstants.TAMIL.equals(language)) {
                     fv.setAlterationValue(alterationValue.getTaRaceName());
                 }
             }
@@ -1128,7 +1129,6 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
 
     }
 
-
     private void populateAlt52_1(BirthDeclaration bdf) {
         Alteration52_1 alt52_1 = birthAlteration.getAlt52_1();
         if (alt52_1 == null) {
@@ -1218,7 +1218,7 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
                 if (parent.getFatherRace() != null) {
                     fatherRaceId = parent.getFatherRace().getRaceId();
                 }
-            } else {
+            } else if (father != null) {
                 if (father.getFatherCountry() != null) {
                     fatherCountryId = father.getFatherCountry().getCountryId();
                 }
@@ -1247,7 +1247,6 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         }
         birthAlteration.setAlt27A(alt27A);
     }
-
 
     private void populateBirthAlterationForUpdate(BirthAlteration existing, BirthAlteration updated) {
         //there are 3 acts in birth alteration and one and only one get populated for on alteration
@@ -1286,8 +1285,8 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
                         updated.getAlt52_1().getMother().setMotherRace((motherRaceId != 0) ?
                             raceDAO.getRace(motherRaceId) : null);
                     }
-                    updated.getAlt52_1().setBirthDivision((divisionAltaration != 0) ?
-                        bdDivisionDAO.getBDDivisionByPK(divisionAltaration) : null);
+                    updated.getAlt52_1().setBirthDivision((divisionAlteration != 0) ?
+                        bdDivisionDAO.getBDDivisionByPK(divisionAlteration) : null);
                     existing.setAlt52_1(updated.getAlt52_1());
                 }
             }
@@ -1318,18 +1317,18 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
                         birthAlteration = alterationService.getByIDUKey(idUKey, user);
                         if (birthAlteration != null) {
                             bdf = service.getById(birthAlteration.getBdfIdUKey());
-                            String preferedLan = bdf.getRegister().getPreferredLanguage();
+                            String language = bdf.getRegister().getPreferredLanguage();
                             //alterationHistoryDate.put(count, birthAlteration.getLifeCycleInfo().getApprovalOrRejectTimestamp());
 
                             switch (birthAlteration.getType()) {
                                 case TYPE_27:
-                                    changesOfAlt27(birthAlteration, bdf, preferedLan);
+                                    changesOfAlt27(birthAlteration, bdf, language);
                                     break;
                                 case TYPE_27A:
-                                    changesOfAlt27A(birthAlteration, bdf, preferedLan);
+                                    changesOfAlt27A(birthAlteration, bdf, language);
                                     break;
                                 default: {
-                                    changesOfAlt52_1(birthAlteration, bdf, preferedLan);
+                                    changesOfAlt52_1(birthAlteration, bdf, language);
                                 }
                             }
                             for (int k = count; k < changesList.size(); k++) {
@@ -1632,12 +1631,12 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         this.register = register;
     }
 
-    public Date getAlterationRecivedDate() {
-        return alterationRecivedDate;
+    public Date getAlterationReceivedDate() {
+        return alterationReceivedDate;
     }
 
-    public void setAlterationRecivedDate(Date alterationRecivedDate) {
-        this.alterationRecivedDate = alterationRecivedDate;
+    public void setAlterationReceivedDate(Date alterationReceivedDate) {
+        this.alterationReceivedDate = alterationReceivedDate;
     }
 
     public boolean isEditChildInfo() {
@@ -1720,12 +1719,12 @@ public class BirthAlterationAction extends ActionSupport implements SessionAware
         this.locationUKey = locationUKey;
     }
 
-    public int getDivisionAltaration() {
-        return divisionAltaration;
+    public int getDivisionAlteration() {
+        return divisionAlteration;
     }
 
-    public void setDivisionAltaration(int divisionAltaration) {
-        this.divisionAltaration = divisionAltaration;
+    public void setDivisionAlteration(int divisionAlteration) {
+        this.divisionAlteration = divisionAlteration;
     }
 
     public boolean isApproveRightsToUser() {
