@@ -32,8 +32,7 @@ import java.util.Date;
         "FROM BirthAlteration ba WHERE( ba.bdfIdUKey=:certificateNumber AND ba.lifeCycleInfo.activeRecord IS TRUE )")
 })
 
-public class
-    BirthAlteration {
+public class BirthAlteration {
 
     /**
      * Section 27

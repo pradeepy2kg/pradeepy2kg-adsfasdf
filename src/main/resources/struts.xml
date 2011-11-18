@@ -555,7 +555,7 @@
             <result type="tiles" name="success">epr.BirthCertificatePrint</result>
         </action>
 
-        <!--birthconfirmation print related-->
+        <!--birth confirmation print related-->
         <action name="eprBirthConfirmationPrintList" class="lk.rgd.crs.web.action.births.PrintAction"
                 method="loadConfirmationPrintList">
             <result type="tiles" name="pageLoad">epr.birthConfirmationPrint</result>
@@ -573,7 +573,7 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
-        <!--        <action name="eprBirthConfirmationBulkPrint" class="lk.rgd.crs.web.action.births.PrintAction"
+        <!--<action name="eprBirthConfirmationBulkPrint" class="lk.rgd.crs.web.action.births.PrintAction"
                 method="printBulkOfEntries">
             <result type="tiles" name="success">epr.birthConfirmationPrint</result>
             <result type="tiles" name="error">epr.error</result>
@@ -1313,7 +1313,7 @@
         <!--To show the history of the birth alteration -->
         <action name="eprApproveHistoryBirthAlteration" class="lk.rgd.crs.web.action.births.BirthAlterationAction"
                 method="getBirthAlterationHistory">
-           <result type="tiles" name="success">epr.birthAlterarionHistory</result>
+            <result type="tiles" name="success">epr.birthAlterationHistory</result>
             <result type="tiles" name="error">epr.birthAlterationPendingApproval</result>
         </action>
 

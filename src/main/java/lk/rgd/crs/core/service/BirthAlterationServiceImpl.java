@@ -105,8 +105,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
     @Transactional(propagation = Propagation.SUPPORTS)
     public BirthAlteration getByIDUKey(long idUKey, User user) {
         logger.debug("Loading birth alteration record : {}", idUKey);
-        BirthAlteration ba = birthAlterationDAO.getById(idUKey);
-        return ba;
+        return birthAlterationDAO.getById(idUKey);
     }
 
     /**
@@ -204,8 +203,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
                 ba.getStatus() != BirthAlteration.State.PRINTED)) {
                 try {
                     birthAlterationDAO.deleteBirthAlteration(ba.getIdUKey());
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     logger.debug("unable to delete birth alteration while cleaning existing birth alteration when an " +
                         "there is a approval for 52_1 A,B,D,E idUKey : {}", ba.getIdUKey());
                     continue;
@@ -301,7 +299,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthAlteration> getApprovalPendingByBDDivision
-        (BDDivision bdDivision, int pageNo, int noOfRows, User user) {
+    (BDDivision bdDivision, int pageNo, int noOfRows, User user) {
         if (logger.isDebugEnabled()) {
             logger.debug("Get birth alteration pending approval by BDDivision ID : " + bdDivision.getBdDivisionUKey()
                 + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
@@ -343,7 +341,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
     }
 
     /**
-     * @inheriteDoc
+     * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthAlteration> getBirthAlterationByBirthCertificateNumber(long idUKey, User user) {
@@ -360,7 +358,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
     }
 
     /**
-     * @inheriteDoc
+     * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void rejectBirthAlteration(long idUKey, String comment, User user) {
@@ -389,7 +387,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
     }
 
     /**
-     * @inheriteDoc
+     * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void markBirthAlterationNoticeAsPrinted(long idUKey, User user) {
@@ -585,7 +583,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
 
     private void process52_1Changes(BirthAlteration ba, BirthDeclaration bdf, Alteration52_1 alt) {
 
-        // childs details
+        // child details
         if (ba.getApprovalStatuses().get(Alteration52_1.DATE_OF_BIRTH)) {
             bdf.getChild().setDateOfBirth(alt.getDateOfBirth());
         }
