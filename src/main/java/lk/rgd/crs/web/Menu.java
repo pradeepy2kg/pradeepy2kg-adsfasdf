@@ -99,6 +99,8 @@ public class Menu {
         adminLink.put("eprCreateReports.do", new Link(null, "/ecivil/management/", "eprCreateReports.do", Permission.GENERATE_REPORTS));
         adminLink.put("eprViewReport.do", new Link(null, "/ecivil/management/", "eprViewReport.do", Permission.GENERATE_REPORTS));
         adminLink.put("eprPopulateStatistics.do", new Link(null, "/ecivil/management/", "eprPopulateStatistics.do", Permission.GENERATE_REPORTS));
+        // TODO remporary fix statistics needs its own menu
+        adminLink.put("eprStatHome.do", new Link(null, "/ecivil/management/", "eprStatHome.do", Permission.USER_MANAGEMENT));
 
 
         adrAdminLink.put("eprRegistrarsManagment.do", new Link("registrars.managment", "/ecivil/management/", "eprRegistrarsManagment.do", Permission.REGISTRAR_MANAGEMENT));

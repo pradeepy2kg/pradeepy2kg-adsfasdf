@@ -11,7 +11,7 @@
             <s:else>
         <li>
             </s:else>
-            <a href="/ecivil/eprStatHome.do">
+            <a href="/ecivil/management/eprStatHome.do">
                 පරිපාලන කටයුතු
             </a>
             <ul class="acitem">
