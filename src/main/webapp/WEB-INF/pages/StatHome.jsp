@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
-<link rel="stylesheet" href="lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
+<link rel="stylesheet" href="/ecivil/lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css" type="text/css"/>
 
 <script type="text/javascript" src="/ecivil/lib/jquery/jquery.jqplot.js"></script>
 <script type="text/javascript" src="/ecivil/lib/jquery/jqplot.categoryAxisRenderer.js"></script>
