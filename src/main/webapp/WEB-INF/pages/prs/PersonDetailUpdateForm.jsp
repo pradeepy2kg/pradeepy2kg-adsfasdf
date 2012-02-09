@@ -10,7 +10,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
-<style type="text/css" title="currentStyle">
+<style type="text/css" xmlns:s="http://www.w3.org/1999/xhtml" xmlns:s="http://www.w3.org/1999/xhtml"
+       title="currentStyle">
     @import "../lib/datatables/media/css/demo_page.css";
     @import "../lib/datatables/media/css/demo_table.css";
     @import "../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css";
@@ -27,8 +28,6 @@
     function validate() {
         var returnVal = true;
         var domObject;
-
-        //alert("AAA")
 
         domObject = document.getElementById("submitDatePicker");
         if (isFieldEmpty(domObject)) {
@@ -50,12 +49,10 @@
 
         checkCivilStatus();
 
-
         domObject = document.getElementById("permanentAddress");
         if (isFieldEmpty(domObject)) {
             isEmpty(domObject, "", 'error8');
         }
-
 
         domObject = document.getElementById("personPhoneNo");
         if (!isFieldEmpty(domObject)) {
@@ -67,40 +64,32 @@
             validateEmail(domObject, "error0", 'error10');
         }
 
+        // validate person passport number
+        domObject = document.getElementById('personPassportNo');
+        if (!isFieldEmpty(domObject)) {
+            if (validatePassportNo(domObject, 'error0', 'error3')) {
+                domObject = document.getElementById('personCountryId');
+                if (domObject.value == 0) {
+                    errormsg = errormsg + "\n" + document.getElementById('error13').value;
+                }
+            }
+        }
+        domObject = document.getElementById('personCountryId');
+        if (domObject.value != 0) {
+            domObject = document.getElementById('personPassportNo');
+            if (isFieldEmpty(domObject)) {
+                isEmpty(domObject, '', 'error3');
+            }
+        }
+
         if (errormsg != "") {
             alert(errormsg);
             returnVal = false;
         }
         errormsg = "";
-        return returnVal;          alert("AAA")
+        return returnVal;
+        alert("AAA")
     }
-
-
-    // TODO for dob calculation for person, how to add??
-    /*function calculateBirthDay(id, error) {
-     var reg = /^([0-9]{9}[X|x|V|v])$/;
-     var day = id.substring(2, 5);
-     var year = 19 + id.substring(0, 2);
-     var date = new Date(year);
-     if ((id.search(reg) == 0) && (day >= 501 && day <= 866)) {
-     if ((day > 559) && ((date.getFullYear() % 4) != 0 )) {
-     day = id.substring(2, 5) - 2;
-     date.setDate(date.getDate() + day - 500);
-     } else {
-     date.setDate(date.getDate() + day - 1500);
-     }
-     datePicker.datepicker('setDate', new Date(date.getYear(), date.getMonth(), date.getDate()));
-     } else if ((id.search(reg) == 0) && (day > 0 && day <= 366)) {
-     if ((day > 59) && ((date.getFullYear() % 4) != 0 )) {
-     day = id.substring(2, 5) - 2;
-     date.setDate(date.getDate() + day);
-     } else {
-     date.setDate(date.getDate() + day - 1000);
-     }
-
-     datePicker.datepicker('setDate', new Date(date.getYear(), date.getMonth(), date.getDate()));
-     }
-     }*/
 
     // check whether any civil status selected
     function checkCivilStatus() {
@@ -125,12 +114,12 @@
             var text = $("textarea#personFullNameOfficialLang").attr("value");
 
             $.post('/ecivil/TransliterationService', {text:text,gender:'M'},
-                function(data) {
-                    if (data != null) {
-                        var s = data.translated;
-                        $("textarea#personFullNameEnglish").val(s);
-                    }
-                });
+                    function(data) {
+                        if (data != null) {
+                            var s = data.translated;
+                            $("textarea#personFullNameEnglish").val(s);
+                        }
+                    });
         });
     });
 
@@ -162,25 +151,7 @@
     function initPage() {
         document.getElementById('citizen-info-min').style.display = 'none';
         document.getElementById('citizenDetails').style.display = 'none';
-        disableButton(true);
     }
-
-    // Disable buttons until user checks ignore duplicates
-    function disableButton(mode) {
-        var domObject = document.getElementById('approve');
-        var duplicates = document.getElementById('persons-table');
-        if (domObject != null && duplicates != null) {
-            if (mode) {
-                document.getElementById('approve').style.display = 'none';
-                document.getElementById('submitButton').style.display = 'none';
-            }
-            else {
-                document.getElementById('approve').style.display = 'block';
-                document.getElementById('submitButton').style.display = 'block';
-            }
-        }
-    }
-
 
     // Minimize and maximize citizen list
     $(function() {
@@ -248,6 +219,36 @@
         });
     });
 
+    function validateAddCitizenship() {
+        var returnVal = true;
+        var domObject;
+
+        domObject = document.getElementById('citizenCountryId');
+        if (domObject.value == 0) {
+            errormsg = document.getElementById('error13').value;
+            checkPassportNo();
+        } else {
+            checkPassportNo();
+        }
+
+        if (errormsg != "") {
+            alert(errormsg);
+            returnVal = false;
+        }
+        errormsg = "";
+        return returnVal;
+    }
+
+    // checks passport number available and valid
+    function checkPassportNo() {
+        domObject = document.getElementById('citizenPassportNo');
+        if (isFieldEmpty(domObject)) {
+            isEmpty(domObject, '', 'error3');
+        } else {
+            validatePassportNo(domObject, 'error0', 'error3');
+        }
+    }
+
     // Add new citizen to the citizen list
     function fnClickAddRow() {
         if (validateAddCitizenship()) {
@@ -276,183 +277,22 @@
     }
 </script>
 
-<head>
-
-    <style type="text/css">
-        * {
-            margin: auto;
-        }
-
-        .inner-table {
-            border-color: #000;
-            border-width: 0 0 1px 1px;
-            border-style: solid;
-            font-size: 9pt;
-        }
-
-        .sub-table {
-            border: 0;
-        }
-
-        .borderless-table {
-            border: none;
-
-        }
-
-            /*a:link, a:visited {
-                text-decoration: none;
-                color: black;
-            }*/
-
-        hr {
-            margin-bottom: 2px;
-            margin-top: 2px;
-        }
-
-            /*td {
-                        border-color: #000;
-                        border-width: 1px 1px 0 0;
-                        border-style: solid;
-                        margin: 0;
-                        padding-top: 5px;
-                        padding-bottom: 5px;
-                        padding-left: 5px;
-                    }
-            */
-        .border-invisible {
-            border-color: blue;
-            border-width: 0 0 0 0;
-
-        }
-
-        .right_align {
-            padding-right: 5px;
-        }
-
-        .special {
-            padding: 0 0 0 0;
-            border-top: 0;
-            border-right: 0;
-            margin: 0 0 0 0;
-        }
-
-        #main_title {
-            text-align: center;
-            font-size: 12pt;
-            padding-top: 10px;
-            padding-bottom: 10px;
-        }
-
-        #citizen_main {
-            display: block;
-            position: relative;
-        }
-
-        .citizen_title {
-            text-align: center;
-            font-size: 12pt;
-            padding-top: 10px;
-            padding-bottom: 10px;
-            height: 70px;
-            float: left;
-            margin-left: 180px;
-        }
-
-        #citizen_icon {
-            padding: 0;
-            width: 100px;
-            height: 90px;
-            float: right;
-            margin: auto;
-        }
-
-        #citizen_blank {
-            padding: 0;
-            width: 100px;
-            height: 90px;
-            float: left;
-            margin: auto;
-        }
-
-            /* body {
-                background: #fff;
-            }*/
-
-    </style>
-
-&nbsp;
-
-<s:form action="eprPersonDetails.do" method="POST" onsubmit="javascript:return validate()">
-    <s:hidden name="personUKey" value="%{#request.personUKey}"/>
-    <div class="form-submit">
-        <s:submit value="%{getText('save.label')}" cssStyle="margin-top:-5px;"/>
-    </div>
-</s:form>
-
-
-<s:form action="eprPersonDetails.do" method="get">
-    <s:hidden name="personUKey" value="%{#request.personUKey}"/>
-    <div class="form-submit">
-        <s:submit value="%{getText('previous.label')}" cssStyle="margin-top:-5px;"/>
-    </div>
-</s:form>
-
 <div class="prs-existing-person-register-outer">
+
+<s:form action="eprUpdatePersonDetails.do" method="POST" onsubmit="javascript:return validate()">
 
 <table class="table_reg_header_01" style="font-size:9pt">
 <caption></caption>
 <col/>
 <col/>
 <tbody>
-<!-- header information [ table ]   -->
-  &nbsp;
-<s:form action="eprUpdatePersonDetails.do" method="POST" onsubmit="javascript:return validate()">
-    <s:hidden name="personUKey" value="%{#request.personUKey}"/>
-    <div class="form-submit">
-        <s:submit value="%{getText('save.label')}" cssStyle="margin-top:-5px;"/>
-    </div>
-</s:form>
-
-
-<s:form action="eprPersonDetails.do" method="get">
-    <s:hidden name="personUKey" value="%{#request.personUKey}"/>
-    <div class="form-submit">
-        <s:submit value="%{getText('previous.label')}" cssStyle="margin-top:-5px;"/>
-    </div>
-</s:form>
-
 <tr>
     <td>
-        <table class="table_reg_datePicker_page_01" width="30%" align="left" cellpadding="0" cellspacing="0">
 
-            <tr>
-                <td colspan="2" width="40%">කාර්යාල ප්‍රයෝජනය සඳහා පමණි <br/>
-                    அலுவலக பாவனைக்காக மட்டும் <br/>
-                    For office use only
-                    <hr>
-                </td>
-
-            </tr>
-            <tr>
-                <td>ඉල්ලුම්පතේ තත්ත්වය<br/>
-                    விண்ணப்பத்தின் நிலைமை <br/>
-                    Status of Application
-                </td>
-                <td>
-                    <s:textfield name="person.status" id="serial" maxLength="10" disabled="true"/>
-                    <%--<%= PersonStatusUtil.getPersonStatusString((Person.Status) request.getAttribute("person.status"))%>--%>
-                </td>
-            </tr>
-
-
-        </table>
     </td>
 
-
-    <td align="center" style="font-size:12pt; width:430px">
+    <td align="center" style="font-size:12pt; width:400px">
         <img src="<s:url value="/images/official-logo.png"/>"/> <br/>
-
-        <!-- Form title -->
 
         <div id="main_title">
             ජනගහන ලේඛනයේ විස්තර වෙනස් කිරීම<br/>
@@ -461,47 +301,18 @@
         </div>
     </td>
 
-
-    <%--<td rowspan="3" align="center">
-        <img src="<s:url value="/images/official-logo.png"/>" alt=""/>
-    </td>
-
-    </tr>
-    <tr>
-    <td>ඉල්ලුම්පතේ තත්වය<br/>
-        விண்ணப்பத்தின் நிலைமை  <br/>
-        Status of Application
-    </td>
-    <td class="special">
-        <table cellpadding="0" cellspacing="0" width="100%" class="sub-table">
-            <tr>
-            <td><s:radio name="person.civilStatus_app_sts" list="#@java.util.HashMap@{'NEVER_MARRIED':''}"/></td>
-            <td><s:label>අනුමතයි /அனுமதி / Approved</s:label></td>
-            </tr>
-            <tr>
-            <td><s:radio name="person.civilStatus_app_sts" list="#@java.util.HashMap@{'NEVER_MARRIED':''}"/></td>
-            <td><s:label>ප්‍රතික්ෂේපිතයි / தள்ளுபடி/ Rejected</s:label></td>
-            </tr>
-        </table>
-
-    </td>--%>
     <td width="350px" align="right" style="margin-right:0;">
         <table class="table_reg_datePicker_page_01" style="width:90%;margin-right:0;margin-bottom:0;border-bottom:none">
             <tr>
-
                 <td colspan="2">
                     කාර්යාල ප්‍රයෝජනය සඳහා පමණි <br/>
                     அலுவலக பாவனைக்காக மட்டும் <br/>
                     For office use only
-
                 </td>
             </tr>
-
-
         </table>
         <table class="table_reg_datePicker_page_01" style="width:90%;margin-right:0;margin-top:0px;">
             <tr>
-
                 <td>භාරගත් දිනය <s:label value="*" cssStyle="color:red;font-size:10pt"/><br/>
                     பெறப்பட்ட திகதி <br/>
                     Date of Acceptance
@@ -513,11 +324,9 @@
             </tr>
         </table>
     </td>
-
 </tr>
 
-
-<tr>  <!-- Basic Details [ table ]   -->
+<tr>
     <table class="table_reg_page_05" cellspacing="0" cellpadding="0" style="margin-bottom:0;margin-top:20px;">
         <tr>
             <td width="25%" colspan="2">
@@ -526,8 +335,7 @@
                 Identification number
             </td>
             <td width="25%" colspan="2">
-
-               <s:textfield id="pin" name="person.pin" maxLength="10" readonly="true"/>
+                <s:textfield id="pin" name="person.pin" maxLength="10" readonly="true"/>
             </td>
             <td width="25%" colspan="2">
                 (2) ජාතික හැඳුනුම්පත් අංකය <br/>
@@ -535,7 +343,7 @@
                 National Identity Card (NIC) Number
             </td>
             <td width="25%" colspan="2">
-                <s:textfield name="person.nic" id="nic"/>
+                <s:textfield name="person.nic" id="nic" readonly="true"/>
             </td>
         </tr>
         <tr>
@@ -567,25 +375,16 @@
     </td>
 </tr>
 <tr>  <!-- Addresses and TP Details  [ table ]   -->
-    <table class="table_reg_page_05" cellspacing="0" cellpadding="0" style="margin-bottom:0;margin-top:20px;">
+    <table class="table_reg_page_05" cellspacing="0" cellpadding="0" style="margin-bottom:10px;margin-top:20px;">
         <tr>
             <td width="15%">
                 (4) ස්ථිර ලිපිනය<s:label value="*" cssStyle="color:red;font-size:10pt"/><br/>
                 நிரந்தர வதிவிட முகவரி <br/>
                 Permanent Address
             </td>
-            <td width="50%">
-                <s:textarea name="person.permanentAddress" id="permanentAddress" cols="65" rows="4"/>
-            </td>
-            <td width="15%">
-                ආරම්භක දිනය <br/>
-                முகவரி <br/>
-                Start date
-            </td>
-            <td width="20%">
-                <s:label value="YYYY-MM-DD" cssStyle="margin-left:5px;font-size:10px"/><br>
-                <s:textfield id="permanentAddress" name="person.dateOfBirth" maxLength="10"/>
-
+            <td colspan="3">
+                <s:textarea name="person.permanentAddress" id="permanentAddress"
+                            cssStyle="width:98.2%;text-transform:uppercase;"/>
             </td>
         </tr>
         <tr>
@@ -600,17 +399,8 @@
                 தற்போதைய வதிவிட முகவரி <br/>
                 Current Address
             </td>
-            <td>
-                <s:textarea name="person.currentAddress" id="currentAddress" cols="65" rows="4"/>
-            </td>
-            <td>
-                ආරම්භක දිනය <br/>
-                முகவரி <br/>
-                Start date
-            </td>
-            <td>
-                <s:label value="YYYY-MM-DD" cssStyle="margin-left:5px;font-size:10px"/><br>
-                <s:textfield id="currentAddress" name="person.dateOfBirth" maxLength="10"/>
+            <td colspan="3">
+                <s:textarea name="person.currentAddress" cssStyle="width:98.2%;text-transform:uppercase;"/>
             </td>
         </tr>
         <tr>
@@ -631,7 +421,6 @@
             <td width="30%">
                 <s:textfield name="person.personEmail" id="personEmail" cssStyle="text-transform:lowercase;"/>
             </td>
-
         </tr>
     </table>
 </tr>
@@ -644,7 +433,7 @@
     </td>
 </tr>
 
-   <fieldset style="margin-bottom:5px;border:1px solid #000;width:97.9%;">
+<fieldset style="margin-bottom:5px;border:1px solid #000;width:97.9%;">
     <table class="table_reg_page_05" style="border:none;margin-bottom:5px;margin-top:5px;width:100%;">
         <tr>
             <td align="center" style="font-size:11pt;border:none">
@@ -713,39 +502,49 @@
         </table>
     </div>
 </fieldset>
-&nbsp;
-<s:form action="eprUpdatePersonDetails.do" method="POST" onsubmit="javascript:return validate()">
-    <s:hidden name="personUKey" value="%{#request.personUKey}"/>
-    <div class="form-submit">
-        <s:submit value="%{getText('save.label')}" cssStyle="margin-top:-5px;"/>
-    </div>
-</s:form>
+    <%--<s:form action="eprUpdatePersonDetails.do" method="POST" onsubmit="javascript:return validate()">--%>
+    <%--<s:hidden name="personUKey" value="%{#request.personUKey}"/>--%>
+    <%--<div class="form-submit">--%>
+    <%--<s:submit value="%{getText('save.label')}" cssStyle="margin-top:-15px;"/>--%>
+    <%--</div>--%>
+    <%--</s:form>--%>
 
-
-<s:form action="eprPersonDetails.do" method="get">
-    <s:hidden name="personUKey" value="%{#request.personUKey}"/>
-    <div class="form-submit">
-        <s:submit value="%{getText('previous.label')}" cssStyle="margin-top:-5px;"/>
-    </div>
-</s:form>
-
+    <%--<s:form action="eprPersonDetails.do" method="get">--%>
+    <%--<s:hidden name="personUKey" value="%{#request.personUKey}"/>--%>
+    <%--<div class="form-submit">--%>
+    <%--<s:submit value="%{getText('previous.label')}" cssStyle="margin-top:-15px;"/>--%>
+    <%--</div>--%>
 </tbody>
-
-
 </table>
 
+<div class="form-submit">
+    <s:submit id="submitButton" value="%{getText('save.label')}" cssStyle="margin-top:5px;margin-bottom:5px;"/>
+</div>
 
+<s:hidden id="citizenship" name="citizenship"/>
+<s:hidden name="person.personUKey" value="%{#request.personUKey}"/>
+<s:hidden name="person.status" value="%{#request.person.status}"/>
+<s:hidden name="personUKey" value="%{#request.personUKey}"/>
+</s:form>
 
+<div class="form-submit" style="margin: 5px 5px 0;">
+    <s:a href="%{advanceSearch}"><s:label value="%{getText('search_record.label')}"/></s:a>
+</div>
+
+<br/>
+<br/>
 
 <s:hidden id="error0" value="%{getText('er.invalid.inputType')}"/>
 <s:hidden id="error1" value="%{getText('er.label.submitDatePicker')}"/>
 <s:hidden id="error2" value="%{getText('er.label.temporaryPIN')}"/>
+<s:hidden id="error3" value="%{getText('er.label.personPassportNo')}"/>
 <s:hidden id="error4" value="%{getText('er.label.birthDatePicker')}"/>
 <s:hidden id="error8" value="%{getText('er.label.permanentAddress')}"/>
 <s:hidden id="error9" value="%{getText('er.label.personPhoneNo')}"/>
 <s:hidden id="error10" value="%{getText('er.label.personEmail')}"/>
 <s:hidden id="error11" value="%{getText('er.label.personNIC')}"/>
 <s:hidden id="error12" value="%{getText('er.label.personNIC')}"/>
+<s:hidden id="error13" value="%{getText('er.label.personCountry')}"/>
 <s:hidden id="error17" value="%{getText('er.label.civilStatus')}"/>
 
 </div>
