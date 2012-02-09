@@ -31,9 +31,11 @@
 <div class="form-submit" style="margin:5px 0 0 5px;margin-right:5px;">
     <s:a href="%{advanceSearch}"><s:label value="%{getText('search_record.label')}"/></s:a>
 </div>
-<div class="form-submit" style="margin-top:5px;">
-    <s:a href="%{edit}"><s:label value="%{getText('label.edit')}"/></s:a>
-</div>
+<s:if test="person.status.ordinal() == 3">
+    <div class="form-submit" style="margin-top:5px;">
+        <s:a href="%{edit}"><s:label value="%{getText('label.edit')}"/></s:a>
+    </div>
+</s:if>
 
 <table style="width:100%; border:none; border-collapse:collapse;">
     <tbody>
@@ -263,8 +265,8 @@
 
     <table class="table_reg_page_05" cellspacing="0" cellpadding="0"
            style="margin-bottom:20px;margin-top:10px;font-size:10pt;">
-        <col width="200px">
-        <col width="300px">
+        <col width="240px">
+        <col width="260px">
         <col width="100px">
         <col width="100px">
         <col width="100px">
@@ -273,12 +275,12 @@
         <tbody>
         <tr>
             <td>
-                වර්තමාන ලිපිනය
-                <br>தற்போதைய வதிவிட
-                <br>Current Address
+                ස්ථිර ලිපිනය
+                <br>நிரந்தர வதிவிட முகவரி
+                <br>Permanent Address
             </td>
             <td colspan="2">
-                <s:label value="%{person.lastAddress}"/>
+                    <s:label value="%{permanentAddress}"/>
             </td>
             <td>
                 ආරම්භය
@@ -286,8 +288,30 @@
                 <br>Start
             </td>
             <td colspan="3">
-                <s:if test="person.lastAddress.startDate != null">
-                    <s:label value="%{person.lastAddress.startDate}"/><br>
+                <s:if test="permanentAddress.startDate != null">
+                    <s:label value="%{permanentAddress.startDate}"/><br>
+                    <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
+                </s:if>
+                <s:else>&nbsp;</s:else>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                වර්තමාන ලිපිනය
+                <br>தற்போதைய வதிவிட
+                <br>Current Address
+            </td>
+            <td colspan="2">
+                    <s:label value="%{currentAddress}"/>
+            </td>
+            <td>
+                ආරම්භය
+                <br> மின்னஞ்சல்
+                <br>Start
+            </td>
+            <td colspan="3">
+                <s:if test="currentAddress.startDate != null">
+                    <s:label value="%{currentAddress.startDate}"/><br>
                     <s:label value="YYYY-MM-DD" cssStyle="margin-left:2px;font-size:10px"/>
                 </s:if>
                 <s:else>&nbsp;</s:else>
@@ -311,21 +335,29 @@
                 <s:label value="%{person.personEmail}"/>
             </td>
         </tr>
-        <s:iterator value="person.addresses">
-            <s:if test="addressUKey != person.lastAddress.addressUKey ">
+        </tbody>
+        </table>
+
+        <table class="table_reg_page_05" cellspacing="0" cellpadding="0"
+           style="margin-bottom:20px;margin-top:10px;font-size:10pt;">
+        <col width="240px">
+        <col width="260px">
+        <col width="100px">
+        <col width="100px">
+        <col width="100px">
+        <col width="100px">
+        <col width="130px">
+        <tbody>
+        <s:iterator value="person.addresses" status="address">
+            <s:if test="addressUKey != currentAddress.addressUKey && addressUKey != permanentAddress.addressUKey">
                 <tr>
                     <td>
-                        පෙර පදිංචි ලිපිනය
-                        <br>தற்போதைய வதிவிட
-                        <br>Previous Address
+                        පෙර පදිංචි ලිපිනය<s:if test="permanent"> (ස්ථිර)</s:if>
+                        <br>தற்போதைய வதிவிட<s:if test="permanent"> (மின்னஞ்சல்)</s:if>
+                        <br>Previous Address<s:if test="permanent"> (Permanent)</s:if>
                     </td>
-                    <td>
+                    <td colspan="2">
                         <s:property value="%{Line1}"/>
-                    </td>
-                    <td>
-                        ස්ථිර
-                        <br>மின்னஞ்சல்
-                        <br>Permanent
                     </td>
                     <td>
                         ආරම්භය
@@ -569,7 +601,7 @@
 <br/>
 
 <%
-String lang = ((Locale) session.getAttribute("WW_TRANS_I18N_LOCALE")).getLanguage();
+    String lang = ((Locale) session.getAttribute("WW_TRANS_I18N_LOCALE")).getLanguage();
 %>
 <s:if test="person.marriages.size() != 0">
     <table style="width:100%; border:none; border-collapse:collapse;">
@@ -643,12 +675,12 @@ String lang = ((Locale) session.getAttribute("WW_TRANS_I18N_LOCALE")).getLanguag
                     <s:else>&nbsp;</s:else>
                 </td>
                 <td>
-                    <% if(lang.equals("si")) {%>
-                        <s:property value="typeOfMarriage.siType"/>
-                    <% } else if(lang.equals("ta")) { %>
-                        <s:property value="typeOfMarriage.taType"/>
+                    <% if (lang.equals("si")) {%>
+                    <s:property value="typeOfMarriage.siType"/>
+                    <% } else if (lang.equals("ta")) { %>
+                    <s:property value="typeOfMarriage.taType"/>
                     <% } else { %>
-                        <s:property value="typeOfMarriage.enType"/>
+                    <s:property value="typeOfMarriage.enType"/>
                     <%}%>
                 </td>
                 <td><s:property value="placeOfMarriage"/></td>
@@ -743,9 +775,9 @@ String lang = ((Locale) session.getAttribute("WW_TRANS_I18N_LOCALE")).getLanguag
 
 <table class="table_reg_page_05" cellspacing="0" cellpadding="0"
        style="margin-bottom:10px;margin-top:10px;font-size:10pt;">
-    <col width="250px">
-    <col width="250px">
-    <col width="250px">
+    <col width="200px">
+    <col width="140px">
+    <col width="240px">
     <col>
     <tbody>
     <tr>
@@ -766,7 +798,12 @@ String lang = ((Locale) session.getAttribute("WW_TRANS_I18N_LOCALE")).getLanguag
             <br>தேசிய
             <br>Added by
         </td>
-        <td><s:label value="%{person.lifeCycleInfo.createdUser.userName}"/></td>
+        <td>
+            <s:label value="%{person.lifeCycleInfo.createdUser.userName}"/>
+            <%--<s:textarea value="%{person.lifeCycleInfo.createdUser.sienSignatureText}" disabled="true"
+                        rows="4"
+                        cssStyle="margin-top:10px;text-transform:none;width:100%;border:none;padding:0;text-transform:uppercase;"/>--%>
+        </td>
     </tr>
     <tr>
         <td>
@@ -844,8 +881,11 @@ String lang = ((Locale) session.getAttribute("WW_TRANS_I18N_LOCALE")).getLanguag
 <div class="form-submit" style="margin:5px 0 0 5px;margin-right:5px;">
     <s:a href="%{advanceSearch}"><s:label value="%{getText('search_record.label')}"/></s:a>
 </div>
-<div class="form-submit" style="margin-top:5px;">
-    <s:a href="%{edit}"><s:label value="%{getText('label.edit')}"/></s:a>
-</div>
+Status: <s:property value="person.status"/>
+<s:if test="person.status.ordinal() == 3">
+    <div class="form-submit" style="margin-top:5px;">
+        <s:a href="%{edit}"><s:label value="%{getText('label.edit')}"/></s:a>
+    </div>
+</s:if>
 <br><br>
 </div>
