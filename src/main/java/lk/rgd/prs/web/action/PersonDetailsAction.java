@@ -16,9 +16,7 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class PersonDetailsAction extends ActionSupport implements SessionAware {
 
@@ -45,6 +43,7 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
     private String raceEn;
     private String civilStatus;
     private Address permanentAddress;
+    private Address currentAddress;
     private Set<Address> address;
 
     private Person person;
@@ -72,6 +71,9 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
             if (person.getLifeStatus() != null) {
                 lifeStatus = LifeStatusUtil.getLifeStatus(person.getLifeStatus(), user.getPrefLanguage());
             }
+
+            populateAddressDetails(person);
+
             children = service.findAllChildren(person, user);
             logger.debug("number of children for {} is {}", person.getFullNameInOfficialLanguage(), children.size());
             siblings = service.findAllSiblings(person, user);
@@ -81,6 +83,46 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
             logger.debug("For Person with personUKey : {} does not have a valid PRS entry", personUKey);
             addActionError(getText("message.person_null"));
             return PAGE_LOAD;
+        }
+    }
+
+    private void populateAddressDetails(Person p) {
+        Set<Address> addresses = p.getAddresses();
+        Map<Long, Address> permanentMap = new LinkedHashMap<Long, Address>();
+        Map<Long, Address> currentMap = new LinkedHashMap<Long, Address>();
+
+        for (Address add : addresses) {
+            if (add.isPermanent()) {
+                permanentMap.put(add.getAddressUKey(), add);
+            } else {
+                currentMap.put(add.getAddressUKey(), add);
+            }
+        }
+
+        // load permanent address to the transient field
+        if (addresses != null && permanentMap.size() > 0) {
+            Set<Long> keys = permanentMap.keySet();
+            TreeSet<Long> addressTreeSet = new TreeSet<Long>(keys);
+
+            Iterator<Long> it = addressTreeSet.descendingIterator();
+            while (it.hasNext()) {
+                Long addKey = it.next();
+                permanentAddress = permanentMap.get(addKey);
+                break;
+            }
+        }
+
+        // load current address to the transient field
+        if (addresses != null && currentMap.size() > 0) {
+            Set<Long> keys = currentMap.keySet();
+            TreeSet<Long> addressTreeSet = new TreeSet<Long>(keys);
+
+            Iterator<Long> it = addressTreeSet.descendingIterator();
+            while (it.hasNext()) {
+                Long addKey = it.next();
+                currentAddress = currentMap.get(addKey);
+                break;
+            }
         }
     }
 
@@ -246,5 +288,13 @@ public class PersonDetailsAction extends ActionSupport implements SessionAware {
 
     public CountryDAO getCountryDAO() {
         return countryDAO;
+    }
+
+    public Address getCurrentAddress() {
+        return currentAddress;
+    }
+
+    public void setCurrentAddress(Address currentAddress) {
+        this.currentAddress = currentAddress;
     }
 }
