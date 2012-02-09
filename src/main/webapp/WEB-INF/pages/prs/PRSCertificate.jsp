@@ -56,11 +56,6 @@
 <div id="birth-certificate-outer">
 
 <s:form action="%{markPrint}" method="POST">
-<s:hidden name="personUKey" value="%{person.personUKey}"/>
-
-<s:hidden name="pageNo" value="%{#request.pageNo}"/>
-<s:hidden name="locationId" value="%{#request.locationId}"/>
-<s:hidden name="printStart" value="%{#request.printStart}"/>
 
 <div class="form-submit" style="margin:5px 0 0 0;">
     <s:submit value="%{getText('mark_as_print.button')}" type="submit"/>
@@ -72,7 +67,14 @@
     <s:a href="%{previous}"><s:label value="%{getText('previous.label')}"/></s:a>
 </div>
 
-<table style="width:100%; border:none;border-collapse:collapse;margin-top:40px;">
+<s:hidden name="personUKey" value="%{person.personUKey}"/>
+<s:hidden name="pageNo" value="%{#request.pageNo}"/>
+<s:hidden name="locationId" value="%{#request.locationId}"/>
+<s:hidden name="printStart" value="%{#request.printStart}"/>
+
+<br/>
+
+<table style="width:100%; border:none;border-collapse:collapse;margin-top:20px;">
     <col width="300px">
     <col width="430px">
     <col width="300px">
@@ -368,4 +370,5 @@
     <s:a href="%{previous}"><s:label value="%{getText('previous.label')}"/></s:a>
 </div>
 </s:form>
+<br/><br/>&nbsp;
 </div>
