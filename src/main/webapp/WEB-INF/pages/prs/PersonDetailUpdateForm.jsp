@@ -11,6 +11,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
 <style type="text/css" xmlns:s="http://www.w3.org/1999/xhtml" xmlns:s="http://www.w3.org/1999/xhtml"
+       xmlns:s="http://www.w3.org/1999/xhtml"
        title="currentStyle">
     @import "../lib/datatables/media/css/demo_page.css";
     @import "../lib/datatables/media/css/demo_table.css";
@@ -319,7 +320,7 @@
                 </td>
                 <td>
                     <s:label value="YYYY-MM-DD" cssStyle="margin-left:5px;font-size:10px"/><br>
-                    <s:textfield id="submitDatePicker" name="person.dateOfBirth" maxLength="10"/>
+                    <s:textfield id="submitDatePicker" name="person.dateOfRegistration" maxLength="10" disabled="true"/>
                 </td>
             </tr>
         </table>
@@ -527,10 +528,12 @@
 <s:hidden name="personUKey" value="%{#request.personUKey}"/>
 </s:form>
 
-<div class="form-submit" style="margin: 5px 5px 0;">
-    <s:a href="%{advanceSearch}"><s:label value="%{getText('search_record.label')}"/></s:a>
+<s:form action="eprPersonDetails.do" method="POST">
+<s:hidden name="personUKey" value="%{#request.personUKey}"/>
+<div class="form-submit">
+    <s:submit id="submitButton" value="%{getText('previous.label')}" cssStyle="margin-top:5px;margin-bottom:5px;"/>
 </div>
-
+</s:form>
 <br/>
 <br/>
 
@@ -548,6 +551,3 @@
 <s:hidden id="error17" value="%{getText('er.label.civilStatus')}"/>
 
 </div>
-
-
-
