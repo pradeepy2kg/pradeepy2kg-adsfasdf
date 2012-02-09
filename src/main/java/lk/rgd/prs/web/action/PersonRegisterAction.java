@@ -104,8 +104,8 @@ public class PersonRegisterAction extends ActionSupport implements SessionAware 
     }
 
     public String updatePersonDetails() {
-        /* logger.debug("Editing of exiting person in PRS");
-        if (person.getDateOfRegistration() == null ||person.getCivilStatus() == null || person.getPermanentAddress() == null) {
+        logger.debug("Editing already verified person details in PRS");
+        if (person.getDateOfRegistration() == null || person.getCivilStatus() == null || person.getPermanentAddress() == null) {
             addFieldError("requiredFieldsEmpty", getText("er.label.requiredFields"));
         }
 
@@ -116,24 +116,19 @@ public class PersonRegisterAction extends ActionSupport implements SessionAware 
         }
 
         if (personUKey == 0) {
-            personList = service.addExistingPerson(person, citizenshipList, ignoreDuplicate, user);
-            if (personList.isEmpty()) {
-                addActionMessage(getText("person_reg_success.message", new String[]{person.getPin().toString()}));
-            }
+            logger.warn("User entering empty personUKey not expected");
         } else {
-            logger.debug("Editing existing person in PRS with personUKey : {}", personUKey);
-            service.editExistingPersonBeforeApproval(person, citizenshipList, user);
+            logger.debug("Editing already verified person in PRS with personUKey : {}", personUKey);
+            service.editExistingPersonAfterApproval(person, citizenshipList, user);
             personList = Collections.emptyList();
             addActionMessage(getText("person_edit_success.message"));
         }
 
         initPermissions();
 
-
-            // TODO service.editExistingPersonAfterApproval(person, user);*/
-          
         return SUCCESS;
     }
+
     /**
      * This method is used to load existing person registration form
      */
