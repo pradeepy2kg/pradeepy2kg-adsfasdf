@@ -437,11 +437,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public List<UserWarning> approvePerson
-    (
-        long personUKey,
-        boolean ignoreWarnings, User
-        user) {
+    public List<UserWarning> approvePerson(long personUKey, boolean ignoreWarnings, User user) {
 
         // check user permission for approve
         validateAccessOfUserToApprove(user);
@@ -503,11 +499,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void deletePersonBeforeApproval
-    (
-        long personUKey, String
-        comment, User
-        user) {
+    public void deletePersonBeforeApproval(long personUKey, String comment, User user) {
         logger.debug("Attempt to delete PRS entry with personUKey : {}", personUKey);
         if (!user.isAuthorized(Permission.PRS_DELETE_PERSON)) {
             handleException("User : " + user.getUserId() + " is not allowed to delete entries on the PRS by UKey",
@@ -555,11 +547,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void rejectPersonBeforeApproval
-    (
-        long personUKey, String
-        comment, User
-        user) {
+    public void rejectPersonBeforeApproval(long personUKey, String comment, User user) {
         logger.debug("Attempt to reject PRS entry with personUKey : {}", personUKey);
         if (!user.isAuthorized(Permission.PRS_REJECT_PERSON)) {
             handleException("User : " + user.getUserId() + " is not allowed to reject entries on the PRS by UKey",
@@ -605,10 +593,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
 
     @Transactional(propagation = Propagation.REQUIRED)
     // TODO chathuranga remove this if unnecessary
-    public void markPRSCertificateAsPrinted
-        (
-            long personUKey, User
-            user) {
+    public void markPRSCertificateAsPrinted(long personUKey, User user) {
         logger.debug("Attempt to mark PRS certificate as marked for PRS entry with personUKey : {}", personUKey);
         if (!user.isAuthorized(Permission.PRS_MARK_CERT_PRINTED)) {
             handleException("User : " + user.getUserId() + " is not allowed mark to PRS certificate as printed ",
@@ -633,10 +618,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void updatePerson
-    (Person
-        person, User
-        user) {
+    public void updatePerson(Person person, User user) {
         if (!user.isAuthorized(Permission.PRS_ADD_PERSON)) {
             handleException("User : " + user.getUserId() + " is not allowed to update entries on the PRS",
                 ErrorCodes.PRS_ADD_RECORD_DENIED);
@@ -678,10 +660,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      */
     @Transactional(propagation = Propagation.SUPPORTS)
     @Auditable
-    public Person getByUKey
-    (
-        long personUKey, User
-        user) {
+    public Person getByUKey(long personUKey, User user) {
         if (!user.isAuthorized(Permission.PRS_LOOKUP_PERSON_BY_KEYS)) {
             handleException("User : " + user.getUserId() + " is not allowed to lookup entries on the PRS by keys (uKey)",
                 ErrorCodes.PRS_LOOKUP_BY_KEYS_DENIED);
@@ -694,10 +673,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      */
     @Transactional(propagation = Propagation.SUPPORTS)
     @Auditable
-    public Person getLoadedObjectByUKey
-    (
-        long personUKey, User
-        user) {
+    public Person getLoadedObjectByUKey(long personUKey, User user) {
         if (!user.isAuthorized(Permission.PRS_LOOKUP_PERSON_BY_KEYS)) {
             handleException("User : " + user.getUserId() + " is not allowed to lookup entries on the PRS by keys (uKey)",
                 ErrorCodes.PRS_LOOKUP_BY_KEYS_DENIED);
@@ -733,10 +709,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void addMarriage
-    (Marriage
-        marriage, User
-        user) {
+    public void addMarriage(Marriage marriage, User user) {
         if (!user.isAuthorized(Permission.PRS_ADD_PERSON)) {
             handleException("User : " + user.getUserId() + " is not allowed to add marriages to the PRS",
                 ErrorCodes.PRS_ADD_RECORD_DENIED);
@@ -748,10 +721,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void updateMarriage
-    (Marriage
-        marriage, User
-        user) {
+    public void updateMarriage(Marriage marriage, User user) {
         if (!user.isAuthorized(Permission.PRS_EDIT_PERSON)) {
             handleException("User : " + user.getUserId() + " is not allowed to update marriages to the PRS",
                 ErrorCodes.PRS_ADD_RECORD_DENIED);
@@ -764,10 +734,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      */
     @Auditable
     @Transactional(propagation = Propagation.SUPPORTS)
-    public Marriage findMarriageByMRUKey
-    (
-        long mrUKey, User
-        user) {
+    public Marriage findMarriageByMRUKey(long mrUKey, User user) {
         if (!user.isAuthorized(Permission.PRS_LOOKUP_PERSON_BY_KEYS)) {
             handleException("User : " + user.getUserId() + " is not allowed to lookup entries from the PRS",
                 ErrorCodes.PRS_LOOKUP_BY_KEYS_DENIED);
@@ -779,10 +746,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void addAddress
-    (Address
-        address, User
-        user) {
+    public void addAddress(Address address, User user) {
         if (!user.isAuthorized(Permission.PRS_ADD_PERSON)) {
             handleException("User : " + user.getUserId() + " is not allowed to add addresses to the PRS",
                 ErrorCodes.PRS_ADD_RECORD_DENIED);
@@ -794,10 +758,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void updateAddress
-    (Address
-        address, User
-        user) {
+    public void updateAddress(Address address, User user) {
         if (!user.isAuthorized(Permission.PRS_EDIT_PERSON)) {
             handleException("User : " + user.getUserId() + " is not allowed to update addresses to the PRS",
                 ErrorCodes.PRS_ADD_RECORD_DENIED);
@@ -809,10 +770,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void addCitizenship
-    (PersonCitizenship
-        citizenship, User
-        user) {
+    public void addCitizenship(PersonCitizenship citizenship, User user) {
         if (!user.isAuthorized(Permission.PRS_ADD_PERSON)) {
             handleException("User : " + user.getUserId() + " is not allowed to add citizenships to the PRS",
                 ErrorCodes.PRS_ADD_RECORD_DENIED);
@@ -824,10 +782,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void updateCitizenship
-    (PersonCitizenship
-        citizenship, User
-        user) {
+    public void updateCitizenship(PersonCitizenship citizenship, User user) {
         if (!user.isAuthorized(Permission.PRS_EDIT_PERSON)) {
             handleException("User : " + user.getUserId() + " is not allowed to update citizenships to the PRS",
                 ErrorCodes.PRS_EDIT_RECORD_DENIED);
@@ -840,10 +795,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      */
     @Transactional(propagation = Propagation.SUPPORTS)
     @Auditable
-    public Person findPersonByPIN
-    (
-        long pin, User
-        user) {
+    public Person findPersonByPIN(long pin, User user) {
         if (!user.isAuthorized(Permission.PRS_LOOKUP_PERSON_BY_KEYS)) {
             handleException("User : " + user.getUserId() + " is not allowed to lookup entries on the PRS by keys (pin)",
                 ErrorCodes.PRS_LOOKUP_BY_KEYS_DENIED);
@@ -856,10 +808,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      */
     @Transactional(propagation = Propagation.SUPPORTS)
     @Auditable
-    public List<Person> findPersonsByNIC
-    (String
-        nic, User
-        user) {
+    public List<Person> findPersonsByNIC(String nic, User user) {
         if (!user.isAuthorized(Permission.PRS_LOOKUP_PERSON_BY_KEYS)) {
             handleException("User : " + user.getUserId() +
                 " is not allowed to lookup entries on the PRS by keys (nic)", ErrorCodes.PRS_LOOKUP_BY_KEYS_DENIED);
@@ -872,10 +821,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      */
     @Transactional(propagation = Propagation.SUPPORTS)
     @Auditable
-    public List<Person> findAllChildren
-    (Person
-        person, User
-        user) {
+    public List<Person> findAllChildren(Person person, User user) {
         if (!user.isAuthorized(Permission.PRS_LOOKUP_PERSON_BY_KEYS)) {
             handleException("User : " + user.getUserId() + " is not allowed to lookup entries on the PRS for children",
                 ErrorCodes.PRS_LOOKUP_BY_KEYS_DENIED);
@@ -888,10 +834,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      */
     @Transactional(propagation = Propagation.SUPPORTS)
     @Auditable
-    public List<Person> findAllSiblings
-    (Person
-        person, User
-        user) {
+    public List<Person> findAllSiblings(Person person, User user) {
         if (!user.isAuthorized(Permission.PRS_LOOKUP_PERSON_BY_KEYS)) {
             handleException("User : " + user.getUserId() + " is not allowed to lookup entries on the PRS for siblings",
                 ErrorCodes.PRS_LOOKUP_BY_KEYS_DENIED);
@@ -908,10 +851,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      */
     @Auditable
     @Transactional(propagation = Propagation.SUPPORTS)
-    public Person findPersonByPINorNIC
-    (String
-        pinOrNic, User
-        user) {
+    public Person findPersonByPINorNIC(String pinOrNic, User user) {
         try {
             if (!isBlankString(pinOrNic)) {
                 long pin = Long.parseLong(pinOrNic);
@@ -935,10 +875,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      */
     @Auditable
     @Transactional(propagation = Propagation.SUPPORTS)
-    public Person findUniquePersonByPINorNIC
-    (String
-        pinOrNic, User
-        user) {
+    public Person findUniquePersonByPINorNIC(String pinOrNic, User user) {
         try {
             if (!isBlankString(pinOrNic)) {
                 long pin = Long.parseLong(pinOrNic);
@@ -962,10 +899,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      */
     @Auditable
     @Transactional(propagation = Propagation.SUPPORTS)
-    public List<Person> findPersonsByDOBGenderAndName
-    (Date
-        dob, int gender, String
-        name) {
+    public List<Person> findPersonsByDOBGenderAndName(Date dob, int gender, String name) {
         // TODO
         throw new UnsupportedOperationException("TODO method - asankha");
     }
@@ -974,11 +908,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<Person> getPersonsByLocation
-    (Location
-        location, int pageNo,
-        int noOfRows, User
-        user) {
+    public List<Person> getPersonsByLocation(Location location, int pageNo, int noOfRows, User user) {
         if (logger.isDebugEnabled()) {
             logger.debug("Get PRS records by LocationId : " + location.getLocationUKey() + " Page : " + pageNo +
                 " and with number of rows per page : " + noOfRows);
@@ -991,10 +921,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<Person> getPersonByLocationAndPIN
-    (Location
-        location, long pin, User
-        user) {
+    public List<Person> getPersonByLocationAndPIN(Location location, long pin, User user) {
         logger.debug("Get PRS record by LocationId : {} and PIN :{}", location.getLocationUKey(), pin);
         validateAccessToLocation(location, user);
         return personDao.getByLocationAndPIN(location, pin);
@@ -1004,11 +931,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<Person> getPersonsByLocationAndNIC
-    (Location
-        location, String
-        nic, User
-        user) {
+    public List<Person> getPersonsByLocationAndNIC(Location location, String nic, User user) {
         logger.debug("Get PRS records by LocationId : {} and NIC : {}", location.getLocationUKey(), nic);
         validateAccessToLocation(location, user);
         return personDao.getByLocationAndNIC(location, nic);
@@ -1018,10 +941,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<Person> getPersonByLocationAndTemporaryPIN
-    (Location
-        location, long tempPin, User
-        user) {
+    public List<Person> getPersonByLocationAndTemporaryPIN(Location location, long tempPin, User user) {
         logger.debug("Get PRS record by LocationId : {} and TemporaryPIN : {}", location.getLocationUKey(), tempPin);
         validateAccessToLocation(location, user);
         return personDao.getByLocationAndTempPIN(location, tempPin);
@@ -1031,10 +951,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.SUPPORTS)
-    public List<Person> findGrandMother
-    (Person
-        person, User
-        user) {
+    public List<Person> findGrandMother(Person person, User user) {
         logger.debug("get grand mother list for person , pin : {}", (person != null) ? person.getPin() : "null");
         List<Person> grandMother = Collections.emptyList();
         //have maximum two grand mothers (fathers mother and mothers mother)
@@ -1061,10 +978,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.SUPPORTS)
-    public List<Person> findGrandFather
-    (Person
-        person, User
-        user) {
+    public List<Person> findGrandFather(Person person, User user) {
         logger.debug("get grand father list for person , pin : {}", (person != null) ? person.getPin() : "null");
         List<Person> grandFather = Collections.emptyList();
         //have maximum two grand fathers (fathers father and mothers father)
