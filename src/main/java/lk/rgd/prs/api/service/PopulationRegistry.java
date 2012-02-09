@@ -62,12 +62,14 @@ public interface PopulationRegistry {
 
     /**
      * Update an existing person to the PRS <b>after</b> approval of ADR or higher. Cannot update all the fields of the
-     * person only limited number of fields can be updated for e.g. current address, permanent address etc.
+     * person only limited number of fields can be updated (only contact details) for e.g. current address, permanent
+     * address, telephone number etc.
      *
-     * @param person the Person to be updated
-     * @param user   the user performing the action
+     * @param person          the Person to be updated
+     * @param citizenshipList the person citizenship list to be updated
+     * @param user            the user performing the action
      */
-    public void editExistingPersonAfterApproval(Person person, User user);
+    public void editExistingPersonAfterApproval(Person person, List<PersonCitizenship> citizenshipList, User user);
 
     /**
      * Approve a Person by ADR or higher authority
