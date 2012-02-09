@@ -126,6 +126,7 @@ $(function() {
                 function(data1) {
                     if (data1 != null) {
                         $("textarea#fatherFullName").val(data1.fullNameInOfficialLanguage);
+                        $("textarea#fatherFullNameInEnglish").val(data1.fullNameInEnglishLanguage);
                         $("input#fatherPlaceOfBirth").val(data1.placeOfBirth);
                         $("select#fatherRaceId").val(data1.race);
                         var fatherDOB = data1.dateOfBirth;
@@ -146,6 +147,7 @@ $(function() {
                 function(data2) {
                     if (data2 != null) {
                         $("textarea#motherFullName").val(data2.fullNameInOfficialLanguage);
+                        $("textarea#motherFullNameInEnglish").val(data2.fullNameInEnglishLanguage);
                         $("input#motherPlaceOfBirth").val(data2.placeOfBirth);
                         $("textarea#motherAddress").val(data2.lastAddress);
                         $("select#motherRaceId").val(data2.race);
