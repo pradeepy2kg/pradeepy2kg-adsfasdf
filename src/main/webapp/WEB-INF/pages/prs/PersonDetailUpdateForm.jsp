@@ -1,18 +1,7 @@
-<%@ page import="lk.rgd.common.util.MarriageStateUtil" %>
-<%@ page import="lk.rgd.common.util.PersonStatusUtil" %>
-<%@ page import="lk.rgd.crs.web.WebConstants" %>
-<%@ page import="lk.rgd.prs.api.domain.Marriage" %>
-<%@ page import="lk.rgd.prs.api.domain.Person" %>
-<%@ page import="java.util.Locale" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="s" uri="/struts-tags" %>
-
-<style type="text/css" xmlns:s="http://www.w3.org/1999/xhtml" xmlns:s="http://www.w3.org/1999/xhtml"
-       xmlns:s="http://www.w3.org/1999/xhtml"
-       title="currentStyle">
+<style type="text/css" title="currentStyle">
     @import "../lib/datatables/media/css/demo_page.css";
     @import "../lib/datatables/media/css/demo_table.css";
     @import "../lib/datatables/themes/smoothness/jquery-ui-1.8.4.custom.css";
@@ -529,10 +518,10 @@
 </s:form>
 
 <s:form action="eprPersonDetails.do" method="POST">
-<s:hidden name="personUKey" value="%{#request.personUKey}"/>
-<div class="form-submit">
-    <s:submit id="submitButton" value="%{getText('previous.label')}" cssStyle="margin-top:5px;margin-bottom:5px;"/>
-</div>
+    <s:hidden name="personUKey" value="%{#request.personUKey}"/>
+    <div class="form-submit">
+        <s:submit id="submitButton" value="%{getText('previous.label')}" cssStyle="margin-top:5px;margin-bottom:5px;"/>
+    </div>
 </s:form>
 <br/>
 <br/>
