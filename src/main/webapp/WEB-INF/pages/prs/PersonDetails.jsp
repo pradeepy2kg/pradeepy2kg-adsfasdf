@@ -349,7 +349,8 @@
         <col width="130px">
         <tbody>
         <s:iterator value="person.addresses" status="address">
-            <s:if test="addressUKey != currentAddress.addressUKey && addressUKey != permanentAddress.addressUKey">
+            <%--<s:if test="addressUKey != currentAddress.addressUKey && addressUKey != permanentAddress.addressUKey">--%>
+            <s:if test="endDate != null">
                 <tr>
                     <td>
                         පෙර පදිංචි ලිපිනය<s:if test="permanent"> (ස්ථිර)</s:if>
@@ -866,7 +867,8 @@
             <br>Record Comments
         </td>
         <td colspan="3">
-            <s:label value="%{person.comments}"/>
+            <s:textarea value="%{person.comments}" disabled="true" rows="6"
+                        cssStyle="margin-top:10px;width:100%;font-size:10pt;background:transparent;border:none;padding:0;text-transform:uppercase;"/>
         </td>
     </tr>
     </tbody>
