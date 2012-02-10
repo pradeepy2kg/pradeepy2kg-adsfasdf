@@ -280,7 +280,7 @@
                 <br>Permanent Address
             </td>
             <td colspan="2">
-                    <s:label value="%{permanentAddress}"/>
+                <s:label value="%{permanentAddress}"/>
             </td>
             <td>
                 ආරම්භය
@@ -302,7 +302,7 @@
                 <br>Current Address
             </td>
             <td colspan="2">
-                    <s:label value="%{currentAddress}"/>
+                <s:label value="%{currentAddress}"/>
             </td>
             <td>
                 ආරම්භය
@@ -336,9 +336,9 @@
             </td>
         </tr>
         </tbody>
-        </table>
+    </table>
 
-        <table class="table_reg_page_05" cellspacing="0" cellpadding="0"
+    <table class="table_reg_page_05" cellspacing="0" cellpadding="0"
            style="margin-bottom:20px;margin-top:10px;font-size:10pt;">
         <col width="240px">
         <col width="260px">
@@ -881,7 +881,6 @@
 <div class="form-submit" style="margin:5px 0 0 5px;margin-right:5px;">
     <s:a href="%{advanceSearch}"><s:label value="%{getText('search_record.label')}"/></s:a>
 </div>
-Status: <s:property value="person.status"/>
 <s:if test="person.status.ordinal() == 3">
     <div class="form-submit" style="margin-top:5px;">
         <s:a href="%{edit}"><s:label value="%{getText('label.edit')}"/></s:a>
