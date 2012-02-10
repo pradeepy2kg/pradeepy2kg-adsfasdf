@@ -203,7 +203,6 @@ public class PopulationRegistryImpl implements PopulationRegistry {
 
         // load permanent address to the transient field
         if (addresses != null) {
-
             Set<Long> keys = permanentMap.keySet();
             TreeSet<Long> addressTreeSet = new TreeSet<Long>(keys);
 
@@ -474,6 +473,9 @@ public class PopulationRegistryImpl implements PopulationRegistry {
         }
 
         if (warnings.isEmpty() || ignoreWarnings) {
+            // TODO update father/ mother relationship
+            manageRelationships(existing, user);
+
             existing.setStatus(Person.Status.VERIFIED);
             existing.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
             existing.getLifeCycleInfo().setApprovalOrRejectUser(user);
@@ -494,6 +496,36 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             return warnings;
         }
     }
+
+    // TODO need to complete this
+    private void manageRelationships(Person person, User user) {
+        final String motherPinOrNIC = person.getMotherPINorNIC();
+        final String fatherPinOrNIC = person.getFatherPINorNIC();
+
+        Person mother = null;
+        Person father = null;
+
+        try {
+            mother = findPersonByPINorNIC(motherPinOrNIC, user);
+            father = findPersonByPINorNIC(fatherPinOrNIC, user);
+        } catch (IllegalArgumentException e) {
+            handleException("Invalid PIN used for fatherPIN : " + fatherPinOrNIC + " or motherPIN : " + motherPinOrNIC,
+                ErrorCodes.INVALID_PIN);
+        }
+
+        if (mother != null && Person.Status.VERIFIED == mother.getStatus()) {
+            person.setMother(mother);
+        }
+        if (father != null && Person.Status.VERIFIED == father.getStatus()) {
+            person.setFather(father);
+        }
+
+        if (father != null && mother != null && Person.Status.VERIFIED == mother.getStatus() &&
+            Person.Status.VERIFIED == father.getStatus()) {
+            //
+        }
+    }
+
 
     /**
      * @inheritDoc
@@ -1007,7 +1039,6 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      * @param currentState current status of the record
      * @return if the given state in data entry mode returns true, else false
      */
-
     private boolean isRecordInDataEntry(Person.Status currentState) {
         return (currentState == Person.Status.SEMI_VERIFIED || currentState == Person.Status.UNVERIFIED ||
             currentState == Person.Status.DATA_ENTRY);

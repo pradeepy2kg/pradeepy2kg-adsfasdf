@@ -14,7 +14,6 @@ import lk.rgd.prs.api.service.PopulationRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.naming.spi.Resolver;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +35,7 @@ public class PopulationRegisterValidator {
 
     private static final Logger logger = LoggerFactory.getLogger(PopulationRegisterValidator.class);
     private static final String POSSIBLE_DUPLICATE = "possible_duplicate";
+    private static final String DASH = " - ";
     private final PersonDAO personDAO;
 
     public PopulationRegisterValidator(PersonDAO personDAO) {
@@ -132,17 +132,11 @@ public class PopulationRegisterValidator {
             warnings.add(w);
         }
 
-        // TODO chathuranga uncomment
-        // validate person temporary pin
-        /* if (!PinAndNicUtils.isValidPIN(tempPin, , user)) {
-            UserWarning w = new UserWarning(MessageFormat.format(rb.getString("invalid_person_tempPin"), pinOrNic));
-            w.setSeverity(UserWarning.Severity.ERROR);
-            warnings.add(w);
-        }
-
+        // TODO can't use PinAndNic util method bcos of cyclic dependency ??
         // validate mother pin or nic
         pinOrNic = person.getMotherPINorNIC();
-        if (!PinAndNicUtils.isValidPINorNIC(pinOrNic, , user)) {
+        //if (!PinAndNicUtils.isValidPINorNIC(pinOrNic, populationRegistry, user)) {
+        if (!PinAndNicUtils.isValidPIN(pinOrNic) && !PinAndNicUtils.isValidNIC(pinOrNic)) {
             UserWarning w = new UserWarning(MessageFormat.format(rb.getString("invalid_mother_pin"), pinOrNic));
             w.setSeverity(UserWarning.Severity.ERROR);
             warnings.add(w);
@@ -150,11 +144,12 @@ public class PopulationRegisterValidator {
 
         // validate father pin or nic
         pinOrNic = person.getFatherPINorNIC();
-        if (!PinAndNicUtils.isValidPINorNIC(pinOrNic, , user)) {
+        //if (!PinAndNicUtils.isValidPINorNIC(pinOrNic, populationRegistry, user)) {
+        if (!PinAndNicUtils.isValidPIN(pinOrNic) && !PinAndNicUtils.isValidNIC(pinOrNic)) {
             UserWarning w = new UserWarning(MessageFormat.format(rb.getString("invalid_father_pin"), pinOrNic));
             w.setSeverity(UserWarning.Severity.ERROR);
             warnings.add(w);
-        }*/
+        }
 
         // TODO more validations to be added
 
@@ -164,7 +159,7 @@ public class PopulationRegisterValidator {
     private void addDuplicateWarning(List<UserWarning> warnings, ResourceBundle rb, Person p) {
         warnings.add(
             new UserWarning(MessageFormat.format(rb.getString(POSSIBLE_DUPLICATE), p.getPersonUKey(),
-                p.getDateOfBirth() != null ? DateTimeUtils.getISO8601FormattedString(p.getDateOfBirth()) : " - ",
+                p.getDateOfBirth() != null ? DateTimeUtils.getISO8601FormattedString(p.getDateOfBirth()) : DASH,
                 NameFormatUtil.getDisplayName(p.getFullNameInOfficialLanguage(), 30), p.getStatus())));
     }
 
