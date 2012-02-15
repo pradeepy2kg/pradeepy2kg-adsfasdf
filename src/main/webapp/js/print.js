@@ -26,12 +26,14 @@ function printPage() {
 function printForm() {
     // set page orientation.
     jsPrintSetup.setOption('orientation', jsPrintSetup.kPortraitOrientation);
+    jsPrintSetup.setGlobalOption('paperWidth', 210);
+    jsPrintSetup.setGlobalOption('paperHeight', 297);
+
     // set margins.
     jsPrintSetup.setOption('marginTop', 0);
     jsPrintSetup.setOption('marginBottom', 0);
     jsPrintSetup.setOption('marginLeft', 10);
     jsPrintSetup.setOption('marginRight', 0);
-
 
     // set page header
     jsPrintSetup.setOption('headerStrLeft', '');
@@ -42,15 +44,12 @@ function printForm() {
     jsPrintSetup.setOption('footerStrCenter', '');
     jsPrintSetup.setOption('footerStrRight', '');
 
-    jsPrintSetup.setGlobalOption('paperWidth', 210);
-    jsPrintSetup.setGlobalOption('paperHeight',297);
-    
     jsPrintSetup.print();
 }
 
 // Install JSPrintSetup
-function installjsPrintSetup(){
-    if(confirm("You don't have printer plugin.\nDo you want to install the Printer Plugin now?")){
+function installjsPrintSetup() {
+    if (confirm("You don't have printer plugin.\nDo you want to install the Printer Plugin now?")) {
         var xpi = new Object();
         xpi['jsprintsetup'] = '/downloads/js_print_setup-0.8.2h-fx.xpi';
         InstallTrigger.install(xpi);
