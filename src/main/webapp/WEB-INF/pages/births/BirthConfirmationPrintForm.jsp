@@ -137,7 +137,7 @@
     </tbody>
 </table>
 
-<table style="width:100%;float:left;margin-bottom:2px">
+<table style="width:100%;float:left;margin-bottom:20px">
     <col/>
     <tbody>
     <tr>
@@ -223,7 +223,7 @@
     </tr>
     </tbody>
 </table>
-<table border="0" style="width:100%;margin-top:2px;">
+<table border="0" style="width:100%;margin-top:20px;">
     <col/>
     <tbody>
     <tr>
@@ -693,7 +693,7 @@
 </table>
 <div style="page-break-after:always;"></div>
 
-<div id="page3">
+<div id="page3" style="margin-top:10px;">
     <table border="0" style="width:100%;float:left;">
         <caption></caption>
         <col/>
@@ -849,7 +849,7 @@
 
 <%--<hr style="border-style:dashed;align:left;width:100% ;margin-bottom:10px;margin-top:70px;">--%>
 
-<hr style="border-style:dashed;align:left;width:100% ;margin-bottom:20px;margin-top:180px;">
+<hr style="border-style:dashed;align:left;width:100% ;margin-bottom:20px;margin-top:100px;">
 <table border="0" cellspacing="0" width="100%">
     <caption></caption>
     <col/>
