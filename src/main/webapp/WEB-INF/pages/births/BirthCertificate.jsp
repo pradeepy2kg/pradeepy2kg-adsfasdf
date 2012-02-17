@@ -339,7 +339,7 @@
     </tbody>
 </table>
 
-<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:10px 0;font-size:10pt">
+<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:5px 0;font-size:10pt">
 <col width="195px">
 <col width="220px">
 <col width="155px">
@@ -635,7 +635,7 @@
 </tbody>
 </table>
 
-<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:10px 0;font-size:10pt">
+<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:5px 0;font-size:10pt">
     <col width="195px">
     <col width="220px">
     <col width="155px">
