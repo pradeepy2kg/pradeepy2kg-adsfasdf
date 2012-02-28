@@ -12,9 +12,14 @@
         <put-attribute name="title-text" value=""/>
     </definition>
 
+    <definition name="epr.welcome" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/Welcome.jsp"/>
+        <put-attribute name="title" value="home.title"/>
+    </definition>
+
     <definition name="epr.home" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/StatHome.jsp"/>
-        <put-attribute name="title" value="home.title"/>
+        <put-attribute name="title" value="statistics.label"/>
     </definition>
 
     <definition name="epr.adminHome" extends="epr.template">
