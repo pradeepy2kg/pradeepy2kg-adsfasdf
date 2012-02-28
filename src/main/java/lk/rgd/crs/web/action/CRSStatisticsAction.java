@@ -19,7 +19,7 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * This action is used for statistics
+ * This action is used for CRS statistics loading
  *
  * @author Chathuranga Withana
  */
@@ -67,7 +67,9 @@ public class CRSStatisticsAction extends ActionSupport implements SessionAware {
 
         statistics = statService.getStatisticsForUser(statUser, null, null);
         if (statistics != null) {
-            if (!statService.existsStatisticsForUser(user)) {
+            Statistics stat = statService.getStatisticsByUserId(statUser.getUserId());
+
+            if (stat == null) {
                 statService.addStatistics(user, statistics);
             } else {
                 Calendar cal = Calendar.getInstance();
