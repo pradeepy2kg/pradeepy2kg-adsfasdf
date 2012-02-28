@@ -47,12 +47,12 @@ public interface StatisticsManager {
     public void addStatistics(User user, Statistics statistics);
 
     /**
-     * check whether user has a statistics record already
+     * Returns Statistics by unique userId
      *
-     * @param user
-     * @return true - if exists : false - if not
+     * @param userId the unique id of user
+     * @return the Statistics instance
      */
-    public boolean existsStatisticsForUser(User user);
+    public Statistics getStatisticsByUserId(String userId);
 
     /**
      * delete all from statistics table
