@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:aop="http://www.springframework.org/schema/aop"
@@ -399,9 +400,13 @@
         <constructor-arg ref="dsDivisionDAOImpl"/>
         <constructor-arg ref="userDAOImpl"/>
         <constructor-arg ref="roleDAOImpl"/>
-        <constructor-arg ref="statisticsDAOImpl"/>
-        <constructor-arg ref="statisticsManagerService"/>
+    </bean>
 
+    <bean id="crsStatAction" class="lk.rgd.crs.web.action.CRSStatisticsAction">
+        <constructor-arg ref="statisticsManagerService"/>
+        <constructor-arg ref="userDAOImpl"/>
+        <constructor-arg ref="dsDivisionDAOImpl"/>
+        <constructor-arg ref="districtDAOImpl"/>
     </bean>
 
     <bean id="searchAction" class="lk.rgd.crs.web.action.births.SearchAction">
@@ -416,11 +421,6 @@
         <constructor-arg ref="districtDAOImpl"/>
         <constructor-arg ref="dsDivisionDAOImpl"/>
         <constructor-arg ref="userManagerService"/>
-        <constructor-arg ref="userDAOImpl"/>
-        <constructor-arg ref="roleDAOImpl"/>
-        <constructor-arg ref="statisticsDAOImpl"/>
-        <constructor-arg ref="statisticsManagerService"/>
-
     </bean>
 
     <bean id="adoptionOrderAction" class="lk.rgd.crs.web.action.births.AdoptionAction">
