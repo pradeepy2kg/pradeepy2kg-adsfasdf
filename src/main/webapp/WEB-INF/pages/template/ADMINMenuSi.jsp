@@ -11,7 +11,7 @@
             <s:else>
         <li>
             </s:else>
-            <a href="/ecivil/management/eprStatHome.do">
+            <a href="#">
                 පරිපාලන කටයුතු
             </a>
             <ul class="acitem">
@@ -27,7 +27,7 @@
                 </li>
                 <li>
                     <a id="addDivision.label" href="/ecivil/management/eprInitAddDivisionsAndDsDivisions.do">
-                        කොට්ඨාශ  ඇතුල් කිරීම
+                        කොට්ඨාශ ඇතුල් කිරීම
                     </a>
                 </li>
                 <li>
@@ -84,6 +84,17 @@
                     </a>
                 </li>
             </ul>
+        </li>
+
+        <s:if test="%{#session.context=='statistics'}">
+        <li class="exp">
+            </s:if>
+            <s:else>
+        <li>
+            </s:else>
+            <a href="/ecivil/statistics/eprStatHome.do">
+                සංඛ්‍යාලේඛන
+            </a>
         </li>
     </ul>
 </div>
