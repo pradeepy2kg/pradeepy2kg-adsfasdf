@@ -709,8 +709,8 @@ public class StatisticsManagerImpl implements StatisticsManager {
     }
 
     @Override
-    public boolean existsStatisticsForUser(User user) {
-        return statisticsDAO.getByUser(user.getUserId()) != null;
+    public Statistics getStatisticsByUserId(String userId) {
+        return statisticsDAO.getByUser(userId);
     }
 
     @Override
