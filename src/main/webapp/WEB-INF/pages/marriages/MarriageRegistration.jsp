@@ -81,6 +81,89 @@
 <s:hidden name="idUKey"/>
 <s:hidden name="editMode" id="editMode"/>
 <s:hidden name="mode" id="mode"/>
+
+<table border="1"
+       style="margin-top:1px;margin-bottom:20px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
+       cellpadding="5px">
+    <caption></caption>
+    <col width="200px"/>
+    <col/>
+    <col/>
+    <col/>
+    <tbody>
+    <tr>
+        <td><label><span class="font-8">අනුක්‍රමික අංකය
+                        <s:label value="*"
+                                 cssStyle="color:red;font-size:10pt;"/> <br>தொடர் இலக்கம்<br>Serial Number</span></label>
+        </td>
+        <td>
+            <s:if test="mode=='register'">
+                <s:textfield name="idUKey" id="idUKey" maxLength="10" disabled="true"/>
+            </s:if>
+            <s:else>
+                <s:if test="marriage.serialNumber==0">
+                    <s:textfield name="marriage.serialNumber" id="serialNumber" maxLength="10" value=""/>
+                </s:if>
+                <s:else>
+                    <s:textfield name="marriage.serialNumber" id="serialNumber" maxLength="10"/>
+                </s:else>
+            </s:else>
+        </td>
+        <td>
+            <label>
+                    <span class="font-8">ලියාපදිංචි දිනය
+                        <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
+                        <br>பெறப்பட்ட திகதி  <br>Date of Registration</span>
+            </label>
+        </td>
+        <td>
+            <s:label value="YYYY-MM-DD" cssStyle="margin-left:10px;font-size:10px"/><br>
+            <s:textfield name="marriage.registrationDate" id="registrationDatePicker" maxLength="10"
+                         onmouseover="datepicker('registrationDatePicker')"/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            දිස්ත්‍රික්කය
+            <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
+            <br>மாவட்டம்
+            <br>District
+        </td>
+        <td>
+            <s:select id="districtId" name="marriageDistrictId" list="districtList"
+                      value="marriageDistrictId"
+                      cssStyle="width:98.5%; width:240px;"
+                      onchange="populateDSDivisions('districtId','dsDivisionId','mrDivisionId', 'Marriage', false)"/>
+        </td>
+        <td><label><span class="font-8">
+            ප්‍රාදේශීය ලේකම් කොට්ඨාශය
+                <s:label value="*" cssStyle="color:red;font-size:10pt;"/><br/>
+                பிரதேச செயளாளர் பிரிவு <br/>
+                Divisional Secretary Division</span>
+        </label>
+        </td>
+        <td>
+            <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="dsDivisionId"
+                      cssStyle="width:98.5%; width:240px;"
+                      onchange="populateDivisions('dsDivisionId', 'mrDivisionId', 'Marriage', false)"/>
+        </td>
+    </tr>
+    <tr>
+        <td><label><span class="font-8">
+        ලියාපදිංචි කිරීමේ කොට්ඨාශය
+               <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
+                    <br>பதிவுப் பிரிவு<br>Registration Division</span>
+        </label>
+        </td>
+        <td colspan="3">
+            <s:select id="mrDivisionId" name="mrDivisionId" list="mrDivisionList"
+                      value="marriage.mrDivision.mrDivisionUKey" headerKey="1"
+                      cssStyle="width:98.5%; width:240px;"/>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
 <table border="1" style="margin-top:1px;width:100%;border:1px solid #000;border-collapse:collapse;font-size:12px"
        cellpadding="5px">
     <caption></caption>
@@ -139,45 +222,6 @@
     </tr>
     <tr>
         <td>
-            දිස්ත්‍රික්කය
-            <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-            <br>மாவட்டம்
-            <br>District
-        </td>
-        <td>
-            <s:select id="districtId" name="marriageDistrictId" list="districtList"
-                      value="marriageDistrictId"
-                      cssStyle="width:98.5%; width:240px;"
-                      onchange="populateDSDivisions('districtId','dsDivisionId','mrDivisionId', 'Marriage', false)"/>
-        </td>
-        <td><label><span class="font-8">
-            ප්‍රාදේශීය ලේකම් කොට්ඨාශය
-                <s:label value="*" cssStyle="color:red;font-size:10pt;"/><br/>
-                பிரதேச செயளாளர் பிரிவு <br/>
-                Divisional Secretary Division</span>
-        </label>
-        </td>
-        <td>
-            <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="dsDivisionId"
-                      cssStyle="width:98.5%; width:240px;"
-                      onchange="populateDivisions('dsDivisionId', 'mrDivisionId', 'Marriage', false)"/>
-        </td>
-    </tr>
-    <tr>
-        <td><label><span class="font-8">
-        ලියාපදිංචි කිරීමේ කොට්ඨාශය
-               <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-                    <br>பதிவுப் பிரிவு<br>Registration Division</span>
-        </label>
-        </td>
-        <td colspan="3">
-            <s:select id="mrDivisionId" name="mrDivisionId" list="mrDivisionList"
-                      value="marriage.mrDivision.mrDivisionUKey" headerKey="1"
-                      cssStyle="width:98.5%; width:240px;"/>
-        </td>
-    </tr>
-    <tr>
-        <td>
             විවාහය සිදු කල ස්ථානය<br>
             திருமணம் நகழ்ந்த இடம்<br>
             place of Marriage
@@ -226,7 +270,7 @@
     <tr>
         <td>
             රෙජිස්ට්‍රාර්තැන / දේවගැතිතැන<br>
-             பதிவாளர்/குருவானவர்<br>
+            பதிவாளர்/குருவானவர்<br>
             Registrar / Minister
         </td>
         <td colspan="3">
@@ -324,7 +368,7 @@
         පුරුෂ පාර්ශ්වය / மாப்பிள்ள திறத்தார் / Male Party
     </td>
     <td align="center">
-        ස්ත්‍රී පාර්ශ්වය /பெண் திறத்தார்/  Female Party
+        ස්ත්‍රී පාර්ශ්වය /பெண் திறத்தார்/ Female Party
     </td>
 </tr>
 <tr>
@@ -619,43 +663,6 @@
     <col>
     <col>
     <col>
-    <tr>
-        <td><label><span class="font-8">අනුක්‍රමික අංකය
-                        <s:label value="*"
-                                 cssStyle="color:red;font-size:10pt;"/> <br>தொடர் இலக்கம்<br>Serial Number</span></label>
-        </td>
-        <td>
-                <%-- <s:if test="idUKey==0">
-                   <s:textfield name="idUKey" id="idUKey" maxLength="10" disabled="true" value=""/>
-               </s:if>
-               <s:else>
-                   <s:textfield name="idUKey" id="idUKey" maxLength="10" disabled="true"/>
-               </s:else> --%>
-            <s:if test="mode=='register'">
-                <s:textfield name="idUKey" id="idUKey" maxLength="10" disabled="true"/>
-            </s:if>
-            <s:else>
-                <s:if test="marriage.serialNumber==0">
-                    <s:textfield name="marriage.serialNumber" id="serialNumber" maxLength="10" value=""/>
-                </s:if>
-                <s:else>
-                    <s:textfield name="marriage.serialNumber" id="serialNumber" maxLength="10"/>
-                </s:else>
-            </s:else>
-        </td>
-        <td>
-            <label>
-                    <span class="font-8">ලියාපදිංචි දිනය
-                        <s:label value="*" cssStyle="color:red;font-size:10pt;"/>
-                        <br>பெறப்பட்ட திகதி  <br>Date of Registration</span>
-            </label>
-        </td>
-        <td>
-            <s:label value="YYYY-MM-DD" cssStyle="margin-left:10px;font-size:10px"/><br>
-            <s:textfield name="marriage.registrationDate" id="registrationDatePicker" maxLength="10"
-                         onmouseover="datepicker('registrationDatePicker')"/>
-        </td>
-    </tr>
     <tr>
         <td class="font-8">
             සහතිකය නිකුත් කල යුතු භාෂාව
