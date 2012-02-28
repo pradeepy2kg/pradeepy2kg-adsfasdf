@@ -44,15 +44,16 @@ public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, Preload
     public Map<Integer, String> getDSDivisionNames(int districtUKey, String language, User user) {
 
         Map<Integer, String> result = getAllDSDivisionNames(districtUKey, language);
+        final String roleId = user.getRole().getRoleId();
 
         if (user == null) {
             logger.error("Error getting DSDivisionNames using null for User");
             throw new IllegalArgumentException("User can not be null");
-        } else if (Role.ROLE_RG.equals(user.getRole().getRoleId())) {
+        } else if (Role.ROLE_RG.equals(roleId) || Role.ROLE_ADMIN.equals(roleId)) {
             // Admin, RG and has full access
             return result;
         } else if (
-            (Role.ROLE_ARG.equals(user.getRole().getRoleId()) || Role.ROLE_DR.equals(user.getRole().getRoleId()))
+            (Role.ROLE_ARG.equals(roleId) || Role.ROLE_DR.equals(roleId))
                 && user.isAllowedAccessToBDDistrict(districtUKey)) {
             // the ARG, or DR who has been assigned to this district has full access
             return result;
