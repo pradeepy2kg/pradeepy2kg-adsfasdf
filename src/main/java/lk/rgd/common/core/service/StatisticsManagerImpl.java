@@ -7,6 +7,7 @@ import lk.rgd.common.api.domain.Role;
 import lk.rgd.common.api.domain.Statistics;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.service.StatisticsManager;
+import lk.rgd.common.util.DateTimeUtils;
 import lk.rgd.crs.api.dao.BirthDeclarationDAO;
 import lk.rgd.crs.api.dao.DeathRegisterDAO;
 import lk.rgd.crs.api.dao.MarriageRegistrationDAO;
@@ -22,6 +23,7 @@ import java.util.*;
 
 /**
  * @author shan
+ * @author Chathuranga Withana
  */
 public class StatisticsManagerImpl implements StatisticsManager {
 
@@ -40,7 +42,7 @@ public class StatisticsManagerImpl implements StatisticsManager {
     private static List<Statistics> statisticsList;
 
     public StatisticsManagerImpl(StatisticsDAO statisticsDAO, UserDAO userDAO, BirthDeclarationDAO birthDeclarationDAO,
-        DeathRegisterDAO deathRegisterDAO, /*DSDivisionDAO dsDivisionDAO, DistrictDAO districtDAO,*/ MarriageRegistrationDAO marriageRegistrationDAO) {
+        DeathRegisterDAO deathRegisterDAO, MarriageRegistrationDAO marriageRegistrationDAO) {
         this.statisticsDAO = statisticsDAO;
         this.userDAO = userDAO;
         this.birthDeclarationDAO = birthDeclarationDAO;
@@ -77,7 +79,6 @@ public class StatisticsManagerImpl implements StatisticsManager {
     /**
      * @inheritDoc
      */
-
     @Transactional(propagation = Propagation.NEVER)
     public void runScheduledStatJobs() {
         logger.info("Start executing Statistics related scheduled tasks..");
@@ -142,16 +143,12 @@ public class StatisticsManagerImpl implements StatisticsManager {
 
                 /* get one dsDivision at a time */
                 for (DSDivision dsDivision : dsDivisionList) {
-
                     if (deoUserList != null)
                         /* get one DEO at a time */ {
                         for (User deoForAdr : deoUserList) {
-
                             if (deoForAdr.getAssignedBDDSDivisions().contains(dsDivision)) {
-
                                 /* get statistics of DEO */
                                 statistics = populateStatistics(deoForAdr, statistics, null, null);
-
                             }
                         }
                     }
@@ -213,7 +210,7 @@ public class StatisticsManagerImpl implements StatisticsManager {
             for (User argUser : argUserList) {
 
                 /* statistics object current ARG */
-                statistics = populateStatistics(argUser/*, startTime, endTime*/, null, null, null);
+                statistics = populateStatistics(argUser, null, null, null);
 
                 /* this can't be null. but ... */
                 if (statistics == null) {
@@ -498,8 +495,7 @@ public class StatisticsManagerImpl implements StatisticsManager {
      * @param endDate   @return
      */
     private Statistics populateStatistics(User user, Statistics stat, Date startDate, Date endDate) {
-        logger.debug("Load statistics for userId : {} from {} to {} period",
-            new Object[]{user.getUserId(), startDate, endDate});
+
         // when date range not specified show statistics of the current year until today
         if (startDate == null || endDate == null) {
             // set first day of current year
@@ -515,6 +511,22 @@ public class StatisticsManagerImpl implements StatisticsManager {
             cal2.set(Calendar.MINUTE, 59);
             cal2.set(Calendar.SECOND, 59);
             endDate = cal2.getTime();
+        } else {
+            Calendar cal1 = Calendar.getInstance();
+            cal1.setTime(startDate);
+            cal1.set(Calendar.HOUR_OF_DAY, 0);
+            cal1.set(Calendar.MINUTE, 0);
+            cal1.set(Calendar.SECOND, 0);
+            startDate = cal1.getTime();
+
+
+            // set end date to today midnight
+            Calendar cal2 = Calendar.getInstance();
+            cal2.setTime(endDate);
+            cal2.set(Calendar.HOUR_OF_DAY, 23);
+            cal2.set(Calendar.MINUTE, 59);
+            cal2.set(Calendar.SECOND, 59);
+            endDate = cal2.getTime();
         }
         Calendar cal3 = Calendar.getInstance();
         cal3.set(Calendar.HOUR_OF_DAY, 0);
@@ -524,23 +536,35 @@ public class StatisticsManagerImpl implements StatisticsManager {
         // TODO http://obscuredclarity.blogspot.com/2010/08/get-previous-business-day-date-object.html
         Date thisMonthStart = cal3.getTime();
 
+        if (logger.isDebugEnabled()) {
+            logger.debug("Load statistics for userId : {} from {} to {} period",
+                new Object[]{user.getUserId(), DateTimeUtils.getISO8601FormattedString(startDate),
+                    DateTimeUtils.getISO8601FormattedString(endDate)});
+        }
+
         /* statistics object for current User */
         Statistics statistics = (stat == null) ? new Statistics() : stat;
         //statistics.setUser(user);
 
         /* get all the Birth Statistics in last day */
         List<BirthDeclaration> bdfList = birthDeclarationDAO.getByCreatedUser(user, startDate, endDate);
+        statistics.setBirthsTotalSubmissions(bdfList.size());
         for (BirthDeclaration birthDeclaration : bdfList) {
-            if (birthDeclaration.getRegister().getStatus() == BirthDeclaration.State.APPROVED) {
-                statistics.setBirthsApprovedItems(statistics.getBirthsApprovedItems() + 1);
-            } else if (birthDeclaration.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_REJECTED) {
-                statistics.setBirthsRejectedItems(statistics.getBirthsRejectedItems() + 1);
-            } else if (birthDeclaration.getRegister().getStatus() == BirthDeclaration.State.DATA_ENTRY) {
-                if (birthDeclaration.getLifeCycleInfo().getCreatedTimestamp().before(thisMonthStart)) {
-                    statistics.setBirthsArrearsPendingItems(statistics.getBirthsArrearsPendingItems() + 1);
-                } else {
-                    statistics.setBirthsThisMonthPendingItems(statistics.getBirthsThisMonthPendingItems() + 1);
-                }
+
+            BirthDeclaration.State status = birthDeclaration.getRegister().getStatus();
+            switch (status) {
+                case APPROVED:
+                    statistics.setBirthsApprovedItems(statistics.getBirthsApprovedItems() + 1);
+                    break;
+                case ARCHIVED_REJECTED:
+                    statistics.setBirthsRejectedItems(statistics.getBirthsRejectedItems() + 1);
+                    break;
+                case DATA_ENTRY:
+                    if (birthDeclaration.getLifeCycleInfo().getCreatedTimestamp().before(thisMonthStart)) {
+                        statistics.setBirthsArrearsPendingItems(statistics.getBirthsArrearsPendingItems() + 1);
+                    } else {
+                        statistics.setBirthsThisMonthPendingItems(statistics.getBirthsThisMonthPendingItems() + 1);
+                    }
             }
 
             BirthDeclaration.BirthType birthType = birthDeclaration.getRegister().getBirthType();
@@ -569,17 +593,23 @@ public class StatisticsManagerImpl implements StatisticsManager {
 
         /* get all the Death Statistics in last day */
         List<DeathRegister> deathList = deathRegisterDAO.getByCreatedUser(user, startDate, endDate);
+        statistics.setDeathsTotalSubmissions(deathList.size());
         for (DeathRegister deathRegister : deathList) {
-            if (deathRegister.getStatus() == DeathRegister.State.APPROVED) {
-                statistics.setDeathsApprovedItems(statistics.getDeathsApprovedItems() + 1);
-            } else if (deathRegister.getStatus() == DeathRegister.State.REJECTED) {
-                statistics.setDeathsRejectedItems(statistics.getDeathsRejectedItems() + 1);
-            } else if (deathRegister.getStatus() == DeathRegister.State.DATA_ENTRY) {
-                if (deathRegister.getLifeCycleInfo().getCreatedTimestamp().before(thisMonthStart)) {
-                    statistics.setDeathsArrearsPendingItems(statistics.getDeathsArrearsPendingItems() + 1);
-                } else {
-                    statistics.setDeathsThisMonthPendingItems(statistics.getDeathsThisMonthPendingItems() + 1);
-                }
+
+            DeathRegister.State status = deathRegister.getStatus();
+            switch (status) {
+                case APPROVED:
+                    statistics.setDeathsApprovedItems(statistics.getDeathsApprovedItems() + 1);
+                    break;
+                case REJECTED:
+                    statistics.setDeathsRejectedItems(statistics.getDeathsRejectedItems() + 1);
+                    break;
+                case DATA_ENTRY:
+                    if (deathRegister.getLifeCycleInfo().getCreatedTimestamp().before(thisMonthStart)) {
+                        statistics.setDeathsArrearsPendingItems(statistics.getDeathsArrearsPendingItems() + 1);
+                    } else {
+                        statistics.setDeathsThisMonthPendingItems(statistics.getDeathsThisMonthPendingItems() + 1);
+                    }
             }
 
             DeathRegister.Type deathType = deathRegister.getDeathType();
@@ -597,19 +627,25 @@ public class StatisticsManagerImpl implements StatisticsManager {
 
         /* get all the Marriage Statistics in last day */
         List<MarriageRegister> mrList = marriageRegistrationDAO.getByCreatedUser(user, startDate, endDate);
+        statistics.setMrgTotalSubmissions(mrList.size());
         for (MarriageRegister marriageRegister : mrList) {
-            if (marriageRegister.getState() == MarriageRegister.State.REGISTRATION_APPROVED) {
-                statistics.setMrgApprovedItems(statistics.getMrgApprovedItems() + 1);
-            } else if (marriageRegister.getState() == MarriageRegister.State.REGISTRATION_REJECTED) {
-                statistics.setMrgRejectedItems(statistics.getMrgRejectedItems() + 1);
-            } else if (marriageRegister.getState() == MarriageRegister.State.DATA_ENTRY) {
-                if (marriageRegister.getLifeCycleInfo().getCreatedTimestamp().before(thisMonthStart)) {
-                    statistics.setMrgArrearsPendingItems(statistics.getMrgArrearsPendingItems() + 1);
-                } else {
-                    statistics.setMrgThisMonthPendingItems(statistics.getMrgThisMonthPendingItems() + 1);
-                }
+            MarriageRegister.State status = marriageRegister.getState();
+            switch (status) {
+                case REGISTRATION_APPROVED:
+                    statistics.setMrgApprovedItems(statistics.getMrgApprovedItems() + 1);
+                    break;
+                case REGISTRATION_REJECTED:
+                    statistics.setMrgRejectedItems(statistics.getMrgRejectedItems() + 1);
+                    break;
+                case DATA_ENTRY:
+                    if (marriageRegister.getLifeCycleInfo().getCreatedTimestamp().before(thisMonthStart)) {
+                        statistics.setMrgArrearsPendingItems(statistics.getMrgArrearsPendingItems() + 1);
+                    } else {
+                        statistics.setMrgThisMonthPendingItems(statistics.getMrgThisMonthPendingItems() + 1);
+                    }
             }
         }
+        statistics.setUser(user.getUserId());
 
         return statistics;
     }
@@ -619,84 +655,46 @@ public class StatisticsManagerImpl implements StatisticsManager {
      */
     @Override
     public Statistics getStatisticsForUser(User user, Date startDate, Date endDate) {
-        Statistics statistics = statisticsDAO.getByUser(user.getUserId());
 
-        if (statistics == null) {
-            if (user.getRole().getRoleId().equals(Role.ROLE_DEO)) {
-                statistics = populateStatistics(user, null, startDate, endDate);
-                statistics.setUser(user.getUserId());
-            }
-            if (user.getRole().getRoleId().equals(Role.ROLE_ADR) || user.getRole().getRoleId().equals(Role.ROLE_DR)) {
-                statistics = populateStatistics(user, null, startDate, endDate);
-                Set<DSDivision> dsDivisionList = user.getAssignedBDDSDivisions();
-                List<User> deoList = userDAO.getUsersByRole(Role.ROLE_DEO);
-                for (DSDivision dsDivision : dsDivisionList) {
-                    for (User deo : deoList) {
-                        if (deo.getAssignedBDDSDivisions().contains(dsDivision)) {
-                            statistics = populateStatistics(deo, statistics, startDate, endDate);
-                        }
-                    }
-                }
-                statistics.setUser(user.getUserId());
-            }
-            if (user.getRole().getRoleId().equals(Role.ROLE_ARG)) {
-                statistics = populateStatistics(user, null, startDate, endDate);
-                List<User> allUserList = userDAO.getAllUsers();
-                for (User oneUser : allUserList) {
-                    if (oneUser.getRole().getRoleId().equals(Role.ROLE_DEO) || oneUser.getRole().getRoleId().equals(Role.ROLE_ADR) || oneUser.getRole().getRoleId().equals(Role.ROLE_DR)) {
-                        statistics = populateStatistics(oneUser, statistics, startDate, endDate);
-                    }
-                }
-                statistics.setUser(user.getUserId());
-            }
-            if (user.getRole().getRoleId().equals(Role.ROLE_RG)) {
-                statistics = populateStatistics(user, null, startDate, endDate);
-                List<User> allUserList = userDAO.getAllUsers();
-                for (User oneUser : allUserList) {
-                    if (!oneUser.getUserId().equals(user.getUserId()) && !oneUser.getRole().getRoleId().equals(Role.ROLE_RG)) {
-                        logger.debug("RG gets the user : {}", oneUser.getUserId());
-                        statistics = populateStatistics(oneUser, statistics, startDate, endDate);
-                    }
-                }
-                statistics.setUser(user.getUserId());
-            }
-        } else {
-            if (user.getRole().getRoleId().equals(Role.ROLE_DEO)) {
-                deleteEntries(statistics);
-                statistics = populateStatistics(user, statistics, startDate, endDate);
-            }
-            if (user.getRole().getRoleId().equals(Role.ROLE_ADR) || user.getRole().getRoleId().equals(Role.ROLE_DR)) {
-                deleteEntries(statistics);
-                statistics = populateStatistics(user, statistics, startDate, endDate);
-                Set<DSDivision> dsDivisionList = user.getAssignedBDDSDivisions();
-                List<User> deoList = userDAO.getUsersByRole(Role.ROLE_DEO);
-                for (DSDivision dsDivision : dsDivisionList) {
-                    for (User deo : deoList) {
-                        if (deo.getAssignedBDDSDivisions().contains(dsDivision)) {
-                            statistics = populateStatistics(deo, statistics, startDate, endDate);
-                        }
+        Statistics statistics = statisticsDAO.getByUser(user.getUserId());
+        final String userRole = user.getRole().getRoleId();
+
+        if (statistics != null) {
+            deleteEntries(statistics);
+        }
+
+        if (Role.ROLE_DEO.equals(userRole)) {
+            statistics = populateStatistics(user, statistics, startDate, endDate);
+        }
+        if (Role.ROLE_ADR.equals(userRole) || Role.ROLE_DR.equals(userRole)) {
+            statistics = populateStatistics(user, statistics, startDate, endDate);
+            Set<DSDivision> dsDivisionList = user.getAssignedBDDSDivisions();
+            List<User> deoList = userDAO.getUsersByRole(Role.ROLE_DEO);
+            for (DSDivision dsDivision : dsDivisionList) {
+                for (User deo : deoList) {
+                    if (deo.getAssignedBDDSDivisions().contains(dsDivision)) {
+                        statistics = populateStatistics(deo, statistics, startDate, endDate);
                     }
                 }
             }
-            if (user.getRole().getRoleId().equals(Role.ROLE_ARG)) {
-                deleteEntries(statistics);
-                statistics = populateStatistics(user, statistics, startDate, endDate);
-                List<User> allUserList = userDAO.getAllUsers();
-                for (User oneUser : allUserList) {
-                    if (oneUser.getRole().getRoleId().equals(Role.ROLE_DEO) || oneUser.getRole().getRoleId().equals(Role.ROLE_ADR) || oneUser.getRole().getRoleId().equals(Role.ROLE_DR)) {
-                        statistics = populateStatistics(oneUser, statistics, startDate, endDate);
-                    }
+        }
+        if (Role.ROLE_ARG.equals(userRole)) {
+            statistics = populateStatistics(user, statistics, startDate, endDate);
+            List<User> allUserList = userDAO.getAllUsers();
+            for (User oneUser : allUserList) {
+                final String oneUserRole = oneUser.getRole().getRoleId();
+                if (Role.ROLE_DEO.equals(oneUserRole) || Role.ROLE_ADR.equals(oneUserRole) || Role.ROLE_DR.equals(oneUserRole)) {
+                    statistics = populateStatistics(oneUser, statistics, startDate, endDate);
                 }
             }
-            if (user.getRole().getRoleId().equals(Role.ROLE_RG)) {
-                deleteEntries(statistics);
-                statistics = populateStatistics(user, statistics, startDate, endDate);
-                List<User> allUserList = userDAO.getAllUsers();
-                for (User oneUser : allUserList) {
-                    if (!oneUser.getUserId().equals(user.getUserId()) && !oneUser.getRole().getRoleId().equals(Role.ROLE_RG)) {
-                        logger.debug("RG gets the user : {}", oneUser.getUserId());
-                        statistics = populateStatistics(oneUser, statistics, startDate, endDate);
-                    }
+        }
+        if (Role.ROLE_RG.equals(userRole)) {
+            statistics = populateStatistics(user, statistics, startDate, endDate);
+            List<User> allUserList = userDAO.getAllUsers();
+            for (User oneUser : allUserList) {
+                if (!oneUser.getUserId().equals(user.getUserId()) && !oneUser.getRole().getRoleId().equals(Role.ROLE_RG)) {
+                    logger.debug("RG gets the user : {}", oneUser.getUserId());
+                    statistics = populateStatistics(oneUser, statistics, startDate, endDate);
                 }
             }
         }
