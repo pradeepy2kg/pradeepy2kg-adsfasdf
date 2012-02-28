@@ -13,11 +13,23 @@ import java.util.Map;
  *         A utility class to contain all menu items for different user roles. Menus will be determined only once using a static block with final  variables
  */
 public class Menu {
+    private static final Logger logger = LoggerFactory.getLogger(Menu.class);
+
+    private static final String BIRTH_MENU = "birth";
+    private static final String DEATH_MENU = "death";
+    private static final String MARRIAGE_MENU = "marriage";
+    private static final String ADOPTION_MENU = "adoption";
+    private static final String ALTERATION_MENU = "alteration";
+    private static final String CERT_SEARCH_MENU = "certificateSearch";
+    private static final String PRS_MENU = "prs";
+    private static final String ADMIN_MENU = "admin";
+    private static final String PREFERENCE_MENU = "preference";
+    private static final String STATISTICS_MENU = "statistics";
+
     private static final Map<String, Map> adminLinks = new LinkedHashMap<String, Map>();
     private static final Map<String, Map> deoLinks = new LinkedHashMap<String, Map>();
     private static final Map<String, Map> adrLinks = new LinkedHashMap<String, Map>();
     private static final Map<String, Map> argLinks = new LinkedHashMap<String, Map>();
-    private static final Logger logger = LoggerFactory.getLogger(Menu.class);
 
     // admin menu items
     private static final Map adminLink = new LinkedHashMap();
@@ -25,6 +37,7 @@ public class Menu {
     // common menu items
     private static final Map preferanceLink = new LinkedHashMap();
     private static final Map searchLink = new LinkedHashMap();
+    private static final Map statisticsLink = new LinkedHashMap();
 
     // deo menu items
     private static final Map deoBirthLink = new LinkedHashMap();
@@ -99,9 +112,6 @@ public class Menu {
         adminLink.put("eprCreateReports.do", new Link(null, "/ecivil/management/", "eprCreateReports.do", Permission.GENERATE_REPORTS));
         adminLink.put("eprViewReport.do", new Link(null, "/ecivil/management/", "eprViewReport.do", Permission.GENERATE_REPORTS));
         adminLink.put("eprPopulateStatistics.do", new Link(null, "/ecivil/management/", "eprPopulateStatistics.do", Permission.GENERATE_REPORTS));
-        // TODO remporary fix statistics needs its own menu
-        adminLink.put("eprStatHome.do", new Link(null, "/ecivil/management/", "eprStatHome.do", Permission.USER_MANAGEMENT));
-
 
         adrAdminLink.put("eprRegistrarsManagment.do", new Link("registrars.managment", "/ecivil/management/", "eprRegistrarsManagment.do", Permission.REGISTRAR_MANAGEMENT));
         adrAdminLink.put("eprRegistrarsView.do", new Link(null, "/ecivil/management/", "eprRegistrarsView.do", Permission.REGISTRAR_MANAGEMENT));
@@ -113,6 +123,9 @@ public class Menu {
         adrAdminLink.put("eprAssignmentEdit.do", new Link(null, "/ecivil/management/", "eprAssignmentEdit.do", Permission.REGISTRAR_MANAGEMENT));
         adrAdminLink.put("eprUpdateRegistrar.do", new Link(null, "/ecivil/management/", "eprUpdateRegistrar.do", Permission.REGISTRAR_MANAGEMENT));
         adrAdminLink.put("eprFindRegistrar.do", new Link("search.registrar", "/ecivil/management/", "eprFindRegistrar.do", Permission.REGISTRAR_MANAGEMENT));
+
+        // User statistics links
+        statisticsLink.put("eprStatHome.do", new Link("statistics.label", "/ecivil/statistics/", "eprStatHome.do", Permission.USER_PREFERENCES));
 
         //User Preferance
         preferanceLink.put("eprUserPreferencesInit.do", new Link("userPreference.label", "/ecivil/preferences/", "eprUserPreferencesInit.do", Permission.USER_PREFERENCES));
@@ -422,41 +435,44 @@ public class Menu {
         //marriage related links ends
 
         // assemble menu for admins : insertion - order
-        adminLinks.put("admin", adminLink);
-        adminLinks.put("preference", preferanceLink);
-
+        adminLinks.put(ADMIN_MENU, adminLink);
+        adminLinks.put(PREFERENCE_MENU, preferanceLink);
+        adminLinks.put(STATISTICS_MENU, statisticsLink);
 
         // assemble menu for deo
-        deoLinks.put("birth", deoBirthLink);
-        deoLinks.put("death", deoDeathLink);
-        deoLinks.put("adoption", deoAdoptionLink);
-        deoLinks.put("alteration", deoAlterationLink);
-        deoLinks.put("preference", preferanceLink);
-        deoLinks.put("prs", deoPRSLink);
-        deoLinks.put("certificateSearch", searchLink);
-        deoLinks.put("marriage", deoMarriageLink);
+        deoLinks.put(BIRTH_MENU, deoBirthLink);
+        deoLinks.put(DEATH_MENU, deoDeathLink);
+        deoLinks.put(ADOPTION_MENU, deoAdoptionLink);
+        deoLinks.put(ALTERATION_MENU, deoAlterationLink);
+        deoLinks.put(PREFERENCE_MENU, preferanceLink);
+        deoLinks.put(PRS_MENU, deoPRSLink);
+        deoLinks.put(CERT_SEARCH_MENU, searchLink);
+        deoLinks.put(MARRIAGE_MENU, deoMarriageLink);
+        deoLinks.put(STATISTICS_MENU, statisticsLink);
 
         // assemble menu for adr
-        adrLinks.put("birth", adrBirthLink);
-        adrLinks.put("death", adrDeathLink);
-        adrLinks.put("adoption", adrAdoptionLink);
-        adrLinks.put("alteration", adrAlterationLink);
-        adrLinks.put("preference", preferanceLink);
-        adrLinks.put("prs", adrPRSLink);
-        adrLinks.put("certificateSearch", searchLink);
-        adrLinks.put("admin", adrAdminLink);
-        adrLinks.put("marriage", adrMarriageLink);
+        adrLinks.put(BIRTH_MENU, adrBirthLink);
+        adrLinks.put(DEATH_MENU, adrDeathLink);
+        adrLinks.put(ADOPTION_MENU, adrAdoptionLink);
+        adrLinks.put(ALTERATION_MENU, adrAlterationLink);
+        adrLinks.put(PREFERENCE_MENU, preferanceLink);
+        adrLinks.put(PRS_MENU, adrPRSLink);
+        adrLinks.put(CERT_SEARCH_MENU, searchLink);
+        adrLinks.put(ADMIN_MENU, adrAdminLink);
+        adrLinks.put(MARRIAGE_MENU, adrMarriageLink);
+        adrLinks.put(STATISTICS_MENU, statisticsLink);
 
         //assemble menu for arg
-        argLinks.put("birth", argBirthLink);
-        argLinks.put("death", argDeathLink);
-        argLinks.put("adoption", argAdoptionLink);
-        argLinks.put("alteration", argAlterationLink);
-        argLinks.put("preference", preferanceLink);
-        argLinks.put("prs", argPRSLink);
-        argLinks.put("certificateSearch", searchLink);
-        argLinks.put("admin", argAdminLink);
-        argLinks.put("marriage", argMarriageLink);
+        argLinks.put(BIRTH_MENU, argBirthLink);
+        argLinks.put(DEATH_MENU, argDeathLink);
+        argLinks.put(ADOPTION_MENU, argAdoptionLink);
+        argLinks.put(ALTERATION_MENU, argAlterationLink);
+        argLinks.put(PREFERENCE_MENU, preferanceLink);
+        argLinks.put(PRS_MENU, argPRSLink);
+        argLinks.put(CERT_SEARCH_MENU, searchLink);
+        argLinks.put(ADMIN_MENU, argAdminLink);
+        argLinks.put(MARRIAGE_MENU, argMarriageLink);
+        argLinks.put(STATISTICS_MENU, statisticsLink);
 
     }
 
