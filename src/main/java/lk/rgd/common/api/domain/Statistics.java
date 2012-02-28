@@ -10,14 +10,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "STATISTICS", schema = "COMMON")
-@NamedQueries({
-    @NamedQuery(name = "get.by.user", query = "SELECT s FROM Statistics s WHERE s.userId = :userId")
-})
 public class Statistics implements Serializable {
-
-    /*@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idUkey;*/
 
     @Id
     private String userId;
@@ -210,14 +203,6 @@ public class Statistics implements Serializable {
     public void setDeathsTotalSubmissions(int deathsTotalSubmissions) {
         DeathsTotalSubmissions = deathsTotalSubmissions;
     }
-
-    /*public long getIdUkey() {
-        return idUkey;
-    }
-
-    public void setIdUkey(long idUkey) {
-        this.idUkey = idUkey;
-    }*/
 
     public int getMrgApprovedItems() {
         return MrgApprovedItems;
