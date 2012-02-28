@@ -48,6 +48,8 @@
 
 <s:url id="loadDSDivList" action="../ajaxSupport_loadDSDivListUserPreferences"/>
 
+<s:actionmessage cssStyle="color:blue;;font-size:10pt"/>
+
 <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
         <legend><b><s:label value="%{getText('changes.lable')}"/></b></legend>
 
@@ -92,7 +94,7 @@
                 <td></td>
                 <td>
                     <div class="form-submit">
-                        <s:submit action="eprBackChangePass" value="%{getText('cancel.button')}" />
+                        <s:submit action="eprUserPreferencesInit" value="%{getText('cancel.button')}" />
                         <s:submit value="%{getText('submit.label')}" cssStyle="float:right;"/>
                     </div>
                 </td>
