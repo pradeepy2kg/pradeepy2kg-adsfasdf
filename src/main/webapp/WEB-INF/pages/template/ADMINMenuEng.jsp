@@ -11,7 +11,7 @@
             <s:else>
         <li>
             </s:else>
-            <a href="/ecivil/management/eprStatHome.do">
+            <a href="#">
                 ADMIN TASK
             </a>
             <ul class="acitem">
@@ -84,6 +84,17 @@
                     </a>
                 </li>
             </ul>
+        </li>
+
+        <s:if test="%{#session.context=='statistics'}">
+        <li class="exp">
+            </s:if>
+            <s:else>
+        <li>
+            </s:else>
+            <a href="/ecivil/statistics/eprStatHome.do">
+                STATISTICS
+            </a>
         </li>
     </ul>
 </div>

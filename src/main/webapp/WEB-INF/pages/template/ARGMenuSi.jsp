@@ -313,5 +313,16 @@
         </li>
     </ul>
 </li>
+
+<s:if test="%{#session.context=='statistics'}">
+<li class="exp">
+    </s:if>
+    <s:else>
+<li>
+    </s:else>
+    <a href="/ecivil/statistics/eprStatHome.do">
+        සංඛ්‍යාලේඛන
+    </a>
+</li>
 </ul>
 </div>
