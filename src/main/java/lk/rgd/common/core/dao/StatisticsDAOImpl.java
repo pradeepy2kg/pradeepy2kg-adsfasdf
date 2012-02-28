@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.Date;
 
@@ -20,16 +19,9 @@ public class StatisticsDAOImpl extends BaseDAO implements StatisticsDAO {
     /**
      * @inheritDoc
      */
-    @Override
     @Transactional(propagation = Propagation.SUPPORTS)
     public Statistics getByUser(String userId) {
-        Query query = em.createNamedQuery("get.by.user");
-        query.setParameter("userId", userId);
-        try {
-            return (Statistics) query.getSingleResult();
-        } catch (NoResultException e) {
-            return null;
-        }
+        return em.find(Statistics.class, userId);
     }
 
     /**

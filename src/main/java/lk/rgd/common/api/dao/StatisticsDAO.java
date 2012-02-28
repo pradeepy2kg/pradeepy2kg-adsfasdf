@@ -18,7 +18,7 @@ public interface StatisticsDAO {
 
     /**
      * Add a Statistics
-     * 
+     *
      * @param statistics    the object to add
      */
     public void addStatistics(Statistics statistics);
