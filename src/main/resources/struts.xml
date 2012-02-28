@@ -46,39 +46,9 @@
         <action name="eprLogin" class="lk.rgd.crs.web.action.LoginAction" method="login">
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="cacheControl"/>
-            <!--<result type="tiles" name="successADMIN">epr.home</result>
-            <result type="tiles" name="successRG">epr.rghome</result>
-            <result type="tiles" name="successARG">epr.arghome</result>
-            <result type="tiles" name="successDR">epr.drhome</result>
-            <result type="tiles" name="successADR">epr.adrhome</result>
-            <result type="tiles" name="successDEO">epr.deohome</result>-->
-            <!--TODO need to resolve this-->
-            <result type="redirectAction" name="successADMIN">
-                <param name="actionName">eprStatHome</param>
-                <param name="namespace">/management</param>
-            </result>
-            <result type="redirectAction" name="successRG">
-                <param name="actionName">eprStatHome</param>
-            </result>
-            <result type="redirectAction" name="successARG">
-                <param name="actionName">eprStatHome</param>
-            </result>
-            <result type="redirectAction" name="successDR">
-                <param name="actionName">eprStatHome</param>
-            </result>
-            <result type="redirectAction" name="successADR">
-                <param name="actionName">eprStatHome</param>
-            </result>
-            <result type="redirectAction" name="successDEO">
-                <param name="actionName">eprStatHome</param>
-            </result>
-
+            <result type="tiles" name="success">epr.welcome</result>
             <result name="expired">/WEB-INF/pages/preferences/PasswordChange.jsp</result>
             <result name="error">/WEB-INF/pages/login/login.jsp</result>
-        </action>
-
-        <action name="eprStatHome" class="lk.rgd.crs.web.action.LoginAction" method="showHomeStatistics">
-            <result type="tiles" name="success">epr.home</result>
         </action>
 
         <action name="eprLogout" class="lk.rgd.crs.web.action.LoginAction" method="logout">
@@ -90,11 +60,6 @@
 
         <!--check here -->
         <action name="eprHome" class="lk.rgd.crs.web.action.births.BirthRegisterAction" method="welcome">
-            <interceptor-ref name="default"/>
-            <result type="tiles" name="success">epr.home</result>
-        </action>
-
-        <action name="eprShowStatistics" class="lk.rgd.crs.web.action.UserPreferencesAction" method="showStatistics">
             <interceptor-ref name="default"/>
             <result type="tiles" name="success">epr.home</result>
         </action>
@@ -783,73 +748,43 @@
             <result type="redirectAction" name="success">
                 <param name="actionName">eprDeathCertificateSearch</param>
             </result>
-            <!--<result type="tiles" name="success">epr.certificateSearch</result>-->
         </action>
     </package>
 
     <package name="preferences" namespace="/preferences" extends="NG">
         <default-interceptor-ref name="default"/>
 
-        <action name="showPasswordChangeStatistics" class="lk.rgd.crs.web.action.UserPreferencesAction"
-                method="showPasswordChangeStatistics">
-            <result name="success" type="tiles">epr.home</result>
-        </action>
-
         <action name="eprChangePass" class="lk.rgd.crs.web.action.UserPreferencesAction"
                 method="changePassword">
-            <!--<result type="tiles" name="successADMIN">epr.home</result>
-            <result type="tiles" name="successRG">epr.rghome</result>
-            <result type="tiles" name="successARG">epr.arghome</result>
-            <result type="tiles" name="successDR">epr.drhome</result>
-            <result type="tiles" name="successADR">epr.adrhome</result>
-            <result type="tiles" name="successDEO">epr.deohome</result>-->
-
-            <result type="redirectAction" name="successADMIN">
-                <param name="actionName">showPasswordChangeStatistics</param>
-            </result>
-            <result type="redirectAction" name="successRG">
-                <param name="actionName">showPasswordChangeStatistics</param>
-            </result>
-            <result type="redirectAction" name="successARG">
-                <param name="actionName">showPasswordChangeStatistics</param>
-            </result>
-            <result type="redirectAction" name="successDR">
-                <param name="actionName">showPasswordChangeStatistics</param>
-            </result>
-            <result type="redirectAction" name="successADR">
-                <param name="actionName">showPasswordChangeStatistics</param>
-            </result>
-            <result type="redirectAction" name="successDEO">
-                <param name="actionName">showPasswordChangeStatistics</param>
-            </result>
-
-            <result name="error">/WEB-INF/pages/preferences/PasswordChange.jsp</result>
+            <result name="success" type="tiles">epr.passwordChange</result>
+            <result name="error" type="tiles">epr.passwordChange</result>
+            <param name="fromLogin">${fromLogin}</param>
+            <result name="expired">/WEB-INF/pages/preferences/PasswordChange.jsp</result>
         </action>
 
         <action name="eprBackChangePass" class="lk.rgd.crs.web.action.UserPreferencesAction" method="back">
-            <result name="success" type="tiles">epr.home</result>
+            <result name="success" type="tiles">epr.welcome</result>
         </action>
 
         <action name="eprpassChangePageLoad" class="lk.rgd.crs.web.action.UserPreferencesAction"
                 method="changePasswordInit">
             <result name="success" type="tiles">epr.passwordChange</result>
         </action>
-        <!--<action name="eprpassChangePageLoad">-->
-        <!--<result>/WEB-INF/pages/preferences/PasswordChange.jsp</result>-->
-        <!--</action>-->
 
         <action name="eprUserPreferencesInit" class="lk.rgd.crs.web.action.UserPreferencesAction"
                 method="userPreferenceInit">
-            <result type="tiles" name="pageload">epr.UserPreferences</result>
+            <result type="tiles" name="success">epr.UserPreferences</result>
         </action>
 
-        <!-- -->
         <action name="eprUserPreferencesAction" class="lk.rgd.crs.web.action.UserPreferencesAction"
                 method="selectUserPreference">
-            <result type="tiles" name="success">epr.home</result>
+            <result type="redirectAction" name="success">
+                <param name="actionName">eprUserPreferencesInit</param>
+                <param name="message">true</param>
+            </result>
         </action>
-
     </package>
+
     <package name="adoption" namespace="/adoption" extends="NG">
 
         <default-interceptor-ref name="default"/>
@@ -1009,11 +944,6 @@
     <package name="management" namespace="/management" extends="NG">
         <default-interceptor-ref name="default"/>
 
-        <!-- Statistics action for ADMIN -->
-        <action name="eprStatHome" class="lk.rgd.crs.web.action.LoginAction" method="showHomeStatistics">
-            <result type="tiles" name="success">epr.home</result>
-        </action>
-
         <!--registrars managment actions-->
         <action name="eprRegistrarsManagment" class="lk.rgd.crs.web.action.RegistrarManagementAction"
                 method="registrarsManagementHome">
@@ -1153,7 +1083,6 @@
             <result type="tiles" name="success">epr.addEditDivisions</result>
         </action>
 
-        <!--TODO for GN Division re-arange option-->
         <action name="eprInitRearrangeDivision" class="lk.rgd.crs.web.action.UserManagementAction"
                 method="initRearrangeDivision">
             <result type="tiles" name="success">epr.ReArrangeDivisions</result>
@@ -1705,6 +1634,14 @@
                 method="displayScannedImage">
             <result name="success" type="tiles">epr.printScannedMarriageCertificate</result>
             <result name="error" type="tiles">epr.error</result>
+        </action>
+    </package>
+
+    <package name="statistics" namespace="/statistics" extends="NG">
+        <default-interceptor-ref name="default"/>
+
+        <action name="eprStatHome" class="lk.rgd.crs.web.action.CRSStatisticsAction" method="showStatistics">
+            <result type="tiles" name="success">epr.home</result>
         </action>
     </package>
 </struts>
